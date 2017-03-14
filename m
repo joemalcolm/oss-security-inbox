@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/17/7
-Message-ID: <alpine.BSF.2.21.1711180920070.49959@aneurin.horsfall.org>
-Date: Sat, 18 Nov 2017 09:22:04 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Re: phusion passenger CVE-2017-1000384
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/14/7
+Message-ID: <20170314220336.GB14618@openwall.com>
+Date: Tue, 14 Mar 2017 23:03:36 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 17 Nov 2017, Jakub Wilk wrote:
+On Sun, Feb 26, 2017 at 11:46:23AM +0000, Agostino Sarubbo wrote:
+> ==6051==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a00001f708 at pc 0x0000004513de bp 0x7ffc71379b20 sp 0x7ffc713792d0
+> WRITE of size 2 at 0x61a00001f708 thread T0
+>     #0 0x4513dd in read /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765
+>     #1 0x7fd944373b2c in bool readValue(File*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:353:12
+>     #2 0x7fd944373b2c in bool readSwap(File*, short*, int) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:375
+>     #3 0x7fd944373b2c in _init /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:397
+>     #4 0x7fd94439ce2f in WAVEFile::parseFormat(Tag const&, unsigned int) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:289:5
 
-> But false _is_ a defined macro in this file, so this doesn't disable the 
-> code inside. I guess they meant to write:
->
->  #if false
->  ...
->  #endif
+Agostino asked the list moderators to post to this thread that the above
+is CVE-2017-6828.
 
-Or perhaps they meant to write the more conventional "#ifdef notdef".
-
--- 
-Dave Horsfall DTM (VK2KFU)  "Those who don't understand security will suffer."
+Alexander
