@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2250" "Friday" "8" "July" "2016" "07:55:40" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3S0SmpoUVj5ZiQL9RF99PL7Kxt4SpDJQt2D_1SDwQmsw@mail.gmail.com>" "58" "Re: [oss-security] On anonymous CVE assignments" "^Cc:" nil nil "7" "2016070813:55:40" "[oss-security] On anonymous CVE assignments" (number mark "U       kseifried@re Jul  8   58/2250  " thread-indent "\"Re: [oss-security] On anonymous CVE assignments\"\n") "<CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>" ("<CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["939" "Wednesday" "15" "March" "2017" "17:03:18" "-0600" "Don A. Bailey" "donb@securitymouse.com" "<C54D7B3D-17DE-46FA-8E8E-382C4312B8A0@securitymouse.com>" "31" "Re: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme" nil nil nil "3" "2017031523:03:18" "[oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme" (number mark "U       donb@securit Mar 15   31/939   " thread-indent "\"Re: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme\"\n") "<20170315224749.GG759@scully.more-magic.net>" ("<20170315224749.GG759@scully.more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7734 invoked by uid 550); 8 Jul 2016 13:55:54 -0000
+Received: (qmail 5694 invoked by uid 550); 16 Mar 2017 12:41:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7714 invoked from network); 8 Jul 2016 13:55:53 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=uhZfU075b4UZhRDXHXvYeo94pHgEj/BLlbv+Nt5DoxQ=;
-        b=guPMF6TVoi8j16JvBqa6np2q93oyHWQ6UHKGZd7SRFVcs2tugQDx82wONyGuFK2dWe
-         g8TWz01yBTukd60JTEX+UHNqEoHWohanb3NjJUpVB2MttMkD3GNurO8uHV4aWFo1gxrT
-         fpGFEPPs7T/khYnKxbi2OecOLP4FXfOtq8+IOjUpyW9/spRdyacqvE7eux8CCezyqvkg
-         dldZV+eLq3KZfT/LG0r5xFjViERTWeBg1odgl2wEm6b03J5Gk0vZEWeJtG+ME82lBTu/
-         D2OiqdsHmGYT8SbGVFjjR1OTBaE9fqMPLiwE+84u9Syg+kbYcv8Exq3ZLDxnPOwtlSyX
-         RJoQ==
-X-Gm-Message-State: ALyK8tIDzFBvQ8sblXNkK6I8ajdxIFGa6MCSR3bQMB4m9WjXtVfxisTjgQbRp+6oUBcDbVbat69VJLTL9FGX0c2F
-X-Received: by 10.202.107.17 with SMTP id g17mr3133140oic.198.1467986141405;
- Fri, 08 Jul 2016 06:55:41 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>
-References: <CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>
-Message-ID: <CANO=Ty3S0SmpoUVj5ZiQL9RF99PL7Kxt4SpDJQt2D_1SDwQmsw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11403bc87e7e3105372028a6
-Cc: CVE ID Requests <cve-assign@mitre.org>
-Date: Fri, 8 Jul 2016 07:55:40 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] On anonymous CVE assignments
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 14075 invoked from network); 15 Mar 2017 23:03:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=securitymouse-com.20150623.gappssmtp.com; s=20150623;
+        h=from:content-transfer-encoding:mime-version:date:subject:message-id
+         :references:in-reply-to:to;
+        bh=Z35pL2lHVe/f5zDiLTjYyCgkFKJWnBo5kVyxMybmJY0=;
+        b=dxtvNZyBJFVIODCDoEx3TqDkZ+WMrwEJ/0HjMAfPzCU9YaZ+v9UpWjk/8HYVpIfiXq
+         T6WNfNKKozaBcKeLMbKdOXiwk1viSMYrkepXxlwTGglE9LNExlzlF8uGW7QxqXU7WQ3H
+         JrvjkVFkW42SjYfr1Zp5oSqDoseq3Rg2PvUUavmpp6aCnDnxzVaE18bYgjXnr9Mn1lms
+         MhzLYkXTAp3DKor0IHVtj7VpEFxoFdbEZ9j9CwkKqCZZsIgyyRvmO33SDG5jnsctFJZD
+         ADYGEjzxI/uVOQPS4/j5PMto08QoWJZr33z7RyUOg85h92pE+TQtzUXJfXY/itbbumzU
+         0jRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version:date
+         :subject:message-id:references:in-reply-to:to;
+        bh=Z35pL2lHVe/f5zDiLTjYyCgkFKJWnBo5kVyxMybmJY0=;
+        b=dXPkkZQ76rQqdq3ZGcEZP8uS4WaB0Ps/fR79+R2b7K3QAdoMVpvK9N6NCnt9SiPzAZ
+         yMZEVVJFsK6doQKB4721XjAz51DUS5V1EMMWqTgbG7fkgZ1rfaa/BLslAw+DoLH4AEsA
+         8IVZXkyzDOjEtEVtiGwsXExpKP1+SdKRYm0N0UQJLCJYODafQPR2rGtv1sLEZx32tWzs
+         qtSLJgpOeznqOQ3xs7giIsD/yLGED0dOBw/ywO8xcfVa4rF3gumIXP3zhnD/fzysVh2o
+         3mjOaBpwg07KugwoU7hOMNx6CcqxIQ/O9ieAFK5Rxn4kzzU5G0F9yUrEftHnP2OGHF3K
+         oT6Q==
+X-Gm-Message-State: AFeK/H372jZ9fjDa34hpl2lr68WQeu+47mDiZ5AdlV7rF43TV2LmiUuYfqizWUBluuLU1Q==
+X-Received: by 10.107.19.196 with SMTP id 65mr7055823iot.191.1489618999658;
+        Wed, 15 Mar 2017 16:03:19 -0700 (PDT)
+From: "Don A. Bailey" <donb@securitymouse.com>
+Content-Type: multipart/alternative;
+	boundary=Apple-Mail-2DF302A4-76C2-4741-BAAD-AA279EF1A262
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (1.0)
+Date: Wed, 15 Mar 2017 17:03:18 -0600
+Message-Id: <C54D7B3D-17DE-46FA-8E8E-382C4312B8A0@securitymouse.com>
+References: <20170315224749.GG759@scully.more-magic.net>
+In-Reply-To: <20170315224749.GG759@scully.more-magic.net>
+To: oss-security@lists.openwall.com
+X-Mailer: iPhone Mail (14D27)
+Subject: Re: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme
 
---001a11403bc87e7e3105372028a6
-Content-Type: text/plain; charset=UTF-8
+--Apple-Mail-2DF302A4-76C2-4741-BAAD-AA279EF1A262
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
 
-I'm hoping to make this better with the DWF by including more meta data in
-the CVE data (e.g. affected products/versions) which will make it much
-easier to automate notification in the future (e.g. "if affected product ==
-php then email security@php.net" or whatever). Part of the problem is that
-for an org like MITRE or the DWF to do all the coordination around security
-issues (as opposed to straight up CVE assignments) is highly labor
-intensive and difficult to scale.
+I find this extremely amusing. 
 
-Also if projects don't like "Surprise" CVEs one way to deal with that is to
-request the CVE's themselves when they know something is a security
-vulnerability. Also making it easy to contact them helps, the harder you
-make it for a security researcher to deal with you, the less likely they
-are to.
+https://www.securitymouse.com/lms-2014-06-23-7
 
-On Fri, Jul 8, 2016 at 7:39 AM, Lior Kaplan <kaplanlior@gmail.com> wrote:
+D
 
-> Hi,
->
-> I'm sorry for sending this to the cve-assign mail, but I think this is
-> important to how CVE assignment process should work and the importance of
-> cooperating with the upstream projects.
->
-> In the past year+ I've been dealing with CVE assignment and the PHP
-> project. During this period we managed to work closer with the Linux
-> distributions and also to improve the internal process regarding CVE
-> requests.
->
-> I've blogged about a recent problem I encountered with is request and
-> assignment of CVE for issues almost a year old without any public info
-> about this ("anonymous requests"). Meaning that me, being part of upstream
-> (incl. the security team), don't even know we've got CVE assigned and can
-> update things on our side (and also other relevant upstreams such as
-> libgd).
->
-> More details at
-> https://liorkaplan.wordpress.com/2016/07/07/anonymous-cve-requests/
->
-> I'll be happy to be referred to the right forum to further discuss this.
-> Till then, I hope you'll take these remakes into consideration, so the
-> whole eco system could work more smoothly.
->
-> Kaplan
-> The PHP project
->
+> On Mar 15, 2017, at 4:47 PM, Peter Bex <peter@more-magic.net> wrote:
+> 
+> Hello all,
+> 
+> I'd like to request a CVE for an unchecked malloc() argument in
+> CHICKEN Scheme's SRFI-4 vector constructors, when allocating the
+> vector in unmanaged memory.  Due to the missing range check, this
+> could result in negative or too small size allocations, which would
+> result in a crash or a buffer overrun, depending on the size.
+> 
+> This issue affects all current releases of CHICKEN Scheme, including
+> the latest release, 4.12.0.
+> 
+> The official announcement was made here:
+> http://lists.gnu.org/archive/html/chicken-announce/2017-03/msg00000.html
+> 
+> Cheers,
+> Peter Bex
 
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a11403bc87e7e3105372028a6--
+--Apple-Mail-2DF302A4-76C2-4741-BAAD-AA279EF1A262--
