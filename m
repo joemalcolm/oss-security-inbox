@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["435" "Thursday" "11" "February" "2016" "10:45:48" "-0500" "David Leo" "httpsonly.github.io@gmail.com" "<CAAeBhPdgWqsUJStCLLt+dgfHjsP=fUyc75L4ME3de4M_ctu8JQ@mail.gmail.com>" "19" "[oss-security] HTTPS Only (Open Source, Python)" "^Date:" nil nil "2" "2016021115:45:48" "[oss-security] HTTPS Only (Open Source, Python)" (number mark "        httpsonly.gi Feb 11   19/435   " thread-indent "\"[oss-security] HTTPS Only (Open Source, Python)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1437" "Wednesday" "15" "March" "2017" "16:05:20" "-0400" "Leo Famulari" "leo@famulari.name" "<20170315200520.GA6090@jasmine>" "34" "Re: [oss-security] Dealing with CVEs that apply to unspecified package versions" "^Date:" nil nil "3" "2017031520:05:20" "[oss-security] Dealing with CVEs that apply to unspecified package versions" (number mark "        leo@famulari Mar 15   34/1437  " thread-indent "\"Re: [oss-security] Dealing with CVEs that apply to unspecified package versions\"\n") "<20170315192747.GA4073@hunt>" ("<87wpbq5uqz.fsf@gnu.org>" "<20170315192747.GA4073@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14165 invoked by uid 550); 11 Feb 2016 15:52:53 -0000
+Received: (qmail 28316 invoked by uid 550); 15 Mar 2017 20:42:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9758 invoked from network); 11 Feb 2016 15:45:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=ijH9vymQ3UOTTz6lLQjdDHGj7BovPHao2SVsxRn7Sgo=;
-        b=rmqznL41o5aUds5dnOCbNQskbvPuAiTiq9pgzZrPkLPSGp6Kp8gTbmez56wKt4y61a
-         7YSjUvpwXPNO9zmkGOUkOftepUkZEVWemwI8TFCMwPBn3IcjBDTNivUj2GJgxWRO4/Na
-         x2MPpytZhG5j27Et2CHLHBhjLyNje71Zn1KSh2al5a9D+CMxDZUKItHRmMgHs5jcqVeR
-         lHci9g2saapRz8+RanVXMUJVVZe/Rt28muyOaPGXXOTZ2OuWNybW9CKqVSW3qrHDJ/7e
-         mTOx8MGkCngXKWXs3UdsfHUv3nQmWYVYPSppYiXQ9ELxtoZipC9UEL35nQooGRaOWJog
-         +DZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=ijH9vymQ3UOTTz6lLQjdDHGj7BovPHao2SVsxRn7Sgo=;
-        b=lip6UF6+AjeQOnmwt+eePDhz/5Rg0Z5+5CH8O3uAeS+0+tXi1BXYXdBlPJvimPhLi8
-         lHNt+7hBldk6zzhhajndTwoEj067HYViA6OkNlBnYPBdNCtNMSuuaiyyI55ZKOKYWCGA
-         urtFjytJcmWPwFSJnUR0zjZUe+EcPVjIZYnmXcZlgjHhhdYAN1QC6cZtWpin+JGKTRSs
-         bz6v27fGHJ4b/3edOjHvTiOfo7PpO9pXYcvCDDDQBn1VtDGWgjKmWVj0zgSTm673rqUs
-         SZvgTf4VR88HyFXxZU32dfOK74KqKRcyj80Nb2iSVH7KMM87QdFwfv/QOh/NQzGoF5kX
-         PB2g==
-X-Gm-Message-State: AG10YOSyCzkJo8keE6gxOaBrf6BAiTTWUR8XUQxeg8SKyJ7T1WdtHolcNzZG3w/pQAXzPRZTCI8pIaCzyq1djA==
+Received: (qmail 29907 invoked from network); 15 Mar 2017 20:05:41 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=famulari.name; h=
+	content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=+rNgHul1i2IhVU3IB3QPHteT1Yk=; b=H9xPsb
+	j/l7+ZtkGmdHq46++Gav1lT4krInHZ8eLdkbCu+USSelP/XLT+6gyrUN5vHGrCpM
+	N3lWQsP2PUa/oiVS5USGKXQaSxPLMDnyezP5F2TbGByiLEUWtN4ahkJChWCfU7lE
+	/YhEeFKNRh9VYS1e9SiMn3oRU3SYMcNCJ2Df8=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=+rNgHul1i2IhVU
+	3IB3QPHteT1Yk=; b=ISsyZwI3TKBtzpR48KntVeAH6u0KyFbwUO6mxuk+H7S/J4
+	90dRzvNsW2Ke/qE8NGISMjwfuzDYFK2ue3Lt52eY9VrcxxTvPUBGeWhCpVLGSSPx
+	sOpXNt4T+qC/OU68aY1Xieccx1SZ7WtWvjnrv6+VXpH0P9DTNDBQX3/446sHI=
+X-ME-Sender: <xms:h57JWJKjj-5ltafPJSPQuF-jFD5Z5InLBx5lVk-LtwVMqGqTtZ8FMw>
+X-Sasl-enc: ACbxR6/9DWSpeByYtLLzT19tznFhvDoBwQjKP4zSXRnZ 1489608326
+Message-ID: <20170315200520.GA6090@jasmine>
+References: <87wpbq5uqz.fsf@gnu.org>
+ <20170315192747.GA4073@hunt>
 MIME-Version: 1.0
-X-Received: by 10.25.163.73 with SMTP id m70mr19536162lfe.20.1455205548100;
- Thu, 11 Feb 2016 07:45:48 -0800 (PST)
-Message-ID: <CAAeBhPdgWqsUJStCLLt+dgfHjsP=fUyc75L4ME3de4M_ctu8JQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 11 Feb 2016 10:45:48 -0500
-From: David Leo <httpsonly.github.io@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Nq2Wo0NMKNjxTN9z"
+Content-Disposition: inline
+In-Reply-To: <20170315192747.GA4073@hunt>
+User-Agent: Mutt/1.8.0 (2017-02-23)
+Date: Wed, 15 Mar 2017 16:05:20 -0400
+From: Leo Famulari <leo@famulari.name>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] HTTPS Only (Open Source, Python)
-To: bugtraq@securityfocus.com, fulldisclosure@seclists.org, 
-	oss-security@lists.openwall.com
+Subject: Re: [oss-security] Dealing with CVEs that apply to unspecified
+ package versions
+To: oss-security@lists.openwall.com
 
-This tool completely locks browser:
-just HTTPS, nothing else.
+--Nq2Wo0NMKNjxTN9z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-This tool is extremely simple:
-less than 100 lines of code(Python and JavaScript).
+On Wed, Mar 15, 2017 at 12:27:47PM -0700, Seth Arnold wrote:
+> I suspect the solution is for people who rely upon these scanning tools to
+> do the leg work themselves on the packages they care about. (i.e., the
+> packages that annoy them the most.)
 
-If browser tries to access HTTP address,
-you will have three options:
-try HTTPS,
-Google Cache,
-or copy-and-paste the address.
+I think those of us who find these tools useful should work to improve
+the CVE database by adding the "fixed-in-version" information as it
+becomes available.
 
-There is no option to "temporarily bypass HTTPS Only".
-You can always do that in another browser.
+--Nq2Wo0NMKNjxTN9z
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Project Home Page:
-https://httpsonly.github.io/
+-----BEGIN PGP SIGNATURE-----
 
-Best Wishes,
+iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAljJnoAACgkQJkb6MLrK
+fwj0iQ/8DkYgmPCIwzj1D+qHqhpDUOQosuz2CpUm9xloWNff6ZAQr/hFfq8L99QD
+lOseSaWn3cMdTYoFlUa7sHREgtZyvZ99srLuPBToBkeb9//sode5OizzGFzS3yWL
+/9gbQMy2R2vV1j9fH3SlmR5/uOrMR782eOujVI0MCjhFaIVqkMBlzahUh/HzITyV
+1FGCpwF1plBPjjDA3OF0Z/mptYU2eJJf0pxEwKA3XMG/r4oumWn1xMXYfYJP3A7o
+vBbMH7UfsiqckYApvrJb0p8DpIpnhzIYbRZog9bAtppl9l3RQcsShw6xG6sefUr0
+Qa6fC+bykYdWqAsIT8kh8blpunkc50v8Q0ESNqwmwVAL899umTGbpkIwnei6RmdC
+hSmJcqpRMvV5Xhrt44F8gL+FBws3IW7cPTSTKaB/8ZyxdE+CN5Ss2QopSMkA92XL
+kTAtymmO3y/FurK11siiPed27NnDHMapYZb+3GZrneLgSKbYKA31tajKUaGD8NUb
+fRhOnBsCKwaSq4t558ThHvJ9PtSPzq9mDT7TFi9SAq6918VE51gDRO4TImDI4kUz
+hYQkomR4NCDyuylRR2MTxXdvKaYpeFemSxbRFzJZm73CID29V8C2cjETjq9jYBj3
+Je0jOmlVV2QVOlQTt0DIV8ycHcI7gXnaPpE4LIiwD/MLh+j2fRI=
+=YfU3
+-----END PGP SIGNATURE-----
+
+--Nq2Wo0NMKNjxTN9z--
