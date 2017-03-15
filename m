@@ -1,93 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/4
-Message-ID: <20170710114253.44fc7ac0@cortex.rrz.uni-hamburg.de>
-Date: Mon, 10 Jul 2017 11:42:53 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/7
+Message-ID: <CANO=Ty3bb11TipJamp2ahk8FSy3+gvSrPp0y7-Yx3XmxJbdwpA@mail.gmail.com>
+Date: Wed, 15 Mar 2017 14:47:45 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Dealing with CVEs that apply to unspecified package versions
 Content-Type: text/plain; charset=utf-8
 
-Am Mon, 10 Jul 2017 09:13:07 +0000
-schrieb "Agostino Sarubbo" <ago@...too.org>:
+On Wed, Mar 15, 2017 at 2:05 PM, Leo Famulari <leo@...ulari.name> wrote:
 
-> Description:
-> mpg123 is a fast console MPEG Audio Player and decoder library.
-> 
-> The complete ASan output of the issue:
-> 
-> # mpg123-mpg123 -t $FILE
-> ==10588==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f01025c5cbc at pc 0x7f010229bfe3 bp 0x7ffc988ac5b0 sp 0x7ffc988ac5a8
-> READ of size 4 at 0x7f01025c5cbc thread T0
+> On Wed, Mar 15, 2017 at 12:27:47PM -0700, Seth Arnold wrote:
+> > I suspect the solution is for people who rely upon these scanning tools
+> to
+> > do the leg work themselves on the packages they care about. (i.e., the
+> > packages that annoy them the most.)
+>
+> I think those of us who find these tools useful should work to improve
+> the CVE database by adding the "fixed-in-version" information as it
+> becomes available.
+>
 
-I would like to point out that this only crashes with the
-AddressSanitizer. The normal effect is some bad values from adjacent
-data being used in numerical computation. No segfault or the like, no
-jumps depending on the values.
+This is a major goal of
 
-> Affected version:
-> 1.25.0
+1) using the JSON format with richer data [a]
+2) allowing other people (e.g. CVE Mentors) to edit the data
 
-1.25.1, too
-
-> Fixed version:
-> N/A
-
-To be released, I hoped to also fix another lurking issue that in practice
-is hidden by padding of a buffer for alignment. If I don't manage that
-today, I guess I have to push out 1.25.2 as-is.
-
-> Commit fix:
-> N/A
-
-It is fixed with subversion revision 4275.
-
-	https://scm.orgis.org/view/mpg123/trunk/src/libmpg123/layer3.c?view=patch&r1=4275&r2=4274&pathrev=4275
-
-Can this info be updated? Agostino: You might want to jump to 4278,
-too, as that fixes that other left shift of -1 complaint you had.
-
-> CVE:
-> CVE-2017-11126
-
-Is this really worth a CVE, though? So far I was only able to see a
-crash triggered by the AddressSanitizer. Never from a normal build. So
-every build of mpg123 in the wild, except for extremely hardened
-distros that build everything with GCC's sanitizers enabled for daily
-use, is not affected. Are people running binaries in production with
-the sanitizers on?
-
-Thing about this specific kind of input: This is a fuzzed stream that
-triggers a code path for MP3 with intensity stereo. These are really
-hard to find and I was not able to produce a valid file (using the FhG
-mp3enc demo, the only encoder that does i-stereo to my knowledge) that
-also triggers this specific array access. So I cannot even say if this
-bug causes bad output from valid input as I never observed the valid
-input! For this fuzzed input data, the produced output data (sound)
-will not be nice, but this is the case with and without the fix.
-
-It's hard to see a security issue here, although of course there
-technically is a buffer overflow. That is why I wanted to take some
-time to possibly dig out a file that tells me that mpg123 is now
-producing correct output. So far, the overflow is averted, but if we do
-something sensible now cannot be tested in lack of valid test data that
-uses 5 bits for scale factors with intensity stereo.
+[a]
+https://github.com/CVEProject/automation-working-group/blob/master/cve_json_schema/DRAFT-JSON-file-format-v4.md
 
 
-Alrighty then,
-
-Thomas
-
-PS: I will do some fuzzing myself to weed out any lurking issues of this
-type. Found a fuzzer in my mailbox, from over 10 years ago, when this
-was a thing before;-)
 
 -- 
-Dr. Thomas Orgis
-Universität Hamburg
-RRZ / Basis-Infrastruktur / HPC
-Schlüterstr. 70
-20146 Hamburg
-Tel.: 040/42838 8826
-Fax: 040/428 38 6270
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4967 bytes)
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
