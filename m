@@ -1,46 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/1
-Message-ID: <3719551.uSXB2Z6hFG@wanheda>
-Date: Thu, 01 Jun 2017 08:47:43 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/3
+Message-ID: <87wpbq5uqz.fsf@gnu.org>
+Date: Wed, 15 Mar 2017 18:12:52 +0100
+From: ludo@....org (Ludovic Courtès)
 To: oss-security@...ts.openwall.com
-Cc: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: Information on recent sqlite3 issues?
+Cc: Leo Famulari <leo@...ulari.name>
+Subject: Dealing with CVEs that apply to unspecified package versions
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 31 May 2017 22:30:37 Moritz Muehlenhoff wrote:
-> Hi,
-> one of the latest Apple advisories mentions several vulnerabilities in
-> sqlite: https://support.apple.com/en-us/HT207798
-> 
-> CVE-2017-2513: found by OSS-Fuzz
-> CVE-2017-2518: found by OSS-Fuzz
-> CVE-2017-2520: found by OSS-Fuzz
-> CVE-2017-2519: found by OSS-Fuzz
-> CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with
-> Trend Micro's Zero Day Initiative CVE-2017-6991: Chaitin Security Research
-> Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
-> 
-> Does anyone have additional information on those and whether that
-> applies to the standard sqlite releases or Apple-specific changes?
-> 
-> Cheers,
->         Moritz
+Hello,
 
-Hi.
+Some CVE entries do not specify the version of the package(s) they apply
+to.  For instance, the software list for CVE-2016-10165 contains
+“cpe:/a:littlecms:little_cms_color_engine”, which theoretically means
+that it applies to any version of lcms.
 
-I don't know about apple itself but in the clusterfuzz reports I see 4 public 
-bugs about sqlite.
-However they have a very small (2 days) range of regression, i.e. a commit 
-made in those two days causes the problem.
-I didn't check, but I suspect they didn't go in any release.
+The problem is automated tools cannot exploit such entries in practice
+because they cannot tell which package versions are affected.
 
-FTR, the time you are seeing in the regression range is UTC:
-https://github.com/google/oss-fuzz/issues/563
+While tuning our CVE tracking tool in GNU Guix, we found that such
+entries are not uncommon:
 
-At this point I don't know if apple referer to those issues or the mentioned 
-issues are not public.
+  https://lists.gnu.org/archive/html/guix-devel/2017-03/msg00335.html
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+What are the possibilities to address this issue?
+
+I can think of two actions that could perhaps be taken:
+
+  1. The software behind the CVE form could force submitters to specify
+     version numbers.
+
+  2. For recent entries (say, 2 years old at most), a bot could email
+     the original submitters kindly asking them to provide the missing
+     version info.
+
+Thoughts?
+
+Thanks,
+Ludo’.
