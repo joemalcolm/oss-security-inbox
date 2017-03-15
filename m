@@ -1,111 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/24
-Message-Id: <78766452-8905-45F1-84C0-A3894F81F423@beckweb.net>
-Date: Wed, 1 Feb 2017 22:35:13 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/4
+Message-ID: <20170315185652.hdf2d2eszr5amwvi@perpetual.pseudorandom.co.uk>
+Date: Wed, 15 Mar 2017 18:56:52 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+Cc: Leo Famulari <leo@...ulari.name>
+Subject: Re: Dealing with CVEs that apply to unspecified package versions
 Content-Type: text/plain; charset=utf-8
 
-The Jenkins project published updates today with fixes for multiple 
-vulnerabilities. Users should upgrade to the versions below:
+On Wed, 15 Mar 2017 at 18:12:52 +0100, Ludovic Courtès wrote:
+>   1. The software behind the CVE form could force submitters to specify
+>      version numbers.
 
-* Jenkins (weekly) 2.44
-* Jenkins (LTS) 2.32.2
+That isn't going to work. Not all of the software of interest to major
+OS distributions even *has* a version number :-(
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2017-02-01
+(I am not arguing that software *shouldn't* have releases with version
+numbers, only that sometimes it *doesn't*; this is a statement about
+reality, not about best-practice.)
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-304 / CVE-2017-2598
-Jenkins stored encrypted secrets on disk using AES ECB block cipher mode 
-without IV.
-
-SECURITY-321 / CVE-2017-2599
-An insufficient permission check allowed users with the permission to create 
-new items (e.g. jobs) to overwrite existing items they don't have access to,
-and access some of their data
-
-SECURITY-343 / CVE-2017-2600
-Overall/Read permission was sufficient to access node monitor data via the
-remote API. These included system configuration and runtime information of
-these nodes.
-
-SECURITY-349 / CVE-2011-4969
-Possible cross-site scripting vulnerability in jQuery bundled with timeline
-widget.
-
-SECURITY-353 / CVE-2017-2601
-Users with the permission to configure jobs were able to inject JavaScript
-into parameter names and descriptions.
-
-SECURITY-354 / CVE-2015-0886
-Jenkins bundled an outdated version of jbcrypt that was affected by
-CVE-2015-0886.
-
-SECURITY-358 / CVE-2017-2602
-Pipeline metadata files not blacklisted in agent-to-master security subsystem
-
-SECURITY-362 / CVE-2017-2603
-Agents that were disconnected by users contained the disconnecting user's 
-User object in serialized form in the config.xml remote API output.
-
-SECURITY-371 / CVE-2017-2604
-Low privilege users were able to act on some administrative monitors due to
-insufficient permission checks.
-
-SECURITY-376 / CVE-2017-2605
-The re-key admin monitor was introduced in Jenkins 1.498 and re-encrypted all
-secrets in JENKINS_HOME with a new key. It also created a backup directory
-with all old secrets, and the key used to encrypt them. These backups were
-world-readable and not removed afterwards.
-
-SECURITY-380 / CVE-2017-2606
-The method Jenkins#getItems() included a performance optimization that wrongly
-returned inaccessible items when the 'Logged in users can do anything'
-authorization strategy was used, even when no access was granted to anonymous
-users
-
-SECURITY-382 / CVE-2017-2607
-Jenkins users, or users with SCM access, could configure jobs or modify build
-scripts such that they print serialized console notes that perform cross-site
-scripting attacks on Jenkins users viewing the build logs.
-
-SECURITY-383 / CVE-2017-2608
-XStream-based APIs in Jenkins (e.g. /createItem URLs, or POST config.xml
-remote API) were vulnerable to a remote code execution vulnerability involving
-the deserialization of various types in the javax.imageio package.
-
-SECURITY-385 / CVE-2017-2609
-The autocompletion for the search box provided the names of views the current
-user does not have access to in its suggestions.
-
-SECURITY-388 / CVE-2017-2610
-User display names with less-than and greater-than were not escaped when
-displaying search suggestions, resulting in a cross-site scripting
-vulnerability.
-
-SECURITY-389 / CVE-2017-2611
-The URLs /workspaceCleanup and /fingerprintCleanup did not perform permission
-checks, allowing users with read access to Jenkins to trigger these background
-processes (that are otherwise performed daily).
-
-SECURITY-392 / CVE-2017-2612
-Users with read access to Jenkins were able to override Oracle JDK download
-credentials, resulting in future builds possibly failing to download a JDK.
-
-SECURITY-406 / CVE-2017-2613
-When administrators accessed a URL like /user/example via HTTP GET, a user
-with the ID 'example' was created if it did not exist. While this user record
-was only retained until restart in most cases, administrators' web browsers
-could be manipulated to create a large number of user records.
-
+    S
