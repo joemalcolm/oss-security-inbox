@@ -1,66 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/11
-Message-ID: <429934.345043392-sendEmail@localhost>
-Date: Wed, 28 Jun 2017 12:09:34 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: lame: two UBSAN crashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/3
+Message-Id: <C54D7B3D-17DE-46FA-8E8E-382C4312B8A0@securitymouse.com>
+Date: Wed, 15 Mar 2017 17:03:18 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
 Content-Type: text/plain; charset=utf-8
 
-Description:
-lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+I find this extremely amusing. 
 
-Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
-bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
-downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
-dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
+https://www.securitymouse.com/lms-2014-06-23-7
 
-The complete ASan output of the issue:
+D
 
-# lame -f -V 9 $FILE out.wav
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/brhist.c:204:60: runtime error: signed integer overflow: 953447384 + 
-1908859798 cannot be represented in type 'int'
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00298-lame-signintoverflow-brhist.c
-CVE:
-N/A
-
-#######################
-
-# lame -f -V 9 $FILE out.wav
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:1234:21: runtime error: value -nan is outside the range of 
-representable values of type 'int'
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00299-lame-outside-int-get_audio.c
-CVE:
-N/A
-
-#######################
-
-Affected version:
-3.99.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
-
-Timeline:
-2017-06-01: bug discovered
-2017-06-17: blog post about the issue
-
-Note:
-These bugs were found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/06/17/lame-two-ubsan-crashes/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
+> On Mar 15, 2017, at 4:47 PM, Peter Bex <peter@...e-magic.net> wrote:
+> 
+> Hello all,
+> 
+> I'd like to request a CVE for an unchecked malloc() argument in
+> CHICKEN Scheme's SRFI-4 vector constructors, when allocating the
+> vector in unmanaged memory.  Due to the missing range check, this
+> could result in negative or too small size allocations, which would
+> result in a crash or a buffer overrun, depending on the size.
+> 
+> This issue affects all current releases of CHICKEN Scheme, including
+> the latest release, 4.12.0.
+> 
+> The official announcement was made here:
+> http://lists.gnu.org/archive/html/chicken-announce/2017-03/msg00000.html
+> 
+> Cheers,
+> Peter Bex
 
