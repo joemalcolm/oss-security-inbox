@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/24/3
-Message-ID: <20170224124833.GD3592@f195.suse.de>
-Date: Fri, 24 Feb 2017 13:48:33 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/6
+Message-ID: <20170315200520.GA6090@jasmine>
+Date: Wed, 15 Mar 2017 16:05:20 -0400
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-5956 virglrenderer: Virglrenderer: OOB access while in vrend_draw_vbo
+Subject: Re: Dealing with CVEs that apply to unspecified package versions
 Content-Type: text/plain; charset=utf-8
 
-> A possible follow-up patch is attached.
+On Wed, Mar 15, 2017 at 12:27:47PM -0700, Seth Arnold wrote:
+> I suspect the solution is for people who rely upon these scanning tools to
+> do the leg work themselves on the packages they care about. (i.e., the
+> packages that annoy them the most.)
 
-Sorry, forgot the attachment. You can find the patch here:
+I think those of us who find these tools useful should work to improve
+the CVE database by adding the "fixed-in-version" information as it
+becomes available.
 
-https://bugzilla.suse.com/attachment.cgi?id=715395
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-
-SUSE Linux GmbH 
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-On Fri, Feb 24, 2017 at 11:03:42AM +0100, Matthias Gerstner wrote:
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
