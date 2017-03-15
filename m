@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/1
-Message-ID: <b091939a-682c-b20d-85ed-5bc0411f2c8f@oracle.com>
-Date: Mon, 23 Jan 2017 23:14:19 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: Pierre Ossman <ossman@...dio.se>, tigervnc-devel@...glegroups.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [tigervnc-devel] Re: [tigervnc-announce] TigerVNC 1.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/5
+Message-ID: <20170315192747.GA4073@hunt>
+Date: Wed, 15 Mar 2017 12:27:47 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Dealing with CVEs that apply to unspecified package versions
 Content-Type: text/plain; charset=utf-8
 
-On 01/23/17 12:34 AM, Pierre Ossman wrote:
-> On 22/01/17 07:25, Alan Coopersmith wrote:
->> Is there a CVE assigned to this issue that we should use when passing this
->> fix through to our packages/distros?  I don't see one mentioned in the
->> commit
->> or pull requests:
->>
->> https://github.com/TigerVNC/tigervnc/commit/18c020124ff1b2441f714da2017f63dba50720ba
->>
->>
->> https://github.com/TigerVNC/tigervnc/pull/399
->>
->
-> Not to my knowledge, no.
+On Wed, Mar 15, 2017 at 06:12:52PM +0100, Ludovic Courtès wrote:
+> I can think of two actions that could perhaps be taken:
+> 
+>   1. The software behind the CVE form could force submitters to specify
+>      version numbers.
 
-Thanks.  Mitre - can a CVE be assigned for the above issue, as fixed in
-TigerVNC 1.7.1 ( https://github.com/TigerVNC/tigervnc/releases/tag/v1.7.1 )?
+"No fix is currently available" would be difficult to accurately describe.
+Sometimes the software is abaondware, and no fix will ever be available.
+Sometimes the software is a hobby and only fun features get implemented
+but difficult fixes do not. Sometimes the fix will be in the next release.
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+>   2. For recent entries (say, 2 years old at most), a bot could email
+>      the original submitters kindly asking them to provide the missing
+>      version info.
+
+I know some submitters who would probably have to invest in new /dev/null
+procmail entries if we mailed them once for every CVE they've been issued. :)
+
+I suspect the solution is for people who rely upon these scanning tools to
+do the leg work themselves on the packages they care about. (i.e., the
+packages that annoy them the most.)
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
