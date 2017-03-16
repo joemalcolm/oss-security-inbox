@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/31/5
-Message-ID: <20170831130409.trythk5aqvjhrryd@lorien.valinor.li>
-Date: Thu, 31 Aug 2017 15:04:09 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/10
+Message-ID: <87pohgords.fsf@dell.be.48ers.dk>
+Date: Thu, 16 Mar 2017 22:15:11 +0100
+From: Peter Korsgaard <peter@...sgaard.com>
 To: oss-security@...ts.openwall.com
-Cc: nicolas.gregoire@...rri.fr
-Subject: Re: CVE request: incorrect URL parsing in async-http-client <= 2.0.35
+Cc: Adam Maris <amaris@...hat.com>
+Subject: Re: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
 Content-Type: text/plain; charset=utf-8
 
-Hi Nicolas,
+>>>>> "Peter" == Peter Bex <peter@...e-magic.net> writes:
 
-On Thu, Aug 31, 2017 at 02:06:34PM +0200, Nicolas Grégoire wrote:
-> Hello,
-> 
-> a flaw was identified in the URL parsing code of async-http-client, a
-> Java HTTP client used in other projects like the Play Framework
-> (through its WS library):
-> https://www.playframework.com/documentation/2.6.x/JavaWS
-> 
-> The bug is similar to CVE-2016-8624 affecting cURL (incorrect
-> processing of string "#@" in the hostname):
-> https://curl.haxx.se/docs/adv_20161102J.html
-> 
-> Version 2.0.35 of async-http-client includes a fix and is available
-> through Maven since Monday. Relevant GitHub issue:
-> https://github.com/AsyncHttpClient/async-http-client/issues/1455
+ > On Thu, Mar 16, 2017 at 01:17:13PM +0100, Peter Korsgaard wrote:
+ >> >>>>> "Peter" == Peter Bex <peter@...e-magic.net> writes:
+ >> 
+ >> > On Thu, Mar 16, 2017 at 10:31:17AM +0100, Adam Maris wrote:
+ >> >> Hi Peter,
+ >> >> 
+ >> >> oss-security mailing is no longer a place for requesting CVEs. Please,
+ >> >> request CVE from MITRE via https://cveform.mitre.org/ or also possibly
+ >> >> from DWF project via http://iwantacve.org/
+ >> 
+ >> > Oh yeah, I forgot about that.  I've filled out the form, and I hope I've
+ >> > done this correctly.
+ >> 
+ >> Please don't forget to forward the form details to this list once a CVE
+ >> has been assigned. Thanks.
 
-CVEs cannot be requested anymore via the oss-security list.  Could you
-please request the CVE via the form at https://cveform.mitre.org/ and
-possibly keep us posted with a followup to this thread once the CVE
-has been assigned?
+ > This was assigned CVE-2017-6949.  The form details were in my original
+ > mail, but I'll include them here again, though I must say fiddling around
+ > with e-mail to forward it is much much more inconvenient than how it used
+ > to work:
 
-Regards,
-Salvatore
+Thanks, and yes - I agree. The longer term plan is afaik that this
+should happen automatically by the MITRE system.
+
+-- 
+Bye, Peter Korsgaard
