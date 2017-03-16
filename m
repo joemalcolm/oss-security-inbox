@@ -1,64 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/6
-Message-ID: <20171103121539.GA825@openwall.com>
-Date: Fri, 3 Nov 2017 13:15:39 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/6
+Message-ID: <CAA=AuEezYNSg-yia-8m=sp+BT+7JdFJGTdYHnYAXLaXqZxBuyA@mail.gmail.com>
+Date: Thu, 16 Mar 2017 18:32:17 +0300
+From: Jerome Athias <athiasjerome@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
+Subject: Re: Dealing with CVEs that apply to unspecified package versions
 Content-Type: text/plain; charset=utf-8
 
-Roman,
+Note for later (for going further into automation) for potential candidate
+for schema reuse
+https://github.com/sarif-standard
 
-Thank you for bringing this to oss-security.
+On Thu, Mar 16, 2017 at 12:29 PM, Jerome Athias <athiasjerome@...il.com>
+wrote:
 
-IMO, there's really absolutely nothing to reasonably embargo here, not
-even the PoC and not even for a week.  The only reason I mentioned the
-possibility to optionally delay the posting of the PoC "by at most a
-week" is because the distros list policy allows that, and you're the one
-reporting this, so it's your call and you wouldn't be violating list
-policy by this unfortunate delay.  But that doesn't make it a good idea.
+> Yes the CVE form could help. (from my experience, first versions of a CVE
+> sometimes do not include the exact CPE versions, the CPE are (or should be
+> used as) at that time a pattern (e.g. "starts with") (still helpful) and
+> are then sometimes (and we should understand/recognize the time/effort
+> needed) revised/detailed over time
+> OVAL could help to circumvent that issue (e.g. patterns/regex, hashes,
+> etc.)
+>
+> imho, the root cause (or main issue) is:
+> CVRF (or OASIS CSAF/CVRF) or CVE schema are lacking in their
+> models/schemas/trees what is needed to automatically handle software
+> components/dependencies
+> e.g. of what would be needed: http://schemas.dmtf.
+> org/wbem/cim-html/2.46.0+/CIM_SoftwareElement.html
+>
+>
+>
+>
+> On Wed, Mar 15, 2017 at 11:47 PM, Kurt Seifried <kseifried@...hat.com>
+> wrote:
+>
+>> On Wed, Mar 15, 2017 at 2:05 PM, Leo Famulari <leo@...ulari.name> wrote:
+>>
+>> > On Wed, Mar 15, 2017 at 12:27:47PM -0700, Seth Arnold wrote:
+>> > > I suspect the solution is for people who rely upon these scanning
+>> tools
+>> > to
+>> > > do the leg work themselves on the packages they care about. (i.e., the
+>> > > packages that annoy them the most.)
+>> >
+>> > I think those of us who find these tools useful should work to improve
+>> > the CVE database by adding the "fixed-in-version" information as it
+>> > becomes available.
+>> >
+>>
+>> This is a major goal of
+>>
+>> 1) using the JSON format with richer data [a]
+>> 2) allowing other people (e.g. CVE Mentors) to edit the data
+>>
+>> [a]
+>> https://github.com/CVEProject/automation-working-group/blob/
+>> master/cve_json_schema/DRAFT-JSON-file-format-v4.md
+>>
+>>
+>>
+>> --
+>>
+>> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>> Red Hat Product Security contact: secalert@...hat.com
+>>
+>
+>
 
-On Fri, Nov 03, 2017 at 11:07:14AM +0000, Fiedler Roman wrote:
-> Due to the recent discussion on vim swap file use, I expected also attraction of of evil-minded to the topic of text editing security and thus an increase in attack probability on server side text editing in general. Therefore I wanted to review our software qualification criteria for text editing on servers, where vim/vim.tiny is used and probably update the SOPs and guidelines.
-> 
-> As .swp security problems also arise from unclear software behaviour expectations, I looked at the behaviour of vim.tiny to verify it works according to specification (man pages as reference). As it seems, the tool is not suited for editing of files not owned by the same user, which is not mentioned in the man pages. Maybe that indicates, that the software design process did not include that specific security requirement or implementation was insufficient. Therefore I would assume, that numerous bugs of similar kind might be found, but there is no time (funding) to do in depth checks.
-
-I think it's an exaggeration to say these are bugs (except for ignoring
-of umask maybe), but there's room to make uses and even misuses of these
-tools safer, as well as their interactions with other tools (such as the
-original example of editing of .php files on a web server, where the
-editor should use explicit safe permissions on its temporary files
-regardless of the original file's permissions and regardless of umask,
-but also limited to at most what's permitted by umask).
-
-> I would be interested in consensus, if editing of non-root files by root user is bad practice in general (thus, e.g. should be mentioned in SECURITY section of man pages of various common server side test editing tools to raise awareness, but no CVEs) or if you think, that this is software misbehaviour.
-
-Editing of non-root files by root should be safe (or be made safe by
-making changes to the editors where necessary) only in the rare special
-case when those files are located in a trusted directory.  For example,
-editing as root /var/run/foo owned by user foo should be safe as long as
-/, /var, and /var/run are owned by root, but editing as root
-/home/foo/foo or /tmp/foo is unsafe and is likely to stay so.
-
-I doubt this belongs to "SECURITY section of man pages" because this is
-by no means limited to just text editors.  Most tools are unsafe to use
-on files in untrusted directories, with very few exceptions - for
-example, "cp" and "mv" are generally unsafe, but "ln" is generally safe.
-
-It is tricky to access files in an untrusted directory safely.  Programs
-that knowingly do it end up using O_EXCL or O_NOFOLLOW|O_NOCTTY and
-such, and doing various *stat() calls, and even that is sometimes not
-enough.  It'd be naive to expect the same from every other program
-accepting an arbitrary pathname.
-
-"How to access users' files as root safely" (with hard links to trusted
-directory, and "su", and how it might still not be exactly safe):
-
-http://openwall.info/wiki/internal/accessing-users-files-as-root-safely
-
-based on excerpts from:
-
-http://www.openwall.com/lists/oss-security/2011/03/04/24
-http://www.openwall.com/lists/oss-security/2011/03/05/6
-
-Alexander
