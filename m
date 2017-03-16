@@ -1,53 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/20
-Message-ID: <6124180.GrrGPQujpz@blackgate>
-Date: Thu, 09 Feb 2017 14:50:59 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/7
+Message-ID: <20170316163421.GI759@scully.more-magic.net>
+Date: Thu, 16 Mar 2017 17:34:21 +0100
+From: Peter Bex <peter@...e-magic.net>
 To: oss-security@...ts.openwall.com
-Subject: zziplib: assertion failure in seeko.c
+Cc: Adam Maris <amaris@...hat.com>
+Subject: Re: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
 Content-Type: text/plain; charset=utf-8
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+On Thu, Mar 16, 2017 at 01:17:13PM +0100, Peter Korsgaard wrote:
+> >>>>> "Peter" == Peter Bex <peter@...e-magic.net> writes:
+> 
+>  > On Thu, Mar 16, 2017 at 10:31:17AM +0100, Adam Maris wrote:
+>  >> Hi Peter,
+>  >> 
+>  >> oss-security mailing is no longer a place for requesting CVEs. Please,
+>  >> request CVE from MITRE via https://cveform.mitre.org/ or also possibly
+>  >> from DWF project via http://iwantacve.org/
+> 
+>  > Oh yeah, I forgot about that.  I've filled out the form, and I hope I've
+>  > done this correctly.
+> 
+> Please don't forget to forward the form details to this list once a CVE
+> has been assigned. Thanks.
 
-A fuzz on it discovered an a NULL pointer access.
+This was assigned CVE-2017-6949.  The form details were in my original
+mail, but I'll include them here again, though I must say fiddling around
+with e-mail to forward it is much much more inconvenient than how it used
+to work:
 
-The complete ASan output:
+> [Suggested description]
+> An issue was discovered in CHICKEN Scheme through 4.12.0.
+> When using a nonstandard CHICKEN-specific extension to allocate an
+> SRFI-4 vector in unmanaged memory, the vector size would be used in
+> unsanitised form as an argument to malloc(). With an unexpected size,
+> the impact may have been a segfault or buffer overflow.
+> 
+> ------------------------------------------
+> 
+> [Vulnerability Type]
+> Buffer Overflow
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> Affected: All versions up to and including 4.12.0.  No fixed versions released yet
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> All SRFI-4 vector constructor functions in CHICKEN Scheme
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Context-dependent
+> 
+> ------------------------------------------
+> 
+> [Impact Code execution]
+> true
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> When using a nonstandard CHICKEN-specific extension to allocate a
+> SRFI-4 vector in unmanaged memory, the vector size would be used in
+> unsanitised form as argument to malloc().
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> http://lists.gnu.org/archive/html/chicken-announce/2017-03/msg00000.html
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Lemonboy
 
-# unzzipcat-seeko $FILE
-/tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/fseeko.c:313: ZZIP_ENTRY 
-*zzip_entry_findfirst(FILE *): Assertion `0 <= root && root < mapsize' failed.
-
-Affected version:
-0.13.62
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00161-zziplib-assertionfailure-seeko_C
-
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-assertion-failure-in-seeko-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
