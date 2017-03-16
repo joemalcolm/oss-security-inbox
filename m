@@ -1,64 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/9
-Message-ID: <20170705133341.GA31268@openwall.com>
-Date: Wed, 5 Jul 2017 15:33:41 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/1
+Message-ID: <1489656677.3059.3.camel@redhat.com>
+Date: Thu, 16 Mar 2017 10:31:17 +0100
+From: Adam Maris <amaris@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)
+Cc: peter@...e-magic.net
+Subject: Re: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 05, 2017 at 03:50:58PM +0300, Lior Kaplan wrote:
-> AFAIK, when the issue is already public the list is just fine.
+On Wed, 2017-03-15 at 23:47 +0100, Peter Bex wrote:
+> Hello all,
 > 
-> From the cve-assign auto reply:
+> I'd like to request a CVE for an unchecked malloc() argument in
+> CHICKEN Scheme's SRFI-4 vector constructors, when allocating the
+> vector in unmanaged memory.  Due to the missing range check, this
+> could result in negative or too small size allocations, which would
+> result in a crash or a buffer overrun, depending on the size.
 > 
-> "In the special case of communications involving a publicly known
-> vulnerability on the oss-security mailing list, please do not use
-> the https://cveform.mitre.org web site at this time, and instead
-> send new or followup messages directly to that mailing list."
+> This issue affects all current releases of CHICKEN Scheme, including
+> the latest release, 4.12.0.
+> 
+> The official announcement was made here:
+> http://lists.gnu.org/archive/html/chicken-announce/2017-03/msg00000.h
+> tml
+> 
+> 
 
-I think the above is about additional "communications involving" a
-vulnerability that already has a CVE ID, not about the CVE request.
+Hi Peter,
 
-FWIW, on the distros list wiki page, we currently ask to avoid using the
-private lists if one's "sole purpose of their use is to obtain a CVE ID",
-and in a footnote we give this alternative procedure:
+oss-security mailing is no longer a place for requesting CVEs. Please,
+request CVE from MITRE via https://cveform.mitre.org/ or also possibly
+from DWF project via http://iwantacve.org/
 
-"In those "CVE only" cases, please start by posting about the (to be
-made) public issue to oss-security (without a CVE ID), request a CVE ID
-from MITRE directly, and finally "reply" to your own posting when you
-also have the CVE ID to add.  With the described approach you would only
-approach MITRE after the issue is already public, but if you choose to
-do things differently and contact MITRE about an issue that is not yet
-public, then please do not disclose to them more than the absolute
-minimum needed for them to assign a CVE ID."
+Thanks!
 
-"from MITRE directly" is a link to https://cveform.mitre.org and "the
-absolute minimum" is a link to
-http://www.openwall.com/lists/oss-security/2015/04/14/3
+Best Regards,
 
-I hope this procedure is consistent with everyone's expectations.
-Salvatore reply quoted below is consistent with it.  Thank you for
-helping run this list, Salvatore!
-
-I think that ideally we add to such boilerplate replies (the need for
-which will hopefully become infrequent) that we appreciate being
-notified of the vulnerabilities first (before the CVE IDs are requested
-from MITRE) and want it to stay this way going forward (just not in the
-form of CVE requests, but rather in the form of vulnerability
-notifications also stating that CVE IDs are being requested separately
-and will be posted in here later).
-
-I don't care about CVEs much, but we need to know where to redirect
-those requests to, and we also need to make it likely that we'll receive
-the actual vulnerability detail on oss-security (the sooner, the better).
-
-> On Wed, Jul 5, 2017 at 3:34 PM, Salvatore Bonaccorso <carnil@...ian.org> wrote:
-> > CVE assignement requests are not handled anymore directly via the
-> > oss-security list, but need to be filled/requested at
-> > https://cveform.mitre.org/
-> >
-> > Once CVE are assigned, can you repost them here for benefit of other
-> > reader?
-
-Alexander
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
