@@ -1,29 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/6
-Message-ID: <20170704150338.7oj7i5iah3hciy6g@eldamar.local>
-Date: Tue, 4 Jul 2017 17:03:38 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: jabberd2: CVE-2017-10807: Allows to authenticate using SASL ANONYMOUS even if disabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/4
+Message-ID: <CAA=AuEeu87z+zx=xf+yy6+4et6jWLF+8v+_rktO-uM_bNtgOMA@mail.gmail.com>
+Date: Thu, 16 Mar 2017 12:29:39 +0300
+From: Jerome Athias <athiasjerome@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Dealing with CVEs that apply to unspecified package versions
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Yes the CVE form could help. (from my experience, first versions of a CVE
+sometimes do not include the exact CPE versions, the CPE are (or should be
+used as) at that time a pattern (e.g. "starts with") (still helpful) and
+are then sometimes (and we should understand/recognize the time/effort
+needed) revised/detailed over time
+OVAL could help to circumvent that issue (e.g. patterns/regex, hashes, etc.)
 
-The Jabberd, before 2.6.1 allowed anyone to authenticate SASL
-ANONYMOUS, even when sasl.anonymous c2s.xml option is not enabled.
-The bug allows nauthorized usage of jabberd server installations and
-could possibly lead to a DoS.
+imho, the root cause (or main issue) is:
+CVRF (or OASIS CSAF/CVRF) or CVE schema are lacking in their
+models/schemas/trees what is needed to automatically handle software
+components/dependencies
+e.g. of what would be needed:
+http://schemas.dmtf.org/wbem/cim-html/2.46.0+/CIM_SoftwareElement.html
 
-References:
 
-https://github.com/jabberd2/jabberd2/releases/tag/jabberd-2.6.1
 
-Upstream fix:
 
-https://github.com/jabberd2/jabberd2/commit/8416ae54ecefa670534f27a31db71d048b9c7f16
+On Wed, Mar 15, 2017 at 11:47 PM, Kurt Seifried <kseifried@...hat.com>
+wrote:
 
-As mentioned in the subject, MITRE has assigned CVE-2017-10807 for
-this issue.
+> On Wed, Mar 15, 2017 at 2:05 PM, Leo Famulari <leo@...ulari.name> wrote:
+>
+> > On Wed, Mar 15, 2017 at 12:27:47PM -0700, Seth Arnold wrote:
+> > > I suspect the solution is for people who rely upon these scanning tools
+> > to
+> > > do the leg work themselves on the packages they care about. (i.e., the
+> > > packages that annoy them the most.)
+> >
+> > I think those of us who find these tools useful should work to improve
+> > the CVE database by adding the "fixed-in-version" information as it
+> > becomes available.
+> >
+>
+> This is a major goal of
+>
+> 1) using the JSON format with richer data [a]
+> 2) allowing other people (e.g. CVE Mentors) to edit the data
+>
+> [a]
+> https://github.com/CVEProject/automation-working-group/blob/
+> master/cve_json_schema/DRAFT-JSON-file-format-v4.md
+>
+>
+>
+> --
+>
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@...hat.com
+>
 
-Regards,
-Salvatore
