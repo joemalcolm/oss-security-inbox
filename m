@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/04/3
-Message-ID: <CAO5O-EL6qGatYRnqwb_aBc3x-hOTeZvZar0OQU4OU2dk45jctQ@mail.gmail.com>
-Date: Thu, 4 May 2017 16:12:01 +0200
-From: Guido Vranken <guidovranken@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: rpcbomb: remote rpcbind denial-of-service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/5
+Message-ID: <877f3p8lh2.fsf@dell.be.48ers.dk>
+Date: Thu, 16 Mar 2017 13:17:13 +0100
+From: Peter Korsgaard <peter@...sgaard.com>
+To: Adam Maris <amaris@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
 Content-Type: text/plain; charset=utf-8
 
-Salvatore Bonaccorso  of Debian was so kind to request a CVE. It is:
-CVE-2017-8779
+>>>>> "Peter" == Peter Bex <peter@...e-magic.net> writes:
 
-On Wed, May 3, 2017 at 8:55 PM, Guido Vranken <guidovranken@...il.com> wrote:
-> This vulnerability allows an attacker to allocate any amount of bytes
-> (up to 4 gigabytes per attack) on a remote rpcbind host, and the
-> memory is never freed unless the process crashes or the administrator
-> halts or restarts the rpcbind service.
->
-> Attacking a system is trivial; a single attack consists of sending a
-> specially crafted payload of around 60 bytes through a UDP socket.
->
-> This can slow down the system’s operations significantly or prevent
-> other services (such as a web server) from spawning processes
-> entirely.
->
-> An extensive write-up can be found here:
-> https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
->
-> Exploit + patches: https://github.com/guidovranken/rpcbomb/
+ > On Thu, Mar 16, 2017 at 10:31:17AM +0100, Adam Maris wrote:
+ >> Hi Peter,
+ >> 
+ >> oss-security mailing is no longer a place for requesting CVEs. Please,
+ >> request CVE from MITRE via https://cveform.mitre.org/ or also possibly
+ >> from DWF project via http://iwantacve.org/
+
+ > Oh yeah, I forgot about that.  I've filled out the form, and I hope I've
+ > done this correctly.
+
+Please don't forget to forward the form details to this list once a CVE
+has been assigned. Thanks.
+
+-- 
+Bye, Peter Korsgaard
