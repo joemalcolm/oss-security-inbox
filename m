@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3787" "Thursday" "23" "April" "2020" "17:14:30" "+0200" "Solar Designer" "solar@openwall.com" "<20200423151430.GA21258@openwall.com>" "88" "Re: [oss-security] spoofing of local email sender via a homoglyph attack" "^Cc:" nil nil "4" "2020042315:14:30" "[oss-security] spoofing of local email sender via a homoglyph attack" (number mark "        solar@openwa Apr 23   88/3787  " thread-indent "\"Re: [oss-security] spoofing of local email sender via a homoglyph attack\"\n") "<2236ad47936a87f144248f9ab6c7340f@promiselabs.net>" ("<20200422152047.3196780D981@smtprhmv1.mitre.org>" "<2843537f5deb3a7987c8485bcc56a260@promiselabs.net>" "<ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>" "<20200423133148.GA19214@openwall.com>" "<2236ad47936a87f144248f9ab6c7340f@promiselabs.net>") nil nil nil nil nil nil nil "Re: [oss-security] spoofing of local email sender via a homoglyph attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2583" "Friday" "17" "March" "2017" "00:58:05" "+0800" "Thuan Pham" "thuanpv@comp.nus.edu.sg" "<CAMNd5sthm7v3xxeZvpd6WBXQoM8OJsst+AWK9jQinzkM-VbZiw@mail.gmail.com>" "67" "[oss-security] CVE Request: multiple bugs found in BFD libraries and Binutils' utilities" nil nil nil "3" "2017031616:58:05" "[oss-security] CVE Request: multiple bugs found in BFD libraries and Binutils' utilities" (number mark "U       thuanpv@comp Mar 17   67/2583  " thread-indent "\"[oss-security] CVE Request: multiple bugs found in BFD libraries and Binutils' utilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18359 invoked by uid 550); 23 Apr 2020 15:15:19 -0000
+Received: (qmail 22430 invoked by uid 550); 16 Mar 2017 17:13:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18057 invoked from network); 23 Apr 2020 15:14:42 -0000
-Message-ID: <20200423151430.GA21258@openwall.com>
-References: <20200422152047.3196780D981@smtprhmv1.mitre.org> <2843537f5deb3a7987c8485bcc56a260@promiselabs.net> <ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net> <20200423133148.GA19214@openwall.com> <2236ad47936a87f144248f9ab6c7340f@promiselabs.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2236ad47936a87f144248f9ab6c7340f@promiselabs.net>
-User-Agent: Mutt/1.4.2.3i
-Cc: PromiseLabs Pentest Research <pentest@promiselabs.net>,
-	Wietse Venema <wietse@porcupine.org>
-Date: Thu, 23 Apr 2020 17:14:30 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] spoofing of local email sender via a homoglyph attack
+Received: (qmail 32040 invoked from network); 16 Mar 2017 16:58:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=Syga7X5K1NUMNvgGKViXVcEq3dmj999KFWb/ExnOO0M=;
+        b=ti2cgrAD2iM6SRmZNF92DianpC/SW5ICyX8LDCMFXLeUlrxMUTOKB7MdDlxPzYvAYU
+         pPKpuhA5Kkkj9G2fErX3Hys/cgScK2IJxCiy2Ga/2TePzAOMPF6h6Uehh2xJ6KBENHkq
+         OJcxA0RnnNgXOe3cORfRZxhnvUxmT+piQWPXVrTp8fa27VKhLB3Ur67BAR3qLhYqGyZt
+         DeLOilrb8OXsj18bXh3EoU8wYGjMetwUMc0BdI1vY6M00uA+uijeBcDGX5mOSw0rN7zp
+         2FFFESqsx4x2Bakn3+ZsmRF2XIkjottWyI1fv/QvppkfSqmOPZzqjWqVF5xM8QcIghqQ
+         s9HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=Syga7X5K1NUMNvgGKViXVcEq3dmj999KFWb/ExnOO0M=;
+        b=oXW89Yk0BuI1xKmRI30grggq+QjivBmam7p66LHMSp95o+JaxcGavh7lFnQjvVysZG
+         e+mLjLNs/+NlMpAmqZIriBRpWNCTHrSDojfQs5SNpiIv2i+Rm63xQ69QXMg2w6dEgSC2
+         oMOAKgXfRlYwULfQTlUsVkg04K27w2yyCJVwUSDTVubEc2sMNCNy43ewWlbCp9F3k+fz
+         xSMLakCbKTevGo61PfJ3JSsEsOBxEv6FbC4JRujtAwvyPwN1/4z1hLtmJpLBUNGZ4cfA
+         x9nUztatzBGDTAYDgtOzJTs3WAcyaFpfMs8MgzPjz9Uq6PFCjF/xrlYYYe+ZgpFmIzUH
+         rkdg==
+X-Gm-Message-State: AFeK/H0fDWtCvU8dr0cVPDoQ+zZAmzdPTkGo3kcYTTJN9EZmuMvTFZbFJpJ7SDeSG/UXnq8GP178SCmEnJQN1Q==
+X-Received: by 10.13.212.18 with SMTP id w18mr8760991ywd.180.1489683485893;
+ Thu, 16 Mar 2017 09:58:05 -0700 (PDT)
+MIME-Version: 1.0
+Sender: thuanpv.nus@gmail.com
+From: Thuan Pham <thuanpv@comp.nus.edu.sg>
+Date: Fri, 17 Mar 2017 00:58:05 +0800
+X-Google-Sender-Auth: oof8NiAn-DUmwVp4Sj6_0cFCoto
+Message-ID: <CAMNd5sthm7v3xxeZvpd6WBXQoM8OJsst+AWK9jQinzkM-VbZiw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a114fa458018368054adbf7c3
+Subject: [oss-security] CVE Request: multiple bugs found in BFD libraries and Binutils' utilities
 
-On Thu, Apr 23, 2020 at 05:32:15PM +0300, PromiseLabs Pentest Research wrote:
-> To follow up on your questions:
+--001a114fa458018368054adbf7c3
+Content-Type: text/plain; charset=UTF-8
 
-Thanks!  Now this is specific.
+Dear all,
 
-> The current configuration actually blocks any non-authorized requests as 
-> explained in the description. The use-case of this (from my perspective) 
-> is that it could be used to advance a social-engineer attack into 
-> tricking the recipients believing that they are getting an email from a 
-> high-level position at the company.
-> 
-> It's related to the from header.
-> 
-> Issuing a regular unauthenticated request, trying to send an email from 
-> john.doe, which is a high-level user at the company:
-> $ nc -v *** OMITTED *** 25
-> Connection to *** OMITTED *** 25 port [tcp/smtp] succeeded!
-> 220 *** OMITTED *** ESMTP Postfix
-> mail from: john.doe@server.com
-> 250 2.1.0 Ok
-> rcpt to: existing.user@server.com
-> 553 5.7.1 <john.doe@server.com>: Sender address rejected: not logged in
-> 
-> As you can see, the mail server rejects the request as the existing user 
-> hasn't authenticated himself.
+Using AFLGo, a directed version of AFL/AFLFast fuzzing tool, we found
+several bugs in the Binutils' utilities such as readelf, objdump, nm and
+the BFD library (DWARF and STABS parsers).
 
-My guess is this works when the server is configured to support SMTP
-AUTH for potentially relaying mail from local users to other servers,
-but as you show under that configuration the authentication requirement
-applies even for messages intended for local users.  That's curious.
+Binary File Descriptor (BFD) library is a GNU library to manipulate object
+files of many processor architecture (>=25) in a variety of formats (>=50).
+The library is used by several widely-used tools like GNU Assembler (GAS),
+GNU Linker (GLD), GNU Binary Utilities ("binutils") tools, and the GNU
+Debugger (GDB). Binutils' utilities like readelf, objdump and nm are common
+tools to analyze program objects..
 
-I don't know whether that behavior is documented and expected, and
-whether it is considered a security feature or not.  I hope Wietse can
-weigh in on this.
+Here is the list of bug reports & bug fixes. All of them have been
+confirmed and fixed by Binutils' maintainers.
 
-> However, issuing a request using a homoglyph character:
-> $ echo -ne "j\xce\xbfhn.doe@server.com" | xclip -selection clipboard
-> $ nc -v *** OMITTED ***  25
-> Connection to *** OMITTED ***  25 port [tcp/smtp] succeeded!
-> 220 *** OMITTED ***  ESMTP Postfix
-> mail from: j??hn.doe@server.com
-> 250 2.1.0 Ok
-> rcpt to: existing.user@server.com
-> 250 2.1.5 Ok
-> data
-> 354 End data with <CR><LF>.<CR><LF>
-> 
-> The victim would get an email thinking it's from the actual john.doe 
-> user.
+1) Heap Buffer Overflow - Invalid Write in Readelf
+https://sourceware.org/bugzilla/show_bug.cgi?id=21137
+https://sourceware.org/bugzilla/show_bug.cgi?id=21155 (bug still exists
+because of incomplete fix in PR Binutils/21137)
 
-OK.  To me, the real unexpected issue here is not the possibility to
-spoof (in fact, it's unexpected to me that it wasn't possible in your
-first example), but rather the possibility to probe for valid usernames.
-That other aspect is more likely CVE-worthy, in my opinion.  There's
-precedent that such easy probing for usernames shouldn't work, and is
-getting CVEs against services where it does work.
+2) Heap Buffer Overflow - Invalid Read in BFD library's DWARF
+https://sourceware.org/bugzilla/show_bug.cgi?id=21151
 
-There's probably room for hardening here where in cases when SMTP AUTH
-is enforced for local users, mail from other local-looking addresses yet
-with non-existent usernames be rejected in exactly the same way (and
-with the same timings - tricky!) as mail from existing local usernames
-when SMTP AUTH is not attempted (like in your example).  There should
-also be no visible (and ideally no measurable) difference for existing
-and non-existent usernames when SMTP AUTH is attempted but fails.
+3) Heap Buffer Overflow - Invalid Read in BFD library's handling of STABS
+debug information causing Objdump to crash
+https://sourceware.org/bugzilla/show_bug.cgi?id=21157
 
-Alternatively, mail to local users could be accepted consistently
-regardless of whether the claimed sender username exists locally or not,
-thus without requiring authentication.  However, this would leave
-unfixed the username probing possibility on attempting to relay mail to
-external servers, where bypassing authentication is certainly not an
-option.  So overall that isn't a valid fix for the username probing.
+4) Global Buffer Overflow - Invalid Read in BFD library's handling of STABS
+debug information
+https://sourceware.org/bugzilla/show_bug.cgi?id=21158
 
-I assume the tests above are with postfix-2.10.1-7.el7.x86_64 as you had
-mentioned previously, and behavior could very well vary between builds.
+5) Use after free in Readelf
+https://sourceware.org/bugzilla/show_bug.cgi?id=21139
 
-> Whether this is applicable for assigning a CVE it's up to you decide, 
+6) Heap buffer overflow - invalid read of size 4 in Readelf
+https://sourceware.org/bugzilla/show_bug.cgi?id=21156
 
-No, technically it's up to MITRE, and they've already assigned one - but
-I complain that they did so without sufficient detail on the issue.
+7) Heap buffer overflow in Readelf (Invalid Read of size 1)
+https://sourceware.org/bugzilla/show_bug.cgi?id=21135
+https://sourceware.org/bugzilla/show_bug.cgi?id=21159 (bug still exists due
+to incomplete fix in PR Binutils/21135)
 
-> the only actual risk here discovered so far is a social-engineering 
-> attack.
+8) Heap buffer overflow in Readelf (Invalid Read of size 1)
+https://sourceware.org/bugzilla/show_bug.cgi?id=21147
 
-And username probing.
+9) Heap buffer overflow in Readelf (Multiple Invalid Read of size 1)
+https://sourceware.org/bugzilla/show_bug.cgi?id=21148
 
-> >>> Use CVE-2020-12063.
+10) Heap buffer overflow in Readelf (Multiple Invalid Read of size 1)
+https://sourceware.org/bugzilla/show_bug.cgi?id=21149
 
-Alexander
+11) Global buffer overflow in Nm (Invalid Read of size 1)
+https://sourceware.org/bugzilla/show_bug.cgi?id=21150
+
+Could you please check whether these bugs are suitable for CVEs?
+Many thanks,
+
+----------------------------
+Thuan Pham
+TSUNAMi Security Research Center
+National University of Singapore
+
+--001a114fa458018368054adbf7c3--
