@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/7
-Message-Id: <85f9558a0a5e1fa9@courtesan.com>
-Date: Fri, 02 Jun 2017 12:48:20 -0600
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Arbitrary terminal access via sudo on Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/9
+Message-ID: <3025119.tSIlaHEIMQ@arcadia>
+Date: Thu, 16 Mar 2017 21:15:28 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Thuan Pham <thuanpv@...p.nus.edu.sg>
+Subject: Re: CVE Request: multiple bugs found in BFD libraries and Binutils' utilities
 Content-Type: text/plain; charset=utf-8
 
-The fix for CVE-2017-1000367 present in sudo 1.8.20p1 was incomplete
-as it did not address the posibility of a program name that contains
-a newline character.  This was fixed by sudo 1.8.20p2.  At the time,
-this was not believed to be a security issue due to the change in
-/dev traversal that was also part of sudo 1.8.20p1.
+On Friday 17 March 2017 00:58:05 Thuan Pham wrote:
+> Could you please check whether these bugs are suitable for CVEs?
 
-However, there is another vector that can be exploited in sudo's
-get_process_ttyname() function under Linux.  The user can choose a
-device number that corresponds to a terminal currently in use by
-another user.  This allows an attacker to run any command allowed
-by sudo with read and write access to an arbitrary terminal device.
-Depending on the command, it may be possible to read sensitive data
-(such as a password) from another user's terminal.
+Thuan,
+thanks for sharing.
 
-This alternate vector is still exploitable in sudo 1.8.20p1 when a
-symbolic link is made from the sudo binary to a name that contains
-a newline followed by a valid device number.  The full fix is
-included in sudo 1.8.20p2, released May 31, 2017.
+Since few time the cve requests happens on https://cveform.mitre.org instead 
+of here.
 
-I have updated https://www.sudo.ws/alerts/linux_tty.html accordingly.
-As before, the bug is specific to Linux systems that have SELinux
-enabled.  Sudo reopens the terminal device after changing its SELinux
-context when a role or type is specified on the command line.
+>From some time of fuzz experience, from multiple cve requests and multiple 
+feedback from mitre I'd say:
+- In any way you are able to crash a library, it needs a cve because it is 
+supposed to receive multiple inputs.
+- Undefined behavior in a library also needs a cve. 
+- while the bug is in a command line tool:
+1) if it is a simple crash like fpe / segv, it is considered just an 
+inconvenience.
+2) if it is an overflow with read of size 1 is also considered an inconveniece 
+unless you can demostrate any evidence of damage.
+The mentioned cases are not just an inconvenience unless there are common 
+cases where you know that for example a webapp relies on this command line 
+tool.
+3) if it is an overflow with write access it should have a cve.
 
-Thanks to Stephane Chazelas, who pointed out that the original patch
-did not address command names that include a newline, and Solar
-Designer, who noticed that the bug could also be used to access
-another user's terminal.
 
- - todd
+@everyone, if you think it is wrong or I missed something feel free to correct 
+me. 
+ 
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
