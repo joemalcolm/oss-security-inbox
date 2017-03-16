@@ -1,20 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/4
-Message-ID: <3404443.FfsTeelCPW@arcadia>
-Date: Sat, 29 Apr 2017 15:40:54 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/8
+Message-ID: <CAMNd5sthm7v3xxeZvpd6WBXQoM8OJsst+AWK9jQinzkM-VbZiw@mail.gmail.com>
+Date: Fri, 17 Mar 2017 00:58:05 +0800
+From: Thuan Pham <thuanpv@...p.nus.edu.sg>
 To: oss-security@...ts.openwall.com
-Subject: Re: mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)
+Subject: CVE Request: multiple bugs found in BFD libraries and Binutils' utilities
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 18 February 2017 12:38:45 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/02/17/mupdf-mujstest-stack-based-buffer-ov
-> erflow-in-main-jstest_main-c
+Dear all,
 
-Fixed by:
-http://git.ghostscript.com/?p=user/sebras/mupdf.git;a=blobdiff;f=platform/x11/jstest_main.c;h=f158d9628ed0c0a84e37fe128277679e8334422a;hp=13c3a0a3ba3ff4aae29f6882d23740833c1d842f;hb=06a012a42c9884e3cd653e7826cff1ddec04eb6e;hpb=34e18d127a02146e3415b33c4b67389ce1ddb614
+Using AFLGo, a directed version of AFL/AFLFast fuzzing tool, we found
+several bugs in the Binutils' utilities such as readelf, objdump, nm and
+the BFD library (DWARF and STABS parsers).
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Binary File Descriptor (BFD) library is a GNU library to manipulate object
+files of many processor architecture (>=25) in a variety of formats (>=50).
+The library is used by several widely-used tools like GNU Assembler (GAS),
+GNU Linker (GLD), GNU Binary Utilities ("binutils") tools, and the GNU
+Debugger (GDB). Binutils' utilities like readelf, objdump and nm are common
+tools to analyze program objects..
+
+Here is the list of bug reports & bug fixes. All of them have been
+confirmed and fixed by Binutils' maintainers.
+
+1) Heap Buffer Overflow - Invalid Write in Readelf
+https://sourceware.org/bugzilla/show_bug.cgi?id=21137
+https://sourceware.org/bugzilla/show_bug.cgi?id=21155 (bug still exists
+because of incomplete fix in PR Binutils/21137)
+
+2) Heap Buffer Overflow - Invalid Read in BFD library's DWARF
+https://sourceware.org/bugzilla/show_bug.cgi?id=21151
+
+3) Heap Buffer Overflow - Invalid Read in BFD library's handling of STABS
+debug information causing Objdump to crash
+https://sourceware.org/bugzilla/show_bug.cgi?id=21157
+
+4) Global Buffer Overflow - Invalid Read in BFD library's handling of STABS
+debug information
+https://sourceware.org/bugzilla/show_bug.cgi?id=21158
+
+5) Use after free in Readelf
+https://sourceware.org/bugzilla/show_bug.cgi?id=21139
+
+6) Heap buffer overflow - invalid read of size 4 in Readelf
+https://sourceware.org/bugzilla/show_bug.cgi?id=21156
+
+7) Heap buffer overflow in Readelf (Invalid Read of size 1)
+https://sourceware.org/bugzilla/show_bug.cgi?id=21135
+https://sourceware.org/bugzilla/show_bug.cgi?id=21159 (bug still exists due
+to incomplete fix in PR Binutils/21135)
+
+8) Heap buffer overflow in Readelf (Invalid Read of size 1)
+https://sourceware.org/bugzilla/show_bug.cgi?id=21147
+
+9) Heap buffer overflow in Readelf (Multiple Invalid Read of size 1)
+https://sourceware.org/bugzilla/show_bug.cgi?id=21148
+
+10) Heap buffer overflow in Readelf (Multiple Invalid Read of size 1)
+https://sourceware.org/bugzilla/show_bug.cgi?id=21149
+
+11) Global buffer overflow in Nm (Invalid Read of size 1)
+https://sourceware.org/bugzilla/show_bug.cgi?id=21150
+
+Could you please check whether these bugs are suitable for CVEs?
+Many thanks,
+
+----------------------------
+Thuan Pham
+TSUNAMi Security Research Center
+National University of Singapore
+
