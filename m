@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1211" "Wednesday" "30" "March" "2016" "19:20:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160330232023.E7D568BC026@smtpvmsrv1.mitre.org>" "32" "[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files" nil nil nil "3" "2016033023:20:23" "[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files" (number mark "U       cve-assign@m Mar 30   32/1211  " thread-indent "\"[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files\"\n") "<CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>" ("<CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["952" "Friday" "17" "March" "2017" "09:08:39" "+0100" "Damien Regad" "dregad@mantisbt.org" "<CA+zp4VN23BSr2aCjrZohXM94UCFXdK8s5z81DLodSjbkDoMwUw@mail.gmail.com>" "28" "[oss-security] Advisory: XSS in MantisBT Source Integration Plugin (CVE-2017-6958)" nil nil nil "3" "2017031708:08:39" "[oss-security] Advisory: XSS in MantisBT Source Integration Plugin (CVE-2017-6958)" (number mark "U       dregad@manti Mar 17   28/952   " thread-indent "\"[oss-security] Advisory: XSS in MantisBT Source Integration Plugin (CVE-2017-6958)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30133 invoked by uid 550); 30 Mar 2016 23:20:36 -0000
+Received: (qmail 17778 invoked by uid 550); 17 Mar 2017 14:35:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,44 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30113 invoked from network); 30 Mar 2016 23:20:35 -0000
-From: cve-assign@mitre.org
-To: gustavo.grieco@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>
-Message-Id: <20160330232023.E7D568BC026@smtpvmsrv1.mitre.org>
-Date: Wed, 30 Mar 2016 19:20:23 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files
+Received: (qmail 5452 invoked from network); 17 Mar 2017 08:08:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=KnwJg5+oLTAMSkrLrGKI8FN8ZUoAcu7kYEH8u7P04+4=;
+        b=fpnGrxmOQk89sc43KrUVNsXCY9RSMrO7f2XExZJxRJwI4acE3dbijrsQb5mghnxtaO
+         KaGUeX8QGYwqJ4O3nt/cnHlpHRgA9rXTCPQNZMuCFSeHW0uFQ60SeRTPc0eISUsC461t
+         cNtzlscBj0fQE4IMr2YneashRwygInUxD1u5XaXTfDwClUjv4/fcQIINJ7y0R1M3mO4k
+         u5xltEjNHJq+EPxZv68UjHw7MtmHaYWc3qmxZzqRPbfyCE00WzqussVmotoG9bIkGC1v
+         2YJw5F5QDV0tYm2UaMXOkKnpg0MHPMtxutTdDwUDRUaoPJQjR2YLZXdShfsVYvk3BaqB
+         a9kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=KnwJg5+oLTAMSkrLrGKI8FN8ZUoAcu7kYEH8u7P04+4=;
+        b=satP/dvmGnWU0Hd5iXifXuQFs8kYoxs4cjFN16Vg8HTpQ1VfEPmN5kxORjzhdc315e
+         UeX44gl4IV3wiolpTp2xDeBwNir/PON3C1W/aasEGd0O8w3gRYUmUGwSgyaGzP3UywSg
+         HMJ4CvAljNl/otRwygwFHKLfgXXlXWX+69nAi1IwP6dXxfZoPZgWPbdEHyQ6hW4PJ4R5
+         iaefgA+Ew/uEZH4lnZczFnKShtIC5EYBlJ1wo2GkRU10tU3iOG7QqUSjJjxOODB3tpE4
+         SSq+ZsFHZtvx/G7FIpQnrYZ03byq03PscLwcheW4D2afktXk7Ux+zUnXWUJwf2dLxT7e
+         50NA==
+X-Gm-Message-State: AFeK/H0N0OvqPSkox5WghS2923vwM3CuY9lhcNG4n3C+KA4TRxjbaqrywL/PC31Gc7FPO44hdv1rZeC3XP8jPw==
+X-Received: by 10.55.122.134 with SMTP id v128mr10213848qkc.115.1489738119947;
+ Fri, 17 Mar 2017 01:08:39 -0700 (PDT)
+MIME-Version: 1.0
+Sender: dregad@gmail.com
+From: Damien Regad <dregad@mantisbt.org>
+Date: Fri, 17 Mar 2017 09:08:39 +0100
+X-Google-Sender-Auth: zvnjHlAsPz-bLp8mcyMc3chcBlM
+Message-ID: <CA+zp4VN23BSr2aCjrZohXM94UCFXdK8s5z81DLodSjbkDoMwUw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=94eb2c062a5872aec1054ae8af38
+Subject: [oss-security] Advisory: XSS in MantisBT Source Integration Plugin (CVE-2017-6958)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--94eb2c062a5872aec1054ae8af38
+Content-Type: text/plain; charset=UTF-8
 
->> https://bugs.launchpad.net/bugs/1533633
+A cross-site scripting (XSS) vulnerability in the MantisBT Source
+Integration plugin search result page allows remote attackers to inject
+arbitrary HTML or JavaScript (the latter, only if MantisBT's CSP settings
+permit it) by crafting any valid parameter.
 
-> It is evident that the memcpy operation has an abnormally large size
-> parameter (4290773038).
+Affected versions: 2.0.0-beta.1 through 2.0.1
+Fixed in versions: 2.0.2 (released 2017-03-16)
 
-Use CVE-2016-3941.
+Patch:
+https://github.com/mantisbt-plugins/source-integration/commit/b014da5687ec37c571105627bf090cb6f270ec35
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Credits:
+Reported by Dmitry Ivanov (d1m0ck) https://twitter.com/d1m0ck
+Fixed by Damien Regad
 
-iQIcBAEBCAAGBQJW/F7oAAoJEL54rhJi8gl5/fsP/0qZaXHxydl6ZJsxaqdac/Dy
-fWVmg594wITgIvtZFpLAZ5pQzGgskboaHJEBcTYkxgQIonJska7QVhNrHSusf2Q5
-ko1T1wkyioQu/en7CFTUBCr2OA5kOiAsSh4Z07zqjJanQHjQ9qvxwjcl+IzhNjJ7
-2ORdJA6NgfseN1m5G7WCos9HqiU+Z7Yah4g9UWkwInBrhU/ehVKAjcLUzH+wFPhQ
-SUx/IQ3hL6fSpY3sAJT2PPhm47Iswt3I6oXmVggMPhJ8rAJmlh51YJhuaPmMKPEI
-hj6X9byGBDhHMEosZzGptDK54Q9nd/CLSjGfW7W0Wzd5o5YOZKzFNgtHhFueCaVv
-CS7pqcmQRzzr6dRiAizjdss7EqJOLmnTGr42ZPQfH5uRg93N1KQyJcmQajkp2YpI
-2yy5hb8wBMfUek/dhCq+VGgwon37pQ46pR++uH3SeYLsmw9EopAKusWlMBqf8CF5
-/2BOHGey+MOKxnGBlGOzMQFseFeOfz1P0DgGvHcn3lOO/YYzmz8Jy94BsabeO58J
-/lnKvbw5rg7/8xYam8x3YKlXrxE1kZvkhr0/FGWL4TvlnRAQg8lNdfaJ+UwJewQ8
-DsJP8RzdLT7Mrwk+WInx3lCN4Gz44F27JvAVxv8KaN/M9ArDPLClUyCfDBMZCq4l
-u70+kK2KhEaAcjYB4cgR
-=SBqA
------END PGP SIGNATURE-----
+References:
+- Initial report http://openbugbounty.org/incidents/218993/
+- Issue tracker https://github.com/mantisbt-plugins/source-integration/
+issues/205
+- Release
+https://github.com/mantisbt-plugins/source-integration/releases/tag/v2.0.2
+
+<http://www.mantisbt.org/bugs/view.php?id=22486>
+
+--94eb2c062a5872aec1054ae8af38--
