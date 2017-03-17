@@ -1,71 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/24/1
-Message-ID: <20171224082315.GA28282@eldamar.local>
-Date: Sun, 24 Dec 2017 09:23:15 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/17/3
+Message-Id: <201703171154.35368@pali>
+Date: Fri, 17 Mar 2017 11:54:35 +0100
+From: Pali Rohár <pali.rohar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux >=4.9: eBPF memory corruption bugs
+Subject: CVE-2017-3305 - The Riddle vulnerability in MySQL client (public disclosure)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi!
 
-Debian issued an update yesterday, an while preparing the fixes three
-more CVEs were requested which are related:
+There is a new vulnerability in MySQL client versions 5.5 and 5.6 which 
+is related to SSL/TLS encryption and to older BACKRONYM vulnerability.
 
-https://lists.debian.org/debian-security-announce/2017/msg00336.html
+As it is common, new vulnerability should have a name, logo and website. 
+So enjoy the *Riddle* at http://riddle.link/
 
-specifically:
+Affected are only Oracle's MySQL clients in all versions 5.5 and 5.6 
+when SSL/TLS encryption is used. Verification of encryption parameters 
+and existence of SSL/TLS layer by MySQL client is done *after* client 
+successfully finish authentication.
 
-CVE-2017-17862
+For more details including mitigation, look at Technical section on 
+vulnerability website: http://riddle.link/
 
-    Alexei Starovoitov discovered that the Extended BPF verifier
-    ignored unreachable code, even though it would still be processed
-    by JIT compilers.  This could possibly be used by local users for
-    denial of service.  It also increases the severity of bugs in
-    determining unreachable code.
+-- 
+Pali Rohár
+pali.rohar@...il.com
 
-https://www.spinics.net/lists/stable/msg206984.html
-Upstream: https://git.kernel.org/linus/c131187db2d3fa2f8bf32fdf4e9a4ef805168467
-
-CVE-2017-17863
-
-    Jann Horn discovered that the Extended BPF verifier did not
-    correctly model pointer arithmetic on the stack frame pointer.
-    A local user can use this for privilege escalation.
-
-https://www.spinics.net/lists/stable/msg206985.html
-
-This 'fixes' 7bca0a9702edfc8d0e7e46f984ca422ffdbe0498 (introduced in
-4.9.28) which was 332270fdc8b6fba07d059a9ad44df9e1a2ad4529 (4.12-rc1) in
-mainline. Quoting the message from Jann: This is a fix specifically for
-the v4.9 stable tree because the mainline code looks very different at
-this point."
-
-CVE-2017-17864
-
-    Jann Horn discovered that the Extended BPF verifier could fail to
-    detect pointer leaks from conditional code.  A local user could
-    use this to obtain sensitive information in order to exploit
-    other vulnerabilities.
-
-Only reference so far:
-
-https://anonscm.debian.org/cgit/kernel/linux.git/tree/debian/patches/bugfix/all/bpf-verifier-fix-states_equal-comparison-of-pointer-and-unknown.patch?h=stretch-security
-
-Quoting the commit/patch description:
-
-> This was fixed differently upstream, but the code around here was
-> largely rewritten in 4.14 by commit f1174f77b50c "bpf/verifier: rework
-> value tracking".  The bug can be detected by the bpf/verifier sub-test
-> "pointer/scalar confusion in state equality check (way 1)".
-
-and further he stated:
-
-https://anonscm.debian.org/cgit/kernel/linux.git/commit/?h=stretch-security&id=ad775f6ff7eebb93eedc2f592bc974260e7757b0
-
-The upstream fix is definitely post-4.14, probably "bpf: don't prune
-branches when a scalar is replaced with a pointer", but no bisect was
-done to confirm, so this question is still open.
-
-Regards,
-Salvatore
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
