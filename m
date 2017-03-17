@@ -1,122 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/7
-Message-ID: <761406.147244514-sendEmail@localhost>
-Date: Wed, 28 Jun 2017 12:06:32 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: lame: heap-based buffer overflow in fill_buffer_resample (util.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/17/4
+Message-ID: <20170317145440.GA24878@openwall.com>
+Date: Fri, 17 Mar 2017 15:54:40 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-3305 - The Riddle vulnerability in MySQL client (public disclosure)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+On Fri, Mar 17, 2017 at 11:54:35AM +0100, Pali Roh??r wrote:
+> There is a new vulnerability in MySQL client versions 5.5 and 5.6 which 
+> is related to SSL/TLS encryption and to older BACKRONYM vulnerability.
+> 
+> As it is common, new vulnerability should have a name, logo and website. 
+> So enjoy the *Riddle* at http://riddle.link/
+> 
+> Affected are only Oracle's MySQL clients in all versions 5.5 and 5.6 
+> when SSL/TLS encryption is used. Verification of encryption parameters 
+> and existence of SSL/TLS layer by MySQL client is done *after* client 
+> successfully finish authentication.
+> 
+> For more details including mitigation, look at Technical section on 
+> vulnerability website: http://riddle.link/
 
-Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
-bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
-downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
-dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
+That's very nice, but per oss-security list content guidelines technical
+detail should also be included in postings.  Attached as text/plain, for
+archival.
 
-The complete ASan output of the issue:
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-# lame -f -V 9 $FILE out.wav
-==29263==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60c00000003c at pc 0x7f60ef5a8c12 bp 0x7ffe7420b940 sp 0x7ffe7420b938
-READ of size 4 at 0x60c00000003c thread T0
-    #0 0x7f60ef5a8c11 in fill_buffer_resample /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/util.c
-    #1 0x7f60ef5a8c11 in fill_buffer /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/util.c:677
-    #2 0x7f60ef47866b in lame_encode_buffer_sample_t /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1736:9
-    #3 0x7f60ef47866b in lame_encode_buffer_template /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1891
-    #4 0x7f60ef47e83a in lame_encode_buffer /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1902:12
-    #5 0x7f60ef47e83a in lame_encode_flush /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:2134
-    #6 0x50fa2c in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:487:16
-    #7 0x50fa2c in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
-    #8 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
-    #9 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
-    #10 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
-    #11 0x7f60ee1c7680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #12 0x41c998 in _init (/usr/bin/lame+0x41c998)
+Alexander
 
-0x60c00000003c is located 4 bytes to the left of 128-byte region [0x60c000000040,0x60c0000000c0)
-allocated by thread T0 here:
-    #0 0x4d2540 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
-    #1 0x7f60ef5a3575 in fill_buffer_resample /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/util.c:558:29
-    #2 0x7f60ef5a3575 in fill_buffer /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/util.c:677
-    #3 0x7f60ef47866b in lame_encode_buffer_sample_t /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1736:9
-    #4 0x7f60ef47866b in lame_encode_buffer_template /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1891
-    #5 0x7f60ef47e83a in lame_encode_buffer /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1902:12
-    #6 0x7f60ef47e83a in lame_encode_flush /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:2134
-    #7 0x50fa2c in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:487:16
-    #8 0x50fa2c in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
-    #9 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
-    #10 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
-    #11 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
-    #12 0x7f60ee1c7680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/util.c in 
-fill_buffer_resample
-Shadow bytes around the buggy address:
-  0x0c187fff7fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c187fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c187fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c187fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c187fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c187fff8000: fa fa fa fa fa fa fa[fa]00 00 00 00 00 00 00 00
-  0x0c187fff8010: 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
-  0x0c187fff8020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c187fff8030: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c187fff8040: 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
-  0x0c187fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==29263==ABORTING
-
-Affected version:
-3.99.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2015-9101
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00292-lame-heapoverflow-fill_buffer_resample
-
-Timeline:
-2017-06-01: bug discovered
-2017-06-17: blog post about the issue
-2017-06-25: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-Mitre decided that this bug can share the same CVE id of https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777161
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/06/17/lame-heap-based-buffer-overflow-in-fill_buffer_resample-util-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+View attachment "riddle.txt" of type "text/plain" (13283 bytes)
