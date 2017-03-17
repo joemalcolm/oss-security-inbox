@@ -1,16 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/6
-Message-ID: <20170512184509.GA30373@tunkki>
-Date: Fri, 12 May 2017 21:45:09 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple crashes in OpenEXR
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/17/1
+Message-ID: <CAMNd5sse8gHbyjf+eAx+1hQgf6d1VQH0vDQRy3f_YxKtA6noEw@mail.gmail.com>
+Date: Fri, 17 Mar 2017 12:56:55 +0800
+From: Thuan Pham <thuanpv@...p.nus.edu.sg>
+To: Agostino Sarubbo <ago@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: multiple bugs found in BFD libraries and Binutils' utilities
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 12, 2017 at 12:09:30PM -0500, Brandon Perry wrote:
-> As of this writing, <snip>. No CVEs have been requested.
+Dear Agostino,
+Thank you very much for your prompt reply. I will choose the suitable bugs
+based on your advice and submit to MITRE directly.
+Many thanks,
+Thuan
 
-Why not?
+On Fri, Mar 17, 2017 at 4:15 AM, Agostino Sarubbo <ago@...too.org> wrote:
 
--- 
-Henri Salo
+> On Friday 17 March 2017 00:58:05 Thuan Pham wrote:
+> > Could you please check whether these bugs are suitable for CVEs?
+>
+> Thuan,
+> thanks for sharing.
+>
+> Since few time the cve requests happens on https://cveform.mitre.org
+> instead
+> of here.
+>
+> From some time of fuzz experience, from multiple cve requests and multiple
+> feedback from mitre I'd say:
+> - In any way you are able to crash a library, it needs a cve because it is
+> supposed to receive multiple inputs.
+> - Undefined behavior in a library also needs a cve.
+> - while the bug is in a command line tool:
+> 1) if it is a simple crash like fpe / segv, it is considered just an
+> inconvenience.
+> 2) if it is an overflow with read of size 1 is also considered an
+> inconveniece
+> unless you can demostrate any evidence of damage.
+> The mentioned cases are not just an inconvenience unless there are common
+> cases where you know that for example a webapp relies on this command line
+> tool.
+> 3) if it is an overflow with write access it should have a cve.
+>
+>
+> @everyone, if you think it is wrong or I missed something feel free to
+> correct
+> me.
+>
+> --
+> Agostino Sarubbo
+> Gentoo Linux Developer
+>
+
