@@ -1,4 +1,9 @@
-Received: (qmail 6025 invoked by uid 550); 23 Feb 2024 12:40:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2268" "Saturday" "18" "March" "2017" "12:51:50" "+0300" "Jerome Athias" "athiasjerome@gmail.com" "<CAA=AuEenQx_oGZcY3iEwbp+frtfb1cw+fSaNH_kLQmv9+BkJKg@mail.gmail.com>" "49" "Re: [oss-security] Dealing with CVEs that apply to unspecified package versions" nil nil nil "3" "2017031809:51:50" "[oss-security] Dealing with CVEs that apply to unspecified package versions" (number mark "U       athiasjerome Mar 18   49/2268  " thread-indent "\"Re: [oss-security] Dealing with CVEs that apply to unspecified package versions\"\n") "<878to3f33h.fsf@prune.linuxpenguins.xyz>" ("<87wpbq5uqz.fsf@gnu.org>" "<878to3f33h.fsf@prune.linuxpenguins.xyz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21579 invoked by uid 550); 18 Mar 2017 11:43:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +12,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17571 invoked from network); 23 Feb 2024 12:29:19 -0000
+Received: (qmail 32764 invoked from network); 18 Mar 2017 09:52:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brad-house.com; s=google; t=1708691552; x=1709296352; darn=lists.openwall.com;
-        h=subject:from:content-language:to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=iKcAq8RcDlGGMUjSfFpwpG8/ehKx84BWDJZINZc8Gvg=;
-        b=ewY/U07Pm/r2ECMeAtZZk00+AYuq91LqySOs8m0kIU9ynXBPhNDu4XrVpgXQyAmfd3
-         ENqWqyayg9yH/dDhDgk4GQCOmhgWtS+YckPBQ9F2hnt8M1hqekiQPYztQn3Xycwc3Pdw
-         pazAxe969lWwlc/xs0aYlBZwkYVl3dxuMHeUo2ID+ioAkQ1P3KsqustbQH5qzXs2tafi
-         wTFcMkMDPhUj9XL71oo3pg5TlgiDuVQaEAI6hq+ZoynosnneXQ/wquT0bZ9N+Qp1Oqsr
-         23dRljlnBbpJQdn1d7WJ+bX4oK2Ch00GcH1+PrDfvJcLs/Kphnv8ynwhnFnIgKQWw3Io
-         CfwA==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=2ZXgra4n7HIAPpvkRWj793uWU3QyPnErTkwAjBn9Vtc=;
+        b=LJCZTXxlLOeOwJo1KpnekZEFYYzvBlzJ3tnUj6dDR9YXfATMnJ0v7TRWiBu46tG7sn
+         bNgBywhy/NxTcemhjRxN9nJqP8Dh+7KONaDQaAjywsCNYenlbIb6zyqwNbU1hpHsG6ZA
+         odQFvBw08k/jIL/CranS3q7acVVlpbMgybve3Ffzs29mTjkOq091S5IKI2OgHRbvjsjx
+         HZl1ZE30JVu3K47KevtrwhwsT7UU+FNpYwdpTmiXkJ/e8TbqIv+Mg8b/ypNYbdEL3o39
+         I2/PXg9DLRtnFD1KVMuIXNd3bnWuZ4ToBmPTB8g1N5+Q+7TSzmkC0cuig9UmGdMhDqJn
+         L0vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708691552; x=1709296352;
-        h=subject:from:content-language:to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iKcAq8RcDlGGMUjSfFpwpG8/ehKx84BWDJZINZc8Gvg=;
-        b=mrlpuzW8JB/7Iw+hTjxrR75mel9PV6x0U6fZQkacLdCWxGIcL3FA1GtU+dbOVTF8AY
-         FalsHT/NqOK3qiz/O1xFJB09Qm89QcfWQQohg82DMwJgYnaFaGM5pnEbCMGa/Uxv224v
-         2Xcoun9OVVSxichcY9I6u4k3N1YCfGpnALHyYLROQ2yKL6AehUWpwz5f+kPsPL1fsST4
-         Qk4vXNVAixNArwJDhSXLJEbpQWWq/WbjbSlrLB3kv2BPkJWouVDX5o78GJS7DA9aONG0
-         wLxnvJHnOpW4SVzdvfg3yHI7QgvMUQg+XynsZUkfCdHLRo/01xt+E9s4yUuK+0ADpcrk
-         p5AA==
-X-Gm-Message-State: AOJu0YyBUtV2GjqxOXXzV1Uh+BlSze7OEa+CdkJOcDzq9ruLpsqeOvfu
-	dBLyEvGE9RpEfwRAUsVH1D0rfETXS483oL6/G+6vH0CyJ8f6shHbK3U1ipJo+nR2CZoO5avzfhh
-	5
-X-Google-Smtp-Source: AGHT+IGMexk1ZxsTVFHzt4CelpEZ53wBX94i31Na1PFAmrrdwbmr5f7V36dnQRH076OWq3oX0EBNqg==
-X-Received: by 2002:a25:a2d1:0:b0:dc6:17d2:3b89 with SMTP id c17-20020a25a2d1000000b00dc617d23b89mr1616991ybn.61.1708691552155;
-        Fri, 23 Feb 2024 04:32:32 -0800 (PST)
-Content-Type: multipart/alternative;
- boundary="------------aLbgZxD8QGviYVG0iHnJ9lj1"
-Message-ID: <b65aad61-048f-406c-afa3-3254748c0504@brad-house.com>
-Date: Fri, 23 Feb 2024 07:32:30 -0500
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=2ZXgra4n7HIAPpvkRWj793uWU3QyPnErTkwAjBn9Vtc=;
+        b=kw2h8Sk3rpCi2INLhtXb1NP7J0HBi6KXPzSkX38shZrl4Sc11QlLnAno8BYz1xo+RU
+         EK3oVoNpZTqbUZypoXp6DufIrSzNYkiFX/asvbrPXPFSVSpPEocsrXDMCZEdo9AQ9SXe
+         Bs/FVnrmFxC2Da7jTYIuiOIqRFH4xBCRMkaIo8WZXuwEOfZGIr5MhiOS/kZMKLE58gpf
+         yE3c834GhJKgimYeNw8fTqa0DdSRQ50f2D7WmGHPgov/0NAe8TfqyzZ6neeHVf5lmZ/w
+         ZmVbRbkQh8B8ZcQlG8+bqIx7Jl5ffWAPoL4fDgdVcs+1u07uUCAJ6nEjChn6Ljkinzsf
+         bJzg==
+X-Gm-Message-State: AFeK/H0Ox6AUwKROAPhPdpSlJTjdgSSzJr56jJkmneGvd4pwYL7Dfi0twFPIQeBH1hJ1VsCLC+6Uw8ujEbsrPg==
+X-Received: by 10.159.39.38 with SMTP id a35mr6938351uaa.152.1489830711336;
+ Sat, 18 Mar 2017 02:51:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+In-Reply-To: <878to3f33h.fsf@prune.linuxpenguins.xyz>
+References: <87wpbq5uqz.fsf@gnu.org> <878to3f33h.fsf@prune.linuxpenguins.xyz>
+From: Jerome Athias <athiasjerome@gmail.com>
+Date: Sat, 18 Mar 2017 12:51:50 +0300
+Message-ID: <CAA=AuEenQx_oGZcY3iEwbp+frtfb1cw+fSaNH_kLQmv9+BkJKg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Language: en-US
-From: Brad House <brad@brad-house.com>
-Subject: [oss-security] c-ares CVE-2024-25629
+Content-Type: multipart/alternative; boundary=94eb2c123e4c532994054afe3eac
+Subject: Re: [oss-security] Dealing with CVEs that apply to unspecified
+ package versions
 
---------------aLbgZxD8QGviYVG0iHnJ9lj1
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--94eb2c123e4c532994054afe3eac
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-There is a single security vulnerability in c-ares that has been 
-released with c-ares 1.27.0.
+We also have this "Is File Version Comparison Sufficient Over Time?"
+discussion in the OVAL Developer ml.
+Yes, a reference to a commit is good to have, if you have time/resources
+for manual vulnerability analysis
+There is a trade-off, but I guess the point here is more on how to increase
+automation for mitigation/remediation of software vulnerabilities.
+Operation Rosehub is one example illustrating why it's important
 
-*CVE-2024-25629 *
+On Sat, Mar 18, 2017 at 10:36 AM, Brian May <brian@linuxpenguins.xyz> wrote:
 
+> Ludovic Court=C3=A8s <ludo@gnu.org> writes:
+>
+> > Some CVE entries do not specify the version of the package(s) they apply
+> > to.  For instance, the software list for CVE-2016-10165 contains
+> > =E2=80=9Ccpe:/a:littlecms:little_cms_color_engine=E2=80=9D, which theor=
+etically means
+> > that it applies to any version of lcms.
+> >
+> > The problem is automated tools cannot exploit such entries in practice
+> > because they cannot tell which package versions are affected.
+>
+> I am not sure the software version helps that much. It can lead to
+> incorrect decision. For example, for security flaw B upstream might say
+> versions before Y.Y.Y are not applicable - lets say version X.X.X <
+> Y.Y.Y and as such as OK, because the do not contain the vulnerable
+> code. In fact, somebody could check the code and mark this security flaw
+> as not applicable.
+>
+> Meanwhile, somebody else gets around to adding another (earlier)
+> security patch for A to Y.Y.Y. This security adds the vulnerable code
+> for B. Anybody making a quick inspection would not notice now that Y.Y.Y
+> patched for A is now vulnerable to B. In fact B was already marked as
+> not vulnerable, so there may not even be need to look at it again (not
+> sure how to solve this problem).
+>
+> While a "fixed in version" is useful, a pointer to a commit that fixed
+> the problem would be even better - and means less speculation on which
+> commit actually fixes the issue. In fact some upstreams won't even
+> answer bug reports asking if security issues has been fixed or not.
+> --
+> Brian May <brian@linuxpenguins.xyz>
+> https://linuxpenguins.xyz/brian/
+>
 
-      Impact
-
-|ares__read_line()|is used to parse local configuration files such 
-as|/etc/resolv.conf|,|/etc/nsswitch.conf|, the|HOSTALIASES|file, and if 
-using a c-ares version prior to 1.22.0, the|/etc/hosts|file. If any of 
-these configuration files has an embedded|NULL|character as the first 
-character in a new line, it can lead to attempting to read memory prior 
-to the start of the given buffer which may result in a crash.
-
-
-      Patches
-
-Fixed in c-ares 1.27.0
-
-
-      Workarounds
-
-No workarounds exist.
-
-
-      Credit
-
-Vojtěch Vobr
-
---------------aLbgZxD8QGviYVG0iHnJ9lj1--
+--94eb2c123e4c532994054afe3eac--
