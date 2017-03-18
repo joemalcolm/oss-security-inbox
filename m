@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/16
-Message-ID: <CAFWq12XK1SHqMYtxkgMmVq1JpfNL=kQb8qFnkLfn60qPsAxiRA@mail.gmail.com>
-Date: Wed, 1 Nov 2017 11:56:06 -0700
-From: Bill Farner <wfarner@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/18/1
+Message-ID: <20170318011201.GC4073@hunt>
+Date: Fri, 17 Mar 2017 18:12:02 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2016-4437] Apache Aurora information disclosure vulnerability
+Cc: security@...ntu.com
+Subject: CVE-2017-6967 xrdp PAM auth_start_session()
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected:
-Aurora 0.10.0 to 0.18.0
+Hello, CVE-2017-6967 has been assigned to xrdp for an incorrect placement
+of auth_start_session().
 
-Description:
-The affected versions of the scheduler rely on a version of Apache Shiro
-which is vulnerable to CVE-2016-4437.  Under certain conditions, the
-vulnerability allows remote attackers to execute arbitrary code or bypass
-intended access restrictions via an unspecified request parameter.
+Full details are at:
+https://github.com/neutrinolabs/xrdp/issues/350
+https://github.com/neutrinolabs/xrdp/pull/694
+https://github.com/neutrinolabs/xrdp/pull/695
+https://bugs.launchpad.net/ubuntu/+source/xrdp/+bug/1672742
 
-Mitigation:
-0.18.0 users should upgrade to 0.18.1
-0.10.0 - 0.17.0 users should upgrade to 0.18.1 or apply this patch
-https://git-wip-us.apache.org/repos/asf?p=aurora.git;a=commit;h=ec640117
-Alternatively, INI configuration mitigations outlined in CVE-2016-4437
-may be applied.
+I believe this is the change upstream has chosen to use:
 
-Credit:
-This issue was discovered by Greg Harris from the Fitbit Security team.
+https://github.com/neutrinolabs/xrdp/pull/696/commits/44129acd210c803fc8bbcfaf1b0db05e5bb4034f
 
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
