@@ -1,120 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/16/1
-Message-ID: <7688fc24-4af1-2922-2158-0095c244f9c9@orlitzky.com>
-Date: Wed, 15 Nov 2017 20:45:49 -0500
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/18/2
+Message-ID: <878to3f33h.fsf@prune.linuxpenguins.xyz>
+Date: Sat, 18 Mar 2017 18:36:50 +1100
+From: Brian May <brian@...uxpenguins.xyz>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-16834: pnp4nagios root privilege escalation via insecure permissions
+Subject: Re: Dealing with CVEs that apply to unspecified package versions
 Content-Type: text/plain; charset=utf-8
 
-Product: pnp4nagios <https://github.com/lingej/pnp4nagios>
-Versions-affected: 0.6.26 and earlier (all modern versions)
-Author: Michael Orlitzky
-Bug-report: https://github.com/lingej/pnp4nagios/issues/140
+Ludovic Courtès <ludo@....org> writes:
 
-== Summary ==
+> Some CVE entries do not specify the version of the package(s) they apply
+> to.  For instance, the software list for CVE-2016-10165 contains
+> “cpe:/a:littlecms:little_cms_color_engine”, which theoretically means
+> that it applies to any version of lcms.
+>
+> The problem is automated tools cannot exploit such entries in practice
+> because they cannot tell which package versions are affected.
 
-The pnp4nagios build system installs two sets of files with insecure
-permissions. After installation, the executables and the configuration
-files are all owned by the same unprivileged user and group
-(typically, "nagios") that the npcd daemon runs as. In one attack, the
-unprivileged user simply replaces the npcd executable with one that
-does his bidding. A slightly more complicated attack can be mounted by
-the unprivileged user by configuring a malicious action and then
-altering npcd.cfg to execute that action as root.
+I am not sure the software version helps that much. It can lead to
+incorrect decision. For example, for security flaw B upstream might say
+versions before Y.Y.Y are not applicable - lets say version X.X.X <
+Y.Y.Y and as such as OK, because the do not contain the vulnerable
+code. In fact, somebody could check the code and mark this security flaw
+as not applicable.
 
+Meanwhile, somebody else gets around to adding another (earlier)
+security patch for A to Y.Y.Y. This security adds the vulnerable code
+for B. Anybody making a quick inspection would not notice now that Y.Y.Y
+patched for A is now vulnerable to B. In fact B was already marked as
+not vulnerable, so there may not even be need to look at it again (not
+sure how to solve this problem).
 
-== Details ==
-
-The pnp4nagios build system allows you to specify a runtime user and
-group (default: "nagios") via the two ./configure parameters
-"--with-nagios-user" and "--with-nagios-group":
-
-  AC_ARG_WITH(
-    nagios_user,
-    AC_HELP_STRING([--with-nagios-user=<user>],
-                   [sets user name to run nagios]),
-    nagios_user=$withval,
-    nagios_user=nagios)
-
-  AC_ARG_WITH(
-    nagios_group,
-    AC_HELP_STRING([--with-nagios-group=<grp>],
-                   [sets group name to run nagios]),
-    nagios_grp=$withval,
-    nagios_grp=nagios)
-
-  AC_SUBST(nagios_user)
-  AC_SUBST(nagios_grp)
-
-The npcd daemon runs as that user and group by default, because the
-upstream configuration file incorporates those flag values into the
-user and group settings in sample-config/pnp/npcd.cfg-sample.in:
-
-  # Privilege Options
-  user = @nagios_user@
-  group = @nagios_grp@
-
-The build system then installs most of the files for the package with
-their owners/groups set to the user and group specified, through the
-pervasive use of the following INSTALL_OPTS in configure.ac:
-
-  INSTALL_OPTS="-o $nagios_user -g $nagios_grp"
-  AC_SUBST(INSTALL_OPTS)
-
-This creates vulnerabilities because the npcd daemon is intended to be
-run as root.
-
-
-== Exploitation ==
-
-The default ownership is exploitable in at least two ways:
-
-  * The runtime user owns the daemon executable, typically located at
-    /usr/bin/npcd. That executable is run as root, and drops privileges
-    to the runtime user itself. This invites a simple attack where the
-    runtime user replaces the daemon executable with his own code.
-
-  * The daemon configuration file npcd.cfg is also owned by the
-    unprivileged runtime user, but npcd.cfg is where the runtime user
-    and group are specified. The unprivileged runtime user can schedule
-    a malicious action (specified in the configuration files he owns)
-    and then put user=root in npcd.cfg. The next time the daemon is
-    started, it will run as root and execute the malicious action.
-
-
-== Mitigation ==
-
-For new installations, trial and error has shown that the
-aforementioned INSTALL_OPTS are unnecessary. Users can unset that
-variable when installing pnp4nagios,
-
-  $ make INSTALL_OPTS="" install
-
-to avoid setting the insecure permissions in the first place.
-Afterwards, there are four directories that need to be made writable
-by the runtime user,
-
-  * The directory specified by the --with-perfdata-dir configure flag.
-  * The directory specified by the --with-perfdata-spool-dir flag.
-  * The directory containing the file for the --with-perfdata-logfile
-    configure flag.
-  * The STATS_DIR defined in process_perfdata.cfg.
-
-Note that the above can be made writable through group permissions
-rather than directory ownership.
-
-In addition, upgraders will need to reset all pre-existing ownership
-and group information to safe values. Unfortunately, executing the
-following command recursively would risk breaking existing Nagios
-installations; so instead, users must be responsible for running it
-only on those $paths installed by pnp4nagios:
-
-  $ nagios_user=nagios
-  $ nagios_group=nagios
-  $ chown --no-dereference --from="${nagios_user}" root $path
-  $ chown --no-dereference --from=":${nagios_group}" :0 $path
-
-Repeat for every $path installed by pnp4nagios, and keep in mind that
-afterwards, the four directories mentioned earlier will need to be made
-writable by the runtime user.
+While a "fixed in version" is useful, a pointer to a commit that fixed
+the problem would be even better - and means less speculation on which
+commit actually fixes the issue. In fact some upstreams won't even
+answer bug reports asking if security issues has been fixed or not.
+-- 
+Brian May <brian@...uxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
