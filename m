@@ -1,33 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/5
-Message-ID: <alpine.LFD.2.20.1701241547390.10545@wniryva>
-Date: Tue, 24 Jan 2017 15:49:53 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Virglrenderer: OOB access while parsing texture instruction
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/18/3
+Message-ID: <CAA=AuEenQx_oGZcY3iEwbp+frtfb1cw+fSaNH_kLQmv9+BkJKg@mail.gmail.com>
+Date: Sat, 18 Mar 2017 12:51:50 +0300
+From: Jerome Athias <athiasjerome@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Dealing with CVEs that apply to unspecified package versions
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+We also have this "Is File Version Comparison Sufficient Over Time?"
+discussion in the OVAL Developer ml.
+Yes, a reference to a commit is good to have, if you have time/resources
+for manual vulnerability analysis
+There is a trade-off, but I guess the point here is more on how to increase
+automation for mitigation/remediation of software vulnerabilities.
+Operation Rosehub is one example illustrating why it's important
 
-Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
-for the virtio GPU, is vulnerable to an OOB array access issue. It could occur 
-when parsing texture instructions in parse_instruction().
+On Sat, Mar 18, 2017 at 10:36 AM, Brian May <brian@...uxpenguins.xyz> wrote:
 
-A guest user/process could use this flaw to crash the Qemu process instance 
-resulting DoS.
+> Ludovic Courtès <ludo@....org> writes:
+>
+> > Some CVE entries do not specify the version of the package(s) they apply
+> > to.  For instance, the software list for CVE-2016-10165 contains
+> > “cpe:/a:littlecms:little_cms_color_engine”, which theoretically means
+> > that it applies to any version of lcms.
+> >
+> > The problem is automated tools cannot exploit such entries in practice
+> > because they cannot tell which package versions are affected.
+>
+> I am not sure the software version helps that much. It can lead to
+> incorrect decision. For example, for security flaw B upstream might say
+> versions before Y.Y.Y are not applicable - lets say version X.X.X <
+> Y.Y.Y and as such as OK, because the do not contain the vulnerable
+> code. In fact, somebody could check the code and mark this security flaw
+> as not applicable.
+>
+> Meanwhile, somebody else gets around to adding another (earlier)
+> security patch for A to Y.Y.Y. This security adds the vulnerable code
+> for B. Anybody making a quick inspection would not notice now that Y.Y.Y
+> patched for A is now vulnerable to B. In fact B was already marked as
+> not vulnerable, so there may not even be need to look at it again (not
+> sure how to solve this problem).
+>
+> While a "fixed in version" is useful, a pointer to a commit that fixed
+> the problem would be even better - and means less speculation on which
+> commit actually fixes the issue. In fact some upstreams won't even
+> answer bug reports asking if security issues has been fixed or not.
+> --
+> Brian May <brian@...uxpenguins.xyz>
+> https://linuxpenguins.xyz/brian/
+>
 
-Upstream patch:
----------------
-   -> https://lists.freedesktop.org/archives/virglrenderer-devel/2017-January/000105.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1415986
-
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
