@@ -1,4 +1,9 @@
-Received: (qmail 14004 invoked by uid 550); 17 Dec 2025 01:50:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1561" "Saturday" "18" "March" "2017" "18:36:50" "+1100" "Brian May" "brian@linuxpenguins.xyz" "<878to3f33h.fsf@prune.linuxpenguins.xyz>" "32" "Re: [oss-security] Dealing with CVEs that apply to unspecified package versions" nil nil nil "3" "2017031807:36:50" "[oss-security] Dealing with CVEs that apply to unspecified package versions" (number mark "U       brian@linuxp Mar 18   32/1561  " thread-indent "\"Re: [oss-security] Dealing with CVEs that apply to unspecified package versions\"\n") "<87wpbq5uqz.fsf@gnu.org>" ("<87wpbq5uqz.fsf@gnu.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21816 invoked by uid 550); 18 Mar 2017 07:37:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,116 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1726 invoked from network); 17 Dec 2025 01:20:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=5jUmqHXuIkL7c5ZO7g14rvW9E+doA9/CNHUsAb6WMpQ=; b=a0PFKI1m3EFi5BGheLHVW1pCba
-	VimJqf0eV+fLCBccdXwGwV/VqKpG0p7xfM993cofLk59iqxnvJJOLjcrD3ZBVBkLWtnIN7I79MrdZ
-	MzA0bAfln9ZvRl9hw7wZCoBp5Jxrgd1cBAEk2jOBnsLLnzGQ6nQWmeX7zvwFVBnVavxlNjSnKZAfO
-	62Gy5iTt6e8MLBwE71XZzXH1nBKAqwliLvgv8MYo4Jf3I9NvAietlY9omOdNmcP762YtPC+vWLItL
-	3UwrXPQRRP7E5jAnaxqNuIXw9G40b1WNVp0OZWIr/2L4uc6pS64W9koK0YFXkbf9Z8k/XJVQj0eHk
-	bTzK3pSg==;
-Date: Wed, 17 Dec 2025 03:20:34 +0200
-Message-ID: <20251217032034.GD672965@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
+Received: (qmail 21795 invoked from network); 18 Mar 2017 07:37:10 -0000
+X-Virus-Scanned: amavisd-new at kolabnow.com
+From: Brian May <brian@linuxpenguins.xyz>
+To: oss-security@lists.openwall.com
+In-Reply-To: <87wpbq5uqz.fsf@gnu.org>
+References: <87wpbq5uqz.fsf@gnu.org>
+Date: Sat, 18 Mar 2017 18:36:50 +1100
+Message-ID: <878to3f33h.fsf@prune.linuxpenguins.xyz>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="K8XAh2X6+9/RLLcx"; micalg="pgp-sha256"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0010
-
---K8XAh2X6+9/RLLcx
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Dealing with CVEs that apply to unspecified package versions
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
-eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAxMAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
-b3J0ZWQgICAgICAgICAgIDogRGVjZW1iZXIgMTcsIDIwMjUKQWR2aXNvcnkgSUQgICAgICAgICAg
-ICAgOiBXU0EtMjAyNS0wMDEwCldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJr
-aXRndGsub3JnL3NlY3VyaXR5L1dTQS0yMDI1LTAwMTAuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5
-IFVSTCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNS0wMDEwLmh0bWwK
-Q1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNS0xNDE3NCwgQ1ZFLTIwMjUtNDM1MDEs
-CiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjUtNDM1MjksIENWRS0yMDI1LTQzNTMx
-LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTQzNTM1LCBDVkUtMjAyNS00MzUz
-NiwKICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS00MzU0MS4KClNldmVyYWwgdnVs
-bmVyYWJpbGl0aWVzIHdlcmUgZGlzY292ZXJlZCBpbiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQu
-CgpDVkUtMjAyNS0xNDE3NAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BF
-IFdlYktpdCBiZWZvcmUgMi41MC40LgogICAgQ3JlZGl0IHRvIEFwcGxlIGFuZCBHb29nbGUgVGhy
-ZWF0IEFuYWx5c2lzIEdyb3VwLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNy
-YWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8KICAgIG1lbW9yeSBjb3JydXB0aW9uLiBBcHBs
-ZSBpcyBhd2FyZSBvZiBhIHJlcG9ydCB0aGF0IHRoaXMgaXNzdWUgbWF5CiAgICBoYXZlIGJlZW4g
-ZXhwbG9pdGVkIGluIGFuIGV4dHJlbWVseSBzb3BoaXN0aWNhdGVkIGF0dGFjayBhZ2FpbnN0CiAg
-ICBzcGVjaWZpYyB0YXJnZXRlZCBpbmRpdmlkdWFscyBvbiB2ZXJzaW9ucyBvZiBpT1MgYmVmb3Jl
-IGlPUyAyNi4KICAgIENWRS0yMDI1LTQzNTI5IHdhcyBhbHNvIGlzc3VlZCBpbiByZXNwb25zZSB0
-byB0aGlzIHJlcG9ydC4KICAgIERlc2NyaXB0aW9uOiBBIG1lbW9yeSBjb3JydXB0aW9uIGlzc3Vl
-IHdhcyBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZAogICAgdmFsaWRhdGlvbi4KICAgIFdlYktpdCBC
-dWd6aWxsYTogMzAzNjE0CgpDVkUtMjAyNS00MzUwMQogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdl
-YktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41MC40LgogICAgQ3JlZGl0IHRvIEhvc3Nl
-aW4gTG90ZmkgKEBob3NzZWxvdCkgb2YgVHJlbmQgTWljcm8gWmVybyBEYXkgSW5pdGlhdGl2ZS4K
-ICAgIEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1h
-eSBsZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIHByb2Nlc3MgY3Jhc2guIERlc2NyaXB0aW9uOiBB
-IGJ1ZmZlciBvdmVyZmxvdyBpc3N1ZSB3YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIG1l
-bW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMzAxMzcxCgpDVkUtMjAyNS00MzUy
-OQogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUg
-Mi41MC40LgogICAgQ3JlZGl0IHRvIEdvb2dsZSBUaHJlYXQgQW5hbHlzaXMgR3JvdXAuCiAgICBJ
-bXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVh
-ZCB0bwogICAgYXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLiBBcHBsZSBpcyBhd2FyZSBvZiBhIHJl
-cG9ydCB0aGF0IHRoaXMgaXNzdWUKICAgIG1heSBoYXZlIGJlZW4gZXhwbG9pdGVkIGluIGFuIGV4
-dHJlbWVseSBzb3BoaXN0aWNhdGVkIGF0dGFjayBhZ2FpbnN0CiAgICBzcGVjaWZpYyB0YXJnZXRl
-ZCBpbmRpdmlkdWFscyBvbiB2ZXJzaW9ucyBvZiBpT1MgYmVmb3JlIGlPUyAyNi4KICAgIENWRS0y
-MDI1LTE0MTc0IHdhcyBhbHNvIGlzc3VlZCBpbiByZXNwb25zZSB0byB0aGlzIHJlcG9ydC4KICAg
-IERlc2NyaXB0aW9uOiBBIHVzZS1hZnRlci1mcmVlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aCBp
-bXByb3ZlZAogICAgbWVtb3J5IG1hbmFnZW1lbnQuCiAgICBXZWJLaXQgQnVnemlsbGE6IDMwMjUw
-MgoKQ1ZFLTIwMjUtNDM1MzEKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQ
-RSBXZWJLaXQgYmVmb3JlIDIuNTAuNC4KICAgIENyZWRpdCB0byBQaGlsIFBpemxvIG9mIEVwaWMg
-R2FtZXMuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29u
-dGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlw
-dGlvbjogQSByYWNlIGNvbmRpdGlvbiB3YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIHN0
-YXRlIGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAzMDE5NDAKCkNWRS0yMDI1LTQzNTM1
-CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAy
-LjUwLjQuCiAgICBDcmVkaXQgdG8gR29vZ2xlIEJpZyBTbGVlcCwgTmFuIFdhbmcgKEBldGVybmFs
-c2FrdXJhMTMpLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2Vi
-IGNvbnRlbnQgbWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgcHJvY2VzcyBjcmFzaC4gRGVz
-Y3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgKICAgIGltcHJvdmVkIG1lbW9y
-eSBoYW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMzAxMzM4CgpDVkUtMjAyNS00MzUzNgog
-ICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41
-MC40LgogICAgQ3JlZGl0IHRvIE5hbiBXYW5nIChAZXRlcm5hbHNha3VyYTEzKS4KICAgIEltcGFj
-dDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRv
-IGFuCiAgICB1bmV4cGVjdGVkIHByb2Nlc3MgY3Jhc2guIERlc2NyaXB0aW9uOiBBIHVzZS1hZnRl
-ci1mcmVlIGlzc3VlIHdhcwogICAgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgbWVtb3J5IG1hbmFn
-ZW1lbnQuCiAgICBXZWJLaXQgQnVnemlsbGE6IDMwMTcyNgoKQ1ZFLTIwMjUtNDM1NDEKICAgIFZl
-cnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTAuNC4K
-ICAgIENyZWRpdCB0byBIb3NzZWluIExvdGZpIChAaG9zc2Vsb3QpIG9mIFRyZW5kIE1pY3JvIFpl
-cm8gRGF5IEluaXRpYXRpdmUuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3Jh
-ZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBTYWZhcmkgY3Jh
-c2guIERlc2NyaXB0aW9uOiBBIHR5cGUgY29uZnVzaW9uIGlzc3VlIHdhcwogICAgYWRkcmVzc2Vk
-IHdpdGggaW1wcm92ZWQgc3RhdGUgaGFuZGxpbmcuCiAgICBXZWJLaXQgQnVnemlsbGE6IDMwMTI1
-NwoKV2UgcmVjb21tZW5kIHVwZGF0aW5nIHRvIHRoZSBsYXRlc3Qgc3RhYmxlIHZlcnNpb25zIG9m
-IFdlYktpdEdUSyBhbmQgV1BFCldlYktpdC4gSXQgaXMgdGhlIGJlc3Qgd2F5IHRvIGVuc3VyZSB0
-aGF0IHlvdSBhcmUgcnVubmluZyBzYWZlIHZlcnNpb25zCm9mIFdlYktpdC4gUGxlYXNlIGNoZWNr
-IG91ciB3ZWJzaXRlcyBmb3IgaW5mb3JtYXRpb24gYWJvdXQgdGhlIGxhdGVzdApzdGFibGUgcmVs
-ZWFzZXMuCgpGdXJ0aGVyIGluZm9ybWF0aW9uIGFib3V0IFdlYktpdEdUSyBhbmQgV1BFIFdlYktp
-dCBzZWN1cml0eSBhZHZpc29yaWVzCmNhbiBiZSBmb3VuZCBhdDogaHR0cHM6Ly93ZWJraXRndGsu
-b3JnL3NlY3VyaXR5Lmh0bWwgb3IKaHR0cHM6Ly93cGV3ZWJraXQub3JnL3NlY3VyaXR5LgoKVGhl
-IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCB0ZWFtLAo=
+Ludovic Court=C3=A8s <ludo@gnu.org> writes:
 
---K8XAh2X6+9/RLLcx
-Content-Type: application/pgp-signature; name="signature.asc"
+> Some CVE entries do not specify the version of the package(s) they apply
+> to.  For instance, the software list for CVE-2016-10165 contains
+> =E2=80=9Ccpe:/a:littlecms:little_cms_color_engine=E2=80=9D, which theoret=
+ically means
+> that it applies to any version of lcms.
+>
+> The problem is automated tools cannot exploit such entries in practice
+> because they cannot tell which package versions are affected.
 
------BEGIN PGP SIGNATURE-----
+I am not sure the software version helps that much. It can lead to
+incorrect decision. For example, for security flaw B upstream might say
+versions before Y.Y.Y are not applicable - lets say version X.X.X <
+Y.Y.Y and as such as OK, because the do not contain the vulnerable
+code. In fact, somebody could check the code and mark this security flaw
+as not applicable.
 
-iF0EABEIAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCaUIFYgAKCRCRxVnb5MkS
-OyyaAJ0XwSgFWKY6wNsb4N+Cqe47ZqN9yACdELNhDdnC2V4lJk8BBj/f8dqmXdE=
-=aiRf
------END PGP SIGNATURE-----
+Meanwhile, somebody else gets around to adding another (earlier)
+security patch for A to Y.Y.Y. This security adds the vulnerable code
+for B. Anybody making a quick inspection would not notice now that Y.Y.Y
+patched for A is now vulnerable to B. In fact B was already marked as
+not vulnerable, so there may not even be need to look at it again (not
+sure how to solve this problem).
 
---K8XAh2X6+9/RLLcx--
+While a "fixed in version" is useful, a pointer to a commit that fixed
+the problem would be even better - and means less speculation on which
+commit actually fixes the issue. In fact some upstreams won't even
+answer bug reports asking if security issues has been fixed or not.
+--=20
+Brian May <brian@linuxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
