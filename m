@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1700" "Wednesday" "13" "January" "2016" "12:51:42" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160113175142.1E7576C09BD@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function" nil nil nil "1" "2016011317:51:42" "[oss-security] Re: Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function" (number mark "U       cve-assign@m Jan 13   39/1700  " thread-indent "\"[oss-security] Re: Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function\"\n") "<3626D6E697A150459C44C0E5D8D8D00E0DBD5177@EX02.corp.qihoo.net>" ("<3626D6E697A150459C44C0E5D8D8D00E0DBD5177@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1011" "Saturday" "18" "March" "2017" "18:42:51" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<57017841-788f-5012-bc78-b70328d349a5@oracle.com>" "27" "Re: [oss-security] CVE-2016-3631 - libtiff 4.0.6 illegel read" nil nil nil "3" "2017031901:42:51" "[oss-security] CVE-2016-3631 - libtiff 4.0.6 illegel read" (number mark "U       alan.coopers Mar 18   27/1011  " thread-indent "\"Re: [oss-security] CVE-2016-3631 - libtiff 4.0.6 illegel read\"\n") "<5EDB84F4B23F5B4DB6500A89258280E0B97359@EX02.corp.qihoo.net>" ("<5EDB84F4B23F5B4DB6500A89258280E0B97359@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17978 invoked by uid 550); 13 Jan 2016 17:51:55 -0000
+Received: (qmail 15702 invoked by uid 550); 19 Mar 2017 01:43:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17954 invoked from network); 13 Jan 2016 17:51:54 -0000
-From: cve-assign@mitre.org
-To: limingxing@360.cn
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <3626D6E697A150459C44C0E5D8D8D00E0DBD5177@EX02.corp.qihoo.net>
-Message-Id: <20160113175142.1E7576C09BD@smtpvmsrv1.mitre.org>
-Date: Wed, 13 Jan 2016 12:51:42 -0500 (EST)
-Subject: [oss-security] Re: Out-of-bounds Read in the JasPer's jpc_pi_nextcprl() function
+Received: (qmail 15684 invoked from network); 19 Mar 2017 01:43:06 -0000
+To: oss-security@lists.openwall.com
+References: <5EDB84F4B23F5B4DB6500A89258280E0B97359@EX02.corp.qihoo.net>
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Message-ID: <57017841-788f-5012-bc78-b70328d349a5@oracle.com>
+Date: Sat, 18 Mar 2017 18:42:51 -0700
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
+MIME-Version: 1.0
+In-Reply-To: <5EDB84F4B23F5B4DB6500A89258280E0B97359@EX02.corp.qihoo.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Source-IP: aserv0021.oracle.com [141.146.126.233]
+Subject: Re: [oss-security] CVE-2016-3631 - libtiff 4.0.6 illegel read
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 04/ 8/16 12:12 AM, 张开翔 wrote:
+> Details
+> =======
+>
+> Product: libtiff
+> Affected Versions: <= 4.0.6
+> Vulnerability Type: Illegel read
+> Vendor URL: http://www.libtiff.org/
+> CVE ID: CVE-2016-3631
+> Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+>
+> Introduction
+>
+> Illegal read occurs in the cpStrips and cpTiles function in thumbnail.c in thumbnail allows attackers to exploit this issue to cause denial-of-service.
 
-> We find a vulnerability in the way JasPer's jpc_pi_nextcprl() function parsed certain JPEG 2000 image files.
-> I was successful in reproducing this issuel in the jasper-1.900.1-31.fc23.src.
-> 
-> Starting program: ./jasper-1.900.1-31.fc23.src/jasper-1.900.1/src/appl/jasper -f ./jasper_poc/poc.jp2 -F temp.bmp -t jp2 -T bmp
-> warning: trailing garbage in marker segment (6 bytes)
-> 
-> Program received signal SIGSEGV, Segmentation fault.
-> jpc_pi_nextcprl (pi=0x80a4ab0) at jpc_t2cod.c:435
-> 435				  pi->xstep = pi->picomp->hsamp * (1 << (pirlvl->prcwidthexpn +
-> (gdb) bt
-> #0  jpc_pi_nextcprl (pi=0x80a4ab0) at jpc_t2cod.c:435
+While this CVE is not listed in the libtiff 4.0.7 release notes, that
+version appears to resolve it via this release note item:
+    'The libtiff tools rgb2ycbcr and thumbnail are only built in the build
+     tree for testing.'
 
-Use CVE-2016-1867.
+I still can't find a bug id specifically for this one in the libtiff bug
+tracker, but for the similar CVE-2016-3634 this removal is listed as the
+resolution in http://bugzilla.maptools.org/show_bug.cgi?id=2547 .
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWlos+AAoJEL54rhJi8gl5FlAP/0UvdOa/MOmWwDQeofST/PbE
-Ba+vQZcXSj58kD77fBaq6rfWbmlMGdK+F7hxyICV9ajWS/Pm+aXhXquF9vsqDsIR
-5//jE3TWvmUgxXebX8Qyqp8xGtJH2Gpaqz/bYiCf9RjUPhaPiQkNxTRl08p5yF4H
-DSoDZS8NLfOgI6gAPEsbQRM1XoJM+rzv0VUcDbOMcQGXxjMGN4EMKM4vml5svvLX
-2dn9BDAPMjTxPm62h1PLQFLCV7gyRmBN4Vu+Ya0HHob4jSb4NoPdxVPO9Jd1UdmJ
-y5KTpEYaTBhSrPtvXLS9UixUuUn/1ShkiQEZWpFJ7MUHcet2zRlm6sXj+xWssFbN
-5qW7mXgMZ3bECRKn+hFonj5Z0spZfvA6bQKZJKBTMIIEBdsI/C/Vti6DBSeiRhmT
-HiZmIHs31X+PpVQNrEw0AaCUEyp3GtYOWpuxXETyBdpsl9Ky5ubS5Hw2bPVNsjz6
-i291DcFlYvXlcLgh6JDJrKEYiOU+ZtYZWBpEK4XIPG0yvx1GTbeTnQJ2/yhCj7pU
-i69jRs3NkkG9snEOJbQv5n6ABTinrIB1PwxSYy9ekPIrbJnV+65TRf7wXTXvJ4Gi
-cebpJS8orRbgml1X4Azfc9bFoeZlpHBP90XhmZydvo6cGcYQS6ZQGI0p9uz7ssDF
-FcISpiPnRyny+eqg65Q3
-=FzZr
------END PGP SIGNATURE-----
+-- 
+	-Alan Coopersmith-              alan.coopersmith@oracle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
