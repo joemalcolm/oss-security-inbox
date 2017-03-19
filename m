@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/22/13
-Message-ID: <2113704961.13214334.1506089666956.JavaMail.zimbra@redhat.com>
-Date: Fri, 22 Sep 2017 10:14:26 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/19/1
+Message-ID: <57017841-788f-5012-bc78-b70328d349a5@oracle.com>
+Date: Sat, 18 Mar 2017 18:42:51 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-14489: Linux kernel: scsi: nlmsg is not properly parsed in iscsi_if_rx()
+Subject: Re: CVE-2016-3631 - libtiff 4.0.6 illegel read
 Content-Type: text/plain; charset=utf-8
 
-Heololo,
+On 04/ 8/16 12:12 AM, 张开翔 wrote:
+> Details
+> =======
+>
+> Product: libtiff
+> Affected Versions: <= 4.0.6
+> Vulnerability Type: Illegel read
+> Vendor URL: http://www.libtiff.org/
+> CVE ID: CVE-2016-3631
+> Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+>
+> Introduction
+>
+> Illegal read occurs in the cpStrips and cpTiles function in thumbnail.c in thumbnail allows attackers to exploit this issue to cause denial-of-service.
 
-It was found that the iscsi_if_rx() function in 'drivers/scsi/scsi_transport_iscsi.c'
-in the Linux kernel since v2.6.24-rc1 through 4.13.2 allows local users to cause
-a denial of service (a system panic) by making a number of certain syscalls by
-leveraging incorrect length validation in the kernel code.
+While this CVE is not listed in the libtiff 4.0.7 release notes, that
+version appears to resolve it via this release note item:
+    'The libtiff tools rgb2ycbcr and thumbnail are only built in the build
+     tree for testing.'
 
-Our tests show that indeed an unprivileged local user can easily cause (i.e. run a binary)
-a system panic or a compete lock up. A wide range of kernel versions is affected, from
-v2.6.24-rc1 till the latest ones.
+I still can't find a bug id specifically for this one in the libtiff bug
+tracker, but for the similar CVE-2016-3634 this removal is listed as the
+resolution in http://bugzilla.maptools.org/show_bug.cgi?id=2547 .
 
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1490421
-
-https://www.suse.com/security/cve/CVE-2017-14489/
-
-https://nvd.nist.gov/vuln/detail/CVE-2017-14489
-
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14489
-
-A suggested upstream patch:
-
-https://patchwork.kernel.org/patch/9923803/
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
