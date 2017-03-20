@@ -1,52 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/2
-Message-ID: <87ziazjhca.fsf@fifthhorseman.net>
-Date: Wed, 16 Aug 2017 18:08:53 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Russ Allbery <eagle@...ie.org>, Florian Weimer <fweimer@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Insecure DNS dependency in many Kerberos deployments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/4
+Message-ID: <762448.990109505-sendEmail@localhost>
+Date: Mon, 20 Mar 2017 10:26:26 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libpcre: invalid memory read in match (pcre_exec.c)
 Content-Type: text/plain; charset=utf-8
 
-On Wed 2017-08-16 10:52:54 -0700, Russ Allbery wrote:
-> Florian Weimer <fweimer@...hat.com> writes:
->
->> As a rule of thumb, the impact is similar to running TLS with CA-based
->> certificate validation, but without host name checks (but perhaps
->> slightly less because the trust domains could be much smaller).
->
-> I think this overstates the impact somewhat.  This is more worrisome with
-> TLS because for most TLS applications there is a single global trust
-> domain with certificates issued by dozens or hundreds of parties and no
-> organizational scoping.
+Description:
+libpcre is a perl-compatible regular expression library.
 
-fwiw, I think that's what Florian means by his parenthetical aside.
+A fuzz on libpcre1 through the pcretest utility revealed an invalid read in the library. For who is interested in a detailed description of the bug, will follow a feedback from upstream:
 
-> This is a much higher bar to meet, and in a lot of organizations this
-> bar cannot be easily met by an attacker.
+This was a genuine bug in the 32-bit library. Thanks for finding it. The crash was caused by trying to find a Unicode property for a code value greater than 0x10ffff, the Unicode maximum, when running 
+in non-UTF mode (where character values can be up to 0xffffffff). The bug was in both PCRE1 and PCRE2. I have fixed both of them.
 
-While i understand the desire to be clear about the constrained scope of
-the risk, i think another way of saying what you're saying is "control
-over one service in a domain and the ability to poison the DNS allows
-that service operator to masquerade as any other service in the domain".
+The complete ASan output:
 
-Even for domains where a single administrator controls all machines,
-this violates principles of privilege separation that admins rely on to
-be able to deploy potentially-buggy services without putting the other
-services at risk.
+# pcretest -32 -d $FILE
+==14788==ERROR: AddressSanitizer: SEGV on unknown address 0x7f1bbffed4df (pc 0x7f1bbee3fe6b bp 0x7fff8b50d8c0 sp 0x7fff8b50d3a0 T0)
+==14788==The signal is caused by a READ memory access.
+    #0 0x7f1bbee3fe6a in match /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:5473:18
+    #1 0x7f1bbee09226 in pcre32_exec /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:6936:8
+    #2 0x527d6c in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5218:9
+    #3 0x7f1bbddd678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #4 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
 
-So i think it's worth taking this seriously, despite(?) its age and
-widespread deployment.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:5473:18 in match
+==14788==ABORTING
 
-> For the record, those are settings for *a* Kerberos client library,
-> not *the* Kerberos client library (specifically, the MIT Kerberos
-> implementation).  Heimdal does not use those settings, and there are
-> other Kerberos implementations as well.
+Affected version:
+8.40 and 10.23
 
-The fact that some client libraries *don't* do this should give us hope
-that it's fixable, even in existing deployments :)
+Fixed version:
+8.41 and 10.24 (not released atm)
 
-     --dkg
+Commit fix for libpcre1:
+https://vcs.pcre.org/pcre/code/trunk/pcre_internal.h?r1=1649&r2=1688&sortby=date
+https://vcs.pcre.org/pcre/code/trunk/pcre_ucd.c?r1=1490&r2=1688&sortby=date
+
+Commit fix for libpcre2:
+https://vcs.pcre.org/pcre2/code/trunk/src/pcre2_ucd.c?r1=316&r2=670&sortby=date
+https://vcs.pcre.org/pcre2/code/trunk/src/pcre2_internal.h?r1=600&r2=670&sortby=date
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-7186
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00204-pcre-invalidread1-pcre_exec
+
+Timeline:
+2017-02-23: bug discovered and reported to upstream
+2017-02-24: upstream released a patch
+2017-03-14: blog post about the issue
+2017-03-19: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/14/libpcre-invalid-memory-read-in-match-pcre_exec-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
