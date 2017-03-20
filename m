@@ -1,53 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/2
-Message-ID: <20170629093354.GA4211@sisay.ephaone.org>
-Date: Thu, 29 Jun 2017 11:33:54 +0200
-From: Michael Scherer <misc@...b.org>
-To: oss-security@...ts.openwall.com
-Subject: rkhunter: [CVE-2017-7480] Potential RCE after MiTM due to clear text download without signature
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/5
+Message-ID: <280519.226656423-sendEmail@localhost>
+Date: Mon, 20 Mar 2017 10:28:08 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libpcre: two stack-based buffer overflow write in pcre32_copy_substring (pcre_get.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
+libpcre is a perl-compatible regular expression library.
 
-while evaluating various security solutions, I looked at
-rkhunter, and found that it do download by default various
-files over http and parse them with bash:
+A fuzz on libpcre1 through the pcretest utility revealed two stack overflow write. Upstream says that these bugs are fixed by one of the previous commit. However I’m providing as usual the stacktrace 
+and the reproducer, so if you are not running the latest upstream release, like happen on debian/rhel based distros, you may want to check better the status of this bug.
+
+The complete ASan output:
+
+# pcretest -32 -d $FILE
+==29686==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7f58f32026a0 at pc 0x7f58f6f90a24 bp 0x7ffea3aa3b30 sp 0x7ffea3aa3b28
+WRITE of size 4 at 0x7f58f32026a0 thread T0
+    #0 0x7f58f6f90a23 in pcre32_copy_substring /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_get.c:358:15
+    #1 0x528220 in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5333:13
+    #2 0x7f58f5ea778f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #3 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00207-pcre-stackoverflow-pcre32_copy_substring
+
+# pcretest -32 -d $FILE
+==21399==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7f83734026a0 at pc 0x0000004bd2ac bp 0x7ffdda673b30 sp 0x7ffdda6732e0
+WRITE of size 268 at 0x7f83734026a0 thread T0
+    #0 0x4bd2ab in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
+    #1 0x7f8377118925 in pcre32_copy_substring /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_get.c:357:1
+    #2 0x528220 in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5333:13
+    #3 0x7f837602f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #4 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00209-pcre-stackoverflow2-read_capture_name32
+
+Affected version:
+8.40
+
+Fixed version:
+8.41 (not released atm)
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2017-02-24: bug discovered and reported to upstream
+2017-03-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/20/libpcre-two-stack-based-buffer-overflow-write-in-pcre32_copy_substring-pcre_get-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-For example, it download mirrors.dat over http, using no signature and
-just a version verification that can be faked:
-
-# cat /var/lib/rkhunter/db/mirrors.dat
-Version:2007060601
-mirror=http://rkhunter.sourceforge.net
-mirror=http://rkhunter.sourceforge.net
-
-So I will assume that a attacker can inject a file with MITM without
-much problem.
-
-And it turn out that since rkhunter is in bash, it parse the file as
-bash.
-
-So adding something like:
-
-mirror=$(sleep 455)
-
-in the file result into "rkhunter --update" doing this:
-
-\_ /bin/sh /usr/bin/rkhunter --update
-\_ /bin/sh /usr/bin/rkhunter --update
-\_ sleep 455
-
-It also :nd on a few packages (if not all), rkhunter --update is run by cron,
-as root, so without much limitation.
-
-Upstream have been warned 2 months ago, and I also did warned
-RH product security, who assigned CVE-2017-7480  to it.
-
-Unfortunaly, half of the upstream developpers seems to have disappeared and the
-software is in maintenance mode, so no fix is avaliable yet, except "turn off
-mirror update". Upstream told me to publish it, but I didn't found time earlier.
-
-
--- 
-Michael Scherer
