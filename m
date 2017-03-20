@@ -1,4 +1,9 @@
-Received: (qmail 14028 invoked by uid 550); 16 Oct 2023 15:01:03 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2039" "Monday" "20" "March" "2017" "10:22:38" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<890963.317451195-sendEmail@localhost>" "59" "[oss-security] libpcre: invalid memory read in phar (pcretest.c)" nil nil nil "3" "2017032010:22:38" "[oss-security] libpcre: invalid memory read in phar (pcretest.c)" (number mark "U       ago@gentoo.o Mar 20   59/2039  " thread-indent "\"[oss-security] libpcre: invalid memory read in phar (pcretest.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16030 invoked by uid 550); 20 Mar 2017 10:22:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,76 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13932 invoked from network); 16 Oct 2023 15:01:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1697468449; x=1697554849; bh=cv
-	fapWpqXVRBBJkNdxFLC+eTloj/HQJivIGU+jWR/h0=; b=ZgKzk7SKQ1OZw5HdpW
-	u8rUsVFd2oyyqaUGtelW/MpivKchfWuI6yzNpThe3bW5rPmEsOVEl/X6q1JUF21Z
-	RBCydfpK10jUu+X7hjlPOYmU4Y1may+gt4S1Vs66n9mJoGPwSHUXpFMxJYElCc8N
-	jQCNHlW0/j6HxOD/KiPSu/TCEbAUuFAEtCgRe7WXYzawDcbbCDyK+NeX1fUy2BR4
-	8LtOBVnpfg2lz9aFho+yENxVbexa9DFTpXrKqHLsDprKfQePgQrccChdeD8f27cq
-	ZAaNkU7E5dWmvXt4gdlSHnrpeX/vfLg4GZuW2GU2ncGxuk89cydFmrlsr6/xa3nA
-	9oHw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697468449; x=1697554849; bh=cvfapWpqXVRBB
-	JkNdxFLC+eTloj/HQJivIGU+jWR/h0=; b=YI0lY5yyeEEsh9qQvOASm+ag14tbd
-	uaRlYjJiXkyZ9+xCALdOFuhYe+ct4KZiMRHn+d2FpfYZ1q2EgSf+tU+8HUgQ8yme
-	0kwPTvqSGs6Lz7rYJdO7vWGSmWXchsNL6Bu1aO8XoPy4Xr1+ksDKBrUBRJ2DkMuO
-	yokrp9pOSvWaMQ8K1VZoM4ZpYsO+OYXA7IRoWeyAvuUCqxDJL4riyUKqgDzrcDoa
-	S9yPl4RDX6o89e1L7+OHvJIE//0SBCZuarkt5AuK2oiiIlGPB0PAVE077ynT2Ylv
-	6pT5RmduYogIKksLp8yPsTR1zW7VCcJM04Ixx+NYtkcCTGehyBBUVQH/w==
-X-ME-Sender: <xms:IVAtZWU5h7CXDA99B1-o5vaVG0zJWucU6-CjRW9ITU_tTXTrGOej0Q>
-    <xme:IVAtZSlKNm5iRYSgenRxbGHAyZyDMDUOi5h-xz83ewUXdrczcu-Z2vir-cgBvNYI8
-    tZz2dCAhUzECA>
-X-ME-Received: <xmr:IVAtZabB6pY7VFaCg6Uqt7VDoIbjGeVQjr8Nc6-cjDINJKbWeCadCJhsG64>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjedtgdektdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
-    ucggtffrrghtthgvrhhnpeevueehjefgfffgiedvudekvdektdelleelgefhleejieeuge
-    egveeuuddukedvteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:IVAtZdUD2-nyDpwdiMP52RkPRNiW-FUqr4HRe2fvjc1JoY36q_R3ow>
-    <xmx:IVAtZQnEUdJa7U7DIw8OGWm69afBUrZiPed64bSa8zIS8K_S1EvUfw>
-    <xmx:IVAtZScqIwoDikvmPO0BtGkAcJLhgqoPTghQVaVgwVDMNL9Q-9iPCg>
-    <xmx:IVAtZXst1IGnvEFf52KxMiFWCrKH-Cqz2bWwRW_WhnUZh7CbaOeakg>
-Feedback-ID: i787e41f1:Fastmail
-Date: Mon, 16 Oct 2023 16:54:35 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <2023101639-setback-dullness-d185@gregkh>
-References: <ZSyUUSF_-3YbT14k@workstation>
- <20231016080850.GF10758@suse.de>
- <ZSzx4s49HaeHFd/e@jumper.schlittermann.de>
+Received: (qmail 15999 invoked from network); 20 Mar 2017 10:22:57 -0000
+Message-ID: <890963.317451195-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 20 Mar 2017 10:22:38 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZSzx4s49HaeHFd/e@jumper.schlittermann.de>
-Subject: Re: [oss-security] linux-distros membership application of openEuler
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-760931.869343953"
+Subject: [oss-security] libpcre: invalid memory read in phar (pcretest.c)
 
-On Mon, Oct 16, 2023 at 10:18:42AM +0200, Heiko Schlittermann wrote:
-> Marcus Meissner <meissner@suse.de> (Mo 16 Okt 2023 10:08:50 CEST):
-> > Regardless of your viability of subscription status I think we also
-> > (sadly) have to consider current geopolitical issues here.
-> 
-> No, we should not consider anything else than technical/security
-> restrictions here.
+------MIME delimiter for sendEmail-760931.869343953
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-No one is outside of the laws of the countries they reside in, sorry.
+Description:
+libpcre is a perl-compatible regular expression library.
 
-> And adhere the spirit of Free and Open Source (as far as I understand it),
-> that there is no instance that can judge about political, ethical,
-> religious issues. Free means free. Open means open.
+A fuzz on libpcre1 through the pcretest utility revealed an invalid read in the utility itself. For the nature of the crash, it is not security relevant because the library is not affected but if you 
+have a web application that calls directly the pcretest utility to parse untrusted data, then you are affected.
+Also, it is important share the details because some distros/packagers may want to take the patch in their repository.
 
-And laws mean laws.  Remember, this is not an "open" issue, it is
-"participating in a closed list issue" here.
+The complete ASan output:
 
-good luck!
+# pcretest -16 -d $FILE
+==28444==ERROR: AddressSanitizer: SEGV on unknown address 0x7f3c2de3e2dd (pc 0x0000005409dd bp 0x7fff0423db40 sp 0x7fff0423dac0 T0)
+==28444==The signal is caused by a READ memory access.
+    #0 0x5409dc in pchar /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:1986:5
+    #1 0x54006f in pchars16 /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:2115:12
+    #2 0x52e3e1 in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5092:15
+    #3 0x7f3c2dc3878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #4 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
 
-greg k-h
+Affected version:
+8.40
+
+Fixed version:
+8.41 (not released atm)
+
+Commit fix:
+https://vcs.pcre.org/pcre/code/trunk/pcretest.c?r1=1665&r2=1685&sortby=date
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00194-pcre-invalidread-phar
+
+Timeline:
+2017-02-22: bug discovered and reported to upstream
+2017-02-22: upstream released a patch
+2017-03-14: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/14/libpcre-invalid-memory-read-in-phar-pcretest-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-760931.869343953--
+
