@@ -1,51 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/7
-Message-ID: <20171020223757.GA28323@hunt>
-Date: Fri, 20 Oct 2017 15:37:58 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/7
+Message-ID: <620190.49757825-sendEmail@localhost>
+Date: Mon, 20 Mar 2017 10:31:24 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libpcre: invalid memory read in _pcre32_xclass (pcre_xclass.c)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 19, 2017 at 08:32:55PM +0000, Robert Watson wrote:
-> Scripts depend on the underlying functionality of the various utilities
-> like rsync that they call. I'm having trouble understanding how a script
-> could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
+Description:
+libpcre is a perl-compatible regular expression library.
 
-I'm not sure what 'script' vs 'not-script' has to do with anything.
-'Script' really just means "interpreted programming language" and says
-nothing about the threat model in use.
+A fuzz on libpcre1 through the pcretest utility revealed an invalid memory read. Upstream says that this bug is fixed by one of the previous commit. However I’m providing as usual the stacktrace and the 
+reproducer, so if you are not running the latest upstream release, like happen on debian/rhel based distros, you may want to check better the status of this bug.
 
-This ftpsync script and similar scripts are the primary tool for mirroring
-Debian, Ubuntu, and other derived Linux distributions, to the mirror
-networks that support many millions of computers.
+The complete ASan output:
 
-Probably other programs use rsync without --safe-links when they should.
-I didn't know the option existed until this thread was started (seriously,
-rsync(1) is a HUGE manpage) so I'm grateful to the original reporter
-for sending it along.
+# pcretest -32 -d $FILE
+==27914==ERROR: AddressSanitizer: SEGV on unknown address 0x7f3f580efe04 (pc 0x7f3f577b8048 bp 0x7ffcb035b390 sp 0x7ffcb035b320 T0)
+==27914==The signal is caused by a READ memory access.
+    #0 0x7f3f577b8047 in _pcre32_xclass /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_xclass.c:135:30
+    #1 0x7f3f576137ca in match /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:3203:16
+    #2 0x7f3f575e7226 in pcre32_exec /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:6936:8
+    #3 0x527d6c in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5218:9
+    #4 0x7f3f565b478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #5 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
 
-> We are overwhelmed with more vulnerabilities than can be fixed quickly
-> already.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_xclass.c:135:30 in _pcre32_xclass
+==27914==ABORTING
 
-Yes.
+Affected version:
+8.40
 
-> Are "just to be safer" type things really a wise use of our resources?
+Fixed version:
+8.41 (not released atm)
 
-Yes. I think we all wish to see software that's less likely to fail.
+Commit fix:
+N/A
 
-> Does a proliferation of a large number of low-caliber problems make
-> monitoring these lists more trouble than it's worth? Does it cause
-> high-impact problems to be lost amongst low-impact ones?
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-It's up to you how you prioritize your time. For this issue, I updated my
-own personal mirroring script and a co-worker updated our wiki page:
-https://wiki.ubuntu.com/Mirrors/Scripts
-These steps took a few minutes and are unlikely to cause problems so it
-was an easy choice. Filing for a CVE for a wiki page feels like a waste of
-time so I'm not going to bother. The page is fixed and users can adopt the
-change if they wish.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00206-pcre-invalidread-_pcre32_xclass
 
-Thanks
+Timeline:
+2017-02-24: bug discovered and reported to upstream
+2017-03-20: blog post about the issue
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/20/libpcre-invalid-memory-read-in-_pcre32_xclass-pcre_xclass-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
