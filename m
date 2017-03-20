@@ -1,56 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/13
-Message-ID: <20170622210110.zqlh2rn5cnzsre65@perpetual.pseudorandom.co.uk>
-Date: Thu, 22 Jun 2017 22:01:10 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/1
+Message-ID: <20170320055348.lsc6oxie7gu4leo5@lorien.valinor.li>
+Date: Mon, 20 Mar 2017 06:53:48 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: git: CVE-2014-9938: does not sanitize branch names in $PS1 allowing command execution
 Content-Type: text/plain; charset=utf-8
 
-Impact: privilege escalation
-Attack range: local
-Vulnerable: all versions < 0.8.7, 0.9.x < 0.9.6
-Fixed in: 0.8.x >= 0.8.7, all versions >= 0.9.6
-Reference: https://github.com/flatpak/flatpak/issues/845
+Hi
 
-Flatpak is a desktop application distribution framework for Linux.
+MITRE has assigned CVE-2014-9938 for an older issue in the contrib
+script in git, where git-prompt.sh did not sanitize branch name in
+$PS1 exploitable for command execution by a malicious repository.
 
-Colin Walters discovered a security vulnerability in versions of Flatpak
-prior to 0.8.7. A third-party app repository could include malicious apps
-that contain files with inappropriate permissions, for example setuid or
-world-writable. Older Flatpak versions would deploy the files with those
-permissions, which would let a local attacker run the setuid executable
-(escalating their privileges) or write to the world-writable location.
+The upstream fix is
 
-In the case of the system helper used when an app is installed
-system-wide, files deployed as part of the app are owned by root, so
-in the worst case the app repository could arrange for a setuid root
-executable to be present.
-
-There are several mitigations:
-
-* The sandboxed apps installed by Flatpak are run with PR_SET_NO_NEW_PRIVS,
-  so the Flatpak app itself cannot escalate privileges via setuid.
-* The attacker making use of these inappropriate permissions to escalate
-  privileges must be local.
-* If you are using Flatpak to install apps from a third-party vendor,
-  then there is already a trust relationship: the app is sandboxed, but
-  the third-party vendor chooses what parameters are used for the sandbox.
-* The default polkit policies will not allow apps to be installed
-  system-wide unless a privileged (root-equivalent) user has added the
-  third-party app repository, which indicates that the privileged user
-  trusts the operator of that repository.
-
-This vulnerability is tracked as
-<https://github.com/flatpak/flatpak/issues/845>, and as CVE-2017-9780.
-
-In the 0.8.x stable branch this vulnerability was fixed in version 0.8.7.
-
-In the 0.9.x development branch this vulnerability was fixed in version
-0.9.6.
+https://github.com/git/git/commit/8976500cbbb13270398d3b3e07a17b8cc7bff43f
 
 Regards,
-    S
--- 
-Simon McVittie
-Collabora Ltd. / Debian
+Salvatore
