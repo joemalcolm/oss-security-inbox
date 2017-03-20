@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5888" "Monday" "10" "April" "2017" "07:28:26" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<398132.043981121-sendEmail@localhost>" "117" "[oss-security] elfutils: heap-based buffer overflow in ebl_object_note_type_name (eblobjnotetypename.c)" nil nil nil "4" "2017041007:28:26" "[oss-security] elfutils: heap-based buffer overflow in ebl_object_note_type_name (eblobjnotetypename.c)" (number mark "U       ago@gentoo.o Apr 10  117/5888  " thread-indent "\"[oss-security] elfutils: heap-based buffer overflow in ebl_object_note_type_name (eblobjnotetypename.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["656" "Monday" "20" "March" "2017" "16:33:17" "+0100" "Ailin Nemui" "ailin.nemui@gmail.com" "<1490023997.1783.5.camel@gmail.com>" "24" "[oss-security] Re: CVE Request: Irssi use after free in netjoin condition (2017/03)" nil nil nil "3" "2017032015:33:17" "[oss-security] Re: CVE Request: Irssi use after free in netjoin condition (2017/03)" (number mark "U       ailin.nemui@ Mar 20   24/656   " thread-indent "\"[oss-security] Re: CVE Request: Irssi use after free in netjoin condition (2017/03)\"\n") "<1489267555.30133.7.camel@gmail.com>" ("<1489267555.30133.7.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5362 invoked by uid 550); 10 Apr 2017 07:28:44 -0000
+Received: (qmail 28396 invoked by uid 550); 20 Mar 2017 15:44:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,129 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5341 invoked from network); 10 Apr 2017 07:28:43 -0000
-Message-ID: <398132.043981121-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 10 Apr 2017 07:28:26 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-97830.2330049736"
-Subject: [oss-security] elfutils: heap-based buffer overflow in ebl_object_note_type_name (eblobjnotetypename.c)
+Received: (qmail 12221 invoked from network); 20 Mar 2017 15:33:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=xe/qoG8nCRKeMWVLTXyaVcYFS0yZDJz0jx+pGAgMaoY=;
+        b=S/NFtR90HKpSH3DaqEijB+pmo17A7tZiXwKIu3+lPHyBvlKlZdue9868vGvaUddfg0
+         1y97kF6/QvH/74C9x9e5Dwxl7pC4ob8EidzE79zW0NCJGa+uaT+0r/qifyd1as0Tc7aT
+         69f5L7w3zdGaUmm7CIR0xmyVX8USmQLualIxHRU1HgsrEMuTDw1VerKckFMFj0JAK/mA
+         xzg12zT/rI+VA90bmjtmTfVX37omSV7L/loRP0Lx0x+Dc42C41pAO9382QWjohx67O1w
+         G+1t2dFw5+oNXAm1tlKsPCvlVcdym6QERuKlBedXqdj7LGc4tfuSN7SyVzxIF2w82BS4
+         qX7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=xe/qoG8nCRKeMWVLTXyaVcYFS0yZDJz0jx+pGAgMaoY=;
+        b=RnsBH9kjgbKTw3bU/DKPvoqO5PKiA15YzoaAZYqXwtDcAbrQE4igsfrio6tYH6kgFB
+         0NOPuPfsYZLbpBR0LTW4lZUzY9hhtlPvlLLAwwXqHSCBlcvuuwjGaqyqeytjtHuNAJLx
+         QyZ8QTdaKvhGCorECBycPs4wX0xLqi4YTGgF0f6VUF5bplo8XdvWAiTjO9ak0oli4fEt
+         3kiKOg9YfCTmDvoj7fHjTnJqfrWLsiQvupQuXl0mC/31hN7dODckCZ6jUr+PP4NylKhK
+         QNj+zIbypqaN/+7iaxcsDcVPJZOk6hg6pzeBjsk7ESfyXnOfMXZW2UJ6u14PtvpIrLrS
+         HV1Q==
+X-Gm-Message-State: AFeK/H2PhWOmyNfsmCsTHErHMCSvffWG/TJIVk2BSh8oEJ8kKgVbc0z/hGzy4+CBSm97ng==
+X-Received: by 10.28.133.84 with SMTP id h81mr10388253wmd.23.1490023998960;
+        Mon, 20 Mar 2017 08:33:18 -0700 (PDT)
+Message-ID: <1490023997.1783.5.camel@gmail.com>
+From: Ailin Nemui <ailin.nemui@gmail.com>
+To: oss-security@lists.openwall.com
+Date: Mon, 20 Mar 2017 16:33:17 +0100
+In-Reply-To: <1489267555.30133.7.camel@gmail.com>
+References: <1489267555.30133.7.camel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.5 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] Re: CVE Request: Irssi use after free in netjoin condition (2017/03)
 
-------MIME delimiter for sendEmail-97830.2330049736
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+On Sat, 2017-03-11 at 22:25 +0100, Ailin Nemui wrote:
+> Dear CVE Assignment Team,
+> 
+> please provide CVE for the following issue:
+> 
+> use after free condition during netjoin processing [1]
+> ======================================================
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+-------- Forwarded Message --------
+From: cve-request@mitre.org
+Subject: Re: [scr308011] Irssi - 1.0.0, 1.0.1
+Date: Mon, 20 Mar 2017 09:14:07 -0400
 
-A fuzz on eu-readelf showed an heap overflow. Will follow a feedback from upstream:
-
-Nice find. The issue is with notes that have a zero sized name (and also no descriptor data at the end of a note section).
-“The system reserves note information with no name (namesz==0) and with a zero-length name (name[0]==’\0′) but currently defines no types. All other names must have at least one non-null character.”
-So we must explicitly check for namesz == 0 before using the name data in the note.
-
-The complete ASan output:
-
-# eu-readelf -a $FILE
-==29866==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000ef9c at pc 0x7f910ac17150 bp 0x7fff92f7ed90 sp 0x7fff92f7e540
-READ of size 1 at 0x60200000ef9c thread T0
-    #0 0x7f910ac1714f  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x4514f)
-    #1 0x4f63a7 in ebl_object_note_type_name /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libebl/eblobjnotetypename.c:48
-    #2 0x461251 in handle_notes_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:9372
-    #3 0x47209d in handle_notes /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:9455
-    #4 0x47209d in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:916
-    #5 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
-    #6 0x7f910a730094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
-    #7 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
-    #8 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
-    #9 0x7f9108d4e78f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #10 0x406cd8 in _start (/usr/bin/eu-readelf+0x406cd8)
-
-0x60200000ef9c is located 0 bytes to the right of 12-byte region [0x60200000ef90,0x60200000ef9c)
-allocated by thread T0 here:
-    #0 0x7f910ac94288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
-    #1 0x7f910a10af48 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
-    #2 0x7f910a10af48 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
-    #3 0x7f910a10c9ba in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
-    #4 0x7f910a10ccae in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
-    #5 0x471fe7 in handle_notes /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:9455
-    #6 0x471fe7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:916
-    #7 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
-    #8 0x7f910a730094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
-    #9 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
-    #10 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
-    #11 0x7f9108d4e78f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x4514f) 
-Shadow bytes around the buggy address:
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c047fff9df0: fa fa 00[04]fa fa 00 02 fa fa 00 02 fa fa 00 01
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==29866==ABORTING
-Affected version:
-0.168
-
-Fixed version:
-0.169 (not released atm)
-
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00111.html
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7608
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00226-elfutils-heapoverflow-ebl_object_note_type_name
-
-Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-ebl_object_note_type_name-eblobjnotetypename-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Use CVE-2017-7191.
 
 
-------MIME delimiter for sendEmail-97830.2330049736--
+-- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 
+
+> [1] https://irssi.org/security/irssi_sa_2017_03.txt
