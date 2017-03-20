@@ -1,4 +1,9 @@
-Received: (qmail 11405 invoked by uid 550); 30 Mar 2024 12:46:09 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3145" "Monday" "20" "March" "2017" "10:29:20" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<15560.2817862643-sendEmail@localhost>" "70" "[oss-security] libpcre: heap-based bufffer overflow in regexflip8_or_16 (pcretest.c)" nil nil nil "3" "2017032010:29:20" "[oss-security] libpcre: heap-based bufffer overflow in regexflip8_or_16 (pcretest.c)" (number mark "U       ago@gentoo.o Mar 20   70/3145  " thread-indent "\"[oss-security] libpcre: heap-based bufffer overflow in regexflip8_or_16 (pcretest.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27732 invoked by uid 550); 20 Mar 2017 10:29:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,119 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25732 invoked from network); 30 Mar 2024 04:15:29 -0000
-DKIM-Signature: a=rsa-sha256; b=bINprSgbYoWuBAIgqavZ7JKLK5ClIvj33uFr2pFreDc3BmafyMebFpGIIH+i6lQmy8Tst8jxAzHh3QndpekrZzd9YG/vBzqdVDiJ9m3Ks8QOKuEdALN1mHeHVeNa2J0XOzm+T1UkEe9cegtaNgqv+qlNNdKOX/UUPlLx0jRx0V1XAuEZE0iwePPQQodTragZP5AE/C8li59R6SOczVxOHTqppkDywRxurDuKgrmV6l5Ht8lt/zTLit29Jtgyr3U1vY7KEpMhF0yE4Z3o0HLPsGrmDEYQX9Oo/Y4ZM1YKlh1d88Cy3E/RlgHnBPx/Fc+07vCaqlaRZ8OOmBflPyb4yQ==; s=purelymail2; d=levitati.ng; v=1; bh=2CTyGs9PcXaRImjxSpTg3xtKrfOR4oF+eWOQt6VdsQ0=; h=Received:From:To:Subject;
-DKIM-Signature: a=rsa-sha256; b=ZhDR1L/B89SNL+kvE4c/MZoQoSesRrW2N8CxInQvaEQ2fEt24uCbZHVsrKUHq4RecAbry19RBMyPuoPwpQbPjAtkXZ/CdVBRYsZBMiyksOTX/E+lfWsnFeUzW1cMSxUGR2vErU/M5YqSOwNLyhug3Vt87PO7zq1P1E651t/6lZ0NifiDONgZ1jyI4w+b8ap3Qk0YIckwpjfgzKNIOYjod3BJ1cL9pcDhwWg0SX95qbxTHFFLaXiA1J69sfKChP8LZu/XLUvk3YaN6u3egCmMcOafWT8sJV0SF/VFId3+1DQY4CTrbDbG8srw29VwIeht/LH2EqT/L5+FBljNTLwpkA==; s=purelymail2; d=purelymail.com; v=1; bh=2CTyGs9PcXaRImjxSpTg3xtKrfOR4oF+eWOQt6VdsQ0=; h=Feedback-ID:Received:From:To:Subject;
-Feedback-ID: 25799:4744:null:purelymail
-X-Pm-Original-To: oss-security@lists.openwall.com
+Received: (qmail 27679 invoked from network); 20 Mar 2017 10:29:37 -0000
+Message-ID: <15560.2817862643-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 20 Mar 2017 10:29:20 +0000
 MIME-Version: 1.0
-Date: Sat, 30 Mar 2024 05:15:09 +0100
-From: "Rein Fernhout (Levitating)" <me@levitati.ng>
-To: oss-security@lists.openwall.com
-Cc: Solar Designer <solar@openwall.com>, Andres Freund <andres@anarazel.de>
-In-Reply-To: <20240330020459.iuodh6oxr72bhkch@awork3.anarazel.de>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <ZgcL9VUx6CQ5Wx/W@weckbecker.name>
- <20240329191926.rvyvzgtdpfwc256c@awork3.anarazel.de>
- <20240329214615.GA2610@openwall.com>
- <6c11b83c81fae221bef05d43331e74ec@purelymail.com>
- <20240330020459.iuodh6oxr72bhkch@awork3.anarazel.de>
-User-Agent: Purely Mail via Roundcube/1.6.5
-Message-ID: <91ed173a97361c7cfa5a2e9e7e742956@purelymail.com>
-X-Sender: me@levitati.ng
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-182787.64940715"
+Subject: [oss-security] libpcre: heap-based bufffer overflow in regexflip8_or_16 (pcretest.c)
+
+------MIME delimiter for sendEmail-182787.64940715
+Content-Type: text/plain;
+        charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
 
-Hey Andres,
+Description:
+libpcre is a perl-compatible regular expression library.
 
-I missed the fact that you had already stated which version the .o was 
-from.
-Thanks for clearing up some confusion on my side.
-I did copy the wrong file (linked with crc64_fast.c).
+A fuzz on libpcre1 through the pcretest utility revealed an heap overflow in the utility itself. Will follow a feedback from upstream.
 
-I now managed to copy ./liblzma_la-crc64-fast.o before it was deleted.
-With both versions my copy matches yours.
+I am not going to do anything about this one. (a) It is concerned with a feature of pcretest that has been dropped from pcre2test, and (b) the input contains binary zeros, which are not supported in 
+pcretest input. This is documented for pcre2test but not, I see for pcretest. I have added a paragraph to the documentation.
 
-Also, I am sorry for not compressing the file earlier! I realized it 
-just as I hit Send.
+However, it does not cost much for me inform the community that this bug exists.
+In any case, if you have a web application that calls directly the pcretest utility to parse untrusted data, then you are affected.
+Also, it is important share the details because some distros/packagers may want to patch this issue instead of follow the upstream’s way.
 
-PS. It seems like Github has taken down the xz repositories.
-The source can still be pulled from https://git.tukaani.org/.
-And the malicious tarballs are archived by archive.org.
+The complete ASan output:
 
-Kind regards,
-Rein
+# pcretest -16 -d $FILE
+==30352==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60b00000b000 at pc 0x00000053cef0 bp 0x7ffd02dccb90 sp 0x7ffd02dccb88
+READ of size 2 at 0x60b00000b000 thread T0
+    #0 0x53ceef in regexflip8_or_16 /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:2552:24
+    #1 0x53ceef in regexflip /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:2792
+    #2 0x53ceef in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:4425
+    #3 0x7fb6693d678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #4 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
 
-On 2024-03-30 03:04, Andres Freund wrote:
-> Hi,
-> 
-> On 2024-03-30 01:08:22 +0100, Rein Fernhout (Levitating) wrote:
->> > Andres, maybe you (or Florian or someone else) can post the .o file from
->> > 5.61 as well (gzipped just like the previous one, please)?
->> 
->> I think the attached liblzma_la-crc64-fast.o is taken from 5.6.1.
->> I compiled 5.6.1 and ended up with a nearly identical object file.
-> 
-> I don't think so - while it was extracted by Florian, not me, I just
-> re-extracted it from 5.6.0 and got the same result.
-> 
-> 
->> When I compiled 5.6.0 I got a larger object file with additional 
->> symbols
->> crc64_generic, crc64_arch_optimized and crc64_resolve.
-> 
-> I think it may just be confusion from the script renaming files. The 
-> symbols
-> you mention come from the script compiling 
-> src/liblzma/check/crc64_fast.c
-> after making some small changes, to call into the added _get_cpuid().  
-> Whereas
-> the attached file was the .o file that was, in very obfuscated form, 
-> committed
-> to the repository.
-> 
-> The script is quite sneaky, it
-> 
-> 1) extracts ./liblzma_la-crc64-fast.o from the archive
-> 2) copies .libs/liblzma_la-crc64_fast.o .libs/liblzma_la-crc64-fast.o 
-> (note
->    the .libs)
-> 3) compiles and links the modified crc64_fast.c file together with the
->    extracted ./liblzma_la-crc64-fast.o, outputting to
->    .libs/liblzma_la-crc64_fast.o, using -r
-> 4) does 2) for the 32 bit version
-> 5) compiles the modified crc32_fast.c, outputting to
->    .libs/liblzma_la-crc32_fast.o
-> 6) links the shared library
-> 7) if compilation fails, it moves .libs/liblzma_la-crc{64,32}-fast.o 
-> back to
->    their original name, I guess to removing "evidence" of the modified 
-> output
-> 8) removes
->    ./liblzma_la-crc64-fast.o,
->    .libs/liblzma_la-crc64-fast.o,
->    .libs/liblzma_la-crc32-fast.o
-> 
-> 
-> If you found crc64_generic etc in liblzma_la-crc64-fast.o, you must 
-> have used
-> the one from .libs/ somehow?
-> 
-> 
-> I'm attaching ./liblzma_la-crc64-fast.o for both 5.6.0 and 5.6.1. These 
-> are
-> the files extracted from the .xz file, and should not have symbols for
-> crc64_arch_optimized, crc64_resolve, crc64_generic but will have stuff 
-> like
-> _get_cpuid, .crc64_generia.
-> 
-> When the backdoor is not active .libs/liblzma_la-crc64_fast.o has only 
-> few
-> symbols, crc64_generic, crc64_arch_optimized, crc64_resolve.
-> 
-> Greetings,
-> 
-> Andres Freund
+0x60b00000b000 is located 0 bytes to the right of 112-byte region [0x60b00000af90,0x60b00000b000)
+allocated by thread T0 here:
+    #0 0x4d41f8 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x53e883 in new_malloc /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:2372:15
+    #2 0x7fb66a9473a1 in pcre16_compile2 /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_compile.c:9393:19
+    #3 0x5335d9 in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:4034:5
+    #4 0x7fb6693d678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:2552:24 in regexflip8_or_16
+
+Affected version:
+8.40
+
+Commit fix:
+N/A
+
+Fixed version:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00196-pcre-heapoverflow-regexflip8_or_16
+
+Timeline:
+2017-02-22: bug discovered and reported to upstream
+2017-03-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/20/libpcre-heap-based-bufffer-overflow-in-regexflip8_or_16-pcretest-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-182787.64940715--
+
