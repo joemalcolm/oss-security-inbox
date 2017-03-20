@@ -1,51 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/24/2
-Message-ID: <20171024114611.GA2330@openwall.com>
-Date: Tue, 24 Oct 2017 13:46:11 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Juan Diego <diego@...ux.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Hash thief on Windows shared folder with SCF files. ADV170014 NTLM SSO
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/3
+Message-ID: <363108.313034417-sendEmail@localhost>
+Date: Mon, 20 Mar 2017 10:25:22 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libpcre: NULL pointer dereference in main (pcretest.c)
 Content-Type: text/plain; charset=utf-8
 
-Juan, all -
+Description:
+libpcre is a perl-compatible regular expression library.
 
-On Mon, Oct 23, 2017 at 04:47:46PM -0700, Juan Diego wrote:
-> I want to share some information with the people on the list.
-> On May 24, I found a problem with NTLM auth on Windows.
+A fuzz on libpcre1 through the pcretest utility revealed a null pointer dereference in the utility itself. For the nature of the crash, it is not security relevant because the library is not affected 
+but if you have a web application that calls directly the pcretest utility to parse untrusted data, then you are affected.
+Also, it is important share the details because some distros/packagers may want to take the patch in their repository.
 
-This is interesting, but it's mostly off-topic for oss-security, so as a
-moderator I ask that further discussion please be handled on other lists
-(once Juan's message probably gets through moderation in there).
+The complete ASan output:
 
-Our only poor excuse for having this on oss-security at all is the use
-of Open Source tools to demonstrate the attack - Metasploit, JtR, Samba -
-but I think it's not enough of a reason to have postings like this on
-oss-security.  If others feel differently, please let me know.
+# pcretest -16 -d $FILE
+==26399==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000052db1c bp 0x7ffc7de68070 sp 0x7ffc7de67ba0 T0)
+==26399==The signal is caused by a READ memory access.
+==26399==Hint: address points to the zero page.
+    #0 0x52db1b in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5083:25
+    #1 0x7f70603bc78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #2 0x41b438 in _init (/usr/bin/pcretest+0x41b438) 
 
-Juan, please re-read the oss-security list content guidelines, and note
-that we not only require relevance to Open Source (lacking here), but
-also discourage cross-postings:
+Affected version:
+8.40
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+Fixed version:
+8.41 (not released atm)
 
-"Please keep discussions relevant to Open Source software.  This is not a
-list to discuss the behavior or problems with closed source software or
-companies."
+Commit fix:
+https://vcs.pcre.org/pcre/code/trunk/pcretest.c?r1=1685&r2=1686&sortby=date
 
-"Please don't cross-post messages to oss-security and other mailing
-lists at once, especially not to high-volume lists such as LKML and
-netdev, as this tends to result in threads that wander partially or
-fully off-topic (e.g., Linux kernel coding style detail may end up being
-discussed in comments to a patch posted to LKML, but it would be
-off-topic for oss-security).  If you feel that something needs to be
-posted to oss-security and to another list, please make separate
-postings.  You may mention the other posting(s) in your oss-security
-posting, and even link to other lists' archives."
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-No reply to this message is expected, unless there's relevant detail to
-add (e.g., the same issue also present in certain Open Source software).
+CVE:
+N/A
 
-Thanks,
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00195-pcre-nullptr-main
 
-Alexander
+Timeline:
+2017-02-22: bug discovered and reported to upstream
+2017-02-23: upstream released a patch
+2017-03-14: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/14/libpcre-null-pointer-dereference-in-main-pcretest-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
