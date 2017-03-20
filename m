@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1105" "Wednesday" "27" "April" "2016" "16:54:41" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1604271646030.9720@freddy.simplesystems.org>" "29" "Re: [oss-security] 3 bugs refer to buffer overflow in in libtiff 4.0.6" nil nil nil "4" "2016042721:54:41" "[oss-security] 3 bugs refer to buffer overflow in in libtiff 4.0.6" (number mark "U       bfriesen@sim Apr 27   29/1105  " thread-indent "\"Re: [oss-security] 3 bugs refer to buffer overflow in in libtiff 4.0.6\"\n") "<CABfY0L3+qV-Q_L2awb-PSXzy=fPWyQFMkZwfbjHSXyxCkfrEbA@mail.gmail.com>" ("<tencent_62222EFF74B667984E9F8E5B@qq.com>" "<CABfY0L3+qV-Q_L2awb-PSXzy=fPWyQFMkZwfbjHSXyxCkfrEbA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2687" "Monday" "20" "March" "2017" "10:28:08" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<280519.226656423-sendEmail@localhost>" "68" "[oss-security] libpcre: two stack-based buffer overflow write in pcre32_copy_substring (pcre_get.c)" nil nil nil "3" "2017032010:28:08" "[oss-security] libpcre: two stack-based buffer overflow write in pcre32_copy_substring (pcre_get.c)" (number mark "U       ago@gentoo.o Mar 20   68/2687  " thread-indent "\"[oss-security] libpcre: two stack-based buffer overflow write in pcre32_copy_substring (pcre_get.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5413 invoked by uid 550); 27 Apr 2016 21:54:54 -0000
+Received: (qmail 17608 invoked by uid 550); 20 Mar 2017 10:28:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5395 invoked from network); 27 Apr 2016 21:54:53 -0000
-Date: Wed, 27 Apr 2016 16:54:41 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
-X-X-Sender: bfriesen@freddy.simplesystems.org
-To: oss-security@lists.openwall.com
-In-Reply-To: <CABfY0L3+qV-Q_L2awb-PSXzy=fPWyQFMkZwfbjHSXyxCkfrEbA@mail.gmail.com>
-Message-ID: <alpine.GSO.2.20.1604271646030.9720@freddy.simplesystems.org>
-References: <tencent_62222EFF74B667984E9F8E5B@qq.com> <CABfY0L3+qV-Q_L2awb-PSXzy=fPWyQFMkZwfbjHSXyxCkfrEbA@mail.gmail.com>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+Received: (qmail 17584 invoked from network); 20 Mar 2017 10:28:25 -0000
+Message-ID: <280519.226656423-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 20 Mar 2017 10:28:08 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Wed, 27 Apr 2016 16:54:41 -0500 (CDT)
-Subject: Re: [oss-security] 3 bugs refer to buffer overflow in in libtiff
- 4.0.6
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-513290.360410796"
+Subject: [oss-security] libpcre: two stack-based buffer overflow write in pcre32_copy_substring (pcre_get.c)
 
-On Tue, 26 Apr 2016, Jodie Cunningham wrote:
->>
->> Running each poc file crashes thumbnail and bmp2tiff made with
->> AddressSanitizer in tiff-4.0.6. I have attached poc and log files .
->> ------------------
->> From Debug_Orz
->>
-> Is there a patch upstream?
+------MIME delimiter for sendEmail-513290.360410796
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-To my knowledge, none of the issues recently posted on this list have 
-been addressed yet in libtiff.
+Description:
+libpcre is a perl-compatible regular expression library.
 
-It is always our priority to fix issues occuring in libtiff itself 
-before addressing issues in the libtiff utilities.  Some of the 
-libtiff maintainers care about only a few of the utilities.  We are 
-all volunteers and available time is limited.
+A fuzz on libpcre1 through the pcretest utility revealed two stack overflow write. Upstream says that these bugs are fixed by one of the previous commit. However I’m providing as usual the stacktrace 
+and the reproducer, so if you are not running the latest upstream release, like happen on debian/rhel based distros, you may want to check better the status of this bug.
 
-It is my intention to spend time addressing the libtiff utility issues 
-(some of which might be due to issues in core libtiff) once I have 
-addressed the remaining CVEs in GraphicsMagick.  Issues appearing to 
-be due to problems in libtiff itself will get attention first.
+The complete ASan output:
 
-Well-formulated source patches are welcomed for the issues.
+# pcretest -32 -d $FILE
+==29686==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7f58f32026a0 at pc 0x7f58f6f90a24 bp 0x7ffea3aa3b30 sp 0x7ffea3aa3b28
+WRITE of size 4 at 0x7f58f32026a0 thread T0
+    #0 0x7f58f6f90a23 in pcre32_copy_substring /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_get.c:358:15
+    #1 0x528220 in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5333:13
+    #2 0x7f58f5ea778f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #3 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00207-pcre-stackoverflow-pcre32_copy_substring
+
+# pcretest -32 -d $FILE
+==21399==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7f83734026a0 at pc 0x0000004bd2ac bp 0x7ffdda673b30 sp 0x7ffdda6732e0
+WRITE of size 268 at 0x7f83734026a0 thread T0
+    #0 0x4bd2ab in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
+    #1 0x7f8377118925 in pcre32_copy_substring /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_get.c:357:1
+    #2 0x528220 in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5333:13
+    #3 0x7f837602f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #4 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00209-pcre-stackoverflow2-read_capture_name32
+
+Affected version:
+8.40
+
+Fixed version:
+8.41 (not released atm)
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2017-02-24: bug discovered and reported to upstream
+2017-03-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/20/libpcre-two-stack-based-buffer-overflow-write-in-pcre32_copy_substring-pcre_get-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-513290.360410796--
+
