@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/3
-Message-ID: <alpine.LFD.2.20.1706011258220.5815@wniryva>
-Date: Thu, 1 Jun 2017 13:00:13 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-9330 Qemu: usb: ohci: infinite loop due to incorrect return value
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/8
+Message-ID: <1490023997.1783.5.camel@gmail.com>
+Date: Mon, 20 Mar 2017 16:33:17 +0100
+From: Ailin Nemui <ailin.nemui@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Irssi use after free in netjoin condition (2017/03)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Sat, 2017-03-11 at 22:25 +0100, Ailin Nemui wrote:
+> Dear CVE Assignment Team,
+> 
+> please provide CVE for the following issue:
+> 
+> use after free condition during netjoin processing [1]
+> ======================================================
 
-Quick Emulator built with the USB OHCI Emulation support is vulnerable to an 
-infinite loop issue. It could occur while processing an endpoint list 
-descriptor in ohci_service_ed_list().
+-------- Forwarded Message --------
+From: cve-request@...re.org
+Subject: Re: [scr308011] Irssi - 1.0.0, 1.0.1
+Date: Mon, 20 Mar 2017 09:14:07 -0400
 
-A guest user/process could use this flaw to crash Qemu process resulting in 
-DoS.
+Use CVE-2017-7191.
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=26f670a244982335cc08943fb1ec099a2c81e42d
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1457697
+-- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 
-This issue was reported by Li Qiang of Qihoo 360 Gear Team.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> [1] https://irssi.org/security/irssi_sa_2017_03.txt
