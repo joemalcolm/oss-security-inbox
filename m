@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2096" "Friday" "23" "June" "2017" "08:02:36" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<bc61fe61-7d1a-2263-252e-9b0196dfd7c2@redhat.com>" "42" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062314:02:36" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        kseifried@re Jun 23   42/2096  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<90f1cd71-5c5d-83ae-23ce-9f12a9074bd3@redhat.com>" ("<20170619152843.GC7769@localhost.localdomain>" "<14558692.afnJ5aRU9J@wanheda>" "<20170621122526.GA32701@grsecurity.net>" "<20170621135727.GA12852@openwall.com>" "<20170621212742.GA28766@grsecurity.net>" "<90f1cd71-5c5d-83ae-23ce-9f12a9074bd3@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1910" "Monday" "20" "March" "2017" "10:25:22" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<363108.313034417-sendEmail@localhost>" "58" "[oss-security] libpcre: NULL pointer dereference in main (pcretest.c)" nil nil nil "3" "2017032010:25:22" "[oss-security] libpcre: NULL pointer dereference in main (pcretest.c)" (number mark "U       ago@gentoo.o Mar 20   58/1910  " thread-indent "\"[oss-security] libpcre: NULL pointer dereference in main (pcretest.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29878 invoked by uid 550); 23 Jun 2017 14:02:49 -0000
+Received: (qmail 28116 invoked by uid 550); 20 Mar 2017 10:25:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29856 invoked from network); 23 Jun 2017 14:02:48 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=IxQWPEnX2A6nKqmjDcuvGO3hHEqCc+tz+yS8IMIAbbU=;
-        b=XnLTJzJPKvHeV9Nb5mIKww63cdgCB0SMhTK13AGxYXP3uWu13/p0Qy6SqJbDXkg6MN
-         5G5V+ZosYf+yByXhloAhngcApESUkNWQ0yQfBg1lU8xO7+dx7/DvXxEyYa0zmrMHdOp3
-         q9f3DEwiLY99McxIJKM+fn1fJ1BlZb3HBSizsUlGPsxMEfkkgUpX4TedM85KzVD1kk1c
-         7uI6p/rj67Pp7wtfVr6NOh2kTdOaR5M6NIRAu+Tu5ZWRzZno0pB7iZuG8ZZbTXG0fCs2
-         0jJ92INWmiK5RGDTA85VfXY3Je5qAxYmj9RDSHI16pecm7AeZrhGO56gQtXCSP/64ohF
-         XLQg==
-X-Gm-Message-State: AKS2vOyGUbngG8mrf3EpuDmW0Aoj8vkrXkD6PKTrr+uzA5cuC0R5tupE
-	k7JKpoVA3t3Fv3fr8OkXTQ==
-X-Received: by 10.107.58.214 with SMTP id h205mr7704599ioa.205.1498226556319;
-        Fri, 23 Jun 2017 07:02:36 -0700 (PDT)
-References: <20170619152843.GC7769@localhost.localdomain>
- <14558692.afnJ5aRU9J@wanheda> <20170621122526.GA32701@grsecurity.net>
- <20170621135727.GA12852@openwall.com> <20170621212742.GA28766@grsecurity.net>
- <90f1cd71-5c5d-83ae-23ce-9f12a9074bd3@redhat.com>
-Message-ID: <bc61fe61-7d1a-2263-252e-9b0196dfd7c2@redhat.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <90f1cd71-5c5d-83ae-23ce-9f12a9074bd3@redhat.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-Date: Fri, 23 Jun 2017 08:02:36 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
-To: oss-security@lists.openwall.com
+Received: (qmail 28084 invoked from network); 20 Mar 2017 10:25:40 -0000
+Message-ID: <363108.313034417-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 20 Mar 2017 10:25:22 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-584141.214451851"
+Subject: [oss-security] libpcre: NULL pointer dereference in main (pcretest.c)
 
-On 2017-06-23 7:56 AM, Jeff Law wrote:
-> On 06/21/2017 03:27 PM, Brad Spengler wrote:
->>> OpenBSD isn't a member of the distros list - they were notified by
->>> Qualys separately.  This matter was discussed, and some folks were
->>> unhappy about OpenBSD's action, but in the end it was decided that
->>> since, as you correctly say, the underlying issue was already publicly
->>> known, OpenBSD's commits don't change things much.  Sure this draws
->>> renewed attention to the problem, but probably not to the extent and in
->>> the many specific ways the Qualys findings cover.  So it was decided to
->>> keep the embargo on the detail.
->> Thank you for clarifying that, my assumption was indeed wrong then.
->>
->> Still, if OpenBSD was able to resolve the issues necessary after 
->> notification without leaking full details to the public, shouldn't 
->> this have been possible for the other projects without an embargo, 
->> let alone an extended one?  
-> I  really doubt it for GCC for a variety of reasons.  Hell, I doubt I
-> could have gotten even a good discussion going about the problems with
-> -fstack-check without the details of the embargo'd CVE.
->
-> Even if I was able to get interest from other key GCC contributors, the
-> level of detail I'd have to disclose to those key contributors to make
-> progress would likely have violated the embargo.
->
-> Perhaps part of the difference is OpenBSD can move fairly independently
-> while something like GCC requires larger scale coordination and public
-> discussion.
->
-> Jeff
->
-OpenBSD made changes to the then known qsort() issue, and implemented
-what was then thought to be the solution to the stack guard issue, the 1
-megabyte guard pages. Subsequent discussion (without OpenBSD present,
-due to them breaking the embargo) took place and as you know we ended up
-with some pretty significant changes to glibc (I don't know if OpenBSD
-has picked this group of fixes up or not).
+------MIME delimiter for sendEmail-584141.214451851
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+Description:
+libpcre is a perl-compatible regular expression library.
+
+A fuzz on libpcre1 through the pcretest utility revealed a null pointer dereference in the utility itself. For the nature of the crash, it is not security relevant because the library is not affected 
+but if you have a web application that calls directly the pcretest utility to parse untrusted data, then you are affected.
+Also, it is important share the details because some distros/packagers may want to take the patch in their repository.
+
+The complete ASan output:
+
+# pcretest -16 -d $FILE
+==26399==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000052db1c bp 0x7ffc7de68070 sp 0x7ffc7de67ba0 T0)
+==26399==The signal is caused by a READ memory access.
+==26399==Hint: address points to the zero page.
+    #0 0x52db1b in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5083:25
+    #1 0x7f70603bc78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #2 0x41b438 in _init (/usr/bin/pcretest+0x41b438) 
+
+Affected version:
+8.40
+
+Fixed version:
+8.41 (not released atm)
+
+Commit fix:
+https://vcs.pcre.org/pcre/code/trunk/pcretest.c?r1=1685&r2=1686&sortby=date
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00195-pcre-nullptr-main
+
+Timeline:
+2017-02-22: bug discovered and reported to upstream
+2017-02-23: upstream released a patch
+2017-03-14: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/14/libpcre-null-pointer-dereference-in-main-pcretest-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-584141.214451851--
 
