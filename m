@@ -1,4 +1,9 @@
-Received: (qmail 30146 invoked by uid 550); 24 Mar 2026 12:22:10 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2671" "Monday" "20" "March" "2017" "10:26:26" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<762448.990109505-sendEmail@localhost>" "70" "[oss-security] libpcre: invalid memory read in match (pcre_exec.c)" nil nil nil "3" "2017032010:26:26" "[oss-security] libpcre: invalid memory read in match (pcre_exec.c)" (number mark "U       ago@gentoo.o Mar 20   70/2671  " thread-indent "\"[oss-security] libpcre: invalid memory read in match (pcre_exec.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5838 invoked by uid 550); 20 Mar 2017 10:26:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,263 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30121 invoked from network); 24 Mar 2026 12:22:10 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 5661 invoked from network); 20 Mar 2017 10:26:43 -0000
+Message-ID: <762448.990109505-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 20 Mar 2017 10:26:26 +0000
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.510 (Entity 5.510)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1w50lf-00ByI7-2u@xenbits.xenproject.org>
-Date: Tue, 24 Mar 2026 12:21:55 +0000
-Subject: [oss-security] Xen Security Advisory 482 v3 (CVE-2026-31788) - Linux privcmd
- driver can circumvent kernel lockdown
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-520624.864920141"
+Subject: [oss-security] libpcre: invalid memory read in match (pcre_exec.c)
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+------MIME delimiter for sendEmail-520624.864920141
+Content-Type: text/plain;
+        charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+libpcre is a perl-compatible regular expression library.
 
-            Xen Security Advisory CVE-2026-31788 / XSA-482
-                              version 3
+A fuzz on libpcre1 through the pcretest utility revealed an invalid read in the library. For who is interested in a detailed description of the bug, will follow a feedback from upstream:
 
-          Linux privcmd driver can circumvent kernel lockdown
+This was a genuine bug in the 32-bit library. Thanks for finding it. The crash was caused by trying to find a Unicode property for a code value greater than 0x10ffff, the Unicode maximum, when running 
+in non-UTF mode (where character values can be up to 0xffffffff). The bug was in both PCRE1 and PCRE2. I have fixed both of them.
 
-UPDATES IN VERSION 3
-====================
+The complete ASan output:
 
-CVE assigned.
+# pcretest -32 -d $FILE
+==14788==ERROR: AddressSanitizer: SEGV on unknown address 0x7f1bbffed4df (pc 0x7f1bbee3fe6b bp 0x7fff8b50d8c0 sp 0x7fff8b50d3a0 T0)
+==14788==The signal is caused by a READ memory access.
+    #0 0x7f1bbee3fe6a in match /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:5473:18
+    #1 0x7f1bbee09226 in pcre32_exec /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:6936:8
+    #2 0x527d6c in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5218:9
+    #3 0x7f1bbddd678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #4 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
 
-ISSUE DESCRIPTION
-=================
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:5473:18 in match
+==14788==ABORTING
 
-The Linux kernel's privcmd driver can be abused to circumvent kernel
-lockdown (secure boot), e.g. by modifying page tables to enable user
-mode to modify kernel memory.
+Affected version:
+8.40 and 10.23
 
-IMPACT
-======
+Fixed version:
+8.41 and 10.24 (not released atm)
 
-An administrator of an unprivileged guest booted in secure mode is able
-to perform actions on the kernel which should not be possible in secure
-mode.
+Commit fix for libpcre1:
+https://vcs.pcre.org/pcre/code/trunk/pcre_internal.h?r1=1649&r2=1688&sortby=date
+https://vcs.pcre.org/pcre/code/trunk/pcre_ucd.c?r1=1490&r2=1688&sortby=date
 
-VULNERABLE SYSTEMS
-==================
+Commit fix for libpcre2:
+https://vcs.pcre.org/pcre2/code/trunk/src/pcre2_ucd.c?r1=316&r2=670&sortby=date
+https://vcs.pcre.org/pcre2/code/trunk/src/pcre2_internal.h?r1=600&r2=670&sortby=date
 
-PV, PVH and HVM guests running Linux using secure boot are vulnerable.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-BSD based systems are believed not to be vulnerable due to a lack of
-secure boot support.
+CVE:
+CVE-2017-7186
 
-MITIGATION
-==========
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00204-pcre-invalidread1-pcre_exec
 
-There is no known mitigation.
+Timeline:
+2017-02-23: bug discovered and reported to upstream
+2017-02-24: upstream released a patch
+2017-03-14: blog post about the issue
+2017-03-19: CVE assigned
 
-CREDITS
-=======
+Note:
+This bug was found with American Fuzzy Lop.
 
-This issue was discovered by Teddy Astie of Vates.
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/14/libpcre-invalid-memory-read-in-match-pcre_exec-c
 
-RESOLUTION
-==========
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-Applying the set of attached patches resolves this issue.
 
-xsa482-linux-?.patch           Linux
+------MIME delimiter for sendEmail-520624.864920141--
 
-$ sha256sum xsa482*
-a4e67d2c773e2e13252337e4b64c08b342c0eb2e0e92271a79dc588ac34e7c3a  xsa482-linux-1.patch
-dd952c1fc49ceb47803b78e15cfe3f7f11a845b29c6b2a80afa7a9eaa60a00ec  xsa482-linux-2.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of patches or mitigations is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because the patches need to be applied to the guests.
-
-Deployment is permitted only AFTER the embargo ends.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmnCgb8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ+HQIALz+nyJm5t0ZSnPHwNDN/EVOrftrep1+m2f35QeG
-9/PWglS7gb5FX7q7Ao5dPoNsN0vJhgeiqyuJlUuvOwvVNPF7mA/wl+YuzgCjMyTD
-rPS3E9lzaQRyfAR1UwvDRyUCYeiE2TNNWA/Y7LMOVB5dswrhO3P7jH5qvUJLTz3z
-fcWKsnunrK1AK1YepklI6ybRhyZY191xI10FX0eSRo1k5gh6KuT5FPqCdjUEBjFO
-0BPi+L+Lj8mZW2kbQ5ctRnesneQqS8Kud/EP+xnTH1hy/YiQny0T2RC9s4/hpQMu
-Mav6EICE7kPvGtjgAYpjBQj+LHCyek3nRizd9gQ8tDaiYLQ=
-=CIF6
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa482-linux-1.patch"
-Content-Disposition: attachment; filename="xsa482-linux-1.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAyNjVmMjA1MmZjYjUyYjllMjZlMTQ2Nzg5MzU5ZjQ1MjJjZWVkZDFiIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6
-IFRodSwgOSBPY3QgMjAyNSAxNjo1NDo1OCArMDIwMApTdWJqZWN0OiBbUEFUQ0ggdjMgMS8yXSB4
-ZW4vcHJpdmNtZDogcmVzdHJpY3QgdXNhZ2UgaW4gdW5wcml2aWxlZ2VkIGRvbVUKClRoZSBYZW4g
-cHJpdmNtZCBkcml2ZXIgYWxsb3dzIHRvIGlzc3VlIGFyYml0cmFyeSBoeXBlcmNhbGxzIGZyb20K
-dXNlciBzcGFjZSBwcm9jZXNzZXMuIFRoaXMgaXMgbm9ybWFsbHkgbm8gcHJvYmxlbSwgYXMgYWNj
-ZXNzIGlzCnVzdWFsbHkgbGltaXRlZCB0byByb290IGFuZCB0aGUgaHlwZXJ2aXNvciB3aWxsIGRl
-bnkgYW55IGh5cGVyY2FsbHMKYWZmZWN0aW5nIG90aGVyIGRvbWFpbnMuCgpJbiBjYXNlIHRoZSBn
-dWVzdCBpcyBib290ZWQgdXNpbmcgc2VjdXJlIGJvb3QsIGhvd2V2ZXIsIHRoZSBwcml2Y21kCmRy
-aXZlciB3b3VsZCBiZSBlbmFibGluZyBhIHJvb3QgdXNlciBwcm9jZXNzIHRvIG1vZGlmeSBlLmcu
-IGtlcm5lbAptZW1vcnkgY29udGVudHMsIHRodXMgYnJlYWtpbmcgdGhlIHNlY3VyZSBib290IGZl
-YXR1cmUuCgpUaGUgb25seSBrbm93biBjYXNlIHdoZXJlIGFuIHVucHJpdmlsZWdlZCBkb21VIGlz
-IHJlYWxseSBuZWVkaW5nIHRvCnVzZSB0aGUgcHJpdmNtZCBkcml2ZXIgaXMgdGhlIGNhc2Ugd2hl
-biBpdCBpcyBhY3RpbmcgYXMgdGhlIGRldmljZQptb2RlbCBmb3IgYW5vdGhlciBndWVzdC4gSW4g
-dGhpcyBjYXNlIGFsbCBoeXBlcmNhbGxzIGlzc3VlZCB2aWEgdGhlCnByaXZjbWQgZHJpdmVyIHdp
-bGwgdGFyZ2V0IHRoYXQgb3RoZXIgZ3Vlc3QuCgpGb3J0dW5hdGVseSB0aGUgcHJpdmNtZCBkcml2
-ZXIgY2FuIGFscmVhZHkgYmUgbG9ja2VkIGRvd24gdG8gYWxsb3cKb25seSBoeXBlcmNhbGxzIHRh
-cmdldGluZyBhIHNwZWNpZmljIGRvbWFpbiwgYnV0IHRoaXMgbW9kZSBjYW4gYmUKYWN0aXZhdGVk
-IGZyb20gdXNlciBsYW5kIG9ubHkgdG9kYXkuCgpUaGUgdGFyZ2V0IGRvbWFpbiBjYW4gYmUgb2J0
-YWluZWQgZnJvbSBYZW5zdG9yZSwgc28gd2hlbiBub3QgcnVubmluZwppbiBkb20wIHJlc3RyaWN0
-IHRoZSBwcml2Y21kIGRyaXZlciB0byB0aGF0IHRhcmdldCBkb21haW4gZnJvbSB0aGUKYmVnaW5u
-aW5nLCByZXNvbHZpbmcgdGhlIHBvdGVudGlhbCBwcm9ibGVtIG9mIGJyZWFraW5nIHNlY3VyZSBi
-b290LgoKVGhpcyBpcyBYU0EtNDgyIC8gQ1ZFID8/PwoKUmVwb3J0ZWQtYnk6IFRlZGR5IEFzdGll
-IDx0ZWRkeS5hc3RpZUB2YXRlcy50ZWNoPgpGaXhlczogMWM1ZGUxOTM5YzIwICgieGVuOiBhZGQg
-cHJpdmNtZCBkcml2ZXIiKQpTaWduZWQtb2ZmLWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3Vz
-ZS5jb20+Ci0tLQogZHJpdmVycy94ZW4vcHJpdmNtZC5jIHwgNjAgKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKy0tLQogMSBmaWxlIGNoYW5nZWQsIDU3IGluc2VydGlvbnMo
-KyksIDMgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy94ZW4vcHJpdmNtZC5jIGIv
-ZHJpdmVycy94ZW4vcHJpdmNtZC5jCmluZGV4IDE3NTljYzE4NzUzZi4uYTgzYmFkNjlmNGYyIDEw
-MDY0NAotLS0gYS9kcml2ZXJzL3hlbi9wcml2Y21kLmMKKysrIGIvZHJpdmVycy94ZW4vcHJpdmNt
-ZC5jCkBAIC0xMiw2ICsxMiw3IEBACiAjaW5jbHVkZSA8bGludXgvZXZlbnRmZC5oPgogI2luY2x1
-ZGUgPGxpbnV4L2ZpbGUuaD4KICNpbmNsdWRlIDxsaW51eC9rZXJuZWwuaD4KKyNpbmNsdWRlIDxs
-aW51eC9rc3RydG94Lmg+CiAjaW5jbHVkZSA8bGludXgvbW9kdWxlLmg+CiAjaW5jbHVkZSA8bGlu
-dXgvbXV0ZXguaD4KICNpbmNsdWRlIDxsaW51eC9wb2xsLmg+CkBAIC0zMCw3ICszMSw5IEBACiAj
-aW5jbHVkZSA8bGludXgvc2VxX2ZpbGUuaD4KICNpbmNsdWRlIDxsaW51eC9taXNjZGV2aWNlLmg+
-CiAjaW5jbHVkZSA8bGludXgvbW9kdWxlcGFyYW0uaD4KKyNpbmNsdWRlIDxsaW51eC9ub3RpZmll
-ci5oPgogI2luY2x1ZGUgPGxpbnV4L3ZpcnRpb19tbWlvLmg+CisjaW5jbHVkZSA8bGludXgvd2Fp
-dC5oPgogCiAjaW5jbHVkZSA8YXNtL3hlbi9oeXBlcnZpc29yLmg+CiAjaW5jbHVkZSA8YXNtL3hl
-bi9oeXBlcmNhbGwuaD4KQEAgLTQ2LDYgKzQ5LDcgQEAKICNpbmNsdWRlIDx4ZW4vcGFnZS5oPgog
-I2luY2x1ZGUgPHhlbi94ZW4tb3BzLmg+CiAjaW5jbHVkZSA8eGVuL2JhbGxvb24uaD4KKyNpbmNs
-dWRlIDx4ZW4veGVuYnVzLmg+CiAjaWZkZWYgQ09ORklHX1hFTl9BQ1BJCiAjaW5jbHVkZSA8eGVu
-L2FjcGkuaD4KICNlbmRpZgpAQCAtNzIsNiArNzYsMTEgQEAgc3RydWN0IHByaXZjbWRfZGF0YSB7
-CiAJZG9taWRfdCBkb21pZDsKIH07CiAKKy8qIERPTUlEX0lOVkFMSUQgaW1wbGllcyBubyByZXN0
-cmljdGlvbiAqLworc3RhdGljIGRvbWlkX3QgdGFyZ2V0X2RvbWFpbiA9IERPTUlEX0lOVkFMSUQ7
-CitzdGF0aWMgYm9vbCByZXN0cmljdF93YWl0Oworc3RhdGljIERFQ0xBUkVfV0FJVF9RVUVVRV9I
-RUFEKHJlc3RyaWN0X3dhaXRfd3EpOworCiBzdGF0aWMgaW50IHByaXZjbWRfdm1hX3JhbmdlX2lz
-X21hcHBlZCgKICAgICAgICAgICAgICAgIHN0cnVjdCB2bV9hcmVhX3N0cnVjdCAqdm1hLAogICAg
-ICAgICAgICAgICAgdW5zaWduZWQgbG9uZyBhZGRyLApAQCAtMTU2MywxMyArMTU3MiwxNiBAQCBz
-dGF0aWMgbG9uZyBwcml2Y21kX2lvY3RsKHN0cnVjdCBmaWxlICpmaWxlLAogCiBzdGF0aWMgaW50
-IHByaXZjbWRfb3BlbihzdHJ1Y3QgaW5vZGUgKmlubywgc3RydWN0IGZpbGUgKmZpbGUpCiB7Ci0J
-c3RydWN0IHByaXZjbWRfZGF0YSAqZGF0YSA9IGt6YWxsb2Nfb2JqKCpkYXRhKTsKKwlzdHJ1Y3Qg
-cHJpdmNtZF9kYXRhICpkYXRhOworCisJaWYgKHdhaXRfZXZlbnRfaW50ZXJydXB0aWJsZShyZXN0
-cmljdF93YWl0X3dxLCAhcmVzdHJpY3Rfd2FpdCkgPCAwKQorCQlyZXR1cm4gLUVJTlRSOwogCisJ
-ZGF0YSA9IGt6YWxsb2Nfb2JqKCpkYXRhKTsKIAlpZiAoIWRhdGEpCiAJCXJldHVybiAtRU5PTUVN
-OwogCi0JLyogRE9NSURfSU5WQUxJRCBpbXBsaWVzIG5vIHJlc3RyaWN0aW9uICovCi0JZGF0YS0+
-ZG9taWQgPSBET01JRF9JTlZBTElEOworCWRhdGEtPmRvbWlkID0gdGFyZ2V0X2RvbWFpbjsKIAog
-CWZpbGUtPnByaXZhdGVfZGF0YSA9IGRhdGE7CiAJcmV0dXJuIDA7CkBAIC0xNjYyLDYgKzE2NzQs
-NDUgQEAgc3RhdGljIHN0cnVjdCBtaXNjZGV2aWNlIHByaXZjbWRfZGV2ID0gewogCS5mb3BzID0g
-Jnhlbl9wcml2Y21kX2ZvcHMsCiB9OwogCitzdGF0aWMgaW50IGluaXRfcmVzdHJpY3Qoc3RydWN0
-IG5vdGlmaWVyX2Jsb2NrICpub3RpZmllciwKKwkJCSB1bnNpZ25lZCBsb25nIGV2ZW50LAorCQkJ
-IHZvaWQgKmRhdGEpCit7CisJY2hhciAqdGFyZ2V0OworCXVuc2lnbmVkIGludCBkb21pZDsKKwor
-CS8qIERlZmF1bHQgdG8gYW4gZ3VhcmFudGVlZCB1bnVzZWQgZG9tYWluLWlkLiAqLworCXRhcmdl
-dF9kb21haW4gPSBET01JRF9JRExFOworCisJdGFyZ2V0ID0geGVuYnVzX3JlYWQoWEJUX05JTCwg
-InRhcmdldCIsICIiLCBOVUxMKTsKKwlpZiAoSVNfRVJSKHRhcmdldCkgfHwga3N0cnRvdWludCh0
-YXJnZXQsIDEwLCAmZG9taWQpKSB7CisJCXByX2VycigiTm8gdGFyZ2V0IGRvbWFpbiBmb3VuZCwg
-YmxvY2tpbmcgYWxsIGh5cGVyY2FsbHNcbiIpOworCQlnb3RvIG91dDsKKwl9CisKKwl0YXJnZXRf
-ZG9tYWluID0gZG9taWQ7CisKKyBvdXQ6CisJaWYgKCFJU19FUlIodGFyZ2V0KSkKKwkJa2ZyZWUo
-dGFyZ2V0KTsKKworCXJlc3RyaWN0X3dhaXQgPSBmYWxzZTsKKwl3YWtlX3VwX2FsbCgmcmVzdHJp
-Y3Rfd2FpdF93cSk7CisKKwlyZXR1cm4gTk9USUZZX0RPTkU7Cit9CisKK3N0YXRpYyBzdHJ1Y3Qg
-bm90aWZpZXJfYmxvY2sgeGVuc3RvcmVfbm90aWZpZXIgPSB7CisJLm5vdGlmaWVyX2NhbGwgPSBp
-bml0X3Jlc3RyaWN0LAorfTsKKworc3RhdGljIHZvaWQgX19pbml0IHJlc3RyaWN0X2RyaXZlcih2
-b2lkKQoreworCXJlc3RyaWN0X3dhaXQgPSB0cnVlOworCisJcmVnaXN0ZXJfeGVuc3RvcmVfbm90
-aWZpZXIoJnhlbnN0b3JlX25vdGlmaWVyKTsKK30KKwogc3RhdGljIGludCBfX2luaXQgcHJpdmNt
-ZF9pbml0KHZvaWQpCiB7CiAJaW50IGVycjsKQEAgLTE2NjksNiArMTcyMCw5IEBAIHN0YXRpYyBp
-bnQgX19pbml0IHByaXZjbWRfaW5pdCh2b2lkKQogCWlmICgheGVuX2RvbWFpbigpKQogCQlyZXR1
-cm4gLUVOT0RFVjsKIAorCWlmICgheGVuX2luaXRpYWxfZG9tYWluKCkpCisJCXJlc3RyaWN0X2Ry
-aXZlcigpOworCiAJZXJyID0gbWlzY19yZWdpc3RlcigmcHJpdmNtZF9kZXYpOwogCWlmIChlcnIg
-IT0gMCkgewogCQlwcl9lcnIoIkNvdWxkIG5vdCByZWdpc3RlciBYZW4gcHJpdmNtZCBkZXZpY2Vc
-biIpOwotLSAKMi41My4wCgo=
-
---=separator
-Content-Type: application/octet-stream; name="xsa482-linux-2.patch"
-Content-Disposition: attachment; filename="xsa482-linux-2.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA2ZjY5MThmZTFkZDQ1OTBlMDBmZjk1OTAwODZmYWIwOGQ5Mjg0MDViIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6
-IFR1ZSwgMTQgT2N0IDIwMjUgMTM6Mjg6MTUgKzAyMDAKU3ViamVjdDogW1BBVENIIHYzIDIvMl0g
-eGVuL3ByaXZjbWQ6IGFkZCBib290IGNvbnRyb2wgZm9yIHJlc3RyaWN0ZWQgdXNhZ2UgaW4KIGRv
-bVUKCldoZW4gcnVubmluZyBpbiBhbiB1bnByaXZpbGVnZWQgZG9tVSB1bmRlciBYZW4sIHRoZSBw
-cml2Y21kIGRyaXZlcgppcyByZXN0cmljdGVkIHRvIGFsbG93IG9ubHkgaHlwZXJjYWxscyBhZ2Fp
-bnN0IGEgdGFyZ2V0IGRvbWFpbiwgZm9yCndoaWNoIHRoZSBjdXJyZW50IGRvbVUgaXMgYWN0aW5n
-IGFzIGEgZGV2aWNlIG1vZGVsLgoKQWRkIGEgYm9vdCBwYXJhbWV0ZXIgInVucmVzdHJpY3RlZCIg
-dG8gYWxsb3cgYWxsIGh5cGVyY2FsbHMgKHRoZQpoeXBlcnZpc29yIHdpbGwgc3RpbGwgcmVmdXNl
-IGRlc3RydWN0aXZlIGh5cGVyY2FsbHMgYWZmZWN0aW5nIG90aGVyCmd1ZXN0cykuCgpNYWtlIHRo
-aXMgbmV3IHBhcmFtZXRlciBlZmZlY3RpdmUgb25seSBpbiBjYXNlIHRoZSBkb21VIHdhc24ndCBz
-dGFydGVkCnVzaW5nIHNlY3VyZSBib290LCBhcyBvdGhlcndpc2UgaHlwZXJjYWxscyB0YXJnZXRp
-bmcgdGhlIGRvbVUgaXRzZWxmCm1pZ2h0IHJlc3VsdCBpbiB2aW9sYXRpbmcgdGhlIHNlY3VyZSBi
-b290IGZ1bmN0aW9uYWxpdHkuCgpUaGlzIGlzIGFjaGlldmVkIGJ5IGFkZGluZyBhbm90aGVyIGxv
-Y2tkb3duIHJlYXNvbiwgd2hpY2ggY2FuIGJlCnRlc3RlZCB0byBub3QgYmVpbmcgc2V0IHdoZW4g
-YXBwbHlpbmcgdGhlICJ1bnJlc3RyaWN0ZWQiIG9wdGlvbi4KClRoaXMgaXMgcGFydCBvZiBYU0Et
-NDgyIC8gQ1ZFLT8/PwoKU2lnbmVkLW9mZi1ieTogSnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1c2Uu
-Y29tPgotLS0KIGRyaXZlcnMveGVuL3ByaXZjbWQuYyAgICB8IDEzICsrKysrKysrKysrKysKIGlu
-Y2x1ZGUvbGludXgvc2VjdXJpdHkuaCB8ICAxICsKIHNlY3VyaXR5L3NlY3VyaXR5LmMgICAgICB8
-ICAxICsKIDMgZmlsZXMgY2hhbmdlZCwgMTUgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL2Ry
-aXZlcnMveGVuL3ByaXZjbWQuYyBiL2RyaXZlcnMveGVuL3ByaXZjbWQuYwppbmRleCBhODNiYWQ2
-OWY0ZjIuLmJiZjllZTIxMzA2YyAxMDA2NDQKLS0tIGEvZHJpdmVycy94ZW4vcHJpdmNtZC5jCisr
-KyBiL2RyaXZlcnMveGVuL3ByaXZjbWQuYwpAQCAtMzIsNiArMzIsNyBAQAogI2luY2x1ZGUgPGxp
-bnV4L21pc2NkZXZpY2UuaD4KICNpbmNsdWRlIDxsaW51eC9tb2R1bGVwYXJhbS5oPgogI2luY2x1
-ZGUgPGxpbnV4L25vdGlmaWVyLmg+CisjaW5jbHVkZSA8bGludXgvc2VjdXJpdHkuaD4KICNpbmNs
-dWRlIDxsaW51eC92aXJ0aW9fbW1pby5oPgogI2luY2x1ZGUgPGxpbnV4L3dhaXQuaD4KIApAQCAt
-NzIsNiArNzMsMTEgQEAgbW9kdWxlX3BhcmFtX25hbWVkKGRtX29wX2J1Zl9tYXhfc2l6ZSwgcHJp
-dmNtZF9kbV9vcF9idWZfbWF4X3NpemUsIHVpbnQsCiBNT0RVTEVfUEFSTV9ERVNDKGRtX29wX2J1
-Zl9tYXhfc2l6ZSwKIAkJICJNYXhpbXVtIHNpemUgb2YgYSBkbV9vcCBoeXBlcmNhbGwgYnVmZmVy
-Iik7CiAKK3N0YXRpYyBib29sIHVucmVzdHJpY3RlZDsKK21vZHVsZV9wYXJhbSh1bnJlc3RyaWN0
-ZWQsIGJvb2wsIDApOworTU9EVUxFX1BBUk1fREVTQyh1bnJlc3RyaWN0ZWQsCisJIkRvbid0IHJl
-c3RyaWN0IGh5cGVyY2FsbHMgdG8gdGFyZ2V0IGRvbWFpbiBpZiBydW5uaW5nIGluIGEgZG9tVSIp
-OworCiBzdHJ1Y3QgcHJpdmNtZF9kYXRhIHsKIAlkb21pZF90IGRvbWlkOwogfTsKQEAgLTE3MDgs
-NiArMTcxNCwxMyBAQCBzdGF0aWMgc3RydWN0IG5vdGlmaWVyX2Jsb2NrIHhlbnN0b3JlX25vdGlm
-aWVyID0gewogCiBzdGF0aWMgdm9pZCBfX2luaXQgcmVzdHJpY3RfZHJpdmVyKHZvaWQpCiB7CisJ
-aWYgKHVucmVzdHJpY3RlZCkgeworCQlpZiAoc2VjdXJpdHlfbG9ja2VkX2Rvd24oTE9DS0RPV05f
-WEVOX1VTRVJfQUNUSU9OUykpCisJCQlwcl93YXJuKCJLZXJuZWwgaXMgbG9ja2VkIGRvd24sIHBh
-cmFtZXRlciBcInVucmVzdHJpY3RlZFwiIGlnbm9yZWRcbiIpOworCQllbHNlCisJCQlyZXR1cm47
-CisJfQorCiAJcmVzdHJpY3Rfd2FpdCA9IHRydWU7CiAKIAlyZWdpc3Rlcl94ZW5zdG9yZV9ub3Rp
-ZmllcigmeGVuc3RvcmVfbm90aWZpZXIpOwpkaWZmIC0tZ2l0IGEvaW5jbHVkZS9saW51eC9zZWN1
-cml0eS5oIGIvaW5jbHVkZS9saW51eC9zZWN1cml0eS5oCmluZGV4IDgzYTY0NmQ3MmY2Zi4uZWU4
-OGRkMmQyZDFmIDEwMDY0NAotLS0gYS9pbmNsdWRlL2xpbnV4L3NlY3VyaXR5LmgKKysrIGIvaW5j
-bHVkZS9saW51eC9zZWN1cml0eS5oCkBAIC0xNDUsNiArMTQ1LDcgQEAgZW51bSBsb2NrZG93bl9y
-ZWFzb24gewogCUxPQ0tET1dOX0JQRl9XUklURV9VU0VSLAogCUxPQ0tET1dOX0RCR19XUklURV9L
-RVJORUwsCiAJTE9DS0RPV05fUlRBU19FUlJPUl9JTkpFQ1RJT04sCisJTE9DS0RPV05fWEVOX1VT
-RVJfQUNUSU9OUywKIAlMT0NLRE9XTl9JTlRFR1JJVFlfTUFYLAogCUxPQ0tET1dOX0tDT1JFLAog
-CUxPQ0tET1dOX0tQUk9CRVMsCmRpZmYgLS1naXQgYS9zZWN1cml0eS9zZWN1cml0eS5jIGIvc2Vj
-dXJpdHkvc2VjdXJpdHkuYwppbmRleCA2N2FmOTIyOGM0ZTkuLmEyNmMxNDc0ZTJlNCAxMDA2NDQK
-LS0tIGEvc2VjdXJpdHkvc2VjdXJpdHkuYworKysgYi9zZWN1cml0eS9zZWN1cml0eS5jCkBAIC02
-MSw2ICs2MSw3IEBAIGNvbnN0IGNoYXIgKmNvbnN0IGxvY2tkb3duX3JlYXNvbnNbTE9DS0RPV05f
-Q09ORklERU5USUFMSVRZX01BWCArIDFdID0gewogCVtMT0NLRE9XTl9CUEZfV1JJVEVfVVNFUl0g
-PSAidXNlIG9mIGJwZiB0byB3cml0ZSB1c2VyIFJBTSIsCiAJW0xPQ0tET1dOX0RCR19XUklURV9L
-RVJORUxdID0gInVzZSBvZiBrZ2RiL2tkYiB0byB3cml0ZSBrZXJuZWwgUkFNIiwKIAlbTE9DS0RP
-V05fUlRBU19FUlJPUl9JTkpFQ1RJT05dID0gIlJUQVMgZXJyb3IgaW5qZWN0aW9uIiwKKwlbTE9D
-S0RPV05fWEVOX1VTRVJfQUNUSU9OU10gPSAiWGVuIGd1ZXN0IHVzZXIgYWN0aW9uIiwKIAlbTE9D
-S0RPV05fSU5URUdSSVRZX01BWF0gPSAiaW50ZWdyaXR5IiwKIAlbTE9DS0RPV05fS0NPUkVdID0g
-Ii9wcm9jL2tjb3JlIGFjY2VzcyIsCiAJW0xPQ0tET1dOX0tQUk9CRVNdID0gInVzZSBvZiBrcHJv
-YmVzIiwKLS0gCjIuNTMuMAoK
-
---=separator--
