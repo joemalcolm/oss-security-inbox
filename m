@@ -1,122 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/17/3
-Message-ID: <20170217135245.5717fc91@redhat.com>
-Date: Fri, 17 Feb 2017 13:52:45 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: Dawid Golunski <dawid@...alhackers.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/21/2
+Message-Id: <60EF1721-9E02-481D-9A2D-204F87D75282@beckweb.net>
+Date: Tue, 21 Mar 2017 02:19:41 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Jenkins plugins -- multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 14 Nov 2016 14:36:16 -0200 Dawid Golunski wrote:
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+plugin releases published today contain fixes for security vulnerabilities:
 
-> Vulnerability: MySQL / MariaDB / PerconaDB - Root Privilege Escalation
-> CVE-2016-6664 / (Oracle)CVE-2016-5617
+- Active Directory 2.3
+- DistFork Plugin 1.6.0
+- Email Extension (email-ext) 2.57.1
+- Mailer Plugin 1.20
+- SSH Slaves 1.15
 
-The original MySQL fix for this issue was quite incomplete and easy to
-bypass.  It had the following problems:
+Users of these plugins should upgrade them to the indicated versions.
 
-- Symlink check was racy - it was easy to replace log file created by
-  touch by a symlink before chmod and chown was used.
+Additionally, one plugin was removed from distribution as there are no plans 
+to fix its vulnerability, and there are adequate alternatives:
 
-- You could avoid the symlink check completely by directly setting
-  log-error to the path name of the file you want to corrupt, such as:
+- Pipeline: Classpath Step
 
-  log-error = /etc/ld.so.preload
+Summary and description of the vulnerabilities are below. Some more details, 
+severity, and attribution can be found here:
+https://jenkins.io/security/advisory/2017-03-20/
 
-- Symlink check did not cover hardlinks (this is a variant of the
-  previous, sort of).
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-- Existing symlinks were used even if they were not chmoded / chowned
-  any more, so it was possible to corrupt files with myslqd_safe's log
-  messages.
+If you find security vulnerabilities in Jenkins, please report them as 
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-I reported these problems to Oracle, and they assigned CVE-2017-3312
-for the incomplete fix.  They were addressed in the following commit:
+---
 
-https://github.com/mysql/mysql-server/commit/1f93f4381b60e3a8012ba36a4dec920416073759
+SECURITY-161 / CVE-2017-2648
+SSH Slaves Plugin did not verify host keys of hosts it connected to.
 
-Note that the commit pre-dates Oct 2016 CPU, when Oracle first
-mentioned CVE-2016-6664 / CVE-2016-5617 as fixed, but it was only
-included in MySQL 5.5.54, 5.6.35, and 5.7.17 released mid-Dec 2016, and
-hence listed in Jan 2017 CPU.  The fix also pre-dates my report.
+SECURITY-251 / CVE-2017-2649
+Active Directory Plugin did not verify TLS certificate of AD server.
 
-Dawid, I assume you were aware of these problems and reported them
-too.  You're acknowledged as a reporter of (at least) one of the issues
-in the Jan 2017 CPU:
+SECURITY-336 / CVE-2017-2650
+Pipeline: Classpath Step plugin allows Script Security sandbox bypass for 
+users with SCM commit access, as well as users with e.g. Job/Configure 
+permission in Jenkins.
 
-http://www.oracle.com/technetwork/security-advisory/cpujan2017-2881727.html
+SECURITY-372 / CVE-2017-2651 (Mailer)
+SECURITY-372 / CVE-2017-2654 (Email Extension)
+Emails could be sent to addresses not associated with actual users of Jenkins 
+by Mailer Plugin and Email Extension Plugin if they were configured to send 
+notifications to a dynamically created list of users based on SCM changes. In 
+rare cases this even resulted in emails sent to people who were not involved 
+in whatever project was being built.
 
-and also in Percona Server release notes:
+SECURITY-386 / CVE-2017-2652
+There were no permission checks performed in the Distributed Fork plugin 
+beyond the basic check for Overall/Read permission, allowing anyone with that 
+permission to run arbitrary shell commands on all connected nodes.
 
-https://www.percona.com/doc/percona-server/LATEST/release-notes/Percona-Server-5.7.17-11.html
-
-  mysqld_safe now limits the use of rm and chown to avoid privilege
-  escalation. chown can now be used only for /var/log directory. Bug
-  fixed #1660265. Thanks to Dawid Golunski (https://legalhackers.com).
-
-Linked Percona bug is not public, but the above text matches MySQL
-commit linked above.
-
-As Oracle is refusing to publicly share any information about their
-CVEs, can you, Dawid, provide information on what CVE or CVEs were
-given to you by Oracle in response to your reports, and for what
-issues?  If you've not received that information yet, would you mind
-asking?  I suspect you may have some info to share on CVE-2017-3317 and
-CVE-2017-3318.
-
-
-Besides the above, I also reported the following issues.  CVEs below
-were assigned by Oracle.
-
-
-CVE-2017-3265 unsafe chmod/chown use in the init script
-
-https://github.com/mysql/mysql-server/blob/mysql-5.6.34/packaging/rpm-oel/mysql.init#L97
-https://github.com/mysql/mysql-server/blob/mysql-5.6.34/packaging/rpm-oel/mysql.init#L73
-
-These may allow mysql -> root privilege escalation similar to
-CVE-2016-6664.  Fixed in:
-
-https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-5fccc3d0e109e8f9ad0653728bd1d975
-
-
-CVE-2017-3291 was assigned to two independent issues
-
-- unrestricted mysqld_safe's ledir
-
-By setting ledir to say /tmp in my.cnf, you could make mysqld_safe
-execute mysqld from there rather than some expected location
-under /usr.  Besides mysql -> root escalation, this also could have
-been used by non-mysql local users in combination with the
-CVE-2016-6662 issue against MySQL versions that do not support
-malloc-lib (e.g. MySQL 5.1).  Fixed in:
-
-https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-144aa2f11374843c969d96b7b84247ea
-
-- insecure path use in mysqld_safe
-
-This code tries to find my_print_defaults command:
-
-https://github.com/mysql/mysql-server/blob/mysql-5.6.34/scripts/mysqld_safe.sh#L466
-
-It first tries relative to $MY_BASEDIR_VERSION, which could have been
-set to $PWD:
-
-https://github.com/mysql/mysql-server/blob/mysql-5.6.34/scripts/mysqld_safe.sh#L402
-
-If root ran mysqld_safe while their $PWD was /tmp, arbitrary code
-controlled by some unprivileged local (not necessarily mysql) user
-could have been executed.  This was fixed in:
-
-https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-144aa2f11374843c969d96b7b84247eaL397
-
-
-There are few more related problems fixed in Jan 2017 CPU, but as noted
-above, Oracle refuses to acknowledge mapping to CVEs publicly.
-
-https://github.com/mysql/mysql-server/commit/76e9d7e5b30365e8b167e2070ee00f81cb115b8b
-https://github.com/mysql/mysql-server/commit/7a5145e445ee802241957eb5290a3e65ea4da70c
-
--- 
-Tomas Hoger / Red Hat Product Security
