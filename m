@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/9
-Message-ID: <3f23b122-8f97-417b-e1ca-4f859bee3196@gmail.com>
-Date: Thu, 7 Dec 2017 14:37:20 -0800
-From: Blibbet <blibbet@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/21/3
+Message-ID: <CAKG8Do5JY9-nP-Fqecf8dfPCO8A_ruz2Ff578thrvwYQ_D8=1A@mail.gmail.com>
+Date: Tue, 21 Mar 2017 20:34:17 +0100
+From: Cedric Buissart <cbuissar@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+Subject: subscription-manager: CVE-2017-2663 unsafe dbus interface
 Content-Type: text/plain; charset=utf-8
 
-On 12/07/2017 01:15 PM, Peter Bex wrote:
-> ible alternatives, I happened to remember that
-> years ago, NetBSD was working on their own BSD-licensed PGP
-> implementation as a GSoC project, but it never really went anywhere.
-> Looks like that finally exists
+Hi,
 
-http://www.netpgp.com/
-https://blog.netbsd.org/tnf/entry/netpgp
-https://en.wikipedia.org/wiki/Netpgp
+CVE-2017-2663 has been assigned for the following issue :
 
-NetPGP has been working since around a decade. It's main dependency is
-libOpenSSL. It is stable, not active. It has MANY fewer features than GPG.
+Subscription-manager's new DBus interface provides methods that can be used
+for malicious usage. It allows an unprivileged local user to have access to
+information known to root only, and/or to modify subscription-manager
+configuration file, allowing, for example, privilege escalation.
 
-(I'm in the process of porting it to UEFI, as there is a stable
-libOpenSSL package there now, and easier to port to UEFI than GPG...)
+-> Upstream patch :
+ * Lock down Facts object to be accessible to root only.
+https://github.com/candlepin/subscription-manager/commit/882bb587a
+-> Followed by this one :
+ * 1434094: Deny D-BUS Config.Set from non-root
+https://github.com/candlepin/subscription-manager/commit/afa0f7afee
+
+Affected versions : from subscription-manager-1.19.0-1 (information
+disclosure) & subscription-manager-1.19.3-1 (configuration modification)
+
+Fixed version : subscription-manager-1.19.4-1
+
+
+Thanks,
+
+-- 
+Cedric Buissart,
+Product Security
+
