@@ -1,4 +1,9 @@
-Received: (qmail 7496 invoked by uid 550); 15 Oct 2024 23:06:32 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2177" "Tuesday" "21" "March" "2017" "02:19:41" "+0100" "Daniel Beck" "ml@beckweb.net" "<60EF1721-9E02-481D-9A2D-204F87D75282@beckweb.net>" "63" "[oss-security] Jenkins plugins -- multiple vulnerabilities" "^Date:" nil nil "3" "2017032101:19:41" "[oss-security] Jenkins plugins -- multiple vulnerabilities" (number mark "        ml@beckweb.n Mar 21   63/2177  " thread-indent "\"[oss-security] Jenkins plugins -- multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16227 invoked by uid 550); 21 Mar 2017 01:19:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,58 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32653 invoked from network); 15 Oct 2024 23:02:00 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Houston Putman <houston@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <0e8319ae-47ce-cdab-2315-a61f42f7e39d@apache.org>
+Received: (qmail 16209 invoked from network); 21 Mar 2017 01:19:53 -0000
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 15 Oct 2024 23:01:06 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-45216: Apache Solr: Authentication bypass possible using
- a fake URL Path ending 
+Message-Id: <60EF1721-9E02-481D-9A2D-204F87D75282@beckweb.net>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1490059193;27f2f331;
+X-HE-SMSGID: 1cq8Sb-0000cl-Pz
+Date: Tue, 21 Mar 2017 02:19:41 +0100
+From: Daniel Beck <ml@beckweb.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Jenkins plugins -- multiple vulnerabilities
+To: oss-security@lists.openwall.com
 
-Severity: critical
+Jenkins is an open source automation server which enables developers around=
+=20
+the world to reliably build, test, and deploy their software. The following=
+=20
+plugin releases published today contain fixes for security vulnerabilities:
 
-Affected versions:
+- Active Directory 2.3
+- DistFork Plugin 1.6.0
+- Email Extension (email-ext) 2.57.1
+- Mailer Plugin 1.20
+- SSH Slaves 1.15
 
-- Apache Solr 5.3.0 before 8.11.4
-- Apache Solr 9.0.0 before 9.7.0
+Users of these plugins should upgrade them to the indicated versions.
 
-Description:
+Additionally, one plugin was removed from distribution as there are no plan=
+s=20
+to fix its vulnerability, and there are adequate alternatives:
 
-Improper Authentication vulnerability in Apache Solr.
+- Pipeline: Classpath Step
 
-Solr instances using the PKIAuthenticationPlugin, which is enabled by defau=
-lt when Solr Authentication is used, are vulnerable to Authentication bypas=
-s.
-A fake ending at the end of any Solr API URL path, will allow requests to s=
-kip Authentication while maintaining the API contract with the original URL=
- Path.
-This fake ending looks like an unprotected API path, however it is stripped=
- off internally after authentication but before API routing.
+Summary and description of the vulnerabilities are below. Some more details=
+,=20
+severity, and attribution can be found here:
+https://jenkins.io/security/advisory/2017-03-20/
 
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-This issue affects Apache Solr: from 5.3.0 before 8.11.4, from 9.0.0 before=
- 9.7.0.
+If you find security vulnerabilities in Jenkins, please report them as=20
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Users are recommended to upgrade to version 9.7.0, or 8.11.4, which fix the=
- issue.
+---
 
-This issue is being tracked as SOLR-17417=20
+SECURITY-161 / CVE-2017-2648
+SSH Slaves Plugin did not verify host keys of hosts it connected to.
 
-Credit:
+SECURITY-251 / CVE-2017-2649
+Active Directory Plugin did not verify TLS certificate of AD server.
 
-Liu Huajin (reporter)
+SECURITY-336 / CVE-2017-2650
+Pipeline: Classpath Step plugin allows Script Security sandbox bypass for=20
+users with SCM commit access, as well as users with e.g. Job/Configure=20
+permission in Jenkins.
 
-References:
+SECURITY-372 / CVE-2017-2651 (Mailer)
+SECURITY-372 / CVE-2017-2654 (Email Extension)
+Emails could be sent to addresses not associated with actual users of Jenki=
+ns=20
+by Mailer Plugin and Email Extension Plugin if they were configured to send=
+=20
+notifications to a dynamically created list of users based on SCM changes. =
+In=20
+rare cases this even resulted in emails sent to people who were not involve=
+d=20
+in whatever project was being built.
 
-https://solr.apache.org/security.html#cve-2024-45216-apache-solr-authentica=
-tion-bypass-possible-using-a-fake-url-path-ending
-https://solr.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2024-45216
-https://issues.apache.org/jira/browse/SOLR-17417
+SECURITY-386 / CVE-2017-2652
+There were no permission checks performed in the Distributed Fork plugin=20
+beyond the basic check for Overall/Read permission, allowing anyone with th=
+at=20
+permission to run arbitrary shell commands on all connected nodes.
 
