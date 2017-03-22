@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/29/1
-Message-ID: <d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>
-Date: Tue, 28 Nov 2017 21:05:28 -0500
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/22/1
+Message-ID: <2236717.WYepoSom2j@blackgate>
+Date: Wed, 22 Mar 2017 11:16:30 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Security risk of server side text editing ...
+Subject: Re: elfutils: memory allocation failure in __libelf_set_rawdata_wrlock (elf_getdata.c)
 Content-Type: text/plain; charset=utf-8
 
-On 11/28/2017 08:19 AM, Bram Moolenaar wrote:
-> 
-> This is a problem with the configuration of the web server.  It should
-> not publish files it doesn't know about.  The problem also happens for
-> any other file manipulation, e.g. "cp file.php file.php.orig" if you
-> want to make some temporary changes.  A .orig and .rej file may also
-> appear when applying a patch.
+On Wednesday 09 November 2016 15:38:04 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2016/11/04/elfutils-memory-allocation-failure-i
+> n-__libelf_set_rawdata_wrlock-elf_getdata-c
 
-The main difference in my mind is that when you "cp" a file, you expect
-it to create a new file. Likewise with patch it tells you that the
-rejects were saved in a new file.
+This is CVE-2016-10255
 
-Editing a file in-place should not create *another* file in the current
-directory with a different name/suffix. I realize that's subjective, but
-a lot of (even long time) users will tell you that no way in hell did
-they expect that to happen. (What's the argument against using a
-subdirectory of $HOME to store these temporary files?)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
