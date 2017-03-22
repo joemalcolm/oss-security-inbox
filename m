@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/12/3
-Message-Id: <201706121815.v5CIF6jp021733@room101.nl.oracle.com>
-Date: Mon, 12 Jun 2017 20:15:06 +0200
-From: Casper.Dik@...cle.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/22/5
+Message-ID: <9c8c5edd-f95a-b39c-7a85-c39c567068d8@canonical.com>
+Date: Wed, 22 Mar 2017 15:21:57 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vixie/ISC Cron group crontab to root escalation 
+Subject: Re: information about pwn2own Kernel problem
 Content-Type: text/plain; charset=utf-8
 
+On 03/22/2017 05:39 AM, Marcus Meissner wrote:
+> Hi,
 
->On Jun 9,  6:27pm, solar@...nwall.com (Solar Designer) wrote:
->-- Subject: Re: [oss-security] Vixie/ISC Cron group crontab to root escalatio
->
->| Oh, I did in fact mention this in the private discussion, so I'll quote:
->| 
->| | Another detail: somehow in Owl we introduced lstat() prior to open, and
->| | check lstat()'s struct for all the required properties before proceeding
->| | with open() with O_NOFOLLOW.  Then we check that st_dev/st_ino stayed
->| | the same.  We also kept the post-open() checks.  I don't recall exactly
->| | why we added this, but maybe because of the possibility of side-effects
->| | on open() for hard links to device files (like with tape drives).  And
->| | it looks like we neglected to add the same for at jobs (perhaps didn't
->| | revisit this when support for at jobs appeared via our update to later
->| | OpenBSD code) - maybe we should.
->
->Thanks, perhaps a comment in the code can't hurt...
->Or even O_NODEV which does not exist, or O_PATH (linux only)..
+Hi Marcus
 
-As there is a O_DIRECTORY it would be more orthogonal to have O_REGULAR 
-(open only a regular file).  But that becomes more and more icky as we're 
-running out of 32 bits of O_*)
+> 
+> Has anyone any more information on the pwn2own Ubuntu Kernel issue?
+> 
+> CVE-2017-7184
+> 
 
-Casper
+ZDI disclosed the information to the Ubuntu Security team a little less
+than 48 hours ago.
 
+The Ubuntu Kernel team has triaged the issue and came up with a
+potential fix. That fix is undergoing internal review and I'll be
+disseminating it via the usual channels once that is complete.
+
+Tyler
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
