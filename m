@@ -1,89 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/7
-Message-ID: <20170201115616.08660970@pc1>
-Date: Wed, 1 Feb 2017 11:56:16 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Multiple memory access issues in gstreamer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/22/6
+Message-ID: <d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>
+Date: Wed, 22 Mar 2017 14:54:30 -0600
+From: "Luedtke, Nicholas (HPE Linux Security)" <nicholas.luedtke@....com>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: information about pwn2own Kernel problem
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-https://gstreamer.freedesktop.org/releases/1.10/#1.10.3
-
-gstreamer 1.10.3 got released, from the release notes:
-"Various fixes for crashes, assertions, deadlocks and memory leaks on
-fuzzed input files and in other situations"
-
-Here they are (at least the ones I reported):
-
-https://bugzilla.gnome.org/show_bug.cgi?id=775450
-gst-plugins-good/aacparse: invalid memory read in
-gst_aac_parse_sink_setcaps
-
-https://bugzilla.gnome.org/show_bug.cgi?id=775451
-gst-plugins-good/qtdemux: out of bounds read in qtdemux_tag_add_str_full
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777262
-gst-plugins-base/riff-media: floating point exception in
-gst_riff_create_audio_caps
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777263
-gstreamer core/datetime: out of bounds read in
-gst_date_time_new_from_iso8601_string()
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777265
-gst-plugins-base/riff: stack overflow in gst_riff_create_audio_caps
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777469
-gst-plugins-good/qtdemux: out of bounds heap read in
-qtdemux_parse_samples
-
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777500
-gst-plugins-good/avidemux: gst_avi_demux_parse_ncdt heap out of bounds
-read
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777502
-gst-plugins-base/samiparse: heap oob in html_context_handle_element
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777503
-gst-plugins-bad/mxfdemux: use after free in gst_mini_object_unref /
-gst_tag_list_unref / gst_mxf_demux_update_essence_tracks
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777525
-gst-plugins-base: floating point exception in gst_riff_create_audio_caps
-(different than #777262)
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777532
-gst-plugins-good/avidemux: invalid memory read in
-gst_avi_demux_parse_ncdt
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777937
-gst-plugins-ugly/asfdemux: invalid memory read in
-gst_asf_demux_process_ext_stream_props()
-
-
-
-And more that didn't make it into 1.10.3:
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777955
-gst-plugins-ugly/asfdemux: out of bounds read in
-gst_asf_demux_process_ext_content_desc
-
-https://bugzilla.gnome.org/show_bug.cgi?id=777957
-gst-plugins-bad/mpegdemux: Invalid memory read in gst_ps_demux_parse_psm
-
-
-(example files are always attached or linked in the bug reports)
-
-I also reported multiple other issues like memory leaks or hangs which
-I consider have no security relevance.
+On 3/22/2017 2:21 PM, Tyler Hicks wrote:
+> ZDI disclosed the information to the Ubuntu Security team a little less
+> than 48 hours ago.
+>
+> The Ubuntu Kernel team has triaged the issue and came up with a
+> potential fix. That fix is undergoing internal review and I'll be
+> disseminating it via the usual channels once that is complete.
+>
+> Tyler
+Is this an Ubuntu specific issue? Or does it affect the upstream kernels
+as well?
 
 
 -- 
-Hanno Böck
-https://hboeck.de/
+Nicholas Luedtke
+HPE Linux Security, Hewlett-Packard Enterprise
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
