@@ -1,23 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/19
-Message-ID: <20170410150812.g3vijutg36dqafhf@eldamar.local>
-Date: Mon, 10 Apr 2017 17:08:12 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: web2py: CVE-2016-10321: does not check if a host is denied before verifying passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/23/1
+Message-ID: <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
+Date: Wed, 22 Mar 2017 15:19:11 -0700
+From: Dave Null <noid23@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: information about pwn2own Kernel problem
 Content-Type: text/plain; charset=utf-8
 
-Hi
+I was wondering this myself. I'm not sure if ZDI does any variant
+investigation when they pick up a bug. Really hoping this doesn't jump from
+a distro related problem to a Linux problem.
 
-CVE-2016-10321 was assigned (via cveform.mitre.org) to the following
-issue in web2py:
+-noid
 
-web2py before 2.14.6 does not properly check if a host is denied
-before verifying passwords, allowing a remote attacker to perform
-brute-force attacks.
+Crypto: https://keybase.io/noid
+None are more hopelessly enslaved than those who falsely believe they are
+free - Goethe
+--
 
-Fixing commit:
-https://github.com/web2py/web2py/commit/944d8bd8f3c5cf8ae296fc03d149056c65358426
+On Wed, Mar 22, 2017 at 1:54 PM, Luedtke, Nicholas (HPE Linux Security) <
+nicholas.luedtke@....com> wrote:
 
-Regards,
-Salvatore
+>
+> On 3/22/2017 2:21 PM, Tyler Hicks wrote:
+> > ZDI disclosed the information to the Ubuntu Security team a little less
+> > than 48 hours ago.
+> >
+> > The Ubuntu Kernel team has triaged the issue and came up with a
+> > potential fix. That fix is undergoing internal review and I'll be
+> > disseminating it via the usual channels once that is complete.
+> >
+> > Tyler
+> Is this an Ubuntu specific issue? Or does it affect the upstream kernels
+> as well?
+>
+>
+> --
+> Nicholas Luedtke
+> HPE Linux Security, Hewlett-Packard Enterprise
+>
+>
+>
+>
+
