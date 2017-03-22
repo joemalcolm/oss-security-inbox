@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["425" "Thursday" "12" "March" "2020" "15:55:06" "-0700" "Matthew Garrett" "mjg59@google.com" "<CACdnJutPzcRCBu53nE9NOYE3gq5w1mTsmWzwHNzEyHmmXJZrAg@mail.gmail.com>" "7" "[oss-security] Bluez <5.53 DoS/privilege escalation" "^Date:" nil nil "3" "2020031222:55:06" "[oss-security] Bluez <5.53 DoS/privilege escalation" (number mark "U       mjg59@google Mar 12    7/425   " thread-indent "\"[oss-security] Bluez <5.53 DoS/privilege escalation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Bluez <5.53 DoS/privilege escalation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1071" "Wednesday" "22" "March" "2017" "15:19:11" "-0700" "Dave Null" "noid23@gmail.com" "<CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>" "40" "Re: [oss-security] information about pwn2own Kernel problem" nil nil nil "3" "2017032222:19:11" "[oss-security] information about pwn2own Kernel problem" (number mark "U       noid23@gmail Mar 22   40/1071  " thread-indent "\"Re: [oss-security] information about pwn2own Kernel problem\"\n") "<d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>" ("<20170322103936.GB28849@suse.de>" "<9c8c5edd-f95a-b39c-7a85-c39c567068d8@canonical.com>" "<d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24479 invoked by uid 550); 12 Mar 2020 22:55:31 -0000
+Received: (qmail 28047 invoked by uid 550); 23 Mar 2017 11:09:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24449 invoked from network); 12 Mar 2020 22:55:30 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 20477 invoked from network); 22 Mar 2017 22:19:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=AWl23En2CSTpgPMnl7xsCRHuZ0rNK6JKaXYXhCW8sqY=;
-        b=btMrYEzozjkUiaIjs4i5RiY/QybOiqrsgpugChDVSU+r3EMLfi3w2Z1aBAKl1cgjOM
-         dG0zs9iaDv4LfH6QWsSHM6dTdalMmv/gVnXFUjSnvGQm3WFBce8oZCB/4EoT5HEY06XC
-         60fIQz3/Hjv/+tqmPoITt8fa/gZEtLDUyQeRBQwKUxwq6Df1gdOeFYoLkEZ4Z9DJNC/S
-         7jjlk5aWulBhtP4slQ+0AEqemuAbD8aZrbdMJHqrqzFdTXl0SHhTpkF63oq3ra0qBp/P
-         o1DPramGe0ovtp2rivTn2ZpIgZZdOqKyJlrfeHoqQ+P67nGcIg7Hg1oSsoyrNFZPJbzx
-         Uagg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=sQ8KSeHuu5gbb6KpvtsDfv+QibZlU+YJ3M22aaHM60E=;
+        b=teFjZmjastdKCBPc3L3fPVK49ruWNeEPFgmgXrzqSriT5TAD8FAZTRvsGpxnU+Rp+u
+         uvr0qLnraLjEKaKUEmmWccKHf8DSgxWo1pVwR532beio4C46jUyh/57qmgcUPKYFlcME
+         hIZnxm8KSLFyRRaoQSc4LbBKLgKjQ/mlbL7L46Ypp369wNSAHxQHI+Ijt/l7YZY1TdEU
+         K119Y3L8wrk8v4pfG7ZJqGxe2b+SjhKq3zeV4fLpZqFmGoNxmWeFa44XXvzq0l4kifrx
+         IX4iyZOLF00bT7FlNoKtqve8m8jAXfh5iFqIghOXeYXTNZ50Br+mhvZk/bYxE3+MWfbB
+         VqXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=AWl23En2CSTpgPMnl7xsCRHuZ0rNK6JKaXYXhCW8sqY=;
-        b=RsrhLG+qzCd2wQ3dYI3W43efz+Mrkukg6x2YIGvXck7/IT9H7/gzvf3dWJqBmed/Y3
-         7jdyRfCgoMi4j060coVZh0lneDwFmNmJjqb98SzUyC86DWIUyOWQf1F2fMsJ+r91/Qrq
-         8gswqNs2GJ1jDTvtHTn3ZghcEDcXfyBf84Euu+PhNmfL4+SYYxV2hYq+4p7k0Xmhsace
-         26uLPTOrddHFV6dpvwqWLPn6wUM23DeHMpe0fh5L5sMHl/xFK+ENb9dRJtRAaQxbUXTD
-         7Nay98An1oBR7ijLOXVMKZdF50ejNnKFI+W0KBCuCbDd/Pb2wtS9298RbD7lIEVPOeX3
-         iOqA==
-X-Gm-Message-State: ANhLgQ3YGywG+4/SaYszH4jXAe840vIXP5dA+bhTI39p6GMKTFCipc3V
-	QV5N51kf5YkX8eBOWhJA8TBsIwtnLNwzc1ThxJkWYhxCnh0y3w==
-X-Google-Smtp-Source: ADFU+vuTbyE2cJxhlslCWleIEZ2GD40NL/ujio/3dARtVsWEEpT9H7sl9//MYixr8mhDi6Ljempqi1Ccb7v77TDaqaE=
-X-Received: by 2002:a5e:d601:: with SMTP id w1mr9659500iom.82.1584053717923;
- Thu, 12 Mar 2020 15:55:17 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=sQ8KSeHuu5gbb6KpvtsDfv+QibZlU+YJ3M22aaHM60E=;
+        b=EMhxkaSn7ECVFF7uipuWTv8j/O1Tb+yi4yRgCfPxnv7ZG/hMeAcpuQJDA7JYnHjIRS
+         BfPxcXfXnchiej+cHSUMCRENInTDNgbmyNzbOIBhmJeUVvONJawRYanUySESDUrI4V7P
+         OXzKy4wpXAWb6DDpP4J9hmNeI0OiA2qtry636yaVy0/FW7IlWymSL+cTKl7+9e70wKhi
+         T3AgdDmL7tUdrL0Ot82ZLCeG1a+QLd3xFUrU+l0AKC4nMRpsLQtlCosdcYtnwLa+4NeB
+         7m1q+pW0V9tzBYbpbhA2HLVU3OfKMrxPDkMOmGFoDgDyUKd+IedTXNq6yVCcGYKFfl9Q
+         52OQ==
+X-Gm-Message-State: AFeK/H0aya7C4uOFuycvYGG8yH5rd5EmBC3sIjZud45EV8K9lKGPUNlY8xo369SkCkTg4EZZjBwbKwT2qJ1MPg==
+X-Received: by 10.37.42.4 with SMTP id q4mr20950639ybq.132.1490221151771; Wed,
+ 22 Mar 2017 15:19:11 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <CACdnJutPzcRCBu53nE9NOYE3gq5w1mTsmWzwHNzEyHmmXJZrAg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Thu, 12 Mar 2020 15:55:06 -0700
-From: Matthew Garrett <mjg59@google.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Bluez <5.53 DoS/privilege escalation
+In-Reply-To: <d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>
+References: <20170322103936.GB28849@suse.de> <9c8c5edd-f95a-b39c-7a85-c39c567068d8@canonical.com>
+ <d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>
+From: Dave Null <noid23@gmail.com>
+Date: Wed, 22 Mar 2017 15:19:11 -0700
+Message-ID: <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a11441e9a63619a054b5926b4
+Subject: Re: [oss-security] information about pwn2own Kernel problem
 
-https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00352.html
-describes a vulnerability in versions below 5.53 of the Bluez
-Bluetooth stack. Intel do not appear to have disclosed this issue to
-distributions in advance, and have not yet made a release that
-includes the fixes. https://patchwork.kernel.org/patch/11428317/ and
-https://patchwork.kernel.org/patch/11428319/ should apply to older
-versions.
+--001a11441e9a63619a054b5926b4
+Content-Type: text/plain; charset=UTF-8
+
+I was wondering this myself. I'm not sure if ZDI does any variant
+investigation when they pick up a bug. Really hoping this doesn't jump from
+a distro related problem to a Linux problem.
+
+-noid
+
+Crypto: https://keybase.io/noid
+None are more hopelessly enslaved than those who falsely believe they are
+free - Goethe
+--
+
+On Wed, Mar 22, 2017 at 1:54 PM, Luedtke, Nicholas (HPE Linux Security) <
+nicholas.luedtke@hpe.com> wrote:
+
+>
+> On 3/22/2017 2:21 PM, Tyler Hicks wrote:
+> > ZDI disclosed the information to the Ubuntu Security team a little less
+> > than 48 hours ago.
+> >
+> > The Ubuntu Kernel team has triaged the issue and came up with a
+> > potential fix. That fix is undergoing internal review and I'll be
+> > disseminating it via the usual channels once that is complete.
+> >
+> > Tyler
+> Is this an Ubuntu specific issue? Or does it affect the upstream kernels
+> as well?
+>
+>
+> --
+> Nicholas Luedtke
+> HPE Linux Security, Hewlett-Packard Enterprise
+>
+>
+>
+>
+
+--001a11441e9a63619a054b5926b4--
