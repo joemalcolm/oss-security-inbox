@@ -1,77 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/27/3
-Message-ID: <93509.5195631845-sendEmail@localhost>
-Date: Fri, 27 Oct 2017 20:25:11 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: binutils: NULL pointer dereference in concat_filename (dwarf2.c) (INCOMPLETE FIX FOR CVE-2017-15023)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/23/3
+Message-ID: <20170323144253.GF12842@openstack.org>
+Date: Thu, 23 Mar 2017 14:42:53 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2017-002] Nova logs sensitive context from notification exceptions (CVE-2017-7214)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-binutils is a set of tools necessary to build programs.
+=======================================================================
+OSSA-2017-002: Nova logs sensitive context from notification exceptions
+=======================================================================
 
-The commit fix for this issue says:
-
-The PR22200 fuzzer testcase found one way to put NULLs into .debug_line file tables. PR22205 finds another.
-So mitre considers this an incomplete fix.
-
-The complete ASan output of the issue:
-
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==19042==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000006a76a6 bp 0x7ffde0afde30 sp 0x7ffde0afde00 T0)
-==19042==The signal is caused by a READ memory access.
-==19042==Hint: address points to the zero page.
-    #0 0x6a76a5 in concat_filename /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8
-    #1 0x696ff3 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2265:44
-    #2 0x6a2d36 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3651:26
-    #3 0x6a2d36 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3686
-    #4 0x6a0369 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4798:11
-    #5 0x5f332e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10
-    #6 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
-    #7 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #8 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #9 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #10 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #11 0x7f6c6d793680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #12 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8 in concat_filename
-==19042==ABORTING
-
-Affected version:
-2.29.51.20170925 and maybe past releases
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=a54018b72d75abf2e74bf36016702da06399c1d9
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-15939
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00380-binutils-NULLptr-concat_filename
-
-Timeline:
-2017-09-25: bug discovered and reported to upstream
-2017-09-26: upstream released a patch
-2017-10-24: blog post about the issue
-2017-10-27: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/10/24/binutils-null-pointer-dereference-in-concat_filename-dwarf2-c-incomplete-fix-for-cve-2017-15023/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+:Date: March 23, 2017
+:CVE: CVE-2017-7214
 
 
+Affects
+~~~~~~~
+- Nova: >=13.0.0 <=13.1.3, >=14.0.0 <=14.0.4, >=15.0.0 <=15.0.1
+
+
+Description
+~~~~~~~~~~~
+Matt Riedemann with Huawei reported a vulnerability in Nova. Legacy
+notification exception contexts appearing in ERROR level logs may
+include sensitive information such as account passwords and
+authorization tokens. All Nova setups are affected.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/447075 (Mitaka)
+- https://review.openstack.org/447072 (Newton)
+- https://review.openstack.org/447071 (Ocata)
+- https://review.openstack.org/446948 (Pike)
+
+
+Credits
+~~~~~~~
+- Matt Riedemann from Huawei (CVE-2017-7214)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1673569
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7214
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
