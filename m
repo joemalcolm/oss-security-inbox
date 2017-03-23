@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/12/2
-Message-ID: <nycvar.YSQ.7.76.1709121258160.2226@wniryva>
-Date: Tue, 12 Sep 2017 13:01:15 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: David Buchanan <d@...buchanan.co.uk>, Michael Tokarev <mjt@....msk.ru>
-Subject: Re: CVE-2017-13673 Qemu: vga: reachable assert failure during during display update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/23/2
+Message-ID: <CAKG8Do71TReFYRvbj9isxStB6SOmn1dvrmq=50JwbbyYV_HosQ@mail.gmail.com>
+Date: Thu, 23 Mar 2017 15:57:01 +0100
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: pcs: CVE-2017-2661 Improper node name field validation when creating clusters leads to XSS
 Content-Type: text/plain; charset=utf-8
 
-+-- On Sun, 10 Sep 2017, Salvatore Bonaccorso wrote --+
-|  As far as I can see, e.g. cpu_physical_memory_snapshot_get_dirty was only 
-| introduced in v2.10.0-rc0. The upstream commit associated with the above 
+Hi,
 
-  Right.
+The CVE-2017-2661 has been assigned to the following issue:
 
-|  https://git.qemu.org/gitweb.cgi?p=qemu.git;a=commit;h=bfc56535f793c557aa754c50213fc5f882e6482d
-| 
-| which fixes
-| 
-|  https://git.qemu.org/gitweb.cgi?p=qemu.git;a=commit;h=fec5e8c92becad223df9d972770522f64aafdb72
-| 
-| introducing the use of dirty bitmap snapshots in vga_draw_graphic().
-| 
-| Do I miss something makeing it affecting as well earlier versions than
-| 2.10?
+Reflected cross-site scripting vulnerability was found in pcs due to
+improper validation of Node name field when creating new cluster or adding
+existing cluster.
 
-There were two issues, one reproducer worked with Qemu 2.9.x, other didn't 
-IIRC.
+Upstream fix :
+* web UI: fixed XSS vulnerability
+https://github.com/ClusterLabs/pcs/commit/1874a769b5720ae5430f10c6cedd234430bc703f
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Red Hat would like to thank Microsoft for reporting the vulnerability.
+
+-- 
+Cedric Buissart,
+Product Security
+
