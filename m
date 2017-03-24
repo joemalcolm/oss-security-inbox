@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["869" "Tuesday" "7" "November" "2017" "18:19:04" "+0000" "Simon McVittie" "smcv@debian.org" "<20171107181904.eu7gdgk43bdacvot@perpetual.pseudorandom.co.uk>" "21" "Re: [oss-security] Net::Ping::External command injections" "^Date:" nil nil "11" "2017110718:19:04" "[oss-security] Net::Ping::External command injections" (number mark "        smcv@debian. Nov  7   21/869   " thread-indent "\"Re: [oss-security] Net::Ping::External command injections\"\n") "<20171107165127.GA1693@weckbecker.name>" ("<20171107165127.GA1693@weckbecker.name>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["929" "Saturday" "25" "March" "2017" "00:35:26" "+1100" "James Morris" "jmorris@namei.org" "<alpine.LRH.2.20.1703250033190.23114@namei.org>" "30" "Re: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP" nil nil nil "3" "2017032413:35:26" "[oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP" (number mark "U       jmorris@name Mar 25   30/929   " thread-indent "\"Re: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP\"\n") "<20170324123201.GA24912@openwall.com>" ("<alpine.LRH.2.20.1703241217250.10825@namei.org>" "<20170324123201.GA24912@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22036 invoked by uid 550); 7 Nov 2017 18:19:20 -0000
+Received: (qmail 28556 invoked by uid 550); 24 Mar 2017 14:20:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22001 invoked from network); 7 Nov 2017 18:19:19 -0000
-Message-ID: <20171107181904.eu7gdgk43bdacvot@perpetual.pseudorandom.co.uk>
-References: <20171107165127.GA1693@weckbecker.name>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171107165127.GA1693@weckbecker.name>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Tue, 7 Nov 2017 18:19:04 +0000
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Net::Ping::External command injections
-To: oss-security@lists.openwall.com
+Received: (qmail 30293 invoked from network); 24 Mar 2017 13:35:39 -0000
+Date: Sat, 25 Mar 2017 00:35:26 +1100 (AEDT)
+From: James Morris <jmorris@namei.org>
+To: Solar Designer <solar@openwall.com>
+cc: oss-security@lists.openwall.com
+In-Reply-To: <20170324123201.GA24912@openwall.com>
+Message-ID: <alpine.LRH.2.20.1703250033190.23114@namei.org>
+References: <alpine.LRH.2.20.1703241217250.10825@namei.org> <20170324123201.GA24912@openwall.com>
+User-Agent: Alpine 2.20 (LRH 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Subject: Re: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP
 
-On Tue, 07 Nov 2017 at 17:51:27 +0100, Matthias Weckbecker wrote:
-> Net::Ping::External [0] is prone to command injection vulnerabilities.
+On Fri, 24 Mar 2017, Solar Designer wrote:
+
+> Hi James,
 > 
-> The issues are roughly 10 (!) years old [1], but the code is still being
-> shipped these days (e.g. in ubuntu artful and debian stretch [2]).
+> With all due respect to you and recognition of the importance of this
+> event, as I had pointed out last year, I wish you either informed
+> oss-security of the outcomes of each year's LSS or didn't post the CFPs
+> in here.  Posting only a CFP and then nothing until next year's CFP
+> sort of works on other lists, but not on oss-security.  Please re-read:
+> 
+> http://www.openwall.com/lists/oss-security/2016/03/25/7
 
-I've reported this to the Debian bug tracking system,
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=881097
+Sorry, I forgot to posting the outcomes back to the list.
 
-In Ubuntu, libnet-ping-external is in the unsupported 'universe' archive
-area, making it unlikely to be fixed there regardless of its status in
-Debian.
+Here is a wrapup of the 2016 LSS:
 
-> Or drop this pkg. altogether?
+http://blog.namei.org/2016/09/30/linux-security-summit-2016-wrapup/
 
-For what it's worth, Debian's archive maintenance software says nothing
-in unstable, stable or oldstable depends on this package, so there is no
-particular barrier to removing it (and bugs in it hopefully only affect
-locally-installed scripts, not anything else in Debian).
+> These are so much more useful (or rather, to more people) than a CFP
+> with no follow-ups.  I wish Kees, James, and others posted this kind of
+> material in here in text/plain, in addition to blogging.
 
-    smcv
+I'll see what I can do in future.
+
+
+- James
+-- 
+James Morris
+<jmorris@namei.org>
+
