@@ -1,4 +1,9 @@
-Received: (qmail 22149 invoked by uid 550); 20 May 2026 03:56:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2906" "Friday" "24" "March" "2017" "12:26:43" "+1100" "James Morris" "jmorris@namei.org" "<alpine.LRH.2.20.1703241217250.10825@namei.org>" "102" "[oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP" nil nil nil "3" "2017032401:26:43" "[oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP" (number mark "U       jmorris@name Mar 24  102/2906  " thread-indent "\"[oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1987 invoked by uid 550); 24 Mar 2017 11:45:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,78 +12,124 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5616 invoked from network); 20 May 2026 03:54:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=catalyst.net.nz;
-	s=default; t=1779249250;
-	bh=Pu3/dZiQ8T48okpMQqs0RwUnhmffI00eIDdv2R7YkoE=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=xggIk+HhwOcRTy7OUvfBqS8vinMsoNsbNOBbW25hg4MmjHajdK087avaBEMMNQFah
-	 DwRrpTvNm7U0Q2fiBFX1wb+9500yaKuMsIIulrltX5xzjwqwANoCAu4qDOxYuZ+J6I
-	 Vj39OUaHI8qR3GeBnLglVf7AeeyGJdr1LfHdGHQMTOg+rAdL5w501TxCubleBu9yyF
-	 TrFUhqKTjFsU7ZziFyyjYgDX5adDWubuu/vuiUu1Mwg0kc6JXHxa+GFkC+aPWp6I/u
-	 VWPkY2SG0QPcRmVZRPfYw2XFbwPeYpl5jG2VOSSTrK4xk746e/AjtJ/eTmUZBKZQVp
-	 6vtjCd8eDrpsQ==
-Message-ID: <110d1661-716f-48d2-84c6-fbc9959b7c39@catalyst.net.nz>
-Date: Wed, 20 May 2026 15:54:09 +1200
+Received: (qmail 5169 invoked from network); 24 Mar 2017 01:27:04 -0000
+Date: Fri, 24 Mar 2017 12:26:43 +1100 (AEDT)
+From: James Morris <jmorris@namei.org>
+To: linux-security-module@vger.kernel.org, linux-kernel@vger.kernel.org
+cc: lwn@lwn.net, fedora-selinux-list@redhat.com, selinux@tycho.nsa.gov,
+        Linux Security Summit Program Committee <lss-pc@lists.linuxfoundation.org>,
+        ubuntu-hardened@lists.ubuntu.com, netfilter-devel@vger.kernel.org,
+        linux-crypto@vger.kernel.org, Audit-ML <linux-audit@redhat.com>,
+        gentoo-hardened@gentoo.org, keyrings@linux-nfs.org,
+        tpmdd-devel@lists.sourceforge.net, kernel-hardening@lists.openwall.com,
+        oss-security@lists.openwall.com, openxt@googlegroups.com,
+        tee-dev@lists.linaro.org
+Message-ID: <alpine.LRH.2.20.1703241217250.10825@namei.org>
+User-Agent: Alpine 2.20 (LRH 67 2015-01-07)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <d9b75448-c072-40ec-9740-1c68d4cee279@samba.org>
- <2f748af7-2d2e-40e5-9c96-7927fd10b12c@samba.org>
- <621ffb04-9b12-416d-b4f6-46185f342de6@samba.org>
-Content-Language: en-NZ
-From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
-Autocrypt: addr=douglas.bagnall@catalyst.net.nz; keydata=
- xsBNBFTZNuABCACnBtS+eLzGts68jAJrZstbH5vM0d/4+OsGcvFkrXGPE9D6PsRdVM+jPT1Z
- fASzsarvWkx0b7p6/XTwTo2Al3KRRVLq3FQFPOLyKzSXK8u+vUi/py7Cv133t4Uea7+Pp+YM
- tWjXGwB/y3s5TBwJkYShSTBpAhDnkKjxRSQXIr7gIE0fIPIS1uy19g1q/BuXuj1sfcISRMpp
- z8qs9cAsk45tG1JItaLjO7+K47Q3LEfskChGPbhwh7tWCquDzreQC7q+h3dK6A1AOrorskON
- +Wy3aucRoOw6scNfV2H1y6lDza2lwZxCDRs6zkn7SQVjX62j9kVczShyi5udgqfWsW2jABEB
- AAHNMURvdWdsYXMgQmFnbmFsbCA8ZG91Z2xhcy5iYWduYWxsQGNhdGFseXN0Lm5ldC5uej7C
- wHgEEwECACIFAlTZNuACGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEHcqM0mxsX5t
- XIoH/jiHvUuw4xrBKuk9KzAE5JNd5rcTQdaRgiIvM/6C6X/uobzO2CDKFEUOmTpYSSXkq0/3
- YmwCRqWMja/5N1886qFrkcrIkTMRb0imxkNVwd7JIPdryK6dFCzCRUC1hByqeI8EwO41ROX+
- qw6DT+H/o6QkPWAB1P8ODVtq0F3TUZ0/Xpe3xYK1QF6Ud0BKWVcKBMAdS7CWTsVRD6m9it80
- Mp4N3y6Ka0vrgZ6IEskBHGVJ/Mm6ONrHIjl4OAbAKK4PuFha5PjPx1YYYOnsp4JvhrSJQDag
- A9vDdm7mbJpxxVY0Rx4t7xRvh+jsZ1f6yVGx5UTpdtvSbriZ2SZ3F29hBGfOwE0EVNk24AEI
- ANSG9xaPHGxr7l1Wcz8J51IDT0EE7ozS3TSYRE80OSH8oB26w5StLbQkC+iWj0GsTveJL9x6
- Vp/dfsPGfG9CP9J0C4ZOwY7+V9ex1d10xzr32zetKiUt7ZEimzIiCnmnR9K54jVbGDvVfJie
- uTOGruqRLIUAO69ZyhplRywyee6MRtgmfLpJlnOySgvihR4kHmq03zHe6whhJ0RmbKSIwb/F
- Ri/ZmpujNZ7PTYcmw7sp/5HpE4taYA0f3QvK9/DTjuoITdugrxhOwBdv6jLAAzI8d0quOFf+
- 5IeGizYTa6HPmBtIUyyzVajjiUpXiB8WuhgTL5pP0BT5j6BtW8Li/YEAEQEAAcLAXwQYAQIA
- CQUCVNk24AIbDAAKCRB3KjNJsbF+bYRnB/94DaFuxGVA65kkr5iubWbwKnaiTWlZLIFQp0RH
- QRk/jgdpuQj3E4D660QdfoMqhTeozOPTBH3cJOCjgN/klI7xrkvdq8sLTMWyM5Bbu+XhDaSr
- 8hnjvdhZM7bHQdaH3FI5zdm2rMbP8nB6IH8wYSxHzywjR9vks6PTsqxqeCoupqdVO/kZ3jsU
- F0LOxxnMTlT8YZIn8lFVptsz5HMOKFnUdR3fYpcO+CTc9vXqcLWqnMwchdSQPp1cjZ5eUl+G
- jmq9xwOWLG/0u5b9stC3cEiCNSZn8Nyy7KaY8fQeKn//sBeyu3htjZ2wZ+oRVuc/XR/+/hl6
- QCGP/4UC6mJGdmU0
-In-Reply-To: <621ffb04-9b12-416d-b4f6-46185f342de6@samba.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Heads-up: Upcoming Samba security releases (2026-05-26)
+Content-Type: multipart/mixed; BOUNDARY="1665246916-1864586338-1490318299=:10825"
+Content-ID: <alpine.LRH.2.20.1703241220400.10825@namei.org>
+Subject: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP
 
-The Samba security release that was due for April 9 is now going to be 
-on May 26.
+--1665246916-1864586338-1490318299=:10825
+Content-Type: text/plain; CHARSET=ISO-8859-7
+Content-Transfer-Encoding: 8BIT
+Content-ID: <alpine.LRH.2.20.1703241220401.10825@namei.org>
 
-On 09/04/2026 08:32, Douglas Bagnall wrote:
->> Release is still Thursday 9 April.
-> Sorry again. The release has been postponed because we found an
-> issue in one of the fixes.
-> 
-> We will announce a new date as soon as possible.
 
->  Impacted components:
->   - File Services, CVSS 10.0, affecting some configurations
->   - File Services, CVSS 10.0, affecting uncommon configurations
->   - File Services, CVSS 7.1 affecting some configurations
->   - File Services, CVSS 6.5 affecting uncommon configurations
->   - Domain members CVSS 8.0, affecting some configurations
->   - AD DC CVSS 7.5, affecting uncommon configurations
+==============================================================================
+		   ANNOUNCEMENT AND CALL FOR PARTICIPATION
 
-Patches and new versions of 4.22, 4.23, and 4.24 will be available from 
-https://www.samba.org/samba/history/security.html (and the usual distro 
-channels).
+			  LINUX SECURITY SUMMIT 2017
+                         
+			       14-15 September
+			       LOS ANGELES, USA
+==============================================================================
 
-Douglas
 
+DESCRIPTION
+
+  The Linux Security Summit (LSS) is a technical forum for collaboration
+  between Linux developers, researchers, and end users. Its primary aim is to
+  foster community efforts in analyzing and solving Linux security challenges.
+
+  LSS this year will be co-located with the Open Source Summit and the Linux
+  Plumbers Conference.
+
+  The program committee currently seeks proposals for:
+
+    * Refereed Presentations:
+      45 minutes in length, including at least 10 minutes of discussion.
+
+    * Discussion Topics:
+      30 minutes in length.
+
+  Topic areas include, but are not limited to:
+
+    * Kernel self-protection
+    * Access control
+    * Cryptography and key management
+    * Integrity control
+    * Hardware Security
+    * Iot and embedded security
+    * Virtualization and containers
+    * System-specific system hardening
+    * Case studies
+    * Security tools
+    * Security UX
+    * Emerging technologies, threats & techniques 
+
+  Proposals should be submitted via:
+    http://events.linuxfoundation.org/events/linux-security-summit/program/cfp
+
+
+DATES
+
+  * CFP Close: June 5, 2017
+  * CFP Notifications: June 12, 2017
+  * Schedule Announced: June 19, 2017
+  * Slide Submission: August 31, 2017
+
+
+WHO SHOULD ATTEND
+
+  We're seeking a diverse range of attendees, and welcome participation by
+  people involved in Linux security development, operations, and research.
+
+  The LSS is a unique global event which provides the opportunity to present
+  and discuss your work or research with key Linux security community members
+  and maintainers.  It¢s also useful for those who wish to keep up with the
+  latest in Linux security development, and to provide input to the
+  development process.
+
+
+WEB SITE
+
+  http://events.linuxfoundation.org/events/linux-security-summit
+
+
+TWITTER
+
+  For event updates and announcements, follow:
+
+    https://twitter.com/LinuxSecSummit
+  
+
+PROGRAM COMMITTEE
+
+  The program committee for LSS 2017 is:
+
+    * James Morris, Oracle
+    * Serge Hallyn, Canonical
+    * Paul Moore, Red Hat
+    * Stephen Smalley, NSA
+    * Elena Reshetova, Intel
+    * John Johansen, Canonical
+    * Kees Cook, Google
+    * Casey Schaufler, Intel
+    * Mimi Zohar, IBM
+    * David A. Wheeler, Institute for Defense Analyses
+
+  The program committee may be contacted as a group via email:
+    lss-pc () lists.linuxfoundation.org
+--1665246916-1864586338-1490318299=:10825--
