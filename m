@@ -1,4 +1,9 @@
-Received: (qmail 7991 invoked by uid 550); 11 Apr 2026 01:11:07 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3709" "Friday" "24" "March" "2017" "13:32:01" "+0100" "Solar Designer" "solar@openwall.com" "<20170324123201.GA24912@openwall.com>" "88" "Re: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP" nil nil nil "3" "2017032412:32:01" "[oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP" (number mark "U       solar@openwa Mar 24   88/3709  " thread-indent "\"Re: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP\"\n") "<alpine.LRH.2.20.1703241217250.10825@namei.org>" ("<alpine.LRH.2.20.1703241217250.10825@namei.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13539 invoked by uid 550); 24 Mar 2017 12:32:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,87 +12,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 27747 invoked from network); 10 Apr 2026 21:45:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1775857499;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=OEpTNiCGC72Gtau5UBfLNpBqb+jiX1vKcxMPmTp4KTY=;
-	b=GzoVRuH+IzHe0SdDXxhwK054E5Wq5qt4mffptyVqGWdDdkspHXzULjZaQtUdBrt+rSv5Oq
-	LNHYkp9W954shs6toeYgM8vkUVu1GJWUf9S3eZTjH/R2Q61y5+cmZiFqKOZBEcrEt3OHQJ
-	y49JYz8VtFpRSus+S7HFbnAHnPLB1T72ZGOWrgl41m0K4K5JZEM/hhzz0NAZA6mW02N4vu
-	SkfPUQpMXri5n9MJjKQ91nGZTLVhT5zuhylzyD8uB7WQz2UgzTDR1L5bBftzn/+rRux4FG
-	qFKfCgvFmtzMw+4SCyuyfZYWgkEos4OfmbRrp0bknaSK1IyQSrm011g2PM3eGw==
-Date: Fri, 10 Apr 2026 23:44:55 +0200
-From: Stig Palmquist <stig@stig.io>
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Message-ID: <adlu6vUp3UOxylFF@ava>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 12111 invoked from network); 24 Mar 2017 12:32:13 -0000
+Date: Fri, 24 Mar 2017 13:32:01 +0100
+From: Solar Designer <solar@openwall.com>
+To: James Morris <jmorris@namei.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20170324123201.GA24912@openwall.com>
+References: <alpine.LRH.2.20.1703241217250.10825@namei.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: [oss-security] CVE-2026-40198: Net::CIDR::Lite versions before 0.23 for Perl does
- not validate IPv6 group count, which may allow IP ACL bypass
+In-Reply-To: <alpine.LRH.2.20.1703241217250.10825@namei.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] [ANNOUNCE] Linux Security Summit 2017 - CFP
 
-========================================================================
-CVE-2026-40198                                       CPAN Security Group
-========================================================================
+Hi James,
 
-        CVE ID:  CVE-2026-40198
-  Distribution:  Net-CIDR-Lite
-      Versions:  before 0.23
+With all due respect to you and recognition of the importance of this
+event, as I had pointed out last year, I wish you either informed
+oss-security of the outcomes of each year's LSS or didn't post the CFPs
+in here.  Posting only a CFP and then nothing until next year's CFP
+sort of works on other lists, but not on oss-security.  Please re-read:
 
-      MetaCPAN:  https://metacpan.org/dist/Net-CIDR-Lite
-      VCS Repo:  https://github.com/stigtsp/Net-CIDR-Lite
+http://www.openwall.com/lists/oss-security/2016/03/25/7
 
+Unless there's anything from LSS besides this CFP posted to here until
+next year's, I am going to reject next year's LSS CFP, as we should have
+been doing per the published oss-security guidelines in the first place.
 
-Net::CIDR::Lite versions before 0.23 for Perl does not validate IPv6
-group count, which may allow IP ACL bypass
+The same applies to other events focused on open source security,
+including non-Linux ones: CFPs only "no", generally useful material from
+such events "probably yes", CFPs from events for which there were other
+accepted postings "possibly yes".  Currently I don't recall any events
+with relevant focus that bothered communicating their materials to here,
+but they should have (if any of the substance could be provided in
+text/plain; for videos only, no).  For events not focused on open source
+security, I intend to make no exceptions regarding CFPs, not even if
+some materials were relevant and discussed in here.  So overall our "no
+CFPs" policy is still in place.
 
-Description
------------
-Net::CIDR::Lite versions before 0.23 for Perl does not validate IPv6
-group count, which may allow IP ACL bypass.
+This applies to oss-security only.  Having this same CFP on the
+kernel-hardening list is OK and desirable.  (And it's already there.)
 
-_pack_ipv6() does not check that uncompressed IPv6 addresses (without
-::) have exactly 8 hex groups. Inputs like "abcd", "1:2:3", or
-"1:2:3:4:5:6:7" are accepted and produce packed values of wrong length
-(3, 7, or 15 bytes instead of 17).
+On Fri, Mar 24, 2017 at 12:26:43PM +1100, James Morris wrote:
+>   Topic areas include, but are not limited to:
+> 
+>     * Kernel self-protection
+>     * Access control
+>     * Cryptography and key management
+>     * Integrity control
+>     * Hardware Security
+>     * Iot and embedded security
+>     * Virtualization and containers
+>     * System-specific system hardening
+>     * Case studies
+>     * Security tools
+>     * Security UX
+>     * Emerging technologies, threats & techniques 
 
-The packed values are used internally for mask and comparison
-operations. find() and bin_find() use Perl string comparison (lt/gt) on
-these values, and comparing strings of different lengths gives wrong
-results. This can cause find() to incorrectly report an address as
-inside or outside a range.
+diff from last year's:
 
-Example:
+-    * Trust systems
+-    * Storage and file systems
+-    * Identity management
+-    * Code analysis
+-    * Security analytics
+-    * Secure development and operational practices
 
-  my $cidr = Net::CIDR::Lite->new("::/8");
-  $cidr->find("1:2:3");  # invalid input, incorrectly returns true
++    * Iot and embedded security
++    * System-specific system hardening
++    * Security tools
++    * Security UX
 
-This is the same class of input validation issue as CVE-2021-47154
-(IPv4 leading zeros) previously fixed in this module.
+To make my posting useful, let me inform those not on kernel-hardening,
+but interested in how the project is doing, that it's been doing OK at
+least(*) in terms of activity lately, with last month being the busiest
+month so far by number of messages posted:
 
-See also CVE-2026-40199, a related issue in the same function affecting
-IPv4 mapped IPv6 addresses.
+http://www.openwall.com/lists/kernel-hardening/
+http://kernsec.org/wiki/index.php/Kernel_Self_Protection_Project
 
-Problem types
--------------
-- CWE-1286 Improper Validation of Syntactic Correctness of Input
+(*) I say "at least" because I know that opinions vary as to the utility
+of such activity.
 
-Solutions
----------
-Upgrade to version 0.23 or newer, or apply the patch provided.
+Another good resource are Kees Cook's blog posts on "security things" in
+each new Linux kernel release:
 
+https://outflux.net/blog/archives/2017/02/27/security-things-in-linux-v4-10/
+https://outflux.net/blog/archives/2016/12/12/security-things-in-linux-v4-9/
+https://outflux.net/blog/archives/2016/10/04/security-things-in-linux-v4-8/
+https://outflux.net/blog/archives/2016/10/03/security-things-in-linux-v4-7/
+https://outflux.net/blog/archives/2016/09/30/security-things-in-linux-v4-6/
+https://outflux.net/blog/archives/2016/09/28/security-things-in-linux-v4-5/
+https://outflux.net/blog/archives/2016/09/27/security-things-in-linux-v4-4/
+https://outflux.net/blog/archives/2016/09/26/security-things-in-linux-v4-3/
 
-References
-----------
-https://github.com/stigtsp/Net-CIDR-Lite/commit/25d65f85dbe4885959a10471725ec9d250a589c3.patch
-https://metacpan.org/release/STIGTSP/Net-CIDR-Lite-0.23/changes
-https://www.cve.org/CVERecord?id=CVE-2026-40199
+and his other blog posts as well, such as on security bugs' lifetime.
 
-Timeline
---------
-- 2026-04-09: Vulnerability found
-- 2026-04-10: Net-CIDR-Lite version 0.23 released
+These are so much more useful (or rather, to more people) than a CFP
+with no follow-ups.  I wish Kees, James, and others posted this kind of
+material in here in text/plain, in addition to blogging.
 
+Alexander
