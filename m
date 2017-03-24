@@ -1,71 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/1
-Message-ID: <olpvai$s2$1@blaine.gmane.org>
-Date: Tue, 1 Aug 2017 15:22:33 +0200
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Advisory: XSS issues in MantisBT (CVE-2017-12061, CVE-2017-12062)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/4
+Message-ID: <20170324123201.GA24912@openwall.com>
+Date: Fri, 24 Mar 2017 13:32:01 +0100
+From: Solar Designer <solar@...nwall.com>
+To: James Morris <jmorris@...ei.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [ANNOUNCE] Linux Security Summit 2017 - CFP
 Content-Type: text/plain; charset=utf-8
 
-Please take note of the following 2 cross-site scripting issues in MantisBT
+Hi James,
 
-Best regards
-Damien Regad
-MantisBT developer
+With all due respect to you and recognition of the importance of this
+event, as I had pointed out last year, I wish you either informed
+oss-security of the outcomes of each year's LSS or didn't post the CFPs
+in here.  Posting only a CFP and then nothing until next year's CFP
+sort of works on other lists, but not on oss-security.  Please re-read:
 
+http://www.openwall.com/lists/oss-security/2016/03/25/7
 
-1. CVE-2017-12061: XSS in /admin/install.php script
+Unless there's anything from LSS besides this CFP posted to here until
+next year's, I am going to reject next year's LSS CFP, as we should have
+been doing per the published oss-security guidelines in the first place.
 
-A cross-site scripting (XSS) vulnerability in the MantisBT
-Installation script allows remote attackers to inject arbitrary code
-through crafted parameters.
+The same applies to other events focused on open source security,
+including non-Linux ones: CFPs only "no", generally useful material from
+such events "probably yes", CFPs from events for which there were other
+accepted postings "possibly yes".  Currently I don't recall any events
+with relevant focus that bothered communicating their materials to here,
+but they should have (if any of the substance could be provided in
+text/plain; for videos only, no).  For events not focused on open source
+security, I intend to make no exceptions regarding CFPs, not even if
+some materials were relevant and discussed in here.  So overall our "no
+CFPs" policy is still in place.
 
-This is only possible if the admin/ folder was not deleted after
-installation, as recommended in the MantisBT Admin Guide [1].
+This applies to oss-security only.  Having this same CFP on the
+kernel-hardening list is OK and desirable.  (And it's already there.)
 
-Affected versions: 1.3.11 and older, 2.5.1 and older
-Fixed in versions: 1.3.12, 2.5.2, 2.6.0 (not yet released*)
+On Fri, Mar 24, 2017 at 12:26:43PM +1100, James Morris wrote:
+>   Topic areas include, but are not limited to:
+> 
+>     * Kernel self-protection
+>     * Access control
+>     * Cryptography and key management
+>     * Integrity control
+>     * Hardware Security
+>     * Iot and embedded security
+>     * Virtualization and containers
+>     * System-specific system hardening
+>     * Case studies
+>     * Security tools
+>     * Security UX
+>     * Emerging technologies, threats & techniques 
 
-Patch:
-- 1.3:
-https://github.com/mantisbt/mantisbt/commit/17f9b94f031ba93ae2a727bca0e68458ecd08fb0
-- 2.x:
-https://github.com/mantisbt/mantisbt/commit/c73ae3d3d4dd4681489a9e697e8ade785e27cba5
+diff from last year's:
 
-Credits:
-- Reported by aLLy from ONSEC (https://twitter.com/IamSecurity)
-- Fixed by Damien Regad (MantisBT Developer)
+-    * Trust systems
+-    * Storage and file systems
+-    * Identity management
+-    * Code analysis
+-    * Security analytics
+-    * Secure development and operational practices
 
-References:
-- MantisBT issue tracker https://mantisbt.org/bugs/view.php?id=23146
++    * Iot and embedded security
++    * System-specific system hardening
++    * Security tools
++    * Security UX
 
-[1]
-http://mantisbt.org/docs/master/en-US/Admin_Guide/html-desktop/#admin.install.postcommon
+To make my posting useful, let me inform those not on kernel-hardening,
+but interested in how the project is doing, that it's been doing OK at
+least(*) in terms of activity lately, with last month being the busiest
+month so far by number of messages posted:
 
+http://www.openwall.com/lists/kernel-hardening/
+http://kernsec.org/wiki/index.php/Kernel_Self_Protection_Project
 
-2. CVE-2017-12062: XSS in manage_user_page.php
+(*) I say "at least" because I know that opinions vary as to the utility
+of such activity.
 
-A cross-site scripting (XSS) vulnerability in the MantisBT
-Manage User page allows remote attackers to inject arbitrary code (if
-CSP settings permit it) through a crafted 'filter' parameter.
+Another good resource are Kees Cook's blog posts on "security things" in
+each new Linux kernel release:
 
-Affected versions: 2.1.0 through 2.5.1
-Fixed in versions: 2.5.2, 2.6.0 (not yet released*)
+https://outflux.net/blog/archives/2017/02/27/security-things-in-linux-v4-10/
+https://outflux.net/blog/archives/2016/12/12/security-things-in-linux-v4-9/
+https://outflux.net/blog/archives/2016/10/04/security-things-in-linux-v4-8/
+https://outflux.net/blog/archives/2016/10/03/security-things-in-linux-v4-7/
+https://outflux.net/blog/archives/2016/09/30/security-things-in-linux-v4-6/
+https://outflux.net/blog/archives/2016/09/28/security-things-in-linux-v4-5/
+https://outflux.net/blog/archives/2016/09/27/security-things-in-linux-v4-4/
+https://outflux.net/blog/archives/2016/09/26/security-things-in-linux-v4-3/
 
-Patch:
-https://github.com/mantisbt/mantisbt/commit/9b5b71dadbeeeec27efea59f562ac5bd6d2673b7
+and his other blog posts as well, such as on security bugs' lifetime.
 
-Credits:
-- Reported by Trí Chim Trích (https://twitter.com/trichimtrich)
-- Fixed by Roland Becker (MantisBT Developer)
+These are so much more useful (or rather, to more people) than a CFP
+with no follow-ups.  I wish Kees, James, and others posted this kind of
+material in here in text/plain, in addition to blogging.
 
-References:
-- MantisBT issue tracker http://www.mantisbt.org/bugs/view.php?id=23166
-
-
-* Releases 1.3.9, 2.1.3, 2.2.3 and 2.3.0 are scheduled for release on
-coming week-end
-
-
-
-
+Alexander
