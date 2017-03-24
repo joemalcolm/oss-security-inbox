@@ -1,49 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/7
-Message-ID: <a23b9a5939ad4e50a10dcc1e65d6305e@imshyb01.MITRE.ORG>
-Date: Wed, 18 Jan 2017 11:35:22 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: audio: memory leakage in ac97 device
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/1
+Message-ID: <2055295.Eyc2jNN39U@blackgate>
+Date: Fri, 24 Mar 2017 10:47:48 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: libpcre: invalid memory read in _pcre32_xclass (pcre_xclass.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Monday 20 March 2017 10:31:24 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/03/20/libpcre-invalid-memory-read-in-_pcre
+> 32_xclass-pcre_xclass-c
 
-> [] Quick Emulator(Qemu) built with the ac97 audio device emulation support is
-> vulnerable to a memory leakage issue. It could occur while doing a device
-> unplug operation; Doing so repeatedly would result in leaking host memory,
-> affecting other services on the host.
-> 
-> A privileged user inside guest could use this flaw to cause a DoS and/or
-> potentially crash the Qemu process on the host.
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01740.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=12351a91da97b414eec8cdb09f1d9f41e535a401
+This is CVE-2017-7244
 
-Use CVE-2017-5525 for this (i.e., a memory consumption issue, not an
-information disclosure issue).
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYf5h/AAoJEHb/MwWLVhi23fIP/0fuLRdLp9NZ5o5pn6LmGfEX
-dENdnZplDoWUTCRSkDPVW5tNDT/Ksz+OyQ45jhmAgyGjZgMKCkg8xErRoOe9M24+
-i2Er+2jeoR1TNaFmmPf2oakdEhU5IBtEj9LhJHq2CqvtNtscf2TOFi5LAzXKmaeM
-MoO43kn0OX8LlWn8CuHy5LpXAXVjVl0JG1D1+koKQFjKMnSfxCGmgePZHMIwSFIO
-FEYgLTC03l65YmzSrd20exYMua4fNgLq2KC9cR/29TM5YuT9flr/n13sS2oQcCs1
-QIxgvlOhMh9B1JKK14aZvPpRELHRnJcDBSq4dFSPxYb1yqC5d+9VvksyzJ4sK+uX
-3WuDCddLgFPHgQHAVfkkvD8hCpGEjjCJbtfLdar1NGwPgWjkBLgdgljpEToVUXOU
-KqkgEl3ZwoEc/dY0bndvoRy5ttEDGjWpZpGNrmF7jSLXVFOZrJ3QEtyj8uieH2v1
-ugvg2RYPb7ucAZssUe3hFOOj8mprIrTAkKoPs7HI7+r8ECsh1DXdKzo2J8awp/87
-7/7X/TVbVgVgXLAf9W1HYmnIZXX68ryAvfjfb7lvTJYV6LMsv++XmIuwkYh6/O9y
-OcfBV9TkMzPtoLNnh6cOFBzQphVwS5slC/cjSkT08ppubh9hOLFiu+VaWeLtcq59
-dMKgDbKn6VcQhjxWKqg1
-=6yzY
------END PGP SIGNATURE-----
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
