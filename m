@@ -1,29 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/7
-Message-ID: <CAGW7fdtioEUEY19WukZQmKn0PDd-rsmHHS_N87nQswFdMnrBhg@mail.gmail.com>
-Date: Tue, 24 Jan 2017 12:15:48 -0500
-From: Max Veytsman <max@...canary.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: rubygem minitar: directory traversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/8
+Message-ID: <CANn89iK-7r3KozC4K1rmWpJ1jM-bhBqessUrkg8HoftnjOks5g@mail.gmail.com>
+Date: Fri, 24 Mar 2017 15:21:06 -0700
+From: Eric Dumazet <edumazet@...gle.com>
+To: Andrey Konovalov <andreyknvl@...gle.com>
+Cc: oss-security@...ts.openwall.com, "David S. Miller" <davem@...emloft.net>,  Alexey Kuznetsov <kuznet@....inr.ac.ru>, James Morris <jmorris@...ei.org>,  Hideaki YOSHIFUJI <yoshfuji@...ux-ipv6.org>, Patrick McHardy <kaber@...sh.net>,  netdev <netdev@...r.kernel.org>, LKML <linux-kernel@...r.kernel.org>,  Vasily Kulikov <segoon@...nwall.com>
+Subject: Re: Linux kernel ping socket / AF_LLC connect() sin_family race
 Content-Type: text/plain; charset=utf-8
 
-Rubygem minitar allows attackers to overwrite arbitrary files during
-archive extraction via a .. (dot dot) in an extracted filename.
+On Fri, Mar 24, 2017 at 1:43 PM, Andrey Konovalov <andreyknvl@...gle.com>
+wrote:
 
-Issue:
-https://github.com/halostatue/minitar/issues/16
+> On Fri, Mar 24, 2017 at 9:27 PM, Solar Designer <solar@...nwall.com>
+> wrote:
+> > Hi,
+> >
+> > I haven't fully investigated this issue, and the Subject is provisional
+> > (but will probably get stuck).  I am not yet sure which kernel
+> > subsystem(s) to blame here (ping sockets? LLC sockets? other/more?), and
+> > there might be other ways to trigger the issue.
+>
+> Reproduced the crash on current upstream
+> (ebe64824e9de4b3ab3bd3928312b4b2bc57b4b7e).
+>
+> Adding kernel maintainers.
+>
 
-Upstream patch:
-https://github.com/halostatue/minitar/commit/e25205ecbb6277ae8a3df1e6a306d7ed4458b6e4
+Looks easy enough to fix ?
 
-The same issue exists in rubygem archive-tar-minitar
-
-I believe they're based on the same codebase, and minitar is the officially
-supported fork, so I'm not sure if this warrants two CVEs or just one.
-
-Thanks,
---
-Max Veytsman
-Co-founder appcanary.com
-@mveytsman <https://twitter.com/mveytsman>
+diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
+index
+2af6244b83e27ae384e96cf071c10c5a89674804..ccfbce13a6333a65dab64e4847dd510dfafb1b43
+100644
+--- a/net/ipv4/ping.c
++++ b/net/ipv4/ping.c
+@@ -156,17 +156,18 @@ int ping_hash(struct sock *sk)
+ void ping_unhash(struct sock *sk)
+ {
+        struct inet_sock *isk = inet_sk(sk);
++
+        pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
++       write_lock_bh(&ping_table.lock);
+        if (sk_hashed(sk)) {
+-               write_lock_bh(&ping_table.lock);
+                hlist_nulls_del(&sk->sk_nulls_node);
+                sk_nulls_node_init(&sk->sk_nulls_node);
+                sock_put(sk);
+                isk->inet_num = 0;
+                isk->inet_sport = 0;
+                sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
+-               write_unlock_bh(&ping_table.lock);
+        }
++       write_unlock_bh(&ping_table.lock);
+ }
+ EXPORT_SYMBOL_GPL(ping_unhash);
 
