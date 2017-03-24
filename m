@@ -1,36 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/16/2
-Message-ID: <7a824313c433c54a212afb25498e8556581@guerrillamail.com>
-Date: Sun, 16 Apr 2017 13:08:27 +0000
-From: <7b4xrw+5q6jtt69cnwlw@...rrillamail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: MantisBT - Full admin access vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/3
+Message-ID: <alpine.LRH.2.20.1703241217250.10825@namei.org>
+Date: Fri, 24 Mar 2017 12:26:43 +1100 (AEDT)
+From: James Morris <jmorris@...ei.org>
+To: linux-security-module@...r.kernel.org, linux-kernel@...r.kernel.org
+cc: lwn@....net, fedora-selinux-list@...hat.com, selinux@...ho.nsa.gov, Linux Security Summit Program Committee <lss-pc@...ts.linuxfoundation.org>, ubuntu-hardened@...ts.ubuntu.com, netfilter-devel@...r.kernel.org, linux-crypto@...r.kernel.org, Audit-ML <linux-audit@...hat.com>, gentoo-hardened@...too.org, keyrings@...ux-nfs.org, tpmdd-devel@...ts.sourceforge.net, kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com, openxt@...glegroups.com, tee-dev@...ts.linaro.org
+Subject: [ANNOUNCE] Linux Security Summit 2017 - CFP
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability exists in MantisBT where any users password can be reset:
 
-Visiting /verify.php?id=XXX&confirm_hash=
+==============================================================================
+		   ANNOUNCEMENT AND CALL FOR PARTICIPATION
 
-where XXX is the userid of the user. id=1 is the default 'administrator' account if it still exists.
-
-On a unpatched instance of mantisBT, this will provide a form to enter a new password for a user.
-
-This works on any enabled account (including users with admin access) - providing an anonymous user with admin access to the system
-
-The issue can be resolved by checking the value of $t_token_confirm_hash is not null in verify.php
-
-i.e. changing the code to read:
-
-if( $f_confirm_hash !== $t_token_confirm_hash || null === $t_token_confirm_hash ) {
-	trigger_error( ERROR_LOST_PASSWORD_CONFIRM_HASH_INVALID, ERROR );
-}
+			  LINUX SECURITY SUMMIT 2017
+                         
+			       14-15 September
+			       LOS ANGELES, USA
+==============================================================================
 
 
+DESCRIPTION
+
+  The Linux Security Summit (LSS) is a technical forum for collaboration
+  between Linux developers, researchers, and end users. Its primary aim is to
+  foster community efforts in analyzing and solving Linux security challenges.
+
+  LSS this year will be co-located with the Open Source Summit and the Linux
+  Plumbers Conference.
+
+  The program committee currently seeks proposals for:
+
+    * Refereed Presentations:
+      45 minutes in length, including at least 10 minutes of discussion.
+
+    * Discussion Topics:
+      30 minutes in length.
+
+  Topic areas include, but are not limited to:
+
+    * Kernel self-protection
+    * Access control
+    * Cryptography and key management
+    * Integrity control
+    * Hardware Security
+    * Iot and embedded security
+    * Virtualization and containers
+    * System-specific system hardening
+    * Case studies
+    * Security tools
+    * Security UX
+    * Emerging technologies, threats & techniques 
+
+  Proposals should be submitted via:
+    http://events.linuxfoundation.org/events/linux-security-summit/program/cfp
 
 
+DATES
 
-----
-Sent using Guerrillamail.com
-Block or report abuse: https://www.guerrillamail.com//abuse/?a=TlJnSB4FQKEHgRqt0HIWYQDUA8WA19lHxqhOMtz5Bg%3D%3D
+  * CFP Close: June 5, 2017
+  * CFP Notifications: June 12, 2017
+  * Schedule Announced: June 19, 2017
+  * Slide Submission: August 31, 2017
 
 
+WHO SHOULD ATTEND
+
+  We're seeking a diverse range of attendees, and welcome participation by
+  people involved in Linux security development, operations, and research.
+
+  The LSS is a unique global event which provides the opportunity to present
+  and discuss your work or research with key Linux security community members
+  and maintainers.  It’s also useful for those who wish to keep up with the
+  latest in Linux security development, and to provide input to the
+  development process.
+
+
+WEB SITE
+
+  http://events.linuxfoundation.org/events/linux-security-summit
+
+
+TWITTER
+
+  For event updates and announcements, follow:
+
+    https://twitter.com/LinuxSecSummit
+  
+
+PROGRAM COMMITTEE
+
+  The program committee for LSS 2017 is:
+
+    * James Morris, Oracle
+    * Serge Hallyn, Canonical
+    * Paul Moore, Red Hat
+    * Stephen Smalley, NSA
+    * Elena Reshetova, Intel
+    * John Johansen, Canonical
+    * Kees Cook, Google
+    * Casey Schaufler, Intel
+    * Mimi Zohar, IBM
+    * David A. Wheeler, Institute for Defense Analyses
+
+  The program committee may be contacted as a group via email:
+    lss-pc () lists.linuxfoundation.org
