@@ -1,18 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/24
-Message-ID: <4129940.EKXfKyb2vO@blackgate>
-Date: Mon, 13 Mar 2017 11:37:49 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/2
+Message-ID: <1566168.ji4fmdV5UO@blackgate>
+Date: Fri, 24 Mar 2017 10:50:19 +0100
 From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c) (incomplete fix for CVE-2016-8887)
+Subject: Re: libpcre: two stack-based buffer overflow write in pcre32_copy_substring (pcre_get.c)
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 23 October 2016 09:58:37 Agostino Sarubbo wrote:
+On Monday 20 March 2017 10:28:08 Agostino Sarubbo wrote:
 > Permalink:
-> https://blogs.gentoo.org/ago/2016/10/23/jasper-null-pointer-dereference-in-j
-> p2_colr_destroy-jp2_cod-c-incomplete-fix-for-cve-2016-8887
+> https://blogs.gentoo.org/ago/2017/03/20/libpcre-two-stack-based-buffer-overf
+> low-write-in-pcre32_copy_substring-pcre_get-c
 
-This is CVE-2016-10250
+
+> WRITE of size 4 at 0x7f58f32026a0 thread T0
+>     #0 0x7f58f6f90a23 in pcre32_copy_substring
+> /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_get.c:358:15
+This is CVE-2017-7245
+
+
+> WRITE of size 268 at 0x7f83734026a0 thread T0
+> #1 0x7f8377118925 in
+> pcre32_copy_substring
+> /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_get.c:357:1
+This is CVE-2017-7246
+
 
 -- 
 Agostino Sarubbo
