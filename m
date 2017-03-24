@@ -1,20 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/06/6
-Message-ID: <8210399.4Q3lmaS87A@wanheda>
-Date: Wed, 06 Sep 2017 21:03:43 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: openjpeg: heap-based buffer overflow in opj_write_bytes_LE (cio.c) (INCOMPLETE FIX FOR CVE-2017-14152)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/5
+Message-ID: <alpine.LRH.2.20.1703250033190.23114@namei.org>
+Date: Sat, 25 Mar 2017 00:35:26 +1100 (AEDT)
+From: James Morris <jmorris@...ei.org>
+To: Solar Designer <solar@...nwall.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: [ANNOUNCE] Linux Security Summit 2017 - CFP
 Content-Type: text/plain; charset=utf-8
 
-On mercoledì 6 settembre 2017 20:59:29 CEST Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/09/06/graphicsmagick-memory-allocation-fai
-> lure-in-magickmalloc-memory-c-2/
+On Fri, 24 Mar 2017, Solar Designer wrote:
 
-I'm sorry I sent a wrong permalink, this is the correct:
-https://blogs.gentoo.org/ago/2017/09/06/heap-based-buffer-overflow-in-opj_write_bytes_le-cio-c-incomplete-fix-for-cve-2017-14152/
+> Hi James,
+> 
+> With all due respect to you and recognition of the importance of this
+> event, as I had pointed out last year, I wish you either informed
+> oss-security of the outcomes of each year's LSS or didn't post the CFPs
+> in here.  Posting only a CFP and then nothing until next year's CFP
+> sort of works on other lists, but not on oss-security.  Please re-read:
+> 
+> http://www.openwall.com/lists/oss-security/2016/03/25/7
 
+Sorry, I forgot to posting the outcomes back to the list.
+
+Here is a wrapup of the 2016 LSS:
+
+http://blog.namei.org/2016/09/30/linux-security-summit-2016-wrapup/
+
+> These are so much more useful (or rather, to more people) than a CFP
+> with no follow-ups.  I wish Kees, James, and others posted this kind of
+> material in here in text/plain, in addition to blogging.
+
+I'll see what I can do in future.
+
+
+- James
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+James Morris
+<jmorris@...ei.org>
+
