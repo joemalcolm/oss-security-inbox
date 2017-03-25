@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6613" "Thursday" "13" "October" "2016" "11:51:26" "+0800" "freener" "freener.gdx@gmail.com" "<CABNVnE1qt5aoJUOqb-d0vxs83Dfirn7CYxYQsS3TAxuTbX=LLQ@mail.gmail.com>" "192" "[oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow" nil nil nil "10" "2016101303:51:26" "[oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow" (number mark "U       freener.gdx@ Oct 13  192/6613  " thread-indent "\"[oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow\"\n") "<CABNVnE1M298EeNrfBsHWfBxSMBfdSTu1XZ1swRpRVWNKkCGtXw@mail.gmail.com>" ("<CABNVnE1M298EeNrfBsHWfBxSMBfdSTu1XZ1swRpRVWNKkCGtXw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2026" "Saturday" "25" "March" "2017" "15:11:02" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<7168532.Ox717MafC3@arcadia>" "51" "Re: [oss-security] libtiff: multiple heap-based buffer overflow" nil nil nil "3" "2017032514:11:02" "[oss-security] libtiff: multiple heap-based buffer overflow" (number mark "U       ago@gentoo.o Mar 25   51/2026  " thread-indent "\"Re: [oss-security] libtiff: multiple heap-based buffer overflow\"\n") "<5357154.SVZ41LeQyt@arcadia>" ("<5357154.SVZ41LeQyt@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15705 invoked by uid 550); 13 Oct 2016 03:59:02 -0000
+Received: (qmail 32175 invoked by uid 550); 25 Mar 2017 14:11:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,231 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11679 invoked from network); 13 Oct 2016 03:51:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=h8GFI04cUODelkYm3OjHOF1FU15tHTfcvGcjmELLlrg=;
-        b=Vc0mwtx8s5RFeD2fRWm4TNwEsAdGqBZWctIz4msaVaSoSaBbawzrqmyl2nVkRMoCgr
-         WY8Xmz5g2f4Zcdi0wGHJk7iHh4GNtmaVmV+JrA7X8WbZD/cBuRWhH4hcyu6UksDfR8dm
-         tCaVpJL23ZB4iGWd4DAcEl2bPji3LNanTC9/ljZIUwQ7DDNnjMuaYyQ3mQm2U3uyMIcc
-         cMLnF1MXpENYL4UZWcX+GccTVuLfsEGf+WqzcFObaz0IjAPom32IjJlPtg/VCfiMLCgW
-         Mwj5V3ON20IDskiA0wJqE3qPLxLNBWPNahyGKGJTnxqXWEHM0VFBWb1T1bKg/RdgeU6f
-         2SxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=h8GFI04cUODelkYm3OjHOF1FU15tHTfcvGcjmELLlrg=;
-        b=Dlquiw1M3aT9a3q6SRqeDoLP3LGdVCQpFLilpZiYlvg2DO8eXSqutfQ+C35S7zqh40
-         xbkkes1fNLJVrOcDYIghgXe9M3BXVHmx6sNE/6rcXIIlegksmUFh9xni97kaVr4tzmeC
-         EDlxs2pE+w68k7a+7VJ6b/r+Z41wU46cIV1ngvgkV0mWxmMH202ayYqw+Z2wlV2wPeY7
-         OcRjb2D0YGhRHHtU3bH2atOM2VHCI4hM6qF95ph5Vd+66iBQTpTNV5G1aJTdartE/xRR
-         ROMDdmpCL5hbdwq+OhXK2uRC3cMn6gtORMk25vv8tRuLHalFSu36mP9LiYhJ8oertxd8
-         0+5Q==
-X-Gm-Message-State: AA6/9RncPnTVyBH6Yyp1GHthsjzXBq7iixHxXYMUZyCv1QHpnOnne6zKEprcPgofye5ArfzUa3w7nyWicAKDYw==
-X-Received: by 10.31.58.137 with SMTP id h131mr2563401vka.137.1476330686514;
- Wed, 12 Oct 2016 20:51:26 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CABNVnE1M298EeNrfBsHWfBxSMBfdSTu1XZ1swRpRVWNKkCGtXw@mail.gmail.com>
-References: <CABNVnE1M298EeNrfBsHWfBxSMBfdSTu1XZ1swRpRVWNKkCGtXw@mail.gmail.com>
-From: freener <freener.gdx@gmail.com>
-Date: Thu, 13 Oct 2016 11:51:26 +0800
-Message-ID: <CABNVnE1qt5aoJUOqb-d0vxs83Dfirn7CYxYQsS3TAxuTbX=LLQ@mail.gmail.com>
+Received: (qmail 32154 invoked from network); 25 Mar 2017 14:11:19 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a11440236240be6053eb706d6
-Subject: [oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap
- Buffer Overflow
+Date: Sat, 25 Mar 2017 15:11:02 +0100
+Message-ID: <7168532.Ox717MafC3@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.29; x86_64; ; )
+In-Reply-To: <5357154.SVZ41LeQyt@arcadia>
+References: <5357154.SVZ41LeQyt@arcadia>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: Re: [oss-security] libtiff: multiple heap-based buffer overflow
 
---001a11440236240be6053eb706d6
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Sunday 01 January 2017 16:48:02 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-heap-based-buffer-o
+> verflow
 
-hi,
-    I found a stack buffer overflow vulnerability in Broadcom wifi driver
-brcmfmac, this issue has been fixed, I would like to
-request a CVE-ID for this issue.
-
-Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Cfg80211 module in kernel is the main interface to operate on wifi.
-This module defines an operation data structure which stores many
-commands and callback functions to control the wifi, and those
-callback functions are implemented in wifi driver finally, executables
-can communicate with this module by netlink socket.
-
-To trigger the bug the exploit should send a NL80211_CMD_START_AP or
-NL80211_CMD_NEW_BEACON command to nl80211 socket in kernel.
-NL80211_CMD_START_AP is equal with NL80211_CMD_NEW_BEACON according
-with the definition in nl80211.h. Hostapd uses NL80211_CMD_NEW_BEACON.
-
-       static struct genl_ops nl80211_ops[] =3D {
-                 ...
-                 {
-                         .cmd =3D NL80211_CMD_START_AP,
-                         .policy =3D nl80211_policy,
-                         .flags =3D GENL_ADMIN_PERM,
-                         .doit  =3D nl80211_start_ap,
-                         .internal_flags =3D NL80211_FLAG_NEED_NETDEV_UP
-| NL80211_FLAG_NEED_RTNL,
-                 },
-                 ...
-       }
-
-When kernel receives the NL80211_CMD_START_AP command then it will
-call nl80211_start_ap function,  but it requries executable owns
-CAP_NET_ADMIN permission.
-
-In nl80211_start_ap, it will parse the data received from user, and
-store the result in cfg80211_ap_settings structure=E3=80=82
-
-       static int nl80211_start_ap( struct sk_buff *skb, struct
-genl_info *info ) {
-                ...
-                struct cfg80211_ap_settings params;
-                ...
-                memset( &params,  0, sizeof(params) );
-                ...
-                err =3D nl80211_parse_beacon( info, &params.beacon );
-
-                if ( info->attrs[NL80211_ATTR_SSID] ) {
-                         params.ssid =3D nla_data(
-info->attrs[NL80211_ATTR_SSID] );
-                         params.ssid_len =3D nla_len(
-info->attrs[NL80211_ATTR_SSID] );
-                         if ( params.ssid_len =3D=3D 0 || params.ssid_len
-> IEEE80211_MAX_SSID_LEN )
-                                 return -EINVAL;
-                }
-
-               ...
-               err =3D rdev_start_ap( rdev, dev, &params );
-               ...
-       }
-
-      struct cfg80211_ap_settings {
-	    struct cfg80211_chan_def chandef;
-
-	    struct cfg80211_beacon_data beacon;
-
-	     int beacon_interval, dtim_period;
-	     const u8 *ssid;
-	     size_t ssid_len;
-	     enum nl80211_hidden_ssid hidden_ssid;
-	     struct cfg80211_crypto_settings crypto;
-	     bool privacy;
-	     enum nl80211_auth_type auth_type;
-	     int inactivity_timeout;
-	     u8 p2p_ctwindow;
-	     bool p2p_opp_ps;
-	     const struct cfg80211_acl_data *acl;
-	     bool radar_required;
-       };
-
-       struct cfg80211_beacon_data {
-              const u8 *head, *tail;
-              const u8 *beacon_ies;
-              const u8 *proberesp_ies;
-              const u8 *assocresp_ies;
-              const u8 *probe_resp;
-
-             size_t head_len, tail_len;
-             size_t beacon_ies_len;
-             size_t proberesp_ies_len;
-	     size_t assocresp_ies_len;
-	     size_t probe_resp_len;
-        };
-
-It also does many checks, the interface type must be NL80211_IFTYPE_AP
-or NL80211_IFTYPE_P2P_GO, and data must contain informations about
-NL80211_ATTR_BEACON_INTERVAL, NL80211_ATTR_DTIM_PERIOD,
-NL80211_ATTR_BEACON_HEAD. Finally it will call rdev_start_ap function.
-
-NL80211_ATTR_SSID is optional, user can send a netlink packet which
-does not contain information about NL80211_ATTR_SSID, so params.ssid
-and params.ssid_len will be 0. It's the key point in the exploit.
-
-       static inline int rdev_start_ap( struct
-cfg80211_registered_device *rdev, struct net_device *dev, struct
-cfg80211_ap_settings *settings ) {
-                ...
-                ret =3D rdev->ops->start_ap( &rdev->wiphy, dev, settings );
-                ...
-       }
-
-rdev_start_ap will call the callback function defined in brcmfmac driver.
-
-      static struct cfg80211_ops wl_cfg80211_ops =3D {
-              ...
-              .start_ap =3D brcmf_cfg80211_start_ap;
-              ...
-      }
-
-If the netlink packet does not contian info about NL80211_ATTR_SSID,
-brcmf_cfg80211_start_ap will call brcmf_parse_tlvs to parse head data
-further. The data format is TLV (Type, Length, Value ),
-it will parse type WLAN_EID_SSID info in data, all those datas are
-controlled by user. It does not
-check the length of data before calling memcpy to copy the data to
-stack buffer. The length of stack buffer ssid_le.SSID is 32, so we can
-construct a malicous data packet in NL80211_CMD_START_AP command, and
-make WLAN_EID_SSID's length large then 32. When it copies the data, it
-will overflow the stack buffer.
-
-       brcmf_cfg80211_start_ap(   struct cfg80211_ap_settings *settings ) {
-               s32  ie_offset;
-               struct brcmf_tlv *ssid_ie;
-               struct brcmf_ssid_le ssid_le;
-
-               memset( &ssid_le, 0, sizeof(ssid_le) );
-
-               if  ( settings->ssid =3D=3D NULL || settings->ssid_len =3D=
-=3D 0 ) {
-                        ie_offset =3D DOT11_MGMT_HDR_LEN +
-DOT11_BCN_PRB_FIXED_LEN;
-                        ssid_ie =3D brcmf_parse_tlvs( (u8
-*)&settings->beacon.head[ie_offset], settings->beacon.head_len -
-ie_offset, WLAN_EID_SSID );
-                       if ( !ssid_ie )
-                              return -EINVAL;
-
-                      memcpy( ssid_le.SSID, ssid_ie->data,
-ssid_ie->len );   //overflow here.
-                      ssid_le.SSID_len =3D cpu_to_le32( ssid_ie->len );
-               }
-               else {
-                      memcpy( ssid_le.SSID, settings->ssid,
-settings->ssid_len );
-                      ssid_le.SSID_len =3D cput_to_le32( (u32)settings->ssi=
-d_len);
-               }
-               ...
-      }
+> # tiffcp -i $FILE /tmp/foo
+> ==16440==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x62500000e861 at pc 0x0000004531de bp 0x7ffd2aba5c30 sp 0x7ffd2aba53e0
+> READ of size 78490 at 0x62500000e861 thread T0
+>     #1 0x7f280456d37b in _tiffWriteProc /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:115:23
+This is CVE-2016-10268
 
 
-Credit
-=3D=3D=3D=3D=3D
-This issue was discovered by Daxing Guo of Tencent's Xuanwu Lab
+> #tiffcp -i $FILE /tmp/foo
+> ==10398==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x60200000eef4 at pc 0x0000004bc235 bp 0x7fff3ebfa700 sp 0x7fff3ebf9eb0
+> READ of size 512 at 0x60200000eef4 thread T0
+>      #1 0x7fcaf590cf0d in _TIFFmemcpy /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:340:2
+This is CVE-2016-10269
+
+> # tiffcp -i $FILE /tmp/foo
+> ==15106==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x60200000edd8 at pc 0x7f33918c5de3 bp 0x7ffc5abe6ba0 sp 0x7ffc5abe6b98
+> READ of size 8 at 0x60200000edd8 thread T0
+>     #0 0x7f33918c5de2 in TIFFFillStrip /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_read.c:523:22
+This is CVE-2016-10270
+
+> # tiffcrop -i $FILE /tmp/foo
+> ==9181==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x7fd3b2e277f8 at pc 0x7fd3b7a762cc bp 0x7ffffd6e2550 sp 0x7ffffd6e2548
+> READ of size 1 at 0x7fd3b2e277f8 thread T0
+>     #0 0x7fd3b7a762cb in _TIFFFax3fillruns /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_fax3.c:413:13
+This is CVE-2016-10271
+
+> # tiffcrop -i $FILE /tmp/foo
+> ==29649==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x62d00000a3fc at pc 0x0000004bc48c bp 0x7ffd6f23c680 sp 0x7ffd6f23be30
+> WRITE of size 2048 at 0x62d00000a3fc thread T0
+>       #1 0x7fcac5ac0033 in NeXTDecode /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_next.c:64:9
+This is CVE-2016-10272
 
 
-Patch
-=3D=3D=3D=3D=3D
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=3Dded=
-89912156b1a47d940a0c954c43afbabd0c42c
 
-2016-10-12 14:59 GMT+08:00 freener <freener.gdx@gmail.com>:
-
-> hi,
->
->     This is a buffer overflow vulnerability in wifi driver brcmfmac.
->
->     The vulnerability has been patched in in Linux kernel 4.7.7 and 4.8.1.
->
->      https://patchwork.kernel.org/patch/9313305/
->
->
->      thanks.
->
-
---001a11440236240be6053eb706d6--
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
