@@ -1,32 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/11/4
-Message-ID: <20170911202142.rnfiesjl7mjho4pg@perpetual.pseudorandom.co.uk>
-Date: Mon, 11 Sep 2017 21:21:42 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/25/3
+Message-ID: <7168532.Ox717MafC3@arcadia>
+Date: Sat, 25 Mar 2017 15:11:02 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
+Subject: Re: libtiff: multiple heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 11 Sep 2017 at 15:58:45 -0400, Michael Orlitzky wrote:
-> With OpenRC
-> we get to cheat a little, because we always have the option to run the
-> daemon in the foreground and supervise it.
+On Sunday 01 January 2017 16:48:02 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-heap-based-buffer-o
+> verflow
 
-For SysV, if you don't need readiness-notification (for daemons that
-other daemons don't depend on, so the ones where Type=simple would be
-acceptable in a systemd unit) then Debian's start-stop-daemon can provide
-the daemonization, and create a pid file if desired. This isn't proper
-supervision, but does give the ability to write the daemon as though it
-relied on being supervised.
+> # tiffcp -i $FILE /tmp/foo
+> ==16440==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x62500000e861 at pc 0x0000004531de bp 0x7ffd2aba5c30 sp 0x7ffd2aba53e0
+> READ of size 78490 at 0x62500000e861 thread T0
+>     #1 0x7f280456d37b in _tiffWriteProc /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:115:23
+This is CVE-2016-10268
 
-start-stop-daemon is shipped as part of dpkg for historical reasons, but
-I doubt it changes very often. If SysV init script writers wanted to spin
-it off into a separate upstream project, then it could perhaps eventually
-become non-Essential in Debian (since it isn't necessary if a machine boots
-with systemd and all the daemons on that machine have native systemd units),
-and that seems like a potential win for everyone?
 
-(Also, one of the most vocally SysV-based distributions is a
-Debian derivative, so they have start-stop-daemon anyway.)
+> #tiffcp -i $FILE /tmp/foo
+> ==10398==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x60200000eef4 at pc 0x0000004bc235 bp 0x7fff3ebfa700 sp 0x7fff3ebf9eb0
+> READ of size 512 at 0x60200000eef4 thread T0
+>      #1 0x7fcaf590cf0d in _TIFFmemcpy /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:340:2
+This is CVE-2016-10269
 
-    S
+> # tiffcp -i $FILE /tmp/foo
+> ==15106==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x60200000edd8 at pc 0x7f33918c5de3 bp 0x7ffc5abe6ba0 sp 0x7ffc5abe6b98
+> READ of size 8 at 0x60200000edd8 thread T0
+>     #0 0x7f33918c5de2 in TIFFFillStrip /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_read.c:523:22
+This is CVE-2016-10270
+
+> # tiffcrop -i $FILE /tmp/foo
+> ==9181==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x7fd3b2e277f8 at pc 0x7fd3b7a762cc bp 0x7ffffd6e2550 sp 0x7ffffd6e2548
+> READ of size 1 at 0x7fd3b2e277f8 thread T0
+>     #0 0x7fd3b7a762cb in _TIFFFax3fillruns /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_fax3.c:413:13
+This is CVE-2016-10271
+
+> # tiffcrop -i $FILE /tmp/foo
+> ==29649==ERROR: AddressSanitizer: heap-buffer-overflow on address
+> 0x62d00000a3fc at pc 0x0000004bc48c bp 0x7ffd6f23c680 sp 0x7ffd6f23be30
+> WRITE of size 2048 at 0x62d00000a3fc thread T0
+>       #1 0x7fcac5ac0033 in NeXTDecode /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_next.c:64:9
+This is CVE-2016-10272
+
+
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
