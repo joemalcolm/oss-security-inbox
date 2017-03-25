@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/8
-Message-ID: <alpine.LFD.2.20.1702091150030.8306@wniryva>
-Date: Thu, 9 Feb 2017 11:58:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/25/2
+Message-ID: <6627125.qZ1aFFj61H@arcadia>
+Date: Sat, 25 Mar 2017 14:57:07 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: libtiff: multiple divide-by-zero
 Content-Type: text/plain; charset=utf-8
 
-+-- On Thu, 9 Feb 2017, cve-assign@...re.org wrote --+
-| To more efficiently assign and publish CVE IDs and to enable
-| automation and data sharing within CVE operations, MITRE is changing
-| the way it accepts CVE ID requests on the oss-security mailing list.
-| Starting today, please direct CVE ID requests to this web form
-| <https://cveform.mitre.org/>. Through this form, you can request a new
-| CVE ID, update a CVE ID that was already assigned, and submit
-| questions or feedback to the CVE Team.
-| 
-| We understand that oss-security is for vulnerabilities that should
-| have immediate public disclosure. You can continue to send details to
-| oss-security and propose that a CVE ID should exist. To actually
-| obtain the CVE ID, please also visit the web form at
-| <https://cveform.mitre.org/>.
+On Sunday 01 January 2017 16:46:12 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-divide-by-zero
 
-Boy, a web form with captcha wouldn't be really efficient to obtain CVE-IDs. 
-Especially when there is huge influx of issues. It might help structure data 
-and automate, but for requesting CVEs, it's not really. :(
+> # tiffcp $FILE /tmp/foo
+> ==12079==ERROR: AddressSanitizer: FPE on unknown address 0x7fd319436251 (pc
+> 0x7fd319436251 bp 0x7fff851e3d80 sp 0x7fff851e3d30 T0)
+>     #0 0x7fd319436250 in TIFFReadEncodedStrip /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_read.c:351:22
 
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This is CVE-2016-10266
+ 
+
+> # tiffmedia $FILE /tmp/foo
+> ==28106==ERROR: AddressSanitizer: FPE on unknown address 0x7faeae7f744e (pc
+> 0x7faeae7f744e bp 0x7ffceab45e40 sp 0x7ffceab45ce0 T0)
+>     #0 0x7faeae7f744d in OJPEGDecodeRaw /tmp/portage/media-
+> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_ojpeg.c:816:8
+
+This is CVE-2016-10267
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
