@@ -1,60 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/8
-Message-ID: <3212855a-34ce-b2dc-d6b1-1fbb40f7ce2e@igalia.com>
-Date: Fri, 13 Jan 2017 15:00:36 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: dawid@...alhackers.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/25/1
+Message-ID: <20170325001057.GA31046@openwall.com>
+Date: Sat, 25 Mar 2017 01:10:57 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Eric Dumazet <edumazet@...gle.com>, Andrey Konovalov <andreyknvl@...gle.com>, "David S. Miller" <davem@...emloft.net>, Alexey Kuznetsov <kuznet@....inr.ac.ru>, James Morris <jmorris@...ei.org>, Hideaki YOSHIFUJI <yoshfuji@...ux-ipv6.org>, Patrick McHardy <kaber@...sh.net>, netdev <netdev@...r.kernel.org>, LKML <linux-kernel@...r.kernel.org>, Vasily Kulikov <segoon@...nwall.com>
+Subject: Re: Linux kernel ping socket / AF_LLC connect() sin_family race
 Content-Type: text/plain; charset=utf-8
 
-On 13/01/17 10:35, Dawid Golunski wrote:
-> Attackers who have managed to replace the log file with a symlink would
-> have to wait for nginx daemon to re-open the log files. 
-> For this to happen nginx service needs to be restarted, or the daemon needs
-> to receive a USR1 process signal. 
-> 
-> However, the USR1 is sent automatically on default installations of 
-> Debian-based systems through logrotate script which calls do_rotate() 
-> function as can be seen in the files quoted below:
-> 
-> 
-> --------[ /etc/logrotate.d/nginx ]--------
-> 
-> /var/log/nginx/*.log {
-> 	daily
-> 	missingok
-> 	rotate 52
-> 	compress
-> 	delaycompress
-> 	notifempty
-> 	create 0640 www-data adm
-> 	sharedscripts
-> 	prerotate
-> 		if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
-> 			run-parts /etc/logrotate.d/httpd-prerotate; \
-> 		fi \
-> 	endscript
-> 	postrotate
-> 		invoke-rc.d nginx rotate >/dev/null 2>&1
-> 	endscript
-> }
-> 
-> ------------------------------------------
+On Fri, Mar 24, 2017 at 03:21:06PM -0700, Eric Dumazet wrote:
+> Looks easy enough to fix ?
 
-This looks to me like an issue on the logrotate side rather than on the nginx one..
+Oh.  Probably.  Thanks.  Need to test, but I guess you already did?
 
-If I have:
+> diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
+> index
+> 2af6244b83e27ae384e96cf071c10c5a89674804..ccfbce13a6333a65dab64e4847dd510dfafb1b43
+> 100644
+> --- a/net/ipv4/ping.c
+> +++ b/net/ipv4/ping.c
+> @@ -156,17 +156,18 @@ int ping_hash(struct sock *sk)
+>  void ping_unhash(struct sock *sk)
+>  {
+>         struct inet_sock *isk = inet_sk(sk);
+> +
+>         pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
+> +       write_lock_bh(&ping_table.lock);
+>         if (sk_hashed(sk)) {
+> -               write_lock_bh(&ping_table.lock);
+>                 hlist_nulls_del(&sk->sk_nulls_node);
+>                 sk_nulls_node_init(&sk->sk_nulls_node);
+>                 sock_put(sk);
+>                 isk->inet_num = 0;
+>                 isk->inet_sport = 0;
+>                 sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
+> -               write_unlock_bh(&ping_table.lock);
+>         }
+> +       write_unlock_bh(&ping_table.lock);
+>  }
+>  EXPORT_SYMBOL_GPL(ping_unhash);
 
-/var/log/nginx/error.log -> /etc/ld.so.preload
+FWIW, in Pavel's original implementation for 2.4.32 (unused), this was:
 
-Why does logrotate "create 0640 www-data adm" over /var/log/nginx/error.log
-removes and creates /etc/ld.so.preload ??? That is shocking!
+static void ping_v4_unhash(struct sock *sk)
+{
+	DEBUG(("ping_v4_unhash(sk=%p,sk->num=%u)\n", sk, sk->num));
+	write_lock_bh(&ping_hash_lock);
+	if (sk->pprev) {
+		if (sk->next)
+		       sk->next->pprev = sk->pprev;
+		*sk->pprev = sk->next;
+		sk->pprev = NULL;
+		sk->num = 0;
+		sock_prot_dec_use(sk->prot);
+		__sock_put(sk);
+	}
+	write_unlock_bh(&ping_hash_lock);
+}
 
-It should do that on /var/log/nginx/error.log, by removing that symlink
-and creating a new empty standard file on /var/log/nginx/error.log !!
+Looks like the erroneous optimization (not expecting concurrent activity
+on the same socket?) was introduced during conversion to 2.6's hlists.
 
-Dont you agree??
+So far this cursed function had 3 bugs, two of them security (including
+this one) and one probably benign (or if not, then effectively a subset
+of this bug as it performed some unneeded / stale debugging work before
+acquiring the lock), with all 3 introduced in forward-porting.  Maybe
+the nature of forward-porting activity makes people relatively
+inattentive ("compiles with the new interfaces and still works? must be
+correct"), compared to when writing new code.
 
+Anyhow, I share some responsibility for this mess, for having advocated
+this patch being forward-ported and merged back then.  I still like
+having this functionality and its userspace security benefits... but I
+don't like the kernel bugs.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+Alexander
