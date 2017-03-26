@@ -1,22 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/04/7
-Message-Id: <cb5fc51e-266b-456c-aaa6-8bf78874cac4@googlegroups.com>
-Date: Tue, 4 Apr 2017 08:31:25 -0700 (PDT)
-From: Tim Graham <timograham@...il.com>
-To: django-announce <django-announce@...glegroups.com>
-Cc: django-developers@...glegroups.com, django-users@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Django security releases issued: 1.10.7, 1.9.13, and 1.8.18
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/26/2
+Message-ID: <1833980.tpDESXtaFc@arcadia>
+Date: Sun, 26 Mar 2017 15:25:49 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: potrace: heap-based buffer overflow in bm_readbody_bmp (bitmap_io.c) (incomplete fix for CVE-2016-8698)
 Content-Type: text/plain; charset=utf-8
 
-Today the Django team issued 1.10.7, 1.9.13, and 1.8.18 as part of our 
-security process. These releases address two security issues, and we 
-encourage all users to upgrade as soon as possible:
+On Friday 03 March 2017 11:10:14 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/03/03/potrace-heap-based-buffer-overflow-i
+> n-bm_readbody_bmp-bitmap_io-c-incomplete-fix-for-cve-2016-8698
 
-https://www.djangoproject.com/weblog/2017/apr/04/security-releases/
+This is CVE-2017-7263
 
-As a reminder, we ask that potential security issues be reported via 
-private email to security@...ngoproject.com and not via Django's Trac 
-instance or the django-developers list. Please see 
-https://www.djangoproject.com/security for further information.
-
-Content of type "text/html" skipped
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
