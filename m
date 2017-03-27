@@ -1,126 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/5
-Message-Id: <E1dTTht-0001as-0r@xenbits.xenproject.org>
-Date: Fri, 07 Jul 2017 13:54:05 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 217 (CVE-2017-10912) - page transfer may allow PV guest to elevate privilege
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/27/2
+Message-ID: <537176772.7443853.1490630809109.JavaMail.zimbra@redhat.com>
+Date: Mon, 27 Mar 2017 12:06:49 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE: kernel: drm/vmwgfx: check that number of mip levels is above zero in in vmw_surface_define_ioctl()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+hello,
 
-            Xen Security Advisory CVE-2017-10912 / XSA-217
-                              version 3
+CVE-2017-7261 was assigned for the following flaw in [vmwgfx] driver.
 
-         page transfer may allow PV guest to elevate privilege
+> [Suggested description]
+> The vmw_surface_define_ioctl function in drivers/gpu/drm/vmwgfx/vmwgfx_surface.c in the Linux kernel through 4.10.5
+> does not check for a zero value of certain levels data, which
+> allows local users to cause a denial of service (ZERO_SIZE_PTR dereference, and
+> GPF and possibly panic) via a crafted ioctl call for
+> a /dev/dri/renderD* device.
+> 
+> ------------------------------------------
+> 
+> [Additional Information]
+> In was found that in the Linux kernel in vmw_surface_define_ioctl()
+> function in 'drivers/gpu/drm/vmwgfx/vmwgfx_surface.c' file, a
+> 'num_sizes' parameter is assigned a user-controlled value which is not
+> checked if it is zero. This is used in a call to kmalloc() and later
+> leads to dereferencing ZERO_SIZE_PTR, which in turn leads to a GPF and
+> possibly to a kernel panic.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-839
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> kernel.org: Linux kernel
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> Linux kernel - all upto 4.11-rc3
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> vmw_surface_define_ioctl() function, drivers/gpu/drm/vmwgfx/vmwgfx_surface.c file
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> to exploit vulnerability a local user have to run a binary which makes certain ioctl() call
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://bugzilla.redhat.com/show_bug.cgi?id=1435719
+> https://lists.freedesktop.org/archives/dri-devel/2017-March/136814.html
+> http://marc.info/?t=149037004200005&r=1&w=2
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+>
+> Use CVE-2017-7261.
 
-UPDATES IN VERSION 3
-====================
-
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-Domains controlling other domains are permitted to map pages owned by
-the domain being controlled.  If the controlling domain unmaps such a
-page without flushing the TLB, and if soon after the domain being
-controlled transfers this page to another PV domain (via
-GNTTABOP_transfer or, indirectly, XENMEM_exchange), and that third
-domain uses the page as a page table, the controlling domain will have
-write access to a live page table until the applicable TLB entry is
-flushed or evicted.  Note that the domain being controlled is
-necessarily HVM, while the controlling domain is PV.
-
-IMPACT
-======
-
-A malicious pair of guests may be able to access all of system memory,
-allowing for all of privilege escalation, host crashes, and
-information leaks.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are vulnerable.
-
-Only x86 systems are affected.  ARM systems are not vulnerable.
-
-Only systems where an attacker can control both a PV and an HVM guest
-are vulnerable.  This must be presumed to include systems containing
-HVM domains with service domains such as stub domain device models.
-
-Systems containing only PV guests are not vulnerable.
-
-Systems containing only HVM domains serviced by dom0 device model
-processes are not vulnerable.  Note that with libxl, xl, and libvirt,
-HVM domains use dom0 device model processes by default.
-
-MITIGATION
-==========
-
-There is no mitigation for this vulnerability.
-
-Switching from stub device models to dom0 process device models is not
-recommended as a mitigation, as in practice the vulnerability is
-likely to be hard to exploit through this route; whereas dom0 process
-device models may have unknown vulnerabilities.
-
-CREDITS
-=======
-
-This issue was discovered by Jann Horn of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa217.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
-xsa217-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa217*
-3e896412389d8e59e417ea7bb3d5b47a20de27b8eae0420c98071ce4b17d219c  xsa217.patch
-4e555cf47faf5e8d2bba4ff8a31fbe72fb11a6c0e3b286f23b26e684a1809705  xsa217-4.5.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZX5IlAAoJEIP+FMlX6CvZCC8IAJ8VgkRigZpOyxl1CHP+pSGu
-TZzWOS0xCMsuIkbPaGgfbgykNh7/7byWWPBZwoUSKh1gnWXIohFtRr3JvPKlsb8X
-5nthArzR1biR4c9kXL7TYiLhxoInHYT3tE7tnAj6c68qxWLrkQuTW3C3kJnlVf+p
-XXIju4ccV33X0hT1nqOr5P9FqhmDKgml4qeaUnEabFjXgM16/JaHM8f2k2U/FYJP
-mfrh+5EeAMg3i1OdtLklMyEUXlA1IE2m7BsfnA3eMQ9xc50mjEQ/NZYhe3knv7IX
-KfvRMMZgjTvEO/6GU7Qt5qlBRLj1e/jpxaviHsdZaLPoHz4Cq4WncdfyqfAJ1Dk=
-=WueX
------END PGP SIGNATURE-----
-
-Download attachment "xsa217.patch" of type "application/octet-stream" (1384 bytes)
-
-Download attachment "xsa217-4.5.patch" of type "application/octet-stream" (1356 bytes)
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
