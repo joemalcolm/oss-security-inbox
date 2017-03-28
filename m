@@ -1,10 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/10
-Message-ID: <tencent_67D03AC71B42EFBB2FE69E9FC1E18DDEE405@qq.com>
-Date: Tue, 26 Sep 2017 17:10:35 +0800
-From: "NOIRFATE" <noirfate@....qq.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: ImageMagick : CVE-2017-14741 : Infinite loop in ReadCAPTIONImage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/28/3
+Message-ID: <20170328144904.GA12627@mail.hallyn.com>
+Date: Tue, 28 Mar 2017 09:49:04 -0500
+From: "Serge E. Hallyn" <serge@...lyn.com>
+To: oss-security@...ts.openwall.com
+Cc: "857295@...s.debian.org" <857295@...s.debian.org>, Stéphane Graber <stgraber@...ntu.com>, serge.hallyn@...ntu.com
+Subject: Re: LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
 Content-Type: text/plain; charset=utf-8
 
-Description:The ReadCAPTIONImage function in coders/caption.c in ImageMagick allows attackers to cause a denial of service (infinite loop) via a crafted font file.Affected version:ImageMagick 7.0.7-3 (maybe previous versions are affected as well)Fixed version:ImageMagick 7.0.7-4Commit fix:https://github.com/ImageMagick/ImageMagick/commit/7d8e14899c562157c7760a77fc91625a27cb596fDetails:https://github.com/ImageMagick/ImageMagick/issues/771Credit:This bug was discovered by Yihan Lian of GearTeam at Qihoo360 CVE:CVE-2017-14741
+On Tue, Mar 28, 2017 at 06:45:34AM -0400, Stiepan wrote:
+> Thanks to the 2.0.7-2 update by Evgeni Golov and his crystal-clear instructions on how to use lxcbr0 with this version, I could confirm that the issue with the host's routing table being affected by changes in the containers' routing tables is not there anymore when using that version (lxc 2.0.7-2 from jessie-backports), which includes the fixes to CVE-2017-5985 which were brought in LXC 2.0.7 (upstream).
+> 
+> This was thus basically a variation of said CVE, which probably doesn't need to be separately numbered as such, the core problem at stake being the same:
+> network namespace ownership was not respected by a setuid-root program enabling the user to configure networks as non-root, which is now solved.
+> This leads me to a suggestion to the upstream developers: couldn't the same be achieved using specific network-related capabilities, instead of setuid-root, thereby further reducing the risk of lxc-user-nic being exploited and hence, reducing overall attack surface (in unprivileged mode)?
+> I have read in https://wiki.ubuntu.com/UserNamespace that the approach of using "targeted capabilities" was then considered. This is probably the closest to what I am suggesting (specifically for lxc-user-nic - the current approach with 1-1 uid mappings seems fine for network-unrelated things).
+
+The targeted capabilities wouldn't help here, because in fact
+lxc-user-nic requires privilege against the parent namespace.
+
+-serge
