@@ -1,55 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/11
-Message-ID: <83acfdf4-1398-8017-fc91-ab65e855d743@chbi.eu>
-Date: Thu, 28 Sep 2017 20:17:26 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: Stored XSS vulnerability in Tine 2.0 Community Edition <= 2017.08.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/28/2
+Message-ID: <547957.629987167-sendEmail@localhost>
+Date: Tue, 28 Mar 2017 13:54:49 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862 and CVE-2016-8866)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+It is probably one of the last issues reported by me on imagemagick because it is always a fight make upstream able to reproduce the issue, however I'm not doing anything special.
 
-there are security issues in Tine 2.0 Community Edition <= 2017.08.3
-(https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/)
+Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap images.
+
+Another round of fuzzing pointed out that the memory allocation failure I discovered, known as CVE-2016-8862 and CVE-2016-8866 is still reproducible in the 7.0.4.9 version.
+As usual, the upstream security policy are enabled.
+
+The interesting part of the ASan stacktrace(not full because is a copy past of the one in the previous post):
+
+# identify $FILE
+    #8 0x7f2aeaea2812 in AcquireMagickMemory /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/memory.c:460:10
+    #9 0x7f2aeaea2812 in AcquireVirtualMemory /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/memory.c:642
+    #10 0x7f2ae32d941a in ReadPCXImage /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/coders/pcx.c:400:16
+    #11 0x7f2aea9cdb26 in ReadImage /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/constitute.c:497:13
+    #12 0x7f2aeb3a2df9 in ReadStream /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/stream.c:1013:9
+    #13 0x7f2aea9cb3a6 in PingImage /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/constitute.c:226:9
+    #14 0x7f2aea9cc2a6 in PingImages /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/constitute.c:327:10
+    #15 0x7f2ae97a6118 in IdentifyImageCommand /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickWand/identify.c:319:18
+    #16 0x7f2ae98f800a in MagickCommandGenesis /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickWand/mogrify.c:183:14
+    #17 0x50a389 in MagickMain /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/utilities/magick.c:149:10
+    #18 0x50a389 in main /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/utilities/magick.c:180
+    #19 0x7f2ae7dda78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #20 0x419da8 in _init (/usr/bin/magick+0x419da8)
+
+Affected version:
+7.0.4.9
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-7275
+
+Timeline:
+2017-02-19: bug re-discovered and re-reported upstream
+2017-03-27: blog post about the issue
+2017-03-27: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/03/27/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c-incomplete-fix-for-cve-2016-8862-and-cve-2016-8866
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Stored XSS vulnerability via IMG tag at "History" of Profile, Calendar,
-Tasks and CRM allows an authenticated user to inject JavaScript which is
-triggered by the application administrator and other users.
-
-Stored XSS vulnerability via IMG tag at "Leadname" of CRM allows an
-authenticated user to inject JavaScript which is triggered by the
-application administrator and other users.
-
-Stored XSS vulnerability via IMG tag at "Filename" of Filemanager allows
-an authenticated user to inject JavaScript which is triggered by the
-application administrator and other users.
-
-
-Fix:
-https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/commit/bc8a6fbd3128cf5ef27d808f6c6ba869fdc2262b
-https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/commit/146c5aaafd826c1c8990333c393bff6f64c90786
-https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/commit/24e39e1e930097b8793a03b8864d3c484ede546b
-
-
-The issues are fixed in Tine Community Edition 2017.08.4.
-
-
-Until now vendor has not marked the new version as security update and
-also not mentioned the security issues.
-(https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/releases/tag/2017.08.4)
-
-
-I've requested CVE IDs (MITRE), but I have not received any yet.
-
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
