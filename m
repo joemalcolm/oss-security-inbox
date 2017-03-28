@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3115" "Sunday" "11" "October" "2015" "12:29:25" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151011162925.4E1E3332310@smtpvbsrv1.mitre.org>" "67" "[oss-security] Re: CVE Request: twig remote code execution" nil nil nil "10" "2015101116:29:25" "[oss-security] Re: CVE Request: twig remote code execution" (number mark "U       cve-assign@m Oct 11   67/3115  " thread-indent "\"[oss-security] Re: CVE Request: twig remote code execution\"\n") "<20150821123957.GA29111@kronk.local>" ("<20150821123957.GA29111@kronk.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1497" "Tuesday" "28" "March" "2017" "09:49:04" "-0500" "Serge E. Hallyn" "serge@hallyn.com" "<20170328144904.GA12627@mail.hallyn.com>" "12" "Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" nil nil nil "3" "2017032814:49:04" "[oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" (number mark "U       serge@hallyn Mar 28   12/1497  " thread-indent "\"Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership\"\n") "<DJvRoKIuVbRyh3w6YppaTZqH1Dcid84FuuKxC6GKQeaXXt2iBfmnPlSvpDlx-wu52iIHxc6-aq7Hpa5PkpetzfBwyuo6NXmTzADSPd9LdG4=@itk.swiss>" ("<8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>" "<Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>" "<831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>" "<9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>" "<yEw48KeZXecR-EKWWbAiNN-28xRPMYmv5qRYVlLwbDs4oH3fwjTstCNrpqptLwzG1mqIHxjMk-hiWRreJGC1WJmbY-daelcKJWMJdrb77z0=@itk.swiss>" "<DJvRoKIuVbRyh3w6YppaTZqH1Dcid84FuuKxC6GKQeaXXt2iBfmnPlSvpDlx-wu52iIHxc6-aq7Hpa5PkpetzfBwyuo6NXmTzADSPd9LdG4=@itk.swiss>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29788 invoked by uid 550); 11 Oct 2015 16:29:38 -0000
+Received: (qmail 22231 invoked by uid 550); 28 Mar 2017 17:18:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,79 +12,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29767 invoked from network); 11 Oct 2015 16:29:37 -0000
-From: cve-assign@mitre.org
-To: alessandro@ghedini.me
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20150821123957.GA29111@kronk.local>
-Message-Id: <20151011162925.4E1E3332310@smtpvbsrv1.mitre.org>
-Date: Sun, 11 Oct 2015 12:29:25 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: twig remote code execution
+Received: (qmail 22087 invoked from network); 28 Mar 2017 14:49:15 -0000
+Date: Tue, 28 Mar 2017 09:49:04 -0500
+From: "Serge E. Hallyn" <serge@hallyn.com>
+To: oss-security@lists.openwall.com
+Cc: "857295@bugs.debian.org" <857295@bugs.debian.org>,
+	=?iso-8859-1?Q?St=E9phane?= Graber <stgraber@ubuntu.com>,
+	serge.hallyn@ubuntu.com
+Message-ID: <20170328144904.GA12627@mail.hallyn.com>
+References: <8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>
+ <Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>
+ <831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>
+ <9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>
+ <yEw48KeZXecR-EKWWbAiNN-28xRPMYmv5qRYVlLwbDs4oH3fwjTstCNrpqptLwzG1mqIHxjMk-hiWRreJGC1WJmbY-daelcKJWMJdrb77z0=@itk.swiss>
+ <DJvRoKIuVbRyh3w6YppaTZqH1Dcid84FuuKxC6GKQeaXXt2iBfmnPlSvpDlx-wu52iIHxc6-aq7Hpa5PkpetzfBwyuo6NXmTzADSPd9LdG4=@itk.swiss>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DJvRoKIuVbRyh3w6YppaTZqH1Dcid84FuuKxC6GKQeaXXt2iBfmnPlSvpDlx-wu52iIHxc6-aq7Hpa5PkpetzfBwyuo6NXmTzADSPd9LdG4=@itk.swiss>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify
+ network namespace ownership
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> the symphony project released a security advisory for the Twig PHP library:
-> http://symfony.com/blog/security-release-twig-1-20-0
+On Tue, Mar 28, 2017 at 06:45:34AM -0400, Stiepan wrote:
+> Thanks to the 2.0.7-2 update by Evgeni Golov and his crystal-clear instructions on how to use lxcbr0 with this version, I could confirm that the issue with the host's routing table being affected by changes in the containers' routing tables is not there anymore when using that version (lxc 2.0.7-2 from jessie-backports), which includes the fixes to CVE-2017-5985 which were brought in LXC 2.0.7 (upstream).
 > 
-> The linked GitHub pull requests provides the fixes:
-> https://github.com/twigphp/Twig/pull/1759
-> 
-> AFAICT there are least two issues: a remote code execution fixed by the "fixed
-> sandbox security issue" patch, and at least another issue regarding access to
-> "reserved macro names".
-> 
-> The RCE deserves a CVE IMO, but I'm not sure about the other one (or if it is
-> indeed only one issue).
+> This was thus basically a variation of said CVE, which probably doesn't need to be separately numbered as such, the core problem at stake being the same:
+> network namespace ownership was not respected by a setuid-root program enabling the user to configure networks as non-root, which is now solved.
+> This leads me to a suggestion to the upstream developers: couldn't the same be achieved using specific network-related capabilities, instead of setuid-root, thereby further reducing the risk of lxc-user-nic being exploited and hence, reducing overall attack surface (in unprivileged mode)?
+> I have read in https://wiki.ubuntu.com/UserNamespace that the approach of using "targeted capabilities" was then considered. This is probably the closest to what I am suggesting (specifically for lxc-user-nic - the current approach with 1-1 uid mappings seems fine for network-unrelated things).
 
-The MITRE CVE team doesn't have any straightforward way to satisfy CVE
-requests about an uncertain set of vulnerabilities (e.g., "least two
-issues" and "if it is indeed only one").
+The targeted capabilities wouldn't help here, because in fact
+lxc-user-nic requires privilege against the parent namespace.
 
-If the information had been broken down into specific independent
-vulnerabilities with distinct discoverers, we would typically be able
-to provide a separate CVE ID per discoverer; however, "I want to thank
-James Kettle who was the first to report a RCE security issue, Alain
-Tiemblo, Christophe Coevoet, and Fabien Potencier for finding more
-possible and dangerous RCEs." doesn't really do that.
-
-It's true that "Prevent importing or calling reserved macro names"
-seems to correspond to a bug, but the listed references don't have any
-statements about whether it's independently exploitable.
-
-Similarly, the new code for "Accessing the environment from templates
-is forbidden to prevent untrusted changes to the environment" in
-a8a125ba9b31d20e8ad50e0d1078983ed7fa41a7 and
-22500609b69a9f17a64102d9376cb114f706ee2f, which weren't mentioned in
-the CVE request, seems like it is probably for a security-related bug
-fix; however, again we don't know that it's independently exploitable.
-
-So, what we'll do here is focus only on
-30be07759a3de2558da5224f127d052ecf492e8f, which is described as "fixed
-sandbox security issue" and suggests that the problem was that,
-previously, a critical constraint of "A block must be a method on a
-Twig_Template instance" wasn't being enforced. Use CVE-2015-7809 for
-this 30be07759a3de2558da5224f127d052ecf492e8f issue.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWGo36AAoJEL54rhJi8gl5JT4P/3dZ+5epCCVOVR2ZXqPIMkuT
-jlsjIjPqXX8cAFkhUnyQEGx5/SjjTxl4Ui8sNmFvJDkPfKs5RGPg9wW/LHu/3a6m
-p+1m+Mn/vw2IjuRLgbBt/4dz4lHUfolhlcAS3PaCYpagB9cQbkRouEjBy0DuRYOj
-yzREbGQhLnlS47zWf749/FN+xb65qppO9xP0MuXwv32Az9cdh73PewTs3XNu0+uh
-EqQeG5QbJob52DXdapfUU+PQNQp+kLQrvJ49zb/89X2GJtom1Sm5zkifbG6GauOQ
-o4zJrE92B5ux1BATKZu+K+ZHA1miSL5vq5sLP80cSF3mza0bxwbo+GK8i8opA/Vk
-PkOGhdeDuoVSn3zxDHQmdg7Wza7jzI6azqGdX8bi+Faj3r4GoHN7sb7xia1bezN8
-a99JRWv2HlLFT1cahNqOVK0ry8JPtb+PJyMleHXMVELsf754AQJeAO0J1diYCdq4
-tktjOf20+jiJMbB3Ie/4343T6C2X1xk5CQrRbLnhN8Yq4pQojnBiiVhpvXKvxow3
-XtYYHptOcoLR3lU88+w3Mxbwma4lNNjALu0uAOMpupJOOnXR8jNfMvA3HV6lfrwC
-zTt9QWeVu1/M1iMibbMyr//n3YnKtkfvVyu4TO7DpM0gB3c7bMFseuHMZ0QNijXR
-X9kopzfIDNWsVlrNsJpx
-=y/pK
------END PGP SIGNATURE-----
+-serge
