@@ -1,4 +1,9 @@
-Received: (qmail 17762 invoked by uid 550); 11 May 2026 20:43:34 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["804" "Wednesday" "29" "March" "2017" "23:16:15" "+0100" "Michael Young" "m.a.young@durham.ac.uk" "<alpine.LFD.2.20.1703292229380.2723@austen3.home>" "22" "[oss-security] Re: [Xen-devel] Xen Security Advisory 206 - xenstore denial of service via repeated update" nil nil nil "3" "2017032922:16:15" "[oss-security] Re: [Xen-devel] Xen Security Advisory 206 - xenstore denial of service via repeated update" (number mark "U       m.a.young@du Mar 29   22/804   " thread-indent "\"[oss-security] Re: [Xen-devel] Xen Security Advisory 206 - xenstore denial of service via repeated update\"\n") "<E1ctFAS-00024L-7B@xenbits.xenproject.org>" ("<E1ctFAS-00024L-7B@xenbits.xenproject.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1857 invoked by uid 550); 29 Mar 2017 22:21:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,62 +12,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17741 invoked from network); 11 May 2026 20:43:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pipping.org;
-	s=manitu-webhosting; t=1778532206;
-	bh=wS5HYDYAIjPgGxoYSCvZyIkaFnh7MKImMR4KY/OoZpE=;
-	h=Date:From:Subject:To;
-	b=Ct9zRrRgJL4iGvELh9prnurjfgihsoSVUinAVTZI1zSzmSt/CnXNDcDYDbzdKPW+r
-	 u9zZ/H65NDqTFV7I26u1byo9+EZuQi5d+40uVgh3uU2Ytc3HlediNB0RYgB7onwx3d
-	 gnzP7QZFY4P3dICeqLx6VXSLBkNc7UUA/38KSEVqtOu4jZoHhwDjQOqPYmCLpIGQvm
-	 OI2ea04eLeyS9rVI2bvW7Ug8v5h1emHHRFDqetipi3lJhXp/t+OHccwUWlQG0fj7hs
-	 tXUx2pOFWAdnIputEJFcA4eeuUYyKrUm6Dr3WfkdsMoinyzEGFUJnY0QdOPVJhPrjf
-	 BG5IBsdZPxzaA==
-Message-ID: <96eb9370-0f79-45f5-9073-adab4693b192@pipping.org>
-Date: Mon, 11 May 2026 22:43:24 +0200
+Received: (qmail 28205 invoked from network); 29 Mar 2017 22:17:05 -0000
+Date: Wed, 29 Mar 2017 23:16:15 +0100
+From: Michael Young <m.a.young@durham.ac.uk>
+X-X-Sender: michael@austen3.home
+To: "Xen.org security team" <security@xen.org>
+CC: <xen-announce@lists.xen.org>, <xen-devel@lists.xen.org>,
+        <xen-users@lists.xen.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <E1ctFAS-00024L-7B@xenbits.xenproject.org>
+Message-ID: <alpine.LFD.2.20.1703292229380.2723@austen3.home>
+References: <E1ctFAS-00024L-7B@xenbits.xenproject.org>
+User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
 MIME-Version: 1.0
-Content-Language: en-US
-From: Sebastian Pipping <sebastian@pipping.org>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] libexpat 2.8.1 fixes CVE-2026-45186 (denial of service)
+Content-Type: text/plain; format=flowed; charset="US-ASCII"
+X-DurhamAcUk-MailScanner-ID: v2TMGe2g009218
+X-DurhamAcUk-MailScanner: Found to be clean
+Subject: [oss-security] Re: [Xen-devel] Xen Security Advisory 206 - xenstore denial of
+ service via repeated update
 
-Hello oss-security,
+On Wed, 29 Mar 2017, Xen.org security team wrote:
 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>                    Xen Security Advisory XSA-206
+>                              version 9
+>
+>            xenstore denial of service via repeated update
 
-just a quick note that libexpat 2.8.1 (or "Expat 2.8.1") released
-yesterday is fixing CVE-2026-45186:
+I am seeing a build failure from these patches when using gcc 7. The 
+problem is with
+xsa206-4.80002-xenstored-Log-when-the-write-transaction-rate-limit-.patch 
+because in tools/xenstore/xenstored_domain.c the patch adds the boolean 
+wrl_delay_logged to the structure "domain" but later it tries to increment 
+it, resulting in the error 
+xenstored_domain.c: In function 'wrl_apply_debit_actual':
+xenstored_domain.c:949:32: error: increment of a boolean expression 
+[-Werror=bool-operation]
+    if (!domain->wrl_delay_logged++) {
 
-   Fix quadratic runtime from attribute name collision checks that
-   allowed denial of service attacks through moderately sized crafted
-   XML input (CWE-407).
-   Please note that a layer of compression around XML can significantly
-   reduce the minimum attack payload size.
-
-Some key links are:
-
-- The blog post about it
-   https://blog.hartwork.org/posts/expat-2-8-1-released/
-
-- The change log of release 2.8.1
-   https://github.com/libexpat/libexpat/blob/R_2_8_1/expat/Changes
-
-- The fixing pull request
-   https://github.com/libexpat/libexpat/pull/1216
-
-- The NVD CVE metadata
-   https://nvd.nist.gov/vuln/detail/CVE-2026-45186
-
-PS: The CVE database lists an unrealistically low CVSS score for this.
-     The complexity of an attack is very low (not "High") and the attack
-     vector is remote (not "Local"). I have asked Mitre to fix this
-     earlier today. My blog post linked above has a few more words on
-     that topic.
-
-Best
-
-
-
-Sebastian
+ 	Michael Young
