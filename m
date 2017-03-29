@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1986" "Friday" "21" "June" "2019" "17:41:49" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<d49124e0c81f204be7733c397539cc077ccd2a44.camel@debian.org>" "46" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062115:41:49" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        corsac@debia Jun 21   46/1986  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<20190621095300.GA9934@kroah.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190615155740.GA2960@kroah.com>" "<02594cdc8ff7c6ff19a3042d824fb27f9d3302c3.camel@debian.org>" "<20190621095300.GA9934@kroah.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2439" "Wednesday" "29" "March" "2017" "16:43:28" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>" "60" "[oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework" nil nil nil "3" "2017032921:43:28" "[oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework" (number mark "U       tyhicks@cano Mar 29   60/2439  " thread-indent "\"[oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15529 invoked by uid 550); 21 Jun 2019 15:42:06 -0000
+Received: (qmail 11540 invoked by uid 550); 29 Mar 2017 21:43:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15509 invoked from network); 21 Jun 2019 15:42:05 -0000
-Message-ID: <d49124e0c81f204be7733c397539cc077ccd2a44.camel@debian.org>
-In-Reply-To: <20190621095300.GA9934@kroah.com>
-References: 
-	<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
-	 <20190615155740.GA2960@kroah.com>
-	 <02594cdc8ff7c6ff19a3042d824fb27f9d3302c3.camel@debian.org>
-	 <20190621095300.GA9934@kroah.com>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5-1.1 
-MIME-Version: 1.0
-Date: Fri, 21 Jun 2019 17:41:49 +0200
-From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
- OSS-Fuzz
+Received: (qmail 11520 invoked from network); 29 Mar 2017 21:43:57 -0000
+From: Tyler Hicks <tyhicks@canonical.com>
 To: oss-security@lists.openwall.com
+Cc: "security@ubuntu.com" <security@ubuntu.com>
+Message-ID: <f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>
+Date: Wed, 29 Mar 2017 16:43:28 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="4WhIVLtmgimjMmisCkx2rosXqdErgLsMk"
+Subject: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--4WhIVLtmgimjMmisCkx2rosXqdErgLsMk
+Content-Type: multipart/mixed; boundary="alfu21VJcF0TAWJ3gPgvpMNe8w9MnFlRE";
+ protected-headers="v1"
+From: Tyler Hicks <tyhicks@canonical.com>
+To: oss-security@lists.openwall.com
+Cc: "security@ubuntu.com" <security@ubuntu.com>
+Message-ID: <f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>
+Subject: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
 
-On Fri, 2019-06-21 at 11:53 +0200, Greg KH wrote:
-> So it's a matter of "do I live with all of the bugs that everyone else
-> knows about and how to exploit, or do I live with a potential
-> regression?"  That sounds like an easy choice given that the reason you
-> should be updating is to resolve all of those known bugs :)
+--alfu21VJcF0TAWJ3gPgvpMNe8w9MnFlRE
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-I'm not really talking about potential regressions: I'm talking about real
-functional changes that the end-user doesn't expect (nor want) in a stable
-release. Backporting is often a pain, but full throttle to latest release a=
-lso
-has a burden (for the end-user, for the distributor and so on). It really
-depends on the project (and I don't want to point fingers, it's not the
-point).
->=20
-> Regressions always happen, we are human, but there are ways to mitigate
-> them (testing, roll-back, preventing developers from not breaking things
-> on purpose, etc.)  And projects that do not do this type of work to
-> prevent regressions need to learn that they should change, or users will
-> go elsewhere.
+A security issue was reported by ZDI, on behalf of Chaitin Security
+Research Lab, against the Linux kernel in Ubuntu. It also affected the
+upstream kernel.
 
-But then again the question is, who do the work (of backporting, regression
-testing, etc.) And again it's not always about bugs, it might very well be
-that there's a user interface change requiring a lot of documentation updat=
-es
-downwards, a dependency chain update or whatever.
+Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
+as called by xfrm_new_ae(), did not verify that the user-specified
+replay_window was within the replay state buffer.
 
-There might be good reasons for stability, even besides not introducing new
-bugs, that was just my point.
+This allowed for out-of-bounds reads and writes of kernel memory.
+Chaitin Security showed that this can lead to local privilege escalation
+by using user namespaces in order to configure XFRM. XFRM configuration
+requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
+not enable user namespaces by default.
 
-Regards,
-- --=20
-Yves-Alexis
+Fixes:
+- https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
+- https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
+
+Tyler
+
+
+
+--alfu21VJcF0TAWJ3gPgvpMNe8w9MnFlRE--
+
+--4WhIVLtmgimjMmisCkx2rosXqdErgLsMk
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAl0M+r0ACgkQ3rYcyPpX
-RFtnkAgAvxwmpnFT0hKbZViUO1j9BBkNo5KUhUMKs86OKSLGTQQNFfTMBs8EX5t5
-1oTXi/uzEMwEYbJcSOzwm3nDavhxJvibGQiRiYgQJaT7ckt0/Pvq1qH1514jWFhj
-CTGMu145VGLoYYx1BjAO8eHQFRbvBct+0C8aBYXzq+rTDZXf+7h/OkVu7OQDgNHM
-HAsiJ8SnUrXykHAE5sMnywI8atAdD9QAGp0aQ3MABxmKX1ZJ9qS/Qv+OfFEJH44U
-G3ZWM9JLwdbmyFOWOrVlhpmpHaFdKTUSC6gpihyR4g5F+KdR5NMnUv3W52S9jzAh
-7zFpM8sUtFsY4+Wta7HTaBTh1gATuQ=3D=3D
-=3Dzzq2
+iQIcBAEBCgAGBQJY3CqAAAoJENaSAD2qAscKnJEQAMD/cn+VKbK2zWXEohHE7Ewp
+uVK9Uri29DJsDMBWuLvOjfhqiBfWCBg08UnQ53barFuFtZGP03PF8MYphp+PA7AN
+7HLcReyGiU8CVwmMg8bViwLT3l/jiEl5ieqgObDTv01BqC7qBl4/DUg2oVdatkab
+Ehbth8g9LwrGo0NmWjtgdjFM/tGye17JPnaxorZD7t0u3zg0fD1i4drZZIZiqEJ9
+FlPxzGSpfOHaWUQ1amMVeChqpSYfyYX+wn0rObbfI6A+L9oX2/6TsX9xt+hMuLzf
+P9yr3mFM91Lxa/HFNoZtghGVnEVFzEweUrVV0ktYFgjnCergzu7qK5wDL2b7lf/h
+tVSNTqI8hSU6c6tBPvgUDyJZwnsV4r3gSAKPofjfsK6m7jbFSneGEM1h2cAhJb7g
+hqJx+Cb9kima2ZUSRlAdj1+WhZqff6j697k9yEADBU7tsg00lJMZQaxzon+jubNl
+hWFIb2IOSmnKzmMOW02HoFIDLLJ+LmrRYbgdmpohpz14MyGT7uk5CloGOtIYsDxV
+RFGagqksKKReF4HO7YaxdZ/8RhvcthY4lphl7SoBhWr7NVQYpI9+6jwOZtTXzIkM
+03Bo4DbDJ/S4Dt0f60VfvRuK6K/C5NoyYJiseM7ApOUYKZ9FysXeRraafRC1uIiw
+7SDk+uzzQJ1C796UL+iL
+=D8Ch
 -----END PGP SIGNATURE-----
+
+--4WhIVLtmgimjMmisCkx2rosXqdErgLsMk--
