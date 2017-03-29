@@ -1,4 +1,9 @@
-Received: (qmail 7863 invoked by uid 550); 8 Nov 2023 13:42:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3174" "Wednesday" "29" "March" "2017" "16:57:49" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<d147eecf-cbde-f20e-b526-c69a02abaef6@canonical.com>" "93" "Re: [oss-security] information about pwn2own Kernel problem" nil nil nil "3" "2017032921:57:49" "[oss-security] information about pwn2own Kernel problem" (number mark "U       tyhicks@cano Mar 29   93/3174  " thread-indent "\"Re: [oss-security] information about pwn2own Kernel problem\"\n") "<CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>" ("<20170322103936.GB28849@suse.de>" "<9c8c5edd-f95a-b39c-7a85-c39c567068d8@canonical.com>" "<d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>" "<CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27747 invoked by uid 550); 29 Mar 2017 21:58:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,151 +12,115 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16012 invoked from network); 8 Nov 2023 13:22:40 -0000
-Content-Type: multipart/alternative;
- boundary="------------MxZbwV6Pyi0mT37NUsTxuksC"
-Message-ID: <c01c1617-641d-4ec2-847f-2e85ea4676f7@notcve.org>
-Date: Wed, 8 Nov 2023 14:22:27 +0100
+Received: (qmail 27729 invoked from network); 29 Mar 2017 21:58:07 -0000
+To: oss-security@lists.openwall.com
+References: <20170322103936.GB28849@suse.de>
+ <9c8c5edd-f95a-b39c-7a85-c39c567068d8@canonical.com>
+ <d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>
+ <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
+Cc: "security@ubuntu.com" <security@ubuntu.com>
+From: Tyler Hicks <tyhicks@canonical.com>
+Message-ID: <d147eecf-cbde-f20e-b526-c69a02abaef6@canonical.com>
+Date: Wed, 29 Mar 2017 16:57:49 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com, submissions@packetstormsecurity.org,
- fulldisclosure@seclists.org, bugs@securitytracker.com
-From: !CVE Team <contact@notcve.org>
-Subject: [oss-security] !CVE: A new platform to track security issues not acknowledged by
- vendors
+In-Reply-To: <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="goPDjD5SAXmKPSbwSHUtrpEaG0lVj2pNs"
+Subject: Re: [oss-security] information about pwn2own Kernel problem
 
---------------MxZbwV6Pyi0mT37NUsTxuksC
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--goPDjD5SAXmKPSbwSHUtrpEaG0lVj2pNs
+Content-Type: multipart/mixed; boundary="NX0Fi52s4i5M7ixD0N02V6MSE6lD99IEu";
+ protected-headers="v1"
+From: Tyler Hicks <tyhicks@canonical.com>
+To: oss-security@lists.openwall.com
+Cc: "security@ubuntu.com" <security@ubuntu.com>
+Message-ID: <d147eecf-cbde-f20e-b526-c69a02abaef6@canonical.com>
+Subject: Re: [oss-security] information about pwn2own Kernel problem
+References: <20170322103936.GB28849@suse.de>
+ <9c8c5edd-f95a-b39c-7a85-c39c567068d8@canonical.com>
+ <d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>
+ <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
+In-Reply-To: <CAOtQxbTJrDdJGp569WtczHGGAV+Nxas6XsNMw7Rw20koE=MXaQ@mail.gmail.com>
 
-=======
-Mission
-=======
+--NX0Fi52s4i5M7ixD0N02V6MSE6lD99IEu
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-The mission of !CVE (read not CVE) is to track, identify and provide a
-common space for !vulnerabilities that are not acknowledged by vendors but
-still are serious security issues.
+This issue is no longer embargoed and I've just sent some details to
+this list:
 
-This project was presented a few days ago at Black Hat Toronto 2023 [1]
-and will also be presented next week at DeepSec 2023 [2].
+  http://openwall.com/lists/oss-security/2017/03/29/2
 
+The upstream kernel was affected and fixes have been committed.
 
-===
-Why
-===
+Tyler
 
-According to MITRE's CNA rules section 7.1:
-
-       "CNAs are left to their own discretion to determine whether
-        something is a vulnerability."[3]
-
-This poses a clear conflict of interest, since the same vendor is the one
-deciding whether or not an issue is a vulnerability and therefore whether a
-CVE is assigned to their own product or not.
-
-
-==============
-What is a !CVE
-==============
-
-    - A common place for !vulnerabilities (read not vulnerabilities)
-
-    - Security issues not covered by the traditional CVE.
-
-    - An identifier following common naming starting with an exclamation
-      mark(!) Example: !CVE-2023-0001
-
-
-============================
-How to request a new !CVE ID
-============================
-
-The !CVE Project is alive and assigning !CVE-IDs for security issues that
-present an advantage for an attacker.
-
-You can request a !CVE ID at: https://notcve.org/form.php
-
-
-======================
-How !CVEs are assigned
-======================
-
-A panel will review !CVE requests and if qualifies, a new !CVE number will
-be assigned and details will be publicly available.
-
-
-==============================
-How to access to !CVEs details
-==============================
-
-Using the search engine at https://notcve.org or a direct link to the !CVE
-entry. For example, the first ever !CVE is available at:
-https://notcve.org/view.php?id=!CVE-2023-0001
-
-
-The search engine combines information from multiple sources and also
-searches for regular CVEs in all fields from all sources. For example to
-search by credit we can obtain CVE discovered by Google Project Zero:
-
-https://notcve.org/search.php?query=Google+Project+Zero
-
-
-=========================
-What qualifies for a !CVE
-=========================
-
-Examples that qualifies for a !CVE:
------------------------------------
-    - A security issues that is not acknowledged by the vendor as a
-      vulnerability.
-
-    - A security issue acknowledged by a vendor as technically correct
-      but outside their threat model.
-
-    - A notified security issue that has not been assigned a CVE after
-      90 days.
-
-    - A published security issue without an assigned CVE.
-
-Examples that do NOT qualify for a !CVE:
-----------------------------------------
-    - A software defect with no impact on security.
-
-    - A generic security issue, you need to list one or more
-      devices/software affected with your finding.
-
-    - Well known attacks to unencrypted channels to obtain
-      credentials: Telnet, FTP, etc.
-
-    - You can read the FAQ [4] for more examples.
+On 03/22/2017 05:19 PM, Dave Null wrote:
+> I was wondering this myself. I'm not sure if ZDI does any variant
+> investigation when they pick up a bug. Really hoping this doesn't jump fr=
+om
+> a distro related problem to a Linux problem.
+>=20
+> -noid
+>=20
+> Crypto: https://keybase.io/noid
+> None are more hopelessly enslaved than those who falsely believe they are
+> free - Goethe
+> --
+>=20
+> On Wed, Mar 22, 2017 at 1:54 PM, Luedtke, Nicholas (HPE Linux Security) <
+> nicholas.luedtke@hpe.com> wrote:
+>=20
+>>
+>> On 3/22/2017 2:21 PM, Tyler Hicks wrote:
+>>> ZDI disclosed the information to the Ubuntu Security team a little less
+>>> than 48 hours ago.
+>>>
+>>> The Ubuntu Kernel team has triaged the issue and came up with a
+>>> potential fix. That fix is undergoing internal review and I'll be
+>>> disseminating it via the usual channels once that is complete.
+>>>
+>>> Tyler
+>> Is this an Ubuntu specific issue? Or does it affect the upstream kernels
+>> as well?
+>>
+>>
+>> --
+>> Nicholas Luedtke
+>> HPE Linux Security, Hewlett-Packard Enterprise
+>>
+>>
+>>
+>>
+>=20
 
 
 
-In short, we see the !CVE Project as a great initiative to track and
-identify security issues that are not acknowledged by vendors but still are
-important for the security community.
+--NX0Fi52s4i5M7ixD0N02V6MSE6lD99IEu--
 
+--goPDjD5SAXmKPSbwSHUtrpEaG0lVj2pNs
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-==========
-References
-==========
+-----BEGIN PGP SIGNATURE-----
 
-[1] 
-https://www.blackhat.com/sector/2023/arsenal/schedule/index.html#cve-a-new-platform-for-unacknowledged-cybersecurity-vulnerabilities-36144
+iQIcBAEBCgAGBQJY3C3dAAoJENaSAD2qAscKoWQP/Ay+uJE/+jDqK/g9pyF+dwNa
+Xov8jtuGtzy98q3Qm10ovnLaxjeIjNLJhVVJQzZDWL35UoBLawbGRut6A7zJOcTT
+lp8CRkbaAebFQQkzy2mh+Dl1Wu75WkLtrWuseyDpH0c9AngNj1k6KpVBV38By7dl
+b9E6PgoebqKkURwp6YPEopNIe3WpNGaq7e3gGRiw4hlxMFzWk0pnuPXlWa5woOIq
+KppXI9XYn4LYJ32qo39rd21seL3To+U71eC9Id+YpH0JpKaLKwLcGVCb4WH1R2YZ
+chDRqF+iO801QfSScTkXczrHt4M9haldAkkqi15v78ImMouewBnh0KpBaYicZm7n
+9vFqOIUTjmlX2/gdPkC214cT0tHurgsWigfWIzOfy1qElBAXxC9a0RQqwjgGxO1m
+UjcCJhsJmwQDYwA4fY8WrZ8CSseFo9Zl57vOOfUzYt4H7ThnIUIiwQZVE7cqwaJ3
+YXn171k7Yr6giGqNWUO0BYKRA9Hy2dOfayY+SU8+9HwiQCqAnA9QZ/lcMXxX1tHs
+TMDTLTDwHUy7i5ahzYy34DrzuE4fG2ZEHqd2HK7TsAuz5xmtP6+ZVprOdrVAM7LN
+QNt3CBuaTG1olrmFyJ3zSho3WxB4L9aULkpv6chYxHWLw9igl1lHSM9IDHZ6mTr1
+LJoFIZOFznYFNQV5hjbj
+=W+Zq
+-----END PGP SIGNATURE-----
 
-[2] https://www.deepsec.net/speaker.html#PSLOT667
-
-[3] https://cve.mitre.org/cve/cna/CNA_Rules_v3.0.pdf
-
-[4] https://notcve.org/faq.html
-
-
-
-
----
-!CVE Team
-
-[ A PGP key is available for encrypted communications at
-https://notcve.org/contact.html ]
---------------MxZbwV6Pyi0mT37NUsTxuksC--
+--goPDjD5SAXmKPSbwSHUtrpEaG0lVj2pNs--
