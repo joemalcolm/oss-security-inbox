@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["690" "Thursday" "28" "May" "2020" "11:16:50" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.77.849.2005281113450.62159@xnncv>" "20" "[oss-security] CVE-2020-13362 QEMU: megasas: OOB read access due to invalid index leads to DoS" nil nil nil "5" "2020052805:46:50" "[oss-security] CVE-2020-13362 QEMU: megasas: OOB read access due to invalid index leads to DoS" (number mark "U       ppandit@redh May 28   20/690   " thread-indent "\"[oss-security] CVE-2020-13362 QEMU: megasas: OOB read access due to invalid index leads to DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-13362 QEMU: megasas: OOB read access due to invalid index leads to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2514" "Wednesday" "29" "March" "2017" "07:10:35" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1989072863.8759727.1490785835327.JavaMail.zimbra@redhat.com>" "87" "[oss-security] CVE-2017-7294: kernel: drm/vmwgfx: limit mip levels in vmw_surface_define_ioctl()" nil nil nil "3" "2017032911:10:35" "[oss-security] CVE-2017-7294: kernel: drm/vmwgfx: limit mip levels in vmw_surface_define_ioctl()" (number mark "U       vdronov@redh Mar 29   87/2514  " thread-indent "\"[oss-security] CVE-2017-7294: kernel: drm/vmwgfx: limit mip levels in vmw_surface_define_ioctl()\"\n") "<17942653da2647d196e3afaef5659a84@imshyb01.MITRE.ORG>" ("<17942653da2647d196e3afaef5659a84@imshyb01.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23942 invoked by uid 550); 28 May 2020 05:47:15 -0000
+Received: (qmail 31857 invoked by uid 550); 29 Mar 2017 11:10:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,113 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23921 invoked from network); 28 May 2020 05:47:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1590644823;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=FRushXCFKTRx65fZR5VU5C60SCmcbZyBGTl1kd7CRQ4=;
-	b=fnqc9F0R9kHJG2telW5/l2Gnod2a5hVM/mYToawIcOmqsp7gw2ClB86cQHUlKcnik2xzAD
-	DDDcDZyHYdW2U/H80uOZbX4Be6veugrWC9aMvYZ3h5WAVP58yJNubQgP5CT1xQ9UqBKmlC
-	WeR7OOPk+626QZSRWwF/qIrNVw09tVo=
-X-MC-Unique: MRU5h0uCM4m5x6AQ_JADzQ-1
-Date: Thu, 28 May 2020 11:16:50 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-cc: "Ding, Ren" <rding@gatech.edu>, "Zhao, Hanqing" <hanqing@gatech.edu>, 
-    Alexander Bulekov <alxndr@bu.edu>
-Message-ID: <nycvar.YSQ.7.77.849.2005281113450.62159@xnncv>
+Received: (qmail 31836 invoked from network); 29 Mar 2017 11:10:49 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 9EAE07F77E
+Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=vdronov@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 9EAE07F77E
+Date: Wed, 29 Mar 2017 07:10:35 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
+To: oss-security@lists.openwall.com
+Cc: liqiang6-s@360.cn
+Message-ID: <1989072863.8759727.1490785835327.JavaMail.zimbra@redhat.com>
+In-Reply-To: <17942653da2647d196e3afaef5659a84@imshyb01.MITRE.ORG>
+References: <17942653da2647d196e3afaef5659a84@imshyb01.MITRE.ORG>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] CVE-2020-13362 QEMU: megasas: OOB read access due to invalid index
- leads to DoS
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.1.12]
+Thread-Topic: CVE-2017-7294: kernel: drm/vmwgfx: limit mip levels in vmw_surface_define_ioctl()
+Thread-Index: TptXnhJeHBMGOX8jTx8QdO6Rwjcz9w==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Wed, 29 Mar 2017 11:10:37 +0000 (UTC)
+Subject: [oss-security] CVE-2017-7294: kernel: drm/vmwgfx: limit mip levels in
+ vmw_surface_define_ioctl()
 
-   Hello,
+hello,
 
-An OOB read access issue was found in the MegaRAID SAS 8708EM2 emulator of the 
-QEMU. It occurs in 'megasas_lookup_frame' routine when 's->reply_queue_head' 
-is set to a malicious value. A guest user/process may use this flaw to crash 
-the QEMU process on the host resulting in DoS scenario.
+CVE-2017-7294 was assigned for another flaw in [vmwgfx] driver.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2020-05/msg03463.html
+> Below is the CVE ID for this new vulnerability (we understand that it
+> is completely different from CVE-2017-7261, even though the affected
+> function is the same).
+>
+> [Suggested description]
+> In was found that in the Linux kernel in vmw_surface_define_ioctl()
+> function in 'drivers/gpu/drm/vmwgfx/vmwgfx_surface.c' file, a
+> 'req->mip_levels[i]' are user-controlled values which are not checked
+> for the upper limit and are used to calculate 'num_sizes' parameter.
+> Both the 'num_sizes' and the array are 'uint32_t' so it is possible to
+> make 'num_sizes' overflow. Later 'mip_levels[i]' are used as the loop
+> count. This can lead an oob-write and/or kernel lockup or crash. Due
+> to the nature of the flaw, privilege escalation cannot be fully ruled
+> out.
+> 
+> ------------------------------------------
+> 
+> [Additional Information]
+> Due to the nature of the flaw, privilege escalation cannot be fully ruled out, although we believe it is unlikely.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-20
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> kernel.org: Linux kernel
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> Linux kernel - all upto 4.11-rc3
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> vmw_surface_define_ioctl() function, drivers/gpu/drm/vmwgfx/vmwgfx_surface.c file
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Impact Escalation of Privileges]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> to exploit vulnerability a local user have to run a binary which makes certain ioctl() call
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://lists.freedesktop.org/archives/dri-devel/2017-March/137094.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1436798
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Li Qiang of the Gear Team, Qihoo 360 Inc
+>
+> Use CVE-2017-7294.
+>
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 
-This issue was reported by Ren Ding & Hanqing Zhao of SSLab Georgia Tech and 
-also by Alexander Bulekov. CVE-2020-13362 requested via -> 
-https://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
