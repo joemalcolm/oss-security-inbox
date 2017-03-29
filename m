@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/7
-Message-ID: <700843.693778978-sendEmail@localhost>
-Date: Mon, 1 May 2017 11:39:43 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libmad: assertion failure in layer3.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/29/2
+Message-ID: <f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>
+Date: Wed, 29 Mar 2017 16:43:28 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: "security@...ntu.com" <security@...ntu.com>
+Subject: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libmad stays for “M”peg “A”udio “D”ecoder library.
+A security issue was reported by ZDI, on behalf of Chaitin Security
+Research Lab, against the Linux kernel in Ubuntu. It also affected the
+upstream kernel.
 
-The same testcase provided in the article: libmad: heap-based buffer overflow in mad_layer_III (layer3.c) is able to show an assertion failure if libmad was compiled with debug 
-(–enable-debugging).
+Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
+as called by xfrm_new_ae(), did not verify that the user-specified
+replay_window was within the replay state buffer.
 
-The complete output of the failure:
+This allowed for out-of-bounds reads and writes of kernel memory.
+Chaitin Security showed that this can lead to local privilege escalation
+by using user namespaces in order to configure XFRM. XFRM configuration
+requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
+not enable user namespaces by default.
 
-# madplay -v -i -o raw:out $FILE
-madplay: /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:2633: mad_layer_III: Assertion `stream->md_len + md_len - si.main_data_begin <= MAD_BUFFER_MDLEN' 
-failed.
+Fixes:
+- https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
+- https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
 
-Affected version:
-0.15.1b
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8372
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00213-libmad-heapoverflow-mad_layer_III
-
-Timeline:
-2017-01-01: bug discovered and reported to upstream
-2017-04-30: blog post about the issue
-2017-05-01: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/30/libmad-assertion-failure-in-layer3-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Tyler
 
 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
