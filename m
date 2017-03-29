@@ -1,77 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/1
-Message-ID: <20170928073533.mlntvkfnzl6sann7@eldamar.local>
-Date: Thu, 28 Sep 2017 09:35:33 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/29/1
+Message-ID: <1989072863.8759727.1490785835327.JavaMail.zimbra@redhat.com>
+Date: Wed, 29 Mar 2017 07:10:35 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+Cc: liqiang6-s@....cn
+Subject: CVE-2017-7294: kernel: drm/vmwgfx: limit mip levels in vmw_surface_define_ioctl()
 Content-Type: text/plain; charset=utf-8
 
-Hi Greg,
+hello,
 
-On Wed, Sep 27, 2017 at 03:04:24PM +0200, Greg KH wrote:
-> On Wed, Sep 27, 2017 at 02:51:49PM +0200, Solar Designer wrote:
-> > Besides, Greg focuses on the problem that some ignore the stable kernels
-> > or the "curated and tested stream of fixes" that could be seen in there,
-> > whereas another concern mentioned earlier in the thread is that the
-> > stream is also incomplete because some security fixes are not marked as
-> > such and not CC'ed to stable.  So that's two problems mentioned in the
-> > thread, but vendor-sec was not / linux-distros is not related to either.
+CVE-2017-7294 was assigned for another flaw in [vmwgfx] driver.
+
+> Below is the CVE ID for this new vulnerability (we understand that it
+> is completely different from CVE-2017-7261, even though the affected
+> function is the same).
+>
+> [Suggested description]
+> In was found that in the Linux kernel in vmw_surface_define_ioctl()
+> function in 'drivers/gpu/drm/vmwgfx/vmwgfx_surface.c' file, a
+> 'req->mip_levels[i]' are user-controlled values which are not checked
+> for the upper limit and are used to calculate 'num_sizes' parameter.
+> Both the 'num_sizes' and the array are 'uint32_t' so it is possible to
+> make 'num_sizes' overflow. Later 'mip_levels[i]' are used as the loop
+> count. This can lead an oob-write and/or kernel lockup or crash. Due
+> to the nature of the flaw, privilege escalation cannot be fully ruled
+> out.
 > 
-> For that second issue, I've not ever really run into any "known security
-> fix" not being cc:ed to stable.  Do you have any known examples where I
-> can go poke the maintainers to do better?
+> ------------------------------------------
 > 
-> We have plenty of the normal "bugfix was merged that a few years later
-> turned out to be a 'security' issue, but no one realized it at the time"
-> changes that get merged.  And to help combat that, we are doing more and
-> more "smart mining"[1] of the kernel commits to try to catch patches
-> that match those types of fixes and get them merged into the stable
-> kernels.
+> [Additional Information]
+> Due to the nature of the flaw, privilege escalation cannot be fully ruled out, although we believe it is unlikely.
 > 
-> You can see the initial results of this work with the huge increase in
-> patches being merged to the 4.9 and 4.4 stable kernels vs. any older
-> stable kernel trees in the past.
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-20
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> kernel.org: Linux kernel
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> Linux kernel - all upto 4.11-rc3
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> vmw_surface_define_ioctl() function, drivers/gpu/drm/vmwgfx/vmwgfx_surface.c file
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Impact Escalation of Privileges]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> to exploit vulnerability a local user have to run a binary which makes certain ioctl() call
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://lists.freedesktop.org/archives/dri-devel/2017-March/137094.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1436798
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Li Qiang of the Gear Team, Qihoo 360 Inc
+>
+> Use CVE-2017-7294.
+>
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 
-This is defintively not "exhaustive", and not exactly what you are
-pointing out. I thought it might be still of help, so I quickly looked
-what we know in our kernel-sec repository tracking as well fixed which
-are "needed" yet in 4.9:
-
-CVE-2017-0605:
---------------
-https://security-tracker.debian.org/tracker/CVE-2017-0605
-upstream: (4.12-rc1) [e09e28671cda63e6308b31798b997639120e2a21]
-
-is e.g. includedin 3.16.44 (a1141b19b23a0605d46f3fab63fd2d76207096c4),
-3.2.89 (e39e64193a8a611d11d4c62579a7246c1af70d1c) but not in 4.9.
-
-(afaics not Cc'ed to stable).
-
-CVE-2017-12154:
----------------
-https://security-tracker.debian.org/tracker/CVE-2017-12154
-from https://marc.info/?l=oss-security&m=150640182829622&w=2
-
-upstream: released (4.14-rc1) [51aa68e7d57e3217192d88ce90fd5b8ef29ec94f]
-
-AFAICS, not Cc'ed to stable.
-
-CVE-2017-14156:
----------------
-https://security-tracker.debian.org/tracker/CVE-2017-14156
-upstream: released (4.14-rc1) [8e75f7a7a00461ef6d91797a60b606367f6e344d]
-
-CVE-2017-1000252:
------------------
-https://security-tracker.debian.org/tracker/CVE-2017-1000252
-The reaon that there is no Cc to stable might have been actually a
-safety guard to not sent out the commit to a public list, but not
-sure.
-
-upstream: released (4.14-rc1) [3a8b0677fc6180a467e26cc32ce6b0c09a32f9bb]
-
-Hope this might be of help.
-
-Regards,
-Salvatore
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
