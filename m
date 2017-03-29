@@ -1,37 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/14/2
-Message-ID: <1502708627.10890.12.camel@apache.org>
-Date: Mon, 14 Aug 2017 14:03:47 +0300
-From: Robert Munteanu <rombert@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/29/3
+Message-ID: <d147eecf-cbde-f20e-b526-c69a02abaef6@canonical.com>
+Date: Wed, 29 Mar 2017 16:57:49 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-9802: Apache Sling XSS vulnerability
+Cc: "security@...ntu.com" <security@...ntu.com>
+Subject: Re: information about pwn2own Kernel problem
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-9802: Apache Sling XSS vulnerability
+This issue is no longer embargoed and I've just sent some details to
+this list:
 
-Severity: Important
+  http://openwall.com/lists/oss-security/2017/03/29/2
 
-Vendor: The Apache Software Foundation
+The upstream kernel was affected and fixes have been committed.
 
-Versions Affected:
-Apache Sling Servlets Post 2.3.20
+Tyler
 
-Description:
-The Javascript method Sling.evalString() uses the javascript `eval`
-function to parse input strings, which allows for XSS attacks by
-passing specially crafted input strings.
+On 03/22/2017 05:19 PM, Dave Null wrote:
+> I was wondering this myself. I'm not sure if ZDI does any variant
+> investigation when they pick up a bug. Really hoping this doesn't jump from
+> a distro related problem to a Linux problem.
+> 
+> -noid
+> 
+> Crypto: https://keybase.io/noid
+> None are more hopelessly enslaved than those who falsely believe they are
+> free - Goethe
+> --
+> 
+> On Wed, Mar 22, 2017 at 1:54 PM, Luedtke, Nicholas (HPE Linux Security) <
+> nicholas.luedtke@....com> wrote:
+> 
+>>
+>> On 3/22/2017 2:21 PM, Tyler Hicks wrote:
+>>> ZDI disclosed the information to the Ubuntu Security team a little less
+>>> than 48 hours ago.
+>>>
+>>> The Ubuntu Kernel team has triaged the issue and came up with a
+>>> potential fix. That fix is undergoing internal review and I'll be
+>>> disseminating it via the usual channels once that is complete.
+>>>
+>>> Tyler
+>> Is this an Ubuntu specific issue? Or does it affect the upstream kernels
+>> as well?
+>>
+>>
+>> --
+>> Nicholas Luedtke
+>> HPE Linux Security, Hewlett-Packard Enterprise
+>>
+>>
+>>
+>>
+> 
 
-Mitigation:
-Users should upgrade to version 2.3.22 or later of the Sling Servlets
-Post bundle.
 
-Credit: This issue was discovered and reported by Dmitriev V.
-Daniil Dmitriev V. Daniil <sgoesw@...il.com>.
 
-References:
 
-- https://issues.apache.org/jira/browse/SLING-7041
-- https://sling.apache.org/project-information/security.html
-
-Robert Munteanu
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
