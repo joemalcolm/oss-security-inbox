@@ -1,70 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/01/4
-Message-ID: <20170401182736.GA12311@openwall.com>
-Date: Sat, 1 Apr 2017 20:27:36 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/30/4
+Message-ID: <obk3lm$s92$1@blaine.gmane.org>
+Date: Fri, 31 Mar 2017 01:17:16 +0200
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
+Subject: Advisory: XSS issues in MantisBT (CVE-2017-6973, CVE-2017-7241, CVE-2017-7309)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please take note of the following 3 cross-site scripting issues in MantisBT
 
-I address this message primarily to Red Hat, but I'd like us to discuss
-it in public so that others can benefit from this information as well.
+Best regards
+Damien Regad
+MantisBT developer
 
-On Wed, Mar 29, 2017 at 04:43:28PM -0500, Tyler Hicks wrote:
-> A security issue was reported by ZDI, on behalf of Chaitin Security
-> Research Lab, against the Linux kernel in Ubuntu. It also affected the
-> upstream kernel.
-> 
-> Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
-> as called by xfrm_new_ae(), did not verify that the user-specified
-> replay_window was within the replay state buffer.
-> 
-> This allowed for out-of-bounds reads and writes of kernel memory.
-> Chaitin Security showed that this can lead to local privilege escalation
-> by using user namespaces in order to configure XFRM. XFRM configuration
-> requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
-> not enable user namespaces by default.
-> 
-> Fixes:
-> - https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
-> - https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
 
-Red Hat claims that all of RHEL5, RHEL6, and RHEL7 are affected,
-although the issue is mitigated by it requiring CAP_NET_ADMIN and/or
-unprivileged user namespaces, neither of which are available by default:
+1. CVE-2017-6973: XSS in adm_config_report.php
 
-https://access.redhat.com/security/cve/cve-2017-7184
+A cross-site scripting (XSS) vulnerability in the MantisBT
+Configuration Report page (adm_config_report.php) allows remote
+attackers to inject arbitrary code through a crafted 'action'
+parameter.
 
-RHEL7 does indeed contain the vulnerable upstream code, but RHEL5 and
-RHEL6 don't - at least not the same code that the commits referenced
-above patch.  This leaves me with two other interpretations of Red Hat's
-analysis:
+Affected versions: 1.3.0-rc.2 through 2.2.1
+Fixed in versions: 1.3.8, 2.1.2, 2.2.2 (released 2017-03-22), 2.3.0 (not
+yet released*)
 
-1. Similar issues existed for other inputs (not ESN) and were silently
-fixed some time between RHEL6 and RHEL7 (perhaps in equivalent upstream
-revisions).  Maybe with the current renewed attention, Red Hat realized
-that older fixes were missed, which are now finally understood as
-security-relevant.  The code does look to me like this may be the case,
-but I didn't spend much time on its analysis yet.
+Patch:
+- 1.3:
+http://github.com/mantisbt/mantisbt/commit/034cd07b47af37366fc7b726cb4a4f971d3d3fb9
+- 2.x:
+http://github.com/mantisbt/mantisbt/commit/da74c5aa02bcf21cfaab1180f892c22415e5fea6
 
--OR-
+Credits:
+- Reported by Yelin and Zhangdongsheng from VenusTech
+http://www.venustech.com.cn/
+- Fixed by Damien Regad (MantisBT Developer)
 
-2. Red Hat's analysis is not correct, and RHEL5 and RHEL6 are not
-affected at all.
+References:
+- MantisBT issue tracker https://mantisbt.org/bugs/view.php?id=22537
 
-Which is it, or something else I haven't thought of?
 
-While for RHEL itself this is almost a non-issue either way due to the
-mitigations mentioned above, better understanding is required for other
-distros where such mitigations might not fully apply (such as along with
-use of containers, where container root would have CAP_NET_ADMIN).
 
-And while I am at it, kudos to Red Hat for patching out unprivileged
-user namespaces in RHEL7!
+2. CVE-2017-7309: XSS in adm_config_report.php
 
-/* While user namespaces remain in tech preview disable them */
-static bool enable_user_ns_creation;
+A cross-site scripting (XSS) vulnerability in the MantisBT
+Configuration Report page (adm_config_report.php) allows remote
+attackers to inject arbitrary code (if CSP settings permit it) through
+a crafted 'config_option' parameter.
 
-Alexander
+This is related to CVE-2017-6973 (see above) introduced by the same
+change, affects same component, and same root cause of not escaping
+parameter before output.
+
+Affected versions: 1.3.0-rc.2 through 2.2.2
+Fixed in versions: 1.3.9, 2.1.3, 2.2.3, 2.3.0 (not yet released*)
+
+Patch:
+- 1.3:
+http://github.com/mantisbt/mantisbt/commit/c9e5b1d0404503022605459552faeaf610bf15ae
+- 2.x:
+http://github.com/mantisbt/mantisbt/commit/e881dd79df422033bbea88914fc0a717fae40358
+
+Credits:
+- Reported by Yelin and Zhangdongsheng from VenusTech
+http://www.venustech.com.cn/
+- Fixed by Damien Regad (MantisBT Developer)
+
+References:
+- MantisBT issue tracker http://www.mantisbt.org/bugs/view.php?id=22579
+
+
+3. CVE-2017-7241: XSS in move_attachments_page.php
+
+A cross-site scripting (XSS) vulnerability in the MantisBT Move
+Attachements page (move_attachments_page.php, part of admin tools)
+allows remote attackers to inject arbitrary code through a crafted
+'type' parameter, if Content Security Protection (CSP) settings allows
+it.
+
+Note that this vulnerability is not exploitable if the admin tools
+directory is removed, as recommended in the Admin Guide [1]. A
+reminder to do so is also displayed on the login page.
+
+Affected versions: 1.2.16 and later
+Fixed in versions: 1.3.9, 2.1.3, 2.2.3, 2.3.0 (not yet released*)
+Note that 1.2 branch is no longer supported, so no patch is provided for
+that; please upgrade to a later version.
+
+Patch:
+- 1.3:
+http://github.com/mantisbt/mantisbt/commit/d31841c806a3c8379fcf6c9d9559451270b0f1cb
+- 2.x:
+http://github.com/mantisbt/mantisbt/commit/ecef0e9b523a460709e8feedfce72f05bb30b992
+
+
+Credits:
+- Reported by Yelin and Zhangdongsheng from VenusTech
+http://www.venustech.com.cn/
+- Fixed by Damien Regad (MantisBT Developer)
+
+References:
+- MantisBT issue tracker http://www.mantisbt.org/bugs/view.php?id=22568
+- [1]
+http://mantisbt.org/docs/master/en-US/Admin_Guide/html-desktop/#admin.install.postcommon
+
+
+* Releases 1.3.9, 2.1.3, 2.2.3 and 2.3.0 are scheduled for release on
+coming week-end
+
+
