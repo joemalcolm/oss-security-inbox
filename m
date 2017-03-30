@@ -1,25 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/28
-Message-ID: <f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>
-Date: Thu, 9 Feb 2017 08:07:49 -0800
-From: "Steven R. Loomis" <srl@...-project.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/30/3
+Message-ID: <73f91775-3811-b90e-66a3-69620c3b5349@canonical.com>
+Date: Thu, 30 Mar 2017 09:17:45 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
+To: Lokesh Ubuntu <lokesh.ubuntu@...il.com>, oss-security@...ts.openwall.com
+Cc: security@...ntu.com
+Subject: Re: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
 Content-Type: text/plain; charset=utf-8
 
-On 2/9/17 6:54 AM, Peter Bex wrote:
-> In an ideal world, free software project leaders should be
-> able to request a CVE ID _before_ announcing a vulnerability to their
-> user base.  If there were some way to register people as project leaders,
-> the "proof" should not be necessary, they should be able to request a
-> CVE ID with authority.
-Peter,
- I actually wondered about this very thing, if it was possible to
-request an ID before the details were fully available. From your note,
-it sounds like this is not the case currently.
+A PoC is not publicly available for this issue.
 
-Steven
+Tyler
+
+On 03/29/2017 10:18 PM, Lokesh Ubuntu wrote:
+> Is there any POC for this to conclude? Thanks.
+> 
+> Regards, Lokesh
+> 
+> On Mar 30, 2017 03:14, "Tyler Hicks" <tyhicks@...onical.com
+> <mailto:tyhicks@...onical.com>> wrote:
+> 
+>     A security issue was reported by ZDI, on behalf of Chaitin Security
+>     Research Lab, against the Linux kernel in Ubuntu. It also affected the
+>     upstream kernel.
+> 
+>     Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
+>     as called by xfrm_new_ae(), did not verify that the user-specified
+>     replay_window was within the replay state buffer.
+> 
+>     This allowed for out-of-bounds reads and writes of kernel memory.
+>     Chaitin Security showed that this can lead to local privilege escalation
+>     by using user namespaces in order to configure XFRM. XFRM configuration
+>     requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
+>     not enable user namespaces by default.
+> 
+>     Fixes:
+>     -
+>     https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a <https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a>
+>     -
+>     https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df <https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df>
+> 
+>     Tyler
+> 
+> 
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
