@@ -1,4 +1,9 @@
-Received: (qmail 16308 invoked by uid 550); 7 Jun 2025 14:56:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3208" "Friday" "31" "March" "2017" "01:17:16" "+0200" "Damien Regad" "dregad@mantisbt.org" "<obk3lm$s92$1@blaine.gmane.org>" "102" "[oss-security] Advisory: XSS issues in MantisBT (CVE-2017-6973, CVE-2017-7241, CVE-2017-7309)" nil nil nil "3" "2017033023:17:16" "[oss-security] Advisory: XSS issues in MantisBT (CVE-2017-6973, CVE-2017-7241, CVE-2017-7309)" (number mark "U       dregad@manti Mar 31  102/3208  " thread-indent "\"[oss-security] Advisory: XSS issues in MantisBT (CVE-2017-6973, CVE-2017-7241, CVE-2017-7309)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11326 invoked by uid 550); 30 Mar 2017 23:21:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,53 +12,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 29964 invoked from network); 7 Jun 2025 14:53:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=thinkmo.de; h=
-	in-reply-to:content-disposition:content-type:content-type
-	:mime-version:references:message-id:subject:subject:from:from
-	:date:date:received:received; s=mail202312; t=1749307990; bh=veK
-	ORQLdRaEo/uUinLsQ+O9nAR4Um/dtRGYbxzEsqGA=; b=zFxK9Ahc6wTjMsGFgzH
-	fZTYjY480egYKtRJFl2x91EM6lZRol0ygDDPa4OBWQIeDdbKiXDaL6lI5Cm1tkt3
-	kZovVL4R+r+SHIhOPw7DmnLnbiZ53xcenYnelQMijswwKA7CI0v4DHcFq342BVJb
-	cog8xacYSp4z3vQOSBpZIfuteGoxO/ieOQ19vSKm0jkkJP7F6VhOBN9ijtEEoT2O
-	RoUkwLZ5OriBvSkN8QxwnY4S+Fu3B8G4Bt6VCiA478IPyVtNDm/2Cbw/u98bSiOI
-	XGjF7qVzMdspF9RUF/JcQlTc/Cugj26+mRARb5ZdlPSKghBp37i+9bLd7JKLSeHZ
-	J+Q==
-X-Virus-Scanned: Debian amavis at 
-Date: Sat, 7 Jun 2025 16:53:07 +0200
-From: Bastian Blank <bblank@thinkmo.de>
+Received: (qmail 9890 invoked from network); 30 Mar 2017 23:17:46 -0000
+X-Injected-Via-Gmane: http://gmane.org/
 To: oss-security@lists.openwall.com
-Message-ID: <20250607145307.owt2hpb3xkqsdxjt@shell.thinkmo.de>
-Mail-Followup-To: Bastian Blank <bblank@thinkmo.de>,
-	oss-security@lists.openwall.com
-References: <07bdaddb-1414-492b-a178-93b38f8ac3a0@gmail.com>
- <2025060713-aloe-decency-a74c@gregkh>
- <aEROmObEfB-k2IW7@lappy>
-MIME-Version: 1.0
+From: Damien Regad <dregad@mantisbt.org>
+Date: Fri, 31 Mar 2017 01:17:16 +0200
+Message-ID: <obk3lm$s92$1@blaine.gmane.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aEROmObEfB-k2IW7@lappy>
-Subject: Re: [oss-security] Re: Re: Linux kernel: HFS+ filesystem
- implementation, issues, exposure in distros
+Content-Transfer-Encoding: 8bit
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+X-Mozilla-News-Host: news://news.gmane.org:119
+Subject: [oss-security] Advisory: XSS issues in MantisBT (CVE-2017-6973, CVE-2017-7241,
+ CVE-2017-7309)
 
-On Sat, Jun 07, 2025 at 10:37:12AM -0400, Sasha Levin wrote:
-> The scope, which I assume was quoted from
-> https://www.cve.org/PartnerInformation/ListofPartners/partner/Linux also
-> lists cve@kernel.org as the right email to contact.
+Please take note of the following 3 cross-site scripting issues in MantisBT
 
-This page also links as step one to
-https://www.kernel.org/doc/html/latest/process/security-bugs.html, which
-does _not_ list cve@kernel.org anywhere.
+Best regards
+Damien Regad
+MantisBT developer
 
-> Note that this isn't just a technicality: for example, I'm a member of
-> cve@k.o, but *NOT* of security@k.o.
 
-But it already reached the right organisation.  Did security@k.o respond
-with a referal?
+1. CVE-2017-6973: XSS in adm_config_report.php
 
-Bastian
+A cross-site scripting (XSS) vulnerability in the MantisBT
+Configuration Report page (adm_config_report.php) allows remote
+attackers to inject arbitrary code through a crafted 'action'
+parameter.
 
--- 
-There are some things worth dying for.
-		-- Kirk, "Errand of Mercy", stardate 3201.7
+Affected versions: 1.3.0-rc.2 through 2.2.1
+Fixed in versions: 1.3.8, 2.1.2, 2.2.2 (released 2017-03-22), 2.3.0 (not
+yet released*)
+
+Patch:
+- 1.3:
+http://github.com/mantisbt/mantisbt/commit/034cd07b47af37366fc7b726cb4a4f971d3d3fb9
+- 2.x:
+http://github.com/mantisbt/mantisbt/commit/da74c5aa02bcf21cfaab1180f892c22415e5fea6
+
+Credits:
+- Reported by Yelin and Zhangdongsheng from VenusTech
+http://www.venustech.com.cn/
+- Fixed by Damien Regad (MantisBT Developer)
+
+References:
+- MantisBT issue tracker https://mantisbt.org/bugs/view.php?id=22537
+
+
+
+2. CVE-2017-7309: XSS in adm_config_report.php
+
+A cross-site scripting (XSS) vulnerability in the MantisBT
+Configuration Report page (adm_config_report.php) allows remote
+attackers to inject arbitrary code (if CSP settings permit it) through
+a crafted 'config_option' parameter.
+
+This is related to CVE-2017-6973 (see above) introduced by the same
+change, affects same component, and same root cause of not escaping
+parameter before output.
+
+Affected versions: 1.3.0-rc.2 through 2.2.2
+Fixed in versions: 1.3.9, 2.1.3, 2.2.3, 2.3.0 (not yet released*)
+
+Patch:
+- 1.3:
+http://github.com/mantisbt/mantisbt/commit/c9e5b1d0404503022605459552faeaf610bf15ae
+- 2.x:
+http://github.com/mantisbt/mantisbt/commit/e881dd79df422033bbea88914fc0a717fae40358
+
+Credits:
+- Reported by Yelin and Zhangdongsheng from VenusTech
+http://www.venustech.com.cn/
+- Fixed by Damien Regad (MantisBT Developer)
+
+References:
+- MantisBT issue tracker http://www.mantisbt.org/bugs/view.php?id=22579
+
+
+3. CVE-2017-7241: XSS in move_attachments_page.php
+
+A cross-site scripting (XSS) vulnerability in the MantisBT Move
+Attachements page (move_attachments_page.php, part of admin tools)
+allows remote attackers to inject arbitrary code through a crafted
+'type' parameter, if Content Security Protection (CSP) settings allows
+it.
+
+Note that this vulnerability is not exploitable if the admin tools
+directory is removed, as recommended in the Admin Guide [1]. A
+reminder to do so is also displayed on the login page.
+
+Affected versions: 1.2.16 and later
+Fixed in versions: 1.3.9, 2.1.3, 2.2.3, 2.3.0 (not yet released*)
+Note that 1.2 branch is no longer supported, so no patch is provided for
+that; please upgrade to a later version.
+
+Patch:
+- 1.3:
+http://github.com/mantisbt/mantisbt/commit/d31841c806a3c8379fcf6c9d9559451270b0f1cb
+- 2.x:
+http://github.com/mantisbt/mantisbt/commit/ecef0e9b523a460709e8feedfce72f05bb30b992
+
+
+Credits:
+- Reported by Yelin and Zhangdongsheng from VenusTech
+http://www.venustech.com.cn/
+- Fixed by Damien Regad (MantisBT Developer)
+
+References:
+- MantisBT issue tracker http://www.mantisbt.org/bugs/view.php?id=22568
+- [1]
+http://mantisbt.org/docs/master/en-US/Admin_Guide/html-desktop/#admin.install.postcommon
+
+
+* Releases 1.3.9, 2.1.3, 2.2.3 and 2.3.0 are scheduled for release on
+coming week-end
+
+
