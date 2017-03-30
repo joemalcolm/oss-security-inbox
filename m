@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["911" "Friday" "8" "October" "2021" "23:27:37" "+0200" "Yann Ylavic" "ylavic.dev@gmail.com" nil "25" "Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)" nil nil nil "10" nil nil (number mark "U       ylavic.dev@g Oct  8   25/911   " thread-indent "\"Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["508" "Thursday" "30" "March" "2017" "14:55:42" "+0300" "Alexander Popov" "alex.popov@linux.com" "<f3785fb8-b95a-522b-14b4-94e8cefb02ab@linux.com>" "15" "[oss-security] Re: Linux kernel: CVE-2017-2636: local privilege escalation flaw in n_hdlc" nil nil nil "3" "2017033011:55:42" "[oss-security] Re: Linux kernel: CVE-2017-2636: local privilege escalation flaw in n_hdlc" (number mark "U       alex.popov@l Mar 30   15/508   " thread-indent "\"[oss-security] Re: Linux kernel: CVE-2017-2636: local privilege escalation flaw in n_hdlc\"\n") "<5ced8dfa-a2e9-1dff-9708-54a76f6b4c59@linux.com>" ("<5ced8dfa-a2e9-1dff-9708-54a76f6b4c59@linux.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8127 invoked by uid 550); 8 Oct 2021 21:34:21 -0000
+Received: (qmail 17525 invoked by uid 550); 30 Mar 2017 12:22:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,68 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5274 invoked from network); 8 Oct 2021 21:28:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=RsTRH1PVDd/7JJtR/R510GgcEOdulrNmjbUgdZ7uTzM=;
-        b=l2ignmxCqtGHi7IK+TSNhA89xqLM0SxYCkphwpSkhxU27Jx8RoQC8nscDcEEoqdTKk
-         rEuGF+5+TR+hqFYq4h7GDVro2BksTHXL+21U9ny7DJ/2P7fXPCfDKOKFWehoWlsL/rQw
-         40CMMe1t93eMkqmRyFF13byjHVOeG0cQExS6JeuSEYGkQxMTxI+f4dqeWF0xss5BkoqC
-         UU0seAZC1WLgsfJEU/6zHe51YFTIImmDg1YFcfKpz8lmJgqie33EgGru/Ejl0QGaEDP3
-         7wibEmcZZK7ZrKvgyvEOVS+S9SvsQvNsAFakKU1pCvCWz8iICClF4b83ZMcW8RPeyoi2
-         OMjg==
+Received: (qmail 27875 invoked from network); 30 Mar 2017 11:55:57 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=RsTRH1PVDd/7JJtR/R510GgcEOdulrNmjbUgdZ7uTzM=;
-        b=K5LtkI+LPFVdmupRNQpOdSafxJ5Va1liahKQ7Cqzav2lCGddrtrUQRLyD+KUET1jOQ
-         WPWIjz3oCFRlsvSYDtb5BKKyfsCmeqVwuZ2W+5MUzCAMRAefCnN9lYbRA9Pr+YLqiaf9
-         I2a113aMaq3WSfycbn2BwpmWtdUn6BlRjknetSJOzTtRZafMJ3p0D6d2zD5Fw5FE0z3r
-         nfVmUbiHNYmBpz8ksxejVgxYMtDdGgtrEphsO856Zq/CnBL1Lk/Dqdla4lnvu7k02LIw
-         xV0y+7wmzH41vLPERhrJ5pLYulf7dPweipmisueNyU0oHXXhsXCeAx9seWkWVWH396Mi
-         xT+Q==
-X-Gm-Message-State: AOAM5337fHugjO6QU4IcyGfZAYYVuKgVeIibPquCCdP7w4rgoOrIbSUk
-	Lgqux6hYeW0v6jpf1j9RHhMrCuDLcI8nxZ1bOTLEBTFS5Hs=
-X-Google-Smtp-Source: ABdhPJzC/xAdlM66vSQcKJuOf+lEwxbL9wARyo69Nw6loT90J3Iibou6b8MLEfh8aCG/sgXq1h8HAsLR2AfSNUCI2pg=
-X-Received: by 2002:a05:6402:5114:: with SMTP id m20mr18407571edd.256.1633728468653;
- Fri, 08 Oct 2021 14:27:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <a2cd6ccf-b381-5513-3c7c-598a6da8c9c9@apache.org>
- <0d7be57c-87ae-c4aa-7207-2337c1a51c6d@rs-labs.com> <CAKQ1sVMn=09uimvWxVZrrVRGSDk5HLCB0TQViFJp1WFNG7jvWg@mail.gmail.com>
- <20211008210821.GA2660@openwall.com>
-In-Reply-To: <20211008210821.GA2660@openwall.com>
-From: Yann Ylavic <ylavic.dev@gmail.com>
-Date: Fri, 8 Oct 2021 23:27:37 +0200
-Message-ID: <CAKQ1sVOHOU+iVCkeK1AqFDWhHq4uM8p9Hrx+XTen=fsJ=VxQyA@mail.gmail.com>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:references:to:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=W3BsZCJP1Bc7ge4akz6GruZHHlJrVFNGtCxGqt0c5cQ=;
+        b=RvxR5NHNaMgsnigsbbZ+uaCAnQbICMWdHgh0a10StK2bsDsXvi9q8gQuRv30EKNVjk
+         6reXYJdHcItUnRcXNH+n52Ab4S6WPJ7R7J1Z55vtE6spuUFwNiR/Pgwh6hUf0PWlHTUK
+         frjd42CFcDB9pcK/QjYYjIC1IwVCDAnJqBn+4NBiPEUyhNaFcnLcuJrBWKx/MMxp+rQn
+         G4giQHXgKnsbLuV/SPZScmI7iMh3xvsyoh/QrgCWp1eJ0m3dtlsfz69J/MsQBOIaW7Bu
+         gxwlP1NgLud9wOC1Ava1rXThqXx7wmpV0cOnzS2KCmG7Ui5ybgVYMusRmP+5IVIS5EtO
+         iVzQ==
+X-Gm-Message-State: AFeK/H3r8RBSv6WxTPn8/6S2rM5GJTBi7cKbkiDW+Oz8f8jaFkSADxKgTctgb+Fou2qhKQ==
+X-Received: by 10.46.20.69 with SMTP id 5mr2132074lju.81.1490874945845;
+        Thu, 30 Mar 2017 04:55:45 -0700 (PDT)
+References: <5ced8dfa-a2e9-1dff-9708-54a76f6b4c59@linux.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code
- Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
+From: Alexander Popov <alex.popov@linux.com>
+Message-ID: <f3785fb8-b95a-522b-14b4-94e8cefb02ab@linux.com>
+Date: Thu, 30 Mar 2017 14:55:42 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <5ced8dfa-a2e9-1dff-9708-54a76f6b4c59@linux.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Re: Linux kernel: CVE-2017-2636: local privilege escalation flaw in
+ n_hdlc
 
-On Fri, Oct 8, 2021 at 11:10 PM Solar Designer <solar@openwall.com> wrote:
->
-> On Fri, Oct 08, 2021 at 08:37:33PM +0200, Yann Ylavic wrote:
-> > On Fri, Oct 8, 2021 at 8:53 AM Roman Medina-Heigl Hernandez
-> > <roman@rs-labs.com> wrote:
-> > >
-> > > I posted RCE exploit for this (it works for both CVEs: 41773 & 42013)
-> > > and some other details regarding requirements / exploitability, which
-> > > you may find useful at:
-> > >
-> > > https://twitter.com/roman_soft/status/1446252280597078024
-> >
-> > Thanks, that's fair analysis.
->
-> Yann is probably referring to the full tweet thread by Roman, not just
-> the one tweet that Roman posted in here.  Let me correct that:
+On 07.03.2017 20:45, Alexander Popov wrote:
+> This is an announcement of CVE-2017-2636, which is a race condition in
+> the n_hdlc Linux kernel driver (drivers/tty/n_hdlc.c). It can be exploited
+> to gain a local privilege escalation.
+> 
+> This driver provides HDLC serial line discipline and comes as a kernel module
+> in many Linux distributions, which have CONFIG_N_HDLC=m in the kernel config.
 
-Exactly, thanks Alexander and sorry if I wasn't clear enough.
+Hello,
 
-For completeness I'll add this tweet/blog from Stefan (OP) about the
-vulnerability and the fixes in httpd:
-https://twitter.com/icing/status/1446504661448593408
+I've published the write-up: https://a13xp0p0v.github.io/2017/03/24/CVE-2017-2636.html
 
-Regards;
-Yann.
+--
+Alexander
+
