@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/8
-Message-ID: <20170210162058.lsxxabktorrk6uxf@perpetual.pseudorandom.co.uk>
-Date: Fri, 10 Feb 2017 16:20:58 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/30/1
+Message-ID: <CAFE48uQg-zUyjYNjf150uFqdMJV0M5Q8RPbr827OFK9H=Y=gtw@mail.gmail.com>
+Date: Thu, 30 Mar 2017 08:48:21 +0530
+From: Lokesh Ubuntu <lokesh.ubuntu@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Use after free in libmysqlclient.so
+Cc: security@...ntu.com
+Subject: Re: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 10 Feb 2017 at 11:59:59 +0100, pali@...n.org wrote:
-> On Friday 27 January 2017 23:53:29 pali@...n.org wrote:
-> > C client library for MySQL (libmysqlclient.so) has use-after-free
-> > defect which can cause crash of applications using that MySQL
-> > client.
+Is there any POC for this to conclude? Thanks.
 
-Is this a security vulnerability, or just a bug?
+Regards, Lokesh
 
-How would an attacker cause this to happen in the application
-that they wish to target?
+On Mar 30, 2017 03:14, "Tyler Hicks" <tyhicks@...onical.com> wrote:
 
-    S
+> A security issue was reported by ZDI, on behalf of Chaitin Security
+> Research Lab, against the Linux kernel in Ubuntu. It also affected the
+> upstream kernel.
+>
+> Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
+> as called by xfrm_new_ae(), did not verify that the user-specified
+> replay_window was within the replay state buffer.
+>
+> This allowed for out-of-bounds reads and writes of kernel memory.
+> Chaitin Security showed that this can lead to local privilege escalation
+> by using user namespaces in order to configure XFRM. XFRM configuration
+> requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
+> not enable user namespaces by default.
+>
+> Fixes:
+> - https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
+> - https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
+>
+> Tyler
+>
+>
+>
+
