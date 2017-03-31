@@ -1,52 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/10
-Message-ID: <848ccf01-0a05-76ea-470d-aa59579d447b@redhat.com>
-Date: Mon, 6 Nov 2017 19:42:25 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Jonas 'Sortie' Termansen <sortie@...si.org>
-Subject: Re: Race condition between UDP bind(2) and connect(2) delivers wrong datagrams
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/31/4
+Message-Id: <1490987389.392790.930214152.29A71F3D@webmail.messagingengine.com>
+Date: Fri, 31 Mar 2017 14:09:49 -0500
+From: Mark Felder <feld@...d.me>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- mapr: information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 11/06/2017 04:31 PM, Jonas 'Sortie' Termansen wrote:
-> Hi oss-security,
-> 
-> When you connect(2) a UDP socket to an address, any subsequent recv(2) must
-> only receieve datagrams from that address. However, if the UDP socket is
-> first given a local address with bind(2), there is a race condition before
-> the connect(2) where datagrams received from any address is added to the
-> socket's receieve queue. Unfortunately, all of Darwin, DragonFly, FreeBSD,
-> GNU/Hurd, Haiku, Linux, Minix, NetBSD, OpenBSD, and OpenIndiana don't purge
-> the receieve queue of datagrams with the wrong source on connect(2).
-> Instead, they deliver datagrams already in the recieve queue even if they
-> have the wrong source. I've failed to find any operating system that handles
-> this case correctly.
+Hello,
 
-The alternative is that these systems are handling the situation correctly.
+The mapr web frontend component creates an information disclosure
+vulnerability.  During the setup of mapr the configure.sh script calls a
+function ConfigureWSRole:
 
-> Even though it can be difficult to exploit this bug, it is a validation bug
-> in the kernels. POSIX 2008 (2016 edition) says[1]:
-> 
->      "For SOCK_DGRAM sockets, the peer address identifies where all datagrams
->       are sent on subsequent send() functions, and limits the remote sender
->       for subsequent recv() functions."
+function ConfigureWSRole() {
+  if [ $clientOnly -eq 0 -a $dontChangeSecurityPermissionsOn -eq 0 ];
+  then
+    ConfigureRunUserForWS
+  fi
 
-Whatever the exact wording used is, the intent of POSIX is to describe 
-the BSD sockets API behavior.  If the API does something else, that's a 
-POSIX bug.
+This calls ConfigureRunUserForWS from configure-common.sh:
 
-> Software can work around this bug by using recvfrom(2) or recvmsg(2) and
-> verifying the sender's address.
+function ConfigureRunUserForWS() {
+  local val=`getent group shadow 2>/dev/null`
+  if [ "$?" != "0" -o "$val" = "" ]; then
+    # Create a group named shadow
+    groupadd shadow  >> $logFile 2>&1
+  fi
+  # Add CURR_USER to the group wheel
+  if [ -f /etc/SuSE-release ]; then
+      # Add CURR_USER to the group wheel for SUSE
+      usermod -A shadow $MAPR_USER >> $logFile 2>&1
+      STATUS=$?
+      #
+      # The '-A' option has been removed from SuSE 12 
+      #
+      if [ $STATUS -ne 0 ]; then
+          usermod -a -G shadow $MAPR_USER  >> $logFile 2>&1
+      fi
+  else
+      usermod -a -G $MAPR_GROUP,shadow $MAPR_USER  >> $logFile 2>&1
+  fi
+  # Change group-owner of /etc/shadow
+  chgrp shadow /etc/shadow  >> $logFile 2>&1
+  # Allow read permissions for user shadow
+  chmod ug+r /etc/shadow >> $logFile 2>&1
+}
 
-It's often possible to simply drain all pending datagrams after the 
-connect call because the application knows that all packets received at 
-this points must be garbage and not intended for it to process.
+This results in a shadow file that is now readable to the application:
 
-> I've not been able to think of / find any other software that bind(2) a UDP
-> socket to an address and then use connect(2) to fix a particular peer, but
-> I don't have time to do a thorough search. Please let me know if you can
-> think of any.
+# ls -la /etc/shadow
+-r--r-----. 1 root shadow 657 Mar 30 16:09 /etc/shadow
+# grep shadow /etc/group
+shadow:x:1000:mapr
 
-OpenJDK had a similar issue because it supported socket disconnect.
+The option to disable this codepath, -no-auto-permission-update,  is not
+recommended by Mapr and comes with a warning in the script as it will
+break the webserver's ability to authenticate the local mapr user, which
+is used to administer the cluster:
 
-Thanks,
-Florian
+        echo "    -no-auto-permission-update - do not update the system
+        security permissions automatically"
+        echo "                             Warn: Features like WebServer
+        might not work properly"
+        echo "                             default: disabled"
+
+The website docs[1] casually describe the option, "Pass this option to
+prevent MapR from silently altering permissions in /etc/shadow."
+
+These files are part of the mapr-core-internal package:
+
+# rpm -fq /opt/mapr/server/configure.sh
+mapr-core-internal-5.2.0.39122.GA-1.x86_64
+# rpm -fq /opt/mapr/server/configure-common.sh
+mapr-core-internal-5.2.0.39122.GA-1.x86_64
+
+
+Thanks
+
+[1] http://maprdocs.mapr.com/home/ReferenceGuide/configure.sh.html
+
+-- 
+  Mark Felder
+  feld@...d.me
