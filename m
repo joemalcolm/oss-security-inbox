@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6814" "Monday" "17" "August" "2015" "13:09:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150817170908.1DF636C005B@smtpvmsrv1.mitre.org>" "134" "[oss-security] Re: CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding" nil nil nil "8" "2015081717:09:08" "[oss-security] Re: CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding" (number mark "U       cve-assign@m Aug 17  134/6814  " thread-indent "\"[oss-security] Re: CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding\"\n") "<87d1yv1oqx.fsf@redhat.com>" ("<87d1yv1oqx.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2186" "Friday" "31" "March" "2017" "06:39:03" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1716857341.9702917.1490956743135.JavaMail.zimbra@redhat.com>" "72" "[oss-security] CVE-2017-7346: kernel: drm/vmwgfx: limit the number of mip levels in vmw_gb_surface_define_ioctl()" nil nil nil "3" "2017033110:39:03" "[oss-security] CVE-2017-7346: kernel: drm/vmwgfx: limit the number of mip levels in vmw_gb_surface_define_ioctl()" (number mark "U       vdronov@redh Mar 31   72/2186  " thread-indent "\"[oss-security] CVE-2017-7346: kernel: drm/vmwgfx: limit the number of mip levels in vmw_gb_surface_define_ioctl()\"\n") "<1e6d72c041264038b30f6277bc8b3a27@imshyb01.MITRE.ORG>" ("<1e6d72c041264038b30f6277bc8b3a27@imshyb01.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18324 invoked by uid 550); 17 Aug 2015 17:09:20 -0000
+Received: (qmail 1610 invoked by uid 550); 31 Mar 2017 10:39:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,147 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18296 invoked from network); 17 Aug 2015 17:09:20 -0000
-In-Reply-To: <87d1yv1oqx.fsf@redhat.com>
-Message-Id: <20150817170908.1DF636C005B@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 17 Aug 2015 13:09:08 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding
-To: mprpic@redhat.com
+Received: (qmail 1571 invoked from network); 31 Mar 2017 10:39:14 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 3FB5A7F6B2
+Authentication-Results: ext-mx01.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx01.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=vdronov@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 3FB5A7F6B2
+Date: Fri, 31 Mar 2017 06:39:03 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <1716857341.9702917.1490956743135.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1e6d72c041264038b30f6277bc8b3a27@imshyb01.MITRE.ORG>
+References: <1e6d72c041264038b30f6277bc8b3a27@imshyb01.MITRE.ORG>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.1.12]
+Thread-Topic: CVE-2017-7346: kernel: drm/vmwgfx: limit the number of mip levels in vmw_gb_surface_define_ioctl()
+Thread-Index: faojYKzg1HhDEDYZ9VPvFMowtaTy9w==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Fri, 31 Mar 2017 10:39:03 +0000 (UTC)
+Subject: [oss-security] CVE-2017-7346: kernel: drm/vmwgfx: limit the number of mip levels
+ in vmw_gb_surface_define_ioctl()
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+hello,
+CVE-2017-7346 was assigned for another flaw in [vmwgfx] driver.
 
-> http://www.gnutls.org/security.html#GNUTLS-SA-2015-3
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+
+> [Suggested description]
+> The vmw_gb_surface_define_ioctl function in
+> drivers/gpu/drm/vmwgfx/vmwgfx_surface.c in the Linux kernel through
+> 4.10.7 does not validate certain levels data, which allows local users
+> to cause a denial of service (system hang) via a crafted ioctl call
+> for a /dev/dri/renderD* device.
 > 
-> "Kurt Roeckx reported that decoding a specific certificate with very
-> long DistinguishedName (DN) entries leads to double free, which may
-> result to a denial of service. Since the DN decoding occurs in almost
-> all applications using certificates it is recommended to upgrade the
-> latest GnuTLS version fixing the issue. Recommendation: Upgrade to
-> GnuTLS 3.4.4, or 3.3.17."
+> ------------------------------------------
 > 
-> The upstream patch that fixes this issue is available at:
+> [Additional Information]
+> It was found that in the Linux kernel in vmw_gb_surface_define_ioctl()
+> function in 'drivers/gpu/drm/vmwgfx/vmwgfx_surface.c' file, a
+> 'req->mip_levels' is a user-controlled value which is later used as a
+> loop count limit. This allows local unprivileged user to cause a
+> denial of service by a kernel lockup via a crafted ioctl call for a
+> /dev/dri/renderD* device.
 > 
-> https://gitlab.com/gnutls/gnutls/commit/272854367efc130fbd4f1a51840d80c630214e12
-
-> lib/x509/common.c
-> _gnutls_x509_dn_to_string
-> +  str->data = NULL;
-
-Use CVE-2015-6251 for GNUTLS-SA-2015-3.
-
-
-> http://www.openwall.com/lists/oss-security/2015/05/05/8
-> I wonder if the following issue in GnuTLS should get a CVE:
-
-> http://www.gnutls.org/security.html#GNUTLS-SA-2015-2
-
-We consider this a potentially complex question. There are multiple
-ways to think about a case in which a client or server bug has the
-possible side effect of an algorithm choice that should not have
-occurred. The perspective from which the CVE project thinks about
-these cases is not necessarily the same as the perspective from which
-a protocol designer, or a cryptographic-library author, would think
-about these cases.
-
->> https://lists.gnupg.org/pipermail/gnutls-devel/2015-April/007572.html
-
->> GnuTLS does not by default support MD5 signatures. Indeed the RSA-MD5
->> signature-hash algorithm needs to be explicitly enabled using the
->> priority option VERIFY_ALLOW_SIGN_RSA_MD5. In the NORMAL and SECURE
->> profiles, GnuTLS clients do not offer RSA-MD5 in the signature
->> algorithms extension. However, we find that all GnuTLS clients still
->> accept RSA-MD5 in the ServerKeyExchange and GnuTLS servers still
->> accept RSA-MD5 in the ClientCertificateVerify.
->> 
->> To see the bug, connect with GnuTLS to an openssl 1.0.1m server with a
->> modified ssl/s3_srvr.c (attached) which always signs the
->> ServerKeyExchange with RSA-MD5.  When gnutls-cli connects to a server,
->> its signature algorithms extension only advertises signature/hash
->> algorithms that use the SHA family. Notably, it should not allow any
->> MD5 signature. However, when our server sends it an RSA-MD5 signature,
->> NSS does not check that this algorithm is included in the allowed
->> algorithms and quietly accepts it, hence downgrading the expected
->> security of the connection.
-
-We think that the implied perspective here is "the actual security is
-weaker than the intended security, and therefore the bug must be
-categorized as a vulnerability in the cryptographic library."
-
-An alternative perspective is:
-
-  The issue does not cross any privilege boundary. Regardless of
-  whether this bug exists, the server was already able to weaken
-  security to any extent that it chose. The server could, for example,
-  automatically publish the cleartext of all sessions to pastebin.com.
-  The attacker role in the described scenario is a server operator who
-  has intentionally decided to modify OpenSSL code to always sign with
-  RSA-MD5. The server operator may, equivalently, have decided to use
-  a non-OpenSSL product that is only capable of signing with RSA-MD5.
-  Similarly, the server operator may have accidentally enabled a
-  product configuration that signs with RSA-MD5 even though the server
-  operator hadn't wanted that. In general, an observation that a
-  server implements the TLS protocol does not mean that the client
-  user is entitled to conclude anything about the ultimate
-  confidentiality or integrity of any data supplied by the client
-  user. The ultimate confidentiality and integrity depends, to a very
-  large extent, on how the server site is operated and maintained. An
-  especially concerned client user could choose to participate in TLS
-  sessions only in cases where operations on the server side had
-  passed a satisfactory third-party audit. Indeed there is a bug in the
-  _gnutls_session_sign_algo_enabled function within the client code,
-  but a bug cannot be categorized as a vulnerability unless it enables
-  an attacker to accomplish a type/severity of impact that the
-  attacker was not already able to accomplish.
-
-The 007572.html message doesn't discuss an attack scenario for "GnuTLS
-servers still accept RSA-MD5 in the ClientCertificateVerify" but we
-think the alternative perspective may be similar. No privilege
-boundary is crossed, because the client was already able to weaken
-security to any extent that it chose, e.g., by publishing its client
-certificate and the associated private key to pastebin.com.
-
-Going back to the "all GnuTLS clients still accept RSA-MD5 in the
-ServerKeyExchange" bug for the entire remainder of this message, it
-may be possible to argue that the attacker role is not the server
-operator, and instead the attacker role is a man in the middle. The
-argument here is "because there might be server code somewhere with a
-bug that causes an unintentional choice of RSA-MD5 for signing, the
-client has a vulnerability unless the client is able to detect that
-and refuse to let the session happen." In this scenario, the "server
-code somewhere with a bug that causes an unintentional choice" issue
-could have a CVE ID for that server-side vulnerability (i.e., if the
-code is generally available rather than in-house code). Before
-assigning a CVE ID for the client's _gnutls_session_sign_algo_enabled
-bug, it may be reasonable to require that the "server code somewhere
-with a bug that causes an unintentional choice" actually exists.
-
-In other words, if the only known relevance of the
-_gnutls_session_sign_algo_enabled bug is in situations where the
-server has chosen to have weak security, then ultimately no privilege
-boundary is crossed, and no CVE ID is needed. If the relevance of the
-_gnutls_session_sign_algo_enabled bug is in an actual (not
-hypothetical) situation where an in-the-wild server bug is causing
-accidental RSA-MD5 signing, and the _gnutls_session_sign_algo_enabled
-bug means that the intended client-side countermeasure is missing,
-then a CVE ID is needed.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJV0hRqAAoJEKllVAevmvmslXIH/367Ktcsmy7a4QW5TOunbDl4
-1ejMuUYm/S+h1LG73BUgR4MCtyBHFd/GnSLGCJWQamiS5crlAobwEeMO1qE74fBh
-Ibk2KdYAKTUM1SwuSK9C+u4XdTz/K5qac9B8YwzvMvjULNnqbjkyf3a4N1H2UYB3
-rDSFd4qvHK0Mtk+aM76rGfVfyePz10dkc6sGHsp6pnlZl153FeNi69lfdvMbK3Ls
-vwY+ROvQ/OiFqbrv0HamWytfSyOlpMVEullEMgpwEC7KRrbNQ5U+tdBNe33ZsdXp
-+1zHqyJ1M76vr4oQp5B+fMEmP0o9sfbLYm/P89hM/h0qA5ls2K2rP+nBqgTtl+s=
-=Xgcf
------END PGP SIGNATURE-----
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-20
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> kernel.org: Linux kernel
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> Linux kernel - all upto 4.11-rc4
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> vmw_gb_surface_define_ioctl() function, drivers/gpu/drm/vmwgfx/vmwgfx_surface.c file
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> to exploit vulnerability a local user have to run a binary which makes
+> certain ioctl() call. to exploit vulnerability a local unprivileged
+> user has to have read/write permissions to the '/dev/dri/renderD*'
+> file.
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://bugzilla.redhat.com/show_bug.cgi?id=1437431
+> https://lists.freedesktop.org/archives/dri-devel/2017-March/137429.html
+> http://marc.info/?l=linux-kernel&m=149086968410117&w=2
+>
+> Use CVE-2017-7346.
+>
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
