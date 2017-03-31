@@ -1,66 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/13
-Message-ID: <794245.981236116-sendEmail@localhost>
-Date: Sun, 26 Feb 2017 11:55:03 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: audiofile: divide-by-zero in BlockCodec::reset1 (BlockCodec.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/31/1
+Message-ID: <1716857341.9702917.1490956743135.JavaMail.zimbra@redhat.com>
+Date: Fri, 31 Mar 2017 06:39:03 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-7346: kernel: drm/vmwgfx: limit the number of mip levels in vmw_gb_surface_define_ioctl()
 Content-Type: text/plain; charset=utf-8
 
+hello,
+CVE-2017-7346 was assigned for another flaw in [vmwgfx] driver.
 
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
-Description:
-audiofile is a C-based library for reading and writing audio files in many common formats.
-
-A fuzz on it discovered a division by zero.
-
-The complete ASan output:
-
-# sfconvert @@ out.mp3 format aiff
-==3538==ERROR: AddressSanitizer: FPE on unknown address 0x7f86a8cffe14 (pc 0x7f86a8cffe14 bp 0x7ffe41d2ae00 sp 0x7ffe41d2adf0 T0)                                                                                                                                              
-    #0 0x7f86a8cffe13 in BlockCodec::reset1() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:74:61                                                                                                                        
-    #1 0x7f86a8d0b794 in ModuleState::reset(_AFfilehandle*, Track*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/ModuleState.cpp:218:9                                                                                                 
-    #2 0x7f86a8d0b794 in ModuleState::setup(_AFfilehandle*, Track*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/ModuleState.cpp:190                                                                                                   
-    #3 0x7f86a8ced43c in afGetFrameCount /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/format.cpp:205:41                                                                                                                                        
-    #4 0x50bb5c in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:329:29                                                                                                                                                 
-    #5 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
-    #6 0x7f86a7dbe78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
-    #7 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                                                               
-AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
-SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:74:61 in BlockCodec::reset1()                                                                                                               
-==3538==ABORTING
-
-Affected version:
-0.3.6
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00189-audiofile-fpe-BlockCodec-reset1
-
-Timeline:
-2017-02-20: bug discovered and reported to upstream
-2017-02-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/20/audiofile-divide-by-zero-in-blockcodecreset1-blockcodec-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+> [Suggested description]
+> The vmw_gb_surface_define_ioctl function in
+> drivers/gpu/drm/vmwgfx/vmwgfx_surface.c in the Linux kernel through
+> 4.10.7 does not validate certain levels data, which allows local users
+> to cause a denial of service (system hang) via a crafted ioctl call
+> for a /dev/dri/renderD* device.
+> 
+> ------------------------------------------
+> 
+> [Additional Information]
+> It was found that in the Linux kernel in vmw_gb_surface_define_ioctl()
+> function in 'drivers/gpu/drm/vmwgfx/vmwgfx_surface.c' file, a
+> 'req->mip_levels' is a user-controlled value which is later used as a
+> loop count limit. This allows local unprivileged user to cause a
+> denial of service by a kernel lockup via a crafted ioctl call for a
+> /dev/dri/renderD* device.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-20
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> kernel.org: Linux kernel
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> Linux kernel - all upto 4.11-rc4
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> vmw_gb_surface_define_ioctl() function, drivers/gpu/drm/vmwgfx/vmwgfx_surface.c file
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> to exploit vulnerability a local user have to run a binary which makes
+> certain ioctl() call. to exploit vulnerability a local unprivileged
+> user has to have read/write permissions to the '/dev/dri/renderD*'
+> file.
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://bugzilla.redhat.com/show_bug.cgi?id=1437431
+> https://lists.freedesktop.org/archives/dri-devel/2017-March/137429.html
+> http://marc.info/?l=linux-kernel&m=149086968410117&w=2
+>
+> Use CVE-2017-7346.
+>
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
