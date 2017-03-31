@@ -1,53 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/10/1
-Message-ID: <20170910195431.fvcvbo24su3zkl3n@eldamar.local>
-Date: Sun, 10 Sep 2017 21:54:31 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/31/3
+Message-ID: <CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>
+Date: Fri, 31 Mar 2017 19:20:20 +0200
+From: Andrey Konovalov <andreyknvl@...gle.com>
 To: oss-security@...ts.openwall.com
-Cc: David Buchanan <d@...buchanan.co.uk>, Michael Tokarev <mjt@....msk.ru>
-Subject: Re: CVE-2017-13673 Qemu: vga: reachable assert failure during during display update
+Subject: Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@...gle.com> wrote:
+> Hi,
+>
+> CVE-2017-7308 [1] was assigned to the following issue:
+>
+> The packet_set_ring function in net/packet/af_packet.c in the Linux
+> kernel through 4.10.6 does not properly validate certain block-size
+> data, which allows local users to cause a denial of service (overflow)
+> or possibly have unspecified other impact via crafted system calls.
+>
+> The fix is sent upstream [2].
 
-On Wed, Aug 30, 2017 at 03:34:51PM +0530, P J P wrote:
->   Hello,
-> 
-> Quick emulator(Qemu) built with the VGA display emulator support is
-> vulnerable to an assert failure issue. It could occur while updating
-> graphics display, due to miscalculating region for dirty bitmap snapshot in
-> split screen mode.
-> 
-> A privileged user/process inside guest could use this flaw to crash the Qemu
-> process on the host resulting in DoS.
-> 
-> Upstream patch:
-> ---------------
->   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg04685.html
-> 
-> Reference:
-> ----------
->   -> https://bugzilla.redhat.com/show_bug.cgi?id=1486588
-> 
-> This issue was reported by David Buchanan.
+Update: the fix actually consists of 3 patches:
 
-Can you clarify the affected versions? I noticed while looking at the
-above, that MITRE description mentions "Qemu 2.8.0 through 2.9.0". I
-perfectly realize those does not come from the above.  As far as I can
-see, e.g. cpu_physical_memory_snapshot_get_dirty was only introduced
-in v2.10.0-rc0. The upstream commit associated with the above issue
-is:
+https://patchwork.ozlabs.org/patch/744811/
+https://patchwork.ozlabs.org/patch/744813/
+https://patchwork.ozlabs.org/patch/744812/
 
- https://git.qemu.org/gitweb.cgi?p=qemu.git;a=commit;h=bfc56535f793c557aa754c50213fc5f882e6482d
-
-which fixes
-
- https://git.qemu.org/gitweb.cgi?p=qemu.git;a=commit;h=fec5e8c92becad223df9d972770522f64aafdb72
-
-introducing the use of dirty bitmap snapshots in vga_draw_graphic().
-
-Do I miss something makeing it affecting as well earlier versions than
-2.10?
-
-Regards and thanks already for your help,
-Salvatore
+>
+> [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
+>
+> [2] https://patchwork.ozlabs.org/patch/744811/
