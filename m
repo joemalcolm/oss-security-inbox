@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2088" "Wednesday" "27" "July" "2016" "13:27:08" "-0400" "Daniel J Walsh" "dwalsh@redhat.com" "<398a8ff1-a2ea-9140-c695-c1969ffc58af@redhat.com>" "47" "Re: [oss-security] Re: cve request: systemd-machined: information exposure for docker containers" "^Date:" nil nil "7" "2016072717:27:08" "[oss-security] Re: cve request: systemd-machined: information exposure for docker containers" (number mark "        dwalsh@redha Jul 27   47/2088  " thread-indent "\"Re: [oss-security] Re: cve request: systemd-machined: information exposure for docker containers\"\n") "<20160727170537.GA3330@motoko>" ("<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>" "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>" "<20160727170537.GA3330@motoko>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["480" "Friday" "31" "March" "2017" "14:03:09" "+0200" "Andrey Konovalov" "andreyknvl@google.com" "<CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>" "14" "[oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" "^Date:" nil nil "3" "2017033112:03:09" "[oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" (number mark "        andreyknvl@g Mar 31   14/480   " thread-indent "\"[oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19503 invoked by uid 550); 27 Jul 2016 17:27:21 -0000
+Received: (qmail 32337 invoked by uid 550); 31 Mar 2017 16:04:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19479 invoked from network); 27 Jul 2016 17:27:20 -0000
-References: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>
- <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
- <20160727170537.GA3330@motoko>
-Message-ID: <398a8ff1-a2ea-9140-c695-c1969ffc58af@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+Received: (qmail 28529 invoked from network); 31 Mar 2017 12:03:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=E6jFW8kKWrYZYIhbwqlBazwWqgkLg5bd2qnrVLi7Lcg=;
+        b=c2khqtauesuJA0xJpP122JyjgZHd7fXhXsDLmJr2eVtFitmL1fR38M+RhttaAmEQU9
+         HGticVtVkl74LZYDc1Kvto1ymu8vWQMek+JH8UC0LPV/r0aoeKxWig8Gbc1Xm4MrFF0D
+         yFV+QmoMEQBY0QLmk3FwPE28BNy386HZ8ELs0HfAFHk4tT6Axi+3rBacw+dXz7YmtSjt
+         A2cdPEu6afuRtc44ZM0shar1Xrj8OwVD/V8RPzvZu7+oBId/VXLM42Gx1lM1rafS0bkF
+         BsP20MGbjPpTcR/OEIWuzfvmhOizzhkeKVKH+rt4UfQRKxjfMiOSjox2/bgd3P2SbTr0
+         xQyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=E6jFW8kKWrYZYIhbwqlBazwWqgkLg5bd2qnrVLi7Lcg=;
+        b=MXm9K/8CA5/uAv9AGKSv6vHWS4hL1n5GF5vO9BgBLH+iUNZdOIJhNuMNhd39ISgIbh
+         MxMIALvQMRrMtLjgDc3FXeU9uucZJT1/Lp7ge+nxF+YzDbOuJtEiuN1haDMnPm5eeiyp
+         ap9GAe5JMi5SC6h2s13VJ8hABpQcrRtl7KvZnri7JjsfM9hlGvGbwdAE9umGI4iu5gT7
+         /Kzza4P3fI1k8qkDlmrTHsBNmTr1dfK94q6ppOSnRxFnzxLMlJbbAb7zIJOAvVHqw00S
+         5tZtLdBM0FMIENC06lFK4fT5xQSHzJddk1d/vHs7hnMzSAEM4jr7YuCn7KUXLPA+1i2n
+         aoEQ==
+X-Gm-Message-State: AFeK/H096wDsYemD6LzMRbgL23eEcVc+rFZ0DWmw38fPl2xq7eOrCK2ClJkrehLlXFTulWDWy2akdJiMUp4ij4ft
+X-Received: by 10.98.212.7 with SMTP id a7mr2612067pfh.34.1490961789818; Fri,
+ 31 Mar 2017 05:03:09 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20160727170537.GA3330@motoko>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Wed, 27 Jul 2016 17:27:08 +0000 (UTC)
-Date: Wed, 27 Jul 2016 13:27:08 -0400
-From: Daniel J Walsh <dwalsh@redhat.com>
+Message-ID: <CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 31 Mar 2017 14:03:09 +0200
+From: Andrey Konovalov <andreyknvl@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: cve request: systemd-machined: information
- exposure for docker containers
+Subject: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
 To: oss-security@lists.openwall.com
 
+Hi,
 
+CVE-2017-7308 [1] was assigned to the following issue:
 
-On 07/27/2016 01:05 PM, Christian Rebischke wrote:
-> On Tue, Jul 26, 2016 at 03:24:13PM -0400, cve-assign@mitre.org wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA256
->>
->>> Once docker containers register themselves to systemd-machined
->>> by oci-register-machine. Any unprivileged user could run
->>> machinectl to list every single containers running in the host
->>> even if the containers do not belong to this user (including containers
->>> belong to the root user), and access sensitive information associated
->>> with any individual container including its internal IP address, OS
->>> version, running processes, and file path for its rootfs.
->>>
->>> $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
->>> cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
->>>            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
->>>           Leader: 43494 (sleep)
->>>          Service: docker; class container
->>>             Root: /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
->>>          Address: 172.17.0.2
->>>                   fe80::42:acff:fe11:2
->>>               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
->>>             Unit: docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
->>>                   43494 sleep 3000
->> Use CVE-2016-6349.
-> Hello,
-> I don't think that the bug for this problem lies in systemd.
-> It's more a design mistake in docker or oci-register-machine.
-> I have forwarded this issue to the systemd developer team and I don't
-> think they will fix this in the future. In their opinion it's a
-> bug in docker or oci-register-machine:
->
-> https://github.com/systemd/systemd/issues/3815
->
-> by the way.. I would feel glad if the security researchers would first
-> message the developers and then assign a CVE a bug. This is the normal
-> way for a full disclosure.
->
-> best regards,
->
-> Christian Rebischke
-Why is this a bug in oci-register-machine?  All it is doing is calling
-the systemd-machine call to register with it using the three flags
-available.
-Is systemd saying we should not use that call?
+The packet_set_ring function in net/packet/af_packet.c in the Linux
+kernel through 4.10.6 does not properly validate certain block-size
+data, which allows local users to cause a denial of service (overflow)
+or possibly have unspecified other impact via crafted system calls.
+
+The fix is sent upstream [2].
+
+[1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
+
+[2] https://patchwork.ozlabs.org/patch/744811/
