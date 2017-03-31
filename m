@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2174" "Thursday" "10" "June" "2021" "14:34:58" "+0200" "Gianluca Gabrielli" "ggabrielli@suse.de" nil "51" "[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock" nil nil nil "6" nil nil (number mark "U       ggabrielli@s Jun 10   51/2174  " thread-indent "\"[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["764" "Friday" "31" "March" "2017" "19:20:20" "+0200" "Andrey Konovalov" "andreyknvl@google.com" "<CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>" "22" "[oss-security] Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" "^Date:" nil nil "3" "2017033117:20:20" "[oss-security] Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" (number mark "        andreyknvl@g Mar 31   22/764   " thread-indent "\"[oss-security] Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring\"\n") "<CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>" ("<CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15542 invoked by uid 550); 10 Jun 2021 12:56:24 -0000
+Received: (qmail 30373 invoked by uid 550); 31 Mar 2017 17:20:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5333 invoked from network); 10 Jun 2021 12:35:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1623328499; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6Vr9azs6yP/cEFPmss56ypXsA5L/87fUStJRit0auuU=;
-	b=hFFSi5nxZ/hMF9zsUH5hKJAWQ5VfY1rWVmjUexabY4val+/flzgkC0zfCDJkwvMzt9I8yP
-	TL4iPvnxRoITfWMrcqvlhgYXzMNeYPWRv/3nB/Wa+BjHEe2pNcCUYlIdPk0zBMgFU3/wpA
-	bRosGBaqgGoN46fhbb1dYV2bgpORCII=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1623328499;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6Vr9azs6yP/cEFPmss56ypXsA5L/87fUStJRit0auuU=;
-	b=NbK5ZzIbCL0whZp9kyn2z/kKVu/bFI4k6lldt9tmjqSqF/Lfm3oNVseqU402G39FElz9Cm
-	ft6Fc1qGozzPVmCg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1623328499; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6Vr9azs6yP/cEFPmss56ypXsA5L/87fUStJRit0auuU=;
-	b=hFFSi5nxZ/hMF9zsUH5hKJAWQ5VfY1rWVmjUexabY4val+/flzgkC0zfCDJkwvMzt9I8yP
-	TL4iPvnxRoITfWMrcqvlhgYXzMNeYPWRv/3nB/Wa+BjHEe2pNcCUYlIdPk0zBMgFU3/wpA
-	bRosGBaqgGoN46fhbb1dYV2bgpORCII=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1623328499;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6Vr9azs6yP/cEFPmss56ypXsA5L/87fUStJRit0auuU=;
-	b=NbK5ZzIbCL0whZp9kyn2z/kKVu/bFI4k6lldt9tmjqSqF/Lfm3oNVseqU402G39FElz9Cm
-	ft6Fc1qGozzPVmCg==
-To: =?UTF-8?Q?Marek_Marczykowski-G=c3=b3recki?=
- <marmarek@invisiblethingslab.com>, oss-security@lists.openwall.com
-References: <YLrLbpUuAbLO3RR8@mail-itl>
-From: Gianluca Gabrielli <ggabrielli@suse.de>
-Organization: SUSE LINUX s.r.o.
-Message-ID: <31aef962-511f-e7d7-455a-23d309f03aa5@suse.de>
-Date: Thu, 10 Jun 2021 14:34:58 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+Received: (qmail 30355 invoked from network); 31 Mar 2017 17:20:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=UaT1yU/+AqzkulKzKbnQqsZnfRSTLfRJv8hk3sas5Rw=;
+        b=HV07PpqT/d/Kxi7Lxiz7yReCtXTGM9amvX6Td2CKcdRpcmK0GHw84uqn1hbvLh5m2u
+         xOV1Ew17q01PcJQ7++jasclt4nh7fIiVKTjxHP93boarAOUrHr6T68zHRj9nctnu8srv
+         L1jKiCrnHhVeAj35oQ6OR4Wo0jy7FpTASEb+6bUcOZTUD/Mq43FDudUC5p2nZD0LPnCO
+         DclJNeaAHPOCL+pwA4LtVK6vxvoIElJVKFUIeTpEnqFbiUc/HlJVzrRweuRdehhh4o77
+         fr0oWKZUsSQenzUYA2rWjAZnSOwl4a8dRSbDvPTo4/9ojrnJ2Xi9vhlRDIfLsPw/sLb/
+         zLnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=UaT1yU/+AqzkulKzKbnQqsZnfRSTLfRJv8hk3sas5Rw=;
+        b=OBIC5nX1up3qRgHKMX1DOMD5F4s9tSkVQqqWtiZy+T1mL/NmJoSsA4+B2VRCjlSyBL
+         xo9Apr2CA0Jy1sOz/KjpYlW2KJpQ+hAWjbGN+qv3KE9ILesM9nfKEZ45Sw0XSlW1riYE
+         Ryxov6yP2a/NfBelxpAt+p3jM3HjTsR+tOlsiRGRCVkyAMaURyxVGpzRFdgZgdcbDEVI
+         uIiju0jGG+do1MFgyailJcRsl2I3xK62mhb+G6fd75EG87jRRL4TMmrhqI7Pca80Cw2z
+         qgwiBdeds+tSEb4LlaLODBJQD/TpC+Ki/3ybcsJtl5XwkujbFvtFpHGgo2SjGbARC9I8
+         ma8w==
+X-Gm-Message-State: AFeK/H0F7sZyFzJG3FaZgTNKO55nWXF5M+LQeC3erYbcTrwQ4jcg8bnFPwmo4qEI7VTnuVlaRlkMaZ9aqPaaiRsX
+X-Received: by 10.98.160.212 with SMTP id p81mr3724416pfl.204.1490980820794;
+ Fri, 31 Mar 2017 10:20:20 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <YLrLbpUuAbLO3RR8@mail-itl>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="tvDDcTB1vvrTlmKYfwXEkF4BukqcFIOyU"
-Subject: [oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause
- XScreenSaver to crash and unlock
+In-Reply-To: <CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>
+References: <CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>
+Message-ID: <CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 31 Mar 2017 19:20:20 +0200
+From: Andrey Konovalov <andreyknvl@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
+To: oss-security@lists.openwall.com
 
---tvDDcTB1vvrTlmKYfwXEkF4BukqcFIOyU
-Content-Type: multipart/mixed; boundary="9IcCeBZNxwuS7BIZb1MjcILYLa7OuWfPr";
- protected-headers="v1"
-From: Gianluca Gabrielli <ggabrielli@suse.de>
-To: =?UTF-8?Q?Marek_Marczykowski-G=c3=b3recki?=
- <marmarek@invisiblethingslab.com>, oss-security@lists.openwall.com
-Message-ID: <31aef962-511f-e7d7-455a-23d309f03aa5@suse.de>
-Subject: Re: XScreenSaver 5.45: Disconnecting a video output can cause
- XScreenSaver to crash and unlock
-References: <YLrLbpUuAbLO3RR8@mail-itl>
-In-Reply-To: <YLrLbpUuAbLO3RR8@mail-itl>
+On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@google.com> wrote:
+> Hi,
+>
+> CVE-2017-7308 [1] was assigned to the following issue:
+>
+> The packet_set_ring function in net/packet/af_packet.c in the Linux
+> kernel through 4.10.6 does not properly validate certain block-size
+> data, which allows local users to cause a denial of service (overflow)
+> or possibly have unspecified other impact via crafted system calls.
+>
+> The fix is sent upstream [2].
 
---9IcCeBZNxwuS7BIZb1MjcILYLa7OuWfPr
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Update: the fix actually consists of 3 patches:
 
-Thank Marek for having shared this with the list. I don't see a CVE ID
-assigned to this bug, have requested one?
+https://patchwork.ozlabs.org/patch/744811/
+https://patchwork.ozlabs.org/patch/744813/
+https://patchwork.ozlabs.org/patch/744812/
 
---=20
-. o .  Gianluca Gabrielli                      gianlu.ca
-. . o  Software security engineer               suse.com
-o o o  D78D 3FDC 2591 7EBA B52F 2362 6E17 38B8 2B60 B31D
--Dance like no one's watching, encrypt like everyone is-
-
-
---9IcCeBZNxwuS7BIZb1MjcILYLa7OuWfPr--
-
---tvDDcTB1vvrTlmKYfwXEkF4BukqcFIOyU
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEE/Gtkry+LfDI9iHEuQPoqj4mlKX4FAmDCBvIFAwAAAAAACgkQQPoqj4mlKX7m
-7w/8DZ8gcci53boNthCFFd0HXMQ5b6TKqdXuiY1bADD6QvOgvLxJZuaRqO1/9tqjFNvgADpWvevM
-28D4f5J5Q1d1l4Oq6VoovS0P4FOfYY8mXr2blBScb4TuQ2d+ZTgFv6QNUrpt/eTirEWmJBvTrJ7S
-NorZCjuFX3DVKNbQsCgc+UqhvR1MnmrzJfc+juqC7/dNpvm9dHmHlc58rYVNH5Tqn5eioh8Hw9HC
-RhVfRMM1H1JPybHGPTPHWMEUwqiuYx+HyEkKMhXjOCtlCfJyMEh3+u4rEHIqlfj6fzdQFrXSvcUs
-k492u/taA3phLVhNIWT8PKc/Ylfdh3qqRxu9ZWu5DVDaKLoF5omYfolO+JFcx/l6QIN/CBgEyoQi
-thMQH0liz9wCHuz+pJr6bNdH6ti0hcm2sSjbbNf9ol0Xq26MHumCCxFYSqOx7z8AX+FNHUAKEGD0
-tOJcmtJnWVWb15OZdo5tNBiNZ+7KfLuv51RgIzoDAMhWhds7T+67auWr7NEHvnjmFsCkd+oEy6Ih
-j7yyUIaHjvochsyhZcU9gyKW+ZmoyURTGXkGts/hXyoDYyolc8HkG4CkXa8dsyZg7WZsdX0g8siH
-NI/EPetjBd+hd96k2YigbwNADFqzwcEwYTXtEIbZBzi3Jhzj1tY5hUfTPRuE/HFEkxS75jZ9eJFc
-5Rg=
-=f57i
------END PGP SIGNATURE-----
-
---tvDDcTB1vvrTlmKYfwXEkF4BukqcFIOyU--
+>
+> [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
+>
+> [2] https://patchwork.ozlabs.org/patch/744811/
