@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/6
-Message-ID: <CAG_fn=WuQgi2dWQesBdAzYEvRGWbLU97qdGMAjiyWkbCEX=bRQ@mail.gmail.com>
-Date: Mon, 9 Oct 2017 11:12:08 +0200
-From: Alexander Potapenko <glider@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/01/6
+Message-ID: <20170401204457.GA12965@openwall.com>
+Date: Sat, 1 Apr 2017 22:44:57 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-14991 in the Linux Kernel: local infoleak via an SG_GET_REQUEST_TABLE ioctl call for /dev/sg0
+Subject: Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+To Red Hat folks:
 
-Kernel commit 109bade9c625c89bb5ea753aaa1a0a97e6fbb548 has introduced
-an infoleak which manifests when the SG_GET_REQUEST_TABLE ioctl is
-called for /dev/sg0 (see the attached repro).
-The bug allows local users to obtain sensitive information from
-uninitialized kernel heap-memory locations. Linux kernels before
-4.13.4 are affected.
-The bug has been found with syzkaller and KMSAN, upstream fix is here:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3e0097499839e0fe3af380410eababe5a47c4cf9
+On Fri, Mar 31, 2017 at 07:20:20PM +0200, Andrey Konovalov wrote:
+> On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@...gle.com> wrote:
+> > CVE-2017-7308 [1] was assigned to the following issue:
+> >
+> > The packet_set_ring function in net/packet/af_packet.c in the Linux
+> > kernel through 4.10.6 does not properly validate certain block-size
+> > data, which allows local users to cause a denial of service (overflow)
+> > or possibly have unspecified other impact via crafted system calls.
+> >
+> > The fix is sent upstream [2].
+> 
+> Update: the fix actually consists of 3 patches:
+> 
+> https://patchwork.ozlabs.org/patch/744811/
+> https://patchwork.ozlabs.org/patch/744813/
+> https://patchwork.ozlabs.org/patch/744812/
+> 
+> > [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
+> >
+> > [2] https://patchwork.ozlabs.org/patch/744811/
 
--- 
-Alexander Potapenko
-Software Engineer
+Red Hat currently says all RHEL starting with RHEL5 are affected:
 
-Google Germany GmbH
-Erika-Mann-Straße, 33
-80636 München
+https://access.redhat.com/security/cve/cve-2017-7308
 
-Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
+However, the corresponding Bugzilla entry has no mention of that:
 
-View attachment "sg_ioctl.c" of type "text/x-csrc" (1683 bytes)
+https://bugzilla.redhat.com/show_bug.cgi?id=1437404
+
+So is it just a better-safe-than-sorry default to list products as
+affected until known otherwise?  If so, maybe Unknown would be better?
+
+RHEL5 doesn't yet include TPACKET_V3.  I did not check RHEL6.
+
+https://github.com/torvalds/linux/commit/f6fb8f100b807378fda19e83e5ac6828b638603a
+
+Alexander
