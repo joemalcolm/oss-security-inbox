@@ -1,69 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/8
-Message-ID: <CY1PR09MB08286A7F2D8571137E7BC7FEB5DF0@CY1PR09MB0828.namprd09.prod.outlook.com>
-Date: Mon, 26 Jun 2017 20:49:43 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Pax Team <pageexec@...email.hu>
-Subject: RE: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/01/4
+Message-ID: <20170401182736.GA12311@openwall.com>
+Date: Sat, 1 Apr 2017 20:27:36 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
 Content-Type: text/plain; charset=utf-8
 
-Even if it turns into an awkward conversation, I'm sure that Solar would be polite, pointed, and respectful.  We could all learn from his style of moderation.
+Hi,
 
-- Steve
+I address this message primarily to Red Hat, but I'd like us to discuss
+it in public so that others can benefit from this information as well.
 
+On Wed, Mar 29, 2017 at 04:43:28PM -0500, Tyler Hicks wrote:
+> A security issue was reported by ZDI, on behalf of Chaitin Security
+> Research Lab, against the Linux kernel in Ubuntu. It also affected the
+> upstream kernel.
+> 
+> Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
+> as called by xfrm_new_ae(), did not verify that the user-specified
+> replay_window was within the replay state buffer.
+> 
+> This allowed for out-of-bounds reads and writes of kernel memory.
+> Chaitin Security showed that this can lead to local privilege escalation
+> by using user namespaces in order to configure XFRM. XFRM configuration
+> requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
+> not enable user namespaces by default.
+> 
+> Fixes:
+> - https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
+> - https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
 
-> -----Original Message-----
-> From: Kurt Seifried [mailto:kseifried@...hat.com]
-> Sent: Monday, June 26, 2017 3:47 PM
-> To: oss-security <oss-security@...ts.openwall.com>
-> Cc: Pax Team <pageexec@...email.hu>
-> Subject: Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities,
-> refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
-> 
-> I think we can agree as a community of professionals that insults and name
-> calling are unnecessary and also not very effective. And before I get
-> accused of censorship I would point out I'm not wanting to stop anyone from
-> talking, I'm only wanting to stop people from talking in a way that is so
-> rude and insulting that it poisons the community and scares people away. I
-> assume Solar also supports this (if not... ergh. that's gonna be an awkward
-> conversation).
-> 
-> On Mon, Jun 26, 2017 at 1:16 PM, Mansour Moufid
-> <mansourmoufid@...il.com>
-> wrote:
-> 
-> > Hello.
-> >
-> > On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@...ecurity.net>
-> > wrote:
-> >
-> > > How could they know that calling people clowns and their work garbage
-> > wasn't
-> > > payment enough?
-> > >
-> > > With no technical content coming from your end, there's no need to
-> > discuss
-> > > anything further -- don't waste your time because I won't reply.
-> > >
-> > > Good luck to you and anyone else stupid enough to do any work at all for
-> > > you and your multi-billion dollar sponsors for free.
-> > >
-> > > -Brad
-> >
-> > Is there another mailing list for discussions of Linux security? Or forum?
-> >
-> > I have been thinking of sharing a few patches for the last couple months.
-> > I don't think this is the right place after the kind of insults I saw this
-> > week.
-> >
-> > Apologies if off topic.
-> >
-> 
-> 
-> 
-> --
-> 
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> Red Hat Product Security contact: secalert@...hat.com
+Red Hat claims that all of RHEL5, RHEL6, and RHEL7 are affected,
+although the issue is mitigated by it requiring CAP_NET_ADMIN and/or
+unprivileged user namespaces, neither of which are available by default:
+
+https://access.redhat.com/security/cve/cve-2017-7184
+
+RHEL7 does indeed contain the vulnerable upstream code, but RHEL5 and
+RHEL6 don't - at least not the same code that the commits referenced
+above patch.  This leaves me with two other interpretations of Red Hat's
+analysis:
+
+1. Similar issues existed for other inputs (not ESN) and were silently
+fixed some time between RHEL6 and RHEL7 (perhaps in equivalent upstream
+revisions).  Maybe with the current renewed attention, Red Hat realized
+that older fixes were missed, which are now finally understood as
+security-relevant.  The code does look to me like this may be the case,
+but I didn't spend much time on its analysis yet.
+
+-OR-
+
+2. Red Hat's analysis is not correct, and RHEL5 and RHEL6 are not
+affected at all.
+
+Which is it, or something else I haven't thought of?
+
+While for RHEL itself this is almost a non-issue either way due to the
+mitigations mentioned above, better understanding is required for other
+distros where such mitigations might not fully apply (such as along with
+use of containers, where container root would have CAP_NET_ADMIN).
+
+And while I am at it, kudos to Red Hat for patching out unprivileged
+user namespaces in RHEL7!
+
+/* While user namespaces remain in tech preview disable them */
+static bool enable_user_ns_creation;
+
+Alexander
