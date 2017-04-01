@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["808" "Friday" "19" "May" "2017" "21:58:58" "+0300" "Yui Hirasawa" "yui@cock.li" "<20170519185858.mbilbjdi3fafgl2j@kamui.lair>" "32" "Re: [oss-security] terminal emulators' processing of escape sequences" nil nil nil "5" "2017051918:58:58" "[oss-security] terminal emulators' processing of escape sequences" (number mark "U       yui@cock.li  May 19   32/808   " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<CAP145pjmwx27VXaT8-njOL9DG205yjhLUrwWkbD0NthYOZQvfA@mail.gmail.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAP145pjmwx27VXaT8-njOL9DG205yjhLUrwWkbD0NthYOZQvfA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5564" "Saturday" "1" "April" "2017" "14:16:28" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<960903.260248841-sendEmail@localhost>" "107" "[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfPainter::ExpandTabs (PdfPainter.cpp)" nil nil nil "4" "2017040114:16:28" "[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfPainter::ExpandTabs (PdfPainter.cpp)" (number mark "U       ago@gentoo.o Apr  1  107/5564  " thread-indent "\"[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfPainter::ExpandTabs (PdfPainter.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28561 invoked by uid 550); 19 May 2017 19:00:02 -0000
+Received: (qmail 32317 invoked by uid 550); 1 Apr 2017 14:16:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28279 invoked from network); 19 May 2017 18:59:16 -0000
-Date: Fri, 19 May 2017 21:58:58 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cock.li; s=mail;
-	t=1495220344; bh=a2bP3iOVwYJFM0kCr0FwGP+4cZyvKyA41k0tGP0fR0Q=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=ZRIt72+ORKKguom8fNK2kUtU8Grqjpe3iFJjfCZGC6Ia4lQJftn/DVvSrT+q2uPKP
-	 q3+zTvqNKONaCEM17LS3DQXOqUPmd5w9ZxDygixtRjaLoX6DDtPhKOVmwgAFpbNCWf
-	 TggZ9ivHc+fjv+Zls+mP6rVK4X8/fRnmFMnqVk+japJzalHrpI7FvfUvvuWA04O92f
-	 6MqVZHkKbJZytTveIPGuYeVyHhfypfFYd3QuZthPIZ/1qfbyn7np3wgdkOzD1gWUKO
-	 yZEE44eTnt9uhz6WiVGiwhhjerHMdpju7C8eb+CmdkReXIehsJcqPXvXB6WERrB9ht
-	 ogk/R9hz7KsYw==
-From: Yui Hirasawa <yui@cock.li>
-To: oss-security@lists.openwall.com
-Message-ID: <20170519185858.mbilbjdi3fafgl2j@kamui.lair>
-References: <20170501164428.GA12322@openwall.com>
- <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
- <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
- <20170516220345.GA10874@openwall.com>
- <CAP145pjmwx27VXaT8-njOL9DG205yjhLUrwWkbD0NthYOZQvfA@mail.gmail.com>
+Received: (qmail 32287 invoked from network); 1 Apr 2017 14:16:47 -0000
+Message-ID: <960903.260248841-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Sat, 1 Apr 2017 14:16:28 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP145pjmwx27VXaT8-njOL9DG205yjhLUrwWkbD0NthYOZQvfA@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: Re: [oss-security] terminal emulators' processing of escape sequences
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-571539.97391379"
+Subject: [oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfPainter::ExpandTabs (PdfPainter.cpp)
 
-On Wed, May 17, 2017 at 02:25:52AM +0200, Robert Święcki wrote:
-> Hi,
->
-> 2017-05-17 0:03 GMT+02:00 Solar Designer <solar@openwall.com>:
-> >
-> > Jason, Robert -
-> >
-> > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
-> > > A harmless example from rxvt - pushing back the new-line character:
-> > >
-> > > $ echo -ne "\eGQ;"
-> > > ;$ 0
-> > > bash: 0: command not found
-> >
-> > Does this also affect rxvt-unicode?
->
-> Yes,
->
-> Tested with rxvt-unicode-9.22
->
-> $ echo -ne "\eGQ;"
-> ;$ 0
-> bash: 0: command not found
-> $
+------MIME delimiter for sendEmail-571539.97391379
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-For me on rxvt-unicode 9.22 this command goes into command mode and
-executes the first command in the history, thanks to vi-mode in bash.
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-In clear history it of course goes into infinite loop of re-executing
-itself.
+A fuzz on it through the podofotxt2pdf command line tool reavealed an heap overflow. This post will be forwarded on the upstream mailing list.
 
-Also works with the more portable `printf "\033GQ;"`
+The complete ASan output:
+
+# podofotxt2pdf $FILE out.pdf
+==12524==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x607000001178 at pc 0x7f44ebaa5c89 bp 0x7ffce55aac90 sp 0x7ffce55aac88
+READ of size 2 at 0x607000001178 thread T0
+    #0 0x7f44ebaa5c88 in PoDoFo::PdfPainter::ExpandTabs(PoDoFo::PdfString const&, long) const /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:1945:26
+    #1 0x7f44eba95942 in PoDoFo::PdfPainter::DrawText(double, double, PoDoFo::PdfString const&, long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:755:31
+    #2 0x519755 in draw(char*, PoDoFo::PdfDocument*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:94:25
+    #3 0x51aa52 in init(char const*, char const*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:165:5
+    #4 0x51c253 in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:212:7
+    #5 0x7f44e9a3878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x41ccb8 in _start (/usr/bin/podofotxt2pdf+0x41ccb8)
+
+0x607000001178 is located 0 bytes to the right of 72-byte region [0x607000001130,0x607000001178)
+allocated by thread T0 here:
+    #0 0x514870 in operator new(unsigned long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_new_delete.cc:82
+    #1 0x7f44eb460304 in PoDoFo::PdfRefCountedBuffer::ReallyResize(unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfRefCountedBuffer.cpp:161:21
+    #2 0x7f44eb21212d in PoDoFo::PdfRefCountedBuffer::Resize(unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfRefCountedBuffer.h:307:9
+    #3 0x7f44eb47a466 in PoDoFo::PdfRefCountedBuffer::PdfRefCountedBuffer(unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfRefCountedBuffer.h:227:11
+    #4 0x7f44eb47a466 in PoDoFo::PdfString::Init(char const*, long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfString.cpp:570
+    #5 0x7f44eb47c24c in PoDoFo::PdfString::PdfString(char const*, PoDoFo::PdfEncoding const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfString.cpp:109:9
+    #6 0x519718 in draw(char*, PoDoFo::PdfDocument*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:94:43
+    #7 0x51aa52 in init(char const*, char const*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:165:5
+    #8 0x51c253 in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:212:7
+    #9 0x7f44e9a3878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:1945:26 in PoDoFo::PdfPainter::ExpandTabs(PoDoFo::PdfString 
+const&, long) const
+Shadow bytes around the buggy address:
+  0x0c0e7fff81d0: fa fa 00 00 00 00 00 00 00 00 00 00 fa fa fa fa
+  0x0c0e7fff81e0: 00 00 00 00 00 00 00 00 00 fa fa fa fa fa fd fd
+  0x0c0e7fff81f0: fd fd fd fd fd fd fd fa fa fa fa fa 00 00 00 00
+  0x0c0e7fff8200: 00 00 00 00 00 fa fa fa fa fa 00 00 00 00 00 00
+  0x0c0e7fff8210: 00 00 00 fa fa fa fa fa fd fd fd fd fd fd fd fd
+=>0x0c0e7fff8220: fd fa fa fa fa fa 00 00 00 00 00 00 00 00 00[fa]
+  0x0c0e7fff8230: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0e7fff8240: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0e7fff8250: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0e7fff8260: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0e7fff8270: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==12524==ABORTING
+
+Affected version:
+0.9.5
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-7378
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00248-podofo-heapoverflow-PdfPainter_cpp
+
+Timeline:
+2017-03-31: bug discovered and reported to upstream
+2017-03-31: blog post about the issue
+2017-03-31: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/31/podofo-heap-based-buffer-overflow-in-podofopdfpainterexpandtabs-pdfpainter-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-571539.97391379--
+
