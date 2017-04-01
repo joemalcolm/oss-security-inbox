@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["697" "Monday" "2" "May" "2016" "19:14:58" "+0200" "Max Teufel" "max@teufelsnetz.com" "<25eccda6-535c-c688-2081-87e4819f59d9@teufelsnetz.com>" "21" "[oss-security] CVE request: atheme: security fixes" "^Date:" nil nil "5" "2016050217:14:58" "[oss-security] CVE request: atheme: security fixes" (number mark "U       max@teufelsn May  2   21/697   " thread-indent "\"[oss-security] CVE request: atheme: security fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5884" "Saturday" "1" "April" "2017" "14:18:00" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<148362.309995235-sendEmail@localhost>" "108" "[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfSimpleEncoding::ConvertToEncoding (PdfEncoding.cpp)" nil nil nil "4" "2017040114:18:00" "[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfSimpleEncoding::ConvertToEncoding (PdfEncoding.cpp)" (number mark "U       ago@gentoo.o Apr  1  108/5884  " thread-indent "\"[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfSimpleEncoding::ConvertToEncoding (PdfEncoding.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26621 invoked by uid 550); 2 May 2016 17:15:14 -0000
+Received: (qmail 11982 invoked by uid 550); 1 Apr 2017 14:18:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26600 invoked from network); 2 May 2016 17:15:13 -0000
-X-Spam-DCC: : 
-Message-ID: <25eccda6-535c-c688-2081-87e4819f59d9@teufelsnetz.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Virus-Status: No
-X-Virus-Checker-Version: clamassassin 1.2.4 with ClamAV 0.97.3/21512/Sun May  1 18:38:16 2016
-Date: Mon, 2 May 2016 19:14:58 +0200
-From: Max Teufel <max@teufelsnetz.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: atheme: security fixes
-To: oss-security@lists.openwall.com
+Received: (qmail 11956 invoked from network); 1 Apr 2017 14:18:17 -0000
+Message-ID: <148362.309995235-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Sat, 1 Apr 2017 14:18:00 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-667660.441323282"
+Subject: [oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfSimpleEncoding::ConvertToEncoding (PdfEncoding.cpp)
 
-Hi,
+------MIME delimiter for sendEmail-667660.441323282
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Multiple security issues were found in Atheme, an IRC services package,
-which will be fixed in the upcoming 7.2.7 release. Could CVEs be
-assigned to the issues summarized below?
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-Fix:
-https://github.com/atheme/atheme/commit/c597156adc60a45b5f827793cd420945f47bc03b
-Description: A remote attacker could change Atheme's behavior by
-registering/dropping certain accounts/nicks.
-Reference: https://github.com/atheme/atheme/issues/397
+A fuzz on it through the podofotxt2pdf command line tool reavealed an heap overflow. This post will be forwarded on the upstream mailing list.
 
-Fix:
-https://github.com/atheme/atheme/commit/87580d767868360d2fed503980129504da84b63e
-Description: Under certain circumstances, a remote attacker could cause
-denial of service due to a buffer overflow in the XMLRPC response
-encoding code.
+The complete ASan output:
 
-Regards,
-Max Teufel
+# podofotxt2pdf $FILE out.pdf
+==12895==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6310000c47ff at pc 0x7f7434e576ea bp 0x7ffde7868b70 sp 0x7ffde7868b68
+READ of size 1 at 0x6310000c47ff thread T0
+    #0 0x7f7434e576e9 in PoDoFo::PdfSimpleEncoding::ConvertToEncoding(PoDoFo::PdfString const&, PoDoFo::PdfFont const*) const /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfEncoding.cpp:484:21
+    #1 0x7f7435337c7f in PoDoFo::PdfFont::WriteStringToStream(PoDoFo::PdfString const&, PoDoFo::PdfStream*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfFont.cpp:144:47
+    #2 0x7f74356a5374 in PoDoFo::PdfPainter::DrawText(double, double, PoDoFo::PdfString const&, long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:824:14
+    #3 0x519755 in draw(char*, PoDoFo::PdfDocument*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:94:25
+    #4 0x51aa52 in init(char const*, char const*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:165:5
+    #5 0x51c253 in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:212:7
+    #6 0x7f743363f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x41ccb8 in _start (/usr/bin/podofotxt2pdf+0x41ccb8)
+
+0x6310000c47ff is located 0 bytes to the right of 65535-byte region [0x6310000b4800,0x6310000c47ff)
+allocated by thread T0 here:
+    #0 0x4dc585 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
+    #1 0x7f7434f9f978 in PoDoFo::podofo_calloc(unsigned long, unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfMemoryManagement.cpp:136:9
+    #2 0x7f7434e51913 in PoDoFo::PdfSimpleEncoding::InitEncodingTable() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfEncoding.cpp:370:47
+    #3 0x7f7434e55af1 in PoDoFo::PdfSimpleEncoding::ConvertToEncoding(PoDoFo::PdfString const&, PoDoFo::PdfFont const*) const /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfEncoding.cpp:459:51
+    #4 0x7f7435337c7f in PoDoFo::PdfFont::WriteStringToStream(PoDoFo::PdfString const&, PoDoFo::PdfStream*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfFont.cpp:144:47
+    #5 0x7f74356a5374 in PoDoFo::PdfPainter::DrawText(double, double, PoDoFo::PdfString const&, long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:824:14
+    #6 0x519755 in draw(char*, PoDoFo::PdfDocument*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:94:25
+    #7 0x51aa52 in init(char const*, char const*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:165:5
+    #8 0x51c253 in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:212:7
+    #9 0x7f743363f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfEncoding.cpp:484:21 in 
+PoDoFo::PdfSimpleEncoding::ConvertToEncoding(PoDoFo::PdfString const&, PoDoFo::PdfFont const*) const
+Shadow bytes around the buggy address:
+  0x0c62800108a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c62800108b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c62800108c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c62800108d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c62800108e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c62800108f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00[07]
+  0x0c6280010900: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c6280010910: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c6280010920: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c6280010930: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c6280010940: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==12895==ABORTING
+
+Affected version:
+0.9.5
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-7379
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00249-podofo-heapoverflow-PdfEncoding_cpp
+
+Timeline:
+2017-03-31: bug discovered and reported to upstream
+2017-03-31: blog post about the issue
+2017-03-31: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/31/podofo-heap-based-buffer-overflow-in-podofopdfsimpleencodingconverttoencoding-pdfencoding-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-667660.441323282--
 
