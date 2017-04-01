@@ -1,95 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/4
-Message-ID: <CA+PdXcspyUe_0yO1bypEWmsZNd9xng-4avjExXFnbb0pGi_X=w@mail.gmail.com>
-Date: Mon, 7 Aug 2017 08:15:14 -0400
-From: Glenn Randers-Pehrson <glennrp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/01/5
+Message-ID: <20170401203314.GA12852@openwall.com>
+Date: Sat, 1 Apr 2017 22:33:15 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Cve issue discussion
+Subject: Re: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
 Content-Type: text/plain; charset=utf-8
 
-Do memory-exhaustion bugs get a CVE?  Suppose an application is fooled
-into requesting 2Gb of memory but then never uses it other than
-attempting to read it, immediately hitting EOF, and cleaning up.
+On Sat, Apr 01, 2017 at 08:27:36PM +0200, Solar Designer wrote:
+> I address this message primarily to Red Hat, but I'd like us to discuss
+> it in public so that others can benefit from this information as well.
+> 
+> On Wed, Mar 29, 2017 at 04:43:28PM -0500, Tyler Hicks wrote:
+> > A security issue was reported by ZDI, on behalf of Chaitin Security
+> > Research Lab, against the Linux kernel in Ubuntu. It also affected the
+> > upstream kernel.
+> > 
+> > Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
+> > as called by xfrm_new_ae(), did not verify that the user-specified
+> > replay_window was within the replay state buffer.
+> > 
+> > This allowed for out-of-bounds reads and writes of kernel memory.
+> > Chaitin Security showed that this can lead to local privilege escalation
+> > by using user namespaces in order to configure XFRM. XFRM configuration
+> > requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
+> > not enable user namespaces by default.
+> > 
+> > Fixes:
+> > - https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
+> > - https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
+> 
+> Red Hat claims that all of RHEL5, RHEL6, and RHEL7 are affected,
+> although the issue is mitigated by it requiring CAP_NET_ADMIN and/or
+> unprivileged user namespaces, neither of which are available by default:
+> 
+> https://access.redhat.com/security/cve/cve-2017-7184
 
-I'm addressing such a bug in libpng right now, in which the user
-is sent a PNG file containing a tEXt chunk that claims to have a 2GB
-length (but none of the 2GB data is included in the PNG).  On my
-platform libpng deals with that almost instantaneously, but I think
-some platforms (ASAN builds?) would actually allocate the memory
-before proceeding to read the data.
+Bugzilla, including the same statement in a comment, but without
+explanation on how this statement was arrived at:
 
-Glenn
+https://bugzilla.redhat.com/show_bug.cgi?id=1435153
 
+> RHEL7 does indeed contain the vulnerable upstream code, but RHEL5 and
+> RHEL6 don't - at least not the same code that the commits referenced
+> above patch.  This leaves me with two other interpretations of Red Hat's
+> analysis:
+> 
+> 1. Similar issues existed for other inputs (not ESN) and were silently
+> fixed some time between RHEL6 and RHEL7 (perhaps in equivalent upstream
+> revisions).  Maybe with the current renewed attention, Red Hat realized
+> that older fixes were missed, which are now finally understood as
+> security-relevant.  The code does look to me like this may be the case,
+> but I didn't spend much time on its analysis yet.
+> 
+> -OR-
+> 
+> 2. Red Hat's analysis is not correct, and RHEL5 and RHEL6 are not
+> affected at all.
+> 
+> Which is it, or something else I haven't thought of?
+> 
+> While for RHEL itself this is almost a non-issue either way due to the
+> mitigations mentioned above, better understanding is required for other
+> distros where such mitigations might not fully apply (such as along with
+> use of containers, where container root would have CAP_NET_ADMIN).
+> 
+> And while I am at it, kudos to Red Hat for patching out unprivileged
+> user namespaces in RHEL7!
+> 
+> /* While user namespaces remain in tech preview disable them */
+> static bool enable_user_ns_creation;
 
-On Mon, Aug 7, 2017 at 5:47 AM, ne xo <nexo123@...look.kr> wrote:
-> Hello,
->
-> thank you for the reply!
->
-> I chose the report at random.
->
-> I'm sorry if I was offended to mention the report.
->
-> Thanks.
-> <http://aka.ms/weboutlook>
-> ________________________________
-> 보낸 사람: Agostino Sarubbo <ago@...too.org>
-> 보낸 날짜: 2017년 8월 7일 월요일 오후 4:42:05
-> 받는 사람: oss-security@...ts.openwall.com
-> 제목: Re: [oss-security] Cve issue discussion
->
-> On Monday 07 August 2017 01:03:53 ne xo wrote:
->> Hello,
->>
->>
->> I am curious about issuing CVEs.
->>
->> I can see that a "NULL pointer dereference" or a bug where the exploit has
->> not been verified also get a CVE.
->
->>
->> heap-overflows may or may not be exploitable.
->>
->>
->> It takes a lot of time to analyze the exploit and create the exploit code.
->>
->>
->> Is it right to be assigned a CVE only if it is exploitable?
->>
->>
->> Or do you think all bugs need to get a CVE?
->>
->>
->> Thanks.
->>
->> ---
->>
->> ref
->>
->> ---
->>
->> [1]http://www.openwall.com/lists/oss-security/2017/04/10/17 - NULL pointer
->> dereference
->> [2]http://www.openwall.com/lists/oss-security/2017/04/10/15 -
->> memory allocation failure
->
-> Hi.
->
-> Since you mentioned some issues reported by me, let me answer directly.
-> For the first, it is an undefined behavior, so actually you don't see the
-> crash.
-> Nowadays, the undefined behavior issues do not get anymore a CVE.
->
->
-> For the second, ASAN reports that the program want to use more that 64GB of
-> ram to execute the process so ASAN hangs the process. In this case is up to
-> the maintainer check whether there is a problem in the code or not, or it is
-> expected. The better double-check would be verify what happens without ASAN.
->
-> I'd like also to mention that MITRE assigns CVE after they analyze the
-> reported issue, so if an issue does not deserve a CVE, MITRE probably won't
-> assign accompanied by an explanation.
->
-> --
-> Agostino Sarubbo
-> Gentoo Linux Developer
+Alexander
