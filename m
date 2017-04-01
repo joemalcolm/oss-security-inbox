@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["715" "Thursday" "10" "December" "2015" "09:23:04" "-0500" "Glenn Randers-Pehrson" "glennrp@gmail.com" "<CA+PdXctvtEfe4gB2VcYJTOMiB5XwZqBQuNpCPSEF8qVgVt1tnw@mail.gmail.com>" "26" "Re: [oss-security] CVE request - read underflow in libpng 1.2.55, 1.0.65, 1.4.18, and 1.5.25 (pngwutil.c)" "^Date:" nil nil "12" "2015121014:23:04" "[oss-security] CVE request - read underflow in libpng 1.2.55, 1.0.65, 1.4.18, and 1.5.25 (pngwutil.c)" (number mark "        glennrp@gmai Dec 10   26/715   " thread-indent "\"Re: [oss-security] CVE request - read underflow in libpng 1.2.55, 1.0.65, 1.4.18, and 1.5.25 (pngwutil.c)\"\n") "<2064c74f.134f0.1518c34b429.Coremail.xiaoqixue_1@163.com>" ("<20151210061616.87FBA8BC232@smtpvmsrv1.mitre.org>" "<2064c74f.134f0.1518c34b429.Coremail.xiaoqixue_1@163.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1414" "Saturday" "1" "April" "2017" "22:44:57" "+0200" "Solar Designer" "solar@openwall.com" "<20170401204457.GA12965@openwall.com>" "39" "Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" "^Date:" nil nil "4" "2017040120:44:57" "[oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" (number mark "        solar@openwa Apr  1   39/1414  " thread-indent "\"Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring\"\n") "<CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>" ("<CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>" "<CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3521 invoked by uid 550); 10 Dec 2015 14:23:17 -0000
+Received: (qmail 1491 invoked by uid 550); 1 Apr 2017 20:45:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3502 invoked from network); 10 Dec 2015 14:23:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=H4S0JZxyJlFJY6qETFDLn28Iu4Q+rUJYtMWQjMuE2rw=;
-        b=qejy0cJytvpVwUVjVwSnNF7uyHz2FZEYbx79CQgfwgUMORiI6F9ex1Ua9jQqtxoPah
-         sJt2tDG60uhJni362gkBYShX/Tqfxjh0Hj5QdL5xsSf4X1pQ0wViOqzFoTmgdw2zxP+n
-         PHihp2ZHX0g/nYKRmgNDxy8u9dmKAN9xgYkvMMSSXEWDbBXkdBjOOXEVwqzsZAFH6GJM
-         f5i4AnmcDSEovNTJ3BGsyhcaO1Wf9GmftjmFB1sPMXgYao7ccX9SCn6ZDz8OeLVseMie
-         WPlKenwmMgUJXP4vU3BEdWYBXekm0Wh0VzXcheIWXg68JDiW+lAvxApxqtzkxuZMXJAa
-         imAg==
-MIME-Version: 1.0
-X-Received: by 10.55.75.8 with SMTP id y8mr15805223qka.2.1449757384694; Thu,
- 10 Dec 2015 06:23:04 -0800 (PST)
-In-Reply-To: <2064c74f.134f0.1518c34b429.Coremail.xiaoqixue_1@163.com>
-References: <20151210061616.87FBA8BC232@smtpvmsrv1.mitre.org>
-	<2064c74f.134f0.1518c34b429.Coremail.xiaoqixue_1@163.com>
-Message-ID: <CA+PdXctvtEfe4gB2VcYJTOMiB5XwZqBQuNpCPSEF8qVgVt1tnw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114a888aece39305268bf1a4
-Date: Thu, 10 Dec 2015 09:23:04 -0500
-From: Glenn Randers-Pehrson <glennrp@gmail.com>
+Received: (qmail 32730 invoked from network); 1 Apr 2017 20:45:03 -0000
+Message-ID: <20170401204457.GA12965@openwall.com>
+References: <CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com> <CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sat, 1 Apr 2017 22:44:57 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request - read underflow in libpng 1.2.55,
- 1.0.65, 1.4.18, and 1.5.25 (pngwutil.c)
+Subject: Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
 To: oss-security@lists.openwall.com
 
---001a114a888aece39305268bf1a4
-Content-Type: text/plain; charset=UTF-8
+To Red Hat folks:
 
-The bug was introduced in libpng-0.90, was fixed in libpng-1.6.0, and will
-be
-fixed in libpng-1.0.66, 1.2.56, 1.4.19, and 1.5.26.
+On Fri, Mar 31, 2017 at 07:20:20PM +0200, Andrey Konovalov wrote:
+> On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@google.com> wrote:
+> > CVE-2017-7308 [1] was assigned to the following issue:
+> >
+> > The packet_set_ring function in net/packet/af_packet.c in the Linux
+> > kernel through 4.10.6 does not properly validate certain block-size
+> > data, which allows local users to cause a denial of service (overflow)
+> > or possibly have unspecified other impact via crafted system calls.
+> >
+> > The fix is sent upstream [2].
+> 
+> Update: the fix actually consists of 3 patches:
+> 
+> https://patchwork.ozlabs.org/patch/744811/
+> https://patchwork.ozlabs.org/patch/744813/
+> https://patchwork.ozlabs.org/patch/744812/
+> 
+> > [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
+> >
+> > [2] https://patchwork.ozlabs.org/patch/744811/
 
-Glenn Randers-Pehrson
-libpng custodian
+Red Hat currently says all RHEL starting with RHEL5 are affected:
 
-On Thu, Dec 10, 2015 at 9:04 AM, xiaoqixue_1 <xiaoqixue_1@163.com> wrote:
+https://access.redhat.com/security/cve/cve-2017-7308
 
->
->
-> there is a underflow read in png_check_keyword in pngwutil.c in
-> libpng-1.2.54, which is found by XiaoQixue and ChenYu.
->
-> if the data of "key" is only ' ' (0x20), it will read a byte before the
-> buffer in line 1288.
->
-> it also impacts libpng 1.2.55, 1.0.65, 1.4.18, and 1.5.25 .
->
-> the details as follows:
-> https://sourceforge.net/p/libpng/bugs/244/
+However, the corresponding Bugzilla entry has no mention of that:
 
---001a114a888aece39305268bf1a4--
+https://bugzilla.redhat.com/show_bug.cgi?id=1437404
+
+So is it just a better-safe-than-sorry default to list products as
+affected until known otherwise?  If so, maybe Unknown would be better?
+
+RHEL5 doesn't yet include TPACKET_V3.  I did not check RHEL6.
+
+https://github.com/torvalds/linux/commit/f6fb8f100b807378fda19e83e5ac6828b638603a
+
+Alexander
