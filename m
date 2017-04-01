@@ -1,4 +1,9 @@
-Received: (qmail 3337 invoked by uid 550); 2 May 2026 20:30:51 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2589" "Saturday" "1" "April" "2017" "20:27:36" "+0200" "Solar Designer" "solar@openwall.com" "<20170401182736.GA12311@openwall.com>" "61" "Re: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework" "^Date:" nil nil "4" "2017040118:27:36" "[oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework" (number mark "        solar@openwa Apr  1   61/2589  " thread-indent "\"Re: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework\"\n") "<f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>" ("<f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17615 invoked by uid 550); 1 Apr 2017 18:28:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,98 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17498 invoked from network); 1 Apr 2017 18:27:47 -0000
+Message-ID: <20170401182736.GA12311@openwall.com>
+References: <f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sat, 1 Apr 2017 20:27:36 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25626 invoked from network); 2 May 2026 20:19:13 -0000
-Message-ID: <3fee55702aa90f0003b1758d047c65ea42141fb0.camel@thirddimension.net>
-From: Reid Sutherland <reid@thirddimension.net>
+Subject: Re: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
 To: oss-security@lists.openwall.com
-Date: Sat, 02 May 2026 16:19:02 -0400
-In-Reply-To: <20260502185608.24115-1-justin.swartz@risingedge.co.za>
-References: <afJorKIje4O6dXbH@netmeister.org>
-	 <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net> <87se8dgicq.fsf@gentoo.org>
-	 <afL-QhLfEKqHZqka@eldamar.lan> <2026043026-treat-devotion-23d7@gregkh>
-	 <CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com>
-	 <12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com>
-	 <315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net>
-	 <20260501165221.27420-1-justin.swartz@risingedge.co.za>
-	 <56cd1494d297ad327a8c2a4cc77308559fbee7f8.camel@thirddimension.net>
-	 <20260502185608.24115-1-justin.swartz@risingedge.co.za>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
-MIME-Version: 1.0
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local
- privilege scalation
 
-On Sat, 2026-05-02 at 20:56 +0200, Justin Swartz wrote:
-> On Fri, May 1, 2026 at 20:25:17 -0400, Reid Sutherland wrote:
-> > Why is userspace allowed to load modules in any capacity?
->=20
-> It's potentially useful for autoloading driver modules when PnP
-> devices are connected, which could be considered deadweight if
-> they were loaded, or baked into the kernel itself, when the
-> respective devices aren't present.
->=20
+Hi,
 
-This is userspace software loading an administrative driver.  Not even
-close to the same as physically connecting a device.
+I address this message primarily to Red Hat, but I'd like us to discuss
+it in public so that others can benefit from this information as well.
 
+On Wed, Mar 29, 2017 at 04:43:28PM -0500, Tyler Hicks wrote:
+> A security issue was reported by ZDI, on behalf of Chaitin Security
+> Research Lab, against the Linux kernel in Ubuntu. It also affected the
+> upstream kernel.
+> 
+> Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
+> as called by xfrm_new_ae(), did not verify that the user-specified
+> replay_window was within the replay state buffer.
+> 
+> This allowed for out-of-bounds reads and writes of kernel memory.
+> Chaitin Security showed that this can lead to local privilege escalation
+> by using user namespaces in order to configure XFRM. XFRM configuration
+> requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
+> not enable user namespaces by default.
+> 
+> Fixes:
+> - https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
+> - https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
 
+Red Hat claims that all of RHEL5, RHEL6, and RHEL7 are affected,
+although the issue is mitigated by it requiring CAP_NET_ADMIN and/or
+unprivileged user namespaces, neither of which are available by default:
 
->=20
-> > Why do we need kernel modules for math?
->=20
-> To interact with cryptographic acceleration hardware, if present or
-> desired, and to provide support for kernel subsystems that rely on
-> encryption, like IPSec or WireGuard.
->=20
->=20
+https://access.redhat.com/security/cve/cve-2017-7184
 
-Then why is it exposed to userland?  Attack surface continues to
-expand.
+RHEL7 does indeed contain the vulnerable upstream code, but RHEL5 and
+RHEL6 don't - at least not the same code that the commits referenced
+above patch.  This leaves me with two other interpretations of Red Hat's
+analysis:
 
+1. Similar issues existed for other inputs (not ESN) and were silently
+fixed some time between RHEL6 and RHEL7 (perhaps in equivalent upstream
+revisions).  Maybe with the current renewed attention, Red Hat realized
+that older fixes were missed, which are now finally understood as
+security-relevant.  The code does look to me like this may be the case,
+but I didn't spend much time on its analysis yet.
 
-> > I'm assuming any thoroughly qualified platform engineer compiles
-> > the host kernel without module support.=C2=A0 At least, that needs to
-> > make a comeback, bring back applying grsec patches and make
-> > menuconfig..
->=20
-> I'm thoroughly unqualified, so take my opinion with a bag of salt:
->=20
-> If you have a use case that allows you to avoid loadable kernel
-> modules indefinitely in a completely monolithic kernel then, by
-> all means, roll your kernel as such and you'll be slightly safer
-> than those who don't.
->=20
+-OR-
 
-Slightly is the wrong word to use in this recent case.  It is likely
-what separated the secure from vulnerable in major cloud environments.
+2. Red Hat's analysis is not correct, and RHEL5 and RHEL6 are not
+affected at all.
 
+Which is it, or something else I haven't thought of?
 
-> Kernel configuration minification doesn't seem to be spoken of
-> much anymore except by those who have fairly resource constrained
-> embedded systems that run Linux on some application processor.
->=20
-> If you're prepared to go that far, why not roll your own distro?
->=20
+While for RHEL itself this is almost a non-issue either way due to the
+mitigations mentioned above, better understanding is required for other
+distros where such mitigations might not fully apply (such as along with
+use of containers, where container root would have CAP_NET_ADMIN).
 
-Because I'm not invested.  Clearly billions are poured into this
-environment and it's all hinged on an insecure chain (using math in
-kernel space and loading modules from userspace).
+And while I am at it, kudos to Red Hat for patching out unprivileged
+user namespaces in RHEL7!
 
-This whole using math in the kernel and exposing it, the complexity of
-code written for algorithms is often very high, this is a breeding
-ground for "oops I messed up" root vulnerabilities (hindsight 20/20).
+/* While user namespaces remain in tech preview disable them */
+static bool enable_user_ns_creation;
 
-
-> LFS is a potentially good starting point, but you can get by with
-> even less. For example: Linux, musl, busybox, just the applications
-> (and mandatory dependencies) you need, and some init scripts to tie
-> it all together.
-
-
-I agree it's easy in theory, but unless the people are paid and
-passionate, it's not going to last.  We need a serious push for a
-hardened platform kernel after this.
-
+Alexander
