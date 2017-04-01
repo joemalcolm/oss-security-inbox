@@ -1,56 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/12
-Message-ID: <20171113212211.GA27512@openwall.com>
-Date: Mon, 13 Nov 2017 22:22:11 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: (linux-)distros list use statistics
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/01/3
+Message-ID: <658335.788033099-sendEmail@localhost>
+Date: Sat, 1 Apr 2017 14:22:07 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: podofo: four null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 13, 2017 at 08:38:59PM +0100, Kristian Fiskerstrand wrote:
-> On 11/13/2017 08:33 PM, Solar Designer wrote:
-> > This lists two very long embargo periods for two Linux kernel issues: 96
-> > days for CVE-2017-7533 and 28 days for CVE-2017-1000255.  While this is
-> > useful info, it does not reflect (linux-)distros' lists performance as
-> > it includes embargo periods from prior to disclosure to those lists.
-> > Also, we can't reliably know of such prior embargo periods, so our data
-> > would be inconsistent, which is especially bad for calculating averages.
-> 
-> It is calculated from first report on distros list,
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-Oh, I must have guessed wrong.  I thought the long embargo periods were
-correct and assumed that was because of inclusion of pre-distros time,
-but according to what you're saying these are just two errors.
+A fuzz on it through the podofotxtextract command line tool reavealed some NULL dereferences. This post will be forwarded on the upstream mailing list.
 
-> that said, for
-> CVE-2017-1000255 there was some missing data for first publication (it
-> is public through
-> https://access.redhat.com/security/cve/CVE-2017-1000255 and
-> http://www.securityfocus.com/bid/101264 since 9th), so the publication
-> time is 5.97 days (although not for oss-security posting).
+The complete ASan output:
 
-Your statistics appear to suggest that it was public on oss-security
-exactly 22 days later, but actually it was public on oss-security at
-most a day later with:
+# podofotxtextract $FILE
+==21905==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f2e6fad8bd8 bp 0x7ffee4f96d10 sp 0x7ffee4f96ca0 T0)
+==21905==The signal is caused by a READ memory access.
+==21905==Hint: address points to the zero page.
+    #0 0x7f2e6fad8bd7 in PoDoFo::PdfPage::GetFromResources(PoDoFo::PdfName const&, PoDoFo::PdfName const&) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPage.cpp:614:20
+    #1 0x51dda3 in TextExtractor::ExtractText(PoDoFo::PdfMemDocument*, PoDoFo::PdfPage*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/TextExtractor.cpp:98:47
+    #2 0x51d021 in TextExtractor::Init(char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/TextExtractor.cpp:48:15
+    #3 0x539f6d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/podofotxtextract.cpp:52:17
+    #4 0x7f2e6db4e6ff in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #5 0x420d48 in _start (/usr/bin/podofotxtextract+0x420d48)
 
-http://www.openwall.com/lists/oss-security/2017/10/10/3
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPage.cpp:614:20 in PoDoFo::PdfPage::GetFromResources(PoDoFo::PdfName const&, 
+PoDoFo::PdfName const&)
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00250-podofo-nullptr1
+CVE:
+CVE-2017-7380
 
-I guess you'll correct this.
+##############################################################
 
-If you ever notice an embargo period exceeding 14 days, please
-investigate and either correct whatever error you might have or sound
-the alarm.  This shouldn't be happening.  Thanks!
+# podofotxtextract $FILE
+==23885==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f44177e97b7 bp 0x7ffe130bed10 sp 0x7ffe130beca0 T0)
+==23885==The signal is caused by a READ memory access.
+==23885==Hint: address points to the zero page.
+    #0 0x7f44177e97b6 in PoDoFo::PdfPage::GetFromResources(PoDoFo::PdfName const&, PoDoFo::PdfName const&) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPage.cpp:609:23
+    #1 0x51dda3 in TextExtractor::ExtractText(PoDoFo::PdfMemDocument*, PoDoFo::PdfPage*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/TextExtractor.cpp:98:47
+    #2 0x51d021 in TextExtractor::Init(char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/TextExtractor.cpp:48:15
+    #3 0x539f6d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/podofotxtextract.cpp:52:17
+    #4 0x7f441585f6ff in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #5 0x420d48 in _start (/usr/bin/podofotxtextract+0x420d48)
 
-On Mon, Nov 13, 2017 at 08:42:49PM +0100, Kristian Fiskerstrand wrote:
-> Page created:
-> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPage.cpp:609:23 in PoDoFo::PdfPage::GetFromResources(PoDoFo::PdfName const&, 
+PoDoFo::PdfName const&)
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00251-podofo-nullptr2
+CVE:
+CVE-2017-7381
 
-Thank you!  This currently shows some fields as empty, including but
-not only for CVE-2017-1000255, where I think you could add the missing
-info easily.  Please do.
+##############################################################
 
-Meanwhile, I've added a link from:
+# podofotxtextract $FILE
+==20388==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f08c6a3c3de bp 0x7ffd52235bd0 sp 0x7ffd52235b20 T0)
+==20388==The signal is caused by a READ memory access.
+==20388==Hint: address points to the zero page.
+    #0 0x7f08c6a3c3dd in PoDoFo::PdfFontFactory::CreateFont(FT_LibraryRec_**, PoDoFo::PdfObject*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfFontFactory.cpp:200:88
+    #1 0x7f08c6a1028d in PoDoFo::PdfFontCache::GetFont(PoDoFo::PdfObject*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfFontCache.cpp:362:22
+    #2 0x51debb in TextExtractor::ExtractText(PoDoFo::PdfMemDocument*, PoDoFo::PdfPage*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/TextExtractor.cpp:104:43
+    #3 0x51d021 in TextExtractor::Init(char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/TextExtractor.cpp:48:15
+    #4 0x539f6d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/podofotxtextract.cpp:52:17
+    #5 0x7f08c4c9a6ff in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x420d48 in _start (/usr/bin/podofotxtextract+0x420d48)
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros#list-usage-statistics
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfFontFactory.cpp:200:88 in PoDoFo::PdfFontFactory::CreateFont(FT_LibraryRec_**, 
+PoDoFo::PdfObject*)
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00251-podofo-nullptr3
+CVE:
+CVE-2017-7382
 
-Alexander
+##############################################################
+
+# podofotxtextract $FILE
+==26727==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f4c23dd5e41 bp 0x7ffd6ce24bd0 sp 0x7ffd6ce24b20 T0)
+==26727==The signal is caused by a READ memory access.
+==26727==Hint: address points to the zero page.
+    #0 0x7f4c23dd5e40 in PoDoFo::PdfFontFactory::CreateFont(FT_LibraryRec_**, PoDoFo::PdfObject*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfFontFactory.cpp:195:62
+    #1 0x7f4c23daa28d in PoDoFo::PdfFontCache::GetFont(PoDoFo::PdfObject*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfFontCache.cpp:362:22
+    #2 0x51debb in TextExtractor::ExtractText(PoDoFo::PdfMemDocument*, PoDoFo::PdfPage*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/TextExtractor.cpp:104:43
+    #3 0x51d021 in TextExtractor::Init(char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/TextExtractor.cpp:48:15
+    #4 0x539f6d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxtextract/podofotxtextract.cpp:52:17
+    #5 0x7f4c220346ff in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x420d48 in _start (/usr/bin/podofotxtextract+0x420d48)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfFontFactory.cpp:195:62 in PoDoFo::PdfFontFactory::CreateFont(FT_LibraryRec_**, 
+PoDoFo::PdfObject*)
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00252-podofo-nullptr4
+CVE:
+CVE-2017-7383
+
+##############################################################
+
+Affected version:
+0.9.5
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2017-03-31: bug discovered and reported to upstream
+2017-03-31: blog post about the issue
+2017-03-31: CVE assigned
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/31/podofo-four-null-pointer-dereference
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
