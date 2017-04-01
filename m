@@ -1,142 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/15
-Message-Id: <E1dNIMo-0003Gy-Ei@xenbits.xenproject.org>
-Date: Tue, 20 Jun 2017 12:34:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 216 - blkif responses leak backend stack data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/01/2
+Message-ID: <148362.309995235-sendEmail@localhost>
+Date: Sat, 1 Apr 2017 14:18:00 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: podofo: heap-based buffer overflow in PoDoFo::PdfSimpleEncoding::ConvertToEncoding (PdfEncoding.cpp)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-                    Xen Security Advisory XSA-216
-                              version 4
+A fuzz on it through the podofotxt2pdf command line tool reavealed an heap overflow. This post will be forwarded on the upstream mailing list.
 
-                blkif responses leak backend stack data
+The complete ASan output:
 
-UPDATES IN VERSION 4
-====================
+# podofotxt2pdf $FILE out.pdf
+==12895==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6310000c47ff at pc 0x7f7434e576ea bp 0x7ffde7868b70 sp 0x7ffde7868b68
+READ of size 1 at 0x6310000c47ff thread T0
+    #0 0x7f7434e576e9 in PoDoFo::PdfSimpleEncoding::ConvertToEncoding(PoDoFo::PdfString const&, PoDoFo::PdfFont const*) const /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfEncoding.cpp:484:21
+    #1 0x7f7435337c7f in PoDoFo::PdfFont::WriteStringToStream(PoDoFo::PdfString const&, PoDoFo::PdfStream*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfFont.cpp:144:47
+    #2 0x7f74356a5374 in PoDoFo::PdfPainter::DrawText(double, double, PoDoFo::PdfString const&, long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:824:14
+    #3 0x519755 in draw(char*, PoDoFo::PdfDocument*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:94:25
+    #4 0x51aa52 in init(char const*, char const*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:165:5
+    #5 0x51c253 in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:212:7
+    #6 0x7f743363f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x41ccb8 in _start (/usr/bin/podofotxt2pdf+0x41ccb8)
 
-Move "For patch:" Reported-by to patches as intended.
+0x6310000c47ff is located 0 bytes to the right of 65535-byte region [0x6310000b4800,0x6310000c47ff)
+allocated by thread T0 here:
+    #0 0x4dc585 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
+    #1 0x7f7434f9f978 in PoDoFo::podofo_calloc(unsigned long, unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfMemoryManagement.cpp:136:9
+    #2 0x7f7434e51913 in PoDoFo::PdfSimpleEncoding::InitEncodingTable() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfEncoding.cpp:370:47
+    #3 0x7f7434e55af1 in PoDoFo::PdfSimpleEncoding::ConvertToEncoding(PoDoFo::PdfString const&, PoDoFo::PdfFont const*) const /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfEncoding.cpp:459:51
+    #4 0x7f7435337c7f in PoDoFo::PdfFont::WriteStringToStream(PoDoFo::PdfString const&, PoDoFo::PdfStream*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfFont.cpp:144:47
+    #5 0x7f74356a5374 in PoDoFo::PdfPainter::DrawText(double, double, PoDoFo::PdfString const&, long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:824:14
+    #6 0x519755 in draw(char*, PoDoFo::PdfDocument*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:94:25
+    #7 0x51aa52 in init(char const*, char const*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:165:5
+    #8 0x51c253 in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:212:7
+    #9 0x7f743363f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-ISSUE DESCRIPTION
-=================
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfEncoding.cpp:484:21 in 
+PoDoFo::PdfSimpleEncoding::ConvertToEncoding(PoDoFo::PdfString const&, PoDoFo::PdfFont const*) const
+Shadow bytes around the buggy address:
+  0x0c62800108a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c62800108b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c62800108c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c62800108d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c62800108e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c62800108f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00[07]
+  0x0c6280010900: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c6280010910: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c6280010920: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c6280010930: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c6280010940: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==12895==ABORTING
 
-The block interface response structure has some discontiguous fields.
-Certain backends populate the structure fields of an otherwise
-uninitialized instance of this structure on their stacks, leaking
-data through the (internal or trailing) padding field.
+Affected version:
+0.9.5
 
-IMPACT
-======
+Fixed version:
+N/A
 
-A malicious unprivileged guest may be able to obtain sensitive
-information from the host or other guests.
+Commit fix:
+N/A
 
-VULNERABLE SYSTEMS
-==================
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-All Linux versions supporting the xen-blkback, blkback, or blktap
-drivers are vulnerable.
+CVE:
+CVE-2017-7379
 
-FreeBSD, NetBSD and Windows (with or without PV drivers) are not
-vulnerable (either because they do not have backends at all, or
-because they use a different implementation technique which does not
-suffer from this problem).
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00249-podofo-heapoverflow-PdfEncoding_cpp
 
-All qemu versions supporting the Xen block backend are vulnerable.  The
-qemu-xen-traditional code base does not include such code, so is not
-vulnerable.  Note that an instance of qemu will be spawned to provide
-the backend for most non-raw-format disks; so you may need to apply the
-patch to qemu even if you use only PV guests.
+Timeline:
+2017-03-31: bug discovered and reported to upstream
+2017-03-31: blog post about the issue
+2017-03-31: CVE assigned
 
-MITIGATION
-==========
+Note:
+This bug was found with American Fuzzy Lop.
 
-There's no mitigation available for x86 PV and ARM guests.
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/31/podofo-heap-based-buffer-overflow-in-podofopdfsimpleencodingconverttoencoding-pdfencoding-cpp
 
-For x86 HVM guests it may be possible to change the guest
-configuaration such that a fully virtualized disk is being made
-available instead.  However, this would normally entail changes inside
-the guest itself.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-CREDITS
-=======
 
-This issue was discovered by Anthony Perard of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa216-linux-4.11.patch           Linux 4.5 ... 4.11
-xsa216-linux-4.4.patch            Linux 3.3 ... 4.4
-xsa216-qemuu.patch                qemu-upstream master, 4.8
-xsa216-qemuu-4.7.patch            qemu-upstream 4.7, 4.6
-xsa216-qemuu-4.5.patch            qemu-upstream 4.5
-xsa216-linux-2.6.18-xen.patch     linux-2.6.18-xen.hg
-
-$ sha256sum xsa216*
-d316e16f8da2078966e9d7d516dd0a9ed5a29c3bc479974374c8fa778859913d  xsa216-linux-2.6.18-xen.patch
-4440fe324b61baf0f3f5a73352c4d9ac6f94917e216d8421263a5e67445852db  xsa216-linux-4.4.patch
-eb24bfc0303e13e08fd3710463aea139a92a3f83db7f35119c4d3831154a6453  xsa216-linux-4.11.patch
-b4b8f68fa05d718c5be7023c84d942e43725bcc563ea15556ee9646f6f9bf7e7  xsa216-qemuu.patch
-4fc3665ff07ec79fb31ac66a3fd360a45b7ec546c549c04284f0128ad0c5beba  xsa216-qemuu-4.5.patch
-a0e0dfd5ea2643ae14c220124194388017a3656db3e6ce430913cda800c43aad  xsa216-qemuu-4.7.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-However, deployment of the mitigation is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.  This is because this produces a guest-visible
-change which will indicate which component contains the vulnerability.
-
-Additionally, distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZSRYiAAoJEIP+FMlX6CvZILQIALI17G6L+BIr6rXHglleL6Lz
-E9Rvlng8K3e5088Hzs5gwq0c9jeK7i9B8PIjdgTH8OS1YjwpWF4wdPveSNACules
-590SQVdwN2+Q1oTqdEECnaaCdl7eiEiv+2vRr+LYXNSLJuIRclnc/Fv3nTz/iuTM
-5vwIVS/rpdETDBcMJVbCRvUbMeCx/ZM8+lNmEe20QP6h++pmc8wT7B54yGVwk6LT
-eknzRMFYhUqcF8eLTJ/QyHf94x1mujVCHNKbOXkMQ27lWAJ5Jt2ut0IZeA6CFAlw
-j/u8azGv9VIpXGLp2R1OWPYbEYeAzvjNC7+qoixiscSvfPkiSTfAv7pmr52jvGg=
-=+gya
------END PGP SIGNATURE-----
-
-Download attachment "xsa216-linux-2.6.18-xen.patch" of type "application/octet-stream" (5698 bytes)
-
-Download attachment "xsa216-linux-4.4.patch" of type "application/octet-stream" (3699 bytes)
-
-Download attachment "xsa216-linux-4.11.patch" of type "application/octet-stream" (3764 bytes)
-
-Download attachment "xsa216-qemuu.patch" of type "application/octet-stream" (4455 bytes)
-
-Download attachment "xsa216-qemuu-4.5.patch" of type "application/octet-stream" (4431 bytes)
-
-Download attachment "xsa216-qemuu-4.7.patch" of type "application/octet-stream" (4431 bytes)
