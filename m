@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["508" "Tuesday" "13" "July" "2021" "04:01:23" "+0000" "Stefan Bodewig" "bodewig@apache.org" nil "20" "[oss-security] CVE-2021-35517: Apache Commons Compress 1.1 to 1.20 denial of service vulnerability " nil nil nil "7" nil nil (number mark "U       bodewig@apac Jul 13   20/508   " thread-indent "\"[oss-security] CVE-2021-35517: Apache Commons Compress 1.1 to 1.20 denial of service vulnerability \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-35517: Apache Commons Compress 1.1 to 1.20 denial of service vulnerability " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2929" "Saturday" "1" "April" "2017" "22:33:15" "+0200" "Solar Designer" "solar@openwall.com" "<20170401203314.GA12852@openwall.com>" "65" "Re: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework" "^Date:" nil nil "4" "2017040120:33:15" "[oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework" (number mark "        solar@openwa Apr  1   65/2929  " thread-indent "\"Re: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework\"\n") "<20170401182736.GA12311@openwall.com>" ("<f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>" "<20170401182736.GA12311@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15976 invoked by uid 550); 13 Jul 2021 07:29:19 -0000
+Received: (qmail 18142 invoked by uid 550); 1 Apr 2017 20:34:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17813 invoked from network); 1 Apr 2017 20:33:38 -0000
+Message-ID: <20170401203314.GA12852@openwall.com>
+References: <f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com> <20170401182736.GA12311@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170401182736.GA12311@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sat, 1 Apr 2017 22:33:15 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32686 invoked from network); 13 Jul 2021 04:01:38 -0000
-Content-Type: text/plain; charset=utf-8
-From: Stefan Bodewig <bodewig@apache.org>
+Subject: Re: [oss-security] CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
 To: oss-security@lists.openwall.com
-Message-ID: <9fb69386-9b78-787a-deef-23433dbecba1@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 13 Jul 2021 04:01:23 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-35517: Apache Commons Compress 1.1 to 1.20 denial of
- service vulnerability 
 
-Description:
+On Sat, Apr 01, 2017 at 08:27:36PM +0200, Solar Designer wrote:
+> I address this message primarily to Red Hat, but I'd like us to discuss
+> it in public so that others can benefit from this information as well.
+> 
+> On Wed, Mar 29, 2017 at 04:43:28PM -0500, Tyler Hicks wrote:
+> > A security issue was reported by ZDI, on behalf of Chaitin Security
+> > Research Lab, against the Linux kernel in Ubuntu. It also affected the
+> > upstream kernel.
+> > 
+> > Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
+> > as called by xfrm_new_ae(), did not verify that the user-specified
+> > replay_window was within the replay state buffer.
+> > 
+> > This allowed for out-of-bounds reads and writes of kernel memory.
+> > Chaitin Security showed that this can lead to local privilege escalation
+> > by using user namespaces in order to configure XFRM. XFRM configuration
+> > requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
+> > not enable user namespaces by default.
+> > 
+> > Fixes:
+> > - https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
+> > - https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
+> 
+> Red Hat claims that all of RHEL5, RHEL6, and RHEL7 are affected,
+> although the issue is mitigated by it requiring CAP_NET_ADMIN and/or
+> unprivileged user namespaces, neither of which are available by default:
+> 
+> https://access.redhat.com/security/cve/cve-2017-7184
 
-When reading a specially crafted TAR archive, Compress can be made to alloc=
-ate large amounts of memory that finally leads to an out of memory error ev=
-en for very small inputs. This could be used to mount a denial of service a=
-ttack against services that use Compress' tar package.
+Bugzilla, including the same statement in a comment, but without
+explanation on how this statement was arrived at:
 
+https://bugzilla.redhat.com/show_bug.cgi?id=1435153
 
-Mitigation:
+> RHEL7 does indeed contain the vulnerable upstream code, but RHEL5 and
+> RHEL6 don't - at least not the same code that the commits referenced
+> above patch.  This leaves me with two other interpretations of Red Hat's
+> analysis:
+> 
+> 1. Similar issues existed for other inputs (not ESN) and were silently
+> fixed some time between RHEL6 and RHEL7 (perhaps in equivalent upstream
+> revisions).  Maybe with the current renewed attention, Red Hat realized
+> that older fixes were missed, which are now finally understood as
+> security-relevant.  The code does look to me like this may be the case,
+> but I didn't spend much time on its analysis yet.
+> 
+> -OR-
+> 
+> 2. Red Hat's analysis is not correct, and RHEL5 and RHEL6 are not
+> affected at all.
+> 
+> Which is it, or something else I haven't thought of?
+> 
+> While for RHEL itself this is almost a non-issue either way due to the
+> mitigations mentioned above, better understanding is required for other
+> distros where such mitigations might not fully apply (such as along with
+> use of containers, where container root would have CAP_NET_ADMIN).
+> 
+> And while I am at it, kudos to Red Hat for patching out unprivileged
+> user namespaces in RHEL7!
+> 
+> /* While user namespaces remain in tech preview disable them */
+> static bool enable_user_ns_creation;
 
-Commons Compress users should upgrade to 1.21 or later.
-
-Credit:
-
-This issue was discovered by OSS Fuzz.
-
-References:
-
-https://commons.apache.org/proper/commons-compress/security-reports.html
-
+Alexander
