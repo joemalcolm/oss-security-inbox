@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1025" "Wednesday" "11" "July" "2018" "15:18:59" "-0500" "Sean Owen" "srowen@apache.org" "<CAEccTyxe6x3zqqV8nLtbdt6dVEB1=_GLvHsdgf-1JRmbMHpa2Q@mail.gmail.com>" "33" "[oss-security] CVE-2018-8024 Apache Spark XSS vulnerability in UI" nil nil nil "7" "2018071120:18:59" "[oss-security] CVE-2018-8024 Apache Spark XSS vulnerability in UI" (number mark "U       srowen@apach Jul 11   33/1025  " thread-indent "\"[oss-security] CVE-2018-8024 Apache Spark XSS vulnerability in UI\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1978" "Monday" "3" "April" "2017" "10:01:22" "+0200" "Martin Prpic" "mprpic@redhat.com" "<87lgrhx6lp.fsf@redhat.com>" "55" "Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" nil nil nil "4" "2017040308:01:22" "[oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" (number mark "U       mprpic@redha Apr  3   55/1978  " thread-indent "\"Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring\"\n") "<20170401204457.GA12965@openwall.com>" ("<CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>" "<CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>" "<20170401204457.GA12965@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29989 invoked by uid 550); 12 Jul 2018 10:16:59 -0000
+Received: (qmail 24440 invoked by uid 550); 3 Apr 2017 08:01:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20365 invoked from network); 11 Jul 2018 20:19:25 -0000
-X-Gm-Message-State: AOUpUlEsVJoPbmAwv7OVpuAgg1uiQJw7ZXzu3QCCdh9Enkm43viVGRpk
-	GzOgMld07V/JFG4Mo2ncj0M/Pe0gnE9REZYuy4I=
-X-Google-Smtp-Source: AAOMgpdUacYXrkvxp7W2XVR7wYZ1/SUm70PU58ObDB560PRtVEHfxk/u09GJCVadOi12nP2wfx/Ujlrb3M8vQ3tv2Qk=
-X-Received: by 2002:a19:ef13:: with SMTP id n19-v6mr78007lfh.48.1531340351421;
- Wed, 11 Jul 2018 13:19:11 -0700 (PDT)
+Received: (qmail 24422 invoked from network); 3 Apr 2017 08:01:37 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com A853BC04B924
+Authentication-Results: ext-mx07.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx07.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=mprpic@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com A853BC04B924
+From: Martin Prpic <mprpic@redhat.com>
+To: oss-security@lists.openwall.com
+References: <CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com> <CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com> <20170401204457.GA12965@openwall.com>
+User-agent: mu4e 0.9.9.5; emacs 24.3.1
+In-reply-to: <20170401204457.GA12965@openwall.com>
+Date: Mon, 03 Apr 2017 10:01:22 +0200
+Message-ID: <87lgrhx6lp.fsf@redhat.com>
 MIME-Version: 1.0
-From: Sean Owen <srowen@apache.org>
-Date: Wed, 11 Jul 2018 15:18:59 -0500
-X-Gmail-Original-Message-ID: <CAEccTyxe6x3zqqV8nLtbdt6dVEB1=_GLvHsdgf-1JRmbMHpa2Q@mail.gmail.com>
-Message-ID: <CAEccTyxe6x3zqqV8nLtbdt6dVEB1=_GLvHsdgf-1JRmbMHpa2Q@mail.gmail.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Content-Type: multipart/alternative; boundary="000000000000ad43420570bef565"
-Subject: [oss-security] CVE-2018-8024 Apache Spark XSS vulnerability in UI
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Mon, 03 Apr 2017 08:01:25 +0000 (UTC)
+Subject: Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
 
---000000000000ad43420570bef565
-Content-Type: text/plain; charset="UTF-8"
+Solar Designer writes:
 
-Severity: Medium
+> To Red Hat folks:
+>
+> On Fri, Mar 31, 2017 at 07:20:20PM +0200, Andrey Konovalov wrote:
+>> On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@google.com> wrote:
+>> > CVE-2017-7308 [1] was assigned to the following issue:
+>> >
+>> > The packet_set_ring function in net/packet/af_packet.c in the Linux
+>> > kernel through 4.10.6 does not properly validate certain block-size
+>> > data, which allows local users to cause a denial of service (overflow)
+>> > or possibly have unspecified other impact via crafted system calls.
+>> >
+>> > The fix is sent upstream [2].
+>> 
+>> Update: the fix actually consists of 3 patches:
+>> 
+>> https://patchwork.ozlabs.org/patch/744811/
+>> https://patchwork.ozlabs.org/patch/744813/
+>> https://patchwork.ozlabs.org/patch/744812/
+>> 
+>> > [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
+>> >
+>> > [2] https://patchwork.ozlabs.org/patch/744811/
+>
+> Red Hat currently says all RHEL starting with RHEL5 are affected:
+>
+> https://access.redhat.com/security/cve/cve-2017-7308
+>
+> However, the corresponding Bugzilla entry has no mention of that:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1437404
+>
+> So is it just a better-safe-than-sorry default to list products as
+> affected until known otherwise?  If so, maybe Unknown would be better?
+>
+> RHEL5 doesn't yet include TPACKET_V3.  I did not check RHEL6.
+>
+> https://github.com/torvalds/linux/commit/f6fb8f100b807378fda19e83e5ac6828b638603a
+>
+> Alexander
 
-Vendor: The Apache Software Foundation
+Hey Alexander,
 
-Versions Affected:
-Spark versions through 2.1.2
-Spark 2.2.0 through 2.2.1
-Spark 2.3.0
+Thanks for the note. The issue in question has not yet been fully
+analyzed and I only did a quick check whether the affected code was
+present in RHEL 5 when filing it and must have misread my search results
+since the affected code is definitely not in RHEL 5. Sorry about that.
 
-Description:
-In Apache Spark up to and including 2.1.2, 2.2.0 to 2.2.1, and 2.3.0, it's
-possible for a malicious user to construct a URL pointing to a Spark
-cluster's UI's job and stage info pages, and if a user can be tricked into
-accessing the URL, can be used to cause script to execute and expose
-information from the user's view of the Spark UI. While some browsers like
-recent versions of Chrome and Safari are able to block this type of attack,
-current versions of Firefox (and possibly others) do not.
+We do have an "Under investigation" state for the affectedness table on
+the CVE pages, which is used when no triage has been done on a filed
+issue.
 
-Mitigation:
-1.x, 2.0.x, and 2.1.x users should upgrade to 2.1.3 or newer
-2.2.x users should upgrade to 2.2.2 or newer
-2.3.x users should upgrade to 2.3.1 or newer
-
-Credit:
-Spencer Gietzen, Rhino Security Labs
-
-References:
-https://spark.apache.org/security.html
-
---000000000000ad43420570bef565--
+-- 
+Martin Prpič / Red Hat Product Security
