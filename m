@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/3
-Message-ID: <CAGeh-pGUHvb09esu_-vekerggwQWU8i64btEE_qgYmkw5o4XUw@mail.gmail.com>
-Date: Tue, 25 Apr 2017 10:47:45 +0200
-From: Dejan Bosanac <dejan@...httale.net>
-To: "dev@...ivemq.apache.org" <dev@...ivemq.apache.org>,  "users@...ivemq.apache.org" <users@...ivemq.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com,  Apache Security Response Team <security@...che.org>, Chess Hazlett <chazlett@...hat.com>
-Subject: [ANNOUNCE] CVE-2015-7559 - DoS in client via shutdown command
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/03/2
+Message-ID: <alpine.LFD.2.20.1704031535260.21857@wniryva>
+Date: Mon, 3 Apr 2017 15:41:12 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-7377 Qemu: 9pfs: host memory leakage via v9fs_create
 Content-Type: text/plain; charset=utf-8
 
-There following security vulnerability was reported against Apache
-ActiveMQ 5.14.4 and older versions.
+   Hello,
 
-Please check the following document and see if you’re affected by the issue.
+Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable 
+to a memory leakage issue. It could occur while doing a I/O operation via 
+v9fs_create/v9fs_lcreate routine.
 
-http://activemq.apache.org/security-advisories.data/CVE-2015-7559-announcement.txt?version=1&modificationDate=1493024710000&api=v2
+A privileged user/process inside guest could use this flaw to leak host memory 
+resulting in Dos.
 
-Apache ActiveMQ 5.14.5 with appropriate fixes was released and
-are available for upgrade.
+Upstream patch:
+---------------
+   -> http://git.qemu-project.org/?p=qemu.git;a=commit;h=d63fb193e71644a073b77ff5ac6f1216f2f6cf6e
 
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1437871
 
-Regards
+This issue was reported by Li Qiang of 360.cn Inc.
+
+Thank you.
 --
-Dejan Bosanac
-http://sensatic.net/about
-
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
