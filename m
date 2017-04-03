@@ -1,35 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/11
-Message-ID: <alpine.LFD.2.20.1703012335480.15645@wniryva>
-Date: Wed, 1 Mar 2017 23:38:14 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-6414 Qemu: libcacard: host memory leakage while creating new APDU
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/03/1
+Message-ID: <87lgrhx6lp.fsf@redhat.com>
+Date: Mon, 03 Apr 2017 10:01:22 +0200
+From: Martin Prpic <mprpic@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Solar Designer writes:
 
-The CAC(Common Access Card) library, used by Quick Emulator(Qemu) to implement 
-smartcard support, is vulnerable to a host memory leakage issue. It could 
-occur while allocating a new APDU object using guest supplied raw byte stream 
-in 'vcard_apdu_new'.
+> To Red Hat folks:
+>
+> On Fri, Mar 31, 2017 at 07:20:20PM +0200, Andrey Konovalov wrote:
+>> On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@...gle.com> wrote:
+>> > CVE-2017-7308 [1] was assigned to the following issue:
+>> >
+>> > The packet_set_ring function in net/packet/af_packet.c in the Linux
+>> > kernel through 4.10.6 does not properly validate certain block-size
+>> > data, which allows local users to cause a denial of service (overflow)
+>> > or possibly have unspecified other impact via crafted system calls.
+>> >
+>> > The fix is sent upstream [2].
+>> 
+>> Update: the fix actually consists of 3 patches:
+>> 
+>> https://patchwork.ozlabs.org/patch/744811/
+>> https://patchwork.ozlabs.org/patch/744813/
+>> https://patchwork.ozlabs.org/patch/744812/
+>> 
+>> > [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
+>> >
+>> > [2] https://patchwork.ozlabs.org/patch/744811/
+>
+> Red Hat currently says all RHEL starting with RHEL5 are affected:
+>
+> https://access.redhat.com/security/cve/cve-2017-7308
+>
+> However, the corresponding Bugzilla entry has no mention of that:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1437404
+>
+> So is it just a better-safe-than-sorry default to list products as
+> affected until known otherwise?  If so, maybe Unknown would be better?
+>
+> RHEL5 doesn't yet include TPACKET_V3.  I did not check RHEL6.
+>
+> https://github.com/torvalds/linux/commit/f6fb8f100b807378fda19e83e5ac6828b638603a
+>
+> Alexander
 
-A guest user/process could use this flaw to leak host memory resulting in DoS.
+Hey Alexander,
 
-Upstream patch:
----------------
-   -> https://cgit.freedesktop.org/spice/libcacard/commit/?id=9113dc6a303604a2d9812ac70c17d076ef11886c
+Thanks for the note. The issue in question has not yet been fully
+analyzed and I only did a quick check whether the affected code was
+present in RHEL 5 when filing it and must have misread my search results
+since the affected code is definitely not in RHEL 5. Sorry about that.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1427833
+We do have an "Under investigation" state for the affectedness table on
+the CVE pages, which is used when no triage has been done on a filed
+issue.
 
-This issue was reported by Li Qiang of 360.cn Inc.
-
-'CVE-2017-6414' assigned via -> http://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+-- 
+Martin Prpič / Red Hat Product Security
