@@ -1,33 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/08/4
-Message-ID: <CAEccTyz4bbvAf+GAY_86HUzdKMN74DUAV8GQkh2oGy+tO1ic7g@mail.gmail.com>
-Date: Fri, 08 Sep 2017 11:20:23 +0000
-From: Sean Owen <srowen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/03/3
+Message-Id: CVE-2017-7239-8662@webweaving.org
+Date: Mon, 3 Apr 2017 12:22:15 +0200 (CEST)
+From: Dirk-Willem van Gulik <dirkx@...weaving.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-12612 Unsafe deserialization in Apache Spark launcher API
+Subject: CVE-2017-7239: ninka license identification tool:  insufficient escaping of external input [vs]
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Vendor: The Apache Software Foundation
 
-Versions Affected:
-Versions of Apache Spark from 1.6.0 until 2.1.1
+             ninka license identification tool
+          insufficient escaping of external input
 
-Description:
-In Apache Spark 1.6.0 until 2.1.1, the launcher API performs unsafe
-deserialization of data received by  its socket. This makes applications
-launched programmatically using the launcher API potentially
-vulnerable to arbitrary code execution by an attacker with access to any
-user
-account on the local machine. It does not affect apps run by spark-submit or
-spark-shell. The attacker would be able to execute code as the user that ran
-the Spark application. Users are encouraged to update to version 2.2.0 or
-later.
+                CVE-2017-7239 / CVSS 9.3
+                        1.07
 
-Mitigation:
-Update to Apache Spark 2.2.0 or later.
+The ninka license identification tool does not properly escape
+special characters in the files it encounters - such as the ‘&’.
 
-Credit:
-Aditya Sharad, Semmle
+In case of an alien code bases; or a code base that is brought in for
+examination - a third party may doctor the file names as to cause 
+a certain result of the license compliance scan. Or the attacker may 
+adversely affect the ninka user their environment (e.g. an automated
+continuous integration setup) by causing it to hang.
 
+This can then lead to unauthorised disclosure of information,
+unreliable compliance information or a denial of services.
+
+Versions affected: 
+- - ------------------
+All versions up to and including version 1.3.0.
+
+Resolution:
+- - -----------
+Upgrade to version 1.3.2 or later - available on
+https://github.com/dmgerman/ninka. 
+
+Mitigations and work arounds:
+- - -----------------------------
+Test the filenames passed for obvious issues. Given that ninka is
+generally only applied to (source)code - a regex matching just
+the alphanumerics and a few glyphs such as the dash and dot
+can usually be applied.
+
+Credits and timeline
+- - --------------------
+The flaw was found and reported by Dirk-Willem van Gulik <dirkx
+@ webweaving.org) on the 12 of March 2017. D.M. German <dmg
+@ turingmachine.org >  fixed the issue on the 27th of March 2017.
+
+2017-01-28	vulnerability found, reported to authors.
+2017-03-21	sample found in alien codebase.
+2017-03-23	reported to more recent email addresses of authors .
+2017-03-26	reported to the authors by phone.
+2017-03-27	CVE issued by mitre. fix created by author and
+                pushed to github (1.3.1)
+2017-04-01	Full disclosure process started.
+2017-04-03	Updated the advisory; an improverd fix is
+                present in version 1.3.2.
+
+Common Vulnerability Scoring (Version 3) and vector
+- - ---------------------------------------------------
+CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H/E:H/RC:R/CR:L/IR
+  :L/AR:L/MAV:L/MAC:L/MPR:N/MUI:N/MS:U/MC:H/MI:H/MA:H
+
+CVSS Base Score          9.3
+CVSS Temporal Score      9.0
+CVSS Environmental Score 6.4
+
+1.07 / : 2719 $
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0
+
+iEYEARECAAYFAljiIlAACgkQ/W+IxiHQpxsahQCeJLsg0CkHAPQOUymwDM54R7Qj
+CMEAoOtJVpgi76+CqprE/q6G+JzHur+y
+=jRAl
+-----END PGP SIGNATURE-----
