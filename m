@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5751" "Tuesday" "14" "May" "2019" "08:35:22" "+0000" "halfdog" "me@halfdog.net" nil "121" nil nil nil nil "5" nil nil (number mark "U       me@halfdog.n May 14  121/5751  " thread-indent "\"Re: [oss-security] fprintd: found storing user fingerprints without encryption\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] fprintd: found storing user fingerprints without encryption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2856" "Tuesday" "4" "April" "2017" "17:20:39" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170404152039.GH3687@suse.de>" "77" "Re: [oss-security] Linux kernel ping socket / AF_LLC connect() sin_family race" nil nil nil "4" "2017040415:20:39" "[oss-security] Linux kernel ping socket / AF_LLC connect() sin_family race" (number mark "U       meissner@sus Apr  4   77/2856  " thread-indent "\"Re: [oss-security] Linux kernel ping socket / AF_LLC connect() sin_family race\"\n") "<20170325001057.GA31046@openwall.com>" ("<20170324202714.GA29241@openwall.com>" "<CAAeHK+yrE7+BZztHVn-2jKgLqgzgbBEa4VWCO8SL45oD0nRxEw@mail.gmail.com>" "<CANn89iK-7r3KozC4K1rmWpJ1jM-bhBqessUrkg8HoftnjOks5g@mail.gmail.com>" "<20170325001057.GA31046@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30116 invoked by uid 550); 14 May 2019 08:35:27 -0000
+Received: (qmail 5779 invoked by uid 550); 4 Apr 2017 15:20:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,138 +12,110 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30095 invoked from network); 14 May 2019 08:35:26 -0000
-From: halfdog <me@halfdog.net>
+Received: (qmail 5760 invoked from network); 4 Apr 2017 15:20:52 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 4 Apr 2017 17:20:39 +0200
+From: Marcus Meissner <meissner@suse.de>
 To: oss-security@lists.openwall.com
-In-reply-to: <CAPZbWnfSknrMDTR+5wjGO6Bgcym8uLa60etn7NXab987tE7quQ@mail.gmail.com>
-References: <CAPZbWnf64OLnNjuJuzmmsVNSi8tOPX+Kaiy0Evd47dw+NQP3NQ@mail.gmail.com> <CAPZbWne7ggvhAc3q22e1kYgmiQi7L+OTTmzXh8YBybZrcDHvjg@mail.gmail.com> <alpine.LNX.2.02.1905081051030.29468@i8.fpunygfrxha.qr> <6fe9f0a9-01d6-369c-5146-23c7a6d9555c@thermi.consulting> <CAPZbWnfDh0dZ8wpnLN7OsXAkKrBPyfnt52Cnz=74t4XCVXG3BQ@mail.gmail.com> <dc36d64e-ac76-29f7-5d54-225b54c2d707@thermi.consulting> <CAPZbWnfVUF-YR21kg=1c7Yh8wW=QBhOd0hW+2pvMjf+eyA=KUg@mail.gmail.com> <CAPZbWncGi8L7OkotuHnajwKutYEmPnY8oYc6gwG8yeMY0wPTNA@mail.gmail.com> <alpine.LNX.2.02.1905081352280.25606@i8.fpunygfrxha.qr> <872-1557480054.563908@mmCb.bu1W.zlxn> <CAPZbWnfSknrMDTR+5wjGO6Bgcym8uLa60etn7NXab987tE7quQ@mail.gmail.com>
-Comments: In-reply-to Seong-Joong Kim <sungjungk@gmail.com>
-   message dated "Fri, 10 May 2019 19:31:34 +0900."
+Cc: Eric Dumazet <edumazet@google.com>,
+	Andrey Konovalov <andreyknvl@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
+	James Morris <jmorris@namei.org>,
+	Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>,
+	Patrick McHardy <kaber@trash.net>, netdev <netdev@vger.kernel.org>,
+	LKML <linux-kernel@vger.kernel.org>,
+	Vasily Kulikov <segoon@openwall.com>
+Message-ID: <20170404152039.GH3687@suse.de>
+References: <20170324202714.GA29241@openwall.com>
+ <CAAeHK+yrE7+BZztHVn-2jKgLqgzgbBEa4VWCO8SL45oD0nRxEw@mail.gmail.com>
+ <CANn89iK-7r3KozC4K1rmWpJ1jM-bhBqessUrkg8HoftnjOks5g@mail.gmail.com>
+ <20170325001057.GA31046@openwall.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Date: Tue, 14 May 2019 08:35:22 +0000
-Message-ID: <2938-1557822922.903457@q0_S.WXHA.Kw1l>
-Subject: Re: [oss-security] fprintd: found storing user fingerprints without encryption
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170325001057.GA31046@openwall.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] Linux kernel ping socket / AF_LLC connect()
+ sin_family race
 
-Seong-Joong Kim writes:
-> I think my initial suggestion is not really good enough.
->
-> Currently, there is no way to defend this issue except for
-> supporting hardware, such as TPM or USB token, rather than
-> encryption by software in Linux environment.
->
-> If necessary, how about implementing interfaces to talk with
-> hardware security module, such as TPM or PKCS#11 compatible
-> devices.
+Hi,
 
->From those solutions I looked at (but not for fingerprint but
-other type of biometry), those using standard interfaces already
-seemed to be those allowing easiest and most stable integration
-with open source software. They do not require any specific libraries,
-components hardware drivers to be present on the target system,
-no proprietary protocols involved.
+did anyone request a CVE yet?
 
-Those solutions usually behave like a crypto-smart-card to be
-unlocked only by an external pin-pad mounted on the card reader,
-except that you do not enter a pin but use your biometrics data.
+Ciao, Marcus
+On Sat, Mar 25, 2017 at 01:10:57AM +0100, Solar Designer wrote:
+> On Fri, Mar 24, 2017 at 03:21:06PM -0700, Eric Dumazet wrote:
+> > Looks easy enough to fix ?
+> 
+> Oh.  Probably.  Thanks.  Need to test, but I guess you already did?
+> 
+> > diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
+> > index
+> > 2af6244b83e27ae384e96cf071c10c5a89674804..ccfbce13a6333a65dab64e4847dd510dfafb1b43
+> > 100644
+> > --- a/net/ipv4/ping.c
+> > +++ b/net/ipv4/ping.c
+> > @@ -156,17 +156,18 @@ int ping_hash(struct sock *sk)
+> >  void ping_unhash(struct sock *sk)
+> >  {
+> >         struct inet_sock *isk = inet_sk(sk);
+> > +
+> >         pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
+> > +       write_lock_bh(&ping_table.lock);
+> >         if (sk_hashed(sk)) {
+> > -               write_lock_bh(&ping_table.lock);
+> >                 hlist_nulls_del(&sk->sk_nulls_node);
+> >                 sk_nulls_node_init(&sk->sk_nulls_node);
+> >                 sock_put(sk);
+> >                 isk->inet_num = 0;
+> >                 isk->inet_sport = 0;
+> >                 sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
+> > -               write_unlock_bh(&ping_table.lock);
+> >         }
+> > +       write_unlock_bh(&ping_table.lock);
+> >  }
+> >  EXPORT_SYMBOL_GPL(ping_unhash);
+> 
+> FWIW, in Pavel's original implementation for 2.4.32 (unused), this was:
+> 
+> static void ping_v4_unhash(struct sock *sk)
+> {
+> 	DEBUG(("ping_v4_unhash(sk=%p,sk->num=%u)\n", sk, sk->num));
+> 	write_lock_bh(&ping_hash_lock);
+> 	if (sk->pprev) {
+> 		if (sk->next)
+> 		       sk->next->pprev = sk->pprev;
+> 		*sk->pprev = sk->next;
+> 		sk->pprev = NULL;
+> 		sk->num = 0;
+> 		sock_prot_dec_use(sk->prot);
+> 		__sock_put(sk);
+> 	}
+> 	write_unlock_bh(&ping_hash_lock);
+> }
+> 
+> Looks like the erroneous optimization (not expecting concurrent activity
+> on the same socket?) was introduced during conversion to 2.6's hlists.
+> 
+> So far this cursed function had 3 bugs, two of them security (including
+> this one) and one probably benign (or if not, then effectively a subset
+> of this bug as it performed some unneeded / stale debugging work before
+> acquiring the lock), with all 3 introduced in forward-porting.  Maybe
+> the nature of forward-porting activity makes people relatively
+> inattentive ("compiles with the new interfaces and still works? must be
+> correct"), compared to when writing new code.
+> 
+> Anyhow, I share some responsibility for this mess, for having advocated
+> this patch being forward-ported and merged back then.  I still like
+> having this functionality and its userspace security benefits... but I
+> don't like the kernel bugs.
+> 
+> Alexander
+> 
 
-I did not look on the PC-to-reader protocol in detail but I assume
-that requesting e.g. decryption/signing from the card, the PC
-will ask the card (via the reader) to perform the crypto operation,
-the card replies with something like "pin required", the PC displays
-a message to the user, the user enters pin (or biometry), the
-reader replies with "card now usable" or "card locked/card destroyed"
-when exceeding the maximum number of attempts.
-
-> Otherwise, users should avoid using fingerprint
-> authentication/identification.
-
-I would not say that in general. That really depends on the security
-requirements of user. While a standard door lock might be appropriate
-to secure a house (even if the key material can be reconstructed
-by stealing the lock, the door or the complete house - last case
-is similar to a standard notebook theft), the same lock will
-be deemed inappropriate to secure nuclear facilities. Also the
-usecases for locking/unlocking should be considered: do you perform
-50 lock/unlocks per day for a device, that would be otherwise
-quite unprotected (no password, because password entry is too
-inconvenient - or using a weak password) or do you protect data
-at rest only accessed once per week (final storage location of
-a disk to disk to disk backup cascade)?
-
-So fingerprint might be the sweetest spot depending on the asset
-value, but also the value of the (non-renewable) biodata and
-the usecases of the locking scheme.
-
-hd
-
-> 2019년 5월 10일 (금) 오후 6:22, halfdog <me@halfdog.net>님이
-> 작성:
->
->> Roman Drahtmueller writes: > [...] > > > I am not insisting
->> that encryption key should be on the disk or is > > encrypted
->> with a static key that is embedded in the binary. > > Instead,
->> we can make fprintd to use a TPM, if available. > > > The
->> problem persists: The encryption key must be available for
->> the FP > data to be accessible, and so it is for an attacker.
->> It doesn't matter > where you store the key. > > A TPM (and,
->> transitively, products that encrypt with TPM-sealed or > TPM-bound
->> key material) is good for the situation where the system is
->> > physically stolen while powered down (or the drive fails).
->> But that's not > our problem here.
->>
->> Therefore dedicated tamper-proof IC-designs+embedded software
->> exist, that perform the biometry template storage and matching
->> on the chip (MoC). There are some vendors out there providing
->> such hardware + MoC-algorithms, but mainly fingerprint and
->> some iris biometry variants seem certified so far. These are
->> intended for access cards or USB-tokens in two or more-factor
->> authentication schemes in a 1-to-1 match fashion, not as
->> centralized 1-to-many matching schemes also deployed rarely
->> (e.g. in Japan where they really like biometrics as long as
->> you do not have to touch the biometry reader ...).
->>
->> > [...] > > > Otherwise, but even though it is not perfect,
->> it would be better to apply > > the fingerprint data protection,
->> such as keyring or access control, rather > > than raw fingerprint
->> template. > > FYI, Windows Hello might use Next Generation
->> Cryptography (called CNG) to > > protect and store user private
->> data and encryption keys. > > There are not many options left
->> to solve the stored credential problem, > and it should be
->> clear that saving a file, encrypted or not, is not the > solution.
->> > > One possible solution is to use a hash algorithm, potentially
->> cost-based, > to derive a bit string (that is suitable for
->> comparison with the > persisted authoritative string) from
->> the output of a fingerprint reader.
->>
->> At the momenent I do not know of any algorithms providing
->> sufficient entropy binary hash data from fingerprints in a
->> reliable way. Changing extraction to deliver more entropy
->> results in higher FNR during authentication step later on,
->> I think.
->>
->> > [...]
->>
->> When working on a project to provide highest security MoC
->> solutions with Linux (for other type of biometry, not
->> fingerprints), Nitrokey was offering an open-source USB-token
->> hardware (even the PCBs are open source, if I remember correctly).
->> That platform seemed closest to be a good starting point for
->> developing such an open source MoC biometry solution as they
->> sell also one part with a certified tamper proof trusted element
->> that seemed to allow performing biometry template storage
->> and comparison on chip if programmed correctly.
->>
->> Time in the project was too limited to explore, if that hardware
->> would REALLY allow to upgrade it to a powerful, highly secure
->> but still affordable open source biometry system for use by
->> journalists, human rights activists, NGOs ... and nerds, e.g.
->> for password+biometry secured full disk encryption schemes.
->>
->> > [...]
->>
->> hd
->>
->>
-
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
