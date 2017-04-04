@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2594" "Wednesday" "13" "May" "2015" "19:18:23" "+0300" "Solar Designer" "solar@openwall.com" "<20150513161823.GA17176@openwall.com>" "45" "Re: [oss-security] VENOM - CVE-2015-3456" nil nil nil "5" "2015051316:18:23" "[oss-security] VENOM - CVE-2015-3456" (number mark "        solar@openwa May 13   45/2594  " thread-indent "\"Re: [oss-security] VENOM - CVE-2015-3456\"\n") "<ba24ac6088a34b9d97fd721591f1e922@casmbox01.crowdstrike.sys>" ("<ba24ac6088a34b9d97fd721591f1e922@casmbox01.crowdstrike.sys>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1714" "Tuesday" "4" "April" "2017" "08:06:14" "+0100" "Dominic Cleal" "dominic@cleal.org" "<99c89101-3138-4cb5-a193-c92250736aab@cleal.org>" "59" "[oss-security] CVE-2017-2667: Hammer CLI SSL certificate verification disabled" nil nil nil "4" "2017040407:06:14" "[oss-security] CVE-2017-2667: Hammer CLI SSL certificate verification disabled" (number mark "U       dominic@clea Apr  4   59/1714  " thread-indent "\"[oss-security] CVE-2017-2667: Hammer CLI SSL certificate verification disabled\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11630 invoked by uid 550); 13 May 2015 16:18:39 -0000
+Received: (qmail 12078 invoked by uid 550); 4 Apr 2017 07:06:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11578 invoked from network); 13 May 2015 16:18:38 -0000
-Message-ID: <20150513161823.GA17176@openwall.com>
-References: <ba24ac6088a34b9d97fd721591f1e922@casmbox01.crowdstrike.sys>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ba24ac6088a34b9d97fd721591f1e922@casmbox01.crowdstrike.sys>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Wed, 13 May 2015 19:18:23 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] VENOM - CVE-2015-3456
-To: Jason Geffner <jason@crowdstrike.com>
+Received: (qmail 12048 invoked from network); 4 Apr 2017 07:06:26 -0000
+From: Dominic Cleal <dominic@cleal.org>
+To: oss-security@lists.openwall.com
+Cc: foreman-security@googlegroups.com
+Message-ID: <99c89101-3138-4cb5-a193-c92250736aab@cleal.org>
+Date: Tue, 4 Apr 2017 08:06:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="bU5R02j1EgmvpFqIIf072MX5psuKxC6Vl"
+Subject: [oss-security] CVE-2017-2667: Hammer CLI SSL certificate verification disabled
 
-All -
+--bU5R02j1EgmvpFqIIf072MX5psuKxC6Vl
+Content-Type: multipart/mixed; boundary="ciSMwlFkLB2c0jesG2p1CG1R6VfM7X794";
+ protected-headers="v1"
+From: Dominic Cleal <dominic@cleal.org>
+To: oss-security@lists.openwall.com
+Cc: foreman-security@googlegroups.com
+Message-ID: <99c89101-3138-4cb5-a193-c92250736aab@cleal.org>
+Subject: CVE-2017-2667: Hammer CLI SSL certificate verification disabled
 
-JFYI, Jason first brought this issue to the distros list on April 30.
+--ciSMwlFkLB2c0jesG2p1CG1R6VfM7X794
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Jason -
+CVE-2017-2667: SSL/HTTPS server certificates are not verified by default
+in Hammer CLI
 
-Thank you for making this mandatory oss-security posting, but ...
+Hammer CLI, a REST API-based CLI for Foreman, initiated HTTPS
+connections via the apipie-bindings and rest-client libraries without
+verifying the SSL certificate presented by the server. This could allow
+for man-in-the-middle attack.
 
-On Wed, May 13, 2015 at 12:22:19PM +0000, Jason Geffner wrote:
-> VENOM, CVE-2015-3456, is a security vulnerability in the virtual floppy drive code used by many computer virtualization platforms. This vulnerability may allow an attacker to escape from the confines of an affected virtual machine (VM) guest and potentially obtain code-execution access to the host. Absent mitigation, this VM escape could open access to the host system and all other VMs running on that host, potentially giving adversaries significant elevated access to the host's local network and adjacent systems.
+This issue was reported by Tomas Strachota.
 
-This is way too little technical detail.  Your distros list posting
-included a 4-page PDF file that actually contained some technical
-detail.  Ideally, you'd post a text-only advisory with at least similar
-level of detail in here.  Can you do that, please?
+Affects all known Hammer CLI versions
+Fix released in Hammer CLI 0.10.0
 
-> Exploitation of the VENOM vulnerability can expose access to corporate intellectual property (IP), in addition to sensitive and personally identifiable information (PII), potentially impacting the thousands of organizations and millions of end users that rely on affected VMs for the allocation of shared computing resources, as well as connectivity, storage, security, and privacy.
+Patch:
+https://github.com/theforeman/hammer-cli/commit/74b926ae24f47f1d93b778e06b6=
+4935e57b60e33
 
-This paragraph is purely PR.  Not appropriate content for oss-security.
+More information:
+https://theforeman.org/security.html#2017-2667
+http://projects.theforeman.org/issues/19033
+https://theforeman.org
 
-> Please see http://venom.crowdstrike.com/ for further details.
+--=20
+Dominic Cleal
+dominic@cleal.org
 
-While links to external resources are acceptable, ideally you'd include
-the technical detail right in your oss-security posting as well.
 
-Anyway, going to that URL I see only a FAQ that is lacking on technical
-detail, and download links for the graphics.  There isn't even a
-download link for the pretty PDF you had ready 2 weeks ago, or did I
-miss it?  Maybe add it now?  Once again, ideally the content should be
-right here and in text form rather than only on CrowdStrike website and
-"in graphics" or in PDF, but making that PDF available for download is a
-step in the right direction.
 
-I am sorry for the criticism.  I actually appreciate your discovery and
-handling of this vulnerability.  But you can clearly do better in the
-ways I mentioned above, and clearly people are now wondering whether the
-vulnerability is actually exploitable or just hype.  For example,
-questions and concerns and sarcasm of this sort have appeared multiple
-times on my Twitter timeline today.
 
-I'd appreciate it if you release more information to the general public.
 
-Thanks,
+--ciSMwlFkLB2c0jesG2p1CG1R6VfM7X794--
 
-Alexander
+--bU5R02j1EgmvpFqIIf072MX5psuKxC6Vl
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iFkEARECABkFAljjReYSHGRvbWluaWNAY2xlYWwub3JnAAoJEHx9Mm8sK3LMhJwA
+nR9JWJ0EKtlp7dFm8ydmEg+vKeKHAJ9b7A+oh6vHbUQIkHaR6MkrazHPmA==
+=Jcnt
+-----END PGP SIGNATURE-----
+
+--bU5R02j1EgmvpFqIIf072MX5psuKxC6Vl--
