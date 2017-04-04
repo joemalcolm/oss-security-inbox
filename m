@@ -1,32 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/3
-Message-ID: <20170817045446.GA21510@sin.redhat.com>
-Date: Thu, 17 Aug 2017 14:24:47 +0930
-From: Doran Moppert <dmoppert@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7555 augeas: crash/memory corruption when handling certain escaped strings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/04/3
+Message-Id: <E1cvNhy-0000Vj-CZ@xenbits.xenproject.org>
+Date: Tue, 04 Apr 2017 12:37:14 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 212 (CVE-2017-7228) - x86: broken check in memory_exchange() permits PV guest breakout
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was found in augeas <http://augeas.net/> that could
-allow attackers to cause memory corruption possibly leading to arbitrary
-code execution by passing crafted strings that would be mis-handled by
-parse_name().  A patch created by David Lutterkort is available on the
-following PR:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://github.com/hercules-team/augeas/pull/480
+            Xen Security Advisory CVE-2017-7228 / XSA-212
+                              version 3
 
-Briefly, input strings ending with a whitespace char would be escaped
-(aug_escape_name) then incorrectly trimmed in parse_name, leading to a
-later loop stepping over the terminating NUL character.  Crashes in
-libvirtd were observed.
+       x86: broken check in memory_exchange() permits PV guest breakout
 
-This issue was discovered by Han Han (Red Hat) through fuzzing with the
-Dice testing framework.
+UPDATES IN VERSION 3
+====================
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1478373
+Public release.
 
--- 
-Doran Moppert
-Red Hat Product Security
+ISSUE DESCRIPTION
+=================
 
-Content of type "application/pgp-signature" skipped
+The XSA-29 fix introduced an insufficient check on XENMEM_exchange
+input, allowing the caller to drive hypervisor memory accesses outside
+of the guest provided input/output arrays.
+
+IMPACT
+======
+
+A malicious or buggy 64-bit PV guest may be able to access all of
+system memory, allowing for all of privilege escalation, host crashes,
+and information leaks.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+Only x86 systems are affected.  ARM systems are not vulnerable.
+
+The vulnerability is only exposed to 64-bit PV guests.  HVM guests and
+32-bit PV guests can't exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM or 32-bit PV guests will avoid the vulnerability.
+
+The vulnerability can be avoided if the guest kernel is controlled by
+the host rather than guest administrator, provided that further steps
+are taken to prevent the guest administrator from loading code into
+the kernel (e.g. by disabling loadable modules etc) or from using
+other mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa212.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
+
+$ sha256sum xsa212*
+be1255bcda06158cdb86eb5297e8a271e05318e88cd21035c58a67f9ada6ccba  xsa212.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJY45NxAAoJEIP+FMlX6CvZMRMH/jGfTS4hcPuPAiarYhD4D4YQ
+pVir0eM/gm/8yJE/CT3m3dieKjjl+GAFW4ehRMoIoxVdSlhiwskx5V+8I5qR/Lo6
+6F9BPJw6eaEM62yw7YvMl7EuSexP3WgQeyRSf3BckZ0oxEPSHrIUi0/p0B7FNOFr
+C1EqK9d08dMKA5AEugpXgDI0t7fbYg3Kkm8SVnW5B8+5OI/iyTOOkFoPx1sbEvWX
+k+zgzodsDuoh8O25+pKVs+verknzGJm9UdCD7vHW8elLg1+1nS2BlfTSr478cDTE
+FnbnpuE7r1X/HHd2hPHDAZu3g2IUqfBJCLeYZfhIM9Eioei6bVLXh0f33DvlH/U=
+=L74k
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa212.patch" of type "application/octet-stream" (3392 bytes)
