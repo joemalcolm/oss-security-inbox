@@ -1,32 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/15/5
-Message-ID: <20171115203040.ygcpeaxl4lsgrkmo@eldamar.local>
-Date: Wed, 15 Nov 2017 21:30:40 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: collectd: CVE-2017-16820: snmp-plugin: double free of request PDU
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/9
+Message-ID: <8491986.Rf34Ez7Glo@blackgate>
+Date: Thu, 06 Apr 2017 15:31:23 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Interger overflow vulnerability in ptp_unpack_EOS_CustomFuncEx function of  libmtp (version 1.1.12 and below)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+The CVE assignments don't happen anymore here.
+Please refer to https://cveform.mitre.org/ 
 
-Collectd's snmp-plugin is prone to a double free vulneability. This
-issue was made aware to the Debian security team, but turned out to be
-public already in. MITRE has assigned CVE-2017-16820 for it. The snmp
-plugin contains a double-free vulnerability in the
-snmp_sess_synch_response() function. Commit message:
+If you obtain a CVE, would be great let this list know.
 
->  snmp plugin: Fix double free of request PDU
->
-> snmp_sess_synch_response() always frees request PDU, in both case of request
-> error and success. If error condition occurs inside of `while (status == 0)`
-> loop, double free of `req` happens.
-
-Upstream issue:
-https://github.com/collectd/collectd/issues/2291
-
-Fix:
-https://github.com/collectd/collectd/commit/d16c24542b2f96a194d43a73c2e5778822b9cb47
-(might need the followup commits to clean up)
-
-Regards,
-Salvatore
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
