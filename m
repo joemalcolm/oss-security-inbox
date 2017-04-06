@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3995" "Monday" "28" "August" "2017" "14:39:23" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<676040.933092253-sendEmail@localhost>" "105" "[oss-security] openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)" nil nil nil "8" "2017082814:39:23" "[oss-security] openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)" (number mark "U       ago@gentoo.o Aug 28  105/3995  " thread-indent "\"[oss-security] openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["12195" "Thursday" "6" "April" "2017" "21:26:56" "+0200" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<27cedcfc-2c7d-ac58-d2e0-f7e2c92beeb7@igalia.com>" "298" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0003" nil nil nil "4" "2017040619:26:56" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0003" (number mark "U       clopez@igali Apr  6  298/12195 " thread-indent "\"[oss-security] WebKitGTK+ Security Advisory WSA-2017-0003\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20027 invoked by uid 550); 28 Aug 2017 14:39:40 -0000
+Received: (qmail 1688 invoked by uid 550); 6 Apr 2017 19:27:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,117 +12,327 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20009 invoked from network); 28 Aug 2017 14:39:39 -0000
-Message-ID: <676040.933092253-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 28 Aug 2017 14:39:23 +0000
+Received: (qmail 1622 invoked from network); 6 Apr 2017 19:27:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Type:MIME-Version:Date:Message-ID:Cc:Subject:From:To; bh=6F60CeIpOnoDw0kbkaTpqoOEAWELRgf79D0kOyhl3mw=;
+	b=SbuGbjtMCEVXm2cMB96kgTqngAzBsBUIsvMhmMWeqjFcSjHlNNYx5OZuo5yJ68dffju3i+GoHDvB6friRNF1/VErfUC+cQFwfKYsyxpm9pO9XG6Yu3m7meILiCP1kawVtMFSaf3321L7jAXb/TxmxSU86iJUhTplBtRk9liqBteGPgwTGO6udTOkF8DW84o56Wk1X0D9klPe98hZTw1iBAwYSAdYTy9eh6mhqcuD1tl3gniCMumJPelO8yR4N+wv0IlG/f4qcJlWvTeWdEu06A5InkrGRLlWlMk2MpviditkvyBbsYzNaN5pBx+Edb8XyAKYjhOpGXd5m1czpgWl0Q==;
+To: "webkit-gtk@lists.webkit.org" <webkit-gtk@lists.webkit.org>
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
+ url=http://key.neutrino.es
+X-Enigmail-Draft-Status: N1110
+Organization: Igalia S.L.
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Mail-Followup-To: "webkit-gtk@lists.webkit.org"
+ <webkit-gtk@lists.webkit.org>, security@webkit.org,
+ distributor-list@gnome.org, oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com
+Message-ID: <27cedcfc-2c7d-ac58-d2e0-f7e2c92beeb7@igalia.com>
+Date: Thu, 6 Apr 2017 21:26:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-363004.952975647"
-Subject: [oss-security] openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="seID20dN3Vpm9PXww4ckfu6OJII6g9hOB"
+Subject: [oss-security] WebKitGTK+ Security Advisory WSA-2017-0003
 
-------MIME delimiter for sendEmail-363004.952975647
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--seID20dN3Vpm9PXww4ckfu6OJII6g9hOB
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-openjpeg is an open-source JPEG 2000 library.
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0003
+------------------------------------------------------------------------
 
-The complete ASan output of the issue:
+Date reported      : April 06, 2017
+Advisory ID        : WSA-2017-0003
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0003.html
+CVE identifiers    : CVE-2016-9642, CVE-2016-9643, CVE-2017-2364,
+                     CVE-2017-2367, CVE-2017-2376, CVE-2017-2377,
+                     CVE-2017-2386, CVE-2017-2392, CVE-2017-2394,
+                     CVE-2017-2395, CVE-2017-2396, CVE-2017-2405,
+                     CVE-2017-2415, CVE-2017-2419, CVE-2017-2433,
+                     CVE-2017-2442, CVE-2017-2445, CVE-2017-2446,
+                     CVE-2017-2447, CVE-2017-2454, CVE-2017-2455,
+                     CVE-2017-2457, CVE-2017-2459, CVE-2017-2460,
+                     CVE-2017-2464, CVE-2017-2465, CVE-2017-2466,
+                     CVE-2017-2468, CVE-2017-2469, CVE-2017-2470,
+                     CVE-2017-2471, CVE-2017-2475, CVE-2017-2476,
+                     CVE-2017-2481.
 
-# opj_compress -n 1 -i $FILE -o null.j2k
-==159529==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7fde59900160 at pc 0x000000450bef bp 0x7ffe7641f3c0 sp 0x7ffe7641eb70
-WRITE of size 36 at 0x7fde59900160 thread T0
-    #0 0x450bee in scanf_common /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors_format.inc:343
-    #1 0x451d20 in __interceptor___isoc99_vfscanf /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1265
-    #2 0x451e02 in __interceptor___isoc99_fscanf /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1282
-    #3 0x525417 in pgxtoimage /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/convert.c:1188:9
-    #4 0x50b520 in main /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/opj_compress.c:1831:21
-    #5 0x7fde5d0c1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x41bc18 in _start (/usr/bin/opj_compress+0x41bc18)
+Several vulnerabilities were discovered in WebKitGTK+.
 
-Address 0x7fde59900160 is located in stack of thread T0 at offset 352 in frame
-    #0 0x52523f in pgxtoimage /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/convert.c:1158
+CVE-2016-9642
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to Gustavo Grieco.
+    JavaScriptCore in WebKit allows attackers to cause a denial of
+    service (out-of-bounds heap read) via a crafted Javascript file.
 
-  This frame has 16 object(s):
-    [32, 33) 'c1.i192'
-    [48, 49) 'c2.i193'
-    [64, 65) 'c3.i'
-    [80, 81) 'c4.i'
-    [96, 97) 'c1.i188'
-    [112, 113) 'c2.i'
-    [128, 129) 'c1.i183'
-    [144, 145) 'c1.i'
-    [160, 164) 'w'
-    [176, 180) 'h'
-    [192, 196) 'prec'
-    [208, 244) 'cmptparm'
-    [288, 289) 'endian1'
-    [304, 305) 'endian2'
-    [320, 352) 'signtmp'
-    [384, 416) 'temp' 0x0ffc4b318020: f2 f2 f2 f2 01 f2 01 f2 00 00 00 00[f2]f2 f2 f2
-  0x0ffc4b318030: 00 00 00 00 f3 f3 f3 f3 00 00 00 00 00 00 00 00
-  0x0ffc4b318040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ffc4b318050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ffc4b318060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ffc4b318070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==159529==ABORTING
-Aborted
+CVE-2016-9643
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Gustavo Grieco.
+    The regex code in WebKit allows remote attackers to cause a denial
+    of service (memory consumption) as demonstrated in a large number of
+    ($ (open parenthesis and dollar) followed by {-2,16} and a large
+    number of +) (plus close parenthesis).
 
-Affected version:
-2.2.0
+CVE-2017-2364
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to lokihardt of Google Project Zero.
+    This issue allows remote attackers to bypass the Same Origin Policy
+    and obtain sensitive information via a crafted web site.
 
-Fixed version:
-N/A
+CVE-2017-2367
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to lokihardt of Google Project Zero.
+    This issue allows remote attackers to bypass the Same Origin Policy
+    and obtain sensitive information via a crafted web site.
 
-Commit fix:
-https://github.com/uclouvain/openjpeg/commit/e5285319229a5d77bf316bb0d3a6cbd3cb8666d9
+CVE-2017-2376
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to an anonymous researcher, Chris Hlady of Google Inc, Yuyang
+    Zhou of Tencent Security Platform Department (security.tencent.com),
+    Muneaki Nishimura (nishimunea) of Recruit Technologies Co., Ltd.,
+    Michal Zalewski of Google Inc, an anonymous researcher.
+    This issue allows remote attackers to spoof the address bar by
+    leveraging text input during the loading of a page.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+CVE-2017-2377
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Vicki Pfau.
+    This issue involves the "WebKit Web Inspector" component. It allows
+    attackers to cause a denial of service (memory corruption and
+    application crash) by leveraging a window-close action during a
+    debugger-pause state.
 
-CVE:
-Waiting for a CVE assignment
+CVE-2017-2386
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to Andr=C3=A9 Bargull.
+    This issue allows remote attackers to bypass the Same Origin Policy
+    and obtain sensitive information via a crafted web site.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00327-openjpeg-stackoverflow-pgxtoimage
+CVE-2017-2392
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Max Bazaliy of Lookout.
+    This issue allows attackers to execute arbitrary code or cause a
+    denial of service (memory corruption) via a crafted app.
 
-Timeline:
-2017-08-18: bug discovered and reported to upstream
-2017-08-18: upstream released a patch
-2017-08-28: blog post about the issue
+CVE-2017-2394
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Apple.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
 
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+CVE-2017-2395
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to Apple.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/28/openjpeg-stack-based-buffer-overflow-write-in-pgxtoimage-convert-c/
+CVE-2017-2396
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to Apple.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+CVE-2017-2405
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to Apple.
+    This issue involves the "WebKit Web Inspector" component. It allows
+    remote attackers to execute arbitrary code or cause a denial of
+    service (memory corruption and application crash) via a crafted web
+    site.
+
+CVE-2017-2415
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Kai Kang of Tencent's Xuanwu Lab (tentcent.com).
+    This issue allows remote attackers to execute arbitrary code by
+    leveraging an unspecified "type confusion.".
+
+CVE-2017-2419
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Nicolai Gr=C3=B8dum of Cisco Systems.
+    This issue allows remote attackers to bypass a Content Security
+    Policy protection mechanism via unspecified vectors.
+
+CVE-2017-2433
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to Apple.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2442
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to lokihardt of Google Project Zero.
+    This issue involves the "WebKit JavaScript Bindings" component. It
+    allows remote attackers to bypass the Same Origin Policy and obtain
+    sensitive information via a crafted web site.
+
+CVE-2017-2445
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to lokihardt of Google Project Zero.
+    This issue allows remote attackers to conduct Universal XSS (UXSS)
+    attacks via crafted frame objects.
+
+CVE-2017-2446
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Natalie Silvanovich of Google Project Zero.
+    This issue allows remote attackers to execute arbitrary code via a
+    crafted web site that leverages the mishandling of strict mode
+    functions.
+
+CVE-2017-2447
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to Natalie Silvanovich of Google Project Zero.
+    This issue allows remote attackers to obtain sensitive information
+    or cause a denial of service (memory corruption) via a crafted web
+    site.
+
+CVE-2017-2454
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Ivan Fratric of Google Project Zero.
+    This issue allows allows remote attackers to execute arbitrary code
+    or cause a denial of service (memory corruption and application
+    crash) via a crafted web site.
+
+CVE-2017-2455
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to Ivan Fratric of Google Project Zero.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2457
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to lokihardt of Google Project Zero.
+    This issue allows allows remote attackers to execute arbitrary code
+    or cause a denial of service (memory corruption and application
+    crash) via a crafted web site.
+
+CVE-2017-2459
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Ivan Fratric of Google Project Zero.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2460
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Ivan Fratric of Google Project Zero.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2464
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to Jeonghoon Shin, Natalie Silvanovich of Google Project
+    Zero.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2465
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Zheng Huang and Wei Yuan of Baidu Security Lab.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2466
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Ivan Fratric of Google Project Zero.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2468
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to lokihardt of Google Project Zero.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2469
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to lokihardt of Google Project Zero.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2470
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to lokihardt of Google Project Zero.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2471
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Ivan Fratric of Google Project Zero.
+    A use-after-free vulnerability allows remote attackers to execute
+    arbitrary code via a crafted web site.
+
+CVE-2017-2475
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to lokihardt of Google Project Zero.
+    This issue allows remote attackers to conduct Universal XSS (UXSS)
+    attacks via crafted use of frames on a web site.
+
+CVE-2017-2476
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to Ivan Fratric of Google Project Zero.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
+
+CVE-2017-2481
+    Versions affected: WebKitGTK+ before 2.14.6.
+    Credit to 0011 working with Trend Micro's Zero Day Initiative.
+    This issue allows remote attackers to execute arbitrary code or
+    cause a denial of service (memory corruption and application crash)
+    via a crafted web site.
 
 
-------MIME delimiter for sendEmail-363004.952975647--
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
 
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+April 06, 2017
+
+
+--seID20dN3Vpm9PXww4ckfu6OJII6g9hOB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: You can fetch my GnuPG key from http://key.neutrino.es
+
+iQIcBAEBCgAGBQJY5paAAAoJEJZQic5rlfiClc8P/26TJ2fYjxPLUsCVKN3Tmsis
+b20n/98393NKZfDqV6QF8m3/unQ1zWxsT3rJfH7Lnhw8NjU2VGBV95jjT/CN7qyB
+IQm7Cwirczf+tH4Xkq7+4G0RX2BdxDbGeAaYQPhn9iovm2iwsXIo1FTmPbtCnH+o
+8SMT//WRg5nXNza2fmNyNpO9ySbBniYKdsR8sNk8ip/XN4FqD+zX2Zbi0g1uh7Kp
+eHFxAN7r9oURz8ynkXIBlR1gt6zEBd7flv4JcRKIJFd2/gBZK5jKuK6VFoB/ZcJa
+VwM/MX0lbQz2yfCSvTg0wu6YHCuwLiSLt4RUaCc/Vr8TeYuBBIqUAOUznRMAfKDn
+XUhlcHnNGl4G6sUgMJ4x/7KaiVn30dKlkV2OvM/RYFg0u9k1EGPrkxktBhxGlWMs
+joEUaxzPMLER5DgyFhIkOif0Bo9zuDOvDW8BMMJVx/cMTG+vo2Qh5gRrzDWmdgD4
+kXp6HwAcCJCYI1RPbmg12Jwxf+Dxw7OmVqcHnytifIwUnWbDI1n5hkD1GKr6M85H
+4G9TLz66/6N3zQK8hQtK7nyMlH5P29ZC7tUwKu4NYFjSoPZgftjxFz+QyQ/Q4M5s
+uasc4kDVbiPZmmvs2rSlLWUzVlpHMTS3gFiiJBrR6Bj3XY0QW54VXcQPQO9ie7jf
+y6qmkSkb3JSPtE3n3v8g
+=hQ8p
+-----END PGP SIGNATURE-----
+
+--seID20dN3Vpm9PXww4ckfu6OJII6g9hOB--
