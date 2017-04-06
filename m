@@ -1,36 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/28/1
-Message-ID: <20170828094932.GA22546@kroah.com>
-Date: Mon, 28 Aug 2017 11:49:32 +0200
-From: Greg KH <greg@...ah.com>
-To: 小雨 <1326397@...com>
-Cc: linux-distros@...openwall.org, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: Integer overflow in bttv driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/4
+Message-ID: <20170406103245.67949bfc@pc1>
+Date: Thu, 6 Apr 2017 10:32:45 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: libxslt math.random issue
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 28, 2017 at 05:42:24PM +0800, 小雨 wrote:
+Hi,
+
+On Thu, 6 Apr 2017 07:44:00 +0200
+Marcus Meissner <meissner@...e.de> wrote:
+
+> CVE-2015-9019 has been assigned to use of libexslt (in libxslt) usage
+> of "math.random" without initializing the randomseed.
 > 
-> > hello ,
-> > 
-> > I found a potential security problem which code located in https://github.com/torvalds/linux/blob/master/drivers/media/pci/bt8xx/bttv-driver.c <https://github.com/torvalds/linux/blob/master/drivers/media/pci/bt8xx/bttv-driver.c>.
-> > 
-> > In setup_window_lock function,as follows:
-> > 
-> > 
-> > 
-> > It did not check the clipcount param,causing a overflow.
+> https://bugzilla.gnome.org/show_bug.cgi?id=758400
+> https://bugzilla.suse.com/show_bug.cgi?id=934119
 
-Really?  What kernel version are you looking at?  The latest kernel tree
-shows this, from the repo you link to above:
-  https://github.com/torvalds/linux/blob/master/drivers/media/pci/bt8xx/bttv-driver.c#L2098
+I have some questions and comments:
 
-what am I missing here?
+1. What's the use of the random number and what's the security impact
+if it's not random? That's not explained
+In case of the bugreport.
+In case a cryptographically secure random number is required then using
+rand()/srand() is a bad idea anyway.
+(Unfortunately there's no secure random in the standard libc, but at
+least glibc now has getrandom.).
 
-Also, any specific reason you sent this to oss-security just a few
-minutes after sending it to security@...nel.org?  I don't really care
-for something like this that is not really an issue, but if it was,
-well, you sure didn't give anyone a chance to actually fix it :)
+2. This part of the patch looks a bit strange:
 
-thanks,
++	seed = time(NULL); /* just in case /dev/urandom is not there */
++	if (fd == -1) {
++		read (fd, &seed, sizeof(seed));
++		close (fd);
++	}
 
-greg k-h
+You're calling time() unconditionally, although it's kinda just a
+fallback. Why not
++	if (fd == -1) {
++		read (fd, &seed, sizeof(seed));
++		close (fd);
++	} else {
++		seed = time(NULL);
++	}
+?
+
+(obviously using time is not a secure way to do random numbers, if
+secure numbers are required cross-plattform you need to do this
+otherwise anyway)
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
