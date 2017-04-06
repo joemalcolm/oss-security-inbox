@@ -1,42 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/6
-Message-ID: <20170120081301.962@usenet.piggo.com>
-Date: Fri, 20 Jan 2017 07:20:33 +0000 (UTC)
-From: Sébastien Delafond <seb@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: cgiemail multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/6
+Message-ID: <081AF1E16E81CF4EB0B01F4D39B2D2A14B4EAFD5@EXMBX-TJ008.tencent.com>
+Date: Thu, 6 Apr 2017 08:45:32 +0000
+From: rudykewang(王永科) <rudykewang@...cent.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request: Interger overflow vulnerability in ptp_unpack_OPL function of  libmtp (version 1.1.12 and below)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-the Debian security team would like to request CVEs for the following
-vulnerabilities in cgiemail, all discovered by the cPanel Security Team,
-and made public in their TSR-2017-0001 advisory[0]:
-
-  * SEC-212 Format string injection
-
-    The ability to supply arbitrary format strings to cgiemail and
-    cgiecho allowed code execution whenever a user was able to provide a
-    cgiemail template file.
-    
-  * SEC-214 Open redirect
-
-    The cgiemail and cgiecho binaries served as an open redirect due to
-    their handling of the “success” and “failure” parameters.
-
-  * SEC-215 HTTP header injection
-
-    The handling of redirects in cgiemail and cgiecho did not protect
-    against the injection of additional HTTP headers.
-
-  * Reflected XSS vulnerability
-
-    The "addendum" parameter was reflected without any escaping in
-    success and error messages produced by cgiemail and cgiecho.
-
-Cheers,
-
---Seb
-
-[0] https://news.cpanel.com/tsr-2017-0001-full-disclosure
-
+Hi, I find an interger overflow vulnerability in ptp-pack.c(ptp_unpack_OPL  function) of  libmtp (version 1.1.12 and below) and report it to http://libmtp.sourceforge.net.
+The fix is here: https://sourceforge.net/p/libmtp/mailman/message/35729062
+Could you assign a CVE number for this? This is Yongke Wang of Tencent's Xuanwu Lab (xlab.tencent.com).
