@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/24/3
-Message-ID: <459c5905-fded-264c-ac85-c5a456aa836e@linux.com>
-Date: Thu, 24 Aug 2017 17:52:45 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: oss-security@...ts.openwall.com, Tom Herbert <tom@...bertland.com>, "David S. Miller" <davem@...emloft.net>
-Subject: Linux kernel: fixed bug in net/core/flow_dissector.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/2
+Message-ID: <20170406054400.GC32355@suse.de>
+Date: Thu, 6 Apr 2017 07:44:00 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: libxslt math.random issue
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-I was asked to investigate a suspicious kernel crash on some Linux
-server. It is at least a remote DoS (and maybe RCE): Linux is crashed by
-receiving a single special MPLS packet.
+CVE-2015-9019 has been assigned to use of libexslt (in libxslt) usage of "math.random" 
+without initializing the randomseed.
 
-I bisected and found out that the bug was introduced in
-commit b3baa0fbd02a1a9d493d8cb92ae4a4491b9e9d13
-Author: Tom Herbert <tom@...bertland.com>
-Date:   Thu Jun 4 09:16:46 2015 -0700
+https://bugzilla.gnome.org/show_bug.cgi?id=758400
+https://bugzilla.suse.com/show_bug.cgi?id=934119
 
-And was later fixed it in
-commit a6e544b0a88b53114bfa5a57e21b7be7a8dfc9d0
-Author: Tom Herbert <tom@...bertland.com>
-Date:   Tue Sep 1 09:24:26 2015 -0700
+Surely, one can argue that the calling program should do srand() or similar, but its
+too easy to forget.
 
-So currently the mainline kernel is not affected.
 
-However, this fix is obfuscated and looks like unimportant code
-cleanup from the first glance. IMO that is not good. Moreover,
-the fix is a part of a branch which breaks the kernel build, so
-bisecting was not easy.
+FWIW, why is glibc not doing srand(RANDOMVECTOR) during startup... :/
 
-Actually the vulnerability is the usage of uninitialized variables. It
-is caused by returning true without setting values for n_proto, ip_proto
-and thoff in __skb_flow_dissect().
-
-Is it worth requesting a CVE ID for that issue?
-
-Best regards,
-Alexander
+Ciao, Marcus
