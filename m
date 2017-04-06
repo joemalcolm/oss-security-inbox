@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/5
-Message-ID: <87po9iugl6.fsf@gnu.org>
-Date: Fri, 20 Oct 2017 14:52:21 +0200
-From: ludo@....org (Ludovic Courtès)
-To: 连一汉 <lianyihan@....cn>
-Cc: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/1
+Message-ID: <03aa7ab9-e00e-f9dc-406d-e017f031f73d@redhat.com>
+Date: Thu, 6 Apr 2017 01:50:17 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2017-003] XSS in Horizon federation mappings UI (CVE-2017-7400)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+====================================================
+OSSA-2017-003: XSS in Horizon federation mappings UI
+====================================================
 
-连一汉 <lianyihan@....cn> skribis:
+:Date: April 04, 2017
+:CVE: CVE-2017-7400
 
-> FFmpeg trigger double-free when it parsing an craft AVI file to MKV file using ffvhuff decoder.
 
-[...]
+Affects
+~~~~~~~
+- Horizon: >=9.0.0 <=9.1.1, >=10.0.0 <=10.0.2, ==11.0.0
 
-> This was fixed with the following commit:
-> https://www.ffmpeg.org/download.html#releases
 
-Looks like this is not the URL you intended to share, is it?
+Description
+~~~~~~~~~~~
+Eric Brown from VMware reported a vulnerability in Horizon. By
+creating a malicious federation mapping, an adminstrator may conduct a
+persistent XSS attack. All Horizon setups are affected.
 
-Ludo’.
+
+Patches
+~~~~~~~
+- https://review.openstack.org/442455 (Mitaka)
+- https://review.openstack.org/442454 (Newton)
+- https://review.openstack.org/442453 (Ocata)
+- https://review.openstack.org/442277 (Pike)
+
+
+Credits
+~~~~~~~
+- Eric Brown from VMware (CVE-2017-7400)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1667086
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7400
+
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
