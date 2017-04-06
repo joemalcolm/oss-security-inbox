@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["486" "Saturday" "11" "June" "2016" "07:56:27" "+0200" "Willy Tarreau" "w@1wt.eu" "<20160611055627.GA26999@1wt.eu>" "15" "[oss-security] Re: [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ" nil nil nil "6" "2016061105:56:27" "[oss-security] Re: [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ" (number mark "U       w@1wt.eu     Jun 11   15/486   " thread-indent "\"[oss-security] Re: [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ\"\n") "<575B352F.9000808@canonical.com>" ("<575B352F.9000808@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["193" "Thursday" "6" "April" "2017" "15:31:23" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<8491986.Rf34Ez7Glo@blackgate>" "8" "Re: [oss-security] CVE Request: Interger overflow vulnerability in ptp_unpack_EOS_CustomFuncEx function of  libmtp (version 1.1.12 and below)" nil nil nil "4" "2017040613:31:23" "[oss-security] CVE Request: Interger overflow vulnerability in ptp_unpack_EOS_CustomFuncEx function of libmtp (version 1.1.12 and below)" (number mark "U       ago@gentoo.o Apr  6    8/193   " thread-indent "\"Re: [oss-security] CVE Request: Interger overflow vulnerability in ptp_unpack_EOS_CustomFuncEx function of  libmtp (version 1.1.12 and below)\"\n") "<081AF1E16E81CF4EB0B01F4D39B2D2A14B4EBFF8@EXMBX-TJ008.tencent.com>" ("<081AF1E16E81CF4EB0B01F4D39B2D2A14B4EBFF8@EXMBX-TJ008.tencent.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30213 invoked by uid 550); 11 Jun 2016 05:56:44 -0000
+Received: (qmail 28594 invoked by uid 550); 6 Apr 2017 13:31:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,35 +12,24 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30191 invoked from network); 11 Jun 2016 05:56:44 -0000
-Date: Sat, 11 Jun 2016 07:56:27 +0200
-From: Willy Tarreau <w@1wt.eu>
-To: John Johansen <john.johansen@canonical.com>
-Cc: oss-security@lists.openwall.com, Jann Horn <jannh@google.com>,
-        Tyler Hicks <tyhicks@canonical.com>,
-        "security@kernel.org" <security@kernel.org>
-Message-ID: <20160611055627.GA26999@1wt.eu>
-References: <575B352F.9000808@canonical.com>
+Received: (qmail 28574 invoked from network); 6 Apr 2017 13:31:39 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Date: Thu, 06 Apr 2017 15:31:23 +0200
+Message-ID: <8491986.Rf34Ez7Glo@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.52-gentoo; KDE/4.14.29; x86_64; ; )
+In-Reply-To: <081AF1E16E81CF4EB0B01F4D39B2D2A14B4EBFF8@EXMBX-TJ008.tencent.com>
+References: <081AF1E16E81CF4EB0B01F4D39B2D2A14B4EBFF8@EXMBX-TJ008.tencent.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <575B352F.9000808@canonical.com>
-User-Agent: Mutt/1.6.0 (2016-04-01)
-Subject: [oss-security] Re: [vs-plain] Linux kernel stack overflow via ecryptfs and
- /proc/$pid/environ
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: Re: [oss-security] CVE Request: Interger overflow vulnerability in ptp_unpack_EOS_CustomFuncEx function of  libmtp (version 1.1.12 and below)
 
-John, Jann,
+The CVE assignments don't happen anymore here.
+Please refer to https://cveform.mitre.org/ 
 
-On Fri, Jun 10, 2016 at 02:46:23PM -0700, John Johansen wrote:
-> The flaw in eCryptfs was assigned CVE-2016-1583.
-> 
-> If backporting these patches to kernels pre 4.6 you may need to
-> cherry-pick patch 6a480a7842545ec520a91730209ec0bae41694c1
+If you obtain a CVE, would be great let this list know.
 
-In the future, please add such precious information to the relevant
-commit message, because it significantly helps doing backports and
-everyone does not necessarily read a security list archives at the
-same time.
-
-Thanks!
-Willy
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
