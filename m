@@ -1,60 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/6
-Message-ID: <20170116201621.h7ywb7fa6t72jcpc@eldamar.local>
-Date: Mon, 16 Jan 2017 21:16:21 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Bastien ROUCARIÈS <roucaries.bastien+debian@...il.com>
-Subject: CVE Request: Imagemagick: various flaws: memory corruption, out-of-bounds writes, memory leaks, double-frees, off-by-one errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/5
+Message-ID: <20170406083928.GE32355@suse.de>
+Date: Thu, 6 Apr 2017 10:39:28 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: libxslt math.random issue
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Thu, Apr 06, 2017 at 10:32:45AM +0200, Hanno Böck wrote:
+> Hi,
+> 
+> On Thu, 6 Apr 2017 07:44:00 +0200
+> Marcus Meissner <meissner@...e.de> wrote:
+> 
+> > CVE-2015-9019 has been assigned to use of libexslt (in libxslt) usage
+> > of "math.random" without initializing the randomseed.
+> > 
+> > https://bugzilla.gnome.org/show_bug.cgi?id=758400
+> > https://bugzilla.suse.com/show_bug.cgi?id=934119
+> 
+> I have some questions and comments:
+> 
+> 1. What's the use of the random number and what's the security impact
+> if it's not random? That's not explained
+> In case of the bugreport.
+> In case a cryptographically secure random number is required then using
+> rand()/srand() is a bad idea anyway.
+> (Unfortunately there's no secure random in the standard libc, but at
+> least glibc now has getrandom.).
 
-The Debian package maintainer for ImageMagick reported several flaws
-in the Debian bugtracker, which might warrant an identifier. It is
-planned to fix those at least for the unstable distribution. I'm
-listing those with the given references by Bastien. Please include him
-in case of questions needed.
 
-- coders/ipl.c: "ipl file missing malloc check"
-Debian Bug: https://bugs.debian.org/851485
-Fixed by: https://github.com/ImageMagick/ImageMagick/commit/97566cf2806c0a5a86e884c96831a0c3b1ec6c20
+It is a bit tricky to find out. I googled some use-cases.
 
-- coders/wpg.c: off-by-one error
-Debian Bug: https://bugs.debian.org/851483
-Fixed by: https://github.com/ImageMagick/ImageMagick/commit/d23beebe7b1179fb75db1e85fbca3100e49593d9
+- UUID generation was looked for by 1 stackoverflow user
+- some harmless randomness in XSLT conversion for selection random pictures
 
-- magick/profile.c: double-free memory corruption
-Debian Bug: https://bugs.debian.org/851383
-Upstream Bug: https://github.com/ImageMagick/ImageMagick/issues/354
-Fixed by: https://github.com/ImageMagick/ImageMagick/commit/6235f1f7a9f7b0f83b197f6cd0073dbb6602d0fb
+> 2. This part of the patch looks a bit strange:
+> 
+> +	seed = time(NULL); /* just in case /dev/urandom is not there */
+> +	if (fd == -1) {
+> +		read (fd, &seed, sizeof(seed));
+> +		close (fd);
+> +	}
+> 
+> You're calling time() unconditionally, although it's kinda just a
+> fallback. Why not
+> +	if (fd == -1) {
+> +		read (fd, &seed, sizeof(seed));
+> +		close (fd);
+> +	} else {
+> +		seed = time(NULL);
+> +	}
+> ?
+> 
+> (obviously using time is not a secure way to do random numbers, if
+> secure numbers are required cross-plattform you need to do this
+> otherwise anyway)
 
-- coders/mpc.c: memory leak in mpc file handling
-Debian Bug: https://bugs.debian.org/851382
-Fixed by: https://github.com/ImageMagick/ImageMagick/commit/4493d9ca1124564da17f9b628ef9d0f1a6be9738
+it should be fd != -1 , my bad :/
 
-- PushQuantumPixel heap buffer-overflow
-Debian Bug: https://bugs.debian.org/851381
-Upstream report: https://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=31161
-
-- memory leak in caption and label handling
-Debian Bug: https://bugs.debian.org/851380
-Fixed by: https://github.com/ImageMagick/ImageMagick/commit/aeff00de228bc5a158c2a975ab47845d8a1db456
-
-- coders/psd.c: out-of-bounds write flaw in psd file handling
-Debian Bug: https://bugs.debian.org/851377
-Upstream report: https://github.com/ImageMagick/ImageMagick/issues/350
-
-- coders/psd.c: out-of-bounds write flaw in psd file handling
-(different issue from the above)
-Debian Bug: https://bugs.debian.org/851376
-Upstream report: https://github.com/ImageMagick/ImageMagick/issues/348
-
-- coders/psd.c: memory corruption heap overflow
-Debian Bug: https://bugs.debian.org/851374
-Upstream report: https://github.com/ImageMagick/ImageMagick/issues/347
-
-Could you assign identifiers for those issues?
-
-Regards,
-Salvatore
+Ciaop, Marcus
