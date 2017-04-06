@@ -1,79 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/10
-Message-ID: <929304.649445356-sendEmail@localhost>
-Date: Thu, 17 Aug 2017 20:14:46 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libfpx: NULL pointer dereference in PFileFlashPixView::GetGlobalInfoProperty (f_fpxvw.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/8
+Message-ID: <09b0b280-113c-e309-f507-27cd7de850f8@cleal.org>
+Date: Thu, 6 Apr 2017 14:22:55 +0100
+From: Dominic Cleal <dominic@...al.org>
+To: oss-security@...ts.openwall.com
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2017-2672: Foreman image password disclosure in audit log
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libfpx is a library for manipulating FlashPIX images.
+CVE-2017-2672: Foreman compute resource image passwords disclosed via
+audit log
 
-I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
-again.
-Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
-are only accepting patches and push new releases.
-This issue was found using the gm command line tool of graphicsmagick.
+When images for compute resources (e.g. an OpenStack image) are
+added/registered in Foreman, the password used to log in is recorded in
+plain text in the audit log. This may allow users with access to view
+the audit log to access newly provisioned hosts using the stored
+credentials.
 
-The complete ASan output of the issue:
+Mitigation: remove view_audit_logs permission from users, change image
+passwords.
 
-# gm identify $FILE
-==11430==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7fc529a4a4e7 bp 0x000000000001 sp 0x7ffefe672888 T0)
-==11430==The signal is caused by a READ memory access.
-==11430==Hint: address points to the zero page.
-    #0 0x7fc529a4a4e6 in PFileFlashPixView::GetGlobalInfoProperty(unsigned int, OLEProperty**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:791
-    #1 0x7fc529a4b40f in PFileFlashPixView::Init() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:293
-    #2 0x7fc529a4bde9 in PFileFlashPixView::PFileFlashPixView(FicNom&, char const*, mode_Ouverture, unsigned int) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:121
-    #3 0x7fc529a52e92 in PFlashPixImageView::PFlashPixImageView(FicNom&, char const*, mode_Ouverture, long, PSearchHookObject*, FPXStatus*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:405
-    #4 0x7fc529a55c81 in OpenImageByFilename(FicNom&, char const*, unsigned long, unsigned int*, unsigned int*, unsigned int*, unsigned int*, FPXColorspace*, PFlashPixImageView**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:1629
-    #5 0x7fc529a55dc9 in FPX_OpenImageByFilename /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:1686
-    #6 0x7fc529cc45e6 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:226:16
-    #7 0x7fc52f599e2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #8 0x7fc52f596e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
-    #9 0x7fc52f462ae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
-    #10 0x7fc52f469065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #11 0x7fc52f5147fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #12 0x7fc52f511931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #13 0x7fc52dd7c680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #14 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+This issue was reported by Daniel Kimsey.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:791 in PFileFlashPixView::GetGlobalInfoProperty(unsigned int, OLEProperty**)
-==11430==ABORTING
+Affects Foreman 1.4 and higher
+Fix due to be released
 
-Affected version:
-1.3.1_p6
+Patch:
+https://github.com/theforeman/foreman/commit/02489389f1a4443e1f437b86aa7ce245f1437020
 
-Fixed version:
-N/A
+More information:
+https://theforeman.org/security.html#2017-2672
+http://projects.theforeman.org/issues/19169
+https://theforeman.org
 
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-12921
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00311-libfpx-NULLptr-PFileFlashPixView_GetGlobalInfoProperty
-
-Timeline:
-2017-08-01: bug discovered
-2017-08-09: blog post about the issue
-2017-08-17: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/09/libfpx-null-pointer-dereference-in-pfileflashpixviewgetglobalinfoproperty-f_fpxvw-cpp/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+-- 
+Dominic Cleal
+dominic@...al.org
 
 
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (210 bytes)
