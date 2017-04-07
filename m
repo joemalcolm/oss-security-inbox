@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["422" "Tuesday" "26" "April" "2016" "07:20:13" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160426052013.GA4299@lorien.valinor.li>" "17" "[oss-security] CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP" nil nil nil "4" "2016042605:20:13" "[oss-security] CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP" (number mark "U       carnil@debia Apr 26   17/422   " thread-indent "\"[oss-security] CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3164" "Friday" "7" "April" "2017" "07:49:10" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<915244.595936628-sendEmail@localhost>" "51" "[oss-security] CVE-2017-7578: libming: heap overflow in parser.c (Incomplete fix for CVE-2016-9831)" nil nil nil "4" "2017040707:49:10" "[oss-security] CVE-2017-7578: libming: heap overflow in parser.c (Incomplete fix for CVE-2016-9831)" (number mark "U       ago@gentoo.o Apr  7   51/3164  " thread-indent "\"[oss-security] CVE-2017-7578: libming: heap overflow in parser.c (Incomplete fix for CVE-2016-9831)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28567 invoked by uid 550); 26 Apr 2016 05:20:27 -0000
+Received: (qmail 24185 invoked by uid 550); 7 Apr 2017 07:49:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28549 invoked from network); 26 Apr 2016 05:20:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Aeo2VGeRDHCUJKYYocUIhzDuq0mfLfGIfo0t+vImGr4=;
-        b=sAWqS7ryLRO1ZcSLSjnyNgViGiKe24fUKpJqzAGLV27bzVzBAKdOPdUI3M/it/4gM9
-         q2ZIGf/hJmBp/DitoFEAbHJqXnw6BEMsMPZc1IVTNF7wTjZHcMzx0AP0W/X1eZgEVvSX
-         HKY0SnAawKTjT00mX+l8pFK+NUjOhkaf7N3uZvLMJCpGvdZPz+PvfbaSri6/WbNGHHMs
-         UuiIzHBx2E0Z3FMM7pnLv4fnrPK/iXgV1ztNv0Kh5mmesBpQ1rIyU/eTorsjNmH+Dsj/
-         mBDr+20M2RuanT+UNlEu8VdFwP9PEmOedGKbr7FulSGCUt62WyVxLWz78U/KTcMjYyhp
-         5V1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=Aeo2VGeRDHCUJKYYocUIhzDuq0mfLfGIfo0t+vImGr4=;
-        b=P3XmiScvAK/lTIgGaHFGVu90g2tPP4gFQxgKRNLe9b8tTVTk/Yjv/ntbO+eHR9WjKL
-         sHso68ynJ3WAbNgVjfK6JKCoeGs+DHLAwiCQ8no5+IUBtCvldQZprfY4nQrpZTQNgj8D
-         XyEQBLyc1IwTmLaAITVpavHoEAwSCiEbcZgx5V7vzE8+pZB8nefEMGeHREs1AQ1Lox8n
-         I7+cqUQX1zJvQIXJBwomD0A4kVze1GdLJTf2eKi2U2s20HBLW3tPnCsBon1JlZm7qWRL
-         MBGHAT2d+WDIttOAb3WgtwuOAitnmZ/3sgRZ7q97Yx+wBA7WQE/ezgHNCB34RXWVgEMf
-         p23Q==
-X-Gm-Message-State: AOPr4FVFj/dx+Hr6WSGbyTGgLZxzJjhhMEkC+ruCM4rZRS4BAa5xjG6TDEWSGG1GP1E+MQ==
-X-Received: by 10.28.0.87 with SMTP id 84mr14849283wma.68.1461648015149;
-        Mon, 25 Apr 2016 22:20:15 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 26 Apr 2016 07:20:13 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160426052013.GA4299@lorien.valinor.li>
+Received: (qmail 24165 invoked from network); 7 Apr 2017 07:49:29 -0000
+Message-ID: <915244.595936628-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Fri, 7 Apr 2017 07:49:10 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE Request: vtun: denial-of-service: high CPU usage after SIGHUP
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-889913.021194847"
+Subject: [oss-security] CVE-2017-7578: libming: heap overflow in parser.c (Incomplete fix for CVE-2016-9831)
 
-Hi
+------MIME delimiter for sendEmail-889913.021194847
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-There exists a denial-of-service vulnerability in vtun, resulting in
-high CPU usage after SIGHUP to a vtun client process.
+Hello,
 
-Debian Bugreport: https://bugs.debian.org/818489 (contains proposed
-patch)
+Marcel Böhme, fuzzing the master version of libming, discovered that the fix for CVE-2016-9831 was incomplete:
 
-Additional references:
+$ util/listswf libming1.swf
+read.c:109:14: runtime error: shift exponent -1 is negative
+read.c:110:20: runtime error: left shift of 1 by 31 places cannot be represented in type 'int'
+read.c:110:16: runtime error: signed integer overflow: 1389485020 - -2147483648 cannot be represented in type 'int'
+205 gradients in SWF_MORPHGRADiENT, expected a max of 8parser.c:786:40: runtime error: index 9 out of bounds for type 'SWF_MORPHGRADIENTRECORD [8]'
+203 gradients in SWF_MORPHGRADiENT, expected a max of 8=================================================================
+==179946==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62e00000b298 at pc 0x0000005b1be8 bp 0x7ffc849e8990 sp 0x7ffc849e8988
+WRITE of size 1 at 0x62e00000b298 thread T0
+    #0 0x5b1be7 in parseSWF_RGBA /home/ubuntu/subjects/build-asan/libming/util/parser.c:68:14
+    #1 0x5f004a in parseSWF_MORPHGRADIENTRECORD /home/ubuntu/subjects/build-asan/libming/util/parser.c:771:3
+    #2 0x5f0c1f in parseSWF_MORPHGRADIENT /home/ubuntu/subjects/build-asan/libming/util/parser.c:786:5
+    #3 0x5ee190 in parseSWF_MORPHFILLSTYLE /home/ubuntu/subjects/build-asan/libming/util/parser.c:802:7
+    #4 0x5f1bbe in parseSWF_MORPHFILLSTYLES /home/ubuntu/subjects/build-asan/libming/util/parser.c:829:7
+    #5 0x634ee5 in parseSWF_DEFINEMORPHSHAPE /home/ubuntu/subjects/build-asan/libming/util/parser.c:2185:3
+    #6 0x543923 in blockParse /home/ubuntu/subjects/build-asan/libming/util/blocktypes.c:145:14
+    #7 0x52b2a9 in readMovie /home/ubuntu/subjects/build-asan/libming/util/main.c:265:11
+    #8 0x528f82 in main /home/ubuntu/subjects/build-asan/libming/util/main.c:350:2
+    #9 0x7ff0c21cdf44 in __libc_start_main /build/eglibc-oGUzwX/eglibc-2.19/csu/libc-start.c:287
+    #10 0x4bdf5c in _start (/home/ubuntu/subjects/build-asan/libming/util/listswf+0x4bdf5c)
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1319858
-https://lists.fedoraproject.org/pipermail/package-announce/2016-April/181383.html
+0x62e00000b298 is located 0 bytes to the right of 44696-byte region [0x62e000000400,0x62e00000b298)
+allocated by thread T0 here:
+    #0 0x4a0a40 in calloc (/home/ubuntu/subjects/build-asan/libming/util/listswf+0x4a0a40)
+    #1 0x5f17b2 in parseSWF_MORPHFILLSTYLES /home/ubuntu/subjects/build-asan/libming/util/parser.c:826:28
+    #2 0x634ee5 in parseSWF_DEFINEMORPHSHAPE /home/ubuntu/subjects/build-asan/libming/util/parser.c:2185:3
+    #3 0x543923 in blockParse /home/ubuntu/subjects/build-asan/libming/util/blocktypes.c:145:14
+    #4 0x52b2a9 in readMovie /home/ubuntu/subjects/build-asan/libming/util/main.c:265:11
+    #5 0x528f82 in main /home/ubuntu/subjects/build-asan/libming/util/main.c:350:2
+    #6 0x7ff0c21cdf44 in __libc_start_main /build/eglibc-oGUzwX/eglibc-2.19/csu/libc-start.c:287
 
-Could you assign a CVE for this issue?
+SUMMARY: AddressSanitizer: heap-buffer-overflow /home/ubuntu/subjects/build-asan/libming/util/parser.c:68 parseSWF_RGBA
 
-Regards,
-Salvatore
+Reference:
+https://github.com/libming/libming/issues/68
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-889913.021194847--
+
