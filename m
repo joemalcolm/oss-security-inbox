@@ -1,134 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/27/1
-Message-ID: <8760d9nd9y.fsf@frougon.crabdance.com>
-Date: Sun, 27 Aug 2017 19:14:49 +0200
-From: Florent Rougon <f.rougon@...e.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/07/2
+Message-ID: <20170407084159.GB9615@f195.suse.de>
+Date: Fri, 7 Apr 2017 10:41:59 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-13709: Incorrect access control in FlightGear
+Subject: CVE-2017-7572: backintime: usage of deprecated unix-process polkit authorization subject opens a race condition during authorization
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-Please find below the info for CVE-2017-13709. I'm also attaching a
-patch combining the security fix applied to FlightGear's 'next'
-branch[1] with its parent commit[2], because [1] requires [2] to work
-properly.
+backintime includes a DBus service helper 'qt/serviceHelper.py'. This helper
+uses polkit to authorize some of its APIs, they should only be accessible
+through entering the root password. The helper program uses the deprecated
+"unix-process" authorization subject for this purpose, however. This polkit
+authorization method is known to be affected by a "time of check, time of use"
+race condition:
 
-However, I don't expect the combined patch nor [2] to apply cleanly to
-FlightGear 2017.2 or earlier, because commit [3] introduced changes in
-the close vicinity of the changes in [2] (two conflicts). If you need to
-adapt [2] for such releases, just put the fgInitAllowedPaths() call
-after the one to Options::processOptions() in src/Main/fg_init.cxx[4] and
-src/Main/main.cxx[5], and you should be good.
+https://www.freedesktop.org/software/polkit/docs/latest/PolkitUnixProcess.html#polkit-unix-process-new
+https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack/blob/master/2011/CVE-2011-1485/polkit-pwnage.c
 
-I will probably backport the needed changes to a few of the last
-releases in the next days: see the FlightGear release branches at [6].
+To exploit this issue an attacker needs to be able to replace the PID of
+a process that requests an affected polkit privilege by a root owned
+process, just in time for polkitd to assume that the requesting process
+was privileged and no further password entry is required.
 
-[1] https://sourceforge.net/p/flightgear/flightgear/ci/2a5e3d06b2c0d9f831063afe7e7260bca456d679/
-[2] https://sourceforge.net/p/flightgear/flightgear/ci/c7a2aef59979af3e9ff22daabb37bdaadb91cd75/
-[3] https://sourceforge.net/p/flightgear/flightgear/ci/b2cc191bc665d13f50360e5508234e653669a372/
-[4] https://sourceforge.net/p/flightgear/flightgear/ci/next/tree/src/Main/fg_init.cxx#l1147
-[5] https://sourceforge.net/p/flightgear/flightgear/ci/next/tree/src/Main/main.cxx#l543
-[6] https://sourceforge.net/p/flightgear/flightgear/ref/next/branches/
+In the worst case this could allow a regular user to add udev rules to the
+system that run commands in the context of the regular user, once a certain
+udev event occurs. I don't think it is easily possible to gain root privileges
+this way. This is because the serviceHelper wraps the udev commands in a sudo
+call running as the user owning the requesting process. The determination of
+this identity is done in a different, more secure way.
 
-Now here is the info for CVE-2017-13709:
+I've proposed a fix to upstream that changes the authorization mechanism to
+"system-bus-name" which is considered safe and not affected by the described
+race condition.
 
-[Suggested description]
-In FlightGear before version 2017.3.1, Main/logger.cxx in the FGLogger
-subsystem allows one to overwrite any file via a resource that affects
-the contents of the global Property Tree.
+This issue was discovered by Sebastian Krahmer of the SUSE security team.
 
-------------------------------------------
+References:
 
-[Additional Information]
-In FlightGear before version 2017.3.1, the FGLogger subsystem allows
-one to overwrite any file the user has write access to (with enough
-control over the contents to run arbitrary commands if the target file
-is then executed). A resource such as a malicious third-party aircraft
-or add-on could exploit this to damage files belonging to the user.
-
-The security fix
-(https://sourceforge.net/p/flightgear/flightgear/ci/2a5e3d06b2c0d9f831063afe7e7260bca456d679/)
-requires its parent commit
-(https://sourceforge.net/p/flightgear/flightgear/ci/c7a2aef59979af3e9ff22daabb37bdaadb91cd75/)
-to work correctly.
-
-We are not aware of any malicious resource exploiting the problem.
-
-The fix will be in FlightGear 2017.3.1 (expected in a few days).
-
-------------------------------------------
-
-[Vulnerability Type]
-Incorrect Access Control
-
-------------------------------------------
-
-[Vendor of Product]
-FlightGear (http://flightgear.org/)
-
-------------------------------------------
-
-[Affected Product Code Base]
-FlightGear - Affected: releases earlier than 2017.3.1 (at least since
-version 2.0.0).
-
-------------------------------------------
-
-[Affected Component]
-source file: src/Main/logger.cxx in the FlightGear repository
-(https://sourceforge.net/p/flightgear/flightgear/ci/next/tree/src/Main/logger.cxx)
-executable: fgfs
-
-------------------------------------------
-
-[Attack Type]
-Local
-
-------------------------------------------
-
-[Impact Code execution]
-true
-
-------------------------------------------
-
-[Impact Denial of Service]
-true
-
-------------------------------------------
-
-[CVE Impact Other]
-Allows one to overwrite any file the user has write access to, and to
-control a significant part of the written contents. This leads to code
-execution using .bashrc and such.
-
-------------------------------------------
-
-[Attack Vectors]
-Trick users into installing a resource that enables logging to a
-chosen file, via properties /logging/log/... For instance, a malicious
-third-party aircraft or add-on could do that (add-ons loaded via 'fgfs
---addon=...').
-
-------------------------------------------
-
-[Reference]
-https://sourceforge.net/p/flightgear/flightgear/ci/2a5e3d06b2c0d9f831063afe7e7260bca456d679/
-https://sourceforge.net/p/flightgear/flightgear/ci/c7a2aef59979af3e9ff22daabb37bdaadb91cd75/
-
-------------------------------------------
-
-[Has vendor confirmed or acknowledged the vulnerability?]
-true
-
-------------------------------------------
-
-[Discoverer]
-wkitty42
+[Suggested patch] https://github.com/bit-team/backintime/commit/7f208dc547f569b689c888103e3b593a48cd1869
+[openSUSE bug] https://bugzilla.suse.com/show_bug.cgi?id=1032717
 
 -- 
-Florent
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
 
-View attachment "combined-patch-for-CVE-2017-13709.patch" of type "text/x-diff" (5459 bytes)
+SUSE Linux GmbH 
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
