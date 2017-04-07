@@ -1,66 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/7
-Message-ID: <20171105181431.a7zstp2v4bytdlvg@jwilk.net>
-Date: Sun, 5 Nov 2017 19:14:31 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/07/5
+Message-ID: <338143b2-aa57-b6eb-61d2-856bac151c2d@redhat.com>
+Date: Fri, 7 Apr 2017 20:01:44 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: Re: Re: libxslt math.random issue
 Content-Type: text/plain; charset=utf-8
 
-* Christian Brabandt <cb@...bit.org>, 2017-11-05, 18:17:
->>In general, what vim does (copying mode bits) in not enough to ensure 
->>that the swapfile is readable only by the users who had access to the 
->>original file. It would have to copy also group ownership and ACLs.
->I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
->the group ownership problem.
+On 04/07/2017 07:50 PM, Frank Ch. Eigler wrote:
+>
+> Florian Weimer wrote:
+>
+>> FWIW, why is glibc not doing srand(RANDOMVECTOR) during startup... :/
+>>
+>> The C standard does not allow it.
+>>
+>> ”
+>> If rand is called before any calls to srand have been made, the same
+>> sequence shall be generated as when srand is first called with a seed
+>> value of 1.
+>> ”
+>
+> Yes, but that does not imply that srand(1) needs to resolve to a
+> build-constant value.
 
-So the code in question looks like this:
+Sorry, I don't understand.  The standard also says, “If srand() is then 
+called with the same seed value, the sequence of pseudo-random numbers 
+shall be repeated.”
 
-   /*
-    * If the group-read bit is set but not the world-read bit, then
-    * the group must be equal to the group of the original file.  If
-    * we can't make that happen then reset the group-read bit.  This
-    * avoids making the swap file readable to more users when the
-    * primary group of the user is too permissive.
-    */
-   if ((swap_mode & 044) == 040)
-   {
-       stat_T	swap_st;
+The sequences is *required* to be deterministic, and this is deliberate.
 
-       if (mch_stat((char *)swap_fname, &swap_st) >= 0
-       	&& st.st_gid != swap_st.st_gid
-       	&& fchown(curbuf->b_ml.ml_mfp->mf_fd, -1, st.st_gid)
-       							 == -1)
-           swap_mode &= 0600;
-   }
-
-   (void)mch_setperm(swap_fname, (long)swap_mode);
-
-The logic here is based on the assumption that the 040 bit in the mode 
-implies that everyone in the group can read the file. Somewhat 
-surprisingly, this assumption is incorrect in the world with ACLs:
-
-   $ id -gn
-   users
-
-   $ ls -l foo
-   -rw-r-----+ 1 root users 0 Nov  5 18:34 foo
-
-   $ cat foo
-   cat: foo: Permission denied
-
-   $ getfacl foo
-   # file: foo
-   # owner: root
-   # group: users
-   user::rw-
-   user:nobody:r--
-   group::---
-   mask::r--
-   other::---
-
-I don't understand why this chmodding is needed at all.
-Couldn't vim create swapfiles with mode 0600 and be done with it?
-
--- 
-Jakub Wilk
+Thanks,
+Florian
