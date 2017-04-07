@@ -1,72 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/27/4
-Message-ID: <577273.647857027-sendEmail@localhost>
-Date: Fri, 27 Oct 2017 20:25:56 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: binutils: invalid memory read in find_abstract_instance_name (dwarf2.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/07/3
+Message-Id: <B39FC5C0-9AC5-4E84-A450-AFF690B74D9C@apache.org>
+Date: Fri, 7 Apr 2017 12:29:13 -0400
+From: Denis Magda <dmagda@...che.org>
+To: user@...ite.apache.org, dev@...ite.apache.org, announce@...che.org, Pierre Ernst <pernst@...esforce.com>, security <security@...che.org>
+Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Apache Ignite
 Content-Type: text/plain; charset=utf-8
 
+[CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Apache Ignite
+
+Severity: Important
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: Apache Ignite 1.0.0-RC3 to 1.8
+
 Description:
-binutils is a set of tools necessary to build programs.
+Apache Ignite uses an update notifier component to update the users about new project releases that include additional functionality, bug fixes and performance improvements. To do that the component communicates to an external PHP server (http://ignite.run) where it needs to send some system properties like Apache Ignite or Java version. This feature is enabled by default and used to send sensitive data over HTTP by mistake, such as installation folders or environment variables stored in Java system properties. The second issue is because TLS is not used between the application and the PHP server, a Man-in-the-middle attack is possible and a malicious actor could alter the response coming from the ignite.run server. This response is parsed by the Apache ignite component as XML, and a XXE attack can be triggered.
 
-The complete ASan output of the issue:
+Both issues mentioned above were fixed as a part of Apache Ignite 1.9 release. The relevant commits with the changes:
 
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==23816==ERROR: AddressSanitizer: SEGV on unknown address 0x4700004008d0 (pc 0x0000005427b6 bp 0x7ffd49033690 sp 0x7ffd49033680 T0)                                                                               
-==23816==The signal is caused by a READ memory access.                                                                                                                                                            
-    #0 0x5427b5 in _bfd_safe_read_leb128 /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:1019:14                                                                                              
-    #1 0x6a9b25 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2918:19                                                                                        
-    #2 0x69a3ff in scan_unit_for_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3168:10                                                                                              
-    #3 0x6a2de6 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3660:9                                                                                    
-    #4 0x6a2de6 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3686                                                                                                   
-    #5 0x6a0369 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4798:11                                                                                      
-    #6 0x5f332e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10                                                                                                    
-    #7 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9                                                                                                       
-    #8 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7                                                                                                      
-    #9 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200                                                                                                     
-    #10 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7                                                                                                      
-    #11 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12                                                                                                             
-    #12 0x7f839bb03680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                   
-    #13 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)                                                                                                                                 
-                                                                                                                                                                                                                  
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:1019:14 in _bfd_safe_read_leb128
-==23816==ABORTING
-
-Affected version:
-2.29.51.20170925 and maybe past releases
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=1b86808a86077722ee4f42ff97f836b12420bb2a
+Mitigation:
+Users must upgrade to Apache Ignite 1.9 or later versions or disable the update notifier.
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Pierre Ernst, Salesforce
 
-CVE:
-CVE-2017-15938
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00381-binutils-invalidread-find_abstract_instance_name
-
-Timeline:
-2017-09-26: bug discovered and reported to upstream
-2017-09-26: upstream released a patch
-2017-10-24: blog post about the issue
-2017-10-27: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/10/24/binutils-invalid-memory-read-in-find_abstract_instance_name-dwarf2-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
 
 
