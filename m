@@ -1,40 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/1
-Message-ID: <84318934-d1c8-8b9a-afe1-641e47d166d2@wichmann.us>
-Date: Fri, 10 Feb 2017 16:58:30 -0700
-From: Mats Wichmann <mats@...hmann.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/07/6
+Message-ID: <CAGDGa53bNmj6RL5k3As_bKh+mc2tkEi+B4GhfDzJEUZbGQYOEA@mail.gmail.com>
+Date: Fri, 7 Apr 2017 19:49:58 -0300
+From: Oliveira Lima <oliveiralimajr@...il.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Request CVE ID for information disclosure present in ForgeRock OpenIDM 4.0.0 and 4.5.0
 Content-Type: text/plain; charset=utf-8
 
-On 02/10/2017 04:39 PM, Williams, Ken wrote:
-> Tim,
-> 
-> Your perception is incorrect.  I can assure you there is no 
-> CVE-related bias whatsoever towards commercial software, or against 
-> OSS.  Never has been any CVE-related bias against OSS, and I can't 
-> imagine there ever will be.
-> 
-> I'm a big OSS fan and advocate, and although I will only speak for 
-> myself, I'd be willing to bet that everybody else involved with the 
-> CVE project is too.
-> 
-> As far as sending copies of CVE web form submissions to oss-sec, or 
-> posting anywhere else, keep in mind that much of that info needs to 
-> be embargoed until a vendor security advisory is published.
-> 
-> Regards,
-> Ken Williams
-> 
-> Disclaimer: I've been on the CVE Board for 17 years.
+Request CVE ID for information disclosure present in ForgeRock OpenIDM
+4.0.0 and 4.5.0
 
-It's hard to see how this change doesn't completely cut the legs out
-from under this list... for those things which were sent here, and thus
-subject to discussion on the list (a lot of which in my simplistic world
-view has often been very useful), now in order to get any attention it
-has to go to a web form, and those submissions are immediately caught in
-the "embargo" net, and thus won't come here at all.  Am I
-misunderstanding this completely?
+Description
+***********************
+
+The OpenIDM info endpoint may leak sensitive information under certain
+circumstances.
+Looking closely I noticed that amid the requests for access to solution idm
+several requests on behalf of a user: "anonymous", editing these requests I
+got a return code 200, containing information from the internal server,
+such as addresses Ips, thus characterizing an information disclosure
+vulnerability.
 
 
+Proof of Concept URL
+***************************
+
+*http://www.rootlabs.com.br/information-disclosure-forgerock-openidm-4-0-0-and-4-5-0/
+<http://www.rootlabs.com.br/information-disclosure-forgerock-openidm-4-0-0-and-4-5-0/>*
+
+Report Timeline
+************************
+10-Jan-2017- Reported
+11-Jan-2017- Vendor Response
+28 -March-2017- Vendor Fixed
+07-April-2017- Public disclosed
+
+Vendo Reference
+*****************
+*https://backstage.forgerock.com/knowledge/kb/article/a92936505
+<https://backstage.forgerock.com/knowledge/kb/article/a92936505>*
+<https://br.wordpress.org/plugins/simple-photo-gallery/changelog/>
+References
+*****************
+
+<https://br.wordpress.org/plugins/simple-photo-gallery/changelog/>
+https://www.owasp.org/index.php/Information_Leak_(information_disclosure)
+<http://www.rootlabs.com.br/xss-simple-photo-gallery/>
+*https://backstage.forgerock.com/knowledge/kb/article/a92936505
+<https://backstage.forgerock.com/knowledge/kb/article/a92936505>*
+
+*http://www.rootlabs.com.br/information-disclosure-forgerock-openidm-4-0-0-and-4-5-0/
+<http://www.rootlabs.com.br/information-disclosure-forgerock-openidm-4-0-0-and-4-5-0/>*
+
+-- 
+Oliveira Lima Jr
+roothc.com.br
+Linkedin <http://br.linkedin.com/pub/oliveira-lima-junior/2b/48/285/>
+@oliveiralimajr <https://twitter.com/oliveiralimajr>
 
