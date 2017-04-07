@@ -1,38 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/15
-Message-ID: <CAPNiXbGAjOKHZH02R+T5HbtXs0F8OLbPz=SZrG4G+ZqgX--wBA@mail.gmail.com>
-Date: Tue, 26 Sep 2017 16:53:53 +0200
-From: Alex R <alexr@...che.org>
-To: dev <dev@...os.apache.org>, user <user@...os.apache.org>,  Amon Flair <amon@...dynarwhals.org>, Lyon Yang <lyon.yang.s@...il.com>,  security <security@...che.org>, oss-security@...ts.openwall.com
-Subject: CVE-2017-9790: Libprocess might crash when decoding an HTTP request with absent path.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/07/1
+Message-ID: <915244.595936628-sendEmail@localhost>
+Date: Fri, 7 Apr 2017 07:49:10 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2017-7578: libming: heap overflow in parser.c (Incomplete fix for CVE-2016-9831)
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+Hello,
 
-Vendor:
-The Apache Software Foundation
+Marcel Böhme, fuzzing the master version of libming, discovered that the fix for CVE-2016-9831 was incomplete:
 
-Versions Affected:
-Apache Mesos 1.1.0 to 1.3.0
-The unsupported Apache Mesos 1.0.x as well as 0.x versions may be also
-affected.
+$ util/listswf libming1.swf
+read.c:109:14: runtime error: shift exponent -1 is negative
+read.c:110:20: runtime error: left shift of 1 by 31 places cannot be represented in type 'int'
+read.c:110:16: runtime error: signed integer overflow: 1389485020 - -2147483648 cannot be represented in type 'int'
+205 gradients in SWF_MORPHGRADiENT, expected a max of 8parser.c:786:40: runtime error: index 9 out of bounds for type 'SWF_MORPHGRADIENTRECORD [8]'
+203 gradients in SWF_MORPHGRADiENT, expected a max of 8=================================================================
+==179946==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62e00000b298 at pc 0x0000005b1be8 bp 0x7ffc849e8990 sp 0x7ffc849e8988
+WRITE of size 1 at 0x62e00000b298 thread T0
+    #0 0x5b1be7 in parseSWF_RGBA /home/ubuntu/subjects/build-asan/libming/util/parser.c:68:14
+    #1 0x5f004a in parseSWF_MORPHGRADIENTRECORD /home/ubuntu/subjects/build-asan/libming/util/parser.c:771:3
+    #2 0x5f0c1f in parseSWF_MORPHGRADIENT /home/ubuntu/subjects/build-asan/libming/util/parser.c:786:5
+    #3 0x5ee190 in parseSWF_MORPHFILLSTYLE /home/ubuntu/subjects/build-asan/libming/util/parser.c:802:7
+    #4 0x5f1bbe in parseSWF_MORPHFILLSTYLES /home/ubuntu/subjects/build-asan/libming/util/parser.c:829:7
+    #5 0x634ee5 in parseSWF_DEFINEMORPHSHAPE /home/ubuntu/subjects/build-asan/libming/util/parser.c:2185:3
+    #6 0x543923 in blockParse /home/ubuntu/subjects/build-asan/libming/util/blocktypes.c:145:14
+    #7 0x52b2a9 in readMovie /home/ubuntu/subjects/build-asan/libming/util/main.c:265:11
+    #8 0x528f82 in main /home/ubuntu/subjects/build-asan/libming/util/main.c:350:2
+    #9 0x7ff0c21cdf44 in __libc_start_main /build/eglibc-oGUzwX/eglibc-2.19/csu/libc-start.c:287
+    #10 0x4bdf5c in _start (/home/ubuntu/subjects/build-asan/libming/util/listswf+0x4bdf5c)
 
-Description:
-When handling a libprocess message wrapped in an HTTP request, libprocess
-crashes if the request path is empty, because the parser assumes the request
-path always starts with '/'. A malicious actor can therefore cause a denial
-of service of Mesos masters rendering the Mesos-controlled cluster
-inoperable.
+0x62e00000b298 is located 0 bytes to the right of 44696-byte region [0x62e000000400,0x62e00000b298)
+allocated by thread T0 here:
+    #0 0x4a0a40 in calloc (/home/ubuntu/subjects/build-asan/libming/util/listswf+0x4a0a40)
+    #1 0x5f17b2 in parseSWF_MORPHFILLSTYLES /home/ubuntu/subjects/build-asan/libming/util/parser.c:826:28
+    #2 0x634ee5 in parseSWF_DEFINEMORPHSHAPE /home/ubuntu/subjects/build-asan/libming/util/parser.c:2185:3
+    #3 0x543923 in blockParse /home/ubuntu/subjects/build-asan/libming/util/blocktypes.c:145:14
+    #4 0x52b2a9 in readMovie /home/ubuntu/subjects/build-asan/libming/util/main.c:265:11
+    #5 0x528f82 in main /home/ubuntu/subjects/build-asan/libming/util/main.c:350:2
+    #6 0x7ff0c21cdf44 in __libc_start_main /build/eglibc-oGUzwX/eglibc-2.19/csu/libc-start.c:287
 
-Mitigation:
-pre-1.1.x users should upgrade to at least 1.1.3
-1.1.x users should upgrade to 1.1.3
-1.2.x users should upgrade to 1.2.2
-1.3.0 users should upgrade to 1.3.1
-1.4.0-dev users should obtain Mesos 1.4.0
+SUMMARY: AddressSanitizer: heap-buffer-overflow /home/ubuntu/subjects/build-asan/libming/util/parser.c:68 parseSWF_RGBA
 
-Credit:
-This issue was discovered by Lyon Yang and Jeremy Heng
+Reference:
+https://github.com/libming/libming/issues/68
 
-Alex on behalf of Mesos PMC
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
