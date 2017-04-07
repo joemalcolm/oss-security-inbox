@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/10
-Message-ID: <CAA7hUgEumKFGGWbfVe=j3xyxBoA0cXSDzds-=pDozm+h6X597A@mail.gmail.com>
-Date: Sun, 17 Dec 2017 21:27:11 +0100
-From: Raphael Geissert <atomo64@...il.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Net::LDAP ruby gem, missing certificate validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/07/4
+Message-ID: <87d1cods3z.fsf@redhat.com>
+Date: Fri, 07 Apr 2017 13:50:40 -0400
+From: fche@...hat.com (Frank Ch. Eigler)
+To: oss-security@...ts.openwall.com
+Subject: Re: libxslt math.random issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Just another heads up that I requested a CVE id for issue #258[1] in the
-Net::LDAP ruby gem. Versions older than 0.16.0 did not verify that the LDAP
-server's certificate matched the host it was supposed to be connecting to.
+Florian Weimer wrote:
 
-This has now been assigned CVE-2017-17718 by MITRE.
+> FWIW, why is glibc not doing srand(RANDOMVECTOR) during startup... :/
+>
+> The C standard does not allow it.
+>
+> ”
+> If rand is called before any calls to srand have been made, the same
+> sequence shall be generated as when srand is first called with a seed
+> value of 1.
+> ”
 
-Older versions did not perform any kind of validation at all, but it was
-properly documented as such. Based on the changelog I believe this to have
-changed in 0.10.0 by verifying the certificate's trust chain.
+Yes, but that does not imply that srand(1) needs to resolve to a
+build-constant value.  https://gitlab.com/fche/randomer salts it with a
+snippet from /dev/urandom, and stays POSIX-compatible & restartable.
 
-[1]https://github.com/ruby-ldap/ruby-net-ldap/issues/258
-
-Cheers,
--- 
-Raphael Geissert
-
+- FChE
