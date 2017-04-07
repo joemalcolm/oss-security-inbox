@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1486" "Monday" "21" "December" "2015" "22:38:09" "+0100" "Florian Weimer" "fweimer@redhat.com" "<56787141.5040202@redhat.com>" "34" "Re: [oss-security] CVE request for math/big.Exp" "^Date:" nil nil "12" "2015122121:38:09" "[oss-security] CVE request for math/big.Exp" (number mark "        fweimer@redh Dec 21   34/1486  " thread-indent "\"Re: [oss-security] CVE request for math/big.Exp\"\n") "<CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>" ("<CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1323" "Friday" "7" "April" "2017" "12:29:13" "-0400" "Denis Magda" "dmagda@apache.org" "<B39FC5C0-9AC5-4E84-A450-AFF690B74D9C@apache.org>" "35" "[oss-security] [CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Apache Ignite" nil nil nil "4" "2017040716:29:13" "[oss-security] [CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Apache Ignite" (number mark "U       dmagda@apach Apr  7   35/1323  " thread-indent "\"[oss-security] [CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Apache Ignite\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13761 invoked by uid 550); 21 Dec 2015 21:38:24 -0000
+Received: (qmail 9313 invoked by uid 550); 7 Apr 2017 16:34:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13733 invoked from network); 21 Dec 2015 21:38:23 -0000
-References: <CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>
-Message-ID: <56787141.5040202@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-Version: 1.0
-In-Reply-To: <CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Date: Mon, 21 Dec 2015 22:38:09 +0100
-From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request for math/big.Exp
-To: oss-security@lists.openwall.com
+Received: (qmail 4068 invoked from network); 7 Apr 2017 16:29:28 -0000
+From: Denis Magda <dmagda@apache.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <B39FC5C0-9AC5-4E84-A450-AFF690B74D9C@apache.org>
+Date: Fri, 7 Apr 2017 12:29:13 -0400
+Cc: oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com
+To: user@ignite.apache.org,
+ dev@ignite.apache.org,
+ announce@apache.org,
+ Pierre Ernst <pernst@salesforce.com>,
+ security <security@apache.org>
+X-Mailer: Apple Mail (2.3273)
+Subject: [oss-security] [CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack
+ in Apache Ignite
 
-On 12/21/2015 05:07 PM, Jason Buberel wrote:
-> OSS-Security,
-> 
-> The Go open source project has received notification of an error in the
-> math/big library (https://golang.org/pkg/math/big/). The problem that was
-> identified is similar to CVE-2015-3193
-> <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3193>. The
-> vulnerability was introduced in the 1.5 release, and remains present in Go
-> 1.5.1 and 1.5.2.
-> 
-> A fix for the issue has been applied to the master branch of the Go repo
-> under CL 17672 <https://go-review.googlesource.com/#/c/17672/>. We will
-> also be releasing Go 1.5.3 to fix this vulnerability.
-> 
-> We are requesting a CVE ID in order to coordinate updates with
-> distributions that include binary packages for the Go programming language.
-> We will also announce and request that all Go programs using the math/big
-> package that were compiled with version 1.5, 1.5.1, or 1.5.2 be recompiled
-> with  1.5.3 (when released) due to the static linking nature of the Go
-> toolchain.
+[CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Ap=
+ache Ignite
 
-Considering that until recently, Go did not protect against RSA-CRT key
-leaks, doesn't that mean that all certificates whose private key was
-touched by Go code should be re-issued?
+Severity: Important
 
-RSA-CRT hardening was added in this commit:
+Vendor: The Apache Software Foundation
 
-https://github.com/golang/go/commit/40ac3690efe420ff7665c6fe1eec0933c41d1413
+Versions Affected: Apache Ignite 1.0.0-RC3 to 1.8
 
-To protect against future key leaks due to similar issues in the
-implementation integer arithmetic, I strongly recommend backporting this
-hardening feature.
+Description:
+Apache Ignite uses an update notifier component to update the users about n=
+ew project releases that include additional functionality, bug fixes and pe=
+rformance improvements. To do that the component communicates to an externa=
+l PHP server (http://ignite.run) where it needs to send some system propert=
+ies like Apache Ignite or Java version. This feature is enabled by default =
+and used to send sensitive data over HTTP by mistake, such as installation =
+folders or environment variables stored in Java system properties. The seco=
+nd issue is because TLS is not used between the application and the PHP ser=
+ver, a Man-in-the-middle attack is possible and a malicious actor could alt=
+er the response coming from the ignite.run server. This response is parsed =
+by the Apache ignite component as XML, and a XXE attack can be triggered.
 
-Florian
+Both issues mentioned above were fixed as a part of Apache Ignite 1.9 relea=
+se. The relevant commits with the changes:
+
+Mitigation:
+Users must upgrade to Apache Ignite 1.9 or later versions or disable the up=
+date notifier.
+
+Credit:
+Pierre Ernst, Salesforce
+
+
+
+
