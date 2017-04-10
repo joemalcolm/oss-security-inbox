@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/10
-Message-ID: <87a858dhaf.fsf@prune.linuxpenguins.xyz>
-Date: Fri, 16 Jun 2017 08:20:40 +1000
-From: Brian May <brian@...uxpenguins.xyz>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/3
+Message-ID: <498371.501078026-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:06:05 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2017-7594: libtiff: Direct leak in tif_ojpeg.c
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> writes:
+http://bugzilla.maptools.org/show_bug.cgi?id=2659 :
 
-> Should we assign CVEs for code examples/documentation? E.g. We assign CVEs
-> for code shipped to people in digital form. Why not assign CVEs for code in
-> documentation or commonly used examples? We can go with the rational that
-> CVEs get assigned to the affected code bases (e.g. when someone implements
-> that documentation/code), but it might also be good to educate the
-> community about bad examples/documentation/etc.
+In tif_ojpeg.c, in OJPEGReadHeaderInfoSecTablesDcTable, we have
+rb=_TIFFmalloc(ra). After, values for rb are filled out. Then there is an if
+(p!=q) return 0, which goes before the line sp->dctable[m]=rb;
 
-For a prior example, in this case of documentation suggesting insecure
-configuration, see:
+Therefore, clearly rb is leaking every time the if (p!=q) is entered, since
+memory is allocated but it is not even assigned anywhere. Our fix:
 
-http://www.openwall.com/lists/oss-security/2015/03/28/7
+https://pdfium-review.googlesource.com/c/2176/
 
-I note that the documentation still has the bad example listed, with no
-indication that this is bad.
+##################
 
-http://www.openldap.org/doc/admin24/guide.html#Access Control Examples
--- 
-Brian May <brian@...uxpenguins.xyz>
-https://linuxpenguins.xyz/brian/
+Patch applied per
+
+2017-01-12 Even Rouault <even.rouault at spatialys.com>
+
+        * libtiff/tif_ojpeg.c: fix leak in OJPEGReadHeaderInfoSecTablesAcTable
+        when read fails.
+        Patch by Nicolás Peña.
+        Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2659
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
