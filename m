@@ -1,98 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/1
-Message-ID: <854490.759407298-sendEmail@localhost>
-Date: Mon, 1 May 2017 11:24:52 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/16
+Message-ID: <712547.523991333-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:47:33 +0000
 From: "Agostino Sarubbo" <ago@...too.org>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libsndfile: global buffer overflow in flac_buffer_copy (flac.c)
+Subject: binutils: two NULL pointer dereference in elflink.c
 Content-Type: text/plain; charset=utf-8
 
 Description:
-libsndfile is a C library for reading and writing files containing sampled sound.
+binutils are a collection of binary tools necessary to build programs.
 
-The complete ASan output of the issue:
+An updated clang version were able to discover two null pointer dereference in the following simple way:
 
-# sndfile-convert $FILE out.wav
-==24715==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000013cc140 at pc 0x7f4f387e75ee bp 0x7ffe9d102370 sp 0x7ffe9d102368
-WRITE of size 4 at 0x0000013cc140 thread T0
-    #0 0x7f4f387e75ed in flac_buffer_copy /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:27
-    #1 0x7f4f387db2fa in sf_flac_write_callback /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:390:2
-    #2 0x7f4f3748f6ad in write_audio_frame_to_client_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:2981
-    #3 0x7f4f3748f6ad in read_frame_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:2152
-    #4 0x7f4f37491aef in FLAC__stream_decoder_process_single /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:1027
-    #5 0x7f4f387e7fbb in flac_read_loop /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:932:8
-    #6 0x7f4f387d31fb in flac_read_flac2i /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:979:13
-    #7 0x7f4f3872b3a2 in sf_readf_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:1835:10
-    #8 0x514b5d in sfe_copy_data_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:87:16
-    #9 0x5138d1 in main /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/sndfile-convert.c:340:3
-    #10 0x7f4f376c678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #11 0x419e18 in _init (/usr/bin/sndfile-convert+0x419e18)
+# echo "int main () { return 0; }" > test.c
+# cc test.c -o test
+/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/bfd/elflink.c:124:12: runtime error: member access within null pointer of type 'struct elf_link_hash_entry'                            
 
-0x0000013cc140 is located 0 bytes to the right of global variable 'data' defined in '/tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:80:14' 
-(0x13c8140) of size 16384
-SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:27 in flac_buffer_copy
-Shadow bytes around the buggy address:
-  0x0000802717d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000802717e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000802717f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271810: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x000080271820: 00 00 00 00 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9
-  0x000080271830: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271840: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271850: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271860: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271870: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==24715==ABORTING
-
+/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/bfd/elflink.c:11979:58: runtime error: member access within null pointer of type 'elf_section_list' (aka 'struct elf_section_list')  
 Affected version:
-1.0.28
+2.28
 
 Fixed version:
 N/A
 
 Commit fix:
-https://github.com/erikd/libsndfile/commit/fd0484aba8e51d16af1e3a880f9b8b857b385eb3
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=ad32986fdf9da1c8748e47b8b45100398223dba8
 
 Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-CVE-2017-8361
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00265-libsndfile-globaloverflow-flac_buffer_copy
+CVE-2017-7614
 
 Timeline:
-2017-04-12: bug discovered and reported to upstream
-2017-04-12: upstream released a patch
-2017-04-29: blog post about the issue
-2017-04-30: CVE assigned
+2017-04-01: bug discovered and reported to upstream
+2017-04-04: upstream released a patch
+2017-04-05: blog post about the issue
+2017-04-09: CVE assigned
 
 Note:
-This bug was found with American Fuzzy Lop.
+This bug was found with clang’s Undefined Behavior Sanitizer.
 
 Permalink:
-https://blogs.gentoo.org/ago/2017/04/29/libsndfile-global-buffer-overflow-in-flac_buffer_copy-flac-c/
+https://blogs.gentoo.org/ago/2017/04/05/binutils-two-null-pointer-dereference-in-elflink-c/
 
 --
 Agostino Sarubbo
