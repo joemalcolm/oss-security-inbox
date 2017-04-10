@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2396" "Saturday" "4" "February" "2017" "13:20:51" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<15646667.pyuNQbuQqX@arcadia>" "85" "[oss-security] pax-utils: dumpelf: two invalid memory read in dumpelf.c" nil nil nil "2" "2017020412:20:51" "[oss-security] pax-utils: dumpelf: two invalid memory read in dumpelf.c" (number mark "U       ago@gentoo.o Feb  4   85/2396  " thread-indent "\"[oss-security] pax-utils: dumpelf: two invalid memory read in dumpelf.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5096" "Monday" "10" "April" "2017" "07:41:09" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<695122.498876543-sendEmail@localhost>" "110" "[oss-security] elfutils: heap-based buffer overflow in check_sysv_hash (elflint.c)" nil nil nil "4" "2017041007:41:09" "[oss-security] elfutils: heap-based buffer overflow in check_sysv_hash (elflint.c)" (number mark "U       ago@gentoo.o Apr 10  110/5096  " thread-indent "\"[oss-security] elfutils: heap-based buffer overflow in check_sysv_hash (elflint.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13863 invoked by uid 550); 4 Feb 2017 12:21:09 -0000
+Received: (qmail 31856 invoked by uid 550); 10 Apr 2017 07:41:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,99 +12,122 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13712 invoked from network); 4 Feb 2017 12:21:07 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Sat, 04 Feb 2017 13:20:51 +0100
-Message-ID: <15646667.pyuNQbuQqX@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+Received: (qmail 31838 invoked from network); 10 Apr 2017 07:41:26 -0000
+Message-ID: <695122.498876543-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 10 Apr 2017 07:41:09 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] pax-utils: dumpelf: two invalid memory read in dumpelf.c
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-711606.391313584"
+Subject: [oss-security] elfutils: heap-based buffer overflow in check_sysv_hash (elflint.c)
+
+------MIME delimiter for sendEmail-711606.391313584
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
 Description:
-pax-utils is a set of tools that check files for security relevant properti=
-es.
+elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
 
-A fuzz on scanelf exposed two invalid memory read. They was reported to vap=
-ier=20
-which fixed the issue immediately.
-Unfortunately I can=E2=80=99t get a symbolized ASan stacktrace, so I will s=
-how only=20
-the useful part of both asan and gdb.
+A fuzz on eu-elflint showed an heap overflow.
 
-# dumpelf $FILE
-  SEGV on unknown address 0x7f8d94dc9e28 (pc 0x00000051efc6 bp 0x7ffe15ddbf=
-a0=20
-sp 0x7ffe15ddbf60 T0)
-=3D=3D31647=3D=3DThe signal is caused by a READ memory access.
+The complete ASan output:
 
-(gdb)
-#0  0x00000000004067f7 in dump_dyn (dyn_void=3Ddyn_void@entry=3D0x7ff5f7ff6=
-e28,=20
-dyn_cnt=3Ddyn_cnt@entry=3D0, elf=3D0x60d8e0, elf=3D0x60d8e0) at dumpelf.c:4=
-86
-#1  0x0000000000401e24 in dumpelf (file_cnt=3D0, filename=3D) at dumpelf.c:=
-146
-#2  parseargs (argv=3D0x7fffffffe1a8, argc=3D2) at dumpelf.c:557
-#3  main (argc=3D2, argv=3D0x7fffffffe1a8) at dumpelf.c:566
+# eu-elflint -d $FILE
+==14428==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60b00000aff4 at pc 0x00000040b36b bp 0x7ffe1e25ef20 sp 0x7ffe1e25ef18
+READ of size 4 at 0x60b00000aff4 thread T0
+    #0 0x40b36a in check_sysv_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2020
+    #1 0x40b36a in check_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2315
+    #2 0x422e73 in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4118
+    #3 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
+    #4 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
+    #5 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
+    #6 0x7f7a318a878f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+    #7 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00140-pax-utils-dumpelf-invalid=
-read-dump_dyn
+0x60b00000aff7 is located 0 bytes to the right of 103-byte region [0x60b00000af90,0x60b00000aff7)
+allocated by thread T0 here:
+    #0 0x7f7a32f95288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
+    #1 0x7f7a32bf1b46 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
+    #2 0x7f7a32bf1b46 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
+    #3 0x7f7a32bf2662 in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
+    #4 0x7f7a32bf2776 in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
+    #5 0x7f7a32c1e035 in elf32_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf32_getchdr.c:72
+    #6 0x7f7a32c1e55c in gelf_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/gelf_getchdr.c:52
+    #7 0x420edf in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3911
+    #8 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
+    #9 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
+    #10 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
+    #11 0x7f7a318a878f in __libc_start_main (/lib64/libc.so.6+0x2078f)
 
-# dumpelf $FILE
-SEGV on unknown address 0x6360e1292000 (pc 0x00000051fba9 bp 0x7ffeef817f20=
- sp=20
-0x7ffeef817ec0 T0)
-=3D=3D8213=3D=3DThe signal is caused by a READ memory access.
-
-(gdb)
-#0  dump_notes (B=3DB@entry=3D64, memory=3Dmemory@entry=3D0x63fff7ff5000,=20
-memory_end=3D0x6414f7ff5000, elf=3D0x60d8e0, elf=3D0x60d8e0) at dumpelf.c:2=
-28
-#1  0x0000000000405636 in dump_phdr (elf=3Delf@entry=3D0x60d8e0,=20
-phdr_void=3Dphdr_void@entry=3D0x7ffff7ff50f0, phdr_cnt=3Dphdr_cnt@entry=3D1=
-) at=20
-dumpelf.c:324
-#2  0x0000000000401dd9 in dumpelf (file_cnt=3D0, filename=3D) at dumpelf.c:=
-91
-#3  parseargs (argv=3D0x7fffffffe1a8, argc=3D2) at dumpelf.c:557
-#4  main (argc=3D2, argv=3D0x7fffffffe1a8) at dumpelf.c:566
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00141-pax-utils-dumpelf-invalid=
-read-dump_notes
-
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2020 in check_sysv_hash
+Shadow bytes around the buggy address:
+  0x0c167fff95a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff95b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff95c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff95d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff95e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c167fff95f0: fa fa 00 00 00 00 00 00 00 00 00 00 00 00[07]fa
+  0x0c167fff9600: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff9610: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff9620: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff9630: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff9640: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==14428==ABORTING
 Affected version:
-1.2.2
+0.168
 
 Fixed version:
-N/A
+0.169 (not released atm)
 
 Commit fix:
-https://github.com/gentoo/pax-utils/commit/18ded0e30ee5a84260cceb80d818b9c2=
-1ade4c76
+https://sourceware.org/ml/elfutils-devel/2017-q1/msg00131.html
 
 Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-N/A
+CVE-2017-7612
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00235-elfutils-heapoverflow-check_sysv_hash
 
 Timeline:
-2017-01-30: bug discovered and reported to upstream
-2017-02-01: upstream released a patch
-2017-02-04: blog post about the issue
+2017-03-27: bug discovered and reported to upstream
+2017-04-04: blog post about the issue
+2017-04-09: CVE assigned
 
 Note:
 This bug was found with American Fuzzy Lop.
 
 Permalink:
-https://blogs.gentoo.org/ago/2017/02/04/pax-utils-dumpelf-two-invalid-memor=
-y-read-in-dumpelf-c
+https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-check_sysv_hash-elflint-c/
 
---=20
+--
 Agostino Sarubbo
 Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-711606.391313584--
+
