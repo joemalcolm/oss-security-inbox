@@ -1,4 +1,9 @@
-Received: (qmail 11273 invoked by uid 550); 10 Nov 2022 17:30:43 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3791" "Monday" "10" "April" "2017" "07:16:00" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<861383.127371909-sendEmail@localhost>" "141" "[oss-security] libtiff: multiple UBSAN crashes" nil nil nil "4" "2017041007:16:00" "[oss-security] libtiff: multiple UBSAN crashes" (number mark "U       ago@gentoo.o Apr 10  141/3791  " thread-indent "\"[oss-security] libtiff: multiple UBSAN crashes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22261 invoked by uid 550); 10 Apr 2017 07:16:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,145 +12,153 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5437 invoked from network); 10 Nov 2022 17:27:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8k6W8LeOjFfVOl6jCUIMYl6AGJuwiHqJJ8wxsXQbiJE=;
-        b=qla7adEwSINeMFEoO8AjLTVv6EX3LM3HaXfxUk5rte9/3jYSq5z+O9ssvkLS2CSOOf
-         b277ZeW5SPxHQLKaeqJS+z0bSJ9dnkidYrOjjSKyPZGH73RFHIeDVy/zh3KLzFzuJXm+
-         7WQ1v8nrl14ocL9gYiVm/L+YstU+uGKblSb6aTUlVgpUUY189X0rCt6lsdfeRbqjI+0b
-         PZHxTVzKEvKG7iJzily4cmZDpCv/8opE2gQWIjm/ybStDooR0nVqG/x7w7TWeT9+XPeY
-         OawS6u/TSS0vPpMQYqyDDSx6ta0qiwCBZkQXyU6J4d/ERx9SlZj04uYN/xWRmZ0pE8sG
-         fpFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8k6W8LeOjFfVOl6jCUIMYl6AGJuwiHqJJ8wxsXQbiJE=;
-        b=AJFABVwrFLLhRWXfgM6VnlQHkOUPLzoxmPoQulmIiIxlH/XnGcdw26cqCPIoLQrNII
-         U1rbUYYjP3wPXf4HwwGizmwNrVyA32rx0TpxlcI42oCewStcixZMEHqeb/vggnC1Q/Pt
-         jxkre546dziBYnc/0CEni5FodcAsFX1mfKscBTD8/GylDpgvrFzQ5zozgkLx8xHnw7zd
-         d1/GiA9Spvkz0XzfdId//9Fw86HNkPdVP2yAeBjrGOU1pVrQxWY/ODOFMwR2wNflUyMq
-         FOvQAa9PtSJmh/YrcQAotQGLvgIY5WHVHZvpc1yCWsCW4gJHO1Q9odxeLoZgsNrTBr1H
-         ka4w==
-X-Gm-Message-State: ACrzQf3X34ch14wqOj80HI7LVVmr9BTjHEwnn6urSzgZgrD2WdWmzXZQ
-	So4MD9D6Q+3dsDzxsyDOTNMTj/E3gutwELTq/VS9sIUlsO8=
-X-Google-Smtp-Source: AMsMyM5K2Eb0HpXxiHOKDbxd0v1UibL24GAq+Y2rQqt1hDOlnfqfK4k13D2M3af7YaV4rgbqf/cCyIST/AiU2svBvbY=
-X-Received: by 2002:a05:6402:22b3:b0:461:6f87:20bb with SMTP id
- cx19-20020a05640222b300b004616f8720bbmr2769725edb.300.1668101211130; Thu, 10
- Nov 2022 09:26:51 -0800 (PST)
+Received: (qmail 22232 invoked from network); 10 Apr 2017 07:16:20 -0000
+Message-ID: <861383.127371909-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 10 Apr 2017 07:16:00 +0000
 MIME-Version: 1.0
-From: Tim Allclair <timallclair@gmail.com>
-Date: Thu, 10 Nov 2022 09:26:15 -0800
-Message-ID: <CALXpagy9180LrnQ_1Ekgek+xj6+iaYRghU+CjRdnWGDcKXxUkQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000238ff305ed2114ea"
-Subject: [oss-security] [kubernetes] CVE-2022-3294: Node address isn't always verified when proxying
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-42276.0407245768"
+Subject: [oss-security] libtiff: multiple UBSAN crashes
 
---000000000000238ff305ed2114ea
-Content-Type: text/plain; charset="UTF-8"
+------MIME delimiter for sendEmail-42276.0407245768
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Hello Kubernetes Community,
+Description:
+Libtiff is a software that provides support for the Tag Image File Format (TIFF), a widely used format for storing image data.
 
-A security issue was discovered in Kubernetes where users may have access
-to secure endpoints in the control plane network. Kubernetes clusters are
-only affected if an untrusted user can modify Node objects and send proxy
-requests to them.
+A fuzz with the undefined behavior sanitizer revealed some crashes.
 
-Kubernetes supports node proxying, which allows clients of kube-apiserver
-to access endpoints of a Kubelet to establish connections to Pods, retrieve
-container logs, and more. While Kubernetes already validates the proxying
-address for Nodes, a bug in kube-apiserver made it possible to bypass this
-validation. Bypassing this validation could allow authenticated requests
-destined for Nodes to to the API server's private network.
+# tiffcp -i $FILE /tmp/foo
+runtime error: value 5.84589e+199 is outside the range of representable values
+of type 'float'
+Affected version:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/3144e57770c1e4d26520d8abee750f8ac8b75490
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00113-libtiff-outside-float
+CVE:
+CVE-2017-7596
 
-This issue has been rated Medium (
-CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H>),
-and assigned CVE-2022-3294
-Am I vulnerable?
+##################################################
 
-Clusters are affected by this vulnerability if there are endpoints that the
-kube-apiserver has connectivity to that users should not be able to access.
-This includes:
+# tiffcp -i $FILE /tmp/foo
+tif_dirread.c:2409:12: runtime error: value -4.779e+161 is outside the range of
+representable values of type 'float'
+Affected version:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/3144e57770c1e4d26520d8abee750f8ac8b75490
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00114-libtiff-outside-float-tif_dirread
+CVE:
+CVE-2017-7597
 
-   -
+##################################################
 
-   kube-apiserver is in a separate network from worker nodes
-   -
+# tiffcp -i $FILE /tmp/foo
+tif_dirread.c:2878:24: runtime error: division by zero
+tif_dirread.c:2906:33: runtime error: division by zero
+Affected version:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/3cfd62d77c2a7e147a05bd678524c345fa9c2bb8
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00115-libtiff-fpe-tif_dirread
+CVE:
+CVE-2017-7598
 
-   localhost services
+##################################################
 
-mTLS services that accept the same client certificate as nodes may be
-affected. The severity of this issue depends on the privileges &
-sensitivity of the exploitable endpoints.
+# tiffcp -i $FILE /tmp/foo
+runtime error: value 65280 is outside the range of representable values of type 'short'
+Affected version:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/3144e57770c1e4d26520d8abee750f8ac8b75490
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00117-libtiff-outside-short-tif_dirwrite
+CVE:
+CVE-2017-7599
 
-Clusters that configure the egress selector to use a proxy for cluster
-traffic may not be affected.
-Affected Versions
+##################################################
 
-   -
+# tiffcp -i $FILE /tmp/foo
+runtime error: value -115 is outside the range of representable values of type 'unsigned char'
+Affected version:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/3144e57770c1e4d26520d8abee750f8ac8b75490
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00118-libtiff-outside-unsigned-char-tif_dirwrite
+CVE:
+CVE-2017-7600
 
-   Kubernetes kube-apiserver <= v1.25.3
-   -
+##################################################
 
-   Kubernetes kube-apiserver <= v1.24.7
-   -
+# tiffcp -i $FILE /tmp/foo
+runtime error: shift exponent 136 is too large for 64-bit type 'long'
+Affected version:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/0a76a8c765c7b8327c59646284fa78c3c27e5490
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00119-libtiff-shift-long-tif_jpeg
+CVE:
+CVE-2017-7601
 
-   Kubernetes kube-apiserver <= v1.23.13
-   -
+##################################################
 
-   Kubernetes kube-apiserver <= v1.22.15
+#ctiffcp -i $FILE /tmp/foo
+runtime error: signed integer overflow: 9223372036452122640 + 85899345928
+cannot be represented in type 'long'
+Affected version:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/66e7bd59520996740e4df5495a830b42fae48bc4
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00121-libtiff-signintoverflow-tif_read
+CVE:
+CVE-2017-7602
 
-How do I mitigate this vulnerability?
+##################################################
 
-Upgrading the kube-apiserver to a fixed version mitigates this
-vulnerability.
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
 
-Aside from upgrading, configuring an egress proxy for egress to the cluster
-network
-<https://kubernetes.io/docs/tasks/extend-kubernetes/setup-konnectivity/>
-can mitigate this vulnerability.
-Fixed Versions
+Timeline:
+2017-01-01: bugs discovered and reported to upstream
+2017-01-11: upstream released a patch
+2017-04-01: blog post about the issue
+2017-04-09: CVE assigned
 
-   -
+Note:
+These bugs were found with American Fuzzy Lop.
 
-   Kubernetes kube-apiserver v1.25.4
-   -
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/01/libtiff-multiple-ubsan-crashes
 
-   Kubernetes kube-apiserver v1.24.8
-   -
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-   Kubernetes kube-apiserver v1.23.14
-   -
 
-   Kubernetes kube-apiserver v1.22.16
+------MIME delimiter for sendEmail-42276.0407245768--
 
-These releases will be published over the course of today, November 10th.
-
-Fix impact: In some cases, the fix can break clients that depend on the
-nodes/proxy subresource, specifically if a kubelet advertises a localhost
-or link-local address to the Kubernetes control plane.
-Detection
-
-Node create & update requests may be included in the Kubernetes audit log,
-and can be used to identify requests for IP addresses that should not be
-permitted. Node proxy requests may also be included in audit logs.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/113757
-Acknowledgements
-
-This vulnerability was reported by Yuval Avrahami of Palo Alto Networks.
-
-Thank You,
-
-Tim Allclair on behalf of the Kubernetes Security Response Committee
-
---000000000000238ff305ed2114ea--
