@@ -1,38 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/10
-Message-ID: <b86bcba4-0a25-bb0c-5dd6-681f4a8381dc@oracle.com>
-Date: Wed, 4 Oct 2017 15:24:18 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/17
+Message-ID: <20170410125807.GD15596@suse.de>
+Date: Mon, 10 Apr 2017 14:58:07 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
-Subject: Fwd: X server fixes for CVE-2017-13721 & CVE-2017-13723
+Subject: Re: binutils: two NULL pointer dereference in elflink.c
 Content-Type: text/plain; charset=utf-8
 
--------- Forwarded Message --------
-Subject: X server fixes for CVE-2017-13721 & CVE-2017-13723
-Date: Wed, 4 Oct 2017 15:22:58 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-Reply-To: xorg@...ts.freedesktop.org
-To: xorg-announce@...ts.x.org
+Hi,
 
-The X.Org Foundation today published fixes for CVE-2017-13721 & CVE-2017-13723
-as part of the xorg-server 1.19.4 release.
+But it did not crash, so the pointer never got derefenced, NULL was just
+passed through pointer arithmetics.
 
-Git commits for these vulnerabilities:
-https://cgit.freedesktop.org/xorg/xserver/commit/?id=b95f25af141d33a65f6f821ea9c003f66a01e1f1
-https://cgit.freedesktop.org/xorg/xserver/commit/?id=94f11ca5cf011ef123bd222cabeaef6f424d76ac
+_bfd_generic_link_add_one_symbol() in 2.28 catches bh being NULL
+(The if (*hashp==NULL)) checks.)
 
-xorg-server 1.19.4 announcement:
-https://lists.x.org/archives/xorg-announce/2017-October/002808.html
+Ciao, Marcus
 
-X.Org thanks Michal Srb of SuSE for finding these issues and bringing them to
-our attention, Julien Cristau of Debian for getting the fixes integrated, and
-Adam Jackson of Red Hat for publishing the release.
+On Mon, Apr 10, 2017 at 07:47:33AM +0000, Agostino Sarubbo wrote:
+> Description:
+> binutils are a collection of binary tools necessary to build programs.
+> 
+> An updated clang version were able to discover two null pointer dereference in the following simple way:
+> 
+> # echo "int main () { return 0; }" > test.c
+> # cc test.c -o test
+> /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/bfd/elflink.c:124:12: runtime error: member access within null pointer of type 'struct elf_link_hash_entry'                            
+> 
+> /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/bfd/elflink.c:11979:58: runtime error: member access within null pointer of type 'elf_section_list' (aka 'struct elf_section_list')  
+> Affected version:
+> 2.28
+> 
+> Fixed version:
+> N/A
+> 
+> Commit fix:
+> https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=ad32986fdf9da1c8748e47b8b45100398223dba8
+> 
+> Credit:
+> This bug was discovered by Agostino Sarubbo of Gentoo.
+> 
+> CVE:
+> CVE-2017-7614
+> 
+> Timeline:
+> 2017-04-01: bug discovered and reported to upstream
+> 2017-04-04: upstream released a patch
+> 2017-04-05: blog post about the issue
+> 2017-04-09: CVE assigned
+> 
+> Note:
+> This bug was found with clang’s Undefined Behavior Sanitizer.
+> 
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/04/05/binutils-two-null-pointer-dereference-in-elflink-c/
+> 
+> --
+> Agostino Sarubbo
+> Gentoo Linux Developer
+> 
+
 
 -- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
-_______________________________________________
-xorg-announce mailing list
-xorg-announce@...ts.x.org
-https://lists.x.org/mailman/listinfo/xorg-announce
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
