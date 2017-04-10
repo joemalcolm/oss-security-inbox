@@ -1,21 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/18/4
-Message-ID: <cf41fea5-4180-fb43-b990-bed8a8c0e31c@debian.org>
-Date: Mon, 18 Sep 2017 13:18:46 -0400
-From: Luciano Bello <luciano@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: team@...urity.debian.org, hosein.askari@....com
-Subject: [CVE-2017-14266] tcprewrite Heap-Based Buffer Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/18
+Message-Id: <a18696795bb4b91a@frisell.zx2c4.com>
+Date: Mon, 10 Apr 2017 16:36:24 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: alloca in inline functions can be dangerous
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
-     I'm trying to reproduce this, to check the affected versions
-https://www.exploit-db.com/exploits/42652/
-     I tried in Debian Sid (4.2.6-1) and Debian Stretch (3.4.4-3) and I
-was not able to reproduce the issue. Specially for the later, the fact
-that tcprewrite exists normally is puzzling. Hosein (the PoC author)
-claims to make it work in 3.4.4 (on Ubuntu 16.04).
+Hey folks,
 
-Can else somebody confirm this issue?
+I'm not sure this is the right mailing list to discuss this matter, but
+hopefully it finds an audience here. I was debugging some code recently,
+when I found a very nasty interaction between alloca and inline functions.
+Observe the following block:
 
-Thanks, luciano
+static inline void process_widget(struct widget *widget,
+				  unsigned int  fcount)
+{
+	struct fragment fragments[fcount];
+	widgets_to_fragments(fragments, widget);
+	process_fragments(fragments);
+}
+
+static void iterate_widgets(struct widgetlist *widgetlist)
+{
+	struct widget *widget;
+	unsigned int fcount;
+
+	for (widget = widgetlist->first; widget; widget = widget->next) {
+		fcount = widget_get_frags_required(widget);
+		if (fcount > 256)
+			continue;
+		process_widget(widget, fcount);
+	}
+}
+
+This seems pretty benign. However, let's look at two transformations that
+gcc makes. First the VLA is changed to use alloca:
+
+static inline void process_widget(struct widget *widget,
+				  unsigned int fcount)
+{
+	struct fragment *fragments = __builtin_alloca(fcount);
+	widgets_to_fragments(fragments, widget);
+}
+
+Next, that block is inlined:
+
+static void iterate_widgets(struct widgetlist *widgetlist)
+{
+	struct fragment *fragments;
+	struct widget *widget;
+	unsigned int fcount;
+
+	for (widget = widgetlist->first; widget; widget = widget->next) {
+		fcount = widget_get_frags_required(widget);
+		if (fcount > 256)
+			continue;
+
+		fragments = __builtin_alloca(fcount);
+		widgets_to_fragments(fragments, widget);
+		process_fragments(fragments);
+	}
+}
+
+Uh oh speghettio: now the vulnerability becomes clear. Alloca only gives
+back its stack at the end of the function, not the end of the block. Since
+process_widget was inlined, we now keep calling alloca for every widget in
+the widgetlist. Problemo! A stack overflow is imminant, depending on the
+size of widgetlist.
+
+I briefly searched for some information about this type of vulnerability
+on the internet, and couldn't find anything. At best, I found somebody on
+a gcc list saying that gcc wouldn't inline functions that use alloca. But
+now I see that this is clearly not true.
+
+So now the standard advice of "don't use VLAs or alloca in loops!" now
+extends to "don't use VLAs or alloca in loops or inline functions that
+might be called inside loops."
+
+It seems like it would be prudent for gcc to either issue a warning when
+alloca is used in an inline function called from inside a loop, or simply
+refuse to inline those function calls (similar to what it does if you ever
+try to take the address of an inline function).
+
+I'm interested if anybody else has encountered this behavior or has any
+thoughts about it.
+
+Thanks,
+Jason
