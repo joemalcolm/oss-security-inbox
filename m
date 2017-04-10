@@ -1,146 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/16
-Message-ID: <20170530151629.GA19040@localhost.localdomain>
-Date: Tue, 30 May 2017 08:16:29 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
-Subject: Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/12
+Message-ID: <200458.336013497-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:34:33 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: elfutils: heap-based buffer overflow in check_group (elflint.c)
 Content-Type: text/plain; charset=utf-8
 
+Description:
+elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
 
-Qualys Security Advisory
+A fuzz on eu-elflint showed an heap overflow.
 
-CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
+The complete ASan output:
 
+# eu-elflint -d $FILE
+==12804==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efd0 at pc 0x00000041a39f bp 0x7ffee6a331d0 sp 0x7ffee6a331c8
+READ of size 4 at 0x60200000efd0 thread T0
+    #0 0x41a39e in check_group /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2664
+    #1 0x420787 in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4132
+    #2 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
+    #3 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
+    #4 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
+    #5 0x7ff00282678f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+    #6 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
 
-========================================================================
-Contents
-========================================================================
+0x60200000efd1 is located 0 bytes to the right of 1-byte region [0x60200000efd0,0x60200000efd1)
+allocated by thread T0 here:
+    #0 0x7ff003f13288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
+    #1 0x7ff003b6fb46 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
+    #2 0x7ff003b6fb46 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
+    #3 0x7ff003b70662 in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
+    #4 0x7ff003b70776 in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
+    #5 0x420935 in check_scn_group /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:544
+    #6 0x420935 in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3940
+    #7 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
+    #8 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
+    #9 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
+    #10 0x7ff00282678f in __libc_start_main (/lib64/libc.so.6+0x2078f)
 
-Analysis
-Exploitation
-Example
-Acknowledgments
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2664 in check_group
+Shadow bytes around the buggy address:
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c047fff9df0: fa fa fa fa fa fa 04 fa fa fa[01]fa fa fa 00 01
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==12804==ABORTING
+Affected version:
+0.168
 
+Fixed version:
+0.169 (not released atm)
 
-========================================================================
-Analysis
-========================================================================
+Commit fix:
+https://sourceware.org/ml/elfutils-devel/2017-q1/msg00137.html
 
-We discovered a vulnerability in Sudo's get_process_ttyname() for Linux:
-this function opens "/proc/[pid]/stat" (man proc) and reads the device
-number of the tty from field 7 (tty_nr). Unfortunately, these fields are
-space-separated and field 2 (comm, the filename of the command) can
-contain spaces (CVE-2017-1000367).
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-For example, if we execute Sudo through the symlink "./     1 ",
-get_process_ttyname() calls sudo_ttyname_dev() to search for the
-non-existent tty device number "1" in the built-in search_devs[].
+CVE:
+CVE-2017-7610
 
-Next, sudo_ttyname_dev() calls the function sudo_ttyname_scan() to
-search for this non-existent tty device number "1" in a breadth-first
-traversal of "/dev".
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00247-elfutils-heapoverflow-check_group
 
-Last, we exploit this function during its traversal of the
-world-writable "/dev/shm": through this vulnerability, a local user can
-pretend that his tty is any character device on the filesystem, and
-after two race conditions, he can pretend that his tty is any file on
-the filesystem.
+Timeline:
+2017-03-28: bug discovered and reported to upstream
+2017-04-04: blog post about the issue
+2017-04-09: CVE assigned
 
-On an SELinux-enabled system, if a user is Sudoer for a command that
-does not grant him full root privileges, he can overwrite any file on
-the filesystem (including root-owned files) with his command's output,
-because relabel_tty() (in src/selinux.c) calls open(O_RDWR|O_NONBLOCK)
-on his tty and dup2()s it to the command's stdin, stdout, and stderr.
-This allows any Sudoer user to obtain full root privileges.
+Note:
+This bug was found with American Fuzzy Lop.
 
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-check_group-elflint-c
 
-========================================================================
-Exploitation
-========================================================================
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-To exploit this vulnerability, we:
-
-- create a directory "/dev/shm/_tmp" (to work around
-  /proc/sys/fs/protected_symlinks), and a symlink "/dev/shm/_tmp/_tty"
-  to a non-existent pty "/dev/pts/57", whose device number is 34873;
-
-- run Sudo through a symlink "/dev/shm/_tmp/     34873 " that spoofs the
-  device number of this non-existent pty;
-
-- set the flag CD_RBAC_ENABLED through the command-line option "-r role"
-  (where "role" can be our current role, for example "unconfined_r");
-
-- monitor our directory "/dev/shm/_tmp" (for an IN_OPEN inotify event)
-  and wait until Sudo opendir()s it (because sudo_ttyname_dev() cannot
-  find our non-existent pty in "/dev/pts/");
-
-- SIGSTOP Sudo, call openpty() until it creates our non-existent pty,
-  and SIGCONT Sudo;
-
-- monitor our directory "/dev/shm/_tmp" (for an IN_CLOSE_NOWRITE inotify
-  event) and wait until Sudo closedir()s it;
-
-- SIGSTOP Sudo, replace the symlink "/dev/shm/_tmp/_tty" to our
-  now-existent pty with a symlink to the file that we want to overwrite
-  (for example "/etc/passwd"), and SIGCONT Sudo;
-
-- control the output of the command executed by Sudo (the output that
-  overwrites "/etc/passwd"):
-
-  . either through a command-specific method;
-
-  . or through a general method such as "--\nHELLO\nWORLD\n" (by
-    default, getopt() prints an error message to stderr if it does not
-    recognize an option character).
-
-To reliably win the two SIGSTOP races, we preempt the Sudo process: we
-setpriority() it to the lowest priority, sched_setscheduler() it to
-SCHED_IDLE, and sched_setaffinity() it to the same CPU as our exploit.
-
-
-========================================================================
-Example
-========================================================================
-
-We will publish our Sudoer-to-root exploit
-(Linux_sudo_CVE-2017-1000367.c) in the near future:
-
-[john@...alhost ~]$ head -n 8 /etc/passwd
-root:x:0:0:root:/root:/bin/bash
-bin:x:1:1:bin:/bin:/sbin/nologin
-daemon:x:2:2:daemon:/sbin:/sbin/nologin
-adm:x:3:4:adm:/var/adm:/sbin/nologin
-lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
-sync:x:5:0:sync:/sbin:/bin/sync
-shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
-halt:x:7:0:halt:/sbin:/sbin/halt
-
-[john@...alhost ~]$ sudo -l
-[sudo] password for john:
-...
-User john may run the following commands on localhost:
-    (ALL) /usr/bin/sum
-
-[john@...alhost ~]$ ./Linux_sudo_CVE-2017-1000367 /usr/bin/sum $'--\nHELLO\nWORLD\n'
-[sudo] password for john:
-
-[john@...alhost ~]$ head -n 8 /etc/passwd
-/usr/bin/sum: unrecognized option '--
-HELLO
-WORLD
-'
-Try '/usr/bin/sum --help' for more information.
-ogin
-adm:x:3:4:adm:/var/adm:/sbin/nologin
-lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
-
-
-========================================================================
-Acknowledgments
-========================================================================
-
-We thank Todd C. Miller for his great work and quick response, and the
-members of the distros list for their help with the disclosure of this
-vulnerability.
 
