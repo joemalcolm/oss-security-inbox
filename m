@@ -1,60 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/25/3
-Message-ID: <7168532.Ox717MafC3@arcadia>
-Date: Sat, 25 Mar 2017 15:11:02 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/21
+Message-ID: <0805f92b-b971-73a2-98c4-0e1b182cd605@apache.org>
+Date: Mon, 10 Apr 2017 20:14:34 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: libtiff: multiple heap-based buffer overflow
+Subject: [SECURITY] CVE-2017-5651 Apache Tomcat Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 01 January 2017 16:48:02 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-heap-based-buffer-o
-> verflow
+CVE-2017-5651 Apache Tomcat Information Disclosure
 
-> # tiffcp -i $FILE /tmp/foo
-> ==16440==ERROR: AddressSanitizer: heap-buffer-overflow on address
-> 0x62500000e861 at pc 0x0000004531de bp 0x7ffd2aba5c30 sp 0x7ffd2aba53e0
-> READ of size 78490 at 0x62500000e861 thread T0
->     #1 0x7f280456d37b in _tiffWriteProc /tmp/portage/media-
-> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:115:23
-This is CVE-2016-10268
+Severity: Important
 
+Vendor: The Apache Software Foundation
 
-> #tiffcp -i $FILE /tmp/foo
-> ==10398==ERROR: AddressSanitizer: heap-buffer-overflow on address
-> 0x60200000eef4 at pc 0x0000004bc235 bp 0x7fff3ebfa700 sp 0x7fff3ebf9eb0
-> READ of size 512 at 0x60200000eef4 thread T0
->      #1 0x7fcaf590cf0d in _TIFFmemcpy /tmp/portage/media-
-> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:340:2
-This is CVE-2016-10269
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M18
+Apache Tomcat 8.5.0 to 8.5.12
+Apache Tomcat 8.0.x and earlier are not affected
 
-> # tiffcp -i $FILE /tmp/foo
-> ==15106==ERROR: AddressSanitizer: heap-buffer-overflow on address
-> 0x60200000edd8 at pc 0x7f33918c5de3 bp 0x7ffc5abe6ba0 sp 0x7ffc5abe6b98
-> READ of size 8 at 0x60200000edd8 thread T0
->     #0 0x7f33918c5de2 in TIFFFillStrip /tmp/portage/media-
-> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_read.c:523:22
-This is CVE-2016-10270
+Description:
+The refactoring of the HTTP connectors for 8.5.x onwards, introduced a
+regression in the send file processing. If the send file processing
+completed quickly, it was possible for the Processor to be added to the
+processor cache twice. This could result in the same Processor being
+used for multiple requests which in turn could lead to unexpected errors
+and/or response mix-up.
 
-> # tiffcrop -i $FILE /tmp/foo
-> ==9181==ERROR: AddressSanitizer: heap-buffer-overflow on address
-> 0x7fd3b2e277f8 at pc 0x7fd3b7a762cc bp 0x7ffffd6e2550 sp 0x7ffffd6e2548
-> READ of size 1 at 0x7fd3b2e277f8 thread T0
->     #0 0x7fd3b7a762cb in _TIFFFax3fillruns /tmp/portage/media-
-> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_fax3.c:413:13
-This is CVE-2016-10271
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Tomcat 9.0.0.M19 or later
+- Upgrade to Apache Tomcat 8.5.13 or later
 
-> # tiffcrop -i $FILE /tmp/foo
-> ==29649==ERROR: AddressSanitizer: heap-buffer-overflow on address
-> 0x62d00000a3fc at pc 0x0000004bc48c bp 0x7ffd6f23c680 sp 0x7ffd6f23be30
-> WRITE of size 2048 at 0x62d00000a3fc thread T0
->       #1 0x7fcac5ac0033 in NeXTDecode /tmp/portage/media-
-> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_next.c:64:9
-This is CVE-2016-10272
+Credit:
+This issue was reported publicly as Bug 60918 [1] and the security
+implications identified by the Tomcat security team.
 
+History:
+2017-04-10 Original advisory
 
+References:
+[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60918
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
