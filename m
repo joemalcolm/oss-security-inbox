@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2361" "Wednesday" "5" "February" "2020" "10:59:55" "+0100" "Riccardo Schirone" "rschiron@redhat.com" nil "64" nil "^Date:" nil nil "2" nil nil (number mark "        rschiron@red Feb  5   64/2361  " thread-indent "\"[oss-security] CVE-2020-1712 systemd: use-after-free when asynchronous polkit queries are performed\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-1712 systemd: use-after-free when asynchronous polkit queries are performed" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3630" "Monday" "10" "April" "2017" "07:30:15" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<483530.584347562-sendEmail@localhost>" "74" "[oss-security] elfutils: memory allocation failure in __libelf_decompress (elf_compress.c)" nil nil nil "4" "2017041007:30:15" "[oss-security] elfutils: memory allocation failure in __libelf_decompress (elf_compress.c)" (number mark "U       ago@gentoo.o Apr 10   74/3630  " thread-indent "\"[oss-security] elfutils: memory allocation failure in __libelf_decompress (elf_compress.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26320 invoked by uid 550); 5 Feb 2020 10:05:28 -0000
+Received: (qmail 22377 invoked by uid 550); 10 Apr 2017 07:30:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23992 invoked from network); 5 Feb 2020 10:00:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1580896805;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=AOAUCTjeu3Bo35xTaFMwDjPGmUCcTY0EWoHB7EjLaeI=;
-	b=dtkSpDCq76eewuqGxrQGkX5Ztj7awV8d1QBgblNFDQSzt/UbXd8jBaM2ze/Rld63yDGC2n
-	0b9Co8R1Lo0CkMWudWqT7hzIv5pwfRoQUpW74MrOEey7Ja3jLMhPjxKLtQTubFaL/ixcZt
-	Z4jtQH1f76GErxJYmQMn6/6/f579HsU=
-X-MC-Unique: nJK713TRNdKWp6s6F8qhkw-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=4V8+adl33DCv5IFd3HZeh/KwMwmaNF5jY/j/gNL3DS4=;
-        b=MqFATlvUb09kPlf156PwKI78GKFYKm2T7BrnZAigA4NPZDZy/L/VQUW1JekcRK97IW
-         rdPQyjlkyY+SYgb1k9ZOPumH1hAAaNdnhR9k7w8VxVddZAxV5xWZGUaWJyUVBUwBjf3h
-         4KIa+ZxrO7PSvBFdWaaS0iIxp/1sF3OalBf6MOs73tZIB89qxQWRCj7wBVuIxgFqfK3N
-         clhYpXGLv8KnHcbkp7JRSCHFMBrTb2s+U7q7r4gvDUcHNkzI0VLGsywT0Z4CZZ1wvQMY
-         Mlo18tqDEuCp2FImYiEbo8oCnNzdX0YV84mKsYI6KwhcjFXTRzVdgi8n66lUnc4XOx3r
-         7Wnw==
-X-Gm-Message-State: APjAAAXCsGTn6hUNIOOAvjb5GrYTRb9LoaaxVGfajeP4aW+YyRJLISDA
-	ZHw585CJ9qA9MckL24EbRUlZ03qU/o6USaRL/8OI3OFKoinTmCb2cZIZGYcry4usuyCDNkdmxBs
-	MA0Uc+1xck9uEybQAQgT2QEoPqBVh
-X-Received: by 2002:a1c:960c:: with SMTP id y12mr4794909wmd.9.1580896798443;
-        Wed, 05 Feb 2020 01:59:58 -0800 (PST)
-X-Google-Smtp-Source: APXvYqzI8kDWP2lEtl1bM4jFdKDE9Gz2BplCiGOaaQeBrEKZjldtVjDkqxFxCsbXzCzYxVpxMz6yVw==
-X-Received: by 2002:a1c:960c:: with SMTP id y12mr4794860wmd.9.1580896797772;
-        Wed, 05 Feb 2020 01:59:57 -0800 (PST)
-Message-ID: <20200205095955.GI121861@fedorawork>
-MIME-Version: 1.0
-X-PGP-Key: http://keyserv.sr32.net/pks/lookup?op=get&search=0x1E8AB789CF96E110
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="M9kwpIYUMbI/2cCx"
-Content-Disposition: inline
-Date: Wed, 5 Feb 2020 10:59:55 +0100
-From: Riccardo Schirone <rschiron@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2020-1712 systemd: use-after-free when asynchronous polkit
- queries are performed
-To: oss-security@lists.openwall.com
+Received: (qmail 22017 invoked from network); 10 Apr 2017 07:30:32 -0000
+Message-ID: <483530.584347562-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 10 Apr 2017 07:30:15 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-847036.03324397"
+Subject: [oss-security] elfutils: memory allocation failure in __libelf_decompress (elf_compress.c)
 
---M9kwpIYUMbI/2cCx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+------MIME delimiter for sendEmail-847036.03324397
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Hello,
+Description:
+elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
 
-A heap use-after-free vulnerability was found in systemd, when asynchronous
-Polkit queries are performed while handling Dbus messages. A local unprivil=
-eged
-attacker can abuse this flaw to crash systemd services or potentially execu=
-te
-code and elevate their privileges, by sending specially crafted Dbus messag=
-es.
+A fuzz on eu-readelf showed a memory allocation failure. Will follow a feedback from upstream:
 
-CVE-2020-1712 has been assigned to this issue.
+That is slightly tricky. We do have to trust the input data to give us the expected output size. We won’t know if that was correct till we decompressed the input. We do actually double check the given 
+output size was correct at the end of the decompression. But we could catch some really bogus sizes before trying to allocate a giant amount of memory and decompressing stuff for nothing (like in this 
+case).
 
-This flaw happens due to the way bus_verify_polkit_async() works. Some DBus
-interfaces use a cache to store objects for a short period and they clear i=
-t as
-soon as the bus is again in the idle state. However, if a DBus method uses
-bus_verify_polkit_async(), the method may have to wait a while until the po=
-lkit
-action is resolved and when that happens the method handler is called again,
-with the userdata previously allocated. If the polkit request takes too lon=
-g,
-the clearing of the cache would free the stored objects before the method is
-called the second time, causing the use-after-free vulnerability.
+The complete ASan output:
 
-The issue was reported by Tavis Ormandy, Google Project Zero.
+# eu-readelf -a $FILE
+==1927==WARNING: AddressSanitizer failed to allocate 0x280065041580 bytes
+==1927==AddressSanitizer's allocator is terminating the process instead of returning 0
+==1927==If you don't like this behavior set allocator_may_return_null=1
+==1927==AddressSanitizer CHECK failed: /tmp/portage/sys-devel/gcc-6.3.0/work/gcc-6.3.0/libsanitizer/sanitizer_common/sanitizer_allocator.cc:145 "((0)) != (0)" (0x0, 0x0)
+    #0 0x7f85fc3a741d  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xcb41d)
+    #1 0x7f85fc3ad063 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xd1063)
+    #2 0x7f85fc3ab226  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xcf226)
+    #3 0x7f85fc3016a4  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x256a4)
+    #4 0x7f85fc39e265 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2265)
+    #5 0x7f85fb88dd1e in __libelf_decompress /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_compress.c:214
+    #6 0x7f85fb88e359 in __libelf_decompress_elf /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_compress.c:288
+    #7 0x7f85fb89132e in elf_compress /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_compress.c:479
+    #8 0x41f933 in handle_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3327
+    #9 0x4680f7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:898
+    #10 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
+    #11 0x7f85fbe3a094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
+    #12 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
+    #13 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
+    #14 0x7f85fa45878f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+    #15 0x406cd8 in _start (/usr/bin/eu-readelf+0x406cd8)
 
-Upstream fix is included in v245-rc1:
-https://github.com/systemd/systemd/commit/ea0d0ede03c6f18dbc5036c5e9cccf97e=
-415ccc2
+Affected version:
+0.168
 
-Thanks,
---=20
-Riccardo Schirone
-Red Hat -- Product Security
-Email: rschiron@redhat.com
-PGP-Key ID: CF96E110
+Fixed version:
+0.169 (not released atm)
 
---M9kwpIYUMbI/2cCx
-Content-Type: application/pgp-signature; name="signature.asc"
+Commit fix:
+https://sourceware.org/ml/elfutils-devel/2017-q1/msg00114.html
 
------BEGIN PGP SIGNATURE-----
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-iQIzBAEBCgAdFiEE3bt3kyIFawQJu6PaHoq3ic+W4RAFAl46khsACgkQHoq3ic+W
-4RCkxxAAhi2B4QY2ylTkUGOypYtz1yDurgfr48ztnchhvOJidsV9+hYt6+Ty+EDU
-vEpYIXPkfVFH5dXQMbRrXvNfFxU+M1NGhuymUVmxMLn/6A/rUlj7mfPTJupNGm8D
-6XdQCL9K9F+kvHsstA+QxInnENmm0K4dqeuWiRj11o2zu6Y6FttMjTKwuW+gGYuQ
-DJlQ5QUFBX96cDgvAAmMtggiMxqMUzFuqoW98AJ5+el4MKoaaZfthvIv76UEDMCJ
-0r33tWCxWC+QrSzt6wo5UfIHY5/2qrE/wRYS+i37dSIcimK47Q+u9paSmc/hA3zF
-Rq89nA4+P6gRnHAyCk32SQi+bemeAlcvyvvxpJefWmX6yTsGby66VPFWQHlk5Rzv
-5ecf7XuotkOffHgWFu9uYKqqn5KKJAlP6yhACyl0Sv4is3ggmGoUtRGpKMcqkfu4
-k8TX9eywV2xGMi/Swt/QOBE3wE+uFMstuNCekBCbXXx+SpVmIPC/8YuL0n9Q1JwL
-Mc1htSHzUdlkr0vn7BPT8pgqebsm8Ulpz62aOuNsFED+gGHkxti52s5FkKYb3C3D
-vfFVHs/BB+puf78CA7XFGbWYycrpwVeZM88q3uSEYFzF+HM/H2lkMRP2qlnbkKGj
-Noe86p08SMYDAolPm3PNlbxJLQjhXYBkVF5jJvmXh6CcgLN5WVc=
-=3WUn
------END PGP SIGNATURE-----
+CVE:
+CVE-2017-7609
 
---M9kwpIYUMbI/2cCx--
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00227-elfutils-memallocfailure
+
+Timeline:
+2017-03-24: bug discovered and reported to upstream
+2017-04-04: blog post about the issue
+2017-04-09: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/03/elfutils-memory-allocation-failure-in-__libelf_decompress-elf_compress-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-847036.03324397--
 
