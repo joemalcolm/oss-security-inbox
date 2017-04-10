@@ -1,4 +1,9 @@
-Received: (qmail 1400 invoked by uid 550); 14 May 2023 16:27:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1147" "Monday" "10" "April" "2017" "20:14:34" "+0100" "Mark Thomas" "markt@apache.org" "<0805f92b-b971-73a2-98c4-0e1b182cd605@apache.org>" "37" "[oss-security] [SECURITY] CVE-2017-5651 Apache Tomcat Information Disclosure" "^Date:" nil nil "4" "2017041019:14:34" "[oss-security] [SECURITY] CVE-2017-5651 Apache Tomcat Information Disclosure" (number mark "U       markt@apache Apr 10   37/1147  " thread-indent "\"[oss-security] [SECURITY] CVE-2017-5651 Apache Tomcat Information Disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9909 invoked by uid 550); 10 Apr 2017 19:23:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,87 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28069 invoked from network); 10 Apr 2017 19:14:49 -0000
+Message-ID: <0805f92b-b971-73a2-98c4-0e1b182cd605@apache.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Date: Mon, 10 Apr 2017 20:14:34 +0100
+From: Mark Thomas <markt@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1263 invoked from network); 14 May 2023 16:27:30 -0000
-Date: Sun, 14 May 2023 18:27:13 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: [oss-security] [SECURITY] CVE-2017-5651 Apache Tomcat Information Disclosure
 To: oss-security@lists.openwall.com
-Cc: Daniel Stenberg <daniel@haxx.se>
-Message-ID: <20230514162713.GA14965@openwall.com>
-References: <20230503190011.GA13309@openwall.com> <20230504064858.GF20467@suse.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230504064858.GF20467@suse.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] semi-public issues on (linux-)distros
 
-Hi,
+CVE-2017-5651 Apache Tomcat Information Disclosure
 
-Thank you Johannes for commenting on this.  I think there was plenty of
-time for anyone else to comment as well if they wanted to, but no one
-did, and that's fine.  So I went ahead and made an edit to the policy.
+Severity: Important
 
-On Thu, May 04, 2023 at 08:48:58AM +0200, Johannes Segitz wrote:
-> On Wed, May 03, 2023 at 09:00:11PM +0200, Solar Designer wrote:
-> > curl project's handling of security issues has been exemplary so far, in
-> 
-> I agree. And I'm happy to see that this is being discussed, as I've seen
-> Daniel talking on Mastodon about this and it would be a shame if they
-> wouldn't provide their high quality reports to distributions up front
-> anymore.
-> 
-> > my opinion at least, which gives me reason to expect sound judgement
-> > from Daniel on which issues to handle in which way.  Also, like it or
-> > not, starting to publicly commit some security fixes is a decision the
-> > project has already made, so our only options are (1) to change the list
-> > policy, (2) to grant one-time exceptions every time, or (3) to create
-> > extra work for Daniel for notifying the individual distros other than
-> > via the list (or choose not to).
-> 
-> My vote is for option 1.
+Vendor: The Apache Software Foundation
 
-The paragraph now reads:
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M18
+Apache Tomcat 8.5.0 to 8.5.12
+Apache Tomcat 8.0.x and earlier are not affected
 
-"Please note that in case a fix for an issue is already in a publicly
-accessible source code repository, we generally consider the issue
-public (and thus you should post to oss-security right away, not report
-the issue to (linux-)distros as we'd merely redirect you to oss-security
-anyway and insist that you make the required posting ASAP).  There can
-be occasional exceptions to this, such as if the publicly accessible fix
-doesn't look like it's for a security issue and not revealing this
-publicly right away is somehow deemed desirable.  In particular, we
-grant such exceptions for (1) Linux kernel issues concurrently or very
-recently handled by the Linux kernel security team and (2) curl issues
-ranked as low or medium severity by the curl project.  In all other
-cases, you'd have to have very sound reasoning to claim an exception
-like this and be prepared to lose your argument and if so to post to
-oss-security ASAP anyway."
+Description:
+The refactoring of the HTTP connectors for 8.5.x onwards, introduced a
+regression in the send file processing. If the send file processing
+completed quickly, it was possible for the Processor to be added to the
+processor cache twice. This could result in the same Processor being
+used for multiple requests which in turn could lead to unexpected errors
+and/or response mix-up.
 
-The addition is "(2) curl issues ranked as low or medium severity by the
-curl project."
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Tomcat 9.0.0.M19 or later
+- Upgrade to Apache Tomcat 8.5.13 or later
 
-> > I would also be happy to have a general solution if we _reasonably_ can,
-> > for all projects, but I'm not sure how reasonable that is.  The terms
-> > for Linux kernel's vs. curl's exceptions may reasonably vary to meet
-> > these project's exact needs and not more: for Linux kernel it's "issues
-> > concurrently or very recently handled by the Linux kernel security team"
-> > and for curl it can be "low and medium severity issues".
-> 
-> This is indeed tricky. I would not try to sync this to specific conditions
-> of the upstream policy, but to the proven track record of an upstream
-> project. If they can show that they can reliable do this for security
-> issues below a certain threshold they should get approved to post
-> semi-public issues onto the list.
-> 
-> And yes, this isn't a hard criterion that can be easily judged, which is
-> indeed a problem. There could be some form of vote on the list to decide
-> this for each project asking for it. In my experience the subscribers are
-> reasonable and I would expect that this would lead to good results.
+Credit:
+This issue was reported publicly as Bug 60918 [1] and the security
+implications identified by the Tomcat security team.
 
-As you can see, I went for project-specific conditions now.  What you
-suggest above didn't look better to me.  One reason why not is that if
-we'd need "some form of vote on the list" anyway, we can as well do so
-with threads like this one discussing the specific project's needs.
+History:
+2017-04-10 Original advisory
 
-Alexander
+References:
+[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60918
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
+
