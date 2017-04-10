@@ -1,45 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/8
-Message-ID: <20170523071046.GA4432@openwall.com>
-Date: Tue, 23 May 2017 09:10:46 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/4
+Message-ID: <542373.786305205-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:10:44 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libtiff: divide-by-zero in JPEGSetupEncode (tiff_jpeg.c)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 22, 2017 at 05:58:31PM -0500, Bob Friesenhahn wrote:
-> On Mon, 22 May 2017, Thomas Deutschmann wrote:
-> >Bob, do you have any PoC you can share with ImageMagick project
-> >regarding CVE-2017-6335?
-> >
-> >Your fix was
-> >https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
-> >
-> >I asked ImageMagick project about that issue but they don't know without
-> >a PoC, see https://github.com/ImageMagick/ImageMagick/issues/391
-> 
-> I have attached the problematic TIFF file.  I don't know if binary 
-> attachments are accepted by this list.
+Description:
+Libtiff is a software that provides support for the Tag Image File Format (TIFF), a widely used format for storing image data.
 
-Small binary attachments (total message size of up to 200 KB including
-overhead) are accepted, but unfortunately image/tiff was on the
-mimeremove list, so your attachment didn't get through.  I've just
-removed image/tiff from mimeremove.  Please resend (if small enough).
+A crafted tiff can crash the library.
 
-As to why have mimeremove at all: many people use MUAs or/and have
-signatures that always attach needless files (e.g., a text/html portion
-linking to a company logo, which is also included).  But I guess use of
-image/tiff for those is very unusual, so there was no good reason to
-have this MIME type removed.
+The complete ASan output:
 
-The current mimeremove is:
+# tiffcp -i $FILE /tmp/out
+==28692==ERROR: AddressSanitizer: FPE on unknown address 0x7f03239af35b (pc 0x7f03239af35b bp 0x7ffc7923f730 sp 0x7ffc7923f600 T0)
+    #0 0x7f03239af35a in JPEGSetupEncode /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_jpeg.c:1687:26
+    #1 0x7f0323a00312 in TIFFWriteEncodedTile /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_write.c:446:8     
+    #2 0x510f06 in writeBufferToContigTiles /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1539:8     
+    #3 0x50f1ce in cpImage /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1236:14   
+    #4 0x50dc1b in cpContigTiles2ContigTiles /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1673:9    
+    #5 0x50c5b6 in tiffcp /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:815:15     
+    #6 0x50c5b6 in main /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:304    
+    #7 0x7f0322a4661f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289  
+    #8 0x419f18 in _init (/usr/bin/tiffcp+0x419f18)    
+ 
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_jpeg.c:1687:26 in JPEGSetupEncode 
+Affected version:
+4.0.7
 
-application/ms-tnef
-text/html
-text/x-vcard
-image/gif
-image/jpeg
-image/png
+Fixed version:
+N/A
 
-Alexander
+Commit fix:
+https://github.com/vadz/libtiff/commit/47f2fb61a3a64667bce1a8398a8fcb1b348ff122
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-7595
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00123-libtiff-fpe-JPEGSetupEncode
+
+Timeline:
+2017-01-04: bug discovered and reported to upstream
+2017-01-11: upstream released a patch
+2017-04-01: blog post about the issue
+2017-04-09: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/01/libtiff-divide-by-zero-in-jpegsetupencode-tiff_jpeg-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
