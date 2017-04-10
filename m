@@ -1,4 +1,9 @@
-Received: (qmail 28553 invoked by uid 550); 25 Jan 2026 20:19:03 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5326" "Monday" "10" "April" "2017" "07:25:59" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<374565.691777633-sendEmail@localhost>" "113" "[oss-security] elfutils: heap-based buffer overflow in handle_gnu_hash (readelf.c)" nil nil nil "4" "2017041007:25:59" "[oss-security] elfutils: heap-based buffer overflow in handle_gnu_hash (readelf.c)" (number mark "U       ago@gentoo.o Apr 10  113/5326  " thread-indent "\"[oss-security] elfutils: heap-based buffer overflow in handle_gnu_hash (readelf.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25957 invoked by uid 550); 10 Apr 2017 07:26:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +12,125 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18075 invoked from network); 25 Jan 2026 20:15:54 -0000
-From: "Olle E. Johansson" <oej@edvina.net>
+Received: (qmail 25936 invoked from network); 10 Apr 2017 07:26:16 -0000
+Message-ID: <374565.691777633-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 10 Apr 2017 07:25:59 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-772165.956747816"
+Subject: [oss-security] elfutils: heap-based buffer overflow in handle_gnu_hash (readelf.c)
+
+------MIME delimiter for sendEmail-772165.956747816
 Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Date: Sun, 25 Jan 2026 21:15:35 +0100
-References: <D5B9E3F5-6C07-40DB-8303-15BE77956988@edvina.net>
- <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
- <01b8770e-38a5-8dca-fa64-712264d6e7a7@behlendorf.com>
- <MEAPR01MB36540D5561D482A63C1B62E8EE92A@MEAPR01MB3654.ausprd01.prod.outlook.com>
-To: oss-security@lists.openwall.com
-In-Reply-To: <MEAPR01MB36540D5561D482A63C1B62E8EE92A@MEAPR01MB3654.ausprd01.prod.outlook.com>
-Message-Id: <B37FB79D-7E28-482F-8AD1-6B1ED4126D27@edvina.net>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Subject: Re: [oss-security] Vulnerability management and Open Source: FOSDEM
- BoF
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+Description:
+elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+
+A fuzz on eu-readelf showed an heap overflow.
+
+The complete ASan output:
+
+# eu-readelf -a $FILE
+==1855==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x611000009ffc at pc 0x000000421a8c bp 0x7ffef67082e0 sp 0x7ffef67082d8
+READ of size 4 at 0x611000009ffc thread T0
+    #0 0x421a8b in handle_gnu_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3268
+    #1 0x421a8b in handle_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3346
+    #2 0x4680f7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:898
+    #3 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
+    #4 0x7f4bae746094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
+    #5 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
+    #6 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
+    #7 0x7f4bacd6478f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+    #8 0x406cd8 in _start (/usr/bin/eu-readelf+0x406cd8)
+
+0x611000009ffc is located 0 bytes to the right of 252-byte region [0x611000009f00,0x611000009ffc)
+allocated by thread T0 here:
+    #0 0x7f4baecaa288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
+    #1 0x7f4bae120f48 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
+    #2 0x7f4bae120f48 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
+    #3 0x7f4bae1229ba in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
+    #4 0x7f4bae122cae in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
+    #5 0x41f100 in handle_gnu_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3206
+    #6 0x41f100 in handle_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3346
+    #7 0x4680f7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:898
+    #8 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
+    #9 0x7f4bae746094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
+    #10 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
+    #11 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
+    #12 0x7f4bacd6478f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3268 in handle_gnu_hash
+Shadow bytes around the buggy address:
+  0x0c227fff93a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff93f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00[04]
+  0x0c227fff9400: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9420: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1855==ABORTING
+
+Affected version:
+0.168
+
+Fixed version:
+0.169 (not released atm)
+
+Commit fix:
+https://sourceware.org/ml/elfutils-devel/2017-q1/msg00109.html
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-7607
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00225-elfutils-heapoverflow-handle_gnu_hash
+
+Timeline:
+2017-03-24: bug discovered and reported to upstream
+2017-04-04: blog post about the issue
+2017-04-09: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-handle_gnu_hash-readelf-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
+------MIME delimiter for sendEmail-772165.956747816--
 
-> On 25 Jan 2026, at 10:53, Peter Gutmann <pgut001@cs.auckland.ac.nz> wrote:
->=20
-> Brian Behlendorf <brian@behlendorf.com> writes:
->=20
->> In fact Daniel will be presenting at a keynote there:
->>=20
->> https://fosdem.org/2026/schedule/event/B7YKQ7-oss-in-spite-of-ai/
->=20
-> Nice!  Looks like there's a FOSDEM YT channel but it hasn't been active f=
-or
-> awhile but there are several FOSDEM 202x playlists from presenter groups =
-for
-> previous talks, e.g. the Mozilla foundation, so with a bit of luck it'll =
-be up
-> for later perusal.
-
-After FOSDEM the video links are published on the FOSDEM web site itself. Y=
-ou can go back to 2025 and you=E2=80=99ll see on each talk page.
-
-/O=
