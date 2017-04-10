@@ -1,94 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/12
-Message-ID: <20170927194101.GA6268@openwall.com>
-Date: Wed, 27 Sep 2017 21:41:02 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OSSN-0081] sha512_crypt is insufficient for password hashing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/7
+Message-ID: <662503.639093728-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:22:46 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: imagemagick: undefined behavior in coders/rle.c
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 18, 2017 at 07:32:00PM +0000, Jeremy Stanley wrote:
-> On 2017-09-17 15:04:10 +0200 (+0200), Solar Designer wrote:
-> [...]
-> > the wording of the advisory and in the discussion at
-> > https://bugs.launchpad.net/ossn/+bug/1668503 is weird.
-> > 
-> > I assume that sha512_crypt refers to the algorithm introduced in
-> > glibc 2.7 and now used by many Linux distros and more. It is
-> > typically called sha512crypt without the underscore. I also assume
-> > that pbkdf2_sha512 refers to PBKDF2-HMAC-SHA512.
-> 
-> Yes, or more specifically these:
-> 
-> https://passlib.readthedocs.io/en/stable/lib/passlib.hash.sha512_crypt.html
-> https://passlib.readthedocs.io/en/stable/lib/passlib.hash.pbkdf2_digest.html
+Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap images.
 
-These say that sha512_crypt defaults to rounds=656000, which is very
-high, whereas pbkdf2_sha512 defaults to rounds=29000, which is also high
-but is relatively lower.
+A fuzz with the upstream security policy enabled, a quantum of 32 and the undefined behavior sanitizer discovered this bug.
 
-Now, we can't directly compare these: even an optimal implementation of
-PBKDF2-HMAC needs two computations of the hash per iteration, but OTOH
-sha512crypt may call SHA-512's compression function more times when the
-password is long (this dependency on length is an issue on its own, but
-that's separate).  That said, overall your pbkdf2_sha512 is likely ~10x
-quicker to crack than your sha512_crypt with these default settings.
+# identify $FILE
+coders/rle.c:274:18: runtime error: value 1.72801e+09 is outside the range of representable values of type 'unsigned char'                                                                     
 
-Yet the advisory continues to recommend pbkdf2_sha512 over sha512_crypt.
-I understand that maybe you just haven't gotten around to correcting it
-yet.  Also, Morgan has since posted another confused comment to 1668503,
-saying "we should be using bcrypt, scrypt, or at *least* pbkdf2 instead
-of sha512_crypt", which continues to imply that "pbkdf2" is necessarily
-a better choice.
+Affected version:
+7.0.5.4
 
-The advisory says that "sha512_crypt algorithm has a low computational
-cost factor", but your 656000 is actually very high.  (I did not verify
-that you actually use a value this high, though.)  So the problem, if
-any, is really not what the advisory says.  Rather, it can be that
-modern hashes starting with scrypt also use memory, and there's bcrypt,
-which is inefficient on GPUs - these are good things that you were
-missing on with sha512_crypt (and would also miss with pbkdf2_sha512).
+Fixed version:
+7.0.5.5 (not released atm)
 
-Per this page:
+Commit fix:
+https://github.com/ImageMagick/ImageMagick/commit/b218117cad34d39b9ffb587b45c71c5a49b12bde
 
-https://passlib.readthedocs.io/en/stable/lib/passlib.hash.bcrypt.html
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-your bcrypt defaults to cost factor 12.  It is non-obvious whether this
-is higher or lower than sha512crypt's 656000.  I just ran some tests
-with John the Ripper -jumbo on a 2x E5-2670 v1 machine, and sha512crypt
-with 656000 is crackable at ~85 c/s (at candidate password length 8)
-whereas bcrypt with 12 is crackable at ~130 c/s.  So for cracking on
-these CPUs supporting AVX but not yet AVX2, the bcrypt is slightly
-weaker.  However, for cracking on newer CPUs supporting AVX2, it'd be
-the other way around (I'd expect ~165 vs. ~130).  For cracking on GPUs,
-sha512crypt would be many times faster than bcrypt.
+CVE:
+CVE-2017-7606
 
-So you can't just say that you're addressing "a low computational cost
-factor".  You're addressing other issues.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00253-imagemagick-outside-unsigned-char
 
-Also, for your defensive use (that is, non-parallelized computation of
-one password hash) bcrypt cost factor 12 is probably way faster than
-sha512crypt's 656000.  You could want to bring the default for bcrypt on
-par with sha512crypt's 656000 if you really could afford a value this
-high before (double-check it first).  My estimate is that bcrypt cost 14
-or 15 will be it.
+Timeline:
+2017-03-31: bug discovered and reported to upstream
+2017-03-31: upstream released a patch
+2017-04-02: blog post about the issue
+2017-04-09: CVE assigned
 
-And at cost factors this high (yes, all of these are unusually high) you
-really should consider scrypt and on, where a lot of memory could be
-filled (if affordable) in that time, resulting in a quadratic growth of
-cost of some kinds of attacks.
+Note:
+This bug was found with American Fuzzy Lop.
 
-I hope this helps.
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/02/imagemagick-undefined-behavior-in-codersrle-c
 
-And while I am at it:
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-On Mon, Sep 18, 2017 at 02:00:09PM -0400, Jordan Glover wrote:
-> What number of iterations is considered secure for sha512crypt/pbkdf2 these days?
 
-You'd use as many iterations as you can afford without running into
-other issues.  It's not like one number is secure and another is not.
-
-I suppose an advisory could be issued if the number of iterations is
-many times lower than what's affordable for the given use case.
-
-Alexander
