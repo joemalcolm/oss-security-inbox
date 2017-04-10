@@ -1,65 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/11
-Message-ID: <23235157.DjIO37ESfJ@blackgate>
-Date: Thu, 09 Feb 2017 14:42:25 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: zziplib: heap-based buffer overflow in __zzip_get64 (fetch.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/8
+Message-ID: <374565.691777633-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:25:59 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: elfutils: heap-based buffer overflow in handle_gnu_hash (readelf.c)
 Content-Type: text/plain; charset=utf-8
 
 Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
 
-A fuzz on it discovered an heap overflow.
+A fuzz on eu-readelf showed an heap overflow.
 
 The complete ASan output:
 
-# unzzipcat-mem $FILE
-READ of size 1 at 0x60400000dff3 thread T0
-    #0 0x7ff28ab675dc in __zzip_get64 /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/fetch.c:59:10
-    #1 0x7ff28ab64968 in zzip_mem_entry_new /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:221:30
-    #2 0x7ff28ab64968 in zzip_mem_disk_load /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
-    #3 0x7ff28ab638b7 in zzip_mem_disk_open /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
-    #4 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12
-    #5 0x7ff289ca361f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #6 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
+# eu-readelf -a $FILE
+==1855==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x611000009ffc at pc 0x000000421a8c bp 0x7ffef67082e0 sp 0x7ffef67082d8
+READ of size 4 at 0x611000009ffc thread T0
+    #0 0x421a8b in handle_gnu_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3268
+    #1 0x421a8b in handle_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3346
+    #2 0x4680f7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:898
+    #3 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
+    #4 0x7f4bae746094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
+    #5 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
+    #6 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
+    #7 0x7f4bacd6478f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+    #8 0x406cd8 in _start (/usr/bin/eu-readelf+0x406cd8)
 
-0x60400000dff3 is located 0 bytes to the right of 35-byte region 
-[0x60400000dfd0,0x60400000dff3)
+0x611000009ffc is located 0 bytes to the right of 252-byte region [0x611000009f00,0x611000009ffc)
 allocated by thread T0 here:
-    #0 0x4d2508 in malloc /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x7ff28ab64187 in zzip_mem_entry_new /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:200:25
-    #2 0x7ff28ab64187 in zzip_mem_disk_load /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
-    #3 0x7ff28ab638b7 in zzip_mem_disk_open /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
-    #4 0x7ff289ca361f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #0 0x7f4baecaa288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
+    #1 0x7f4bae120f48 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
+    #2 0x7f4bae120f48 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
+    #3 0x7f4bae1229ba in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
+    #4 0x7f4bae122cae in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
+    #5 0x41f100 in handle_gnu_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3206
+    #6 0x41f100 in handle_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3346
+    #7 0x4680f7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:898
+    #8 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
+    #9 0x7f4bae746094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
+    #10 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
+    #11 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
+    #12 0x7f4bacd6478f in __libc_start_main (/lib64/libc.so.6+0x2078f)
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/fetch.c:59:10 in 
-__zzip_get64
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3268 in handle_gnu_hash
 Shadow bytes around the buggy address:
-  0x0c087fff9ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9bc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9bd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c087fff9bf0: fa fa fa fa fa fa fa fa fa fa 00 00 00 00[03]fa
-  0x0c087fff9c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9c20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9c30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c087fff9c40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff93f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00[04]
+  0x0c227fff9400: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9420: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
 Shadow byte legend (one shadow byte represents 8 application bytes):
   Addressable:           00
   Partially addressable: 01 02 03 04 05 06 07 
@@ -81,36 +77,39 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   ASan internal:           fe
   Left alloca redzone:     ca
   Right alloca redzone:    cb
-==7924==ABORTING
+==1855==ABORTING
 
 Affected version:
-0.13.62
+0.168
 
 Fixed version:
-N/A
+0.169 (not released atm)
 
 Commit fix:
-N/A
+https://sourceware.org/ml/elfutils-devel/2017-q1/msg00109.html
 
 Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-N/A
+CVE-2017-7607
 
 Reproducer:
-https://github.com/asarubbo/poc/blob/master/00151-zziplib-heapoverflow-__zzip_get64
+https://github.com/asarubbo/poc/blob/master/00225-elfutils-heapoverflow-handle_gnu_hash
 
 Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
+2017-03-24: bug discovered and reported to upstream
+2017-04-04: blog post about the issue
+2017-04-09: CVE assigned
 
 Note:
 This bug was found with American Fuzzy Lop.
 
 Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-__zzip_get64-fetch-c
+https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-handle_gnu_hash-readelf-c/
 
--- 
+--
 Agostino Sarubbo
 Gentoo Linux Developer
+
+
