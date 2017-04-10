@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4331" "Friday" "11" "January" "2019" "23:44:02" "+0530" "Dhiraj Mishra" "mishra.dhiraj95@gmail.com" "<CAG8b5tRjAg5iioDo18JpJdvNQDdtdaZBU_GcPacnqHDCGBcp2A@mail.gmail.com>" "100" "[oss-security] Memory leak in libiec61850" "^Date:" nil nil "1" "2019011118:14:02" "[oss-security] Memory leak in libiec61850" (number mark "        mishra.dhira Jan 11  100/4331  " thread-indent "\"[oss-security] Memory leak in libiec61850\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2391" "Monday" "10" "April" "2017" "07:10:44" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<542373.786305205-sendEmail@localhost>" "63" "[oss-security] libtiff: divide-by-zero in JPEGSetupEncode (tiff_jpeg.c)" nil nil nil "4" "2017041007:10:44" "[oss-security] libtiff: divide-by-zero in JPEGSetupEncode (tiff_jpeg.c)" (number mark "U       ago@gentoo.o Apr 10   63/2391  " thread-indent "\"[oss-security] libtiff: divide-by-zero in JPEGSetupEncode (tiff_jpeg.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5518 invoked by uid 550); 11 Jan 2019 18:20:52 -0000
+Received: (qmail 9500 invoked by uid 550); 10 Apr 2017 07:11:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,138 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27880 invoked from network); 11 Jan 2019 18:14:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=GsJ0ScScoEIVfjjAscNVhJSLby+KTlrFrGjy+9rSVRc=;
-        b=ZPPdHCDcQoVR6bYSC5pU96gLD1e9Xy79G2lMi2h6I8LOphdOH2DocRulTsfRo6OiWY
-         RxKLC5J0eTIMeC+GehpFMNfgmbkpi4yX8tK4PFy3zbUP4T7CPdXYAhmM/7vvmyqI0Jfq
-         +pFuBQeOTtTUmmF86O2qw1VJjc8DcD5jp2Fc4uR61NXZPaIPkuaiwjjx/fw/RubAQkMn
-         H+W84xQL0zA3gMYCC15GjyjRqmyfifgvNmbEbcyNps5WxtlCBWD4/VjNmxM8mL1+QWqT
-         RwWHUNOvPDJ/NEDJrySkR90Uaz3G2NB5/1hhvZ2DxUnKheMLhJTUeh+F/m94/h+cG2EF
-         v3wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=GsJ0ScScoEIVfjjAscNVhJSLby+KTlrFrGjy+9rSVRc=;
-        b=ASB7nY7+LelyyGDRjwZ4Aca2+sM3PzY8xXRf9uSygaUGDjzX+BWb+T3YvNfPFKNQsu
-         UFeORkjJ7D/ea7mFsxlexlDXfodJxNGx9hBUiztCaii6WgXDdrjli2Mbi//AHpYJ93Xp
-         9OYVvPENDoAScAx8B+XlKMmAwi+XW1OK4uqfr6FWZB/dtcdY8frsLoZ/NFA5nbSSGcOM
-         CnHmL1fzCaWtof3nYPnpLK3hOKkgfR3Hktk4Ko1jOhpp9CBTZWDfgNVq/fNo0V6Ed7z1
-         1PSBt07wVMCd3mqFCU/vSXABeb/rltjxZbXG7vgFuPx7m5vG+hwUsDMRfT69A90ZTBNq
-         OReQ==
-X-Gm-Message-State: AJcUukcFrrR2d3cyfj2WnrVp30pPj4ebXiWxCjNJv9lVUd9KV+iLwKNO
-	4k3GlDAvBu5lX1Gup7FXawSIWb7k/tJsu+TOO7WY24Fw
-X-Google-Smtp-Source: ALg8bN4A9Nc/+L2mPYUx1lGbFuCnCD3w+QUVcQwCx+PPX5BTS/fYQn5dgsjFkDDPrK/jAR8ybeuvwnQkFAPwY3QjJj4=
-X-Received: by 2002:a63:bd51:: with SMTP id d17mr14527259pgp.443.1547230453303;
- Fri, 11 Jan 2019 10:14:13 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CAG8b5tRjAg5iioDo18JpJdvNQDdtdaZBU_GcPacnqHDCGBcp2A@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000008e0cc9057f32a91f"
-Date: Fri, 11 Jan 2019 23:44:02 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Memory leak in libiec61850
-To: oss-security@lists.openwall.com
+Received: (qmail 9469 invoked from network); 10 Apr 2017 07:11:02 -0000
+Message-ID: <542373.786305205-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 10 Apr 2017 07:10:44 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-617608.459972875"
+Subject: [oss-security] libtiff: divide-by-zero in JPEGSetupEncode (tiff_jpeg.c)
 
---0000000000008e0cc9057f32a91f
-Content-Type: text/plain; charset="UTF-8"
+------MIME delimiter for sendEmail-617608.459972875
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Hi List,
+Description:
+Libtiff is a software that provides support for the Tag Image File Format (TIFF), a widely used format for storing image data.
 
-## Summary:
-An issue has been found in libIEC61850 v1.3.1. Memory_malloc and
-Memory_calloc in hal/memory/lib_memory.c have memory leaks when called from
-mms/iso_mms/common/mms_value.c, server/mms_mapping/mms_mapping.c, and
-server/mms_mapping/mms_sv.c (via common/string_utilities.c), as
-demonstrated by iec61850_9_2_LE_example.c.
+A crafted tiff can crash the library.
 
-## Snip code from mms_value.c#L1583-L1600:
-    self->value.visibleString.buf = (char*) GLOBAL_MALLOC(size + 1);
+The complete ASan output:
 
-    if (self->value.visibleString.buf == NULL) {
-        GLOBAL_FREEMEM(self);
-        self = NULL;
-        goto exit_function;
-    }
+# tiffcp -i $FILE /tmp/out
+==28692==ERROR: AddressSanitizer: FPE on unknown address 0x7f03239af35b (pc 0x7f03239af35b bp 0x7ffc7923f730 sp 0x7ffc7923f600 T0)
+    #0 0x7f03239af35a in JPEGSetupEncode /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_jpeg.c:1687:26
+    #1 0x7f0323a00312 in TIFFWriteEncodedTile /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_write.c:446:8     
+    #2 0x510f06 in writeBufferToContigTiles /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1539:8     
+    #3 0x50f1ce in cpImage /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1236:14   
+    #4 0x50dc1b in cpContigTiles2ContigTiles /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1673:9    
+    #5 0x50c5b6 in tiffcp /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:815:15     
+    #6 0x50c5b6 in main /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:304    
+    #7 0x7f0322a4661f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289  
+    #8 0x419f18 in _init (/usr/bin/tiffcp+0x419f18)    
+ 
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_jpeg.c:1687:26 in JPEGSetupEncode 
+Affected version:
+4.0.7
 
-    self->value.visibleString.buf[0] = 0;
+Fixed version:
+N/A
 
-    exit_function:
-    return self;
-}
+Commit fix:
+https://github.com/vadz/libtiff/commit/47f2fb61a3a64667bce1a8398a8fcb1b348ff122
 
-MmsValue*
-MmsValue_newVisibleStringWithSize(int size)
-{
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-## Memory leak:
+CVE:
+CVE-2017-7595
 
-==23314==ERROR: LeakSanitizer: detected memory leaks
-Direct leak of 260 byte(s) in 2 object(s) allocated from:
-    #0 0x7fd669c33b50 in __interceptor_malloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.4+0xdeb50)
-    #1 0x55f220071c7c in Memory_malloc
-/home/input0/Desktop/libiec61850/hal/memory/lib_memory.c:47
-    #2 0x55f21ff7390d in MmsValue_newStringWithSize
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:1583
-    #3 0x55f21ff73a80 in MmsValue_newVisibleStringWithSize
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:1600
-    #4 0x55f21ff72d0d in MmsValue_newDefaultValue
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:1457
-    #5 0x55f21ff72203 in MmsValue_newStructure
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:1391
-    #6 0x55f21ffafcf7 in LIBIEC61850_SV_createSVControlBlocks
-/home/input0/Desktop/libiec61850/src/iec61850/server/mms_mapping/mms_sv.c:428
-    #7 0x55f21ff8df69 in createNamedVariableFromLogicalNode
-/home/input0/Desktop/libiec61850/src/iec61850/server/mms_mapping/mms_mapping.c:1090
-    #8 0x55f21ff8ea2f in createMmsDomainFromIedDevice
-/home/input0/Desktop/libiec61850/src/iec61850/server/mms_mapping/mms_mapping.c:1193
-    #9 0x55f21ff8ec8d in createMmsDataModel
-/home/input0/Desktop/libiec61850/src/iec61850/server/mms_mapping/mms_mapping.c:1215
-    #10 0x55f21ff8f2ef in createMmsModelFromIedModel
-/home/input0/Desktop/libiec61850/src/iec61850/server/mms_mapping/mms_mapping.c:1298
-    #11 0x55f21ff8f5a8 in MmsMapping_create
-/home/input0/Desktop/libiec61850/src/iec61850/server/mms_mapping/mms_mapping.c:1344
-    #12 0x55f21ff7a565 in IedServer_createWithConfig
-/home/input0/Desktop/libiec61850/src/iec61850/server/impl/ied_server.c:430
-    #13 0x55f21ff7abcb in IedServer_create
-/home/input0/Desktop/libiec61850/src/iec61850/server/impl/ied_server.c:483
-    #14 0x55f21ff66cf7 in main
-/home/input0/Desktop/libiec61850/examples/iec61850_9_2_LE_example/iec61850_9_2_LE_example.c:119
-    #15 0x7fd6691c8b96 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00123-libtiff-fpe-JPEGSetupEncode
 
-Direct leak of 216 byte(s) in 17 object(s) allocated from:
-    #0 0x7fd669c33d38 in __interceptor_calloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.4+0xded38)
-    #1 0x55f220071cb5 in Memory_calloc
-/home/input0/Desktop/libiec61850/hal/memory/lib_memory.c:59
-    #2 0x55f21ff72045 in MmsValue_newStructure
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:1386
-    #3 0x55f21ff72ecd in MmsValue_newDefaultValue
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:1479
-    #4 0x55f21ff72203 in MmsValue_newStructure
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:1391
-    #5 0x55f21ff72ecd in MmsValue_newDefaultValue
-/home/input0/Desktop/libiec61850/src/mms/iso_mms/common/mms_value.c:1479
-    #6 0x55f21ff791b4 in createMmsServerCache
-/home/input0/Desktop/libiec61850/src/iec61850/server/impl/ied_server.c:207
-    #7 0x55f21ff7aa4d in IedServer_createWithConfig
-/home/input0/Desktop/libiec61850/src/iec61850/server/impl/ied_server.c:453
-    #8 0x55f21ff7abcb in IedServer_create
-/home/input0/Desktop/libiec61850/src/iec61850/server/impl/ied_server.c:483
-    #9 0x55f21ff66cf7 in main
-/home/input0/Desktop/libiec61850/examples/iec61850_9_2_LE_example/iec61850_9_2_LE_example.c:119
-    #10 0x7fd6691c8b96 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
-.....
+Timeline:
+2017-01-04: bug discovered and reported to upstream
+2017-01-11: upstream released a patch
+2017-04-01: blog post about the issue
+2017-04-09: CVE assigned
 
-Later CVE-2019-6138 was assigned to this issue.
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/01/libtiff-divide-by-zero-in-jpegsetupencode-tiff_jpeg-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Thank you
-@mishradhiraj_
+------MIME delimiter for sendEmail-617608.459972875--
 
---0000000000008e0cc9057f32a91f--
