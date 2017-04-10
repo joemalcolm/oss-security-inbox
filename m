@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["426" "Sunday" "25" "February" "2018" "18:50:34" "+0700" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8i241-OvnTKwC=Z-GmaNaV5BB9PwmXw668BKsamLiwntQ@mail.gmail.com>" "15" "[oss-security] [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls" nil nil nil "2" "2018022511:50:34" "[oss-security] [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls" (number mark "U       solomax@apac Feb 25   15/426   " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["960" "Monday" "10" "April" "2017" "07:03:25" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<457875.000636221-sendEmail@localhost>" "38" "[oss-security] CVE-2017-7592: libtiff: left shift" "^Date:" nil nil "4" "2017041007:03:25" "[oss-security] CVE-2017-7592: libtiff: left shift" (number mark "        ago@gentoo.o Apr 10   38/960   " thread-indent "\"[oss-security] CVE-2017-7592: libtiff: left shift\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32432 invoked by uid 550); 25 Feb 2018 11:50:50 -0000
+Received: (qmail 7785 invoked by uid 550); 10 Apr 2017 07:04:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32405 invoked from network); 25 Feb 2018 11:50:49 -0000
-X-Gm-Message-State: APf1xPDqAhNNsYRxrKzWDjVHqU+GWcsz19WdRFLpZsAXrnxoLm9aL/6K
-	ar67oARfuqCVVEU6CfNsS8ZWcn8MuQkclG3P/lU=
-X-Google-Smtp-Source: AG47ELs2I09WM9nvr47DnBETqAfrOy2XkWmHEkNM/unHKLqiK9F2UgSSXlLvQeGw5nV7/BhAgrmRtSZJu+aY8B87veA=
-X-Received: by 10.36.120.211 with SMTP id p202mr9441639itc.28.1519559434500;
- Sun, 25 Feb 2018 03:50:34 -0800 (PST)
+Received: (qmail 7650 invoked from network); 10 Apr 2017 07:03:45 -0000
+Message-ID: <457875.000636221-sendEmail@localhost>
 MIME-Version: 1.0
-From: Maxim Solodovnik <solomax@apache.org>
-Date: Sun, 25 Feb 2018 18:50:34 +0700
-X-Gmail-Original-Message-ID: <CAJmbs8i241-OvnTKwC=Z-GmaNaV5BB9PwmXw668BKsamLiwntQ@mail.gmail.com>
-Message-ID: <CAJmbs8i241-OvnTKwC=Z-GmaNaV5BB9PwmXw668BKsamLiwntQ@mail.gmail.com>
-To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
-	user-russian@openmeetings.apache.org, Sahil <sdhar@securityinnovation.com>, 
-	security@openmeetings.apache.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-979895.548037351"
+Date: Mon, 10 Apr 2017 07:03:25 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-7592: libtiff: left shift
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Severity: Medium
+------MIME delimiter for sendEmail-979895.548037351
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Vendor: The Apache Software Foundation
+http://bugzilla.maptools.org/show_bug.cgi?id=2658 :
 
-Versions Affected: Apache OpenMeetings 3.0.0
+In tif_getimage.c, in function putagreytile, there is a shift of unsigned char
+by 24:
+*(pp+1) << 24.
 
-Description: CRUD operations on privileged users are not password
-protected allowing an authenticated attacker to deny service for
-privileged users.
+Since there is no cast, *(pp+1) is treated as int, so
+UndefinedBehaviorSanitizer says:
+runtime error: left shift of 134 by 24 places cannot be represented in type
+'int'
+
+Maybe we could have something like:
+
+*cp++ = BWmap[*pp][0] & ((uint32)*(pp+1) << 24 | ~A1);
+
+###########
+
+Fixed per
+
+2017-01-11 Even Rouault <even.rouault at spatialys.com>
+
+        * libtiff/tif_getimage.c: add explicit uint32 cast in putagreytile to
+        avoid UndefinedBehaviorSanitizer warning.
+        Patch by Nicolás Peña.
+        Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2658
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-The issue was fixed in 4.0.2
-All users are recommended to upgrade to Apache OpenMeetings 4.0.2
+------MIME delimiter for sendEmail-979895.548037351--
 
-Credit: This issue was identified by Sahil Dhar of Security Innovation Inc
