@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1318" "Monday" "20" "February" "2017" "08:22:42" "-0800" "Timothy D. Morgan" "tim.advisories@blindspotsecurity.com" "<a2152d8b-5716-db81-9668-c04e70cd744f@blindspotsecurity.com>" "15" "[oss-security] Blindspot Advisory: Java/Python FTP Injections Allow for Firewall Bypass" nil nil nil "2" "2017022016:22:42" "[oss-security] Blindspot Advisory: Java/Python FTP Injections Allow for Firewall Bypass" (number mark "U       tim.advisori Feb 20   15/1318  " thread-indent "\"[oss-security] Blindspot Advisory: Java/Python FTP Injections Allow for Firewall Bypass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1067" "Monday" "10" "April" "2017" "20:14:37" "+0100" "Mark Thomas" "markt@apache.org" "<8c9758b3-34d8-4126-bade-df93a26256bb@apache.org>" "36" "[oss-security] [SECURITY] CVE-2017-5650 Apache Tomcat Denial of Service" nil nil nil "4" "2017041019:14:37" "[oss-security] [SECURITY] CVE-2017-5650 Apache Tomcat Denial of Service" (number mark "U       markt@apache Apr 10   36/1067  " thread-indent "\"[oss-security] [SECURITY] CVE-2017-5650 Apache Tomcat Denial of Service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9701 invoked by uid 550); 20 Feb 2017 16:29:55 -0000
+Received: (qmail 10128 invoked by uid 550); 10 Apr 2017 19:23:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,31 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3344 invoked from network); 20 Feb 2017 16:23:01 -0000
+Received: (qmail 28151 invoked from network); 10 Apr 2017 19:14:52 -0000
+From: Mark Thomas <markt@apache.org>
 To: oss-security@lists.openwall.com
-From: "Timothy D. Morgan" <tim.advisories@blindspotsecurity.com>
-Message-ID: <a2152d8b-5716-db81-9668-c04e70cd744f@blindspotsecurity.com>
-Date: Mon, 20 Feb 2017 08:22:42 -0800
+Message-ID: <8c9758b3-34d8-4126-bade-df93a26256bb@apache.org>
+Date: Mon, 10 Apr 2017 20:14:37 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.4.0
+ Thunderbird/45.8.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Blindspot Advisory: Java/Python FTP Injections Allow for Firewall
- Bypass
+Subject: [oss-security] [SECURITY] CVE-2017-5650 Apache Tomcat Denial of Service
 
+CVE-2017-5650 Apache Tomcat Denial of Service
 
-Recently, an vulnerability in Java's FTP URL handling code has been published which allows for protocol stream injection. It has been shown[1] that this flaw could be used to leverage existing XXE or SSRF vulnerabilities to send unauthorized email from Java applications via the SMTP protocol. While technically interesting, the full impact of this protocol stream injection has not been fully accounted for in existing public analysis.
+Severity: Important
 
-Protocol injection flaws like this have been an area of research of mine for the past few couple of years and as it turns out, this FTP protocol injection allows one to fool a victim's firewall into allowing TCP connections from the Internet to the vulnerable host's system on any "high" port (1024-65535). A nearly identical vulnerability exists in Python's urllib2 and urllib libraries. In the case of Java, this attack can be carried out against desktop users even if those desktop users do not have the Java browser plugin enabled.
+Vendor: The Apache Software Foundation
 
-As of 2017-02-20, the vulnerabilities discussed here have not been patched by the associated vendors, despite advance warning and ample time to do so.
-...
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M18
+Apache Tomcat 8.5.0 to 8.5.12
+Apache Tomcat 8.0.x and earlier are not affected
 
-For the rest of the advisory, please see:
-  http://blog.blindspotsecurity.com/2017/02/advisory-javapython-ftp-injections.html
+Description
+The handling of an HTTP/2 GOAWAY frame for a connection did not close
+streams associated with that connection that were currently waiting for
+a WINDOW_UPDATE before allowing the application to write more data.
+These waiting streams each consumed a thread. A malicious client could
+therefore construct a series of HTTP/2 requests that would consume all
+available processing threads.
 
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Tomcat 9.0.0.M19 or later
+- Upgrade to Apache Tomcat 8.5.13 or later
 
+Credit:
+This issue was identified by Chun Han Hsiao and reported responsibly to
+the Tomcat security team.
 
+History:
+2017-04-10 Original advisory
 
-1. https://shiftordie.de/blog/2017/02/18/smtp-over-xxe/
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+
