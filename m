@@ -1,155 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/15/4
-Message-Id: <E1eF1Fd-0002My-86@xenbits.xenproject.org>
-Date: Wed, 15 Nov 2017 17:13:25 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 243 (CVE-2017-15592) - x86: Incorrect handling of self-linear shadow mappings with translated guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/15
+Message-ID: <312509.123326407-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:43:59 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: elfutils: memory allocation failure in xcalloc (xmalloc.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
 
-            Xen Security Advisory CVE-2017-15592 / XSA-243
-                               version 5
+A fuzz on eu-elflint showed a memory allocation failure.
 
- x86: Incorrect handling of self-linear shadow mappings with translated guests
+The interesting ASan output:
 
-UPDATES IN VERSION 5
-====================
+# eu-elflint -d $FILE
+==5053==AddressSanitizer CHECK failed: /tmp/portage/sys-devel/gcc-6.3.0/work/gcc-6.3.0/libsanitizer/sanitizer_common/sanitizer_common.cc:180 "((0 && "unable to mmap")) != (0)" (0x0, 0x0)
+    #0 0x7faa2335941d  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xcb41d)
+    #1 0x7faa2335f063 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xd1063)
+    #2 0x7faa2335f24d  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xd124d)
+    #3 0x7faa23368c52  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xdac52)
+    #4 0x7faa232ba0b9  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x2c0b9)
+    #5 0x7faa232b249b  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x2449b)
+    #6 0x7faa2335040a in calloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc240a)
+    #7 0x431b8d in xcalloc /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/lib/xmalloc.c:64
+    #8 0x41f0bb in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3680
+    #9 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
+    #10 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
+    #11 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
+    #12 0x7faa21c6378f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+    #13 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
+Affected version:
+0.168
 
-New final patch, addressing a hypervisor crash the original fix caused,
-which by itself represents another security issue (DoS).
+Fixed version:
+0.169 (not released atm)
 
-ISSUE DESCRIPTION
-=================
+Commit fix:
+https://sourceware.org/ml/elfutils-devel/2017-q1/msg00133.html
 
-The shadow pagetable code uses linear mappings to inspect and modify the
-shadow pagetables.  A linear mapping which points back to itself is known as
-self-linear.  For translated guests, the shadow linear mappings (being in a
-separate address space) are not intended to be self-linear.  For
-non-translated guests, the shadow linear mappings (being the same
-address space) are intended to be self-linear.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-When constructing a monitor pagetable for Xen to run on a vcpu with, the shadow
-linear slot is filled with a self-linear mapping, and for translated guests,
-shortly thereafter replaced with a non-self-linear mapping, when the guest's
-%cr3 is shadowed.
+CVE:
+CVE-2017-7613
 
-However when writeable heuristics are used, the shadow mappings are used as
-part of shadowing %cr3, causing the heuristics to be applied to Xen's
-pagetables, not the guest shadow pagetables.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00236-elfutils-memallocfailure
 
-While investigating, it was also identified that PV auto-translate mode was
-insecure.  This mode was removed in Xen 4.7 due to being unused, unmaintained
-and presumed broken.  We are not aware of any guest implementation of PV
-auto-translate mode.
+Timeline:
+2017-03-27: bug discovered and reported to upstream
+2017-04-04: blog post about the issue
+2017-04-09: CVE assigned
 
-IMPACT
-======
+Note:
+This bug was found with American Fuzzy Lop.
 
-A malicious or buggy HVM guest may cause a hypervisor crash, resulting in a
-Denial of Service (DoS) affecting the entire host, or cause hypervisor memory
-corruption.  We cannot rule out a guest being able to escalate its privilege.
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/03/elfutils-memory-allocation-failure-in-xcalloc-xmalloc-c/
 
-VULNERABLE SYSTEMS
-==================
 
-All versions of Xen are vulnerable.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-HVM guests using shadow mode paging can exploit this vulnerability.
-HVM guests using Hardware Assisted Paging (HAP) as well as PV guests
-cannot exploit this vulnerability.
 
-ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-Where the HVM guest is explicitly configured to use shadow paging (eg
-via the `hap=0' xl domain configuration file parameter), changing to
-HAP (eg by setting `hap=1') will avoid exposing the vulnerability to
-those guests.  HAP is the default (in upstream Xen), where the
-hardware supports it; so this mitigation is only applicable if HAP has
-been disabled by configuration.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached set of patches resolves this issue.
-
-xsa243-[12].patch            xen-unstable, Xen 4.9.x
-xsa243-{4.8-1,2}.patch       Xen 4.8.x
-xsa243-{4.7-1,2}.patch       Xen 4.7.x
-xsa243-{4.6-[12],2}.patch    Xen 4.6.x
-xsa243-4.{6-1,5-[23]}.patch  Xen 4.5.x
-
-$ sha256sum xsa243*
-a5b484db80346f7e75c7921ee4780567f04b9f9b4620c0cde4bfa1df3ac0f87f  xsa243-1.patch
-013cff90312305b7f4ce6818a25760bcfca61bfadd860b694afa04d56e60c563  xsa243-2.patch
-79e1c5e088eee8e78aa67895a29d611352c64251854e4c5129e33c85988a47a5  xsa243-4.5-2.patch
-b838f387747c6e45314f44202c018ad907a8119bb7d8330fc875dc4243626e78  xsa243-4.5-3.patch
-722073aad1e734e24b0b79d03a1957e491f3616fe6e244a89050f7a50f8f356b  xsa243-4.6-1.patch
-94cb346c486f88f2f4f701564017e1997e518a5a14218f0e38ff882c60fb382c  xsa243-4.6-2.patch
-465ba9e3293591a3c84c122ffd73474fe96483f5e21565440d5fbc207fa4c4a9  xsa243-4.7-1.patch
-f8e471b42502905a442d43934ac339663a6124118c9762b31f2ad930fd532e64  xsa243-4.8-1.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJaDHWmAAoJEIP+FMlX6CvZbKgH/RsntzKBpEJQfElzpN15+eMM
-Kakfq3Mzad4JuaOb5dVy4fhE88gHgE344mmiUqu/h+pwRKofC/a3DvS4GPO8NJAI
-Zdu1CCkuZ3/L3IpbtdGsLMw1EZGQLXNsQGWCgDB3sNAT6Ue+FvmJbiP0RkIO+qXw
-7KSCfs2NtMvkj17jt5ZYj2Y43d0IvWirR3LHkJIDR0ZPYkX5WagAmuOom3bj57lt
-0Q/GC40x+kO9lQSw299CZxuHTi34zu0V4/HRtfSSVph5Gbcb+4kxMqv8e3wRfgg9
-kBF6FD12oLJkArIeb/J72m13RTiIJDiG3VltS9B2Vmm9+LZOhBvbsfILrePk0qE=
-=6RHQ
------END PGP SIGNATURE-----
-
-Download attachment "xsa243-1.patch" of type "application/octet-stream" (4174 bytes)
-
-Download attachment "xsa243-2.patch" of type "application/octet-stream" (2426 bytes)
-
-Download attachment "xsa243-4.5-2.patch" of type "application/octet-stream" (4243 bytes)
-
-Download attachment "xsa243-4.5-3.patch" of type "application/octet-stream" (2377 bytes)
-
-Download attachment "xsa243-4.6-1.patch" of type "application/octet-stream" (1064 bytes)
-
-Download attachment "xsa243-4.6-2.patch" of type "application/octet-stream" (4192 bytes)
-
-Download attachment "xsa243-4.7-1.patch" of type "application/octet-stream" (4177 bytes)
-
-Download attachment "xsa243-4.8-1.patch" of type "application/octet-stream" (4162 bytes)
