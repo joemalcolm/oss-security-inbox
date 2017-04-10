@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["775" "Wednesday" "25" "March" "2015" "14:16:48" "+0100" "Sebastian Krahmer" "krahmer@suse.de" "<20150325131648.GC3795@suse.de>" "32" "Re: [oss-security] CVS-Request: realmd code execution/auth bypass" nil nil nil "3" "2015032513:16:48" "[oss-security] CVS-Request: realmd code execution/auth bypass" (number mark "        krahmer@suse Mar 25   32/775   " thread-indent "\"Re: [oss-security] CVS-Request: realmd code execution/auth bypass\"\n") "<20150325125438.GB3795@suse.de>" ("<20150325125438.GB3795@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1272" "Monday" "10" "April" "2017" "20:14:41" "+0100" "Mark Thomas" "markt@apache.org" "<5c4ad2ea-c39f-776a-aa54-cf4a7b4a82e9@apache.org>" "41" "[oss-security] [SECURITY] CVE-2017-5648 Apache Tomcat Information Disclosure" nil nil nil "4" "2017041019:14:41" "[oss-security] [SECURITY] CVE-2017-5648 Apache Tomcat Information Disclosure" (number mark "U       markt@apache Apr 10   41/1272  " thread-indent "\"[oss-security] [SECURITY] CVE-2017-5648 Apache Tomcat Information Disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16246 invoked by uid 550); 25 Mar 2015 13:17:00 -0000
+Received: (qmail 11962 invoked by uid 550); 10 Apr 2017 19:23:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16228 invoked from network); 25 Mar 2015 13:17:00 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20150325131648.GC3795@suse.de>
-References: <20150325125438.GB3795@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150325125438.GB3795@suse.de>
-Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
- =?utf-8?Q?=F6rffer=2C_Jane_Smithard=2C_Jennife?= =?utf-8?Q?r?= Guild, Dilip
- Upmanyu, Graham Norton, HRB 21284 (AG Nuernberg)
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Wed, 25 Mar 2015 14:16:48 +0100
-From: Sebastian Krahmer <krahmer@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVS-Request: realmd code execution/auth bypass
+Received: (qmail 28225 invoked from network); 10 Apr 2017 19:14:55 -0000
+From: Mark Thomas <markt@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <5c4ad2ea-c39f-776a-aa54-cf4a7b4a82e9@apache.org>
+Date: Mon, 10 Apr 2017 20:14:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [SECURITY] CVE-2017-5648 Apache Tomcat Information Disclosure
 
+CVE-2017-5648 Apache Tomcat Information Disclosure
 
-CVE-Request indeed :D
+Severity: Low
 
+Vendor: The Apache Software Foundation
 
-On Wed, Mar 25, 2015 at 01:54:38PM +0100, Sebastian Krahmer wrote:
-> Hi
-> 
-> Upstream has opened two bugs for issues in realmd that
-> could lead to remote attackers logging into the local system
-> by placing an evil AD server in the LAN or by offering \r in
-> LDAP responses that are treated by sssd and winbind as newline
-> separator; therefore allowing to smuggle options into the config
-> files used for startup:
-> 
-> https://bugs.freedesktop.org/show_bug.cgi?id=89205
-> https://bugs.freedesktop.org/show_bug.cgi?id=89207
-> 
-> Sebastian
-> 
-> 
-> -- 
-> 
-> ~ perl self.pl
-> ~ $_='print"\$_=\47$_\47;eval"';eval
-> ~ krahmer@suse.de - SuSE Security Team
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M17
+Apache Tomcat 8.5.0 to 8.5.11
+Apache Tomcat 8.0.0.RC1 to 8.0.41
+Apache Tomcat 7.0.0 to 7.0.75
+Apache Tomcat 6.0.x is not affected
 
--- 
+Description
+While investigating bug 60718, it was noticed that some calls to
+application listeners did not use the appropriate facade object. When
+running an untrusted application under a SecurityManager, it was
+therefore possible for that untrusted application to retain a reference
+to the request or response object and thereby access and/or modify
+information associated with another web application.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.de - SuSE Security Team
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Tomcat 9.0.0.M18 or later
+- Upgrade to Apache Tomcat 8.5.12 or later
+- Upgrade to Apache Tomcat 8.0.42 or later
+- Upgrade to Apache Tomcat 7.0.76 or later
+
+Credit:
+This issue was identified by the Tomcat security team.
+
+History:
+2017-04-10 Original advisory
+
+References:
+[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60718
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
+[4] http://tomcat.apache.org/security-7.html
 
