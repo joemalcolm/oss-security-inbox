@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/5
-Message-ID: <1486115842.8276.10.camel@redhat.com>
-Date: Fri, 03 Feb 2017 10:57:22 +0100
-From: Adam Maris <amaris@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request for two input validation flaws in gtk-vnc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/2
+Message-ID: <489378.913628997-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:04:59 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2017-7593: libtiff: Potential unitialized-memory access from tif_rawdata
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+http://bugzilla.maptools.org/show_bug.cgi?id=2651 :
 
-Could you please allocate CVE IDs for these input validation issues in
-gtk-vnc?
+It is possible to end up accessing un-intialized memory from tif_rawdata. A
+potential fix can be seen at: https://pdfium-review.googlesource.com/c/2150/
 
-https://bugzilla.gnome.org/show_bug.cgi?id=778048
-https://bugzilla.gnome.org/show_bug.cgi?id=778050
+#################
 
-Thank you!
+Fixed per 
 
-Best Regards,
+2017-01-11 Even Rouault <even.rouault at spatialys.com>
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
+        * libtiff/tiffio.h, tif_unix.c, tif_win32.c, tif_vms.c: add_TIFFcalloc()
+
+        * libtiff/tif_read.c: TIFFReadBufferSetup(): use _TIFFcalloc() to zero
+        initialize tif_rawdata.
+        Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2651
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
