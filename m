@@ -1,169 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/13/1
-Message-ID: <20170913060419.GT17782@dastard>
-Date: Wed, 13 Sep 2017 16:04:19 +1000
-From: Dave Chinner <david@...morbit.com>
-To: oss-security@...ts.openwall.com
-Cc: sandeen@...deen.net, darrick.wong@...cle.com, rwareing@...com
-Subject: CVE-2017-14340: Linux kernel: xfs: unprivileged user kernel oops
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/14
+Message-ID: <695122.498876543-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:41:09 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: elfutils: heap-based buffer overflow in check_sysv_hash (elflint.c)
 Content-Type: text/plain; charset=utf-8
 
+Description:
+elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
 
-Summary
--------
+A fuzz on eu-elflint showed an heap overflow.
 
-XFS mishandles a user settable inode flag in kernels prior to
-4.14-rc1 which can cause a local denial of service via a kernel
-oops.
+The complete ASan output:
 
+# eu-elflint -d $FILE
+==14428==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60b00000aff4 at pc 0x00000040b36b bp 0x7ffe1e25ef20 sp 0x7ffe1e25ef18
+READ of size 4 at 0x60b00000aff4 thread T0
+    #0 0x40b36a in check_sysv_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2020
+    #1 0x40b36a in check_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2315
+    #2 0x422e73 in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4118
+    #3 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
+    #4 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
+    #5 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
+    #6 0x7f7a318a878f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+    #7 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
 
-Description
------------
+0x60b00000aff7 is located 0 bytes to the right of 103-byte region [0x60b00000af90,0x60b00000aff7)
+allocated by thread T0 here:
+    #0 0x7f7a32f95288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
+    #1 0x7f7a32bf1b46 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
+    #2 0x7f7a32bf1b46 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
+    #3 0x7f7a32bf2662 in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
+    #4 0x7f7a32bf2776 in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
+    #5 0x7f7a32c1e035 in elf32_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf32_getchdr.c:72
+    #6 0x7f7a32c1e55c in gelf_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/gelf_getchdr.c:52
+    #7 0x420edf in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3911
+    #8 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
+    #9 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
+    #10 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
+    #11 0x7f7a318a878f in __libc_start_main (/lib64/libc.so.6+0x2078f)
 
-Richard Wareing recently discovered that if the XFS kernel code is
-compiled with CONFIG_XFS_RT=y, the code mishandles
-FS_XFLAG_RTINHERIT and FS_XFLAG_REALTIME flags when the filesystem
-does not have a realtime device configured. When an fsync/fdatasync
-operation is run on an inode configured this way, we attempt to
-flush the cache of the non-existent realtime device and the kernel
-will oops.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:2020 in check_sysv_hash
+Shadow bytes around the buggy address:
+  0x0c167fff95a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff95b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff95c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff95d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff95e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c167fff95f0: fa fa 00 00 00 00 00 00 00 00 00 00 00 00[07]fa
+  0x0c167fff9600: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff9610: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff9620: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff9630: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c167fff9640: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==14428==ABORTING
+Affected version:
+0.168
 
-While a user cannot set the FS_XFLAG_REALTIME directly on such a
-filesystem, we fail to prevent them from setting the
-FS_XFLAG_RTINHERIT on directories.  Hence files can inherit the
-problematic FS_XFLAG_REALTIME flag from their parent directory at
-create time. Setting the FS_XFLAG_RTINHERIT flag does not require
-special privileges, so any user with permission to write to a
-directory can set it.
+Fixed version:
+0.169 (not released atm)
 
-Details of the oops signature and the trivial reproducer can be
-found in the commit message for the fix below.
+Commit fix:
+https://sourceware.org/ml/elfutils-devel/2017-q1/msg00131.html
 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Scope of vulnerable filesystems
--------------------------------
+CVE:
+CVE-2017-7612
 
-This vulnerability was introduced in late 2005 by commit
-f538d4da8d52 ("[XFS] write barrier support"). Hence XFS filesystems
-on all kernels since 2.6.16 are vulnerable except for:
-
-	* Kernels that are compiled with CONFIG_XFS_RT=n are
-	  not vulnerable.
-
-	* XFS filesystems with actual realtime devices are not
-	  not vulnerable.
-
-
-How to recognise a vulnerable system
-------------------------------------
-
-1. Search the boot log for the XFS initialisation message. If this
-message contains the world "realtime" then the kernel is vulnerable
-to the issue:
-
-CONFIG_XFS_RT=y (vulnerable):
-
-# dmesg |grep "XFS with"
-[    1.625711] SGI XFS with ACLs, security attributes, realtime, debug enabled
-
-CONFIG_XFS_RT=n (not vulnerable):
-
-# dmesg |grep "XFS with"
-[    1.625711] SGI XFS with ACLs, security attributes, debug enabled
-
-
-2. If you have a vulnerable kernel, check each XFS filesystems to
-see if they use a realtime device.
-
-This filesystem is not vulnerable as it has a realtime device
-configured:
-
-# xfs_info /mnt |grep ^realtime
-realtime =/dev/ram0              extsz=4096   blocks=2048000, rtextents=2048000
-
-This filesystem is vulnerable if the kernel is vulnerable as it does
-not have a realtime device:
-
-# xfs_info /mnt |grep ^realtime
-realtime =none                   extsz=4096   blocks=0, rtextents=0
-
-
-Mitigation
-----------
-
-Fixed upstream in 4.14-rc1, commit below.
-
-Backports to supported stable upstream kernels is already underway,
-so fixes will roll out with the next stable kernel releases.
-
-Recompile the kernel with CONFIG_XFS_RT=n. This is recommended for
-users who cannot wait for upstream or distro kernel updates, cannot
-backport the fix themselves and do not use realtime devices.
-
-
-Upstream commit
----------------
-
-commit b31ff3cdf540110da4572e3e29bd172087af65cc
-Author: Richard Wareing <rwareing@...com>
-Date:   Wed Sep 13 09:09:35 2017 +1000
-
-    xfs: XFS_IS_REALTIME_INODE() should be false if no rt device present
-    
-    If using a kernel with CONFIG_XFS_RT=y and we set the RHINHERIT flag on
-    a directory in a filesystem that does not have a realtime device and
-    create a new file in that directory, it gets marked as a real time file.
-    When data is written and a fsync is issued, the filesystem attempts to
-    flush a non-existent rt device during the fsync process.
-    
-    This results in a crash dereferencing a null buftarg pointer in
-    xfs_blkdev_issue_flush():
-    
-      BUG: unable to handle kernel NULL pointer dereference at 0000000000000008
-      IP: xfs_blkdev_issue_flush+0xd/0x20
-      .....
-      Call Trace:
-        xfs_file_fsync+0x188/0x1c0
-        vfs_fsync_range+0x3b/0xa0
-        do_fsync+0x3d/0x70
-        SyS_fsync+0x10/0x20
-        do_syscall_64+0x4d/0xb0
-        entry_SYSCALL64_slow_path+0x25/0x25
-    
-    Setting RT inode flags does not require special privileges so any
-    unprivileged user can cause this oops to occur.  To reproduce, confirm
-    kernel is compiled with CONFIG_XFS_RT=y and run:
-    
-      # mkfs.xfs -f /dev/pmem0
-      # mount /dev/pmem0 /mnt/test
-      # mkdir /mnt/test/foo
-      # xfs_io -c 'chattr +t' /mnt/test/foo
-      # xfs_io -f -c 'pwrite 0 5m' -c fsync /mnt/test/foo/bar
-    
-    Or just run xfstests with MKFS_OPTIONS="-d rtinherit=1" and wait.
-    
-    Kernels built with CONFIG_XFS_RT=n are not exposed to this bug.
-    
-    Fixes: f538d4da8d52 ("[XFS] write barrier support")
-    Cc: <stable@...r.kernel.org>
-    Signed-off-by: Richard Wareing <rwareing@...com>
-    Signed-off-by: Dave Chinner <david@...morbit.com>
-    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
-
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00235-elfutils-heapoverflow-check_sysv_hash
 
 Timeline:
+2017-03-27: bug discovered and reported to upstream
+2017-04-04: blog post about the issue
+2017-04-09: CVE assigned
 
-2017.09.04 - Discussion on xfs@...r.kernel.org (public list) hinted
-	     at crash bug in realtime device support
-2017.09.09 - Bug found and reported to XFS maintainers
-2017.09.12 - Bug reported to security@...nel.org
-2017.09.13 - Fix committed to kernel
-2017.09.13 - Announcement to oss-security
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-check_sysv_hash-elflint-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
--Dave.
--- 
-Dave Chinner
-david@...morbit.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
