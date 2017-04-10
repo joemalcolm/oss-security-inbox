@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5703" "Sunday" "26" "September" "2021" "08:52:50" "-0600" "Damien Miller" "djm@cvs.openbsd.org" nil "147" "[oss-security] Announce: OpenSSH 8.8 released" nil nil nil "9" nil nil (number mark "U       djm@cvs.open Sep 26  147/5703  " thread-indent "\"[oss-security] Announce: OpenSSH 8.8 released\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Announce: OpenSSH 8.8 released" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["983" "Monday" "10" "April" "2017" "07:06:05" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<498371.501078026-sendEmail@localhost>" "34" "[oss-security] CVE-2017-7594: libtiff: Direct leak in tif_ojpeg.c" nil nil nil "4" "2017041007:06:05" "[oss-security] CVE-2017-7594: libtiff: Direct leak in tif_ojpeg.c" (number mark "U       ago@gentoo.o Apr 10   34/983   " thread-indent "\"[oss-security] CVE-2017-7594: libtiff: Direct leak in tif_ojpeg.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5163 invoked by uid 550); 26 Sep 2021 14:53:05 -0000
+Received: (qmail 24303 invoked by uid 550); 10 Apr 2017 07:06:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,157 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5127 invoked from network); 26 Sep 2021 14:53:04 -0000
-From: Damien Miller <djm@cvs.openbsd.org>
-Date: Sun, 26 Sep 2021 08:52:50 -0600 (MDT)
-To: oss-security@lists.openwall.com
-Message-ID: <94b230a84bd78c43@cvs.openbsd.org>
-Subject: [oss-security] Announce: OpenSSH 8.8 released
+Received: (qmail 24222 invoked from network); 10 Apr 2017 07:06:23 -0000
+Message-ID: <498371.501078026-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 10 Apr 2017 07:06:05 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-410788.674214022"
+Subject: [oss-security] CVE-2017-7594: libtiff: Direct leak in tif_ojpeg.c
 
-OpenSSH 8.8 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+------MIME delimiter for sendEmail-410788.674214022
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+http://bugzilla.maptools.org/show_bug.cgi?id=2659 :
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+In tif_ojpeg.c, in OJPEGReadHeaderInfoSecTablesDcTable, we have
+rb=_TIFFmalloc(ra). After, values for rb are filled out. Then there is an if
+(p!=q) return 0, which goes before the line sp->dctable[m]=rb;
 
-Future deprecation notice
-=========================
+Therefore, clearly rb is leaking every time the if (p!=q) is entered, since
+memory is allocated but it is not even assigned anywhere. Our fix:
 
-A near-future release of OpenSSH will switch scp(1) from using the
-legacy scp/rcp protocol to using SFTP by default.
+https://pdfium-review.googlesource.com/c/2176/
 
-Legacy scp/rcp performs wildcard expansion of remote filenames (e.g.
-"scp host:* .") through the remote shell. This has the side effect of
-requiring double quoting of shell meta-characters in file names
-included on scp(1) command-lines, otherwise they could be interpreted
-as shell commands on the remote side.
+##################
 
-This creates one area of potential incompatibility: scp(1) when using
-the SFTP protocol no longer requires this finicky and brittle quoting,
-and attempts to use it may cause transfers to fail. We consider the
-removal of the need for double-quoting shell characters in file names
-to be a benefit and do not intend to introduce bug- compatibility for
-legacy scp/rcp in scp(1) when using the SFTP protocol.
+Patch applied per
 
-Another area of potential incompatibility relates to the use of remote
-paths relative to other user's home directories, for example -
-"scp host:~user/file /tmp". The SFTP protocol has no native way to
-expand a ~user path. However, sftp-server(8) in OpenSSH 8.7 and later
-support a protocol extension "expand-path@openssh.com" to support
-this.
+2017-01-12 Even Rouault <even.rouault at spatialys.com>
 
-Security
-========
+        * libtiff/tif_ojpeg.c: fix leak in OJPEGReadHeaderInfoSecTablesAcTable
+        when read fails.
+        Patch by Nicolás Peña.
+        Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2659
 
-sshd(8) from OpenSSH 6.2 through 8.7 failed to correctly initialise
-supplemental groups when executing an AuthorizedKeysCommand or
-AuthorizedPrincipalsCommand, where a AuthorizedKeysCommandUser or
-AuthorizedPrincipalsCommandUser directive has been set to run the
-command as a different user. Instead these commands would inherit
-the groups that sshd(8) was started with.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-Depending on system configuration, inherited groups may allow
-AuthorizedKeysCommand/AuthorizedPrincipalsCommand helper programs to
-gain unintended privilege.
 
-Neither AuthorizedKeysCommand nor AuthorizedPrincipalsCommand are
-enabled by default in sshd_config(5).
-
-Potentially-incompatible changes
-================================
-
-This release disables RSA signatures using the SHA-1 hash algorithm
-by default. This change has been made as the SHA-1 hash algorithm is
-cryptographically broken, and it is possible to create chosen-prefix
-hash collisions for <USD$50K [1]
-
-For most users, this change should be invisible and there is
-no need to replace ssh-rsa keys. OpenSSH has supported RFC8332
-RSA/SHA-256/512 signatures since release 7.2 and existing ssh-rsa keys
-will automatically use the stronger algorithm where possible.
-
-Incompatibility is more likely when connecting to older SSH
-implementations that have not been upgraded or have not closely tracked
-improvements in the SSH protocol. For these cases, it may be necessary
-to selectively re-enable RSA/SHA1 to allow connection and/or user
-authentication via the HostkeyAlgorithms and PubkeyAcceptedAlgorithms
-options. For example, the following stanza in ~/.ssh/config will enable
-RSA/SHA1 for host and user authentication for a single destination host:
-
-    Host old-host
-        HostkeyAlgorithms +ssh-rsa
-	PubkeyAcceptedAlgorithms +ssh-rsa
-
-We recommend enabling RSA/SHA1 only as a stopgap measure until legacy
-implementations can be upgraded or reconfigured with another key type
-(such as ECDSA or Ed25519).
-
-[1] "SHA-1 is a Shambles: First Chosen-Prefix Collision on SHA-1 and
-    Application to the PGP Web of Trust" Leurent, G and Peyrin, T
-    (2020) https://eprint.iacr.org/2020/014.pdf
-
-Changes since OpenSSH 8.7
-=========================
-
-This release is motivated primarily by the above deprecation and
-security fix.
-
-New features
-------------
- * ssh(1): allow the ssh_config(5) CanonicalizePermittedCNAMEs
-   directive to accept a "none" argument to specify the default
-   behaviour.
-
-Bugfixes
---------
-
- * scp(1): when using the SFTP protocol, continue transferring files
-   after a transfer error occurs, better matching original scp/rcp
-   behaviour.
-    
- * ssh(1): fixed a number of memory leaks in multiplexing,
-
- * ssh-keygen(1): avoid crash when using the -Y find-principals
-   command.
-
- * A number of documentation and manual improvements, including
-   bz#3340, PR#139, PR#215, PR#241, PR#257
-
-Portability
------------
-
- * ssh-agent(1): on FreeBSD, use procctl to disable ptrace(2)
-
- * ssh(1)/sshd(8): some fixes to the pselect(2) replacement
-   compatibility code. bz#3345
-
-Checksums:
-==========
-
- - SHA1 (openssh-8.8.tar.gz) = 732947082a8998047e839cc0b4c066bf0a7e1a5b
- - SHA256 (openssh-8.8.tar.gz) = AngyrPSQH255hnzU1l7y+LlVAUNcGWtuYQIFEl22nRo=
-
- - SHA1 (openssh-8.8p1.tar.gz) = 1eb964897a4372f6fb96c7effeb509ec71c379c9
- - SHA256 (openssh-8.8p1.tar.gz) = RZCJDqm7ms5Pca4zF4WjpYIyMkNRYZYO1fyGWI8zH+k=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Please note that the OpenPGP key used to sign releases has been
-rotated for this release. The new key has been signed by the previous
-key to provide continuity.
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@openssh.com
+------MIME delimiter for sendEmail-410788.674214022--
 
