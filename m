@@ -1,31 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/31/3
-Message-ID: <CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>
-Date: Fri, 31 Mar 2017 19:20:20 +0200
-From: Andrey Konovalov <andreyknvl@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/13
+Message-ID: <1843.42902818457-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:38:26 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: elfutils: heap-based buffer overflow in check_symtab_shndx (elflint.c)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@...gle.com> wrote:
-> Hi,
->
-> CVE-2017-7308 [1] was assigned to the following issue:
->
-> The packet_set_ring function in net/packet/af_packet.c in the Linux
-> kernel through 4.10.6 does not properly validate certain block-size
-> data, which allows local users to cause a denial of service (overflow)
-> or possibly have unspecified other impact via crafted system calls.
->
-> The fix is sent upstream [2].
+Description:
+elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
 
-Update: the fix actually consists of 3 patches:
+A fuzz on eu-elflint showed an heap overflow.
 
-https://patchwork.ozlabs.org/patch/744811/
-https://patchwork.ozlabs.org/patch/744813/
-https://patchwork.ozlabs.org/patch/744812/
+The complete ASan output:
 
->
-> [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
->
-> [2] https://patchwork.ozlabs.org/patch/744811/
+# eu-elflint -d $FILE
+==14342==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efd0 at pc 0x0000004267ec bp 0x7ffdf36a7ad0 sp 0x7ffdf36a7ac8
+READ of size 4 at 0x60200000efd0 thread T0
+    #0 0x4267eb in check_symtab_shndx /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:1961
+    #1 0x4267eb in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4114
+    #2 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
+    #3 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
+    #4 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
+    #5 0x7f625ef4678f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+    #6 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
+
+0x60200000efd2 is located 0 bytes to the right of 2-byte region [0x60200000efd0,0x60200000efd2)
+allocated by thread T0 here:
+    #0 0x7f6260633288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
+    #1 0x7f626028fb46 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
+    #2 0x7f626028fb46 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
+    #3 0x7f6260290662 in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
+    #4 0x7f6260290776 in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
+    #5 0x7f62602bc035 in elf32_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf32_getchdr.c:72
+    #6 0x7f62602bc55c in gelf_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/gelf_getchdr.c:52
+    #7 0x420edf in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3911
+    #8 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
+    #9 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
+    #10 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
+    #11 0x7f625ef4678f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:1961 in check_symtab_shndx
+Shadow bytes around the buggy address:
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c047fff9df0: fa fa fa fa fa fa fa fa fa fa[02]fa fa fa 00 01
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==14342==ABORTING
+Affected version:
+0.168
+
+Fixed version:
+0.169 (not released atm)
+
+Commit fix:
+https://sourceware.org/ml/elfutils-devel/2017-q1/msg00129.html
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-7611
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00234-elfutils-heapoverflow-check_symtab_shndx
+
+Timeline:
+2017-03-27: bug discovered and reported to upstream
+2017-04-04: blog post about the issue
+2017-04-09: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-check_symtab_shndx-elflint-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
