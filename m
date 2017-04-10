@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/8
-Message-ID: <nycvar.YSQ.7.76.1711282322150.6216@wniryva>
-Date: Tue, 28 Nov 2017 23:26:43 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Eric Blake <eblake@...hat.com>
-Subject: CVE-2017-15118 Qemu: stack buffer overflow in NBD server triggered via long export name
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/23
+Message-ID: <5c4ad2ea-c39f-776a-aa54-cf4a7b4a82e9@apache.org>
+Date: Mon, 10 Apr 2017 20:14:41 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2017-5648 Apache Tomcat Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+CVE-2017-5648 Apache Tomcat Information Disclosure
 
-A stack based buffer overflow vulnerability was found in NBD server 
-implementation in Qemu allowing client to request an export name of size up to 
-4096 bytes, which in fact should be limited to 256 bytes, allowing to cause 
-out-of-bounds stack write in Qemu process.
+Severity: Low
 
-If NBD server requires TLS, the attacker cannot trigger the buffer overflow 
-without first successfully negotiating TLS.
+Vendor: The Apache Software Foundation
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg05045.html
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M17
+Apache Tomcat 8.5.0 to 8.5.11
+Apache Tomcat 8.0.0.RC1 to 8.0.41
+Apache Tomcat 7.0.0 to 7.0.75
+Apache Tomcat 6.0.x is not affected
 
-Reference:
-----------
-   ->https://bugzilla.redhat.com/show_bug.cgi?id=1516922
+Description
+While investigating bug 60718, it was noticed that some calls to
+application listeners did not use the appropriate facade object. When
+running an untrusted application under a SecurityManager, it was
+therefore possible for that untrusted application to retain a reference
+to the request or response object and thereby access and/or modify
+information associated with another web application.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Tomcat 9.0.0.M18 or later
+- Upgrade to Apache Tomcat 8.5.12 or later
+- Upgrade to Apache Tomcat 8.0.42 or later
+- Upgrade to Apache Tomcat 7.0.76 or later
+
+Credit:
+This issue was identified by the Tomcat security team.
+
+History:
+2017-04-10 Original advisory
+
+References:
+[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60718
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
+[4] http://tomcat.apache.org/security-7.html
+
