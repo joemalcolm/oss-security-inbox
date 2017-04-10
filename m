@@ -1,70 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/7
-Message-ID: <CAN6_dU9ReOV3ogigS1rmM0xE_f_+BkyhktgTm0nubGNbL4WOwg@mail.gmail.com>
-Date: Sun, 5 Feb 2017 21:42:20 +0800
-From: chunibalon <chunibalon@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2017-2581, CVE-2017-2579, CVE-2017-2580, CVE-2017-2586, CVE-2017-2587: Multiple vulnerabilities in netpbm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/1
+Message-ID: <457875.000636221-sendEmail@localhost>
+Date: Mon, 10 Apr 2017 07:03:25 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2017-7592: libtiff: left shift
 Content-Type: text/plain; charset=utf-8
 
-Hello:
+http://bugzilla.maptools.org/show_bug.cgi?id=2658 :
 
-       There are some issues that found in netpbm super stable branch
-10.47.63 and may effect other branches and this mail is to disclose
-them(the maintainer agrees with me).
+In tif_getimage.c, in function putagreytile, there is a shift of unsigned char
+by 24:
+*(pp+1) << 24.
 
-        CVE-2017-2581 netpbm: Out-of-bounds write in writeRasterPbm()
-function
-       This OOBW issue occurs in bmptopnm and casues by integer overflow.
-       This issue can be cause by a malformed BMP file through
-bmptopnm.Attackers could exploit this issue to result in DoS and may cause
-arbitrary code execution.
+Since there is no cast, *(pp+1) is treated as int, so
+UndefinedBehaviorSanitizer says:
+runtime error: left shift of 134 by 24 places cannot be represented in type
+'int'
 
-        CVE-2017-2579 netpbm: Out-of-bounds read in expandCodeOntoStack()
-        This OOBR issue occurs in giftopnm and causes by insufficient check
-of value of specific variable.
-        This issue can be caused by a malformed GIF file through giftopnm.
-Attackers could exploit this issue to result in DoS and might cause
-arbitrary code execution.
+Maybe we could have something like:
 
-        CVE-2017-2580 netpbm: Out-of-bounds write of heap data in
-addPixelToRaster() function
-        This OOBW issues occurs in giftopnm and causes by a improper deal
-with a zero-size heap chunk allocation and when malloc() is called it will
-be crash by unlink this heap overflow.
-        This issue can be caused by a malformed GIF file through giftopnm.
-Attackers could exploit this issue to result in DoS and might cause
-arbitrary code execution by using some feature of unlink() to arbitrary
-anywhere.
+*cp++ = BWmap[*pp][0] & ((uint32)*(pp+1) << 24 | ~A1);
 
-        CVE-2017-2586 netpbm: Null pointer dereference in stringToUint
-function
-        This issue occurs in svgtopam and causes by a NULL pointer passed
-to strlen(const char*).
-        This issue can be caused by a malformed SVG  file through svgtopam.
-Attackers could exploit this issue to result in DoS of the program.
+###########
 
+Fixed per
 
-        CVE-2017-2587 netpbm: Insufficient size check of memory allocation
-in createCanvas() function
-        This issue occurs in svgtopam and causes by handleing memory
-allocation improperly.
-        This issue can be caused by a malformed SVG file through
-svgtopam.Attackers could exploit this issue to result in DoS of the program
-and might DoS the OS if the OS do not terminate the program automatically
-and timely because of the large allocation of the memory.
+2017-01-11 Even Rouault <even.rouault at spatialys.com>
 
-       Some of these issues are patched in other branches and all will be
-patched in Super Stable branch in March as maintainer said.
-       And the maintainer said: "*Anyone who wants a fix before the March
-Super Stable release can either upgrade to Stable or backport the
-fixes from Stable."*
+        * libtiff/tif_getimage.c: add explicit uint32 cast in putagreytile to
+        avoid UndefinedBehaviorSanitizer warning.
+        Patch by Nicolás Peña.
+        Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2658
 
-       These CVE ids are assigned by Redhat Product Security(
-secalert@...hat.com).
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-
-Best Regards!
-chunibalon of VARAS@IIE
 
