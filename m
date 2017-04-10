@@ -1,45 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/1
-Message-ID: <20171113145336.GA23241@openwall.com>
-Date: Mon, 13 Nov 2017 15:53:36 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/24
+Message-ID: <bd686d9b-f123-995b-3620-1efa03b86709@apache.org>
+Date: Mon, 10 Apr 2017 20:14:45 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
+Subject: [SECURITY] CVE-2017-5647 Apache Tomcat Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 03, 2017 at 11:07:14AM +0000, Fiedler Roman wrote:
-> PS: POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user root when editing file in directory owned by other user is available on request, disclosure after one week or if list discussion indicates other timing.
+CVE-2017-5647 Apache Tomcat Information Disclosure
 
-Please post this PoC in here ASAP.  Right now, you're in violation of
-distros list policy for having posted the PoC in there yet not made it
-public on oss-security within 7 days after posting about the issue
-itself in here.  Please correct this.  (To me this is also an example of
-misuse of the distros list, and then of the ability to delay posting the
-PoC - creating administrative work for all of us out of thin air.)
+Severity: Important
 
-The policy:
+Vendor: The Apache Software Foundation
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M18
+Apache Tomcat 8.5.0 to 8.5.12
+Apache Tomcat 8.0.0.RC1 to 8.0.42
+Apache Tomcat 7.0.0 to 7.0.76
+Apache Tomcat 6.0.0 to 6.0.52
 
-"If you shared exploit(s) that are not an essential part of the issue
-description, then at your option you may slightly delay posting them to
-oss-security but you must post the exploits to oss-security within at
-most 7 days"
+Description
+A bug in the handling of the pipelined requests when send file was used
+resulted in the pipelined request being lost when send file processing
+of the previous request completed. This could result in responses
+appearing to be sent for the wrong request. For example, a user agent
+that sent requests A, B and C could see the correct response for request
+A, the response for request C for request B and no response for request C.
 
-Also, it looks like Gentoo and Amazon failed to track this and remind
-you on November 10.  They should have, as per:
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Switch to the BIO HTTP where available
+- Disable send file
+- Upgrade to Apache Tomcat 9.0.0.M19 or later
+- Upgrade to Apache Tomcat 8.5.13 or later
+- Upgrade to Apache Tomcat 8.0.43 or later
+- Upgrade to Apache Tomcat 7.0.77 or later
+- Upgrade to Apache Tomcat 6.0.53 or later
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+Credit:
+This issue was identified by the Tomcat security team.
 
-"12. If exploit(s) were shared on the list, make sure that either
-they're included in the oss-security posting along with the issue detail
-or the posting includes an announcement of planned later posting of the
-exploits (with the delay being within list policy), and in the latter
-case also make sure that the later posting is in fact made as planned,
-and remind the reporter if not - primary: Gentoo, backup: Amazon"
+History:
+2017-04-10 Original advisory
 
-So at least this worked as an almost failed test of our handling of this
-little administrative task.  Maybe on some other occasion it would be
-actually important, so let's debug and fix it now.
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+[4] http://tomcat.apache.org/security-6.html
 
-Alexander
