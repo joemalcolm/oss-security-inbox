@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/15/1
-Message-ID: <2348591.dvo7L7yzgS@arcadia>
-Date: Sat, 15 Apr 2017 13:08:15 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/19
+Message-ID: <20170410150812.g3vijutg36dqafhf@eldamar.local>
+Date: Mon, 10 Apr 2017 17:08:12 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: web2py: CVE-2016-10321: does not check if a host is denied before verifying passwords
 Content-Type: text/plain; charset=utf-8
 
-On Friday 14 April 2017 12:29:16 Ian Zimmerman wrote:
-> Should this be 0.1.8 and 0.1.9 instead?
+Hi
 
-Hi,
+CVE-2016-10321 was assigned (via cveform.mitre.org) to the following
+issue in web2py:
 
-I dind't understand at all what you would to change.
+web2py before 2.14.6 does not properly check if a host is denied
+before verifying passwords, allowing a remote attacker to perform
+brute-force attacks.
 
-The affected version is 1.0.8
-The fixed version is 1.0.9
+Fixing commit:
+https://github.com/web2py/web2py/commit/944d8bd8f3c5cf8ae296fc03d149056c65358426
 
-So for me it is right as-is.
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Regards,
+Salvatore
