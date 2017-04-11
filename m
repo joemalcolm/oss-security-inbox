@@ -1,76 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/16
-Message-ID: <20170706211258.gkd5rhnsononht6f@perpetual.pseudorandom.co.uk>
-Date: Thu, 6 Jul 2017 22:12:58 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/11/1
+Message-ID: <7001b5d5-ff27-8d91-a284-2c37f35e9bf6@dovecot.fi>
+Date: Tue, 11 Apr 2017 10:57:03 +0300
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+Subject: CVE-2017-2669: Dovecot DoS when passdb dict was used for authentication
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 06 Jul 2017 at 13:27:53 -0600, Leonid Isaev wrote:
-> On Thu, Jul 06, 2017 at 03:02:07PM +0100, Simon McVittie wrote:
-> > > The problem is that my new and shiny
-> > > script won't work as intended on old systemD versions which silently ignore
-> > > User= directive.
-> > 
-> > I am not aware of any such version existing. The 2010 commit
-> > "first attempt at proper service/socket logic", which was 6 months before
-> > the release of systemd version 1 and was the first commit to introduce
-> > ExecStart, also introduced User.
-> 
-> OK, but then there is no excuse to silently ignore any kind of error in
-> User=. If systemd can not start unit as a specified user, it must fail it, just
-> like ExecStart: if the command specified there is not found
+CVSS: 6.5 (CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:N/A:H)
+Vulnerable versions: 2.2.26 - 2.2.28
+Fixed version(s): 2.2.29
 
-I agree, and this was already done for usernames that were parsed as
-syntactically valid (User=whatever on a system where there is no 'whatever'
-user). The issue here was a combination of two things:
+Broken by a3783f8a3c9cd816b51e77a922f82301512fcf22
+Fixed by 000030feb7a30f193197f1aab8a7b04a26b42735
 
-* Usernames that were considered to be syntactically invalid went
-  through the error-handling code path for unknown configuration items
-  (ignored on the assumption that they are some future extension point,
-  rather than causing failure). https://github.com/systemd/systemd/pull/6300
-  has now been proposed to change this, for User and a few other key
-  directives.  This is basically Felipe's suggestion from the systemd-devel
-  thread.
+Dovecot supports "dict" passdb and
+userdb: https://wiki2.dovecot.org/AuthDatabase/Dict
+When these were used for user authentication, the username sent by the
+IMAP/POP3 client was sent through var_expand() to perform %variable
+expansion. Sending specially crafted %variable fields could result in
+excessive memory usage causing the process to crash (and restart), or
+excessive CPU usage causing all authentications to hang.
 
-* What can be in a valid username is Unix folklore rather than a standard
-  (POSIX defines a subset of usernames that are portable, but does not
-  forbid systems from additionally accepting non-portable usernames, and
-  in practice they do), and systemd's idea of what is a syntactically
-  valid username accepts considerably fewer usernames than common
-  useradd implementations (indeed it doesn't accept all POSIX portable
-  user names either).
+Excessive memory usage could be done with e.g. %09999999999u as the
+username. Because by default Dovecot limits the auth process's VSZ and
+exits on any memory allocation failure, the auth process typically dies
+afterwards and is immediately restarted. This may result in some user
+authentications getting temporary internal failures.
 
-User="syntax error!" or User=0day (which are treated as equivalently
-invalid, and go through the same code paths) were never "silently
-ignored": they were ignored rather noisily, with multiple log messages
-every time the unit in question was started.
+Excessive CPU usage could be done with %{pkcs5;rounds=100000000:user}
+variable introduced in v2.2.27.
 
-> I thought the current behavior of ignoring some syntax "mistakes" was put in
-> place by design because units have to be backwards copatible with older systemd
-> versions.
+Please use this
+https://github.com/dovecot/core/commit/000030feb7a30f193197f1aab8a7b04a26b42735.patch
+to fix this issue, it should be applicable to older versions too.
+Please let us know if you need assistance in patching.
 
-Yes, it is: if some future systemd version adds a new directive,
-perhaps AnonymizeMachineID or StackSizeMax or something,
-it is a deliberate design choice that current systemd versions will
-log a warning and ignore it. This lets upstreams be more aggressive
-about enabling new features (many of which are non-critical but
-good-to-have security hardening for services), without necessarily
-having to wait for the systemd version that introduced those features to
-become available in the oldest, most stable or most "enterprise"
-distribution that they target.
+---
+Aki Tuomi
+Dovecot oy
 
-This is a trade-off, and both possibilities (reject unknown directives,
-or warn and ignore) are plausible design choices: which one is better is
-a matter of opinion. The systemd developers chose to treat the advantages
-of the warn-and-ignore approach as larger than its disadvantages.
 
-In general the same is true for the *values* of directives: systemd needs
-to choose something to do about known directives with values that it
-cannot understand, and in general they are ignored with a warning on
-the assumption that the new value is something that might have been
-understood by a newer version of systemd. That isn't appropriate for
-all directives, hence <https://github.com/systemd/systemd/pull/6300>.
 
-    S
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
