@@ -1,4 +1,9 @@
-Received: (qmail 14208 invoked by uid 550); 10 Aug 2025 13:50:07 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8262" "Wednesday" "12" "April" "2017" "09:12:58" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<513133.504052774-sendEmail@localhost>" "92" "[oss-security] libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)" "^Date:" nil nil "4" "2017041209:12:58" "[oss-security] libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)" (number mark "        ago@gentoo.o Apr 12   92/8262  " thread-indent "\"[oss-security] libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5574 invoked by uid 550); 12 Apr 2017 09:13:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,63 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 14153 invoked from network); 10 Aug 2025 13:50:07 -0000
-Date: Sun, 10 Aug 2025 15:49:56 +0200
-From: Christian Brabandt <cb@256bit.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aJijhMw9JafSzXEX@256bit.org>
+Received: (qmail 5556 invoked from network); 12 Apr 2017 09:13:17 -0000
+Message-ID: <513133.504052774-sendEmail@localhost>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] A double-free was found in Vim >v9.1.1231 and <
- 9.1.1406
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-994904.928215878"
+Date: Wed, 12 Apr 2017 09:12:58 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Note: I have been asked to created a security advisory for the issue 
-mentioned below. The actual issue has already been fixed on May 23rd.
+------MIME delimiter for sendEmail-994904.928215878
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-A double-free was found in Vim >v9.1.1231 and < 9.1.1406
-========================================================
-Date: 10.08.2025
-Severity: Medium
-CVE: *not yet assigned*
-CWE: Double Free (CWE-415)
+Description:
+libsamplerate is a Sample Rate Converter for audio.
 
-Vim gained support for the "tuple" data type in patch v9.1.1232.
+This bug was initially discovered and silently fixed by the upstream author Erik de Castro Lopo (erikd). As usual I’m providing the stacktrace and the reproducer so that all release distros can test and 
+patch their own version of the package.
 
-When processing nested tuples during Vim9 script import operations, an
-error during evaluation can trigger a double-free in Vim’s internal
-typed value (typval_T) management. Specifically, the clear_tv() function
-may attempt to free memory that has already been deallocated, due to
-improper lifetime handling in the handle_import / ex_import code paths.
+# sndfile-resample -to 24000 -c 1 $FILE out
+==13807==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f44bc709a3c at pc 0x7f44bc6b1d6b bp 0x7fffec8f5e20 sp 0x7fffec8f5e18                                                                       
+READ of size 4 at 0x7f44bc709a3c thread T0                                                                                                                                                                        
+    #0 0x7f44bc6b1d6a in calc_output_single /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/src_sinc.c:296:48                                                                         
+    #1 0x7f44bc6b1d6a in sinc_mono_vari_process /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/src_sinc.c:400                                                                        
+    #2 0x7f44bc6a3659 in src_process /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/samplerate.c:174:11                                                                              
+    #3 0x51369a in sample_rate_convert /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/examples/sndfile-resample.c:221:16                                                                 
+    #4 0x51369a in main /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/examples/sndfile-resample.c:163                                                                                   
+    #5 0x7f44bb55278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                        
+    #6 0x419f88 in _init (/usr/bin/sndfile-resample+0x419f88)                                                                                                                                                     
+                                                                                                                                                                                                                  
+0x7f44bc709a3c is located 0 bytes to the right of global variable 'slow_mid_qual_coeffs' defined in '/tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/mid_qual_coeffs.h:37:3' 
+(0x7f44bc6f3ba0) of size 89756
+SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/src_sinc.c:296:48 in calc_output_single                                             
+Shadow bytes around the buggy address:                                                                                                                                                                            
+  0x0fe9178d92f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+  0x0fe9178d9300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+  0x0fe9178d9310: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+  0x0fe9178d9320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+  0x0fe9178d9330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+=>0x0fe9178d9340: 00 00 00 00 00 00 00[04]f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
+  0x0fe9178d9350: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
+  0x0fe9178d9360: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
+  0x0fe9178d9370: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
+  0x0fe9178d9380: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
+  0x0fe9178d9390: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
+Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                              
+  Addressable:           00                                                                                                                                                                                       
+  Partially addressable: 01 02 03 04 05 06 07                                                                                                                                                                     
+  Heap left redzone:       fa                                                                                                                                                                                     
+  Freed heap region:       fd                                                                                                                                                                                     
+  Stack left redzone:      f1                                                                                                                                                                                     
+  Stack mid redzone:       f2                                                                                                                                                                                     
+  Stack right redzone:     f3                                                                                                                                                                                     
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==13807==ABORTING
+Affected version:
+1.0.8
 
-The most likely outcome is a denial-of-service (application crash).
-However, since this is a memory corruption flaw, it could, in theory, be
-exploited for more severe consequences depending on the execution
-environment. The vulnerability can only be triggered if a user
-explicitly opens and executes a specially crafted Vim script and
-therefore the severity of this impact is rated **medium**.
+Fixed version:
+1.0.9
 
-This issue was discovered via fuzz testing with AFL++ and confirmed
-using AddressSanitizer.
+Commit fix:
+N/A
 
-The Vim project would like to thank Yang Luo and Yanju Chen from the
-Security Team @ Riema Labs for reporting this issue and Yegappan
-Lakshmanan for fixing this vulnerability.
+Credit:
+This bug was discovered by Erik de Castro Lopo and Agostino Sarubbo.
 
-The issue has been fixed as of Vim patch v9.1.1406
+CVE:
+CVE-2017-7697
 
-References:
-https://github.com/vim/vim/commit/9772025d24e939fd84b85748ce35c26874c05775
-https://github.com/vim/vim/security/advisories/GHSA-5fg8-wvx3-583x
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00262-libsamplerate-globaloverflow-calc_output_single
 
-Thanks,
-Christian
--- 
-Beharrlichkeit wird zuweilen mit Eigensinn verwechselt.
-		-- August von Kotzebue
+Timeline:
+2017-04-11: bug discovered and reported to upstream
+2017-04-11: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/11/libsamplerate-global-buffer-overflow-in-calc_output_single-src_sinc-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-994904.928215878--
+
