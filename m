@@ -1,47 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/08/5
-Message-ID: <328b2aec213f4e34b3cbc4c6b4707b37@imshyb02.MITRE.ORG>
-Date: Sun, 8 Jan 2017 14:47:40 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: icoutils: exploitable crash in wrestool programm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/13/2
+Message-ID: <646c39e1-31e9-0178-3fd2-54fae31b6559@redhat.com>
+Date: Thu, 13 Apr 2017 08:32:38 +0200
+From: Andrej Nemec <anemec@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - XStream: DoS when unmarshalling void
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello Jörg,
 
-> an exploitable crash in wrestool from the icoutils
+Unfortunately, CVE assignments are not done through this list anymore.
+You need to visit [1] and request a CVE by filing out the form. Could
+you please look at it and let the list know about the assigned CVE?
 
-> https://bugs.debian.org/850017
-> https://anonscm.debian.org/git/users/cjwatson/icoutils.git/plain/debian/patches/check-offset-overflow.patch
+Thanks!
 
->> wrestool/fileread.c
+Best Regards,
 
->> On 64-bit systems, the result of subtracting two pointers exceeds the
->> size of int
+[1] https://cveform.mitre.org/
 
-Use CVE-2017-5208.
+-- 
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+On 04/03/2017 01:55 PM, Jörg Schaible wrote:
+> Hello,
+>
+> XStream is a Java library basically to marshal Java objects into XML and 
+> back.
+>
+> Huawei engineers reported a reproducible crash of the Java VM (DoS) feeding 
+> XStream with a specially crafted XML (note, that Stream also supports JSON, 
+> that one can be used equally).
+>
+> Issue Description
+> =================
+>
+> The processed stream at unmarshalling type contains type information to 
+> recreate the formerly written objects. XStream creates therefore new 
+> instances based on these type information. The crash occurrs if this 
+> information advices XStream to create an instance of the primitive type 
+> 'void'. This situation can only happen if an attacker was able to manipulate 
+> the incoming data, since such an instance does not exist.
+>
+> Steps to Reproduce:
+> ===================
+>
+> The simplest way to demonstrate the problem is with this snippet:
+>
+> XStream xstream = new XStream();
+> xstream.fromXML("<void/>");
+>
+> If XStream is configured to read JSON, the equivalent line is:
+>
+> xstream.fromXML("{'void':null}");
+>
+> However, the problematic type information can be injected at any position in 
+> the provided stream, in XML just by adding a class attribute:
+>
+> xstream.fromXML("<string class='void'>Hello, world!</string>");
+>
+> Impact:
+> =======
+> The vulnerability may allow a remote attacker to cause a crash on the target 
+> system resulting in a denial of service only by manipulating the processed 
+> input stream.
+>
+> Affected Versions:
+> ==================
+> Currently all versions until and including version 1.4.9 are affected, but 
+> workarounds exist.
+>
+> Workarounds:
+> ============
+> XStream contains since version 1.4.7 a security framework to prevent an 
+> attack described in CVE-2013-7285. This framework can also be used to 
+> suppress the current vulnerability by setting:
+>
+> xstream.denyTypes(void.class, Void.class);
+>
+> Users of older XStream releases can register an own converter for the 'void' 
+> type, that also protects against this attack:
+>
+> xstream.registerConverter(new Converter() {
+>   public boolean canConvert(Class type) {
+>     return Void.class == type || void.class == type;
+>   }
+>   public Object unmarshal(HierarchicalStreamReader reader, 
+> UnmarshallingContext context) {
+>     throw new ConversionException("Type void cannot have an instance");
+>   }
+>   public void marshal(Object source, HierarchicalStreamWriter writer, 
+> MarshallingContext context) {
+>     throw new ConversionException("Type void cannot have an instance");
+>   }
+> }, XStream.PRIORITY_VERY_HIGH);
+>
+> Regards,
+> Jörg Schaible
+>
+> Maintainer of XStream.
+>
 
-iQIcBAEBCAAGBQJYcpb7AAoJEHb/MwWLVhi2kLwP/A+G4NM3R2Ad/IKIDemtxNpC
-qKNMumJCh3kS2tiUcWZgfChZiED2lpQIQRwE6z/DQznt8iXbIxEolipRBj8PlEIe
-Z8L7A10OxVQLKf9pYZmN4JmomcAFcI1Nzt3sgMsS+7leClf606kXAdPiVlxjgH3E
-LFaQRqatsD1UA7eftvul8MZeBFQUtQttH6fIvqj9/L3HifNQ6xYkBdT/8C8MbEku
-KzRNOFk803YBrfbgvsZhk65N8KXpX+fBXiXS8gu7TyUxnS1UxqaT8F7NkoPiHCqk
-M2t+l5M152nD/Gjf0/2y+Nfb+fi3sNDvLgE2ElmnRmC2InGI1JBITEtuflM5znYn
-z6Wz5ts1rvQenqEzAxPLYBFdUTMFyyheqLKRYo2I+tQ5LM69HlHZnsTclGHGCUyx
-tD+MPLz54kuPXaXj6HUG+eK49QxWLoDTlRS/TOrCUC1YsXIRfleo1QO00BcpBVHw
-jcdEvebEXzCMG0+Av6pcBKmBwlGOy+y7ckJHUnQ7c8PvbKlk5nunlSmrLqHvDBSL
-V4V4rE5WmFu/GSuGcr+pz/IhFZViwDgydz7dagTv8CJsMAvJGean93r0AO+WXhA9
-jdFg5tbrvzH3nHh1v5GZ/SZaWi34de1/9rG3cxLmlMStyOGMTxpOeO/Scb9Bkqp2
-6d2/HyseA0dKnDgxtrIi
-=vxi7
------END PGP SIGNATURE-----
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
