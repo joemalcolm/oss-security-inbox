@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/10
-Message-ID: <20171103143900.GA2541@openwall.com>
-Date: Fri, 3 Nov 2017 15:39:00 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/13/1
+Message-ID: <e9b245be-ac9d-082a-2c32-c810c1bc13c4@isc.org>
+Date: Wed, 12 Apr 2017 16:36:43 -0800
+From: Michael McNally <mcnally@....org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
+Subject: ISC announces three BIND vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 03, 2017 at 03:18:49PM +0100, Solar Designer wrote:
-> I am not saying things are good as they are; I think they are not.  Like
-> I say, people neither know nor want to know this, and it means they
-> continue to do things insecurely.  I don't currently have a solution.
+Today Internet Systems Consortium disclosed three security
+vulnerabilities in BIND which had been previously announced
+to the distros@...ts.openwall.org list:
 
-The closest to a solution I came up with so far (around year 2000, but
-still unimplemented) is two programs - call them give(1) and take(1) -
-for users to exchange files safely.  From users' perspective, these
-would go along with write(1) and talk(1).  From sysadmin's perspective,
-they'd be tools to use after using an unusually safe (allocating a new
-pty, filtering terminal escapes) implementation of su(1) (actually, it
-should become su(8), since no safe use of a "su" by a user is possible
-anyway) to access the user(s)' account(s) (to copy a file between two
-users, or between a user and root).
+CVE-2017-3136, CVE-2017-3137, and CVE-2017-3138 are now public
+and details can be found in our knowledge base:
 
-Implementation-wise, give(1) and take(1) could either rely on having a
-shared directory with /tmp-like permissions on the same filesystem with
-the users' home directories (and this would be rather specialized, not
-addressing the need to easily share files that are not on /home) and use
-of hard links, or they'd need a daemon like talkd(8) or reuse sshd(8).
 
-And this last possibility brings us to what we can (and I sometimes do)
-use already - setting up temporary SSH keys with forced "cat < ..." or
-"cat > ..." commands, and using SSH for safely exchanging files by users
-of the same host, or of different hosts for this matter.  It's just
-manual setup each time, and we could want to provide convenient tools to
-automate that.
+https://kb.isc.org/category/74/0/10/Software-Products/BIND9/Security-Advisories/
 
-Alexander
+New software releases have been issued containing these security fixes;
+they are available from our download page at http://www.isc.org/downloads
+
+
+Michael McNally
+ISC Security Officer
+
