@@ -1,68 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/12
-Message-ID: <20170517162923.3855.16F61A97@matica.foolinux.mooo.com>
-Date: Wed, 17 May 2017 09:40:57 -0700
-From: Ian Zimmerman <itz@...mate.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/15/3
+Message-ID: <6cb75b56-b1b4-d381-1110-1e0cad5fb6b4@flausch.at>
+Date: Sat, 15 Apr 2017 12:13:28 +0200
+From: Andreas Lausch-Waas <andreas@...usch.at>
 To: oss-security@...ts.openwall.com
-Subject: rxvt-unicode "insecure" setting [Was: terminal emulators' processing of escape sequences]
+Subject: Re: alloca in inline functions can be dangerous
 Content-Type: text/plain; charset=utf-8
 
-This is a bit tangential to this particular thread, but clearly
-security-related.
+On 2017-04-10 16:55, Leandro Pereira wrote:
+> On Mon, Apr 10, 2017 at 7:36 AM, Jason A. Donenfeld <Jason@...c4.com> wrote:
+>> I'm interested if anybody else has encountered this behavior or has any
+>> thoughts about it.
+> Yes, and I usually mark those functions with __attribute__((noinline))
+> to avoid precisely this kind of behavior.
+>
 
-Quoting "man urxvt", section "RESOURCES":
+This (VLAs in loops or inlines filling the stack) would be a gcc bug: 
+"Jumping or breaking out of the scope of the array name deallocates the 
+storage. Jumping into the scope is not allowed; you get an error message 
+for it.". See https://gcc.gnu.org/onlinedocs/gcc/Variable-Length.html
 
- insecure: boolean
+At least GCC 6.3.1 does not call alloca for VLAs.
 
-  Enables "insecure" mode. Rxvt-unicode offers some escape sequences
-  that echo arbitrary strings like the icon name or the locale. This
-  could be abused if somebody gets 8-bit-clean access to your display,
-  whether through a mail client displaying mail bodies unfiltered or
-  through write(1) or any other means. Therefore, these sequences are
-  disabled by default. (Note that many other terminals, including xterm,
-  have these sequences enabled by default, which doesn't make it safer,
-  though).
 
-  You can enable them by setting this boolean resource or specifying
-  -insecure as an option. At the moment, this enables display-answer,
-  locale, findfont, icon label and window title requests.
-
-My ~/.Xresources file, trimmed.  I am sure it is getting read, because
-of the cutchars, colors and geometry settings:
-
- Rxvt.background: seashell
- Rxvt.color10: green4
- Rxvt.color11: orange2
- Rxvt.color14: cyan4
- Rxvt.color2: green3
- Rxvt.color3: orange
- Rxvt.color6: cyan3
- Rxvt.cutchars: '"!' &()*,;<=>?@[]^{|} #$%+-./:
- Rxvt.foreground: Gray40
- Rxvt.geometry: 103x36
- Rxvt.saveLines: 200
- Rxvt.visualBell: on
- URxvt.font: x:-misc-fixed-medium-r-semicondensed--13-*-*-*-*-*-iso10646-1
- URxvt.perl-ext-common:
- URxvt.insecure: false
-
-Finally, a chunk of my ~/.bashrc:
-
- # If this is an xterm set the title to something informative
- case "$TERM" in
-         xterm*|rxvt*)
-             PROMPT_COMMAND="echo -ne \"\E]0; $$ ${LOGNAME}@...OSTNAME}:\${PWD} \a\""
-             ;;
-         *)
-             ;;
- esac
-
-And ... it works!
-
-Why?
-
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign:
-http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
+--
+Andreas
