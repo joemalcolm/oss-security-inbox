@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/3
-Message-ID: <bf387118-b094-17b1-a023-39af87742479@oracle.com>
-Date: Tue, 7 Nov 2017 14:20:26 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/15/4
+Message-ID: <CACqxkW+VWetr30iWUQaEaLOJ0FTgc0Bv4SPRm9pftaw15X1+bw@mail.gmail.com>
+Date: Sat, 15 Apr 2017 14:38:23 +0100
+From: Nick Boyce <nick.boyce@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Race condition between UDP bind(2) and connect(2) delivers wrong datagrams
+Subject: Re: Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)
 Content-Type: text/plain; charset=utf-8
 
-On 06/11/17 18:42, Florian Weimer wrote:
->> Even though it can be difficult to exploit this bug, it is a
->> validation bug
->> in the kernels. POSIX 2008 (2016 edition) says[1]:
->>
->>   "For SOCK_DGRAM sockets, the peer address identifies where all datagrams
->>    are sent on subsequent send() functions, and limits the remote sender
->>    for subsequent recv() functions."
-> 
-> Whatever the exact wording used is, the intent of POSIX is to describe
-> the BSD sockets API behavior.  If the API does something else, that's a
-> POSIX bug.
+Hi Agostino,
 
-It does say "subsequent" and says nothing about datagrams that might be
-received by the kernel before the connect(2).
+Ian>>> Affected version:  1.0.8
+Ian>>> Fixed version:  1.0.9
+Ian>>
+Ian>> Should this be 0.1.8 and 0.1.9 instead?
+you>
+you> I dind't understand at all what you would to change.
 
-The Linux man page also has this to say:
+Perhaps Ian is referring to the fact that at the "Secret Rabbit Code"
+home of libsamplerate, to which your linked blog article provides this
+link:
+http://www.mega-nerd.com/SRC/
+there is no reference to any version numbers of the form 1.0.x, but
+only numbers such as 0.1.8 (the last release [dated 15.Aug.2011]
+mentioned in the changelog as I write)
+http://www.mega-nerd.com/SRC/ChangeLog
+and 0.1.9 (the latest version actually available for download):
+http://www.mega-nerd.com/SRC/download.html
 
->   Generally, connection-based protocol sockets may successfully connect()
->   only once; connectionless protocol sockets may use  connect()  multiple
->   times to change their association.  Connectionless sockets may dissolve
->   the association by connecting to an address with the  sa_family  member
->   of sockaddr set to AF_UNSPEC (supported on Linux since kernel 2.2).
+I'm just as confused as Ian.
 
-I know that that's not Posix, but it underlines the interesting question
-of what happens to packets that have already been received that have the
-"wrong" source address?
-
-You might hope that the kernel will just flush any datagrams that the
-application has picked up.  What happens, though, if the program is
-working its way through datagrams that it has received or is receiving
-from the kernel?   That's a rhetorical question -- it should, of course,
-discard packets it is (no longer) interested in.
-
-While there's plenty of scope for programs to get this wrong, I don't
-think the kernel is under any obligation to attempt to flush anything
-either from a standards point of view or from a real-world
-implementation point of view.
-
-jch
+Cheers
+Nick Boyce
+(just following along at home)
