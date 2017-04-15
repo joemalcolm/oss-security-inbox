@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/4
-Message-ID: <20170306153855.7eb0672f@redhat.com>
-Date: Mon, 6 Mar 2017 15:38:55 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: Emilio Pozuelo Monfort <pochu27@...il.com>
-Cc: oss-security@...ts.openwall.com, Anthony Sasadeusz <sasadeu1@...c.edu>
-Subject: Re: CVE-Request JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/15/1
+Message-ID: <2348591.dvo7L7yzgS@arcadia>
+Date: Sat, 15 Apr 2017 13:08:15 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 6 Mar 2017 09:06:00 +0100 Emilio Pozuelo Monfort wrote:
+On Friday 14 April 2017 12:29:16 Ian Zimmerman wrote:
+> Should this be 0.1.8 and 0.1.9 instead?
 
-> > This also happens on the latest master branch.
-> > The repo: https://github.com/mdadams/jasper
-> > 
-> > Crashing inputs found with afl:
-> > https://github.com/nullsector/jasper-fuzz/tree/master/testcases/crashes  
-> 
-> You should request CVEs at http://cveform.mitre.org/ these days.
-> 
-> Also it'd be good if you opened an upstream bug report about this.
+Hi,
 
-Looks like that was already done:
+I dind't understand at all what you would to change.
 
-https://github.com/mdadams/jasper/issues/120
+The affected version is 1.0.8
+The fixed version is 1.0.9
+
+So for me it is right as-is.
 
 -- 
-Tomas Hoger / Red Hat Product Security
+Agostino Sarubbo
+Gentoo Linux Developer
