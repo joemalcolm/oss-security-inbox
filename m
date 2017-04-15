@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3946" "Tuesday" "1" "May" "2018" "15:35:06" "+0000" "Andy Lutomirski" "luto@kernel.org" "<CALCETrULDOyC7po=DcKzPRrYTmSY0ye0xtmtZ2xRD6Xxh9K24Q@mail.gmail.com>" "77" "[oss-security] CVE-2018-1000199: ptrace() incorrect error handling leads to corruption and DoS" nil nil nil "5" "2018050115:35:06" "[oss-security] CVE-2018-1000199: ptrace() incorrect error handling leads to corruption and DoS" (number mark "U       luto@kernel. May  1   77/3946  " thread-indent "\"[oss-security] CVE-2018-1000199: ptrace() incorrect error handling leads to corruption and DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["766" "Saturday" "15" "April" "2017" "14:38:23" "+0100" "Nick Boyce" "nick.boyce@gmail.com" "<CACqxkW+VWetr30iWUQaEaLOJ0FTgc0Bv4SPRm9pftaw15X1+bw@mail.gmail.com>" "25" "Re: [oss-security] Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)" "^Date:" nil nil "4" "2017041513:38:23" "[oss-security] Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)" (number mark "        nick.boyce@g Apr 15   25/766   " thread-indent "\"Re: [oss-security] Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)\"\n") "<2348591.dvo7L7yzgS@arcadia>" ("<513133.504052774-sendEmail@localhost>" "<20170414192740.28134.332C76E5@matica.foolinux.mooo.com>" "<2348591.dvo7L7yzgS@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13415 invoked by uid 550); 1 May 2018 15:35:58 -0000
+Received: (qmail 3365 invoked by uid 550); 15 Apr 2017 22:41:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11969 invoked from network); 1 May 2018 15:35:31 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AB7D222E01
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.org
-Authentication-Results: mail.kernel.org; spf=none smtp.mailfrom=luto@kernel.org
-X-Gm-Message-State: ALQs6tDvnidOpop45vwozOCosQeD0kOnbmXQPQCchZziCClTcpht3dQz
-	41FGS6KpK6oQnF5RiuybtcvPGdfCtEIro/xHtxlrMw==
-X-Google-Smtp-Source: AB8JxZrM4ekknZOo7B0UobUbuP5/zo1OO4p8BInzgPX8c/XI8rb4N/IF0gYhcmR79S2t6ARB12tGnZGnkxzBADVwk40=
-X-Received: by 10.28.169.6 with SMTP id s6mr9369022wme.116.1525188917152; Tue,
- 01 May 2018 08:35:17 -0700 (PDT)
+Received: (qmail 24073 invoked from network); 15 Apr 2017 13:39:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=mutwWVJfiLMIesmbAbITwss9G31rGtaZ4raulxzXudM=;
+        b=tuas+KsiLXb5P5QUTkHO7CIQrY1u/OS1JqSh5g2sMgeKaLV8TDctKVIUXSEQuq8UkG
+         of+gCawPYZqpok5iabVKH8zJkHccNNYb7RVA4n2axPLGW8pII1xWbFj+GcIDUkoaa5cN
+         AnX+DRWbVZa5XvdB23dPh5RGtC5aAM4RhDPeJvE74kdtHlQ9mEJHQyvUr3b4wBBpPHI2
+         8Vio+yloxE30fdSzt/X13HTYcxg+BoV1zd9qLTslcB6qfBxBsaFlZwMtZBZ74lh+DKsw
+         2xm8eYVST5vEbI4pUslz1/2dz1NL89m0rO6rrmkAiTSX44ilZqW6nq2FgHXe3q8TgUr6
+         zRWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=mutwWVJfiLMIesmbAbITwss9G31rGtaZ4raulxzXudM=;
+        b=p1ZNMBHEb0GKbCiNN0ZWrvPQnkDTJF5Mb/kCAz5emWl4MPNRL8hPDNf+o2awW2QpwC
+         teJCYr07BYiMyDDea+QUSnHrB2CDjnzWkcZ4zaBhXBmN6ag1SepNplNeY9lDAbISisUD
+         oWJ19qaBdEpzrRPlFbaFp5X4Jg2CfDjrWTT2kZ1P8R6+1oomw/q0Mm+j2jBrhPxLdniQ
+         uWnEYp59OdrXTzstfXVwETN2a5YovzBQdt2SeGM7iqPQgRBWvBtnqv23889i1i5gELH/
+         hnlc4wIN1+4wWI6rb/rVdHyZfNzGmmh1cnLfj1HHiRj0wLcfFv8k8hE09cZxxD7GbGuj
+         iXTg==
+X-Gm-Message-State: AN3rC/7DZnZJEMOlxHa9jdqEi3nqQ8cGH/qN8W2i9FYnnGd+EqeN3zE/
+	F8Ymm4VjcNb8msd482MkiAiOusDhgARu
+X-Received: by 10.200.36.131 with SMTP id s3mr2282314qts.289.1492263543995;
+ Sat, 15 Apr 2017 06:39:03 -0700 (PDT)
 MIME-Version: 1.0
-From: Andy Lutomirski <luto@kernel.org>
-Date: Tue, 01 May 2018 15:35:06 +0000
-X-Gmail-Original-Message-ID: <CALCETrULDOyC7po=DcKzPRrYTmSY0ye0xtmtZ2xRD6Xxh9K24Q@mail.gmail.com>
-Message-ID: <CALCETrULDOyC7po=DcKzPRrYTmSY0ye0xtmtZ2xRD6Xxh9K24Q@mail.gmail.com>
-To: oss security list <oss-security@lists.openwall.com>
-Content-Type: multipart/mixed; boundary="001a114b3eb69f9030056b26b727"
-Subject: [oss-security] CVE-2018-1000199: ptrace() incorrect error handling leads to
- corruption and DoS
+In-Reply-To: <2348591.dvo7L7yzgS@arcadia>
+References: <513133.504052774-sendEmail@localhost> <20170414192740.28134.332C76E5@matica.foolinux.mooo.com>
+ <2348591.dvo7L7yzgS@arcadia>
+Message-ID: <CACqxkW+VWetr30iWUQaEaLOJ0FTgc0Bv4SPRm9pftaw15X1+bw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 15 Apr 2017 14:38:23 +0100
+From: Nick Boyce <nick.boyce@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: libsamplerate: global buffer overflow in
+ calc_output_single (src_sinc.c)
+To: oss-security@lists.openwall.com
 
---001a114b3eb69f9030056b26b727
-Content-Type: text/plain; charset="UTF-8"
+Hi Agostino,
 
-The Linux ptrace code virtualizes access to the debug registers, and
-the virtualization code has incorrect error handling.  This means that
-if you write an illegal value to, say, DR0, the internal state of the
-kernel's breakpoint tracking can become corrupt despite the fact that
-the ptrace() call will return -EINVAL.
+Ian>>> Affected version:  1.0.8
+Ian>>> Fixed version:  1.0.9
+Ian>>
+Ian>> Should this be 0.1.8 and 0.1.9 instead?
+you>
+you> I dind't understand at all what you would to change.
 
-As a example, you can find the address of do_debug in /proc/kallsyms
-on an x86 kernel and pass that address to the attached PoC.  I suspect
-that architectures other than x86 are affected as well, but I haven't
-tried to exploit it.  The bug itself is spread all over the place in
-the kernel in generic and arch code.
+Perhaps Ian is referring to the fact that at the "Secret Rabbit Code"
+home of libsamplerate, to which your linked blog article provides this
+link:
+http://www.mega-nerd.com/SRC/
+there is no reference to any version numbers of the form 1.0.x, but
+only numbers such as 0.1.8 (the last release [dated 15.Aug.2011]
+mentioned in the changelog as I write)
+http://www.mega-nerd.com/SRC/ChangeLog
+and 0.1.9 (the latest version actually available for download):
+http://www.mega-nerd.com/SRC/download.html
 
-I haven't spotted an obvious way to get privilege escalation using
-this bug, but it may exist.  For example, it's plausible that using
-this bug to target the perf NMI handler could result in overflowing
-the NMI stack, resulting in various forms of corruption.  I haven't
-tried to analyze the impact on non-x86 architectures since I only know
-how x86 breakpoints work, but the effects of the bug could be very
-different.
+I'm just as confused as Ian.
 
-Linus has mostly fixed this upstream in commit
-f67b15037a7a50c57f72e69a6d59941ad90a0f0f.  With that commit applied,
-the error handling is still wrong but the defect results in a disabled
-breakpoint instead of an incorrect breakpoint.
-
-This bug was discovered by me.
-
---001a114b3eb69f9030056b26b727
-Content-Type: text/x-csrc; charset="US-ASCII"; name="dr7_clash.c"
-Content-Disposition: attachment; filename="dr7_clash.c"
-Content-Transfer-Encoding: base64
-Content-ID: <f_jgnu15xa0>
-X-Attachment-Id: f_jgnu15xa0
-
-LyogU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAgKi8KLyoKICog
-Q29weXJpZ2h0IChjKSAyMDE4IEFuZHJldyBMdXRvbWlyc2tpCiAqIFBvQyBm
-b3IgYSBwdHJhY2UoKSBidWcuICBQYXNzIHRoZSBhZGRyZXNzIG9mIGRvX2Rl
-YnVnIHRvIHRoaXMgcHJvZ3JhbS4KICogQ1ZFLTIwMTgtMTAwMDE5OQogKi8K
-I2RlZmluZSBfR05VX1NPVVJDRQoKI2luY2x1ZGUgPHN0ZGxpYi5oPgojaW5j
-bHVkZSA8c3lzL3B0cmFjZS5oPgojaW5jbHVkZSA8c3lzL3R5cGVzLmg+CiNp
-bmNsdWRlIDxzeXMvd2FpdC5oPgojaW5jbHVkZSA8c3lzL3VzZXIuaD4KI2lu
-Y2x1ZGUgPHN5cy9zeXNjYWxsLmg+CiNpbmNsdWRlIDx1bmlzdGQuaD4KI2lu
-Y2x1ZGUgPGVycm5vLmg+CiNpbmNsdWRlIDxzdGRkZWYuaD4KI2luY2x1ZGUg
-PHN0ZGlvLmg+CiNpbmNsdWRlIDxlcnIuaD4KI2luY2x1ZGUgPHN0cmluZy5o
-PgojaW5jbHVkZSA8c2V0am1wLmg+CgpzdGF0aWMgdm9pZCBzZXRfZHIwX2Ry
-Nyh1bnNpZ25lZCBsb25nIGRyMCwgdW5zaWduZWQgbG9uZyBkcjcpCnsKCXBp
-ZF90IHBhcmVudCA9IGdldHBpZCgpOwoJaW50IHN0YXR1czsKCglwaWRfdCBj
-aGlsZCA9IGZvcmsoKTsKCWlmIChjaGlsZCA8IDApCgkJZXJyKDEsICJmb3Jr
-Iik7CgoJaWYgKGNoaWxkKSB7CgkJaWYgKHdhaXRwaWQoY2hpbGQsICZzdGF0
-dXMsIDApICE9IGNoaWxkKQoJCQllcnIoMSwgIndhaXRwaWQgZm9yIGNoaWxk
-Iik7Cgl9IGVsc2UgewoJCWlmIChwdHJhY2UoUFRSQUNFX0FUVEFDSCwgcGFy
-ZW50LCBOVUxMLCBOVUxMKSAhPSAwKQoJCQllcnIoMSwgIlBUUkFDRV9BVFRB
-Q0giKTsKCgkJaWYgKHdhaXRwaWQocGFyZW50LCAmc3RhdHVzLCAwKSAhPSBw
-YXJlbnQpCgkJCWVycigxLCAid2FpdHBpZCBmb3IgY2hpbGQiKTsKCgkJcHJp
-bnRmKCJXaWxsIHNldCBEUjA9JWx4LCBEUjc9JWx4XG4iLCBkcjAsIGRyNyk7
-CgoJCWlmIChwdHJhY2UoUFRSQUNFX1BPS0VVU0VSLCBwYXJlbnQsICh2b2lk
-ICopb2Zmc2V0b2Yoc3RydWN0IHVzZXIsIHVfZGVidWdyZWdbMF0pLCBkcjAp
-ICE9IDApCgkJCWVycigxLCAiUFRSQUNFX1BPS0VVU0VSIERSMCA9ICVseCIs
-IGRyMCk7CgoJCWlmIChwdHJhY2UoUFRSQUNFX1BPS0VVU0VSLCBwYXJlbnQs
-ICh2b2lkICopb2Zmc2V0b2Yoc3RydWN0IHVzZXIsIHVfZGVidWdyZWdbN10p
-LCBkcjcpICE9IDApCgkJCWVycigxLCAiUFRSQUNFX1BPS0VVU0VSIERSNyA9
-ICVseCIsIGRyNyk7CgoJCWlmIChwdHJhY2UoUFRSQUNFX0RFVEFDSCwgcGFy
-ZW50LCBOVUxMLCBOVUxMKSAhPSAwKQoJCQllcnIoMSwgIlBUUkFDRV9ERVRB
-Q0giKTsKCgkJZXhpdCgwKTsKCX0KfQoKaW50IG1haW4oaW50IGFyZ2MsIGNo
-YXIgKiphcmd2KQp7Cgl1bnNpZ25lZCBsb25nIGRhbmdlcl9kcjA7CglpZiAo
-YXJnYyA9PSAyKSB7CgkJY2hhciAqZW5kOwoJCWRhbmdlcl9kcjAgPSBzdHJ0
-b3VsbChhcmd2WzFdLCAmZW5kLCAxNik7Cgl9IGVsc2UgewoJCXByaW50Zigi
-VXNhZ2U6ICVzIERSMFxuXG5TZXQgRFIwIHRvIGEgcHJvYmxlbWF0aWMgYWRk
-cmVzc1xuIik7CgkJZGFuZ2VyX2RyMCA9IDB4ODAwMDAwMDAwMDAwMDAwMDsK
-CX0KCglzZXRfZHIwX2RyNygxLCAxKTsKCXNldF9kcjBfZHI3KGRhbmdlcl9k
-cjAsIDApOwoKCWFzbSB2b2xhdGlsZSAoIi5ieXRlIDB4ZjEiKTsKCXJldHVy
-biAwOwp9Cg==
-
---001a114b3eb69f9030056b26b727--
+Cheers
+Nick Boyce
+(just following along at home)
