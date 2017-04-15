@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3370" "Sunday" "29" "March" "2015" "14:05:04" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150329140504.7d64d404@pc1.fritz.box>" "104" "[oss-security] Fw: GNU Libtasn1 4.4 released ( fixes stack overflow in asn1_der_decoding)" nil nil nil "3" "2015032912:05:04" "[oss-security] Fw: GNU Libtasn1 4.4 released ( fixes stack overflow in asn1_der_decoding)" (number mark "        hanno@hboeck Mar 29  104/3370  " thread-indent "\"[oss-security] Fw: GNU Libtasn1 4.4 released ( fixes stack overflow in asn1_der_decoding)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1598" "Saturday" "15" "April" "2017" "11:19:35" "-0400" "Leo Famulari" "leo@famulari.name" "<20170415151935.GA9162@jasmine>" "43" "Re: [oss-security] Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)" "^Date:" nil nil "4" "2017041515:19:35" "[oss-security] Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)" (number mark "        leo@famulari Apr 15   43/1598  " thread-indent "\"Re: [oss-security] Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)\"\n") "<2348591.dvo7L7yzgS@arcadia>" ("<513133.504052774-sendEmail@localhost>" "<20170414192740.28134.332C76E5@matica.foolinux.mooo.com>" "<2348591.dvo7L7yzgS@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27663 invoked by uid 550); 29 Mar 2015 12:05:13 -0000
+Received: (qmail 5520 invoked by uid 550); 15 Apr 2017 15:33:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,120 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26569 invoked from network); 29 Mar 2015 12:05:06 -0000
-Message-ID: <20150329140504.7d64d404@pc1.fritz.box>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-22267-1427630694-0001-2"
-Cc: cve-assign@mitre.org
-Date: Sun, 29 Mar 2015 14:05:04 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Received: (qmail 29907 invoked from network); 15 Apr 2017 15:19:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=famulari.name;
+	 h=content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=8BUF2WuzUYkRmBirDdZtaeAXTDA62eo1tz5L73
+	lnobU=; b=p2mdBy2QymkblwUESlc/rrSmtF7jFH9lafn/J+d/38A2yzBxN+dZxE
+	FilMtmFp/GN30FrhliN+cSUc/QF3bO07Q11OXKOnMaLxE7AIhbkWMS10WnscOgFF
+	kqD3QCyHDnuZ0GuvildMTqOET3LiXwljwPEVZPgy5yAiqrM+eLESQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=8BUF2WuzUYkRmBirDd
+	ZtaeAXTDA62eo1tz5L73lnobU=; b=JR0cVa53fVWsqQV6u73O2EeIg8veZ7OtYM
+	/nQWifS1jPtr1eDMRJg0+IG6hwsFLfMNXMzsK9LaLme21HDCfhA3Tp3j3Wdpilxf
+	uR+JXdLL8LUNFl/YBgqTjM3XLJMRTl5zPMFo1xVamxWkrfc1TRnEkAJD6iFxTEE/
+	Ww0xUL3QtMwtzrTxzVQH1eBD4VtxSd2JDMBsz+hxzwVW5n4/GN5xGf+NNAzwi2sR
+	PRq9NafjbNCRMNsol7FMjV5B7bWWJSp6kwbkstV9IJEN131s0YlKCq+fY6ZAb1/v
+	XTEuuaflZnYKoMft8AG4PuwVUM9y7J2NMJrJ4OgdTmC5uIKWWZYg==
+X-ME-Sender: <xms:CzryWA1Z8Ppr3z-K4FvyYmGKAYr-dxyIsantBF3HiCYUAedQW1MYYQ>
+X-Sasl-enc: Pf2B/9bCNdFotDl9572t1xpmqX+2C77i4UkmTxbsUMdK 1492269579
+Message-ID: <20170415151935.GA9162@jasmine>
+References: <513133.504052774-sendEmail@localhost>
+ <20170414192740.28134.332C76E5@matica.foolinux.mooo.com>
+ <2348591.dvo7L7yzgS@arcadia>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="BXVAT5kNtrzKuDFl"
+Content-Disposition: inline
+In-Reply-To: <2348591.dvo7L7yzgS@arcadia>
+User-Agent: Mutt/1.8.1 (2017-04-11)
+Date: Sat, 15 Apr 2017 11:19:35 -0400
+From: Leo Famulari <leo@famulari.name>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Fw: GNU Libtasn1 4.4 released ( fixes stack overflow in
- asn1_der_decoding)
+Subject: Re: [oss-security] Re: libsamplerate: global buffer overflow in
+ calc_output_single (src_sinc.c)
 To: oss-security@lists.openwall.com
 
---=_zucker.schokokeks.org-22267-1427630694-0001-2
-Content-Type: text/plain; charset=UTF-8
+--BXVAT5kNtrzKuDFl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Can I get a CVE for this?
+On Sat, Apr 15, 2017 at 01:08:15PM +0200, Agostino Sarubbo wrote:
+> On Friday 14 April 2017 12:29:16 Ian Zimmerman wrote:
+> > Should this be 0.1.8 and 0.1.9 instead?
+>=20
+> Hi,
+>=20
+> I dind't understand at all what you would to change.
+>=20
+> The affected version is 1.0.8
+> The fixed version is 1.0.9
 
-This is the git commit
-http://git.savannah.gnu.org/gitweb/?p=3Dlibtasn1.git;a=3Dcommit;h=3D4d4f992=
-826a4962790ecd0cce6fbba4a415ce149
+For some reason, the most recent two release versions are 0.1.8 and
+0.1.9, but the commit announcing the new version says "1.0.9":
 
+https://github.com/erikd/libsamplerate/commit/f6730d03c3e7660bb6ecad8816f1b=
+09c5825142a
 
-
-Begin forwarded message:
-
-Date: Sun, 29 Mar 2015 12:04:05 +0200
-From: Nikos Mavrogiannopoulos <nmav@gnutls.org>
-To: help-libtasn1@gnu.org
-Subject: GNU Libtasn1 4.4 released
-
-
-GNU Libtasn1 is a standalone library written in C for manipulating ASN.1
-objects including DER/BER encoding/decoding.  GNU Libtasn1 is used by
-GnuTLS to handle X.509 structures and by GNU Shishi to handle Kerberos
-V5 structures.
-
-* Noteworthy changes in release 4.4 (released 2015-03-29) [stable]
-- Corrected a two-byte stack overflow in asn1_der_decoding. Reported
-  by Hanno B=C3=B6ck.
-
-
-Homepage:
-  https://www.gnu.org/software/libtasn1/
-
-Here are the compressed sources:
-  ftp://ftp.gnu.org/gnu/libtasn1/libtasn1-4.4.tar.gz
-  http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.4.tar.gz
-
-Here are GPG detached signatures:
-  ftp://ftp.gnu.org/gnu/libtasn1/libtasn1-4.4.tar.gz.sig
-  http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.4.tar.gz.sig
-
-If you need help to use Libtasn1, or want to help others, you are
-invited to join the help-libtasn1 mailing list, see:
-  https://lists.gnu.org/mailman/listinfo/help-libtasn1
-
-All manuals are available from:
-  https://www.gnu.org/software/libtasn1/manual/
-
-Direct links to the manual:
-  HTML: https://www.gnu.org/software/libtasn1/manual/libtasn1.html
-  PDF: https://www.gnu.org/software/libtasn1/manual/libtasn1.pdf
-
-Direct links to the API Reference manual:
-  HTML: https://www.gnu.org/software/libtasn1/reference/
-  PDF: https://www.gnu.org/software/libtasn1/reference/libtasn1.pdf
-
-The software is cryptographically signed by the author using an
-OpenPGP key identified by the following information:
-
-pub   3104R/96865171 2008-05-04 [expires: 2028-04-29]
-uid                  Nikos Mavrogiannopoulos <nmav <at> gnutls.org>
-uid                  Nikos Mavrogiannopoulos <n.mavrogiannopoulos <at>
-gmail.com>
-sub   2048R/9013B842 2008-05-04 [expires: 2018-05-02]
-sub   2048R/1404A91D 2008-05-04 [expires: 2018-05-02]
-
-regards,
-Nikos
-
-
-
-
-
---=20
-Hanno B=C3=B6ck
-http://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
-
---=_zucker.schokokeks.org-22267-1427630694-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
+--BXVAT5kNtrzKuDFl
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQIcBAEBCgAGBQJVF+pwAAoJEKWIAHK7tR5CJE4P/RBahib7cKtn37+NrR22A6TD
-dn0VutYYd8SCqDL72ezhPXQ3v6ZQUxZyr7oscEln152LTG5xyfx9VZrBfosuT66Q
-8Rwsv5XGHbBo08uSUPcQAckUaUKfn5CmAlYBLfQG+iifrLU3qC9PLXRGdYq7Rndm
-xzU+GtoLamTFUM5HED2BZG9KXDbgpFSnkiiYJTyQVrT2nS1QHLWf1nDn+9uDtZew
-ywTfyX8whrAkKE8KSpoPXp0/eN0BOkvudNoV78yO+7wOKsXmTLHidx8gye4HHcox
-xBhmaU2efJFg9vzhdPRNrl0S7j8kjNBJTKrz3IKGPY5UV4gfWT6D5m5UXd7VBubC
-Vqn9tJGze8KRjNmKvQHMeTBgcv8ymWJnXgyysk/K2hiiBle3elr7087m/HEFoSyN
-GkmjZpt+mzEvmXG8I3xjr5JQ2h2K6BAxb/teUS0A+9RPq0O15ToF73y4IFMKiT2F
-Bwyk3pfDI/OXpe4m47+Iyja0imWXJ9PKotlPVdM5vXF/mkXI6gSD479hm8KCOlG8
-2LjwuZR2HQ/eHl2DZ1TdkfffhS93AwjZ0dh96PSm6vZy5Xhulapkso1eHYt7tvzN
-4FhqmvohRU95s5QUWY23S91GhoDYIvvx1xLo5KNDserQQrRWj7tnGdJlw1k40HpQ
-xgg9sSqo41choD7Yc4Di
-=iNgx
+iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAljyOgQACgkQJkb6MLrK
+fwiM7g/+LLJjuXf2P/xcPn/L9CqWPe+TPl/oDxX1ec1mPkgA0cCtjzhtgnrEqCsQ
+uW0gLBqTxAo4itJ8rQsocmjHRVY4uBGbSZDYjtEWKUAaLbOpPmUqBy9Ors8k9W4Q
+Xd63AgAI9oNxy1cSbwM2BTLb82qXlMS8dNbRsLIoMp5AVDGhfKCIJSnpfrhfGARN
+0gCnhBeAylSgA8/Dk96k4jaROfn48I5+07EatVDikKRkyW2xhKKrGdrTryeBKOtB
+zHs63LtHXHQPD/kXlc/q/eYR5kWQu9WsUkJaNQca90PXeJQniYUfiPdUjoXhitqE
+CXAnUmSK4/iGdz3MIsIhf/v6S0Y5TzfaqRM/ZK7wtv07LrYfw1zs1PMklV1vjJXV
+wijivM5E8U0Og9FFPvD6STv8YISlFpm3x0NjwFUagh1MDsrJFHgSxYQuLsVlI01B
+pnmnx73YZI5yhqHriTklSA+CHmsWae8zlEr7+ELPUhkVJ8s3XXmWF2HMkQ0AI8zD
+m6ku+2vHfiJcRzqHotV72fpJz3J9lOlbMb3kAO9J9Qji45Wr+frnsOM39RyddZhH
+77JaZAU/I3goH6EBKlmo/GHan2429TWfjNTFtZID5f7Ztchx3UmQ1Wm5U9oIdFYG
+rgqtyqfIxJqJD6UHYJJ5/xGCei9tQWMfwoPQwPGMDx8jR3VT958=
+=Jq5D
 -----END PGP SIGNATURE-----
 
---=_zucker.schokokeks.org-22267-1427630694-0001-2--
+--BXVAT5kNtrzKuDFl--
