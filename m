@@ -1,39 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/19/1
-Message-ID: <ef83c96a-90be-e97d-1616-a7b74870cb16@apache.org>
-Date: Tue, 19 Sep 2017 14:06:38 +0100
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-12615 Apache Tomcat Remote Code Execution via JSP upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/16/2
+Message-ID: <7a824313c433c54a212afb25498e8556581@guerrillamail.com>
+Date: Sun, 16 Apr 2017 13:08:27 +0000
+From: <7b4xrw+5q6jtt69cnwlw@...rrillamail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: MantisBT - Full admin access vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-12615 Apache Tomcat Remote Code Execution via JSP Upload
+A vulnerability exists in MantisBT where any users password can be reset:
 
-Severity: Important
+Visiting /verify.php?id=XXX&confirm_hash=
 
-Vendor: The Apache Software Foundation
+where XXX is the userid of the user. id=1 is the default 'administrator' account if it still exists.
 
-Versions Affected:
-Apache Tomcat 7.0.0 to 7.0.79
+On a unpatched instance of mantisBT, this will provide a form to enter a new password for a user.
 
-Description:
-When running on Windows with HTTP PUTs enabled (e.g. via setting the
-readonly initialisation parameter of the Default to false) it was
-possible to upload a JSP file to the server via a specially crafted
-request. This JSP could then be requested and any code it contained
-would be executed by the server.
+This works on any enabled account (including users with admin access) - providing an anonymous user with admin access to the system
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Tomcat 7.0.81 or later (7.0.80 was not released)
+The issue can be resolved by checking the value of $t_token_confirm_hash is not null in verify.php
 
-Credit:
-This issue was reported responsibly to the Apache Tomcat Security Team
-by iswin from 360-sg-lab (360观星实验室)
+i.e. changing the code to read:
 
-History:
-2017-09-19 Original advisory
+if( $f_confirm_hash !== $t_token_confirm_hash || null === $t_token_confirm_hash ) {
+	trigger_error( ERROR_LOST_PASSWORD_CONFIRM_HASH_INVALID, ERROR );
+}
 
-References:
-[1] http://tomcat.apache.org/security-7.html
+
+
+
+
+----
+Sent using Guerrillamail.com
+Block or report abuse: https://www.guerrillamail.com//abuse/?a=TlJnSB4FQKEHgRqt0HIWYQDUA8WA19lHxqhOMtz5Bg%3D%3D
+
+
