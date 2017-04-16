@@ -1,97 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/3
-Message-Id: <201702101200.00422@pali>
-Date: Fri, 10 Feb 2017 11:59:59 +0100
-From: pali@...n.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/16/4
+Message-ID: <20170416202538.GA12165@grsecurity.net>
+Date: Sun, 16 Apr 2017 16:25:38 -0400
+From: Brad Spengler <spender@...ecurity.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Use after free in libmysqlclient.so
+Subject: Silently (or obliviously) partially-fixed CONFIG_STRICT_DEVMEM bypass
 Content-Type: text/plain; charset=utf-8
 
-Hello, are you going to assign CVE for this particular defect?
+Hi all,
 
-On Friday 27 January 2017 23:53:29 pali@...n.org wrote:
-> Hello, I would like to report problem related to MySQL/MariaDB and
-> possibly asking for assigning CVE if this list is the right place.
-> 
-> C client library for MySQL (libmysqlclient.so) has use-after-free
-> defect which can cause crash of applications using that MySQL
-> client.
-> 
-> Defect occurs by calling mysql_close() function from
-> libmysqlclient.so. If mysql_close() is called before calling all
-> mysql_stmt_close() (for all allocated stmts), then following
-> mysql_stmt_close() call try to write to already released memory.
-> mysql_close() let dangling pointer exist for prepared statements.
-> Real problem is in function
-> mysql_prune_stmt_list() which incorrectly iterate over elements.
-> Function list_add() overwrite ->next pointer of current element which
-> overwrite next element for iteration.
-> 
-> Basically it is just wrong usage of linked list structure.
-> 
-> Languages in which is not guaranteed order of executing destructor of
-> created objects have a big problem as such writing to memory pointed
-> by dangling can cause crash of whole application.
-> 
-> E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of
-> whole perl process with simple script:
-> 
-> perl -MDBI -e '
-> $dbh = DBI->connect("dbi:mysql:", "root", undef,
->                     {RaiseError => 1, mysql_server_prepare => 1});
-> $sth1 = $dbh->prepare("SELECT 1");
-> $sth2 = $dbh->prepare("USE mysql");
-> $dbh->disconnect;
-> $dbh = undef;
-> '
-> Segmentation fault
-> 
-> Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce
-> change username, password and host where is running mysql server.
-> Valgrind can prove that memory corruption really occurs.
-> 
-> This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But
-> is present in all MySQL 5.5 versions (and also older) and
-> appropriate older 5.6 and 5.7 versions. MySQL 5.5 is still used,
-> supported and included in lot of linux distributions.
-> 
-> Moreover this defect is present also in MariaDB releases. I tested
-> all last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all
-> those are affected.
-> 
-> MySQL and MariaDB provides also standalone package with only C client
-> library libmysqlclient.so (without server) under name "Connector/C"
-> and so appropriate versions of it are affected too.
-> 
-> I found that this defected was fixed in MySQL git repository by
-> commit:
-> https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc5
-> 52424132806f46e93
-> 
-> That commit can be easily applied to last MySQL 5.5.54 version and
-> fixes this defect.
-> 
-> Looks like problem was already reported and is publically available
-> in MySQL bug tracker, see more details on links:
-> https://bugs.mysql.com/bug.php?id=70429
-> https://bugs.mysql.com/bug.php?id=63363
-> (tickets are closed despite fact that MySQL 5.5 and older are not
-> fixed)
-> 
-> ---
-> 
-> I reported this problem to Oracle secalert_us@...cle.com two months
-> ago, but they did absolutely nothing for fixing it in MySQL 5.5.
-> Instead they started resending this problem to some random people
-> with @cpan.org address for unknown reason. And told me to not
-> disclose information about this defect. Resending does not look like
-> normal handling of security related problem! Therefore I suggest
-> other people to not wasting time reporting problems to Oracle for
-> open source applications.
-> 
-> As two months is really long time to fix such problem which was
-> already fixed in new versions; it is already publically disclosed in
-> MySQL bug tracker; fix available in public git; problem is in major
-> MariaDB versions; fix is small; and this is open source product
-> included in many linux distributions I decided to send information
-> to oss-security.
+I wanted to provide some small notice of upstream kernel developers silently
+or obliviously partially fixing a CONFIG_STRICT_DEVMEM bypass which explicitly has
+never been possible in grsecurity in the past 15 years.  I say this because the commit
+message makes no mention of this partially fixing a CONFIG_STRICT_DEVMEM bypass (and I
+suppose a Secure Boot bypass, but what isn't these days?), and similarly makes no
+mentions of the modifications it makes to the write side.  CONFIG_STRICT_DEVMEM exists
+to prevent userland from directly modifying kernel memory, yet the kernel will happily
+make slab allocations in allowed regions below 1MB.  CONFIG_STRICT_DEVMEM explicitly
+allowed both reads and writes to these allocations.  As noted, the commit below doesn't
+fix the mmap side.
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a4866aa812518ed1a37d8ea0c881dc946409de94
+
+Feel free to look at GRKERNSEC_KMEM code going back to 2002 in our 2.4.20
+patch, or when it changed in 2003 for 2.4.21, or this explicit hunk, comment and
+all, that's been around ever since CONFIG_STRICT_DEVMEM was added in 2008:
+
++#ifdef CONFIG_GRKERNSEC_KMEM
++       /* throw out everything else below 1MB */
++       if (pagenr <= 256)
++               return 0;
++#endif
+
+<additional comments/details removed: b76e178e7b24f238ba0dd70104336298f493f0142056a1e5f35c27897369adc6>
+
+While I'm here, some more VMAP_STACK fallout (DoS/potential memory corruption,
+adding to the dozen or so posted earlier):
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67b0503db9c29b04eadfeede6bebbfe5ddad94ef
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=606142af57dad981b78707234cfbd15f9f7b7125
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3f190e3aec212fc8c61e202c51400afa7384d4bc
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=005145378c9ad7575a01b6ce1ba118fb427f583a
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=3b30460c5b0ed762be75a004e924ec3f8711e032
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=c919a3069c775c1c876bec55e00b2305d5125caa
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c4baad50297d84bde1a7ad45e50c73adae4a2192
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=5593523f968bc86d42a035c6df47d5e0979b5ace
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=7926aff5c57b577ab0f43364ff0c59d968f6a414
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=2d6a0e9de03ee658a9adc3bfb2f0ca55dff1e478
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7a7b5df84b6b4e5d599c7289526eed96541a0654
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8e9faa15469ed7c7467423db4c62aeed3ff4cae3
+
+Thanks,
+-Brad
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
