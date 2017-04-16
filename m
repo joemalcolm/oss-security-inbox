@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/15/2
-Message-ID: <20170715011453.GB14774@hunt>
-Date: Fri, 14 Jul 2017 18:14:53 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/16/3
+Message-ID: <od089o$htq$1@blaine.gmane.org>
+Date: Sun, 16 Apr 2017 19:06:07 +0200
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-1000083: evince: Command injection vulnerability in CBT handler
+Subject: Re: MantisBT - Full admin access vulnerability - CVE-2017-7615
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 14, 2017 at 07:27:53PM -0500, Brandon Perry wrote:
-> > On Jul 13, 2017, at 10:43 AM, Johannes Segitz <jsegitz@...e.de> wrote:
-> > This can be exploited by creating a tar archive with an embedded file
-> > named something
-> > like this: "--checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg"
-> > 
-> > (Make sure evince is not sandboxed by apparmor before trying to reproduce
-> > the attached POC)
-> 
-> Not sure if the list ate the attachment, but I don’t see it available.
-> Perhaps a link to it somewhere else would be of use?
+> A vulnerability exists in MantisBT where any users password can be reset:
 
-The attachment didn't make it through to the distros list either. When I
-was testing just the tar portion of this, I skipped the / character in the
-filename and added a 10MB zeroed file (truncate -s 10MB huge) to make sure
-the checkpoint program gets run.
+This is registered as CVE-2017-7615. It was discovered and reported to
+us by John Page aka hyp3rlinx from ApparitionSec
+(http://hyp3rlinx.altervista.org).
 
-Thanks
+We didn't post it here before, as due to the severity of the issue we
+wanted to give the opportunity to our users to patch their systems
+before full public disclosure, so we notified them via private e-mail.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Unfortunately someone decided to post it here (anonymously, too...) in
+spite of our request to keep the embargo, so here's the rest of the story.
+
+The issue will be fixed in versions 1.3.10, 2.2.4, and 2.3.1, to be
+released shortly.
+
+Until then, all MantisBT administrators are advised to patch their
+system immediately. Fixes are availble from our GitHub repository:
+
+- 2.3.x https://github.com/mantisbt/mantisbt/commit/cfbc5e54
+- 2.2.x https://github.com/mantisbt/mantisbt/commit/46880ef6
+- 1.3.x https://github.com/mantisbt/mantisbt/commit/14c61a8c
+
+MantisBT issue tracker reference:
+https://mantisbt.org/bugs/view.php?id=22690
+
+Best regards
+D. Regad
+MantisBT developer
+
+
