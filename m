@@ -1,126 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/4
-Message-ID: <5c4b27b2-ce77-2495-5f11-46beef5cda0b@igalia.com>
-Date: Fri, 10 Feb 2017 14:36:56 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2017-0002
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/5
+Message-ID: <cf512b42-ebd9-ec59-e2b1-326368f53f3b@isc.org>
+Date: Mon, 17 Apr 2017 11:41:58 -0800
+From: ISC Security Officer <security-officer@....org>
+To: oss-security@...ts.openwall.com
+Subject: Additional information for packagers concerning recent BIND security vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2017-0002
-------------------------------------------------------------------------
+[Apologies to those who receive multiple copies of this message but
+we were asked to notify oss-security after sending details to the
+distros security list.]
 
-Date reported      : February 10, 2017
-Advisory ID        : WSA-2017-0002
-Advisory URL       : https://webkitgtk.org/security/WSA-2017-0002.html
-CVE identifiers    : CVE-2017-2350, CVE-2017-2354, CVE-2017-2355,
-                     CVE-2017-2356, CVE-2017-2362, CVE-2017-2363,
-                     CVE-2017-2364, CVE-2017-2365, CVE-2017-2366,
-                     CVE-2017-2369, CVE-2017-2371, CVE-2017-2373.
+To all BIND packagers and redistributors:
 
-Several vulnerabilities were discovered in WebKitGTK+.
+Recently we sent you information about several BIND vulnerabilities,
+including CVE-2017-3137.  After providing that information we
+received feedback from multiple parties concerning a potential pitfall
+for those who are trying to selectively backport the fix for CVE-2017-3137
+to earlier versions of BIND.  Since we do not know which of you may be
+trying to do this we are notifying all parties to whom we sent the
+CVE details.  If you are using the security releases provided by ISC
+without changes or if you are not trying to selectively backport fixes
+to earlier BIND versions you can ignore the rest of this message.
 
-CVE-2017-2350
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to Gareth Heyes of Portswigger Web Security.
-    Impact: Processing maliciously crafted web content may exfiltrate
-    data cross-origin. Description: A prototype access issue was
-    addressed through improved exception handling.
+For those who ARE backporting the security fixes to earlier versions of
+BIND:  several parties have reported to us that backporting to a
+version of BIND that does not have change #4190 can cause an assertion
+failure to appear in name.c in the vicinity of line 2150 (the exact line
+number varies by version) with the error message:
 
-CVE-2017-2354
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to Neymar of Tencent's Xuanwu Lab (tencent.com) working with
-    Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved memory handling.
+  REQUIRE(prefix == ((void *)0) || ((((prefix) != ((void *)0)) &&
+(((const isc__magic_t *)(prefix))->magic == ((('D') << 24 | ('N') << 16
+| ('S') << 8 | ('n'))))) && prefix->buffer != ((void *)0) &&
+((prefix->attributes & (0x00000002|0x00000004)) == 0))) failed
 
-CVE-2017-2355
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to Team Pangu and lokihardt at PwnFest 2016.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory initialization issue
-    was addressed through improved memory handling.
+To test whether the version of BIND you have produced is subject to
+this assertion failure, we recommend you run the dname test in the
+provided BIND system tests.  (Actually, we recommend you run that
+in any case.)
 
-CVE-2017-2356
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to Team Pangu and lokihardt at PwnFest 2016.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved input validation.
+  build named:
+    ./configure && make
 
-CVE-2017-2362
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved memory handling.
+  then:
+    cd bin/tests/system
+    as root:  sh ./ifconfig.sh up
+    sh ./run.sh dname
 
-CVE-2017-2363
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may exfiltrate
-    data cross-origin. Description: Multiple validation issues existed
-    in the handling of page loading. This issue was addressed through
-    improved logic.
+If your named crashes you should correct the problem; see change #4190.
 
-CVE-2017-2364
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may exfiltrate
-    data cross-origin. Description: Multiple validation issues existed
-    in the handling of page loading. This issue was addressed through
-    improved logic.
+ISC doesn't officially support selective backporting of changes and we
+cannot
+guarantee that there may not be other issues, depending on which combination
+of changes you have selected.  However this issue has been reported by
+several
+parties and we are providing what info we have on it in the hopes that
+it will
+help those who repackage and redistribute our code.
 
-CVE-2017-2365
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may exfiltrate
-    data cross-origin. Description: A validation issue existed in
-    variable handling. This issue was addressed through improved
-    validation.
-
-CVE-2017-2366
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved input validation.
-
-CVE-2017-2369
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved input validation.
-
-CVE-2017-2371
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to lokihardt of Google Project Zero.
-    Impact: A malicious website can open popups. Description: An issue
-    existed in the handling of blocking popups. This was addressed
-    through improved input validation.
-
-CVE-2017-2373
-    Versions affected: WebKitGTK+ before 2.14.4.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved memory handling.
-
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-February 10, 2017
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+Michael McNally
+ISC Security Officer
