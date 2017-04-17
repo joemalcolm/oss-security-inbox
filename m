@@ -1,49 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/9
-Message-ID: <87k26628ox.fsf@curie.anarc.at>
-Date: Wed, 26 Apr 2017 16:52:14 -0400
-From: anarcat@...ngeseeds.org (Antoine Beaupré)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/4
+Message-ID: <20170417180728.GA31692@openwall.com>
+Date: Mon, 17 Apr 2017 20:07:28 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: kedpm: Information leak via the command history file
+Cc: Kenton Varda <kenton@...udflare.com>, Tom Lee <debian@...lee.co>
+Subject: Re: Re: CVE Request: Cap'n Proto: Bounds check elided by compiler optimization
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in the kedpm password manager that may
-expose the master password when changed, if passed on the commandline.
+On Mon, Apr 17, 2017 at 10:35:51AM -0700, Kenton Varda wrote:
+> Whoops, apparently I'm supposed to use the web form now. Sorry!
 
-Example, good:
+Yes, but many of us in here care(d) about being notified of security
+issues much more than about CVEs, hence as a moderator I approved your
+posting anyway.  Once you've obtained the CVE ID from MITRE, please post
+it to this same thread as a "reply".
 
-kedpm> passwd
-New password:
-Repeat password:
-Password changed.
-kedpm>
+> On Mon, Apr 17, 2017 at 10:32 AM, Kenton Varda <kenton@...udflare.com> wrote:
+> > Full details and fix covered here: https://github.com/sandstorm-i
+> > o/capnproto/blob/master/security-advisories/2017-04-17-0-
+> > apple-clang-elides-bounds-check.md
 
-Example, bad:
+The lack of detail in your posting goes against published oss-security
+guidelines, which are:
 
-kedpm:/> passwd bar
-Password changed
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-The former will show "passwd" in the ~/.kedpm/history file while the
-latter will show "passwd bar" in the history file, divulging the
-password in clear text.
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should
+remain valuable even with all of the external resources gone."
 
-Also, all password *names* that are created or consulted are saved in
-the history file, something that users may not expect (although you have
-to wonder how they thought history worked).
+Here's the "unbroken" GitHub URL:
 
-This is documented in the Debian bugtracker:
+https://github.com/sandstorm-io/capnproto/blob/master/security-advisories/2017-04-17-0-apple-clang-elides-bounds-check.md
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=860817
+and I've attached to this message the "raw" (text) version from:
 
-But I would like to get a CVE assigned for wider diffusion.
+https://raw.githubusercontent.com/sandstorm-io/capnproto/master/security-advisories/2017-04-17-0-apple-clang-elides-bounds-check.md
 
-Note that I seem to be the sole kedpm maintainer left and I consider the
-software abandoned. I will backport patches to fix this in the Debian
-bugtracker, but I have filed a request for the software to be removed
-from Debian and all users should switch away.
+as text/plain.
 
 Thanks,
 
-a.
+Alexander
 
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+View attachment "2017-04-17-0-apple-clang-elides-bounds-check.md" of type "text/plain" (6443 bytes)
