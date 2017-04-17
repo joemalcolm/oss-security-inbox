@@ -1,72 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/6
-Message-ID: <30a766a5-00c8-f5b8-0773-fa9846f250be@igalia.com>
-Date: Tue, 19 Dec 2017 19:58:26 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2017-0010
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/6
+Message-ID: <CAJouXQmLpm3-cdy--hUjNy70XXGmQ=Rnuwr0W+FQJkWA4BuX4w@mail.gmail.com>
+Date: Mon, 17 Apr 2017 13:35:26 -0700
+From: Kenton Varda <kenton@...udflare.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Tom Lee <debian@...lee.co>
+Subject: Re: Re: CVE Request: Cap'n Proto: Bounds check elided by compiler optimization
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2017-0010
-------------------------------------------------------------------------
+Hi,
 
-Date reported      : December 19, 2017
-Advisory ID        : WSA-2017-0010
-Advisory URL       : https://webkitgtk.org/security/WSA-2017-0010.html
-CVE identifiers    : CVE-2017-7156, CVE-2017-7157, CVE-2017-13856,
-                     CVE-2017-13866, CVE-2017-13870.
+This has been assigned: CVE-2017-7892
 
-Several vulnerabilities were discovered in WebKitGTK+.
+Apologies for failing to follow the list guidelines.
 
-CVE-2017-7156
-    Versions affected: WebKitGTK+ before 2.18.4.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Thanks,
+-Kenton
 
-CVE-2017-7157
-    Versions affected: WebKitGTK+ before 2.18.1.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+On Mon, Apr 17, 2017 at 11:07 AM, Solar Designer <solar@...nwall.com> wrote:
 
-CVE-2017-13856
-    Versions affected: WebKitGTK+ before 2.18.4.
-    Credit to Jeonghoon Shin.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+> On Mon, Apr 17, 2017 at 10:35:51AM -0700, Kenton Varda wrote:
+> > Whoops, apparently I'm supposed to use the web form now. Sorry!
+>
+> Yes, but many of us in here care(d) about being notified of security
+> issues much more than about CVEs, hence as a moderator I approved your
+> posting anyway.  Once you've obtained the CVE ID from MITRE, please post
+> it to this same thread as a "reply".
+>
+> > On Mon, Apr 17, 2017 at 10:32 AM, Kenton Varda <kenton@...udflare.com>
+> wrote:
+> > > Full details and fix covered here: https://github.com/sandstorm-i
+> > > o/capnproto/blob/master/security-advisories/2017-04-17-0-
+> > > apple-clang-elides-bounds-check.md
+>
+> The lack of detail in your posting goes against published oss-security
+> guidelines, which are:
+>
+> http://oss-security.openwall.org/wiki/mailing-lists/oss-
+> security#list-content-guidelines
+>
+> "At least the most essential part of your message (e.g., vulnerability
+> detail and/or exploit) should be directly included in the message itself
+> (and in plain text), rather than only included by reference to an
+> external resource.  Posting links to relevant external resources as well
+> is acceptable, but posting only links is not.  Your message should
+> remain valuable even with all of the external resources gone."
+>
+> Here's the "unbroken" GitHub URL:
+>
+> https://github.com/sandstorm-io/capnproto/blob/master/
+> security-advisories/2017-04-17-0-apple-clang-elides-bounds-check.md
+>
+> and I've attached to this message the "raw" (text) version from:
+>
+> https://raw.githubusercontent.com/sandstorm-io/capnproto/
+> master/security-advisories/2017-04-17-0-apple-clang-elides-bounds-check.md
+>
+> as text/plain.
+>
+> Thanks,
+>
+> Alexander
+>
 
-CVE-2017-13866
-    Versions affected: WebKitGTK+ before 2.18.4.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-13870
-    Versions affected: WebKitGTK+ before 2.18.4.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-December 19, 2017
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
