@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1188" "Thursday" "21" "April" "2016" "20:30:00" "+0300" "Solar Designer" "solar@openwall.com" "<20160421172959.GA8640@openwall.com>" "28" "[oss-security] list mail bounces; libtiff" nil nil nil "4" "2016042117:30:00" "[oss-security] list mail bounces; libtiff" (number mark "U       solar@openwa Apr 21   28/1188  " thread-indent "\"[oss-security] list mail bounces; libtiff\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["375" "Monday" "17" "April" "2017" "16:13:04" "-0700" "Bryan Call" "bcall@apache.org" "<F4BD9382-D7C5-4322-BCDA-F555472B08F9@apache.org>" "15" "[oss-security] [ANNOUNCE] Chunking and content-length vulnerability in ATS - CVE-2017-5659" "^Date:" nil nil "4" "2017041723:13:04" "[oss-security] [ANNOUNCE] Chunking and content-length vulnerability in ATS - CVE-2017-5659" (number mark "U       bcall@apache Apr 17   15/375   " thread-indent "\"[oss-security] [ANNOUNCE] Chunking and content-length vulnerability in ATS - CVE-2017-5659\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14175 invoked by uid 550); 21 Apr 2016 17:30:14 -0000
+Received: (qmail 22092 invoked by uid 550); 17 Apr 2017 23:38:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14080 invoked from network); 21 Apr 2016 17:30:04 -0000
-Date: Thu, 21 Apr 2016 20:30:00 +0300
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20160421172959.GA8640@openwall.com>
-Mime-Version: 1.0
+Received: (qmail 7307 invoked from network); 17 Apr 2017 23:13:18 -0000
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] list mail bounces; libtiff
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <F4BD9382-D7C5-4322-BCDA-F555472B08F9@apache.org>
+X-Mailer: Apple Mail (2.3273)
+Date: Mon, 17 Apr 2017 16:13:04 -0700
+From: Bryan Call <bcall@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [ANNOUNCE] Chunking and content-length vulnerability in ATS -
+ CVE-2017-5659
+To: dev <dev@trafficserver.apache.org>,
+ users@trafficserver.apache.org,
+ announce@trafficserver.apache.org,
+ security@trafficserver.apache.org,
+ oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com,
+ persia@apache.org
 
-Hi,
+There is a vulnerability in ATS with chunking and content-length that can l=
+ead to a DoS attack.  Versions 6.2.0 and prior are affected.  Please upgrad=
+e to ATS 6.2.1 or 7.0.0.
 
-About 10 of you have e-mailed the list admins about "ezmlm warning"
-messages that some of you received today, so I'll reply to all in here
-(expecting that more of you are wondering, but haven't e-mailed us).
+Downloads:
+	https://trafficserver.apache.org/downloads
 
-Yes, there was a mail delivery problem from oss-security on April 8,
-resolved on April 9.
+Jira Ticket:
+	https://issues.apache.org/jira/browse/TS-4819
 
-Several of the messages were initially queued up, and when the problem
-was resolved and they were finally attempted to be delivered, they could
-not be delivered to some of you, as well as to some of the third-party
-archives, presumably because of those servers' use of greylisting (or
-any other intermittent errors).  Crucially, there was not a second
-delivery attempt because of those messages' age in the queue.  Indeed,
-this is incompatible with greylisting, and in hindsight we should have
-temporarily increased the allowable queue age before resolving the
-initial problem.
+CVE:
+	https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=3D2017-5659
 
-The official archive has the full set of messages posted on April 8:
 
-http://www.openwall.com/lists/oss-security/2016/04/08/
-
-Specifically, the multiple notifications about different libtiff
-vulnerabilities were affected, so if libtiff is relevant to you please
-review the above archive page.
-
-Alexander
+-Bryan
