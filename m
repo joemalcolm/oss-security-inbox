@@ -1,65 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/17
-Message-ID: <20170410125807.GD15596@suse.de>
-Date: Mon, 10 Apr 2017 14:58:07 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: binutils: two NULL pointer dereference in elflink.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/7
+Message-Id: <E3256204-9440-4DDA-9E00-A65C5A4DA022@apache.org>
+Date: Mon, 17 Apr 2017 16:09:08 -0700
+From: Bryan Call <bcall@...che.org>
+To: dev <dev@...fficserver.apache.org>, users@...fficserver.apache.org, announce@...fficserver.apache.org, security@...fficserver.apache.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, Masaori Koshiba <masaori@...che.org>
+Subject: [ANNOUNCE] HPACK Bomb Attack vulnerability in ATS - CVE-2016-5396
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+There is a vulnerability in ATS with the HPACK Bomb Attack that can lead to a DoS.  Versions 6.0.0 to 6.2.0 are affected.  Please upgrade to ATS 6.2.1 or 7.0.0.
 
-But it did not crash, so the pointer never got derefenced, NULL was just
-passed through pointer arithmetics.
+Downloads:
+	https://trafficserver.apache.org/downloads
 
-_bfd_generic_link_add_one_symbol() in 2.28 catches bh being NULL
-(The if (*hashp==NULL)) checks.)
+Jira Ticket:
+	ttps://issues.apache.org/jira/browse/TS-5019
 
-Ciao, Marcus
+CVE
+	https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2016-5396
 
-On Mon, Apr 10, 2017 at 07:47:33AM +0000, Agostino Sarubbo wrote:
-> Description:
-> binutils are a collection of binary tools necessary to build programs.
-> 
-> An updated clang version were able to discover two null pointer dereference in the following simple way:
-> 
-> # echo "int main () { return 0; }" > test.c
-> # cc test.c -o test
-> /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/bfd/elflink.c:124:12: runtime error: member access within null pointer of type 'struct elf_link_hash_entry'                            
-> 
-> /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/bfd/elflink.c:11979:58: runtime error: member access within null pointer of type 'elf_section_list' (aka 'struct elf_section_list')  
-> Affected version:
-> 2.28
-> 
-> Fixed version:
-> N/A
-> 
-> Commit fix:
-> https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=ad32986fdf9da1c8748e47b8b45100398223dba8
-> 
-> Credit:
-> This bug was discovered by Agostino Sarubbo of Gentoo.
-> 
-> CVE:
-> CVE-2017-7614
-> 
-> Timeline:
-> 2017-04-01: bug discovered and reported to upstream
-> 2017-04-04: upstream released a patch
-> 2017-04-05: blog post about the issue
-> 2017-04-09: CVE assigned
-> 
-> Note:
-> This bug was found with clang’s Undefined Behavior Sanitizer.
-> 
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/04/05/binutils-two-null-pointer-dereference-in-elflink-c/
-> 
-> --
-> Agostino Sarubbo
-> Gentoo Linux Developer
-> 
+-Bryan
 
-
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
