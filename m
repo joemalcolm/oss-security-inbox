@@ -1,57 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/1
-Message-ID: <CADSYzst1LHBrdak=PmYQf1mzbhC2k5ynes_-xbXW+yiv5hnAXw@mail.gmail.com>
-Date: Thu, 27 Apr 2017 01:48:32 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/1
+Message-ID: <20170417070929.GB23282@kroah.com>
+Date: Mon, 17 Apr 2017 09:09:29 +0200
+From: Greg KH <gregkh@...uxfoundation.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
+Subject: Re: Silently (or obliviously) partially-fixed CONFIG_STRICT_DEVMEM bypass
 Content-Type: text/plain; charset=utf-8
 
-In case anyone needs the patched release, it looks like the patch got
-included at last in version:
-squirrelmail-20170427_0200-SVN
+On Sun, Apr 16, 2017 at 04:25:38PM -0400, Brad Spengler wrote:
+> Hi all,
+> 
+> I wanted to provide some small notice of upstream kernel developers silently
+> or obliviously partially fixing a CONFIG_STRICT_DEVMEM bypass which explicitly has
+> never been possible in grsecurity in the past 15 years.  I say this because the commit
+> message makes no mention of this partially fixing a CONFIG_STRICT_DEVMEM bypass (and I
+> suppose a Secure Boot bypass, but what isn't these days?), and similarly makes no
+> mentions of the modifications it makes to the write side.  CONFIG_STRICT_DEVMEM exists
+> to prevent userland from directly modifying kernel memory, yet the kernel will happily
+> make slab allocations in allowed regions below 1MB.  CONFIG_STRICT_DEVMEM explicitly
+> allowed both reads and writes to these allocations.  As noted, the commit below doesn't
+> fix the mmap side.
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a4866aa812518ed1a37d8ea0c881dc946409de94
+> 
+> Feel free to look at GRKERNSEC_KMEM code going back to 2002 in our 2.4.20
+> patch, or when it changed in 2003 for 2.4.21, or this explicit hunk, comment and
+> all, that's been around ever since CONFIG_STRICT_DEVMEM was added in 2008:
+> 
+> +#ifdef CONFIG_GRKERNSEC_KMEM
+> +       /* throw out everything else below 1MB */
+> +       if (pagenr <= 256)
+> +               return 0;
+> +#endif
+> 
+> <additional comments/details removed: b76e178e7b24f238ba0dd70104336298f493f0142056a1e5f35c27897369adc6>
+> 
+> While I'm here, some more VMAP_STACK fallout (DoS/potential memory corruption,
+> adding to the dozen or so posted earlier):
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67b0503db9c29b04eadfeede6bebbfe5ddad94ef
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=606142af57dad981b78707234cfbd15f9f7b7125
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3f190e3aec212fc8c61e202c51400afa7384d4bc
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=005145378c9ad7575a01b6ce1ba118fb427f583a
+> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=3b30460c5b0ed762be75a004e924ec3f8711e032
+> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=c919a3069c775c1c876bec55e00b2305d5125caa
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c4baad50297d84bde1a7ad45e50c73adae4a2192
+> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=5593523f968bc86d42a035c6df47d5e0979b5ace
+> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=7926aff5c57b577ab0f43364ff0c59d968f6a414
+> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=2d6a0e9de03ee658a9adc3bfb2f0ca55dff1e478
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7a7b5df84b6b4e5d599c7289526eed96541a0654
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8e9faa15469ed7c7467423db4c62aeed3ff4cae3
 
+Thanks a lot for the heads up, I'll work on queueing up the first commit
+you posted here for the next stable releases, and go through this list
+to ensure I caught all of these as well.
 
-Regards,
-Dawid Golunski
-https://legalhackers.com  |  https://ExploitBox.io
-t: @dawid_golunski
+Many thanks for letting us all know!
 
-
-On Mon, Apr 24, 2017 at 6:14 PM, Dawid Golunski <dawid@...alhackers.com> wrote:
-> SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
->
-> Desc.:
-> SquirrelMail is affected by a critical Remote Code Execution vulnerability
-> which stems from insufficient escaping of user-supplied data when
-> SquirrelMail has been configured with Sendmail as the main transport.
-> An authenticated attacker may be able to exploit the vulnerability
-> to execute arbitrary commands on the target and compromise the remote
-> system.
->
-> Discovered by:
-> Dawid Golunski (https://legalhackers.com : https://ExploitBox.io)
-> , as well as Filippo Cavallarin (see attached advisory for details)
->
-> Official solution:
-> Vendor seems to have released a new version of 1.4.23 on
-> squirrelmail-20170424_0200-SVN.stable.tar.gz
-> which still seems to be vulnerable hence a new subject/thread.
->
-> The exploit from my advisory was also confirmed to work on Ubuntu
-> package: '1.4.23~svn20120406-2ubuntu1.16.04.1'.
->
-> Hence the updated version in the subject/advisory title.
->
-> Full advisory URL:
->
-> https://legalhackers.com/advisories/SquirrelMail-Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
->
->
->
-> --
-> Regards,
-> Dawid Golunski
-> https://legalhackers.com
-> https://ExploitBox.io
-> t: @dawid_golunski
+greg k-h
