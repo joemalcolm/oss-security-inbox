@@ -1,47 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/4
-Message-ID: <20170619164836.GQ20604@suse.de>
-Date: Mon, 19 Jun 2017 18:48:36 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/2
+Message-ID: <CACmp6kpcEne1tqKHK2Xbceeu9CFwqKE1ARhT_jMYRq=TNZYNcA@mail.gmail.com>
+Date: Mon, 17 Apr 2017 10:17:28 -0500
+From: Matt Sicker <mattsicker@...che.org>
+To: dev@...ging.apache.org, security <security@...che.org>,  "Almeida De Macedo, Marcio" <Marcio.AlmeidaDeMacedo@...m.telstra.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2017-5645: Apache Log4j socket receiver deserialization vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 19, 2017 at 12:46:20PM -0400, Daniel Micay wrote:
-> On Mon, 2017-06-19 at 09:40 -0600, kseifried@...hat.com wrote:
-> > On 06/19/2017 09:28 AM, Qualys Security Advisory wrote:
-> > > 
-> > > Qualys Security Advisory
-> > > 
-> > > The Stack Clash
-> > 
-> > I just want to publicly thank Qualys for working with the Open Source
-> > community so we (Linux and *BSD) could all get this fixed properly.
-> > There was a lot of work from everyone involved and it all went pretty
-> > smoothly.
-> 
-> Fixing it properly would really also include fixing these:
-> 
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68065
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66479
-> 
-> and actually implementing -fstack-check as not just a no-op in Clang.
-> 
-> Windows has working stack probes, even in Windows XP and perhaps even
-> earlier. LLVM has working stack probes there (not sure if GCC deals with
-> it properly) yet doesn't make them available elsewhere.
-> 
-> Rust is 'memory safe' but has this same stack exhaustion issue. It
-> didn't used to have the issue, since it kept around the LLVM segmented
-> stack code generation after it dropped segmented stacks to check for
-> stack overflow in function preludes. That got dropped for a 1-3%
-> performance win from using stack probes instead... which was a good
-> idea, but without implementing stack probes... making it a terrible
-> idea. It was deferred to some later date. That was in July 2015, and 2
-> years later it's not done.
+CVE-2017-5645: Apache Log4j socket receiver deserialization vulnerability
 
-The GCC team at least has been working on patches on this topic and they will also
-continue to work on this publically soon.
+Severity: High
 
-Ciao, Marcus
+CVSS Base Score: 7.5 (AV:N/AC:L/Au:N/C:P/I:P/A:P)
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: all versions from 2.0-alpha1 to 2.8.1
+
+Description: When using the TCP socket server or UDP socket server to
+receive serialized log events from another application, a specially crafted
+binary payload can be sent that, when deserialized, can execute arbitrary
+code.
+
+Mitigation: Java 7+ users should migrate to version 2.8.2 or avoid using
+the socket server classes. Java 6 users should avoid using the TCP or UDP
+socket server classes, or they can manually backport the security fix from
+2.8.2: <https://git-wip-us.apache.org/repos/asf?p=logging-log4j2.
+git;h=5dcc192>
+
+Credit: This issue was discovered by Marcio Almeida de Macedo of Red Team
+at Telstra
+
+References: <https://issues.apache.org/jira/browse/LOG4J2-1863>
+
