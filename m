@@ -1,18 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/1
-Message-ID: <1639079.ZQkYUiMST9@blackgate>
-Date: Mon, 13 Mar 2017 10:34:35 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: audiofile: global buffer overflow in decodeSample (IMA.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/3
+Message-ID: <CAJouXQntfKK9r8T5HtxHCeVGhdYjwW_Wk_SSa4n-KsbM5qAFZA@mail.gmail.com>
+Date: Mon, 17 Apr 2017 10:35:51 -0700
+From: Kenton Varda <kenton@...udflare.com>
+To: Tom Lee <debian@...lee.co>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Cap'n Proto: Bounds check elided by compiler optimization
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 26 February 2017 11:49:46 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/02/20/audiofile-global-buffer-overflow-in-> decodesample-ima-cpp
+Whoops, apparently I'm supposed to use the web form now. Sorry!
 
-This is CVE-2017-6829
+-Kenton
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+On Mon, Apr 17, 2017 at 10:32 AM, Kenton Varda <kenton@...udflare.com>
+wrote:
+
+> Hi oss-security and cve-assign,
+>
+> Can you assign a CVE for the following issue?
+>
+> Full details and fix covered here: https://github.com/sandstorm-i
+> o/capnproto/blob/master/security-advisories/2017-04-17-0-
+> apple-clang-elides-bounds-check.md
+>
+> > Discovered by Kenton Varda
+>
+> > Some bounds checks are elided by Apple's compiler and possibly others,
+> leading to a possible attack especially in 32-bit builds.
+>
+> > Although triggered by a compiler optimization, this is a bug in Cap'n
+> Proto, not the compiler.
+>
+> Thanks,
+> -Kenton
+>
+
