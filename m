@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2126" "Friday" "22" "January" "2016" "11:57:42" "-0500" "Steve Grubb" "sgrubb@redhat.com" "<41532875.k1hQz0ZxHK@x2>" "61" "Re: [oss-security] Re: Prime example of a can of worms" "^Cc:" nil nil "1" "2016012216:57:42" "[oss-security] Re: Prime example of a can of worms" (number mark "        sgrubb@redha Jan 22   61/2126  " thread-indent "\"Re: [oss-security] Re: Prime example of a can of worms\"\n") "<56A126C4.7090905@andrewg.com>" ("<56A126C4.7090905@andrewg.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8675" "Tuesday" "18" "April" "2017" "15:22:55" "+0200" "Solar Designer" "solar@openwall.com" "<20170418132255.GA4877@openwall.com>" "206" "[oss-security] CVE-2017-7467: minicom and prl-vzvncserver vt100.c escparms[] buffer overflow" "^Cc:" nil nil "4" "2017041813:22:55" "[oss-security] CVE-2017-7467: minicom and prl-vzvncserver vt100.c escparms[] buffer overflow" (number mark "        solar@openwa Apr 18  206/8675  " thread-indent "\"[oss-security] CVE-2017-7467: minicom and prl-vzvncserver vt100.c escparms[] buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21937 invoked by uid 550); 22 Jan 2016 16:57:56 -0000
+Received: (qmail 3119 invoked by uid 550); 18 Apr 2017 13:23:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,222 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21912 invoked from network); 22 Jan 2016 16:57:55 -0000
-Message-ID: <41532875.k1hQz0ZxHK@x2>
-Organization: Red Hat
-User-Agent: KMail/4.14.10 (Linux/4.2.3-203.fc22.x86_64; KDE/4.14.14; x86_64; ; )
-In-Reply-To: <56A126C4.7090905@andrewg.com>
-References: <56A126C4.7090905@andrewg.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart1546160.sjnFM40Lh6"; micalg="pgp-sha1"; protocol="application/pgp-signature"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Cc: Andrew Gallagher <andrewg@andrewg.com>
-Date: Fri, 22 Jan 2016 11:57:42 -0500
-From: Steve Grubb <sgrubb@redhat.com>
+Received: (qmail 1921 invoked from network); 18 Apr 2017 13:23:08 -0000
+Message-ID: <20170418132255.GA4877@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Cc: Adam Lackorzynski <adam@os.inf.tu-dresden.de>
+Date: Tue, 18 Apr 2017 15:22:55 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Prime example of a can of worms
+Subject: [oss-security] CVE-2017-7467: minicom and prl-vzvncserver vt100.c escparms[] buffer overflow
 To: oss-security@lists.openwall.com
 
---nextPart1546160.sjnFM40Lh6
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="us-ascii"
+Hi,
 
-On Thursday, January 21, 2016 06:43:16 PM Andrew Gallagher wrote:
-> On Thu, 21 Jan 2016 10:15:55 -0500 Steve Grubb wrote:
-> > Hallway discussions mentioned that ECC is dead due to trust issues
-> > and fuzzy IP issues which slowed vendor uptake. There was a mention
-> > of RSA officially being allowed to go to 16k key sizes.
->=20
-> Was there any mention of the relative ease of quantum attacks against
-> ECC compared to classically-equivalent RSA?=20
+This is to announce a vulnerability that has just been fixed in minicom
+2.7.1 released earlier today, and that had been found and fixed in
+derived code in prl-vzvncserver (a Virtuozzo 7 component) earlier this
+year.  minicom 2.7.1 is available for download at:
 
-Yes. At one time ECC looked good because it offered comparable strength wit=
-h=20
-fewer operations so it was faster in the age of slower CPUs. Now, the threa=
-t=20
-has changed and people are looking over the not too distant future at how b=
-est=20
-to provide some resistance in the face of a very different landscape. Thing=
-s=20
-that are computationally expensive start looking better. The slide on page =
-9=20
-kind of shows the concern. The leftover part of rectangle X not covered by=
-=20
-rectangle Z means spilled secrets.
+https://alioth.debian.org/projects/minicom/
 
-To my mind, one of the things that we as an open source community need to=20
-think hard about is how we are going to protect data in the Quantum computi=
-ng=20
-age. If many of the new QR algorithms get patented, where does that leave u=
-s?=20
-Its kinda like ECC all over again except this time the consequences are muc=
-h=20
-more dire because there may not be any IP unencumbered algorithm to jump to=
-. I=20
-certainly hope that won't be the case.
+The main bug is that in minicom's vt100.c escparms[] is declared as:
 
--Steve
+static void (*vt_keyb)(int, int);/* Gets called for NORMAL/APPL switch. */
+static void (*termout)(const char *, int);/* Gets called to output a string. */
 
+static int escparms[8];         /* Cumulated escape sequence. */
+static int ptr;                 /* Index into escparms array. */
+static long vt_tabs[5];         /* Tab stops for max. 32*5 = 160 columns. */
 
-> [1] That was suggested on a couple of discussion groups as a possible
-> motivation for the newly rekindled RSA love.
->=20
-> [1] http://arxiv.org/abs/quant-ph/0301141
+but is filled as:
 
---nextPart1546160.sjnFM40Lh6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
+  /* See if a number follows */
+  if (c >= '0' && c <= '9') {
+    escparms[ptr] = 10*escparms[ptr] + c - '0';
+    return;
+  }
+  /* Separation between numbers ? */
+  if (c == ';') {
+    if (ptr < 15)
+      ptr++;
+    return;
+  }
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Notice the 8 vs. 15 (meaning 16 elements) discrepancy.
 
-iEYEABECAAYFAlaiX4YACgkQCfgKaXAKiuZYNQCguGueIWhlrsRPEpspIR5dsbgL
-x8gAn2ih2CW5kAiQ4O3iTuDvGmiUrxC9
-=sXQY
------END PGP SIGNATURE-----
+At least in the Fedora 23 package of minicom, this lets me adjust or
+replace the termout function pointer.  If the variables were put in .bss
+in the other order (perhaps by a different compiler), then ptr could be
+overwritten, which is likely also exploitable.
 
---nextPart1546160.sjnFM40Lh6--
+Here's how to reproduce:
 
+mkfifo fifo
+gdb /usr/bin/minicom
+
+(gdb) r -oD fifo
+Starting program: /usr/bin/minicom -oD fifo
+
+On another terminal:
+
+echo -ne "\033[0;0;0;0;0;0;0;0;00000000000000000000001094795585;00000000000000000000001094795585" > fifo
+
+Then press Enter in minicom, and:
+
+Program received signal SIGSEGV, Segmentation fault.
+                                                    0x000055555555d31f in v_termout ()
+(gdb) disass
+Dump of assembler code for function v_termout:
+[...]
+   0x000055555555d316 <+70>:	mov    %r12d,%esi
+   0x000055555555d319 <+73>:	mov    %rbp,%rdi
+   0x000055555555d31c <+76>:	pop    %rbp
+   0x000055555555d31d <+77>:	pop    %r12
+=> 0x000055555555d31f <+79>:	jmpq   *0x225ebb(%rip)        # 0x5555557831e0
+   0x000055555555d325 <+85>:	nopl   (%rax)
+   0x000055555555d328 <+88>:	mov    $0xa,%edi
+   0x000055555555d32d <+93>:	callq  0x55555555be70 <vt_out>
+   0x000055555555d332 <+98>:	jmp    0x55555555d304 <v_termout+52>
+End of assembler dump.
+(gdb) x/2x 0x5555557831e0
+0x5555557831e0:	0x41414141	0x41414141
+
+As you can see, I am able to control the address to branch to.  Moreover,
+on typical 64-bit little-endian there's partial ASLR (PIE) bypass due to
+ability to keep most significant 32 bits of the function pointer intact.
+
+Thus, this bug likely allows for remote code execution.
+
+In the PoC above, the decimal numbers (corresponding to the 32-bit
+pointer halves) include leading zeroes (for exactly 32 digits in each
+number) in order to completely shift out, one bit at a time, the
+previous contents of the v_termout pointer.  This works due to the
+multiplier 10 including 2 as a factor.
+
+The fix included in minicom 2.7.1 is simply:
+
+-	if (ptr < 15)
++	if (ptr < 7)
+
+(I guess a later code revision could introduce a macro for this array's
+size, or determine the array size by dividing two sizeof's.)
+
+I'd like to thank Adam Lackorzynski, CC'ed here, for producing the new
+minicom release promptly and in time for this announcement.
+
+I first found the bug during Openwall's security audit of the
+Virtuozzo 7 product, which contains derived downstream code in its
+prl-vzvncserver component.  The corresponding Virtuozzo 7 fix is:
+
+https://src.openvz.org/projects/OVZ/repos/prl-vzvncserver/commits/6d95404e75b98f36b1cc85ee23df99dcf06ca13f
+
+We would like to thank the Virtuozzo company for funding the effort.
+
+In prl-vzvncserver, the escparms[] overflow wasn't obviously exploitable
+due to different nearby variables:
+
+static int esc_s = 0;
+
+#define ESC 27
+
+static unsigned char vt_fg;             /* Standard foreground color. */
+static unsigned char vt_bg;             /* Standard background color. */
+
+static int escparms[8];         /* Cumulated escape sequence. */
+static int ptr;                 /* Index into escparms array. */
+
+static short newy1 = 0;         /* Current size of scrolling region. */
+static short newy2 = 23;
+
+but it also was clearly triggerable, as seen in an ASan-enabled build:
+
+==45204== ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000006164a0 at pc 0x40c922 bp 0x7fffffffa700 sp 0x7fffffffa6f0
+READ of size 4 at 0x0000006164a0 thread T0
+    #0 0x40c921 (/home/user/prl-vzvncserver-debug/prl_vzvncserver_app+0x40c921)
+    #1 0x403e6d (/home/user/prl-vzvncserver-debug/prl_vzvncserver_app+0x403e6d)
+    #2 0x7ffff43c8b14 (/usr/lib64/libc-2.17.so+0x21b14)
+    #3 0x4043f4 (/home/user/prl-vzvncserver-debug/prl_vzvncserver_app+0x4043f4)
+0x0000006164a0 is located 32 bytes to the left of global variable 'vt_bg (vt100.c)' (0x6164c0) of size 1
+  'vt_bg (vt100.c)' is ascii string ''
+0x0000006164a0 is located 0 bytes to the right of global variable 'escparms (vt100.c)' (0x616480) of size 32
+  'escparms (vt100.c)' is ascii string ''
+
+In VzLinux's build of prl-vzvncserver as of when this issue was
+discovered, the following variables happened to follow escparms[] and
+were close enough: esc_s, vt_fg, vt_bg.  Changing esc_s is benign - for
+valid values, it could as well be done directly (with the proper
+escapes), and the invalid values are unused.  Changing vt_fg or/and
+vt_bg might have some other ill effects, although we'd expect only out
+of bound reads, so at worst crashes.  That's because prl-vzvncserver's
+console.c defines only a 16 entry colourMap.  In LibVNCServer, that
+table appears to be used to initialize related tables with bigger
+elements, but those inherit the size of 16.  Out of bound reads from
+those tables in LibVNCServer might be triggered through having the color
+numbers above 15 written to the frameBuffer (which console.c will
+happily do once we overwrote vt_fg or/and vt_bg with such values) and
+then accessed via certain parts of LibVNCServer's code.  We did not
+actually test for these potential ill effects of overwriting vt_fg
+or/and vt_bg.  Regardless, it is inappropriate and unsafe to rely on a
+specific memory layout of a binary build, and of course the issue was
+promptly fixed.
+
+Some other issues inherited from minicom likely were exploitable in
+prl-vzvncserver - namely, incomplete validation of cursor coordinates
+in vt100.c.  In minicom itself, there's further validation in mc_*()
+functions.  In prl-vzvncserver, there was no such validation in its
+equivalent functions - and there are now more commits in the above
+repository fixing those issues (besides the commit referenced above).
+Specifically, a likely exploitable code path was triggered e.g. with:
+
+echo -ne "\033[2147483648B"
+
+but this appears to do little against minicom.(*)  In fact, I ran a
+rather extensive set of escape sequences against minicom, which
+triggered no other crashes besides the escparms[] buffer overflow
+reported here.
+
+(*) Formally speaking, the code is also triggering C's undefined
+behavior when it allows signed integers to overflow.  In practice, so
+far compilers only make use of compile-time detectable UB of this kind
+(such as to drop the UB-triggering code as an optimization, since they
+are allowed to).
+
+One change minicom could make later is switch to using unsigned types
+for escparms and coordinates.  But we'd need to carefully review all
+uses for that, in case any place relies on a value temporarily becoming
+negative and on checking for that.
+
+prl-vzvncserver was using int and switched to "unsigned short".
+This may be weird, but it actually helps avoid integer overflows in
+calculations as inputs to calculations become more limited whereas
+intermediate results get promoted to int.
+
+Besides minicom and prl-vzvncserver, I managed to identify just one
+other project reusing this code (and also containing the issues), but
+it's obscure (likely unused):
+
+https://github.com/sigflup/vt100
+
+I did not bother notifying this project in advance (putting the
+information at unjustified risk), but I intend to notify it now.
+
+For those into CVEs: CVE-2017-7467 is only for the escparms[] buffer
+overflow (in all projects reusing this code), not for other issues
+casually mentioned in here (even if some of them had higher impact on
+prl-vzvncserver).  Those other issues have no CVE IDs.
+
+Timeline:
+
+20161228 - bug found in prl-vzvncserver
+20161229 - report to Virtuozzo
+20170109 - fix committed in Virtuozzo (became part of an update later)
+20170407 - report to minicom
+20170408 - initial heads-up and CVE request via distros@vs, no detail
+20170411 - detail shared with distros@vs
+20170418 - fixed minicom release, public disclosure
+
+Alexander
