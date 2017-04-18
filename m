@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4700" "Thursday" "9" "June" "2016" "13:52:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160609175249.85CE16C03BF@smtpvmsrv1.mitre.org>" "103" "[oss-security] Re: CVE Request: ruby openssl hostname verification issue" nil nil nil "6" "2016060917:52:49" "[oss-security] Re: CVE Request: ruby openssl hostname verification issue" (number mark "U       cve-assign@m Jun  9  103/4700  " thread-indent "\"[oss-security] Re: CVE Request: ruby openssl hostname verification issue\"\n") "<20160609080613.GA3694@suse.de>" ("<20160609080613.GA3694@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["943" "Tuesday" "18" "April" "2017" "08:34:14" "-0700" "Ian Zimmerman" "itz@primate.net" "<20170418153218.2599.042D7EFA@matica.foolinux.mooo.com>" "27" "[oss-security] Re: Apache XML Graphics FOP information disclosure vulnerability" nil nil nil "4" "2017041815:34:14" "[oss-security] Re: Apache XML Graphics FOP information disclosure vulnerability" (number mark "U       itz@primate. Apr 18   27/943   " thread-indent "\"[oss-security] Re: Apache XML Graphics FOP information disclosure vulnerability\"\n") "<017201d2b81c$4defec50$e9cfc4f0$@gmail.com>" ("<017201d2b81c$4defec50$e9cfc4f0$@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21975 invoked by uid 550); 9 Jun 2016 17:53:04 -0000
+Received: (qmail 13396 invoked by uid 550); 18 Apr 2017 15:47:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,115 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21946 invoked from network); 9 Jun 2016 17:53:02 -0000
-From: cve-assign@mitre.org
-To: meissner@suse.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160609080613.GA3694@suse.de>
-Message-Id: <20160609175249.85CE16C03BF@smtpvmsrv1.mitre.org>
-Date: Thu,  9 Jun 2016 13:52:49 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: ruby openssl hostname verification issue
+Received: (qmail 3514 invoked from network); 18 Apr 2017 15:34:28 -0000
+X-Authentication-Warning: acedia.primate.net: itz set sender to itz@ahiker.mooo.com using -f
+Date: Tue, 18 Apr 2017 08:34:14 -0700
+From: Ian Zimmerman <itz@primate.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20170418153218.2599.042D7EFA@matica.foolinux.mooo.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <017201d2b81c$4defec50$e9cfc4f0$@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <017201d2b81c$4defec50$e9cfc4f0$@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] Re: Apache XML Graphics FOP information disclosure vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2017-04-18 09:18, Simon Steiner wrote:
 
-> This probably warrants a CVE:
+> CVE-2017-5661:
+>  Apache XML Graphics FOP information disclosure vulnerability
+
+[...]
+
+> Description:
+
+>  Files lying on the filesystem of the server which uses batik can be
+>  revealed to arbitrary users who send maliciously formed SVG
+>  files. The file types that can be shown depend on the user context in
+>  which the exploitable application is running. If the user is root a
+>  full compromise of the server--including confidential or sensitive
+>  files--would be possible.
 > 
-> https://github.com/ruby/openssl/issues/8
+>  XXE can also be used to attack the availability of the server via
+>  denial of service as the references within a xml document can
+>  trivially trigger an amplification attack.
 
-We are not sure exactly what issue you believe should have a CVE ID,
-There seem to be three issues that are somewhat related. Our short
-answer is "probably there shouldn't be a CVE ID - the main concern was
-that the documentation needed to be improved, and the vendor instead
-decided to change the API semantics and break one (rare) use case."
+Was this a copy and paste accident?
 
-Here's some discussion of the three issues.
-
-> VERIFY_PEER only checks the cert chain is rooted in the local
-> truststore. It does not check if the subject is valid in and of
-> itself.
-
-One might argue that this behavior should have a CVE ID because it is
-not properly documented. Some users might have guessed that
-VERIFY_PEER did validate the subject, because it is very rare for
-anyone to want to establish only that a certificate is rooted in the
-local truststore, with any arbitrary subject.
-
-Other products, such as libcurl, have a similarly named option with
-the same behavior, but with explicit documentation, e.g.,
-
-  https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html
-  "Authenticating the certificate is not enough to be sure about the
-  server. You typically also want to ensure that the server is the
-  server you mean to be talking to. Use CURLOPT_SSL_VERIFYHOST for
-  that."
-
-However, there apparently isn't an analogous OpenSSL::SSL::VERIFY_HOST
-for Ruby.
-
-Still, our initial thought is that underdocumenting
-OpenSSL::SSL::VERIFY_PEER, by itself, should not have a CVE ID. Users
-may be able to realize, possibly from their knowledge of libcurl, that
-an option called VERIFY_PEER or VERIFYPEER is typically insufficient.
-
-
-> My understanding is the ssl_socket.post_connection_check(hostname) method
-> must be called to ensure the subject is correctly verified. However,
-> communication is allowed to remote services without verifying the subject.
-
-Here, maybe the problem is a race condition. In other words, there is
-inherently a time window in which communication can occur with an
-unexpected host. Possibly, in most common scenarios in which the
-application author did understand the post_connection_check
-documentation, nothing security-relevant happens in this time window,
-e.g., a client would not be sending requests to a server before the
-post_connection_check step. However, there may be uncommon scenarios
-where something security-relevant can happen in this time window.
-
-Do you believe that these uncommon scenarios actually occur, and
-therefore this race condition should have a CVE ID?
-
-
-> I would suggest throwing an exception if VERIFY_PEER is configured and
-> I/O is attempted without first calling post_connection_check
-
-Here, you seem to be suggesting that VERIFY_PEER is never sufficient
-in any scenario. This seems to be equivalent to suggesting that the
-libcurl choice of using CURLOPT_SSL_VERIFYPEER without
-CURLOPT_SSL_VERIFYHOST is always wrong, and should not even be
-possible in the libcurl API.
-
-Do you believe that there should be a CVE ID, in general, for "the
-product needlessly offers a way to skip subject validation"?
-
-(We don't know all of the use cases for skipping subject validation.
-We think that it is typically useful only within isolated networks.
-For example, consider a scenario where the local truststore recognizes
-exactly one CA, this CA has only ever issued one certificate, and the
-certificate happens to have an arbitrary subject, but is intentionally
-used on multiple intranet HTTPS servers that are trusted by the same
-intranet clients. Here, subject validation doesn't really help anyone,
-and mandating subject validation would break this use case.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXWawKAAoJEHb/MwWLVhi2tgkP/2xjIkd96YWn0dYlo0XWD00s
-9rdCsybI7FffGljxN0eioA33cAGbZ7Xw6OHjQMfjuV6V9eprWwjFQvRKmO/5nJcI
-Wqw24KonYbeoNwYZVMcESfKMefPitEUFf2FYs1blo4PoEJx+3bOUvpnA2576f11k
-f5mBX3GIj5SoRzxr5f3gQfVW/CZfvJgeVEmb7g/I868kXOeNPR78/OIGogj96s9v
-4bOFg7nAd20uHTKScKl82Gh5VcuL4ZWaKJhVGmdC6AH/7YTLIWbFNwKWv/LhZTzl
-YxBl/FfZG6M1glRpqDUnIEGj0EEtA0EyTUxrtNrL0nVxxh6ZyowEAH8wlNsFuwuU
-KsKC7JJsrPtG+SxMXwdc10jDvUufS1XPPvm1KVOEy/MRRLWYcxlPKOGM3SD/Pchw
-qijozFYx59ORKg47NUVKOzvahan1GLoDXKaxXQZzN7ll6PwiKsFpEGBPbNQEsuBq
-gUMuws4UC1g5yD2p0RreC2X4S0EXA0MbdGo0ovIYH/C1uhJdooIQt6UvajVa9X3X
-0NFnvpJuj3q+dxWD8H0BwVvg9CQTeFslD04ZMJND1TeXJWYBMElIVgDc8Bc0IYzw
-SRjEyqX5GK9qXiR/VOW+XhHzcRkY8Rd6n+M8timCOjqIGWu9bOhVLtKovbnudM4L
-9tJEbPydeJGuvSmiEkTS
-=KqPE
------END PGP SIGNATURE-----
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign:
+http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
