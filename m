@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1297" "Tuesday" "25" "April" "2017" "18:16:08" "-0700" "Chris Douglas" "cdouglas@apache.org" "<CACO5Y4zUtzG38tkpQZDAeUdz-c69Gg4Q7fz2dLaT0ywdfWQYcA@mail.gmail.com>" "38" "[oss-security] CVE-2017-3161: Apache Hadoop NameNode XSS vulnerability" nil nil nil "4" "2017042601:16:08" "[oss-security] CVE-2017-3161: Apache Hadoop NameNode XSS vulnerability" (number mark "U       cdouglas@apa Apr 25   38/1297  " thread-indent "\"[oss-security] CVE-2017-3161: Apache Hadoop NameNode XSS vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1284" "Tuesday" "18" "April" "2017" "09:11:16" "+0100" "Simon Steiner" "simonsteiner1984@gmail.com" "<016901d2b81b$5a69da00$0f3d8e00$@gmail.com>" "77" "[oss-security] [CVE-2017-5662] Apache Batik information disclosure vulnerability" "^Cc:" nil nil "4" "2017041808:11:16" "[oss-security] [CVE-2017-5662] Apache Batik information disclosure vulnerability" (number mark "U       simonsteiner Apr 18   77/1284  " thread-indent "\"[oss-security] [CVE-2017-5662] Apache Batik information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26094 invoked by uid 550); 26 Apr 2017 02:01:54 -0000
+Received: (qmail 7946 invoked by uid 550); 18 Apr 2017 11:57:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,125 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4043 invoked from network); 26 Apr 2017 01:16:45 -0000
-X-Gm-Message-State: AN3rC/6vGV9fA1T9OOaRt36ilooT8pK+H0JOdXbcusFRJ57qPYbKLOXP
-	u5oC5wk0gND35JAW0GV3mlxK1V4dYg==
-X-Received: by 10.31.154.194 with SMTP id c185mr1479763vke.35.1493169388543;
- Tue, 25 Apr 2017 18:16:28 -0700 (PDT)
+Received: (qmail 31928 invoked from network); 18 Apr 2017 08:11:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version:thread-index
+         :content-language;
+        bh=umVauFm0m5muLkmGJqIPZ5IyqIPPzvTAi17X0uJOct0=;
+        b=TcVpDKTYGrQBZ3O+GCb71vEwf/PQrMreEBSt09sC3u26sPQfygOfp8nZTNwlWQGgaF
+         YL2QR04iIpmnjVMM7C7IxiOXdrwpK6k/PSRskO4A3Wg22e8wXSns8gQNVxXNQ67WENoJ
+         0UMhSXnm+5n+3XfNXZVIHFQlSTU7/p5AIIg6Z3E51c4HZEYVGiCtYJ4nykaEDucvl3HO
+         RhtCsWHgX2fnRRBPuyP6FtsSWfmKNeSIDd7sAEkpUAfh1e2JwjYjfTySsbgZbmmpmitD
+         hr5iovfnAZp5hNvuB6zumk5HMOtTtc0sNCOIle4PuFYJn8+jRnTbIOX8aiAyT1D8pwHm
+         27bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :thread-index:content-language;
+        bh=umVauFm0m5muLkmGJqIPZ5IyqIPPzvTAi17X0uJOct0=;
+        b=bFaTScRamEBXQlq407CkRfJ9rKf505fQDqYOOhvYvtUGso4Q1rtZevPskinXhrOLqu
+         G6m1LeWf1130S5QRZvfaXRwj3i50sPKQFbO8XjycIClkRl1r2SuD/YMiaKM8X36jV36X
+         RcnFxwizSzr0sQYKcAUe0aEosb3qKT7UiHjgMczT+geJoIVY1f7rXaHVA4cfPzrKKpfu
+         QAw30ZQq67LVDUU4XH+v/DX7d8XK+ZxuwezU9HvA7c+Ci+bIsg6vHiNPp4IrjYQjewcr
+         SW+czp0m2jqXSJ/ja7SKTgGxhU6+ChSmRb/onLUH4Ht5dyY7wJFLSeeZI9j4XNyQ2mcd
+         omDg==
+X-Gm-Message-State: AN3rC/5tGNzCJmzEFlYD/zVKKBZLXyiVrskXF1+TR0POc8zMtLZHtsG6
+	Pq2xMbPg7JDEjQ==
+X-Received: by 10.223.157.37 with SMTP id k37mr22465069wre.156.1492503077123;
+        Tue, 18 Apr 2017 01:11:17 -0700 (PDT)
+Message-ID: <016901d2b81b$5a69da00$0f3d8e00$@gmail.com>
 MIME-Version: 1.0
-From: Chris Douglas <cdouglas@apache.org>
-Date: Tue, 25 Apr 2017 18:16:08 -0700
-X-Gmail-Original-Message-ID: <CACO5Y4zUtzG38tkpQZDAeUdz-c69Gg4Q7fz2dLaT0ywdfWQYcA@mail.gmail.com>
-Message-ID: <CACO5Y4zUtzG38tkpQZDAeUdz-c69Gg4Q7fz2dLaT0ywdfWQYcA@mail.gmail.com>
-To: user@hadoop.apache.org, 
-	"common-dev@hadoop.apache.org" <common-dev@hadoop.apache.org>, 
-	"general@hadoop.apache.org" <general@hadoop.apache.org>, "security@apache.org" <security@apache.org>, 
-	full-disclosure@lists.grok.org.uk, bugtraq <bugtraq@securityfocus.com>, 
-	oss-security@lists.openwall.com, 
-	"<security@hadoop.apache.org>" <security@hadoop.apache.org>
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE-2017-3161: Apache Hadoop NameNode XSS vulnerability
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_016A_01D2B823.BC308BF0"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdK4Gw57N+QKqTWxTd6mClBP6wrOpg==
+Content-Language: en-gb
+Cc: "'Pierre Ernst'" <pernst@salesforce.com>
+Date: Tue, 18 Apr 2017 09:11:16 +0100
+From: "Simon Steiner" <simonsteiner1984@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [CVE-2017-5662] Apache Batik information disclosure vulnerability
+To: <general@xmlgraphics.apache.org>,
+	<batik-users@xmlgraphics.apache.org>,
+	<batik-dev@xmlgraphics.apache.org>,
+	<oss-security@lists.openwall.com>,
+	<bugtraq@securityfocus.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+------=_NextPart_000_016A_01D2B823.BC308BF0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-CVE-2017-3161: Apache Hadoop NameNode XSS vulnerability
+CVE-2017-5662:
 
-Severity: Important
+        Apache Batik information disclosure vulnerability
 
-Vendor: The Apache Software Foundation
+ 
 
-Versions affected: Hadoop 2.6.x and earlier
+Severity:
+
+        Medium
+
+ 
+
+Vendor:
+
+        The Apache Software Foundation
+
+ 
+
+Versions Affected:
+
+        Batik 1.0 - 1.8
+
+ 
 
 Description:
-The HDFS web UI is vulnerable to a cross-site scripting (XSS) attack
-through an unescaped query parameter.
+
+        Files lying on the filesystem of the server which uses batik can
+
+        be revealed to arbitrary users who send maliciously formed SVG
+
+        files. The file types that can be shown depend on the user context
+
+        in which the exploitable application is running. If the user is root
+
+        a full compromise of the server--including confidential or sensitive
+
+        files--would be possible.
+
+ 
+
+        XXE can also be used to attack the availability of the server
+
+        via denial of service as the references within a xml document
+
+        can trivially trigger an amplification attack.
+
+ 
 
 Mitigation:
-Users of Apache Hadoop 2.6.x and earlier should upgrade to Hadoop
-2.7.0 or later.
+
+        Users should upgrade to Batik 1.9+
+
+ 
 
 Credit:
-This issue was discovered by Sunil Yadav.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCgAGBQJY//OZAAoJEPrQXCrFJpS4YEIP/RfhNS+MHoyc+Qgj2DXlw4NK
-yH8RVh2Kg2qnIkl/gaNromzYuJn7EEgBuyeXCkEUax4F2G0zUuVEImxVNPlLGVp3
-gvj4tAmpCQ6/JcaklI5p8C5LV1Qe17EnHXZ34eFKXTTej3NyE01o6D4mDYW9pmHG
-8JGjZ1FtZpP3YTvqiDrSbXTsSx5bY9uJOaqPrkQAdmTOWRrtnKHF/nS39vrBRJCL
-J/gEb3k8/UVco5gOtqFcWSXyNPgZofYCfaGgyWH2wauH8ngD6kEI5Yx1fX5CVDeU
-Kpr+mJxNGNqICI8+L84tCuHMXO4Ie0ec4X87VzWX1Bf9FGMfAm8UKapsw69qCJrk
-Pszul+d1Wq1gEcOUccbnEuMP0JfOuzer8GQ9FohCRUO26C6DFhN7sgMUFRUEJeia
-ElTiolEh9jv+2NssmNkgZH8eK6fKrK5MZR8TankmOUiw++nxJjqCRP/D6aGuEkYR
-g7zuS3KBK5G8EmLdT/DTRuakWIsKGDkVic0s/NMrYx+fV3DGUe/2hB4ejXfTHQnU
-85fYiyR7l8F4YmVqmCf9fb1FYclJ/J/9QuBHw0X523EKUH+sePOFjBzdiF+Apazp
-6I5iaPHlnNS50dCSksMs/hlu3GjcU5ZMm9xG+yBGYN8Ex5sEXKcqVuvw7n6Ju4OH
-AZbRxaHoIU5p8U0S237o
-=87hK
------END PGP SIGNATURE-----
+        This issue was independently reported by Lars Krapf of Adobe and
+Pierre Ernst at Salesforce.
+
+ 
+
+References:
+
+        http://xmlgraphics.apache.org/security.html
+
+ 
+
+The Apache XML Graphics team.
+
+
+------=_NextPart_000_016A_01D2B823.BC308BF0--
+
