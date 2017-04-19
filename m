@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["851" "Tuesday" "31" "August" "2021" "17:37:55" "+0200" "Daniel Bevenius" "dbeveniu@redhat.com" nil "26" "[oss-security] Fwd: Node.js security updates for versions 12.x, and 14.x releases lines, August 31 2021" nil nil nil "8" nil nil (number mark "U       dbeveniu@red Aug 31   26/851   " thread-indent "\"[oss-security] Fwd: Node.js security updates for versions 12.x, and 14.x releases lines, August 31 2021\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Fwd: Node.js security updates for versions 12.x, and 14.x releases lines, August 31 2021" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["797" "Wednesday" "19" "April" "2017" "15:15:24" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1704191512410.20535@wniryva>" "26" "[oss-security] CVE-2017-7718 Qemu: display: cirrus: OOB read access issue" nil nil nil "4" "2017041909:45:24" "[oss-security] CVE-2017-7718 Qemu: display: cirrus: OOB read access issue" (number mark "U       ppandit@redh Apr 19   26/797   " thread-indent "\"[oss-security] CVE-2017-7718 Qemu: display: cirrus: OOB read access issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5162 invoked by uid 550); 31 Aug 2021 16:17:19 -0000
+Received: (qmail 28109 invoked by uid 550); 19 Apr 2017 09:45:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,74 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20471 invoked from network); 31 Aug 2021 15:38:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1630424290;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xb+68TrOHH0fSahAnGN2uTb+4JH9WV++RUxg1luNxec=;
-	b=bPkIZjoX+mVW8Q3zVwib+clwroJQVf8HPQApzBTy2Mzi6ajkrzIlQwGrI1nWg5YbhvwY8m
-	SaJ+Q2/86TU6vsebiZGJi6GKAY+hIybfFgld3m20lw5LeMXN6cHtHYp+S5bUFPYNIFqWL/
-	pUUOAlWDEbBQaMUetRZC2Q77l9CadHw=
-X-MC-Unique: DmbEl13yMy-Lbt-OxZdgVQ-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=xb+68TrOHH0fSahAnGN2uTb+4JH9WV++RUxg1luNxec=;
-        b=rsxKPR3hCytIP2KrymT17u+c3eztJeENGruWSWeV5M1zVQadwSB6wdDOK4zVYRGcBx
-         zF7z+lqLkoJ92wq7u9zfB5oMSsHVd6CyShhpCChk8EIVCvOb5FH8LDgMy4xgQdWNBQ9B
-         +hcCY3xllysTUHfeScZQgZ2VTe40BLVI35DCB9dVlWIpCkjpa++oRksPmQykQArJNRIP
-         dWLj4uttEXot4rqI7IzX/CjFG//eKo+NFM1l2gfcASbrPer2gCoSNrDs+E3u749aOH91
-         XvEwcESWwJ1t1BSVCpUoIvkjuMRFtsC5wcg6b/Ob1trSGOsfiztDd7ApH6zqMr9y8GWp
-         SP7A==
-X-Gm-Message-State: AOAM532NIV+3pggnlvxjok5DJ97MfP+vnA/LOH29uVzwHtDKxP0QxO+o
-	119lWXpQ+WhgRLpjiJeNHsk717MW3gtbYC/2m1qtDg9jLKLMz9kqCpGLc+yJX1wkVs2GS8d2x/z
-	+t6BYgxVk8TGEOE1/G180GU4380DZfbBkcqFmq5w039bE
-X-Received: by 2002:a17:906:ce24:: with SMTP id sd4mr31204108ejb.329.1630424286374;
-        Tue, 31 Aug 2021 08:38:06 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxfYLjeF22KveZdnTl1LRrI/tK/Sr4xH1OfTqLYsaHvLoZaJu/NZ4U9Qn6F+J4VN0jd1VSgtZp9vFRUJbhQh9s=
-X-Received: by 2002:a17:906:ce24:: with SMTP id sd4mr31204090ejb.329.1630424286126;
- Tue, 31 Aug 2021 08:38:06 -0700 (PDT)
+Received: (qmail 28085 invoked from network); 19 Apr 2017 09:45:41 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 87C394E341
+Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 87C394E341
+Date: Wed, 19 Apr 2017 15:15:24 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Jiangxin <jiangxin1@huawei.com>
+Message-ID: <alpine.LFD.2.20.1704191512410.20535@wniryva>
 MIME-Version: 1.0
-References: <33aabbe7-ef8d-49ef-b5b1-fa1bfd40d07bn@googlegroups.com> <d2b6592b-c7e0-43ed-8f14-9eb07b8077ecn@googlegroups.com>
-In-Reply-To: <d2b6592b-c7e0-43ed-8f14-9eb07b8077ecn@googlegroups.com>
-From: Daniel Bevenius <dbeveniu@redhat.com>
-Date: Tue, 31 Aug 2021 17:37:55 +0200
-Message-ID: <CA+4-CWyqf=PE5S6pYVctCUoyq8rNi+odqg2YnS7aF5ADbu+kTw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=dbeveniu@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="0000000000006888ed05cadcbc08"
-Subject: [oss-security] Fwd: Node.js security updates for versions 12.x, and 14.x releases
- lines, August 31 2021
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Wed, 19 Apr 2017 09:45:28 +0000 (UTC)
+Subject: [oss-security] CVE-2017-7718 Qemu: display: cirrus: OOB read access issue
 
---0000000000006888ed05cadcbc08
-Content-Type: text/plain; charset="UTF-8"
+   Hello,
 
----------- Forwarded message ---------
-From: Daniel Bevenius <dbeveniu@redhat.com>
-Date: Tue, Aug 31, 2021 at 5:36 PM
-Subject: Re: Node.js security updates for versions 12.x, and 14.x releases
-lines, August 31 2021
-To: nodejs-sec <nodejs-sec@googlegroups.com>
+Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
+vulnerable to an out-of-bounds access issue. It could occur while copying VGA 
+data via bitblt functions cirrus_bitblt_rop_fwd_transp_ and/or 
+cirrus_bitblt_rop_fwd_.
 
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-The Node.js project has now released new versions of v14, and v12 release
-lines.
-For more information see:
-https://nodejs.org/en/blog/vulnerability/aug-2021-security-releases2/
+Upstream patch
+--------------
+   -> http://git.qemu-project.org/?p=qemu.git;a=commitdiff;h=215902d7b6fb50c6fc216fc74f770858278ed904
 
-On Friday, August 27, 2021 at 7:58:18 AM UTC+2 Daniel Bevenius wrote:
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1443441
 
-> The Node.js project will release new versions of 12.x, and 14.x releases
-> lines on or shortly after Tuesday August 31th, 2021.
-> For more information see:
-> https://nodejs.org/en/blog/vulnerability/aug-2021-security-releases2
->
+This issue was reported by Jiangxin of PSIRT Huawei Inc.
 
---0000000000006888ed05cadcbc08--
+'CVE-2017-7718' assigned via -> http://cveform.mitre.org/
 
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
