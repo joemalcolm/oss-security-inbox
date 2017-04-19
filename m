@@ -1,4 +1,9 @@
-Received: (qmail 25604 invoked by uid 550); 15 May 2022 16:48:40 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2665" "Wednesday" "19" "April" "2017" "08:07:31" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1704190806280.2937@tvnag.unkk.fr>" "90" "[oss-security] [SECURITY ADVISORY] curl: TLS session resumption client cert bypass (again)" nil nil nil "4" "2017041906:07:31" "[oss-security] [SECURITY ADVISORY] curl: TLS session resumption client cert bypass (again)" (number mark "U       daniel@haxx. Apr 19   90/2665  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: TLS session resumption client cert bypass (again)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21960 invoked by uid 550); 19 Apr 2017 06:07:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,221 +12,110 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21536 invoked from network); 15 May 2022 16:42:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudlinux.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=1Ih9BzT2eu+ZAonQAujG6zPlBLM9nuJps/UpPLk7zrg=;
-        b=TGNDZtA7dUXQeCor2V6W6wZt6iYGaf37y7jHe0u6DTp7SgvoDp6kGqHMdshAHtMhZj
-         io/V6p7fW4+7Ty43N2M9jO3O+n84N8SbkAs8ycqlnNPZKn3Zij0zOeqy5wc414J0SiCf
-         FCL0Job1LmM+EPC54OAdQHGoLfZ/gnJVigVj993NT9Lo5/xzyvfQKmf3H737QZKDi5i1
-         ZUiAnudnOa1UsWGn/8dkvUuYzlaM/+QnPgsGjJNSuqhn5LCS/U3dIyamapTzjZNLt7lz
-         PEM212DhfKiNErMqp5faZKN/utr4SqwvvQginbq0XaN7IMSUd0ocN9OcmpXUmun+wVjA
-         cKkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=1Ih9BzT2eu+ZAonQAujG6zPlBLM9nuJps/UpPLk7zrg=;
-        b=27+dxUNAOZrkmk2fNT5DBr76Gbi2dRGBPtA/qsG2vk/vOdWpbTXRnq1YGExbn+jtBl
-         uiD7zkTFHxjo8iWddx4Tt+sEnRu6mB+uvyAkMDYywl8OkLFT6dSToSaPbI+sL23fS9NZ
-         XwDOVBbXhxy2epjQDdcCWAvuQfKMPS+bY+p89nBIybhNRau9HXRPLNowUjuIWL3nKUoS
-         6idluY0eEHTuWy63GhWo6lQrcNFMMWNzUPvrriTnDByw5XSGTX+/2XXaB2U3CxNV+ycx
-         E7nkVcqUa8WyjY0ZnwAW7caeouxCtq3QnkD11gKLg5J10DhjP5kn0j5Y45KQXshh1ifU
-         OIbg==
-X-Gm-Message-State: AOAM530Q8dfIG7GN8566naqEqk0FdxfLDFGdyL2VZ8VzML15b5j3AA+8
-	mPLshxkJQtLPafhQ0mJCjCLR6fN0vOIKUJKA64iyYJDFixk=
-X-Google-Smtp-Source: ABdhPJwe8DoImGrNzPBI67za5lDQrf7HZEyzND43SOP5Ig1Nr9J+5Ajx48UrZFOXCJwjjEysc3Q9eWWo2ovD+lxZ0k4=
-X-Received: by 2002:a05:690c:446:b0:2fe:f680:3462 with SMTP id
- bj6-20020a05690c044600b002fef6803462mr1543947ywb.468.1652632932760; Sun, 15
- May 2022 09:42:12 -0700 (PDT)
+Received: (qmail 21919 invoked from network); 19 Apr 2017 06:07:44 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 19 Apr 2017 08:07:31 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1704190806280.2937@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-References: <20220515162740.GA20526@openwall.com>
-In-Reply-To: <20220515162740.GA20526@openwall.com>
-From: Igor Seletskiy <i@cloudlinux.com>
-Date: Sun, 15 May 2022 09:41:37 -0700
-Message-ID: <CA+-XxSHpfXpN5drp__JtcyUuvzyatc8u8+FTsrX6uExRDOdDMg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000e6db2405df0f969e"
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: TLS session resumption client cert bypass
+ (again)
 
---000000000000e6db2405df0f969e
-Content-Type: text/plain; charset="UTF-8"
+TLS session resumption client cert bypass (again)
+=========================================
 
-My vote would be for #1
-Linux kernel is a huge ecosystem in its own right with many vested
-players.  They arrived at their way of handling security issues, and
-overall doing a good job. It will be really hard to change that
-ecosystem from the outside. This would make #2 very similar to #3 in many
-cases.
+Project curl Security Advisory, April 19th 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_20170419.html)
 
-On the other hand, the linux-distros mailing list is very valuable for the
-participating distros (at least it is very valuable for CloudLinux OS), and
-losing it as a resource would be dreadful for us. So would be losing only
-part of the information related to the Linux kernel. As such I don't like
-either #3 or #4.
+VULNERABILITY
+-------------
 
-I also don't like #0, as it seems we have a fairly concrete case to deal
-with, and it can be dealt with explicitly using #1.
+libcurl would attempt to resume a TLS session even if the client certificate
+had changed. That is unacceptable since a server by specification is allowed
+to skip the client certificate check on resume, and may instead use the old
+identity which was established by the previous certificate (or no
+certificate).
 
-Regards,
-Igor Seletskiy |  CEO
-CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
-<https://kernelcare.com>   |   Imunify360 <http://imunify360.com/> |
-AlmaLinux <https://almalinux.org>
+libcurl supports by default the use of TLS session id/ticket to resume
+previous TLS sessions to speed up subsequent TLS handshakes. They are used
+when for any reason an existing TLS connection couldn't be kept alive to make
+the next handshake faster.
 
+This flaw is a regression and identical to
+[CVE-2016-5419](https://curl.haxx.se/docs/adv_20160803A.html) reported on
+August 3rd 2016, but affecting a different version range.
 
+We are not aware of any exploit of this flaw.
 
-On Sun, May 15, 2022 at 9:28 AM Solar Designer <solar@openwall.com> wrote:
+INFO
+----
 
-> Hi,
->
-> This is a lengthy and belated message, yet I think is something we need
-> to discuss in here.
->
-> Context:
->
-> (linux-)distros list policy is generally to treat as public issues for
-> which a fix is public.  For issues that haven't yet been brought to
-> (linux-)distros, this means they shouldn't be - and instead should be
-> brought to oss-security right away.  For issues that have been on
-> (linux-)distros, this means an oss-security posting is to be made as
-> soon as a fix is made public.
->
-> This works well for most distros (where releasing a package update
-> generally implies documenting the update's known security relevance at
-> the same time) and for (linux-)distros list interactions with most
-> projects, with the major exception being the Linux kernel.
->
-> For Linux kernel maintainers, it is customary to post a fix technically
-> publicly but without indication of its security relevance, then work on
-> getting it merged into the various trees, and expect that its security
-> relevance wouldn't be clearly indicated publicly for a while.
->
-> I didn't keep track of statistics, but my impression was that in the
-> last few years for issues handled with linux-distros involved, the
-> maintainers usually reluctantly accepted linux-distros' way of handling
-> them - didn't insist that the reporter would post e.g. to netdev before
-> a "final" patch is ready, agreed on and honored coordinated release
-> dates, and didn't object to linux-distros members asking the reporter to
-> post about the issue to oss-security on the same day that a posting to a
-> Linux kernel list is made.  I was grateful for that, especially knowing
-> that some of this is an inconvenience/overhead for the maintainers.
->
-> The handling was still often problematic (somehow way worse than for
-> other projects, in my impression), but that appeared to be because
-> discoverers/reporters were not familiar with the procedure and with our
-> expectations, or/and because our policy and thus expectations were
-> counter-intuitive for them (I admit this could mean that we were wrong
-> in having such unexpected policy).  This also suggested that many didn't
-> fully read or didn't understand our published policy before posting to
-> linux-distros, which I tried to address by adding clarifications, some
-> emphasized in bold and eventually even in ALL CAPS (not as shouting, but
-> to make these parts less likely overlooked).
->
-> Somehow it seems to have gotten worse this year.  In handling of an
-> issue in February, a reporter planned to ignore our policy after having
-> already shared an issue with linux-distros, and a list member from a
-> major distro tried to enforce the policy.  In discussion that followed,
-> a kernel maintainer (someone I have a lot of respect for, and who I
-> think is also on the kernel security team?) said he had directed the
-> reporter to share the issue with linux-distros despite of the reporter's
-> explicit concerns and non-acceptance of the policy, expecting that
-> linux-distros members would be "reasonable" and won't actually enforce
-> the "unreasonable" policy (I don't recall the exact wording used, but
-> that's the gist of it).  So it was not a case of something unexpected
-> being overlooked by someone new - it was a case of the policy being
-> deliberately violated by someone very experienced.  (Moreover, we also
-> got accused of shouting with the ALL CAPS.)
->
-> linux-distros members and Linux kernel security team didn't arrive at an
-> agreement on how to handle further issues, planning to bring this up for
-> discussion on oss-security - which I am finally doing now.  Meanwhile,
-> the handling was hectic - indeed, people felt discouraged from enforcing
-> the policy.  Another kernel maintainer also mentioned he's no longer
-> directing people to linux-distros (which I find more reasonable than
-> coercing/expecting linux-distros not to enforce a published policy).
->
-> Question:
->
-> Should we address this incompatibility in desired handling of issues by
-> the distros vs. kernel teams, and how?
->
-> Options:
->
-> Off the top of my head, we can do one of:
->
-> 0. Do nothing specific - let things work or fail on their own.
->
-> 1. Adjust linux-distros policy to allow "embargoes" on publicly fixed
-> Linux kernel issues.  (Only for Linux kernel, not for other projects.)
->
-> However, besides not posting to oss-security this probably means also
-> not releasing distro kernel updates until the "embargo" is over (when
-> the changes hit a stable tree maybe?), thus exposing most Linux users to
-> vulnerabilities that some attackers can infer from Linux kernel mailing
-> lists and git commits.
->
-> The current policy:
->
->
-> https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
->
-> already includes an exception in:
->
-> "Please note that in case a fix for an issue is already in a publicly
-> accessible source code repository, we generally consider the issue
-> public (and thus you should post to oss-security right away, not report
-> the issue to (linux-)distros as we'd merely redirect you to oss-security
-> anyway and insist that you make the required posting ASAP).  There can
-> be occasional (rare) exceptions to this, such as if the publicly
-> accessible fix doesn't look like it's for a security issue (e.g., if the
-> corresponding changes were initially made for unrelated reasons and were
-> only later realized to have fixed a non-public security issue) and not
-> revealing this publicly right away is somehow desirable.  You'd have to
-> have very sound reasoning to claim an exception like this and be
-> prepared to lose your argument and if so to post to oss-security ASAP
-> anyway."
->
-> This currently talks about fixes that are already public at the time of
-> reporting to (linux-)distros, it requires "very sound reasoning", and it
-> allows (linux-)distros to insist that the issue be made public ASAP.
->
-> In my understanding, the Linux kernel folks want an exception like this
-> also for publicly fixing issues already being handled with linux-distros
-> involved, and to have the exception granted unconditionally with no way
-> for linux-distros not to agree to it in a given case.  (Please correct
-> me if I misunderstand.)
->
-> 2. Strictly enforce the policy as it is - and be in conflict with Linux
-> kernel security team, and handle fewer issues via linux-distros.
->
-> As a sub-option, also suggest that if a reporter or/and upstream does
-> not accept the policy, they can nevertheless use the list to establish
-> direct communication with interested distros - post a vague message like
-> "I found a [type, impact] vulnerability in the Linux kernel [versions,
-> subsystem], but I don't accept the list policy - please contact me
-> directly if you'd like to receive the details on my terms anyway."
-> Maybe with or without the clarifications I put in square brackets there.
->
-> 3. Ask that Linux kernel issues not be reported to linux-distros at all.
-> This is unnecessarily limiting compared to option 2 above, but maybe not
-> so conflicting (just not using this specific medium for communication).
-> However, I think it won't work consistently - it would be too
-> unexpected by many (indeed, out of context it sounds plain ridiculous),
-> and linux-distros is referenced in older Linux kernel release trees.
-> More importantly, both teams actually want to communicate on issues
-> somewhere, and there isn't a good alternative currently.
->
-> 4. Shut down the list.  (What about the non-Linux distros list, then?)
-> I need to migrate the setup soon and ideally also update it later, so
-> shutting it down is as simple as not putting more effort into it.  It's
-> been around for 11 years.
->
-> I don't like any of these options.  Any other ideas?  Any ways to make
-> option 1 more reasonable?
->
-> Alexander
->
+This flaw also affects the curl command line tool.
 
---000000000000e6db2405df0f969e--
+For version 7.52.0, we rearranged a lot of TLS code to bring support for HTTPS
+proxies, which unfortunately made us accidentally bring this old flaw back!
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-7468 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw is relevant for all versions of curl and libcurl that support TLS
+and client certificates.
+
+- Affected versions: curl 7.52.0 to and including 7.53.1
+- Not affected versions: curl < 7.52.0 and >= 7.54.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+TLS session resumption is disabled when a client certificate is used so that a
+subsequent connection attempt to the same server cannot risk getting a
+previously authenticated session resumed.
+
+A [patch for CVE-2017-7468](https://curl.haxx.se/CVE-2017-7468.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.54.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Set `CURLOPT_SSL_SESSIONID_CACHE` to 0L when using client certificates
+
+TIME LINE
+---------
+
+It was [first reported to the curl
+project](https://github.com/curl/curl/issues/1341) on March 21, 2017.  We
+contacted distros@openwall on April 10.
+
+libcurl 7.54.0 was released on April 19 2017, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by lijian996@users.noreply.github.com. Patch by Ray Satiro.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
