@@ -1,93 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/30/1
-Message-ID: <20170130012137.GA20854@jasmine>
-Date: Sun, 29 Jan 2017 20:21:37 -0500
-From: Leo Famulari <leo@...ulari.name>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: FW: [DSA 3775-1] tcpdump security update]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/19/4
+Message-ID: <alpine.LFD.2.20.1704191512410.20535@wniryva>
+Date: Wed, 19 Apr 2017 15:15:24 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Jiangxin <jiangxin1@...wei.com>
+Subject: CVE-2017-7718 Qemu: display: cirrus: OOB read access issue
 Content-Type: text/plain; charset=utf-8
 
-I'm forwarding a Debian security advisory regarding tcpdump.
+   Hello,
 
-The reason that I'm forwarding it is that I'm unable to find an upstream
-source for this new release, 4.9.0.
+Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
+vulnerable to an out-of-bounds access issue. It could occur while copying VGA 
+data via bitblt functions cirrus_bitblt_rop_fwd_transp_ and/or 
+cirrus_bitblt_rop_fwd_.
 
-It doesn't appear on tcpdump web page nor has it been tagged in their
-public Git repo:
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-http://www.tcpdump.org/#latest-release
-https://github.com/the-tcpdump-group/tcpdump/tags
+Upstream patch
+--------------
+   -> http://git.qemu-project.org/?p=qemu.git;a=commitdiff;h=215902d7b6fb50c6fc216fc74f770858278ed904
 
-Can anyone provide some insight?
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1443441
 
------ Forwarded message from Moritz Muehlenhoff <jmm@...ian.org> -----
+This issue was reported by Jiangxin of PSIRT Huawei Inc.
 
-Date: Sun, 29 Jan 2017 18:24:15 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: debian-security-announce@...ts.debian.org
-Subject: [SECURITY] [DSA 3775-1] tcpdump security update
-User-Agent: NeoMutt/20161126 (1.7.1)
+'CVE-2017-7718' assigned via -> http://cveform.mitre.org/
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-- -------------------------------------------------------------------------
-Debian Security Advisory DSA-3775-1                   security@...ian.org
-https://www.debian.org/security/                       Moritz Muehlenhoff
-January 29, 2017                      https://www.debian.org/security/faq
-- -------------------------------------------------------------------------
-
-Package        : tcpdump
-CVE ID         : CVE-2016-7922 CVE-2016-7923 CVE-2016-7924 CVE-2016-7925 
-                 CVE-2016-7926 CVE-2016-7927 CVE-2016-7928 CVE-2016-7929 
-                 CVE-2016-7930 CVE-2016-7931 CVE-2016-7932 CVE-2016-7933 
-                 CVE-2016-7934 CVE-2016-7935 CVE-2016-7936 CVE-2016-7937 
-                 CVE-2016-7938 CVE-2016-7939 CVE-2016-7940 CVE-2016-7973 
-                 CVE-2016-7974 CVE-2016-7975 CVE-2016-7983 CVE-2016-7984 
-                 CVE-2016-7985 CVE-2016-7986 CVE-2016-7992 CVE-2016-7993 
-                 CVE-2016-8574 CVE-2016-8575 CVE-2017-5202 CVE-2017-5203 
-                 CVE-2017-5204 CVE-2017-5205 CVE-2017-5341 CVE-2017-5342 
-                 CVE-2017-5482 CVE-2017-5483 CVE-2017-5484 CVE-2017-5485 
-                 CVE-2017-5486
-
-Multiple vulnerabilities have been discovered in tcpdump, a command-line
-network traffic analyzer. These vulnerabilities might result in denial
-of service or the execution of arbitrary code.
-
-For the stable distribution (jessie), these problems have been fixed in
-version 4.9.0-1~deb8u1.
-
-For the testing distribution (stretch), these problems have been fixed
-in version 4.9.0-1.
-
-For the unstable distribution (sid), these problems have been fixed in
-version 4.9.0-1.
-
-We recommend that you upgrade your tcpdump packages.
-
-Further information about Debian Security Advisories, how to apply
-these updates to your system and frequently asked questions can be
-found at: https://www.debian.org/security/
-
-Mailing list: debian-security-announce@...ts.debian.org
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEtuYvPRKsOElcDakFEMKTtsN8TjYFAliOJGUACgkQEMKTtsN8
-TjY54w//TQtKeoBF3uzCtMTKExAzKCZKkVnTLkFKu0Ybcr6ooTQ+Vyy81t0WlHa7
-L4i31RavlQerBK3euGLhg679Bcv6Wrtgc1dC6caaDQTWF3+IWrZ/KO3LHJdgLMoj
-y10zBMLBdr2rTB4cItXCYcCkzXWGGoDjFyAf9h61O6SAHa9qZthGXCzOY7G0eQfX
-GCN7LW2rY+H3NuUo0UYVhiru9poflehxArdQnoeZGU//8uZ5qaD2XeUILQI+gOo8
-rwBnYpF7YvrrFGaleVrHgXuLN6t/7HOkMxaIQtn9zmigZfWkOUjPGOAkn8xLKhk3
-zgRBT7n+pd+N82TK4B6+RhDilY9Ec2btJ5EDHIJAnmVAATwoULPtgzQwLSrziN9a
-DCsusuWxPFcvmyGMy4ooEWpKsZ2MgXusR/As84g5ZeWl9qOuZ9U0aeJtThhl37zA
-wNH+KIgWEUoQNmoVrOCUchtbiKeHEbIDUWR1PNpgl3Cb7Fbp3be3AFPJiiTE/r+7
-UUmtFXdWKGNK6nzLV0yo4TWDXyNLJMu+SP6JiZNsbkYntmUgqFw0iotWNoqgajPQ
-U4cmAeDMJMDFTU6Or1Tam+Njv71mIZNGCsplZa2gAHHsmXHeqYiI+vEp5ZljFOkY
-SgoWuuERDtFv4FGL5oBxP/Z+SYOrt8ME+rRqsLUWfgXD+tDCE6I=
-=sV/2
------END PGP SIGNATURE-----
-
-
------ End forwarded message -----
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
