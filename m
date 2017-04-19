@@ -1,76 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/5
-Message-ID: <3334481.1M2hnby0EQ@blackgate>
-Date: Wed, 01 Feb 2017 10:18:51 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/19/3
+Message-ID: <20170419092124.GA9609@suse.de>
+Date: Wed, 19 Apr 2017 11:21:24 +0200
+From: Sebastian Krahmer <krahmer@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)
+Cc: cve-assign@...re.org
+Subject: CVE-2017-7874 versus CVE-2009-1185 ?
 Content-Type: text/plain; charset=utf-8
 
-Description:
-pax-utils is a set of tools that check files for security relevant properties.
+Hi
 
-A fuzz on scanelf exposed an out-of bound read. It was reported to vapier 
-which fixed the issue immediately.
-Unfortunately I can’t get a symbolized ASan stacktrace, so I will show only 
-the useful part of both asan and gdb.
 
-# scanelf -s '*' -axetrnibSDIYZB $FILE
-==32758==ERROR: AddressSanitizer: unknown-crash on address 0x7f8f9fa252dc at 
-pc 0x00000053c6a0 bp 0x7ffe93a19910 sp 0x7ffe93a19908 
-READ of size 4 at 0x7f8f9fa252dc thread T0                                                                                                                                                                                                                                      
-   #0 0x53c69f  (/usr/bin/scanelf+0x53c69f) 
-   #1 0x51d649  (/usr/bin/scanelf+0x51d649) 
-   #2 0x51b97e  (/usr/bin/scanelf+0x51b97e) 
-   #3 0x51ad43  (/usr/bin/scanelf+0x51ad43) 
-   #4 0x51922e  (/usr/bin/scanelf+0x51922e) 
-   #5 0x7f8f9e7fd61f  (/lib64/libc.so.6+0x2061f) 
-   #6 0x41a008  (/usr/bin/scanelf+0x41a008) 
+I stumbled across https://twitter.com/info_dox/status/854372066228932609
+that is curious about an udev+kernel exploit
+(https://packetstormsecurity.com/files/142152/Linux-Kernel-4.8.0-udev-232-Privilege-Escalation.html)
 
-(gdb) bt
-#8  0x000000000053c6a0 in scanelf_file_get_symtabs (elf=, sym=0x7fffffffcc00, 
-str=0x7fffffffcc20) at scanelf.c:357
-#9  0x000000000051d64a in scanelf_file_sym (elf=0x60700000de60, found_sym=) at 
-scanelf.c:1327
-#10 scanelf_elfobj (elf=) at scanelf.c:1547
-#11 0x000000000051b97f in scanelf_elf (filename=0x7fffffffe50e "1.crashes", 
-fd=, len=) at scanelf.c:1612
-#12 scanelf_fileat (dir_fd=, filename=, st_cache=) at scanelf.c:1679
-#13 0x000000000051ad44 in scanelf_dirat (dir_fd=, path=) at scanelf.c:1713
-#14 0x000000000051922f in scanelf_dir (path=) at scanelf.c:1763
-#15 parseargs (argc=5, argv=0x7fffffffe258) at scanelf.c:2273
-#16 main (argc=5, argv=) at scanelf.c:2361
+which claims to exploit a missing sender-check within udev. That makes
+me wonder, as kernel 4.8.0 (and even earlier) no longer allow users
+to send NETLINK_KOBJECT_UEVENT messages. Our testcases fail,
+as they should:
 
-Affected version:
-1.2
+https://bugzilla.suse.com/show_bug.cgi?id=1034330
 
-Fixed version:
-1.2.1
 
-Commit fix:
-https://github.com/gentoo/pax-utils/commit/95e5489534ac9e9324c5096286899b688e19ae00
+However, MITRE apparently assigned a valid CVE for it:
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7874
 
-CVE:
-N/A
+So either we miss some weird corner case or the CVE is invalid
+and should be withdrawn?
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00131-pax-utils-scanelf-oobread-scanelf_file_get_symtabs
-
-Timeline:
-2017-01-23: bug discovered and reported to upstream
-2017-01-24: upstream realeased a patch and 1.2.1
-2017-02-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-I’d suggest to go to 1.2.2 because of a functionality bug(s) in 1.2.1
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/01/pax-utils-scanelf-out-of-bounds-read-in-scanelf_file_get_symtabs-scanelf-c
+Sebastian
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
+
