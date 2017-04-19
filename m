@@ -1,18 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/31/2
-Message-ID: <20170531084224.GG4590@scully.more-magic.net>
-Date: Wed, 31 May 2017 10:42:24 +0200
-From: Peter Bex <peter@...e-magic.net>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request form not working
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/19/5
+Message-ID: <20170419112247.GC19075@suse.de>
+Date: Wed, 19 Apr 2017 13:22:47 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE-2017-7874 versus CVE-2009-1185 ?
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Wed, Apr 19, 2017 at 11:21:24AM +0200, Sebastian Krahmer wrote:
+> Hi
+> 
+> 
+> I stumbled across https://twitter.com/info_dox/status/854372066228932609
+> that is curious about an udev+kernel exploit
+> (https://packetstormsecurity.com/files/142152/Linux-Kernel-4.8.0-udev-232-Privilege-Escalation.html)
+> 
+> which claims to exploit a missing sender-check within udev. That makes
+> me wonder, as kernel 4.8.0 (and even earlier) no longer allow users
+> to send NETLINK_KOBJECT_UEVENT messages. Our testcases fail,
+> as they should:
+> 
+> https://bugzilla.suse.com/show_bug.cgi?id=1034330
+> 
+> 
+> However, MITRE apparently assigned a valid CVE for it:
+> 
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7874
+> 
+> So either we miss some weird corner case or the CVE is invalid
+> and should be withdrawn?
 
-Today I wanted to request another CVE, but cveform.mitre.org seems to
-be down (it just loads forever here).  Can anyone please fix this?
+I think the reporter is incorrect and it should be retracted. I tried emailing 
+him, but got no reply on this issue so far.
 
-Cheers,
-Peter Bex
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Ciao, Marcus
