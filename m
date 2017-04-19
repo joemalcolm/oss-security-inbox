@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["62" "Sunday" "4" "October" "2020" "11:18:53" "+0300" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD8=KG1TQcEVFy6kPiq17T=1-Xv138ZYAg-eo+B1RmqhQw@mail.gmail.com>" "1" "[oss-security] the Bugtraq list archives before 2000" "^Date:" nil nil "10" "2020100408:18:53" "[oss-security] the Bugtraq list archives before 2000" (number mark "        gguninski@gm Oct  4    1/62    " thread-indent "\"[oss-security] the Bugtraq list archives before 2000\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] the Bugtraq list archives before 2000" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["947" "Wednesday" "19" "April" "2017" "13:22:47" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170419112247.GC19075@suse.de>" "27" "Re: [oss-security] CVE-2017-7874 versus CVE-2009-1185 ?" nil nil nil "4" "2017041911:22:47" "[oss-security] CVE-2017-7874 versus CVE-2009-1185 ?" (number mark "U       meissner@sus Apr 19   27/947   " thread-indent "\"Re: [oss-security] CVE-2017-7874 versus CVE-2009-1185 ?\"\n") "<20170419092124.GA9609@suse.de>" ("<20170419092124.GA9609@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1032 invoked by uid 550); 4 Oct 2020 08:21:14 -0000
+Received: (qmail 9549 invoked by uid 550); 19 Apr 2017 11:23:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29719 invoked from network); 4 Oct 2020 08:19:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Pd8bgylW2KbZO7hrY+VnqmA4FKJ4j2XNWtARwHyK0IA=;
-        b=uTnfb/lu9PRhXCaC15bceqb7q3T2XEgN0uFO5qbsPidWEzZoPB6oKneQ4HoZI5DQYk
-         xvH0Hkh7mH0tbveEJfWexBa7Hu9EN6kbSNHzi6g9VP6/Yb8VeAHyMPESn6pmoJkMWUiW
-         bW6NyhkgDKtJb4EWwkefSCBA96XdSxwv9fycMmxFuYzMejBII6c9Z/kjfW7v4PuINijp
-         ywtYO3TmvCfLeLJ5yoMgTmhmox/qRYyPBY7Sdh8TTQMPkIoRv/DD/QleCrSDNYUeHd+x
-         DrFK8LYNw/x/LvcnxSSaK3NbODskq8MizNsBhP3XSTVUvI3RFXFbuk2MUONMnpvdYB+m
-         is1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Pd8bgylW2KbZO7hrY+VnqmA4FKJ4j2XNWtARwHyK0IA=;
-        b=O8aWXTxhU50mUV9laZ43UMf9tiBdPJsirPX+RwoS0ad9YNTSFtZJlDvdyXV/ErTCzv
-         hm+aahRyRxwQZZ/FpbgM6xPz6Dysk8eBacradjwt3tchDUX+lzLLEhwLMTkNh4i9C9T5
-         9t/c3p3MAJNOT3JtKG1PxFIKj4IM8VXw/dMxeZ6UJqUt0gKjosbrWSBpO9A1qc7y3joy
-         OoVek4zzcTyMUZrgYIuqvZU7FbEQgcDeZ2WY/zm8dckAT7CZTWxhopo3mbEsr/gPlY4o
-         UlMo9Eu48H7oV0bLVaj/vDA/mXXVlCCupDakaDivsrSkt+iUtswNV5An420P47MWca63
-         UQJA==
-X-Gm-Message-State: AOAM532qzCDrIfrF/KWIGdyvJU7JxhnwzBzid0iuW+8/bOJevu9SqdOm
-	D1twwHoIihrXsKpmRdjvZNU2X1xk90VKZQT8urRs8mq1GRw=
-X-Google-Smtp-Source: ABdhPJwD+izSfzFJHpM3f094l6XTjd+fsOmQhJhddFHfBQyG1HRxY8FWWb5Ws6qKAX5v2iwRrUypEVp44Ry3vxzP86A=
-X-Received: by 2002:adf:f4c6:: with SMTP id h6mr5489563wrp.310.1601799544951;
- Sun, 04 Oct 2020 01:19:04 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAGUWgD8=KG1TQcEVFy6kPiq17T=1-Xv138ZYAg-eo+B1RmqhQw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Sun, 4 Oct 2020 11:18:53 +0300
-From: Georgi Guninski <gguninski@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] the Bugtraq list archives before 2000
+Received: (qmail 9525 invoked from network); 19 Apr 2017 11:22:59 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Wed, 19 Apr 2017 13:22:47 +0200
+From: Marcus Meissner <meissner@suse.de>
 To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Message-ID: <20170419112247.GC19075@suse.de>
+References: <20170419092124.GA9609@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170419092124.GA9609@suse.de>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] CVE-2017-7874 versus CVE-2009-1185 ?
 
-hi, We are looking for the Bugtraq list archives before 2000.
+On Wed, Apr 19, 2017 at 11:21:24AM +0200, Sebastian Krahmer wrote:
+> Hi
+> 
+> 
+> I stumbled across https://twitter.com/info_dox/status/854372066228932609
+> that is curious about an udev+kernel exploit
+> (https://packetstormsecurity.com/files/142152/Linux-Kernel-4.8.0-udev-232-Privilege-Escalation.html)
+> 
+> which claims to exploit a missing sender-check within udev. That makes
+> me wonder, as kernel 4.8.0 (and even earlier) no longer allow users
+> to send NETLINK_KOBJECT_UEVENT messages. Our testcases fail,
+> as they should:
+> 
+> https://bugzilla.suse.com/show_bug.cgi?id=1034330
+> 
+> 
+> However, MITRE apparently assigned a valid CVE for it:
+> 
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7874
+> 
+> So either we miss some weird corner case or the CVE is invalid
+> and should be withdrawn?
+
+I think the reporter is incorrect and it should be retracted. I tried emailing 
+him, but got no reply on this issue so far.
+
+Ciao, Marcus
