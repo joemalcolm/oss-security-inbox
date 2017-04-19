@@ -1,56 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/16/4
-Message-ID: <20170416202538.GA12165@grsecurity.net>
-Date: Sun, 16 Apr 2017 16:25:38 -0400
-From: Brad Spengler <spender@...ecurity.net>
-To: oss-security@...ts.openwall.com
-Subject: Silently (or obliviously) partially-fixed CONFIG_STRICT_DEVMEM bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/19/1
+Message-ID: <alpine.DEB.2.20.1704190806280.2937@tvnag.unkk.fr>
+Date: Wed, 19 Apr 2017 08:07:31 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: TLS session resumption client cert bypass (again)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+TLS session resumption client cert bypass (again)
+=========================================
 
-I wanted to provide some small notice of upstream kernel developers silently
-or obliviously partially fixing a CONFIG_STRICT_DEVMEM bypass which explicitly has
-never been possible in grsecurity in the past 15 years.  I say this because the commit
-message makes no mention of this partially fixing a CONFIG_STRICT_DEVMEM bypass (and I
-suppose a Secure Boot bypass, but what isn't these days?), and similarly makes no
-mentions of the modifications it makes to the write side.  CONFIG_STRICT_DEVMEM exists
-to prevent userland from directly modifying kernel memory, yet the kernel will happily
-make slab allocations in allowed regions below 1MB.  CONFIG_STRICT_DEVMEM explicitly
-allowed both reads and writes to these allocations.  As noted, the commit below doesn't
-fix the mmap side.
+Project curl Security Advisory, April 19th 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_20170419.html)
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a4866aa812518ed1a37d8ea0c881dc946409de94
+VULNERABILITY
+-------------
 
-Feel free to look at GRKERNSEC_KMEM code going back to 2002 in our 2.4.20
-patch, or when it changed in 2003 for 2.4.21, or this explicit hunk, comment and
-all, that's been around ever since CONFIG_STRICT_DEVMEM was added in 2008:
+libcurl would attempt to resume a TLS session even if the client certificate
+had changed. That is unacceptable since a server by specification is allowed
+to skip the client certificate check on resume, and may instead use the old
+identity which was established by the previous certificate (or no
+certificate).
 
-+#ifdef CONFIG_GRKERNSEC_KMEM
-+       /* throw out everything else below 1MB */
-+       if (pagenr <= 256)
-+               return 0;
-+#endif
+libcurl supports by default the use of TLS session id/ticket to resume
+previous TLS sessions to speed up subsequent TLS handshakes. They are used
+when for any reason an existing TLS connection couldn't be kept alive to make
+the next handshake faster.
 
-<additional comments/details removed: b76e178e7b24f238ba0dd70104336298f493f0142056a1e5f35c27897369adc6>
+This flaw is a regression and identical to
+[CVE-2016-5419](https://curl.haxx.se/docs/adv_20160803A.html) reported on
+August 3rd 2016, but affecting a different version range.
 
-While I'm here, some more VMAP_STACK fallout (DoS/potential memory corruption,
-adding to the dozen or so posted earlier):
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67b0503db9c29b04eadfeede6bebbfe5ddad94ef
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=606142af57dad981b78707234cfbd15f9f7b7125
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3f190e3aec212fc8c61e202c51400afa7384d4bc
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=005145378c9ad7575a01b6ce1ba118fb427f583a
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=3b30460c5b0ed762be75a004e924ec3f8711e032
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=c919a3069c775c1c876bec55e00b2305d5125caa
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c4baad50297d84bde1a7ad45e50c73adae4a2192
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=5593523f968bc86d42a035c6df47d5e0979b5ace
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=7926aff5c57b577ab0f43364ff0c59d968f6a414
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=2d6a0e9de03ee658a9adc3bfb2f0ca55dff1e478
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7a7b5df84b6b4e5d599c7289526eed96541a0654
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8e9faa15469ed7c7467423db4c62aeed3ff4cae3
+We are not aware of any exploit of this flaw.
 
-Thanks,
--Brad
+INFO
+----
 
+This flaw also affects the curl command line tool.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+For version 7.52.0, we rearranged a lot of TLS code to bring support for HTTPS
+proxies, which unfortunately made us accidentally bring this old flaw back!
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-7468 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw is relevant for all versions of curl and libcurl that support TLS
+and client certificates.
+
+- Affected versions: curl 7.52.0 to and including 7.53.1
+- Not affected versions: curl < 7.52.0 and >= 7.54.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+TLS session resumption is disabled when a client certificate is used so that a
+subsequent connection attempt to the same server cannot risk getting a
+previously authenticated session resumed.
+
+A [patch for CVE-2017-7468](https://curl.haxx.se/CVE-2017-7468.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.54.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Set `CURLOPT_SSL_SESSIONID_CACHE` to 0L when using client certificates
+
+TIME LINE
+---------
+
+It was [first reported to the curl
+project](https://github.com/curl/curl/issues/1341) on March 21, 2017.  We
+contacted distros@...nwall on April 10.
+
+libcurl 7.54.0 was released on April 19 2017, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by lijian996@...rs.noreply.github.com. Patch by Ray Satiro.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
