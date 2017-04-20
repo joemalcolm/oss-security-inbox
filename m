@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1853" "Tuesday" "1" "March" "2016" "14:23:39" "-0700" "Bob Beck" "beck@openbsd.org" "<CAComcpOd1_+qxMnTdJYLM2dP0W=E95Kn6OZ4yYuUS72EQLBpiQ@mail.gmail.com>" "44" "Re: [oss-security] Re: CVE's for SSLv2 support" "^Cc:" nil nil "3" "2016030121:23:39" "[oss-security] Re: CVE's for SSLv2 support" (number mark "        beck@openbsd Mar  1   44/1853  " thread-indent "\"Re: [oss-security] Re: CVE's for SSLv2 support\"\n") "<20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>" ("<CANO=Ty0ZOjCGL-iXCZ46FbSQ3i+fpGHBB6X1x2Agy9jftQ3ozA@mail.gmail.com>" "<20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3968" "Friday" "21" "April" "2017" "00:30:31" "+0200" "Summer of Pwnage" "lists@securify.nl" "<c1e731cf-2841-56d0-4be7-a2ae98edd66e@securify.nl>" "86" "[oss-security] Cross-Site Request Forgery in WordPress Connection Information" nil nil nil "4" "2017042022:30:31" "[oss-security] Cross-Site Request Forgery in WordPress Connection Information" (number mark "U       lists@securi Apr 21   86/3968  " thread-indent "\"[oss-security] Cross-Site Request Forgery in WordPress Connection Information\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13391 invoked by uid 550); 2 Mar 2016 06:50:22 -0000
+Received: (qmail 28006 invoked by uid 550); 20 Apr 2017 22:30:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30274 invoked from network); 1 Mar 2016 21:24:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=obtuse-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=O5sm970eUF9Xzt7yDYFQbU2mIMP6C+SrhzFBHuAx3SU=;
-        b=xvhPUY01DkVDQsUIaIqFs6ImMzvHhw3vKC04q8yDCEl9xvpkFC7c5gQibH3bfczW5O
-         zi9U2eOzNOC7EyhtAwT8wn/RB+eU94MYxH4n0Gnskn9QviCawq5+il1NxpUXE+xAuyfH
-         9upgeRmeJd8s7R9PkkrJFRI0l24andOYIvgOGMYO3QAEC101Hn7/gUnf7HzZdWcuxUGq
-         qRKi5aZ8x57WbexXNb28Ga56yb34lvJnaTv6rm2zhCars2WDukpsFV1mIcEfZWCKtjRv
-         vlpgYu//MzfPR9X+t9de4sTsapg9L7F8/YSsVbOw/XBCyaF0hQpYACHSk9JWxeVgxo26
-         5GLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=O5sm970eUF9Xzt7yDYFQbU2mIMP6C+SrhzFBHuAx3SU=;
-        b=in2JZlMmJ0/lmJd9UiypzMIrJP+U3zZQY8HUZcjmyScfNc+aF/mpU0QNuv0XuuHUAm
-         jAbSPespiqaKXUqEod2vKX1bROgwH9VqwlYrtZpbMXNSqhCJhbhT0R3uKvMtFzp98kMg
-         OYZ84yEjhPCEqrKs2aecZ8mRn2em3K+L3vAbYotL1gwN8YSXtlFUweRBrJLjAKLRCzNE
-         8I6tJGUYVTGni0YUTWWim4acQTZqI5Zp8FyERGfUJI8SiEHO+d/0o+2ZNHBq9VmNyO/j
-         W3IXFKMR7/sy+/ydfwVq0j5BDCf8yP6cdi3XitPHNseEi155rqtmrN0dUEKP0jRggRVv
-         U8tg==
-X-Gm-Message-State: AG10YOS7Duz13TlfjAvC3YC4Ih/Z3YOlhY5hmA98ANeEE+9N78G2XLZr1S4sH+WhKIA+RQ++JKkmHeVWXe4FKw==
-X-Received: by 10.107.168.29 with SMTP id r29mr28636460ioe.12.1456867438859;
- Tue, 01 Mar 2016 13:23:58 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>
-References: <CANO=Ty0ZOjCGL-iXCZ46FbSQ3i+fpGHBB6X1x2Agy9jftQ3ozA@mail.gmail.com>
- <20160301191235.EDA1852E01C@smtpvbsrv1.mitre.org>
-X-Google-Sender-Auth: fZQ17DdbZxP276h45vO2VtC2qlQ
-Message-ID: <CAComcpOd1_+qxMnTdJYLM2dP0W=E95Kn6OZ4yYuUS72EQLBpiQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: kseifried@redhat.com, cve-assign@mitre.org
-Date: Tue, 1 Mar 2016 14:23:39 -0700
-From: Bob Beck <beck@openbsd.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: beck@obtuse.com
-Subject: Re: [oss-security] Re: CVE's for SSLv2 support
+Received: (qmail 27977 invoked from network); 20 Apr 2017 22:30:43 -0000
+X-Virus-Scanned: amavisd-new at edge2.intern.zimbra-login.net
+From: Summer of Pwnage <lists@securify.nl>
 To: oss-security@lists.openwall.com
+Organization: Securify B.V.
+Message-ID: <c1e731cf-2841-56d0-4be7-a2ae98edd66e@securify.nl>
+Date: Fri, 21 Apr 2017 00:30:31 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Cross-Site Request Forgery in WordPress Connection Information
 
-On Tue, Mar 1, 2016 at 12:12 PM,  <cve-assign@mitre.org> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> If a crypto library (e.g. OpenSSL, NSS) supports AND enables SSLv2 by
->> default should it receive a CVE?
->
-> There's no general answer to that question. CVE ID assignments are not
-> based on outsiders making guesses about the expectations of a product's
-> customers. For example, there might be a crypto library intended for
-> communication on isolated networks to high-value embedded devices that
-> support only SSLv2, and cannot and will not ever be updated.
+------------------------------------------------------------------------
+Cross-Site Request Forgery in WordPress Connection Information
+------------------------------------------------------------------------
+Yorick Koster, July 2016
+
+------------------------------------------------------------------------
+Abstract
+------------------------------------------------------------------------
+The FTP/SSH form functionality of WordPress was found to be vulnerable
+to Cross-Site Request Forgery. This vulnerability can be used to
+overwrite the FTP or SSH connection settings of the affected WordPress
+site. An attacker can use this issue to trick an Administrator into
+logging into the attacker's FTP or SSH server, disclosing his/her login
+credentials to the attacker. In order to exploit this vulnerability, the
+attacker has to lure/force a logged on WordPress Administrator into
+opening a malicious website.
 
 
-What.. like... I have an embedded high value device that only supports
-TELNET to access it.. OMG please give me a CVE?
+------------------------------------------------------------------------
+OVE ID
+------------------------------------------------------------------------
+OVE-20160717-0004
 
-replace SSLV2 in the above sentence with telnet or ssh v1 for that
-matter and you have the same issue.
+------------------------------------------------------------------------
+Tested versions
+------------------------------------------------------------------------
+This issue was successfully tested on the WordPress [2] version 4.5.3 up
+till and including version 4.7.4.
 
+------------------------------------------------------------------------
+Fix
+------------------------------------------------------------------------
+There is currently no fix available.
 
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJW1ekCAAoJEL54rhJi8gl5dQEQAK5x43W8Q157sNT4gUg8rQtS
-> U0UlnjmsT1S40FlNiwZpK5IPkE7hdeTeiWUoFMsvc13vtlfpwfHCBfb05B5fcQBP
-> 2b3ssj49aH5yXVxnGE2ab6W5c63wN2jkbBBihVBXZ8SB9h4tNNSey+7dJrLyMqi0
-> Um76Tv5htBbpm+6UtlgN7zV3tT9MIe6bZI/b7xxuf23nM8/mBvc1nX8dpCFF16og
-> ks9d9A1Rnn79xCvWZ++jR8PRlmFwmLym/PEQulJ6k4WQdOECH78ytYWg9MG7EuIg
-> 6PbKloy7u36+ZgrUXxYnydoH834H6yOQIPro7hARFA0fpkbmydBJKnP4letuVS5w
-> S89g15c2ymxIyKaKy+qT31LEKBGf+N6vPoPNL/IWeRh+8GmSyWkWF7Rx0CboFCTs
-> 7+Ft9T+0Lfi6bYkYqAFUVe8gBkM84tLR+4HXgkANLAfhLEsKaCYqAkNYlbDvCXtB
-> RyFZHcVhp8XYWx7b5YN3BBB5VWK/fS8y8ilHaf143Bkbn+Yu6yrFb+DIAYhKPPAI
-> 1CURZksBwzSSjiprsExD4dODDJGzl/0khHdkDkdZp7o9drt3D4VkKGgkBPoG5NFk
-> cX1XQc6o3Hv72oYFLyatCA5H8k9HZLEUjl8cYuf/QIvfwJwjlLqZ+HrPWvs2SY5C
-> K4C7mIXfd9Iem6DqXfNK
-> =ylcp
-> -----END PGP SIGNATURE-----
+------------------------------------------------------------------------
+Introduction
+------------------------------------------------------------------------
+WordPress is web software you can use to create a website, blog, or
+app. It was found that the FTP/SSH form functionality is vulnerable to
+Cross-Site Request Forgery. This vulnerability can be used by an
+attacker to overwrite the FTP or SSH connection settings of the affected
+WordPress site. It can be used to trick in an Administrator into login
+into the attacker's FTP or SSH server, disclosing his/her login
+credentials to the attacker.
+
+------------------------------------------------------------------------
+Details
+------------------------------------------------------------------------
+This issue exists in the method request_filesystem_credentials()
+(/wp-admin/includes/file.php). It allows overwriting of the values:
+
+- hostname
+- username
+- connection_type
+
+The request_filesystem_credentials() method is called in various
+locations in WordPress. The connection information is updated if a POST
+request contains a password or public & private key value (in case of
+connection type ssh). In order to trigger this issue, the WordPress
+installation must not be able to write to the wp-content folder. Also,
+the attacker has to lure/force a logged on WordPress Administrator into
+opening a malicious website.
+
+------------------------------------------------------------------------
+Proof of concept
+------------------------------------------------------------------------
+<html>
+	<body>
+		<form action="http://<target>/wp-admin/plugins.php" method="POST">
+			<input type="hidden" name="hostname" value="sumofpwn.nl" />
+			<input type="hidden" name="connection_type" value="ftp" />
+			<input type="hidden" name="password" value="password" />
+			<input type="submit" value="Submit request" />
+		</form>
+	</body>
+</html>
+------------------------------------------------------------------------
+References
+------------------------------------------------------------------------
+[1] 
+https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_connection_information.html
+[2] https://wordpress.org/
+------------------------------------------------------------------------
+Summer of Pwnage (https://sumofpwn.nl) is a Dutch community project. Its
+goal is to contribute to the security of popular, widely used OSS
+projects in a fun and educational way.
