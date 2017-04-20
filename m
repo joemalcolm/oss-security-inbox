@@ -1,4 +1,9 @@
-Received: (qmail 9749 invoked by uid 550); 25 May 2026 01:55:25 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1643" "Thursday" "20" "April" "2017" "10:01:00" "+0200" "Fabian =?iso-8859-1?Q?Gr=FCnbichler?=" "f.gruenbichler@proxmox.com" "<20170420080100.3pwt7tgz46xya4ym@nora.maurer-it.com>" "36" "[oss-security] CVE-2017-7979: Linux kernel: local DoS via packet action API" nil nil nil "4" "2017042008:01:00" "[oss-security] CVE-2017-7979: Linux kernel: local DoS via packet action API" (number mark "U       f.gruenbichl Apr 20   36/1643  " thread-indent "\"[oss-security] CVE-2017-7979: Linux kernel: local DoS via packet action API\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10231 invoked by uid 550); 20 Apr 2017 08:17:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,74 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17562 invoked from network); 25 May 2026 01:36:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
-	t=1779672984; bh=+DbtfEuoU8sjFNcR7LiKPwMGgCDCKst3JDAimgtgmnw=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=eIDSUD4kOaA+zIzu2wWkgq865nl6ZjWeNOUjN4DfWYyA9l79OqBY1OB4kViSRfew5
-	 /rwgKnWdvir9qwOcRovMPr27QHblphpdPRiaqqxw7HnCtteLyHsIDOJCFMQOAJ676E
-	 r/ZUJq94KtSnsJWFeV4+e4+iInkCchbXy1AW7rKg=
-X-Riseup-User-ID: 61CF8D5A2E9857489AE36F87333EDAC66FDA134D61E3387FE832EDB7E030ED7C
-Date: Sun, 24 May 2026 21:36:21 -0400
-From: Aaron Rainbolt <arraybolt3@riseup.net>
+Received: (qmail 1437 invoked from network); 20 Apr 2017 08:01:25 -0000
+Date: Thu, 20 Apr 2017 10:01:00 +0200
+From: Fabian =?iso-8859-1?Q?Gr=FCnbichler?= <f.gruenbichler@proxmox.com>
 To: oss-security@lists.openwall.com
-Cc: adrelanos@whonix.org
-Message-ID: <20260524213621.18bd1dad@riseup.net>
-In-Reply-To: <20260518220116.170677b2@riseup.net>
-References: <20260518220116.170677b2@riseup.net>
+Cc: Wolfgang Bumiller <w.bumiller@proxmox.com>
+Message-ID: <20170420080100.3pwt7tgz46xya4ym@nora.maurer-it.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/zlTzyTSWByGhWz6t_m2pBHU";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-Subject: [oss-security] Re: On the issue of MIME handlers that execute arbitrary code (e.g.
- Wine)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: [oss-security] CVE-2017-7979: Linux kernel: local DoS via packet action API
 
---Sig_/zlTzyTSWByGhWz6t_m2pBHU
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+CVE-2017-7979 [1] was assigned to the following issue:
 
-On Mon, 18 May 2026 22:01:16 -0400
-Aaron Rainbolt <arraybolt3@riseup.net> wrote:
+The cookie feature in the packet action API implementation in
+net/sched/act_api.c in the Linux kernel 4.11.x through 4.11-rc7
+mishandles the tb nlattr array, which allows local users to cause a
+denial of service (uninitialized memory access and refcount underflow,
+and system hang or crash) or possibly have unspecified other impact via
+"tc filter add" commands in certain contexts.
 
-... snip ...
-=20
-> If all applications followed the xdg-mime manpage's advice to never
-> execute code when opening a file, this wouldn't be that big of a
-> problem. This is where Wine comes in; it ships a desktop file that
-> registers Wine as a MIME handler for
-> 'application/x-ms-dos-executable', 'application/x-msi', and
-> 'application/x-bat'. [3] These handlers result in the command 'wine
-> start /unix FILE-NAME' being run, which of course loads the
-> executable code from the opened file into memory and starts running
-> it. That means, if you are unlucky enough to have an unsandboxed copy
-> of Wine as your only MIME handler for EXE files, any flatpak on your
-> system can break out of the sandbox by writing an EXE file somewhere,
-> then opening it with org.freedesktop.portal.OpenURI.OpenFile. This
-> issue has been reported to Wine a short while ago [4]; I didn't
-> report the issue privately since I couldn't find a security contact
-> for Wine and was encouraged to make a public bug report when I asked
-> for a security contact on IRC some time back. (I was also given an
-> email where I could privately contact someone, but I no longer have
-> it, and I was somewhat discouraged from using it when I initially
-> asked.)=20
+The fix has been sent upstream [2], whether all related issues are fixed by
+the two proposed patches (see whole thread at [3]) is still under
+discussion.
 
-CVE-2026-48831 has been assigned for this. [1]
+Not affected:
+- Upstream: stable kernels from kernel.org, such as 4.10.x
 
---
-Aaron
+Affected:
+- Upstream: all current 4.11 RCs (rc1-rc7) are affected.
+- Ubuntu 17.04: commit 1045ba77a ("net sched actions: Add support for
+  user cookies") which introduced the problematic code was backported to
+  Ubuntu 17.04's "Ubuntu-4.10.0-15.17" kernel, which is affected[4].
+- Proxmox VE 5.0 Beta: the Proxmox VE kernel 4.10.5-1 which was based on
+  Ubuntu-4.10.0-15.17 was affected[5], the subsequently released PVE
+  kernel 4.10.8-1 contains the fix from [2]. The current PVE stable
+  release 4.4 is not affected.
 
-[1] https://www.cve.org/CVERecord?id=3DCVE-2026-48831
+Thanks to Wolfang Bumiller for analysis and proposed fixes.
+Thanks to "Ivensiya" <ivensiya@gmail.com> for the initial bug report[5]
+that lead to the discovery.
 
---Sig_/zlTzyTSWByGhWz6t_m2pBHU
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+1: https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7979
+2: https://marc.info/?l=linux-netdev&m=149200746116365
+3: https://marc.info/?l=linux-netdev&m=149251041420195
+4: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1682368
+5: https://bugzilla.proxmox.com/show_bug.cgi?id=1351
 
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCahOnlQAKCRA5rdye4jrr
-CPgvAP9vP/2tZ0xQIpnQi2FStlNOIAARLuaaq8OumvWatFobdAEA2/zAnLEWhO4f
-nHAiy8I8Q5aFMZq0CB0L7VlqL7ixgAI=
-=ai7D
------END PGP SIGNATURE-----
-
---Sig_/zlTzyTSWByGhWz6t_m2pBHU--
