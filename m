@@ -1,116 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/3
-Message-ID: <116345.929538028-sendEmail@localhost>
-Date: Wed, 4 Oct 2017 15:42:21 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: binutils: heap-based buffer overflow in parse_die (dwarf1.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/20/2
+Message-ID: <20170420084105.his3vgnzjpvu4jcv@gaara.hadrons.org>
+Date: Thu, 20 Apr 2017 10:41:05 +0200
+From: Guillem Jover <guillem@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Directory traversal in dpkg-source via indented patches on non-GNU systems
 Content-Type: text/plain; charset=utf-8
 
-Description:
-binutils is a set of tools necessary to build programs.
+Hi!
 
-The complete ASan output of the issue:
+Recently, while going through the POSIX standard to check for some
+other stuff related to the patch(1) format, I realized that indented
+patches are also accepted, which is something the Dpkg::Source::Patch
+perl module is not checking, so any of the sanity checks against
+directory traveral attacks can be avoided through indenting.
 
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==26890==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6130000006d3 at pc 0x000000472115 bp 0x7ffdb7d8a0d0 sp 0x7ffdb7d89880                                                                         
-READ of size 298 at 0x6130000006d3 thread T0                                                                                                                                                                      
-    #0 0x472114 in __interceptor_strlen /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:302                      
-    #1 0x68fea5 in parse_die /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf1.c:254:12                                                                                                           
-    #2 0x68ddda in _bfd_dwarf1_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf1.c:521:13                                                                                       
-    #3 0x5f2f00 in _bfd_elf_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8659:10                                                                                            
-    #4 0x517755 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1004:12                                                                                                      
-    #5 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7                                                                                                      
-    #6 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200                                                                                                     
-    #7 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7                                                                                                       
-    #8 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12                                                                                                              
-    #9 0x7f3dea34e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                    
-    #10 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)                                                                                                                                 
-                                                                                                                                                                                                                  
-0x6130000006d3 is located 0 bytes to the right of 339-byte region [0x613000000580,0x6130000006d3)                                                                                                                 
-allocated by thread T0 here:                                                                                                                                                                                      
-    #0 0x4d8828 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:67                                                                      
-    #1 0x53f138 in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9
-    #2 0x799bc8 in bfd_get_full_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/compress.c:248:21
-    #3 0x7b8797 in bfd_simple_get_relocated_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/simple.c:193:12
-    #4 0x68e3b1 in _bfd_dwarf1_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf1.c:490:4
-    #5 0x5f2f00 in _bfd_elf_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8659:10
-    #6 0x517755 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1004:12
-    #7 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #8 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #9 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #10 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #11 0x7f3dea34e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+Of course on Debian and other distributions using GNU patch >= 1.7.5,
+this is not a concern anymore, as this implementation should be
+directory traversal resistant.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:302 in 
-__interceptor_strlen
-Shadow bytes around the buggy address:
-  0x0c267fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c267fff8090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c267fff80a0: 00 00 00 04 fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff80b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c267fff80c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c267fff80d0: 00 00 00 00 00 00 00 00 00 00[03]fa fa fa fa fa
-  0x0c267fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff80f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff8100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff8110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c267fff8120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==26890==ABORTING
+But on systems such as the BSDs, with their own patch(1) variant,
+this is effective. And while this could (and should in addition be
+considered) a problem with those patch implementations, dpkg-source
+has always assumed uncooperating underlaying implementations so this
+is something it should probably protect against one way or another.
 
-Affected version:
-2.29.51.20170924 and maybe past releases
+This issue shows up when unpacking a Debian source package for
+examination, but then on those non-GNU systems, usage of patch(1)
+is unsafe, so I'm not sure how sever this should be considered.
 
-Fixed version:
-N/A
+I've got a test case (attached) that fails (the attack is successful) on
+at least NetBSD (not tried others), but they share a similar patch(1)
+codebase.
 
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=1da5c9a485f3dcac4c45e96ef4b7dae5948314b5
+And I started adding support for indented patches so thah the checks
+would apply, or to just reject them (as a query on codesearch.debian.net)
+didn't trigger any instance of such patches in Debian (which would make
+them not able to be unpacked if we reject them). But I'm considering the
+shorter and more strightforward solution of just requiring GNU patch at
+configure time for now. Which is what I'm attaching here as the fix
+I'm planning to merge for dpkg 1.18.24.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Given tha above, does this deserve a CVE? At least we have gotten ones
+for similar issues in the past.
 
-CVE:
-CVE-2017-15020
+Thanks,
+Guillem
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00376-binutils-heapoverflow-parse_die
+View attachment "0001-Dpkg-Source-Patch-Indented-patch-test-case.patch" of type "text/x-diff" (2559 bytes)
 
-Timeline:
-2017-09-25: bug discovered and reported to upstream
-2017-09-25: upstream released a patch
-2017-10-03: blog post about the issue
-2017-10-04: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
-Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/10/03/binutils-heap-based-buffer-overflow-in-parse_die-dwarf1-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+View attachment "0001-build-Detect-the-required-GNU-patch.patch" of type "text/x-diff" (5826 bytes)
