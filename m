@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/1
-Message-ID: <20171122035243.edl3dqbnpyaa337h@matica.foolinux.mooo.com>
-Date: Tue, 21 Nov 2017 19:52:43 -0800
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/20/3
+Message-ID: <b31ce992-8cb7-15c7-397f-7408bb459027@redhat.com>
+Date: Thu, 20 Apr 2017 16:26:16 +0200
+From: Andrej Nemec <anemec@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine
+Subject: CVE-2017-2575 libbpg: NULL pointer dereference in image_alloc
 Content-Type: text/plain; charset=utf-8
 
-On 2017-11-17 11:14, P J P wrote:
+Hello folks,
 
-> Upstream patch:
-> ---------------
->   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02982.html
+While going through our assigned CVEs it was found that this one was
+allocated but never reported by the original researcher to the public
+list. I am going to list as much information as possible below. Credits
+for the findings go to "Meifang, Yang @VARAS of IIE". I advised the
+researcher to report this issue upstream, however, it seems the
+communication failed.
 
-Hi, what can I do with these QEMU reports?  I can try to apply the
-patch, but I have no idea if it will work, because I don't know which
-branch or revision it is based on.
+A vulnerability was found while fuzzing libbpg 0.9.7. It is a NULL
+pointer dereference issue due to missing check of the return value of
+function malloc in the BPG encoder. This vulnerability appeared while
+converting a malicious JPEG file to BPG.
 
-By my unscientific counting, there are only 2 other userspace projects
-which earn CVEs as frequently as QEMU: openjpeg and graphicsmagick.  In
-both these cases, starting with the message posted here and following
-the references, I can quickly locate the actual VC commit (in git and
-mercurial, respectively) and thus have a sound basis for deciding what
-to do: patch, wait for an updated distro package, or fork the distro
-package.
+The problem seems to be line 717 in function image_alloc. Due to the
+missing check, value of img->data[i] could be NULL and crash the program.
 
-Is there a reason why that cannot be done with QEMU?
+Unfortunately, I don't have access to the reproducer.
+
+Best Regards,
 
 -- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet, fetch the TXT record for the domain.
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
