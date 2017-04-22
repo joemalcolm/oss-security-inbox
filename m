@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["383" "Wednesday" "31" "May" "2017" "06:39:12" "-0400" "Qhdwns123" "qhdwns123@protonmail.com" "<8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com>" "11" "[oss-security] I found Crash in tcpdump and radare2." "^Date:" nil nil "5" "2017053110:39:12" "[oss-security] I found Crash in tcpdump and radare2." (number mark "        qhdwns123@pr May 31   11/383   " thread-indent "\"[oss-security] I found Crash in tcpdump and radare2.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["501" "Saturday" "22" "April" "2017" "13:46:35" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<7429505.9S0h3zJD4P@arcadia>" "12" "Re: [oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp)" "^Cc:" nil nil "4" "2017042211:46:35" "[oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp)" (number mark "        ago@gentoo.o Apr 22   12/501   " thread-indent "\"Re: [oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp)\"\n") "<CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>" ("<CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3702 invoked by uid 550); 31 May 2017 11:04:12 -0000
+Received: (qmail 1637 invoked by uid 550); 22 Apr 2017 11:46:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,33 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5968 invoked from network); 31 May 2017 10:39:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=default; t=1496227161;
-	bh=7GYg6mYZ1UwPdr3QAHi9yH1cTM6cAlATKqTcdP1647I=;
-	h=To:From:Reply-To:Subject:Feedback-ID:From;
-	b=O9T9RR2FyuWmVmk7tLxbVsHyRq/mf7cEK3X92F1B68dQcu27pjIkYinr5ws5J4y/E
-	 HBXom9HMdzz/hTS4J0xqw24SlA6B/lPGMrxGQKkeEqOdzb7guXTtckSDgH6S5cZFR2
-	 xgmZ6ioL0xwbImqHj1XnF9SaHtED1PmbWL8nPn3A=
-Message-ID: <8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com>
-Feedback-ID: vXRURrFWGeaheBsGNsaJ1M8AetqoNVBGwyWj2Pttnkyk2mY512lZA5edfaxiLrte64sYuwkYV1fWVZik9fITZw==:Ext:ProtonMail
+Received: (qmail 1613 invoked from network); 22 Apr 2017 11:46:54 -0000
+Message-ID: <7429505.9S0h3zJD4P@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.29; x86_64; ; )
+In-Reply-To: <CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>
+References: <CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_ffb8780627a51607a479e5035e5154b9"
-Date: Wed, 31 May 2017 06:39:12 -0400
-From: Qhdwns123 <qhdwns123@protonmail.com>
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Cc: Xiaobo Xiang <xiangxb2112@gmail.com>
+Date: Sat, 22 Apr 2017 13:46:35 +0200
+From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] I found Crash in tcpdump and radare2.
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp)
+To: oss-security@lists.openwall.com
 
---b1_ffb8780627a51607a479e5035e5154b9
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+On Saturday 22 April 2017 11:02:21 Xiaobo Xiang wrote:
+> There is a infinite recursion in
+> PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
+> In the ReadDocumentStructure function
 
-SGkuCgpJIGZvdW5kIENyYXNoIGluIHRjcGR1bXAgYW5kIHJhZGFyZTIuCgpJ
-dCBwb2ludHMgdG8gdGhlIGhlYXAgb3ZlcmZsb3cgYXMgdGhlIHJlc3VsdCBv
-ZiBhbmFseXNpcyBieSBBU0FOLgoKV2hhdCBzdGVwcyBzaG91bGQgSSB0YWtl
-IHRvIHJlcG9ydCB0aGlzIGlzc3VlPwoKVGhhbmtzLg==
+I found it too time ago, but since upstream was unresponsive about....I didn't 
+investigate, and then I didn't know if it has the same root cause of:
+https://blogs.gentoo.org/ago/2017/02/01/podofo-infinite-loop-in-podofopdfpagegetinheritedkeyfromobject-pdfpage-cpp/
 
---b1_ffb8780627a51607a479e5035e5154b9--
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
