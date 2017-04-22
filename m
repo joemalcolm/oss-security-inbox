@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/7
-Message-ID: <20170923162050.GA7215@wopr>
-Date: Sat, 23 Sep 2017 09:20:50 -0700
-From: Kurt H Maier <khm@...ops.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/22/3
+Message-ID: <CAHHvYcojhqfj_naXXv=qiQhXLMGFP2+EOostc9ff0yhbt4ZgWA@mail.gmail.com>
+Date: Sat, 22 Apr 2017 20:03:32 +0800
+From: Xiaobo Xiang <xiangxb2112@...il.com>
+To: Agostino Sarubbo <ago@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 23, 2017 at 01:44:18PM +0200, Hanno Böck wrote:
-> If I can trust Red Hat's CVE tracker [3] there still are no fixed
-> packages available. Also I haven't found any info about updated
-> opensuse packages.
+Hello ago,
 
-This is standard operating procedure for Red Hat, at least.  Generally
-days or even weeks pass before patches are released.   If you're an
-"Extended Update Support" customer you can expect months to go by.  If
-you're super lucky you'll get a systemtap script to play with, but that
-generally requires a kernel RCE.
+They are two different issues, we could judge them by just checking the
+call stacks. I have the infinite recursion crash in the pdfpage too but I
+found your blog post so I ignored it. This is a different issue.
 
+Best Regards,
+Xiang Xiaobo
 
-khm
+2017-04-22 19:46 GMT+08:00 Agostino Sarubbo <ago@...too.org>:
+
+> On Saturday 22 April 2017 11:02:21 Xiaobo Xiang wrote:
+> > There is a infinite recursion in
+> > PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
+> > In the ReadDocumentStructure function
+>
+> I found it too time ago, but since upstream was unresponsive about....I
+> didn't
+> investigate, and then I didn't know if it has the same root cause of:
+> https://blogs.gentoo.org/ago/2017/02/01/podofo-infinite-loop-in-
+> podofopdfpagegetinheritedkeyfromobject-pdfpage-cpp/
+>
+> --
+> Agostino Sarubbo
+> Gentoo Linux Developer
+>
 
