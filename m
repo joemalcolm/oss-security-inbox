@@ -1,4 +1,9 @@
-Received: (qmail 9731 invoked by uid 550); 8 Mar 2026 08:06:29 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8195" "Sunday" "23" "April" "2017" "12:42:04" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<2144211.BpqYkg82hc@arcadia>" "149" "[oss-security] libcroco: heap overflow and undefined behavior" nil nil nil "4" "2017042310:42:04" "[oss-security] libcroco: heap overflow and undefined behavior" (number mark "U       ago@gentoo.o Apr 23  149/8195  " thread-indent "\"[oss-security] libcroco: heap overflow and undefined behavior\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32735 invoked by uid 550); 23 Apr 2017 10:42:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,81 +12,163 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7776 invoked from network); 8 Mar 2026 08:06:04 -0000
-Date: Sun, 8 Mar 2026 09:05:57 +0100
-From: Solar Designer <solar@openwall.com>
-To: Justin Swartz <justin.swartz@risingedge.co.za>
-Cc: oss-security@lists.openwall.com, bug-inetutils@gnu.org,
-	collin.funk1@gmail.com, simon@josefsson.org,
-	auerswal@unix-ag.uni-kl.de, ron.benyizhak@safebreach.com
-Message-ID: <20260308080557.GA27619@openwall.com>
-References: <20260224011702.27987-1-justin.swartz@risingedge.co.za> <20260224052943.GA13045@openwall.com> <20260224064351.GA14779@openwall.com> <20260307002011.18141-1-justin.swartz@risingedge.co.za> <20260308025745.GA24992@openwall.com> <fbfd407edbca76995b86ec45e9cf935d@risingedge.co.za> <20260308073422.20218-1-justin.swartz@risingedge.co.za>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260308073422.20218-1-justin.swartz@risingedge.co.za>
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Re: Telnetd Vulnerability Report
+Received: (qmail 32711 invoked from network); 23 Apr 2017 10:42:18 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Date: Sun, 23 Apr 2017 12:42:04 +0200
+Message-ID: <2144211.BpqYkg82hc@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.29; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libcroco: heap overflow and undefined behavior
 
-On Sun, Mar 08, 2026 at 09:34:22AM +0200, Justin Swartz wrote:
-> Based on the feedback provided, the third version of the patch set [1]:
+Description:
+libcroco is a Generic Cascading Style Sheet (CSS) parsing and manipulation 
+toolkit.
 
-> - Places the strings of the allowed environment variables array into
->   the .rodata section.
+A fuzz on it discovered and heap overflow and an undefined behavior.
 
-Actually, the strings would be in .rodata (or after linking, in .text)
-with your previous patch version as well.  It's the array of pointers
-that you're also moving to there now.
+The complete ASan output:
 
-> - Discards the --accept-env feature [3], as an inetutils maintainer [2]
->   is working on an implementation to extend the allowed environment
->   using Gnulib instead.
+# csslint-0.6 $FILE
+==9246==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x60400000007a at pc 0x7f3771a05074 bp 0x7fff426076a0 sp 0x7fff42607698                                                                          
+READ of size 1 at 0x60400000007a thread T0                                                                                                                                                                        
+    #0 0x7f3771a05073 in cr_input_read_byte /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-input.c:416:19                                                                                      
+    #1 0x7f3771a3c0ba in cr_tknzr_parse_rgb /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-tknzr.c:1295:17                                                                                     
+    #2 0x7f3771a3c0ba in cr_tknzr_get_next_token /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-tknzr.c:2127                                                                                   
+    #3 0x7f3771ab6688 in cr_parser_parse_any_core /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:1179:18                                                                              
+    #4 0x7f3771ab6c1e in cr_parser_parse_any_core /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:1215:34                                                                              
+    #5 0x7f3771ab6c1e in cr_parser_parse_any_core /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:1215:34                                                                              
+    #6 0x7f3771ab6c1e in cr_parser_parse_any_core /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:1215:34                                                                              
+    #7 0x7f3771ab9579 in cr_parser_parse_block_core /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:1005:26                                                                            
+    #8 0x7f3771a8882a in cr_parser_parse_atrule_core /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:798:26                                                                            
+    #9 0x7f3771ab0644 in cr_parser_parse_stylesheet /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c                                                                                    
+    #10 0x7f3771a8131e in cr_parser_parse /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:4381:26                                                                                      
+    #11 0x7f3771a804f1 in cr_parser_parse_file /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:2993:18                                                                                 
+    #12 0x7f3771b04869 in cr_om_parser_parse_file /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-om-parser.c:956:18                                                                            
+    #13 0x51506f in cssom_parse /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/csslint/csslint.c:252:18                                                                                               
+    #14 0x51506f in main /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/csslint/csslint.c:997                                                                                                         
+    #15 0x7f377041b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                       
+    #16 0x41a9b8 in _init (/usr/bin/csslint-0.6+0x41a9b8)
 
-It sounds like one of you will have to rebase this on the other's work.
+0x60400000007a is located 0 bytes to the right of 42-byte region 
+[0x604000000050,0x60400000007a)
+allocated by thread T0 here:
+    #0 0x4da285 in calloc /tmp/portage/sys-libs/compiler-rt-
+sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
+    #1 0x7f377168a1a0 in g_malloc0 /tmp/portage/dev-
+libs/glib-2.48.2/work/glib-2.48.2/glib/gmem.c:124
+    #2 0x7f3771a00c4d in cr_input_new_from_buf /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-input.c:151:26
+    #3 0x7f3771a027d6 in cr_input_new_from_uri /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-input.c:251:26
+    #4 0x7f3771a22797 in cr_tknzr_new_from_uri /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-tknzr.c:1642:17
+    #5 0x7f3771a8047c in cr_parser_parse_file /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-parser.c:2986:17
+    #6 0x7f3771b04869 in cr_om_parser_parse_file /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-om-parser.c:956:18
+    #7 0x51506f in cssom_parse /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/csslint/csslint.c:252:18
+    #8 0x51506f in main /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/csslint/csslint.c:997
+    #9 0x7f377041b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-> +extern int is_env_var_allowed (const char *var, const char *val);
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-
+libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-input.c:416:19 in 
+cr_input_read_byte
+Shadow bytes around the buggy address:
+  0x0c087fff7fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c087fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c087fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c087fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c087fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c087fff8000: fa fa 00 00 00 00 00 fa fa fa 00 00 00 00 00[02]
+  0x0c087fff8010: fa fa 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
+  0x0c087fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==9246==ABORTING
+Commit fix:
+https://git.gnome.org/browse/libcroco/commit/?id=898e3a8c8c0314d2e6b106809a8e3e93cf9d4394
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00267-libcroco-heapoverflow-cr_input_read_byte
+CVE:
+CVE-2017-7960
 
-You shouldn't need to have this one extern now - you can make it static.
+#####################################
 
-> +#ifdef HAVE_PATHS_H
-> +# include <paths.h>
-> +#else
-> +# ifndef _PATH_DEFPATH
-> +#  define _PATH_DEFPATH "/usr/bin:/bin"
-> +# endif
-> +#endif
+# csslint-0.6 $FILE
+/tmp/portage/dev-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-
+tknzr.c:1283:15: runtime error: value 9.11111e+19 is outside the range of 
+representable values of type 'long'
+Commit fix:
+https://git.gnome.org/browse/libcroco/commit/?id=9ad72875e9f08e4c519ef63d44cdbd94aa9504f7
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00268-libcroco-outside-long
+CVE:
+CVE-2017-7961
 
-You shouldn't need this anymore.
+Affected version:
+0.6.11 and 0.6.12
 
-> +is_env_var_allowed (const char *var, const char *val)
-> +{
-> +  const char * const *p;
+Fixed version:
+0.6.13 (not released atm)
 
-This second const here looks wrong as you're changing the value of this
-pointer.  I suggested this syntax only for the array, where you used it
-correctly.
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
 
-> +void
-> +set_env_var_if_allowed (const char *var, const char *val)
-> +{
-> +  if (is_env_var_allowed (var, val))
-> +    {
-> +      if (val)
-> +        {
-> +          if (*val != 0)
-> +            setenv (var, val, 1);
-> +        }
-> +      else
-> +        {
-> +          unsetenv (var);
-> +        }
-> +    }
-> +}
+Timeline:
+2017-04-12: bugs discovered and reported to upstream
+2017-04-16: upstream released a patch
+2017-04-17: blog post about the issues
+2017-04-19: CVE assigned
 
-I doubt it's desired behavior to retain the previous value of the env
-var if the new value is an empty string - or is it?  If it is not, then
-I suggest either dropping the "*val != 0" check or moving it into
-"if (val && *val != 0)".
+Note:
+These bugs were found with American Fuzzy Lop.
 
-Alexander
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/17/libcroco-heap-overflow-and-undefined-behavior/
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
