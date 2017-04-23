@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2213" "Wednesday" "14" "December" "2016" "07:24:19" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>" "76" "Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre" "^Cc:" nil nil "12" "2016121414:24:19" "[oss-security] why many CVEs are ** RESERVED ** on Mitre" (number mark "        kseifried@re Dec 14   76/2213  " thread-indent "\"Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre\"\n") "<4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>" ("<4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4510" "Sunday" "23" "April" "2017" "12:43:30" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<13452201.C1oyba3XSE@arcadia>" "75" "[oss-security] imageworsener: divide-by-zero in iwgif_record_pixel (imagew-gif.c)" nil nil nil "4" "2017042310:43:30" "[oss-security] imageworsener: divide-by-zero in iwgif_record_pixel (imagew-gif.c)" (number mark "U       ago@gentoo.o Apr 23   75/4510  " thread-indent "\"[oss-security] imageworsener: divide-by-zero in iwgif_record_pixel (imagew-gif.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29854 invoked by uid 550); 14 Dec 2016 14:24:33 -0000
+Received: (qmail 11320 invoked by uid 550); 23 Apr 2017 10:43:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29827 invoked from network); 14 Dec 2016 14:24:32 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+Q5ZIag8kCjjiGL6m7AeIpPtr3MY+um/92ssDi1F9GE=;
-        b=mdBcyD9LfNhyJVWVjLESAhvUxpq+puIODsjyT7swXa9NpAhgmmRlq2EZJqwOdrv27/
-         wqCUVQkpf94Ch8Kfhm1VPkSlobHEUCd4W1An1EzC3hYx1Rs6jChM6FM1qZbxW4WbNMhZ
-         iTD/Va7TuQnrsAfY2afE0N4WhkjoYodEu2UgudmIpG0M7dDQW6SX79dMhDuOWH/FoVAk
-         ftDCkkKufuUnYnwHY4gp/SfSt9fYKSC6n9sngKnF1Fw9lrZ0kCqTieTLsYx5sM9xgMaI
-         O+jN8w1VLHWBJ+v1RKPRFkZgwDwXFV000zrxPszEn7gSSUTgwhtx1DLN6KxC8560i9Oh
-         Bs2A==
-X-Gm-Message-State: AKaTC029l/KPF8vzkOjDYU1rjQ2H0NbXcFaMytzM9x+cgl4ziMSTWhI6rk8ymjGACcoL1Xf1qTocZO+JCQ2NoOl8
-X-Received: by 10.157.47.106 with SMTP id h97mr55052414otb.12.1481725460322;
- Wed, 14 Dec 2016 06:24:20 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>
-References: <4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>
-Message-ID: <CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=94eb2c032d54b7a98005439f1765
-Cc: CVE ID Requests <cve-assign@mitre.org>
-Date: Wed, 14 Dec 2016 07:24:19 -0700
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 10116 invoked from network); 23 Apr 2017 10:43:43 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Date: Sun, 23 Apr 2017 12:43:30 +0200
+Message-ID: <13452201.C1oyba3XSE@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.29; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] imageworsener: divide-by-zero in iwgif_record_pixel (imagew-gif.c)
 
---94eb2c032d54b7a98005439f1765
-Content-Type: text/plain; charset=UTF-8
+Description:
+imageworsener is a utility for image scaling and processing.
 
-On Wed, Dec 14, 2016 at 1:44 AM, Sona Sarmadi <sona.sarmadi@enea.com> wrote:
+A fuzz on it discovered a divide-by-zero.
 
-> Hi again,
->
-> Does anyone know why Mitre lists many CVEs ** RESERVED ** while they are
-> public (e.g. curl CVEs below)?
->
+The complete ASan output:
 
-As per
-https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Description
+# imagew $FILE /tmp/out -outfmt bmp
+==20305==ERROR: AddressSanitizer: FPE on unknown address 0x7f8e57340cd6 (pc 
+0x7f8e57340cd6 bp 0x7ffc0fee8910 sp 0x7ffc0fee87e0 T0)                                                                                
+    #0 0x7f8e57340cd5 in iwgif_record_pixel /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-gif.c:213:13                                                                           
+    #1 0x7f8e57340cd5 in lzw_emit_code /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-gif.c:312                                                                                   
+    #2 0x7f8e57339a94 in lzw_process_code /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-gif.c:376:3                                                                              
+    #3 0x7f8e57339a94 in lzw_process_bytes /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-gif.c:433                                                                               
+    #4 0x7f8e57339a94 in iwgif_read_image /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-gif.c:669                                                                                
+    #5 0x7f8e57339a94 in iwgif_read_main /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-gif.c:724                                                                                 
+    #6 0x7f8e5732fb71 in iw_read_gif_file /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-gif.c:773:6                                                                              
+    #7 0x7f8e572e9091 in iw_read_file_by_fmt /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-allfmts.c:61:12                                                                       
+    #8 0x519304 in iwcmd_run /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:1191:6                                                                                          
+    #9 0x515326 in iwcmd_main /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3018:7                                                                                         
+    #10 0x515326 in main /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3067                                                                                                
+    #11 0x7f8e562f078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                       
+    #12 0x41b028 in _init (/usr/bin/imagew+0x41b028)                                                                                                                                                              
+                                                                                                                                                                                                                  
+AddressSanitizer can not provide additional info.                                                                                                                                                                 
+SUMMARY: AddressSanitizer: FPE /tmp/portage/media-
+gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-gif.c:213:13 in 
+iwgif_record_pixel                                                                  
+==20305==ABORTING
 
-Description[edit]
-This is a standardized text description of the issue(s). One common entry
-is:
+Affected version:
+1.3.0
 
-** RESERVED ** This candidate has been reserved by an organization
-or individual that will use it when announcing a new security problem.
-When the candidate has been publicized, the details for this
-candidate will be provided.
+Fixed version:
+N/A
 
-This means that the entry number has been reserved by Mitre for an issue or
-a CNA has reserved the number. So in the case where a CNA requests a block
-of CVE numbers in advance (e.g. Red Hat currently requests CVEs in blocks
-of 500), the CVE number will be marked as reserved even though the CVE
-itself may not be assigned by the CNA for some time. Until the CVE is
-assigned AND Mitre is made aware of it (e.g. the embargo passes and the
-issue is made public), AND Mitre has researched the issue and written a
-description of it, entries will show up as "** RESERVED **".
+Commit fix:
+https://github.com/jsummers/imageworsener/commit/ca3356eb49fee03e2eaf6b6aff826988c1122d93
 
-The good news is this is changing (MITRE will be able to accept
-descriptions/data from other parties at some point). I don't have an exact
-time frame though.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+CVE-2017-7962
 
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00270-imageworsener-FPE-iwgif_record_pixel
 
+Timeline:
+2017-04-12: bug discovered and reported to upstream
+2017-04-14: upstream released a patch
+2017-04-17: blog post about the issue
+2017-04-19: CVE assigned
 
->
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-8615
->
-> https://curl.haxx.se/docs/security.html:
->
-> CVE-2016-8615
-> CVE-2016-8616
-> CVE-2016-8617
-> CVE-2016-8618
-> CVE-2016-8619
-> CVE-2016-8620
-> CVE-2016-8621
-> CVE-2016-8622
-> CVE-2016-8623
-> CVE-2016-8624
-> CVE-2016-8625
->
-> Shouldn't Mitre follow a process and update the page after CVEs have
-> been made public e.g. by upstream project? Or perhaps there is another
-> reason for these CVEs not to be updated?
->
-> Best,
-> ---------------------------------------
-> Sona Sarmadi
-> Security Responsible for Enea Linux
->
->
+Note:
+This bug was found with American Fuzzy Lop.
 
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/17/imageworsener-divide-by-zero-in-iwgif_record_pixel-imagew-gif-c/
 
 -- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---94eb2c032d54b7a98005439f1765--
+Agostino Sarubbo
+Gentoo Linux Developer
