@@ -1,34 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/3
-Message-ID: <CALPTtNW35RHRmVgfdAG118m9Yghfa0X6ZHFRzpUuhCsQbWE8Xw@mail.gmail.com>
-Date: Mon, 9 Oct 2017 01:04:30 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/23/3
+Message-ID: <6637563.hSMPS8suxu@arcadia>
+Date: Sun, 23 Apr 2017 12:52:16 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
+Subject: imageworsener: multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 8, 2017 at 11:24 PM Michael Niedermayer <michael@...dermayer.cc>
-wrote:
+There are some other vulnerabilities discovered by 'bestshow' and fixed in 
+imageworsener:
 
-> > We’d love to have FFmpeg in-scope, but the simple reason is that they
-> don’t
-> > reply to our e-mails. All projects participating must explicitly opt-in,
-> > and we can’t get anybody at FFmpeg to let us know their thoughts on if
-> they
-> > would like to be added or not.
->
-> Your mails where misidentified as spam on my side at least, and while
-> i admit i saw them and wanted to reply later i forgot and somehow
-> apparently everyone else forgot to reply too.
-> Finally replied and yes of course FFmpeg wants to participate
->
+CVE-2017-7452
+NULL pointer dereference in iwbmp_read_info_header
+https://github.com/jsummers/imageworsener/issues/8
 
-Awesome! Thanks for getting back to us.
 
-We've added FFmpeg to the scope at the bottom of
-https://hackerone.com/ibb-data.
+CVE-2017-7453
+NULL pointer dereference in iwgif_record_pixel
+https://github.com/jsummers/imageworsener/issues/9
 
-Happy hacking,
-~reed
-(for the IBB)
 
+CVE-2017-7454
+heap-buffer-overflow in iwgif_record_pixel
+https://github.com/jsummers/imageworsener/issues/11
+
+
+CVE-2017-7623
+heap-buffer-overflow in iwmiffr_convert_row32
+https://github.com/jsummers/imageworsener/issues/12
+
+
+CVE-2017-7624
+memory leak in imagew-cmd
+https://github.com/jsummers/imageworsener/issues/10
+
+
+CVE-2017-7939
+stack buffer overflow in read_next_pam_token
+https://github.com/jsummers/imageworsener/issues/13
+
+
+CVE-2017-7940
+memory leak in imagew-cmd
+https://github.com/jsummers/imageworsener/issues/18
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
