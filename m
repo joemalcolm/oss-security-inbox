@@ -1,39 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/21/1
-Message-ID: <alpine.LFD.2.20.1704211444290.8068@wniryva>
-Date: Fri, 21 Apr 2017 14:47:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Jiangxin <jiangxin1@...wei.com>, Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-7980 Qemu: display: cirrus: OOB r/w access issues in bitblt routines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/3
+Message-ID: <CADSkJJWpn3Z6VermSdq9f2ckxQ59BUXDZ4y=_A0gSQKv7YZ+zg@mail.gmail.com>
+Date: Mon, 24 Apr 2017 10:06:52 -0400
+From: Russ Cox <rsc@...ch.com>
+To: oss-security@...ts.openwall.com
+Subject: remote DoS via CPU exhaustion in anon FTP server glob expansion
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Essentially all Unix shells and many popular programming languages use
+an exponential-time algorithm to decide whether a glob pattern matches
+a particular file name. For example, on my Linux system, matching
+a*a*a*a*a*a*a*a*b unsuccessfully against a file name consisting of 100
+a's takes half an hour using Java 8 and 15 minutes using BSD libc's
+glob(3) function.
 
-Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
-vulnerable to an out-of-bounds r/w access issues. It could occur while copying 
-VGA data via various bitblt functions.
+If an attacker can control the pattern used against even moderately
+sized file names (40 characters would be fine), a single failed
+pattern match against a single file name can easily consume
+hours of CPU.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS OR potentially execute arbitrary code on a host with 
-privileges of Qemu process on the host.
+This can happen in anonymous FTP servers, creating a possible remote
+DoS attack.
 
-Upstream patches:
------------------
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=026aeffcb4752054830ba203020ed6eb05bcaba8
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=ffaf857778286ca54e3804432a2369a279e73aa7
+Affected:
+- tnftpd, a fork of the NetBSD ftpd, as shipped with macOS 10.12.4 and earlier
+- Pure-FTPd 1.0.36
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1444371
+Possibly affected:
+- standard ftpd on BSD-based systems
 
+Not affected:
+- netkit ftpd 0.17, if run on Linux
+- ProFTPD 1.3.5
+- vsftpd 3.0.2
 
-This issue was independently reported by Jiangxin of PSIRT Huawei Inc. and Li 
-Qiang of 360.cn Inc.
+On the language side, C on BSD and macOS systems, Java, Perl, and Tcl
+implement glob pattern-matching with an exponential-time algorithm.
+Code passing untrusted glob patterns to those implementations would
+also be affected. Because BSD libc is affected, I expect that most of
+the standard *BSD ftpd implementations are affected as well, but I have
+not tested them.
 
-CVE-2017-7980 assigned via -> http://cveform.mitre.org/
+C on Linux systems (using GNU glibc), Go, Ruby, and Rust implement
+glob pattern-matching with a linear-time algorithm. Code passing
+untrusted glob patterns to those implementations should be unaffected.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This problem is not CVE-2001-1501, nor CVE-2010-2632, nor
+CVE-2015-5917, all of which are about patterns matching many files.
+In this case, the pattern matches no files.
+
+The closest previous report is CVE-2005-0256 (CPU problems caused by
+repeated adjacent stars), which is a special case of the underlying
+general problem here.
+
+Due to the widespread but limited ("only" CPU exhaustion) nature of
+the problem, I have not attempted any embargoed prenotification.
+I will forward this note directly to product-security@...le.com and
+bugs@...eftpd.org. I filled out the "DWF Open Source Request Form v2"
+for a CVE number for the generic problem, and I will reply here when
+I receive the number.
+
+In addition to fixing the matching algorithms, I would suggest that
+all FTP implementations impose CPU time limits on individual FTP
+sessions to guard against future problems and consider removing glob
+support entirely. I would also suggest that affected sites consider
+not running anonymous FTP servers.
+
+More details at https://research.swtch.com/glob.
+
+Russ Cox
+rsc@...ch.com
