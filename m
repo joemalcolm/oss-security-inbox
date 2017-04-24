@@ -1,33 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/6
-Message-ID: <20171102121654.GA5905@gremlin.ru>
-Date: Thu, 2 Nov 2017 15:16:55 +0300
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: tftpd-hpa - insecure chroot()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/4
+Message-ID: <CAHmME9r_F44PvenZbTK4LyqTucMpV+o75t3FH8CcWF8TyQuhgQ@mail.gmail.com>
+Date: Mon, 24 Apr 2017 20:00:10 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: remote heap overflow in linux networking stack
 Content-Type: text/plain; charset=utf-8
 
-Just look at this code and guess how it would be compiled on most
-systems:
+Hello,
 
-========================================
-    /* Chroot and drop privileges */
-    if (secure) {
-        if (chroot(".")) {
-            syslog(LOG_ERR, "chroot: %m");
-            exit(EX_OSERR);
-        }
-#ifdef __CYGWIN__
-        chdir("/");             /* Cygwin chroot() bug workaround */
-#endif
-    }
-========================================
+Requesting a CVE for [1], a heap overflow I found in Linux.
 
-:-)
+Thanks,
+Jason
 
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
-
-Content of type "application/pgp-signature" skipped
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4d6fa57b4dab0d77f4d8e9d9c73d1e63f6fe8fee
