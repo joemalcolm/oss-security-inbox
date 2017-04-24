@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/26
-Message-ID: <20170622010316.6a70d902@yolovo>
-Date: Thu, 22 Jun 2017 01:03:16 +0200
-From: Franz Pletz <fpletz@...rdicwalking.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/7
+Message-ID: <alpine.GSO.2.20.1704241659260.19751@scrappy.simplesystems.org>
+Date: Mon, 24 Apr 2017 17:08:57 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Qualys Security Advisory - The Stack Clash
+Subject: Re: remote DoS via CPU exhaustion in anon FTP server glob expansion
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 21 Jun 2017 22:45:45 +0100
-nospam@...so.re wrote:
+There was no mention of ImageMagick and GraphicsMagick, which have 
+their own built-in glob algorithm.
 
-> not sure it counts as a major distribution (probably not), but NixOS
-> (https://nixos.org) is gaining traction and, as far as I understand,
-> they are working on patches but they don't seem to be ready yet.
+When a matching file exists, a glob expression which takes massive 
+time with zsh, takes virtually no time with ImageMagick/GraphicsMagick 
+(much better than zsh).  However if there is no matching file, then 
+the amount of time required seems unbounded.
 
-Hi,
+Besides being passed as an explicit argument, glob expressions can be 
+passed as multiple lines in a text file preceded with a '@' character 
+like
 
-there is an open pull request[0] that will be merged soon.
+   @filename.txt
 
-Unfortunately we can't yet fulfill all of the requirements of the
-distros mailing list. That's why we had no prior notice.
+Any input file name could be a glob expression.
 
-NixOS does have an active security team[1] though.
-
-Cheers,
-Franz
-
-[0]: https://github.com/NixOS/nixpkgs/pull/26750
-[1]: https://nixos.org/nixos/security.html
-
-Content of type "application/pgp-signature" skipped
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
