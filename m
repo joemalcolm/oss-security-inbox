@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/15/4
-Message-ID: <CACqxkW+VWetr30iWUQaEaLOJ0FTgc0Bv4SPRm9pftaw15X1+bw@mail.gmail.com>
-Date: Sat, 15 Apr 2017 14:38:23 +0100
-From: Nick Boyce <nick.boyce@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/2
+Message-ID: <20170424124605.GG22557@suse.de>
+Date: Mon, 24 Apr 2017 14:46:05 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)
+Subject: Re: libcroco: heap overflow and undefined behavior
 Content-Type: text/plain; charset=utf-8
 
-Hi Agostino,
+On Sun, Apr 23, 2017 at 12:42:04PM +0200, Agostino Sarubbo wrote:
+> Description:
+> libcroco is a Generic Cascading Style Sheet (CSS) parsing and manipulation 
+> toolkit.
 
-Ian>>> Affected version:  1.0.8
-Ian>>> Fixed version:  1.0.9
-Ian>>
-Ian>> Should this be 0.1.8 and 0.1.9 instead?
-you>
-you> I dind't understand at all what you would to change.
+...
 
-Perhaps Ian is referring to the fact that at the "Secret Rabbit Code"
-home of libsamplerate, to which your linked blog article provides this
-link:
-http://www.mega-nerd.com/SRC/
-there is no reference to any version numbers of the form 1.0.x, but
-only numbers such as 0.1.8 (the last release [dated 15.Aug.2011]
-mentioned in the changelog as I write)
-http://www.mega-nerd.com/SRC/ChangeLog
-and 0.1.9 (the latest version actually available for download):
-http://www.mega-nerd.com/SRC/download.html
+> # csslint-0.6 $FILE
+> /tmp/portage/dev-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-
+> tknzr.c:1283:15: runtime error: value 9.11111e+19 is outside the range of 
+> representable values of type 'long'
+> Commit fix:
+> https://git.gnome.org/browse/libcroco/commit/?id=9ad72875e9f08e4c519ef63d44cdbd94aa9504f7
+> Reproducer:
+> https://github.com/asarubbo/poc/blob/master/00268-libcroco-outside-long
+> CVE:
+> CVE-2017-7961
+> 
+> Affected version:
+> 0.6.11 and 0.6.12
+> 
+> Fixed version:
+> 0.6.13 (not released atm)
 
-I'm just as confused as Ian.
+This is not a security issue in my view. The conversion surely is
+truncating the double into a long value, but there is no impact as the
+value is one of the RGB components.
 
-Cheers
-Nick Boyce
-(just following along at home)
+Ciao, Marcus
