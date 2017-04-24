@@ -1,40 +1,167 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/3
-Message-ID: <87wpbq5uqz.fsf@gnu.org>
-Date: Wed, 15 Mar 2017 18:12:52 +0100
-From: ludo@....org (Ludovic Courtès)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/1
+Message-ID: <3763aa60-8c4e-b6a0-f9e8-2c7a120989a1@redhat.com>
+Date: Mon, 24 Apr 2017 10:21:15 +0200
+From: Andrej Nemec <anemec@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Leo Famulari <leo@...ulari.name>
-Subject: Dealing with CVEs that apply to unspecified package versions
+Subject: Re: CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Xiaobo,
 
-Some CVE entries do not specify the version of the package(s) they apply
-to.  For instance, the software list for CVE-2016-10165 contains
-“cpe:/a:littlecms:little_cms_color_engine”, which theoretically means
-that it applies to any version of lcms.
+Unfortunately, CVE assignments are not done through this list anymore.
+You need to visit [1] and request a CVE by filing out the form. Could
+you please look at it and let the list know about the assigned CVE?
 
-The problem is automated tools cannot exploit such entries in practice
-because they cannot tell which package versions are affected.
+Thanks!
 
-While tuning our CVE tracking tool in GNU Guix, we found that such
-entries are not uncommon:
+Best Regards,
 
-  https://lists.gnu.org/archive/html/guix-devel/2017-03/msg00335.html
+[1] https://cveform.mitre.org/
 
-What are the possibilities to address this issue?
+-- 
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
 
-I can think of two actions that could perhaps be taken:
 
-  1. The software behind the CVE form could force submitters to specify
-     version numbers.
+On 04/22/2017 05:02 AM, Xiaobo Xiang wrote:
+> Hi,
+>
+> There is a infinite recursion in
+> PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
+> In the ReadDocumentStructure function, it calls ReadXRefContents several
+> time, for exmple in the end of ReadDocumentStructure:.
+>     try {
+>         ReadXRefContents( m_nXRefOffset );
+>     } catch( PdfError & e ) {
+>         e.AddToCallstack( __FILE__, __LINE__, "Unable to load xref
+> entries." );
+>         throw e;
+>     }
+>
+> The ReadXRefContents and ReadXRefStreamContents will call each other if it
+> meet some conditions. Just as below.
+>
+> void PdfParser::ReadXRefStreamContents( pdf_long lOffset, bool
+> bReadOnlyTrailer )
+> {
+>     m_device.Device()->Seek( lOffset );
+>     //....
+>     if(xrefObject.HasPrevious())
+>     {
+>         try {
+>             m_nIncrementalUpdates++;
+>
+>             // PDFs that have been through multiple PDF tools may have a
+> mix of xref tables (ISO 32000-1 7.5.4)
+>             // and XRefStm streams (ISO 32000-1 7.5.8.1) and in the Prev
+> chain,
+>             // so call ReadXRefContents (which deals with both) instead of
+> ReadXRefStreamContents
+>             ReadXRefContents( xrefObject.GetPreviousOffset(),
+> bReadOnlyTrailer );
+>         } catch(PdfError &e) {
+>             //....
+>         }
+>     }
+> }
+>
+> void PdfParser::ReadXRefContents( pdf_long lOffset, bool bPositionAtEnd )
+> {
+>     pdf_int64 nFirstObject = 0;
+>     pdf_int64 nNumObjects  = 0;
+>
+>     if( !this->IsNextToken( "xref" ) )
+>     {
+> //      if( m_ePdfVersion < ePdfVersion_1_5 )
+> //        Ulrich Arnold 19.10.2009, found linearized 1.3-pdf's with
+> trailer-info in xref-stream
+>         if( m_ePdfVersion < ePdfVersion_1_3 )
+>         {
+>             PODOFO_RAISE_ERROR( ePdfError_NoXRef );
+>         }
+>         else
+>         {
+>             ReadXRefStreamContents( lOffset, bPositionAtEnd );
+>             return;
+>         }
+>     }
+>
+> The crash log is just as follows:
+>
+> ./podofofuzzer: Running 1 inputs 1 time(s) each.
+> Running: crash-5aac275479284034b46368c836564266b0ed3694
+> ASAN:DEADLYSIGNAL
+> =================================================================
+> ==30073==ERROR: AddressSanitizer: stack-overflow on address 0x7ffc70e74f18
+> (pc 0x0000004e6119 bp 0x7ffc70e75790 sp 0x7ffc70e74f20 T0)
+>     #0 0x4e6118  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x4e6118)
+>     #1 0x8a75c1  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x8a75c1)
+>     #2 0x4e6efc  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x4e6efc)
+>     #3 0x7fdbbe094277  (/usr/lib/x86_64-linux-gnu/libstdc++.so.6+0x121277)
+>     #4 0x61085e  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x61085e)
+>
+> when debugging with gdb and checking the stack backtrace, it showed the
+> program runs out of the stack as below :
+>
+> #6884 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
+> (this=0x617000000080, lOffset=5923, bReadOnlyTrailer=false)
+>     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
+> #6885 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
+> (this=0x617000000080, lOffset=5923, bPositionAtEnd=false) at
+> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
+> #6886 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
+> (this=0x617000000080, lOffset=5923, bReadOnlyTrailer=false)
+>     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
+> #6887 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
+> (this=0x617000000080, lOffset=5923, bPositionAtEnd=false) at
+> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
+> #6888 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
+> (this=0x617000000080, lOffset=5923, bReadOnlyTrailer=false)
+>     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
+> #6889 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
+> (this=0x617000000080, lOffset=5923, bPositionAtEnd=false) at
+> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
+> #6890 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
+> (this=0x617000000080, lOffset=5923, bReadOnlyTrailer=false)
+>     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
+> #6891 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
+> (this=0x617000000080, lOffset=5923, bPositionAtEnd=false) at
+> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
+> #6892 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
+> (this=0x617000000080, lOffset=116, bReadOnlyTrailer=false)
+>     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
+> #6893 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
+> (this=0x617000000080, lOffset=116, bPositionAtEnd=false) at
+> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
+> #6894 0x00000000006303bf in PoDoFo::PdfParser::ReadDocumentStructure
+> (this=0x617000000080) at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:337
+> #6895 0x000000000062e252 in PoDoFo::PdfParser::ParseFile
+> (this=0x617000000080, rDevice=..., bLoadOnDemand=true) at
+> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:220
+> #6896 0x000000000062ce49 in PoDoFo::PdfParser::ParseFile
+> (this=0x617000000080, pszFilename=0x8ca380 <.str> "tempinput.pdf",
+> bLoadOnDemand=true)
+>     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:164
+> #6897 0x00000000005cdc65 in PoDoFo::PdfMemDocument::Load
+> (this=0x7fffffffbfe0, pszFilename=0x8ca380 <.str> "tempinput.pdf",
+> bForUpdate=false)
+>     at /home/name/podofo-0.9.5/src/doc/PdfMemDocument.cpp:256
+> #6898 0x00000000005cd682 in PoDoFo::PdfMemDocument::PdfMemDocument
+> (this=0x7fffffffbfe0, pszFilename=0x8ca380 <.str> "tempinput.pdf",
+> bForUpdate=false)
+>     at /home/name/podofo-0.9.5/src/doc/PdfMemDocument.cpp:102
+>
+> Thus,causing denial of service.
+> ​
+>  crash-5aac275479284034b46368c836564266b0ed3694
+> <https://drive.google.com/file/d/0B_D2GM9VAVyvanRadmhWd1RKM0U/view?usp=drive_web>
+> ​
+>
+> Best Regards,​​
+> Xiang Xiaobo
+>
 
-  2. For recent entries (say, 2 years old at most), a bot could email
-     the original submitters kindly asking them to provide the missing
-     version info.
 
-Thoughts?
 
-Thanks,
-Ludo’.
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
