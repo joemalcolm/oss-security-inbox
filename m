@@ -1,148 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/7
-Message-ID: <44bd64fe-87c7-918c-4d0e-5e2e05d233ca@securify.nl>
-Date: Wed, 22 Nov 2017 18:40:21 +0100
-From: "Securify B.V." <lists@...urify.nl>
-To: oss-security@...ts.openwall.com
-Subject: Clickjacking vulnerability in CSRF error page pfSense
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/5
+Message-ID: <20170424181756.GA2236@openwall.com>
+Date: Mon, 24 Apr 2017 20:17:56 +0200
+From: Solar Designer <solar@...nwall.com>
+To: "Jason A. Donenfeld" <Jason@...c4.com>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: remote heap overflow in linux networking stack
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-Clickjacking vulnerability in CSRF error page pfSense
-------------------------------------------------------------------------
-Yorick Koster, November 2017
+Hi Jason,
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-pfSense is a free and open source firewall and router. It was found that
-the pfSense WebGUI is vulnerable to Clickjacking. By tricking an
-authenticated admin into interacting with a specially crafted webpage it
-is possible for an attacker to execute arbitrary code in the WebGUI.
-Since the WebGUI runs as the root user, this will result in a full
-compromise of the pfSense instance.
+On Mon, Apr 24, 2017 at 08:00:10PM +0200, Jason A. Donenfeld wrote:
+> Requesting a CVE for [1], a heap overflow I found in Linux.
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was successfully tested on pfSense version 2.4.1.
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4d6fa57b4dab0d77f4d8e9d9c73d1e63f6fe8fee
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-pfSense 2.4.2-RELEASE [2] was released that addresses the Clickjacking
-issue.
+Thank you for bringing this in here.
 
-------------------------------------------------------------------------
-Introduction
-------------------------------------------------------------------------
-pfSense [3] is a free and open source firewall and router. It was found
-that the pfSense WebGUI is vulnerable to Clickjacking. This
-vulnerability allows an attacker to execute arbitrary code with root
-privileges.
+I've attached the above URL's content in text/plain form, as required by
+oss-security content guidelines (actual content must be on the list, not
+only included by reference).
 
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-The pfSense WebGUI uses the csrf-magic [4] library to protect against
-Cross-Site Request Forgery (CSRF) attacks. This library contains a user
-friendly error page that is implemented in the csrf_callback() function.
-This error page is shown whenever the users submits an incorrect (or
-missing) CSRF token. The error page contains a 'Try again' button that
-allows the user to re-submit the requested action; the invalid token is
-replaced with a valid token. The default callback function is listed
-below, which is also used by pfSense.
+The bug is in drivers/net/macsec.c implementing IEEE 802.1AE (MACsec).
+I hope it is rarely used and thus rarely exposed, and Linux kernel
+support for it is rather new, right?
 
-/usr/local/www/csrf/csrf-magic.php:
-function csrf_callback($tokens) {
-	// (yes, $tokens is safe to echo without escaping)
-	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
-	$data = '';
-	foreach (csrf_flattenpost($_POST) as $key => $value) {
-		if ($key == $GLOBALS['csrf']['input-name']) continue;
-		$data .= '<input type="hidden" name="'.htmlspecialchars($key).'"
-value="'.htmlspecialchars($value).'" />';
-	}
-	echo "<html><head><title>CSRF check failed</title></head>
-		<body>
-		<p>CSRF check failed. Your form session may have expired, or you may
-not have
-		cookies enabled.</p>
-		<form method='post' action=''>$data<input type='submit' value='Try
-again' /></form>
-		<p>Debug: $tokens</p></body></html>
-";
-}
+oss-security is no longer a place to request CVE IDs.  You may request a
+CVE ID directly from MITRE:
 
-The use of this error page introduces a risk as in case of a CSRF
-attempt, the victim will only be shown this error page. The victim may
-be enticed to click the 'Try again' button, thus executing the
-attacker's specially crafted action. What is even more interesting is
-that the CSRF logic is executed before the WebGUI sets the
-X-Frame-Options header, which should mitigate Clickjacking. In case of
-an invalid CSRF token, execution of the script will be stopped after the
-error page is returned and as a result the X-Frame-Options header will
-not be set. Consequently, the CSRF error page is prone to Clickjacking
-attacks.
+https://cveform.mitre.org
 
-/usr/local/www/guiconfig.inc:
-/* Include authentication routines */
-/* THIS MUST BE ABOVE ALL OTHER CODE */
-include_once('phpsessionmanager.inc');
-if (!$nocsrf) {
-	function csrf_startup() {
-		global $config;
-		csrf_conf('rewrite-js', '/csrf/csrf-magic.js');
-		$timeout_minutes =
-isset($config['system']['webgui']['session_timeout']) ?
-$config['system']['webgui']['session_timeout'] : 240;
-		csrf_conf('expires', $timeout_minutes * 60);
-	}
-	require_once("csrf/csrf-magic.php");
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		phpsession_end(true);
-	}
-}
-/* make sure nothing is cached */
-if (!$omit_nocacheheaders) {
-	header("Expires: 0");
-	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-	header("Cache-Control: no-cache, no-store, must-revalidate");
-	header("Pragma: no-cache");
-}
-header("X-Frame-Options: SAMEORIGIN");
+Once you have the CVE ID, please post it to this same thread in here.
 
-The CSRF error page does include a Javascript framebreaker script that
-also mitigates Clickjacking in some cases. In this case it is trivial to
-bypass this framebreaker script by opening the target page within a
-sandboxed iframe [5] with the allow-forms attribute set. The allow-forms
-attribute allows for the form post when a victim clicks the 'Try again'
-button.
+(For non-public issues, it is also still possible to request CVE IDs
+along with notification to the (linux-)distros lists, as long as the
+primary purpose of giving advance notice to the distros is providing
+them with actionable information.  A few of the distros are CNAs, so
+they'd assign CVE IDs from their pools.)
 
-/usr/local/www/csrf/csrf-magic.php:
-if ($GLOBALS['csrf']['frame-breaker']) {
-	$buffer = str_ireplace('</head>', '<script type="text/javascript">if
-(top != self) {top.location.href =
-self.location.href;}</script></head>', $buffer);
-}
+Alexander
 
-An attacker can use this issue to perform a Clickjacking attack against
-an authenticated admin. This requires that the attacker knows the URL of
-the WebGUI and tricks an authenticated admin into visiting a specially
-crafted webpage. This webpage will make an arbitrary POST to the WebGUI
-containing an invalid token. The POST is done to a sandboxed iframe.
-Using UI redressing the attacker can trick the victim into clicking the
-'Try again' button, resulting in the POST to be resend to the WebGUI -
-this time containing a valid CSRF token. A successful attack will result
-in the execution of arbitrary code by the WebGUI. Since the WebGUI runs
-as the root user, this will result in a full compromise of the pfSense
-instance.
-------------------------------------------------------------------------
-References
-------------------------------------------------------------------------
-[1] 
-https://www.securify.nl/advisory/SFY20171101/clickjacking-vulnerability-in-csrf-error-page-pfsense.html
-[2] https://doc.pfsense.org/index.php/2.4.2_New_Features_and_Changes
-[3] https://www.pfsense.org/
-[4] https://github.com/ezyang/csrf-magic
-[5] https://www.w3schools.com/tags/att_iframe_sandbox.asp
+View attachment "linux-drivers-net-macsec.txt" of type "text/plain" (3175 bytes)
