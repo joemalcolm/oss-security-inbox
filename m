@@ -1,41 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/14
-Message-ID: <CA+55aFyZpWutYKccn1eZBV5Lj_bF7gEZqy=LgjDOBqHk4poeTA@mail.gmail.com>
-Date: Sat, 24 Jun 2017 09:46:12 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Brad Spengler <spender@...ecurity.net>
-Cc: oss-security@...ts.openwall.com, Pax Team <pageexec@...email.hu>
-Subject: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/6
+Message-ID: <CADSYzsugzEnV-7WjgVetwCHLmhaX3bY9DPgR-Gvo-UodR0R1xA@mail.gmail.com>
+Date: Mon, 24 Apr 2017 18:14:59 -0300
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 24, 2017 at 8:15 AM, Brad Spengler <spender@...ecurity.net> wrote:
->
-> So Linus, you called the patches garbage when someone asked how we fixed the heap
-> stack gap issue 7 years ago when you failed to.  Can you provide any technical details
-> demonstrating why that fix is garbage,
+SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
 
-I didn't call "that fix" garbage.
+Desc.:
+SquirrelMail is affected by a critical Remote Code Execution vulnerability
+which stems from insufficient escaping of user-supplied data when
+SquirrelMail has been configured with Sendmail as the main transport.
+An authenticated attacker may be able to exploit the vulnerability
+to execute arbitrary commands on the target and compromise the remote
+system.
 
-I called the grsecurity patches garbage.
+Discovered by:
+Dawid Golunski (https://legalhackers.com : https://ExploitBox.io)
+, as well as Filippo Cavallarin (see attached advisory for details)
 
-Why?
+Official solution:
+Vendor seems to have released a new version of 1.4.23 on
+squirrelmail-20170424_0200-SVN.stable.tar.gz
+which still seems to be vulnerable hence a new subject/thread.
 
-They aren't split up, there has never been any effort by you to make
-them palatable to upstream, and when somebody else *dioes* try to make
-them palatable to upstream, you start crying about how people are
-taking advantage of your work (hah), and try to make them private
-instead.
+The exploit from my advisory was also confirmed to work on Ubuntu
+package: '1.4.23~svn20120406-2ubuntu1.16.04.1'.
 
-So tell me, why shouldn't I consider them garbage?  They are.
+Hence the updated version in the subject/advisory title.
 
-It's literally less work for people to re-implement things than look
-at your mixed-up patches, and YOU SEEM TO BE DOING THAT ON PURPOSE.
+Full advisory URL:
 
-Now, prove *me* wrong. Start trying to integrate your work upstream,
-and send individual patches with commit logs that can be integrated.
+https://legalhackers.com/advisories/SquirrelMail-Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
 
-> Put up or shut up, for once.
 
-Indeed, Brad.
 
-                  Linus
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+https://ExploitBox.io
+t: @dawid_golunski
+
+View attachment "SquirrelMail_RCE.txt" of type "text/plain" (16343 bytes)
