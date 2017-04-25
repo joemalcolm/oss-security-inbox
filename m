@@ -1,4 +1,9 @@
-Received: (qmail 4072 invoked by uid 550); 28 Apr 2025 13:21:49 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["746" "Tuesday" "25" "April" "2017" "15:23:42" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1704251521270.24794@wniryva>" "25" "[oss-security] CVE-2017-8086 Qemu: 9pfs: host memory leakage via v9pfs_list_xattr" nil nil nil "4" "2017042509:53:42" "[oss-security] CVE-2017-8086 Qemu: 9pfs: host memory leakage via v9pfs_list_xattr" (number mark "U       ppandit@redh Apr 25   25/746   " thread-indent "\"[oss-security] CVE-2017-8086 Qemu: 9pfs: host memory leakage via v9pfs_list_xattr\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5853 invoked by uid 550); 25 Apr 2017 09:54:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,89 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21623 invoked from network); 28 Apr 2025 09:37:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnupg.org;
-	s=20181017; h=Content-Type:MIME-Version:Message-ID:In-Reply-To:Date:
-	References:Subject:Cc:To:From:Sender:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=fGgotoWYsSPdzRpExurOjjVVXGnKqPQXvcuWJ9gr3ZE=; b=D9dGqOKGJ6YUUVDCIIMprMkcch
-	XIadLmpwhwxhBkDPgTDahDJENX/Raqp8KQA2SzpI0ru3mmkUAaGgsBPcJunYboA2SANQvftwlyiY2
-	SgeGxfa9G9LuZAISHaZ8xGJLMFwnInRGmDKhLZnqKWxGNb4Tw5TPX0yOnJa4h5XkibHE=;
-From: Werner Koch <wk@gnupg.org>
-To: Jan Engelhardt <ej@inai.de>
-Cc: Florian Westphal <fw@strlen.de>,  oss-security@lists.openwall.com,
-  Sunny73Cr <Sunny73Cr@protonmail.com>,  "netfilter-devel@vger.kernel.org"
- <netfilter-devel@vger.kernel.org>
-References: <1EYtBL_6T4QRNdyaUOoY2OO_FLzCtCfv4Q7gBf28RHR_k_LB-t0IN5R7v12bgaOOSKputo826H9PZ-2EmksldVLnGVoXyMQVemTy3tMra10=@protonmail.com>
-	<20250425062231.GA7332@breakpoint.cc>
-	<sqo7nqpr-151q-4sr4-1o40-r95r62179s29@vanv.qr>
-X-message-flag: Mails containing HTML will not be read!
-	 Please send only plain text.
-Jabber-ID: wk@jabber.gnupg.org
-Date: Mon, 28 Apr 2025 11:38:51 +0200
-In-Reply-To: <sqo7nqpr-151q-4sr4-1o40-r95r62179s29@vanv.qr> (Jan Engelhardt's
-	message of "Fri, 25 Apr 2025 09:46:15 +0200 (CEST)")
-Message-ID: <87sels7hhw.fsf@jacob.g10code.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: (qmail 5835 invoked from network); 25 Apr 2017 09:53:59 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 16E349F727
+Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 16E349F727
+Date: Tue, 25 Apr 2017 15:23:42 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1704251521270.24794@wniryva>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=Plume_Standoff_Security_Evaluation_H5N1_UT/RUS_computer_terrorism_ID";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] Re: Trailing dot in Cygwin filenames [was:
- failed to clone iptables,ipset,nftables]
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Tue, 25 Apr 2017 09:53:48 +0000 (UTC)
+Subject: [oss-security] CVE-2017-8086 Qemu: 9pfs: host memory leakage via v9pfs_list_xattr
 
---=Plume_Standoff_Security_Evaluation_H5N1_UT/RUS_computer_terrorism_ID
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+   Hello,
 
-Hi!
+Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable 
+to a memory leakage issue. It could occur while querying file system extended 
+attributes via 9pfs_list_xattr() routine.
 
-> But Cygwin does something unusual, it *actually* creates a file with
-> the 2-char sequence "y.", through whatever means. Explorer *shows* it
+A privileged user/process inside guest could use this flaw to leak host memory 
+resulting in Dos.
 
-  C:\Users\dd9jn\test>echo foo >x.
-=20=20
-  C:\Users\dd9jn\test>dir
-  [...]
-  28.04.2025  11:30                 6 x
-                 1 Datei(en),              6 Bytes
-=20=20
-  C:\Users\dd9jn\test>echo foo >\\?\\c:\users\dd9jn\test\x.
-=20=20
-  C:\Users\dd9jn\test>dir
-  [...]
-  28.04.2025  11:30                 6 x
-  28.04.2025  11:30                 6 x.
-                 2 Datei(en),             12 Bytes
-=20=20
-Thus you can create such a file using the Extended Path Length Prefix
-which bypasses the mapping used by CreateFile.  For detailed info see
-also
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=4ffcdef4277a91af15a3c09f7d16af072c29f3f2
 
-https://googleprojectzero.blogspot.com/2016/02/the-definitive-guide-on-win3=
-2-to-nt.html
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1444781
 
+This issue was reported by Li Qiang of Qihoo 360 Gear Team.
 
+'CVE-2017-8086' assigned via -> http://cveform.mitre.org/
 
-Salam-Shalom,
-
-   Werner
-
---=20
-The pioneers of a warless world are the youth that
-refuse military service.             - A. Einstein
-
---=Plume_Standoff_Security_Evaluation_H5N1_UT/RUS_computer_terrorism_ID
-Content-Type: application/pgp-signature; name="openpgp-digital-signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iIMEARYKACsWIQSHd0YfKgdOvEgNNZQZzByeCFsQegUCaA9Mqw0cd2tAZ251cGcu
-b3JnAAoJEBnMHJ4IWxB6GrMA/1ErZrryPW9I5PzDBEP7qnTm6CmvHb1XTGpPCYY3
-GzkiAQCspnhUjJls8OtNEQQGp8EQBS5QK658mrVqCDJk+3XACw==
-=L7uo
------END PGP SIGNATURE-----
---=Plume_Standoff_Security_Evaluation_H5N1_UT/RUS_computer_terrorism_ID--
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
