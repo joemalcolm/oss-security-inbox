@@ -1,87 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/04/6
-Message-ID: <20170404152039.GH3687@suse.de>
-Date: Tue, 4 Apr 2017 17:20:39 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/6
+Message-ID: <3805bb04-25a8-5408-30e9-17af80f78d0b@redhat.com>
+Date: Tue, 25 Apr 2017 15:52:28 +0200
+From: Andrej Nemec <anemec@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Eric Dumazet <edumazet@...gle.com>, Andrey Konovalov <andreyknvl@...gle.com>, "David S. Miller" <davem@...emloft.net>, Alexey Kuznetsov <kuznet@....inr.ac.ru>, James Morris <jmorris@...ei.org>, Hideaki YOSHIFUJI <yoshfuji@...ux-ipv6.org>, Patrick McHardy <kaber@...sh.net>, netdev <netdev@...r.kernel.org>, LKML <linux-kernel@...r.kernel.org>, Vasily Kulikov <segoon@...nwall.com>
-Subject: Re: Linux kernel ping socket / AF_LLC connect() sin_family race
+Subject: Re: CVE request: remote heap overflow in linux networking stack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Alexander, Jason,
 
-did anyone request a CVE yet?
+This is the issue that I referenced in [1]. We have internally decided
+that it's worth to assign a CVE even though it's public and there is a
+risk of duplication because the issue looks serious. I sent a CVE update
+to Mitre, we'll see if they catch it and stop possible duplication
+assignment.
 
-Ciao, Marcus
-On Sat, Mar 25, 2017 at 01:10:57AM +0100, Solar Designer wrote:
-> On Fri, Mar 24, 2017 at 03:21:06PM -0700, Eric Dumazet wrote:
-> > Looks easy enough to fix ?
-> 
-> Oh.  Probably.  Thanks.  Need to test, but I guess you already did?
-> 
-> > diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
-> > index
-> > 2af6244b83e27ae384e96cf071c10c5a89674804..ccfbce13a6333a65dab64e4847dd510dfafb1b43
-> > 100644
-> > --- a/net/ipv4/ping.c
-> > +++ b/net/ipv4/ping.c
-> > @@ -156,17 +156,18 @@ int ping_hash(struct sock *sk)
-> >  void ping_unhash(struct sock *sk)
-> >  {
-> >         struct inet_sock *isk = inet_sk(sk);
-> > +
-> >         pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
-> > +       write_lock_bh(&ping_table.lock);
-> >         if (sk_hashed(sk)) {
-> > -               write_lock_bh(&ping_table.lock);
-> >                 hlist_nulls_del(&sk->sk_nulls_node);
-> >                 sk_nulls_node_init(&sk->sk_nulls_node);
-> >                 sock_put(sk);
-> >                 isk->inet_num = 0;
-> >                 isk->inet_sport = 0;
-> >                 sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
-> > -               write_unlock_bh(&ping_table.lock);
-> >         }
-> > +       write_unlock_bh(&ping_table.lock);
-> >  }
-> >  EXPORT_SYMBOL_GPL(ping_unhash);
-> 
-> FWIW, in Pavel's original implementation for 2.4.32 (unused), this was:
-> 
-> static void ping_v4_unhash(struct sock *sk)
-> {
-> 	DEBUG(("ping_v4_unhash(sk=%p,sk->num=%u)\n", sk, sk->num));
-> 	write_lock_bh(&ping_hash_lock);
-> 	if (sk->pprev) {
-> 		if (sk->next)
-> 		       sk->next->pprev = sk->pprev;
-> 		*sk->pprev = sk->next;
-> 		sk->pprev = NULL;
-> 		sk->num = 0;
-> 		sock_prot_dec_use(sk->prot);
-> 		__sock_put(sk);
-> 	}
-> 	write_unlock_bh(&ping_hash_lock);
-> }
-> 
-> Looks like the erroneous optimization (not expecting concurrent activity
-> on the same socket?) was introduced during conversion to 2.6's hlists.
-> 
-> So far this cursed function had 3 bugs, two of them security (including
-> this one) and one probably benign (or if not, then effectively a subset
-> of this bug as it performed some unneeded / stale debugging work before
-> acquiring the lock), with all 3 introduced in forward-porting.  Maybe
-> the nature of forward-porting activity makes people relatively
-> inattentive ("compiles with the new interfaces and still works? must be
-> correct"), compared to when writing new code.
-> 
-> Anyhow, I share some responsibility for this mess, for having advocated
-> this patch being forward-ported and merged back then.  I still like
-> having this functionality and its userspace security benefits... but I
-> don't like the kernel bugs.
-> 
-> Alexander
-> 
+All credits for this discovery go to Jason.
+
+[1] http://seclists.org/oss-sec/2017/q2/119
+
+Best Regards,
 
 -- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+
+
+On 04/24/2017 08:17 PM, Solar Designer wrote:
+> Hi Jason,
+>
+> On Mon, Apr 24, 2017 at 08:00:10PM +0200, Jason A. Donenfeld wrote:
+>> Requesting a CVE for [1], a heap overflow I found in Linux.
+>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4d6fa57b4dab0d77f4d8e9d9c73d1e63f6fe8fee
+> Thank you for bringing this in here.
+>
+> I've attached the above URL's content in text/plain form, as required by
+> oss-security content guidelines (actual content must be on the list, not
+> only included by reference).
+>
+> The bug is in drivers/net/macsec.c implementing IEEE 802.1AE (MACsec).
+> I hope it is rarely used and thus rarely exposed, and Linux kernel
+> support for it is rather new, right?
+>
+> oss-security is no longer a place to request CVE IDs.  You may request a
+> CVE ID directly from MITRE:
+>
+> https://cveform.mitre.org
+>
+> Once you have the CVE ID, please post it to this same thread in here.
+>
+> (For non-public issues, it is also still possible to request CVE IDs
+> along with notification to the (linux-)distros lists, as long as the
+> primary purpose of giving advance notice to the distros is providing
+> them with actionable information.  A few of the distros are CNAs, so
+> they'd assign CVE IDs from their pools.)
+>
+> Alexander
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
