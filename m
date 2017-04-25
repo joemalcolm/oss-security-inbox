@@ -1,26 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/16
-Message-ID: <e0f40b5d-6d9b-561e-7e3f-bf146ec26e9a@securify.nl>
-Date: Wed, 25 Jan 2017 19:28:07 +0100
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/4
+Message-ID: <b3892063-b093-4353-88e3-49cbec582422@redhat.com>
+Date: Tue, 25 Apr 2017 11:20:12 +0200
+From: Andrej Nemec <anemec@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple PHP object injection vulnerabilities affecting three WordPress Plugins
+Subject: CVE-2017-7477 kernel: net: Heap overflow in skb_to_sgvec in macsec.c
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+Hello folks,
+
+Red Hat has been notified about a possible heap overflow vulnerability
+in kernel networking, specifically in the macsec.c module. We have
+assigned a CVE-2017-7477 for this issue. Corresponding commit which
+fixes this issue can be found at [1]. There is no preliminary impact
+available as of now.
+
+Short description:
+
+A heap overflow vulnerability was found in the Linux kernel in macsec
+module. Specifying MAX_SKB_FRAGS + 1 and using NETIF_F_FRAGLIST which
+calls skb_to_sgvec will overflow the heap.
+
+This is now available as a Red Hat bugzilla at [2].
+
+[1]
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4d6fa57b4dab0d77f4d8e9d9c73d1e63f6fe8fee
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=1445207
+
+Best Regards,
+
+-- 
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
 
 
 
 
-
-
-
-
-View attachment "cms_commander_client_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3305 bytes)
-
-View attachment "google_forms_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3124 bytes)
-
-View attachment "infinitewp_client_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3667 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
