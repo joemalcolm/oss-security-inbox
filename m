@@ -1,4 +1,9 @@
-Received: (qmail 32137 invoked by uid 550); 16 Apr 2023 21:00:22 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1147" "Tuesday" "25" "April" "2017" "16:56:56" "-0400" "Stuart Gathman" "stuart@gathman.org" "<d414e085-1071-0815-98cf-94d68ca76df5@gathman.org>" "22" "Re: [oss-security] SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)" "^Date:" nil nil "4" "2017042520:56:56" "[oss-security] SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)" (number mark "        stuart@gathm Apr 25   22/1147  " thread-indent "\"Re: [oss-security] SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)\"\n") "<CADSYzsugzEnV-7WjgVetwCHLmhaX3bY9DPgR-Gvo-UodR0R1xA@mail.gmail.com>" ("<CADSYzsugzEnV-7WjgVetwCHLmhaX3bY9DPgR-Gvo-UodR0R1xA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3268 invoked by uid 550); 26 Apr 2017 06:31:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,151 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32088 invoked from network); 25 Apr 2017 20:57:22 -0000
+Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="fc37:2c50:7583:e01a:8c69:8f50:8dcf:a076" (h.elissa.gathman.org); auth=pass (CRAM-MD5 sslbits=None) smtp.auth=stuart
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; i=@gathman.org; 
+ q=dns/txt; s=default; t=1493153828; h=subject : to : references : from 
+ : message-id : date : mime-version : in-reply-to : content-type : 
+ content-transfer-encoding : subject : from : date; 
+ bh=W4Wfp9/zP0Z7WXjPg3HvhmmK1StOcm4jqaSzceBRrYE=; 
+ b=G2/OVZtI1qADQzr7H9oZD/qyVfFvz2gFurBUivBjz6Yh9zGh/cdvFb52FRWHgPkGY3Imi6
+ LbcH4wn2CDJRSMq2HNmUMfAepJ6XnxsP80ZhXakle1qVsPfqZUzHYVqQ+APzRbVMkcCza3iT
+ uW09M622eL6aSDZay2l1VS7hedlEw=
+References: <CADSYzsugzEnV-7WjgVetwCHLmhaX3bY9DPgR-Gvo-UodR0R1xA@mail.gmail.com>
+Organization: Gathman Systems
+Jabber-Id:  stuart@gathman.org
+Message-ID: <d414e085-1071-0815-98cf-94d68ca76df5@gathman.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <CADSYzsugzEnV-7WjgVetwCHLmhaX3bY9DPgR-Gvo-UodR0R1xA@mail.gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 25 Apr 2017 16:56:56 -0400
+From: Stuart Gathman <stuart@gathman.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30530 invoked from network); 16 Apr 2023 20:57:40 -0000
-Date: Sun, 16 Apr 2023 22:57:27 +0200
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
+Subject: Re: [oss-security] SquirrelMail <= 1.4.23 Remote Code Execution
+ (CVE-2017-7692)
 To: oss-security@lists.openwall.com
-Message-ID: <20230416205727.0XQJ2%steffen@sdaoden.eu>
-In-Reply-To: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
-References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-450-g9589f04a75
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth:
- Unauthorized management command execution
 
-Ruihan Li wrote in
- <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>:
- ...
- |be privileged, such as a setuid program. Moreover, if the socket is used as
- |stdout or stderr, an ioctl call is made to obtain tty parameters, which \
- |can be
- |verified through the strace command.
- |```
- |# strace -e trace=ioctl sudo > /dev/null
- |ioctl(3, TIOCGPGRP, [30305])            = 0
- |ioctl(2, TIOCGWINSZ, {ws_row=45, ws_col=190, ws_xpixel=0, ws_ypixel=0}) = 0
- |```
- ...
- |# find . -user root -perm -4000 -exec sh -c "strace -e trace=ioctl \
- |{} < /dev/null 2>&1 > /dev/null | grep ioctl > /dev/null && echo -n \
- |'V ' || echo -n 'S '; echo {};" \; | sort
- |S ./chage
- |S ./expiry
- |S ./fusermount
- |S ./fusermount3
- |S ./gpasswd
- |S ./ksu
- |S ./mount.cifs
- |S ./sg
- |S ./umount
- |V ./chfn
- |V ./chsh
- |V ./mount
- |V ./newgrp
- |V ./passwd
- |V ./pkexec
- |V ./screen-4.9.0
- |V ./su
- |V ./sudo
- |V ./unix_chkpwd
- |```
- |After manually checking the strace output, it is found that all of \
- |these ioctl
- |users are using ioctl calls on stdin, stdout, or stderr to get or set \
- |some tty
- |parameters. Note that exactly no arguments are passed to these setuid
+On 04/24/2017 05:14 PM, Dawid Golunski wrote:
+> SquirrelMail <=3D 1.4.23 Remote Code Execution (CVE-2017-7692)
+>
+> Desc.:
+> SquirrelMail is affected by a critical Remote Code Execution vulnerability
+> which stems from insufficient escaping of user-supplied data when
+> SquirrelMail has been configured with Sendmail as the main transport.
+> An authenticated attacker may be able to exploit the vulnerability
+> to execute arbitrary commands on the target and compromise the remote
+> system.
+We deploy squirrelmail NOT using sendmail for sending mail ($useSendmail
+=3D false).  There is no reason not to use SMTP instead of running
+sendmail directly.  It doesn't seem to be vulnerable that way - and I
+suggest that as a mitigation.  Just to be sure, after reading this
+advisory I added  $sendmail_path  =3D '/usr/sbin/false'; (We always avoid
+direct command execution with PHP because PHP is prone to quoting bugs.)=20
 
-Your discovered bluetooth bug totally aside.
+OT: is there already a utility that *safely* logs arguments and stdin
+(as was apparently used to explain the exploit)?  I could write a C
+prog, or a carefully quoted bash script - but would rather use an
+already proven utility.
 
-I wonder -- have you verified that they do not use isatty(3) aka
-some tc*() series *first*?  The above with sudo does for example
-not reveal anything as shown, roght?  FD 2 seems to be a terminal,
-.. and whereas i do not have sudo src here, i am sure it uses
-isatty(3) and tcgetattr(3).
-
-I find it hard to believe that people simply use terminal ioctl(2)
-etc on file descriptors without verifying that they are, well,
-indeed terminal file descriptors?  For example, su(1), as above,
-of Linux shadow-utils works a bit, i read for example
-
-       * Be more paranoid, like su from SimplePAMApps.  --marekm
-
-So this general beating onto SETUID or super capable programs
-smells like bad fish Hollywood boom-boom again, no?
-You have to do some things, and if you give up privileges
-thereafter, extended capabilities are gone.
-Here locally Xorg now is
-
-  #!/bin/sh
-  #
-  # Execute Xorg.wrap if it exists otherwise execute Xorg directly.
-  # This allows distros to put the suid wrapper in a separate package.
-
-  basedir="/usr/lib/xorg-server"
-  if [ -x "$basedir"/Xorg.wrap ]; then
-          exec "$basedir"/Xorg.wrap "$@"
-  else
-          exec "$basedir"/Xorg "$@"
-  fi
-
-
-  $ ll /usr/lib/xorg-server|grep Xorg
-  -r-sr-xr-x 1 root root   14632 Mar 31 21:24 Xorg.wrap*
-  -rwxr-xr-x 1 root root 2482224 Mar 31 21:24 Xorg*
-
-and so i had to adjust my startx.sh
-
-  X=
-  if [ -x /usr/lib/xorg-server/Xorg ]; then
-     g=`groups`
-     if { echo ${g} | grep -q video; } >/dev/null 2>&1 &&
-           { echo ${g} | grep -q input; } >/dev/null 2>&1; then
-        X=/usr/lib/xorg-server/Xorg
-     fi
-     unset g
-  fi
-
-  if [ -n "${X}" ]; then
-     :
-  elif [ -x /usr/lib/xorg-server/Xorg.wrap ]; then
-     X=/usr/lib/xorg-server/Xorg.wrap
-  elif command -v Xorg; then
-     X=Xorg
-  else
-     X=X
-  fi
-
-and furthermore i indeed find myself now in video, input (and
-audio) on this box.  What a maintance mess.
-(Maintenance is a real thing, i for example have ssh access to
-servers where in (/var)?/tmp/ you will find stale temporary files
-older than one and a half decade!  Isn't that sheer grazy:
-
-  l#?0|...$ ll /var/tmp/
-  Gesamt 874514
-  -rw-------   1 dam      ...         8192 Nov 22  2008 Rx_2ay14
-  ...
-  -rw-------   1 schwarze ...        25232 Aug  6  2016 aaaJTaazJ
-  ...
-
-Then something capable that is nicely programmed, saw many eyes,
-and looses privileges as soon as possible i prefer.  Hey -- or
-make it message passing aware, use TLS connections, marshal via
-normalized Unicode and XML, and ask question over an otherwise
-under-documented message protocol, that uses totally
-under-documented cryptical XML configuration files, and that
-somehow gives you resources via a passed-back file descriptor, or
-something like this.
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
