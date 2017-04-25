@@ -1,33 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/02/3
-Message-ID: <20170102002054.GA21309@jasmine>
-Date: Sun, 1 Jan 2017 19:20:54 -0500
-From: Leo Famulari <leo@...ulari.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/10
+Message-Id: <1493134410.v5lp2nuxd8.tristanC@fedora>
+Date: Tue, 25 Apr 2017 15:40:02 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libtiff: multiple divide-by-zero
+Subject: [OSSA-2017-004] federated user gets wrong role (CVE-2017-2673)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 01, 2017 at 04:46:12PM +0100, Agostino Sarubbo wrote:
-> Description:
-> Libtiff is a software that provides support for the Tag Image File Format 
-> (TIFF), a widely used format for storing image data.
-> 
-> Some crafted images, through a fuzzing revealed multiple division by zero. 
-> Since the number of the issues, I will post the relevant part of the 
-> stacktrace.
-> 
-> Affected version / Tested on:
-> 4.0.7
-> Fixed version:
-> N/A
-> Commit fix:
-> https://github.com/vadz/libtiff/commit/438274f938e046d33cb0e1230b41da32ffe223e1
+================================================================
+OSSA-2017-004: Incorrect role assignment with federated Keystone
+================================================================
 
-Do you know if this repository has any relationship to the libtiff project?
+:Date: April 25, 2017
+:CVE: CVE-2017-2673
 
-It describes itself like this:
 
-"Unofficial mirror of libtiff cvs repository at cvs.maptools.org created
-and updated using "git cvsimport"?
+Affects
+~~~~~~~
+- Keystone: >=10.0.0 <=10.0.1, ==11.0.0
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+
+Description
+~~~~~~~~~~~
+Boris Bobrov from Mail.Ru reported a vulnerability in Keystone
+Federation. An authenticated user may receive all the roles assigned
+to the user's project regardless of the federation mapping when there
+are rules in which group-based assignments are not used. For example,
+by requesting an admin user to get a role in their project, the user
+may be granted the admin privileges for new scoped tokens. All setups
+using the Keystone federation without group based assignments rules
+are affected.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/459713 (Newton)
+- https://review.openstack.org/459732 (Ocata)
+- https://review.openstack.org/459705 (Pike)
+
+
+Credits
+~~~~~~~
+- Boris Bobrov from Mail.Ru (CVE-2017-2673)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1677723
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-2673
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+Content of type "application/pgp-signature" skipped
