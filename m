@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/14
-Message-ID: <20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>
-Date: Fri, 3 Nov 2017 11:12:43 -0700
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/3
+Message-ID: <d414e085-1071-0815-98cf-94d68ca76df5@gathman.org>
+Date: Tue, 25 Apr 2017 16:56:56 -0400
+From: Stuart Gathman <stuart@...hman.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
+Subject: Re: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
 Content-Type: text/plain; charset=utf-8
 
-On 2017-11-03 11:07, Fiedler Roman wrote:
+On 04/24/2017 05:14 PM, Dawid Golunski wrote:
+> SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
+>
+> Desc.:
+> SquirrelMail is affected by a critical Remote Code Execution vulnerability
+> which stems from insufficient escaping of user-supplied data when
+> SquirrelMail has been configured with Sendmail as the main transport.
+> An authenticated attacker may be able to exploit the vulnerability
+> to execute arbitrary commands on the target and compromise the remote
+> system.
+We deploy squirrelmail NOT using sendmail for sending mail ($useSendmail
+= false).  There is no reason not to use SMTP instead of running
+sendmail directly.  It doesn't seem to be vulnerable that way - and I
+suggest that as a mitigation.  Just to be sure, after reading this
+advisory I added  $sendmail_path  = '/usr/sbin/false'; (We always avoid
+direct command execution with PHP because PHP is prone to quoting bugs.) 
 
-> Due to the recent discussion on vim swap file use, I expected also
-> attraction of of evil-minded to the topic of text editing security and
-> thus an increase in attack probability on server side text editing in
-> general. Therefore I wanted to review our software qualification
-> criteria for text editing on servers, where vim/vim.tiny is used and
-> probably update the SOPs and guidelines.
+OT: is there already a utility that *safely* logs arguments and stdin
+(as was apparently used to explain the exploit)?  I could write a C
+prog, or a carefully quoted bash script - but would rather use an
+already proven utility.
 
-How much of this (and the parallel thread of course) applies to nvi?
-
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet, fetch the TXT record for the domain.
