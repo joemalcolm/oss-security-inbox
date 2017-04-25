@@ -1,74 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/14
-Message-ID: <20170628174537.GB16895@localhost.localdomain>
-Date: Wed, 28 Jun 2017 10:45:37 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/3
+Message-ID: <CAGeh-pGUHvb09esu_-vekerggwQWU8i64btEE_qgYmkw5o4XUw@mail.gmail.com>
+Date: Tue, 25 Apr 2017 10:47:45 +0200
+From: Dejan Bosanac <dejan@...httale.net>
+To: "dev@...ivemq.apache.org" <dev@...ivemq.apache.org>,  "users@...ivemq.apache.org" <users@...ivemq.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com,  Apache Security Response Team <security@...che.org>, Chess Hazlett <chazlett@...hat.com>
+Subject: [ANNOUNCE] CVE-2015-7559 - DoS in client via shutdown command
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+There following security vulnerability was reported against Apache
+ActiveMQ 5.14.4 and older versions.
 
-On Mon, Jun 26, 2017 at 02:35:57AM +0200, Solar Designer wrote:
-> The decision to wait for fixes in major distros that almost certainly do
-> intend to release fixes makes sense to me.
+Please check the following document and see if you’re affected by the issue.
 
-Thank you.  Since Fedora and Slackware published their updates, and
-FreeBSD and NetBSD published their patches (and our *BSD POCs are not
-full-fledged exploits anyway), we attached our Stack Clash exploits and
-POCs to this mail (alternatively, they are also available at
-https://www.qualys.com/research/security-advisories/).
+http://activemq.apache.org/security-advisories.data/CVE-2015-7559-announcement.txt?version=1&modificationDate=1493024710000&api=v2
 
-A few notes on the Linux ld.so exploits:
-
-- Linux_ldso_dynamic's probability of success varies significantly from
-  one SUID binary to another, because it depends on the size of the
-  .dynamic, .data, and .bss sections of the SUID binary.
-
-- Linux_ldso_hwcap's probability of success depends on the length of the
-  path to the SUID binary -- as a rule of thumb, the longer the path,
-  the higher the probability of success.
-
-- On Fedora and CentOS, Linux_ldso_hwcap_64 may not work against
-  "short-path" SUID binaries, but it works against the "long-path" SUIDs
-  that are installed by default (for example,
-  /usr/lib/polkit-1/polkit-agent-helper-1).
-
-  Moreover, we wrote a quick-and-dirty version of this exploit that does
-  work against the SUIDs in /usr/bin (it does not hardcode the 96KB/32KB
-  sizes of argv[] pointers/free stack space, but instead optimizes these
-  sizes).  However, we wanted to keep the main loop of this exploit as
-  simple as possible, and this improvement is therefore left as an
-  exercise for the interested reader.
-
-We are at your disposal for questions, comments, and further
-discussions.  Thank you very much!
-
-With best regards,
-
--- 
-the Qualys Security Advisory team
-
-    Give 'Em Enough ROP
-            --The Clash, second studio album
+Apache ActiveMQ 5.14.5 with appropriate fixes was released and
+are available for upgrade.
 
 
-View attachment "FreeBSD_CVE-2017-1085.c" of type "text/plain" (1947 bytes)
+Regards
+--
+Dejan Bosanac
+http://sensatic.net/about
 
-View attachment "FreeBSD_CVE-2017-FGPE.c" of type "text/plain" (2098 bytes)
-
-View attachment "FreeBSD_CVE-2017-FGPU.c" of type "text/plain" (1852 bytes)
-
-View attachment "Linux_ldso_dynamic.c" of type "text/plain" (18948 bytes)
-
-View attachment "Linux_ldso_hwcap_64.c" of type "text/plain" (31921 bytes)
-
-View attachment "Linux_ldso_hwcap.c" of type "text/plain" (33273 bytes)
-
-View attachment "Linux_offset2lib.c" of type "text/plain" (5394 bytes)
-
-View attachment "NetBSD_CVE-2017-1000375.c" of type "text/plain" (1529 bytes)
-
-View attachment "OpenBSD_at.c" of type "text/plain" (18062 bytes)
-
-View attachment "Solaris_rsh.c" of type "text/plain" (10686 bytes)
