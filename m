@@ -1,38 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/23/1
-Message-ID: <20170123030704.GA404@sin.redhat.com>
-Date: Mon, 23 Jan 2017 13:38:24 +1030
-From: Doran Moppert <dmoppert@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: lcms2 heap OOB read parsing crafted ICC profile
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/2
+Message-ID: <CANO=Ty0v=dPC3Gndgg8W17frEti12AzY6DoPcRmG3cgbJ5mq5w@mail.gmail.com>
+Date: Mon, 24 Apr 2017 19:51:24 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
 Content-Type: text/plain; charset=utf-8
 
-Originally disclosed on this list in August by Ibrahim El-Sayed, but the
-CVE request was unclear so I guess it got lost:
+On Mon, Apr 24, 2017 at 3:14 PM, Dawid Golunski <dawid@...alhackers.com>
+wrote:
 
-http://seclists.org/oss-sec/2016/q3/288
+> SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
+>
+> Desc.:
+> SquirrelMail is affected by a critical Remote Code Execution vulnerability
+> which stems from insufficient escaping of user-supplied data when
+> SquirrelMail has been configured with Sendmail as the main transport.
+> An authenticated attacker may be able to exploit the vulnerability
+> to execute arbitrary commands on the target and compromise the remote
+> system.
+>
+> Discovered by:
+> Dawid Golunski (https://legalhackers.com : https://ExploitBox.io)
+> , as well as Filippo Cavallarin (see attached advisory for details)
+>
+> Official solution:
+> Vendor seems to have released a new version of 1.4.23 on
+> squirrelmail-20170424_0200-SVN.stable.tar.gz
+> which still seems to be vulnerable hence a new subject/thread.
+>
 
-An out-of-bounds heap read in lcms2 ("Little Colour Management System"),
-in the function Type_MLU_Read in cmstypes.c.  This could be triggered by
-an untrusted image with a crafted ICC profile.
+So Squirrelmail's last release was 2011.
 
-Fixed in commit:
+**************************************
+*** SquirrelMail Stable Series 1.4 ***
+**************************************
 
-https://github.com/mm2/Little-CMS/commit/5ca71a7b
+Version 1.4.22 - 12 July 2011
 
-lcms2 is fairly bundled in various OpenJDK releases, so distributions
-should check carefully whether they use bundled versions, and if so,
-whether those have picked up the patch.
-
-Some more information at Red Hat bugzilla:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1367357
+I don't want to tell people what to do, but the fact is squirrelmail is
+probably not something you should be using.
 
 
-Thanks,
+
+>
+> The exploit from my advisory was also confirmed to work on Ubuntu
+> package: '1.4.23~svn20120406-2ubuntu1.16.04.1'.
+>
+> Hence the updated version in the subject/advisory title.
+>
+> Full advisory URL:
+>
+> https://legalhackers.com/advisories/SquirrelMail-
+> Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
+>
+>
+>
+> --
+> Regards,
+> Dawid Golunski
+> https://legalhackers.com
+> https://ExploitBox.io
+> t: @dawid_golunski
+>
+
+
 
 -- 
-Doran Moppert
-Red Hat Product Security
 
-Content of type "application/pgp-signature" skipped
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
