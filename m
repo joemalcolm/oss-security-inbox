@@ -1,48 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/10
-Message-ID: <20171128214359.q4b7cmlxd4ayz7ct@jumper.schlittermann.de>
-Date: Tue, 28 Nov 2017 22:43:59 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-16943 CVE-2017-16944 (Was:RCE in Exim reported)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/5
+Message-ID: <alpine.LFD.2.20.1704261248200.8206@wniryva>
+Date: Wed, 26 Apr 2017 12:52:02 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: YY Z <bigbird475958471@...il.com>, Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-8112 Qemu: scsi: vmw_pvscsi: infinite loop in pvscsi_log2
 Content-Type: text/plain; charset=utf-8
 
-Phil Pennock <oss-security-phil@...dhuis.org> (Sa 25 Nov 2017 04:59:12 CET):
-> In Post-Thanksgiving mail-catchup, I see that the Exim Project was
-> gifted with a couple of surprises in our public bugtracker on Thursday
-> morning.  Complete with proof-of-concept small Python script.
-> 
-> I've requested CVEs, don't have them yet.
-> 
-> My mail to our announce list:
->   https://lists.exim.org/lurker/message/20171125.034842.d1d75cac.en.html
-…
-> Public bugtracker links:
-> 
->   https://bugs.exim.org/show_bug.cgi?id=2199
->   https://bugs.exim.org/show_bug.cgi?id=2201
+   Hello,
 
-Both issues are fixed now.
+Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
+emulation support is vulnerable to an infinite loop issue. It could occur 
+while initialising SCSI message ring buffer in pvscsi_ring_init_msg().
 
-    CVE-2017-16943  (RCE)       Exim Bug 2199
-        master:             4e6ae6235c68de243b1c2419027472d7659aa2b4
-        exim-4_89+fixes:    4090d62a4b25782129cc1643596dc2f6e8f63bde
-    Fix done by Jeremy Harrys
-        
+A privileged user inside guest could use this flaw to consume host cpu cycles 
+or crash the Qemu process resulting in DoS.
 
-    CVE-2017-16944  (DoS)       Exim Bug 2201
-        master:             178ecb70987f024f0e775d87c2f8b2cf587dd542
-        exim-4_89+fixes:    4804c62909a62a3ac12ec4777ebd48c541028965
-    Fix done by me.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-04/msg04578.html
 
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1445621
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+This issue was independently reported by Li Qiang of Qihoo 360 Gear 
+Team and YY Z(CC'd).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+'CVE-2017-8112' assigned via -> http://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
