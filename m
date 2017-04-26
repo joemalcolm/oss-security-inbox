@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["656" "Tuesday" "19" "November" "2019" "13:41:36" "-0500" "Nathan Gough" "thenatog@apache.org" "<CAEhjM2Dr85nH_JNFJQ=f+uS7ptcht+zhKSL0w1gTXa6QvD+mWA@mail.gmail.com>" "20" "[oss-security] [CVE-2019-10080] Apache NiFi XXE information disclosure" nil nil nil "11" "2019111918:41:36" "[oss-security] [CVE-2019-10080] Apache NiFi XXE information disclosure" (number mark "U       thenatog@apa Nov 19   20/656   " thread-indent "\"[oss-security] [CVE-2019-10080] Apache NiFi XXE information disclosure\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-10080] Apache NiFi XXE information disclosure" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["804" "Wednesday" "26" "April" "2017" "12:52:02" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1704261248200.8206@wniryva>" "26" "[oss-security] CVE-2017-8112 Qemu: scsi: vmw_pvscsi: infinite loop in pvscsi_log2" nil nil nil "4" "2017042607:22:02" "[oss-security] CVE-2017-8112 Qemu: scsi: vmw_pvscsi: infinite loop in pvscsi_log2" (number mark "U       ppandit@redh Apr 26   26/804   " thread-indent "\"[oss-security] CVE-2017-8112 Qemu: scsi: vmw_pvscsi: infinite loop in pvscsi_log2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14193 invoked by uid 550); 19 Nov 2019 19:22:08 -0000
+Received: (qmail 21850 invoked by uid 550); 26 Apr 2017 07:22:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,38 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31769 invoked from network); 19 Nov 2019 18:41:59 -0000
-X-Gm-Message-State: APjAAAVAVQWqxL+WAcy4+QakIGESPe3RVHRk24ZPRUmCbODAcYxGjCII
-	UQzmc5lEfoKlEN7d3SyV0eY8ILvkHn2x0Mc7Kz4=
-X-Google-Smtp-Source: APXvYqwosG3F8nldNCaHyXa3jCafFgrNbZNs8sW02zIXw2eRbY5qb8qVR2Mcl3mQaURCU3vq+VhQpei+2l3svEl5Zd0=
-X-Received: by 2002:a6b:cc01:: with SMTP id c1mr17050528iog.7.1574188906733;
- Tue, 19 Nov 2019 10:41:46 -0800 (PST)
+Received: (qmail 21829 invoked from network); 26 Apr 2017 07:22:22 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com BA778C057FA9
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com BA778C057FA9
+Date: Wed, 26 Apr 2017 12:52:02 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: YY Z <bigbird475958471@gmail.com>, Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1704261248200.8206@wniryva>
 MIME-Version: 1.0
-From: Nathan Gough <thenatog@apache.org>
-Date: Tue, 19 Nov 2019 13:41:36 -0500
-X-Gmail-Original-Message-ID: <CAEhjM2Dr85nH_JNFJQ=f+uS7ptcht+zhKSL0w1gTXa6QvD+mWA@mail.gmail.com>
-Message-ID: <CAEhjM2Dr85nH_JNFJQ=f+uS7ptcht+zhKSL0w1gTXa6QvD+mWA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000009899020597b76abc"
-Subject: [oss-security] [CVE-2019-10080] Apache NiFi XXE information disclosure
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Wed, 26 Apr 2017 07:22:10 +0000 (UTC)
+Subject: [oss-security] CVE-2017-8112 Qemu: scsi: vmw_pvscsi: infinite loop in pvscsi_log2
 
---0000000000009899020597b76abc
-Content-Type: text/plain; charset="UTF-8"
+   Hello,
 
-[CVEID]:CVE-2019-10080
+Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
+emulation support is vulnerable to an infinite loop issue. It could occur 
+while initialising SCSI message ring buffer in pvscsi_ring_init_msg().
 
-[PRODUCT]:Apache NiFi
+A privileged user inside guest could use this flaw to consume host cpu cycles 
+or crash the Qemu process resulting in DoS.
 
-[VERSION]:Apache NiFi 1.3.0 to 1.9.2
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-04/msg04578.html
 
-[PROBLEMTYPE]:Information Disclosure
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1445621
 
-[REFERENCES]:https://nifi.apache.org/security.html#CVE-2019-10080
+This issue was independently reported by Li Qiang of Qihoo 360 Gear 
+Team and YY Z(CC'd).
 
-[DESCRIPTION]:As reported by RunningSnail, the XMLFileLookupService in NiFi
-versions 1.3.0 to 1.9.2 allowed trusted users to inadvertently configure a
-potentially malicious XML file. The XML file has the ability to make
-external calls to services (via XXE) and reveal information such as the
-versions of Java, Jersey, and Apache that the NiFI instance uses.
+'CVE-2017-8112' assigned via -> http://cveform.mitre.org/
 
---0000000000009899020597b76abc--
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
