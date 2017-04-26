@@ -1,77 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/03/1
-Message-ID: <5d143215-bf10-6f6a-e1f1-bf4264f8a10a@orlitzky.com>
-Date: Sun, 3 Sep 2017 18:30:18 -0400
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-14102: MIMEDefang privilege escalation via PID file manipulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/8
+Message-ID: <CAHmME9pvD3WYORH7u0WZEwxfsURJ+DZ0tQeYbx8fptZLeY-x6w@mail.gmail.com>
+Date: Wed, 26 Apr 2017 22:27:12 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: remote heap overflow in linux networking stack
 Content-Type: text/plain; charset=utf-8
 
-Product: MIMEDefang
-Versions-affected: 2.80 and earlier
-Fixed-in: Version 2.81
-Bug-report:
-http://lists.roaringpenguin.com/pipermail/mimedefang/2017-August/038077.html
-Author: Michael Orlitzky
-Acknowledgments: Dianne Skoll, who had an initial fix ready within
-  minutes of my report.
+Hey guys,
 
+Just following up on CVE-2017-7477 -- systems must also be patched
+with this commit that landed today:
 
-== Summary ==
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=5294b83086cc1c35b4efeca03644cf9d12282e5b
 
-The MIMEDefang daemons should create their PID files before dropping
-privileges. This represents a minor security issue; additional factors
-are needed to make it exploitable.
-
-
-== Details ==
-
-The purpose of the PID file is to hold the PID of the running daemon,
-so that later it can be stopped, restarted, or otherwise signalled
-(many daemons reload their configurations in response to a SIGHUP).
-To fulfil that purpose, the contents of the PID file need to be
-trustworthy. If the PID file is writable by a non-root user, then he
-can replace its contents with the PID of a root process. Afterwards,
-any attempt to signal the PID contained in the PID file will instead
-signal a root process chosen by the non-root user (a vulnerability).
-
-This is commonly exploitable through init scripts that are run as root
-and which blindly trust the contents of their PID files. Examples of
-said init scripts can be found in the MIMEDefang source tree:
-
-  * examples/init-script.in
-  * redhat/mimedefang-init.in
-
-
-== Exploitation ==
-
-An example of a problematic scenario involving an init script would be,
-
-1. I run "/etc/init.d/mimedefang start" to start the daemon.
-
-2. mimedefang drops to the "defang" user.
-
-3. mimedefang writes its PID file, now owned by the "defang" user.
-
-4. Someone compromises the daemon.
-
-5. The attacker is generally limited in what he can do because the
-   daemon doesn't run as root. However, he can write "1" into the
-   PID file, and he does.
-
-6. I run "/etc/init.d/mimedefang stop" to stop the daemon while I
-   investigate the weird behavior resulting from the hack.
-
-7. The machine reboots, because I killed PID 1 (this is normally
-   restricted to root).
-
-
-== Resolution ==
-
-The problem is resolved in MIMEDefang 2.81 by creating the PID files as
-root before dropping privileges. The role of the lock files --
-previously played by the PID files -- is now played by a separate set of
-files (specified on the command-line with "-o").
-
-Init script authors should relocate their PID files to either /run or
-/var/run.
+Regards,
+Jason
