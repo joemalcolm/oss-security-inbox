@@ -1,60 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/4
-Message-ID: <20170127112142.pgx5mrvl5qsxnvpa@home.ouaza.com>
-Date: Fri, 27 Jan 2017 12:21:42 +0100
-From: Raphael Hertzog <hertzog@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/4
+Message-ID: <2c23bf0d-0e48-e1b2-9db7-25ecba46d6e9@census-labs.com>
+Date: Wed, 26 Apr 2017 09:42:27 +0300
+From: Dimitrios Glynos <dimitris@...sus-labs.com>
 To: oss-security@...ts.openwall.com
-Cc: Gustavo Grieco <gustavo.grieco@...il.com>
-Subject: Re: CVE-2016-9584: heap use-after-free on libical
+Subject: Re: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 20 Jan 2017, Gustavo Grieco wrote:
-> > Any reason why you did not request a CVE for #251?
+
+
+On 25/04/2017 11:56 μμ, Stuart Gathman wrote:
+> On 04/24/2017 05:14 PM, Dawid Golunski wrote:
+>> SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
+>>
+>> Desc.:
+>> SquirrelMail is affected by a critical Remote Code Execution vulnerability
+>> which stems from insufficient escaping of user-supplied data when
+>> SquirrelMail has been configured with Sendmail as the main transport.
+>> An authenticated attacker may be able to exploit the vulnerability
+>> to execute arbitrary commands on the target and compromise the remote
+>> system.
+> We deploy squirrelmail NOT using sendmail for sending mail ($useSendmail
+> = false).  There is no reason not to use SMTP instead of running
+> sendmail directly.  It doesn't seem to be vulnerable that way - and I
+> suggest that as a mitigation.  Just to be sure, after reading this
+> advisory I added  $sendmail_path  = '/usr/sbin/false'; (We always avoid
+> direct command execution with PHP because PHP is prone to quoting bugs.) 
 > 
-> Yes. It was already reported here:
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1275400 (CVE-2016-5824)
-> but it was never officially reported upstream (and therefore, never fixed).
-
-It was reported in https://github.com/libical/libical/issues/235 but then
-closed by the submitter.
-
-You could have stated in #251 that you believed this crash to be the same
-than the one above. It was not obvious to me, I did it for you.
-
-> >> It is worth to mention there is a very similar bug found (CVE-2016-5824) on
-> >> the libical version used by
-> >> Thunderbird but we think is *not* the same as this one. In fact, we've
-> >> tested it on Thunderbird and it does *not* crash.
-> >>
-> >> The reproducer is available upon request.
-> >
-> > #253 has a reproducer here:
-> > https://github.com/libical/libical/files/627392/heap-use-after-free.ical.txt
-> >
-> > Is this the same file?
+> OT: is there already a utility that *safely* logs arguments and stdin
+> (as was apparently used to explain the exploit)?  I could write a C
+> prog, or a carefully quoted bash script - but would rather use an
+> already proven utility.
 > 
-> It is not the same file in fact. We found a variation of the original
-> input that trigger this
-> read out-of-bounds to read more than 60 bytes. This looks more serious
-> than usual (maybe you can read as much as you want) .
-> We had some complains in the past for making public test cases ..
 
-Here, I'm lost. You said that this oss-security report (CVE-2016-9584) is
-the same as #253 but you have another file than the test case
-submitted in #253.
+For execve logging (just arguments) see 'snoopy'. It catches exec
+calls using LDPRELOAD, so it misses them only if the calls are
+made from a static binary (which I don't believe php or sendmail
+are).
 
-Are you sure that this second file is the same underlying issue ?
+HTH,
 
-> > If it's a different file, then I'd like to have access to the file but I
-> > would prefer if it was just available publicly and not to me only.
-> 
-> Feel free to make the file public if you want.
-
-You would have to send it to me first :-)
-
-Cheers,
--- 
-Raphaël Hertzog ◈ Debian Developer
-
-Support Debian LTS: https://www.freexian.com/services/debian-lts.html
-Learn to master Debian: https://debian-handbook.info/get/
+Dimitris
