@@ -1,41 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/9
-Message-ID: <3025119.tSIlaHEIMQ@arcadia>
-Date: Thu, 16 Mar 2017 21:15:28 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/6
+Message-ID: <CADSYzssP6NY1J2dz8NB0FfNx2iSXJFwnLWq_o2P0mK+BjEGcTw@mail.gmail.com>
+Date: Wed, 26 Apr 2017 04:30:16 -0300
+From: Dawid Golunski <dawid@...alhackers.com>
 To: oss-security@...ts.openwall.com
-Cc: Thuan Pham <thuanpv@...p.nus.edu.sg>
-Subject: Re: CVE Request: multiple bugs found in BFD libraries and Binutils' utilities
+Subject: Re: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
 Content-Type: text/plain; charset=utf-8
 
-On Friday 17 March 2017 00:58:05 Thuan Pham wrote:
-> Could you please check whether these bugs are suitable for CVEs?
+Stuart,
 
-Thuan,
-thanks for sharing.
-
-Since few time the cve requests happens on https://cveform.mitre.org instead 
-of here.
-
->From some time of fuzz experience, from multiple cve requests and multiple 
-feedback from mitre I'd say:
-- In any way you are able to crash a library, it needs a cve because it is 
-supposed to receive multiple inputs.
-- Undefined behavior in a library also needs a cve. 
-- while the bug is in a command line tool:
-1) if it is a simple crash like fpe / segv, it is considered just an 
-inconvenience.
-2) if it is an overflow with read of size 1 is also considered an inconveniece 
-unless you can demostrate any evidence of damage.
-The mentioned cases are not just an inconvenience unless there are common 
-cases where you know that for example a webapp relies on this command line 
-tool.
-3) if it is an overflow with write access it should have a cve.
+Your suggested mitigation is good and was in fact already mentioned in
+my advisory, see
+'VIII. SOLUTION' section of:
+https://legalhackers.com/advisories/SquirrelMail-Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
 
 
-@everyone, if you think it is wrong or I missed something feel free to correct 
-me. 
- 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+As for the utility I just wrote my own C tool that loops through
+argv[] and saves it into a file.
+If you need something more advanced / already available you can try
+auditd rules.
+
+
+Regards,
+Dawid Golunski
+https://legalhackers.com  |  https://ExploitBox.io
+t: @dawid_golunski
+
+
+
+On Tue, Apr 25, 2017 at 5:56 PM, Stuart Gathman <stuart@...hman.org> wrote:
+> On 04/24/2017 05:14 PM, Dawid Golunski wrote:
+>> SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
+>>
+>> Desc.:
+>> SquirrelMail is affected by a critical Remote Code Execution vulnerability
+>> which stems from insufficient escaping of user-supplied data when
+>> SquirrelMail has been configured with Sendmail as the main transport.
+>> An authenticated attacker may be able to exploit the vulnerability
+>> to execute arbitrary commands on the target and compromise the remote
+>> system.
+> We deploy squirrelmail NOT using sendmail for sending mail ($useSendmail
+> = false).  There is no reason not to use SMTP instead of running
+> sendmail directly.  It doesn't seem to be vulnerable that way - and I
+> suggest that as a mitigation.  Just to be sure, after reading this
+> advisory I added  $sendmail_path  = '/usr/sbin/false'; (We always avoid
+> direct command execution with PHP because PHP is prone to quoting bugs.)
+>
+> OT: is there already a utility that *safely* logs arguments and stdin
+> (as was apparently used to explain the exploit)?  I could write a C
+> prog, or a carefully quoted bash script - but would rather use an
+> already proven utility.
+>
