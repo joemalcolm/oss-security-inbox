@@ -1,54 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/17
-Message-ID: <3791103E-80D5-4E75-AF23-6F8ED54DDEBE@apache.org>
-Date: Tue, 31 Oct 2017 12:44:38 -0700
-From: Jesus Camacho Rodriguez <jcamacho@...che.org>
-To: "user@...e.apache.org" <user@...e.apache.org>, <dev@...e.apache.org>, "security@...e.apache.org" <security@...e.apache.org>, <announce@...che.org>, <oss-security@...ts.openwall.com>
-Subject: [CVE-2017-12625] Apache Hive information disclosure vulnerability for column masking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/9
+Message-ID: <87k26628ox.fsf@curie.anarc.at>
+Date: Wed, 26 Apr 2017 16:52:14 -0400
+From: anarcat@...ngeseeds.org (Antoine Beaupré)
+To: oss-security@...ts.openwall.com
+Subject: kedpm: Information leak via the command history file
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-12625: Apache Hive information disclosure vulnerability for column masking
+A vulnerability was discovered in the kedpm password manager that may
+expose the master password when changed, if passed on the commandline.
 
-Severity: Important
+Example, good:
 
-Vendor: The Apache Software Foundation
+kedpm> passwd
+New password:
+Repeat password:
+Password changed.
+kedpm>
 
-Versions Affected: Hive 2.1.0 to 2.3.0
+Example, bad:
 
-Description:
-Hive exposes an interface through which masking policies can be defined on tables or
-views, e.g., using Apache Ranger. When a view is created over a given table, the
-policy enforcement does not happen correctly on the table for masked columns.
+kedpm:/> passwd bar
+Password changed
 
-Mitigation:
-2.3.0 users should upgrade to 2.3.1
-2.2.0 users should upgrade to 2.3.1, obtain the latest source from git for branch-2.2
-or apply this patch which will be included from 2.2.1
-https://git1-us-west.apache.org/repos/asf?p=hive.git;a=commit;h=0e795debddf261b0ac6ace90e2d774f9a99b7f4b
-2.1.x users should upgrade to 2.3.1, obtain the latest source from git for branch-2.1
-or apply this patch which will be included from 2.1.2
-https://git1-us-west.apache.org/repos/asf?p=hive.git;a=commit;h=6db9fd6e43f6eef3c9d1ca8e324b2edaa54fb0d3
+The former will show "passwd" in the ~/.kedpm/history file while the
+latter will show "passwd bar" in the history file, divulging the
+password in clear text.
 
-To mitigate this vulnerability until Hive is upgraded to a new version, there are two
-possible options. These steps need to be done manually in Ranger / Hive.
-1) Restrict users from creating views on tables with column masking rules defined. For
-this in Ranger Hive Policy:
- - Users should not have SELECT permission for those Table columns with masking rules
-defined.
- - Give SELECT permission only for those columns without masking rules defined.
-2) Review the Hive Column Masking Policies maintained in Ranger for the tables. Then
-check in Hive if views that read those tables have been defined.
-If present, either change the view definition so those columns are not selected or
-directly drop those views.
+Also, all password *names* that are created or consulted are saved in
+the history file, something that users may not expect (although you have
+to wonder how they thought history worked).
 
-Credit:
-This issue was reported by ﻿Suja Santhosh of Hortonworks.
+This is documented in the Debian bugtracker:
 
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=860817
 
-If you have any question, please reach out to us in the Hive dev list.
+But I would like to get a CVE assigned for wider diffusion.
 
-Regards,
+Note that I seem to be the sole kedpm maintainer left and I consider the
+software abandoned. I will backport patches to fix this in the Debian
+bugtracker, but I have filed a request for the software to be removed
+from Debian and all users should switch away.
 
-The Apache Hive Team
+Thanks,
 
+a.
 
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
