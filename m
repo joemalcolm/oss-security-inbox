@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1744" "Tuesday" "15" "September" "2015" "18:38:42" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150915183842.6e72c05b@pc1>" "50" "Re: [oss-security] Heap overflow and DoS in unzip 6.0" nil nil nil "9" "2015091516:38:42" "[oss-security] Heap overflow and DoS in unzip 6.0" (number mark "        hanno@hboeck Sep 15   50/1744  " thread-indent "\"Re: [oss-security] Heap overflow and DoS in unzip 6.0\"\n") "<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>" ("<CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>" "<20150915180357.7a0097a4@redhat.com>" "<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1345" "Tuesday" "25" "April" "2017" "18:16:11" "-0700" "Chris Douglas" "cdouglas@apache.org" "<CACO5Y4zUyP7-znomom9NJFTxAzG+_RjmjCqeF0CQoogVMzL9Dg@mail.gmail.com>" "39" "[oss-security] CVE-2017-3162: Apache Hadoop DataNode web UI vulnerability" nil nil nil "4" "2017042601:16:11" "[oss-security] CVE-2017-3162: Apache Hadoop DataNode web UI vulnerability" (number mark "U       cdouglas@apa Apr 25   39/1345  " thread-indent "\"[oss-security] CVE-2017-3162: Apache Hadoop DataNode web UI vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 2040 invoked by uid 550); 15 Sep 2015 16:38:36 -0000
+Received: (qmail 22235 invoked by uid 550); 26 Apr 2017 02:01:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 2016 invoked from network); 15 Sep 2015 16:38:35 -0000
-Message-ID: <20150915183842.6e72c05b@pc1>
-In-Reply-To: <CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>
-References: <CACn5sdRQaUEHfde5QzqnOSv829baMEgDBCN7n8rzzrb+1s2uMw@mail.gmail.com>
-	<20150915180357.7a0097a4@redhat.com>
-	<CACn5sdScL+e_x+QH4wS-cUKaEAMhSSy-jjeKufXu53j6-as_HA@mail.gmail.com>
-X-Mailer: Claws Mail 3.12.0 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-9959-1442335103-0001-2"
-Date: Tue, 15 Sep 2015 18:38:42 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Heap overflow and DoS in unzip 6.0
-To: oss-security@lists.openwall.com
-
---=_zucker.schokokeks.org-9959-1442335103-0001-2
+Received: (qmail 4094 invoked from network); 26 Apr 2017 01:16:52 -0000
+X-Gm-Message-State: AN3rC/4/s9WNoUcF0EP61S1GvFZLDCsRqXmdp8ek5wvqBPWC5WpWQP3v
+	Pq+TbKFBqvLPllcIubgXlOV705RzVA==
+X-Received: by 10.31.11.208 with SMTP id 199mr1614529vkl.149.1493169391544;
+ Tue, 25 Apr 2017 18:16:31 -0700 (PDT)
+MIME-Version: 1.0
+From: Chris Douglas <cdouglas@apache.org>
+Date: Tue, 25 Apr 2017 18:16:11 -0700
+X-Gmail-Original-Message-ID: <CACO5Y4zUyP7-znomom9NJFTxAzG+_RjmjCqeF0CQoogVMzL9Dg@mail.gmail.com>
+Message-ID: <CACO5Y4zUyP7-znomom9NJFTxAzG+_RjmjCqeF0CQoogVMzL9Dg@mail.gmail.com>
+To: user@hadoop.apache.org, 
+	"common-dev@hadoop.apache.org" <common-dev@hadoop.apache.org>, 
+	"general@hadoop.apache.org" <general@hadoop.apache.org>, "security@apache.org" <security@apache.org>, 
+	full-disclosure@lists.grok.org.uk, bugtraq <bugtraq@securityfocus.com>, 
+	oss-security@lists.openwall.com, 
+	"<security@hadoop.apache.org>" <security@hadoop.apache.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE-2017-3162: Apache Hadoop DataNode web UI vulnerability
 
-On Tue, 15 Sep 2015 13:10:17 -0300
-Gustavo Grieco <gustavo.grieco@gmail.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-> AFAIK, upstream is still working on the heap overflow issue (the DoS
-> is fixed in the last unzip beta). In concrete, they said:
+CVE-2017-3162: Apache Hadoop DataNode web UI vulnerability
 
-Actually talking about upstream: The state of the info-zip packages is
-pretty dismal.
+Severity: Important
 
-There are issues from 2009(!) that haven't seen a fix yet, at least
-not in a release:
-http://www.info-zip.org/phpBB3/viewtopic.php?f=3D7&t=3D267
+Vendor: The Apache Software Foundation
 
-Are you in contact with upstream?
+Versions affected: Hadoop 2.6.x and earlier
 
---=20
-Hanno B=C3=B6ck
-http://hboeck.de/
+Description:
+HDFS clients interact with a servlet on the DataNode to browse the
+HDFS namespace. The NameNode is provided as a query parameter that is
+not validated.
 
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
+Mitigation:
+Users of Apache Hadoop 2.6.x and earlier should upgrade to Hadoop
+2.7.0 or later.
 
---=_zucker.schokokeks.org-9959-1442335103-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
+Credit:
+This issue was discovered by Sunil Yadav.
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAEBCgAGBQJV+EmSAAoJEKWIAHK7tR5CL4MP/3CwmApfPwxoK9wH9W3U73k2
-4BKr+2zAdktMDeqoCx2TtSoqM0GeTugB8m/N2h4H/5lpx9MPOcbnnAfF7PRUAizW
-9njvQ5jHo1yJ5wzSkAlVpQtazcQYjUUhPi15OQsCyrh/2btT0dYpK47TY1TfvjD9
-Qpw+xF6JkO43dV4+Ox+VvSJOgDa7geqyI9NTt2P+k0cpp+sLvWIEAH7ozExA2EG3
-YmH5wETCc0Y8SKiDKwwjeq8w9P/k+PN+jZyibCv0CcMrzJHMzjXg+w1Y7VkTsCsK
-b+DKhvwgwT7yZ3Q9I1NcS9vk4LSzuYa66bQ3y97ipA7uFl4xr0t7oAHdfjAyCYnC
-dcGmwzmQxmuCtgKSQMyCLTbbBcN1MD7j0eeO6fUolmiRt5thgMFB6UeFprBB6TPH
-b0uUmRVZxx+d4HIo+gpyQZDHe7gOc6oTyZvGO1Ab/BNjkIoCpzb7PKYij5jF4N09
-wRipFZtLXEXuYmF7zGQqPmefqkgXMicFDP+YEEQ5vC7tqS8Irdk2qTelETCi/a9E
-3JPfpAXGzzNH433oxJpLQAR5Df959V+HV9fFHsnPABgV3x6IFqkhxKQmTGgEb6T2
-l2inb6q2DMcF46JIypHbrebUOsQfzcyCQkkryuJxeLMIb7QqB4OYNJG2/BHHA3qC
-8fBceSaTNnp8FOUgDoPp
-=DmXj
+iQIcBAEBCgAGBQJY//MFAAoJEPrQXCrFJpS4ZVYQAJ2BcBuaX/vV8brWXEsMH25L
+cUCKbyhdbKaq5m3vcGF6S8H+RAzurZSoy/xxP2Xc9oKKtwcUV/TEphMmYK/xEfTU
+iSMs84gV7rLPiCg20YwCSi0DbFjpfvFiLrX/K9YoIHD8ZoWOTxrGmf9JGaGWTsv8
+gi7N8iCSja2adc88WoqdbdQg/cTPFdv2OKjQeo0Axg63Vt4UFxdrWpGL7oyXPuHD
+df2mJR09jvuprzhyACDL2l4O3YO/Q8BMffHu5XVdnewYUS8K3lOEBsNkdbsJx5YG
+8XXUYQEZ8RpnAADaeInI6g5e3qEqISrvtLxp/QXARUgpFYoPY2te+3hBQZADnBiq
+JlXtM+UD7iY+bs0c+/AJNTn/JRLqiaRe745E/kkYJ8mjvzFEjko5Eaq1xTuzER42
+euH5GDr3tkGXsoGPDrCv+ns9MMMZz9qmMqZOayKNN3oN3gZYg00w6Jm8f4BA5qWs
+8tPfgaLGoGnEySoGPZdZPVdwFIOcS16+5Wr2JpvMCv8bTQOPR/H2yAFO4K1mmUEh
+HB7T67lBCbNa1LrOFQJIWVRMAx9iR63UzCLpRfiTCKSHei2GFuGzat5gRXly3goF
+iZqu2AugMFf93KW9x8koVOyoXYOYcIlhLNyRkBPkpgsYY2LZ96plNkNEPOSD+EGC
+FlCf1icS+h2DK/F059f5
+=TSqN
 -----END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-9959-1442335103-0001-2--
