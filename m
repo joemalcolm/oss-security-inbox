@@ -1,75 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/11/1
-Message-ID: <d664369b-77c6-b0e3-7d40-5d8ef912ee3d@powerdns.com>
-Date: Mon, 11 Dec 2017 13:34:31 +0100
-From: Remi Gacogne <remi.gacogne@...erdns.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/7
+Message-Id: <B2478A17-5E89-484B-9728-1AB95D5EA865@beckweb.net>
+Date: Wed, 26 Apr 2017 21:07:50 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: PowerDNS Security Advisory 2017-08
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Hello everybody,
+The Jenkins project published updates today with fixes for multiple 
+vulnerabilities. Users should upgrade to the versions below:
 
-We just released PowerDNS Recursor 4.0.8, fixing a security issue
-(CVE-2017-15120) affecting PowerDNS Recursor from 4.0.0 up to and
-including 4.0.7. PowerDNS Recursor 3.7.4 and 4.1.0 are not affected. The
-full security advisory can be found below and at
-https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2017-08.html
+* Jenkins (weekly) 2.57
+* Jenkins (LTS) 2.46.2
 
-The issue is a parsing error while handling authoritative answers
-containing a CNAME of a different class than IN, leading to a recursor
-crash via a NULL-pointer dereference. We don't believe this crash to be
-exploitable, but it results in an unauthenticated remote denial of
-service which can be mitigated by running the recursor inside a
-supervisor like supervisord or systemd so it can be automatically restarted.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2017-04-26/
 
-We also provide a minimal patch for the 4.0.7 release at
-https://downloads.powerdns.com/patches/2017-08/
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Please feel free to contact me directly if you have any question.
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Best regards,
+---
 
+SECURITY-412 through SECURITY-420 / CVE-2017-1000356
+Multiple CSRF vulnerabilities, including immediate or delayed Jenkins
+restart, removing all configured update sites, installing and loading
+any plugin available on configured update sites, changing Jenkins
+system, security, and tool configuration, or creating new agents.
 
-Remi and the PowerDNS team
+SECURITY-429 / CVE-2017-1000353
+An unauthenticated remote code execution vulnerability allowed
+attackers to transfer a serialized Java SignedObject object to the
+remoting-based Jenkins CLI, that would be deserialized using a new
+ObjectInputStream, bypassing the existing blacklist-based protection
+mechanism.
 
-PowerDNS Security Advisory 2017-08: Crafted CNAME answer can cause a
-=====================================================================
-denial of service
-=================
+SECURITY-466 / CVE-2017-1000354
+The login command available in the remoting-based CLI stored the
+encrypted user name of the successfully authenticated user in a cache
+file used to authenticate further commands. Users with sufficient
+permission to create secrets in Jenkins, and download their encrypted
+values (e.g. with Job/Configure permission), were able to impersonate
+any other Jenkins user on the same instance.
 
--  CVE: CVE-2017-15120
--  Date: December 11th 2017
--  Credit: Toshifumi Sakaguchi
--  Affects: PowerDNS Recursor from 4.0.0 up to and including 4.0.7
--  Not affected: PowerDNS Recursor 3.7.4, 4.0.8, 4.1.0
--  Severity: High
--  Impact:  Denial of service
--  Exploit: This problem can be triggered by an authoritative server
-   sending a crafted CNAME answer with a class other than IN to the
-Recursor.
--  Risk of system compromise: No
--  Solution: Upgrade to a non-affected version
--  Workaround: run the process inside a supervisor like supervisord or
-systemd
-
-An issue has been found in the parsing of authoritative answers in
-PowerDNS Recursor, leading to a NULL pointer dereference when parsing a
-specially crafted answer containing a CNAME of a different class than IN.
-This issue has been assigned CVE-2017-15120.
-
-When the PowerDNS Recursor is run inside a supervisor like supervisord
-or systemd, it will be automatically restarted, limiting the impact to
-somewhat degraded service.
-
-PowerDNS Recursor from 4.0.0 up to and including 4.0.7 are affected.
-
-For those unable to upgrade to a new version, a minimal patch is
-`available <https://downloads.powerdns.com/patches/2017-08>`__
-
-We would like to thank Toshifumi Sakaguchi for finding and subsequently
-reporting this issue.
+SECURITY-503 / CVE-2017-1000355
+Jenkins uses the XStream library to serialize and deserialize XML. Its
+maintainer recently published a security vulnerability[1] that allows
+anyone able to provide XML to Jenkins for processing using XStream to
+crash the Java process. In Jenkins this typically applies to users
+with permission to create or configure items (jobs), views, or agents.
 
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+1: http://www.openwall.com/lists/oss-security/2017/04/03/4
