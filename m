@@ -1,36 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/12
-Message-ID: <3e2ebfb9-f0ad-b61b-f1ed-abf9810d8c09@apache.org>
-Date: Mon, 19 Jun 2017 15:16:21 -0700
-From: Jacob Champion <jchampion@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-3169: Apache httpd 2.x mod_ssl null pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/1
+Message-ID: <CACO5Y4zUyP7-znomom9NJFTxAzG+_RjmjCqeF0CQoogVMzL9Dg@mail.gmail.com>
+Date: Tue, 25 Apr 2017 18:16:11 -0700
+From: Chris Douglas <cdouglas@...che.org>
+To: user@...oop.apache.org,  "common-dev@...oop.apache.org" <common-dev@...oop.apache.org>,  "general@...oop.apache.org" <general@...oop.apache.org>, "security@...che.org" <security@...che.org>,  full-disclosure@...ts.grok.org.uk, bugtraq <bugtraq@...urityfocus.com>,  oss-security@...ts.openwall.com,  "<security@...oop.apache.org>" <security@...oop.apache.org>
+Subject: CVE-2017-3162: Apache Hadoop DataNode web UI vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-3169: mod_ssl null pointer dereference
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+CVE-2017-3162: Apache Hadoop DataNode web UI vulnerability
 
 Severity: Important
 
 Vendor: The Apache Software Foundation
 
-Versions Affected:
-httpd 2.2.0 to 2.2.32
-httpd 2.4.0 to 2.4.25
+Versions affected: Hadoop 2.6.x and earlier
 
 Description:
-mod_ssl may dereference a NULL pointer when third-party modules call
-ap_hook_process_connection() during an HTTP request to an HTTPS port.
+HDFS clients interact with a servlet on the DataNode to browse the
+HDFS namespace. The NameNode is provided as a query parameter that is
+not validated.
 
 Mitigation:
-2.2.x users should either apply the patch available at
-https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-3169.patch
-or upgrade in the future to 2.2.33, which is currently unreleased.
-
-2.4.x users should upgrade to 2.4.26.
+Users of Apache Hadoop 2.6.x and earlier should upgrade to Hadoop
+2.7.0 or later.
 
 Credit:
-The Apache HTTP Server security team would like to thank Vasileios
-Panopoulos and AdNovum Informatik AG for reporting this issue.
+This issue was discovered by Sunil Yadav.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-References:
-https://httpd.apache.org/security_report.html
+iQIcBAEBCgAGBQJY//MFAAoJEPrQXCrFJpS4ZVYQAJ2BcBuaX/vV8brWXEsMH25L
+cUCKbyhdbKaq5m3vcGF6S8H+RAzurZSoy/xxP2Xc9oKKtwcUV/TEphMmYK/xEfTU
+iSMs84gV7rLPiCg20YwCSi0DbFjpfvFiLrX/K9YoIHD8ZoWOTxrGmf9JGaGWTsv8
+gi7N8iCSja2adc88WoqdbdQg/cTPFdv2OKjQeo0Axg63Vt4UFxdrWpGL7oyXPuHD
+df2mJR09jvuprzhyACDL2l4O3YO/Q8BMffHu5XVdnewYUS8K3lOEBsNkdbsJx5YG
+8XXUYQEZ8RpnAADaeInI6g5e3qEqISrvtLxp/QXARUgpFYoPY2te+3hBQZADnBiq
+JlXtM+UD7iY+bs0c+/AJNTn/JRLqiaRe745E/kkYJ8mjvzFEjko5Eaq1xTuzER42
+euH5GDr3tkGXsoGPDrCv+ns9MMMZz9qmMqZOayKNN3oN3gZYg00w6Jm8f4BA5qWs
+8tPfgaLGoGnEySoGPZdZPVdwFIOcS16+5Wr2JpvMCv8bTQOPR/H2yAFO4K1mmUEh
+HB7T67lBCbNa1LrOFQJIWVRMAx9iR63UzCLpRfiTCKSHei2GFuGzat5gRXly3goF
+iZqu2AugMFf93KW9x8koVOyoXYOYcIlhLNyRkBPkpgsYY2LZ96plNkNEPOSD+EGC
+FlCf1icS+h2DK/F059f5
+=TSqN
+-----END PGP SIGNATURE-----
