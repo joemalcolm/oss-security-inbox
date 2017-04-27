@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["540" "Tuesday" "30" "June" "2020" "14:54:59" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20200630145459.1d12bb01@lenovo>" "21" "Re: [oss-security] libvncserver: old websocket decoding patch" nil nil nil "6" "2020063012:54:59" "[oss-security] libvncserver: old websocket decoding patch" (number mark "U       scorneli@red Jun 30   21/540   " thread-indent "\"Re: [oss-security] libvncserver: old websocket decoding patch\"\n") "<20200630105009.46d2de6d@lenovo>" ("<20200630105009.46d2de6d@lenovo>") nil nil nil nil nil nil nil "Re: [oss-security] libvncserver: old websocket decoding patch" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2695" "Thursday" "27" "April" "2017" "16:14:27" "+0200" "Andrej Nemec" "anemec@redhat.com" "<9d804ae1-0f52-2d83-f3a1-52a97d28e903@redhat.com>" "78" "Re: [oss-security] CVE Request: Two memory corruption vulnerabilities ldns 1.7" "^Date:" nil nil "4" "2017042714:14:27" "[oss-security] CVE Request: Two memory corruption vulnerabilities ldns 1.7" (number mark "U       anemec@redha Apr 27   78/2695  " thread-indent "\"Re: [oss-security] CVE Request: Two memory corruption vulnerabilities ldns 1.7\"\n") "<2192b13b-52ef-4464-db55-36f45f97b258@splone.com>" ("<2192b13b-52ef-4464-db55-36f45f97b258@splone.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30659 invoked by uid 550); 30 Jun 2020 12:55:21 -0000
+Received: (qmail 32059 invoked by uid 550); 27 Apr 2017 14:14:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30641 invoked from network); 30 Jun 2020 12:55:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1593521708;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oiojF3aEAk+WIQ4q4+Bkpkzk3pZ7t3oX+vQCQc8At44=;
-	b=HX0n3WpQ+34qQyE304V1IB9cNVxSFHSCZB/nkPimHFus6Y6jlGLEJw+TpETnAlqKrTIfAN
-	6D5HJQlGVYMDNjqKb5nupT/+jw6TQ3rDWoA3KhDOXfFYYVGhikYNPy2GCUsSNo0u2H5SVy
-	tVLBpbAOrhjBzuVJMtTJODBJLZKdIc0=
-X-MC-Unique: KRX20CgpPLW3RpED_vn66A-1
-Date: Tue, 30 Jun 2020 14:54:59 +0200
-From: Stefan Cornelius <scorneli@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20200630145459.1d12bb01@lenovo>
-In-Reply-To: <20200630105009.46d2de6d@lenovo>
-References: <20200630105009.46d2de6d@lenovo>
+Received: (qmail 32041 invoked from network); 27 Apr 2017 14:14:41 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 3862E7971D
+Authentication-Results: ext-mx01.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx01.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=anemec@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 3862E7971D
+References: <2192b13b-52ef-4464-db55-36f45f97b258@splone.com>
+Message-ID: <9d804ae1-0f52-2d83-f3a1-52a97d28e903@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
+In-Reply-To: <2192b13b-52ef-4464-db55-36f45f97b258@splone.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="0Q4rWP1cODqdbBu8wpD7DUIvlk0Gnqw4n"
 X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=scorneli@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] libvncserver: old websocket decoding patch
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Thu, 27 Apr 2017 14:14:29 +0000 (UTC)
+Date: Thu, 27 Apr 2017 16:14:27 +0200
+From: Andrej Nemec <anemec@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: Two memory corruption vulnerabilities
+ ldns 1.7
+To: oss-security@lists.openwall.com
 
-On Tue, 30 Jun 2020 10:50:09 +0200
-Stefan Cornelius <scorneli@redhat.com> wrote:
+--0Q4rWP1cODqdbBu8wpD7DUIvlk0Gnqw4n
+Content-Type: multipart/mixed; boundary="fgfu38c27vl88AVhP9iNIsauk7epcMqiF";
+ protected-headers="v1"
+From: Andrej Nemec <anemec@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <9d804ae1-0f52-2d83-f3a1-52a97d28e903@redhat.com>
+Subject: Re: [oss-security] CVE Request: Two memory corruption vulnerabilities
+ ldns 1.7
+References: <2192b13b-52ef-4464-db55-36f45f97b258@splone.com>
+In-Reply-To: <2192b13b-52ef-4464-db55-36f45f97b258@splone.com>
 
+--fgfu38c27vl88AVhP9iNIsauk7epcMqiF
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hello Stephan,
+
+Unfortunately, CVE assignments are not done through this list anymore.
+You need to visit [1] and request a CVE by filing out the form. Could
+you please look at it and let the list know about the assigned CVE?
+
+Thanks!
+
+[1] https://cveform.mitre.org/
+
+Best Regards,
+
+--=20
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+
+On 04/27/2017 12:54 PM, Stephan Zeisberg wrote:
 > Hi,
-> 
-> Upstream libvncserver fixed a websocket decoding issue >3years ago in
-> https://github.com/LibVNC/libvncserver/commit/aac95a9dcf4bbba87b76c72706c3221a842ca433
-> 
-> AFAICT, this never got a CVE and wasn't backported by some
-> distributions.
-> 
-> Thanks and kind regards,
-> 
-> [I sent a heads-up about this to distros last Friday, 'embargo' ran
-> out on Monday 20:00 UTC]
+>
+> i discovered two memory corruption vulnerabilities (double free) in ldns
+> 1.7.0:
+>
+> * https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=3D1256
+> * https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=3D1257
+>
+> and reported it to https://www.nlnetlabs.nl/bugs-script/
+>
+> Both fixed in upstream (in development branch):
+> * for bug 1256: https://git.nlnetlabs.nl/ldns/commit/?id=3Dc8391790
+> * for bug 1257: https://git.nlnetlabs.nl/ldns/commit/?id=3D3bdeed02
+>
+> Could you please assign CVE(s) for the vulnerabilites?
+>
+> Thanks,
+> Stephan
 
-Please use CVE-2017-18922
 
--- 
-Stefan Cornelius / Red Hat Product Security
+--fgfu38c27vl88AVhP9iNIsauk7epcMqiF--
 
+--0Q4rWP1cODqdbBu8wpD7DUIvlk0Gnqw4n
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJZAfzDAAoJEIkERKHVe23aFIsQAMJKglW5Y7daoiKlIPd0Qqyk
+eE3rRGCBLIuqkRB18huNY1iDkF8lIeSY7XZtaKHgoq4t6JzFThWRYdH2fuJ2yxqg
+eb3hwj3ypWkY+W79IcekXBLmHeXaJgZMvD6tQm3RzucSOCgQI4GQxgF9VxK6Ssnr
+zCYMx5NiZXBfd5aYC22UWyZb0Nrzggrvb6cbpGmb3dVyGbfA81YmBEvBt0i5DNag
+mtxuAoDQveC9QbXIu0JqQ0Vt7Nol/P6xZoQ1/oMHt+bBW1qxeDOeuNXspO/M3vEv
++ExFXStgApZuGAxuRKKouQhGIYYTnrMHgaqvgprPxTWJUx4zeaPXpnLRXXTC9nxD
+QIA/C36Na57etIiFbqbVhRufgZiZ7f4uGalzd/h4BcoyexO2nbWUzRRNkroLkKvK
+wlZ/Rx3yI1fhawQ5OF9F0v86NBp0pwuVxXizSWQ8YOOBOlHyPbmpTRKRdEqMj1A1
+MdNje8vBaC+eVHLvclAO0i0eV9PIbVTtqtFqpQ3loi0mzHCZTm7HaKKKcmHhdYd1
+Cdrz7fb2ikYWFH4rP4Wh6DekJnHn58wDXK+mDGKznHVkph/x3sYp+LYv/E1htdam
+CuUKB3OsdbvcxDgaPcPLP2yxSwKyzdckTSjk8HNuPBK0FYOdu45fl5IIFds4ww/9
+V4OF+jWboCmSiYHFUGml
+=b8e3
+-----END PGP SIGNATURE-----
+
+--0Q4rWP1cODqdbBu8wpD7DUIvlk0Gnqw4n--
