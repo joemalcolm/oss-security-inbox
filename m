@@ -1,80 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/03/3
-Message-Id: CVE-2017-7239-8662@webweaving.org
-Date: Mon, 3 Apr 2017 12:22:15 +0200 (CEST)
-From: Dirk-Willem van Gulik <dirkx@...weaving.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/6
+Message-ID: <9d804ae1-0f52-2d83-f3a1-52a97d28e903@redhat.com>
+Date: Thu, 27 Apr 2017 16:14:27 +0200
+From: Andrej Nemec <anemec@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7239: ninka license identification tool:  insufficient escaping of external input [vs]
+Subject: Re: CVE Request: Two memory corruption vulnerabilities ldns 1.7
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Stephan,
+
+Unfortunately, CVE assignments are not done through this list anymore.
+You need to visit [1] and request a CVE by filing out the form. Could
+you please look at it and let the list know about the assigned CVE?
+
+Thanks!
+
+[1] https://cveform.mitre.org/
+
+Best Regards,
+
+-- 
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+
+On 04/27/2017 12:54 PM, Stephan Zeisberg wrote:
+> Hi,
+>
+> i discovered two memory corruption vulnerabilities (double free) in ldns
+> 1.7.0:
+>
+> * https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=1256
+> * https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=1257
+>
+> and reported it to https://www.nlnetlabs.nl/bugs-script/
+>
+> Both fixed in upstream (in development branch):
+> * for bug 1256: https://git.nlnetlabs.nl/ldns/commit/?id=c8391790
+> * for bug 1257: https://git.nlnetlabs.nl/ldns/commit/?id=3bdeed02
+>
+> Could you please assign CVE(s) for the vulnerabilites?
+>
+> Thanks,
+> Stephan
 
 
-             ninka license identification tool
-          insufficient escaping of external input
 
-                CVE-2017-7239 / CVSS 9.3
-                        1.07
-
-The ninka license identification tool does not properly escape
-special characters in the files it encounters - such as the ‘&’.
-
-In case of an alien code bases; or a code base that is brought in for
-examination - a third party may doctor the file names as to cause 
-a certain result of the license compliance scan. Or the attacker may 
-adversely affect the ninka user their environment (e.g. an automated
-continuous integration setup) by causing it to hang.
-
-This can then lead to unauthorised disclosure of information,
-unreliable compliance information or a denial of services.
-
-Versions affected: 
-- - ------------------
-All versions up to and including version 1.3.0.
-
-Resolution:
-- - -----------
-Upgrade to version 1.3.2 or later - available on
-https://github.com/dmgerman/ninka. 
-
-Mitigations and work arounds:
-- - -----------------------------
-Test the filenames passed for obvious issues. Given that ninka is
-generally only applied to (source)code - a regex matching just
-the alphanumerics and a few glyphs such as the dash and dot
-can usually be applied.
-
-Credits and timeline
-- - --------------------
-The flaw was found and reported by Dirk-Willem van Gulik <dirkx
-@ webweaving.org) on the 12 of March 2017. D.M. German <dmg
-@ turingmachine.org >  fixed the issue on the 27th of March 2017.
-
-2017-01-28	vulnerability found, reported to authors.
-2017-03-21	sample found in alien codebase.
-2017-03-23	reported to more recent email addresses of authors .
-2017-03-26	reported to the authors by phone.
-2017-03-27	CVE issued by mitre. fix created by author and
-                pushed to github (1.3.1)
-2017-04-01	Full disclosure process started.
-2017-04-03	Updated the advisory; an improverd fix is
-                present in version 1.3.2.
-
-Common Vulnerability Scoring (Version 3) and vector
-- - ---------------------------------------------------
-CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H/E:H/RC:R/CR:L/IR
-  :L/AR:L/MAV:L/MAC:L/MPR:N/MUI:N/MS:U/MC:H/MI:H/MA:H
-
-CVSS Base Score          9.3
-CVSS Temporal Score      9.0
-CVSS Environmental Score 6.4
-
-1.07 / : 2719 $
------BEGIN PGP SIGNATURE-----
-Version: GnuPG/MacGPG2 v2.0
-
-iEYEARECAAYFAljiIlAACgkQ/W+IxiHQpxsahQCeJLsg0CkHAPQOUymwDM54R7Qj
-CMEAoOtJVpgi76+CqprE/q6G+JzHur+y
-=jRAl
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
