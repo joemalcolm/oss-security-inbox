@@ -1,72 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/8
-Message-ID: <CANO=Ty2J67rVs2agjkgxQ65eGnAn=iUKXy16HpTrWay_XEQPPQ@mail.gmail.com>
-Date: Fri, 2 Jun 2017 12:51:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Arbitrary terminal access via sudo on Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/1
+Message-ID: <CADSYzst1LHBrdak=PmYQf1mzbhC2k5ynes_-xbXW+yiv5hnAXw@mail.gmail.com>
+Date: Thu, 27 Apr 2017 01:48:32 -0300
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 2, 2017 at 12:48 PM, Todd C. Miller <Todd.Miller@...rtesan.com>
-wrote:
+In case anyone needs the patched release, it looks like the patch got
+included at last in version:
+squirrelmail-20170427_0200-SVN
 
-> The fix for CVE-2017-1000367 present in sudo 1.8.20p1 was incomplete
-> as it did not address the posibility of a program name that contains
-> a newline character.  This was fixed by sudo 1.8.20p2.  At the time,
-> this was not believed to be a security issue due to the change in
-> /dev traversal that was also part of sudo 1.8.20p1.
+
+Regards,
+Dawid Golunski
+https://legalhackers.com  |  https://ExploitBox.io
+t: @dawid_golunski
+
+
+On Mon, Apr 24, 2017 at 6:14 PM, Dawid Golunski <dawid@...alhackers.com> wrote:
+> SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
 >
-> However, there is another vector that can be exploited in sudo's
-> get_process_ttyname() function under Linux.  The user can choose a
-> device number that corresponds to a terminal currently in use by
-> another user.  This allows an attacker to run any command allowed
-> by sudo with read and write access to an arbitrary terminal device.
-> Depending on the command, it may be possible to read sensitive data
-> (such as a password) from another user's terminal.
+> Desc.:
+> SquirrelMail is affected by a critical Remote Code Execution vulnerability
+> which stems from insufficient escaping of user-supplied data when
+> SquirrelMail has been configured with Sendmail as the main transport.
+> An authenticated attacker may be able to exploit the vulnerability
+> to execute arbitrary commands on the target and compromise the remote
+> system.
 >
-> This alternate vector is still exploitable in sudo 1.8.20p1 when a
-> symbolic link is made from the sudo binary to a name that contains
-> a newline followed by a valid device number.  The full fix is
-> included in sudo 1.8.20p2, released May 31, 2017.
+> Discovered by:
+> Dawid Golunski (https://legalhackers.com : https://ExploitBox.io)
+> , as well as Filippo Cavallarin (see attached advisory for details)
 >
-
-Ok, I read the diff:
-
-+       Sudo 1.8.20p2
-+       [47836f4c9834]
-+
-+       * src/ttyname.c:
-+       A command name may also contain newline characters so read
-+       /proc/self/stat until EOF. It is not legal for /proc/self/stat to
-+       contain embedded NUL bytes so treat the file as corrupt if we see
-+       any. With help from Qualys.
-+
-+       This is not exploitable due to the /dev traversal changes in sudo
-+       1.8.20p1 (thanks Solar!).
-
-which says it is NOT exploitable, but you're saying that it is actually
-exploitable? If confirmed yes I'll get you a new CVE for this asap. Thanks.
-
-
+> Official solution:
+> Vendor seems to have released a new version of 1.4.23 on
+> squirrelmail-20170424_0200-SVN.stable.tar.gz
+> which still seems to be vulnerable hence a new subject/thread.
 >
-> I have updated https://www.sudo.ws/alerts/linux_tty.html accordingly.
-> As before, the bug is specific to Linux systems that have SELinux
-> enabled.  Sudo reopens the terminal device after changing its SELinux
-> context when a role or type is specified on the command line.
+> The exploit from my advisory was also confirmed to work on Ubuntu
+> package: '1.4.23~svn20120406-2ubuntu1.16.04.1'.
 >
-> Thanks to Stephane Chazelas, who pointed out that the original patch
-> did not address command names that include a newline, and Solar
-> Designer, who noticed that the bug could also be used to access
-> another user's terminal.
+> Hence the updated version in the subject/advisory title.
 >
->  - todd
+> Full advisory URL:
 >
-
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+> https://legalhackers.com/advisories/SquirrelMail-Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
+>
+>
+>
+> --
+> Regards,
+> Dawid Golunski
+> https://legalhackers.com
+> https://ExploitBox.io
+> t: @dawid_golunski
