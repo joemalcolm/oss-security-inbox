@@ -1,32 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/5
-Message-ID: <1d770872-05b4-6e74-930f-09a49c34ad24@isc.org>
-Date: Wed, 30 Aug 2017 08:01:31 -0800
-From: ISC Security Officer <security-officer@....org>
-To: oss-security@...ts.openwall.com
-Subject: A recommendation for maintainers of BIND packages (re: DNSSEC validation)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/5
+Message-ID: <87k266yq9p.fsf@curie.anarc.at>
+Date: Thu, 27 Apr 2017 08:43:46 -0400
+From: Antoine Beaupré <anarcat@...ngeseeds.org>
+To: Emilio Pozuelo Monfort <pochu27@...il.com>, oss-security@...ts.openwall.com
+Subject: Re: kedpm: Information leak via the command history file
 Content-Type: text/plain; charset=utf-8
 
-Hello, oss-security list subscribers --
+On 2017-04-27 10:09:13, Emilio Pozuelo Monfort wrote:
+> Hi,
+>
+> On 26/04/17 22:52, Antoine Beaupré wrote:
+>> A vulnerability was discovered in the kedpm password manager that may
+>> expose the master password when changed, if passed on the commandline.
+>> 
+>> Example, good:
+>> 
+>> kedpm> passwd
+>> New password:
+>> Repeat password:
+>> Password changed.
+>> kedpm>
+>> 
+>> Example, bad:
+>> 
+>> kedpm:/> passwd bar
+>> Password changed
+>> 
+>> The former will show "passwd" in the ~/.kedpm/history file while the
+>> latter will show "passwd bar" in the history file, divulging the
+>> password in clear text.
+>> 
+>> Also, all password *names* that are created or consulted are saved in
+>> the history file, something that users may not expect (although you have
+>> to wonder how they thought history worked).
+>> 
+>> This is documented in the Debian bugtracker:
+>> 
+>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=860817
+>> 
+>> But I would like to get a CVE assigned for wider diffusion.
+>
+> You need to request it at https://cveform.mitre.org/
+>
+> You can follow up here with the number when you get one assigned.
 
-Please pardon the intrusion but ISC are trying to reach packagers who
-maintain and redistribute packages of BIND based on our source.
+I have requested a CVE.
 
-We know that many of you selectively pick and choose changes which are
-added to current BIND releases for backporting to older BIND versions
-on which your distributed packages are based.  For those of you who do,
-we would like to make sure you have selected this change:
-
-4564.	[maint]		Update the built in managed keys to include the
-			upcoming root KSK. [RT #44579]
-
-and distributed it to users prior to the completion of the in-progress
-root key rollover in order to ensure that DNSSEC validation continues
-to work for operators who are using BIND's managed-keys functionality.
-
-If you have any questions, you may contact us using security-officer@....org
-
-Thank you,
-
-Michael McNally
-ISC Security Officer
+-- 
+The history of any one part of the earth, like the life of a soldier,
+consists of long periods of boredom and short periods of terror.
+                       - British geologist Derek V. Ager
