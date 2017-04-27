@@ -1,49 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/11/1
-Message-ID: <09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>
-Date: Sun, 10 Sep 2017 23:56:20 -0700
-From: Paul Eggert <eggert@...ucla.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/9
+Message-ID: <20170427153101.GA2561@openwall.com>
+Date: Thu, 27 Apr 2017 17:31:01 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: GNU Emacs 25.2 enriched text remote code execution
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-GNU Emacs is an extensible, customizable, free/libre text editor and software 
-environment.  When Emacs renders MIME text/enriched data (Internet RFC 1896), it 
-is vulnerable to arbitrary code execution. Since Emacs-based mail clients decode 
-"Content-Type: text/enriched", this code is exploitable remotely. This bug 
-affects GNU Emacs versions 19.29 through 25.2.
+On Thu, Apr 27, 2017 at 08:37:51AM -0600, Kurt Seifried wrote:
+> longer term the DWF will be taking this on, but like most things in tech
+> there have been unexpected delays and issues. I'll keep the list appraised
+> as things improve (we should start seeing progress in the next month or
+> two).
 
-Although we know no efforts to exploit this in the wild, exploitation is easy.
+Meanwhile, why don't you simply proceed to assign CVEs per requests made
+in here like you do on (linux-)distros?  I think this would help.
 
-== Details ==
+As you're aware, personally I'm not into CVEs, but I liked the
+side-effect that people's desire to have CVEs brought more vulnerability
+information in here.  I am a bit concerned that MITRE's change may
+result in us getting notified in fewer cases, especially if we continue
+to redirect to MITRE those CVE requests that still arrive in here.  This
+is going to result in not only fewer CVE requests sent in here, but also
+in fewer vulnerabilities being disclosed in here - or at least in them
+being brought in here with an extra delay (after MITRE has assigned a
+CVE ID and reminded the person that they should notify oss-security,
+which thankfully they do).
 
-https://bugs.gnu.org/28350
-
-== Patch ==
-
-https://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-25&id=9ad0fcc54442a9a01d41be19880250783426db70
-
-== Mitigation ==
-
-To work around the bug in unfixed versions of Emacs, put the following code in 
-your personal or site-wide Emacs init file (~/.emacs, ~/emacs.d/init.el, 
-site-start.el):
-
-   ;; Mitigate Bug#28350 (security) in Emacs 25.2 and earlier.
-   (eval-after-load "enriched"
-     '(defun enriched-decode-display-prop (start end &optional param)
-        (list start end)))
-
-and avoid 'emacs -Q' and similar options that bypass normal initialization.
-
-== Timeline ==
-
-2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
-
-2017-09-07. POC for remote code execution sent to the maintainers of Emacs and 
-Gnus (Reiner Steib <Reiner.Steib@....de>, private mail).
-
-2017-09-08. Patch (by Lars Ingebrigtsen <larsi@...s.org>) to disable the 
-problematic code and mitigation (private mail).
-
-2017-09-09. Patch committed in main development repository.
+Alexander
