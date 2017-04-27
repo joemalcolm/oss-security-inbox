@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2342" "Sunday" "16" "January" "2022" "09:54:02" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" nil "43" "Re: [oss-security] Fuzzy CVE's in GNU inetutils" nil nil nil "1" nil nil (number mark "U       carnil@debia Jan 16   43/2342  " thread-indent "\"Re: [oss-security] Fuzzy CVE's in GNU inetutils\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Fuzzy CVE's in GNU inetutils" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2262" "Thursday" "27" "April" "2017" "10:54:00" "+0000" "Stephan Zeisberg" "stephan.zeisberg@splone.com" "<2192b13b-52ef-4464-db55-36f45f97b258@splone.com>" "64" "[oss-security] CVE Request: Two memory corruption vulnerabilities ldns 1.7" nil nil nil "4" "2017042710:54:00" "[oss-security] CVE Request: Two memory corruption vulnerabilities ldns 1.7" (number mark "U       stephan.zeis Apr 27   64/2262  " thread-indent "\"[oss-security] CVE Request: Two memory corruption vulnerabilities ldns 1.7\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12023 invoked by uid 550); 16 Jan 2022 08:54:15 -0000
+Received: (qmail 23604 invoked by uid 550); 27 Apr 2017 11:11:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,86 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12005 invoked from network); 16 Jan 2022 08:54:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XrXC4RW7JWN/4Tt+r42ozwIwjfcC9JNnHQHZUNPzRa8=;
-        b=Q9uVM/pvLGuOIlHqb7ka/bRcuOHJlt3mrqzPiE19wEgeXRHZVjTB2F3DKfl2l+5gUR
-         IazEwO16AkIWUUzuuY7QMdkST6ZxAXwwg+k6TUmr4dva2B2NagcqrptQuSs79qje8z0F
-         Q1Inf17qD1QgBlAblPNWsGb/BiTP46C4jyTHZLm0UcaiSj4xjRY4HRGHKYt8GhybGOJp
-         svoLGYAlCwx6SL35BBG6qjnBZQ4jsvaYcIl3eaTDdSGZfG1U1cSjzvmej2fgSu4GPvWe
-         hauuqxSzjpY290Hojo3rbBDCvlZv3cCK0pndggO2fUK3pJEO7K3l7oKm5JHj2CP9JB2m
-         evDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=XrXC4RW7JWN/4Tt+r42ozwIwjfcC9JNnHQHZUNPzRa8=;
-        b=pb54NVNvOWC21RLylqJmLuF2EHmj2WPWQN+q/KW2bX9cr1Y/4BXCwcvFAraTIk/0Y4
-         QmWCRU+da7UwFC2TGjo+jmSByn6sMEG7Iuvl+QAClO8ckfGFOI5wvo9p/ugi33w2Znrz
-         37iaIcKpcC2KZQNJrWy2UEAwb0SK3TfgQFxBqrOwguoyRXSq7yg3Is1gw5yU/de+YZFK
-         GoB7lk6F6cW97mWOfHbNFDSTzKl+8ThW8eYiikUIKcIqIejFwgXyWIVQNBi0cVkHDp3G
-         G/+h3a//TQGHcdSjJQT6QtjgdUfp4gYeyvd0RL8lIc3rTRWXMtfOwGWadkhAqXMkuVF2
-         7/Xw==
-X-Gm-Message-State: AOAM533meqHps76RPR822YsM7TaFp33fX1/D+cHV9RGAd73ZJTyCrU3l
-	9xrp0VI1zVU4m/1ousXGU71fl8kjOkLXCQ==
-X-Google-Smtp-Source: ABdhPJx6uSqgX7+mXE+kGcnL6hJC5STMZ1BT4HK0fnu7yWWHmV/6s/AjQluGbCLkan5Qapcz6boFhg==
-X-Received: by 2002:adf:fa42:: with SMTP id y2mr6636799wrr.52.1642323243267;
-        Sun, 16 Jan 2022 00:54:03 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sun, 16 Jan 2022 09:54:02 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
+Received: (qmail 17815 invoked from network); 27 Apr 2017 10:54:23 -0000
+From: Stephan Zeisberg <stephan.zeisberg@splone.com>
 To: oss-security@lists.openwall.com
-Message-ID: <YePdKmWRZCS9HDqD@eldamar.lan>
-References: <0cb43119-de19-4f4b-99a8-b7949227a26c@oracle.com>
+Message-ID: <2192b13b-52ef-4464-db55-36f45f97b258@splone.com>
+Date: Thu, 27 Apr 2017 10:54:00 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0cb43119-de19-4f4b-99a8-b7949227a26c@oracle.com>
-Subject: Re: [oss-security] Fuzzy CVE's in GNU inetutils
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="j39Jl1X0GiiKIOIcCaADbuvE2eLWMQlKj"
+X-Authenticated-Sender: stephan.zeisberg@splone.com
+X-Virus-Scanned: Clear (ClamAV 0.99.2/23334/Thu Apr 27 06:59:21 2017)
+Subject: [oss-security] CVE Request: Two memory corruption vulnerabilities ldns 1.7
+
+--j39Jl1X0GiiKIOIcCaADbuvE2eLWMQlKj
+Content-Type: multipart/mixed; boundary="05IDl26jNCL3dOt4uppNr1UHblH0JgeGS";
+ protected-headers="v1"
+From: Stephan Zeisberg <stephan.zeisberg@splone.com>
+To: oss-security@lists.openwall.com
+Message-ID: <2192b13b-52ef-4464-db55-36f45f97b258@splone.com>
+Subject: CVE Request: Two memory corruption vulnerabilities ldns 1.7
+
+--05IDl26jNCL3dOt4uppNr1UHblH0JgeGS
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-LU
+Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Fri, Jan 14, 2022 at 06:56:13PM -0800, Alan Coopersmith wrote:
-> I noticed a number of new CVE's recently published against GNU inetutils,
-> which seem to correspond to the results of fuzz testing that were mailed
-> out in December, as seen on
-> https://lists.gnu.org/archive/html/bug-inetutils/2021-12/threads.html
-> 
-> Trying out the provided POC inputs with other ftp, telnet, and tftp
-> commands derived from the same original BSD sources showed some seem
-> to originate in the common roots and may affect other implementations
-> as well.
-> 
-> But they all also seem to only be of the case "user can crash local
-> client" - I don't see any security boundaries crossed or security
-> assurances broken here, just bugs in local command input parsers,
-> so I don't see why they have CVE ids in general.
-> 
-> They are:
-> 
-> CVE-2021-46060 	A NULL Pointer Dereference vulnerability exists in GNU inetutils 2.2 via the setcmd function at commands.c, which causes a denial of service.
-> 
-> CVE-2021-46058 	A heap-based Buffer Overflow vulnerability exists in GNU inetutils 2.2 in cmds.c, which caused a denial of service.
-> 
-> CVE-2021-45782 	An untrusted pointer dereference in getcmd() at inetutils/src/tftp.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
-> 
-> CVE-2021-45781 	GNU Inetutils 2.2.16-cf091 was discovered to contain a heap-based buffer overflow via the component logger at inetutils/src/logger.c.
-> 
-> CVE-2021-45780 	GNU Inetutils commit cf091 was discovered to contain a memory leak via the ifconfig function.
-> 
-> CVE-2021-45779 	A NULL pointer dereference in unsetcmd() at inetutils/telnet/commands.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
-> 
-> CVE-2021-45778 	A NULL pointer dereference in setnmap() at cmds.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
-> 
-> CVE-2021-45775 	GNU Inetutils 2.2.16-cf091 was discovered to contain an infinite loop in domacro at domacro.c.
-> 
-> CVE-2021-45774 	A NULL pointer dereference in help() at inetutils/telnet/commands.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+i discovered two memory corruption vulnerabilities (double free) in ldns
+1.7.0:
 
-In fact all of those were REJECTED again (with a "Further
-investigation showed that it was not a security issue" reason).
+* https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=3D1256
+* https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=3D1257
 
-Regards,
-Salvatore
+and reported it to https://www.nlnetlabs.nl/bugs-script/
+
+Both fixed in upstream (in development branch):
+* for bug 1256: https://git.nlnetlabs.nl/ldns/commit/?id=3Dc8391790
+* for bug 1257: https://git.nlnetlabs.nl/ldns/commit/?id=3D3bdeed02
+
+Could you please assign CVE(s) for the vulnerabilites?
+
+Thanks,
+Stephan
+--=20
+Stephan Zeisberg
+Security Researcher
+
+m: stephan.zeisberg@splone.com
+
+
+--05IDl26jNCL3dOt4uppNr1UHblH0JgeGS--
+
+--j39Jl1X0GiiKIOIcCaADbuvE2eLWMQlKj
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJQBAEBCgA6FiEEPCtxiZwWHnFb+4aQLD/vJG2/tYgFAlkBzdEcHHN0ZXBoYW4u
+emVpc2JlcmdAc3Bsb25lLmNvbQAKCRAsP+8kbb+1iPnRD/0VgdJbN/QX1fKieKi5
+8tGMKM+f1CRYegM9LMYh4cI9v8DLlYa1Y4vkhxhWJSzDPjCexE1KkrPA+GT8iZsG
+3ywFsy/q0od6qQ7F8VArEBAMm2yxcWUhAdOrcAv33ekk41UprJAf56xUu8n+zlqm
+istgRrI3JI7jScny1x8IzKqVwAHBBFFX+zl1tHkbCONAFiHvLhzhQFcVS7tbN8bo
+1beNR5wBnaMKL+l/2WcG3CSHpCoEoMkDslYUsbkKt4inLFTHKjFVAZuDfYuRGAZB
+nl07vOmVmWu+jB3V5oKyevV96hItYsaXPcrt6C1CFuFv0HqgC+LUxZE+Rk0FVntH
+kBdJgul3+aytRXPCQQRL2dd9HQy77lfVxZFNmcpG43u46EW7BnoASnMEzNMXtnYt
+BdZyvQLxnI8Lx94XnZ3FbdFUG4QWD9PUX3byn9G0+GDWNwcpRTC1ss0HuOEmo7L3
+TYRpbYAUcesJHDvYQg/HCpuoNBMmd0dK9PyKfqvxca7CU01tuibB1e02yrRaxA3I
+5TmhORgu/JhM49KFJpsx6NUBWAdbLn4hSzLmPNNzZV3xDJcHfdwG1/Zw9S+DD3FI
+6kGRF1I8JqUsqJ4YgmO5dZ8CmAVishfLoPqefAv6dc7ocDOLMfqosPnJEMqxYu81
+nqbyz1r42ybBzrAxCDBzltgMXg==
+=BqZX
+-----END PGP SIGNATURE-----
+
+--j39Jl1X0GiiKIOIcCaADbuvE2eLWMQlKj--
