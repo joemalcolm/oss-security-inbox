@@ -1,20 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/15/2
-Message-ID: <20170915123125.GA29130@openwall.com>
-Date: Fri, 15 Sep 2017 14:31:25 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Ben Seri <ben@...is.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux BlueBorne vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/12
+Message-ID: <775c0f6a-3a9a-913c-de4a-40208159a6ad@tripleback.net>
+Date: Thu, 27 Apr 2017 11:46:49 -0400
+From: Kash Pande <kash@...pleback.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 15, 2017 at 12:28:11PM +0000, Ben Seri wrote:
-> Our thought is that since these issues affect multi vendors that are using
-> Linux, the longer the embargo period, the better chance there is a
-> coordinated patch goes out to as many users as possible once the embargo is
-> lifted.
 
-Indeed, but it's 2017, not 1997.  14 days is considered a long embargo
-period now.  Unnecessarily long embargoes hurt more than they help.
+On 27/04/17 11:31 AM, Solar Designer wrote:
+> I am a bit concerned that MITRE's change may
+> result in us getting notified in fewer cases, especially if we continue
+> to redirect to MITRE those CVE requests that still arrive in here.  This
+> is going to result in not only fewer CVE requests sent in here, but also
+> in fewer vulnerabilities being disclosed in here - or at least in them
+> being brought in here with an extra delay (after MITRE has assigned a
+> CVE ID and reminded the person that they should notify oss-security,
+> which thankfully they do).
 
-Alexander
+I share with you these concerns, thank you for articulating them.
+
+
+Kash Pande
