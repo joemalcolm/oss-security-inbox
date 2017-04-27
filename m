@@ -1,32 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/6
-Message-ID: <20170228162524.47jesr3zopycriir@eldamar.local>
-Date: Tue, 28 Feb 2017 17:25:24 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Linux: packet: fix races in fanout_add() (CVE-2017-6346)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/2
+Message-ID: <a51da883-9c17-1e80-d081-20f1bf01199b@debian.org>
+Date: Thu, 27 Apr 2017 10:04:06 +0200
+From: Emilio Pozuelo Monfort <pochu@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-8288: gnome-shell may leave extensions enabled in the lock screen
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-CVE-2017-6346 was assigned by MITRE to the following (via
-https://cveform.mitre.org/):
+The following CVE was assigned to gnome-shell. Note this may affect earlier
+versions than 3.22, but I didn't check them.
 
-https://git.kernel.org/linus/d199fab63c11998a602205f7ee7ff7c05c97164b
+[Suggested description]
+gnome-shell 3.22 through 3.24.1 mishandles extensions that fail to reload,
+which can lead to leaving extensions enabled in the lock screen.
+With these extensions, a bystander could
+launch applications (but not interact with them), see information from
+the extensions (e.g., what applications you have opened or what music
+you were playing), or even execute arbitrary commands. It all
+depends on what extensions a user has enabled. The problem is caused by lack of
+exception handling in
+js/ui/extensionSystem.js.
 
-> packet: fix races in fanout_add()
-> 
-> Multiple threads can call fanout_add() at the same time.
-> 
-> We need to grab fanout_mutex earlier to avoid races that could
-> lead to one thread freeing po->rollover that was set by another thread.
-> 
-> Do the same in fanout_release(), for peace of mind, and to help us
-> finding lockdep issues earlier.
+------------------------------------------
 
-Since 4.2 the races can lead to a use-after-free.
+[Vulnerability Type]
+Incorrect Access Control
 
-The fix was backported to 4.9.13 as well.
+------------------------------------------
 
-Regards,
-Salvatore
+[VulnerabilityType Other]
+Incorrect Access Control
+
+------------------------------------------
+
+[Vendor of Product]
+GNOME
+
+------------------------------------------
+
+[Affected Product Code Base]
+gnome-shell - 3.22 - 3.25
+
+------------------------------------------
+
+[Affected Component]
+js/ui/extensionSystem.js
+
+------------------------------------------
+
+[Attack Type]
+Physical
+
+------------------------------------------
+
+[Impact Code execution]
+true
+
+------------------------------------------
+
+[Impact Information Disclosure]
+true
+
+------------------------------------------
+
+[Attack Vectors]
+A broken gnome-shell extension needs to be installed (broken as in may
+work normally, but has a bug where it fails to reload properly)
+
+An extension reload needs to be triggered (which can happen for multiple reasons)
+
+------------------------------------------
+
+[Reference]
+https://bugzilla.gnome.org/show_bug.cgi?id=781728
+https://github.com/EasyScreenCast/EasyScreenCast/issues/46
+https://bugs.kali.org/view.php?id=2513
+https://github.com/GNOME/gnome-shell/commit/ff425d1db7082e2755d2a405af53861552acf2a1
