@@ -1,4 +1,9 @@
-Received: (qmail 11547 invoked by uid 550); 13 May 2025 19:20:09 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3436" "Thursday" "27" "April" "2017" "20:58:10" "+0200" "Jakub Jirutka" "jakub@jirutka.cz" "<416E8C5A-A926-4C7E-94F3-AFBB169C383A@jirutka.cz>" "94" "[oss-security] CVE-2017-8301: TLS verification vulnerability in LibreSSL 2.5.1 - 2.5.3" "^Date:" nil nil "4" "2017042718:58:10" "[oss-security] CVE-2017-8301: TLS verification vulnerability in LibreSSL 2.5.1 - 2.5.3" (number mark "        jakub@jirutk Apr 27   94/3436  " thread-indent "\"[oss-security] CVE-2017-8301: TLS verification vulnerability in LibreSSL 2.5.1 - 2.5.3\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30002 invoked by uid 550); 27 Apr 2017 19:14:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,87 +11,114 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5812 invoked from network); 27 Apr 2017 18:58:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jirutka.cz; s=mail;
+	t=1493319490; bh=PqalMvmn+Sdqz4Dph1z+YDZgSPuDaReMu6rZXA0rz18=;
+	h=From:Subject:Date:To;
+	b=jzlCPLXVcRL1T60/J4wLfZZs7H+WQJTLhfvCrPgnQ2IyFJ5NDN+HeiVna5OLufsty
+	 61OAif2oUkRLrz6c5pVbaB6F9CuDsQVufLLRCsbZiQKef+khjuvwNfXHCvgXWk3xhm
+	 uOwEGuk3AEBow4L1Pb6v26mDcwCuCqp7qSNjKpEA=
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <416E8C5A-A926-4C7E-94F3-AFBB169C383A@jirutka.cz>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Date: Thu, 27 Apr 2017 20:58:10 +0200
+From: Jakub Jirutka <jakub@jirutka.cz>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11520 invoked from network); 13 May 2025 19:20:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date:Reply-To
-	:Cc:Content-ID:Content-Description;
-	bh=d+FgsdWKa1wdjj03QsSUCOGvoVZYSJZ3LtryJeOrRY8=; b=Tx1ghAPP6pl5FKWmhbz+QDFijv
-	hl0aWzDk1SdZwAPhHt0TFYL8CpzrsCBNTNAjhWAhXOp7/JcV3SWtEqoBHf1mnAS0e4eh+Py5mmfKe
-	hF1EhIaSlTRqHWmtNDahWI4NP6jf9GetH452XKv4WHMOx5xpgZbiSYeOmuvC+MBsJSoic/m0KQhQZ
-	FDTYZudo9jcKqNwG/spHidQFa7zjs8OOgOlOun0f8JvCjJ9oS7V5YuYu9Ba+CCnxy6lwZUpVNsOM0
-	wU5Fr2O2sLfHnTXWM7UJi7FeZdu2NSSYlIn8Oc6yZuYXv6ijyR3auCvTNeog1NHnDu/wecVTq3o1c
-	Ylx1s1uQ==;
-Date: Tue, 13 May 2025 20:19:57 +0100
-From: Simon McVittie <smcv@debian.org>
+Subject: [oss-security] CVE-2017-8301: TLS verification vulnerability in LibreSSL 2.5.1 - 2.5.3
 To: oss-security@lists.openwall.com
-Message-ID: <aCObXXrfD4H1h4t5@remnant.pseudorandom.co.uk>
-References: <aCISrQTbLQjaxBZS@kasco.suse.de>
- <20250513182106.414b569f@plasteblaster>
- <20250513183744.2c187967@plasteblaster>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250513183744.2c187967@plasteblaster>
-X-Debian-User: smcv
-Subject: Re: [oss-security] screen: Multiple Security Issues in Screen
- (mostly affecting release 5.0.0 and setuid-root installations)
 
-On Tue, 13 May 2025 at 18:37:44 +0200, Dr. Thomas Orgis wrote:
->that doesn't compile. A numeric value is expected.
->
->./configure --with-pty-mode=0620 --with-pty-group=$(getent group tty|cut -f 3 -d :)
->
->is closer to what also the default for screen-5.0.0 configure is.
->
->AC_ARG_WITH(pty-mode, AS_HELP_STRING([--with-pty-mode],
->            [set pty mode (default: 0622)]),
->            [with_pty_mode=$withval],
->            [with_pty_mode=0622])
->AC_ARG_WITH(pty-group, AS_HELP_STRING([--with-pty-group],
->            [set pty group (default: 5)]),
->            [with_pty_group=$withval],
->            [with_pty_group=5])
->
->
->Which brings me to the question if it is really smart to hardcode the
->numeric group ID. I observe wildly changing system user/group IDs in
->distros that create the accounts on the fly when installing packages.
+Vulnerability Type: Missing TLS Certificate Validation
+Affected Product Code Base: LibreSSL - 2.5.1 - 2.5.3
+Vendor of Product: OpenBSD
+Affected Component: SSL_set_verify, SSL_CTX_set_verify, SSL_get_verify_resu=
+lt
 
-In general yes, group IDs vary and can't be hard-coded; but for tty, 
-specifically, it seems to be common for it to be hard-coded as a numeric 
-gid. One reason for group IDs to be hard-coded in this way is if they 
-need to work as expected on incomplete or minimal installations that 
-lack the usual infrastructure around passwd(5) etc.; another is if they 
-need to remain usable during recovery of broken installations where that 
-infrastructure isn't working, and a third is during early boot where 
-that infrastructure might not work *yet*.
 
-In at least Debian (presumably other distros), there are some small 
-ranges reserved for user and group IDs that are fixed in all 
-installations of the distro and can safely be hard-coded into binaries
-(in Debian, 0-99 is the one that contains tty), and a considerably 
-larger range available for dynamic allocation (in Debian, 100-999 is the 
-main range for this purpose). 
-https://www.debian.org/doc/debian-policy/ch-opersys.html#uid-and-gid-classes 
-is the canonical reference for this in Debian and its derivatives.
+## Summary
 
->Maybe tty is always present on install images already … and happens to
->always be numeric ID 5, everywhere?
+LibreSSL 2.5.1 to 2.5.3 lacks TLS certificate verification if
+SSL_get_verify_result is relied upon for a later check of a
+verification result, in a use case where a user-provided verification
+callback returns 1, as demonstrated by acceptance of invalid
+certificates by nginx.
 
-This is its value in Debian and all Debian derivatives, and in practice 
-seems to be common to "most" distributions - for example it's also used 
-in Fedora, despite neither Debian nor Fedora being a derivative of the 
-other (reference: 
-https://src.fedoraproject.org/rpms/setup/blob/rawhide/f/uidgid)
 
-systemd also hard-codes 5 as its default for its "tty-gid" build-time 
-option, and installs a sysusers.d(5) snippet that will create the tty 
-group with the configured gid if it doesn't already exist (which seems 
-to be the route by which for example Arch ends up with the tty group 
-having gid 5).
+## Additional Information
 
-     smcv
+LibreSSL versions from 2.5.1 until 2.5.3 suffer from a lack of TLS certific=
+ate
+verification if the user-provided callback for verification returns 1.
+This bug was introduced in commit ddd98f8ea741a122952185a36c1396c14c2fda74 =
+[1]
+(libcrypto/x509/x509_vfy.c, version 1.58) and has not been fixed upstream y=
+et.
+
+If the user verification callback returns 1, LibreSSL will force the
+verification result to X509_V_OK resulting in, contrary to the documentatio=
+n,
+any later checks by the API user through SSL_get_verify_result() to be usel=
+ess,
+as it will always return X509_V_OK instead of any earlier error that occurr=
+ed
+in the verification process.
+
+As such, any API user that matches the following prerequisites:
+
+* Installs a verification callback that always returns 1, or returns 1 even
+  when the first parameter (preverify_ok) is 0;
+* Intends to check the verification result later using SSL_get_verify_resul=
+t()
+  in order to abort the connection at that point;
+
+will be lead into thinking that the verification succeeded and thus possibly
+allow connections to peers with invalid certificates, despite this clearly
+not being the intention and in violation of the documentation of the origin=
+al
+OpenSSL API:
+
+> If verify_callback always returns 1, the TLS/SSL handshake will not be
+> terminated with respect to verification failures and the connection will =
+be
+> established. The calling process can however retrieve the error code of t=
+he
+> last verification error using SSL_get_verify_result(3) or by maintaining
+> its own error storage managed by verify_callback. -- [2]
+
+An example of real-world software affected by this is nginx [3], bypassing
+certificate verification entirely and InspIRCd [4], bypassing the option
+of requiring trusted clients upon connect (<connect requiressl=3D"trusted">=
+).
+
+This issue was discovered by Jakub Jirutka <jakub@jirutka.cz> from Alpine L=
+inux
+using the nginx automated test suite [5] and further investigated by
+Duncan Overbruck <duncaen@voidlinux.eu> from Void Linux and Shiz <hi@shiz.m=
+e>
+from Alpine Linux.
+
+Not fixed upstream yet, verified by vendor here [6].
+
+This issue got assigned CVE-2017-8301 [7].
+
+
+## Attack Vectors
+
+Connect to an affected service over TLS using an arbitrary client
+certificate, or an affected client connecting to a service that
+presents an arbitrary server certificate.
+
+
+## References
+
+[1]: https://github.com/libressl-portable/openbsd/commit/ddd98f8ea741a12295=
+2185a36c1396c14c2fda74
+[2]: https://wiki.openssl.org/index.php/Manual:SSL_CTX_set_verify(3)
+[3]: https://trac.nginx.org/nginx/ticket/1257
+[4]: https://github.com/inspircd/inspircd/blob/5366dd2abd8fdeecf4a6ff173faf=
+1f241d185628/src/modules/extra/m_ssl_openssl.cpp#L536
+[5]: http://hg.nginx.org/nginx-tests/
+[6]: https://github.com/libressl-portable/portable/issues/307#issuecomment-=
+297469867
+[7]: https://nvd.nist.gov/vuln/detail/CVE-2017-8301
+
