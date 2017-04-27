@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/6
-Message-ID: <CAAYo3Bu+9QFoqsRU__WmCou09Y_xt39VMEyoV3Y-RR0qv-gtng@mail.gmail.com>
-Date: Fri, 28 Apr 2017 21:37:38 +1000
-From: David Black <dblack@...assian.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2017-8291 ghostscript remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/8
+Message-ID: <CANO=Ty1xTCMb=3EnWhZm-mL+vdR8-U0Dn379-KW_q1AGwzKgRQ@mail.gmail.com>
+Date: Thu, 27 Apr 2017 08:37:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-On Friday, 28 April 2017, Kurt H Maier <khm@...ops.net> wrote:
+longer term the DWF will be taking this on, but like most things in tech
+there have been unexpected delays and issues. I'll keep the list appraised
+as things improve (we should start seeing progress in the next month or
+two).
 
-> On Fri, Apr 28, 2017 at 01:50:04AM -0000, security@...assian.com
-> <javascript:;> wrote:
->
->
-> Why are you sending user-tracking urls to this list?
->
->
-Hi Kurt,
-We did not intend to send user tracking urls to this list. However, the
-method we used to send the email resulted in sendgrid rewriting the the
-links. We apologise regardless.
+On Thu, Apr 27, 2017 at 8:32 AM, Solar Designer <solar@...nwall.com> wrote:
 
+> Hi,
+>
+> With CVE requests continuing to come in here, maybe it'd be best for a
+> CNA present in here (perhaps Red Hat?) to be assigning those CVEs?  Just
+> like it's done on the private (linux-)distros lists.  If not, why not?
+>
+> Alexander
+>
 
---
-David.
 
 
 -- 
-David Black / Security Engineer.
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
