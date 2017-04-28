@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/25/2
-Message-ID: <430b7126-01a4-0b15-cee2-4bd1a34945de@oracle.com>
-Date: Tue, 25 Jul 2017 16:46:19 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/5
+Message-ID: <CAOGJi+7UWmxUZercz+_TObWWwGz9NpZGSYL6Muy+hHDO-MW0Pw@mail.gmail.com>
+Date: Fri, 28 Apr 2017 14:34:38 +0800
+From: 李琪 <pjqruc@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Subject: CVE-2017-7475 Cairo-1.15.4 Denial-of-Service Attack due to Logical Problem in Program
 Content-Type: text/plain; charset=utf-8
 
-On 03/07/17 19:55, John Haxby wrote:
->> On 3 Jul 2017, at 19:18, Solar Designer <solar@...nwall.com> wrote:
->>
->>> PS For contributing back I have given myself a "must try harder" mark.
->> Thanks.  Please let us know at which specific tasks you'll try harder.
-> 
-> Will do.   I’m in the middle of a house move at the moment so everything is a little chaotic so I’ll get back to you next week when, hopefully, the dust has settled somewhat.
+Hello,
 
-Still in the middle of the house move and it's all generally chaos and
-sorry for not getting back sooner.
+## Overview
+I and my colleague have found a vulnerability of Cairo-1.15.4 when fuzzing
+HarfBuzz with AFL.
+Cairo is a 2d graphics library, and HarBuzz is an OpenType text shaping
+engine which contains a tool named *hb-view* to give a graphical view of
+text using Cairo with a font provided by user.
+Owing to logical problem in program, the crash happens during null pointer
+deference and the vulnerability will cause a denial-of-service attack with
+a crafted font file.
 
-However, put me down as backup for "1. Promptly review new issue reports
-for meeting the list's requirements and confirm receipt..."
+## Note
+I have reported this issue to cairo and here is the link:
+https://bugs.freedesktop.org/show_bug.cgi?id=100763.
 
-I do expect that we (I) will become more active on linux-distros as
-well.   Speaking of which, has it been unusually quiet or do I need to
-beat up the mail admin people again?   I haven't seen anything since
-Bastille Day (14 July).
+When I disclosure to Red Hat Product Security, they suggest me to use
+CVE-2017-7475 for this issue and I have communicated this number to
+upstream.
 
-jch
+
+Best Regards,
+
+--
+Jiaqi Peng, Bingchang Liu @ VARAS of IIE
+
