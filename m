@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/18
-Message-ID: <20171103212659.378593da@pc1>
-Date: Fri, 3 Nov 2017 21:26:59 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/3
+Message-ID: <20170428030522.GA53619@wopr>
+Date: Thu, 27 Apr 2017 20:05:22 -0700
+From: Kurt H Maier <khm@...ops.net>
 To: oss-security@...ts.openwall.com
-Subject: nvi crash recovery (was Re: Re: Security risk of server side text editing in general and vim.tiny specifically)
+Subject: Re: CVE-2017-8291 ghostscript remote code execution
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 3 Nov 2017 11:12:43 -0700
-Ian Zimmerman <itz@...y.loosely.org> wrote:
+On Fri, Apr 28, 2017 at 01:50:04AM -0000, security@...assian.com wrote:
+>  Hi,
+> 
+> 
+>  CVE-2017-8291 was reported initially to Ghostscript by the Atlassian Security Team. We worked with the developers of Ghostscript to address this vulnerability. This vulnerability impacts versions 9.21 and earlier, and is called from many other libraries, such as Pillow and ImageMagick. Fortunately, fixes have now been pushed to master and can be reviewed here: https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirKb6U3wFxO6cZ2MrfZFe9KXxeenPQ9IFz8TJhw6LOtOaFuB-2BSAw9BeCw0BhtT081tIKPb6Ah9qpSmP-2FzO2sx-2BjA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbIeCjEPp1RqnDE5ZMVkV8u-2FQck2RKXjMbDOcixr2-2BNtOmj3Wzq5XwkhDFXhU2AKyL9layYKe-2BQtxt0vvnrLW-2BhggU2jp-2FuYmlu1mgnKq3GLT-2BQs66xRLMVK0ptzU4dayw9UBPVRQ2Fkfj-2FJw1BXrk-2BY-3D and https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirJzYNkGRnjRAeENnIy4IlGMktl4IMwqOL-2F6c9eA2tuyk4XtZY7kQE2gU21K2S6Iame7IH19-2BL1vfBFf0SU6yEiA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbPyFjltEjXNsT3qz-2Fb9AtZOlxcf7srfg3ApNJwAPl06rQsoKGLAu393JsVQP6IMnwpmfkPtqhUc0Kd-2Fr-2BdA39SFaSuqgV1MSaFq7Bx7Osg3G1ng9ujPr9Xt71FOQOsCM9Ada5YhYxQbHq72hBUfE7-2Bo-3D
+> 
+> 
+>  Since this issue is potentially serious, we encourage people to patch and update as soon as possible.
+> 
 
-> How much of this (and the parallel thread of course) applies to nvi?
+Why are you sending user-tracking urls to this list?
 
-This is actually interesting:
-nvi saves recovery files to /var/tmp/vi.recover and creates them with
-600 permissions.
-So all the problems discussed don't really apply here.
-However the dir itself gets created by the first user using nvi. Not
-sure if that causes any other problems (permissions are rwx for all and
-sticky bit).
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+khm
