@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2391" "Thursday" "2" "March" "2017" "16:36:23" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<910426.377874927-sendEmail@localhost>" "64" "[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)" nil nil nil "3" "2017030216:36:23" "[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)" (number mark "U       ago@gentoo.o Mar  2   64/2391  " thread-indent "\"[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1935" "Friday" "28" "April" "2017" "03:58:18" "+0200" "Guillem Jover" "guillem@debian.org" "<20170428015817.zgsoz5sdjrlou3fm@gaara.hadrons.org>" "42" "[oss-security] Re: CVE-2017-8283 Directory traversal in dpkg-source via indented patches on non-GNU systems" nil nil nil "4" "2017042801:58:18" "[oss-security] Re: CVE-2017-8283 Directory traversal in dpkg-source via indented patches on non-GNU systems" (number mark "U       guillem@debi Apr 28   42/1935  " thread-indent "\"[oss-security] Re: CVE-2017-8283 Directory traversal in dpkg-source via indented patches on non-GNU systems\"\n") "<20170420084105.his3vgnzjpvu4jcv@gaara.hadrons.org>" ("<20170420084105.his3vgnzjpvu4jcv@gaara.hadrons.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26427 invoked by uid 550); 2 Mar 2017 16:36:42 -0000
+Received: (qmail 22362 invoked by uid 550); 28 Apr 2017 02:54:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,76 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26250 invoked from network); 2 Mar 2017 16:36:40 -0000
-Message-ID: <910426.377874927-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 2 Mar 2017 16:36:23 +0000
+Received: (qmail 11909 invoked from network); 28 Apr 2017 01:58:43 -0000
+Date: Fri, 28 Apr 2017 03:58:18 +0200
+From: Guillem Jover <guillem@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20170428015817.zgsoz5sdjrlou3fm@gaara.hadrons.org>
+References: <20170420084105.his3vgnzjpvu4jcv@gaara.hadrons.org>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-370246.599734859"
-Subject: [oss-security] podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170420084105.his3vgnzjpvu4jcv@gaara.hadrons.org>
+User-Agent: NeoMutt/20170306 (1.8.0)
+Subject: [oss-security] Re: CVE-2017-8283 Directory traversal in dpkg-source via indented
+ patches on non-GNU systems
 
-------MIME delimiter for sendEmail-370246.599734859
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Hi!
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+On Thu, 2017-04-20 at 10:41:05 +0200, Guillem Jover wrote:
+> Recently, while going through the POSIX standard to check for some
+> other stuff related to the patch(1) format, I realized that indented
+> patches are also accepted, which is something the Dpkg::Source::Patch
+> perl module is not checking, so any of the sanity checks against
+> directory traveral attacks can be avoided through indenting.
+> 
+> Of course on Debian and other distributions using GNU patch >= 1.7.5,
+> this is not a concern anymore, as this implementation should be
+> directory traversal resistant.
+> 
+> But on systems such as the BSDs, with their own patch(1) variant,
+> this is effective. And while this could (and should in addition be
+> considered) a problem with those patch implementations, dpkg-source
+> has always assumed uncooperating underlaying implementations so this
+> is something it should probably protect against one way or another.
+> 
+> This issue shows up when unpacking a Debian source package for
+> examination, but then on those non-GNU systems, usage of patch(1)
+> is unsafe, so I'm not sure how sever this should be considered.
+> 
+> I've got a test case (attached) that fails (the attack is successful) on
+> at least NetBSD (not tried others), but they share a similar patch(1)
+> codebase.
+> 
+> And I started adding support for indented patches so thah the checks
+> would apply, or to just reject them (as a query on codesearch.debian.net)
+> didn't trigger any instance of such patches in Debian (which would make
+> them not able to be unpacked if we reject them). But I'm considering the
+> shorter and more strightforward solution of just requiring GNU patch at
+> configure time for now. Which is what I'm attaching here as the fix
+> I'm planning to merge for dpkg 1.18.24.
+> 
+> Given tha above, does this deserve a CVE? At least we have gotten ones
+> for similar issues in the past.
 
-A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+This is now CVE-2017-8283.
 
-The complete ASan output:
-
-# podofocolor dummy $FILE foo
-==5768==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000018 (pc 0x7f6504f1742c bp 0x7fffc41a0df0 sp 0x7fffc41a0d00 T0)
-==5768==The signal is caused by a READ memory access.
-==5768==Hint: address points to the zero page.
-    #0 0x7f6504f1742b in PoDoFo::PdfVariant::DelayedLoad() const /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:545:10
-    #1 0x7f6504f1742b in PoDoFo::PdfVariant::GetArray() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:795
-    #2 0x7f6504f1742b in PoDoFo::PdfXObject::PdfXObject(PoDoFo::PdfObject*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfXObject.cpp:264
-    #3 0x51ff55 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:137:28
-    #4 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
-    #5 0x7f650358c61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #6 0x428718 in _start (/usr/bin/podofocolor+0x428718)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:545:10 in PoDoFo::PdfVariant::DelayedLoad() const
-==5768==ABORTING
-
-Affected version:
-0.9.4
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00174-podofo-nullptr-PoDoFo-PdfVariant-DelayedLoad
-
-Timeline:
-2017-02-13: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-podofopdfvariantdelayedload-pdfvariant-h
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-370246.599734859--
-
+Thanks,
+Guillem
