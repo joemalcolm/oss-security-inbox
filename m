@@ -1,43 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/30/3
-Message-ID: <ad8e08c6-e1f9-280c-41a7-169b901ca859@chbi.eu>
-Date: Mon, 30 Oct 2017 20:15:51 +0100
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-14752, CVE-2017-15273: Stored XSS vulnerability in Mahara <= 15.04.14, <= 16.04.8, <= 16.10.5, <= 17.04.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/6
+Message-ID: <CAAYo3Bu+9QFoqsRU__WmCou09Y_xt39VMEyoV3Y-RR0qv-gtng@mail.gmail.com>
+Date: Fri, 28 Apr 2017 21:37:38 +1000
+From: David Black <dblack@...assian.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2017-8291 ghostscript remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Friday, 28 April 2017, Kurt H Maier <khm@...ops.net> wrote:
 
-I've discovered two security issues in Mahara <= 15.04.14, <= 16.04.8,
-<= 16.10.5, <= 17.04.3 (https://mahara.org)
-
-
-CVE-2017-14752:
-A stored XSS vulnerability in "First name", "Last name" and "Display
-name" allows an authenticated user to inject JavaScript to gain
-administrator privileges.
-
-https://mahara.org/interaction/forum/topic.php?id=8083
-
-
-CVE-2017-15273:
-A stored XSS vulnerability in the title of a journal allows an
-authenticated user to inject JavaScript to gain administrator privileges.
-
-https://mahara.org/interaction/forum/topic.php?id=8081
+> On Fri, Apr 28, 2017 at 01:50:04AM -0000, security@...assian.com
+> <javascript:;> wrote:
+>
+>
+> Why are you sending user-tracking urls to this list?
+>
+>
+Hi Kurt,
+We did not intend to send user tracking urls to this list. However, the
+method we used to send the email resulted in sendgrid rewriting the the
+links. We apologise regardless.
 
 
-The issues are fixed in Mahara 15.04.15, 16.04.9, 16.10.6, 17.04.4
+--
+David.
 
 
 -- 
-chbi
-https://chbi.eu
+David Black / Security Engineer.
 
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
