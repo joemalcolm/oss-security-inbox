@@ -1,72 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/13/1
-Message-ID: <c15cf180-9dd5-7ade-1e4e-5fef72274dc1@redhat.com>
-Date: Fri, 13 Oct 2017 17:41:18 +0200
-From: Andrej Nemec <anemec@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/1
+Message-ID: <20170428015817.zgsoz5sdjrlou3fm@gaara.hadrons.org>
+Date: Fri, 28 Apr 2017 03:58:18 +0200
+From: Guillem Jover <guillem@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-12629 Solr: Code execution via entity expansion
+Subject: Re: CVE-2017-8283 Directory traversal in dpkg-source via indented patches on non-GNU systems
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+Hi!
 
-I would like to make the list aware of CVE-2017-12629, which was
-yesterday reported with a working 0-day exploit to the public Lucene
-development mailing list [1]. Lucene / Solr developers quickly confirmed
-the bug and moved to fixing it ASAP. There is also a late Apache
-announcement [2] which came out yesterday, appended below.
+On Thu, 2017-04-20 at 10:41:05 +0200, Guillem Jover wrote:
+> Recently, while going through the POSIX standard to check for some
+> other stuff related to the patch(1) format, I realized that indented
+> patches are also accepted, which is something the Dpkg::Source::Patch
+> perl module is not checking, so any of the sanity checks against
+> directory traveral attacks can be avoided through indenting.
+> 
+> Of course on Debian and other distributions using GNU patch >= 1.7.5,
+> this is not a concern anymore, as this implementation should be
+> directory traversal resistant.
+> 
+> But on systems such as the BSDs, with their own patch(1) variant,
+> this is effective. And while this could (and should in addition be
+> considered) a problem with those patch implementations, dpkg-source
+> has always assumed uncooperating underlaying implementations so this
+> is something it should probably protect against one way or another.
+> 
+> This issue shows up when unpacking a Debian source package for
+> examination, but then on those non-GNU systems, usage of patch(1)
+> is unsafe, so I'm not sure how sever this should be considered.
+> 
+> I've got a test case (attached) that fails (the attack is successful) on
+> at least NetBSD (not tried others), but they share a similar patch(1)
+> codebase.
+> 
+> And I started adding support for indented patches so thah the checks
+> would apply, or to just reject them (as a query on codesearch.debian.net)
+> didn't trigger any instance of such patches in Debian (which would make
+> them not able to be unpacked if we reject them). But I'm considering the
+> shorter and more strightforward solution of just requiring GNU patch at
+> configure time for now. Which is what I'm attaching here as the fix
+> I'm planning to merge for dpkg 1.18.24.
+> 
+> Given tha above, does this deserve a CVE? At least we have gotten ones
+> for similar issues in the past.
 
-[1]
-http://lucene.472066.n3.nabble.com/Re-Several-critical-vulnerabilities-discovered-in-Apache-Solr-XXE-amp-RCE-td4358308.html
+This is now CVE-2017-8283.
 
-[2] https://marc.info/?l=apache-announce&m=150786685013286
-
-
-Dear Apache Solr users,
-
-Please secure your Solr servers since a zero-day exploit has been
-reported on a public mailing list. This has been assigned a public
-CVE (CVE-2017-12629) which we will reference in future communication
-about resolution and mitigation steps.
-
-Here is what we're recommending and what we're doing now:
-
-* Until fixes are available, all Solr users are advised to restart their
-Solr instances with the system parameter `-Ddisable.configEdit=true`.
-This will disallow any changes to be made to configurations via the
-Config API. This is a key factor in this vulnerability, since it allows
-GET requests to add the RunExecutableListener to the config. This is
-sufficient to protect you from this type of attack, but means you cannot
-use the edit capabilities of the Config API until the other fixes
-described below are in place.
-
-* A new release of Lucene/Solr was in the vote phase, but we have now
-pulled it back to be able to address these issues in the upcoming 7.1
-release. We will also determine mitigation steps for users on earlier
-versions, which may include a 6.6.2 release for users still on 6.x.
-
-* The RunExecutableListener will be removed in 7.1. It was previously
-used by Solr for index replication but has been replaced and is no
-longer needed.
-
-* The XML Parser will be fixed and the fixes will be included in the 7.1
-release.
-
-* The 7.1 release was already slated to include a change to disable the
-`stream.body` parameter by default, which will further help protect
-systems.
-
-Thanks, The Apache Lucene/Solr team
-
-[1] : https://s.apache.org/FJDl
-
-
-Best Regards,
-
--- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Thanks,
+Guillem
