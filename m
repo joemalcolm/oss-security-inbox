@@ -1,53 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/7
-Message-ID: <52e2df07020643ae977e2f5fd739fe04@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 00:58:00 -0500
-From: <cve-assign@...re.org>
-To: <leo@...ulari.name>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: Bugs fixed in libevent 2.1.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/2
+Message-ID: <20170428015004.11956.12148@falcon>
+Date: Fri, 28 Apr 2017 01:50:04 -0000
+From: security@...assian.com
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-8291 ghostscript remote code execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> [] https://github.com/libevent/libevent/issues/317
-> libevent dns remote stack overread vulnerability
-
-Use CVE-2016-10195.
+ Hi,
 
 
-> [] https://github.com/libevent/libevent/issues/318
-> libevent (stack) buffer overflow in evutil_parse_sockaddr_port()
-
-Use CVE-2016-10196.
+ CVE-2017-8291 was reported initially to Ghostscript by the Atlassian Security Team. We worked with the developers of Ghostscript to address this vulnerability. This vulnerability impacts versions 9.21 and earlier, and is called from many other libraries, such as Pillow and ImageMagick. Fortunately, fixes have now been pushed to master and can be reviewed here: https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirKb6U3wFxO6cZ2MrfZFe9KXxeenPQ9IFz8TJhw6LOtOaFuB-2BSAw9BeCw0BhtT081tIKPb6Ah9qpSmP-2FzO2sx-2BjA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbIeCjEPp1RqnDE5ZMVkV8u-2FQck2RKXjMbDOcixr2-2BNtOmj3Wzq5XwkhDFXhU2AKyL9layYKe-2BQtxt0vvnrLW-2BhggU2jp-2FuYmlu1mgnKq3GLT-2BQs66xRLMVK0ptzU4dayw9UBPVRQ2Fkfj-2FJw1BXrk-2BY-3D and https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirJzYNkGRnjRAeENnIy4IlGMktl4IMwqOL-2F6c9eA2tuyk4XtZY7kQE2gU21K2S6Iame7IH19-2BL1vfBFf0SU6yEiA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbPyFjltEjXNsT3qz-2Fb9AtZOlxcf7srfg3ApNJwAPl06rQsoKGLAu393JsVQP6IMnwpmfkPtqhUc0Kd-2Fr-2BdA39SFaSuqgV1MSaFq7Bx7Osg3G1ng9ujPr9Xt71FOQOsCM9Ada5YhYxQbHq72hBUfE7-2Bo-3D
 
 
-> [] https://github.com/libevent/libevent/issues/332
-> out-of-bounds read in search_make_new()
-
-Use CVE-2016-10197.
+ Since this issue is potentially serious, we encourage people to patch and update as soon as possible.
 
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+ --
+ Atlassian Security Team
 
-iQIcBAEBCAAGBQJYkscCAAoJEHb/MwWLVhi2YewP/1u5OS30qLHSRq1rCr7C9kDL
-DE8/09mH0y5dgW0DPYllVLv6tUdQT9QwKoYQI/rWUYZ9j5oxEEeKo/Kr+klhTQLY
-cpvNrtZGhwTXynq/BC69s74n3mi8lXxxnV+XRwQgDKkdYSvaT19yrVG337WZKZq+
-A03c78NJQEn6Gw/p7hyhGmQZA2AKO/DhqccSX4YlSKfarH3yhCd0rvionaclxyPa
-2O+ldYbDElwFD1nfSBW8HLvjl3YeUgKFl0r1mqQSg/rCvYoEcXBfqJ5KmCFNI+3C
-eTkSZ2q7yWQBPIEkldQBEJAGP5LxXxAm0FWfuoj2VHFFl6I3Pm7R7oNULiEqKDeD
-rQ6SRQ43H0Qf8E6c3HkPGhRS9OI+pfcFrbX4hAtCwMVpWhdKwv4gYNI3yg9Mjnnp
-gfj7Uu0BESQupGBOPi9Ex2Am7k6JQSFUyz6Fzy3eHumCj4WxxjtWljVY8uevlu57
-sL8P3esH15174t/iMhXw0SS+DEs4CiCk0vH1M2Qd2tEqoLHZ2TCNDoska9KdUifh
-hsJU9vxEn+uIZIKpffx/OIMntzoqCoRHlCgDNMiKZPW4oi6FYARzhLVnhkB/ayY0
-f2ha9TBXUtm8m/S4KU0MKPfZWjiudFbS5yqYNJFfpVCT8GG04SFc4Zd4WYEo3Vih
-Nc8R5cRbqqFTMK1ZCcK9
-=VKif
------END PGP SIGNATURE-----
