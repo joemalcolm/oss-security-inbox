@@ -1,39 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/11
-Message-ID: <20170914092615.5e8ab5e3@sturbolzen>
-Date: Thu, 14 Sep 2017 09:26:15 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/6
+Message-ID: <7182616.Nnz2bjfGhP@arcadia>
+Date: Sat, 29 Apr 2017 15:48:37 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
+Subject: Re: CVE-2017-7578: libming: heap overflow in parser.c (Incomplete fix for CVE-2016-9831)
 Content-Type: text/plain; charset=utf-8
 
-Hi Agostino,
-
-thanks for pointing out that mp3gain is yet another user of an outdated
-fork of mpg123 code. But this time with a twist: This again seems to be
-a lifted version of the modified mpg123 code from Lame! A forked fork.
-
-I'll have a look if I can rip that mpglib out of mp3gain and provide a
-patch that uses an up-to-date libmpg123 for parsing instead. This would
-perhaps be a better path forward for distros than to remove the
-vulnerable mp3gain altogether.
-
-An impressive list of vulnerabilities you have there … perhaps some
-specific to mp3gain's modifications, but I guess the overflows in
-layer3.c are well-known already from mpg123 and Lame.
-
-
-Alrighty then,
-
-Thomas
+This is fixed in the 0.4.8 release.
 
 -- 
-Dr. Thomas Orgis
-Universität Hamburg
-RRZ / Basisinfrastruktur / HPC
-Schlüterstr. 70
-20146 Hamburg
-Tel.: 040/42838 8826
-Fax: 040/428 38 6270
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (5898 bytes)
+Agostino Sarubbo
+Gentoo Linux Developer
