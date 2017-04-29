@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["725" "Monday" "15" "May" "2017" "15:40:39" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhTK3+YqzhtPLa96QNYTkfDRv_YPc0bieXvLgQDRRoFRWQ@mail.gmail.com>" "27" "[oss-security] CVE-2017-7495 kernel : information leak on ext4 when hardware reset." nil nil nil "5" "2017051505:40:39" "[oss-security] CVE-2017-7495 kernel : information leak on ext4 when hardware reset." (number mark "U       wmealing@red May 15   27/725   " thread-indent "\"[oss-security] CVE-2017-7495 kernel : information leak on ext4 when hardware reset.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["987" "Friday" "28" "April" "2017" "22:36:16" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLfOaQEkD+o8j7GMiXFxcZ-ANA4aYA13NjtN6iOUWfDuQ@mail.gmail.com>" "28" "Re: [oss-security] CVE-2017-8291 ghostscript remote code execution" "^Date:" nil nil "4" "2017042905:36:16" "[oss-security] CVE-2017-8291 ghostscript remote code execution" (number mark "        taviso@googl Apr 28   28/987   " thread-indent "\"Re: [oss-security] CVE-2017-8291 ghostscript remote code execution\"\n") "<CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>" ("<20170428015004.11956.12148@falcon>" "<20170428030522.GA53619@wopr>" "<CAAYo3Bu+9QFoqsRU__WmCou09Y_xt39VMEyoV3Y-RR0qv-gtng@mail.gmail.com>" "<CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30159 invoked by uid 550); 15 May 2017 05:40:52 -0000
+Received: (qmail 16183 invoked by uid 550); 29 Apr 2017 05:36:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30135 invoked from network); 15 May 2017 05:40:51 -0000
+Received: (qmail 16165 invoked from network); 29 Apr 2017 05:36:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=chWka9b9xpWm+nVXwYped8UrTUC6MqBGWQ362VkHfnE=;
+        b=hddYpbTkw3X8cwZeJ+pPshERLU5vnx8hDP7glLd6WOaTlaVkn41mkfs55Z2MiBPm7r
+         rsW+WvMi8b7IkonEAg8qbjBYmGVNGDYKXdZdtAT97ctgbyGcb+SDjMfbJB0cu+jEx5VI
+         vUVlZ8ya+ec9iKdDyPmIuS1Qth4A8aaFn/8sy6HzmtU1aMahWMOcNwK+FwcwWUI7b7PH
+         c7bLcnSx9MPdj3pGwCc2LIp3BYSXXltMQ7W7Sfe6ut0S3+MyR9N6Ls5x+zUVRiFSzhP8
+         UO5OKnuJG7BarR6ji4QRTNQ/wdlsGMuKK8ezMwVfEnSZGYNxDGCiLAtXJUnEar3VvL2/
+         LVVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=oEttuIHFKR5oOl6ybopLJ7EzG0gpu1v4oRhj7KOZ4q4=;
-        b=XmGM4DeTcUyWzDOU4nGR6H3dvxyCgU53Tct6Ltg3yIx3gynQikxnAb+lbgfSCUHdTN
-         rsvgJMLGkhoC1Y8ekO1+VVFIUpfDCqMynVFvfaToYNVUk6aZK/VQReZ6YOXYfUrC58Sa
-         VfuQR5hL08WHm0ynrKRKy0WrYpwEcF9WOO7xW9N5SB/tYo0eEXHuH/BS8tn8lWsVuSND
-         xHzWiEupsiWpb3LNYC9DUsE6YaJKmMyfYuemRzjB6k5KrY6mWsIv9FjCzogZg0D3nnv0
-         95/B28oS6yIyEqv4fqhApr2jyWg6/bJqzxGW+NTDhLm1GhFezz/G9cV7u3XVqQfNfL9v
-         ia3w==
-X-Gm-Message-State: AODbwcAKTJ+Ybq/U9bm9gnmneCXkMKDo+WOUeHlKjFojkobzZ4C/dihY
-	O07gH/bAkjJY5INrSWrUmoE/ctOoGU6jz7+LQw==
-X-Received: by 10.55.201.10 with SMTP id q10mr4085386qki.4.1494826839980; Sun,
- 14 May 2017 22:40:39 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=chWka9b9xpWm+nVXwYped8UrTUC6MqBGWQ362VkHfnE=;
+        b=nAyjNnVPGq00ZVpncdGNQlpB1h558OM6Q9KX+jvt3/i8K61n2XCS7roCz7y6a55BHX
+         HFhMPvmYoeMmGOgKyZeN3co/szQi3AIKHeoiXzb267GtbyhNZPG1B3Ng94PLiacER5W6
+         1L04ga4qe9K2usDvzDKjZ/sOT98RZ9qIzMDh84D3fGAr9g4sjiOv6vnddHj2iUA/yfM4
+         cn+kt5hurMpSX3kmgPrrhESkSX2Xv702+NwwE0AJuLJy7LP+pLIzQ56AGA+BaiWYWelD
+         Xd6GIGZWFJJc1m0eOqq7T4NaL0lCMkfMYMg0bcTliJMpImja9M2/uT+e5X8JZ8pG6s4s
+         idvQ==
+X-Gm-Message-State: AN3rC/5eXpPV47WQYSSSdw6JOJnbRgOkQdhuFPISJF10qbAIqWoXG9rW
+	zRupJVquakuT95TqsJplcHlG5jB+4J/7ctd5oQ==
+X-Received: by 10.200.41.35 with SMTP id y32mr12926989qty.37.1493444196585;
+ Fri, 28 Apr 2017 22:36:36 -0700 (PDT)
 MIME-Version: 1.0
-From: Wade Mealing <wmealing@redhat.com>
-Date: Mon, 15 May 2017 15:40:39 +1000
-Message-ID: <CALJHwhTK3+YqzhtPLa96QNYTkfDRv_YPc0bieXvLgQDRRoFRWQ@mail.gmail.com>
+In-Reply-To: <CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>
+References: <20170428015004.11956.12148@falcon> <20170428030522.GA53619@wopr>
+ <CAAYo3Bu+9QFoqsRU__WmCou09Y_xt39VMEyoV3Y-RR0qv-gtng@mail.gmail.com> <CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>
+Message-ID: <CAJ_zFkLfOaQEkD+o8j7GMiXFxcZ-ANA4aYA13NjtN6iOUWfDuQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 28 Apr 2017 22:36:16 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2017-8291 ghostscript remote code execution
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="001a1149a49ecc4fa1054f897e69"
-Subject: [oss-security] CVE-2017-7495 kernel : information leak on ext4 when hardware reset.
 
---001a1149a49ecc4fa1054f897e69
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Apr 28, 2017 at 7:43 PM, redrain root <rootredrain@gmail.com> wrote:
+>
+> what a awkward??
+> I have discovered a part of my vulns about ghostscript last year and
+> exploited in fulldisclosure early!
+> and these vulns are part of mine I was going to discovered these in defcon
+> or other conference...WTF...
+> u guys are logo designer???
+>
+> there are two demos last year
+> Evince Arbitrary Code Execution https://youtu.be/wzcrHXngfcM Attack Imagick
+> through Ghostscript https://youtu.be/tPGm_ANDyOw
+>
 
-When a power failure (or hardware reset) occurs, applications writing to an
-ext4 filesystem system may create a situation in which writes to one file
-may appear in another file (ergo information leak).
+I don't think so, that is CVE-2016-7976 and is entirely unrelated to
+the issue being discussed, other than superficial similarity of the
+exploit.
 
-This may be at least data corruption, a controlled attacker may be able to
-leverage this to steal data from writes to the same ext4 subsystem.
+That issue was reported by me, and we discussed the ImageMagick and
+evince attack vectors at the time, you can check the archives if
+you're interested.
 
+http://seclists.org/oss-sec/2016/q4/29
 
-Reference:
+This issue (CVE-2017-8291) is a type confusion vulnerability (well,
+technically two vulnerabilities), and was found in the wild.
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1450261
-
-Upstream patch:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=06bd3c36a733ac27962fea7d6f47168841376824
-
-Thanks
-
---
-
-Wade Mealing
-Red Hat Product Security
-
---001a1149a49ecc4fa1054f897e69--
+Tavis.
