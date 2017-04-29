@@ -1,100 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/7
-Message-ID: <552869.637121574-sendEmail@localhost>
-Date: Thu, 14 Sep 2017 07:03:29 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: mp3gain: global buffer overflow in III_i_stereo (mpglibDBL/layer3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/5
+Message-ID: <3467590.lVyNDzTuZc@arcadia>
+Date: Sat, 29 Apr 2017 15:48:36 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: libming: listswf: heap-based buffer overflow in parseSWF_DEFINEFONT (parser.c)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-mp3gain is a program to analyze and adjust MP3 files to same volume.
+This is fixed in the 0.4.8 release.
 
-The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
-The upstream project seems to be dead, so the issue wasn’t communicated to them.
-
-The complete ASan output of the issue:
-
-# aacgain -f $FILE
-==20037==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000010803e0 at pc 0x0000008dde6c bp 0x7fff0aee7020 sp 0x7fff0aee7018                                                                       
-READ of size 8 at 0x0000010803e0 thread T0                                                                                                                                                                        
-    #0 0x8dde6b in III_i_stereo /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1076                                                                                         
-    #1 0x8dde6b in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1661                                                                                            
-    #2 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643                                                                                          
-    #3 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262                                                                                                          
-    #4 0x7f756ace0680 in __libc_start_main (/lib64/libc.so.6+0x20680)                                                                                                                                             
-    #5 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)                                                                                                                                                             
-                                                                                                                                                                                                                  
-0x0000010803e0 is located 32 bytes to the left of global variable 'pow2_1' defined in 'layer3.c:109:27' (0x1080400) of size 256                                                                                   
-0x0000010803e0 is located 0 bytes to the right of global variable 'pow1_2' defined in 'layer3.c:109:41' (0x10802e0) of size 256                                                                                   
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1076 in III_i_stereo                                                       
-Shadow bytes around the buggy address:                                                                                                                                                                            
-  0x000080208020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-  0x000080208030: 00 f9 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x000080208040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080208050: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
-  0x000080208060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x000080208070: 00 00 00 00 00 00 00 00 00 00 00 00[f9]f9 f9 f9
-  0x000080208080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080208090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000802080a0: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000802080b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000802080c0: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==20037==ABORTING
-
-Affected version:
-1.5.2
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14410
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00353-aacgain-globaloverflow-III_i_stereo
-
-Timeline:
-2017-08-28: bug discovered
-2017-09-08: blog post about the issue
-2017-09-13: CVE Assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/08/mp3gain-global-buffer-overflow-in-iii_i_stereo-mpglibdbllayer3-c/
-
---
+-- 
 Agostino Sarubbo
 Gentoo Linux Developer
-
-
