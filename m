@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/08/1
-Message-Id: <4FAC7CFD-313D-44AF-8A91-50C41EB4D3C1@beckweb.net>
-Date: Tue, 8 Aug 2017 16:50:44 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/2
+Message-ID: <CAJ_zFkLfOaQEkD+o8j7GMiXFxcZ-ANA4aYA13NjtN6iOUWfDuQ@mail.gmail.com>
+Date: Fri, 28 Apr 2017 22:36:16 -0700
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Jenkins SAML Plugin 1.0.2 and earlier stored secrets unencrypted
+Subject: Re: CVE-2017-8291 ghostscript remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-plugin releases contain fixes for security vulnerabilities:
+On Fri, Apr 28, 2017 at 7:43 PM, redrain root <rootredrain@...il.com> wrote:
+>
+> what a awkward??
+> I have discovered a part of my vulns about ghostscript last year and
+> exploited in fulldisclosure early!
+> and these vulns are part of mine I was going to discovered these in defcon
+> or other conference...WTF...
+> u guys are logo designer???
+>
+> there are two demos last year
+> Evince Arbitrary Code Execution https://youtu.be/wzcrHXngfcM Attack Imagick
+> through Ghostscript https://youtu.be/tPGm_ANDyOw
+>
 
-* SAML Plugin 1.0.3
+I don't think so, that is CVE-2016-7976 and is entirely unrelated to
+the issue being discussed, other than superficial similarity of the
+exploit.
 
-Users of these plugins should upgrade them to the indicated versions.
+That issue was reported by me, and we discussed the ImageMagick and
+evince attack vectors at the time, you can check the archives if
+you're interested.
 
-Descriptions of the vulnerabilities are below. Some more details, 
-severity, and attribution can be found here:
-https://jenkins.io/security/advisory/2017-08-08/
+http://seclists.org/oss-sec/2016/q4/29
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+This issue (CVE-2017-8291) is a type confusion vulnerability (well,
+technically two vulnerabilities), and was found in the wild.
 
-If you find security vulnerabilities in Jenkins, please report them as 
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-JENKINS-46007
-The SAML Plugin stored passwords unencrypted as part of its configuration. 
-This allowed users with Jenkins master local file system access and Jenkins 
-administrators to retrieve the stored password. The latter could result in 
-exposure of the passwords through browser extensions, cross-site scripting 
-vulnerabilities, etc.
-
+Tavis.
