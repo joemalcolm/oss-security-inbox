@@ -1,38 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/10
-Message-ID: <87pohgords.fsf@dell.be.48ers.dk>
-Date: Thu, 16 Mar 2017 22:15:11 +0100
-From: Peter Korsgaard <peter@...sgaard.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/4
+Message-ID: <3404443.FfsTeelCPW@arcadia>
+Date: Sat, 29 Apr 2017 15:40:54 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Adam Maris <amaris@...hat.com>
-Subject: Re: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
+Subject: Re: mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)
 Content-Type: text/plain; charset=utf-8
 
->>>>> "Peter" == Peter Bex <peter@...e-magic.net> writes:
+On Saturday 18 February 2017 12:38:45 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/02/17/mupdf-mujstest-stack-based-buffer-ov
+> erflow-in-main-jstest_main-c
 
- > On Thu, Mar 16, 2017 at 01:17:13PM +0100, Peter Korsgaard wrote:
- >> >>>>> "Peter" == Peter Bex <peter@...e-magic.net> writes:
- >> 
- >> > On Thu, Mar 16, 2017 at 10:31:17AM +0100, Adam Maris wrote:
- >> >> Hi Peter,
- >> >> 
- >> >> oss-security mailing is no longer a place for requesting CVEs. Please,
- >> >> request CVE from MITRE via https://cveform.mitre.org/ or also possibly
- >> >> from DWF project via http://iwantacve.org/
- >> 
- >> > Oh yeah, I forgot about that.  I've filled out the form, and I hope I've
- >> > done this correctly.
- >> 
- >> Please don't forget to forward the form details to this list once a CVE
- >> has been assigned. Thanks.
-
- > This was assigned CVE-2017-6949.  The form details were in my original
- > mail, but I'll include them here again, though I must say fiddling around
- > with e-mail to forward it is much much more inconvenient than how it used
- > to work:
-
-Thanks, and yes - I agree. The longer term plan is afaik that this
-should happen automatically by the MITRE system.
+Fixed by:
+http://git.ghostscript.com/?p=user/sebras/mupdf.git;a=blobdiff;f=platform/x11/jstest_main.c;h=f158d9628ed0c0a84e37fe128277679e8334422a;hp=13c3a0a3ba3ff4aae29f6882d23740833c1d842f;hb=06a012a42c9884e3cd653e7826cff1ddec04eb6e;hpb=34e18d127a02146e3415b33c4b67389ce1ddb614
 
 -- 
-Bye, Peter Korsgaard
+Agostino Sarubbo
+Gentoo Linux Developer
