@@ -1,134 +1,178 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/1
-Message-Id: <E1d984d-00072n-R5@xenbits.xenproject.org>
-Date: Fri, 12 May 2017 10:45:27 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 213 (CVE-2017-8903) - x86: 64bit PV guest breakout via pagetable use-after-mode-change
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/13
+Message-ID: <68c416cf-44b4-1d43-441e-8262b0b88e82@securify.nl>
+Date: Sat, 29 Apr 2017 16:44:13 +0200
+From: "Securify B.V." <lists@...urify.nl>
+To: oss-security@...ts.openwall.com
+Subject: SyntaxHighlight MediaWiki extension allows injection of arbitrary Pygments options
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------------------------------------------------------------------------
+SyntaxHighlight MediaWiki extension allows injection of arbitrary
+Pygments options
+------------------------------------------------------------------------
+Yorick Koster, February 2017
 
-            Xen Security Advisory CVE-2017-8903 / XSA-213
-                              version 3
+------------------------------------------------------------------------
+Abstract
+------------------------------------------------------------------------
+A vulnerability was found in the SyntaxHighlight MediaWiki extension.
+Using this vulnerability it is possible for an anonymous attacker to
+pass arbitrary options to the Pygments library. By specifying specially
+crafted options, it is possible for an attacker to trigger a (stored)
+Cross-Site Scripting condition. In addition, it allows the creating of
+arbitrary files containing user-controllable data. Depending on the
+server configuration, this can be used by an anonymous attacker to
+execute arbitrary PHP code.
 
-   x86: 64bit PV guest breakout via pagetable use-after-mode-change
+------------------------------------------------------------------------
+See also
+------------------------------------------------------------------------
+- CVE-2017-0372 [2]
+- T158689 [3]: Parameters injection in SyntaxHighlight results in
+multiple vulnerabilities
+- Fix REL1_28 [4]: SECURITY: Escape start argument before passing to
+pygments
+- Fix REL1_27 [5]: SECURITY: Escape start argument before passing to
+pygments
+- MediaWiki-announce [6]: Security Release: 1.28.1 / 1.27.2 / 1.23.16
+(fix not included in this release)
 
-UPDATES IN VERSION 3
-====================
+------------------------------------------------------------------------
+Tested versions
+------------------------------------------------------------------------
+This issue was tested on SyntaxHighlight version 2.0 as bundled with
+MediaWiki version 1.28.0.
 
-CVE assigned.
+------------------------------------------------------------------------
+Fix
+------------------------------------------------------------------------
+This issue was supposed to be fixed in MediaWiki version 1.28.1 and
+version 1.27.2. It appears that the fix was pushed to the git
+repository, but for some reason it was not included in the release
+packages. It is advised to apply the patch committed to Github.
 
-ISSUE DESCRIPTION
-=================
+https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/2d5a60a89fb3995b73e17df5901d6f023e41df3d
+https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/a88c5e1dcbdb3e9940c6f55a6744c62a6d62710f
 
-64-bit PV guests typically use separate (root) page tables for their
-kernel and user modes.  Hypercalls are accessible to guest kernel
-context only, which certain hypercall handlers make assumptions on.
-The IRET hypercall (replacing the identically name CPU instruction)
-is used by guest kernels to transfer control from kernel mode to user
-mode.  If such an IRET hypercall is placed in the middle of a multicall
-batch, subsequent operations invoked by the same multicall batch may
-wrongly assume the guest to still be in kernel mode.  If one or more of
-these subsequent operations involve operations on page tables, they may
-be using the wrong root page table, confusing internal accounting.  As
-a result the guest may gain writable access to some of its page tables.
+------------------------------------------------------------------------
+Introduction
+------------------------------------------------------------------------
+The SyntaxHighlight [7] extension for MediaWiki [8] allows formatting of
+source code using the <syntaxhighlight> tag. Version 2.0 uses the Python
+Pygments [9] library to format the code. SyntaxHighlight is bundled with
+MediaWiki version 1.21 and later. Version 2.0 is bundled with MediaWiki
+1.26.0 and later (other versions may or may not include this version as
+well).
 
-IMPACT
-======
+The <syntaxhighlight> tag supports various parameters. It was found that
+the start parameter is not validated and/or sanitized. This allows an
+attacker to pass arbitrary options to the Lexer and/or Formatter that is
+used when Pygments is invoked. By specifying specially crafted options,
+it is possible for an attacker to trigger a (stored) Cross-Site
+Scripting condition. In addition, the HTML formatter allows the creating
+of arbitrary files containing user-controllable data. Depending on the
+server configuration, this can be used by an attacker to execute
+arbitrary PHP code.
 
-A malicious or buggy 64-bit PV guest may be able to access all of
-system memory, allowing for all of privilege escalation, host crashes,
-and information leaks.
+------------------------------------------------------------------------
+Details
+------------------------------------------------------------------------
+The SyntaxHighlight extension utilizes Pygments to format source code.
+Pygments is a Python library, a copy is provided with the extension. In
+order to use Pygments, the extension invokes it using Symfony's [10]
+ProcessBuilder [11] component. This component performs escaping of
+command line arguments to prevent command injection.
 
-VULNERABLE SYSTEMS
-==================
+SyntaxHighlight_GeSHi.class.php:
 
-All 64-bit Xen versions are vulnerable.
+$optionPairs = array();
+foreach ( $options as $k => $v ) {
+	$optionPairs[] = "{$k}={$v}";
+}
+$builder = new ProcessBuilder();
+$builder->setPrefix( $wgPygmentizePath );
+$process = $builder
+	->add( '-l' )->add( $lexer )
+	->add( '-f' )->add( 'html' )
+	->add( '-O' )->add( implode( ',', $optionPairs ) )
+	->getProcess();
+	
+$process->setInput( $code );
+$process->run();
 
-Only x86 systems are affected.  ARM systems are not vulnerable.
+The used Lexer is specified through the lang parameter, the Formatter is
+always set to the HtmlFormatter. Additional options for the Lexer and/or
+Formatter are provided using the -O command line argument. These options
+can be controlled by the parameters that are supported by the
+<syntaxhighlight> tag. Each option is a key value pair, the options are
+comma separated.
 
-The vulnerability is only exposed to 64-bit PV guests.  HVM guests and
-32-bit PV guests can't exploit the vulnerability.
+It was found that no input validation and/or sanitization is done on the
+start parameter. This parameter is used to define the first line number
+of a code block. If line numbers are enabled, the numbering will start
+with the value provided in the start parameter. Normally, this value
+should only contain numbers. Due to the lack of validation/sanitization,
+it can be set to any value.
 
-MITIGATION
-==========
+SyntaxHighlight_GeSHi.class.php:
 
-Running only HVM or 32-bit PV guests will avoid the vulnerability.
+// Starting line number
+if ( isset( $args['start'] ) ) {
+	$options['linenostart'] = $args['start'];
+}
 
-The vulnerability can be avoided if the guest kernel is controlled by
-the host rather than guest administrator, provided that further steps
-are taken to prevent the guest administrator from loading code into
-the kernel (e.g. by disabling loadable modules etc) or from using
-other mechanisms which allow them to run code at kernel privilege.
+Since Lexer/Formatter options are comma separated, it is possible for an
+attacker to provide arbitrary options when invoking Pygments. Depending
+on the options supported by the Lexer or Formatter, this allows the
+attacker to perform various types of attacks. For example it is possible
+for an attacker to trigger a (stored) Cross-Site Scripting condition by
+passing a specially crafted prestyles option to the HTML Formatter.
 
-CREDITS
-=======
+<syntaxhighlight lang="java" 
+start='0,prestyles="&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;'>
+	string foo="bar";
+</syntaxhighlight>
 
-This issue was discovered by Jann Horn of Google Project Zero.
 
-RESOLUTION
-==========
+When the option full is passed to the HTML Formatter, it is possible to
+specify a local CSS file using the cssfile option. If the CSS file does
+not exist it will be created - provided that Pygments has write
+privileges on the provided path. This CSS file contains the styles that
+are used for formatting the source code. Providing additional options,
+it is possible to control parts of the CSS. One such option is the
+classprefix option.
 
-Applying the appropriate attached patch resolves this issue.
+Combining these options can result in execution of arbitrary PHP code,
+provided that a writeable folder exists within the webserver's document
+root that allows the execution of PHP files. The proof of concept below
+will try to create a PHP file name foo.php in the images folder located
+within the document root.
 
-xsa213.patch           xen-unstable
-xsa213-4.8.patch       Xen 4.8.x
-xsa213-4.7.patch       Xen 4.7.x
-xsa213-4.6.patch       Xen 4.6.x
-xsa213-4.5.patch       Xen 4.5.x
+<syntaxhighlight lang='java' 
+start='0,full=1,title=,cssfile=images/foo.php,classprefix=&lt;?php
+phpinfo();exit; ?&gt;'>
+</syntaxhighlight>
 
-$ sha256sum xsa213*
-cddea5eac2ad1f5a68b561da4e98afce891189a2fdedf93087a03889e9df6e99  xsa213.patch
-fce9bbc9fc30769dfbab4d1830d87d220000b2742e5e70aac22f3e9d013b7614  xsa213-4.5.patch
-dce026ed1a02db1cf22de89120e7129839f656d041379c450e7403ae909e7b99  xsa213-4.6.patch
-d8202db5981e2f13d9942332cd3fefded98a5cbc302caee431c7a15051887e7f  xsa213-4.7.patch
-20c12810ac73809ba74cfde811d420b1b544a07f759c393380afde1a09eb5274  xsa213-4.8.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZFZInAAoJEIP+FMlX6CvZq7YIAL4qV4jk+XHwuTSPp/3DyOgX
-CSwDduXqwdeUTfc+1qn6yQFiDxOMVUUUq8Qq1j+x6QrcBocJ6qNJNXhHdExbJ9Aa
-VPMkf1c+WbuoqOy5BHgnVkTLbCjUzDknQmDBJF4JjADsFpWaIzaXXmLG7GLwSaaf
-XIYIRcqa51XYSA32E0nvn+AC5OQCx7Pt5jQwRnQFfWH4e79abbI/2jNci3Xe7vfa
-TmUFlmTEZ3qZ5WNL0+vW4qF/fwwLya9E3IqtqBKYf5BmI369dC9tQs4ELleJ1mqi
-pj+81RnpVMeQlmYkt+31zP1Hzn/zBdF19yDzpBmvRZJYrF/I6rd+8mYXa8k5H5g=
-=KN3M
------END PGP SIGNATURE-----
-
-Download attachment "xsa213.patch" of type "application/octet-stream" (5626 bytes)
-
-Download attachment "xsa213-4.5.patch" of type "application/octet-stream" (5760 bytes)
-
-Download attachment "xsa213-4.6.patch" of type "application/octet-stream" (5760 bytes)
-
-Download attachment "xsa213-4.7.patch" of type "application/octet-stream" (5749 bytes)
-
-Download attachment "xsa213-4.8.patch" of type "application/octet-stream" (5628 bytes)
+Unless the Wiki is configured as private, it is possible to exploit this
+issue without logging into the Wiki. If the Wiki is set to private, an
+account with read access is required to exploit this vulnerability.
+------------------------------------------------------------------------
+References
+------------------------------------------------------------------------
+[1] 
+https://www.securify.nl/advisory/SFY20170201/syntaxhighlight_mediawiki_extension_allows_injection_of_arbitrary_pygments_options.html
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-0372
+[3] https://phabricator.wikimedia.org/T158689
+[4] 
+https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/2d5a60a89fb3995b73e17df5901d6f023e41df3d
+[5] 
+https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/a88c5e1dcbdb3e9940c6f55a6744c62a6d62710f
+[6] 
+https://lists.wikimedia.org/pipermail/mediawiki-announce/2017-April/000207.html
+[7] https://www.mediawiki.org/wiki/Extension:SyntaxHighlight
+[8] https://www.mediawiki.org
+[9] http://pygments.org/
+[10] https://symfony.com/
+[11] 
+http://api.symfony.com/3.2/Symfony/Component/Process/ProcessBuilder.html
