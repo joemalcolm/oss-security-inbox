@@ -1,33 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/7
-Message-ID: <1497898323.1005.1.camel@gmail.com>
-Date: Mon, 19 Jun 2017 14:52:03 -0400
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/9
+Message-ID: <67887623.xDECAtUjHM@arcadia>
+Date: Sat, 29 Apr 2017 15:48:46 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Qualys Security Advisor -- The Stack Clash
+Subject: Re: libming: listmp3: divide-by-zero in printMP3Headers (listmp3.c)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2017-06-19 at 11:26 -0600, Jeff Law wrote:
-> I would consider those two GCC BZs (68065, 66479) a separate an
-> distinct
-> issue.
-> 
-> It is far more important to address design issues around the existing
-> -fstack-check first.  I think we've got a pretty good handle on how to
-> address those problems and discussions with the upstream GCC community
-> have already started.
-> 
-> In an ideal world we'll get to a place where the new -fstack-check
-> does
-> not change program semantics, never misses probes and is efficient
-> enough to just turn on and forget everywhere.  The existing
-> -fstack-check fails all three of those criteria.
-> 
-> Jeff
+This is fixed in the 0.4.8 release.
 
-AFAIK, the main efficiency issue (reserving a register) was fixed for
-GCC 6. I might be missing something but it seems very cheap now, at
-least for x86_64. It definitely doesn't really work though.
-
-Is there an example of it changing program semantics? I haven't seen
-anything since the generic arch stuff was fixed.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
