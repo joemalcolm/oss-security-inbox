@@ -1,49 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/9
-Message-ID: <DMO5TQmFAPfu4dFKu4KMcGi6kvI4kaQ7lW-aj2fp5bdVprZtr-S6uqEEJ-lB4fu6HSILDCDivxFhQDq-Mm2kQqlPBeu7qzDE2fpV6TiS0CU=@itk.swiss>
-Date: Fri, 10 Feb 2017 13:09:43 -0500
-From: Stiepan <stie@....swiss>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/12
+Message-ID: <15088047.6W8cpZ90dd@arcadia>
+Date: Sat, 29 Apr 2017 15:48:48 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+Subject: Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
 Content-Type: text/plain; charset=utf-8
 
-Same concern here; I second your suggestion, John.
+This is fixed in the 0.4.8 release.
 
-By the way, I have just tried the OVE ID alternative:
-good idea, but perhaps one button is a bit too frugal.
-What about adding at least the possibility of a title?
-This would probably encourage people to use OVEs.
-Of course, a catpcha might be needed in that event.
-
-Stiepan
-
-P.S.: While we're at it, let's use the two OVEs I have just wasted,
-OVE-20170210-0001 (forward CVE web request+ID to oss-sec)
-OVE-20170210-0002 (add a title option field to OVE web form),
-for the two aforementioned issues!
-
-
--------- Original Message --------
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
-Local Time: 10 February 2017 5:08 PM
-UTC Time: 10 February 2017 16:09
-From: john.haxby@...cle.com
-To: oss-security@...ts.openwall.com
-
-On 10/02/17 15:40, Priedhorsky, Reid wrote:
-> To more efficiently assign and publish CVE IDs and to enable
-> automation and data sharing within CVE operations, MITRE is changing
-> the way it accepts CVE ID requests on the oss-security mailing list.
-> Starting today, please direct CVE ID requests to this web form
-> <https://cveform.mitre.org/>
->
-> I’ve been using the CVE requests on oss-security to maintain a reasonably comprehensive and timely list of vulnerabilities for specific products. It’s not clear to me how to do this when CVE requests happen offline in a web form.
->
-> Has this use case been considered? Is there an alternate way to accomplish my goal?
-
-I'm glad someone else mentioned this -- I've been wondering too.
-
-What would be nice is if the web form forwarded the request and CVE-ID
-(suitably formatted) to oss-security or a similar list.
-
-jch
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
