@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1935" "Tuesday" "29" "August" "2017" "10:49:17" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0+7=X0u+o6yyvZcjbEmvj-_c0QzDQiSRxgUAFy7mF6hw@mail.gmail.com>" "65" "Re: [oss-security] A bunch of duplicate CVEs requested for?? bho.." "^Date:" nil nil "8" "2017082916:49:17" "[oss-security] A bunch of duplicate CVEs requested for?? bho.." (number mark "        kseifried@re Aug 29   65/1935  " thread-indent "\"Re: [oss-security] A bunch of duplicate CVEs requested for?? bho..\"\n") "<alpine.GSO.2.20.1708291116010.12310@scrappy.simplesystems.org>" ("<6609652.OIiHvm4qLd@wanheda>" "<alpine.GSO.2.20.1708291116010.12310@scrappy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1093" "Saturday" "29" "April" "2017" "10:43:50" "+0800" "redrain root" "rootredrain@gmail.com" "<CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>" "46" "Re: [oss-security] CVE-2017-8291 ghostscript remote code execution" "^Date:" nil nil "4" "2017042902:43:50" "[oss-security] CVE-2017-8291 ghostscript remote code execution" (number mark "        rootredrain@ Apr 29   46/1093  " thread-indent "\"Re: [oss-security] CVE-2017-8291 ghostscript remote code execution\"\n") "<CAAYo3Bu+9QFoqsRU__WmCou09Y_xt39VMEyoV3Y-RR0qv-gtng@mail.gmail.com>" ("<20170428015004.11956.12148@falcon>" "<20170428030522.GA53619@wopr>" "<CAAYo3Bu+9QFoqsRU__WmCou09Y_xt39VMEyoV3Y-RR0qv-gtng@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26567 invoked by uid 550); 29 Aug 2017 16:49:31 -0000
+Received: (qmail 11801 invoked by uid 550); 29 Apr 2017 02:44:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26546 invoked from network); 29 Aug 2017 16:49:30 -0000
+Received: (qmail 11780 invoked from network); 29 Apr 2017 02:44:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=j20VZxOYq7neh9CgsFfOZ3q+uSK3xoZzsp4Q1gTyZx4=;
+        b=K+2HkIiiGQFiJ9UNpFYrwa1inbdSJ+LLFhTlUCh970mdzN+wl+OtB8JN6P8PKsZsD1
+         gz5Zw3RrBGvB2KyRgGsorC59AeUTjpi90Xa9EA8VHIjVt1khoGEwTwS3fw95dwysiuln
+         OZ7FF2ZKQZP9mT5oiQLqpFO0TUYfqf9K36mFPPOJ+D4j1JX2Bf8MGOJLY8ogSI/jRVAq
+         e58uKpsntlmiTXcoUg2wuRK8MN6CIFeT0/CEum7dCQg+HqIlTB7xO1HPQAXLGzQ80ecW
+         pVzrvgo8UONRT3l+4BJsMTP7ZakLE0UDLQlRHs/V7WrG4g6hk+NIidlw1Xe4nXmQr5Tv
+         IGCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to;
-        bh=WzsvlD56opdUs1ovzVGb7OQOYeY2zz9rXYoLnIjlRj4=;
-        b=KfGSH9BSk/8M1OoC9t/o2wNmUERe3wpIe/2u/XKKO21VYAP2clfU/eWIldaodwjtsG
-         ud+LzExTxdhuUjOIw4FMVcuz+39xPwTyObK73EIq9OrQ2py18WEj6EVw8eGcsUJhfp7k
-         ryJLSniqDueJtUsrpWnId8ZvIwKcZXHYLTxtkGE3oMYHqdX7bJq9JNTfZbSn2fcK8iSl
-         +/r0PyhTk2hhnXSvJE37ISOzb3sUQm12BOjro/4aljoHonvavUPHl/H0gNuAecF5sfuN
-         cN2ZVbdUiPa2Qu0ViPLcwxJDgYF+bDEg8zHRV3cyfxNfpRFMgRifNva8TkE54WBGIZIW
-         1sCw==
-X-Gm-Message-State: AHYfb5gmvLdrDa4Dlf/j7EYLTiN6B7yOa5yd0dQfj4LMJFI9CN72GGMR
-	gdKbmx8DCHrj2+sp/beXnISO2EcvrKMVba2b3w==
-X-Received: by 10.202.232.84 with SMTP id f81mr969720oih.121.1504025358262;
- Tue, 29 Aug 2017 09:49:18 -0700 (PDT)
+        bh=j20VZxOYq7neh9CgsFfOZ3q+uSK3xoZzsp4Q1gTyZx4=;
+        b=MTPbr4XS7dGdgwvT4KyfjtCotrzvl4GxRiqc7zBYCTnhxSLzY0K+/ZHgDsGnNBZ6P0
+         I4GZvq0Rxiy7/rsldPi6ScsfPqcNIbOoMaupWENIh7/2No6kgZ9eCj5wasZ3aevFBYqC
+         KvVdnEHJslzOEHNivtno6PLelY8Rhzr4mtSNSGKi2YQmap2NHFrRTTfMIb/a/ZQDJrhB
+         /Zxfj3AW+I/5H0qd3rGeEyxrD60B9+Xn5JXxUm9JijPO2g8bOehRhMxcosgW969BBIWE
+         r4RKlQmGuxPdeNLWXSxzrZSyFgDtsDLyflAbpbapKLlt6N3Sy6QgjtrqWG/zUcGEki4x
+         C0/g==
+X-Gm-Message-State: AN3rC/6B2XJX17fktXU0kafsTwXH/Uxtq5EVrYgBO4dtLlmz/fZhg76N
+	ijABnRaxsk99YKpNzp97CY2d8jW54VUy9ac=
+X-Received: by 10.129.48.68 with SMTP id w65mr11348581yww.99.1493433830392;
+ Fri, 28 Apr 2017 19:43:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <alpine.GSO.2.20.1708291116010.12310@scrappy.simplesystems.org>
-References: <6609652.OIiHvm4qLd@wanheda> <alpine.GSO.2.20.1708291116010.12310@scrappy.simplesystems.org>
-Message-ID: <CANO=Ty0+7=X0u+o6yyvZcjbEmvj-_c0QzDQiSRxgUAFy7mF6hw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a11407ac23693180557e7315c"
-Date: Tue, 29 Aug 2017 10:49:17 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+In-Reply-To: <CAAYo3Bu+9QFoqsRU__WmCou09Y_xt39VMEyoV3Y-RR0qv-gtng@mail.gmail.com>
+References: <20170428015004.11956.12148@falcon> <20170428030522.GA53619@wopr> <CAAYo3Bu+9QFoqsRU__WmCou09Y_xt39VMEyoV3Y-RR0qv-gtng@mail.gmail.com>
+Message-ID: <CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11409d0ef4c93a054e452872
+Date: Sat, 29 Apr 2017 10:43:50 +0800
+From: redrain root <rootredrain@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] A bunch of duplicate CVEs requested for?? bho..
-To: oss-security <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] CVE-2017-8291 ghostscript remote code execution
+To: oss-security@lists.openwall.com
 
---001a11407ac23693180557e7315c
-Content-Type: text/plain; charset="UTF-8"
+--001a11409d0ef4c93a054e452872
+Content-Type: text/plain; charset=UTF-8
 
-On Tue, Aug 29, 2017 at 10:44 AM, Bob Friesenhahn <
-bfriesen@simple.dallas.tx.us> wrote:
+what a awkward??
+I have discovered a part of my vulns about ghostscript last year and
+exploited in fulldisclosure early!
+and these vulns are part of mine I was going to discovered these in defcon
+or other conference...WTF...
+u guys are logo designer???
 
-> On Tue, 29 Aug 2017, Agostino Sarubbo wrote:
+there are two demos last year
+Evince Arbitrary Code Execution https://youtu.be/wzcrHXngfcM Attack Imagick
+through Ghostscript https://youtu.be/tPGm_ANDyOw
+
+
+Regards,
+redrain
+
+
+
+2017-04-28 19:37 GMT+08:00 David Black <dblack@atlassian.com>:
+
+> On Friday, 28 April 2017, Kurt H Maier <khm@sciops.net> wrote:
 >
-> Hi all.
->>
->> In the last time there are some people that run afl for fuzzing...that's
->> just
->> fine and great. Some people miss to communicate their findings to
->> upstream and
->> request a CVE from mitre.
->> However I'm noticing that every day there are new duplicates, let me post
->> some
->> examples:
->>
->
-> It is important to keep in mind that CVEs are issued against "products".
-> There might be a CVE issued against a software version distributed by Red
-> Hat or Debian which is not applicable to the upstream version.  Since each
-> distribution patches their version it is difficult to know the "product"
-> that a particular CVE is applicable to.
-
-
-Actually no, that is incorrect. Please see the CVE counting rules, it's a
-LOT more nuanced than "CVEs are issued against products". THe docs are at
-
-https://cve.mitre.org/cve/editorial_policies/counting_rules.html
-
-TL;DR: CNT1 comes into play and you get situations like libxml/gzip being
-embedded all over the place, but only a single CVE because 1) it's a single
-code based that's copied everywhere and 2) pragmatism.
-
-
->
-> I agree that in my personal experience upstream maintainers are rarely
-> involved in the CVE process.
-
-
-Something I am trying to change. If you are an upstream and you want to
-become a CVE Numbering Authority (CNA) for your project(s) please contact
-me.
-
-
+> > On Fri, Apr 28, 2017 at 01:50:04AM -0000, security@atlassian.com
+> > <javascript:;> wrote:
+> >
+> >
+> > Why are you sending user-tracking urls to this list?
+> >
+> >
+> Hi Kurt,
+> We did not intend to send user tracking urls to this list. However, the
+> method we used to send the email resulted in sendgrid rewriting the the
+> links. We apologise regardless.
 >
 >
-> Bob
 > --
-> Bob Friesenhahn
-> bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+> David.
+>
+>
+> --
+> David Black / Security Engineer.
 >
 
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a11407ac23693180557e7315c--
+--001a11409d0ef4c93a054e452872--
