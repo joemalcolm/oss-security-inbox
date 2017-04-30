@@ -1,45 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/07/6
-Message-ID: <6c33ffd08b9d43af97e2de8c4e70c464@imshyb02.MITRE.ORG>
-Date: Sat, 7 Jan 2017 12:57:10 -0500
-From: <cve-assign@...re.org>
-To: <mcarpenter@...e.fr>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: Firejail local root exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/30/5
+Message-ID: <20170430182826.ovpqricwr7ucjtg7@eldamar.local>
+Date: Sun, 30 Apr 2017 20:28:26 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: radicale: CVE-2017-8342: prone to timing oracles and simple bruteforce attacks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> 6. Root shell via --bandwidth and --shell
-> 
-> Reported at:
-> https://github.com/netblue30/firejail/issues/1023
-> 
-> Fixed at:
->   https://github.com/netblue30/firejail/commit/5d43fdcd215203868d440ffc42036f5f5ffc89fc
+The following CVE assignment was done via the
+https://cveform.mitre.org:
 
-Use CVE-2017-5207.
+Radicale, a simple calendar and addressbook server, before 1.1.2 and
+2.x before 2.0.0rc2 is prone to timing oracles and simple brute-force
+attacks when using the htpasswd authentication method.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+References:
+https://bugs.debian.org/861514
+https://github.com/Kozea/Radicale/commit/059ba8dec1f22ccbeab837e288b3833a099cee2d
+https://github.com/Kozea/Radicale/commit/190b1dd795f0c552a4992445a231da760211183b
+https://github.com/Kozea/Radicale/blob/1.1.2/NEWS.rst
 
-iQIcBAEBCAAGBQJYcSqgAAoJEHb/MwWLVhi2/v4QAJK4oISptZjq0MUeAnSnOtAT
-DypS2YyDgmfXARVnW9Mo6h50XJFBStzBXF4bZMovBLXDNyoVnUNcJ3mGZVWvKAFj
-cWSHH7oLv+9FBNQNpSW1C+HOdDUr1TVNaXY9h8qPl0jxP2qMKqRS2E9eOJ9OTMzX
-v9bgKyJGECbv8njzju7EKzbjDgGgrB5X2Y1cTSZnNXwSAc1OZ2cXZDx4Q8Ai/G0f
-8OqI5yO74iEEHjSwL0SljhjGX2/YZyOMJZASlI6zzNe15HLcqS4ewZQAWr25NsBz
-7Pf5sxHCUBSEi10kDlZrL9PAZRuZtD/aRMG51robZg0abTrIp+WM7oI5HVPh65Ep
-SOYLMi/ZyaBEDAc0S+mktCv7AmGiiyWDFyYkX9y7adZedURCNzbaGzi9RGXtj7nA
-9tFmC48kiCdo7RYV/fQCZt+aYiEKZUmsJr6NTOvodIEJVoGBILefLCn8BGMBJer9
-SCilgTO8XNQrR+jpampIX4txM9Ne4xgASz3do31Drzlkt4Uxcf/aG2NckOoKNrAl
-jan/zdDnoDXyedp+DIjn9r9P0OJwic+kq1aLfXs2SlRmaqXsEMVi2IzE45SYbsBZ
-SxDG7EwslqEnEA0s7us4I71M3r7NeDyhCV+NzIOoY/0PF5VbU8q5wQA7zPRis5Jz
-OCu6RFZSA6OjdSLAe5fy
-=5Uph
------END PGP SIGNATURE-----
+CVE-2017-8342 was assigned for this issue.
+
+Regards,
+Salvatore
