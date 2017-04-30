@@ -1,4 +1,9 @@
-Received: (qmail 19746 invoked by uid 550); 30 Oct 2025 00:53:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["598" "Sunday" "30" "April" "2017" "20:28:26" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20170430182826.ovpqricwr7ucjtg7@eldamar.local>" "19" "[oss-security] radicale: CVE-2017-8342: prone to timing oracles and simple bruteforce attacks" nil nil nil "4" "2017043018:28:26" "[oss-security] radicale: CVE-2017-8342: prone to timing oracles and simple bruteforce attacks" (number mark "U       carnil@debia Apr 30   19/598   " thread-indent "\"[oss-security] radicale: CVE-2017-8342: prone to timing oracles and simple bruteforce attacks\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15436 invoked by uid 550); 30 Apr 2017 18:28:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,76 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28208 invoked from network); 30 Oct 2025 00:46:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=catalyst.net.nz;
-	s=default; t=1761785167;
-	bh=k6loDdQahyB+Wd3DvzTHK48UcH4Ps54RAd2q4BmT23c=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=V8NCKrmF9qxtcmvqfmKpPQgnA6Ay1rtENpTqP08l9jia6VlBeUR12BysU4Sl1BDrP
-	 3gHP6cpHEBYckGNP0Csh1flTPoYn6oQKdlrrGcb4H+7Gc06oTBJMo6bNKSw332CHag
-	 IIMqcvubG6y4SYCuAr8DjpZNmUpYf6oHugx6EGTk+lCWQp1lKoqxIn3QtKbgMsfaCD
-	 HCl+fXwnPHqE7Ybq+95F1IhT+4G2hK2Eu1mEBpo0wOzfT2/OX4a701JfZNN17e0NgR
-	 gp5+cuGIJHfgq9N1u3wzN2WSjmWIZhz7pdAha39kMjBh7B5KjiuWOz+Z13J7jPFlok
-	 2oLCn/2z4Cn6Q==
-Message-ID: <3e318f64-58f5-4909-8098-d157a3ecc00c@catalyst.net.nz>
-Date: Thu, 30 Oct 2025 13:46:06 +1300
+Received: (qmail 15412 invoked from network); 30 Apr 2017 18:28:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=XtiqsMEkZg/mQf+uHAve14vOkDdPfEVYJ+JTtlcURlE=;
+        b=hbe9OgxEe72DRb26m9aI3anw9dMP8GNJE2OlbLuMpRMAqMIcK8OUvXwSB6KVUEPDV5
+         2KYgM/naL799D/cSXQ1RMliXdlWnYFlziJ4L1fGRGXBOqCsVGhuAMoRTuDSudaiTM/mq
+         wCauWUc0VOoGyQgU5BwXchiNc+rqcC00nG6oTPNpz7TjNC7wBq+Ges/pmu+w/w7BMIcK
+         xTOHvNlIOZVUPzZzbssZy76/hntvx1Fao5eynTn2FSieFTm+XxBN6gqpjV5E/DaXlvm8
+         BixHLMZ6ZcLtLzx9i+4bHJsJFSkLcZs8TwQkPIH6tgycguEQDjHRwGCt1HYiq3PV5GmY
+         fHUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=XtiqsMEkZg/mQf+uHAve14vOkDdPfEVYJ+JTtlcURlE=;
+        b=t3mGvaibsEaG51+8QY2tBEwY2JKZC7hHNskI9ARB+HWCrIkDtuXBNclWGh0/b6kFtB
+         FCajHgu5kOIL8PqBuMn80cDO4RNpERgXLCvFi+0rfq66+TbaQ0PN8FrHoBKrpqyF1+4o
+         Ip6FMiGR3WvmHReEvRLvy6laNowOsFhaNQSiBEhQ9rpbXE8utiuUuUO5OkPygz6sAAca
+         g9UXxkh9XQ6XYBZzQUwQgOEiFgeJGIUdiDNV6GDmQubMwusH+nO/p/s6d7Fz0JnbAAm2
+         1T8otFC/itnHTjBiWJNo2hhN8XFhGm/yq7ohja1VfkMV7yCdavgmC65GgsEC4PE9ml0h
+         TyQg==
+X-Gm-Message-State: AN3rC/4CO8eLTwOkOWAKwqtKb20RFTCnFDVcEEJGGNid0Wyb6yuehxwZ
+	bB3Hfg/UGuO9T6mj
+X-Received: by 10.223.150.74 with SMTP id c10mr13814550wra.85.1493576907949;
+        Sun, 30 Apr 2017 11:28:27 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sun, 30 Apr 2017 20:28:26 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20170430182826.ovpqricwr7ucjtg7@eldamar.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
-References: <aP_msOoiyHJ_M4Yx@mertle>
- <20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com>
- <20251028014909.GA6430@openwall.com>
-Content-Language: en-NZ
-From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
-Autocrypt: addr=douglas.bagnall@catalyst.net.nz; keydata=
- xsBNBFTZNuABCACnBtS+eLzGts68jAJrZstbH5vM0d/4+OsGcvFkrXGPE9D6PsRdVM+jPT1Z
- fASzsarvWkx0b7p6/XTwTo2Al3KRRVLq3FQFPOLyKzSXK8u+vUi/py7Cv133t4Uea7+Pp+YM
- tWjXGwB/y3s5TBwJkYShSTBpAhDnkKjxRSQXIr7gIE0fIPIS1uy19g1q/BuXuj1sfcISRMpp
- z8qs9cAsk45tG1JItaLjO7+K47Q3LEfskChGPbhwh7tWCquDzreQC7q+h3dK6A1AOrorskON
- +Wy3aucRoOw6scNfV2H1y6lDza2lwZxCDRs6zkn7SQVjX62j9kVczShyi5udgqfWsW2jABEB
- AAHNMURvdWdsYXMgQmFnbmFsbCA8ZG91Z2xhcy5iYWduYWxsQGNhdGFseXN0Lm5ldC5uej7C
- wHgEEwECACIFAlTZNuACGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEHcqM0mxsX5t
- XIoH/jiHvUuw4xrBKuk9KzAE5JNd5rcTQdaRgiIvM/6C6X/uobzO2CDKFEUOmTpYSSXkq0/3
- YmwCRqWMja/5N1886qFrkcrIkTMRb0imxkNVwd7JIPdryK6dFCzCRUC1hByqeI8EwO41ROX+
- qw6DT+H/o6QkPWAB1P8ODVtq0F3TUZ0/Xpe3xYK1QF6Ud0BKWVcKBMAdS7CWTsVRD6m9it80
- Mp4N3y6Ka0vrgZ6IEskBHGVJ/Mm6ONrHIjl4OAbAKK4PuFha5PjPx1YYYOnsp4JvhrSJQDag
- A9vDdm7mbJpxxVY0Rx4t7xRvh+jsZ1f6yVGx5UTpdtvSbriZ2SZ3F29hBGfOwE0EVNk24AEI
- ANSG9xaPHGxr7l1Wcz8J51IDT0EE7ozS3TSYRE80OSH8oB26w5StLbQkC+iWj0GsTveJL9x6
- Vp/dfsPGfG9CP9J0C4ZOwY7+V9ex1d10xzr32zetKiUt7ZEimzIiCnmnR9K54jVbGDvVfJie
- uTOGruqRLIUAO69ZyhplRywyee6MRtgmfLpJlnOySgvihR4kHmq03zHe6whhJ0RmbKSIwb/F
- Ri/ZmpujNZ7PTYcmw7sp/5HpE4taYA0f3QvK9/DTjuoITdugrxhOwBdv6jLAAzI8d0quOFf+
- 5IeGizYTa6HPmBtIUyyzVajjiUpXiB8WuhgTL5pP0BT5j6BtW8Li/YEAEQEAAcLAXwQYAQIA
- CQUCVNk24AIbDAAKCRB3KjNJsbF+bYRnB/94DaFuxGVA65kkr5iubWbwKnaiTWlZLIFQp0RH
- QRk/jgdpuQj3E4D660QdfoMqhTeozOPTBH3cJOCjgN/klI7xrkvdq8sLTMWyM5Bbu+XhDaSr
- 8hnjvdhZM7bHQdaH3FI5zdm2rMbP8nB6IH8wYSxHzywjR9vks6PTsqxqeCoupqdVO/kZ3jsU
- F0LOxxnMTlT8YZIn8lFVptsz5HMOKFnUdR3fYpcO+CTc9vXqcLWqnMwchdSQPp1cjZ5eUl+G
- jmq9xwOWLG/0u5b9stC3cEiCNSZn8Nyy7KaY8fQeKn//sBeyu3htjZ2wZ+oRVuc/XR/+/hl6
- QCGP/4UC6mJGdmU0
-In-Reply-To: <20251028014909.GA6430@openwall.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20170306 (1.8.0)
+Subject: [oss-security] radicale: CVE-2017-8342: prone to timing oracles and simple
+ bruteforce attacks
 
-On 28/10/25 14:49, Solar Designer wrote:
+Hi
 
-> At this point, I think we want to hear from VulDB on this, and from
-> MITRE on their requirements for CNAs in general and VulDB in particular
-> to review CVE requests before assignment.  Maybe VulDB is in violation.
+The following CVE assignment was done via the
+https://cveform.mitre.org:
 
-Samba has had at least one bogus CVE claim from a different CNA 
-(mitre.org), but it is in some sort of "reserved" rather than "issued" 
-state. That means that searching for the CVE number returns a single 
-result -- the claimant's LinkedIn profile.
+Radicale, a simple calendar and addressbook server, before 1.1.2 and
+2.x before 2.0.0rc2 is prone to timing oracles and simple brute-force
+attacks when using the htpasswd authentication method.
 
-This would be the perfect outcome for all parties if we had not been 
-required to spend hours confirming the report was bogus.
+References:
+https://bugs.debian.org/861514
+https://github.com/Kozea/Radicale/commit/059ba8dec1f22ccbeab837e288b3833a099cee2d
+https://github.com/Kozea/Radicale/commit/190b1dd795f0c552a4992445a231da760211183b
+https://github.com/Kozea/Radicale/blob/1.1.2/NEWS.rst
 
-Alan Coopersmith wrote:
-> The folks on the dnsmasq mailing list also pointed out the version claimed is
-> a release candidate from 10 years ago, not anything current:
+CVE-2017-8342 was assigned for this issue.
 
-We also see this pattern.
-
-Douglas
-
+Regards,
+Salvatore
