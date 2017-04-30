@@ -1,22 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/14
-Message-ID: <20170501165444.wiaxkiauxjbgd5cx@jwilk.net>
-Date: Mon, 1 May 2017 18:54:44 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: RuboCop: insecure use of /tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/30/2
+Message-ID: <987945.267788263-sendEmail@localhost>
+Date: Sun, 30 Apr 2017 09:11:39 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: imageworsener: two left shift
 Content-Type: text/plain; charset=utf-8
 
-RuboCop stores cache files in /tmp/$UID/rubocop_cache/.
-There are no ownership checks, so a malicious local users could exploit this to 
-tamper with cache files belonging to other users.
+Description:
+imageworsener is a utility for image scaling and processing.
 
-Upstream bug report:
-https://github.com/bbatsov/rubocop/issues/4336
+There are two left shift visible with UbSan enabled.
 
-I've attached PoC exploit.
+# imagew $FILE /tmp/out -outfmt bmp
+src/imagew-util.c:415:68: runtime error: left shift of 255 by 24 places cannot be represented in type 'int'
+src/imagew-bmp.c:427:10: runtime error: left shift of 1 by 31 places cannot be represented in type 'int'
+Affected version:
+1.3.0
 
--- 
-Jakub Wilk
+Fixed version:
+1.3.1
 
-View attachment "rubocop-cache-exploit" of type "text/plain" (727 bytes)
+Commit fix:
+https://github.com/jsummers/imageworsener/commit/a00183107d4b84bc8a714290e824ca9c68dac738
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8326
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00271-imageworsener-leftshift
+
+Timeline:
+2017-04-13: bug discovered and reported to upstream
+2017-04-22: upstream released a patch
+2017-04-27: blog post about the issue
+2017-04-29: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/27/imageworsener-two-left-shift/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
