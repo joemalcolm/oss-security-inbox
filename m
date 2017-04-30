@@ -1,24 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/20/2
-Message-ID: <20170220165206.GA15039@openwall.com>
-Date: Mon, 20 Feb 2017 17:52:07 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Blindspot Advisory: Java/Python FTP Injections Allow for Firewall Bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/30/3
+Message-ID: <742074.028446467-sendEmail@localhost>
+Date: Sun, 30 Apr 2017 09:13:23 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: imageworsener: heap-based buffer overflow in iw_process_cols_to_intermediate (imagew-main.c)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 20, 2017 at 08:22:42AM -0800, Timothy D. Morgan wrote:
-> For the rest of the advisory, please see:
->   http://blog.blindspotsecurity.com/2017/02/advisory-javapython-ftp-injections.html
+Description:
+imageworsener is a utility for image scaling and processing.
 
-Thanks, Timothy.  For archival (since web pages tend to be gone after a
-few years) and per oss-security list content guidelines, we'd like full
-advisories to be posted right in here (including links as well is OK and
-encouraged; including only links is not).
+The complete ASan output of the issue:
 
-Attached is a mostly auto-converted text version of the above advisory.
-(I only deleted the web page header/footer portions not specific to it.)
+# imagew $FILE /tmp/out -outfmt bmp
+==20314==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7fe233b99af8 at pc 0x7fea7f55da64 bp 0x7ffdb4737840 sp 0x7ffdb4737838
+WRITE of size 4 at 0x7fe233b99af8 thread T0  
+    #0 0x7fea7f55da63 in iw_process_cols_to_intermediate /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:903:75 
+    #1 0x7fea7f55da63 in iw_process_one_channel /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:1144  
+    #2 0x7fea7f54ca71 in iw_process_internal /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:1405:7   
+    #3 0x7fea7f520095 in iw_process_image /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:2248:8 
+    #4 0x528de1 in iwcmd_run /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:1400:6
+    #5 0x515326 in iwcmd_main /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3018:7    
+    #6 0x515326 in main /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3067  
+    #7 0x7fea7e5e878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
+    #8 0x41b028 in _init (/usr/bin/imagew+0x41b028)    
 
-Alexander
+0x7fe233b99af8 is located 4 bytes to the right of 8003134196-byte region [0x7fe056b37800,0x7fe233b99af4) 
+allocated by thread T0 here:  
+    #0 0x4da6f8 in malloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:66    
+    #1 0x551fc0 in my_mallocfn /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:794:9    
+    #2 0x7fea7f6a39ae in iw_malloc_ex /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-util.c:48:8  
+    #3 0x7fea7f6a3dec in iw_malloc_large /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-util.c:77:9    
+    #4 0x7fea7f54c5a0 in iw_process_internal /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:1396:44  
+    #5 0x7fea7f520095 in iw_process_image /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:2248:8 
+    #6 0x528de1 in iwcmd_run /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:1400:6
+    #7 0x515326 in iwcmd_main /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3018:7    
+    #8 0x515326 in main /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3067  
+    #9 0x7fea7e5e878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-View attachment "advisory-javapython-ftp-injections.txt" of type "text/plain" (17045 bytes)
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:903:75 in iw_process_cols_to_intermediate
+Shadow bytes around the buggy address:
+  0x0ffcc676b300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcc676b310: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcc676b320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcc676b330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcc676b340: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0ffcc676b350: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04[fa]
+  0x0ffcc676b360: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ffcc676b370: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ffcc676b380: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ffcc676b390: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ffcc676b3a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==20314==ABORTING
+
+Affected version:
+1.3.0
+
+Fixed version:
+1.3.1
+
+Commit fix:
+https://github.com/jsummers/imageworsener/commit/86564051db45b466e5f667111ce00b5eeedc8fb6
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8325
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00269-imageworsener-heapoverflow-iw_process_cols_to_intermediate
+
+Timeline:
+2017-04-12: bug discovered and reported to upstream
+2017-04-12: upstream released a patch
+2017-04-27: blog post about the issue
+2017-04-29: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/27/imageworsener-heap-based-buffer-overflow-in-iw_process_cols_to_intermediate-imagew-main-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
