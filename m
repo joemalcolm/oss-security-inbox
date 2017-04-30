@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2289" "Friday" "29" "September" "2017" "01:03:31" "+0200" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>" "42" "Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" nil nil nil "9" "2017092823:03:31" "[oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" (number mark "U       guidovranken Sep 29   42/2289  " thread-indent "\"Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)\"\n") "<20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>" ("<20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5419" "Sunday" "30" "April" "2017" "09:13:23" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<742074.028446467-sendEmail@localhost>" "107" "[oss-security] imageworsener: heap-based buffer overflow in iw_process_cols_to_intermediate (imagew-main.c)" nil nil nil "4" "2017043009:13:23" "[oss-security] imageworsener: heap-based buffer overflow in iw_process_cols_to_intermediate (imagew-main.c)" (number mark "U       ago@gentoo.o Apr 30  107/5419  " thread-indent "\"[oss-security] imageworsener: heap-based buffer overflow in iw_process_cols_to_intermediate (imagew-main.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13682 invoked by uid 550); 28 Sep 2017 23:45:52 -0000
+Received: (qmail 24087 invoked by uid 550); 30 Apr 2017 09:13:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,82 +12,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14160 invoked from network); 28 Sep 2017 23:04:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=qDdIchYvJl6WjX2Fa2vDNj1UpI4XsFNUgaqffw0SdLM=;
-        b=aOynYPMxUqsp5MzyrAY5lejHqw4ntRvkJNdem3jqEfP222FQZOtGHrS942xXwGULhS
-         uOWhXGzX5QWq+FEjcUE3CDvnqn7y9f4jpOyuH1f7mhJPl29yZnIjSurdgGx+qsAvrG9D
-         pEMb9NqBPfgAx3bk2Dr6UMqO8VrLuHMA8x5M3/xl53VIc4UB0Dc/cNzunnjT/JMqSS7c
-         AVRmP8nVq8z8F4yhuvDqbtuVBmwseGmvpllQYHi+J9J4hG4nQoW4GF3dTcCzHdNsHsx7
-         rvvMBvkfiSwqbnHz50qE/RH8QhPvk8qUXrBAYS+Ei0FlNCC2PzgYdo0hxf5DVv34xRHP
-         LLGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=qDdIchYvJl6WjX2Fa2vDNj1UpI4XsFNUgaqffw0SdLM=;
-        b=Kdae33ScIf1uH59r5UHS3hYI21KK4OACsIv8SRf3G65hUThtvsJt7wv6qXOylPojuM
-         dJFMidaxaDYYzK/OeZbIc/lulmZb0YbFwqRxIxHhX2g6xkYVymSX4aOSEG7o+lA3SMsK
-         jpfVQ93mQcHrDURleoai2OKLDKUUrfVaqUMoFIcwUwcXDv68kpUaz4izDLs/nAgd8td7
-         3+XoImkT3nr8OfQEseLyp/DDfr8potCZv47wvlJ7JPeijeeIQo9uD704ZTPS6koKJDxG
-         nIxgmZAhAkXu0yPxOaz/Ttzuby6HU0j2gxQj3nLq1La9mfLkX0va7QHkkhowxrVEyaiM
-         NCDw==
-X-Gm-Message-State: AHPjjUgqGKA8x9cip+C3tOsUpt2R9LRm5bYGnVzUdb5aiplzsnoyz1LN
-	YZWtIO/cGQqYfnmxm7IIx1nFoR8TJQIqU1qjwi3xto9e
-X-Google-Smtp-Source: AOwi7QCgfktea7bvrgI1ncJ7GzFXRzuL5ETe5eT0El+jkX2K4dPpFmod+rn63P6Y9t30A9fq9ZTjjB9a8tD4zkRlwT8=
-X-Received: by 10.99.145.73 with SMTP id l70mr1106929pge.132.1506639812311;
- Thu, 28 Sep 2017 16:03:32 -0700 (PDT)
+Received: (qmail 23966 invoked from network); 30 Apr 2017 09:13:42 -0000
+Message-ID: <742074.028446467-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Sun, 30 Apr 2017 09:13:23 +0000
 MIME-Version: 1.0
-In-Reply-To: <20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>
-References: <20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>
-From: Guido Vranken <guidovranken@gmail.com>
-Date: Fri, 29 Sep 2017 01:03:31 +0200
-Message-ID: <CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-695030.295829387"
+Subject: [oss-security] imageworsener: heap-based buffer overflow in iw_process_cols_to_intermediate (imagew-main.c)
 
-I found a buffer overflow in one of the projects within 30 minutes,
-and there are probably many more issues to be found (as in virtually
-any large, unaudited project). What makes this project special
-compared to other bug bounties for C libraries (such as the regular
-Internet Big Bounty programs) is that they require a full, reliable
-exploit.
+------MIME delimiter for sendEmail-695030.295829387
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-If they would be willing to be lenient in their qualification of what
-constitutes a working exploit, such as exploitation of a binary
-without advanced anti-exploit protections such ASLR, I might bother,
-otherwise I won't. Enhancing open source projects is a honourable
-pursuit indeed and I've done it many times for free, but if I'm going
-to hack for money I might as well choose something that is easier or
-more profitable or both at the same time. You can fetch $500 for any
-old XSS on a web page or a buffer overflow in the clusterfucks that
-are the PHP and Python code
-(https://hackerone.com/directory?query=ibb%3Ayes&sort=published_at%3Adescending&page=1
--- see the sheer number of submissions to both those programs).
+Description:
+imageworsener is a utility for image scaling and processing.
 
-Right after the program was announced, I sent an email to the IBB
-asking if exploitation of a non-ASLR configuration of the binary at
-hand would be sufficient. Unfortunately, I have not yet received a
-reply. The reason they want full exploits is, I think, to cut the
-chaff from the grain and solicit bugs that at least have real
-potential. A nice middle ground would be paying a percentage (25%?) of
-their current bounty offering for raw submissions of bugs that are
-generally assumed to constitute a security risk. It will attract a
-larger body of researchers for sure, and in the end this will be more
-beneficial to the overall security of the internet than under their
-current approach.
+The complete ASan output of the issue:
 
-A Heartbleed-like vulnerability in an image parsing or conversion
-library, where an attacker can send a crafted image file resulting in
-exposure of unrelated memory, would not be eligible under this
-program. Case in point: see Chris Evans' Yahoobleed:
-https://scarybeastsecurity.blogspot.nl/2017/05/bleed-more-powerful-dumping-yahoo.html
+# imagew $FILE /tmp/out -outfmt bmp
+==20314==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7fe233b99af8 at pc 0x7fea7f55da64 bp 0x7ffdb4737840 sp 0x7ffdb4737838
+WRITE of size 4 at 0x7fe233b99af8 thread T0  
+    #0 0x7fea7f55da63 in iw_process_cols_to_intermediate /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:903:75 
+    #1 0x7fea7f55da63 in iw_process_one_channel /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:1144  
+    #2 0x7fea7f54ca71 in iw_process_internal /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:1405:7   
+    #3 0x7fea7f520095 in iw_process_image /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:2248:8 
+    #4 0x528de1 in iwcmd_run /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:1400:6
+    #5 0x515326 in iwcmd_main /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3018:7    
+    #6 0x515326 in main /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3067  
+    #7 0x7fea7e5e878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
+    #8 0x41b028 in _init (/usr/bin/imagew+0x41b028)    
 
-All in all I think they should reconsider their current program
-stipulations, if only to increase their own return-on-investment
-(making the internet safer with a limited funding).
+0x7fe233b99af8 is located 4 bytes to the right of 8003134196-byte region [0x7fe056b37800,0x7fe233b99af4) 
+allocated by thread T0 here:  
+    #0 0x4da6f8 in malloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:66    
+    #1 0x551fc0 in my_mallocfn /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:794:9    
+    #2 0x7fea7f6a39ae in iw_malloc_ex /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-util.c:48:8  
+    #3 0x7fea7f6a3dec in iw_malloc_large /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-util.c:77:9    
+    #4 0x7fea7f54c5a0 in iw_process_internal /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:1396:44  
+    #5 0x7fea7f520095 in iw_process_image /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:2248:8 
+    #6 0x528de1 in iwcmd_run /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:1400:6
+    #7 0x515326 in iwcmd_main /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3018:7    
+    #8 0x515326 in main /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3067  
+    #9 0x7fea7e5e878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Guido
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-main.c:903:75 in iw_process_cols_to_intermediate
+Shadow bytes around the buggy address:
+  0x0ffcc676b300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcc676b310: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcc676b320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcc676b330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffcc676b340: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0ffcc676b350: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04[fa]
+  0x0ffcc676b360: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ffcc676b370: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ffcc676b380: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ffcc676b390: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0ffcc676b3a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==20314==ABORTING
+
+Affected version:
+1.3.0
+
+Fixed version:
+1.3.1
+
+Commit fix:
+https://github.com/jsummers/imageworsener/commit/86564051db45b466e5f667111ce00b5eeedc8fb6
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8325
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00269-imageworsener-heapoverflow-iw_process_cols_to_intermediate
+
+Timeline:
+2017-04-12: bug discovered and reported to upstream
+2017-04-12: upstream released a patch
+2017-04-27: blog post about the issue
+2017-04-29: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/27/imageworsener-heap-based-buffer-overflow-in-iw_process_cols_to_intermediate-imagew-main-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-695030.295829387--
+
