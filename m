@@ -1,21 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/5
-Message-ID: <CALx_OUCSLH1n0JaBT4XAysVpEQMLF-vGUBtn4dmJ3ED8cZigEg@mail.gmail.com>
-Date: Wed, 22 Nov 2017 08:34:23 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Go programming language invalid modular exponentiation result (Exp() in math/big pkg)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/30/1
+Message-ID: <479277.612964751-sendEmail@localhost>
+Date: Sun, 30 Apr 2017 09:11:02 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: imageworsener: memory allocation failure in my_mallocfn (imagew-cmd.c)
 Content-Type: text/plain; charset=utf-8
 
-> Is this fuzzer freely available?  I'd love to try it out on the bignum
-> support I added to the CHICKEN Scheme implementation for its upcoming
-> new major release (probably somewhere mid-2018).  Being able to release
-> it with a bit higher confidence in its correctness would be nice, as this
-> is almost all brand new code.
+Description:
+imageworsener is a utility for image scaling and processing.
 
-Not the same tool, but Hanno released a bignum fuzzer that found quite
-a few issues back in the day:
+There is a memory allocation failure, I will show the interesting ASan output,
 
-https://github.com/hannob/bignum-fuzz/
+# imagew $FILE /tmp/out -outfmt bmp
+    #8 0x551fc0 in my_mallocfn /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:794:9
+    #9 0x7f37f140c9ae in iw_malloc_ex /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-util.c:48:8
+    #10 0x7f37f140cdec in iw_malloc_large /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-util.c:77:9
+    #11 0x7f37f136d66c in bmpr_read_uncompressed /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-bmp.c:665:32
+    #12 0x7f37f134ce64 in iwbmp_read_bits /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-bmp.c:910:7
+    #13 0x7f37f134ce64 in iw_read_bmp_file /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-bmp.c:980
+    #14 0x7f37f1349f94 in iw_read_file_by_fmt /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-allfmts.c:66:12
+    #15 0x519304 in iwcmd_run /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:1191:6
+    #16 0x515326 in iwcmd_main /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3018:7
+    #17 0x515326 in main /tmp/portage/media-gfx/imageworsener-1.3.0/work/imageworsener-1.3.0/src/imagew-cmd.c:3067
+    #18 0x7f37f035178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #19 0x41b028 in _init (/usr/bin/imagew+0x41b028)
 
-/mz
+Affected version:
+1.3.0
+
+Fixed version:
+1.3.1
+
+Commit fix:
+https://github.com/jsummers/imageworsener/commit/86564051db45b466e5f667111ce00b5eeedc8fb6
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8327
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00276-imageworsener-memallocfailure
+
+Timeline:
+2017-04-13: bug discovered and reported to upstream
+2017-04-12: upstream released a patch for another issue that fixes this issue too
+2017-04-27: blog post about the issue
+2017-04-29: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/27/imageworsener-memory-allocation-failure-in-my_mallocfn-imagew-cmd-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
