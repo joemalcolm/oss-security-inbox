@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2656" "Wednesday" "18" "July" "2018" "16:38:38" "+0200" "Daniel Beck" "ml@beckweb.net" "<2EA2CE8E-22FD-4098-89D4-A1A9ACB7F970@beckweb.net>" "74" "[oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "7" "2018071814:38:38" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Jul 18   74/2656  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2433" "Monday" "1" "May" "2017" "11:26:02" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<521982.786801772-sendEmail@localhost>" "63" "[oss-security] libsndfile: invalid memory read in flac_buffer_copy (flac.c)" nil nil nil "5" "2017050111:26:02" "[oss-security] libsndfile: invalid memory read in flac_buffer_copy (flac.c)" (number mark "U       ago@gentoo.o May  1   63/2433  " thread-indent "\"[oss-security] libsndfile: invalid memory read in flac_buffer_copy (flac.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24086 invoked by uid 550); 18 Jul 2018 14:38:51 -0000
+Received: (qmail 25800 invoked by uid 550); 1 May 2017 11:26:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,90 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24062 invoked from network); 18 Jul 2018 14:38:50 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <2EA2CE8E-22FD-4098-89D4-A1A9ACB7F970@beckweb.net>
-Date: Wed, 18 Jul 2018 16:38:38 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1531924730;de2a1f32;
-X-HE-SMSGID: 1ffnbC-0000sd-TA
-Subject: [oss-security] Multiple vulnerabilities in Jenkins
+Received: (qmail 25650 invoked from network); 1 May 2017 11:26:20 -0000
+Message-ID: <521982.786801772-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 1 May 2017 11:26:02 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-949599.148080782"
+Subject: [oss-security] libsndfile: invalid memory read in flac_buffer_copy (flac.c)
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+------MIME delimiter for sendEmail-949599.148080782
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-* Jenkins (weekly) 2.133
-* Jenkins (LTS) 2.121.2
+Description:
+libsndfile is a C library for reading and writing files containing sampled sound.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-07-18/
+The complete ASan output of the issue:
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+# sndfile-resample -to 24000 -c 1 $FILE out
+==19624==ERROR: AddressSanitizer: SEGV on unknown address 0x000000004000 (pc 0x7fe14fe3f2b3 bp 0x000000004000 sp 0x7ffcb49c4d50 T0)    
+==19624==The signal is caused by a READ memory access. 
+    #0 0x7fe14fe3f2b2 in flac_buffer_copy /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:287    
+    #1 0x7fe14fe403d7 in flac_read_loop /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:928 
+    #2 0x7fe14fe404d4 in flac_read_flac2f /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:999    
+    #3 0x7fe14fe34925 in sf_readf_float /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:1945  
+    #4 0x50a525 in sample_rate_convert /tmp/portage/media-libs/libsamplerate-0.1.9/work/libsamplerate-0.1.9/examples/sndfile-resample.c:206:29   
+    #5 0x50a525 in main /tmp/portage/media-libs/libsamplerate-0.1.9/work/libsamplerate-0.1.9/examples/sndfile-resample.c:156 
+    #6 0x7fe14ef70680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
+    #7 0x419fa8 in _init (/usr/bin/sndfile-resample+0x419fa8)    
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+AddressSanitizer can not provide additional info. 
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:287 in flac_buffer_copy    
+==19624==ABORTING
 
----
+Affected version:
+1.0.28
 
-SECURITY-897
-Unauthenticated users could provide maliciously crafted login credentials=20
-that cause Jenkins to move the config.xml file from the Jenkins home=20
-directory. This configuration file contains basic configuration of=20
-Jenkins, including the selected security realm and authorization strategy.=
-=20
-If Jenkins is started without this file present, it will revert to the=20
-legacy defaults of granting administrator access to anonymous users.
+Fixed version:
+N/A
 
+Commit fix:
+https://github.com/erikd/libsndfile/commit/ef1dbb2df1c0e741486646de40bd638a9c4cd808
 
-SECURITY-914
-An arbitrary file read vulnerability in the Stapler web framework used by=20
-Jenkins allowed unauthenticated users to send crafted HTTP requests=20
-returning the contents of any file on the Jenkins master file system that=20
-the Jenkins master process has access to.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+CVE-2017-8362
 
-SECURITY-891
-The URLs handling cancellation of queued builds did not perform a=20
-permission check, allowing users with Overall/Read permission to cancel=20
-queued builds.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00264-libsndfile-invalidread-flac_buffer_copy
 
+Timeline:
+2017-04-12: bug discovered and reported to upstream
+2017-04-14: upstream released a patch
+2017-04-29: blog post about the issue
+2017-04-30: CVE assigned
 
-SECURITY-892
-The URL that initiates agent launches on the Jenkins master did not perform=
-=20
-a permission check, allowing users with Overall/Read permission to initiate=
-=20
-agent launches.
+Note:
+This bug was found with American Fuzzy Lop.
 
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/29/libsndfile-invalid-memory-read-in-flac_buffer_copy-flac-c/
 
-SECURITY-944
-The build timeline widget shown on URLs like /view/=E2=80=A6/builds did not=
-=20
-properly escape display names of items. This resulted in a cross-site=20
-scripting vulnerability exploitable by users able to control item display=20
-names.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-SECURITY-925
-Files indicating when a plugin JPI file was last extracted into a=20
-subdirectory of plugins/ in the Jenkins home directory was accessible via=20
-HTTP by users with Overall/Read permission. This allowed unauthorized users=
-=20
-to determine the likely install date of a given plugin.
-
-
-SECURITY-390
-Stapler is the web framework used by Jenkins to route HTTP requests. When=20
-its debug mode is enabled, HTTP 404 error pages display diagnostic=20
-information. Those error pages did not escape parts of URLs they displayed,=
-=20
-in rare cases resulting in a cross-site scripting vulnerability.
+------MIME delimiter for sendEmail-949599.148080782--
 
