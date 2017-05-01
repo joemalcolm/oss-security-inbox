@@ -1,44 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/2
-Message-ID: <57f09f12-2cf9-a77b-86d9-1f981fc10930@gmail.com>
-Date: Mon, 6 Mar 2017 09:06:00 +0100
-From: Emilio Pozuelo Monfort <pochu27@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/7
+Message-ID: <700843.693778978-sendEmail@localhost>
+Date: Mon, 1 May 2017 11:39:43 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libmad: assertion failure in layer3.c
 Content-Type: text/plain; charset=utf-8
 
-On 06/03/17 03:16, Anthony Sasadeusz wrote:
-> admin@...172-31-13-10:~/jasper/build-asan/src/appl$ ./jasper --input
-> ../../../build-afl/src/appl/findings/crashes/id\:000000\,sig\:11\,src\:000002\,op\:havoc\,rep\:16
-> --output /dev/null --output-format jp2
-> ASAN:SIGSEGV
-> =================================================================
-> ==16088==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
-> (pc 0x7f45f3104fe6 sp 0x7ffcd24052c0 bp 0x7ffcd24063d0 T0)
->     #0 0x7f45f3104fe5 in jp2_encode
-> /home/admin/jasper/src/libjasper/jp2/jp2_enc.c:119
->     #1 0x7f45f30de187 in jas_image_encode
-> /home/admin/jasper/src/libjasper/base/jas_image.c:471
->     #2 0x402494 in main /home/admin/jasper/src/appl/jasper.c:277
->     #3 0x7f45f2a1eb44 in __libc_start_main
-> (/lib/x86_64-linux-gnu/libc.so.6+0x21b44)
->     #4 0x401908 (/home/admin/jasper/build-asan/src/appl/jasper+0x401908)
-> 
-> AddressSanitizer can not provide additional info.
-> SUMMARY: AddressSanitizer: SEGV
-> /home/admin/jasper/src/libjasper/jp2/jp2_enc.c:119 jp2_encode
-> ==16088==ABORTING
-> 
-> 
-> This also happens on the latest master branch.
-> The repo: https://github.com/mdadams/jasper
-> 
-> Crashing inputs found with afl:
-> https://github.com/nullsector/jasper-fuzz/tree/master/testcases/crashes
+Description:
+libmad stays for “M”peg “A”udio “D”ecoder library.
 
-You should request CVEs at http://cveform.mitre.org/ these days.
+The same testcase provided in the article: libmad: heap-based buffer overflow in mad_layer_III (layer3.c) is able to show an assertion failure if libmad was compiled with debug 
+(–enable-debugging).
 
-Also it'd be good if you opened an upstream bug report about this.
+The complete output of the failure:
 
-Cheers,
-Emilio
+# madplay -v -i -o raw:out $FILE
+madplay: /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:2633: mad_layer_III: Assertion `stream->md_len + md_len - si.main_data_begin <= MAD_BUFFER_MDLEN' 
+failed.
+
+Affected version:
+0.15.1b
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8372
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00213-libmad-heapoverflow-mad_layer_III
+
+Timeline:
+2017-01-01: bug discovered and reported to upstream
+2017-04-30: blog post about the issue
+2017-05-01: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/30/libmad-assertion-failure-in-layer3-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
