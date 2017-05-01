@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1717" "Sunday" "22" "March" "2015" "20:19:00" "+0100" "Kristian Fiskerstrand" "kristian.fiskerstrand@sumptuouscapital.com" "<550F15A4.8020904@sumptuouscapital.com>" "45" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032219:19:00" "[oss-security] CVE for Kali Linux" (number mark "        kristian.fis Mar 22   45/1717  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550F01FF.1010208@redhat.com>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F01FF.1010208@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4850" "Monday" "1" "May" "2017" "11:30:37" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<293903.679211752-sendEmail@localhost>" "106" "[oss-security] ettercap: etterfilter: heap-based buffer overflow write" nil nil nil "5" "2017050111:30:37" "[oss-security] ettercap: etterfilter: heap-based buffer overflow write" (number mark "U       ago@gentoo.o May  1  106/4850  " thread-indent "\"[oss-security] ettercap: etterfilter: heap-based buffer overflow write\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13661 invoked by uid 550); 22 Mar 2015 19:19:14 -0000
+Received: (qmail 30544 invoked by uid 550); 1 May 2017 11:30:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13641 invoked from network); 22 Mar 2015 19:19:13 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=yNG0DjSVsZndf9LPsAWE8+mQamdxknD224xomSYAwWw=;
-        b=GJCMphb5xEf/3le2WCd1Aa9wBXS1L8KKfbsbXPkZyigIB23u4cTA2OgxM42/CiLTZm
-         LaD74VjLYvuQWiLZIXgb5FAlV8HTeYrk6pORY3qBqTTDcFXbBnedllYqHk504x4RM1xl
-         Tg96I3Akghx0oiAlkqj315a8ez5/5996ogxwVMNLDP7oTwo6/Awxzr9ua1/zKc1TASr7
-         ASTUS0BronoUosiCBYaYYZtANv1rA5cdDkjH28Eq8yUMprimYxW8npT98fyMiI26vNDd
-         V99Yku1xLgIaULP4pdVg2n3lmCGkGwxeKKFO9p+KFyIqos9xoWiGByqcZJfugzmX/v3X
-         ZqVA==
-X-Gm-Message-State: ALoCoQn4uzqnR1KUqVJaSOCiseAqhkUhuIpC8WhsRfxiD/I2MyNK5TVwJ7LdV6VDj9aire+bXjt5
-X-Received: by 10.152.43.201 with SMTP id y9mr80224821lal.25.1427051942556;
-        Sun, 22 Mar 2015 12:19:02 -0700 (PDT)
-Message-ID: <550F15A4.8020904@sumptuouscapital.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-MIME-Version: 1.0
-References: <550EE478.70005@redhat.com> <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com> <20150322172300.GA21110@openwall.com> <550F01FF.1010208@redhat.com>
-In-Reply-To: <550F01FF.1010208@redhat.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Sun, 22 Mar 2015 20:19:00 +0100
-From: Kristian Fiskerstrand <kristian.fiskerstrand@sumptuouscapital.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
-To: oss-security@lists.openwall.com
+Received: (qmail 30468 invoked from network); 1 May 2017 11:30:56 -0000
+Message-ID: <293903.679211752-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 1 May 2017 11:30:37 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-646265.998789207"
+Subject: [oss-security] ettercap: etterfilter: heap-based buffer overflow write
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+------MIME delimiter for sendEmail-646265.998789207
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-On 03/22/2015 06:55 PM, Kurt Seifried wrote:
-> 
+Description:
+ettercap is a comprehensive suite for man in the middle attacks.
 
-...
+There is an heap overflow write in etterfilter if it parses a malformed filter.
 
-> The problem is to do this you need some key/shared
-> secret/verifiable secret, e.g. a GPG key. How do I get the GPG key
-> securely?
+The complete ASan output:
 
-The same way as for bootstrapping key validity using OpenPGP , in the
-absence of a direct verification path a probabilistic trust model can
-be used, mainly. The package being signing using the same key over
-time signifies that it is coming from authoritative source (unless
-you've been MITMed a long time), the fingerprint of the OpenPGP key
-should be included in email announcements and other documents that are
-being mirrored by multiple sources, reducing the likelihood of a MITM
-if corresponding information is the same in multiple archives over a
-long time. Its always better to have a direct validation path to the
-key in question, but all is not in vein without it.
+# etterfilter $FILE
+etterfilter 0.8.2 copyright 2001-2015 Ettercap Development Team                                                                                                                                                   
+                                                                                                                                                                                                                  
+                                                                                                                                                                                                                  
+ 14 protocol tables loaded:                                                                                                                                                                                       
+        DECODED DATA udp tcp esp gre icmp ipv6 ip arp wifi fddi tr eth                                                                                                                                            
+
+ 13 constants loaded:
+        VRRP OSPF GRE UDP TCP ESP ICMP6 ICMP PPTP PPPOE IP6 IP ARP 
+
+=================================================================
+==3961==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61d00000a8da at pc 0x7fb38ebea5b8 bp 0x7fff8bc36cc0 sp 0x7fff8bc36cb8
+WRITE of size 1 at 0x61d00000a8da thread T0
+    #0 0x7fb38ebea5b7 in strescape /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/src/ec_strings.c:182:23
+    #1 0x51342c in encode_const /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/utils/etterfilter/ef_encode.c:134:27
+    #2 0x538e70 in yylex /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999_build/utils/etterfilter/ef_syntax.l:173:8
+    #3 0x53fe67 in yyparse /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999_build/utils/ef_grammar.c:1223:16
+    #4 0x51fadf in main /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/utils/etterfilter/ef_main.c:81:8
+    #5 0x7fb38d81178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x41abf8 in _start (/usr/bin/etterfilter+0x41abf8)
+
+AddressSanitizer can not describe address in more detail (wild memory access suspected).
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/src/ec_strings.c:182:23 in strescape
+Shadow bytes around the buggy address:
+  0x0c3a7fff94c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c3a7fff94d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c3a7fff94e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c3a7fff94f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c3a7fff9500: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c3a7fff9510: fa fa fa fa fa fa fa fa fa fa fa[fa]fa fa fa fa
+  0x0c3a7fff9520: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c3a7fff9530: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c3a7fff9540: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c3a7fff9550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c3a7fff9560: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==3961==ABORTING
+
+Affected version:
+0.8.2
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8366
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00224-ettercap-heapoverflow-strescape
+
+Timeline:
+2017-03-21: bug discovered and reported to upstream
+2017-04-29: blog post about the issue
+2017-04-30: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/29/ettercap-etterfilter-heap-based-buffer-overflow-write/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-- -- 
-- ----------------------------
-Kristian Fiskerstrand
-Blog: http://blog.sumptuouscapital.com
-Twitter: @krifisk
-- ----------------------------
-Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-- ----------------------------
-Aquila non capit muscas
-The eagle does not hunt flies
------BEGIN PGP SIGNATURE-----
+------MIME delimiter for sendEmail-646265.998789207--
 
-iQEcBAEBCgAGBQJVDxWhAAoJEP7VAChXwav6dBMIAIi/1dMykJO58oL0yFUZmU95
-x+zhzrmPepuOJcJb1WEPzU3LZvf+fQYS+c4YivG95MA7u4ljWcW55BJYZd5+AIMM
-6emwg1mFuqenEMby8zFCDYyLardM4GODifhPXDE9LF6YoJ26m1twPWWMXcioWioO
-vNMrQoaTNdpR4jkNX8FGUm5/hDS8iM+BDiT5qjQ3INz3/x0pnVg2pjxjNBuV6CkZ
-PTGVrwVXT9uxrgw4XkF+59/IS/weWrNUSnFoNRuTBseNXor5jjrSRY1W010yLVX3
-+leeB6wTVmfTuBxbl5T9pCtd6Xv4fq8fL5KILppsUyLa1STDXlnPz3o/x+ukPxc=
-=AT4h
------END PGP SIGNATURE-----
