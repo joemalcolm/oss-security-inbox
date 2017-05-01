@@ -1,56 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/21/1
-Message-ID: <NZZ7VKP4WW_5a3ae0d5ea16f_173b53fbfb8ecb988831843_sprut@zendesk.com>
-Date: Wed, 20 Dec 2017 22:14:46 +0000
-From: "Kwang (GitLab Support)" <security@...lab.com>
-Cc: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [GitLab, Inc.] Update: Gitlab, LDAP integration vulnerable to MITM attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/1
+Message-ID: <854490.759407298-sendEmail@localhost>
+Date: Mon, 1 May 2017 11:24:52 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libsndfile: global buffer overflow in flac_buffer_copy (flac.c)
 Content-Type: text/plain; charset=utf-8
 
-##- Please type your reply above this line -##
+Description:
+libsndfile is a C library for reading and writing files containing sampled sound.
 
-You are registered as a CC on this support request (86379). Reply to this email to add a comment to the request.
+The complete ASan output of the issue:
 
-----------------------------------------------
+# sndfile-convert $FILE out.wav
+==24715==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000013cc140 at pc 0x7f4f387e75ee bp 0x7ffe9d102370 sp 0x7ffe9d102368
+WRITE of size 4 at 0x0000013cc140 thread T0
+    #0 0x7f4f387e75ed in flac_buffer_copy /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:27
+    #1 0x7f4f387db2fa in sf_flac_write_callback /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:390:2
+    #2 0x7f4f3748f6ad in write_audio_frame_to_client_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:2981
+    #3 0x7f4f3748f6ad in read_frame_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:2152
+    #4 0x7f4f37491aef in FLAC__stream_decoder_process_single /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:1027
+    #5 0x7f4f387e7fbb in flac_read_loop /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:932:8
+    #6 0x7f4f387d31fb in flac_read_flac2i /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:979:13
+    #7 0x7f4f3872b3a2 in sf_readf_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:1835:10
+    #8 0x514b5d in sfe_copy_data_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:87:16
+    #9 0x5138d1 in main /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/sndfile-convert.c:340:3
+    #10 0x7f4f376c678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #11 0x419e18 in _init (/usr/bin/sndfile-convert+0x419e18)
 
-Kwang, Dec 20, 17:14 EST
+0x0000013cc140 is located 0 bytes to the right of global variable 'data' defined in '/tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:80:14' 
+(0x13c8140) of size 16384
+SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:27 in flac_buffer_copy
+Shadow bytes around the buggy address:
+  0x0000802717d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000802717e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000802717f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080271800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080271810: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x000080271820: 00 00 00 00 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9
+  0x000080271830: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080271840: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080271850: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080271860: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080271870: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==24715==ABORTING
 
-Hi Raphael,
+Affected version:
+1.0.28
 
-Thank you for the heads-up. We will note that on the public issue tracker page.
+Fixed version:
+N/A
 
-Regards,
-GitLab Security Team
+Commit fix:
+https://github.com/erikd/libsndfile/commit/fd0484aba8e51d16af1e3a880f9b8b857b385eb3
 
-----------------------------------------------
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Raphael Geissert, Dec 17, 15:26 EST
+CVE:
+CVE-2017-8361
 
-Hi,
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00265-libsndfile-globaloverflow-flac_buffer_copy
 
-This is just a heads up that I requested a CVE id for issue #30420[1]: gitlab
-between 9.4 and before 9.4.2 does not verify the identity of the LDAP server.
+Timeline:
+2017-04-12: bug discovered and reported to upstream
+2017-04-12: upstream released a patch
+2017-04-29: blog post about the issue
+2017-04-30: CVE assigned
 
-This has been assigned CVE-2017-17716.
+Note:
+This bug was found with American Fuzzy Lop.
 
-[1]https://gitlab.com/gitlab-org/gitlab-ce/issues/30420
-(needless to say, this wasn't reported by me)
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/29/libsndfile-global-buffer-overflow-in-flac_buffer_copy-flac-c/
 
-Cheers,
 --
-Raphael Geissert
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-
---------------------------------
-This email is a service from GitLab, Inc..
-
-
-
-
-
-
-
-
-
-[NZZ7VK-P4WW]
