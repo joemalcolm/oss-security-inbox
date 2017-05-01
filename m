@@ -1,161 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/4
-Message-ID: <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>
-Date: Fri, 10 Feb 2017 22:59:27 -0500
-From: <cve-assign@...re.org>
-To: <oss-security@...ts.openwall.com>
-CC: <cve-assign@...re.org>
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/3
+Message-ID: <69904.7908160253-sendEmail@localhost>
+Date: Mon, 1 May 2017 11:26:37 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libsndfile: heap-based buffer overflow in flac_buffer_copy (flac.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+libsndfile is a C library for reading and writing files containing sampled sound.
 
-All,
+The complete ASan output of the issue:
 
-Thanks to all who have provided constructive and meaningful feedback
-on this change up to this point. This reply will hopefully answer all
-of the concerns so far. We are hearing 11 distinct concerns, listed
-below as C1 through C11, along with our responses of R1 through R11.
-If you have any ideas or suggestions for improvements to the CVE web
-form, we are completely open to this.
+# sndfile-convert $FILE out.wav
+==26966==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x621000001110 at pc 0x7fd12fe865e6 bp 0x7ffea55e99f0 sp 0x7ffea55e99e8
+READ of size 4 at 0x621000001110 thread T0
+    #0 0x7fd12fe865e5 in flac_buffer_copy /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:41
+    #1 0x7fd12fe86ef4 in flac_read_loop /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:928:3
+    #2 0x7fd12fe721fb in flac_read_flac2i /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:979:13
+    #3 0x7fd12fdca3a2 in sf_readf_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:1835:10
+    #4 0x514b5d in sfe_copy_data_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:87:16
+    #5 0x5138d1 in main /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/sndfile-convert.c:340:3
+    #6 0x7fd12ed6578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x419e18 in _init (/usr/bin/sndfile-convert+0x419e18)
 
+0x621000001110 is located 0 bytes to the right of 4112-byte region [0x621000000100,0x621000001110)
+allocated by thread T0 here:
+    #0 0x4d94e8 in malloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7fd12eb2d492 in safe_malloc_muladd2_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/include/share/alloc.h:153
+    #2 0x7fd12eb2d492 in allocate_output_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:1294
+    #3 0x7fd12eb2d492 in read_frame_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:2035
 
-C1. What exactly has changed after MITRE's 2017-02-09 announcement?
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:41 in flac_buffer_copy
+Shadow bytes around the buggy address:
+  0x0c427fff81d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c427fff81e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c427fff81f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c427fff8200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c427fff8210: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c427fff8220: 00 00[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff8230: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff8240: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff8250: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff8260: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff8270: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==26966==ABORTING
 
-R1. There are two changes. Each of the two changes is about the case
-where an oss-security participant is immediately ready to make a
-public disclosure, and wants an accompanying CVE ID. First, the person
-must visit https://cveform.mitre.org to make the CVE request (but can
-also send the vulnerability information to oss-security at the same
-time). Second, we would like a vulnerability description (i.e., a
-sentence or two about the product name, affected versions, problem
-type, impact, and attack methodology) so that we can publish the CVE
-on https://cve.mitre.org much more quickly. We recognize that, in a
-fraction of the cases (e.g., unanalyzed fuzzer results), a description
-would have very limited information.
+Affected version:
+1.0.28
 
+Fixed version:
+N/A
 
-C2. Can I still obtain a CVE ID if I'm not yet willing to disclose
-what the vulnerability is, and cannot offer any public reference URL?
+Commit fix:
+https://github.com/erikd/libsndfile/commit/fd0484aba8e51d16af1e3a880f9b8b857b385eb3
 
-R2. Yes, simply visit https://cveform.mitre.org and leave the
-"Reference(s)" box blank. Alternatively, you can enter a reference
-URL, and use the "Additional information" box to clarify that neither
-the reference nor the CVE should be public yet. This is not a change
-to how the oss-security list has be used. The oss-security list has
-always been about only public vulnerabilities.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+CVE-2017-8363
 
-C3. MITRE currently has documentation such as
-https://cve.mitre.org/cve/request_id.html that recommends contacting
-DWF if an Open Source product does not appear on a certain list.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00266-libsndfile-heapoverflow-flac_buffer_copy
 
-R3. In all cases where our documentation suggests contacting DWF,
-please use https://cveform.mitre.org instead at this time. DWF is
-currently ramping up their operations. CVE is covering all Open Source
-software. There is no list that is excluding anything.
+Timeline:
+2017-04-12: bug discovered and reported to upstream
+2017-04-12: upstream released a patch
+2017-04-29: blog post about the issue
+2017-04-30: CVE assigned
 
+Note:
+This bug was found with American Fuzzy Lop.
 
-C4. I have historically obtained CVE IDs from the CNA of a specific
-Linux distribution (e.g., Debian, Ubuntu, or Red Hat) and they are
-still willing to provide CVE IDs to me. May I continue?
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/29/libsndfile-heap-based-buffer-overflow-in-flac_buffer_copy-flac-c/
 
-R4. Yes.
-
-
-C5. I want MITRE to send the https://cveform.mitre.org form data, and
-the CVE ID, to the oss-security list at the same time that these are
-sent to the requester.
-
-R5. We have had internal discussions within MITRE about this. We are
-able to implement this easily if the community requires this approach.
-At the moment, we are expecting the requester to resend this
-information to oss-security once they accept their CVE ID assignment.
-Please see http://www.openwall.com/lists/oss-security/2017/02/09/26
-for an example.
-
-
-C6. I want MITRE to send the https://cveform.mitre.org form data to
-the oss-security list as soon as that data is entered (i.e., before a
-CVE ID exists).
-
-R6. We have had internal discussions within MITRE about this. We are
-not yet able to implement this easily. We may work on this if the
-community requires this approach. However, our understanding of CVE
-consumers is that they look to MITRE as a source of vulnerability
-information after a CVE ID number exists, not before.
-
-
-C7. When using the https://cveform.mitre.org site, it is unclear what
-a "vendor" is, e.g., must it be the name of a Linux distribution?
-
-R7. The vendor is the name of the upstream project or organization
-that maintains the Open Source software. If there isn't any project
-name or organization name, then the name of the software can be used
-as the vendor name.
-
-
-C8. A CAPTCHA makes it difficult to do high-volume vulnerability
-reporting.
-
-R8. We agree. The https://cveform.mitre.org use case is persons with
-low-volume reporting needs. We will announce other solutions for
-high-volume reporting. You can contact us, using the
-https://cveform.mitre.org "request type: Other" option, if you need a
-high-volume workaround now.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-C9. I want to obtain CVE IDs faster in the future. Is there a plan for
-that?
-
-R9. Yes, we anticipate that, in the future, hundreds of Open Source
-projects will become CNAs for their own vulnerabilities. This will be
-coordinated under DWF. In other words, an individual Open Source
-project will have a "sub-CNA" role. The initial documentation is on
-the
-https://github.com/distributedweaknessfiling/DWF-Documentation/blob/master/README.md
-web page.
-
-
-C10. I do not want to use Google docs. Is there any other option?
-
-R10. First, Google docs is applicable only to DWF, which is currently
-ramping up their operations, and is not a required entity for any CVE
-ID requests at present. Also, we do not expect that Google docs will
-be applicable to persons or organizations with a higher level of DWF
-participation, such as sub-CNA participation. At the higher levels,
-DWF currently uses GitHub, not Google docs.
-
-
-C11. The https://cveform.mitre.org X.509 certificate chain is
-incomplete.
-
-R11. Yes, we realize this and will be adding the missing item (Entrust
-Certification Authority - L1K) soon.
-
-
-Regards,
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYnolXAAoJEHb/MwWLVhi25U8P/iFmLFMukKWRgurASnqee1IR
-hQTaRfu+KPn3yDPe7/PDhnGSirPJQoZ85GS954ac7/xTCmS/fnbRVIqCIsr8WhVe
-OpwAYHY2XyLKRCPslv7yMhXIOdK1mf9xak51A19nWgiDxxCToUOcJvxC9Gq0dmez
-+MhXDLfo2yy+LSsw1BNJhxVFqeI6Xpr007aIzedvUUXa4Q8oD1ifkSaVKFI0JONQ
-sbRpBBc4UJ2OyYcrj4nVDiH2/wHo1YzTFP09YwMXIL9cZuNUqX1ZXj5RDFfIFf4E
-FUUq4DU938TFJXl30YxIlYWu98physJ2MBtHIqXHaN6Q0RZQlv8esuLSfnN00Y2t
-j+Ki5biol4Eff8Zt+LGHdkpZj7JZHei6IDWsPVaaLdPWYwsR5MiZO2F/fm0Fb8zv
-ORbZHtCwnjl26OGqh08W/jxHKfoGPlruZHNHMHiYh84YOhMhjrtY4M/U6lxVB/rC
-6q2PleMmh6/jfBWCQgM3N+c1luwXwY6MEdkEbt9U+X6fxXNQlNy8S5EbEPzx1U4J
-4TTyWat4JsW/AKwAAjcI7R1qBPqkNvVEoKeKqIRpHKOnfKcqhtUTrq92KozNiVbH
-uKnsvuaxVWtjCc30onR0PUbi7ENeJZfVTQlAtBl3TN2Ku9ReASP/23KjTk4jnCZA
-Da1WB50SGz0ynSMY/fBZ
-=GKwE
------END PGP SIGNATURE-----
