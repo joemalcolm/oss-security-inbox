@@ -1,4 +1,9 @@
-Received: (qmail 1914 invoked by uid 550); 28 Sep 2025 00:44:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["13188" "Monday" "1" "May" "2017" "12:05:44" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<600131.444024981-sendEmail@localhost>" "183" "[oss-security] libarchive: two heap-based buffer overflow read" nil nil nil "5" "2017050112:05:44" "[oss-security] libarchive: two heap-based buffer overflow read" (number mark "U       ago@gentoo.o May  1  183/13188 " thread-indent "\"[oss-security] libarchive: two heap-based buffer overflow read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28216 invoked by uid 550); 1 May 2017 12:06:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,104 +12,195 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32066 invoked from network); 28 Sep 2025 00:32:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wichmann.us; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1759019525;
-	 x=1759105925; bh=AcWJ4vSH09U7fUN1NNzP0q3qfCJlH+m9GW/VYL75fOk=; b=
-	e/lN04xgjaY2zOVe3O0CbVUxo0dX+i/X01qttDD2R10EiE8J43I6zsu8JcjRAc2W
-	DKZt1rANwMbYD0GvYBvGu9V+hyL2J0IlVhdm6X8Vfl/fPj8dYr/XLs42+gWk8B2v
-	ZCXoj1mrp1/eMgrGMgs/6vd7Yx+iLQLfoDhq3mSBLK228b8Z5KHqNvdqfpDoT+60
-	3/oG34UX7vEG/Cd86mVciHUbHLOBtEjD8YDmUPNj2nSPuUJj6BB04OtQy697YhVa
-	OBuj3IkvQbH8A2LnIjWgM27ZhEB4pvAlEmfZh/aV2AHKSXu5ln0pMtXh19hsWMWy
-	RvptP7yTMQRbV1eH/aMqpQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1759019525; x=1759105925; bh=A
-	cWJ4vSH09U7fUN1NNzP0q3qfCJlH+m9GW/VYL75fOk=; b=LZBdNGg51cpdvuLc3
-	amvObhJpYyvyDNzqO3OPhdRn/yMBQnVC2IAnf9Dx1prrauRJGYgs3PAuCtDqGhHp
-	itAv3ynz7724Y8HuH4hxCI2bIdz2TBKZsIubA3x9jCD+VC769X1q9Kt0LmCc700H
-	ooi97DgDHTa9bXLaBGZt3jW1JhIUpavBhNSfWDmdJXTZycbewN5aMYQi9pf2n10d
-	bqQgPGvFUlUW2YsAQKNQ5fEDtARAZRUpZRJtd5nD4vajLATWmfa7U6Uxo6lDMw4D
-	pqls3zB5TnZttwu0u5mNDISOulSxTEd55JPG+5kiKtD62UrhkBOvvN/b5rDa/64J
-	jJXjQ==
-X-ME-Sender: <xms:BYLYaDSqyCUKRu4gl7i9NqzrL4iqOEbJpb_ylp43lZ9vYma5LcgUGQ>
-    <xme:BYLYaLtE6wXtOjjsvjT94f3f2178vaj4TResu7M9YxQuk1kHG87vd1ajDOcSs9FfC
-    2TAbg2pJFI7q_VQ6GWJqls9MSf-glAIZJ02_RxFR5ZuvH5XHOwStAQ>
-X-ME-Received: <xmr:BYLYaOewcuer7F9pBPpWQiXXbLP3ikuKnmlU03biUGeVxjOzBYSo9vDyfeifTvGnRZv5yuDH0Ip09M1s_4zVRi1Q3nWFuviojg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejfeejtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepkfffgggfuffvfhfhjggtgfesthejredttd
-    dvjeenucfhrhhomhepofgrthhsucghihgthhhmrghnnhcuoehmrghtshesfihitghhmhgr
-    nhhnrdhusheqnecuggftrfgrthhtvghrnheptdejudevieetgeetjeegheeiudefkefgvd
-    ejgfevtdetudffueeileeivedtgeffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepmhgrthhsseifihgthhhmrghnnhdruhhspdhnsggprhgtph
-    htthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhr
-    ihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhm
-X-ME-Proxy: <xmx:BYLYaIJdLmatLTxItOBq9IdHa8E1pucNYd_ZJghZ_P-VdqHH4Xhggw>
-    <xmx:BYLYaMaRvbpjCIfYfgUopjD6FCMliRzOoEoQJBQhfqRgMUmSSj5ksQ>
-    <xmx:BYLYaDvi4auAmUC3ToCBKPTHfSfCec_YADSDklM0OdVeeK8AXAA2Sw>
-    <xmx:BYLYaJte0efXlrd5t9dLIcP49cTBHxAJSvKV1NzVsmzCGeU3Wd5NEg>
-    <xmx:BYLYaA6T6pI8IDBzyWbI_BjDmLgs1zDf8wgoGD6JSIW0zZIdh8_80yGp>
-Feedback-ID: i387144f0:Fastmail
-Message-ID: <dbb07692-6f92-48d1-ac35-239943831edd@wichmann.us>
-Date: Sat, 27 Sep 2025 18:32:04 -0600
+Received: (qmail 28198 invoked from network); 1 May 2017 12:06:04 -0000
+Message-ID: <600131.444024981-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 1 May 2017 12:05:44 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
-From: Mats Wichmann <mats@wichmann.us>
-Content-Language: en-US
-Autocrypt: addr=mats@wichmann.us;
- keydata= xsDiBD9xp6oRBAC1vd3YI8Gcr1CxpV1gldNQu0uQsNaICDk+Ai3+R163s/P83JOYG+SBEA3P
- v7iZx70qpQ3RzP7KrjF1Nm6j0em9ccUX2fPQUCAxXw5Hiq7CSMiwQQZRI6shcnyMh9XTKViT
- WK5MrKDyvjDEn7epjKzKwPS5SG039l6XaOKU0A4uGwCgsNqUQqC0gMMcbKlJV8ql58iKmbMD
- /ii8FPQrXmyS/FnsPs7UddV5qMHKm7NUH5oiKuMVyakInRyq9iIxuu3D4Ec6mWRKcGsjmIkW
- HXCSz0aefs6dsqNqpU54cYioJ3wP5LzHK7oclgJPryVt5Qezbdutf8SQf8gVkaNIlkxwGUzi
- bKTZ6CHzwlz9nNgeel0XPUcZzFxGA/4paeCg2rMSVuAhUQbsLYHu4XzTs9P16zaXkrtxc4m5
- b+BF5xsLgTpyO5l859XudS2Gp+7/Y37dAU4QlyGGOboWmF1y9U5DnzBwG8ghsnym+ga58MJh
- LdRdQQ6xQolCpEXOuzm40f2r5uMxF3KOJ7WpIPuGAkeCPru9BmlATH+zOs0gTWF0cyBXaWNo
- bWFubiA8bWF0c0B3aWNobWFubi51cz7CYQQTEQIAIQIbAwYLCQgHAwIDFQIDAxYCAQIeAQIX
- gAUCT0VyZwIZAQAKCRDAMaCQc9hUxiZBAJ9cWziGp7hVfsu5T+cQptc3rLNndQCgrZh8u5LW
- BfJ5e/Y+3PwZ8UEm+ELOwE0EP5is8BAEAMtwzcA8TYf5UTjDMgwcSNoErTc9ag+IX05QFgL8
- aF8sfJRv5atcitqQy0gSIsOzI+L/AFdPN/+QQI3dL1tCq14t32KPDtigDhzm6jVPXX5z+V9u
- xnD8XTp+ZvNcWoHXjViM8aXeLLEiCpiVCho307h3XShvqoKINWRQWeAsKKDDAAMFA/48zaey
- wiiEyvI0meJ1KkNHxdLP0yLODr1WV6j9xkPkLWOaIDw7dlwEOlF1N1YtZ2wa0p1wsttdIbIx
- ffgwXmcH4zrdxUIMz3U0BqYzk5H+5cYFXECXTFVOmweS+JECYMj80PjRoKCO1eVO1N30zksB
- 36NnhZWPRWIhjK3ZarIYH8JGBBgRAgAGBQI/mKzwAAoJEMAxoJBz2FTG6VEAoKDYHfDp5Q3q
- PuPvPahCE9HsXMgAAJ9INTqcLSJrOfyJ8q95nBO1T26H2Q==
-In-Reply-To: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-802118.906824948"
+Subject: [oss-security] libarchive: two heap-based buffer overflow read
+
+------MIME delimiter for sendEmail-802118.906824948
+Content-Type: text/plain;
+        charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] How to do secure coding and create secure software
 
-On 9/27/25 02:30, Amit wrote:
-> -----------------------------------------------------------------------
-> How to do secure coding and create secure software
-> -----------------------------------------------------------------------
-> 
-> I can do secure coding and no one can hack my code unless the language/OS have
-> some issues. You can challenge me on this.
-> 
-> Ultimately, all software boil down to functions/methods. If functions/methods
-> are secure then the whole software is secure.
+Description:
+libarchive is a multi-format archive and compression library.
 
-That's just plain silly.  You will get challenged on this... already 
-seen some. I'll just post a hokey analogy: a door lock is secure, as it 
-requires a "thing you have" (the key). The API is fine. If you don't 
-protect the security token (leave the key under a flowerpot), that's not 
-the fault of the lock - defeated by bad security processes and no fault 
-of the "function". If someone kick in the door it's bad design: a door 
-jamb made out of wood isn't safe from a brute force attack, even if the 
-lock mechanism itself wasn't breached.
+In the 2016 I reported two heap-based buffer over-read to libarchive. They appear to have already been fixed in the trunk when I reported them; here are the details:
 
-The "whole system" matters a lot. Secure functions are necessary but not 
-sufficient.
+# bsdtar -t -f $FILE
+=================================================================                                                                                                                              
+==27838==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61500000ff05 at pc 0x7fad7b060778 bp 0x7ffe35698a10 sp 0x7ffe35698a08                                                      
+READ of size 1 at 0x61500000ff05 thread T0                                                                                                                                                     
+    #0 0x7fad7b060777 in archive_le32dec /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_endian.h:122:20                                                       
+    #1 0x7fad7b060777 in cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:669                                         
+    #2 0x7fad7b060777 in archive_read_format_cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903                     
+    #3 0x7fad7affa45b in _archive_read_next_header2 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:649:7                                               
+    #4 0x7fad7affa100 in _archive_read_next_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:687:8                                                
+    #5 0x514c89 in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:261:7                                                                                  
+    #6 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
+    #7 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3                                                                                        
+    #8 0x7fad7a08d61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
+    #9 0x41c168 in _init (/usr/bin/bsdtar+0x41c168)                                                                                                                                            
+                                                                                                                                                                                               
+0x61500000ff05 is located 5 bytes to the right of 512-byte region [0x61500000fd00,0x61500000ff00)                                                                                              
+allocated by thread T0 here:                                                                                                                                                                   
+    #0 0x4d4f28 in malloc /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                       
+    #1 0x7fad7aff5854 in __archive_read_filter_ahead /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:1436:17                                            
+    #2 0x7fad7b0db8cd in archive_read_format_tar_bid /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_tar.c:310:6                           
+    #3 0x7fad7afef670 in choose_format /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:712:10                                                           
+    #4 0x7fad7afef670 in archive_read_open1 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:529                                                         
+    #5 0x7fad7b0162e1 in archive_read_open_filenames /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:152:10                               
+    #6 0x7fad7b015e8b in archive_read_open_filename /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:109:9                                 
+    #7 0x5149eb in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:223:6                                                                                  
+    #8 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
+    #9 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3                                                                                        
+    #10 0x7fad7a08d61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                       
+                                                                                                                                                                                               
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_endian.h:122:20 in archive_le32dec
+Shadow bytes around the buggy address:
+  0x0c2a7fff9f90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c2a7fff9fe0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==27838==ABORTING
+
+Affected version:
+3.2.2
+Fixed version:
+3.3.0
+Commit fix:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00105-libarchive-heapoverflow-archive_le32dec
+CVE:
+CVE-2016-10349
+
+#############################
+
+# bsdtar -t -f $FILE
+==21129==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61500000ff00 at pc 0x7fa070bd7827 bp 0x7fffb7183a30 sp 0x7fffb7183a28                                                      
+READ of size 1 at 0x61500000ff00 thread T0                                                                                                                                                     
+    #0 0x7fa070bd7826 in archive_read_format_cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903:9                   
+    #1 0x7fa070b7145b in _archive_read_next_header2 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:649:7                                               
+    #2 0x7fa070b71100 in _archive_read_next_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:687:8                                                
+    #3 0x514c89 in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:261:7                                                                                  
+    #4 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
+    #5 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3
+    #6 0x7fa06fc0461f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #7 0x41c168 in _init (/usr/bin/bsdtar+0x41c168)
+
+0x61500000ff00 is located 0 bytes to the right of 512-byte region [0x61500000fd00,0x61500000ff00)
+allocated by thread T0 here:
+    #0 0x4d4f28 in malloc /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7fa070b6c854 in __archive_read_filter_ahead /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:1436:17
+    #2 0x7fa070c528cd in archive_read_format_tar_bid /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_tar.c:310:6
+    #3 0x7fa070b66670 in choose_format /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:712:10
+    #4 0x7fa070b66670 in archive_read_open1 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:529
+    #5 0x7fa070b8d2e1 in archive_read_open_filenames /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:152:10
+    #6 0x7fa070b8ce8b in archive_read_open_filename /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:109:9
+    #7 0x5149eb in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:223:6
+    #8 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2
+    #9 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3
+    #10 0x7fa06fc0461f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903:9 in 
+archive_read_format_cab_read_header
+Shadow bytes around the buggy address:
+  0x0c2a7fff9f90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c2a7fff9fe0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==21129==ABORTING
+
+Affected version:
+3.2.2
+Fixed version:
+3.3.0
+Commit fix:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00106-libarchive-heapoverflow-archive_read_format_cab_read_header
+CVE:
+CVE-2016-10350
+
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2016-12-06: bugs discovered and reported to upstream
+2017-05-01: blog post about the issue
+2017-05-01: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/01/libarchive-two-heap-based-buffer-overflow-read/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
+------MIME delimiter for sendEmail-802118.906824948--
 
