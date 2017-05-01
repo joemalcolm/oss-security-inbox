@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["706" "Wednesday" "17" "August" "2016" "17:21:27" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160817152127.4bmib7pf4hhqc4ro@eldamar.local>" "23" "Re: [oss-security] CVE-2016-5696: linux kernel - challange ack information leak." "^Date:" nil nil "8" "2016081715:21:27" "[oss-security] CVE-2016-5696: linux kernel - challange ack information leak." (number mark "        carnil@debia Aug 17   23/706   " thread-indent "\"Re: [oss-security] CVE-2016-5696: linux kernel - challange ack information leak.\"\n") "<CAOTQaXEMKvWRH4Aexf3bXzsdx0488TkWmVq2-7+v4Ak7dar7jw@mail.gmail.com>" ("<CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>" "<b84b5a3f-9e85-e3f2-fbbd-95dac3a76518@enea.com>" "<20160814195158.GA19228@kroah.com>" "<3230301C09DEF9499B442BBE162C5E48ABE26AE4@SESTOEX04.enea.se>" "<20160815075301.GD6359@kroah.com>" "<8e047f04-5c48-aaa8-0e71-e06a44cb8a2c@enea.com>" "<20160816201908.GB10132@kroah.com>" "<3230301C09DEF9499B442BBE162C5E48ABE280AE@SESTOEX04.enea.se>" "<20160817121621.GA7146@kroah.com>" "<CAOTQaXEMKvWRH4Aexf3bXzsdx0488TkWmVq2-7+v4Ak7dar7jw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3815" "Monday" "1" "May" "2017" "11:29:58" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<189251.155450137-sendEmail@localhost>" "94" "[oss-security] libsndfile: global buffer overflow in i2les_array (pcm.c)" nil nil nil "5" "2017050111:29:58" "[oss-security] libsndfile: global buffer overflow in i2les_array (pcm.c)" (number mark "U       ago@gentoo.o May  1   94/3815  " thread-indent "\"[oss-security] libsndfile: global buffer overflow in i2les_array (pcm.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15764 invoked by uid 550); 17 Aug 2016 15:21:41 -0000
+Received: (qmail 26012 invoked by uid 550); 1 May 2017 11:30:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15746 invoked from network); 17 Aug 2016 15:21:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Gzt6EmeGuYWl9jLBe4zpVR0kJozJNoM6jZcFtigL7Jw=;
-        b=jy9s8N0S+NYcfSpmSuBRDGmTVw32qPdraRUq/kaiHrfG8uUhlOeOojOqN4ePwfCWAN
-         EU5g4PZEkn0DiFnRIwBl/cxaqOEDxUw6FMJ99CtUw5C5pAIXhabTUJVyRkPKE5aHu9by
-         jLHyMyddAWui5GtqTBsIF5ALQ+lCqpQW1x/I91xxKr7nq8vkdtmCab09iAn46swXbhRI
-         Dfd2rcLrZvTFnsuCSeqhhVqTmRGHD6n+DQqqTlgMQQHFERzg47pfhsNhAA9GuNMTcuIF
-         zoFreGavo3x7eAi649h5SLAsdbOWlgdabvaOQy1ogK0xUKZHYjztu7CL+wzuooKa0PW6
-         ZShA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Gzt6EmeGuYWl9jLBe4zpVR0kJozJNoM6jZcFtigL7Jw=;
-        b=buevjLAj9BvSXstwzEWt+rVhc37HDRAu9vOBhPmRjDxmz2kpu4N7w+PfgefJ1T5zk6
-         TVSWf8D57+6wT+sUJI/a0dWltIhQE55L8h75jH+5ZyRfb+eTsf1SWMfq66Ml3jDthCx4
-         ENzkPvpgMGc3o0mu4BA/IvTvBXJAZffrbAMRIs1nr3omxoUnP+12NTQWVPIxYSnmDmQl
-         0Ge02/nQ4bey2BqVgr37f+UWNB9eHt6cuJC/KmbRywoiplFcuw0ojaD5OHaVUPqLbaIt
-         fP+flB6EghEx/8Lvk0h0SrkV6IRFzRvSbt2Zv96wSjJIrzH9wwXj26T30aG9NEfr+jV2
-         mbeA==
-X-Gm-Message-State: AEkooutsQHOkVM+Y/IqlgQlO2+4HirzLrSSDQLY/Plxc1OnzEWBHCo/qqwB5OWv3S2qCQg==
-X-Received: by 10.28.4.194 with SMTP id 185mr28249678wme.91.1471447289751;
-        Wed, 17 Aug 2016 08:21:29 -0700 (PDT)
-Message-ID: <20160817152127.4bmib7pf4hhqc4ro@eldamar.local>
-References: <CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>
- <b84b5a3f-9e85-e3f2-fbbd-95dac3a76518@enea.com>
- <20160814195158.GA19228@kroah.com>
- <3230301C09DEF9499B442BBE162C5E48ABE26AE4@SESTOEX04.enea.se>
- <20160815075301.GD6359@kroah.com>
- <8e047f04-5c48-aaa8-0e71-e06a44cb8a2c@enea.com>
- <20160816201908.GB10132@kroah.com>
- <3230301C09DEF9499B442BBE162C5E48ABE280AE@SESTOEX04.enea.se>
- <20160817121621.GA7146@kroah.com>
- <CAOTQaXEMKvWRH4Aexf3bXzsdx0488TkWmVq2-7+v4Ak7dar7jw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOTQaXEMKvWRH4Aexf3bXzsdx0488TkWmVq2-7+v4Ak7dar7jw@mail.gmail.com>
-User-Agent: Mutt/1.6.2-neo (2016-08-08)
-Date: Wed, 17 Aug 2016 17:21:27 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] CVE-2016-5696: linux kernel - challange ack
- information leak.
-To: oss-security@lists.openwall.com
+Received: (qmail 25911 invoked from network); 1 May 2017 11:30:20 -0000
+Message-ID: <189251.155450137-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 1 May 2017 11:29:58 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-319114.30654964"
+Subject: [oss-security] libsndfile: global buffer overflow in i2les_array (pcm.c)
 
-Hi,
+------MIME delimiter for sendEmail-319114.30654964
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 17, 2016 at 05:01:45PM +0200, Gsunde Orangen wrote:
-> > > Heh, fair enough.  This fix is now in the kernels that were released
-> today
-> > > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
-> It seems that Greg keeps on being bothered with questions ;-)
-> Here's one more: the relevant Upstream commit
-> 75ff39ccc1bd5d3c455b6822ab09e533c551f758
-> is referenced in all change logs of yesterday's kernel releases...
-> ... Except for: 4.7.1 (https://cdn.kernel.org/pub/
-> linux/kernel/v4.x/ChangeLog-4.7.1)
-> Did 4.7.1 miss the fix?
+Description:
+libsndfile is a C library for reading and writing files containing sampled sound.
 
-That commit was actually already part of v4.7.
+The complete ASan output of the issue:
 
-$ git tag --contains 75ff39ccc1bd5d3c455b6822ab09e533c551f758
-v4.7
-v4.8-rc1
-v4.8-rc2
+# sndfile-convert $FILE out.wav
+==27948==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000013cd13c at pc 0x7f59caaaaace bp 0x7ffcab360cf0 sp 0x7ffcab360ce8 
+READ of size 4 at 0x0000013cd13c thread T0   
+    #0 0x7f59caaaaacd in i2les_array /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/pcm.c:670:15  
+    #1 0x7f59caaaaacd in pcm_write_i2les /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/pcm.c:1696
+    #2 0x7f59ca7bf831 in sf_writef_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:2342:10
+    #3 0x514b70 in sfe_copy_data_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:88:3 
+    #4 0x5138d1 in main /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/sndfile-convert.c:340:3    
+    #5 0x7f59c974178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
+    #6 0x419e18 in _init (/usr/bin/sndfile-convert+0x419e18)
 
-Regards,
-Salvatore
+0x0000013cd13c is located 4092 bytes to the right of global variable 'data' defined in '/tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:80:14' 
+(0x13c8140) of size 16384  
+SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/pcm.c:670:15 in i2les_array    
+Shadow bytes around the buggy address:  
+  0x0000802719d0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x0000802719e0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x0000802719f0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080271a00: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080271a10: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+=>0x000080271a20: f9 f9 f9 f9 f9 f9 f9[f9]00 00 00 00 00 00 00 00
+  0x000080271a30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080271a40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080271a50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080271a60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080271a70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):  
+  Addressable: 00   
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa 
+  Freed heap region:       fd 
+  Stack left redzone:      f1 
+  Stack mid redzone:       f2 
+  Stack right redzone:     f3 
+  Stack after return:      f5 
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==27948==ABORTING
+
+Affected version:
+1.0.28
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/erikd/libsndfile/commit/fd0484aba8e51d16af1e3a880f9b8b857b385eb3
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8365
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00263-libsndfile-globaloverflow-i2les_array
+
+Timeline:
+2017-04-11: bug discovered and reported to upstream
+2017-04-12: upstream released a patch
+2017-04-29: blog post about the issue
+2017-04-30: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/29/libsndfile-global-buffer-overflow-in-i2les_array-pcm-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-319114.30654964--
+
