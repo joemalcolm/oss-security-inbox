@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["691" "Tuesday" "24" "March" "2020" "23:21:38" "-0400" "Daniel Klco" "dklco@apache.org" "<CAHbpyFYWV3mM9GHwpmKhVB-aMhXKa2w4HBRwSER6sqGHuYP2ag@mail.gmail.com>" "28" "[oss-security] CVE-2020-1949: Apache Sling CMS Reflected XSS Vulnerability" nil nil nil "3" "2020032503:21:38" "[oss-security] CVE-2020-1949: Apache Sling CMS Reflected XSS Vulnerability" (number mark "U       dklco@apache Mar 24   28/691   " thread-indent "\"[oss-security] CVE-2020-1949: Apache Sling CMS Reflected XSS Vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-1949: Apache Sling CMS Reflected XSS Vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["38" "Monday" "1" "May" "2017" "20:28:16" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9pxyiMx1LCD93HmBNF_EnLqJiyGfTnUCNuqgctNnuYLAQ@mail.gmail.com>" "1" "[oss-security] Re: Integer Overflow in rxvt" nil nil nil "5" "2017050118:28:16" "[oss-security] Re: Integer Overflow in rxvt" (number mark "U       Jason@zx2c4. May  1    1/38    " thread-indent "\"[oss-security] Re: Integer Overflow in rxvt\"\n") "<CAHmME9qMDNZ8-X_S4vNeHkUWxAacN2onuRZ4=SCo4CPqqVPmhQ@mail.gmail.com>" ("<CAHmME9qMDNZ8-X_S4vNeHkUWxAacN2onuRZ4=SCo4CPqqVPmhQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9318 invoked by uid 550); 25 Mar 2020 09:51:18 -0000
+Received: (qmail 32106 invoked by uid 550); 1 May 2017 18:29:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +12,29 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20214 invoked from network); 25 Mar 2020 03:22:02 -0000
-X-Gm-Message-State: ANhLgQ0OtqLqxwYFTRSbvKsT4sdawcvejlOcLQmrtexMhF6WGJnckO7S
-	oskcxiJxLFRalTDJjUX5ph8j4+zDmj6ZK2NhX0U=
-X-Google-Smtp-Source: ADFU+vuhg1WmpoFKO26aWxgWfgIrWKqOub54ka1tSdNaEuNs7eN3NDa1TMqNKrNHo54O53Le/+NjrZZd7qtPSt3agc4=
-X-Received: by 2002:aca:3255:: with SMTP id y82mr1121703oiy.44.1585106509266;
- Tue, 24 Mar 2020 20:21:49 -0700 (PDT)
+Received: (qmail 30715 invoked from network); 1 May 2017 18:28:30 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:in-reply-to:references:from:date:message-id:subject:to
+	:content-type; s=mail; bh=0c1azi6cFDqYEJJkO8ZwBwew1dc=; b=hApu7D
+	Oke6ofetmFMKID0MywA+RZ6ubhtDebXXNruY6Ln1mY5aN0jRZtBALfD/5Ey5TJdD
+	w0x5inzJ4aH0UquLL2bZP/vvZi1rtT2FXOcwLExYB26LJr6zZye1JyEv6+HCV2AF
+	3IEU7wQdHY8xubj+u7bWD1I/IG3AtGyMEgyC8eNVHmC5C12gusoDKVWbX7mfR/na
+	LnKkKEzg8CIAsS6l3UppUf4/HT2SZJTBkm77Mk8SjwBkp6YSawE0u2Wf5R6Ydvv/
+	8YPuyW2hP0HjQiivi+om0Qzqy6gvm8aNl5PyiXgdJBCPVvMEKYybfmSjvMi5m3jP
+	1AtUdyFtsDukM8hA==
+X-Gm-Message-State: AN3rC/6zQ1wMvMFasbOiznyRdcS+Fh7RT+mzuKu2XqVrjETwCSV4GybK
+	X05HI4GBkIZhZyzqjlLEGXl4T2L7fg==
+X-Received: by 10.202.219.7 with SMTP id s7mr7613510oig.147.1493663297135;
+ Mon, 01 May 2017 11:28:17 -0700 (PDT)
 MIME-Version: 1.0
-From: Daniel Klco <dklco@apache.org>
-Date: Tue, 24 Mar 2020 23:21:38 -0400
-X-Gmail-Original-Message-ID: <CAHbpyFYWV3mM9GHwpmKhVB-aMhXKa2w4HBRwSER6sqGHuYP2ag@mail.gmail.com>
-Message-ID: <CAHbpyFYWV3mM9GHwpmKhVB-aMhXKa2w4HBRwSER6sqGHuYP2ag@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000006a856d05a1a55e91"
-Subject: [oss-security] CVE-2020-1949: Apache Sling CMS Reflected XSS Vulnerability
+In-Reply-To: <CAHmME9qMDNZ8-X_S4vNeHkUWxAacN2onuRZ4=SCo4CPqqVPmhQ@mail.gmail.com>
+References: <CAHmME9qMDNZ8-X_S4vNeHkUWxAacN2onuRZ4=SCo4CPqqVPmhQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 1 May 2017 20:28:16 +0200
+X-Gmail-Original-Message-ID: <CAHmME9pxyiMx1LCD93HmBNF_EnLqJiyGfTnUCNuqgctNnuYLAQ@mail.gmail.com>
+Message-ID: <CAHmME9pxyiMx1LCD93HmBNF_EnLqJiyGfTnUCNuqgctNnuYLAQ@mail.gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] Re: Integer Overflow in rxvt
 
---0000000000006a856d05a1a55e91
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Severity: Medium
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-Sling CMS 0.14.0 and previous releases
-
-Description:
-Scripts in Sling CMS do not property escape the Sling Selector from URLs
-when generating navigational elements for the administrative consoles and
-are vulnerable to reflected XSS attacks.
-
-Mitigation:
-All users should upgrade to 0.16.0
-
-Credit:
-This issue was discovered by Guillaume GRAB=C3=89 Pentester from Orange
-Cyberdefense France
-
-References:
-https://sling.apache.org/project-information/security.html
-
---0000000000006a856d05a1a55e91--
+This has been assigned CVE-2017-7483.
