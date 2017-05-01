@@ -1,207 +1,185 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/13/3
-Message-ID: <b07ab35f-c872-253b-86fb-0ce0fd074336@x41-dsec.de>
-Date: Fri, 13 Oct 2017 18:41:34 +0200
-From: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
-To: oss-security@...ts.openwall.com
-Subject: Advisory X41-2017-008: Multiple Vulnerabilities in Shadowsocks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/12
+Message-ID: <600131.444024981-sendEmail@localhost>
+Date: Mon, 1 May 2017 12:05:44 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libarchive: two heap-based buffer overflow read
 Content-Type: text/plain; charset=utf-8
 
+Description:
+libarchive is a multi-format archive and compression library.
 
-X41 D-Sec GmbH Security Advisory: X41-2017-008
+In the 2016 I reported two heap-based buffer over-read to libarchive. They appear to have already been fixed in the trunk when I reported them; here are the details:
 
-Multiple Vulnerabilities in Shadowsocks
-=======================================
+# bsdtar -t -f $FILE
+=================================================================                                                                                                                              
+==27838==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61500000ff05 at pc 0x7fad7b060778 bp 0x7ffe35698a10 sp 0x7ffe35698a08                                                      
+READ of size 1 at 0x61500000ff05 thread T0                                                                                                                                                     
+    #0 0x7fad7b060777 in archive_le32dec /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_endian.h:122:20                                                       
+    #1 0x7fad7b060777 in cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:669                                         
+    #2 0x7fad7b060777 in archive_read_format_cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903                     
+    #3 0x7fad7affa45b in _archive_read_next_header2 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:649:7                                               
+    #4 0x7fad7affa100 in _archive_read_next_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:687:8                                                
+    #5 0x514c89 in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:261:7                                                                                  
+    #6 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
+    #7 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3                                                                                        
+    #8 0x7fad7a08d61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
+    #9 0x41c168 in _init (/usr/bin/bsdtar+0x41c168)                                                                                                                                            
+                                                                                                                                                                                               
+0x61500000ff05 is located 5 bytes to the right of 512-byte region [0x61500000fd00,0x61500000ff00)                                                                                              
+allocated by thread T0 here:                                                                                                                                                                   
+    #0 0x4d4f28 in malloc /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                       
+    #1 0x7fad7aff5854 in __archive_read_filter_ahead /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:1436:17                                            
+    #2 0x7fad7b0db8cd in archive_read_format_tar_bid /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_tar.c:310:6                           
+    #3 0x7fad7afef670 in choose_format /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:712:10                                                           
+    #4 0x7fad7afef670 in archive_read_open1 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:529                                                         
+    #5 0x7fad7b0162e1 in archive_read_open_filenames /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:152:10                               
+    #6 0x7fad7b015e8b in archive_read_open_filename /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:109:9                                 
+    #7 0x5149eb in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:223:6                                                                                  
+    #8 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
+    #9 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3                                                                                        
+    #10 0x7fad7a08d61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                       
+                                                                                                                                                                                               
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_endian.h:122:20 in archive_le32dec
+Shadow bytes around the buggy address:
+  0x0c2a7fff9f90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c2a7fff9fe0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==27838==ABORTING
 
-Overview
---------
-Confirmed Affected Versions: Latest commit 2ab8c6b on Sep 6
-Confirmed Patched Versions: N/A
-Vendor: Shadowsocks
-Vendor URL: https://github.com/shadowsocks/shadowsocks/tree/master
-Vector: Network
-Credit: X41 D-Sec GmbH, Niklas Abel
-Status: Public
-Advisory-URL:
-https://www.x41-dsec.de/lab/advisories/x41-2017-008-shadowsocks/
+Affected version:
+3.2.2
+Fixed version:
+3.3.0
+Commit fix:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00105-libarchive-heapoverflow-archive_le32dec
+CVE:
+CVE-2016-10349
 
+#############################
 
-Summary and Impact
-------------------
-Several issues have been identified, which allow attackers to manipulate
-log files, execute commands and to brute force Shadowsocks with enabled
-autoban.py brute force detection. Brute force detection from autoban.py
-does not work with suggested tail command. The key of captured
-Shadowsocks traffic can be brute forced.
+# bsdtar -t -f $FILE
+==21129==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61500000ff00 at pc 0x7fa070bd7827 bp 0x7fffb7183a30 sp 0x7fffb7183a28                                                      
+READ of size 1 at 0x61500000ff00 thread T0                                                                                                                                                     
+    #0 0x7fa070bd7826 in archive_read_format_cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903:9                   
+    #1 0x7fa070b7145b in _archive_read_next_header2 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:649:7                                               
+    #2 0x7fa070b71100 in _archive_read_next_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:687:8                                                
+    #3 0x514c89 in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:261:7                                                                                  
+    #4 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
+    #5 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3
+    #6 0x7fa06fc0461f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #7 0x41c168 in _init (/usr/bin/bsdtar+0x41c168)
 
+0x61500000ff00 is located 0 bytes to the right of 512-byte region [0x61500000fd00,0x61500000ff00)
+allocated by thread T0 here:
+    #0 0x4d4f28 in malloc /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7fa070b6c854 in __archive_read_filter_ahead /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:1436:17
+    #2 0x7fa070c528cd in archive_read_format_tar_bid /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_tar.c:310:6
+    #3 0x7fa070b66670 in choose_format /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:712:10
+    #4 0x7fa070b66670 in archive_read_open1 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:529
+    #5 0x7fa070b8d2e1 in archive_read_open_filenames /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:152:10
+    #6 0x7fa070b8ce8b in archive_read_open_filename /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:109:9
+    #7 0x5149eb in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:223:6
+    #8 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2
+    #9 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3
+    #10 0x7fa06fc0461f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
 
-Product Description
--------------------
-Shadowsocks is a fast tunnel proxy that helps you bypass firewalls.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903:9 in 
+archive_read_format_cab_read_header
+Shadow bytes around the buggy address:
+  0x0c2a7fff9f90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c2a7fff9fe0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fffa030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==21129==ABORTING
 
+Affected version:
+3.2.2
+Fixed version:
+3.3.0
+Commit fix:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00106-libarchive-heapoverflow-archive_read_format_cab_read_header
+CVE:
+CVE-2016-10350
 
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
 
-Log file manipulation
-=====================
-Severity Rating: Medium
-Confirmed Affected Versions: Latest commit 2ab8c6b on Sep 6
-Confirmed Patched Versions: N/A
-Vector: Network
-CVE: not yet issued
-CWE: 117
-CVSS Score: 4.3
-CVSS Vector: CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N
+Timeline:
+2016-12-06: bugs discovered and reported to upstream
+2017-05-01: blog post about the issue
+2017-05-01: CVE assigned
 
-Summary and Impact
-------------------
-Log file manipulation is possible with a manipulated hostname, sent to
-the server from a client, even if Shadowsocks is as quiet as possible
-with "-qq".
+Note:
+This bug was found with American Fuzzy Lop.
 
-Therefore a string like "\nI could be any log entry\n" could be sent as
-hostname to Shadowsocks. The server would log an additional line with
-"I could be any log entry".
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/01/libarchive-two-heap-based-buffer-overflow-read/
 
-
-Workarounds
------------
-There is no workaround available, do not trust the logfiles until a
-patch is released.
-
-
-
-Command Execution
-=================
-Severity Rating: Critical
-Confirmed Affected Versions: Latest commit 2ab8c6b on Sep 6
-Confirmed Patched Versions: N/A
-Vector: Network
-CVE: not yet issued
-CWE: 78
-CVSS Score: 9.0
-CVSS Vector: CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H
-
-
-Summary and Impact
-------------------
-When the brute force detection with autoban.py is enabled, remote
-attackers are able to execute arbitrary commands.
-
-Command execution is possible because of because of line 53 "os.system(cmd)"
-in autoban.py, which executes "cmd = 'iptables -A INPUT -s %s -j DROP' %
-ip". The "ip" parameter gets parsed from the log file, whose contents
-can be controlled by a third party sending unauthenticated packets.
-
-
-Proof of Concept
-----------------
-When, a string like "can not parse header when ||ls&:\n" is sent as host
-name to Shadowsocks, it would end up in the logfile and lead to the
-execution of "ls".
-Autoban.py does not execute commands with spaces due to internal
-sanitization. A requested hostname like:
-
-" can not parse header when ||ls&:\ntouch /etc/evil.txt\nexit\ncan not
-parse header when ||/bin/bash</var/log/shadowsocks.log&:\n" could be
-used to work around this limitation. It writes the command "touch
-/etc/evil.txt" into the logfile and executes it with
-"/bin/bash</var/log/shadowsocks.log".
-The exit; command is an important factor, without it an unbounded
-recursion would occur leading to a DoS.
-
-
-Workarounds
------------
-No workaround available, do not use autoban.py.
-
-
-
-Lack of Bruteforce detection through autoban.py
-===============================================
-Confirmed Affected Versions: Latest commit 2ab8c6b on Sep 6
-Confirmed Patched Versions: N/A
-
-
-Summary and Impact
-------------------
-The brute force detection autoban.py does not work at all with the suggested
-tail command, suggested at
-https://github.com/shadowsocks/shadowsocks/wiki/Ban-Brute-Force-Crackers.
-
-The command "python autoban.py < /var/log/shadowsocks.log" does work,
-but the suggested "nohup tail -F /var/log/shadowsocks.log | python
-autoban.py > log 2>log &" does not block IP's.
-The "for line in sys.stdin:" from autoban.py parses the input until
-there is an end of file (EOF). As "tail -F" will never pipe an EOF into
-the pyhon script, the sys.stdin will block the script forever. So the
-"tail -F /var/log/shodowsocks | autoban.py" will never block anything
-except itself.
-
-Workarounds
------------
-Use python "autoban.py < /var/log/shadowsocks.log" in a cronjob. Do not
-use autoban.py until the command execution issue gets fixed.
-
-
-
-Bruteforcable Shadowsocks traffic because of MD5
-================================================
-Confirmed Affected Versions: Latest commit 2ab8c6b on Sep 6
-Confirmed Patched Versions: N/A
-
-Summary and Impact
-------------------
-Shadowsocks uses no brute force prevention for it's key derivation function.
-
-The key for Shadowsocks traffic encryption is static and derived from
-the password, using MD5. The password derivation is in encrypt.py in
-line 56 to 63: "
-
-while len(b''.join(m)) < (key_len + iv_len):
-        md5 = hashlib.md5()
-        data = password
-        if i > 0:
-            data = m[i - 1] + password
-        md5.update(data)
-        m.append(md5.digest())
-        i += 1
-"
-
-MD5 should not be used to generate keys, since it is a hash function.
-A proper key derivation function increases the costs for this operation,
-which is a small burden for a user, but a big one for an attacker,
-which performs this operation many more times. As passwords usually have
-low-entropy, a good password derivation function has to be slow.
-
-
-Workarounds
------------
-Use a secure password generated by a cryptographically secure random
-generator. Wait for a patch that uses a password based key derivation
-function like "Argon2" instead of a hash.
-
-
-
-About X41 D-Sec GmbH
---------------------
-X41 D-Sec is a provider of application security services. We focus on
-application code reviews, design review and security testing. X41 D-Sec
-GmbH was founded in 2015 by Markus Vervier. We support customers in
-various industries such as finance, software development and public
-institutions.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Timeline
---------
-2017-09-28	Issues found
-2017-10-05	Vendor contacted
-2017-10-09	Vendor contacted, replied to use GitHub for a full disclosure
-2017-10-11	Vendor contacted, asked if the vendor is sure to want a full
-disclosure
-2017-10-12	Vendor contacted, replied to create a public issue on GitHub
-2017-10-13	Created public issues on GitHub
-2017-10-13	Advisory release
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (867 bytes)
