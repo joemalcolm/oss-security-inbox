@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7877" "Wednesday" "6" "February" "2019" "17:54:39" "+0100" "Daniel Beck" "ml@beckweb.net" "<6909BB50-6CA1-44C5-81EA-4413BA44B2AB@beckweb.net>" "255" "Re: [oss-security] Multiple vulnerabilities in Jenkins plugins" "^Date:" nil nil "2" "2019020616:54:39" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "        ml@beckweb.n Feb  6  255/7877  " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") "<8EA8F86C-34A0-479D-B0E7-1AB8AF3E9FDF@beckweb.net>" ("<8EA8F86C-34A0-479D-B0E7-1AB8AF3E9FDF@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10549" "Monday" "1" "May" "2017" "18:44:28" "+0200" "Solar Designer" "solar@openwall.com" "<20170501164428.GA12322@openwall.com>" "252" "[oss-security] terminal emulators' processing of escape sequences" "^Date:" nil nil "5" "2017050116:44:28" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        solar@openwa May  1  252/10549 " thread-indent "\"[oss-security] terminal emulators' processing of escape sequences\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21769 invoked by uid 550); 6 Feb 2019 16:55:00 -0000
+Received: (qmail 19498 invoked by uid 550); 1 May 2017 16:45:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,275 +11,267 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21748 invoked from network); 6 Feb 2019 16:54:59 -0000
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-References: <8EA8F86C-34A0-479D-B0E7-1AB8AF3E9FDF@beckweb.net>
-In-Reply-To: <8EA8F86C-34A0-479D-B0E7-1AB8AF3E9FDF@beckweb.net>
-Message-Id: <6909BB50-6CA1-44C5-81EA-4413BA44B2AB@beckweb.net>
-X-Mailer: Apple Mail (2.3445.9.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1549472099;1f30866b;
-X-HE-SMSGID: 1grQTH-0005Il-Sy
-Date: Wed, 6 Feb 2019 17:54:39 +0100
-From: Daniel Beck <ml@beckweb.net>
+Received: (qmail 18040 invoked from network); 1 May 2017 16:44:35 -0000
+Message-ID: <20170501164428.GA12322@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Date: Mon, 1 May 2017 18:44:28 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Subject: [oss-security] terminal emulators' processing of escape sequences
 To: oss-security@lists.openwall.com
 
+Hi,
 
-> On 28. Jan 2019, at 15:28, Daniel Beck <ml@beckweb.net> wrote:
->=20
-> SECURITY-1292
-> Script Security sandbox protection could be circumvented during the scrip=
-t=20
-> compilation phase by applying AST transforming annotations such as `@Grab=
-`=20
-> to source code elements.
->=20
-> This affected an HTTP endpoint used to validate a user-submitted Groovy=20
-> script that was not covered in the 2019-01-08 fix for SECURITY-1266 and=20
-> allowed users with Overall/Read permission to bypass the sandbox=20
-> protection and execute arbitrary code on the Jenkins master.
->=20
+It is a well-known feature, previously discussed in here, that data
+printed to a terminal (emulator) may control that terminal, including
+making it effectively unusable until reset, and in some cases even
+pasting characters as if they were typed by the user.  Also as discussed
+what characters may be pasted varies by terminal - sometimes they can be
+arbitrary (e.g., if the terminal supports macro recording and playback
+via escape sequences) and sometimes not so (like a terminal reporting
+back its status, usually not followed by a linefeed, so not yet
+executing a shell command until further user assistance).  Here are some
+relevant threads:
 
-CVE-2019-1003005
+http://www.openwall.com/lists/oss-security/2015/08/11/8
+http://www.openwall.com/lists/oss-security/2015/09/17/5
+http://www.openwall.com/lists/oss-security/2016/11/04/12
 
->=20
-> SECURITY-1293
-> Groovy Plugin has a form validation HTTP endpoint used to validate a user-
-> submitted Groovy script through compilation, which was not subject to=20
-> sandbox protection. This allowed attackers with Overall/Read access to=20
-> execute arbitrary code on the Jenkins master by applying AST transforming=
-=20
-> annotations such as `@Grab` to source code elements.
->=20
+(I link to messages that started these threads, not necessarily to most
+informative messages in the threads.  So you might want to go through
+the threads with the "thread-next" links.)
 
-CVE-2019-1003006
+Besides (mis)features, there may also be implementation bugs.  A couple
+of weeks ago, I brought in here vulnerabilities in terminal escape
+handling in minicom and prl-vzvncserver (both already fixed in latest
+versions by then):
 
->=20
-> SECURITY-1295 (1)
-> Warnings Plugin has a form validation HTTP endpoint used to validate a=20
-> user-submitted Groovy script through compilation, which was not subject t=
-o=20
-> sandbox protection. The endpoint checked for the Overall/RunScripts=20
-> permission, but did not require POST requests, so it was vulnerable to=20
-> cross-site request forgery (CSRF). This allowed attackers to execute=20
-> arbitrary code on the Jenkins master by applying AST transforming=20
-> annotations such as `@Grab` to source code elements.
->=20
+http://www.openwall.com/lists/oss-security/2017/04/18/5
 
-CVE-2019-1003007
+I already knew this wouldn't be the end of the story as some other
+terminal emulators exhibited suspicious behavior when targeted with
+streams of unusual escape sequences involving large or negative integer
+parameters.  I sent the following to the distros list on April 17,
+presented here with updates reflecting the current status.
 
->=20
-> SECURITY-1295 (2)
-> Warnings Next Generation Plugin has a form validation HTTP endpoint used=
-=20
-> to validate a Groovy script through compilation, which was not subject to=
-=20
-> sandbox protection. The endpoint checked for the Overall/RunScripts=20
-> permission, but did not require POST requests, so it was vulnerable to=20
-> cross-site request forgery (CSRF). This allowed attackers to execute=20
-> arbitrary code on the Jenkins master by applying AST transforming=20
-> annotations such as `@Grab` to source code elements.
->=20
+I wrote a script, and indeed there are crashes:
 
-CVE-2019-1003008
+---
+#!/usr/bin/perl
 
->=20
-> SECURITY-859
-> Active Directory Plugin performs TLS upgrade (StartTLS) after connecting=
-=20
-> to domain controllers through insecure LDAP. In this mode, certificates=20
-> were not properly validated, effectively trusting all certificates,=20
-> allowing man-in-the-middle attacks.
->=20
-> This only affected TLS upgrades. The LDAPS mode, available by setting the=
-=20
-> system property hudson.plugins.active_directory.
-> ActiveDirectorySecurityRealm.forceLdaps to true, was unaffected.
->=20
+# List of numbers stolen from vncrush.pl
+@numbers = ('0', '-0', '1', '-1', '32767', '-32768', '2147483647', '-2147483647', '2147483648', '-2147483648',
+              '4294967294', '4294967295', '4294967296', '357913942', '-357913942', '536870912', '-536870912',
+              '1.79769313486231E+308', '3.39519326559384E-313', '99999999999', '-99999999999', '0x100', '0x1000',
+              '0x3fffffff', '0x7ffffffe', '0x7fffffff', '0x80000000', '0xffff', '0xfffffffe', '0xfffffff', '0xffffffff',
+              '0x10000', '0x100000', '0x99999999', '65535', '65536', '65537', '16777215', '16777216', '16777217', '-268435455');
 
-CVE-2019-1003009
+sub test
+{
+	local $what = shift;
+	print "Testing CSI $what\n";
+	print "\033[" . $what . "first\nsecond\n";
+#	print "\233" . $what . "first\nsecond\n";
+}
 
->=20
-> SECURITY-1095
-> Git Plugin allows the creation of a tag in a job workspace=E2=80=99s Git=
-=20
-> repository with accompanying metadata attached to a build record.
->=20
-> The HTTP endpoint to create the tag did not require POST requests,=20
-> resulting in a CSRF vulnerability.
->=20
+foreach $n1 (@numbers) {
+	for ($c = 0; $c < 256; $c++) {
+		test($n1 . chr($c));
+		foreach $n2 (@numbers) {
+			test($n1 . ";" . $n2 . chr($c));
+		}
+	}
+}
+---
 
-CVE-2019-1003010
+rxvt:
 
->=20
-> SECURITY-1102
-> Token Macro Plugin recursively applied token expansion.
->=20
-> This could be used by users able to affect input to token expansion (such=
-=20
-> as change log messages), to inject additional tokens into the input, whic=
-h=20
-> would then be expanded, resulting in information disclosure (for example=
-=20
-> values of environment variables), or denial of service.
->=20
+---
+Program received signal SIGSEGV, Segmentation fault.
+0x000055555556a560 in rxvt_scroll_text.part ()
+(gdb) bt
+#0  0x000055555556a560 in rxvt_scroll_text.part ()
+#1  0x00005555555602eb in rxvt_process_csi_seq ()
+#2  0x00005555555607a7 in rxvt_main_loop ()
+#3  0x000055555555c1eb in main ()
 
-CVE-2019-1003011
+   0x000055555556a540 <+512>:	cmp    %r15,%rbp
+   0x000055555556a543 <+515>:	je     0x55555556a5d0 <rxvt_scroll_text.part.4+656>
+   0x000055555556a549 <+521>:	mov    0x198(%rbx),%rdx
+   0x000055555556a550 <+528>:	xor    %ecx,%ecx
+   0x000055555556a552 <+530>:	test   %r14d,%r14d
+   0x000055555556a555 <+533>:	mov    %cx,(%rdx,%rax,1)
+   0x000055555556a559 <+537>:	mov    0x178(%rbx),%rdx
+=> 0x000055555556a560 <+544>:	mov    (%rdx,%rbp,1),%rcx
+   0x000055555556a564 <+548>:	mov    0x190(%rbx),%rdx
+   0x000055555556a56b <+555>:	mov    %rcx,(%rdx,%r12,1)
+   0x000055555556a56f <+559>:	mov    0x180(%rbx),%rdx
+   0x000055555556a576 <+566>:	mov    (%rdx,%rbp,1),%rcx
+   0x000055555556a57a <+570>:	mov    0x1a0(%rbx),%rdx
+   0x000055555556a581 <+577>:	mov    %rcx,(%rdx,%r12,1)
+   0x000055555556a585 <+581>:	jne    0x55555556a530 <rxvt_scroll_text.part.4+496>
 
->=20
-> SECURITY-1201
-> Blue Ocean did not require CSRF tokens ("crumbs") for POST requests with=
-=20
-> the `Content-Type: application/json`, resulting in CSRF vulnerabilities.
->=20
+(gdb) p/x $rdx
+$1 = 0x5555557dd0c0
+(gdb) p/x $rbp
+$2 = 0x3fffffff8
+---
 
-CVE-2019-1003012
+I did not investigate this closely.
 
->=20
-> SECURITY-1204
-> Blue Ocean did not properly escape HTML/JavaScript content set on the=20
-> current user=E2=80=99s description field, resulting in a cross-site scrip=
-ting=20
-> vulnerability exploitable by administrators and other people accessing=20
-> Jenkins with the same user account.
->=20
+Jason A. Donenfeld of Gentoo volunteered to investigate it, and came up
+with findings that he's to post to oss-security on his own.
 
-CVE-2019-1003013
+xfce4-terminal:
 
->=20
-> SECURITY-1253
-> Config File Provider Plugin improperly handled script names in its=20
-> JavaScript-based UI, resulting in a stored cross-site scripting (XSS)=20
-> vulnerability.
->=20
+---
+(xfce4-terminal:10050): Gdk-ERROR **: The program 'xfce4-terminal' received an X Window System error.
+This probably reflects a bug in the program.
+The error was 'BadAlloc (insufficient resources for operation)'.
+  (Details: serial 54787 error_code 11 request_code 12 minor_code 0)
+  (Note to programmers: normally, X errors are reported asynchronously;
+   that is, you will receive the error a while after causing it.
+   To debug your program, run it with the --sync command line
+   option to change this behavior. You can then get a meaningful
+   backtrace from your debugger if you break on the gdk_x_error() function.)
 
-CVE-2019-1003014
+Program received signal SIGTRAP, Trace/breakpoint trap.
+0x00007ffff5b3b86b in g_logv () from /lib64/libglib-2.0.so.0
+(gdb) bt
+#0  0x00007ffff5b3b86b in g_logv () at /lib64/libglib-2.0.so.0
+#1  0x00007ffff5b3b9df in g_log () at /lib64/libglib-2.0.so.0
+#2  0x00007ffff6d04b10 in gdk_x_error () at /lib64/libgdk-x11-2.0.so.0
+#3  0x00007ffff784139d in _XError () at /lib64/libX11.so.6
+#4  0x00007ffff783e227 in handle_error () at /lib64/libX11.so.6
+#5  0x00007ffff783e2e5 in handle_response () at /lib64/libX11.so.6
+#6  0x00007ffff783eca5 in _XEventsQueued () at /lib64/libX11.so.6
+#7  0x00007ffff78306a7 in XPending () at /lib64/libX11.so.6
+#8  0x00007ffff6cf8e8e in gdk_event_check () at /lib64/libgdk-x11-2.0.so.0
+#9  0x00007ffff5b34bd1 in g_main_context_check () at /lib64/libglib-2.0.so.0
+#10 0x00007ffff5b35130 in g_main_context_iterate.isra () at /lib64/libglib-2.0.so.0
+#11 0x00007ffff5b35512 in g_main_loop_run () at /lib64/libglib-2.0.so.0
+#12 0x00007ffff70a2667 in gtk_main () at /lib64/libgtk-x11-2.0.so.0
+#13 0x000055555556327a in main ()
+---
 
->=20
-> SECURITY-905 (1)
-> Job Import Plugin allows to import jobs from other Jenkins instances. As =
-a=20
-> first step in this process, Job Import Plugin sends a request to another=
-=20
-> Jenkins instance, parsing XML REST API output to obtain a list of jobs=20
-> that could be imported.
->=20
-> Job Import Plugin did not configure the XML parser in a way that would=20
-> prevent XML External Entity (XXE) processing. This allowed attackers able=
-=20
-> to control either the server Jenkins will query, or the URL Jenkins=20
-> queries, to have it parse a maliciously crafted XML response that uses=20
-> external entities for extraction of secrets from the Jenkins master,=20
-> server-side request forgery, or denial-of-service attacks.
->=20
+and gnome-terminal looks similar, also taking down the parent
+ghome-terminal (perhaps via their shared server).  Again I did not
+investigate this, but unlike rxvt these crashes look only indirectly
+related to the escapes.
 
-CVE-2019-1003015
+Yves-Alexis Perez of Debian pointed out that whether these crashes occur
+or not may be related to the version of vte.  I'll leave it up to him to
+post a follow-up on that.
 
->=20
-> SECURITY-905 (2)
-> Job Import Plugin did not check user permissions on its API endpoint used=
-=20
-> to access remote Jenkins instances. This allowed users with Overall/Read=
-=20
-> access to Jenkins to connect to an attacker-specified URL using attacker-
-> specified credentials IDs obtained through another method, capturing=20
-> credentials stored in Jenkins.
->=20
+terminology:
 
-CVE-2019-1003016
+---
+ERR<10676>:termpty termptyesc.c:1115 _handle_esc_csi() unhandled CSI 'x': 2147483647;0x
+ERR<10676>:termpty termptyesc.c:1115 _handle_esc_csi() unhandled CSI 'x': 2147483647;0x
+ERR<10676>:termpty termptyesc.c:1115 _handle_esc_csi() unhandled CSI 'x': 2147483647;0x
+---
 
->=20
-> SECURITY-1302
-> Job Import Plugin did not require that POST requests are sent to its=20
-> /import URL, which processes requests to import jobs. This resulted in a=
-=20
-> cross-site request forgery (CSRF) vulnerability that could be exploited t=
-o=20
-> create or replace jobs on the local instance if the remote Jenkins=20
-> instance has different ones with the same name, or to install additional=
-=20
-> plugins, if jobs on the remote Jenkins instance reference them in their=20
-> configuration.
->=20
+and so on, where it effectively locks up (is stuck re-processing this
+same escape sequence in an endless loop?)  Before reaching this point,
+it plays funny music.
 
-CVE-2019-1003017
+Several others sort of passed the test - no crash, but then it's typical
+to see something injected onto the shell command line, e.g. in lilyterm
+it's "62;9;cx62;9;cx62;[...];9;cxxxxxxxxxxxxxxxxxxxxxxxxx[...]", where I
+omitted (denoted with "[...]") many other repeats of "9;cx62" and many
+more "x" characters.  I've seen similar injected strings from running
+this script on many other terminals.  There was no automatic shell
+command execution - the person would still need to press Enter in order
+to be fully trapped.
 
->=20
-> SECURITY-602
-> GitHub Authentication Plugin stores the client secret in the global=20
-> Jenkins configuration.
->=20
-> While the client secret is stored encrypted on disk, it was transmitted i=
-n=20
-> plain text as part of the configuration form and displayed without maskin=
-g.
-> This could result in exposure of the client secret through browser=20
-> extensions, cross-site scripting vulnerabilities, and similar situations.
->=20
+Note that my trivial script does not test for an equivalent to minicom's
+escparms[] array overflow - that would need to be tested separately.
+Also, many more orderings of the escape commands (e.g., setting up a
+scroll region and then moving the cursor) and many more integer values
+may be tested.
 
-CVE-2019-1003018
+Unfortunately, I did not record which terminal emulators did not crash
+for me.  However, Jason recorded both kinds of results for him, coming
+up with:
 
->=20
-> SECURITY-797
-> GitHub Authentication Plugin did not invalidate the previous session and=
-=20
-> create a new one upon successful login, allowing attackers able to contro=
-l=20
-> or obtain another user=E2=80=99s pre-login session ID to impersonate them.
->=20
+Konsole: no crash
+Xterm: no crash
+rxvt: crash
+Yakuake: no crash
+Mosh (which is a terminal emulator, after all): no crash
+Screen: 100% CPU usage --> DoS
+rxvt-unicode: no crash
+Qterminal: no crash
+putty: no crash
 
-CVE-2019-1003019
+This adds "screen" to terminal emulators with problematic processing of
+terminal escapes.  Due to minor known impact, we did not handle this
+under embargo - it should be investigated and fixed now, in public.
 
->=20
-> SECURITY-818
-> Kanboard Plugin did not perform permission checks on a method implementin=
-g=20
-> form validation. This allowed users with Overall/Read access to Jenkins t=
-o=20
-> submit a GET request to an attacker-specified URL.
->=20
-> Additionally, this form validation method did not require POST requests,=
-=20
-> resulting in a CSRF vulnerability.
->=20
+For testing minicom, which sort of passed the test (short for the known
+escparms[] buffer overflow), I used a different revision of the script:
 
-CVE-2019-1003020
+---
+#!/usr/bin/perl
 
->=20
-> SECURITY-886
-> OpenId Connect Authentication Plugin stores the client secret in the=20
-> global Jenkins configuration.
->=20
-> While the client secret is stored encrypted on disk, it was transmitted i=
-n=20
-> plain text as part of the configuration form and displayed without maskin=
-g.
-> This could result in exposure of the client secret through browser=20
-> extensions, cross-site scripting vulnerabilities, and similar situations.
->=20
+# List of numbers stolen from vncrush.pl
+@numbers = ('0', '-0', '1', '-1', '32767', '-32768', '2147483647', '-2147483647', '2147483648', '-2147483648',
+              '4294967294', '4294967295', '4294967296', '357913942', '-357913942', '536870912', '-536870912',
+              '1.79769313486231E+308', '3.39519326559384E-313', '99999999999', '-99999999999', '0x100', '0x1000',
+              '0x3fffffff', '0x7ffffffe', '0x7fffffff', '0x80000000', '0xffff', '0xfffffffe', '0xfffffff', '0xffffffff',
+              '0x10000', '0x100000', '0x99999999', '65535', '65536', '65537', '16777215', '16777216', '16777217', '-268435455');
 
-CVE-2019-1003021
+sub test
+{
+	local $what = shift;
+	print STDERR "Testing CSI $what\n";
+	do {
+		open(PIPE, "> fifo") || die;
+		print PIPE "\033[" . $what . "first\nsecond\n";
+	} until (close(PIPE));
+#	select undef, undef, undef, 0.02;
+}
 
->=20
-> SECURITY-1153
-> Monitoring Plugin provides a standalone JavaMelody servlet with an=20
-> independent CSRF protection configuration. Even if Jenkins had CSRF=20
-> protection enabled, Monitoring Plugin may not have it enabled.
->=20
+$SIG{'PIPE'} = 'IGNORE';
 
-CVE-2019-1003022
+foreach $n1 (@numbers) {
+	for ($c = 0; $c < 256; $c++) {
+		test($n1 . chr($c));
+		foreach $n2 (@numbers) {
+			test($n1 . ";" . $n2 . chr($c));
+		}
+	}
+}
+---
 
->=20
-> SECURITY-1271
-> Warnings Next Generation Plugin did not properly escape HTML content in=20
-> warnings displayed on the Jenkins UI, resulting in a cross-site scripting=
-=20
-> vulnerability exploitable by users able to control warnings parser input.
->=20
+In my testing, this script sometimes unintentionally triggers the
+escparms[] overflow in minicom.  I guess this is because of its
+non-perfect handling of the named pipe's buffer filling up (partial data
+from a previous write gets concatenated with attempted next write).
+This also means that occasionally it will miss testing some of the
+sequences as intended.  I am saying this now primarily so that none of
+you get alarmed by unpatched minicom crashing on some runs of that
+script - this does not necessarily indicate the script triggers another
+issue of this kind, even though it does not probe for the escparms[]
+overflow explicitly.
 
-CVE-2019-1003023
+One thing we mostly haven't tried yet (except on prl-vzvncserver) is
+applying this kind of fuzzing/testing to ASan-enabled builds of
+terminals; doing so may reveal dormant issues, which with some code
+review and better targeted attacks could be awoken in regular builds as
+well.  Another thing we mostly haven't tried yet (except for
+prl-vzvncserver and to a lesser extent minicom) is old-fashioned manual
+code review.  This too may result in findings that a specific script
+would miss.
 
+I'll stop here, expecting that Jason and Yves-Alexis will post
+follow-ups, and the wider oss-security community will do some more
+testing and fuzzing of terminal escapes, as well as hopefully code
+reviews, likely finding more issues.
+
+Thanks,
+
+Alexander
