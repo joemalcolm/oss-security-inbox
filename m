@@ -1,52 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/20/2
-Message-ID: <20170420084105.his3vgnzjpvu4jcv@gaara.hadrons.org>
-Date: Thu, 20 Apr 2017 10:41:05 +0200
-From: Guillem Jover <guillem@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/16
+Message-ID: <1493659500.2460.28.camel@debian.org>
+Date: Mon, 01 May 2017 19:25:00 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Directory traversal in dpkg-source via indented patches on non-GNU systems
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Mon, 2017-05-01 at 18:44 +0200, Solar Designer wrote:
+> Yves-Alexis Perez of Debian pointed out that whether these crashes occur
+> or not may be related to the version of vte.  I'll leave it up to him to
+> post a follow-up on that.
 
-Recently, while going through the POSIX standard to check for some
-other stuff related to the patch(1) format, I realized that indented
-patches are also accepted, which is something the Dpkg::Source::Patch
-perl module is not checking, so any of the sanity checks against
-directory traveral attacks can be avoided through indenting.
+Indeed, original tests by Solar Designer and Jason A. Donenfeld might have
+targeted xfce4-terminal 0.6 which is written in GTK2 and use vte2 while more
+recent versions (starting 0.8) use GTK3 and vte3.
 
-Of course on Debian and other distributions using GNU patch >= 1.7.5,
-this is not a concern anymore, as this implementation should be
-directory traversal resistant.
+I tried running the perl script with current Debian sid and:
 
-But on systems such as the BSDs, with their own patch(1) variant,
-this is effective. And while this could (and should in addition be
-considered) a problem with those patch implementations, dpkg-source
-has always assumed uncooperating underlaying implementations so this
-is something it should probably protect against one way or another.
+xfce4-terminal 0.8.4-1
+libvte-2.91-0:amd64 0.46.1-1
+libgtk-3-0:amd64 3.22.12-1
 
-This issue shows up when unpacking a Debian source package for
-examination, but then on those non-GNU systems, usage of patch(1)
-is unsafe, so I'm not sure how sever this should be considered.
+I wasn't able to make the process crash (it seems stuck at some point but the
+window is somehow resized and I don't have access to the content so it' not
+clear why).
 
-I've got a test case (attached) that fails (the attack is successful) on
-at least NetBSD (not tried others), but they share a similar patch(1)
-codebase.
+Out of curiosity I also tried lxterminal (0.3.0-1) which is vte2 based, along
+with:
 
-And I started adding support for indented patches so thah the checks
-would apply, or to just reject them (as a query on codesearch.debian.net)
-didn't trigger any instance of such patches in Debian (which would make
-them not able to be unpacked if we reject them). But I'm considering the
-shorter and more strightforward solution of just requiring GNU patch at
-configure time for now. Which is what I'm attaching here as the fix
-I'm planning to merge for dpkg 1.18.24.
+libvte9 1:0.28.2-5+b
+libgtk2.0-0:amd64 2.24.31-2
 
-Given tha above, does this deserve a CVE? At least we have gotten ones
-for similar issues in the past.
+and I wasn't able to crash the process either. This time the perl process
+terminates successfully.
 
-Thanks,
-Guillem
-
-View attachment "0001-Dpkg-Source-Patch-Indented-patch-test-case.patch" of type "text/x-diff" (2559 bytes)
-
-View attachment "0001-build-Detect-the-required-GNU-patch.patch" of type "text/x-diff" (5826 bytes)
+Regards,
+-- 
+Yves-Alexis
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
