@@ -1,162 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/6
-Message-Id: <E1diLsN-0001GF-Az@xenbits.xenproject.org>
-Date: Thu, 17 Aug 2017 14:34:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 226 (CVE-2017-12135) - multiple problems with transitive grants
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/4
+Message-ID: <816566.780300008-sendEmail@localhost>
+Date: Mon, 1 May 2017 11:27:43 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: rzip: heap-based buffer overflow in read_buf (stream.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+rzip is a compression program for large files.
 
-            Xen Security Advisory CVE-2017-12135 / XSA-226
-                               version 6
+A crafted archive causes an heap overflow write.
 
-               multiple problems with transitive grants
+The complete ASan output:
 
-UPDATES IN VERSION 6
-====================
+# rzip -k -f -d $FILE
+Read of length -1325400064 failed - Bad address
+=================================================================
+==5655==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efb1 at pc 0x00000045117e bp 0x7ffc9d9f6980 sp 0x7ffc9d9f6130
+WRITE of size 187 at 0x60200000efb1 thread T0
+    #0 0x45117d in read /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765
+    #1 0x52b8c6 in read_buf /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/stream.c:153:8
+    #2 0x526d44 in fill_buffer /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/stream.c:406:6
+    #3 0x526d44 in read_stream /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/stream.c:464
+    #4 0x518ed9 in unzip_literal /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:75:2
+    #5 0x518ed9 in runzip_chunk /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:156
+    #6 0x518ed9 in runzip_fd /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:184
+    #7 0x51bbfd in decompress_file /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/main.c:176:2
+    #8 0x51bbfd in main /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/main.c:334
+    #9 0x7f4dd0db578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #10 0x419908 in _init (/usr/bin/rzip+0x419908)
 
-Patches actually addressing the issue have become ready.
+0x60200000efb1 is located 0 bytes to the right of 1-byte region [0x60200000efb0,0x60200000efb1)
+allocated by thread T0 here:
+    #0 0x4d26c8 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x5269e0 in fill_buffer /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/stream.c:402:25
+    #2 0x5269e0 in read_stream /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/stream.c:464
+    #3 0x518ed9 in unzip_literal /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:75:2
+    #4 0x518ed9 in runzip_chunk /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:156
+    #5 0x518ed9 in runzip_fd /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:184
+    #6 0x51bbfd in decompress_file /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/main.c:176:2
+    #7 0x51bbfd in main /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/main.c:334
+    #8 0x7f4dd0db578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-ISSUE DESCRIPTION
-=================
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765 in read
+Shadow bytes around the buggy address:
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c047fff9df0: fa fa fa fa fa fa[01]fa fa fa fd fd fa fa 00 05
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==5655==ABORTING
 
-1) Code to handle copy operations on transitive grants has built in
-   retry logic, involving a function reinvoking itself with unchanged
-   parameters.  Such use assumes that the compiler would also translate
-   this to a so called "tail call" when generating machine code.
-   Empirically, this is not commonly the case, allowing for
-   theoretically unbounded nesting of such function calls.
+Affected version:
+2.1
 
-2) The reference counting and locking discipline for transitive grants
-   is broken.  Concurrent use of the transitive grant can leak
-   references on the transitively-referenced grant.
+Fixed version:
+N/A
 
-IMPACT
-======
+Commit fix:
+N/A
 
-A malicious or buggy guest may be able to crash Xen.  Privilege
-escalation and information leaks cannot be ruled out.  A malicious or
-buggy guest can leak references on grants it has been given, amounting
-to a DoS against the grantee.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-VULNERABLE SYSTEMS
-==================
+CVE:
+CVE-2017-8364
 
-All versions of Xen are vulnerable.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00277-rzip-heap-overflow-read_buf.rz
 
-MITIGATION
-==========
+Timeline:
+2017-04-11: bug discovered and reported to upstream
+2017-04-29: blog post about the issue
+2017-04-30: CVE assigned
 
-There is no known mitigation.
+Note:
+This bug was found with American Fuzzy Lop.
 
-CREDITS
-=======
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/29/rzip-heap-based-buffer-overflow-in-read_buf-stream-c/
 
-This issue was discovered by Jan Beulich of SUSE.
-
-The security team would also like to thank Amazon for helping to identify that
-the problems with transitive grants were deeper than originally believed.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached pair of patches from the list below
-addresses this issue:
-
-xsa226-unstable/*.patch     xen-unstable
-xsa226-4.9/*.patch          Xen 4.9.x, Xen 4.8.x, Xen 4.7.x
-xsa226-4.6/*.patch          Xen 4.6.x
-xsa226-4.5/*.patch          Xen 4.5.x
-
-Note that these patches have already been applied to the respective staging
-trees.
-
-Alternatively, applying the appropriate attached patch from the list
-below works around this issue by disabling transitive grants by default:
-
-xsa226.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x
-xsa226-4.7.patch       Xen 4.7.x
-xsa226-4.6.patch       Xen 4.6.x
-xsa226-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa226* xsa226*/*
-b09e07aaf422ae04a4ece5e2c5b5e54036cfae5b5c632bfc6953a0cacd6f60ff  xsa226.patch
-22913e87349e27bd9167d5dad2d6a449b3959516e34e78ca0ff822320c4b55da  xsa226-unstable/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch
-4473fd96ce4fdea5e19e0b502d65f20bd279d82473ac34ff404ce2b2cbc10be1  xsa226-unstable/0002-gnttab-fix-transitive-grant-handling.patch
-ca8b92b2ff58b87e8bec137a34784cbf11e2820659046df6e1d71e23bf7e7dee  xsa226-4.5.patch
-61096dca309f48d9e63e255a7bd76a3f5fbdd7ba1c42a3d0661f6f024b553fc7  xsa226-4.5/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch
-de6359e50fd2bb710469da74a596013ce275edb43d3d1c36d41452f88eee9b7d  xsa226-4.5/0002-gnttab-fix-transitive-grant-handling.patch
-28c7df7edabb91fb2f1fa3fc7d6906bfae75a6e701f1cd335baafaae3e087696  xsa226-4.6.patch
-9f2fb6981206d39274331316cd9cd9ee73d5f610de4891f6d13181fee9bc0529  xsa226-4.6/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch
-e34dbba7b94942faeb3e6b7630ba06f01998e2b56be1035d76e67aa47e77457d  xsa226-4.6/0002-gnttab-fix-transitive-grant-handling.patch
-fffcc0a4428723e6aea391ff4f1d27326b5a3763d2308cbde64e6a786502c702  xsa226-4.7.patch
-624a5ba690de5de88b6fafd8429d025c013632755621f9f4e4c206e0f86419c3  xsa226-4.9/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch
-01d773c5bb4cafe54daf0d14e8a3af899a7c5863513d18927c4a570a74afdb15  xsa226-4.9/0002-gnttab-fix-transitive-grant-handling.patch
-$
-
-(The .meta file is a prototype machine-readable file for describing
-which patches are to be applied how.)
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZlaksAAoJEIP+FMlX6CvZzOQH/A3LxvExBgExoQJWM8VPVliF
-jV19jRvLSK8Z2Xql4UZ8tcihmZyaBKLtzEAeMosk2FOtDu+iIIkmtL+KHaDwNkBk
-ZEyTkWuGWPqe4G/2CNpsx31v25YYGxgQlqyUcpJ8ZK97QtHkTo0+6PtQZ9wR8vgr
-1OXAotDnnFSSAanpcEMd2DKtpK5k/IphbPYf9S5dFooUuQ7JQmLn6i/H4n9nsWV1
-kHg58t3GM7I0hU6ahu7apdymGf3awYKD5Q/9fBGfna8ZU+Qjs//tZM0zfiQ4/5d5
-dCvwsl8SeuM7rbkxrXgMCuiJMfOcsDr2YswJcjkryLQtmJjY+Eo6mCjYSKdDVO4=
-=06gT
------END PGP SIGNATURE-----
-
-Download attachment "xsa226.patch" of type "application/octet-stream" (4517 bytes)
-
-Download attachment "xsa226-unstable/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch" of type "application/octet-stream" (4641 bytes)
-
-Download attachment "xsa226-unstable/0002-gnttab-fix-transitive-grant-handling.patch" of type "application/octet-stream" (11182 bytes)
-
-Download attachment "xsa226-4.5.patch" of type "application/octet-stream" (4545 bytes)
-
-Download attachment "xsa226-4.5/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch" of type "application/octet-stream" (4013 bytes)
-
-Download attachment "xsa226-4.5/0002-gnttab-fix-transitive-grant-handling.patch" of type "application/octet-stream" (11334 bytes)
-
-Download attachment "xsa226-4.6.patch" of type "application/octet-stream" (4510 bytes)
-
-Download attachment "xsa226-4.6/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch" of type "application/octet-stream" (4642 bytes)
-
-Download attachment "xsa226-4.6/0002-gnttab-fix-transitive-grant-handling.patch" of type "application/octet-stream" (11179 bytes)
-
-Download attachment "xsa226-4.7.patch" of type "application/octet-stream" (4521 bytes)
-
-Download attachment "xsa226-4.9/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch" of type "application/octet-stream" (4641 bytes)
-
-Download attachment "xsa226-4.9/0002-gnttab-fix-transitive-grant-handling.patch" of type "application/octet-stream" (11169 bytes)
