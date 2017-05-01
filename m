@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2245" "Tuesday" "14" "July" "2015" "21:54:26" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150715015426.2D17452E10F@smtpvbsrv1.mitre.org>" "63" "[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" nil nil nil "7" "2015071501:54:26" "[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" (number mark "        cve-assign@m Jul 14   63/2245  " thread-indent "\"[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow\"\n") "<CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>" ("<CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4384" "Monday" "1" "May" "2017" "11:26:37" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<69904.7908160253-sendEmail@localhost>" "100" "[oss-security] libsndfile: heap-based buffer overflow in flac_buffer_copy (flac.c)" nil nil nil "5" "2017050111:26:37" "[oss-security] libsndfile: heap-based buffer overflow in flac_buffer_copy (flac.c)" (number mark "U       ago@gentoo.o May  1  100/4384  " thread-indent "\"[oss-security] libsndfile: heap-based buffer overflow in flac_buffer_copy (flac.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11471 invoked by uid 550); 15 Jul 2015 01:54:39 -0000
+Received: (qmail 30056 invoked by uid 550); 1 May 2017 11:26:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11441 invoked from network); 15 Jul 2015 01:54:38 -0000
-In-Reply-To: <CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>
-Message-Id: <20150715015426.2D17452E10F@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 14 Jul 2015 21:54:26 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow
-To: fernando@null-life.com
+Received: (qmail 29989 invoked from network); 1 May 2017 11:26:56 -0000
+Message-ID: <69904.7908160253-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 1 May 2017 11:26:37 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-460229.938224987"
+Subject: [oss-security] libsndfile: heap-based buffer overflow in flac_buffer_copy (flac.c)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+------MIME delimiter for sendEmail-460229.938224987
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-> The original discovery was about memory corruption,
-> and then the vendor mentioned an attack variation in which a small
-> file can lead to a 4 Gb allocation, which potentially would be
-> successful on some platform and cause a DoS.
+Description:
+libsndfile is a C library for reading and writing files containing sampled sound.
 
-> In other words, the first CVE would be for
-> https://github.com/htacg/tidy-html5/issues/217 with:
-> 
->   AddressSanitizer: heap-buffer-overflow
->   WRITE of size 1
-> 
->   tmbstr cp = s = (tmbstr) TidyAlloc( allocator, 1+len );
->   Notice the plus 1, so it arrives at TidyAlloc with a ZERO!!!
-> 
->   Now it seems malloc does not mind a zero value, malloc(0), and
->   dutifully returns a pointer
-> 
->   Then tmbstrndup does the corruption, with -
-> 
->   while ( len-- > 0 && (*cp++ = *str++) ) /**/;
-> 
->   Of course ( len-- > 0 ) will be true until the 4294967295 expires ;=))
-> 
->   But thankfully the corruption stops when a 0 is reached in the lexer
->   with (*cp++ = *str++). As indicated in this case it is storing the
->   attribute "href", but that is 4+ bytes of corruption.
+The complete ASan output of the issue:
 
-Use CVE-2015-5522.
+# sndfile-convert $FILE out.wav
+==26966==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x621000001110 at pc 0x7fd12fe865e6 bp 0x7ffea55e99f0 sp 0x7ffea55e99e8
+READ of size 4 at 0x621000001110 thread T0
+    #0 0x7fd12fe865e5 in flac_buffer_copy /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:41
+    #1 0x7fd12fe86ef4 in flac_read_loop /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:928:3
+    #2 0x7fd12fe721fb in flac_read_flac2i /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:979:13
+    #3 0x7fd12fdca3a2 in sf_readf_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:1835:10
+    #4 0x514b5d in sfe_copy_data_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:87:16
+    #5 0x5138d1 in main /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/sndfile-convert.c:340:3
+    #6 0x7fd12ed6578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x419e18 in _init (/usr/bin/sndfile-convert+0x419e18)
+
+0x621000001110 is located 0 bytes to the right of 4112-byte region [0x621000000100,0x621000001110)
+allocated by thread T0 here:
+    #0 0x4d94e8 in malloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7fd12eb2d492 in safe_malloc_muladd2_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/include/share/alloc.h:153
+    #2 0x7fd12eb2d492 in allocate_output_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:1294
+    #3 0x7fd12eb2d492 in read_frame_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:2035
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:41 in flac_buffer_copy
+Shadow bytes around the buggy address:
+  0x0c427fff81d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c427fff81e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c427fff81f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c427fff8200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c427fff8210: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c427fff8220: 00 00[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff8230: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff8240: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff8250: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff8260: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff8270: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==26966==ABORTING
+
+Affected version:
+1.0.28
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/erikd/libsndfile/commit/fd0484aba8e51d16af1e3a880f9b8b857b385eb3
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8363
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00266-libsndfile-heapoverflow-flac_buffer_copy
+
+Timeline:
+2017-04-12: bug discovered and reported to upstream
+2017-04-12: upstream released a patch
+2017-04-29: blog post about the issue
+2017-04-30: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/29/libsndfile-heap-based-buffer-overflow-in-flac_buffer_copy-flac-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-> The second CVE would be for
-> https://github.com/htacg/tidy-html5/issues/217#issuecomment-108565501
-> with:
-> 
->   In some cases this bug could exibit a different problem like parsing
->   the snippet <a <?xm \0xd?> href="">.
-> 
->   Now the lexer buffer will contain 2, or more IsWhite() chars and len
->   would be reduced to -2, or less, which means the malloc buffer
->   allocation would be a giant 4,294,967,295 byte allocation, a value
->   lots of OSes will reject
+------MIME delimiter for sendEmail-460229.938224987--
 
-Use CVE-2015-5523.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVpby0AAoJEKllVAevmvmsYlgIALsomSkXtN2xeMmqFxVFu3+y
-kdUmzXii7CB5uQnwG/AOxnsj1iv0TahON89VTt07ODF+5wDIY0xPp5gaP/YHG65l
-AXU+HBIDpDe5YSQNSUrn+DyPVbNzweNWXXrSUtTYF/bIgzSPPbHM6K6nHblNAFfQ
-N+rq/O5QeB/xG3DAv+Rj3FzgRZakfRboUDDLQrhBeEy6goys99cgxD09aWqmQSNB
-5kB2tQNeCnJ959Ds61joQdgA5iTo9ASxjRMSvanNLD4xW/ofuYGFXkYgFw0cJxTA
-zx1FJyxiq7vHW/DpHZ987W3w4fLV2OjlwiJppkVkyoav+F8T6PRh43OFEtdudNk=
-=hW30
------END PGP SIGNATURE-----
