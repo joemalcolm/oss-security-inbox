@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["722" "Monday" "17" "May" "2021" "22:50:20" "+0300" "Dan Yefihmov" "dan@lightwave.net.ru" nil "22" "=?US-ASCII?Q?Re:_[oss-security]_rxvt_terminal_(+?==?US-ASCII?Q?bash)_remoteish_code_execution_0day?=" nil nil nil "5" nil nil (number mark "U       dan@lightwav May 17   22/722   " thread-indent "\"=?US-ASCII?Q?Re:?= =?US-ASCII?Q?[oss-security]?= =?US-ASCII?Q?rxvt?= =?US-ASCII?Q?terminal?= =?US-ASCII?Q?(+?==?US-ASCII?Q?bash)?= =?US-ASCII?Q?remoteish?= =?US-ASCII?Q?code?= =?US-ASCII?Q?execution?= =?US-ASCII?Q?0day?=\"\n") nil nil nil nil nil nil nil nil nil "=?US-ASCII?Q?Re:?= =?US-ASCII?Q?[oss-security]?= =?US-ASCII?Q?rxvt?= =?US-ASCII?Q?terminal?= =?US-ASCII?Q?(+?==?US-ASCII?Q?bash)?= =?US-ASCII?Q?remoteish?= =?US-ASCII?Q?code?= =?US-ASCII?Q?execution?= =?US-ASCII?Q?0day?=" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4443" "Monday" "1" "May" "2017" "19:12:05" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9qMDNZ8-X_S4vNeHkUWxAacN2onuRZ4=SCo4CPqqVPmhQ@mail.gmail.com>" "105" "[oss-security] Integer Overflow in rxvt" nil nil nil "5" "2017050117:12:05" "[oss-security] Integer Overflow in rxvt" (number mark "U       Jason@zx2c4. May  1  105/4443  " thread-indent "\"[oss-security] Integer Overflow in rxvt\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19529 invoked by uid 550); 17 May 2021 19:57:06 -0000
+Received: (qmail 5648 invoked by uid 550); 1 May 2017 17:21:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +12,130 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15720 invoked from network); 17 May 2021 19:50:32 -0000
-Date: Mon, 17 May 2021 22:50:20 +0300
-From: Dan Yefihmov <dan@lightwave.net.ru>
-To: oss-security@lists.openwall.com
-In-Reply-To: <20210517192810.6zus3mumaq6l63zi@jwilk.net>
-References: <20210517134904.GA24667@huumeet.info> <20210517143348.GB24667@huumeet.info> <20210517192810.6zus3mumaq6l63zi@jwilk.net>
-Message-ID: <BA6125DF-2119-46AF-A87F-59876DF57168@lightwave.net.ru>
+Received: (qmail 28322 invoked from network); 1 May 2017 17:12:19 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:from:date:message-id:subject:to:content-type; s=mail; bh=AG+7T7
+	/RO8dEqPiUdSPOk7zDMhk=; b=iHZ6QwSssGH9AkWTRrXjyn1FU0w4CuLsn+j1nO
+	JPM5zYGAHVB72JyGkZAIAnUg+zoGBX80LBbIIIpwlUE63km+5flMrZjZEJhPK+UB
+	AtaQzlVX8ISUrXnr0Z0I29E3/goyH2Tnb5LRV5VIhyfOJoD65wEMYzY92fc/KrDp
+	3696hjEGKQ1ZokBfpqHMwWhC5TbSAtCKPfagRVx6t7Z9wT4T6pwG2Olu9BwG24y6
+	klzyy4ApJcR4rI1rvd90GMClZU89KabbzoazPmUgC2JsFK8rpFoam+b7vhifOBaE
+	X6HU+yjdW+jGNRZey6l2MFZO9szyhcsjS9dEeqmSECdQOQiw==
+X-Gm-Message-State: AN3rC/7V+s/ROOtY7PCSPXOVsHjqw7jhePOANlpxWG/RMq0j9an04RnE
+	Nc0Jx8eKaAXWxb+YJZWeJZeFeS8UzQ==
+X-Received: by 10.202.204.86 with SMTP id c83mr9687055oig.4.1493658726411;
+ Mon, 01 May 2017 10:12:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Autocrypt: addr=dan@lightwave.net.ru; prefer-encrypt=mutual; keydata=
- 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
- zIn8AQWfM0BAQ2IY9LBfM2bLYUsJ/A==
-Subject: =?US-ASCII?Q?Re=3A_=5Boss-security=5D_rxvt_terminal_=28+?= =?US-ASCII?Q?bash=29_remoteish_code_execution_0day?=
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 1 May 2017 19:12:05 +0200
+X-Gmail-Original-Message-ID: <CAHmME9qMDNZ8-X_S4vNeHkUWxAacN2onuRZ4=SCo4CPqqVPmhQ@mail.gmail.com>
+Message-ID: <CAHmME9qMDNZ8-X_S4vNeHkUWxAacN2onuRZ4=SCo4CPqqVPmhQ@mail.gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Content-Type: multipart/mixed; boundary=001a1134fecccdefd2054e7985be
+Subject: [oss-security] Integer Overflow in rxvt
 
-On May 17, 2021 10:28:10 PM GMT+03:00, Jakub Wilk <jwilk@jwilk.net> wrote:
->* def <def@huumeet.info>, 2021-05-17, 17:33:
->>The bug is not technically a 0day for rxvt-unicode and has been known=20
->>at least since 2017-05-01 when it was discussed publicly in=20
->>oss-security:
->>
->>    https://www.openwall.com/lists/oss-security/2017/05/01/20
->>
->>The issue was quietly fixed in rxvt-unicode upstream in 2017.
->
->Or was it 2019?
->
->http://cvs.schmorp.de/rxvt-unicode/src/command.C?view=3Dlog#rev1.585
->
-No, that was in fact 2017:
-http://cvs.schmorp.de/rxvt-unicode/src/command.C?view=3Dlog#rev1.583
+--001a1134fecccdefd2054e7985be
+Content-Type: text/plain; charset=UTF-8
 
-The commit you mentioned just eradicates the faulty code to protect unwise =
-and careless users.
+Hello,
 
+A CVE for this in the process of being assigned, and I'll follow up on this
+thread once one has been given.
 
-Sincerely Yours, Dan.
+There exists an integer overflow in rxvt. As the upstream project is dead,
+there is no non-vulnerable version. Thus, I'd recommend distributions use
+the attached patch. Do note that rxvt is different from rxvt-unicode (urxvt),
+which is still maintained by an upstream and is not vulnerable to this bug.
+
+Using the following escape code will segfault rxvt:
+
+        $ printf '\033[-2147483648L'
+
+The crash occurs here in screen.c:
+
+    for (; i--; j++) {
+        r->screen.tlen[j] = 0;
+        r->screen.text[j] = r->buf_text[i];
+        r->screen.rend[j] = r->buf_rend[i];
+
+We appear to be segfaulting on the read to r->buf_text[i], where i is
+2147483647 -- 0x7fffffff. Slightly earlier in that function we have this
+block:
+
+    if (count < 0)
+        count = -count;
+
+Before this block is run, count is -2147483648 -- 0x80000000. After the block
+is run, count should be 2147483648, right? Not so fast. It turns out that
+there's no complement of -2147483648 within 32-bits, because the maximum
+positive integer is 2147483647, one less. Probably if you read the C spec it
+will tell you that this operation is undefined, but what's for certain is that
+on my architecture, the integer remains negative -- -2147483648. We then
+bypass the next few blocks, since count is negative, until we get to this
+line:
+
+        j = row2 - count + 1, i = count;
+
+Thus, by the time we get to the crashing block, i has become -2147483648 - 1,
+which is our crashing value of 2147483647, and so we segfault.
+
+It comes from a call to rxvt_scroll_text from inside rxvt_scr_insdel_lines. Here
+we have the following multiplication:
+
+    rxvt_scroll_text(r, r->screen.cur.row, r->screen.bscroll, insdel * count,
+
+In this case insdel is -1, for the INSERT operation, and count is our
+-2147483648. Predictably, we still don't become positive. Backtracing a step
+further reveals that this comes from a call inside of rxvt_process_csi_seq,
+where the actual escape code is converted from a string.
+
+The attached patch simply bounds the size of input values, so that they don't
+overflow on multiplication or a few small additions and then a multiplication.
+
+I've also attached a similar patch for rxvt-unicode. While it is not
+vulnerable to this particular attack, the attached patch may be
+"best practice". I've also sent this upstream and am awaiting their
+response.
+
+While this particular bug is in rxvt, I suspect that other terminal emulators,
+such as rxvt-unicode, xterm, libvte, konsole, tmux, screen, mosh, etc, may
+indeed suffer from similar types of bugs. Thus, research into this domain could
+prove useful.
+
+Jason
+
+--001a1134fecccdefd2054e7985be
+Content-Type: text/x-patch; charset=US-ASCII; name="rxvt-integer-overflow-fix.patch"
+Content-Disposition: attachment; filename="rxvt-integer-overflow-fix.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_j26b9twm0
+
+LS0tIHJ4dnQtMi43LjEwL3NyYy9jb21tYW5kLmMJMjAwMy0wMy0yNiAwNzow
+MToyMy4wMDAwMDAwMDAgKzAxMDAKKysrIHJ4dnQtMi43LjEwLXBhdGNoZWQv
+c3JjL2NvbW1hbmQuYwkyMDE3LTA0LTI3IDEyOjA2OjA1LjY4MjA3MjI3NCAr
+MDIwMApAQCAtMjA5Niw3ICsyMDk2LDcgQEAKICAgICBpID0gY2ggLSBDU0lf
+SUNIOwogICAgIG5kZWYgPSBnZXRfYnl0ZV9hcnJheV9iaXQoY3NpX2RlZmF1
+bHRzLCBpKTsKICAgICBmb3IgKHAgPSAwOyBwIDwgbmFyZ3M7IHArKykKLQlp
+ZiAoYXJnW3BdID09IC0xKQorCWlmIChhcmdbcF0gPCAwIHx8IGFyZ1twXSA+
+IDMwMDAwKQogCSAgICBhcmdbcF0gPSBuZGVmOwogCiAjaWZkZWYgREVCVUdf
+Q01ECg==
+
+--001a1134fecccdefd2054e7985be
+Content-Type: text/x-patch; charset=US-ASCII; name="rxvt-unicode-integer-bounding.patch"
+Content-Disposition: attachment; 
+	filename="rxvt-unicode-integer-bounding.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_j26b9tx41
+
+ZGlmZiAtcnUgcnh2dC11bmljb2RlLTkuMjIvc3JjL2NvbW1hbmQuQyByeHZ0
+LXVuaWNvZGUtOS4yMi1wYXRjaGVkL3NyYy9jb21tYW5kLkMKLS0tIHJ4dnQt
+dW5pY29kZS05LjIyL3NyYy9jb21tYW5kLkMJMjAxNi0wMS0xOCAyMDozNTow
+OC4wMDAwMDAwMDAgKzAxMDAKKysrIHJ4dnQtdW5pY29kZS05LjIyLXBhdGNo
+ZWQvc3JjL2NvbW1hbmQuQwkyMDE3LTA0LTI4IDA5OjUyOjM1LjQ0MDI0NTYw
+NyArMDIwMApAQCAtMjg2OCw3ICsyODY4LDcgQEAKICAgaSA9IGNoIC0gQ1NJ
+X0lDSDsKICAgbmRlZiA9IGdldF9ieXRlX2FycmF5X2JpdCAoY3NpX2RlZmF1
+bHRzLCBpKTsKICAgZm9yIChwID0gMDsgcCA8IG5hcmdzOyBwKyspCi0gICAg
+aWYgKGFyZ1twXSA9PSAtMSkKKyAgICBpZiAoYXJnW3BdIDwgMCB8fCBhcmdb
+cF0gPiAzMDAwMCkKICAgICAgIGFyZ1twXSA9IG5kZWY7CiAKICAgLyoK
+
+--001a1134fecccdefd2054e7985be--
