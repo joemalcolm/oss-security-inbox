@@ -1,4 +1,9 @@
-Received: (qmail 1219 invoked by uid 550); 24 May 2023 13:42:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["888" "Monday" "1" "May" "2017" "11:52:20" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<55840.351476462-sendEmail@localhost>" "42" "[oss-security] telegram-desktop: insecure permission of $HOME/.TelegramDesktop directory" nil nil nil "5" "2017050111:52:20" "[oss-security] telegram-desktop: insecure permission of $HOME/.TelegramDesktop directory" (number mark "U       ago@gentoo.o May  1   42/888   " thread-indent "\"[oss-security] telegram-desktop: insecure permission of $HOME/.TelegramDesktop directory\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9476 invoked by uid 550); 1 May 2017 11:52:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,50 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28269 invoked from network); 24 May 2023 12:46:53 -0000
-Date: Wed, 24 May 2023 14:46:45 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Matt Caswell <matt@openssl.org>
-Message-ID: <20230524124645.GA6775@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Fwd: Forthcoming OpenSSL Releases
+Received: (qmail 9428 invoked from network); 1 May 2017 11:52:39 -0000
+Message-ID: <55840.351476462-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 1 May 2017 11:52:20 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-588281.171004386"
+Subject: [oss-security] telegram-desktop: insecure permission of $HOME/.TelegramDesktop directory
 
------ Forwarded message from Matt Caswell <matt@openssl.org> -----
+------MIME delimiter for sendEmail-588281.171004386
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Date: Wed, 24 May 2023 10:49:13 +0100
-Subject: Re: Forthcoming OpenSSL Releases
-To: openssl-users@openssl.org,
- "openssl-project@openssl.org" <openssl-project@openssl.org>,
- openssl-announce@openssl.org
-From: Matt Caswell <matt@openssl.org>
+Description:
+Telegram-desktop is the official desktop client for Telegram.
 
-To clarify, OpenSSL version 3.1.1 will also be released on Tuesday 30th 
-May 2023, and is also a security-fix release with the highest severity 
-issue being Moderate.
+During the navigation of my filesystem I found the .TelegramDesktop with 755 permission:
 
-Regards
+drwxr-xr-x  4 ago  ago      4096 nov 23 14:30 .TelegramDesktop
 
-Matt
+Affected version:
+At least from 0.10.19 to 1.0.29
 
-On 24/05/2023 05:06, Tomas Mraz wrote:
->The OpenSSL project team would like to announce the forthcoming release
->of OpenSSL versions 3.0.9, 1.1.1u and 1.0.2zh. Note that OpenSSL 1.0.2
->is End Of Life and so 1.0.2zh will be available to premium support
->customers only.
->
->These releases will be made available on Tuesday 30th May 2023
->between 1300-1700 UTC.
->
->These are security-fix releases. The highest severity issue fixed in
->each of these three releases is Moderate:
->
->https://www.openssl.org/policies/secpolicy.html
->
->Yours
->The OpenSSL Project Team
+Fixed version:
+N/A
 
------ End forwarded message -----
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2016-10351
+
+Timeline:
+2016-11-23: bug discovered and reported to upstream
+2017-05-01: blog post about the issue
+2017-05-01: CVE assigned
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/01/telegram-desktop-insecure-permission-of-home-telegramdesktop-directory/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-588281.171004386--
+
