@@ -1,19 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/3
-Message-ID: <20170203082635.7htlwilcixrd4l3p@diablo>
-Date: Fri, 3 Feb 2017 18:26:35 +1000
-From: Justin Steven <justin@...tinsteven.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/17
+Message-ID: <1493661615.2460.29.camel@corsac.net>
+Date: Mon, 01 May 2017 20:00:15 +0200
+From: Yves-Alexis Perez <corsac@...sac.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: curiosity for CVE-2016-10000
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-As I understand, it is indeed DWF which I believe is a bona fide CNA.
+On Mon, 2017-05-01 at 19:25 +0200, Yves-Alexis Perez wrote:
+> I wasn't able to make the process crash (it seems stuck at some point but the
+> window is somehow resized and I don't have access to the content so it' not
+> clear why).
 
-See
-<https://github.com/distributedweaknessfiling/DWF-Database/blob/master/DWF-Database-2016.csv>
+Slight update, actually the perl process terminates successfully too on xfce4-
+terminal here.
 
-Do these allcoations (as well as the 2015 and 2017 allocations) need to be
-pushed upstream and synced with Mitre's dataset?
-
+Regards,
 -- 
-Justin
+Yves-Alexis
