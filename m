@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1471" "Friday" "14" "August" "2020" "17:14:08" "-0400" "David Smiley" "dsmiley@apache.org" nil "36" nil nil nil nil "8" nil nil (number mark "U       dsmiley@apac Aug 14   36/1471  " thread-indent "\"[oss-security] [CVE-2020-13941] Apache Solr information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-13941] Apache Solr information disclosure vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4990" "Monday" "1" "May" "2017" "11:27:43" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<816566.780300008-sendEmail@localhost>" "114" "[oss-security] rzip: heap-based buffer overflow in read_buf (stream.c)" nil nil nil "5" "2017050111:27:43" "[oss-security] rzip: heap-based buffer overflow in read_buf (stream.c)" (number mark "U       ago@gentoo.o May  1  114/4990  " thread-indent "\"[oss-security] rzip: heap-based buffer overflow in read_buf (stream.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14025 invoked by uid 550); 15 Aug 2020 07:57:21 -0000
+Received: (qmail 7477 invoked by uid 550); 1 May 2017 11:28:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +12,126 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1916 invoked from network); 14 Aug 2020 21:14:32 -0000
-X-Gm-Message-State: AOAM533ggoydAJcQKj8gqv6rlnGM+TU+CFuHFXICbsaMRc5xgYg4b+ZB
-	BkMH0eB1Z27sYg8zxLUnxksLmgRLi/5De0PGOA==
-X-Google-Smtp-Source: ABdhPJz2Kose2HKOeuEkUnYPE6BsOqTQUqwpowrOOBCm4nj8zprpEoFQmCZPJlz4MdoYDqNGqI2nrAvfAnWb3vFSExc=
-X-Received: by 2002:a25:3bce:: with SMTP id i197mr6390943yba.426.1597439659580;
- Fri, 14 Aug 2020 14:14:19 -0700 (PDT)
+Received: (qmail 7349 invoked from network); 1 May 2017 11:28:01 -0000
+Message-ID: <816566.780300008-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 1 May 2017 11:27:43 +0000
 MIME-Version: 1.0
-From: David Smiley <dsmiley@apache.org>
-Date: Fri, 14 Aug 2020 17:14:08 -0400
-X-Gmail-Original-Message-ID: <CABEwPvGwaijionFNmS7vMCTFkQ20Mp+KTBCp3wr+A02EFjyUrQ@mail.gmail.com>
-Message-ID: <CABEwPvGwaijionFNmS7vMCTFkQ20Mp+KTBCp3wr+A02EFjyUrQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000075a1a305acdce7b1"
-Subject: [oss-security] [CVE-2020-13941] Apache Solr information disclosure vulnerability
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-753188.146119104"
+Subject: [oss-security] rzip: heap-based buffer overflow in read_buf (stream.c)
 
---00000000000075a1a305acdce7b1
-Content-Type: text/plain; charset="UTF-8"
+------MIME delimiter for sendEmail-753188.146119104
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Reported in SOLR-14515 (private) and fixed in SOLR-14561 (public), released
-in Solr version 8.6.0.
-The Replication handler (
-https://lucene.apache.org/solr/guide/8_6/index-replication.html#http-api-commands-for-the-replicationhandler)
-allows commands backup, restore and deleteBackup. Each of these take a
-location parameter, which was not validated, i.e you could read/write to
-any location the solr user can access.
+Description:
+rzip is a compression program for large files.
 
-On a windows system SMB paths such as \\10.0.0.99\share\folder may also be
-used, leading to:
-* The possibility of restoring another SolrCore from a server on the
-network (or mounted remote file system) may lead to:
-** Exposing search index data that the attacker should otherwise not have
-access to
-** Replacing the index data entirely by loading it from a remote file
-system that the attacker controls
+A crafted archive causes an heap overflow write.
 
-* Launching SMB attacks which may result in:
-** The exfiltration of sensitive data such as OS user hashes (NTLM/LM
-hashes),
-** In case of misconfigured systems, SMB Relay Attacks which can lead to
-user impersonation on SMB Shares or, in a worse-case scenario, Remote Code
-Execution
+The complete ASan output:
 
-The solution implemented to address these issues was to:
-* Restrict the location parameter to trusted paths
-* Prevent remote connection when using Windows UNC Paths
+# rzip -k -f -d $FILE
+Read of length -1325400064 failed - Bad address
+=================================================================
+==5655==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efb1 at pc 0x00000045117e bp 0x7ffc9d9f6980 sp 0x7ffc9d9f6130
+WRITE of size 187 at 0x60200000efb1 thread T0
+    #0 0x45117d in read /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765
+    #1 0x52b8c6 in read_buf /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/stream.c:153:8
+    #2 0x526d44 in fill_buffer /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/stream.c:406:6
+    #3 0x526d44 in read_stream /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/stream.c:464
+    #4 0x518ed9 in unzip_literal /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:75:2
+    #5 0x518ed9 in runzip_chunk /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:156
+    #6 0x518ed9 in runzip_fd /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:184
+    #7 0x51bbfd in decompress_file /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/main.c:176:2
+    #8 0x51bbfd in main /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/main.c:334
+    #9 0x7f4dd0db578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #10 0x419908 in _init (/usr/bin/rzip+0x419908)
 
-~ David Smiley
-Apache Lucene/Solr Search Developer
-http://www.linkedin.com/in/davidwsmiley
+0x60200000efb1 is located 0 bytes to the right of 1-byte region [0x60200000efb0,0x60200000efb1)
+allocated by thread T0 here:
+    #0 0x4d26c8 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x5269e0 in fill_buffer /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/stream.c:402:25
+    #2 0x5269e0 in read_stream /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/stream.c:464
+    #3 0x518ed9 in unzip_literal /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:75:2
+    #4 0x518ed9 in runzip_chunk /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:156
+    #5 0x518ed9 in runzip_fd /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/runzip.c:184
+    #6 0x51bbfd in decompress_file /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/main.c:176:2
+    #7 0x51bbfd in main /tmp/portage/app-arch/rzip-2.1-r2/work/rzip-2.1/main.c:334
+    #8 0x7f4dd0db578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
---00000000000075a1a305acdce7b1--
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765 in read
+Shadow bytes around the buggy address:
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c047fff9df0: fa fa fa fa fa fa[01]fa fa fa fd fd fa fa 00 05
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==5655==ABORTING
+
+Affected version:
+2.1
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8364
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00277-rzip-heap-overflow-read_buf.rz
+
+Timeline:
+2017-04-11: bug discovered and reported to upstream
+2017-04-29: blog post about the issue
+2017-04-30: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/29/rzip-heap-based-buffer-overflow-in-read_buf-stream-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-753188.146119104--
+
