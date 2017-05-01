@@ -1,26 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/4
-Message-ID: <20170926065556.irjryveao6xcjmds@perpetual.pseudorandom.co.uk>
-Date: Tue, 26 Sep 2017 07:55:56 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/9
+Message-ID: <528854.035164358-sendEmail@localhost>
+Date: Mon, 1 May 2017 11:41:10 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libmad: heap-based buffer overflow in mad_bit_skip (bit.c)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 25 Sep 2017 at 21:50:59 +0000, Priedhorsky, Reid wrote:
-> 2. Is there another source of comprehensive coverage of vulnerabilities
-> in the Linux kernel, including but not necessarily limited to all CVEs
-> issued for it?
+Description:
+libmad stays for “M”peg “A”udio “D”ecoder library.
 
-https://security-tracker.debian.org/tracker/source-package/linux is
-probably not comprehensive either, but should include all the
-non-embargoed CVEs and other vulnerabilities that the Debian security team
-is aware of, including vulnerabilities that were assessed as too minor
-to justify a Debian security advisory.
+There is an heap overflow discovered through madplay.
 
-(The same works for any other Debian source package, e.g.
-https://security-tracker.debian.org/tracker/source-package/ioquake3 is
-a less extreme case.)
+The complete ASan output:
 
-Regards,
-    smcv
+# madplay -v -i -o raw:out $FILE
+==12603==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61200000c09f at pc 0x7f72d6aa05c0 bp 0x7fff03e32040 sp 0x7fff03e32038
+READ of size 1 at 0x61200000c09f thread T0
+    #0 0x7f72d6aa05bf in mad_bit_skip /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/bit.c:130:21
+    #1 0x7f72d6b032ad in III_huffdecode /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:953:3
+    #2 0x7f72d6b032ad in III_decode /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:2403
+    #3 0x7f72d6af1a8e in mad_layer_III /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:2648:13
+    #4 0x7f72d6ab584d in mad_frame_decode /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/frame.c:453:7
+    #5 0x7f72d6ada4e4 in run_sync /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/decoder.c:404:11
+    #6 0x7f72d6ad8c59 in mad_decoder_run /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/decoder.c:557:12
+    #7 0x5277a1 in decode /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:1862:12
+    #8 0x5277a1 in play_one /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:1951
+    #9 0x5277a1 in play_all /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:2041
+    #10 0x5215a2 in player_run /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:2768:14
+    #11 0x50c46c in main /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/madplay.c:816:7
+    #12 0x7f72d599d78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #13 0x41aa78 in _init (/usr/bin/madplay+0x41aa78)
+
+Affected version:
+0.15.1b
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8374
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00211-libmad-heapoverflow-mad_bit_skip
+
+Timeline:
+2017-01-01: bug discovered and reported to upstream
+2017-04-30: blog post about the issue
+2017-05-01: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/30/libmad-heap-based-buffer-overflow-in-mad_bit_skip-bit-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
