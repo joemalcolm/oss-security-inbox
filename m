@@ -1,31 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/11/1
-Message-ID: <CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>
-Date: Wed, 11 Oct 2017 11:40:33 +0800
-From: Leon Zhao <leon.zhao.7@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/20
+Message-ID: <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
+Date: Tue, 2 May 2017 00:05:27 +0200
+From: Robert Święcki <robert@...ecki.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Two DoS vulneribilities in libextractor
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Hello oss security,
+2017-05-01 23:13 GMT+02:00 Michal Zalewski <lcamtuf@...edump.cx>:
+>
+> > Besides (mis)features, there may also be implementation bugs.
+>
+> It is perhaps worth noting that guided fuzzing has been used in this
+> space with good results, too. For example, AFL was credited on at
+> least the following in rxvt, tmux, screen, and mosh:
+>
+> http://lists.schmorp.de/pipermail/rxvt-unicode/2015q3/002155.html
+> http://lists.schmorp.de/pipermail/rxvt-unicode/2015q3/002164.html
+> https://savannah.gnu.org/bugs/?45715
+> https://savannah.gnu.org/bugs/?45713
+> https://savannah.gnu.org/bugs/?45714https://github.com/tmux/tmux/issues/92
+> https://github.com/tmux/tmux/commit/3219e0314e3d1d39a57db330faa5693ce0264244
+> https://github.com/mobile-shell/mosh/issues/667
+>
+> Especially if what's highlighted in this thread can be found with a
+> simple script, I'm betting there's far more beneath the surface.
+> Guided fuzzers have the advantage of being able to discover features
+> that may be undocumented or hard to spot, so a more comprehensive dive
+> into all the terminal emulators in use today would probably be quite
+> fruitful
 
-I found two DoS vulneribilities in libextractor,
+On a slightly different note; memory corruption/abort() problems might
+end up as RCE with some effort, but what *is* RCE is ability to push
+back characters into terminal's input buffer. There are some
+well-known vectors, like setting title of the current terminal and
+printing it back with ESC codes, and hopefully it's something that is
+mitigated in all modern terminal emulator software packages for many
+years now.
 
-Affected version
-1.4
+But, it's not something that can be discovered simply by waiting for
+SEGV and similar signals. Hence, I'd like to encourage everyone
+looking for bugs in terminal emulators to add some form of
+instrumentation to their fuzz setups aimed at finding such problems
+too.
 
-1. Divide-By-Zero
-https://bugzilla.redhat.com/show_bug.cgi?id=1499599
-http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00002.html
-Fixed
+A harmless example from rxvt - pushing back the new-line character:
 
-2. Null Pointer Dereference
-https://bugzilla.redhat.com/show_bug.cgi?id=1499600
-http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00003.html
-Fixed
+$ echo -ne "\eGQ;"
+;$ 0
+bash: 0: command not found
 
-
-Best regards
-
-Zhao Liang, Huawei Weiran Labs
-
+-- 
+Robert Święcki
