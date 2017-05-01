@@ -1,65 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/15
-Message-ID: <20170628203343.0e36d391@pc1>
-Date: Wed, 28 Jun 2017 20:33:43 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-Subject: Re: lame: multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/8
+Message-ID: <974628.333791287-sendEmail@localhost>
+Date: Mon, 1 May 2017 11:40:19 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libmad: heap-based buffer overflow in mad_layer_III (layer3.c)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 28 Jun 2017 15:43:35 +0200
-"Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de> wrote:
+Description:
+libmad stays for “M”peg “A”udio “D”ecoder library.
 
-> A number of these occur inside the mpglib part, which is an old fork
-> of the mpg123 decoder (extended with some LAME specifics). Can you
-> check if they also occur in current mpg123 / libmpg123
-> (https://mpg123.org)?
+There is an heap overflow discovered through madplay.
 
-None of Agostinos samples trigger anything in an asan build of mpg123
-1.25.0 here. However I was quickly able to get afl to find another bug,
-I reported into your bugtracker [1].
+The complete ASan output:
 
-It's an out of bounds heap read, the base64 encoded, minimized input
-file:
-SUQzAzAwAAABAjAwMDAAAAAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
-MDAwMDAwMDAwMDAwMDAwAAAABTAwMDAwMDAwMDAwAAAABTAwMDAwMDAwMDAwAAAABTAwMDAwMDAw
-MDAwAAAABTAwMDAwMDBUMDAwAAAABDAAADA=
+# madplay -v -i -o raw:out $FILE
+==14773==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61e00000fa87 at pc 0x0000004bc8ec bp 0x7ffcda3263d0 sp 0x7ffcda325b80
+WRITE of size 2060 at 0x61e00000fa87 thread T0
+    #0 0x4bc8eb in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
+    #1 0x7f37ddfa397d in mad_layer_III /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:2635:2
+    #2 0x7f37ddf6784d in mad_frame_decode /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/frame.c:453:7
+    #3 0x7f37ddf8c4e4 in run_sync /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/decoder.c:404:11
+    #4 0x7f37ddf8ac59 in mad_decoder_run /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/decoder.c:557:12
+    #5 0x5277a1 in decode /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:1862:12
+    #6 0x5277a1 in play_one /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:1951
+    #7 0x5277a1 in play_all /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:2041
+    #8 0x5215a2 in player_run /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:2768:14
+    #9 0x50c46c in main /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/madplay.c:816:7
+    #10 0x7f37dce4f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #11 0x41aa78 in _init (/usr/bin/madplay+0x41aa78)
 
-Address Sanitizer stack trace:
-==15557==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60d000000333 at pc 0x0000005610b3 bp 0x7ffebe8287f0 sp 0x7ffebe8287e8
-READ of size 1 at 0x60d000000333 thread T0
-    #0 0x5610b2 in convert_latin1 /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:980:5
-    #1 0x5576b8 in INT123_id3_to_utf8 /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:309:2
-    #2 0x55abed in store_id3_text /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:274:2
-    #3 0x55abed in process_text /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:368
-    #4 0x55abed in INT123_parse_new_id3 /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:917
-    #5 0x53e74f in handle_id3v2 /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:1071:8
-    #6 0x53e74f in skip_junk /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:1152
-    #7 0x53e74f in INT123_read_frame /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:525
-    #8 0x574001 in get_next_frame /mnt/ram/mpg123-1.25.0/src/libmpg123/libmpg123.c:625:7
-    #9 0x574984 in mpg123_decode_frame /mnt/ram/mpg123-1.25.0/src/libmpg123/libmpg123.c:861:12
-    #10 0x524ff2 in play_frame /mnt/ram/mpg123-1.25.0/src/mpg123.c:739:7
-    #11 0x528f97 in main /mnt/ram/mpg123-1.25.0/src/mpg123.c:1363:8
-    #12 0x7f9d2db941e0 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.24-r3/work/glibc-2.24/csu/../csu/libc-start.c:289
-    #13 0x41af59 in _start (/mnt/ram/mpg123+0x41af59)
+Affected version:
+0.15.1b
 
-0x60d000000333 is located 0 bytes to the right of 131-byte region [0x60d0000002b0,0x60d000000333)
-allocated by thread T0 here:
-    #0 0x4d19a8 in malloc (/mnt/ram/mpg123+0x4d19a8)
-    #1 0x55806d in INT123_parse_new_id3 /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:744:34
-    #2 0x53e74f in handle_id3v2 /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:1071:8
-    #3 0x53e74f in skip_junk /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:1152
-    #4 0x53e74f in INT123_read_frame /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:525
-    #5 0x574001 in get_next_frame /mnt/ram/mpg123-1.25.0/src/libmpg123/libmpg123.c:625:7
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+This bug came out in the past during the debug of mp3splt with Dave Kennedy
+
+CVE:
+CVE-2017-8373
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00213-libmad-heapoverflow-mad_layer_III
+
+Timeline:
+2017-01-01: bug discovered and reported to upstream
+2017-04-30: blog post about the issue
+2017-05-01: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/30/libmad-heap-based-buffer-overflow-in-mad_layer_iii-layer3-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-
-[1] https://sourceforge.net/p/mpg123/bugs/252
-
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
