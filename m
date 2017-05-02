@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/5
-Message-ID: <CAJznFrvPcbHvu9v0vFHPe-BqjSGr9vX5Ji9Rt8reEkbKg4n80A@mail.gmail.com>
-Date: Mon, 25 Sep 2017 14:16:04 +0200
-From: Slavco Mihajloski <slavco.mihajloski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/02/1
+Message-ID: <1493697035.1191.0@ssh.steve.org.uk>
+Date: Tue, 02 May 2017 03:50:35 +0000
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Subject: wordpress <= 4.8.1 SQLi
+Cc: 
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Isuue in wpdb->prepare() method guides to sqli in the wordpress.
 
-https://wordpress.org/news/
+> Yves-Alexis Perez of Debian pointed out that whether these crashes occur
+> or not may be related to the version of vte.  I'll leave it up to him to
+> post a follow-up on that.
 
-https://medium.com/websec/wordpress-sqli-bbb2afcc8e94
+  The mention of vte reminded me of a security issue I reported a while 
+ back in the evilvte emulator - shell execution via improper quotation
+ handling in hyperlinks:
 
-PoC:
-https://medium.com/websec/wordpress-sqli-poc-f1827c20bf8e
+    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=854585
 
-Regards,
-Slavco
+  I didn't ask for a CVE ID because the process seems a bit more
+ complicated these days, but perhaps topical.
 
+
+Steve
+-- 
+https://steve.fi/
