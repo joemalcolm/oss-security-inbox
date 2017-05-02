@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/14
-Message-ID: <alpine.LFD.2.20.1701202004350.14113@wniryva>
-Date: Fri, 20 Jan 2017 20:06:20 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: watchdog: memory leakage in virtual hardware watchdog wdt_i6300esb
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/02/5
+Message-ID: <739C33C0-C0EC-46AF-B1EA-1D1BBEC1E654@synopsys.com>
+Date: Tue, 2 May 2017 12:58:22 +0000
+From: Ari Kauppi <Ari.Kauppi@...opsys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2017-7645 Linux kernel: nfsd: remote DoS
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi,
 
-Quick Emulator(Qemu) built with the virtual hardware watchdog 'wdt_i6300esb' 
-support is vulnerable to a memory leakage issue. It could occur while doing a 
-device unplug operation; Doing so repeatedly would result in leaking host 
-memory, affecting other services on the host.
+Linux kernel NFSv3 and NFSv2 servers are vulnerable to a remote DoS attack.
 
-A privileged user inside guest could use this flaw to cause a DoS and/or 
-potentially crash the Qemu process on the host.
+A specifically crafted request can overflow the request/response page
+array. A few distinct attack vectors exist which all lead to system hang/crash
+and have possibly other unspecified impact.
+
+The attack vectors require at least read access to a NFS mount on the target host.
+
+The issue has been verified to be reproducible on multiple baselines. At least
+2.6.32, 3.2, 4.4, 4.8 and 4.10 baselines (and distributions derived from those)
+have been confirmed to be vulnerable. Fixed in 4.11 release.
+
+CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H (7.7 / High)
 
 Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2016-12/msg03104.html
+https://git.kernel.org/linus/e6838a29ecb484c97e4efef9429643b9851fba6e
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1415199
+This issue was found by Tuomas Haanpää and Matti Kamunen from Synopsys Ltd
+with Synopsys Defensics fuzzer.
 
-This issue was reported by Mr Li Qiang of 360.cn Inc.
+Thanks,
 
-Thank you.
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Ari Kauppi / Synopsys Ltd.
