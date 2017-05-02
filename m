@@ -1,60 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/5
-Message-ID: <20170705123427.mky43jbckj4quua2@lorien.valinor.li>
-Date: Wed, 5 Jul 2017 14:34:28 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/02/7
+Message-ID: <20170502233603.GA16882@openwall.com>
+Date: Wed, 3 May 2017 01:36:03 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, "security@....net" <security@....net>
-Subject: Re: CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Mon, May 01, 2017 at 06:44:28PM +0200, Solar Designer wrote:
+> It is a well-known feature, previously discussed in here, that data
+> printed to a terminal (emulator) may control that terminal, including
+> making it effectively unusable until reset, and in some cases even
+> pasting characters as if they were typed by the user.  Also as discussed
+> what characters may be pasted varies by terminal - sometimes they can be
+> arbitrary (e.g., if the terminal supports macro recording and playback
+> via escape sequences) and sometimes not so (like a terminal reporting
+> back its status, usually not followed by a linefeed, so not yet
+> executing a shell command until further user assistance).  Here are some
+> relevant threads:
+> 
+> http://www.openwall.com/lists/oss-security/2015/08/11/8
+> http://www.openwall.com/lists/oss-security/2015/09/17/5
+> http://www.openwall.com/lists/oss-security/2016/11/04/12
+> 
+> (I link to messages that started these threads, not necessarily to most
+> informative messages in the threads.  So you might want to go through
+> the threads with the "thread-next" links.)
 
-On Wed, Jul 05, 2017 at 02:37:00PM +0300, Lior Kaplan wrote:
-> Hi,
-> 
-> The following issues have been reported and fixed in PHP. At the moment
-> they are part of PHP 7.0.21 release. The fixes are also included in the 5.6
-> branch and will be part of 5.6.31 when it will be released.
-> 
-> #73807 Performance problem with processing post request over 2000000 chars
-> https://bugs.php.net/bug.php?id=73807
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=0f8cf3b8497dc45c010c44ed9e96518e11e19fc3
-> 
-> #74145 wddx parsing empty boolean tag leads to SIGSEGV
-> https://bugs.php.net/bug.php?id=74145
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=f269cdcd4f76accbecd03884f327cffb9a7f1ca9
-> 
-> #74651 negative-size-param (-1) in memcpy in zif_openssl_seal()
-> https://bugs.php.net/bug.php?id=74651
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=89637c6b41b510c20d262c17483f582f115c66d6
-> 
-> #74819 wddx_deserialize() heap out-of-bound read via php_parse_date()
-> https://bugs.php.net/bug.php?id=74819
-> PHP 5.6 -
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
-> PHP 7.0  -
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=6b18d956de38ecd8913c3d82ce96eb0368a1f9e5
-> 
-> Also, requests from past releases:
-> 
-> PHP 5.6.28 + 7.0.13
-> #73192 parse_url return wrong hostname
-> https://bugs.php.net/bug.php?id=73192
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=b061fa909de77085d3822a89ab901b934d0362c4
-> 
-> 5.6.30 + 7.0.15
-> #73773 Seg fault when loading hostile phar
-> https://bugs.php.net/bug.php?id=73773
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=e5246580a85f031e1a3b8064edbaa55c1643a451
+Adding to the above older sub-topic of (mis)features rather than bugs,
+here's a particularly relevant one, quoting excerpts from:
 
-CVE assignement requests are not handled anymore directly via the
-oss-security list, but need to be filled/requested at
-https://cveform.mitre.org/
+http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
 
-Once CVE are assigned, can you repost them here for benefit of other
-reader?
+| Operating System Commands
+| 
+| OSC Ps ; Pt BEL
+| OSC Ps ; Pt ST
+[...]
+| 
+|             Ps = 5 2  -> Manipulate Selection Data.  These controls may
+|           be disabled using the allowWindowOps resource.  The parameter
+|           Pt is parsed as
+|                Pc; Pd
+|           The first, Pc, may contain zero or more characters from the
+|           set c  p  s  0  1  2  3  4  5  6  7 .  It is used to construct
+|           a list of selection parameters for clipboard, primary, select,
+|           or cut buffers 0 through 7 respectively, in the order given.
+|           If the parameter is empty, xterm uses s 0 , to specify the
+|           configurable primary/clipboard selection and cut buffer 0.
+|           The second parameter, Pd, gives the selection data.  Normally
+|           this is a string encoded in base64.  The data becomes the new
+|           selection, which is then available for pasting by other appli-
+|           cations.
+|           If the second parameter is a ? , xterm replies to the host
+|           with the selection data encoded using the same protocol.
+|           If the second parameter is neither a base64 string nor ? ,
+|           then the selection is cleared.
 
-Regards,
-Salvatore
+The potential for use in attacks is mitigated by the fact that the reply
+triggered by setting the second parameter to ? is "encoded using the
+same protocol", so its string portion is in base64 and thus in its
+encoded form won't contain a linefeed.  However, altering X clipboard's
+content is nevertheless nasty and perhaps unexpected by a user.  If the
+user pastes the clipboard into a terminal, perhaps thinking there's
+still an intended command they had saved in there before, the replaced
+content's embedded linefeed(s) will be pasted as such, thereby
+immediately executing the attacker's command(s).
+
+The feature is in fact present and working in xterm when allowWindowOps
+is enabled (even though the clipboard isn't specific to one "window"),
+and is non-working when it's disabled.  (I've just tested.)
+
+[user@...t ~]$ echo -e '\x1b]52;;dGVzdAo=\x1b\\'
+
+[user@...t ~]$ echo -e '\x1b]52;;?\x1b\\'
+
+^[]52;s0;dGVzdAo=^[\[user@...t ~]$ 52;s0;dGVzdAo=
+
+Per a quick search, it appears to also be present in mintty:
+
+https://github.com/mintty/mintty/issues/258
+
+and iTerm2:
+
+https://gist.github.com/saitoha/3326112
+https://github.com/gnachman/iTerm2/blob/37c293e2adbec0be49bdca93440665bb98e0d18d/sources/VT100XtermParser.m#L208
+https://github.com/gnachman/iTerm2/blob/d5c23f1f207ffd0723599be66fb7da6ccea59ce4/sources/VT100Terminal.m#L1679
+
+and perhaps elsewhere.
+
+Alexander
