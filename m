@@ -1,111 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/19/1
-Message-ID: <06ff7936-bd2b-81d5-7dfd-8f048ddc6056@orlitzky.com>
-Date: Sun, 19 Nov 2017 15:55:59 -0500
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-16882: Icinga core root privilege escalation via insecure permissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/02/4
+Message-Id: <E1d5WTf-0005MI-Tb@xenbits.xenproject.org>
+Date: Tue, 02 May 2017 12:00:23 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 215 - possible memory corruption via failsafe callback
 Content-Type: text/plain; charset=utf-8
 
-Product: Icinga core <https://github.com/Icinga/icinga-core>
-Vendor: NETWAYS GmbH <https://www.netways.de/>
-Versions-affected: 1.14.0 and earlier (all 1.x versions)
-Author: Michael Orlitzky
-Bug-report: https://github.com/Icinga/icinga-core/issues/1601
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+                    Xen Security Advisory XSA-215
+                              version 2
 
-== Summary ==
+           possible memory corruption via failsafe callback
 
-Icinga installs two sets of files with insecure permissions: after
-installation, the executables and the configuration files are all
-owned by the same unprivileged user and group (typically, "icinga")
-that the daemon runs as. In one attack, the unprivileged user simply
-replaces the icinga executable with one that does his bidding. A
-slightly more complicated attack can be mounted by the unprivileged
-user by scheduling a malicious service check and then altering
-icinga.cfg to execute that check as root.
+UPDATES IN VERSION 2
+====================
 
-The ido2db daemon and its sample configuration file have the same
-issue.
+Public release.
 
+Added email header syntax to patches, for e.g. git-am.
 
-== Details ==
+ISSUE DESCRIPTION
+=================
 
-The Icinga build system allows you to specify a runtime user and group
-(default: icinga) via the two ./configure parameters
-"--with-icinga-user" and "--with-icinga-group":
+Under certain special conditions Xen reports an exception resulting
+from returning to guest mode not via ordinary exception entry points,
+but via a so call failsafe callback.  This callback, unlike exception
+handlers, takes 4 extra arguments on the stack (the saved data
+selectors DS, ES, FS, and GS).  Prior to placing exception or failsafe
+callback frames on the guest kernel stack, Xen checks the linear
+address range to not overlap with hypervisor space.  The range spanned
+by that check was mistakenly not covering these extra 4 slots.
 
-  AC_ARG_WITH(
-    icinga_user,
-    AC_HELP_STRING([--with-icinga-user=<user>],
-                   [sets user name to run icinga]),
-    icinga_user=$withval,
-    icinga_user=icinga)
+IMPACT
+======
 
-  AC_ARG_WITH(
-    icinga_group,
-    AC_HELP_STRING([--with-icinga-group=<grp>],
-                   [sets group name to run icinga]),
-    icinga_grp=$withval,
-    icinga_grp=icinga)
+A malicious or buggy 64-bit PV guest may be able to modify part of a
+physical memory page not belonging to it, potentially allowing for all
+of privilege escalation, host or other guest crashes, and information
+leaks.
 
-  AC_SUBST(icinga_user)
-  AC_SUBST(icinga_grp)
+VULNERABLE SYSTEMS
+==================
 
-The daemon runs as that user and group by default, because the
-upstream configuration file icinga.cfg incorporates those flag values
-into the icinga_user and icinga_group settings in
-sample-config/icinga.cfg.in:
+64-bit Xen versions 4.6 and earlier are vulnerable.  Xen versions 4.7
+and later are not vulnerable.
 
-  # ICINGA USER
-  # This determines the effective user that Icinga should run as.
-  # You can either supply a username or a UID.
-  icinga_user=@...nga_user@
+Only x86 systems are affected.  ARM systems are not vulnerable.
 
-  # ICINGA GROUP
-  # This determines the effective group that Icinga should run as.
-  # You can either supply a group name or a GID.
-  icinga_group=@...nga_grp@
+Only x86 systems with physical memory extending to a configuration
+dependent boundary (5Tb or 3.5Tb) may be affected.  Whether they are
+actually affected depends on actual physical memory layout.
 
-The build system then installs most of the files for the package with
-their owners/groups set to the user and group specified, through the
-pervasive use of the following INSTALL_OPTS in configure.ac:
+The vulnerability is only exposed to 64-bit PV guests.  HVM guests and
+32-bit PV guests can't exploit the vulnerability.
 
-  INSTALL_OPTS="-o $icinga_user -g $icinga_grp"
-  AC_SUBST(INSTALL_OPTS)
+MITIGATION
+==========
 
-This creates vulnerabilities because the Icinga daemons are intended to
-be run as root.
+Running only HVM or 32-bit PV guests will avoid the vulnerability.
 
+The vulnerability can be avoided if the guest kernel is controlled by
+the host rather than guest administrator, provided that further steps
+are taken to prevent the guest administrator from loading code into
+the kernel (e.g. by disabling loadable modules etc) or from using
+other mechanisms which allow them to run code at kernel privilege.
 
-== Exploitation ==
+CREDITS
+=======
 
-The default ownership is exploitable in at least two ways:
+This issue was discovered by Jann Horn of Google Project Zero.
 
- 1. The Icinga runtime user owns the daemon executable, typically
-    located at /usr/bin/icinga. That executable is run as root, and
-    drops privileges to the runtime user itself. This invites a simple
-    attack where the runtime user replaces the daemon executable with
-    his own code. The ido2db daemon has the same problem.
+RESOLUTION
+==========
 
-    In addition, the system executables icingastats and log2ido are
-    installed to root's $PATH and
-    could conceivably be run as root. They thus pose a similar risk.
+Applying the attached patch resolves this issue.
 
-  2. The main configuration file icinga.cfg is also owned by the
-     unprivileged runtime user, but icinga.cfg is where the runtime user
-     and group are specified. The unprivileged runtime user can schedule
-     a malicious service check (specified in the configuration files he
-     owns) and then put icinga_user=root in icinga.cfg. The next time
-     the daemon is restarted, it will run as root and execute the
-     command set by the unprivileged user.
+xsa215.patch       Xen 4.6.x, Xen 4.5.x
 
-     The configuration file ido2db.cfg-sample is vulnerable in the same
-     manner if it is renamed to ido2db.cfg without adjusting its
-     ownership.
+$ sha256sum xsa215*
+5be4ff661dd22890b0120f86beee3ec809e2a29f833db8c48bd70ce98e9691ee  xsa215.patch
+$
 
-== Mitigation ==
+DEPLOYMENT DURING EMBARGO
+=========================
 
-Most users should reset all ownership and group information to safe
-values, "root:root", except where write access is needed (for example,
-Icinga needs runtime write access to its $localstatedir).
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZCGsCAAoJEIP+FMlX6CvZulUH/38S+01LCZXAyAiPQTKGtJ09
+QZeqIriU1rFn/jXWvxnlC2eaKmrZvucOtYWK5Uccmj49Y2lgvoxTqSCa0S86POWU
+xvwBH2nGMsJ0Q4m1qQ4fZQ3lSsRlRoz0FyeTwdjdGlGVqGqPhDqB7Nm68IyOjr5j
+zhIxl8WCQulaqlWwCIgR+KQEgbyVDdsqmOYq7vIrYvyEEtM98l2sQ4E5kO3QfxUV
+aRbUBH4XrleGYNXQE3kXCNBJJIxl8LwsIHvk55hWAjEwmdRbu8o4+eBNn+lvDzQb
++AEMk1VrDMYCsxB6bUryJm6AzNc69vBNsdgGo4o0UXZtrfhtyBsEXD6daWqu3/c=
+=zQpX
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa215.patch" of type "application/octet-stream" (1695 bytes)
