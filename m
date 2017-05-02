@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/19/5
-Message-ID: <CAD3CancmhjKRJd1oXmxpFXp3vUB7Q_rFNAyduavPUtKE_9gycg@mail.gmail.com>
-Date: Wed, 19 Jul 2017 23:37:28 +1200
-From: Matthew Daley <mattd@...fuzz.com>
-To: Henri Salo <henri@...v.fi>
-Cc: Kurt Seifried <kurt@...fried.org>, oss-security@...ts.openwall.com
-Subject: Re: ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/02/6
+Message-ID: <AEE7726B-5FE6-4972-BEFB-8CED939E875F@synopsys.com>
+Date: Tue, 2 May 2017 13:08:43 +0000
+From: Ari Kauppi <Ari.Kauppi@...opsys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2017-7895 Linux kernel: nfsd: Remote arbitrary memory read
 Content-Type: text/plain; charset=utf-8
 
-JFTR:
+Hi,
 
-On 17 July 2017 at 00:01, Henri Salo <henri@...v.fi> wrote:
-> Is this assigment somehow related to this oss-security post?
-> http://www.openwall.com/lists/oss-security/2016/07/01/3
+Linux kernel NFSv3 server is vulnerable to a remote arbitrary memory read attack.
 
-Yes.
+A specifically crafted request can extract chunks of arbitrary memory from both
+kernel-space and user-space.
 
-CVE-2017-1000002 = issues #26 and #32
-CVE-2017-1000003 = issues #29 to #31
-CVE-2017-1000004 = issues #1 to #25, #27 and #28 (but issue #25 should
-probably be in CVE-2017-1000003 as it's a missing auth check, not a
-SQL injection)
+The attack vector requires write access to a NFS mount on the target host.
 
-HTH,
+The issue has been verified to be reproducible on multiple baselines. At least
+2.6.32, 3.2, 4.4, 4.8 and 4.10 baselines (and distributions derived from those)
+have been confirmed to be vulnerable. Fixed in 4.11 release. Most probably
+this has been introduced about 10 years ago due to fs/nfsd changes for 2.6.22.
 
-- Matthew
+CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N (7.7 / High)
+
+Upstream patch:
+https://git.kernel.org/linus/13bf9fbff0e5e099e2b6f003a0ab8ae145436309
+
+This issue was found by Ari Kauppi from Synopsys Ltd with Synopsys Defensics
+fuzzer combined with KASAN.
+
+Thanks,
+
+--
+Ari Kauppi / Synopsys Ltd.
