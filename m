@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["611" "Tuesday" "17" "April" "2018" "09:51:56" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<cbee626b-67e6-73a4-f82e-0f4adb6da1a4@redhat.com>" "21" "Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths" nil nil nil "4" "2018041704:21:56" "[oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths" (number mark "U       huzaifas@red Apr 17   21/611   " thread-indent "\"Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows several non constant time code paths\"\n") "<CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>" ("<CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6415" "Tuesday" "2" "May" "2017" "12:00:23" "+0000" "Xen.org security team" "security@xen.org" "<E1d5WTf-0005MI-Tb@xenbits.xenproject.org>" "162" "[oss-security] Xen Security Advisory 215 - possible memory corruption via failsafe callback" nil nil nil "5" "2017050212:00:23" "[oss-security] Xen Security Advisory 215 - possible memory corruption via failsafe callback" (number mark "U       security@xen May  2  162/6415  " thread-indent "\"[oss-security] Xen Security Advisory 215 - possible memory corruption via failsafe callback\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22457 invoked by uid 550); 17 Apr 2018 04:22:13 -0000
+Received: (qmail 3803 invoked by uid 550); 2 May 2017 12:00:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,179 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22404 invoked from network); 17 Apr 2018 04:22:12 -0000
-To: oss-security@lists.openwall.com, Billy Brumley <bbrumley@gmail.com>
-References: <CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=huzaifas@redhat.com; keydata=
- xsDiBETun5sRBACOCWbRM5KLDngL46w371lRBMCCmBRpzQHXuxllk1dbku3GYQu5ApCYVvck
- 45GWqFAYqWVjXGjEOnATxg693FI3Mw8tv8E9JED1OMbyaI4bhUxP1H7Ia89BOEFHjHKR7VPY
- S9tSwvTr2AkjK1j+CrMcWmV2rL4KooRk/ykB/4joJwCgnoMEbrNCrnSIiZNGxS7Okxgknb8D
- /AxkMwysc39T68fp0AOAr4wNrwWzgBPqjyF0As5n9ewZie9Z+uqqGCnjn9XgMmMNkL1DsXXs
- 4dJXaFrAdlcArtWaiQX/d2nZaZj8kw9D7ADudBTA0YzAnVQGk4wf2zL9WT/YwYhV3Sb1TERa
- H6g4gg8b+KwsbmhJSrqsg06mWR3eA/9j86ollyU31Fq/qIjsbHR+tSManlv57wGiH9luburk
- bUSFgLo9t2h6bHZ4sTQyt6aJcxXzon2IuiTYVpDrnoAfYfvFvzSae0BPG7nP8moAL7X1nnW0
- xP8+ZATAqwds75yAQMpGRXuOntFl5ZL1xmzzeDS5aUfMg3gC9M0jIWK3zc0sSHV6YWlmYSBT
- LiBTaWRocHVyd2FsYSA8aHV6YWlmYXNAcmVkaGF0LmNvbT7CXgQTEQIAHgUCRO6fmwIbAwYL
- CQgHAwIDFQIDAxYCAQIeAQIXgAAKCRDMcNzy2lva5e+DAJ4hG6WLhJfmJ27UOKZLPRi3gVNx
- owCeP5f7Cp5aU4DXyK3X81poNLIW2i3OwE0ERO6fnRAEALle4LaG+djyt8slfQbwAPf06dgz
- bC6o1TcPg/ZRSE8TSE6d1fRkLSLJJZSW9gGpl5fphNYUSzarFKP4xLRol/fZCY4tupcAv+Vm
- jfzaLqdIiy+G6ei1UpQTP6uRHxLdtXmMmg6kWds0ZavEU2+y18HzAczCCPBQN30dd/1/5jUn
- AAMFBACOEdEjzZIQmK6ciB6TymIcD8nf6Jn0zz6+DjxrtdEnP7V/zyZgv/tD1GdneOBaGJTL
- FTqT5vNSsmMTtQ03tjg/e4+P1MX8YcbhObj186Js47moYoeWgfAGZlFd6mNl/aSITVSHsooF
- zVi9Xs6zKZNWsY2LcENMnE/xM7Qdpi5ChMJJBBgRAgAJBQJE7p+dAhsMAAoJEMxw3PLaW9rl
- XKEAnjySXTUlGFzWQ9BiLx5Fo91JziLYAJ4lQdBofA+Gf1Vewb/61ilmdq4Qqg==
-Message-ID: <cbee626b-67e6-73a4-f82e-0f4adb6da1a4@redhat.com>
-Date: Tue, 17 Apr 2018 09:51:56 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+Received: (qmail 3280 invoked from network); 2 May 2017 12:00:49 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-In-Reply-To: <CAFeDd5bgmNV4=u0GNwpuszCv-k+ZeOJv=uF+z3MZybf+thG+fg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security@xen.org>
+Message-Id: <E1d5WTf-0005MI-Tb@xenbits.xenproject.org>
+Date: Tue, 02 May 2017 12:00:23 +0000
+Subject: [oss-security] Xen Security Advisory 215 - possible memory corruption via
+ failsafe callback
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.78 on 10.11.54.4
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Tue, 17 Apr 2018 04:22:00 +0000 (UTC)
-X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Tue, 17 Apr 2018 04:22:00 +0000 (UTC) for IP:'10.11.54.4' DOMAIN:'int-mx04.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'huzaifas@redhat.com' RCPT:''
-Subject: Re: [oss-security] CVE-2018-0737 OpenSSL: RSA key generation follows
- several non constant time code paths
 
-On 04/16/2018 10:16 PM, Billy Brumley wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> 6939eab03a6e23d2bd2c3f5e34fe1d48e542e787
-> 
-> we verified with a debugger they cumulatively solve (1) (2) and (3).
-> 
-> Look for our preprint on http://eprint.iacr.org/ soon -- working title
-> is "One Shot, One Trace, One Key: Cache-Timing Attacks on RSA Key
-> Generation". We'll update the list with the full URL once it's posted.
-> 
+                    Xen Security Advisory XSA-215
+                              version 2
 
+           possible memory corruption via failsafe callback
 
-Can you post a link to the draft here please?
+UPDATES IN VERSION 2
+====================
 
-The attack vector is not clear, does the attacker need to be on the same
-physical machine or is this a cross-vm attack?
+Public release.
 
+Added email header syntax to patches, for e.g. git-am.
 
+ISSUE DESCRIPTION
+=================
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Under certain special conditions Xen reports an exception resulting
+from returning to guest mode not via ordinary exception entry points,
+but via a so call failsafe callback.  This callback, unlike exception
+handlers, takes 4 extra arguments on the stack (the saved data
+selectors DS, ES, FS, and GS).  Prior to placing exception or failsafe
+callback frames on the guest kernel stack, Xen checks the linear
+address range to not overlap with hypervisor space.  The range spanned
+by that check was mistakenly not covering these extra 4 slots.
+
+IMPACT
+======
+
+A malicious or buggy 64-bit PV guest may be able to modify part of a
+physical memory page not belonging to it, potentially allowing for all
+of privilege escalation, host or other guest crashes, and information
+leaks.
+
+VULNERABLE SYSTEMS
+==================
+
+64-bit Xen versions 4.6 and earlier are vulnerable.  Xen versions 4.7
+and later are not vulnerable.
+
+Only x86 systems are affected.  ARM systems are not vulnerable.
+
+Only x86 systems with physical memory extending to a configuration
+dependent boundary (5Tb or 3.5Tb) may be affected.  Whether they are
+actually affected depends on actual physical memory layout.
+
+The vulnerability is only exposed to 64-bit PV guests.  HVM guests and
+32-bit PV guests can't exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM or 32-bit PV guests will avoid the vulnerability.
+
+The vulnerability can be avoided if the guest kernel is controlled by
+the host rather than guest administrator, provided that further steps
+are taken to prevent the guest administrator from loading code into
+the kernel (e.g. by disabling loadable modules etc) or from using
+other mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa215.patch       Xen 4.6.x, Xen 4.5.x
+
+$ sha256sum xsa215*
+5be4ff661dd22890b0120f86beee3ec809e2a29f833db8c48bd70ce98e9691ee  xsa215.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZCGsCAAoJEIP+FMlX6CvZulUH/38S+01LCZXAyAiPQTKGtJ09
+QZeqIriU1rFn/jXWvxnlC2eaKmrZvucOtYWK5Uccmj49Y2lgvoxTqSCa0S86POWU
+xvwBH2nGMsJ0Q4m1qQ4fZQ3lSsRlRoz0FyeTwdjdGlGVqGqPhDqB7Nm68IyOjr5j
+zhIxl8WCQulaqlWwCIgR+KQEgbyVDdsqmOYq7vIrYvyEEtM98l2sQ4E5kO3QfxUV
+aRbUBH4XrleGYNXQE3kXCNBJJIxl8LwsIHvk55hWAjEwmdRbu8o4+eBNn+lvDzQb
++AEMk1VrDMYCsxB6bUryJm6AzNc69vBNsdgGo4o0UXZtrfhtyBsEXD6daWqu3/c=
+=zQpX
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa215.patch"
+Content-Disposition: attachment; filename="xsa215.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODY6IGNvcnJlY3QgY3JlYXRlX2JvdW5jZV9mcmFtZQoKV2UgbWF5IHB1
+c2ggdXAgdG8gOTYgYnl0ZXMgb24gdGhlIGd1ZXN0IChrZXJuZWwpIHN0YWNr
+LCBzbyB3ZSBzaG91bGQKYWxzbyBjb3ZlciBhcyBtdWNoIGluIHRoZSBlYXJs
+eSByYW5nZSBjaGVjay4gTm90ZSB0aGF0IHRoaXMgaXMgdGhlCnNpbXBsZXN0
+IHBvc3NpYmxlIHBhdGNoLCB3aGljaCBoYXMgdGhlIHRoZW9yZXRpY2FsIHBv
+dGVudGlhbCBvZgpicmVha2luZyBhIGd1ZXN0OiBXZSBvbmx5IHJlYWxseSBw
+dXNoIDk2IGJ5dGVzIHdoZW4gaW52b2tpbmcgdGhlCmZhaWxzYWZlIGNhbGxi
+YWNrLCBvcmRpbmFyeSBleGNlcHRpb25zIG9ubHkgaGF2ZSA1NiBvciA2NCBi
+eXRlcyBwdXNoZWQKKHdpdGhvdXQgLyB3aXRoIGVycm9yIGNvZGUgcmVzcGVj
+dGl2ZWx5KS4gVGhlcmUgaXMsIGhvd2V2ZXIsIG5vIFBWIE9TCmtub3duIHRv
+IHBsYWNlIGEga2VybmVsIHN0YWNrIHRoZXJlLgoKVGhpcyBpcyBYU0EtMjE1
+LgoKUmVwb3J0ZWQtYnk6IEphbm4gSG9ybiA8amFubmhAZ29vZ2xlLmNvbT4K
+U2lnbmVkLW9mZi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29t
+PgpSZXZpZXdlZC1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNA
+Y2l0cml4LmNvbT4KCi0tLSBhL3hlbi9hcmNoL3g4Ni94ODZfNjQvZW50cnku
+UworKysgYi94ZW4vYXJjaC94ODYveDg2XzY0L2VudHJ5LlMKQEAgLTM0Nyw3
+ICszNDcsNyBAQCBpbnQ4MF9zbG93X3BhdGg6CiAgICAgICAgIGptcCAgIGhh
+bmRsZV9leGNlcHRpb25fc2F2ZWQKIAogLyogQ1JFQVRFIEEgQkFTSUMgRVhD
+RVBUSU9OIEZSQU1FIE9OIEdVRVNUIE9TIFNUQUNLOiAgICAgICAgICAgICAg
+ICAgICAgICovCi0vKiAgIHsgUkNYLCBSMTEsIFtEUy1HUyxdIFtDUjIsXSBb
+RVJSQ09ERSxdIFJJUCwgQ1MsIFJGTEFHUywgUlNQLCBTUyB9ICAgKi8KKy8q
+ICAgeyBSQ1gsIFIxMSwgW0RTLUdTLF0gW0VSUkNPREUsXSBSSVAsIENTLCBS
+RkxBR1MsIFJTUCwgU1MgfSAgICAgICAgICAqLwogLyogJXJkeDogdHJhcF9i
+b3VuY2UsICVyYng6IHN0cnVjdCB2Y3B1ICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICovCiAvKiBPbiByZXR1cm4gb25seSAlcmJ4IGFuZCAl
+cmR4IGFyZSBndWFyYW50ZWVkIG5vbi1jbG9iYmVyZWQuICAgICAgICAgICAg
+Ki8KIGNyZWF0ZV9ib3VuY2VfZnJhbWU6CkBAIC0zNjcsNyArMzY3LDcgQEAg
+Y3JlYXRlX2JvdW5jZV9mcmFtZToKIDI6ICAgICAgYW5kcSAgJH4weGYsJXJz
+aSAgICAgICAgICAgICAgICAjIFN0YWNrIGZyYW1lcyBhcmUgMTYtYnl0ZSBh
+bGlnbmVkLgogICAgICAgICBtb3ZxICAkSFlQRVJWSVNPUl9WSVJUX1NUQVJU
+LCVyYXgKICAgICAgICAgY21wcSAgJXJheCwlcnNpCi0gICAgICAgIG1vdnEg
+ICRIWVBFUlZJU09SX1ZJUlRfRU5EKzYwLCVyYXgKKyAgICAgICAgbW92cSAg
+JEhZUEVSVklTT1JfVklSVF9FTkQrMTIqOCwlcmF4CiAgICAgICAgIHNiYiAg
+ICVlY3gsJWVjeCAgICAgICAgICAgICAgICAgIyBJbiArdmUgYWRkcmVzcyBz
+cGFjZT8gVGhlbiBva2F5LgogICAgICAgICBjbXBxICAlcmF4LCVyc2kKICAg
+ICAgICAgYWRjICAgJWVjeCwlZWN4ICAgICAgICAgICAgICAgICAjIEFib3Zl
+IFhlbiBwcml2YXRlIGFyZWE/IFRoZW4gb2theS4K
+
+--=separator--
