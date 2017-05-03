@@ -1,4 +1,9 @@
-Received: (qmail 23687 invoked by uid 550); 27 Nov 2025 07:10:11 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1417" "Wednesday" "3" "May" "2017" "15:16:55" "+0200" "Adrien Nader" "adrien@notk.org" "<20170503131655.GA1397@notk.org>" "40" "Re: [oss-security]Sourcetree arbitrary command execution" "^Date:" nil nil "5" "2017050313:16:55" "[oss-security]Sourcetree arbitrary command execution" (number mark "        adrien@notk. May  3   40/1417  " thread-indent "\"Re: [oss-security]Sourcetree arbitrary command execution\"\n") "<CAPGxrc8ERFkDD=+x3qo2rkWPZ_3SxMGdJaAgUsEkcrBsZZ0ovg@mail.gmail.com>" ("<CAPGxrc8ERFkDD=+x3qo2rkWPZ_3SxMGdJaAgUsEkcrBsZZ0ovg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5863 invoked by uid 550); 3 May 2017 14:19:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,52 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3892 invoked from network); 27 Nov 2025 06:37:39 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Harikrishna Patnala <harikrishna@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <7dcc49a1-e3f1-699c-20e8-2ce3725e485e@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 27 Nov 2025 06:35:20 +0000
+Received: (qmail 20365 invoked from network); 3 May 2017 13:17:07 -0000
+Message-ID: <20170503131655.GA1397@notk.org>
+References: <CAPGxrc8ERFkDD=+x3qo2rkWPZ_3SxMGdJaAgUsEkcrBsZZ0ovg@mail.gmail.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-59454: Apache CloudStack: Lack of user permission
- validation leading to data leak for few APIs 
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPGxrc8ERFkDD=+x3qo2rkWPZ_3SxMGdJaAgUsEkcrBsZZ0ovg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Wed, 3 May 2017 15:16:55 +0200
+From: Adrien Nader <adrien@notk.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security]Sourcetree arbitrary command execution
+To: oss-security@lists.openwall.com
 
-Severity: low=20
+Hi,
 
-Affected versions:
+On Wed, May 03, 2017, redrain root wrote:
+> Hi there,
+> 
+> I would report a sourcetree arbitrary command execution
+> 
+> Sourcetree is a popular git gui client,and I found a command execution two
+> month ago,
+> and I report to the official atlassian but the told me they have known this
+> vulnerability internal tracker and they will fix it in next version but
+> sourcetree has upgrade several version, this vulnerability still alive.
+> So I want to disclose this vulnerability and make a copy for atlassian
+> again.
 
-- Apache CloudStack 4.0.0 before 4.20.2
-- Apache CloudStack 4.21.0 before 4.22.0
+Unless I'm mistaken, the source for it isn't available.
 
-Description:
+I see you've Cc'ed fulldisclosure@seclists.org and
+security@atlassian.com too and it sounds more applicable to them.
 
-In Apache CloudStack, a gap in access control checks affected the APIs - cr=
-eateNetworkACL
-- listNetworkACLs
-- listResourceDetails
-- listVirtualMachinesUsageHistory
-- listVolumesUsageHistory
+> SourceTree v2.5c and prior are affected by a command injection in the
+> handling of sourcetree:// scheme.
+> The cloneRepo action with ‘ext’ is base on git-remote-ext, The git team’s
+> description of the bug was:
+> Some protocols (like git-remote-ext) can execute arbitrary code found in
+> the URL.
 
-While these APIs were accessible only to authorized users, insufficient per=
-mission validation meant that users could occasionally access information b=
-eyond their intended scope.
+You make it sound like there might be something related to
+"git-remote-ext" or its (typicala) usage but you're not giving details
+except that it's difficult to tell if it happens in othe software too
+and the following seems to indicate it is very specific to Sourcetree:
 
+> PoC:
+> sourcetree://cloneRepo/ext::[command injection]
+> Even attacker can exploit it through the browser
 
+Best regards,
 
-
-Users are recommended to upgrade to Apache CloudStack 4.20.2.0 or 4.22.0.0,=
- which fixes the issue.
-
-Credit:
-
-bugreporter@qq.com <https://github.com/ai-bugreporter/Credits> (finder)
-
-References:
-
-https://cloudstack.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-59454
-
+-- 
+Adrien Nader
