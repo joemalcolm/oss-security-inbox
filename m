@@ -1,63 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/1
-Message-ID: <20171031132352.2df6d2ad@pc1>
-Date: Tue, 31 Oct 2017 13:23:52 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/1
+Message-ID: <alpine.LFD.2.20.1705031412570.32279@wniryva>
+Date: Wed, 3 May 2017 14:19:40 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Jiangxin <jiangxin1@...wei.com>
+Subject: CVE-2017-8309 Qemu: audio: host memory leakage via capture buffer
 Content-Type: text/plain; charset=utf-8
 
-I just sent this to the vim dev list, but I guess it's interesting for
-oss-security, too.
+   Hello,
 
-Begin forwarded message:
+Quick Emulator(Qemu) built with the Audio subsystem support is vulnerable to a 
+host memory leakage issue. It could occur if a guest user was to repeatedly 
+start and stop audio capture.
 
-Date: Tue, 31 Oct 2017 11:30:50 +0100
-Subject: Security risk of vim swap files
+A privileged user inside guest could use this flaw to exhaust host memory, 
+resulting in DoS.
 
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-04/msg05587.html
 
-Hi,
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1446517
 
-I wanted to point out an issue here with vim swap files that make them
-a security problem.
+This issue was reported by Jiang Xin (PSIRT Huawei inc.)
 
-By default vim creates a file with the name .filename.swp in the same
-directory while editing. They contain the full content of the edited
-file. This usually gets deleted upon exit, but not if vim crashes or
-gets killed (e.g. due to a reboot).
+'CVE-2017-8309' allocated via -> http://cveform.mitre.org/
 
-On web servers this can be a severe security risk. One can e.g. scan
-for web hosts that have swap files of PHP configuration files and thus
-expose settings like database passwords. (e.g. wget
-http://example.com/.wp-config.php.swp )
-
-In a scan of the alexa top 1 million I found ~750 instances of such
-files. I tried to inform affected people as best as I could. I also
-discovered such scans in my own web server logs, so I assume black hats
-are already aware of this and it's actively exploitet.
-
-I was wondering how to best avoid this on my own servers and I first
-thought about saving the swap files to tmp ( with "set directory").
-However on multiuser systems this creates another security problem.
-These files are world readable, thus instead of leaking information to
-the world it's now leaking information to other users on the same
-system. Thus even if one is aware of the issue it's nontrivial to get
-secure settings (I've now worked around this by having per-user tmp
-dirs with secure permissions.)
-
-I think vim should change the behavior of swap files:
-1. they should be stored in /tmp by default
-2. they should have secure permissions (tmp file security is
-a tricky thing and needs careful consideration to avoid symlink attacks
-and the like, but there are dedicated functions for this like mkstemp).
-3. Ideally they also shouldn't leak currently edited filenames (e.g.
-they shouldn't be called /tmp/.test.txt.swp, but more something
-like /tmp/.vim_swap.123782173)
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
