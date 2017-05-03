@@ -1,35 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/21/7
-Message-ID: <f7ba24cc-1b0e-7ea8-fd2d-d062c817d55d@insomniasec.com>
-Date: Sun, 22 Jan 2017 10:26:36 +1300
-From: Murray McAllister <murray.mcallister@...omniasec.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/5
+Message-ID: <CAPGxrc8ERFkDD=+x3qo2rkWPZ_3SxMGdJaAgUsEkcrBsZZ0ovg@mail.gmail.com>
+Date: Wed, 3 May 2017 20:49:28 +0800
+From: redrain root <rootredrain@...il.com>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Cc: security@...assian.com
+Subject: Sourcetree arbitrary command execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi there,
 
-This issue affects the VC4_SUBMIT_CL IOCTL in the VideoCore DRM driver,
-so probably only affects devices like the Raspberry Pi.
+I would report a sourcetree arbitrary command execution
 
-Quoting from Eric Anholt's post:
+Sourcetree is a popular git gui client,and I found a command execution two
+month ago,
+and I report to the official atlassian but the told me they have known this
+vulnerability internal tracker and they will fix it in next version but
+sourcetree has upgrade several version, this vulnerability still alive.
+So I want to disclose this vulnerability and make a copy for atlassian
+again.
 
-""
-We copy the unvalidated ioctl arguments from the user into kernel
-temporary memory to run the validation from, to avoid a race where the
-user updates the unvalidate contents in between validating them and
-copying them into the validated BO.
 
-However, in setting up the layout of the kernel side, we failed to
-check one of the additions (the roundup() for shader_rec_offset)
-against integer overflow, allowing a nearly MAX_UINT value of
-bin_cl_size to cause us to under-allocate the temporary space that we
-then copy_from_user into.
-""
+Author: redrain, hongyu-s@....cn
+Date: 2017-03-02
+Version:2.5c and prior
+Platform: macOS, Windows, Linux Desktop
+Site: https://www.sourcetreeapp.com
+Vendor: Atlassian
+Vendor Notified: 2017-03-02
 
-https://lkml.org/lkml/2017/1/17/761
-https://lkml.org/lkml/2017/1/17/759 (discovered by Ingo Molnar)
 
-I am not subscribed to the list so please mail me if you have any issues.
+Technical Details:
+========================================
 
-Chur
+SourceTree v2.5c and prior are affected by a command injection in the
+handling of sourcetree:// scheme.
+The cloneRepo action with ‘ext’ is base on git-remote-ext, The git team’s
+description of the bug was:
+Some protocols (like git-remote-ext) can execute arbitrary code found in
+the URL.
+
+PoC:
+sourcetree://cloneRepo/ext::[command injection]
+Even attacker can exploit it through the browser
+
+<html>
+<head></head>
+<body>
+	<a href=sourcetree://checkoutRef/ext::id>a</a>
+</body>
+</html>
+
+There is a simple demo video:
+https://youtu.be/SQ1_Ht-0Bdo
+
+
+Other:
+============================================
+and there is the last bugtrack I reported:
+
+
+```
+Activity
+Your request status changed to Resolved with resolution Tracked Elsewhere.
+03/Mar/17 5:35 PMLATEST
+Alexander Minozhenko
+Alexander Minozhenko03/Mar/17 5:34 PM
+Hi rootredrain,
+Thank you for sending this notification to Atlassian. This is indeed a
+vulnerability and an issue has been filed on an internal tracker.
+The issue is SRCTREE-4632. Unfortunately, this issue is not accessible
+externally, so you will not be able to monitor its progress. Feel free to
+check with us for updates.
+redrain
+redrain02/Mar/17 5:43 PM
+sourcetree_vuln.7z (9.62 MB)
+Details02/Mar/17 5:43 PM
+Product or Service
+Other
+Product Version
+2.4.1a and earlier
+Description
+SourceTree v2.4.1a and earlier are affected by a command injection in the
+handling of sourcetree:// scheme.
+The cloneRepo action with ‘ext’ is base on git-remote-ext, The git team’s
+description of the bug was:
+Some protocols (like git-remote-ext) can execute arbitrary code found in
+the URL.
+PoC:
+sourcetree://cloneRepo/ext::[command injection]
+Even attacker can exploit it through the browser
+there is a simple demo in the attachment.
+```
+
+
+Regards,
+redrain
+
