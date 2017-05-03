@@ -1,152 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/5
-Message-ID: <20170626104036.GA21186@grsecurity.net>
-Date: Mon, 26 Jun 2017 06:40:36 -0400
-From: Brad Spengler <spender@...ecurity.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/11
+Message-Id: <201705031910.52415@pali>
+Date: Wed, 3 May 2017 19:10:52 +0200
+From: Pali Rohár <pali.rohar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Can someone explain all the CONFIG_VMAP_STACK CVEs lately?
+Subject: Re: MySQL - Again Riddle vulnerability (public disclosure)
 Content-Type: text/plain; charset=utf-8
 
-Hi Andy,
-
-As I recently learned, you'll have to go through the CVE
-dispute/reject process for each one of them.  Since I'm the reporter
-I believe I would have to reject them (you could only dispute them),
-however I'm not willing to reject any but the USB ones given the
-information I found below, since the vulnerability (for the crypto
-etc cases) is also the BUG() when CONFIG_DEBUG_VIRTUAL is enabled
-(aka the thing you seem to depend on to find these bugs in the first
-place since no static analysis is apparently being done), which will
-panic the system when panic_on_oops is on.
-
-#ifdef CONFIG_DEBUG_VIRTUAL
-unsigned long __phys_addr(unsigned long x)
-{
-        unsigned long y = x - __START_KERNEL_map;
-
-        /* use the carry flag to determine if x was < __START_KERNEL_map */
-        if (unlikely(x > y)) {
-                x = y + phys_base;
-
-                VIRTUAL_BUG_ON(y >= KERNEL_IMAGE_SIZE);
-        } else {
-                x = y + (__START_KERNEL_map - PAGE_OFFSET);
-
-                /* carry flag will be set if starting x was >= PAGE_OFFSET */
-                VIRTUAL_BUG_ON((x > y) || !phys_addr_valid(x));
-        }
-
-        return x;
-}
-EXPORT_SYMBOL(__phys_addr);
-
-These are well-established denial of service issues that CVEs have been
-assigned for in the past.
-
-I've dug into the USB case a bit more since reading your mail and Greg's.
-It has changed apparently since I originally wrote KSTACKOVERFLOW in
-2014.  Here's what seems to be the relevant commit:
-
-commit 29d2fef8be1165a26984a94fbcf81d68c1442fc5
-Author: Dan Williams <dan.j.williams@...el.com>
-Date:   Thu May 8 19:25:56 2014 +0300
-
-    usb: catch attempts to submit urbs with a vmalloc'd transfer buffer
-    
-    Save someone else the debug cycles of figuring out why a driver's
-    transfer request is failing or causing undefined system behavior.
-    Buffers submitted for dma must come from GFP allocated / DMA-able
-    memory.
-    
-    Return -EAGAIN matching the return value for dma_mapping_error() cases.
-    
-    Acked-by: Alan Stern <stern@...land.harvard.edu>
-    Cc: Sarah Sharp <sarah.a.sharp@...ux.intel.com>
-    Cc: Mathias Nyman <mathias.nyman@...ux.intel.com>
-    Signed-off-by: Dan Williams <dan.j.williams@...el.com>
-    Signed-off-by: Mathias Nyman <mathias.nyman@...ux.intel.com>
-    Signed-off-by: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-
-diff --git a/drivers/usb/core/hcd.c b/drivers/usb/core/hcd.c
-index 9c4e292..adddc66 100644
---- a/drivers/usb/core/hcd.c
-+++ b/drivers/usb/core/hcd.c
-@@ -1502,6 +1502,9 @@ int usb_hcd_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
-                                        ret = -EAGAIN;
-                                else
-                                        urb->transfer_flags |= URB_DMA_MAP_PAGE;
-+                       } else if (is_vmalloc_addr(urb->transfer_buffer)) {
-+                               WARN_ONCE(1, "transfer buffer not dma capable\n");
-+                               ret = -EAGAIN;
-                        } else {
-                                urb->transfer_dma = dma_map_single(
-                                                hcd->self.controller,
-
-So it wasn't at all the case that the transfer would simply be rejected, 
-certainly not since the 2.2 days.  Prior to this patch (assuming 
-CONFIG_VMAP_STACK existed back then, which it didn't) you can see it 
-would have hit the dma_map_single call, which would call virt_to_page 
-which will end up in __phys_addr() and hit the BUG() on 
-CONFIG_DEBUG_VIRTUAL. My first version of KSTACKOVERFLOW seems to have 
-been for 3.14 which didn't carry this patch.  When I ported to 3.15, I 
-had already redesigned KSTACKOVERFLOW to avoid triggering DoS conditions 
-in buggy drivers/crypto code since it was clear the long-held no DMA on 
-stack policy was never enforced across the board, so we would have never 
-seen any USB-related issues again to have ever seen that WARN().
-
-For the CVE dispute/reject process, Kurt Seifried can tell you all
-about it.  Give him a couple weeks, since
-https://twitter.com/kurtseifried/status/876818809079816193
-is still up, the CVE still apparently is not rejected, and he is
-very busy taking pictures of his dinner.  I am certain he will
-treat a member of upstream Linux the same as I've been treated,
-as he is a very professional and equitable person.
-
-That said, I'm happy to be wrong about the USB case (and to clear
-up Greg's misconception about it), and I hope the above info/history
-makes clear where my assumption went wrong.  I'll gladly work with you
-to get the USB-related CVEs rejected that you were saved from via
-the above commit.
-
--Brad
-
-On Sun, Jun 25, 2017 at 08:49:43PM -0700, Andy Lutomirski wrote:
-> As the author of the CONFIG_VMAP_STACK patches, I'm a bit confused
-> here.  There have been quite a few bugs in which some code passes a
-> stack buffer to either sg_set_buf(), etc. or to the usb core.  The
-> former seem to all be crypto users.
+On Wednesday 03 May 2017 18:23:09 Pali Rohár wrote:
+> Hi!
 > 
-> As I understand it, the supposed vulnerability is that, if you can
-> force the buffer to span a page boundary, the kernel or device will
-> instead hit the physical page following the the first page of the
-> buffer, which is likely to be the wrong page.  This causes corruption
-> and maybe code execution.
+> The Riddle vulnerability (CVE-2017-3305) we have it there again.
 > 
-> Naively, this failure mode occurs because __pa (or virt_to_phys() or
-> virt_to_page() or whatever interface gets used) will return the PA of
-> the *beginning* of the buffer, but the next virtual page may not be
-> the next physical page.  But this makes no sense -- __pa and friends
-> don't have that effect when called on addresses in vmap space.
+> So what happened?
 > 
-> So I tried to refresh my memory of what actually happened.  (I looked
-> into this when I wrote CONFIG_VMAP_STACK.)  __pa() and friends return
-> garbage when called on a vmap address.  (I think it's likely to be a
-> totally bogus PA that won't even correspond to a real physical page of
-> memory.)  The tricky but is that it's *invertable* garbage.  When
-> these buffers are passed to synchronous crypto APIs, the crypto core
-> calls sg_virt(), which inverts the transformation and returns a valid
-> virtual address of the page.  But this is the original VA and points
-> to the vmap space where the buffer is genuinely contiguous.
+> In 2015 was discovered BACKRONYM vulnerability (CVE-2015-3152) which
+> allowed an attacker to downgrade and snoop on the SSL encrypted
+> connection between MySQL client and server. Oracle claimed it was
+> fixed in MySQL 5.5.49. Later in February 2017 I discovered The
+> Riddle vulnerability (CVE-2017-3305) which allowed an attacker to do
+> man in the middle attack. Oracle claimed it was fixed in MySQL
+> 5.5.55.
 > 
-> IOW, for most synchronous crypto, using sg_set_buf() on a stack
-> address is utterly bogus, but it works correctly.  Ick.
+> And now in April 2017 I found out that it is still not fixed in MySQL
+> 5.5.55 properly and I named this defect Again Riddle. Basically fix
+> for The Riddle in 5.5.55 introduced Again Riddle.
 > 
-> I haven't checked what USB does, but I suspect it's a wildly
-> out-of-bounds DMA transfer that's more likely to result in a
-> straight-up abort than easily exploitable corruption.
+> And what is the problem?
 > 
-> So could someone all these CVEs, please?
+> If MySQL client library libmysqlclient.so is compiled from source
+> code without SSL support via cmake switch -DWITH_SSL=OFF, then all
+> SSL related functions from libmysqlclient.so return success
+> (non-error) value. And function mysql_real_connect() from
+> libmysqlclient.so connects to MySQL server via plain text protocol,
+> even if client enforced SSL mode with certificate verification.
+> Which means that function for enforcing SSL mode does nothing if
+> libmysqlclient.so is compiled without SSL support. So attacker can
+> do exactly same what for The Riddle vulnerability.
 > 
-> --Andy
+> So every application which links to libmysqlclient.so and require SSL
+> encryption of MySQL protocol is affected.
+> 
+> I contacted Oracle, MariaDB and Percona security teams about this
+> problem and after discussion we scheduled public disclosure to May 3.
+> 
+> Oracle decided that this Again Riddle vulnerability would not have
+> CVE identifier and would be part of original The Riddle
+> vulnerability CVE-2017-3305.
+> 
+> I'm not sure if this is correct decision, as MariaDB 5.5 was not
+> affected by The Riddle vulnerability, but is affected by Again
+> Riddle.
+> 
+> I was told that prebuild binaries are not affected as they are
+> compiled with SSL support, but lot of distributions compile
+> libraries from source code by their own which means they could be
+> affected.
+> 
+> I prepared POC program written in C to verify if system installed
+> libmysqlclient.so library is vulnerable or not. You can find it on
+> the new Again Riddle website together with some Q&A:
+> 
+> http://again.riddle.link/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Yesterday Oracle released new MySQL 5.5.56 which disable compilation 
+without SSL support, just to address this issue.
+
+So it is not possible to compile MySQL without SSL support anymore.
+
+-- 
+Pali Rohár
+pali.rohar@...il.com
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
