@@ -1,49 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/12
-Message-ID: <20170120112604.cga6fjvktcveo46g@home.ouaza.com>
-Date: Fri, 20 Jan 2017 12:26:04 +0100
-From: Raphael Hertzog <hertzog@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/04/2
+Message-ID: <2e47f3de-a154-ff6d-a596-6c7766a96e34@pizzey.me>
+Date: Wed, 3 May 2017 16:42:25 -0500
+From: Sam Pizzey <sam@...zey.me>
 To: oss-security@...ts.openwall.com
-Cc: mista.agustin@...il.com
-Subject: Re: CVE-2016-9584: heap use-after-free on libical
+Subject: Re: [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Looks good! Especially the Exim RCE technique which I now need to go 
+play with.
 
-On Thu, 15 Dec 2016, Agustin Mista wrote:
-> We found a heap use-after-free in a recent revision of libical (
-> f3688b444f820cecf51b1539b0856a392c0fdb0f),
-> using a specially crafted ics file. This bugs looks particularly dangerous
-> since it allows to read a big chunk of the heap memory.
+However:
 
-I see you reported multiple bugs on github's libical issues page:
-https://github.com/libical/libical/issues/251
-https://github.com/libical/libical/issues/252
-https://github.com/libical/libical/issues/253
+'Also note that the output log file contains a lot of debug information
+added by Sendmail MTA. This might'
 
-Looking at the backtrace, it seems that #253 is the same as this one.
-Do you confirm?
+Might ..?
 
-Any reason why you did not request a CVE for #251?
+On 03/05/2017 15:32, Dawid Golunski wrote:
+> Here's a paper I wrote back in December.  It was originally meant to go
+> into Phrack but the team wanted a more general article on parameter injection
+> as mail() was supposedly an outdated technique.
+> Meanwhile, the RCE-chain continues :) So I decided to post it as it is without
+> changing it as mail() injection deserves a separate article imho.
+>
+> https://exploitbox.io/paper/Pwning-PHP-Mail-Function-For-Fun-And-RCE.html
+>
+> I reveal some exim code-execution vectors in there that should change
+> the whole game slightly :)
+>
+> See my exploit for WordPress Core that is based on it:
+> https://exploitbox.io/vuln/WordPress-Exploit-4-6-RCE-CODE-EXEC-CVE-2016-10033.html
+>
+>
+> I'll attach copies of the white-paper here in the next revision as I
+> haven't slept for 3 nights and need to double check on everything
+> before it goes into the archive forever :)
+>
+>
+> Regards,
+> Dawid Golunski
+> https://legalhackers.com
+> https://ExploitBox.io
+> t: @dawid_golunski
 
-> It is worth to mention there is a very similar bug found (CVE-2016-5824) on
-> the libical version used by
-> Thunderbird but we think is *not* the same as this one. In fact, we've
-> tested it on Thunderbird and it does *not* crash.
-> 
-> The reproducer is available upon request.
-
-#253 has a reproducer here:
-https://github.com/libical/libical/files/627392/heap-use-after-free.ical.txt
-
-Is this the same file?
-
-If it's a different file, then I'd like to have access to the file but I
-would prefer if it was just available publicly and not to me only.
-
-Cheers,
--- 
-Raphaël Hertzog ◈ Debian Developer
-
-Support Debian LTS: http://www.freexian.com/services/debian-lts.html
-Learn to master Debian: http://debian-handbook.info/get/
