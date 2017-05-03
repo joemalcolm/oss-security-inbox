@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/4
-Message-ID: <20170213112557.381@usenet.piggo.com>
-Date: Mon, 13 Feb 2017 10:30:10 +0000 (UTC)
-From: Sébastien Delafond <seb@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/12
+Message-ID: <CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>
+Date: Wed, 3 May 2017 20:55:23 +0200
+From: Guido Vranken <guidovranken@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XXE in Openpyxl
+Subject: rpcbomb: remote rpcbind denial-of-service
 Content-Type: text/plain; charset=utf-8
 
-On 2017-02-07, Doran Moppert <dmoppert@...hat.com> wrote:
-> This is yet another instance of CVE-2016-9318.  As already observed
-> on the Debian tracker, disabling entity resolution altogether is
-> probably going to make openpyxl fail on well-formed Excel documents
-> using standard entities such as &lt;.
+This vulnerability allows an attacker to allocate any amount of bytes
+(up to 4 gigabytes per attack) on a remote rpcbind host, and the
+memory is never freed unless the process crashes or the administrator
+halts or restarts the rpcbind service.
 
-Hi Doran,
+Attacking a system is trivial; a single attack consists of sending a
+specially crafted payload of around 60 bytes through a UDP socket.
 
-we do not see this issue being technically the same thing as
-CVE-2016-9318. openpyxl shouldn't need to resolve *external* XML
-entities, and the initial reporter of the Debian bug tested that the
-upstream patch doesn't break reglar entities like "&lt"; and
-"&gt;". What do you think ?
+This can slow down the system’s operations significantly or prevent
+other services (such as a web server) from spawning processes
+entirely.
 
-Cheers,
+An extensive write-up can be found here:
+https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
 
---Seb
-
+Exploit + patches: https://github.com/guidovranken/rpcbomb/
