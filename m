@@ -1,142 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/11
-Message-Id: <E1e2cPe-0007BF-Tb@xenbits.xenproject.org>
-Date: Thu, 12 Oct 2017 12:16:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 241 - Stale TLB entry due to page type release race
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/4
+Message-ID: <20170503084730.GA10085@hal>
+Date: Wed, 3 May 2017 10:47:30 +0200
+From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
+To: oss-security@...ts.openwall.com
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* Solar Designer <solar@...nwall.com> [2017-05-03 01:37]:
+> On Mon, May 01, 2017 at 06:44:28PM +0200, Solar Designer wrote:
+> > It is a well-known feature, previously discussed in here, that data
+> > printed to a terminal (emulator) may control that terminal, including
+> > making it effectively unusable until reset, and in some cases even
+> > pasting characters as if they were typed by the user.  Also as discussed
+> > what characters may be pasted varies by terminal - sometimes they can be
+> > arbitrary (e.g., if the terminal supports macro recording and playback
+> > via escape sequences) and sometimes not so (like a terminal reporting
+> > back its status, usually not followed by a linefeed, so not yet
+> > executing a shell command until further user assistance).  Here are some
+> > relevant threads:
+> > 
+> > http://www.openwall.com/lists/oss-security/2015/08/11/8
+> > http://www.openwall.com/lists/oss-security/2015/09/17/5
+> > http://www.openwall.com/lists/oss-security/2016/11/04/12
+> > 
+> > (I link to messages that started these threads, not necessarily to most
+> > informative messages in the threads.  So you might want to go through
+> > the threads with the "thread-next" links.)
+> 
+> Adding to the above older sub-topic of (mis)features rather than bugs,
+> here's a particularly relevant one, quoting excerpts from:
+> 
+> http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+> 
+> | Operating System Commands
+> | 
+> | OSC Ps ; Pt BEL
+> | OSC Ps ; Pt ST
+> [...]
+> | 
+> |             Ps = 5 2  -> Manipulate Selection Data.  These controls may
+> |           be disabled using the allowWindowOps resource.  The parameter
+> |           Pt is parsed as
+> |                Pc; Pd
+> |           The first, Pc, may contain zero or more characters from the
+> |           set c  p  s  0  1  2  3  4  5  6  7 .  It is used to construct
+> |           a list of selection parameters for clipboard, primary, select,
+> |           or cut buffers 0 through 7 respectively, in the order given.
+> |           If the parameter is empty, xterm uses s 0 , to specify the
+> |           configurable primary/clipboard selection and cut buffer 0.
+> |           The second parameter, Pd, gives the selection data.  Normally
+> |           this is a string encoded in base64.  The data becomes the new
+> |           selection, which is then available for pasting by other appli-
+> |           cations.
+> |           If the second parameter is a ? , xterm replies to the host
+> |           with the selection data encoded using the same protocol.
+> |           If the second parameter is neither a base64 string nor ? ,
+> |           then the selection is cleared.
+> 
+> The potential for use in attacks is mitigated by the fact that the reply
+> triggered by setting the second parameter to ? is "encoded using the
+> same protocol", so its string portion is in base64 and thus in its
+> encoded form won't contain a linefeed.  However, altering X clipboard's
+> content is nevertheless nasty and perhaps unexpected by a user.  If the
+> user pastes the clipboard into a terminal, perhaps thinking there's
+> still an intended command they had saved in there before, the replaced
+> content's embedded linefeed(s) will be pasted as such, thereby
+> immediately executing the attacker's command(s).
+> 
+> The feature is in fact present and working in xterm when allowWindowOps
+> is enabled (even though the clipboard isn't specific to one "window"),
+> and is non-working when it's disabled.  (I've just tested.)
 
-                    Xen Security Advisory XSA-241
-                              version 3
+The window operations setting is not binary though, if
+allowWindowOps is enabled you can blacklist certain functionality
+via disallowedWindowOps, e.g.
 
-             Stale TLB entry due to page type release race
+allowWindowOps: true
+disallowedWindowOps: GetSelection,SetSelection
 
-UPDATES IN VERSION 3
-====================
-
-Fix ARM build issue in patches.
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-x86 PV guests effect TLB flushes by way of a hypercall.  Xen tries to
-reduce the number of TLB flushes by delaying them as much as possible.
-When the last type reference of a page is dropped, the need for a TLB
-flush (before the page is re-used) is recorded.  If a guest TLB flush
-request involves an Inter Processor Interrupt (IPI) to a CPU in which
-is the process of dropping the last type reference of some page, and
-if that IPI arrives at exactly the right instruction boundary, a stale
-time stamp may be recorded, possibly resulting in the later omission
-of the necessary TLB flush for that page.
-
-IMPACT
-======
-
-A malicious x86 PV guest may be able to access all of system memory,
-allowing for all of privilege escalation, host crashes, and
-information leaks.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from at least 3.2 onwards are vulnerable.  Earlier
-versions have not been checked.
-
-Only x86 systems are affected.  ARM systems are not affected.
-
-Only x86 PV guests can leverage the vulnerability.  x86 HVM guests
-cannot leverage the vulnerability.
-
-RISK ASSESSMENT
-===============
-
-A successful attack would require introducing an extended delay between
-two adjacent operations on one cpu -- long enough for two hypercalls to
-complete on another cpu.  The security team currently has no
-proof-of-concept for this vulnerability.
-
-However, techniques for these sorts of timing-based attacks are
-continually advancing, so we still recommend users potentially affected
-by this issue apply the patch as soon as reasonably possible.
-
-MITIGATION
-==========
-
-Running only HVM guests will avoid this vulnerability.
-
-For PV guests, the vulnerability can be avoided if the guest kernel is
-controlled by the host rather than guest administrator, provided that
-further steps are taken to prevent the guest administrator from loading
-code into the kernel (e.g. by disabling loadable modules etc) or from
-using other mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Jann Horn of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa241.patch           xen-unstable
-xsa241-4.9.patch       Xen 4.9.x
-xsa241-4.8.patch       Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
-
-$ sha256sum xsa241*
-5e239ba4dbd74fd61e59a27f9abc8ea6ba32532bdf81eeb2d7e66f0fd53e40b4  xsa241.meta
-b8db933d53e7e289652ffda6c46ce284a0254a9f8bc9e1be6793e388009f49ce  xsa241.patch
-443a5b0818045ada44fad0370ac01af0c96181be5a4078ae3b2575799e4a4e5b  xsa241-4.8.patch
-927ef14d875556481c38d4065f501211a78eec1c2396a954a4a4abfb9255960f  xsa241-4.9.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZ31v/AAoJEIP+FMlX6CvZsNgIALcJ/DeUN5nv8duBvC3hbAX6
-NABBtlVJ6K7qZpAf+04Eztym4bEWXWGtJ1BQVCJ6aPwPZ4aOUodA/zRBEQS7Xp8F
-5P5U3Qwa/C+slqLh7QfYdwlkgdMRG67yWIo2xMOEcfORlPjc1wDxohtCQZT9uiMs
-Y9Xllt/sLhGgYq4+TpNvJyYMzvPp1+oBEuqcR58IZ2aepQJAlPl3LnLdYyN8TAqv
-MBmli7cRO/vYn5z7aII9NbuF8XEnx0Vfqp7EufLU1LQyG4S9jYXd0xvD6BjjkGWM
-N/dvJTMq8HXS00VUAoONOv+blq2AdRs9oYD8yeMCglUhpeK8cIaEsYzhOHbCvlI=
-=1uZK
------END PGP SIGNATURE-----
-
-Download attachment "xsa241.meta" of type "application/octet-stream" (2185 bytes)
-
-Download attachment "xsa241.patch" of type "application/octet-stream" (6123 bytes)
-
-Download attachment "xsa241-4.8.patch" of type "application/octet-stream" (4959 bytes)
-
-Download attachment "xsa241-4.9.patch" of type "application/octet-stream" (4981 bytes)
+will disallow interference with the selection while still allowing
+other window ops.
+Note also that distributions such as Debian/Ubuntu disallow
+everything by default.
+-- 
+Guido Berhoerster
