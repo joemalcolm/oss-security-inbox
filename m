@@ -1,178 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/13
-Message-ID: <68c416cf-44b4-1d43-441e-8262b0b88e82@securify.nl>
-Date: Sat, 29 Apr 2017 16:44:13 +0200
-From: "Securify B.V." <lists@...urify.nl>
-To: oss-security@...ts.openwall.com
-Subject: SyntaxHighlight MediaWiki extension allows injection of arbitrary Pygments options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/2
+Message-ID: <alpine.LFD.2.20.1705031419470.32279@wniryva>
+Date: Wed, 3 May 2017 14:22:50 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Jiangxin <jiangxin1@...wei.com>
+Subject: CVE-2017-8379 Qemu: input: host memory lekage via keyboard
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-SyntaxHighlight MediaWiki extension allows injection of arbitrary
-Pygments options
-------------------------------------------------------------------------
-Yorick Koster, February 2017
+   Hello,
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-A vulnerability was found in the SyntaxHighlight MediaWiki extension.
-Using this vulnerability it is possible for an anonymous attacker to
-pass arbitrary options to the Pygments library. By specifying specially
-crafted options, it is possible for an attacker to trigger a (stored)
-Cross-Site Scripting condition. In addition, it allows the creating of
-arbitrary files containing user-controllable data. Depending on the
-server configuration, this can be used by an anonymous attacker to
-execute arbitrary PHP code.
+Quick Emulator(Qemu) built with the keyboard input event handlers support is 
+vulnerable to a host memory leakage issue. It could occur if a guest user was 
+to generate large keyboard events, faster than Qemu could process them.
 
-------------------------------------------------------------------------
-See also
-------------------------------------------------------------------------
-- CVE-2017-0372 [2]
-- T158689 [3]: Parameters injection in SyntaxHighlight results in
-multiple vulnerabilities
-- Fix REL1_28 [4]: SECURITY: Escape start argument before passing to
-pygments
-- Fix REL1_27 [5]: SECURITY: Escape start argument before passing to
-pygments
-- MediaWiki-announce [6]: Security Release: 1.28.1 / 1.27.2 / 1.23.16
-(fix not included in this release)
+A privileged user inside guest could use this flaw to exhaust host memory, 
+resulting in DoS.
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was tested on SyntaxHighlight version 2.0 as bundled with
-MediaWiki version 1.28.0.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-04/msg05599.html
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-This issue was supposed to be fixed in MediaWiki version 1.28.1 and
-version 1.27.2. It appears that the fix was pushed to the git
-repository, but for some reason it was not included in the release
-packages. It is advised to apply the patch committed to Github.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1446547
 
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/2d5a60a89fb3995b73e17df5901d6f023e41df3d
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/a88c5e1dcbdb3e9940c6f55a6744c62a6d62710f
+This issue was reported by Jiang Xin (PSIRT Huawei Inc.)
 
-------------------------------------------------------------------------
-Introduction
-------------------------------------------------------------------------
-The SyntaxHighlight [7] extension for MediaWiki [8] allows formatting of
-source code using the <syntaxhighlight> tag. Version 2.0 uses the Python
-Pygments [9] library to format the code. SyntaxHighlight is bundled with
-MediaWiki version 1.21 and later. Version 2.0 is bundled with MediaWiki
-1.26.0 and later (other versions may or may not include this version as
-well).
+'CVE-2017-8379' allocated via -> http://cveform.mitre.org/
 
-The <syntaxhighlight> tag supports various parameters. It was found that
-the start parameter is not validated and/or sanitized. This allows an
-attacker to pass arbitrary options to the Lexer and/or Formatter that is
-used when Pygments is invoked. By specifying specially crafted options,
-it is possible for an attacker to trigger a (stored) Cross-Site
-Scripting condition. In addition, the HTML formatter allows the creating
-of arbitrary files containing user-controllable data. Depending on the
-server configuration, this can be used by an attacker to execute
-arbitrary PHP code.
-
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-The SyntaxHighlight extension utilizes Pygments to format source code.
-Pygments is a Python library, a copy is provided with the extension. In
-order to use Pygments, the extension invokes it using Symfony's [10]
-ProcessBuilder [11] component. This component performs escaping of
-command line arguments to prevent command injection.
-
-SyntaxHighlight_GeSHi.class.php:
-
-$optionPairs = array();
-foreach ( $options as $k => $v ) {
-	$optionPairs[] = "{$k}={$v}";
-}
-$builder = new ProcessBuilder();
-$builder->setPrefix( $wgPygmentizePath );
-$process = $builder
-	->add( '-l' )->add( $lexer )
-	->add( '-f' )->add( 'html' )
-	->add( '-O' )->add( implode( ',', $optionPairs ) )
-	->getProcess();
-	
-$process->setInput( $code );
-$process->run();
-
-The used Lexer is specified through the lang parameter, the Formatter is
-always set to the HtmlFormatter. Additional options for the Lexer and/or
-Formatter are provided using the -O command line argument. These options
-can be controlled by the parameters that are supported by the
-<syntaxhighlight> tag. Each option is a key value pair, the options are
-comma separated.
-
-It was found that no input validation and/or sanitization is done on the
-start parameter. This parameter is used to define the first line number
-of a code block. If line numbers are enabled, the numbering will start
-with the value provided in the start parameter. Normally, this value
-should only contain numbers. Due to the lack of validation/sanitization,
-it can be set to any value.
-
-SyntaxHighlight_GeSHi.class.php:
-
-// Starting line number
-if ( isset( $args['start'] ) ) {
-	$options['linenostart'] = $args['start'];
-}
-
-Since Lexer/Formatter options are comma separated, it is possible for an
-attacker to provide arbitrary options when invoking Pygments. Depending
-on the options supported by the Lexer or Formatter, this allows the
-attacker to perform various types of attacks. For example it is possible
-for an attacker to trigger a (stored) Cross-Site Scripting condition by
-passing a specially crafted prestyles option to the HTML Formatter.
-
-<syntaxhighlight lang="java" 
-start='0,prestyles="&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;'>
-	string foo="bar";
-</syntaxhighlight>
-
-
-When the option full is passed to the HTML Formatter, it is possible to
-specify a local CSS file using the cssfile option. If the CSS file does
-not exist it will be created - provided that Pygments has write
-privileges on the provided path. This CSS file contains the styles that
-are used for formatting the source code. Providing additional options,
-it is possible to control parts of the CSS. One such option is the
-classprefix option.
-
-Combining these options can result in execution of arbitrary PHP code,
-provided that a writeable folder exists within the webserver's document
-root that allows the execution of PHP files. The proof of concept below
-will try to create a PHP file name foo.php in the images folder located
-within the document root.
-
-<syntaxhighlight lang='java' 
-start='0,full=1,title=,cssfile=images/foo.php,classprefix=&lt;?php
-phpinfo();exit; ?&gt;'>
-</syntaxhighlight>
-
-Unless the Wiki is configured as private, it is possible to exploit this
-issue without logging into the Wiki. If the Wiki is set to private, an
-account with read access is required to exploit this vulnerability.
-------------------------------------------------------------------------
-References
-------------------------------------------------------------------------
-[1] 
-https://www.securify.nl/advisory/SFY20170201/syntaxhighlight_mediawiki_extension_allows_injection_of_arbitrary_pygments_options.html
-[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-0372
-[3] https://phabricator.wikimedia.org/T158689
-[4] 
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/2d5a60a89fb3995b73e17df5901d6f023e41df3d
-[5] 
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/a88c5e1dcbdb3e9940c6f55a6744c62a6d62710f
-[6] 
-https://lists.wikimedia.org/pipermail/mediawiki-announce/2017-April/000207.html
-[7] https://www.mediawiki.org/wiki/Extension:SyntaxHighlight
-[8] https://www.mediawiki.org
-[9] http://pygments.org/
-[10] https://symfony.com/
-[11] 
-http://api.symfony.com/3.2/Symfony/Component/Process/ProcessBuilder.html
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
