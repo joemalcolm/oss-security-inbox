@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/11
-Message-ID: <5267070.4mDNyxnpBX@blackgate>
-Date: Mon, 13 Mar 2017 11:06:02 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/6
+Message-ID: <CAP145pjFHU2p2cYomcaMqjHBmq4t4_yOqmB_D9U9SWxr0UJagA@mail.gmail.com>
+Date: Wed, 3 May 2017 15:41:04 +0200
+From: Robert Święcki <robert@...ecki.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 02 March 2017 16:33:47 Agostino Sarubbo 
-wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-g
-> 
-raphicsstacktgraphicsstackelementtgraphicsstackelement-
-graphicsstack-h
+> On a slightly different note; memory corruption/abort() problems might
+> end up as RCE with some effort, but what *is* RCE is ability to push
+> back characters into terminal's input buffer. There are some
+> well-known vectors, like setting title of the current terminal and
+> printing it back with ESC codes, and hopefully it's something that is
+> mitigated in all modern terminal emulator software packages for many
+> years now.
+>
+> But, it's not something that can be discovered simply by waiting for
+> SEGV and similar signals. Hence, I'd like to encourage everyone
+> looking for bugs in terminal emulators to add some form of
+> instrumentation to their fuzz setups aimed at finding such problems
+> too.
+>
+> A harmless example from rxvt - pushing back the new-line character:
+>
+> $ echo -ne "\eGQ;"
+> ;$ 0
+> bash: 0: command not found
 
-This is CVE-2017-6841
+For those interested in high-speed terminal emulator fuzzing
+(typically 300k-700k inputs/sec on a modern i7-6600K), I prepared a
+short step-by-step guide:
+
+https://github.com/google/honggfuzz/tree/master/examples/terminal-emulators
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
-
+Robert Święcki
