@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/8
-Message-ID: <6334883.xSAWTLvUd5@x2>
-Date: Fri, 14 Jul 2017 08:28:56 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/04/3
+Message-ID: <CAO5O-EL6qGatYRnqwb_aBc3x-hOTeZvZar0OQU4OU2dk45jctQ@mail.gmail.com>
+Date: Thu, 4 May 2017 16:12:01 +0200
+From: Guido Vranken <guidovranken@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Georgi Guninski <guninski@...inski.com>
-Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
+Subject: Re: rpcbomb: remote rpcbind denial-of-service
 Content-Type: text/plain; charset=utf-8
 
-On Friday, July 14, 2017 5:34:01 AM EDT Georgi Guninski wrote:
-> What is an estimate for the total number of exploitable bugs in large
-> linux distro?
+Salvatore Bonaccorso  of Debian was so kind to request a CVE. It is:
+CVE-2017-8779
 
-A few years back, Dan Geer wrote an interesting article about using biological 
-models to estimate how many bugs exist. Biologists have the same issue, how 
-many fish are in a lake?
-
-http://geer.tinho.net/fgm/fgm.geer.1504.pdf
-
--Steve
-
-> Also, does the total number decrease, increase or change in other way
-> over time?
-
-
+On Wed, May 3, 2017 at 8:55 PM, Guido Vranken <guidovranken@...il.com> wrote:
+> This vulnerability allows an attacker to allocate any amount of bytes
+> (up to 4 gigabytes per attack) on a remote rpcbind host, and the
+> memory is never freed unless the process crashes or the administrator
+> halts or restarts the rpcbind service.
+>
+> Attacking a system is trivial; a single attack consists of sending a
+> specially crafted payload of around 60 bytes through a UDP socket.
+>
+> This can slow down the system’s operations significantly or prevent
+> other services (such as a web server) from spawning processes
+> entirely.
+>
+> An extensive write-up can be found here:
+> https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
+>
+> Exploit + patches: https://github.com/guidovranken/rpcbomb/
