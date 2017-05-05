@@ -1,29 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/12/1
-Message-ID: <alpine.LFD.2.20.1706121430420.20327@wniryva>
-Date: Mon, 12 Jun 2017 14:33:33 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-9524 Qemu: nbd: segmentation fault due to client non-negotiation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/05/2
+Message-ID: <756cef1f-ab04-dbc3-a80a-67fbae7e4cab@redhat.com>
+Date: Fri, 5 May 2017 11:52:49 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: rpcbomb: remote rpcbind denial-of-service
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+On 05/05/2017 11:22 AM, Marcus Meissner wrote:
+> On Wed, May 03, 2017 at 05:55:20PM -0700, Seth Arnold wrote:
+>> On Wed, May 03, 2017 at 08:55:23PM +0200, Guido Vranken wrote:
+>>> This vulnerability allows an attacker to allocate any amount of bytes
+>>> (up to 4 gigabytes per attack) on a remote rpcbind host, and the
+>>> memory is never freed unless the process crashes or the administrator
+>>> halts or restarts the rpcbind service.
+>>> [...]
+>>> An extensive write-up can be found here:
+>>> https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
+>>>
+>>> Exploit + patches: https://github.com/guidovranken/rpcbomb/
+>>
+>> Hello Guido, nice find. Have CVE numbers been requested for this issue
+>> yet? Have you investigated if ntirpc is affected too? Much of the code
+>> looks similar:
+>>
+>> http://sources.debian.net/src/ntirpc/1.4.3-3/src/rpc_generic.c/#L728
+> 
+> We also saw glibc affected.
+> 
+> https://bugzilla.suse.com/show_bug.cgi?id=1037559#c7
+> 
+> That said, your reproducer allocates virtual memory, and on systems with overcommit
+> there is only neglible impact on overall memory pressure.
+> 
+> The rpc service will however likely crash at some point though when there is no virtual
+> address space left for it.
 
-Quick Emulator(Qemu) built with the Network Block Device(NBD) Server support 
-is vulnerable to a null pointer dereference issue. It could occur while 
-releasing a client, which was not initialised due to failed negotiation.
+Thanks, I filed it upstream as well:
 
-A remote user/process could use this flaw to crash the qemu-nbd server 
-resulting in DoS.
+https://sourceware.org/bugzilla/show_bug.cgi?id=21461
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-05/msg06240.html
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-06/msg02321.html
+Looks like both xdr_bytes and xdr_string have a similar bug.
 
-'CVE-2017-9524' assigned via -> https://cveform.mitre.org/
+I'd appreciate some guidance on reusing or not reusing CVE IDs here.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Florian
