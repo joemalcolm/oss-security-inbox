@@ -1,56 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/9
-Message-ID: <51722bb1-e4c8-4aa3-0008-0994c35ff2ce@suse.com>
-Date: Fri, 3 Feb 2017 18:02:53 +0100
-From: Andreas Stieger <astieger@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/05/1
+Message-ID: <20170505092258.GF25854@suse.de>
+Date: Fri, 5 May 2017 11:22:58 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read
+Subject: Re: rpcbomb: remote rpcbind denial-of-service
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Wed, May 03, 2017 at 05:55:20PM -0700, Seth Arnold wrote:
+> On Wed, May 03, 2017 at 08:55:23PM +0200, Guido Vranken wrote:
+> > This vulnerability allows an attacker to allocate any amount of bytes
+> > (up to 4 gigabytes per attack) on a remote rpcbind host, and the
+> > memory is never freed unless the process crashes or the administrator
+> > halts or restarts the rpcbind service.
+> > [...]
+> > An extensive write-up can be found here:
+> > https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
+> > 
+> > Exploit + patches: https://github.com/guidovranken/rpcbomb/
+> 
+> Hello Guido, nice find. Have CVE numbers been requested for this issue
+> yet? Have you investigated if ntirpc is affected too? Much of the code
+> looks similar:
+> 
+> http://sources.debian.net/src/ntirpc/1.4.3-3/src/rpc_generic.c/#L728
 
+We also saw glibc affected.
 
-On 02/03/2017 12:29 PM, John Haxby wrote:
-> On 03/02/17 05:52, Wade Mealing wrote:
->> Mounting a crafted EXT4 image read-only leads to a memory corruption and
->> SLAB-Out-of-Bounds Reads (according to KASAN).  Since the mounting
->> procedure is a privileged operation, an attacker is probably not able
->> to trigger this vulnerability on the commandline.
->> Instead the automatic mounting feature of the GUI via a crafted
->> USB-device is required.
->>
->> From full disclosure at:
->>
->> http://seclists.org/fulldisclosure/2016/Nov/75
->>
->> If it has been assigned elsewhere, I am unable to see it.
-> The bugzilla link from the above isn't accessible.  Are we missing any
-> useful information?
+https://bugzilla.suse.com/show_bug.cgi?id=1037559#c7
 
+That said, your reproducer allocates virtual memory, and on systems with overcommit
+there is only neglible impact on overall memory pressure.
 
-https://bugzilla.suse.com/show_bug.cgi?id=1023377#c1
+The rpc service will however likely crash at some point though when there is no virtual
+address space left for it.
 
-RH: https://bugzilla.redhat.com/show_bug.cgi?id=1395190
-ML: http://www.spinics.net/lists/linux-ext4/msg54572.html
-
-Introduced in:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=952fc18ef9ec707ebdc16c0786ec360295e5ff15
-(first in v3.6-rc1...)
-
-Fix:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3a4b77cd47bb837b8557595ec7425f281f2ca1fe
-(first in v4.10-rc1)
-
-
-Andreas
-
--- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Ciao, Marcus
