@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3243" "Monday" "1" "February" "2016" "08:16:05" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1602010814410.21513@tvnag.unkk.fr>" "100" "[oss-security] curl: NTLM credentials not-checked for proxy connection re-use" nil nil nil "2" "2016020107:16:05" "[oss-security] curl: NTLM credentials not-checked for proxy connection re-use" (number mark "U       daniel@haxx. Feb  1  100/3243  " thread-indent "\"[oss-security] curl: NTLM credentials not-checked for proxy connection re-use\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1499" "Friday" "5" "May" "2017" "11:52:49" "+0200" "Florian Weimer" "fweimer@redhat.com" "<756cef1f-ab04-dbc3-a80a-67fbae7e4cab@redhat.com>" "38" "Re: [oss-security] rpcbomb: remote rpcbind denial-of-service" "^Date:" nil nil "5" "2017050509:52:49" "[oss-security] rpcbomb: remote rpcbind denial-of-service" (number mark "        fweimer@redh May  5   38/1499  " thread-indent "\"Re: [oss-security] rpcbomb: remote rpcbind denial-of-service\"\n") "<20170505092258.GF25854@suse.de>" ("<CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>" "<20170504005520.GD12174@hunt>" "<20170505092258.GF25854@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11746 invoked by uid 550); 1 Feb 2016 07:16:36 -0000
+Received: (qmail 30033 invoked by uid 550); 5 May 2017 09:53:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11616 invoked from network); 1 Feb 2016 07:16:17 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Mon, 1 Feb 2016 08:16:05 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1602010814410.21513@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 30009 invoked from network); 5 May 2017 09:53:03 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 1F7413B70D
+Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fweimer@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 1F7413B70D
+References: <CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>
+ <20170504005520.GD12174@hunt> <20170505092258.GF25854@suse.de>
+Message-ID: <756cef1f-ab04-dbc3-a80a-67fbae7e4cab@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] curl: NTLM credentials not-checked for proxy connection re-use
+In-Reply-To: <20170505092258.GF25854@suse.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Fri, 05 May 2017 09:52:51 +0000 (UTC)
+Date: Fri, 5 May 2017 11:52:49 +0200
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] rpcbomb: remote rpcbind denial-of-service
+To: oss-security@lists.openwall.com
 
-NTLM credentials not-checked for proxy connection re-use
-========================================================
+On 05/05/2017 11:22 AM, Marcus Meissner wrote:
+> On Wed, May 03, 2017 at 05:55:20PM -0700, Seth Arnold wrote:
+>> On Wed, May 03, 2017 at 08:55:23PM +0200, Guido Vranken wrote:
+>>> This vulnerability allows an attacker to allocate any amount of bytes
+>>> (up to 4 gigabytes per attack) on a remote rpcbind host, and the
+>>> memory is never freed unless the process crashes or the administrator
+>>> halts or restarts the rpcbind service.
+>>> [...]
+>>> An extensive write-up can be found here:
+>>> https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
+>>>
+>>> Exploit + patches: https://github.com/guidovranken/rpcbomb/
+>>
+>> Hello Guido, nice find. Have CVE numbers been requested for this issue
+>> yet? Have you investigated if ntirpc is affected too? Much of the code
+>> looks similar:
+>>
+>> http://sources.debian.net/src/ntirpc/1.4.3-3/src/rpc_generic.c/#L728
+> 
+> We also saw glibc affected.
+> 
+> https://bugzilla.suse.com/show_bug.cgi?id=1037559#c7
+> 
+> That said, your reproducer allocates virtual memory, and on systems with overcommit
+> there is only neglible impact on overall memory pressure.
+> 
+> The rpc service will however likely crash at some point though when there is no virtual
+> address space left for it.
 
-Project cURL Security Advisory, January 27th 2016 -
-[Permalink](http://curl.haxx.se/docs/adv_20160127A.html)
+Thanks, I filed it upstream as well:
 
-VULNERABILITY
--------------
+https://sourceware.org/bugzilla/show_bug.cgi?id=21461
 
-libcurl will reuse NTLM-authenticated proxy connections without properly
-making sure that the connection was authenticated with the same credentials as
-set for this transfer.
+Looks like both xdr_bytes and xdr_string have a similar bug.
 
-libcurl maintains a pool of connections after a transfer has completed. The
-pool of connections is then gone through when a new transfer is requested and
-if there's a live connection available that can be reused, it is preferred
-instead of creating a new one.
+I'd appreciate some guidance on reusing or not reusing CVE IDs here.
 
-Since NTLM-based authentication is *connection oriented* instead of *request
-oriented* as other HTTP based authentication, it is important that only
-connections that have been authenticated with the correct username + password
-are reused. This was done properly for server connections already, but libcurl
-failed to do it properly for proxy connections using NTLM.
-
-A libcurl application can easily switch user credentials used for a proxy
-connection between two requests, and that subsequent transfer then MUST make
-libcurl use another connection. libcurl previously failed to do so.
-
-The effects of this flaw, is that the application could be reusing a proxy
-connection using the previously used credentials and thus it could be given to
-or prevented access from resources that it wasn't intended to.
-
-This problem is very similar to
-[CVE-2014-0015][http://curl.haxx.se/docs/adv_20140129.html], which was for
-direct server connections while this is for proxy connections.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw can also affect the curl command line tool if a similar operation
-series is made with that.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-0755 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw is relevant for
-
-- Affected versions: libcurl 7.10.7 to and including 7.46.0
-- Not affected versions: libcurl < 7.10.7 and libcurl >= 7.47.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.47.0, libcurl properly verifies the credentials for NTLM proxies
-and only reuses a connection if there there is a match.
-
-A patch for this problem that changes the default is available at:
-
-     http://curl.haxx.se/CVE-2016-0755.patch
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.47.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Avoid NTLM with proxies, or if you use NTLM with proxies, make sure you
-      close all the libcurl handles if you ever change proxy credentials so that
-      libcurl won't get a chance to reuse the wrong connection.
-
-TIME LINE
----------
-
-It was first reported to the curl project on January 13 2016. We contacted
-distros@openwall on January 21.
-
-libcurl 7.47.0 was released on January 27 2016, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-Reported and patched by Isaac Boukris.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Florian
