@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/05/3
-Message-Id: <CE3AFC1B-46F2-4482-809D-2D8822A219FB@beckweb.net>
-Date: Tue, 5 Dec 2017 11:09:33 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/07/2
+Message-ID: <73bb24ef-176d-0ea1-e0a3-5f4a9542ea50@tripleback.net>
+Date: Sun, 7 May 2017 12:12:59 -0400
+From: Kash Pande <kash@...pleback.net>
 To: oss-security@...ts.openwall.com
-Subject: Jenkins stored cross-site scripting vulnerability
+Subject: Re: [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
 
-The Jenkins project released a security advisory today. A description of the
-vulnerability is below. More details, severity, and attribution can be found
-here:
-https://jenkins.io/security/advisory/2017-12-05/
+On 03/05/17 04:32 PM, Dawid Golunski wrote:
+> Here's a paper I wrote back in December.  It was originally meant to go
+> into Phrack but the team wanted a more general article on parameter injection
+> as mail() was supposedly an outdated technique.
+> Meanwhile, the RCE-chain continues :) So I decided to post it as it is without
+> changing it as mail() injection deserves a separate article imho.
+>
+> https://exploitbox.io/paper/Pwning-PHP-Mail-Function-For-Fun-And-RCE.html
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+This article purposely uses a litany of poor programming practices to 
+expose an alleged exploit in PHP mail().. I'd like to see the same 
+exploit, without assuming the developer on the software had no idea what 
+they're doing (passing non-sanitized variables to functions). As well, 
+you noted in your own article that this 'discovery' was first published 
+in 2011 by someone else.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+>
+> I reveal some exim code-execution vectors in there that should change
+> the whole game slightly :)
 
----
+Not really, because it still relies on unfiltered input.
 
-SECURITY-624
-Jenkins administrators can configure tools, such as JDK, Maven, or Ant,
-that will be available in job configurations for use by build scripts. Some
-tool names are not properly escaped on job configuration forms, resulting
-in a stored cross-site scripting vulnerability.
 
-Tools confirmed to be affected are:
-- JDK (provided by Jenkins core)
-- Ant (provided by Ant plugin)
-
-Others may also be affected by this.
-
-This vulnerability can only be exploited by Jenkins administrators, as
-they’re the only ones able to define tools. In the vast majority of Jenkins
-configurations, administrators are able to run any code and install any
-plugin. Therefore this vulnerability only really affects installations that
-don’t grant administrators the Run Scripts, Configure Update Sites, and
-Install Plugins permissions.
-
-The Jenkins project has prepared a plugin preventing the configuration of
-unsafe tool names at https://github.com/jenkinsci-cert/security624 as a
-workaround. If you’re affected by this issue, we recommend installing this
-plugin.
 
