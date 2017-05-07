@@ -1,120 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/1
-Message-ID: <1d5bcc90-3248-b7bf-6d3e-64fdc6c9a4bc@windriver.com>
-Date: Mon, 3 Jul 2017 08:31:05 +0200
-From: Mark Hatle <mark.hatle@...driver.com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/07/1
+Message-ID: <952229.668011086-sendEmail@localhost>
+Date: Sun, 7 May 2017 10:10:17 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libpcre: heap-based buffer overflow write in pcre2test.c
 Content-Type: text/plain; charset=utf-8
 
-On 7/1/17 4:07 PM, Solar Designer wrote:
-> On Sat, Jul 01, 2017 at 01:57:55PM +0200, Mark Hatle wrote:
->> We (Wind River) can take a more active role in at least some of the
->> administrative tasks..
-> 
-> Thank you!
-> 
->> However, I can assure you we don't have the time or
->> ability to do it ourselves.
-> 
+Description:
+libpcre is a perl-compatible regular expression library.
 
-Sorry I wasn't clear.  "time or ability to do it all ourselves" is what I meant
-to write.
+A fuzz on pcre2 via pcre2test revealed an overflow in that command-line utility.
 
-Between timezones, vacation schedules, etc.  I can't promise immediate responses
-or even a specific response time to the list.
+# pcre2test -d -i -32 $FILE
+==30932==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61100000a000 at pc 0x7f2d8c3aea0f bp 0x7ffeea6b6e20 sp 0x7ffeea6b6e18   
+WRITE of size 4 at 0x61100000a000 thread T0  
+    #0 0x7f2d8c3aea0e in pcre2_get_error_message_32 /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2_error.c:318:13
+    #1 0x53b7c5 in process_pattern /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:5169:3    
+    #2 0x513846 in main /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:7839:10    
+    #3 0x7f2d8b37478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
+    #4 0x41d5b8 in _init (/usr/bin/pcre2test+0x41d5b8) 
 
-> No "time or ability" to take care of any one (or preferably more) of the
-> administrative micro-roles I listed?  This makes no sense to me.  All of
-> the administrative tasks combined are far less than one full-time job.
-> With good discipline and focus, they can probably be taken care of with
-> 1 hour of effort per day on average (of course, there will be occasional
-> busy days, but also many days with no work of this type).  All of them
-> at once.  I think I know this because of me being the fallback person
-> for this type of work so far.  OTOH, I do recognize that I listed a few
-> additional tasks now - such as producing statistics - and the extent of
-> work on tasks involving monitoring external resources can vary greatly.
-> So maybe it's more than 1 hour/day on average with those extra tasks and
-> desired greater extent now.  But not much more.
+0x61100000a000 is located 0 bytes to the right of 256-byte region [0x611000009f00,0x61100000a000)   
+allocated by thread T0 here:  
+    #0 0x4d6378 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64    
+    #1 0x54c522 in to32 /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:2911:27    
+    #2 0x53962e in process_pattern /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:4998:43   
+    #3 0x513846 in main /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:7839:10    
+    #4 0x7f2d8b37478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
 
-So really what I'm saying is even for something trivial, there will be times
-where I can not promise immediate response.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2_error.c:318:13 in 
+pcre2_get_error_message_32    
+Shadow bytes around the buggy address:  
+  0x0c227fff93b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff93f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff9400:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9420: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9450: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==30932==ABORTING
 
-> What I do understand is needing to temporarily transfer responsibility
-> to another distro if your own team subscribed to the list is small and
-> many of these people may simultaneously go on vacation.
+Affected version:
+10.23
 
-We effectively have one person monitoring the list, with two backup in case of
-vacations.  Occasionally all people are out at the same time (usually national
-holidays.)  I'm happy to offer our help, but as long as my limitations are
-understood then I think this will be beneficial.  (I doubt we are unique in
-this.  If we could subscribe all of our developers then the limitations go away
--- but that would be a terrible idea for informational security.)  :)
+Fixed version:
+N/A
 
-> A reason why I listed so many administrative micro-tasks/roles is that
-> I'd like to allow for an even (or close to it) distribution of the
-> effort across the distros, where every one of them bears a tiny portion
-> of this small total effort of running the list.  This would also serve
-> to ensure and demonstrate to the rest of us that every distro is still
-> an active member, without us needing responsiveness tests.
-> 
-> The technical expertise tasks could be worked on to varying extent,
-> including becoming a full-time job for someone or even for several
-> people.  There's no decision on the exact extent yet, but it should be
-> sufficient to almost always avoid things like the recent incomplete fix
-> in Sudo.
-> 
->> So the more then one 'actor' on an action would definitely be what I suggest.
-> 
-> That's within consideration, but we got to start by listing at least one
-> distro per task.  When we eventually have more than one listed for some
-> task, we or they will need to coordinate their activities, and that
-> could create extra work.  Perhaps a "primary and backup" arrangement for
-> two distros sharing a task will work best: will not result in "no one's
-> responsibility" and will have low coordination overhead.
-> 
-> The first administrative task of getting back to message senders is so
-> trivial that I think it'd make sense to keep it reserved to the distro
-> who was last to join, perhaps switching responsibility to them from the
-> previous distro once the new member has confirmed they're successfully
-> receiving messages through the list.  The new distro will be "primary"
-> and the previous will be "backup" for that role.  Always that way,
-> unless the newly joining distro opts for something less trivial right
-> away.  (I know some people would be offended by being asked to
-> participate in this trivial activity.  I think they'd be wrong, but we
-> can accommodate their egos, no problem.)  This will quickly test each
-> new distro's responsiveness and get them involved, and hopefully
-> encourage them to pick up several of the less trivial tasks as well
-> (they will need to, or otherwise they'd be left without a task once
-> another distro joins, which would be inappropriate).
+Commit fix:
+https://vcs.pcre.org/pcre2/code/trunk/src/pcre2test.c?r1=692&r2=697
 
-Reply that a report made it to the list would certainly be an easy original
-task.  I've not done it so far, only because others usually beat me to it.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
->> Unfortunately I really don't have a good sense (based on the link to the tasks)
->> as to what would be appropriate to volunteer for.  I'm open to suggestions.
-> 
-> It's really anything you feel like doing.  Perhaps see in which areas
-> you have been helping already, and suggest that you focus on those.
+CVE:
+CVE-2017-8786
 
-Unfortunately I'm on vacation through the end of this week (as are many of us
-that are located in North America.)  So I can get back with what we can help
-with next week.  (If tasks are gone, that is fine.)
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00220-pcre2-heapoverflow-pcre2_get_error_message_32
 
-Thank you for organizing this.  I do think it is important.
+Timeline:
+2017-03-17: bug discovered and reported to upstream
+2017-03-21: upstream released a patch
+2017-04-29: blog post about the issue
+2017-05-05: CVE assigned
 
---Mark
+Note:
+This bug was found with American Fuzzy Lop.
 
-> If you really want me to narrow down the list for you, let me know.
-> 
-> This may also start happening on its own, due to other distros picking
-> up tasks.  Once a task is taken by one or two distros, I will want
-> further distros to volunteer for other tasks.  So if you want to have
-> more freedom of choice, hurry up.
-> 
-> OTOH, with distros not volunteering for specific tasks (like we've seen
-> so far), I might just assign tasks to distros myself.
-> 
-> Alexander
-> 
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/29/libpcre-heap-based-buffer-overflow-write-in-pcre2test-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
