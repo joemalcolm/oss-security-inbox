@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1515" "Saturday" "2" "November" "2019" "22:27:27" "+0300" "Alexander Popov" "alex.popov@linux.com" "<ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>" "39" "[oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid" nil nil nil "11" "2019110219:27:27" "[oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid" (number mark "U       alex.popov@l Nov  2   39/1515  " thread-indent "\"[oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4142" "Sunday" "7" "May" "2017" "10:10:17" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<952229.668011086-sendEmail@localhost>" "101" "[oss-security] libpcre: heap-based buffer overflow write in pcre2test.c" "^Date:" nil nil "5" "2017050710:10:17" "[oss-security] libpcre: heap-based buffer overflow write in pcre2test.c" (number mark "        ago@gentoo.o May  7  101/4142  " thread-indent "\"[oss-security] libpcre: heap-based buffer overflow write in pcre2test.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3969 invoked by uid 550); 2 Nov 2019 19:27:43 -0000
+Received: (qmail 23554 invoked by uid 550); 7 May 2017 10:10:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,114 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3937 invoked from network); 2 Nov 2019 19:27:43 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:to:from:subject:autocrypt:message-id
-         :date:user-agent:mime-version:content-language
-         :content-transfer-encoding;
-        bh=MwPyH6iKhWXZ83Em+Rxv/yWvyfj7W/MaI/aQWVrDmgM=;
-        b=qLU0HFNq6mQC92+uoKr+7rZLPYthA2lYVyMTIvePwf11P/tbrnlApH+qYm9edZQiKb
-         6DOQBJI7IiM07r9IiDdQjduKlYPRl1qZ/+PqNfgCPiPRWNMN+A7ojlXJ/prIK2gZ2vNz
-         uTNAjpItkK+8dfAcJjqSf/eyArx0c/2LDtjZOQRoy7CmLpIxmMMMJ1t62D1glmY6Ydkt
-         1DgDRBwcljDU+/gs8FG0F6spOD9xgEuPZ3QG2/Yc2sgdbOcMURNiCCHgoXZM/oznCIl7
-         hAKjimGGi0AggoVtlWJH09a97ICSHYxz+Suu+p/chct4Y2F7Z7T5Ctl5oFCku7rQ+T0j
-         68/w==
-X-Gm-Message-State: APjAAAU9H4goW410wlreuOZNgDNKUuT+lmIonE68bVlf1d3o9B9K78WY
-	it6dUJTZzW4Hf+M0nh/IPKCqkLl7m8Y=
-X-Google-Smtp-Source: APXvYqxYfDoODbOPPOVY/AlAmXfy1Q/7jPxw4EULLiFrIsEDWVLVUiZKnD25mItVSLneGqHjq64Ilw==
-X-Received: by 2002:a2e:7207:: with SMTP id n7mr11751551ljc.207.1572722851488;
-        Sat, 02 Nov 2019 12:27:31 -0700 (PDT)
-To: oss-security@lists.openwall.com
-From: Alexander Popov <alex.popov@linux.com>
-Autocrypt: addr=alex.popov@linux.com; prefer-encrypt=mutual; keydata=
- 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
- j3lCqPk=
-Message-ID: <ab2c1aae-38d8-c15e-6109-f522f85936d2@linux.com>
-Date: Sat, 2 Nov 2019 22:27:27 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.1
+Received: (qmail 22506 invoked from network); 7 May 2017 10:10:36 -0000
+Message-ID: <952229.668011086-sendEmail@localhost>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-228696.871855394"
+Date: Sun, 7 May 2017 10:10:17 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] libpcre: heap-based buffer overflow write in pcre2test.c
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+
+------MIME delimiter for sendEmail-228696.871855394
+Content-Type: text/plain;
+        charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [ Linux kernel ] Exploitable bugs in drivers/media/platform/vivid
 
-Hello!
+Description:
+libpcre is a perl-compatible regular expression library.
 
-I used the syzkaller fuzzer with custom modifications and found a bunch of
-5-year old bugs in the Linux kernel. I managed to exploit one of them for a
-local privilege escalation.
+A fuzz on pcre2 via pcre2test revealed an overflow in that command-line utility.
 
-These vulnerabilities are caused by wrong mutex locking in the vivid driver of
-the V4L2 subsystem. Please see the fixing patch that I've just sent to LKML:
-https://lore.kernel.org/lkml/20191102190327.24903-1-alex.popov@linux.com/
+# pcre2test -d -i -32 $FILE
+==30932==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61100000a000 at pc 0x7f2d8c3aea0f bp 0x7ffeea6b6e20 sp 0x7ffeea6b6e18   
+WRITE of size 4 at 0x61100000a000 thread T0  
+    #0 0x7f2d8c3aea0e in pcre2_get_error_message_32 /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2_error.c:318:13
+    #1 0x53b7c5 in process_pattern /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:5169:3    
+    #2 0x513846 in main /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:7839:10    
+    #3 0x7f2d8b37478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
+    #4 0x41d5b8 in _init (/usr/bin/pcre2test+0x41d5b8) 
 
-The vivid driver doesn't require any special hardware. It is shipped in Ubuntu,
-Debian, Arch Linux, SUSE Linux Enterprise and openSUSE.
+0x61100000a000 is located 0 bytes to the right of 256-byte region [0x611000009f00,0x61100000a000)   
+allocated by thread T0 here:  
+    #0 0x4d6378 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64    
+    #1 0x54c522 in to32 /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:2911:27    
+    #2 0x53962e in process_pattern /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:4998:43   
+    #3 0x513846 in main /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2test.c:7839:10    
+    #4 0x7f2d8b37478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
 
-On Ubuntu the devices created by this driver are available to the normal user,
-since Ubuntu applies RW ACL when the user is logged in:
-  a13x@ubuntu_server_1804:~$ getfacl /dev/video0
-  getfacl: Removing leading '/' from absolute path names
-  # file: dev/video0
-  # owner: root
-  # group: video
-  user::rw-
-  user:a13x:rw-
-  group::rw-
-  mask::rw-
-  other::---
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/libpcre2-10.23/work/pcre2-10.23/src/pcre2_error.c:318:13 in 
+pcre2_get_error_message_32    
+Shadow bytes around the buggy address:  
+  0x0c227fff93b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff93e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff93f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff9400:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9420: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff9450: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==30932==ABORTING
 
-(Un)fortunately, I don't know how to autoload the vulnerable driver, which
-limits the severity of these vulnerabilities. That's why the Linux kernel
-security team allows me to do the full disclosure.
+Affected version:
+10.23
 
-But there is an interesting aspect -- my PoC exploit bypasses SMEP and SMAP on
-the fresh Ubuntu Server 18.04. Moreover, it gains the local privilege escalation
-from the kthread context (where the userspace is not mapped). I'm going to share
-the details about the exploit techniques later.
+Fixed version:
+N/A
 
-For now I would recommend to blacklist the vivid kernel module on your machines.
+Commit fix:
+https://vcs.pcre.org/pcre2/code/trunk/src/pcre2test.c?r1=692&r2=697
 
-Best regards,
-Alexander
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8786
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00220-pcre2-heapoverflow-pcre2_get_error_message_32
+
+Timeline:
+2017-03-17: bug discovered and reported to upstream
+2017-03-21: upstream released a patch
+2017-04-29: blog post about the issue
+2017-05-05: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/04/29/libpcre-heap-based-buffer-overflow-write-in-pcre2test-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-228696.871855394--
+
