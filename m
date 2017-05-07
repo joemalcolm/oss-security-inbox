@@ -1,4 +1,9 @@
-Received: (qmail 32613 invoked by uid 550); 19 May 2026 15:32:22 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4241" "Sunday" "7" "May" "2017" "17:32:38" "-0300" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzstpKUwZ89poth5XNbROcBnakBJ9+rnJ9zJrvfSdKe_q6Q@mail.gmail.com>" "105" "Re: [oss-security] [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)" "^Date:" nil nil "5" "2017050720:32:38" "[oss-security] [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)" (number mark "        dawid@legalh May  7  105/4241  " thread-indent "\"Re: [oss-security] [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)\"\n") "<73bb24ef-176d-0ea1-e0a3-5f4a9542ea50@tripleback.net>" ("<CADSYzstfctEZTo4GKGR-H2WXC3kZRSAj7sj7ZHCAu9C7Ff5BYw@mail.gmail.com>" "<73bb24ef-176d-0ea1-e0a3-5f4a9542ea50@tripleback.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32749 invoked by uid 550); 7 May 2017 20:32:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,162 +11,147 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 4031 invoked from network); 19 May 2026 14:15:57 -0000
-From: SBA Research Security Advisory <advisory@sba-research.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [SBA-ADV-20260128-03] CVE-2026-42543: DFIR-IRIS before 2.4.28
- Cross-Site Request Forgery (CSRF)
-Thread-Index: AdznmaT5x/w9GGNbQJC2Dg/caIBZ9A==
-Date: Tue, 19 May 2026 14:15:47 +0000
-Message-ID: <79f185e0e5024eb5b3c04706d0ed8628@sba-research.org>
-Accept-Language: de-AT, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Received: (qmail 32731 invoked from network); 7 May 2017 20:32:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=cvcLGd6u0YjzZeXnx1PjP23+Oj7KwvUzTK6CCro/Yh4=;
+        b=t38mktWzeOj5Q4PKSmCQFqhDakrVvdnfHxfPB1jXa9pSziKbyi3XRcex5U43+FPO0U
+         Y44vazKe7KD9oBS4PBYMoyqTSEzUGNLGb2E3ZY6UT+jsMD38lqcaCpgbEmnCtPH6f4Le
+         CdRzowXbyWDS8nv/uyMPttzdX2HbPo6CHGltYcxI19210W9GNgnW94+U1bYjGB2GChSP
+         Fahbd+9SUGkzuV1FrYkp0ZP317hyvIja3yr7BEb+8NTgCA+dQtYEQKFhw8C/D8bTCcvv
+         MQaJKu6JsMIVe9oR0dFXDG/pCalEt4vquR136Zh80b0/7NPEQdCw4NKe1joadhta6HCV
+         6Mqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=cvcLGd6u0YjzZeXnx1PjP23+Oj7KwvUzTK6CCro/Yh4=;
+        b=DSYdmaB4LOIfqo7y0ss0T7pueEJlkSpBbx10y/9DEx3VdF09Md5P/OpfSW1EVNX/HY
+         qnClAGpMikA03l9nbonXD4r8SghvjYRlZPwfkKW1PCADdLAzFWKM5JnLSYzn/WGyS06t
+         37UMSrXQefY7vkdvrUVIhm9dC+uL+psxBEqOX07Ll2pGQE/ZO8IoHuo/AdL23L6BZh/4
+         hQH07oopiVT9ilvidZthrJWtptFEFu8bCUj7IVR8//cycEzdnkWuFd0j5/h2QNBrzXUN
+         shFID2ABwo9mvZ1LBmCjpBYHgDaky3HdNgtMp3l51jxWR/xkOb22gADYZsHlZA5/oMIt
+         xsPA==
+X-Gm-Message-State: AN3rC/5UNkDYo9XWkLS1el7DVBKlufNV4rOhdh0pEGAqKHkKQJcR5kSB
+	1dUIrFxBpmHQLdhpGllXVJPkX3+F+XSw
+X-Received: by 10.159.33.71 with SMTP id 65mr7780305uab.50.1494189158482; Sun,
+ 07 May 2017 13:32:38 -0700 (PDT)
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=sba-research.org; s=_dkimgw1; c=relaxed/relaxed;
- h=from:to:subject:date:message-id:content-type:mime-version;
- bh=43ZgezTZzInJEoQlV6azyLuu9Nj3W3CImOmY7X/geCc=;
- b=niCH1qtz1aj6Re3uWE/rQzsfMAXf9X0B1mV8PO/64ft0zZtv9bK853QsytKg7P8ImUNJYJtmgnp4
-	veBrufLRQRppBEITYiap2s5hO073bk6uydt3SXuSqnnZJNA868ZHzrayuBqMcy4WOYhq1EovqMOr
-	cdCJHCW3QS1m3dzRMWKQ/r+mm+MstP7zSX5VRSpZ2HYwyTcNNWoUdUxMOHhIe12mLwvz9FHQyhy5
-	EGbpadrO8tASHjytlkCgLg9v8IWxEGzvm3No4gzqfarGeQAGCFavz0yKTyMCDZXfMNgYU/ry025c
-	APp1j1rHdTClfLNDIeaPhhwEvybjGXHdQdyV/g==
-Subject: [oss-security] [SBA-ADV-20260128-03] CVE-2026-42543: DFIR-IRIS before 2.4.28
- Cross-Site Request Forgery (CSRF)
+In-Reply-To: <73bb24ef-176d-0ea1-e0a3-5f4a9542ea50@tripleback.net>
+References: <CADSYzstfctEZTo4GKGR-H2WXC3kZRSAj7sj7ZHCAu9C7Ff5BYw@mail.gmail.com>
+ <73bb24ef-176d-0ea1-e0a3-5f4a9542ea50@tripleback.net>
+Message-ID: <CADSYzstpKUwZ89poth5XNbROcBnakBJ9+rnJ9zJrvfSdKe_q6Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 7 May 2017 17:32:38 -0300
+From: Dawid Golunski <dawid@legalhackers.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] [white-paper] Pwning PHP mail() function For Fun
+ And RCE (ver 1.0)
+To: oss-security@lists.openwall.com
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hBMjU2DQoNCiMgREZJ
-Ui1JUklTIENyb3NzLVNpdGUgUmVxdWVzdCBGb3JnZXJ5IChDU1JGKSAjDQoNCkxpbms6IGh0dHBz
-Oi8vZ2l0aHViLmNvbS9zYmFyZXNlYXJjaC9hZHZpc29yaWVzL3RyZWUvcHVibGljLzIwMjYvU0JB
-LUFEVi0yMDI2MDEyOC0wM19ERklSLUlSSVNfQ1NSRg0KDQojIyBWdWxuZXJhYmlsaXR5IE92ZXJ2
-aWV3ICMjDQoNClRoZSBJUklTIHdlYiBhcHBsaWNhdGlvbiBpcyB2dWxuZXJhYmxlIHRvIGEgKkNy
-b3NzLXNpdGUgcmVxdWVzdCBmb3JnZXJ5Kg0KYXR0YWNrLCBiZWNhdXNlIGl0IHVzZXMgdGhlIEhU
-VFAgbWV0aG9kIGBHRVRgIHRvIGNoYW5nZSBzdGF0ZSBvbiB0aGUgc2VydmVyLg0KDQoqICoqSWRl
-bnRpZmllcioqICAgICAgICAgICAgOiBTQkEtQURWLTIwMjYwMTI4LTAzDQoqICoqVHlwZSBvZiBW
-dWxuZXJhYmlsaXR5KiogOiBDcm9zcy1zaXRlIHJlcXVlc3QgZm9yZ2VyeSAoQ1NSRikNCiogKipT
-b2Z0d2FyZS9Qcm9kdWN0IE5hbWUqKiA6IFtJUklTXShodHRwczovL3d3dy5kZmlyLWlyaXMub3Jn
-LykNCiogKipWZW5kb3IqKiAgICAgICAgICAgICAgICA6IFtERklSLUlSSVNdKGh0dHBzOi8vZ2l0
-aHViLmNvbS9kZmlyLWlyaXMpDQoqICoqQWZmZWN0ZWQgVmVyc2lvbnMqKiAgICAgOiA8PSAyLjQu
-MjcNCiogKipGaXhlZCBpbiBWZXJzaW9uKiogICAgICA6IHYyLjQuMjgNCiogKipDVkUgSUQqKiAg
-ICAgICAgICAgICAgICA6IENWRS0yMDI2LTQyNTQzDQoqICoqQ1ZTUyBWZWN0b3IqKiAgICAgICAg
-ICAgOiBDVlNTOjMuMS9BVjpOL0FDOkwvUFI6Ti9VSTpSL1M6VS9DOk4vSTpML0E6Tg0KKiAqKkNW
-U1MgQmFzZSBTY29yZSoqICAgICAgIDogNC4zIChNZWRpdW0pDQoNCiMjIFZlbmRvciBEZXNjcmlw
-dGlvbiAjIw0KDQo+IElSSVMgaXMgYSBjb2xsYWJvcmF0aXZlIGRpZ2l0YWwgcGxhdGZvcm0gZGVz
-aWduZWQgZm9yIGluY2lkZW50IHJlc3BvbnNlDQo+IGFuYWx5c3RzIHRvIHNoYXJlIGNvbXBsZXgg
-aW52ZXN0aWdhdGlvbnMgYXQgYSB0ZWNobmljYWwgbGV2ZWwuIEl0IGNhbiBiZQ0KPiBpbnN0YWxs
-ZWQgb24gYSBkZWRpY2F0ZWQgc2VydmVyIG9yIGFzIGEgcG9ydGFibGUgYXBwbGljYXRpb24gZm9y
-IHJvYW1pbmcNCj4gaW52ZXN0aWdhdGlvbnMgd2hlcmUgaW50ZXJuZXQgYWNjZXNzIG1pZ2h0IG5v
-dCBiZSBhdmFpbGFibGUuDQoNClNvdXJjZTogPGh0dHBzOi8vZG9jcy5kZmlyLWlyaXMub3JnLzIu
-NC4yNC8+DQoNCiMjIEltcGFjdCAjIw0KDQpXaXRoIHRoZSBpbmRpY2F0ZWQgYXR0YWNrLCB1c2Vy
-cyB2aXNpdGluZyBhIG1hbGljaW91cyB3ZWJzaXRlLCBvciBldmVuDQpjZXJ0YWluIHBhcnRzIG9m
-IHRoZSBhcHBsaWNhdGlvbiBpdHNlbGYsIGNhbiBpbmFkdmVydGVudGx5IHRyaWdnZXIgYWN0aW9u
-DQp3aGlsZSBoYXZpbmcgYW4gYWN0aXZlIHNlc3Npb24uIFRob3NlIGFjdGlvbnMgaW5jbHVkZSB0
-aGUgcm90YXRpb24gb2YgYW4NCkFQSS10b2tlbiBhbmQgZW5kaW5nIHRoZSBzZXNzaW9uIHZpYSBh
-IGxvZ291dC4NCg0KIyMgVnVsbmVyYWJpbGl0eSBEZXNjcmlwdGlvbiAjIw0KDQpUaGUgYXBwbGlj
-YXRpb24gYWNjZXB0cyBwYXJhbWV0ZXJzIGJvdGggd2hlbiB0aGV5IGFyZSB0cmFuc21pdHRlZCB1
-c2luZyB0aGUNCkhUVFAtR0VUIGFuZCBIVFRQLVBPU1QgbWV0aG9kcy4gVGhpcyB1bm5lY2Vzc2Fy
-aWx5IGV4cGFuZHMgdGhlIGF0dGFjayBzdXJmYWNlDQphbmQgZmFjaWxpdGF0ZXMgKkNyb3NzLXNp
-dGUgcmVxdWVzdCBmb3JnZXJ5IChDU1JGKSosICpDcm9zcy1TaXRlIFNjcmlwdGluZyoNCm9yICpT
-ZXJ2ZXItU2lkZS1SZXF1ZXN0LUZvcmdlcnkqIGF0dGFja3MgKFNTUkYpLCBmb3IgZXhhbXBsZS4g
-VGhpcyByZW5kZXJzDQphbGwgYXZhaWxhYmxlIHByb3RlY3RpdmUgY29udHJvbHMgYWdhaW5zdCBD
-U1JGIGF0dGFja3MgaW5lZmZlY3RpdmUuDQoNCiMjIFByb29mIG9mIENvbmNlcHQgIyMNCg0KIyMj
-IEFQSSBLZXkgUm90YXRpb24gIyMjDQoNClRoZSBmb2xsb3dpbmcgSFRUUCBjb21tdW5pY2F0aW9u
-IHJvdGF0ZXMgdGhlIEFQSSBrZXkgb2YgdGhlIGFjY291bnQ6DQoNClJlcXVlc3Q6DQoNCmBgYGh0
-dHANCkdFVCAvdXNlci90b2tlbi9yZW5ldz9jaWQ9MSBIVFRQLzEuMQ0KSG9zdDogbXlpcmlzLmxv
-Y2FsDQpDb29raWU6IHNlc3Npb249LmVKd1suLi5dDQpVc2VyLUFnZW50OiBNb3ppbGxhLzUuMCAo
-WDExOyBMaW51eCB4ODZfNjQ7IHJ2OjE0MC4wKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzE0MC4w
-DQpBY2NlcHQ6IGFwcGxpY2F0aW9uL2pzb24sIHRleHQvamF2YXNjcmlwdCwgKi8qOyBxPTAuMDEN
-CkFjY2VwdC1MYW5ndWFnZTogZW4tVVMsZW47cT0wLjUNCkFjY2VwdC1FbmNvZGluZzogZ3ppcCwg
-ZGVmbGF0ZSwgYnINClgtUmVxdWVzdGVkLVdpdGg6IFhNTEh0dHBSZXF1ZXN0DQpSZWZlcmVyOiBo
-dHRwczovL215aXJpcy5sb2NhbC91c2VyL3NldHRpbmdzP2NpZD0xDQpTZWMtRmV0Y2gtRGVzdDog
-ZW1wdHkNClNlYy1GZXRjaC1Nb2RlOiBjb3JzDQpTZWMtRmV0Y2gtU2l0ZTogc2FtZS1vcmlnaW4N
-ClByaW9yaXR5OiB1PTANClRlOiB0cmFpbGVycw0KQ29ubmVjdGlvbjoga2VlcC1hbGl2ZQ0KYGBg
-DQoNClJlc3BvbnNlOg0KDQpgYGBodHRwDQpIVFRQLzEuMSAyMDAgT0sNClNlcnZlcjogbmdpbngN
-CkRhdGU6IE1vbiwgMjYgSmFuIDIwMjYgMTA6NDc6MzEgR01UDQpDb250ZW50LVR5cGU6IGFwcGxp
-Y2F0aW9uL2pzb24NCkNvbnRlbnQtTGVuZ3RoOiA2MQ0KQ29ubmVjdGlvbjoga2VlcC1hbGl2ZQ0K
-VmFyeTogQ29va2llDQpDb250ZW50LVNlY3VyaXR5LVBvbGljeTogZGVmYXVsdC1zcmMgJ3NlbGYn
-IGh0dHBzOi8vYW5hbHl0aWNzLmRmaXItaXJpcy5vcmc7IHNjcmlwdC1zcmMgJ3NlbGYnICd1bnNh
-ZmUtaW5saW5lJyBodHRwczovL2FuYWx5dGljcy5kZmlyLWlyaXMub3JnOyBzdHlsZS1zcmMgJ3Nl
-bGYnICd1bnNhZmUtaW5saW5lJzsgaW1nLXNyYyAnc2VsZicgZGF0YTo7DQpYLVhTUy1Qcm90ZWN0
-aW9uOiAxOyBtb2RlPWJsb2NrDQpYLUZyYW1lLU9wdGlvbnM6IERFTlkNClgtQ29udGVudC1UeXBl
-LU9wdGlvbnM6IG5vc25pZmYNClN0cmljdC1UcmFuc3BvcnQtU2VjdXJpdHk6IG1heC1hZ2U9MzE1
-MzYwMDA6IGluY2x1ZGVTdWJEb21haW5zDQpGcm9udC1FbmQtSHR0cHM6IG9uDQoNCnsic3RhdHVz
-IjogInN1Y2Nlc3MiLCAibWVzc2FnZSI6ICJUb2tlbiByZW5ld2VkIiwgImRhdGEiOiBbXX0NCmBg
-YA0KDQpBZnRlciBwZXJmb3JtaW5nIHRoaXMgb3BlcmF0aW9uLCB0aGUgcHJldmlvdXNseSB1c2Vk
-IHRva2VuIHdpbGwgYmUNCnVuYXZhaWxhYmxlIGFuZCBhbGwgYXBwbGljYXRpb25zIHJlbHlpbmcg
-b24gaXQgd2lsbCBjZWFzZSB0byBmdW5jdGlvbi4gVGhlDQpjdXJyZW50bHkgaW1wbGVtZW50ZWQg
-Q1NSRi1wcm90ZWN0aW9uIHZpYSB0aGUgdXNhZ2Ugb2YgdGhlIGBjc3JmLXRva2VuYCBpcw0Kbm90
-IHdvcmtpbmcgZm9yIGBHRVRgLXJlcXVlc3RzLg0KDQpUaGUgYXR0YWNrIGNvdWxkIGJlIHBlcmZv
-cm1lZCBieSBsdXJpbmcgdGhlIHVzZXIgb250byBhIG1hbGljaW91cyBzaXRlLCBvcg0KZXZlbiBi
-eSBoaWRpbmcgdGhlIHRhZyBpbiB0aGUgSVJJUyBhcHBsaWNhdGlvbiBpdHNlbGYsIGUuZy4sIGJ5
-IHNldHRpbmcgYW4NCkhUTUwgZGVzY3JpcHRpb25zIGxpa2UgdGhpczoNCg0KIVtTY3JlZW5zaG90
-IG9mIGEgZm9yY2VkIEFQSSB0b2tlbiByZW5ld2FsIGluc2lkZSBhbiBpbWFnZSBVUkxdKGltYWdl
-cy9DU1JGX2h0bWwucG5nKQ0KDQojIyMgTG9nb3V0ICMjIw0KDQpBbm90aGVyIHN1c2NlcHRpYmxl
-IGVuZHBvaW50IHRvIHRoaXMgdnVsbmVyYWJpbGl0eSBpcyB0aGUgbG9nb3V0DQpmdW5jdGlvbmFs
-aXR5Og0KDQpgYGBodHRwDQpHRVQgL2xvZ291dCBIVFRQLzEuMQ0KSG9zdDogbXlpcmlzLmxvY2Fs
-DQpDb29raWU6IHNlc3Npb249LmVKd1suLi5dDQpVc2VyLUFnZW50OiBNb3ppbGxhLzUuMCAoWDEx
-OyBMaW51eCB4ODZfNjQ7IHJ2OjE0MC4wKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzE0MC4wDQpB
-Y2NlcHQ6IHRleHQvaHRtbCxhcHBsaWNhdGlvbi94aHRtbCt4bWwsYXBwbGljYXRpb24veG1sO3E9
-MC45LCovKjtxPTAuOA0KQWNjZXB0LUxhbmd1YWdlOiBlbi1VUyxlbjtxPTAuNQ0KQWNjZXB0LUVu
-Y29kaW5nOiBnemlwLCBkZWZsYXRlLCBicg0KUmVmZXJlcjogaHR0cHM6Ly9teWlyaXMubG9jYWwv
-ZGFzaGJvYXJkDQpVcGdyYWRlLUluc2VjdXJlLVJlcXVlc3RzOiAxDQpTZWMtRmV0Y2gtRGVzdDog
-ZG9jdW1lbnQNClNlYy1GZXRjaC1Nb2RlOiBuYXZpZ2F0ZQ0KU2VjLUZldGNoLVNpdGU6IHNhbWUt
-b3JpZ2luDQpTZWMtRmV0Y2gtVXNlcjogPzENClByaW9yaXR5OiB1PTAsIGkNClRlOiB0cmFpbGVy
-cw0KQ29ubmVjdGlvbjoga2VlcC1hbGl2ZQ0KDQpIVFRQLzEuMSAzMDIgRk9VTkQNClNlcnZlcjog
-bmdpbngNCkRhdGU6IE1vbiwgMjYgSmFuIDIwMjYgMTM6NTc6MjcgR01UDQpDb250ZW50LVR5cGU6
-IHRleHQvaHRtbDsgY2hhcnNldD11dGYtOA0KQ29udGVudC1MZW5ndGg6IDIxMw0KQ29ubmVjdGlv
-bjoga2VlcC1hbGl2ZQ0KTG9jYXRpb246IC9sb2dpbj9uZXh0PS8NClZhcnk6IENvb2tpZQ0KU2V0
-LUNvb2tpZTogc2Vzc2lvbj07IEV4cGlyZXM9VGh1LCAwMSBKYW4gMTk3MCAwMDowMDowMCBHTVQ7
-IE1heC1BZ2U9MDsgU2VjdXJlOyBIdHRwT25seTsgUGF0aD0vOyBTYW1lU2l0ZT1MYXgNCkNvbnRl
-bnQtU2VjdXJpdHktUG9saWN5OiBkZWZhdWx0LXNyYyAnc2VsZicgaHR0cHM6Ly9hbmFseXRpY3Mu
-ZGZpci1pcmlzLm9yZzsgc2NyaXB0LXNyYyAnc2VsZicgJ3Vuc2FmZS1pbmxpbmUnIGh0dHBzOi8v
-YW5hbHl0aWNzLmRmaXItaXJpcy5vcmc7IHN0eWxlLXNyYyAnc2VsZicgJ3Vuc2FmZS1pbmxpbmUn
-OyBpbWctc3JjICdzZWxmJyBkYXRhOjsNClgtWFNTLVByb3RlY3Rpb246IDE7IG1vZGU9YmxvY2sN
-ClgtRnJhbWUtT3B0aW9uczogREVOWQ0KWC1Db250ZW50LVR5cGUtT3B0aW9uczogbm9zbmlmZg0K
-U3RyaWN0LVRyYW5zcG9ydC1TZWN1cml0eTogbWF4LWFnZT0zMTUzNjAwMDogaW5jbHVkZVN1YkRv
-bWFpbnMNCkZyb250LUVuZC1IdHRwczogb24NCg0KWy4uLl0NCmBgYA0KDQojIyBSZWNvbW1lbmRl
-ZCBDb3VudGVybWVhc3VyZXMgIyMNCg0KV2UgcmVjb21tZW5kIHVwZGF0aW5nIHRvIElSSVMgdmVy
-c2lvbiAyLjQuMjggb3IgbGF0ZXIuDQoNCldoZW4gcGFyYW1ldGVycyBhcmUgc2VudCBieSBkZWZh
-dWx0IHVzaW5nIHRoZSBQT1NUIG1ldGhvZCwgSVJJUyBzaG91bGQgb25seQ0KYWNjZXB0IHRoZW0g
-dXNpbmcgUE9TVC4NCg0KSXQgbXVzdCBhbHNvIGJlIGVuc3VyZWQgdGhhdCBHRVQgcmVxdWVzdHMg
-ZG8gbm90IGxlYWQgdG8gYW55IHN0YXR1cyBjaGFuZ2VzDQpvbiB0aGUgc2VydmVyLg0KDQojIyBU
-aW1lbGluZSAjIw0KDQoqIGAyMDI2LTAxLTI4YCBJZGVudGlmaWVkIHRoZSB2dWxuZXJhYmlsaXR5
-IGluIHZlcnNpb24gMi40LjI2DQoqIGAyMDI2LTAxLTMwYCBJbml0aWFsIHZlbmRvciBjb250YWN0
-IHZpYSBlLW1haWwNCiogYDIwMjYtMDItMjdgIFNlY29uZCB2ZW5kb3IgY29udGFjdCB2aWEgZS1t
-YWlsDQoqIGAyMDI2LTAzLTMwYCBSZXBvcnQgb24gR2l0SHViIGR1ZSB0byBhIG1pc3NpbmcgcmVz
-cG9uc2UgZnJvbSB0aGUgdmVuZG9yDQoqIGAyMDI2LTA0LTI3YCBWZXJzaW9uIGNvbnRhaW5pbmcg
-Zml4ICh2Mi40LjI4KSB0YWdnZWQgYnkgdmVuZG9yDQoqIGAyMDI2LTA0LTI4YCBHaXRIdWIgYXNz
-aWduZWQgQ1ZFLTIwMjYtNDI1NDMNCiogYDIwMjYtMDUtMDRgIENvbmZpcm0gZml4IGZvciB2Mi40
-LjI4DQoqIGAyMDI2LTA1LTE5YCBQdWJsaWMgZGlzY2xvc3VyZQ0KDQojIyBSZWZlcmVuY2VzICMj
-DQoNCiogUkZDIDcyMzEuIEh5cGVydGV4dCBUcmFuc2ZlciBQcm90b2NvbCAoSFRUUC8xLjEpOiBT
-ZW1hbnRpY3MgYW5kIENvbnRlbnQuDQogIFNhZmUgTWV0aG9kczogPGh0dHBzOi8vd3d3LnJmYy1l
-ZGl0b3Iub3JnL3JmYy9yZmM3MjMxLmh0bWwjc2VjdGlvbi00LjIuMT4NCiogQ29tbW9uIFdlYWtu
-ZXNzIEVudW1lcmF0aW9uLiBDV0UtNjUwIFRydXN0aW5nIEhUVFAgUGVybWlzc2lvbiBNZXRob2Rz
-IG9uIHRoZQ0KICBTZXJ2ZXIgU2lkZTogPGh0dHBzOi8vY3dlLm1pdHJlLm9yZy9kYXRhL2RlZmlu
-aXRpb25zLzY1MC5odG1sPg0KDQojIyBDcmVkaXRzICMjDQoNCiogTWljaGFlbCBLb3BwbWFubiAo
-W1NCQSBSZXNlYXJjaF0oaHR0cHM6Ly93d3cuc2JhLXJlc2VhcmNoLm9yZy8pKQ0KKiBNYXRoaWFz
-IFRhdXNpZyAoW1NCQSBSZXNlYXJjaF0oaHR0cHM6Ly93d3cuc2JhLXJlc2VhcmNoLm9yZy8pKQ0K
-DQpUaGUgZGlzY292ZXJ5IG9mIHRoaXMgdnVsbmVyYWJpbGl0eSB3YXMgbWFkZSBwb3NzaWJsZSB0
-aHJvdWdoIHN1cHBvcnQgZnJvbQ0KW0NZU1NERV0oaHR0cHM6Ly9jeXNzZGUuZXUvKSBhbmQgdGhl
-IEV1cm9wZWFuIFVuaW9uLg0KDQohW0NZU1NERV0oaW1hZ2VzL2N5c3NkZS5wbmcpDQotLS0tLUJF
-R0lOIFBHUCBTSUdOQVRVUkUtLS0tLQ0KDQppUUpQQkFFQkNBQTVGaUVFTDlXcC95WldGRDlPcEl0
-Nis3aUdMMWozZGJJRkFtb01jSkViRklBQUFBQUFCQUFPDQpiV0Z1ZFRJc01pNDFLekV1TVRJc01p
-d3hBQW9KRVB1NGhpOVk5M1d5aTk4UC8weWpPdnhzclJTT1VsZHFxYjVtDQpkVUxSdWRGTlVtbWtR
-OE1OY1VSTDNFSmVKUWRyQTBCL0g5bE9va3VYbExZaXpvR1ovaFo2bkhDdGxSRmNmY0I4DQo2d0pq
-ZnhRZDQzd1IyT1NHZ001NnNNd1BIdTZVUTNpZ0Q5NE9ZQlU1emdiVHIwQ1p5UHJrSXFMSFNUK2Fs
-a2luDQp6dzdrTDhLSlUrNThCWCtDb1I1bVNGYStDTkdabTlMT01VZVVYcGExM1dPMVNLdTJ0RUFT
-ZU1NVDl0bXBTYUp5DQppTUVDY09rUUtJSDQxSFZpekFPeHMzVFp6MUxxU0dTRzJWbDBFQWI1aFFS
-bDI5KzE5d0kzQTRQcDU0RUFlK1J6DQorWGFqYWlpT3AxWks5NUNrakc0bmlhc1czTWk3eDgvdXhS
-S05sWEM1NFphOVRnc2FoSHU3azBRWTdMb0N1NTRDDQpRNk14bFlrR3IvRXBxNWlicFRBTjBQSXRQ
-TFRvMXhPQmNSSjR4YUJvVzNwdWxwMkVhNlpSNG8rY0pwNTEzYVBwDQpaZ3hsa0Jyckk0bk4weWg3
-UnRXVy9JNVdSMCs4OXRzd3VNYVNSTi9BamxISEhWby9wL2l4OCtiVzJ4UElxL1BmDQo1ZVB2UlAy
-b0wwWDZjOTA4UDRWVWkvbnMyeExTMU1WdUtGVkU0VXIwY29sUDFPZzh4SXdNajlCMGU1aXRkRlB3
-DQpTd3VQaHdhZk9xL3htRXJ4NnRFWmd5V2l6cHFYWUpDV094K1h3eXVrM2kyR2tiSG45bXQxL2dT
-T2xPNjdhU1JrDQpNcFJPTWJ3RjhzY0xuRitPQTg0YnJwSTQvQmhRb0lkNzlJdTAwY1N1NENVNGZV
-S2pqZkFwSXZsYTJYUzNlMFdDDQowYnVodHpHbFF3TWhpekdQbUN4RkRxQ24NCj1UWUVIDQotLS0t
-LUVORCBQR1AgU0lHTkFUVVJFLS0tLS0NCg==
+Hi Kash,
+
+On Sun, May 7, 2017 at 1:12 PM, Kash Pande <kash@tripleback.net> wrote:
+>
+> On 03/05/17 04:32 PM, Dawid Golunski wrote:
+>>
+>> Here's a paper I wrote back in December.  It was originally meant to go
+>> into Phrack but the team wanted a more general article on parameter
+>> injection
+>> as mail() was supposedly an outdated technique.
+>> Meanwhile, the RCE-chain continues :) So I decided to post it as it is
+>> without
+>> changing it as mail() injection deserves a separate article imho.
+>>
+>> https://exploitbox.io/paper/Pwning-PHP-Mail-Function-For-Fun-And-RCE.html
+>
+>
+> This article purposely uses a litany of poor programming practices to expose
+> an alleged exploit in PHP mail().. I'd like to see the same exploit, without
+> assuming the developer on the software had no idea what they're doing
+> (passing non-sanitized variables to functions).
+
+In my article some of the early examples are simplified to demonstrate
+the general concept in an easy way.
+Try digging a bit deeper and maybe do some research too...
+Note the paragraph:
+"It presents several new exploitation vectors and bypass techniques
+on the PHP mail() function that were discovered and recently released by the
+author of this white-paper in the course of finding multiple critical
+vulnerabilities in major PHP e-mail sending libraries (PHPMailer, Zend
+Framework / Zend-mail, SwiftMailer) that are used by millions of web
+applications/projects (e.g Wordpress, Drupal, Joomla etc.)  and PHP
+programming frameworks (Zend, Yii2, Symphony, Laravel etc.)"
+
+These are all real-world examples of vulns that I discovered and that
+you can read-up on here:
+
+https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
+https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10045-Vuln-Patch-Bypass.html
+https://legalhackers.com/advisories/SwiftMailer-Exploit-Remote-Code-Exec-CVE-2016-10074-Vuln.html
+https://legalhackers.com/advisories/ZendFramework-Exploit-ZendMail-Remote-Code-Exec-CVE-2016-10034-Vuln.html
+https://legalhackers.com/advisories/SquirrelMail-Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
+
+These are pretty good examples I think. If creators of major email
+sending libraries / email client software have made the mistakes that
+have stayed hidden for years,  there is a chance others have made
+it/will make it too.
+
+Contrary to what you seem to assume here, mail() function parameters
+are quite tricky to use properly.
+Note my CVE-2016-10045 exploit which was a bypass of the
+CVE-2016-10033 patch applied to phpmailer library.
+
+There is also a whole write-up on the subject/problem by a developer
+that emerged after the phpmailer vulnerability I disclosed:
+
+https://gist.github.com/Zenexer/40d02da5e07f151adeaeeaa11af9ab36
+
+
+> As well, you noted in your
+> own article that this 'discovery' was first published in 2011 by someone
+> else.
+
+Yes, as explained, with only 2 Sendmail techniques (file write with -X
+parameter / and file read -C parameter) known back then which are not
+really applicable these days as Sendmail is pretty much extinct/not
+shipped with any distro by default, and -X required a writable upload
+directory / known path etc.
+
+http://www.securityspace.com/s_survey/data/man.201703/mxsurvey.html
+
+
+>>
+>> I reveal some exim code-execution vectors in there that should change
+>> the whole game slightly :)
+>
+>
+> Not really, because it still relies on unfiltered input.
+>
+
+Yes, you have to have a vulnerability to exploit it ;)
+It's like saying 'ret2libc is useless technique because it still
+relies on a buffer overflow, format string, X... vulnerability' :)
+
+The exim vector I presented in the article will help a lot in the
+exploitation of these kind of vulns as exim is widely used, and the
+vector doesn't require you to know file paths, plus it is good for
+bypassing filters.
+
+A good example of the exim vector is my recently disclosed Wordpress
+RCE expoit (which would likely not be possible if it wasn't for the
+exim vector):
+
+https://exploitbox.io/vuln/WordPress-Exploit-4-6-RCE-CODE-EXEC-CVE-2016-10033.html
+
+
+Hope this helps / explains some things better and happy hacking.
+
+
+
+Regards,
+Dawid Golunski
+https://legalhackers.com
+https://ExploitBox.io
+t: @dawid_golunski
