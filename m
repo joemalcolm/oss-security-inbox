@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2174" "Friday" "2" "December" "2016" "11:43:08" "+0100" "=?utf-8?B?U8OpYmFzdGllbg==?= Delafond" "seb@debian.org" "<20161202104308.GE4706@hz1>" "63" "[oss-security] CVE request: 2 issues in tomcat8 Debian packaging" nil nil nil "12" "2016120210:43:08" "[oss-security] CVE request: 2 issues in tomcat8 Debian packaging" (number mark "U       seb@debian.o Dec  2   63/2174  " thread-indent "\"[oss-security] CVE request: 2 issues in tomcat8 Debian packaging\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["676" "Monday" "8" "May" "2017" "09:10:12" "-0400" "Russ Cox" "rsc@swtch.com" "<CADSkJJU9JJ--uWnYD0yTMXuK3EHvpcCUC9GSxzq4X7f3Ogd0dA@mail.gmail.com>" "14" "[oss-security] Re: remote DoS via CPU exhaustion in anon FTP server glob expansion" "^Date:" nil nil "5" "2017050813:10:12" "[oss-security] Re: remote DoS via CPU exhaustion in anon FTP server glob expansion" (number mark "        rsc@swtch.co May  8   14/676   " thread-indent "\"[oss-security] Re: remote DoS via CPU exhaustion in anon FTP server glob expansion\"\n") "<CADSkJJWpn3Z6VermSdq9f2ckxQ59BUXDZ4y=_A0gSQKv7YZ+zg@mail.gmail.com>" ("<CADSkJJWpn3Z6VermSdq9f2ckxQ59BUXDZ4y=_A0gSQKv7YZ+zg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9723 invoked by uid 550); 2 Dec 2016 13:37:09 -0000
+Received: (qmail 5626 invoked by uid 550); 8 May 2017 14:00:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14026 invoked from network); 2 Dec 2016 10:43:22 -0000
+Received: (qmail 9834 invoked from network); 8 May 2017 13:10:59 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=AiSQaeHb/6E3sp6b18W3wRRq9BjOB5mp8jISO/y+fs4=;
-        b=dI1D6FWSO2Z1GlCPKgiUwij+rJWgGsi5Npgria9iEOJfVYf/iWZg7OfUaPMHmP+hGc
-         3ZLSrmelyE6fkDsVjWDYXLOspLsvEHeyctHG35W1iM5vCibCg+mmJS66hLMhk59Vg+y4
-         p34o4MU1zzeTD4dMxGVUoA+DRUNRajXqsZyI3dvSRjiEfXD9KG7OghO+2VGVHtQhLhzh
-         Cvej0N3AS96o2MX/uXewzypTyBfFT61ChCfImTSrLv6iYRHJxzohhMEJI1T6v/TwE+/V
-         OaAKJDr13WYdonMfjzEvH/4et5NlBCNDSJSYqrwv8A4/v8eDZVRUgWjBeqqWzjFvhQHX
-         ESiQ==
+        d=swtch.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=O8s7KDyDX0grYrH8GfDcmHz2M1mKUar7df+sdqvWtUA=;
+        b=KwIXBQhLxtGbU32PVqTKwiTVZB96UU7QRJOPoGOtm5Cz3ZDd4DGsMNPYQ1e3XSlIE9
+         SnsTqOrnZZDbpEKlUdLHIxJ4I0PY8KqC/ThItZYoX2tH2BiuCGPfMQlM97NIxH2CkgJp
+         JmDwm9tEDOiBzrQueVsUfOBNuEyqc6OoRw+mkclhoY+r1wsoejVgMeGlb96wQ6Eg0snb
+         ZjDPoTzDJZv57tStCdDaPFbZwzQtX8fCjFrKv4q8da8GZbk8q/YUSAluB0Z9Y9KpPrIw
+         +SBHUNPQAY2JFvGndtC10tkp7upMsdqo4uD+7vzRri6RAerI1NOzQo1o8aV2T+FPQZAb
+         GVbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=AiSQaeHb/6E3sp6b18W3wRRq9BjOB5mp8jISO/y+fs4=;
-        b=YXS9v2jm/eTAJzHz5Vt5uOoOc4cRId5yYPX326UmzTY8nscMXNfMDe5TmB4EJ0ky/+
-         /szXEPW1IKvc/fZ2lmKnP1Ny9mdMoO3JqSGAC0XlRrVS8P5WskIh1Qecw4jHNN02fiXd
-         KI7QTPxK18PMc4rfC7RLdDsaW/7tmfqIMUQ7gfBuyktk2BzAGfkMJDFsidrt5bk90yK3
-         pTGpNSRLr+tMATjb/dpXoedAumGFveRDH3uL6HiJ5IsPq1JTsx8ykzW3CIueC325g9yD
-         nGrbJATDpuVGap+lkcpuVjZs5mRgy7MZvp40KvHUFhznjufIEHKpEdDHGO1UefIGrb6H
-         xFEQ==
-X-Gm-Message-State: AKaTC00YNv7jqcitwkWskQ2kzJAjD61o17ZRBapN2UPpMGlpaiBLnejCQG+7SfZX1F1E4w==
-X-Received: by 10.28.29.86 with SMTP id d83mr2123591wmd.75.1480675390942;
-        Fri, 02 Dec 2016 02:43:10 -0800 (PST)
-Sender: =?UTF-8?Q?S=C3=A9bastien_Delafond?= <sdelafond@gmail.com>
-Date: Fri, 2 Dec 2016 11:43:08 +0100
-From: =?utf-8?Q?S=C3=A9bastien?= Delafond <seb@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20161202104308.GE4706@hz1>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=O8s7KDyDX0grYrH8GfDcmHz2M1mKUar7df+sdqvWtUA=;
+        b=bSm20DxmGQIAG17OherohjE3C6eVybXZXRTcCgrvK36Mh9Y+ERHRCqMMGZYy6bHm9p
+         B1mGuPbIQQPpOUzAcCS4/puAZk9Be9d0EDFTOA+EOe3NXIPMY8Gc5OhzGlcZXbcILo2W
+         Wc0HqKLypt77eujyWxasU6GMcooL4lLxXnaWMxbsbr8jzrPpogqGCkBTrMatUK2TAvmg
+         jvvIsUWfqk9ozTcgZVPnKeh4ehbGMRdzwYjqN+W9xpljGw0s4GVPMsUIIAyTwaV9iXO8
+         mjoC/XeoDnbC0Vz3Uh/CKN80FRnaoJOVG5zT4aA8sBSaelYy7hDc1mJ4z/s+OF1oMoU1
+         7ZDg==
+X-Gm-Message-State: AN3rC/7YUiH3iVOCTvyiYMDtpdo4IzyIP9WiB58WiR1JnFMkS4XXyaHw
+	MLDHq/6YF5ITKBKFbC+i2WtnKbLd4eTD
+X-Received: by 10.84.231.131 with SMTP id g3mr84592366plk.70.1494249043243;
+ Mon, 08 May 2017 06:10:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE request: 2 issues in tomcat8 Debian packaging
+In-Reply-To: <CADSkJJWpn3Z6VermSdq9f2ckxQ59BUXDZ4y=_A0gSQKv7YZ+zg@mail.gmail.com>
+References: <CADSkJJWpn3Z6VermSdq9f2ckxQ59BUXDZ4y=_A0gSQKv7YZ+zg@mail.gmail.com>
+Message-ID: <CADSkJJU9JJ--uWnYD0yTMXuK3EHvpcCUC9GSxzq4X7f3Ogd0dA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 8 May 2017 09:10:12 -0400
+From: Russ Cox <rsc@swtch.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: remote DoS via CPU exhaustion in anon FTP server glob expansion
+To: oss-security@lists.openwall.com
 
-Hello,
+On Mon, Apr 24, 2017 at 10:06 AM, Russ Cox <rsc@swtch.com> wrote:
+> > Due to the widespread but limited ("only" CPU exhaustion) nature of
+> the problem, I have not attempted any embargoed prenotification.
+> I will forward this note directly to product-security@apple.com and
+> bugs@pureftpd.org. I filled out the "DWF Open Source Request Form v2"
+> for a CVE number for the generic problem, and I will reply here when
+> I receive the number.
 
-the Debian security team would like to requests 2 CVEs, for issues
-discovered by Paul Szabo in the tomcat8 Debian packaging.
+FYI, over the weekend I received notification (two weeks after applying)
+that DWF has declined to issue a CVE number for this general problem.
+Interested parties will have to obtain their own CVE numbers for specific
+products.
 
-  * Privilege escalation when upgrading tomcat8 package
-    https://bugs.debian.org/845393
-
-    > Having installed tomcat8, the directory /etc/tomcat8/Catalina is
-    > set writable by group tomcat8, as per the postinst script. Then
-    > the tomcat8 user, in the situation envisaged in DSA-3670 and
-    > DSA-3720, see also http://seclists.org/fulldisclosure/2016/Oct/4
-    > could use something like commands
-    > 
-    >   mv /etc/tomcat8/Catalina/localhost /tmp/
-    >   ln -s /etc/shadow /etc/tomcat8/Catalina/localhost
-    > 
-    > to create a symlink.
-    > 
-    > Then when the tomcat8 package is upgraded (e.g. for the next DSA),
-    > the postinst script runs
-    > 
-    >   chmod 775 /etc/tomcat8/Catalina /etc/tomcat8/Catalina/localhost
-    > 
-    > and that will make the /etc/shadow file world-readable (and
-    > group-writable). Other useful attacks might be to make the
-    > objects:
-    > 
-    >   /root/.Xauthority
-    >   /etc/ssh/ssh_host_dsa_key
-    > 
-    > world-readable; or make something (already owned by group tomcat8)
-    > group-writable (some "policy" setting maybe?).
-
-  * Privilege escalation when removing tomcat8 package
-    https://bugs.debian.org/845395    
-
-    > Having installed tomcat8, the directory
-    > /etc/tomcat8/Catalina is set writable by group tomcat8, as
-    > per the postinst script. Then the tomcat8 user, in the
-    > situation envisaged in DSA-3670 and DSA-3720, see also
-    > http://seclists.org/fulldisclosure/2016/Oct/4
-    > 
-    > could use something like commands
-    > 
-    >   touch /etc/tomcat8/Catalina/attack
-    >   chmod 2747 /etc/tomcat8/Catalina/attack
-    > 
-    > Then if the tomcat8 package is removed (purged?), the
-    > postrm script runs
-    > 
-    >   chown -Rhf root:root /etc/tomcat8/
-    > 
-    > and that will leave the file world-writable, setgid root:
-    > 
-    >   # ls -l /etc/tomcat8/Catalina/attack
-    >   -rwxr-Srwx 1 root root 0 Nov 23 09:00 /etc/tomcat8/Catalina/attack
-    > 
-    > allowing "group root" access to the world.
-
-Cheers,
-
---Seb
+Russ
