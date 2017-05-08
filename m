@@ -1,52 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/09/5
-Message-ID: <20170609162729.GA2535@openwall.com>
-Date: Fri, 9 Jun 2017 18:27:29 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vixie/ISC Cron group crontab to root escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/8
+Message-ID: <CANO=Ty0BX4m57asPzCzr2mcKP96VjYc2j12FxwrOy28ggbapGg@mail.gmail.com>
+Date: Mon, 8 May 2017 11:34:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: remote DoS via CPU exhaustion in anon FTP server glob expansion
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 09, 2017 at 11:47:55AM -0400, Christos Zoulas wrote:
-> In this patch:
-> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/vixie-cron/vixie-cron-4.1.20040916-owl-crond.diff
-> 
-> Why do:
-> 
-> +	if (lstat(tabname, &lstatbuf) < OK) {
-> +		log_it(fname, getpid(), "CAN'T LSTAT", tabname);
-> +		goto next_crontab;
-> +	}
-> +	if (!S_ISREG(lstatbuf.st_mode)) {
-> +		log_it(fname, getpid(), "NOT REGULAR", tabname);
-> +		goto next_crontab;
-> +	}
-> +	if ((!pw && (lstatbuf.st_mode & 07533) != 0400) ||
-> +	    (pw && (lstatbuf.st_mode & 07577) != 0400)) {
-> +		log_it(fname, getpid(), "BAD FILE MODE", tabname);
-> +		goto next_crontab;
-> +	}
-> +	if (lstatbuf.st_nlink != 1) {
-> +		log_it(fname, getpid(), "BAD LINK COUNT", tabname);
-> +		goto next_crontab;
-> +	}
-> +
->  	if ((crontab_fd = open(tabname, O_RDONLY|O_NONBLOCK|O_NOFOLLOW, 0)) < OK) {
->  		/* crontab not accessible?
->  		 */
-> 
-> Instead of doing the open first and then fstat(2) to prevent TOCTOU?
+Just a note on how CVE works: CVE is for specific vulnerabilities. E.g. If
+you find a specific XSS in a product for example, or a globbing problem in
+an FTP server that allows someone to crash it by ls */*/*....*/*/*.
+Alternatively there can be CVE's for protocol level flaws (e.g. where the
+specification itself was flawed), or for security technologies that aren't
+secure anymore (e.g. DES, 56bit keyspace just isn't big enough anymore with
+a modern laptop, let alone access to cloud GPU systems) to name a few more
+general cases.
 
-Oh, I did in fact mention this in the private discussion, so I'll quote:
+Also for DoS type attacks it can be a gray area, e.g. "send a ping of
+death, system crashes" is clearly a problem, but "open X Million
+connections and system gets slow" is... well... normal behavior for most
+things. In the case of globbing where do we go from "it simply takes a long
+time for a complicated request" to "this is pathological behavior and needs
+to be fixed" (it takes 1 second? 100 seconds? 100 minutes?).
 
-| Another detail: somehow in Owl we introduced lstat() prior to open, and
-| check lstat()'s struct for all the required properties before proceeding
-| with open() with O_NOFOLLOW.  Then we check that st_dev/st_ino stayed
-| the same.  We also kept the post-open() checks.  I don't recall exactly
-| why we added this, but maybe because of the possibility of side-effects
-| on open() for hard links to device files (like with tape drives).  And
-| it looks like we neglected to add the same for at jobs (perhaps didn't
-| revisit this when support for at jobs appeared via our update to later
-| OpenBSD code) - maybe we should.
+In any event if there are specific instances of a given FTP server (or
+whatever) that can be crashed/made really non responsive by this class of
+attack then that is appropriate to ask for a CVE and would be given one.
 
-Alexander
+On Mon, May 8, 2017 at 7:10 AM, Russ Cox <rsc@...ch.com> wrote:
+
+> On Mon, Apr 24, 2017 at 10:06 AM, Russ Cox <rsc@...ch.com> wrote:
+> > > Due to the widespread but limited ("only" CPU exhaustion) nature of
+> > the problem, I have not attempted any embargoed prenotification.
+> > I will forward this note directly to product-security@...le.com and
+> > bugs@...eftpd.org. I filled out the "DWF Open Source Request Form v2"
+> > for a CVE number for the generic problem, and I will reply here when
+> > I receive the number.
+>
+> FYI, over the weekend I received notification (two weeks after applying)
+> that DWF has declined to issue a CVE number for this general problem.
+> Interested parties will have to obtain their own CVE numbers for specific
+> products.
+>
+> Russ
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
