@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/9
-Message-id: <2DC459E9-2A8F-45E1-8D1C-7AC78F3BCADB@me.com>
-Date: Wed, 01 Mar 2017 04:39:21 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Persistent XSS Vulnerability in Wordpress plugin AnyVar v0.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/2
+Message-Id: <06FEF7A9-73A6-43C5-A8FA-36FA1349E5A4@shiz.me>
+Date: Mon, 8 May 2017 04:03:24 +0200
+From: Shiz <hi@...z.me>
+To: oss-security@...ts.openwall.com
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Title: Persistent XSS Vulnerability in Wordpress plugin AnyVar v0.1.1
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-02-21
-Download Site: https://wordpress.org/plugins/anyvar
-Vendor: https://profiles.wordpress.org/matt_dev/
-Vendor Notified: 2017-02-28
-Vendor Contact: plugins@...dpress.org
-Description: AnyVar is a simple search and replace plugin. It lets you add changeable variables (text snippets) to posts, sidebars, widgets, links & themes.
-Vulnerability:
-$var_name and $var_text aren't sanitized before being sent to the webpage.  $var_name only can contain text so only $var_text is exploitable
-In file ./anyvar/anyvar.php:
+> On 1 May 2017, at 18:44, Solar Designer <solar@...nwall.com> wrote:
+> 
+> Unfortunately, I did not record which terminal emulators did not crash
+> for me.  However, Jason recorded both kinds of results for him, coming
+> up with:
+> 
+> Konsole: no crash
+> Xterm: no crash
+> rxvt: crash
+> Yakuake: no crash
+> Mosh (which is a terminal emulator, after all): no crash
+> Screen: 100% CPU usage --> DoS
+> rxvt-unicode: no crash
+> Qterminal: no crash
+> putty: no crash
+> 
+> This adds "screen" to terminal emulators with problematic processing of
+> terminal escapes.  Due to minor known impact, we did not handle this
+> under embargo - it should be investigated and fixed now, in public.
 
-202                         echo "<tr id='anyvar-$var_name' $class>
-203                                 <th scope='row' class='check-column'><input     type='checkbox' name='delete[]' value='$var_name' /></th>
-204                                 <td><a class='row-title' href='?page=".$_GET    ['page']."&action=edit&amp;var=$var_name' title='Edit &quot;$var_name&quot;'    > $var_name</a></td>
-205                                 <td>[$var_name]</td>
-206                                 <td><textarea name='anyvar_text_$var_name' i    d='anyvar_text_$var_name' cols='60' rows='3' readonly>$var_text</textarea></    td>
+Despite not being open source and thus unfit for the list, I can confirm this
+also causes high CPU usage for macOS Terminal.app, version 2.7.1 (387),
+as shipped on macOS 10.12.1.
 
-CVE-ID: CVE-2017-6103
-Exploit Code:
-	• In the text field box the following will trigger a JS alert popup:
-	•  
-	• </textarea><script>alert(1);</script><textarea>
-Screen Shots: [http://www.vapidlabs.com/m/xssvar.png]
-Advisory: http://www.vapidlabs.com/advisory.php?v=177
+- Shiz
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
