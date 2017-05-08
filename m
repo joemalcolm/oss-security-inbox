@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["925" "Monday" "17" "August" "2015" "11:02:39" "+0200" "Raphael Geissert" "geissert@debian.org" "<CAA7hUgHDgc063CdR8jpzdCmAYTB5_R0a1K+uHjgwiBCYcJ5NSA@mail.gmail.com>" "24" "Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" nil nil nil "8" "2015081709:02:39" "[oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" (number mark "        geissert@deb Aug 17   24/925   " thread-indent "\"Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)\"\n") "<20150816184849.GA32213@zoho.com>" ("<CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>" "<20150816184849.GA32213@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2103" "Monday" "8" "May" "2017" "04:03:24" "+0200" "Shiz" "hi@shiz.me" "<06FEF7A9-73A6-43C5-A8FA-36FA1349E5A4@shiz.me>" "57" "Re: [oss-security] terminal emulators' processing of escape sequences" nil nil nil "5" "2017050802:03:24" "[oss-security] terminal emulators' processing of escape sequences" (number mark "U       hi@shiz.me   May  8   57/2103  " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<20170501164428.GA12322@openwall.com>" ("<20170501164428.GA12322@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13786 invoked by uid 550); 17 Aug 2015 09:03:11 -0000
+Received: (qmail 30035 invoked by uid 550); 8 May 2017 09:48:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13768 invoked from network); 17 Aug 2015 09:03:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=USD1S44UGWAj8Xga3aqVa98mjTNhhGPwf+bwt/UG6FE=;
-        b=0dzK5HgO4nVuM7dAvKNn1X2zuZgmooUmOelcdLaJDy48k79cwz5pFt3oaJNX6fvzwm
-         ZdCbkgUoukIM0PP5np4pd9VhQcqpLtnPl9Ky/YRaXUODdmUl6ZKEBxAvRl5oys4vTSYN
-         K67EgJUpz10nXDH/2AdomCe711O14kpxnno6old0HydAB/D+JDaydX4Gzi3SDYQR+4jA
-         DcfvHuk/zvomn6c9LCuXUw+U49sB/Jo3XGiZrfb+u6mPF5C1Fkjy+GJFSC1uTHi0kSRl
-         aiEl/BmFwDOwMOrLQ6wl6G13fc2kdl8ZPUdMoNGhJf1ynk+1Rq6gXCxi+5lxswKbateH
-         aYHg==
-X-Received: by 10.180.94.168 with SMTP id dd8mr31762188wib.76.1439802179324;
- Mon, 17 Aug 2015 02:02:59 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20150816184849.GA32213@zoho.com>
-References: <CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>
- <20150816184849.GA32213@zoho.com>
-X-Google-Sender-Auth: H-zUR6jFeTPwmKNgv-bwqPF1TwA
-Message-ID: <CAA7hUgHDgc063CdR8jpzdCmAYTB5_R0a1K+uHjgwiBCYcJ5NSA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: gustavo.grieco@gmail.com
-Date: Mon, 17 Aug 2015 11:02:39 +0200
-From: Raphael Geissert <geissert@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: atomo64@gmail.com
-Subject: Re: [oss-security] Double free corruption in JasPer JPEG-2000
- implementation (CVE-2015-5203)
-To: Open Source Security <oss-security@lists.openwall.com>
+Received: (qmail 11830 invoked from network); 8 May 2017 02:04:02 -0000
+From: Shiz <hi@shiz.me>
+Content-Type: multipart/signed;
+ boundary="Apple-Mail=_624BF067-490B-4BE4-B5FD-EE9F4EE89DFF";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
+Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
+Date: Mon, 8 May 2017 04:03:24 +0200
+References: <20170501164428.GA12322@openwall.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <20170501164428.GA12322@openwall.com>
+Message-Id: <06FEF7A9-73A6-43C5-A8FA-36FA1349E5A4@shiz.me>
+X-Mailer: Apple Mail (2.3251)
+Subject: Re: [oss-security] terminal emulators' processing of escape sequences
 
-Hi,
+--Apple-Mail=_624BF067-490B-4BE4-B5FD-EE9F4EE89DFF
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=us-ascii
 
-On 16 August 2015 at 20:48, mancha <mancha1@zoho.com> wrote:
-> On Sun, Aug 16, 2015 at 05:22:50PM +0200, Gustavo Grieco wrote:
->> A new double free affecting JasPer JPEG-2000 (libjasper 1.900) has
->> been found triggered by function jasper_image_stop_load.  Despite this
->> library is used by many programs (
->> http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one
->> providing support, so there is no fix so far.
->
-> If you email me your crasher I can look into a fix.
+> On 1 May 2017, at 18:44, Solar Designer <solar@openwall.com> wrote:
+> 
+> Unfortunately, I did not record which terminal emulators did not crash
+> for me.  However, Jason recorded both kinds of results for him, coming
+> up with:
+> 
+> Konsole: no crash
+> Xterm: no crash
+> rxvt: crash
+> Yakuake: no crash
+> Mosh (which is a terminal emulator, after all): no crash
+> Screen: 100% CPU usage --> DoS
+> rxvt-unicode: no crash
+> Qterminal: no crash
+> putty: no crash
+> 
+> This adds "screen" to terminal emulators with problematic processing of
+> terminal escapes.  Due to minor known impact, we did not handle this
+> under embargo - it should be investigated and fixed now, in public.
 
-Last time I ran zzuf on jasper there were plenty of crashes and bugs
-that triggered a high resource consumption - pretty much like the ones
-I found on openjpeg at work. They looked less severe, however.
+Despite not being open source and thus unfit for the list, I can confirm this
+also causes high CPU usage for macOS Terminal.app, version 2.7.1 (387),
+as shipped on macOS 10.12.1.
 
-I should still have some samples in another machine, if anyone is
-interested in taking a look at those and/or using them as a base for
-further fuzzing.
+- Shiz
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+--Apple-Mail=_624BF067-490B-4BE4-B5FD-EE9F4EE89DFF
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCAAGBQJZD9HvAAoJEI8YjKeZk+kHawMQAKWYkSiRv8yjmE//j2yh0+sR
+mXvutrqR8+3LyCzJJ897Newv5oiEUratIPSYEQpsHdTulnk5uggdoKGgkMxTh249
+3/7g0HvaImdYgUkNfqZrYuyBjitHpLPvop3RZC+GKnKF6pJZdtTmjHFmbhZClOJ4
+FJqXfwpaEAD6tYTLgtFei6XwQfoO+N3VRwnl1a9Pq1BQu7iei0g+NWq9y83S0CNc
+uL7v5lz2mqpQakhw/Havd7daM6ii+leywgDSod/OhxGKpWQGVO58OxoFLT4SqWMu
+hnAFvhVrv/acjxDDfOmxIg1xFSmLrobJ+81XsX1kK1oMPHT/HqOdjl9wgo+8Wdaw
+TxhVEQ0SPZ1sDr3N/5louN4kLTNBZ7w2jPifPVffJZqtEnvQ0awhU6DY47kgOAWl
+vInR604vLV43uRph9rhu/tuNLCJZ3weuISxFlyvQlbIg3ekl928zzboF3hUI0jor
+ZR13m+WE67CjXioi29TluvcGOQqZZK54frNsV0frB2tad5T3P5LfFh/wwxR1w16v
+nVQXOJV5b90wTx6TM5ynWvAOxgL0gYHhf2O23h+3dDiXysePcJL3hZSLCmbcmJg8
+c7rozkSoQE9sfmDf81+Dt/YNtDbUuM7MgcWmCp/dSoPKo5RwPeCPf4/6llwIcrnN
+sui/hp9+VyBwX77IA7KU
+=Fgsd
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_624BF067-490B-4BE4-B5FD-EE9F4EE89DFF--
