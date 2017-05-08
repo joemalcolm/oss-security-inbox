@@ -1,42 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/24/1
-Message-ID: <alpine.GSO.2.20.1702232109380.9710@freddy.simplesystems.org>
-Date: Thu, 23 Feb 2017 21:18:17 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: GraphicsMagick heap out of bounds write issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/9
+Message-ID: <34774b80-6941-d562-fb5f-710c8f9b9cb8@redhat.com>
+Date: Mon, 8 May 2017 20:32:21 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: rpcbomb: remote rpcbind denial-of-service
 Content-Type: text/plain; charset=utf-8
 
-GraphicsMagick versions up to 1.3.25 encounter a write beyond an 
-allocated heap buffer when reading CMYKA TIFF files which claim to 
-offer fewer samples per pixel than required.
+On 05/07/2017 08:47 PM, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> On Fri, May 05, 2017 at 11:52:49AM +0200, Florian Weimer wrote:
+>> On 05/05/2017 11:22 AM, Marcus Meissner wrote:
+>>> On Wed, May 03, 2017 at 05:55:20PM -0700, Seth Arnold wrote:
+>>>> On Wed, May 03, 2017 at 08:55:23PM +0200, Guido Vranken wrote:
+>>>>> This vulnerability allows an attacker to allocate any amount of bytes
+>>>>> (up to 4 gigabytes per attack) on a remote rpcbind host, and the
+>>>>> memory is never freed unless the process crashes or the administrator
+>>>>> halts or restarts the rpcbind service.
+>>>>> [...]
+>>>>> An extensive write-up can be found here:
+>>>>> https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
+>>>>>
+>>>>> Exploit + patches: https://github.com/guidovranken/rpcbomb/
+>>>>
+>>>> Hello Guido, nice find. Have CVE numbers been requested for this issue
+>>>> yet? Have you investigated if ntirpc is affected too? Much of the code
+>>>> looks similar:
+>>>>
+>>>> http://sources.debian.net/src/ntirpc/1.4.3-3/src/rpc_generic.c/#L728
+>>>
+>>> We also saw glibc affected.
+>>>
+>>> https://bugzilla.suse.com/show_bug.cgi?id=1037559#c7
+>>>
+>>> That said, your reproducer allocates virtual memory, and on systems with overcommit
+>>> there is only neglible impact on overall memory pressure.
+>>>
+>>> The rpc service will however likely crash at some point though when there is no virtual
+>>> address space left for it.
+>>
+>> Thanks, I filed it upstream as well:
+>>
+>> https://sourceware.org/bugzilla/show_bug.cgi?id=21461
+>>
+>> Looks like both xdr_bytes and xdr_string have a similar bug.
+>>
+>> I'd appreciate some guidance on reusing or not reusing CVE IDs here.
+> 
+> A separate CVE should be used for this issue as clarified with MITRE.
+> 
+> It was assigned CVE-2017-8804.
+> 
+> https://sourceware.org/bugzilla/show_bug.cgi?id=21461
+> 
+> Patch posted at
+> https://sourceware.org/ml/libc-alpha/2017-05/msg00105.html by Florian
+> Weimer.
 
-This is the tiffinfo description of the problematic TIFF file:
+Note that we have a bit of a dispute here whether whether this is 
+actually a vulnerability in the XDR code, or whether the caller is to blame.
 
-TIFF Directory at offset 0x808 (2056)
-   Image Width: 34 Image Length: 48
-   Bits/Sample: 8
-   Sample Format: unsigned integer
-   Compression Scheme: None
-   Photometric Interpretation: separated
-   Extra Samples: 1<unassoc-alpha>
-   Orientation: row 0 top, col 0 lhs
-   Samples/Pixel: 2
-   Rows/Strip: 32
-   Planar Configuration: single image plane
-
-The fix for this is Mercurial changeset 14998:6156b4c2992d which may 
-be viewed at SourceForge via this link:
-
-https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
-
-A minimal patch to correct the problem is attached.
-
-This issue was reported to us on February 15, 2017 by Valon Chu.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-View attachment "tiff.c.patch" of type "text/plain" (1074 bytes)
+Thanks,
+Florian
