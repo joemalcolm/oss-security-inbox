@@ -1,66 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/1
-Message-ID: <921525.047483982-sendEmail@localhost>
-Date: Thu, 2 Mar 2017 16:33:13 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: podofo: invalid memory read in ColorChanger::GetColorFromStack (colorchanger.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/7
+Message-ID: <CADSkJJU9JJ--uWnYD0yTMXuK3EHvpcCUC9GSxzq4X7f3Ogd0dA@mail.gmail.com>
+Date: Mon, 8 May 2017 09:10:12 -0400
+From: Russ Cox <rsc@...ch.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: remote DoS via CPU exhaustion in anon FTP server glob expansion
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+On Mon, Apr 24, 2017 at 10:06 AM, Russ Cox <rsc@...ch.com> wrote:
+> > Due to the widespread but limited ("only" CPU exhaustion) nature of
+> the problem, I have not attempted any embargoed prenotification.
+> I will forward this note directly to product-security@...le.com and
+> bugs@...eftpd.org. I filled out the "DWF Open Source Request Form v2"
+> for a CVE number for the generic problem, and I will reply here when
+> I receive the number.
 
-A fuzz on it discovered an invalid memory read. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+FYI, over the weekend I received notification (two weeks after applying)
+that DWF has declined to issue a CVE number for this general problem.
+Interested parties will have to obtain their own CVE numbers for specific
+products.
 
-The complete ASan output:
-
-# podofocolor dummy $FILE foo
-==9073==ERROR: AddressSanitizer: SEGV on unknown address 0xffffffffffffffe0 (pc 0x000000537d67 bp 0x7ffc54cb3c50 sp 0x7ffc54cb3ba0 T0)
-==9073==The signal is caused by a READ memory access.
-    #0 0x537d66 in ColorChanger::GetColorFromStack(int, std::vector<PoDoFo::PdfVariant, std::allocator >&) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:416:32
-    #1 0x530d50 in ColorChanger::ProcessColor(ColorChanger::EKeywordType, int, std::vector<PoDoFo::PdfVariant, std::allocator >&, GraphicsStack&) 
-/tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:449:28
-    #2 0x52c2a9 in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:214:31
-    #3 0x526921 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:120:15
-    #4 0x523b8d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/podofocolor.cpp:116:12
-    #5 0x7f36fe7fe78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x4300e8 in _start (/usr/bin/podofocolor+0x4300e8)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:416:32 in ColorChanger::GetColorFromStack(int, std::vector<PoDoFo::PdfVariant, std::allocator >&)
-==9073==ABORTING
-
-Affected version:
-0.9.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00215-podofo-invalidread-colorchanger-cpp
-
-Timeline:
-2017-03-01: bug discovered
-2017-03-02: bug reported upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-invalid-memory-read-in-colorchangergetcolorfromstack-colorchanger-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Russ
