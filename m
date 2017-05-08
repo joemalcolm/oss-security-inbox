@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/4
-Message-ID: <138470974.7338270.1494595496637.JavaMail.zimbra@redhat.com>
-Date: Fri, 12 May 2017 09:24:56 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7487: Linux kernel: ipx: call ipxitf_put() in ioctl error path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/5
+Message-ID: <BD9EEBEB-7C45-4F5E-BF5D-7C403CDEC3C9@gmail.com>
+Date: Mon, 08 May 2017 08:31:41 -0400
+From: Ryan Munz <gcoc.devops@...il.com>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+iTerm2 would be another excellent test target as it is very popular.
 
-A reference counter leak in Linux kernel in ipxitf_ioctl function was found
-which results into use after free vulnerability that's triggerable from
-unprivileged userspace when IPX interface is configured.
+On 5/7/17, 10:03 PM, "Shiz" <hi@...z.me> wrote:
 
-cvss3=5.6/CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:H
-cwe=CWE-416
+    > On 1 May 2017, at 18:44, Solar Designer <solar@...nwall.com> wrote:
+    > 
+    > Unfortunately, I did not record which terminal emulators did not crash
+    > for me.  However, Jason recorded both kinds of results for him, coming
+    > up with:
+    > 
+    > Konsole: no crash
+    > Xterm: no crash
+    > rxvt: crash
+    > Yakuake: no crash
+    > Mosh (which is a terminal emulator, after all): no crash
+    > Screen: 100% CPU usage --> DoS
+    > rxvt-unicode: no crash
+    > Qterminal: no crash
+    > putty: no crash
+    > 
+    > This adds "screen" to terminal emulators with problematic processing of
+    > terminal escapes.  Due to minor known impact, we did not handle this
+    > under embargo - it should be investigated and fixed now, in public.
+    
+    Despite not being open source and thus unfit for the list, I can confirm this
+    also causes high CPU usage for macOS Terminal.app, version 2.7.1 (387),
+    as shipped on macOS 10.12.1.
+    
+    - Shiz
+    
 
-References:
 
-https://patchwork.ozlabs.org/patch/757549/
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1447734
-
-Upstream patch:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ee0d8d8482345ff97a75a7d747efc309f13b0d80
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
