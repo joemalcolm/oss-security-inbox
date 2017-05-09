@@ -1,29 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/19/7
-Message-ID: <6dd6b52f-c4cb-4dcf-118e-f5f9510a2d84@oracle.com>
-Date: Wed, 19 Jul 2017 13:44:50 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Devil's Ivy (CVE-2017-9765) in gSOAP 2.7 up to 2.8.47
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/4
+Message-ID: <747001.945364417-sendEmail@localhost>
+Date: Tue, 9 May 2017 08:20:53 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: lrzip: NULL pointer dereference in join_pthread (stream.c)
 Content-Type: text/plain; charset=utf-8
 
-I noticed some press coverage of this but haven't seen mail here yet:
+Description:
+lrzip is a compression utility that excels at compressing large files.
 
-http://blog.senr.io/blog/devils-ivy-flaw-in-widely-used-third-party-code-impacts-millions
-https://www.genivia.com/advisory.html#Security_advisory:_CVE-2017-9765_bug_in_certain_versions_of_gSOAP_2.7_up_to_2.8.47_(June_21,_2017)
-https://www.genivia.com/changelog.html#Version_2.8.48_upd_(06/21/2017)
+The complete ASan output of the issue:
 
-"a potential vulnerability to a large and specific XML message over 2GB in size
-  (greater than 2147483711 bytes to trigger the software bug). A buffer overflow
-  can cause an open unsecured server to crash or malfunction after 2GB is
-  received."
+# lrzip -t $FILE
+==1329==ERROR: AddressSanitizer: SEGV on unknown address 0x0000000002d0 (pc 0x7fa931ad7660 bp 0x7ffff4a30c30 sp 0x7ffff4a309f8 T0)
+==1329==The signal is caused by a READ memory access.
+==1329==Hint: address points to the zero page.
+    #0 0x7fa931ad765f  /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_join.c:34
+    #1 0x53ee0d in join_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:147:6
+    #2 0x53ee0d in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1697
+    #3 0x53ee0d in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
+    #4 0x531075 in unzip_literal /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:162:16
+    #5 0x531075 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:320
+    #6 0x531075 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
+    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
+    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
+    #9 0x7fa930d3a78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #10 0x41abf8 in _init (/usr/bin/lrzip+0x41abf8)
 
-Unfortunately, the subversion repo on sourceforge for gSOAP only has
-full releases, not individual changes, in each commit, so the fix
-appears to be somewhere mixed in [r119] on
-https://sourceforge.net/p/gsoap2/code/commit_browser
-making it a challenge for distros who want to patch instead of upgrade.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_join.c:34 
+==1329==ABORTING
 
--- 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+Affected version:
+0.631
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8843
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00231-lrzip-nullptr-join_pthread
+
+Timeline:
+2017-03-24: bug discovered and reported to upstream
+2017-05-07: blog post about the issue
+2017-05-08: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/07/lrzip-null-pointer-dereference-in-join_pthread-stream-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
