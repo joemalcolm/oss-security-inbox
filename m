@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["568" "Thursday" "10" "May" "2018" "08:05:56" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>" "18" "[oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit" nil nil nil "5" "2018051012:05:56" "[oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit" (number mark "U       vdronov@redh May 10   18/568   " thread-indent "\"[oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit\"\n") "<982848644.28761175.1525953818635.JavaMail.zimbra@redhat.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1827" "Tuesday" "9" "May" "2017" "14:49:56" "+0100" "Simon MacDonald" "macdonst@apache.org" "<CAM1AYQCj1EOvyXJ9xH9tMqNn_V0p9G2A1MZD0bu92Q3506q8Rw@mail.gmail.com>" "50" "[oss-security] CVE-2016-6799: Internal system information leak" nil nil nil "5" "2017050913:49:56" "[oss-security] CVE-2016-6799: Internal system information leak" (number mark "U       macdonst@apa May  9   50/1827  " thread-indent "\"[oss-security] CVE-2016-6799: Internal system information leak\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5722 invoked by uid 550); 10 May 2018 12:06:10 -0000
+Received: (qmail 32709 invoked by uid 550); 9 May 2017 14:52:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,38 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5676 invoked from network); 10 May 2018 12:06:09 -0000
-Date: Thu, 10 May 2018 08:05:56 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <1961715083.28767602.1525953956902.JavaMail.zimbra@redhat.com>
-In-Reply-To: <982848644.28761175.1525953818635.JavaMail.zimbra@redhat.com>
+Received: (qmail 26384 invoked from network); 9 May 2017 13:50:30 -0000
+X-Gm-Message-State: AODbwcCMaOn1LsU52Znkp1gGnp9xF4RcYOWWIJGl5rfQ4eMsr6G4lAQy
+	LuGCVYJmGRr6cbj/qW+6FybHWdq5fg==
+X-Received: by 10.36.36.193 with SMTP id f184mr1251270ita.111.1494337817130;
+ Tue, 09 May 2017 06:50:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.5.81, 10.4.195.25]
-Thread-Topic: CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in net/dccp/output.c:dccp_write_xmit
-Thread-Index: IE3hqurjeM8jelCV14Pi7a9x358h4w==
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Thu, 10 May 2018 12:05:57 +0000 (UTC)
-Subject: [oss-security] CVE-2018-1130: Linux kernel: dccp: a null pointer dereference in
- net/dccp/output.c:dccp_write_xmit
+From: Simon MacDonald <macdonst@apache.org>
+Date: Tue, 9 May 2017 14:49:56 +0100
+X-Gmail-Original-Message-ID: <CAM1AYQCj1EOvyXJ9xH9tMqNn_V0p9G2A1MZD0bu92Q3506q8Rw@mail.gmail.com>
+Message-ID: <CAM1AYQCj1EOvyXJ9xH9tMqNn_V0p9G2A1MZD0bu92Q3506q8Rw@mail.gmail.com>
+To: "dev@cordova.apache.org" <dev@cordova.apache.org>, 
+	"private@cordova.apache.org" <private@cordova.apache.org>, security <security@apache.org>, 
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com, 
+	Mark Ward <mark.ward@mind-click.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE-2016-6799: Internal system information leak
 
-Hello,
+CVE-2016-6799: Internal system information leak
 
-A null pointer dereference in dccp_write_xmit() function in net/dccp/output.c
-in the Linux kernel before v4.16-rc7 allows a local user to cause a denial of
-service by a number of certain crafted system calls.
+Severity: High
 
-References:
+Vendor: The Apache Software Foundation
 
-https://syzkaller.appspot.com/bug?id=833568de043e0909b2aeaef7be136db39d21ba94
+Versions Affected: Cordova Android (5.2.2 and below)
 
-https://marc.info/?t=152036611500003&r=1&w=2
+Description: The application calls methods of the Log class. Messages
+passed to these methods (Log.v(), Log.d(), Log.i(), Log.w(), and
+Log.e()) are stored in a series of circular buffers on the device. By
+default, a maximum of four 16 KB rotated logs are kept in addition to
+the current log. The logged data can be read using Logcat on the
+device. When using platforms prior to Android 4.1 (Jelly Bean), the
+log data is not sandboxed per application=CD=BE any application installed
+on the device has the capability to read data logged by other
+applications.
 
-An upstream patch:
+Upgrade path: Developers who are concerned about this issue should
+upgrade to 6.0.0 or later and install cordova plugins whose versions
+are equal to or greater than:
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=67f93df79aeefc3add4e4b31a752600f834236e2
+cordova-plugin-battery-status: 1.2.0
+cordova-plugin-camera: 2.3.0
+cordova-plugin-console: 1.0.4
+cordova-plugin-contacts: 2.2.0
+cordova-plugin-device: 1.1.3
+cordova-plugin-device-motion: 1.2.2
+cordova-plugin-device-orientation: 1.0.4
+cordova-plugin-dialogs: 1.3.0
+cordova-plugin-file: 4.3.0
+cordova-plugin-file-transfer: 1.6.0
+cordova-plugin-geolocation: 2.3.0
+cordova-plugin-globalization: 1.0.4
+cordova-plugin-inappbrowser: 1.5.0
+cordova-plugin-media: 2.4.0
+cordova-plugin-media-capture: 1.4.0
+cordova-plugin-network-information: 1.3.0
+cordova-plugin-splashscreen: 4.0.0
+cordova-plugin-statusbar: 2.2.0
+cordova-plugin-test-framework: 1.1.3
+cordova-plugin-vibration: 2.1.2
+cordova-plugin-whitelist: 1.3.0
+cordova-plugin-wkwebview-engine: 1.1.0
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Mitigation Steps: If developers are unable to install the latest versions,
+this vulnerability can easily be mitigated by not putting sensitive
+information in the log statements.
+
+Credit: Mark Ward
