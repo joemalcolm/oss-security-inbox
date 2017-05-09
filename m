@@ -1,72 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/4
-Message-ID: <MWHPR04MB1086792B34233BB68DEE393184DF0@MWHPR04MB1086.namprd04.prod.outlook.com>
-Date: Mon, 26 Jun 2017 22:31:14 +0000
-From: Kyle R <Kyle.R@...ticalInformatics.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/5
+Message-ID: <997258.47630495-sendEmail@localhost>
+Date: Tue, 9 May 2017 08:21:41 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)
+Subject: lrzip: invalid memory read in lzo_decompress_buf (stream.c)
 Content-Type: text/plain; charset=utf-8
 
-+1 for Solar always having a level-head when moderating this list.
+Description:
+lrzip is a compression utility that excels at compressing large files.
 
-________________________________
-From: Kurt Seifried <kseifrie@...hat.com>
-Sent: Monday, June 26, 2017 2:26:46 PM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)
+The complete ASan output of the issue:
 
-To be clear solar has always been a sane and polite person, but I don't know what the list policy is, in part because I don't think this has really come up before(that I can remember).
+# lrzip -t $FILE
+==3311==ERROR: AddressSanitizer: SEGV on unknown address 0x602000010000 (pc 0x7f75cabe8834 bp 0x62100002c11f sp 0x7f7085ab4d78 T5)
+==3311==The signal is caused by a READ memory access.
+    #0 0x7f75cabe8833 in lzo1x_decompress /tmp/portage/dev-libs/lzo-2.08/work/lzo-2.08/src/lzo1x_d.ch:108
+    #1 0x54af2f in lzo_decompress_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:590:10
+    #2 0x54af2f in ucompthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1525
+    #3 0x7f75ca2944a3 in start_thread /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_create.c:333
+    #4 0x7f75c95bf66c in clone /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/misc/../sysdeps/unix/sysv/linux/x86_64/clone.S:109
 
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/lzo-2.08/work/lzo-2.08/src/lzo1x_d.ch:108 in lzo1x_decompress
+Thread T5 created by T0 here:
+    #0 0x42d49d in pthread_create /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:245
+    #1 0x53e70f in create_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:133:6
+    #2 0x53e70f in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1673
+    #3 0x53e70f in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
+    #4 0x531075 in unzip_literal /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:162:16
+    #5 0x531075 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:320
+    #6 0x531075 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
+    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
+    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
+    #9 0x7f75c94f878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
--Kurt
+Dunno wtf decompression type to use!
+==3311==AddressSanitizer: while reporting a bug found another one. Ignoring.
+Fatal error - exiting
 
+Affected version:
+0.631
 
+Fixed version:
+N/A
 
+Commit fix:
+N/A
 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-> On Jun 26, 2017, at 14:50, Solar Designer <solar@...nwall.com> wrote:
->
-> Hi all,
->
-> Yes, I too would like the discussions in here to stay civilized.
->
-> Brad wrote to Linus:
->
->> On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@...ecurity.net> wrote:
->> With no technical content coming from your end, there's no need to discuss
->> anything further -- don't waste your time because I won't reply.
->
-> and I hope that Linus won't reply (as far as I can see, he did not so
-> far) and this does in fact end that thread.
->
->> On Mon, Jun 26, 2017 at 03:16:06PM -0400, Mansour Moufid wrote:
->> Is there another mailing list for discussions of Linux security? Or forum?
->
-> At Openwall, we also host the kernel-hardening mailing list, but we
-> currently moderate it similarly - that is, we're not preventing
-> occasional/infrequent threads like this right away, letting a sensible
-> number of messages to pass through, even if with insults and such.
-> Usually those threads end on their own.  In fact, I only recall one very
-> recent thread in there where I intervened and technically shut it down.
-> If the pro-grsecurity and/or anti-grsecurity folks try much harder,
-> we'll probably have to start moderating the lists much stricter.
->
-> There are probably other suitable mailing lists and forums as well.
-> Maybe someone else would share some.
->
->> I have been thinking of sharing a few patches for the last couple months.
->> I don't think this is the right place after the kind of insults I saw this week.
->
-> This sounds weird to me: you've been sitting on those patches for "the
-> last couple months" and now a thread "this week" finally made you decide
-> not to post them in here.  Anyhow, if those patches would be on-topic in
-> here or on kernel-hardening, please feel free to reconsider.
->
-> Off-list, someone else also explained to me that the recent dirt in here
-> discouraged them from posting certain reasonable content.  So this is
-> probably happening, and that's a pity.  I ask that anyone who thinks
-> they have higher quality content than what we see in this thread does
-> post that.  Let this be your response.
->
-> Alexander
+CVE:
+CVE-2017-8845
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00230-lrzip-invalidread-lzo1x_decompress
+
+Timeline:
+2017-03-24: bug discovered and reported to upstream
+2017-05-07: blog post about the issue
+2017-05-08: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/07/lrzip-invalid-memory-read-in-lzo_decompress_buf-stream-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
