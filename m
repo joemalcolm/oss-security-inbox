@@ -1,4 +1,9 @@
-Received: (qmail 6012 invoked by uid 550); 22 Dec 2024 19:40:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3376" "Tuesday" "9" "May" "2017" "08:19:51" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<844121.337493078-sendEmail@localhost>" "75" "[oss-security] lrzip: NULL pointer dereference in bufRead::get (libzpaq.h)" nil nil nil "5" "2017050908:19:51" "[oss-security] lrzip: NULL pointer dereference in bufRead::get (libzpaq.h)" (number mark "U       ago@gentoo.o May  9   75/3376  " thread-indent "\"[oss-security] lrzip: NULL pointer dereference in bufRead::get (libzpaq.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32154 invoked by uid 550); 9 May 2017 08:20:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,92 +12,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32341 invoked from network); 22 Dec 2024 19:21:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ZVb+nddG7Q8K3W83TdWTGNCLdasMnoXmZX/dRcm7fWo=; b=Njq22Sph1gBLF57RQbgw/BQKF5
-	7C3vk962RzN4x4TIkZsuEKRHR2iHtVA1ICYMPB+cj0WBSmRipLxPH7pkMF2zjA++E5cu/2Rmcz/zn
-	A7g7TGzDWWFVyhFQkLeKyU2u27ulFSHaNli0qg8V5MG+He/C/vdg0mOBg68fvOXAaCHRREfoOVUDf
-	Y31BtKINaaKVWFz9GdY7SLxcfJofpsphS+B+uAgmSIwQnjs6j+wd7V6zyIf8ikA/urVYVLXSWyoWe
-	mPd2jPIsiA/c5Yu+xbQvb7KaSPJADo4J/mkq3/vzY/3VoszvisW3NUnHxd4a7Q6RA3+yxDD0Cq/jQ
-	j56feTHw==;
-Date: Sun, 22 Dec 2024 21:21:22 +0200
-Message-ID: <20241222212122.GD236434@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
+Received: (qmail 32106 invoked from network); 9 May 2017 08:20:09 -0000
+Message-ID: <844121.337493078-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Tue, 9 May 2017 08:19:51 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Ps6ZXBfygoRwES2s"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0008
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-60923.7405742569"
+Subject: [oss-security] lrzip: NULL pointer dereference in bufRead::get (libzpaq.h)
 
---Ps6ZXBfygoRwES2s
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
+------MIME delimiter for sendEmail-60923.7405742569
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
-eSAgICAgICAgICAgICAgICAgV1NBLTIwMjQtMDAwOAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
-b3J0ZWQgICAgICAgICAgIDogRGVjZW1iZXIgMjIsIDIwMjQKQWR2aXNvcnkgSUQgICAgICAgICAg
-ICAgOiBXU0EtMjAyNC0wMDA4CldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJr
-aXRndGsub3JnL3NlY3VyaXR5L1dTQS0yMDI0LTAwMDguaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5
-IFVSTCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNC0wMDA4Lmh0bWwK
-Q1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNC01NDQ3OSwgQ1ZFLTIwMjQtNTQ1MDIs
-CiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjQtNTQ1MDUsIENWRS0yMDI0LTU0NTA4
-LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI0LTU0NTM0LgoKU2V2ZXJhbCB2dWxu
-ZXJhYmlsaXRpZXMgd2VyZSBkaXNjb3ZlcmVkIGluIFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdC4K
-CkNWRS0yMDI0LTU0NDc5CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUg
-V2ViS2l0IGJlZm9yZSAyLjQ2LjUuCiAgICBDcmVkaXQgdG8gU2V1bmdoeXVuIExlZS4KICAgIElt
-cGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFk
-IHRvIGFuCiAgICB1bmV4cGVjdGVkIHByb2Nlc3MgY3Jhc2ggRGVzY3JpcHRpb246IFRoZSBpc3N1
-ZSB3YXMgYWRkcmVzc2VkIHdpdGgKICAgIGltcHJvdmVkIGNoZWNrcy4KICAgIFdlYktpdCBCdWd6
-aWxsYTogMjc4NDk3CgpDVkUtMjAyNC01NDUwMgogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktp
-dEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40Ni41LgogICAgQ3JlZGl0IHRvIEJyZW5kb24g
-VGlzemthIG9mIEdvb2dsZSBQcm9qZWN0IFplcm8uCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFs
-aWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3Rl
-ZCBwcm9jZXNzIGNyYXNoIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRo
-CiAgICBpbXByb3ZlZCBjaGVja3MuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI4MTkxMgoKQ1ZFLTIw
-MjQtNTQ1MDUKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQg
-YmVmb3JlIDIuNDYuNS4KICAgIENyZWRpdCB0byBHYXJ5IEt3b25nLgogICAgSW1wYWN0OiBQcm9j
-ZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8KICAgIG1l
-bW9yeSBjb3JydXB0aW9uIERlc2NyaXB0aW9uOiBBIHR5cGUgY29uZnVzaW9uIGlzc3VlIHdhcyBh
-ZGRyZXNzZWQKICAgIHdpdGggaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1
-Z3ppbGxhOiAyODI2NjEKCkNWRS0yMDI0LTU0NTA4CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2Vi
-S2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjUuCiAgICBDcmVkaXQgdG8gbGluankg
-b2YgSEtVUzNMYWIgYW5kIGNobHVvIG9mIFdIVVNlY0xhYiwgWGlhbmd3ZWkgWmhhbmcgb2YgVGVu
-Y2VudAogICAgU2VjdXJpdHkgWVVORElORyBMQUIuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFs
-aWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3Rl
-ZCBwcm9jZXNzIGNyYXNoIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRo
-CiAgICBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI4MjE4
-MAoKQ1ZFLTIwMjQtNTQ1MzQKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQ
-RSBXZWJLaXQgYmVmb3JlIDIuNDYuMC4KICAgIENyZWRpdCB0byBUYXNoaXRhIFNvZnR3YXJlIFNl
-Y3VyaXR5LgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNv
-bnRlbnQgbWF5IGxlYWQgdG8KICAgIG1lbW9yeSBjb3JydXB0aW9uIERlc2NyaXB0aW9uOiBUaGUg
-aXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkCiAgICBtZW1vcnkgaGFuZGxpbmcuCiAg
-ICBXZWJLaXQgQnVnemlsbGE6IDI3Nzk2NwoKV2UgcmVjb21tZW5kIHVwZGF0aW5nIHRvIHRoZSBs
-YXRlc3Qgc3RhYmxlIHZlcnNpb25zIG9mIFdlYktpdEdUSyBhbmQgV1BFCldlYktpdC4gSXQgaXMg
-dGhlIGJlc3Qgd2F5IHRvIGVuc3VyZSB0aGF0IHlvdSBhcmUgcnVubmluZyBzYWZlIHZlcnNpb25z
-Cm9mIFdlYktpdC4gUGxlYXNlIGNoZWNrIG91ciB3ZWJzaXRlcyBmb3IgaW5mb3JtYXRpb24gYWJv
-dXQgdGhlIGxhdGVzdApzdGFibGUgcmVsZWFzZXMuCgpGdXJ0aGVyIGluZm9ybWF0aW9uIGFib3V0
-IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBzZWN1cml0eSBhZHZpc29yaWVzCmNhbiBiZSBmb3Vu
-ZCBhdDogaHR0cHM6Ly93ZWJraXRndGsub3JnL3NlY3VyaXR5Lmh0bWwgb3IKaHR0cHM6Ly93cGV3
-ZWJraXQub3JnL3NlY3VyaXR5LgoKVGhlIFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCB0ZWFtLAo=
+Description:
+lrzip is a compression utility that excels at compressing large files.
 
---Ps6ZXBfygoRwES2s
-Content-Type: application/pgp-signature; name="signature.asc"
+The complete ASan output of the issue:
 
------BEGIN PGP SIGNATURE-----
+# lrzip -t $FILE
+==24966==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000005e7caa bp 0x7f7c755a58d0 sp 0x7f7c755a5870 T2)    
+==24966==The signal is caused by a READ memory access. 
+==24966==Hint: address points to the zero page.   
+    #0 0x5e7ca9 in bufRead::get() /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.h:485:24 
+    #1 0x5856f1 in libzpaq::Decompresser::findBlock(double*) /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.cpp:1236:21 
+    #2 0x55f79a in libzpaq::decompress(libzpaq::Reader*, libzpaq::Writer*) /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.cpp:1363:12  
+    #3 0x55f4e2 in zpaq_decompress /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.h:538:2 
+    #4 0x54b3a4 in zpaq_decompress_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:453:2 
+    #5 0x54b3a4 in ucompthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1534
+    #6 0x7f81b7a434a3 in start_thread /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_create.c:333
+    #7 0x7f81b6d6e66c in clone /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/misc/../sysdeps/unix/sysv/linux/x86_64/clone.S:109
 
-iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZ2hmsgAKCRCRxVnb5MkS
-O6qBAJ4gLMBW4Y0wP+46RW3fo7WLDt6bIACfe8gaUCUewyXI1zXkzwN3tz2O8Ok=
-=bknK
------END PGP SIGNATURE-----
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.h:485:24 in bufRead::get()
+Thread T2 created by T0 here:
+    #0 0x42d49d in pthread_create /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:245
+    #1 0x53e70f in create_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:133:6
+    #2 0x53e70f in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1673
+    #3 0x53e70f in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
+    #4 0x531075 in unzip_literal /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:162:16
+    #5 0x531075 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:320
+    #6 0x531075 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
+    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
+    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
+    #9 0x7f81b6ca778f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
---Ps6ZXBfygoRwES2s--
+==24966==ABORTING
+
+Affected version:
+0.631
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8847
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00229-lrzip-nullptr-bufRead-get
+
+Timeline:
+2017-03-24: bug discovered and reported to upstream
+2017-05-07: blog post about the issue
+2017-05-08: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/07/lrzip-null-pointer-dereference-in-bufreadget-libzpaq-h/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-60923.7405742569--
+
