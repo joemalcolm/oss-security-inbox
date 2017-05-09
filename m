@@ -1,4 +1,9 @@
-Received: (qmail 3942 invoked by uid 550); 7 Jan 2025 22:04:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3023" "Tuesday" "9" "May" "2017" "08:21:41" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<997258.47630495-sendEmail@localhost>" "73" "[oss-security] lrzip: invalid memory read in lzo_decompress_buf (stream.c)" nil nil nil "5" "2017050908:21:41" "[oss-security] lrzip: invalid memory read in lzo_decompress_buf (stream.c)" (number mark "U       ago@gentoo.o May  9   73/3023  " thread-indent "\"[oss-security] lrzip: invalid memory read in lzo_decompress_buf (stream.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11361 invoked by uid 550); 9 May 2017 08:22:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,70 +12,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3644 invoked from network); 7 Jan 2025 22:04:05 -0000
-Date: Tue, 7 Jan 2025 23:04:00 +0100
-From: Solar Designer <solar@openwall.com>
-To: Linfeng Sun <slf@hdu.edu.cn>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20250107220400.GA14382@openwall.com>
-References: <ALcAqQAMIghdG5uEpB93rap6.1.1736154109674.Hmail.241270009@hdu.edu.cn>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ALcAqQAMIghdG5uEpB93rap6.1.1736154109674.Hmail.241270009@hdu.edu.cn>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux: general protection fault in __vmx_vcpu_run with nested virtualization
+Received: (qmail 10185 invoked from network); 9 May 2017 08:21:57 -0000
+Message-ID: <997258.47630495-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Tue, 9 May 2017 08:21:41 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-326896.676867367"
+Subject: [oss-security] lrzip: invalid memory read in lzo_decompress_buf (stream.c)
 
-Hi,
+------MIME delimiter for sendEmail-326896.676867367
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Thank you very much for bringing this to oss-security (as it also was on
-linux-distros).
+Description:
+lrzip is a compression utility that excels at compressing large files.
 
-On Mon, Jan 06, 2025 at 05:01:49PM +0800, Linfeng Sun wrote:
-> A bug has been detected in the Linux kernel's nested virtualization implementation, which 
-> can lead to a general protection fault in __vmx_vcpu_run when running a higher 
-> version L1 hypervisor kernel on an L0 host kernel version predating the following 
-> commit: https://github.com/torvalds/linux/commit/45779be5ced626db836e612e0dc638a1601abcf2
+The complete ASan output of the issue:
 
-I assume you identified this commit by bisecting?
+# lrzip -t $FILE
+==3311==ERROR: AddressSanitizer: SEGV on unknown address 0x602000010000 (pc 0x7f75cabe8834 bp 0x62100002c11f sp 0x7f7085ab4d78 T5)
+==3311==The signal is caused by a READ memory access.
+    #0 0x7f75cabe8833 in lzo1x_decompress /tmp/portage/dev-libs/lzo-2.08/work/lzo-2.08/src/lzo1x_d.ch:108
+    #1 0x54af2f in lzo_decompress_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:590:10
+    #2 0x54af2f in ucompthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1525
+    #3 0x7f75ca2944a3 in start_thread /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_create.c:333
+    #4 0x7f75c95bf66c in clone /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/misc/../sysdeps/unix/sysv/linux/x86_64/clone.S:109
 
-Do you know / can explain how your PoC triggers this bug?  Where does
-the POP SS instruction come from?
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/lzo-2.08/work/lzo-2.08/src/lzo1x_d.ch:108 in lzo1x_decompress
+Thread T5 created by T0 here:
+    #0 0x42d49d in pthread_create /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:245
+    #1 0x53e70f in create_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:133:6
+    #2 0x53e70f in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1673
+    #3 0x53e70f in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
+    #4 0x531075 in unzip_literal /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:162:16
+    #5 0x531075 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:320
+    #6 0x531075 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
+    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
+    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
+    #9 0x7f75c94f878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Also, in another message (not CC'ed to you) Demi Marie Obenour asked:
-"Is this exploitable for anything other than denial of service?"
+Dunno wtf decompression type to use!
+==3311==AddressSanitizer: while reporting a bug found another one. Ignoring.
+Fatal error - exiting
 
-The corresponding mainline commit is:
+Affected version:
+0.631
 
-commit 6aa5c47c351b22c21205c87977c84809cd015fcf
-Author: Michal Luczaj <mhal@rbox.co>
-Date:   Mon Aug 22 00:06:47 2022 +0200
+Fixed version:
+N/A
 
-    KVM: x86/emulator: Fix handing of POP SS to correctly set interruptibility
+Commit fix:
+N/A
 
-    The emulator checks the wrong variable while setting the CPU
-    interruptibility state, the target segment is embedded in the instruction
-    opcode, not the ModR/M register.  Fix the condition.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-    Signed-off-by: Michal Luczaj <mhal@rbox.co>
-    Fixes: a5457e7bcf9a ("KVM: emulate: POP SS triggers a MOV SS shadow too")
-    Cc: stable@vger.kernel.org
-    Link: https://lore.kernel.org/all/20220821215900.1419215-1-mhal@rbox.co
-    Signed-off-by: Sean Christopherson <seanjc@google.com>
+CVE:
+CVE-2017-8845
 
-diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
-index f092c54d1a2f..08dbcff4045a 100644
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -1953,7 +1953,7 @@ static int em_pop_sreg(struct x86_emulate_ctxt *ctxt)
-        if (rc != X86EMUL_CONTINUE)
-                return rc;
- 
--       if (ctxt->modrm_reg == VCPU_SREG_SS)
-+       if (seg == VCPU_SREG_SS)
-                ctxt->interruptibility = KVM_X86_SHADOW_INT_MOV_SS;
-        if (ctxt->op_bytes > 2)
-                rsp_increment(ctxt, ctxt->op_bytes - 2);
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00230-lrzip-invalidread-lzo1x_decompress
 
-Alexander
+Timeline:
+2017-03-24: bug discovered and reported to upstream
+2017-05-07: blog post about the issue
+2017-05-08: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/07/lrzip-invalid-memory-read-in-lzo_decompress_buf-stream-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-326896.676867367--
+
