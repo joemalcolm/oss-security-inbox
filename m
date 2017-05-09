@@ -1,87 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/21
-Message-ID: <20170621212742.GA28766@grsecurity.net>
-Date: Wed, 21 Jun 2017 17:27:43 -0400
-From: Brad Spengler <spender@...ecurity.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/8
+Message-Id: <B1C068C5-DD6F-406D-BA2D-C6F685416F7C@gmail.com>
+Date: Tue, 9 May 2017 09:34:23 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: Numerous FreeTDS crashes fixed on master
 Content-Type: text/plain; charset=utf-8
 
-> OpenBSD isn't a member of the distros list - they were notified by
-> Qualys separately.  This matter was discussed, and some folks were
-> unhappy about OpenBSD's action, but in the end it was decided that
-> since, as you correctly say, the underlying issue was already publicly
-> known, OpenBSD's commits don't change things much.  Sure this draws
-> renewed attention to the problem, but probably not to the extent and in
-> the many specific ways the Qualys findings cover.  So it was decided to
-> keep the embargo on the detail.
+Attached is a zip file of reported TDS streams that cause segmentation faults in the FreeTDS library. The ‘tsql’ binary was used for the fuzzing, so these most likely only affect client-side functionality. These have been resolved on master and the 1.0 branch.
 
-Thank you for clarifying that, my assumption was indeed wrong then.
+Also included in the zip file is a bucket.txt, a crashwalk db dump detailing the crashes for the files in the zip file.
 
-Still, if OpenBSD was able to resolve the issues necessary after 
-notification without leaking full details to the public, shouldn't 
-this have been possible for the other projects without an embargo, 
-let alone an extended one?  Especially considering that the full 
-duration of the extended embargo didn't result in complete fixes for 
-the issue and in fact resulted in a broken fix for Linux, which 
-could easily have been avoided if the discussions around it happened 
-in public (and none of the deep details from the Qualys advisory 
-would have been needed for any of those discussions).
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f4cb767d76cf7ee72f97dd76f6cfa6c76a5edc89
-for instance mentions Linus' fix blew up in 3 minutes of fuzz testing.
+You can find the bucket.txt itself in the following Github gist as well. No CVE’s have been requested.
 
-> Ditto for the "move mmap_area and PIE binaries away from the stack"
-> patch series posted to LKML and CC'ed to kernel-hardening on June 2:
-> 
-> http://www.openwall.com/lists/kernel-hardening/2017/06/02/
-> 
-> which might have been inspired by Qualys work known to Red Hat engineers
-> internally.  A difference is that Red Hat is a member of the distros
-> list.  I brought this up on the distros list, and another Red Hat person
-> said "We'll deal with this internally."  Given the circumstances, I find
-> this response satisfactory.
+https://gist.github.com/brandonprry/bfb0e58682d464e2d2d319644790bdf5 <https://gist.github.com/brandonprry/bfb0e58682d464e2d2d319644790bdf5>
 
-At first I was rather concerned about this, so I emailed Rik 
-directly and asked him the simple question of whether the advance 
-notice prioritized or kickstarted the process of porting those 
-features, regardless of having looked at some code in the past (as I 
-imagine much of our code has been looked at).  I too am satisfied 
-with his answer that the actual porting work on his part had already
-been done prior to that notice, and that any internal concerns afterward
-were simply to avoid the appearance of impropriety.
+To test, you can compile FreeTDS, then use preeny to redirect network IO to stdin/stdout.
 
-My take on the embargoing process (outside of what's already mentioned
-on https://grsecurity.net/an_ancient_kernel_hole_is_not_closed.php ):
-I've always been concerned by the fact that smaller distros seem to 
-be barred from distros-list membership; it seems the arrangement 
-lends itself too much to enabling the marketing of the larger 
-companies and in fact perhaps even disincentivizing their investment 
-in security as the embargo process enables them to skirt much of the 
-public pain they'd otherwise have to experience (for in this 
-instance what was a completely avoidable problem).  I get the practical
-reasons for the policy (increased leak risk, major distros often do
-the actual fixing work, etc) but from a level of principle it's always
-rubbed me the wrong way.
+export LD_PRELOAD=~/preeny/x86_64-linux-gnu/desock.so
+unzip freetds_crashed.zip
+cd rpt
+for i in id*; do valgrind ~/freetds/build/src/apps/tsql -S 127.0.0.1 -U fdsa -P fdsa -I ~/tdsconfig < $i; done
 
-So despite that I have full trust in you Alexander as being 
-completely transparent and impartial despite having to engage in a 
-bit of politics necessary to work with all the companies involved, I 
-am uneasy (and I believe I note some uneasiness in your own mails) 
-with how others are exploiting the arrangment despite your sincere
-efforts at sticking to the policies you established.
+A simple tdsconfig file can be used to speed things up a bit.
 
-That said, I think regardless of whether you head the distros list
-or not, the major companies are going to see it to be in their
-financial/PR interest to maintain an embargo list.  I would not be
-surprised at all if were you to step down from the role/shutter the
-list, a company like Red Hat would quickly swoop in to "take the
-reins."  Which would be a shame and adds to my general worries about
-the direction this industry is going in, since your record for fairness
-is sterling, and I doubt very much that dogged dedicated to
-transparency, fairness, and ethics would continue with anyone else
-at the helm.
+[global]
+timeout = 1
+connect timeout = 1
 
-Thanks,
--Brad
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Many thanks to Frediano Ziglio, the maintainer of FreeTDS, for quick communication and bug fix turn arounds.
+
+
+Content of type "text/html" skipped
+
+Download attachment "freetds_crashes.zip" of type "application/zip" (56842 bytes)
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
