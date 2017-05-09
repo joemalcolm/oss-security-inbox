@@ -1,50 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/10
-Message-ID: <CAH468dq50NUG9ohUFnXcAUG1gowU19=EZJwuoW8o=ygLgnGiMg@mail.gmail.com>
-Date: Mon, 22 May 2017 15:08:44 -0400
-From: Anthony Sasadeusz <sasadeu1@...c.edu>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to request a CVE for open source projects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/3
+Message-ID: <844121.337493078-sendEmail@localhost>
+Date: Tue, 9 May 2017 08:19:51 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: lrzip: NULL pointer dereference in bufRead::get (libzpaq.h)
 Content-Type: text/plain; charset=utf-8
 
-Yeah, I'm kind of in the same boat. Used the DWF form, got a response
-basically asking to accept the Mitre Terms of Service, and nothing since.
+Description:
+lrzip is a compression utility that excels at compressing large files.
 
-Anthony
+The complete ASan output of the issue:
 
-On Mon, May 22, 2017 at 2:05 PM, Michael Catanzaro <mcatanzaro@...lia.com>
-wrote:
+# lrzip -t $FILE
+==24966==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000005e7caa bp 0x7f7c755a58d0 sp 0x7f7c755a5870 T2)    
+==24966==The signal is caused by a READ memory access. 
+==24966==Hint: address points to the zero page.   
+    #0 0x5e7ca9 in bufRead::get() /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.h:485:24 
+    #1 0x5856f1 in libzpaq::Decompresser::findBlock(double*) /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.cpp:1236:21 
+    #2 0x55f79a in libzpaq::decompress(libzpaq::Reader*, libzpaq::Writer*) /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.cpp:1363:12  
+    #3 0x55f4e2 in zpaq_decompress /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.h:538:2 
+    #4 0x54b3a4 in zpaq_decompress_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:453:2 
+    #5 0x54b3a4 in ucompthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1534
+    #6 0x7f81b7a434a3 in start_thread /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_create.c:333
+    #7 0x7f81b6d6e66c in clone /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/misc/../sysdeps/unix/sysv/linux/x86_64/clone.S:109
 
-> Hi,
->
-> I'm aware that the CVE form [1] can now be used to request CVEs. However,
-> it does not seem to be designed for requesting CVEs in open source
-> products. The field "Vendor of the product(s)" says "Please ensure vendors
-> are on the products and sources list," indicating the intent of MITRE to
-> restrict usage of the form to specific products. This list [2] says "For
-> open source software products not listed below, request a CVE ID through
-> the Distributed Weakness Filing Project CNA." So, clearly we are supposed
-> to request a CVE through the DWF project. (Or perhaps via Red Hat, since it
-> seems like it's willing to allocate CVEs for miscellaneous Linux-related
-> issues.)
->
-> Anyway, I attempted to request a CVE using the DWF project's request form
-> [3] several months ago, but have not yet received any response [4]. So I am
-> hesitant to request further CVEs from the DWF project, for fear that I
-> won't receive a response and will wind up needing to make a duplicate CVE
-> request somewhere else.
->
-> How are other people getting open source CVEs right now? Has anybody else
-> had luck getting a CVE via DWF? Should I be trying to do this through Red
-> Hat instead? Or just by filling out MITRE's CVE form even though we're not
-> really supposed to be using it?
->
-> Michael
->
-> [1] https://cveform.mitre.org/
-> [2] http://cve.mitre.org/cve/request_id.html#cna_coverage
-> [3] http://iwantacve.org/
-> [4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
->
->
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/libzpaq/libzpaq.h:485:24 in bufRead::get()
+Thread T2 created by T0 here:
+    #0 0x42d49d in pthread_create /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:245
+    #1 0x53e70f in create_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:133:6
+    #2 0x53e70f in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1673
+    #3 0x53e70f in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
+    #4 0x531075 in unzip_literal /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:162:16
+    #5 0x531075 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:320
+    #6 0x531075 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
+    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
+    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
+    #9 0x7f81b6ca778f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+==24966==ABORTING
+
+Affected version:
+0.631
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8847
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00229-lrzip-nullptr-bufRead-get
+
+Timeline:
+2017-03-24: bug discovered and reported to upstream
+2017-05-07: blog post about the issue
+2017-05-08: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/07/lrzip-null-pointer-dereference-in-bufreadget-libzpaq-h/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
