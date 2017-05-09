@@ -1,107 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/12
-Message-Id: <E1dNHpJ-000683-14@xenbits.xenproject.org>
-Date: Tue, 20 Jun 2017 12:00:09 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 223 - ARM guest disabling interrupt may crash Xen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/7
+Message-ID: <290801.443715708-sendEmail@localhost>
+Date: Tue, 9 May 2017 08:23:34 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: lrzip: use-after-free in read_stream (stream.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+lrzip is a compression utility that excels at compressing large files.
 
-                    Xen Security Advisory XSA-223
-                              version 2
+The complete ASan output of the issue:
 
-              ARM guest disabling interrupt may crash Xen
+# lrzip -t $FILE
+==4026==ERROR: AddressSanitizer: heap-use-after-free on address 0x62100000dd00 at pc 0x0000004bccc5 bp 0x7ffcf3b4d9f0 sp 0x7ffcf3b4d1a0
+READ of size 1 at 0x62100000dd00 thread T0
+    #0 0x4bccc4 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
+    #1 0x53cff6 in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1747:4
+    #2 0x5307fc in read_vchars /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:79:6
+    #3 0x5307fc in unzip_match /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:208
+    #4 0x5307fc in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:329
+    #5 0x5307fc in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
+    #6 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
+    #7 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
+    #8 0x7f743a5d278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #9 0x41abf8 in _init (/usr/bin/lrzip+0x41abf8)
 
-UPDATES IN VERSION 2
-====================
+0x62100000dd00 is located 0 bytes inside of 4096-byte region [0x62100000dd00,0x62100000ed00)
+freed by thread T0 here:
+    #0 0x4d3660 in free /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47
+    #1 0x53d186 in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1574:3
+    #2 0x53d186 in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
+    #3 0x5307fc in read_vchars /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:79:6
+    #4 0x5307fc in unzip_match /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:208
+    #5 0x5307fc in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:329
+    #6 0x5307fc in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
+    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
+    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
+    #9 0x7f743a5d278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Public release.
+previously allocated by thread T1 here:
+    #0 0x4d39b8 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x54b0d7 in lzma_decompress_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:546:20
+    #2 0x54b0d7 in ucompthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1522
+    #3 0x7f743b36e4a3 in start_thread /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_create.c:333
 
-ISSUE DESCRIPTION
-=================
+Thread T1 created by T0 here:
+    #0 0x42d49d in pthread_create /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:245
+    #1 0x53e70f in create_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:133:6
+    #2 0x53e70f in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1673
+    #3 0x53e70f in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
+    #4 0x5303e3 in read_u8 /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:55:6
+    #5 0x5303e3 in read_header /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:144
+    #6 0x5303e3 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:314
+    #7 0x5303e3 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
+    #8 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
+    #9 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
+    #10 0x7f743a5d278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Virtual interrupt injection could be triggered by a guest when sending
-an SGI (e.g IPI) to any vCPU or by configuring timers. When the virtual
-interrupt is masked, a missing check in the injection path may result in
-reading invalid hardware register or crashing the host.
+SUMMARY: AddressSanitizer: heap-use-after-free 
+/tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413 in __asan_memcpy
+Shadow bytes around the buggy address:
+  0x0c427fff9b50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff9b60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff9b70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff9b80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c427fff9b90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c427fff9ba0:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c427fff9bb0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c427fff9bc0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c427fff9bd0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c427fff9be0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c427fff9bf0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==4026==ABORTING
 
-IMPACT
-======
+Affected version:
+0.631
 
-A guest may cause a hypervisor crash, resulting in a Denial of Service
-(DoS).
+Fixed version:
+N/A
 
-VULNERABLE SYSTEMS
-==================
+Commit fix:
+N/A
 
-All Xen versions which support ARM are affected.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-x86 systems are not affected.
+CVE:
+CVE-2017-8846
 
-MITIGATION
-==========
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00233-lrzip-UAF-read_stream
 
-On systems where the guest kernel is controlled by the host rather than
-guest administrator, running only kernels which do not disable SGI and
-PPI (i.e IRQ < 32) will prevent untrusted guest users from exploiting
-this issue. However untrusted guest administrators can still trigger it
-unless further steps are taken to prevent them from loading code into
-the kernel (e.g by disabling loadable modules etc) or from using other
-mechanisms which allow them to run code at kernel privilege.
+Timeline:
+2017-03-24: bug discovered and reported to upstream
+2017-05-07: blog post about the issue
+2017-05-08: CVE assigned
 
-CREDITS
-=======
+Note:
+This bug was found with American Fuzzy Lop.
 
-This issue was discovered by Julien Grall of ARM.
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/07/lrzip-use-after-free-in-read_stream-stream-c/
 
-RESOLUTION
-==========
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-Applying the attached patch resolves this issue.
 
-xsa223.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
-
-$ sha256sum xsa223*
-b5c8d8e8dac027069bec7dd812cff3f6f99e5949dd4a8ee729255c38274958b1  xsa223.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZSQ3WAAoJEIP+FMlX6CvZpxQH/0nQaJEWEuVZlQliIaB3TUK2
-nnXBf3cFMsNCBIsrQtYXetZ8amA7cjULd2SX8/WIR60CPZ5Uj/YQtld5cq4LfxMj
-Ngma8mPDUMlu6t+n07vee/fte5fZYOpci0teC9NCLDbG5eTWoJ0K7CzN2JUQWLAb
-IgeJAVgyNr3ZibqdB8xBb5KlA+hOBE77MQ6yt8qZeltoYezIxprwgcqE/BgMVrcj
-+7pz0WtJtdTe7i8i6jGcqvzbl3WhmcppiDLNhv310V+dV+T2e9cJia5EuapbqYD7
-mkMLnOTRngJq97q1RwTQlsLMOp+/deZpqueLKttVCSR6VP4GtKpgr/0O1NW91YU=
-=hATV
------END PGP SIGNATURE-----
-
-Download attachment "xsa223.patch" of type "application/octet-stream" (1999 bytes)
