@@ -1,35 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/20
-Message-ID: <alpine.LFD.2.20.1702240012110.19005@wniryva>
-Date: Fri, 24 Feb 2017 00:14:56 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-6209 Virglrenderer: stack buffer oveflow in parse_identifier
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/6
+Message-ID: <999555.97808318-sendEmail@localhost>
+Date: Tue, 9 May 2017 08:22:55 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: lrzip: heap-based buffer overflow write in read_1g (stream.c)
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+Description:
+lrzip is a compression utility that excels at compressing large files.
 
-Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
-for the virtio GPU, is vulnerable to an OOB array access issue. It could occur 
-when parsing properties in parse_identifier().
+The complete ASan output of the issue:
 
-A guest user/process could use this flaw to crash the Qemu process instance 
-resulting DoS.
+# lrzip -t $FILE
+==25584==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000ef33 at pc 0x00000045246e bp 0x7ffd881d4970 sp 0x7ffd881d4120
+WRITE of size 8 at 0x60200000ef33 thread T0
+    #0 0x45246d in read /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765
+    #1 0x537ce1 in read_1g /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:731:9
+    #2 0x53e349 in read_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:774:8
+    #3 0x53e349 in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1648
+    #4 0x53e349 in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
+    #5 0x5307fc in read_vchars /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:79:6
+    #6 0x5307fc in unzip_match /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:208
+    #7 0x5307fc in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:329
+    #8 0x5307fc in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
+    #9 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
+    #10 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
+    #11 0x7f02ed48f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #12 0x41abf8 in _init (/usr/bin/lrzip+0x41abf8)
 
-Upstream patch:
----------------
-   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=e534b51ca3c3cd25f3990589932a9ed711c59b27
+0x60200000ef33 is located 0 bytes to the right of 3-byte region [0x60200000ef30,0x60200000ef33)
+allocated by thread T0 here:
+    #0 0x4d39b8 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x53e2ab in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1643:10
+    #2 0x53e2ab in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
+    #3 0x5307fc in read_vchars /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:79:6
+    #4 0x5307fc in unzip_match /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:208
+    #5 0x5307fc in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:329
+    #6 0x5307fc in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
+    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
+    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
+    #9 0x7f02ed48f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1426149
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765 in read
+Shadow bytes around the buggy address:
+  0x0c047fff9d90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c047fff9de0: fa fa fa fa fa fa[03]fa fa fa fd fd fa fa fd fa
+  0x0c047fff9df0: fa fa fd fd fa fa 04 fa fa fa 03 fa fa fa 05 fa
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==25584==ABORTING
 
-This issue was reported by Li Qiang of 360.cn Inc.
+Affected version:
+0.631
 
-'CVE-2017-6209' assigned via -> http://cveform.mitre.org/
+Fixed version:
+N/A
 
-Thank you.
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-8844
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00232-lrzip-heapoverflow-read_1g
+
+Timeline:
+2017-03-24: bug discovered and reported to upstream
+2017-05-07: blog post about the issue
+2017-05-08: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/07/lrzip-heap-based-buffer-overflow-write-in-read_1g-stream-c/
+
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
