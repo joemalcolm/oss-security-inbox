@@ -1,91 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/12
-Message-ID: <4388229.gHBqzp8EGK@wanheda>
-Date: Tue, 29 Aug 2017 22:02:28 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-request@...re.org
-Subject: Re: Re: [scr379303] A bunch of duplicate CVEs requested for?? bho..
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/9
+Message-ID: <CAM1AYQCj1EOvyXJ9xH9tMqNn_V0p9G2A1MZD0bu92Q3506q8Rw@mail.gmail.com>
+Date: Tue, 9 May 2017 14:49:56 +0100
+From: Simon MacDonald <macdonst@...che.org>
+To: "dev@...dova.apache.org" <dev@...dova.apache.org>,  "private@...dova.apache.org" <private@...dova.apache.org>, security <security@...che.org>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  Mark Ward <mark.ward@...d-click.com>
+Subject: CVE-2016-6799: Internal system information leak
 Content-Type: text/plain; charset=utf-8
 
-Hello Mitre, I'm glad to see your response here.
+CVE-2016-6799: Internal system information leak
 
+Severity: High
 
-On martedì 29 agosto 2017 21:23:50 CEST cve-request@...re.org wrote:
-> > https://nvd.nist.gov/vuln/detail/CVE-2017-13753 duplicate of:
-> > https://nvd.nist.gov/vuln/detail/CVE-2016-9396
-> 
-> Yes, these are duplicates; we will reject CVE-2017-13753 and update
-> CVE-2016-9396.
-The problem is not about this duplicate but from some assignments in the last 
-two months from people I mentioned, see the first post here from a partial 
-list: https://marc.info/?l=oss-security&m=150401081512049&w=2
+Vendor: The Apache Software Foundation
 
-> This occurred because the MITRE CVE team inadvertently populated
-> CVE-2016-9396 with incorrect version information, 
-This is right
+Versions Affected: Cordova Android (5.2.2 and below)
 
-> and because the code
-> changed between the two tested versions.
-from https://blogs.gentoo.org/ago/2016/11/16/jasper-multiple-assertion-failure/ we have: 
-libjasper/jpc/jpc_t1cod.c:144: int JPC_NOMINALGAIN(int, int, int, int): 
-Assertion `qmfbid == 0x01′ failed.
-form https://bugzilla.redhat.com/show_bug.cgi?id=1485272 we have:
-libjasper/jpc/jpc_t1cod.c:144: int JPC_NOMINALGAIN(int, int, int, int): 
-Assertion `qmfbid == JPC_COX_RFT' failed.
+Description: The application calls methods of the Log class. Messages
+passed to these methods (Log.v(), Log.d(), Log.i(), Log.w(), and
+Log.e()) are stored in a series of circular buffers on the device. By
+default, a maximum of four 16 KB rotated logs are kept in addition to
+the current log. The logged data can be read using Logcat on the
+device. When using platforms prior to Android 4.1 (Jelly Bean), the
+log data is not sandboxed per application; any application installed
+on the device has the capability to read data logged by other
+applications.
 
-they looks to be similar.
+Upgrade path: Developers who are concerned about this issue should
+upgrade to 6.0.0 or later and install cordova plugins whose versions
+are equal to or greater than:
 
-> Specifically, CVE-2016-9396 had said "in JasPer before 1.900.12" but
-> actually there was no reference stating that 1.900.12 was a fixed
-> version. Also, the CVE-2017-13753 reference said "Assertion `qmfbid ==
-> JPC_COX_RFT' failed" but the CVE-2016-9396 reference said "Assertion
-> `qmfbid == 0x01' failed." These happen to be the same (there's a
-> "#define JPC_COX_RFT 0x01" elsewhere), but it initially looked like
-> the new report was about a different assertion that was problematic in
-> 1.900.12 and later versions.
-From your side looks to be correct, What I'm trying to point out is to not 
-trust at all cve-requests that never went under upstream eyes.
+cordova-plugin-battery-status: 1.2.0
+cordova-plugin-camera: 2.3.0
+cordova-plugin-console: 1.0.4
+cordova-plugin-contacts: 2.2.0
+cordova-plugin-device: 1.1.3
+cordova-plugin-device-motion: 1.2.2
+cordova-plugin-device-orientation: 1.0.4
+cordova-plugin-dialogs: 1.3.0
+cordova-plugin-file: 4.3.0
+cordova-plugin-file-transfer: 1.6.0
+cordova-plugin-geolocation: 2.3.0
+cordova-plugin-globalization: 1.0.4
+cordova-plugin-inappbrowser: 1.5.0
+cordova-plugin-media: 2.4.0
+cordova-plugin-media-capture: 1.4.0
+cordova-plugin-network-information: 1.3.0
+cordova-plugin-splashscreen: 4.0.0
+cordova-plugin-statusbar: 2.2.0
+cordova-plugin-test-framework: 1.1.3
+cordova-plugin-vibration: 2.1.2
+cordova-plugin-whitelist: 1.3.0
+cordova-plugin-wkwebview-engine: 1.1.0
 
+Mitigation Steps: If developers are unable to install the latest versions,
+this vulnerability can easily be mitigated by not putting sensitive
+information in the log statements.
 
-> 
-> > months later we have:
-> > https://nvd.nist.gov/vuln/detail/CVE-2017-11720
-> > "There is a division-by-zero vulnerability in LAME 3.99.5, caused by a
-> > malformed input file."
-> 
-> When we worked on your CVE ID request for the
-> https://blogs.gentoo.org/ago/2017/06/17/lame-divide-by-zero-in-parse_wave_he
-> ader-get_audio-c/ report, we had the information about the affected
-> source-code pathname frontend/get_audio.c, and we had found the
-> https://bugs.debian.org/777159 information about "this is all in the
-> frontend code in frontend/get_audio.c:parse_wave_header() and not in
-> the library." By contrast, the CVE-2017-11720 request had less
-> technical detail about the source-code location, and the requester had
-> checked the "Has vendor confirmed or acknowledged the vulnerability?"
-This is right from your side, but looks to be false in the reality. The cve 
-was issued on 07/28/2017 while the first comment from upstream was on 
-08/13/2017 (https://sourceforge.net/p/lame/bugs/460/). Again do not entirely 
-trust request that never went under upstream eyes.
-
-> Yes box on our https://cveform.mitre.org web site. In general, if a
-> problem is only a divide-by-zero in a command-line program, but the
-> upstream vendor decided to categorize it as a vulnerability, then it
-> gets a CVE. Admittedly, there was no direct proof of "decided to
-> categorize it as a vulnerability" here. Also, if a CVE is already
-> populated, and is about this type of valid crash report, then we do
-> not retroactively reject it, even if we learn more about exploitation
-> relevance. We will update CVE-2017-11720 with your reference, to help
-> to show that you were the original discoverer.
-
-As said to Henri in my previous email, the problem is not the FPE itself or 
-something technical.
-As you can clearly see I'm trying to include the asan output on each bug I 
-find, to make it easily-comparable and sometimes you can easily understand the 
-cause/nature of the issue. Unfortunately people do not do the same and this 
-causes the presence of duplicates.
-
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Credit: Mark Ward
