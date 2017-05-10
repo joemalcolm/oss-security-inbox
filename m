@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1417" "Tuesday" "9" "June" "2015" "13:08:51" "-0400" "Steven M. Christey" "coley@mitre.org" "<Pine.LNX.4.64.1506091305340.22006@beijing.mitre.org>" "34" "[oss-security] Re: MITRE delays persist" nil nil nil "6" "2015060917:08:51" "[oss-security] Re: MITRE delays persist" (number mark "        coley@mitre. Jun  9   34/1417  " thread-indent "\"[oss-security] Re: MITRE delays persist\"\n") "<25011_1433195303_556CD326_25011_1363_1_20150601214754.GA3491@zoho.com>" ("<25011_1433195303_556CD326_25011_1363_1_20150601214754.GA3491@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1051" "Tuesday" "9" "May" "2017" "23:19:54" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20170510061953.GA3445@hunt>" "30" "Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton" nil nil nil "5" "2017051006:19:54" "[oss-security] CVE Request: Denial of Service in Dropbox lepton" (number mark "U       seth.arnold@ May  9   30/1051  " thread-indent "\"Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton\"\n") "<CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>" ("<CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17663 invoked by uid 550); 9 Jun 2015 17:09:10 -0000
+Received: (qmail 11505 invoked by uid 550); 10 May 2017 06:20:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17559 invoked from network); 9 Jun 2015 17:09:04 -0000
-X-Authentication-Warning: beijing.mitre.org: coley owned process doing -bs
-In-Reply-To: <25011_1433195303_556CD326_25011_1363_1_20150601214754.GA3491@zoho.com>
-Message-ID: <Pine.LNX.4.64.1506091305340.22006@beijing.mitre.org>
-References: <25011_1433195303_556CD326_25011_1363_1_20150601214754.GA3491@zoho.com>
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-cc: oss-security@lists.openwall.com, cve-assign@mitre.org
-Date: Tue, 9 Jun 2015 13:08:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: MITRE delays persist
-To: mancha <mancha1@zoho.com>
+Received: (qmail 11481 invoked from network); 10 May 2017 06:20:07 -0000
+Date: Tue, 9 May 2017 23:19:54 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
+To: Insu Yun <wuninsu@gmail.com>
+Cc: oss-security@lists.openwall.com,
+	Yeongjin Jang <Yeongjin.jang@gatech.edu>
+Message-ID: <20170510061953.GA3445@hunt>
+Mail-Followup-To: Insu Yun <wuninsu@gmail.com>,
+	oss-security@lists.openwall.com,
+	Yeongjin Jang <Yeongjin.jang@gatech.edu>
+References: <CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="SUOF0GtieIMvvwua"
+Content-Disposition: inline
+In-Reply-To: <CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton
 
+--SUOF0GtieIMvvwua
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> Back in mid-March you wrote an email addressing the CVE assignment
-> delays people had been experiencing. [1]
->
-> I was relieved when I received your email because I had several
-> outstanding requests and was wondering why they were being held up.
->
-> Unfortunately, almost 11 weeks has passed since your email and my
-> pending requests have yet to be addressed.
->
-> Would you please provide an update on the steps MITRE is taking to
-> become more responsive and provide a hard timeline on clearing of the
-> existing backlog?
->
-> For example, I have pending requests dating back to mid-February.
->
-> Thank you.
->
-> [1] http://marc.info/?l=oss-security&m=142679274522902&w=2
+On Tue, May 09, 2017 at 11:55:10PM -0400, Insu Yun wrote:
+> Please help assign a CVE to this vulnerability.
 
-Some requests are delayed because of complexity in deciding how 
-vulnerability information can be best represented in CVE. If there is a 
-vulnerability-research category, aspect, or approach that we feel may have 
-unexpected concerns that are specific to CVE, we prefer to resolve that 
-within our team, rather than follow a piecemeal approach to the related 
-individual requests. Accordingly, we do not designate a timeline that 
-applies globally to every request. If anyone needs additional confirmation 
-that a request has indeed been received and read, and that we are aware of 
-it remaining unanswered, sending directly to the cve-assign@mitre.org 
-address is the best option.
+Hello Insu, CVE assignment is now handled via the web form at
+https://cveform.mitre.org/ -- fill out the details that you can, and
+when you get a response from the MITRE team (often within a dozen hours)
+please forward details about open source tools to this list.
 
+Thanks
 
----
-CVE Assignment Team, MITRE CVE Numbering Authority
+--SUOF0GtieIMvvwua
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCgAGBQJZErEJAAoJEPMhclmdjS6XsNMIAJywrkRwtCacd8aTNF5fwEb9
++OIGFaleALMCQwdtGc78/Q3ltKiydDExtnYHotBrx0Qb5F+I68tGbq6eCL43TYAd
+7Fn/Xd1K7+eFW2VTw5Rto6VgswxCymCk2Mzx7q7c5INgg0YxW3HLcLGh5dEA8U46
+UHx1xcHB+yXRoDpaeZQ3DHBMTR/BpjzPWROr89Cha74aUcl1jiavCxj5k/qQqIBN
+DlHpekBgBCRfUF/MwLF01QCoaBMaFDq+m1GZPwIK72ttP1zvLtFgLCM8L4qzSb34
+rNkFz4W8zOHmgdmFMKW4UUEEQhzbcDTELEpoxAFysVgtPOFKhcsntkR5I/G8yVA=
+=qcG0
+-----END PGP SIGNATURE-----
+
+--SUOF0GtieIMvvwua--
