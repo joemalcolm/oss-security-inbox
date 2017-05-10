@@ -1,29 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/2
-Message-ID: <20171114073720.GA27647@kroah.com>
-Date: Tue, 14 Nov 2017 08:37:20 +0100
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/10/8
+Message-ID: <CAAeHK+zA4QumKnwDCMtXPPpbUb=WObQnV1hKJ-yAA8z8HHpi2Q@mail.gmail.com>
+Date: Wed, 10 May 2017 18:37:42 +0200
+From: Andrey Konovalov <andreyknvl@...gle.com>
 To: oss-security@...ts.openwall.com
-Cc: Vladis Dronov <vdronov@...hat.com>
-Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+Subject: Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 13, 2017 at 07:42:27PM -0500, David A. Wheeler wrote:
-> On Mon, 13 Nov 2017 16:15:24 +0100, Greg KH <greg@...ah.com> wrote:
-> > It's the arbitrarily nature here that I am curious about, it feels like
-> > it should be "all or nothing", for CVEs to mean much here.  Right now it
-> > seems like it is just, "all that we care to track"?  :)
-> 
-> "All" would be awesome, though unlikely.  But even if that's the eventual goal,
-> "good starts" are still good starts.
+On Fri, Mar 31, 2017 at 7:20 PM, Andrey Konovalov <andreyknvl@...gle.com> wrote:
+> On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@...gle.com> wrote:
+>> Hi,
+>>
+>> CVE-2017-7308 [1] was assigned to the following issue:
+>>
+>> The packet_set_ring function in net/packet/af_packet.c in the Linux
+>> kernel through 4.10.6 does not properly validate certain block-size
+>> data, which allows local users to cause a denial of service (overflow)
+>> or possibly have unspecified other impact via crafted system calls.
+>>
+>> The fix is sent upstream [2].
+>
+> Update: the fix actually consists of 3 patches:
+>
+> https://patchwork.ozlabs.org/patch/744811/
+> https://patchwork.ozlabs.org/patch/744813/
+> https://patchwork.ozlabs.org/patch/744812/
 
-But really, this isn't even a "good start", it's identifying a bug fixed
-over a year ago for a kernel that only one company seems to care about
-because they are _not_ following the recommended upstream stable kernel
-patches because they "know better" :)
+Another update: this turned out to be exploitable.
 
-That's my objection here.
+Details are here:
+https://googleprojectzero.blogspot.com/2017/05/exploiting-linux-kernel-via-packet.html
 
-thanks,
-
-greg k-h
+>
+>>
+>> [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
+>>
+>> [2] https://patchwork.ozlabs.org/patch/744811/
