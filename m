@@ -1,4 +1,9 @@
-Received: (qmail 15374 invoked by uid 550); 22 Oct 2023 08:31:39 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3805" "Wednesday" "10" "May" "2017" "11:54:56" "+0100" "Simon McVittie" "smcv@debian.org" "<20170510105456.nosikak5pgs7fp7b@perpetual.pseudorandom.co.uk>" "74" "Re: [oss-security] generic kde LPE" nil nil nil "5" "2017051010:54:56" "[oss-security] generic kde LPE" (number mark "U       smcv@debian. May 10   74/3805  " thread-indent "\"Re: [oss-security] generic kde LPE\"\n") "<20170510100504.GA17705@suse.de>" ("<20170510100504.GA17705@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 6074 invoked by uid 550); 10 May 2017 10:55:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,139 +12,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16383 invoked from network); 22 Oct 2023 00:46:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1697935558; x=1698021958; bh=fCQhDK+j81x8cAS4/m7gdAo7ZjZzm7LWwhe
-	pxAr9/ak=; b=yD+7Jdi2vIkuZUv4lvX4ecXEAObX8I6uVXCexpHuipFNy/bHMEu
-	vqKwIvpmNyS/xj/3XZfetAoCD1P6QWot2opZ0hI3FubcmFBp8H1S3lpa/Ys/YJOj
-	94XvuqYKuM3HXFpDlTXhD/OcuSjHOXqf40B2IyBpTsgZimQQh0kR5dBTZGZyDudt
-	gOdfFkNgNkKZjBK0rntBOnWW+9iOdAa3IAu8efYRDj4fbu8FB+M1Oxtit9j5G0Rb
-	THoMGODEDDIuTl+TzWBUX/2/GV/alRMlviFwtrnc92l1+17Sp5IKNn4W25l1t6D2
-	EvvTGRb6TEHKgRXbw6SfNLwCWqmx1/88u8w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697935558; x=1698021958; bh=fCQhDK+j81x8c
-	AS4/m7gdAo7ZjZzm7LWwhepxAr9/ak=; b=jsIXY+aGYgKzhj3exQsYHopmcrTJg
-	X6W8mQW3PrjhvZzV12kJtXuMukVyVMBoDkZ4SG/BoS3IVsUb5fR1NHG/hFE8tNp3
-	wCHNRQ0O6aLG8UtGkv/ehvrcobIgHFNrm8m41Em9M6uN4OrkpJifPqPOUW4X76VK
-	FHTZg0e4NjaC4BQybUnpQQFcvo0awpbnZZ5U1amixpY4O8W4yLRblSuv3zcBUHOr
-	jve3nNvuCSPR5RsP0Po2MqoFKt9KgSp8twtoooNfeIw8VmJwMLdC056TkQyFQu0F
-	qmXN1qZ+81lXTAt+RRrM4uATScVe0UxXBlfWMBDiVFh/33u/x50C05ABA==
-X-ME-Sender: <xms:xnA0ZRrdfXFXwn2R8Js8AsyVGMOnMC-BLK9ZFlL3X9UNCvB0ucE7WQ>
-    <xme:xnA0ZTqcKg9ar2-NEocRhpcRmfptf9QQMZxdUg6A66jQg08a8o_-M2_wDUXl2ZfSE
-    iyynHZ1v9BMslY>
-X-ME-Received: <xmr:xnA0ZeP4WAbs3TO_jS0PXiRw_HgmXgntANTMXS5bslD2mG78AMTt0RE2HweFHqB5xrjDaHhxd_Abs8ZHt9tbRMjgwVN_gXEi42_NQHheBpH-IgoS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkedugdefkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttdejnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihes
-    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    dttedtueeivdefiedugfejtdeutdelfedvueekledtudegjedviedukeefhfeuteenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmihesih
-    hnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
-X-ME-Proxy: <xmx:xnA0Zc5WpTMJjEFJ8bhDgu3iSScaNPdc0dwjzwspTu4BgHCx2nQHZQ>
-    <xmx:xnA0ZQ7Ojm9iNzS5dyco_V-XvBYS4OONhQKQAjCOejIpJ4Ma86aPCw>
-    <xmx:xnA0ZUjsvGaDGiERz2dDEwY8ZjlYtWrlPJL1N66a_R5XZVXGe2-ZPg>
-    <xmx:xnA0ZSERn3TJQu1G_tkL46aPQLgo6gZXJ2koSW6A7xWy0rXizw7EVg>
-Feedback-ID: iac594737:Fastmail
-Date: Sat, 21 Oct 2023 20:45:40 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+Received: (qmail 6045 invoked from network); 10 May 2017 10:55:24 -0000
+Date: Wed, 10 May 2017 11:54:56 +0100
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
-Message-ID: <ZTRwxHaoUqTPyf+b@itl-email>
-References: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com>
- <20231022000649.GA14340@openwall.com>
+Cc: Albert Astals Cid <aacid@kde.org>
+Message-ID: <20170510105456.nosikak5pgs7fp7b@perpetual.pseudorandom.co.uk>
+References: <20170510100504.GA17705@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AoSo05VpGDNYXz+Q"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231022000649.GA14340@openwall.com>
-Subject: Re: [oss-security] sandboxing,of upstream programs by distros
+In-Reply-To: <20170510100504.GA17705@suse.de>
+User-Agent: NeoMutt/20170306 (1.8.0)
+Subject: Re: [oss-security] generic kde LPE
 
---AoSo05VpGDNYXz+Q
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 21 Oct 2023 20:45:40 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] sandboxing,of upstream programs by distros
+On Wed, 10 May 2017 at 12:05:04 +0200, Sebastian Krahmer wrote:
+> The callerID usually looks like ":1.123"
+> and is a DBUS unique name that maps to the sender of the message.
+> You can think of it like the source address of an IP packet.
+> This ID should be obtained via a DBUS function while the message is
+> arriving, so it can actually be trusted and used as a subject for polit
+> authorizations when using systembus-name subjects. Allowing callers to
+> arbitrarily choosing values for this ID is taking down the whole idea
+> of authentication and authorization.
 
-On Sun, Oct 22, 2023 at 02:06:49AM +0200, Solar Designer wrote:
-> Hi Matt,
->=20
-> I'm sorry I didn't follow up on this sooner.
->=20
-> On Sat, Oct 14, 2023 at 06:39:49PM +1100, Matthew Fernandez wrote:
-> > Is there interest/solutions within the Rock Security SIG or other=20
-> > distro's security teams for sandboxing that package upstreams can opt=20
-> > into?
->=20
-> For Rocky Linux Security SIG, the only relevant thing mentioned so far
-> was possibly offering an OpenBSD pledge()-alike that other packages
-> could use.  However, I am skeptical any actually would, unless we also
-> introduce such uses ourselves and maintain own "override" packages
-> (replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
-> software.  Initially, we are going to only create "override' packages
-> for core or very commonly used/exposed components, and to do so only for
-> specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
-> coming from EPEL and with most of its dependency libraries coming from
-> AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
-> make the cut, at least not initially.
+Yes - the analogy "unique name is like an IP address" is a good one here.
+When receiving an IP packet, you might trust the source address in the IP
+header, but not an IP address mentioned in the packet's body (payload).
+It's the same in D-Bus.
 
-Has deprecating ImageMagick and/or GraphicsMagick outright been
-considered?  I don=E2=80=99t just mean the downstream packages, but the ent=
-ire
-upstream projects, or at least the libraries.
+It's also suspicious that the "callerID" is a byte array (D-Bus type 'ay');
+that makes me wonder whether it was originally intended to be something
+other than a D-Bus unique name. D-Bus unique names are constrained to a
+subset of printable ASCII, and in particular are always valid for the
+D-Bus string type 's' (which contains arbitrary UTF-8, excluding U+0000,
+overlong encodings and non-characters), so it is not necessary to use
+a byte-array.
 
-> Also, continuing these examples, it's probably more realistic to sandbox
-> their command-line tools, whereas the underlying libraries are probably
-> more exposed via language bindings.  Would we be introducing creation of
-> child processes into the libraries?  That's tricky as it could violate
-> expectations of programs using such libraries.  (Yet at Openwall we did
-> a similar thing in pam_tcb, albeit limiting this maybe-unexpected
-> behavior to setups that opted-in to it with the "fork" option in the PAM
-> configuration file.  So it's not completely out of consideration.)
+This is probably a good opportunity for me to clarify which
+security-sensitive things you can rely on receiving in a trusted way[1]
+via D-Bus. They are:
 
-One option would be to instead make an IPC call to a persistent daemon
-running in the background.  That said, has wasm2c been considered?  The
-best fix would be something that can make C code memory-safe, even if it
-comes at a performance hit of 4x or more (like SoftBound+CETS did).
-Stuff that cares about performance should be migrating to something like
-libvips or ImageFlow.
+* The unique name of the message sender (dbus_message_get_sender(),
+  g_dbus_method_invocation_get_sender() and similar APIs)
 
-If neither of these are options, I think the entire library will need to
-be deprecated for eventual removal.  The command-line tools can remain,
-but they can be much more strongly sandboxed than a library can, because
-they have the entire process to themselves.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+* The Unix uid corresponding to a unique name, available by calling
+  the GetConnectionCredentials or GetConnectionUnixUser method on
+  the dbus-daemon's org.freedesktop.DBus bus name and interface
 
---AoSo05VpGDNYXz+Q
-Content-Type: application/pgp-signature; name="signature.asc"
+* The Unix pid corresponding to a unique name, available by calling
+  the GetConnectionCredentials or GetConnectionUnixProcessID method
+  (but be careful: you can't safely use this pid to look up further
+  information in /proc[2])
 
------BEGIN PGP SIGNATURE-----
+* The Linux LSM (AppArmor, SELinux, Smack etc.) label corresponding
+  to a unique name, available by calling the GetConnectionCredentials
+  method
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmU0cMQACgkQsoi1X/+c
-IsEA2g/6AmJ0XYdSK4Klg+rRjptMjbWVVxsBeAnGO9qixRjzZAdQAiCteIPn9e6Q
-cE1mz9v/+3SIzTzDZL7Pge9Z3G5RcgG7Sp1yuloSHeMDyRXKG5zdk0z5aq/Uf9rS
-dX8eXwtlKiz91tB+075gsR2c7ePUnlrx0UzLZ42pT+y+MYnt9gMX9+cAevDWSoCq
-VfSZK7sx+mkSRs29/u2w+L5yV3MYjPGUh0rEi267MqsQFcCwn5k3vicI2xqW0cwD
-i8Bht/ZAiu9yBXIsozfqkXDhQkntK91/otWGshVoC699HKA0EjkIC0GJT9zlM7WM
-ZQckx5GhqJ5WUQ8RD1z9r6u0FfaEBWqtfxgh51Tq1FhV7BAvQHNwGcEUefMdDQsE
-CGh+I0rHIG42G9FLQD2anMo+BzOAsbY+b1q1Sorrvb5Bs1we1WN2nCSAUZK96quB
-ei4lglwTGFVPAcMOuf991+o7NnUzicJTyRoaaRtUpZvjX3ubV9HPMZD2cOQM8NA9
-Vk26ED70DPLRynde46Qt4T0mFM7pNkrV+hnI9O1vJK3w2iAxNwmdKtrGg7+oTeLe
-8bp2MQmGQEbwtyh+2XJxckbwU0nz3NE38ups2VNCXdVHzQRgtF30+iPLdkXZF2zA
-ohVo870/ltB2yPaPWsmyWO+1o6oK+h+FpYMF7SWQojuoMAdK+fk=
-=mwDz
------END PGP SIGNATURE-----
+It is not coincidental that these match the information that the
+dbus-daemon can get from the kernel in a trusted way by querying
+the AF_UNIX socket that it uses to communicate with the peer, via
+the SO_PEERCRED and SO_PEERSEC socket options or their non-Linux
+equivalents[3].
 
---AoSo05VpGDNYXz+Q--
+(By the way, the protocol is called D-Bus and the reference implementation
+is dbus. There is nothing called DBUS, and it isn't an acronym.)
+
+Regards,
+    S
+
+[1] This requires trusting the dbus-daemon to not lie to you, which in
+    practice you must, unless you do some sort of out-of-band
+    authentication. On practical Unix systems the system dbus-daemon
+    is a security boundary (a trusted component, in the infosec sense that
+    it is in a position where it could break your security policy). If
+    using LSMs, the session dbus-daemon is potentially also a security
+    boundary for the security domains represented by LSM labels.
+[2] This would be unsafe because a malicious process could change the
+    apparent credentials of a particular pid by queuing up outgoing
+    messages that it wants to be interpreted as though their sender had
+    higher privilege, then exec()ing a setuid or similarly
+    privileged executable. Rather more tenuously, it could also try
+    arranging for the 15-bit process ID space to wrap around and then
+    exiting at just the right time before a more privileged process
+    forks, although that probably isn't a practically feasible attack.
+[3] SO_PEERCRED technically also tells us the primary gid,
+    but we don't expose that information in dbus-daemon, because the
+    distinction between primary and supplementary group IDs seems
+    needlessly confusing.
