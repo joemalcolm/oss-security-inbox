@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4484" "Monday" "20" "April" "2020" "13:47:12" "-0600" "Taylor Blau" "ttaylorr@github.com" "<20200420194712.GA51427@syl.local>" "129" "[oss-security] CVE-2020-11008: Git: Malicious URLs can still cause Git to send a stored credential to the wrong server" nil nil nil "4" "2020042019:47:12" "[oss-security] CVE-2020-11008: Git: Malicious URLs can still cause Git to send a stored credential to the wrong server" (number mark "U       ttaylorr@git Apr 20  129/4484  " thread-indent "\"[oss-security] CVE-2020-11008: Git: Malicious URLs can still cause Git to send a stored credential to the wrong server\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-11008: Git: Malicious URLs can still cause Git to send a stored credential to the wrong server" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6327" "Wednesday" "10" "May" "2017" "12:05:04" "+0200" "Sebastian Krahmer" "krahmer@suse.com" "<20170510100504.GA17705@suse.de>" "174" "[oss-security] generic kde LPE" nil nil nil "5" "2017051010:05:04" "[oss-security] generic kde LPE" (number mark "U       krahmer@suse May 10  174/6327  " thread-indent "\"[oss-security] generic kde LPE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18317 invoked by uid 550); 20 Apr 2020 19:52:42 -0000
+Received: (qmail 13779 invoked by uid 550); 10 May 2017 10:05:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,168 +12,192 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13890 invoked from network); 20 Apr 2020 19:47:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=Mepwz5Yb1LeP3sLR5igOIISnKjpYqBKzY9OvAQjznMI=;
-        b=ZdWivy1gByQ0VX5JXqtUXDmyXS9r5sZv7tOFIf6BvAINJuah802GnA/Zxd02Dz7Ai2
-         r2TmPd3W14KTcHPIdKCdJJeyOAz13bkUNMPJdG/qHFrO8x+FirI0ylkNPfFDXJKbSlFe
-         2U6EKXKrhhLozqL1RbfZRZjuo7IHKzpGePGUM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=Mepwz5Yb1LeP3sLR5igOIISnKjpYqBKzY9OvAQjznMI=;
-        b=oeW/uFF+kreb8bHMusG7+1Bz99t58CKZDKepAwWFz6Zz2Xe/OvBpR444yqK1mgt/Tw
-         hiRk+uLS1fs/q6YSxZuuhZ3XUnVZBv8iuS0IPd/1B8VjqrAIBBA6RZJCy7eFxbG2N/ul
-         uB0n1kJM61ShQiFYSweXjLybKZWkpQPK3HmnZCBpPi/cY/ECWbMwK6E0hdLdbvAK68kP
-         GNPaklxwAD91c1LhwEgA2WoJDv8Q40zJvO4D5Ufpm2Qtm4B0ukV7+2d4j2QR+BBBD4ns
-         COcuGyK7vOg8WTS5GrW15qh5BNn5+4LHdjY8vhL+/d1qSTDWqDOgeyXvT1DCh2jWqbCn
-         QYSw==
-X-Gm-Message-State: AGi0PuaI2KBl6EFbtxfFoWa+9zkPWDJSzYq0WTQIRX+LGPL7yU8Ntymq
-	jYpvhswLZU3WQXip7CaC+LtSmjA0yhAs4JhwpgWXQsV3bhZ2nvRb5Zcny6JnAvvH+mu+wcfgcpi
-	htUm88A/vvmdCF0dV9vRrhDhwiekYrydyo5Em3PhXEkOH8fSbflkSIJBWT232ojCzQpJoVAknos
-	Q+wQ==
-X-Google-Smtp-Source: APiQypLce7e+OTpkci+GwYjJanHmBdsGvfgsbqGfvf3LTh0zfgKzI6Uye6DEx/V6OsbyZuyh2cDJIg==
-X-Received: by 2002:a17:90a:7d16:: with SMTP id g22mr1188730pjl.179.1587412034237;
-        Mon, 20 Apr 2020 12:47:14 -0700 (PDT)
-Date: Mon, 20 Apr 2020 13:47:12 -0600
-From: Taylor Blau <ttaylorr@github.com>
+Received: (qmail 13748 invoked from network); 10 May 2017 10:05:15 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Wed, 10 May 2017 12:05:04 +0200
+From: Sebastian Krahmer <krahmer@suse.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20200420194712.GA51427@syl.local>
+Message-ID: <20170510100504.GA17705@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="cNdxnHkX5QqsyA0e"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: [oss-security] CVE-2020-11008: Git: Malicious URLs can still cause Git to send a
- stored credential to the wrong server
+Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
+ =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
+ (AG Nuernberg)
+User-Agent: Outlook
+Subject: [oss-security] generic kde LPE
 
---cNdxnHkX5QqsyA0e
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Hi,
 
-Team,
+As per distros list policy, I forward the info here. The document
+has slightly been modified (spelling and newlines, no new content).
 
-Today, the Git project released v2.26.2 (and corresponding point
-releases as far back as the v2.17.x track) to address the following
-issue:
+CVE-2017-8422 (KAuth) and CVE-2017-8849 (smb4k) have meanwhile been
+assigned by the kde project.
+Also see https://cgit.kde.org/kauth.git/commit/?id=df875f725293af53399f5146362eb158b4f9216a
 
-  * CVE-2020-11008:
-    With a crafted URL that contains a newline or empty host, or lacks a
-    scheme, the credential helper machinery can be fooled into providing
-    credential information that is not appropriate for the protocol in
-    use and host being contacted.
+Updates are on their way, and once available I will also share
+the PoC.
 
-    Unlike the vulnerability CVE-2020-5260 fixed in v2.17.4, the
-    credentials are not for a host of the attacker's choosing; instead,
-    they are for some unspecified host (based on how the configured
-    credential helper handles an absent "host" parameter).
-
-    The attack has been made impossible by refusing to work with
-    under-specified credential patterns.
-
-The distros list has been notified of this release in advance of its
-disclosure. This notification serves the same purpose for the
-oss-security list, too.
-
-Full details are available at the following link:
-
-  https://github.com/git/git/security/advisories/GHSA-hjc9-x69f-jqj7
-
-Per the list guidelines, I am attaching a plaintext representation of
-the above so as to include all essential materials within the mail
-itself.
+Just to show you that theres notable research outside of P0 :)
 
 
-Thanks,
-Taylor
 
---cNdxnHkX5QqsyA0e
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: attachment; filename="cve-2020-11008.txt"
+-----8<----- snip ------
 
-Malicious URLs can still cause Git to send a stored credential to the wrong server
 
-Affected versions
-	<= 2.17.4, 2.18.3, 2.19.4, 2.20.3, 2.21.2, 2.22.3, 2.23.2, 2.24.2, 2.25.3, 2.26.1
 
-Patched versions
-	2.17.5, 2.18.4, 2.19.5, 2.20.4, 2.21.3, 2.22.4, 2.23.3, 2.24.3, 2.25.4, 2.26.2
+This document describes a generic root exploit against kde.
 
-CVE identifier
-	CVE-2020-11008
+The exploit is achieved by abusing a logic flaw within
+the KAuth framework which is present in kde4 (org.kde.auth) and kde5
+(org.kde.kf5auth). It is possible to spoof what KAuth calls
+callerID's which are indeed DBUS unique names of the sender of a DBUS
+message.
+Exploitation requires a helper which is doing some privileged work
+as root. Kde ships quite some of them, but for this writeup I chose the
+smb4k helper because it contains another vulnerability that makes
+exploitation a lot easier; but in general any KAuth privileged helper code
+can be triggered by users with arbitrary arguments which leads to
+LPE on default kde installations.
 
-Impact
-	Git uses external "credential helper" programs to store and retrieve passwords
-	or other credentials from secure storage provided by the operating system.
-	Specially-crafted URLs that are considered illegal as of the recently
-	published Git versions can cause Git to send a "blank" pattern to helpers,
-	missing hostname and protocol fields. Many helpers will interpret this as
-	matching any URL, and will return some unspecified stored password, leaking
-	the password to an attacker's server.
+I will describe the overall problem by walking through the smb4k code and
+explain which DBUS functions are called and how a particular smb4k bug maps
+into the bigger picture of the KAuth flaw.
 
-	The vulnerability can be triggered by feeding a malicious URL to git clone.
-	However, the affected URLs look rather suspicious; the likely vector would be
-	through systems which automatically clone URLs not visible to the user, such
-	as Git submodules, or package systems built around Git.
+Theres a problem with smb4k using the KAuth framework
+and trusting all the arguments passed to the helper:
 
-	This bug is similar to the one mentioned in CVE-2020-5260. The fix for that
-	bug still left the door open for an exploit where some credential is leaked
-	(but the attacker cannot control which one).
+ActionReply Smb4KMountHelper::mount(const QVariantMap &args)
+{
 
-	The root of the problem is in Git itself, which should not be feeding blank
-	input to helpers. However, the ability to exploit the vulnerability in
-	practice depends on which helpers are in use.
+...
 
-	Credential helpers which are known to trigger the vulnerability:
+command << args["mh_command"].toString();
+command << args["mh_unc"].toString();
+command << args["mh_mountpoint"].toString();
+command << args["mh_options"].toStringList();
 
-		* Git's store helper
-		* Git's cache helper
-		* the osxkeychain helper that ships in Git's contrib directory
+...
 
-	Credential helpers which are known to be safe even with vulnerable versions of
-	Git:
+proc.setProgram(command);
+// Run the mount process.
+proc.start();
+...
+}
 
-		* Git Credential Manager for Windows
+This code is running as root, triggered via DBUS activation by smb4k GUI
+code running as user, and the "args" supplied by the user, via:
 
-	Any helper not in this list should be assumed to trigger the vulnerability.
+void Smb4KMountJob::slotStartMount()
+{
+...
 
-Patches
+ Action::executeActions(actions, NULL, "net.sourceforge.smb4k.mounthelper");
+...
+}
 
-	The problem has been patched in the versions published on April 20th, 2020,
-	going back to v2.17.x.
+after filling "actions" (theres only one) with the proper Name
+(net.sourceforge.smb4k.mounthelper.mount) and HelperID
+(net.sourceforge.smb4k.mounthelper) in order to trigger DBUS activation as
+well as the argument dictionary which contains the "mh_command" etc.
+key/value pairs. Its calling the list-version of Action::executeAction()
+[note the trailing 's'] with a one-element list, but that doesn't matter.
+The important thing here is that the arguments are created by code
+running as user - potentially containing evil input - and are evaluated
+by the helper program running as root.
 
-Workarounds
+The above call ends at DBusHelperProxy::executeAction(), still at callers
+side. This function translates it into a DBUS method call which is
+finally running privileged and has the following interface:
 
-	The most complete workaround is to disable credential helpers altogether:
+<interface name="org.kde.kf5auth">
+...
+    <method name="performAction" >
+        <arg name="action" type="s" direction="in" />
+        <arg name="callerID" type="ay" direction="in" />
+        <arg name="arguments" type="ay" direction="in" />
+        <arg name="r" type="ay" direction="out" />
+    </method>
+...
+</interface>
 
-	```
-	git config --unset credential.helper
-	git config --global --unset credential.helper
-	git config --system --unset credential.helper
-	```
+Unlike the root helpers DBUS interfaces itself, which are not
+accessible as user, the KAuth DBUS interface org.kde.kf5auth is:
 
-	An alternative is to avoid malicious URLs:
+<busconfig>
+  <policy context="default">
+    <allow send_interface="org.kde.kf5auth"/>
+    <allow receive_sender="org.kde.kf5auth"/>
+    <allow receive_interface="org.kde.kf5auth"/>
+  </policy>
+</busconfig>
 
-		* Examine the hostname and username portion of URLs fed to git clone or git
-			fetch for the presence of encoded newlines (%0A) or evidence of
-			credential-protocol injections (e.g., host=github.com)
+The code for actually doing the call from user to root is this:
 
-		* Avoid using submodules with untrusted repositories (don't use git clone
-			--recurse-submodules; use git submodule update only after examining the
-			URLs found in .gitmodules).
+void DBusHelperProxy::executeAction(const QString &action,
+     const QString &helperID, const QVariantMap &arguments)
+{
+...
 
-		* Avoid tools which may run git clone on untrusted URLs under the hood.
+QDBusMessage::createMethodCall(helperID, QLatin1String("/"),
+   QLatin1String("org.kde.kf5auth"), QLatin1String("performAction"));
 
-		* Avoid using the credential helper by only cloning publicly available
-			repositories.
+QList<QVariant> args;
+args << action << BackendsManager::authBackend()->callerID() << blob;
+message.setArguments(args);
 
-Credits
-	Credit for finding the vulnerability goes to Carlo Arenas.
+m_actionsInProgress.push_back(action);
 
-References
-	release announcement: ???
+QDBusPendingCall pendingCall = m_busConnection.asyncCall(message);
 
-	commit introducing fix: https://github.com/git/git/compare/v2.17.4...v2.17.5
+...
+}
 
---cNdxnHkX5QqsyA0e--
+This code is invoking the performAction() DBUS method, passing along the
+user supplied arguments dictionary, in our smb4k case containing the
+handcrafted evil "mh_command" key, amongst others key/value pairs.
+
+There are two problems:
+
+The KAuth frameworks performAction() method is passed the callerID by the
+user and the method is invokable by the user. This allows to mask as any
+caller, bypassing any polkit checks that may happen later in the KAuth
+polkit backend via calls into
+
+PolicyKitBackend::isCallerAuthorized(const QString &action,
+                                     QByteArray callerID)
+
+The second problem is smb4k trusting the arguments that are passed from the
+user and which are forwarded by the KAuth DBUS service running as root to
+the mount helper DBUS service which is also running as root but not allowed
+to be contacted by users.
+Thats a logical flaw. It was probably not intented that users invoke
+performAction() themself, using it as a proxy into DBUS services and
+faking caller IDs en-passant. The callerID usually looks like ":1.123"
+and is a DBUS unique name that maps to the sender of the message.
+You can think of it like the source address of an IP packet.
+This ID should be obtained via a DBUS function while the message is
+arriving, so it can actually be trusted and used as a subject for polit
+authorizations when using systembus-name subjects. Allowing callers to
+arbitrarily choosing values for this ID is taking down the whole idea
+of authentication and authorization.
+
+I made an exploit for smb4k that works on openSUSE Leap 42.2 thats using
+the org.kde.auth interface (rather than org.kde.kf5auth) but both
+interfaces share the same problems. The exploit also works on the latest
+Fedora26 Alpha kde spin with SELinux in enforcing mode. In order to test
+the callerID spoofing, I "protected" the smb4k helper code via "auth_admin"
+polkit settings and tried mounting SMB shares via smb4k GUI. This asked for
+the root password, as its expected. The exploit however still works, as its
+spoofing the callerID to be DBUs itself and the request is taken as legit,
+requiring no root password.
+
+
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@suse.com - SuSE Security Team
+
