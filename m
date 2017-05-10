@@ -1,23 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/9
-Message-ID: <20170926090349.f5rwmd7be3tu2qad@refracta>
-Date: Tue, 26 Sep 2017 11:03:49 +0200
-From: joernchen <joernchen@...noelit.de>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: Advisory: Git cvsserver OS Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/10/1
+Message-ID: <CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>
+Date: Tue, 9 May 2017 23:55:10 -0400
+From: Insu Yun <wuninsu@...il.com>
+To: oss-security@...ts.openwall.com, Yeongjin Jang <Yeongjin.jang@...ech.edu>
+Subject: CVE Request: Denial of Service in Dropbox lepton
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi.
+In Dropbox lepton, I found memory corruption bug that can cause DoS.
+I reported it with a reproducible input. (
+https://github.com/dropbox/lepton/issues/87)
+Here is fix info:
+https://github.com/dropbox/lepton/commit/82167c144a322cc956da45407f6dce8d4303d346
+Please help assign a CVE to this vulnerability.
+Thank you.
 
-
-see attached advisory.
-
-Cheers,
-
-joernchen
 -- 
-joernchen ~ Phenoelit
-<joernchen@...noelit.de> ~ C776 3F67 7B95 03BF 5344
-http://www.phenoelit.de  ~ A46A 7199 8B7B 756A F5AC
+Regards
+Insu Yun
 
-View attachment "git_cvsserver.txt" of type "text/plain" (2224 bytes)
