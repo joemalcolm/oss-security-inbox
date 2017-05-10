@@ -1,77 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/4
-Message-ID: <20170929150922.15b800f8@pc1>
-Date: Fri, 29 Sep 2017 15:09:22 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: clamav: Out of bounds read and segfault in xar parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/10/7
+Message-Id: <F9830DA3-7A0E-494D-B755-C0EDEEBC6132@gmail.com>
+Date: Wed, 10 May 2017 10:59:34 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: Re: Numerous FreeTDS crashes fixed on master
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I was asked what software this affects.
 
-A malformed xar file can cause an out of bounds heap read in clamav (as
-usual detectable with asan). If run against a non-asan build clamscan
-will still segfault in my tests. Found with afl.
+PHP - http://www.freetds.org/userguide/php.htm <http://www.freetds.org/userguide/php.htm>
+Perl DBI - http://www.peppler.org/freeware/dbd-sybase.html <http://www.peppler.org/freeware/dbd-sybase.html>
+Ruby DBI w/ Sybase - http://stackoverflow.com/questions/721960/connecting-to-sql-server-with-activerecord <http://stackoverflow.com/questions/721960/connecting-to-sql-server-with-activerecord>
+Python-Sybase - http://python-sybase.sourceforge.net/index.html <http://python-sybase.sourceforge.net/index.html>
 
-The bug happens in the function xar_hash_check. Despite it being
-reported more than a year ago there's still no release with the fix
-(however it's been fixed in git).
+Other languages have less-official bindings.
 
-I fuzzed clamav according to the instructions in this blog post:
-https://foxglovesecurity.com/2016/06/13/finding-pearls-fuzzing-clamav/
-
-Upstream fix:
-https://github.com/vrtadmin/clamav-devel/commit/d96a6b8bcc7439fa7e3876207aa0a8e79c8451b6
-
-Upstream bug (not public):
-https://bugzilla.clamav.net/show_bug.cgi?id=11588
-
-Timeline:
-2016-06-15 reported bug
-2016-06-21 fix in git
-2017-09-29 public disclosure due to lack of upstream action
-
-base64-encoded poc (didn't want to send it as an attachment due to
-fear of crashing people's mail scanners. On the other hand I'm sure
-there are mail scanners that'll try to decode the base64...):
-eGFyIQAcMDAAAAAAAAABMAAAAAAAMDAwMDAwMHjafFPLcpwwELzvV1DcZT14LqWVKxdX7nEuuQ1i
-WFThVaC11/76CAHecrbsE61Wq6dHjOTjtWuDF5xmM/SnkD+wMMBeD5Xpz6fw9/MTycNHdZBXmNQh
-kHbQ7hMwPSFYd4Iw06ESMCcwMMKyMM4LnhUwMPpZ4g81qP/Oly6Y7VuLpzBugIfLTiCHup7RKjDp
-hjw7m/fFXDAPFgu6e/gwMDAMTOVibzYVWPAokC32Z9soMEm6wZXf/MXnMFut+FbKUfs97HlhHFuj
-fVP0Ss7vZgzpJoVJN+YFK/J/j79+/nDhMAiqMDAwMDCvdTCOSTAwMBcsyuAwMDAwhJcwMDDeGe1Z
-rnYCbb+sUNW1yDAC2X0jMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA=
+Go - https://github.com/minus5/gofreetds <https://github.com/minus5/gofreetds>
+Erlang - http://arcusfelis.github.io/blog/2012/07/02/odbc/ <http://arcusfelis.github.io/blog/2012/07/02/odbc/>
+R - http://eriqande.github.io/2014/12/19/setting-up-rodbc.html <http://eriqande.github.io/2014/12/19/setting-up-rodbc.html>
 
 
-Meta-level comment:
-It seems to me clamav development has mostly stalled. Detection rates
-are very low and I'm considering to stop using it for mail filtering.
-(also there's of course the whole AV debate, however I never saw
-clamav as a security tool, more as something like a spam filter that
-prevents crap in my inbox. Still of course it needs to have secure
-parsers.)
+Also, obviously the tsql binary if used to connect to an untrusted MSSQL/Sybase server.
+
+> On May 9, 2017, at 9:34 AM, Brandon Perry <bperry.volatile@...il.com> wrote:
+> 
+> Attached is a zip file of reported TDS streams that cause segmentation faults in the FreeTDS library. The ‘tsql’ binary was used for the fuzzing, so these most likely only affect client-side functionality. These have been resolved on master and the 1.0 branch.
+> 
+> Also included in the zip file is a bucket.txt, a crashwalk db dump detailing the crashes for the files in the zip file.
+> 
+> You can find the bucket.txt itself in the following Github gist as well. No CVE’s have been requested.
+> 
+> https://gist.github.com/brandonprry/bfb0e58682d464e2d2d319644790bdf5 <https://gist.github.com/brandonprry/bfb0e58682d464e2d2d319644790bdf5>
+> 
+> To test, you can compile FreeTDS, then use preeny to redirect network IO to stdin/stdout.
+> 
+> export LD_PRELOAD=~/preeny/x86_64-linux-gnu/desock.so
+> unzip freetds_crashed.zip
+> cd rpt
+> for i in id*; do valgrind ~/freetds/build/src/apps/tsql -S 127.0.0.1 -U fdsa -P fdsa -I ~/tdsconfig < $i; done
+> 
+> A simple tdsconfig file can be used to speed things up a bit.
+> 
+> [global]
+> timeout = 1
+> connect timeout = 1
+> 
+> 
+> Many thanks to Frediano Ziglio, the maintainer of FreeTDS, for quick communication and bug fix turn arounds.
+> 
+> <freetds_crashes.zip>
 
 
+Content of type "text/html" skipped
 
-ASAN error:
-
-==17489==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000504790 at pc 0x7f83622125d4 bp 0x7ffcee86b840 sp 0x7ffcee86b830
-READ of size 20 at 0x602000504790 thread T0
-    #0 0x7f83622125d3 in xar_hash_check /var/tmp/portage/app-antivirus/clamav-0.99.2/work/clamav-0.99.2/libclamav/xar.c:399
-    #1 0x7f83622125d3 in cli_scanxar /var/tmp/portage/app-antivirus/clamav-0.99.2/work/clamav-0.99.2/libclamav/xar.c:818
-    #2 0x7f8362053706 in magic_scandesc /var/tmp/portage/app-antivirus/clamav-0.99.2/work/clamav-0.99.2/libclamav/scanners.c:3162
-    #3 0x7f8362057376 in cli_base_scandesc /var/tmp/portage/app-antivirus/clamav-0.99.2/work/clamav-0.99.2/libclamav/scanners.c:3351
-    #4 0x7f8362058a65 in scan_common /var/tmp/portage/app-antivirus/clamav-0.99.2/work/clamav-0.99.2/libclamav/scanners.c:3590
-    #5 0x7f8362058d1a in scan_common /var/tmp/portage/app-antivirus/clamav-0.99.2/work/clamav-0.99.2/libclamav/scanners.c:3534
-    #6 0x7f8362058d1a in cl_scandesc_callback /var/tmp/portage/app-antivirus/clamav-0.99.2/work/clamav-0.99.2/libclamav/scanners.c:3706
-    #7 0x40e41f in scanfile /var/tmp/portage/app-antivirus/clamav-0.99.2/work/clamav-0.99.2/clamscan/manager.c:392
-    #8 0x4126a3 in scanmanager /var/tmp/portage/app-antivirus/clamav-0.99.2/work/clamav-0.99.2/clamscan/manager.c:1204
-    #9 0x403971 in main /var/tmp/portage/app-antivirus/clamav-0.99.2/work/clamav-0.99.2/clamscan/clamscan.c:161
-    #10 0x7f83616f478f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #11 0x403fb8 in _start (/usr/bin/clamscan+0x403fb8)
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
