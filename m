@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7070" "Sunday" "22" "March" "2015" "21:46:26" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" "<550E8162.1040602@treenet.co.nz>" "142" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032208:46:26" "[oss-security] CVE for Kali Linux" (number mark "        squid3@treen Mar 22  142/7070  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550E4125.3070303@gmail.com>" ("<550E21FA.6090704@redhat.com>" "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>" "<550E289C.1060602@redhat.com>" "<550E33F1.4020007@gmail.com>" "<87fv8xd7zy.fsf@hope.eyrie.org>" "<550E4125.3070303@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["720" "Wednesday" "10" "May" "2017" "07:32:46" "-0400" "Insu Yun" "wuninsu@gmail.com" "<CAGoFzNdT-DJpZNs8TOpC-e8viGTrDNE4uQs8rR7v0YrhEQTAvQ@mail.gmail.com>" "22" "Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton" nil nil nil "5" "2017051011:32:46" "[oss-security] CVE Request: Denial of Service in Dropbox lepton" (number mark "U       wuninsu@gmai May 10   22/720   " thread-indent "\"Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton\"\n") "<CAGoFzNfv6-Ubx7-6t7rOdA_sU06hE=8UhxpCJG8w5xSocgH9rg@mail.gmail.com>" ("<CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>" "<20170510061953.GA3445@hunt>" "<CAGoFzNfv6-Ubx7-6t7rOdA_sU06hE=8UhxpCJG8w5xSocgH9rg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7952 invoked by uid 550); 22 Mar 2015 08:46:50 -0000
+Received: (qmail 10042 invoked by uid 550); 10 May 2017 11:32:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,159 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7931 invoked from network); 22 Mar 2015 08:46:48 -0000
-Message-ID: <550E8162.1040602@treenet.co.nz>
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-MIME-Version: 1.0
-References: <550E21FA.6090704@redhat.com>	<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>	<550E289C.1060602@redhat.com> <550E33F1.4020007@gmail.com> <87fv8xd7zy.fsf@hope.eyrie.org> <550E4125.3070303@gmail.com>
-In-Reply-To: <550E4125.3070303@gmail.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Date: Sun, 22 Mar 2015 21:46:26 +1300
-From: Amos Jeffries <squid3@treenet.co.nz>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
-To: oss-security@lists.openwall.com
+Received: (qmail 10011 invoked from network); 10 May 2017 11:32:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=OXL+P9ZbxT5DpyU4ODduArRAH0SuPymp+0JunanPX8o=;
+        b=K603yCgznjcolf/rb0vrCNuCISE1LQA6PnsWjrGk2ceQLd7fkuUb5WgsnqCeojh33E
+         VvNBMlfetCAfvcgszG0rjHRy67bnEAtVJVDbI5sSUPUg+Q5aMclIwQI6Xopt+K+nDQ4h
+         oSytzDrHml+UNu7RTiyYNw0dE/HgeZ7hYM/Ax8yXplh26abLgvcoSXA2Se8jxh/P/G0I
+         qSEfQdUT8KNHBRIIPFi9WMLNQUUvACQaZlR7+OzZ9mDCiCbLCAT2GgLAazhV91FwMM4n
+         RKiUjgWajZU2WSbyaf1GJe+UfqSseipkVdWzIcdprLAvxUOYy3cXp6E+xYpoYpJ2m2Q9
+         TtmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=OXL+P9ZbxT5DpyU4ODduArRAH0SuPymp+0JunanPX8o=;
+        b=QG+gCt2kBWblHywVe8q5/boft4BK89rjqQJLnhiPTTwvxSGACgg8++CE8RddbS79aF
+         +0YXj7MEbKHLRmIUGaS0uVUtrS9OVCNOzq02CVx/ZSagIXo00UP/Mp63/zaydS4g0U4Y
+         rz0sY8OJMwOfOX43VzZm93AjI4SDregGmHDis4xhzj2xZEbqrCpi8R0qRQMJA+rGIiMg
+         QGs+6/bsj5ZkN2xRKxuZq5POtJidvcmGg5FJyUg5AlAW+SHWulLWbri4CYcp1EpJE7d2
+         IAIAOaDuf+EOXOSbBt0VUJVe8visYXBoGvEoBKGusL/XDMdGpgcJVnLeiVxRoLoZqBtG
+         UYtA==
+X-Gm-Message-State: AODbwcAanoiS6P4EINmORqCx5G3M6uWG8wH5BW/uBTKWhqrgh0hI4WOK
+	a1BQZA6+Cnjol7nIaPD/wlbliWEMnA==
+X-Received: by 10.159.48.151 with SMTP id j23mr2480809uab.12.1494415967238;
+ Wed, 10 May 2017 04:32:47 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <CAGoFzNfv6-Ubx7-6t7rOdA_sU06hE=8UhxpCJG8w5xSocgH9rg@mail.gmail.com>
+References: <CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>
+ <20170510061953.GA3445@hunt> <CAGoFzNfv6-Ubx7-6t7rOdA_sU06hE=8UhxpCJG8w5xSocgH9rg@mail.gmail.com>
+From: Insu Yun <wuninsu@gmail.com>
+Date: Wed, 10 May 2017 07:32:46 -0400
+Message-ID: <CAGoFzNdT-DJpZNs8TOpC-e8viGTrDNE4uQs8rR7v0YrhEQTAvQ@mail.gmail.com>
+To: oss-security@lists.openwall.com, Yeongjin Jang <Yeongjin.jang@gatech.edu>
+Content-Type: multipart/alternative; boundary=f403045dadaadfc366054f29d471
+Subject: Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton
 
-On 22/03/2015 5:12 p.m., Daniel Micay wrote:
-> On 21/03/15 11:30 PM, Russ Allbery wrote:
->> Daniel Micay writes:
->>
->>> It would be much better to provide the download via HTTPS from a domain
->>> that's HSTS preloaded and ideally has some level of key pinning. We are
->>> all well aware that few users are going to go through a manual process
->>> on the command-line to verify the download, especially if they're on
->>> Windows as they won't have the commands that are being used.
->>
->> Unless you do certificate pinning, I don't see how this adds much
->> meaningful security.  Commercial CAs at the level of browser verification
->> of server certificates are a bad joke.  You should assume that a
->> moderately sophisticated attacker can get a valid brower-acceptable
->> certificate for any web site they choose, particularly given the number of
->> opportunities attackers have to insert new root CAs into the user's
->> browser store.  (Sometimes even preinstalled on the factory-shipped
->> computer.)
-> 
-> I fully agree that the PKI system is downright awful. HTTPS + HSTS is
-> still way better than nothing for the vast majority of users who aren't
-> going to validate the ISO download manually. Debian would have no issue
-> getting a certificate pinned in Chromium and Firefox, and I expect that
-> even much smaller distributions could get included.
+--f403045dadaadfc366054f29d471
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Cert pinning would increase the vulnerability footprint with regards to
-whether the browser being used was trusted, ANd whether the pinned cert
-database was tructworthy. Same as the issues already outlined for
-obtaining gpg and apt trust.
+Oh, thank you, Seth!
 
-> 
-> The home page that users land on when they want to download the distro
-> is secured via HTTPS so you're relying on that to initiate the trust
-> model regardless of the better PGP-based model that's used for package
-> signing afterwards.
+Sent from a mobile. Excuse my typo.
 
-Look a bit closer, past the https://. Debian are using DANE (DNSSEC and
-TLSA records) to publish their HTTPS details in a way which avoids
-dependence on the browser organizations security and pinned certificate
-registry. Its also far more portable than browser pinning allows.
+2017. 5. 10. =EC=98=A4=EC=A0=84 2:19=EC=97=90 "Seth Arnold" <seth.arnold@ca=
+nonical.com>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
 
-Unfortunately the browser vendors are letting us all down by refusing to
-implement DANE validation and going with their in-house developed
-mechanisms instead.
+On Tue, May 09, 2017 at 11:55:10PM -0400, Insu Yun wrote:
+> Please help assign a CVE to this vulnerability.
 
-> 
->> I think the approach Debian takes here has some real merit, although it
->> would still be a good idea to offer https downloads just for privacy
->> reasons (it's hard to do so just because of the way the mirror network and
->> the commercial CA world work).  Because the downloads are over HTTP,
->> everyone goes "wait, what?" and looks for the *actual* security, which,
->> provided you can get a good bootstrap of the initial public PGP keys, is
->> quite a bit better than just TLS verification of the server.  As opposed
->> to seeing TLS and assuming that adds meaningful verification of the
->> server, which is dubious.
->>
->> And that approach has the significant advantage that, because it uses
->> proper public key cryptography, anyone can mirror the packages and you
->> don't have to care where you got the packages from or establishing a full
->> trust chain for them.  You only have to do that for the published signing
->> key, and then verify the signatures, which apt does for you.  This is a
->> pretty huge advantage, since it means that large organizations can just
->> mirror the repository with rsync, and any apt client can be pointed to the
->> mirror without needing to configure any new keys and while getting the
->> same level of security validation.
->>
->> The problem, of course, is how to do the bootstrap, and that's where the
->> original post came in.  The ISO images presumably (like Debian's) include
->> the pre-installed repository signing keys, so known-good ISO images are a
->> way to bootstrap the security of subsequent downloads.  But this requires
->> actually verifying the ISO signatures in some meaningful way, which is
->> hard for the average user to do, since there isn't any pre-existing trust
->> relationship that one can easily leverage.
-> 
-> I fully agree with what you're saying about package signing. It's what I
-> pointed out in my other email:
-> 
-> http://www.openwall.com/lists/oss-security/2015/03/22/6
-> 
-> It's a distinct issue from the initial download though, where the user
-> needs to obtain the PGP keyring in the first place. HTTPS + HSTS + HPKP
-> has a *lot* of value for bootstrapping the trust model. It provides a
-> high level of security for *all* users rather than just a tiny minority
-> willing to go through the trouble of manual verification.
+Hello Insu, CVE assignment is now handled via the web form at
+https://cveform.mitre.org/ -- fill out the details that you can, and
+when you get a response from the MITRE team (often within a dozen hours)
+please forward details about open source tools to this list.
 
-HTTPS as commonly implemented is a joke, which is how the channels get
-routinely hijacked.
+Thanks
 
-HSTS is a joke today due to the insecure channels - so your going to
-send a flag saying the content MUST be kept secure ... over the channel
-that just got hijacked. Yay.
-
-HPKP helps - but increases the footprint of things that have to be
-secured and thus trusted. And only covers the major browsers or
-implementers capable of developing their own registries for pinned certs
-- otherwise you are back to trusting the browser vendors X, Y, or Z
-registry again.
-
-With DANE the TLSA record is under control of the publisher, and DNSSEC
-ties it securely to both the origin server for the HTTPS channel, and to
-the keys of a mutually trusted upstream authority in a web-of-trust like
-model. Only the DNS root server key needs to be bootstrapped at some
-point down the chain.
-
-Single point of vulnerability with 0-24hr DNS TTL updates turnover when
-attacked,
- vs.
-multiple points of vulnerability with weeks of turnaround to publish new
-browser updates plus all the time to get the user population upgraded.
-
-
-> 
-> You only need to provide the users with a torrent file securely and
-> you've done your job, as the torrent client will validate SHA1 hashes.
-> The mirrors work fine as web seeds. Note that this doesn't require the
-> user to take any additional *optional* steps to validate, because once
-> you do that you've failed the majority of users.
-
-You still have the bootstrap problem of how to validate the torrent
-client binary. Might as well use apt validation and avoid the complexity
-of torrent.
-
-> 
-> Windows users are also left out without this: they don't have GPG, and
-> they don't have a secure way to obtain GPG.
-> 
-
-Ironically the safest way to obtain GPG is probably to download it with
-Internet Explorer these days.
-
-Consider the signed boot loader validated by CPU itself, loading a
-signed OS, loading signed WUpdate binary, installing signed MSIE and
-certificates binaries, running the resulting signed browser to connect
-to a HTTPS download site for signed GPG installer - should (in theory at
-least) be signed from top to bottom.
- Of course there are loopholes at the browser trusted-CA and cert
-pinning stages, browser not veryfing download signatures and side
-channel infections are an ever present problem. But then those are still
-issues if one uses a non-IE browser installed between the IE and GPG
-stages (at risk of more software ~= larger vulnerability footprint).
-
-AYJ
+--f403045dadaadfc366054f29d471--
