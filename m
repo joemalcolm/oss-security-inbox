@@ -1,47 +1,183 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/17
-Message-ID: <CANO=Ty1yT4APP6kfiNA5=_bPu0LR7r-Vn624vCAK-3jjh1K27Q@mail.gmail.com>
-Date: Thu, 6 Jul 2017 15:49:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, daniel@...nf.net,  lennart@...ttering.net
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/10/3
+Message-ID: <20170510100504.GA17705@suse.de>
+Date: Wed, 10 May 2017 12:05:04 +0200
+From: Sebastian Krahmer <krahmer@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: generic kde LPE
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 2, 2017 at 3:08 AM, Daniel Skowroński <daniel@...nf.net> wrote:
+Hi,
 
-> Hi all,
->
-> Just wanted to bring attention to issue with systemd not doing what is
-> expected when parsing User that should run service.
-> When it fails to parse string starting with digit it fails back to root
-> causing obvious threat to security.
->
-> See discussion with developer on github: https://github.com/systemd/
-> systemd/issues/6237
->
-> Best,
-> -Daniel Skowronski
->
+As per distros list policy, I forward the info here. The document
+has slightly been modified (spelling and newlines, no new content).
 
-I've assigned CVE-2017-1000082 for this issue. Lennart is CC'ed.
+CVE-2017-8422 (KAuth) and CVE-2017-8849 (smb4k) have meanwhile been
+assigned by the kde project.
+Also see https://cgit.kde.org/kauth.git/commit/?id=df875f725293af53399f5146362eb158b4f9216a
+
+Updates are on their way, and once available I will also share
+the PoC.
+
+Just to show you that theres notable research outside of P0 :)
 
 
-{"data_version":"4.0","references":{"reference_data":[{"url":"
-https://github.com/systemd/systemd/issues/6237"},{"url":"
-http://www.openwall.com/lists/oss-security/2017/07/02/1"}]},"description":{"description_data":[{"lang":"eng","value":"systemd
-v233 and earlier fails to safely parse usernames starting with a numeric
-digit (e.g. \"0day\"), running the service in quesiton with root privileges
-rather than the user
-intended"}]},"data_type":"CVE","affects":{"vendor":{"vendor_data":[{"product":{"product_data":[{"version":{"version_data":[{"version_value":"v223
-and
-earlier"}]},"product_name":"systemd"}]},"vendor_name":"systemd"}]}},"CVE_data_meta":{"DATE_ASSIGNED":"2017-70-06","STATE":"PUBLIC","ID":"CVE-2017-1000082","ASSIGNER":"
-kurt@...fried.org","REQUESTER":"kseifried@...hat.com
-"},"data_format":"MITRE","problemtype":{"problemtype_data":[{"description":[{"lang":"eng","value":"CWE-20"}]}]}}
+
+-----8<----- snip ------
+
+
+
+This document describes a generic root exploit against kde.
+
+The exploit is achieved by abusing a logic flaw within
+the KAuth framework which is present in kde4 (org.kde.auth) and kde5
+(org.kde.kf5auth). It is possible to spoof what KAuth calls
+callerID's which are indeed DBUS unique names of the sender of a DBUS
+message.
+Exploitation requires a helper which is doing some privileged work
+as root. Kde ships quite some of them, but for this writeup I chose the
+smb4k helper because it contains another vulnerability that makes
+exploitation a lot easier; but in general any KAuth privileged helper code
+can be triggered by users with arbitrary arguments which leads to
+LPE on default kde installations.
+
+I will describe the overall problem by walking through the smb4k code and
+explain which DBUS functions are called and how a particular smb4k bug maps
+into the bigger picture of the KAuth flaw.
+
+Theres a problem with smb4k using the KAuth framework
+and trusting all the arguments passed to the helper:
+
+ActionReply Smb4KMountHelper::mount(const QVariantMap &args)
+{
+
+...
+
+command << args["mh_command"].toString();
+command << args["mh_unc"].toString();
+command << args["mh_mountpoint"].toString();
+command << args["mh_options"].toStringList();
+
+...
+
+proc.setProgram(command);
+// Run the mount process.
+proc.start();
+...
+}
+
+This code is running as root, triggered via DBUS activation by smb4k GUI
+code running as user, and the "args" supplied by the user, via:
+
+void Smb4KMountJob::slotStartMount()
+{
+...
+
+ Action::executeActions(actions, NULL, "net.sourceforge.smb4k.mounthelper");
+...
+}
+
+after filling "actions" (theres only one) with the proper Name
+(net.sourceforge.smb4k.mounthelper.mount) and HelperID
+(net.sourceforge.smb4k.mounthelper) in order to trigger DBUS activation as
+well as the argument dictionary which contains the "mh_command" etc.
+key/value pairs. Its calling the list-version of Action::executeAction()
+[note the trailing 's'] with a one-element list, but that doesn't matter.
+The important thing here is that the arguments are created by code
+running as user - potentially containing evil input - and are evaluated
+by the helper program running as root.
+
+The above call ends at DBusHelperProxy::executeAction(), still at callers
+side. This function translates it into a DBUS method call which is
+finally running privileged and has the following interface:
+
+<interface name="org.kde.kf5auth">
+...
+    <method name="performAction" >
+        <arg name="action" type="s" direction="in" />
+        <arg name="callerID" type="ay" direction="in" />
+        <arg name="arguments" type="ay" direction="in" />
+        <arg name="r" type="ay" direction="out" />
+    </method>
+...
+</interface>
+
+Unlike the root helpers DBUS interfaces itself, which are not
+accessible as user, the KAuth DBUS interface org.kde.kf5auth is:
+
+<busconfig>
+  <policy context="default">
+    <allow send_interface="org.kde.kf5auth"/>
+    <allow receive_sender="org.kde.kf5auth"/>
+    <allow receive_interface="org.kde.kf5auth"/>
+  </policy>
+</busconfig>
+
+The code for actually doing the call from user to root is this:
+
+void DBusHelperProxy::executeAction(const QString &action,
+     const QString &helperID, const QVariantMap &arguments)
+{
+...
+
+QDBusMessage::createMethodCall(helperID, QLatin1String("/"),
+   QLatin1String("org.kde.kf5auth"), QLatin1String("performAction"));
+
+QList<QVariant> args;
+args << action << BackendsManager::authBackend()->callerID() << blob;
+message.setArguments(args);
+
+m_actionsInProgress.push_back(action);
+
+QDBusPendingCall pendingCall = m_busConnection.asyncCall(message);
+
+...
+}
+
+This code is invoking the performAction() DBUS method, passing along the
+user supplied arguments dictionary, in our smb4k case containing the
+handcrafted evil "mh_command" key, amongst others key/value pairs.
+
+There are two problems:
+
+The KAuth frameworks performAction() method is passed the callerID by the
+user and the method is invokable by the user. This allows to mask as any
+caller, bypassing any polkit checks that may happen later in the KAuth
+polkit backend via calls into
+
+PolicyKitBackend::isCallerAuthorized(const QString &action,
+                                     QByteArray callerID)
+
+The second problem is smb4k trusting the arguments that are passed from the
+user and which are forwarded by the KAuth DBUS service running as root to
+the mount helper DBUS service which is also running as root but not allowed
+to be contacted by users.
+Thats a logical flaw. It was probably not intented that users invoke
+performAction() themself, using it as a proxy into DBUS services and
+faking caller IDs en-passant. The callerID usually looks like ":1.123"
+and is a DBUS unique name that maps to the sender of the message.
+You can think of it like the source address of an IP packet.
+This ID should be obtained via a DBUS function while the message is
+arriving, so it can actually be trusted and used as a subject for polit
+authorizations when using systembus-name subjects. Allowing callers to
+arbitrarily choosing values for this ID is taking down the whole idea
+of authentication and authorization.
+
+I made an exploit for smb4k that works on openSUSE Leap 42.2 thats using
+the org.kde.auth interface (rather than org.kde.kf5auth) but both
+interfaces share the same problems. The exploit also works on the latest
+Fedora26 Alpha kde spin with SELinux in enforcing mode. In order to test
+the callerID spoofing, I "protected" the smb4k helper code via "auth_admin"
+polkit settings and tried mounting SMB shares via smb4k GUI. This asked for
+the root password, as its expected. The exploit however still works, as its
+spoofing the callerID to be DBUs itself and the request is taken as legit,
+requiring no root password.
+
 
 
 -- 
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
 
