@@ -1,34 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/10
-Message-ID: <20170601181906.GA5071@openwall.com>
-Date: Thu, 1 Jun 2017 20:19:06 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/10/4
+Message-ID: <20170510105456.nosikak5pgs7fp7b@perpetual.pseudorandom.co.uk>
+Date: Wed, 10 May 2017 11:54:56 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: unresponsive distros
+Cc: Albert Astals Cid <aacid@....org>
+Subject: Re: generic kde LPE
 Content-Type: text/plain; charset=utf-8
 
-Anthony,
+On Wed, 10 May 2017 at 12:05:04 +0200, Sebastian Krahmer wrote:
+> The callerID usually looks like ":1.123"
+> and is a DBUS unique name that maps to the sender of the message.
+> You can think of it like the source address of an IP packet.
+> This ID should be obtained via a DBUS function while the message is
+> arriving, so it can actually be trusted and used as a subject for polit
+> authorizations when using systembus-name subjects. Allowing callers to
+> arbitrarily choosing values for this ID is taking down the whole idea
+> of authentication and authorization.
 
-On Thu, Jun 01, 2017 at 06:03:59PM +0000, Liguori, Anthony wrote:
-> Hrm, I've been following the thread but apparently missed your request Solar.
+Yes - the analogy "unique name is like an IP address" is a good one here.
+When receiving an IP packet, you might trust the source address in the IP
+header, but not an IP address mentioned in the packet's body (payload).
+It's the same in D-Bus.
 
-Wow, that was quick.  I don't see how you could have been following the
-thread, including in the period since May 27, and miss the request,
-since most other distros replied to that very same thread.  With the
-replies quoting parts of my request, it was many messages.  I mentioned
-the 3 non-responsive distros by name in two messages - yesterday and
-today (a few hours before bringing this to oss-security).
+It's also suspicious that the "callerID" is a byte array (D-Bus type 'ay');
+that makes me wonder whether it was originally intended to be something
+other than a D-Bus unique name. D-Bus unique names are constrained to a
+subset of printable ASCII, and in particular are always valid for the
+D-Bus string type 's' (which contains arbitrary UTF-8, excluding U+0000,
+overlong encodings and non-characters), so it is not necessary to use
+a byte-array.
 
-What was it about the oss-security posting that made you notice it,
-unlike the many messages on the distros list?
+This is probably a good opportunity for me to clarify which
+security-sensitive things you can rely on receiving in a trusted way[1]
+via D-Bus. They are:
 
-Is it the encryption that causes you not to read some messages, or to
-postpone doing so (for days)?
+* The unique name of the message sender (dbus_message_get_sender(),
+  g_dbus_method_invocation_get_sender() and similar APIs)
 
-With such selective reading, you'd also miss some new issues that are
-being brought up as part of this same thread.  The Subject stays since
-it's unencrypted, but discussion deviates and expands to new topics.
+* The Unix uid corresponding to a unique name, available by calling
+  the GetConnectionCredentials or GetConnectionUnixUser method on
+  the dbus-daemon's org.freedesktop.DBus bus name and interface
 
-Thanks,
+* The Unix pid corresponding to a unique name, available by calling
+  the GetConnectionCredentials or GetConnectionUnixProcessID method
+  (but be careful: you can't safely use this pid to look up further
+  information in /proc[2])
 
-Alexander
+* The Linux LSM (AppArmor, SELinux, Smack etc.) label corresponding
+  to a unique name, available by calling the GetConnectionCredentials
+  method
+
+It is not coincidental that these match the information that the
+dbus-daemon can get from the kernel in a trusted way by querying
+the AF_UNIX socket that it uses to communicate with the peer, via
+the SO_PEERCRED and SO_PEERSEC socket options or their non-Linux
+equivalents[3].
+
+(By the way, the protocol is called D-Bus and the reference implementation
+is dbus. There is nothing called DBUS, and it isn't an acronym.)
+
+Regards,
+    S
+
+[1] This requires trusting the dbus-daemon to not lie to you, which in
+    practice you must, unless you do some sort of out-of-band
+    authentication. On practical Unix systems the system dbus-daemon
+    is a security boundary (a trusted component, in the infosec sense that
+    it is in a position where it could break your security policy). If
+    using LSMs, the session dbus-daemon is potentially also a security
+    boundary for the security domains represented by LSM labels.
+[2] This would be unsafe because a malicious process could change the
+    apparent credentials of a particular pid by queuing up outgoing
+    messages that it wants to be interpreted as though their sender had
+    higher privilege, then exec()ing a setuid or similarly
+    privileged executable. Rather more tenuously, it could also try
+    arranging for the 15-bit process ID space to wrap around and then
+    exiting at just the right time before a more privileged process
+    forks, although that probably isn't a practically feasible attack.
+[3] SO_PEERCRED technically also tells us the primary gid,
+    but we don't expose that information in dbus-daemon, because the
+    distinction between primary and supplementary group IDs seems
+    needlessly confusing.
