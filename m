@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["590" "Friday" "6" "January" "2017" "11:11:53" "+0100" "Marcus Meissner" "meissner@suse.de" "<20170106101153.GB9517@suse.de>" "20" "Re: [oss-security] Re: Firejail local root exploit" "^Cc:" nil nil "1" "2017010610:11:53" "[oss-security] Re: Firejail local root exploit" (number mark "        meissner@sus Jan  6   20/590   " thread-indent "\"Re: [oss-security] Re: Firejail local root exploit\"\n") "<a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>" ("<20170104131248.GA28596@suse.de>" "<a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["765" "Thursday" "11" "May" "2017" "12:21:53" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>" "27" "[oss-security] CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings" nil nil nil "5" "2017051116:21:53" "[oss-security] CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings" (number mark "U       vdronov@redh May 11   27/765   " thread-indent "\"[oss-security] CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings\"\n") "<2045504338.6880508.1494519270013.JavaMail.zimbra@redhat.com>" ("<2045504338.6880508.1494519270013.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12090 invoked by uid 550); 6 Jan 2017 10:12:05 -0000
+Received: (qmail 7976 invoked by uid 550); 11 May 2017 16:22:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12069 invoked from network); 6 Jan 2017 10:12:05 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20170106101153.GB9517@suse.de>
-References: <20170104131248.GA28596@suse.de>
- <a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: cve-assign@mitre.org
-Date: Fri, 6 Jan 2017 11:11:53 +0100
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Firejail local root exploit
+Received: (qmail 7953 invoked from network); 11 May 2017 16:22:05 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 85EAAC057FA8
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=vdronov@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 85EAAC057FA8
+Date: Thu, 11 May 2017 12:21:53 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
 To: oss-security@lists.openwall.com
+Message-ID: <1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>
+In-Reply-To: <2045504338.6880508.1494519270013.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.1.12, 10.4.195.3]
+Thread-Topic: CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings
+Thread-Index: 0cmp5i6vtxZ/c2BCxksViljVZTngJw==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Thu, 11 May 2017 16:21:53 +0000 (UTC)
+Subject: [oss-security] CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring()
+ to not leak thread keyrings
 
-Hi Mitre,
+Hello,
 
-On Wed, Jan 04, 2017 at 12:16:49PM -0500, cve-assign@mitre.org wrote:
-> >  * Firejail has too broad attack surface that allows users
-> >  * to specify a lot of options, where one of them eventually
-> >  * broke by accessing user-files while running with euid 0.
-> 
-> > const char *const ldso = "/etc/ld.so.preload";
-> > ...
-> > snprintf(path, sizeof(path) - 1, "%s/.firenail/.Xauthority", home);
-> > ...
-> > symlink(ldso, path)
-> 
-> Use CVE-2017-5180.
+A vulnerability was found in the Linux kernel from v2.6.29-rc1 (since
+commit d84f4f992cbd) upto v4.11-rc8 (commit c9f838d104). It was found
+that keyctl_set_reqkey_keyring() function leaks thread keyring which
+allows unprivileged local user to exhaust kernel memory and thus to
+cause DoS.
 
-Is this correct? It starts quite far into the 2017 namespace?
+cvss3=5.5/CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H
+cwe=CWE-400
 
-Or have other CNAs allocated the previous 5000 ?
+References:
 
-Ciao, Marcus
+https://lkml.org/lkml/2017/4/1/235
+
+https://lkml.org/lkml/2017/4/3/724
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1442086
+
+https://bugzilla.novell.com/show_bug.cgi?id=1034862
+
+Upstream patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c9f838d104fed6f2f61d68164712e3204bf5271b
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
