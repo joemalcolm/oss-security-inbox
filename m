@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/4
-Message-ID: <1207006894.2769604.1485695665647@mail.yahoo.com>
-Date: Sun, 29 Jan 2017 13:14:25 +0000 (UTC)
-From: Ion Ionescu <netblue30@...oo.com>
-To: Sebastian Krahmer <krahmer@...e.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Firejail local root exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/11/1
+Message-ID: <1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>
+Date: Thu, 11 May 2017 12:21:53 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings
 Content-Type: text/plain; charset=utf-8
 
 Hello,
-The first fix for CVE-2017-5180 in Firejail version 0.9.44.4 and 0.9.38.8 (LTS) was incomplete. Changing .Xauthority to .bashrc in the exploit code, the problem is still there - credit Sebastian Krahmer.
-New releases are out: 0.9.44.8 and 0.9.38.10 (LTS). Please assign a new CVE.
-Thank you,
-Ion Ionescu
 
-      From: Sebastian Krahmer <krahmer@...e.com>
- To: oss-security@...ts.openwall.com 
-Cc: netblue30@...oo.com
- Sent: Wednesday, January 4, 2017 8:12 AM
- Subject: Firejail local root exploit
-   
-Hi
+A vulnerability was found in the Linux kernel from v2.6.29-rc1 (since
+commit d84f4f992cbd) upto v4.11-rc8 (commit c9f838d104). It was found
+that keyctl_set_reqkey_keyring() function leaks thread keyring which
+allows unprivileged local user to exhaust kernel memory and thus to
+cause DoS.
 
-Please find attached PoC for firejail, which seems to be quite
-popular sandboxing tool.
+cvss3=5.5/CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H
+cwe=CWE-400
 
-Sebastian
+References:
 
--- 
+https://lkml.org/lkml/2017/4/1/235
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
+https://lkml.org/lkml/2017/4/3/724
 
+https://bugzilla.redhat.com/show_bug.cgi?id=1442086
 
+https://bugzilla.novell.com/show_bug.cgi?id=1034862
 
-   
+Upstream patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c9f838d104fed6f2f61d68164712e3204bf5271b
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
