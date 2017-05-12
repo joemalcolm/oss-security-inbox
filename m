@@ -1,81 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/22/1
-Message-ID: <20171222195252.GA6497@openwall.com>
-Date: Fri, 22 Dec 2017 20:52:52 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/3
+Message-Id: <E1d984g-00074N-Bd@xenbits.xenproject.org>
+Date: Fri, 12 May 2017 10:45:30 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 214 (CVE-2017-8904) - grant transfer allows PV guest to elevate privileges
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Dec 17, 2017 at 09:06:08AM +0000, halfdog wrote:
-> Solar Designer writes:
-> > Are you saying "--s2k-count" option to "gpg2" is ignored, and moreover
-> > that this is documented?  gnupg-2.1.23/doc/gpg.texi says (formatted):
-> > 
-> > `--s2k-count `n''
-> >      Specify how many times the passphrase mangling is repeated.  This
-> >      value may range between 1024 and 65011712 inclusive.  The default
-> >      is inquired from gpg-agent.  Note that not all values in the
-> >      1024-65011712 range are legal and if an illegal value is selected,
-> >      GnuPG will round up to the nearest legal value.  This option is
-> >      only meaningful if `--s2k-mode' is 3.
-> 
-> Here is the gpgv2 documentation:
-> 
-> "     --s2k-count n
->               Specify how many times the passphrases  mangling  for  symmetric
->               encryption  is  repeated.  This value may range between 1024 and
->               65011712 inclusive.  The default  is  inquired  from  gpg-agent.
->               Note  that  not  all values in the 1024-65011712 range are legal
->               and if an illegal value is selected, GnuPG will round up to  the
->               nearest  legal  value.  This option is only meaningful if --s2k-
->               mode is set to the default of 3."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It's actually the same documentation - just a different place in it,
-which I didn't notice until you pointed it out.  So this option is
-documented differently in different places in the documentation.  Some
-of those refer to different ones of the tools, but others might be just
-repeats of what's supposed to be the same info yet is not?  Confusing.
+            Xen Security Advisory CVE-2017-8904 / XSA-214
+                              version 3
 
-> You noticed the additional "symmetric" word? According to GPG
-> developer that means, that with gpgv2 this setting is only applied
-> with symmetric schemes, e.g. the "--symmetric" mode of GPG. For
-> assymetric mode the parameter is just ignored.
+         grant transfer allows PV guest to elevate privileges
 
-Weird.  Was this discussion with "GPG developer" anywhere public?
+UPDATES IN VERSION 3
+====================
 
-Did you test this yourself?  You don't need to determine the exact
-s2k-count to see if the option has effect or not - you can instead set
-the value to the highest supported and measure whether this increases
-the delay compared to the default.
+CVE assigned.
 
-I think this description is ambiguous: "symmetric" might refer only to
-cases when GnuPG as a whole is invoked for symmetric encryption, or it
-might also include cases when GnuPG symmetrically en/decrypts its keys.
+ISSUE DESCRIPTION
+=================
 
-> > You may process the private key file with gpg2john, then try to crack it
-> > with john.  This will output the actual value, as well as show you the
-> > speed at which passphrases can be tested against that key on your system
-> > and with that version of JtR.  To use a GPU, add "--format=gpg-opencl".
-> > Please use latest bleeding-jumbo off GitHub for all of this.
-> 
-> Done that, but still fighting how to use "gpg2john" with the new
-> gpgv2 "private-keys-v1.d" key format. Exporting the private keys
-> using gpgv2 does not help as that requires the passphrase already,
-> thus removing the gpgv2-encryption, we want to test.
+The GNTTABOP_transfer operation allows one guest to transfer a page to
+another guest.  The internal processing of this, however, does not
+include zapping the previous type of the page being transferred.  This
+makes it possible for a PV guest to transfer a page previously used as
+part of a segment descriptor table to another guest while retaining the
+"contains segment descriptors" property.
 
-I tried asking a JtR jumbo contributor to look into this, but
-unfortunately I got no response yet, and I had no time to look into it
-myself.  This is something we ought to have an answer to, but I
-currently don't.
+If the destination guest is a PV one of different bitness, it may gain
+access to segment descriptors it is not normally allowed to have, like
+64-bit code segments in a 32-bit PV guest.
 
-> Just FYI: your releases on Openwall are still signed with the old
-> openwall-key, according to http://www.openwall.com/signatures/ the
-> key is "Old Openwall offline signing key (no longer used)".
+If the destination guest is a HVM one, that guest may freely alter the
+page contents and then hand the page back to the same or another PV
+guest.
 
-Sure.  Releases made prior to the switch to the new key are signed with
-the old key.  The "no longer used" comment applies to new signatures.
-Maybe we need to clarify that or/and re-sign some releases from prior to
-the key switch with the new key.
+In either case, if the destination PV guest then inserts that page into
+one of its own descriptor tables, the page still having the designated
+type results in validation of its contents being skipped.
 
-Alexander
+IMPACT
+======
+
+A malicious pair of guests may be able to access all of system memory,
+allowing for all of privilege escalation, host crashes, and information
+leaks.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+Only x86 systems are affected.  ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+Running only one out of the three relevant classes of guest (namely:
+32-bit PV; 64-bit PV; HVM) on any given host will avoid the
+vulnerability.  (Note that this must also include any nonprivileged
+service domains such as stub device model domains.)
+
+The vulnerability can also be avoided if all guest kernels are
+controlled by the host rather than guest administrator, provided that
+further steps are taken to prevent the guest administrator from loading
+code into the kernel (e.g. by disabling loadable modules etc) or from
+using other mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa124.patch           xen-unstable, Xen 4.8.x, 4.7.x, 4.6.x, 4.5.x
+
+$ sha256sum xsa214*
+1c038c3927d08e6abdf3ce320bb8b0b68a106e6ac86b4e8194035dc5e4726d64  xsa214.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZFZIpAAoJEIP+FMlX6CvZHfsH+wdMlBxYgNB8pf405BLp6Jxy
+rv/8/cZjOYvIfHL3L4DnwROJ351AC4G3Yja1PqCl6/XFCuMYLIWlYknFAjE4kPTf
+lvvjYiogMR9SD60odieh5fqZdEBq2jIAD6h0Wn2klb5B3U3T5DdIgOOGnhz+OqX7
+/clQEWJsDD9sVmEO46weZxgIiOkTLyBBbrXE3+y4qdwEbo+yhLkFj7nKpA+v8NxZ
+heOKALALSW7OtYy2Zr2B4+n1FQyeqsyovl3YPK4MKB5BYDBboDUBuPn2YCYCa4JY
+UBIL4ZsWsqBUouVqccVvOUIF1PMr8lyB7+xopSOTC23/pTrT3gAetKUVxxB6uqI=
+=CGId
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa214.patch" of type "application/octet-stream" (1782 bytes)
