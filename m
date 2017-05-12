@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/7
-Message-ID: <CA+-XxSHAUfG=z0AU9LoT_N1mB-aOAtFvEz6NgL8b8iyY5vYEhQ@mail.gmail.com>
-Date: Tue, 4 Jul 2017 18:07:13 +0300
-From: Igor Seletskiy <i@...udlinux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/4
+Message-ID: <138470974.7338270.1494595496637.JavaMail.zimbra@redhat.com>
+Date: Fri, 12 May 2017 09:24:56 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CloudLinux
+Subject: CVE-2017-7487: Linux kernel: ipx: call ipxitf_put() in ioctl error path
 Content-Type: text/plain; charset=utf-8
 
->
->
->
-> On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
-> > We typically have to patch local privilege escalations in kernel asap as
-> > our customers are easily rooted using this type of vulnerabilities
-> (anyone
-> > can buy website or hack old wordpress instance & run any code).
->
-> This may be a reason for you to harden your distro's userland against
-> local privilege escalations as well, such as by adopting the
-> owl-alt-sanitize-env glibc hardening patch maintained by ALT Linux:
->
-> http://git.altlinux.org/gears/g/..git?p=glibc.git;a=commitdiff;h=496059f2
+Hello,
 
-Thank you, we will analyze it / test how well it works with 3rd party
-software.
+A reference counter leak in Linux kernel in ipxitf_ioctl function was found
+which results into use after free vulnerability that's triggerable from
+unprivileged userspace when IPX interface is configured.
 
->
->
-> and getting rid of most or all world-accessible SUID programs, which is
-> do-able like we have demonstrated with Owl.  This shouldn't be
-> unreasonably hard to implement and maintain in a fork of RHEL, although
-> obviously you'll end up with more packages (including some core ones)
-> that would no longer be mere rebuilds of RHEL's.
->
-All the web applications, end users ssh sessions and cron jobs are executed
-in
-namespaced / chrooted environment with no SUID files accessible already.
-We cannot completely get rid of SUID scripts as they are used by 3rd party
-software (like cPanel/Plesk) that is used on most of customer's servers.
-It is not perfect, but the best we were able to do so far.
+cvss3=5.6/CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:H
+cwe=CWE-416
 
+References:
 
-Thank you for the advise,
-Igor.
+https://patchwork.ozlabs.org/patch/757549/
 
+https://bugzilla.redhat.com/show_bug.cgi?id=1447734
+
+Upstream patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ee0d8d8482345ff97a75a7d747efc309f13b0d80
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
