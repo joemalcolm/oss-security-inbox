@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1891" "Monday" "5" "September" "2016" "18:42:51" "+0200" "Nathan Van Gheem" "nathan.van.gheem@plone.org" "<CAL8hw9Hx1HH2DuD8RL1fMAK3SnXsnRSwkF-rb_26z2_Soq+PCg@mail.gmail.com>" "55" "[oss-security] CVE request: Plone multiple vulnerabilities" nil nil nil "9" "2016090516:42:51" "[oss-security] CVE request: Plone multiple vulnerabilities" (number mark "U       nathan.van.g Sep  5   55/1891  " thread-indent "\"[oss-security] CVE request: Plone multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3327" "Friday" "12" "May" "2017" "22:45:05" "+0200" "Florent Rougon" "f.rougon@free.fr" "<87tw4pere6.fsf@frougon.crabdance.com>" "103" "[oss-security] CVE-2017-8921: directory traversal vulnerability in FlightGear" "^Date:" nil nil "5" "2017051220:45:05" "[oss-security] CVE-2017-8921: directory traversal vulnerability in FlightGear" (number mark "U       f.rougon@fre May 12  103/3327  " thread-indent "\"[oss-security] CVE-2017-8921: directory traversal vulnerability in FlightGear\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8188 invoked by uid 550); 5 Sep 2016 17:38:08 -0000
+Received: (qmail 29806 invoked by uid 550); 12 May 2017 21:13:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9950 invoked from network); 5 Sep 2016 16:43:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=7KT5JyxBSmbCjMpH6KvE+LgT/H0n6iuHusrTjrwMDag=;
-        b=vHAkFxY2SfcT4R5kAqFDaIjohnJC7AHQI37+p8pKSGjZLiVoWEwSN9DWHEOB0/0QGe
-         UZ50DyOaDNu4MRLeJVlQahRaXAzMMpJNFcDep7I7UIW0p50TTIySHrXJG+aA5UJB5MmX
-         pNkRA6zcyQ6OntxbpuRE3s9+KFNVs7hfPjlpSkaPiIakppUt2bzIed8x3QASQjP6dcIh
-         3yZ1Sx+mbP3r/dH+iuh/Yenv7s28/0GDu2NdKMWuDrJdIc0kZck8doWBha+PB6+7xhLL
-         Ktj0i0rdJ1GTTer2H33PlNyHMCOh7Bw1EoNXFNUJNqHStzTULd1Ic5MJsKwsnS4ZhBXG
-         vzpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=7KT5JyxBSmbCjMpH6KvE+LgT/H0n6iuHusrTjrwMDag=;
-        b=GWWIsCz+eFPJiIxNibSU1dDvI1Xm4qsD3wAK9NOJ9yjzcd7DyQyrFXtfgS+wNgeeJp
-         E6kn+NjuanmGUEng3MvEx9ViUCgnYehDcRFTGuaPAS8yboFdpjtJpl2TK4KYQSupFkU+
-         wu0XhbtM7pAjfiaQtcj1vNZT5gV+4ZXdOPoqTFrRIJl8jr+I55oLv7gwMrJbRaMqCqgX
-         gREC0jMrrOQkr1BpMvNEniuZPseR6nbwo534N1NlciHm3AgPeHYq35OOn84Wi+VENdm8
-         VfMLxd3f0WPiuxac3PJ91vms0Ub0OFCKKwFNm7xJf1Tz12zXFRI8oWE1ebeGAHbH0IuQ
-         C8lg==
-X-Gm-Message-State: AE9vXwPZbP3uUxEVAfLKKoPGYkhs0XPhLIvz0vidjmp72WdluAeT2NVff2Ew+mRExbOlimnccQU79lPjgjbizA==
-X-Received: by 10.237.44.66 with SMTP id f60mr40023660qtd.11.1473093772236;
- Mon, 05 Sep 2016 09:42:52 -0700 (PDT)
+Received: (qmail 1773 invoked from network); 12 May 2017 20:45:17 -0000
+Mail-Followup-To: oss-security@lists.openwall.com
+Message-ID: <87tw4pere6.fsf@frougon.crabdance.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-Sender: vangheem@gmail.com
-From: Nathan Van Gheem <nathan.van.gheem@plone.org>
-Date: Mon, 5 Sep 2016 18:42:51 +0200
-X-Google-Sender-Auth: aPkQ_z5RoXuc_hVUPG_nT8iaZwA
-Message-ID: <CAL8hw9Hx1HH2DuD8RL1fMAK3SnXsnRSwkF-rb_26z2_Soq+PCg@mail.gmail.com>
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Fri, 12 May 2017 22:45:05 +0200
+From: Florent Rougon <f.rougon@free.fr>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-8921: directory traversal vulnerability in FlightGear
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=94eb2c06bee403f1dc053bc55f0a
-Subject: [oss-security] CVE request: Plone multiple vulnerabilities
 
---94eb2c06bee403f1dc053bc55f0a
-Content-Type: text/plain; charset=UTF-8
+--=-=-=
+Content-Type: text/plain
 
 Hi,
 
-Multiple vulnerabilities were recently patched.
+Here is the info for CVE-2017-8921:
 
+[Suggested description]
+In FlightGear before 2017.2.1, the FGCommand interface allows
+overwriting any file the user has write access to, but not with
+arbitrary data: only with the contents of a FlightGear flightplan (XML).
+A resource such as a malicious third-party aircraft could exploit this
+to damage files belonging to the user. Both this issue and CVE-2016-9956
+are directory traversal vulnerabilities in Autopilot/route_mgr.cxx -
+this one exists because of an incomplete fix for CVE-2016-9956.
 
-1. *filesystem information leak*:
-https://plone.org/security/hotfix/20160830/filesystem-information-leak
+------------------------------------------
 
-Managers had the ability to find read files from the file system that the
-system user running the plone process had access to
+[Additional Information]
+We are not aware of any such malicious resource. The fix will be in
+FlightGear 2017.2.1 (expected in 1 or 2 weeks before the vulnerability
+was found). There may be a stable update too meanwhile (2017.1.4) with
+the fix, but I can't guarantee if so, and when.
 
-2. *Non-Persistent XSS in Plone forms*:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-forms
+This is not a duplicate of CVE-2016-9956.
 
-z3c.form will currently accept data from GET requests when the form is
-supposed to be POST. This allows a user to inject a potential XSS attack
-into a form. With certain widgets in Plone admin forms, the input is
-expected to be safe and can cause a reflexive XSS attack. Additionally,
-there is potential for an attack that will trick a user into saving a
-persistent XSS.
+------------------------------------------
 
-3. *open redirection*:
-https://plone.org/security/hotfix/20160830/open-redirection-in-plone
+[Vulnerability Type]
+Incorrect Access Control
 
-In multiple places, Plone blindly uses the referer header to redirect a
-user to the next page after a particular action. An attacker could utilize
-this to draw a user into a redirection attack.
+------------------------------------------
 
-4. *Non-Persistent XSS in Plone*:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-1
+[Vendor of Product]
+FlightGear (http://flightgear.org/)
 
-Plone's URL checking infrastructure includes a method for checking if URLs
-valid and located in the Plone site. By passing javascript into this
-specially crafted url, XSS can be achieved.
+------------------------------------------
 
-5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
+[Affected Product Code Base]
+FlightGear - Affected: releases earlier than 2017.2.1. Fixed in 'next'
+branch (commit faf872e7f71ca14c567ac7080561fc785d8d2fd0), currently
+referred to as FlightGear 2017.2.0 (this is *not* a release).
 
-In multiple places, Zope2's ZMI pages do not properly escape user input
+------------------------------------------
 
+[Affected Component]
+source file: src/Autopilot/route_mgr.cxx in the FlightGear repository,
+executable: fgfs
 
-Credits to all these go to Sebastian Perez
+------------------------------------------
 
-All of these vulnerabilities have been patched with the hotfix release
-package(https://plone.org/security/hotfix/20160830) and are being
-incorporated upstream.
+[Attack Type]
+Local
 
+------------------------------------------
 
-Thanks,
-Nathan
+[CVE Impact Other]
+Allows to overwrite any file the user has write access to, but not
+with arbitrary data: only with the contents of a FlightGear flightplan
+(XML).
 
---94eb2c06bee403f1dc053bc55f0a--
+------------------------------------------
+
+[Attack Vectors]
+Trick users into installing a resource that, when run, can execute
+arbitrary FGCommands. For instance, a malicious third-party aircraft
+could do that.
+
+------------------------------------------
+
+[Reference]
+https://sourceforge.net/p/flightgear/flightgear/ci/faf872e7f71ca14c567ac7080561fc785d8d2fd0/
+
+------------------------------------------
+
+[Has vendor confirmed or acknowledged the vulnerability?]
+true
+
+------------------------------------------
+
+[Discoverer]
+Rebecca N. Palmer (FlightGear developer)
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEEltaD9t4j90O9Bqdx4W5C1BTo6IFAlkWHtEACgkQx4W5C1BT
+o6JzBg//fZKGUiUSeRJD8vzm4hRY/wWCXyTc+OlNjZ5k3BsVeHeZ9opYXTKgaiEd
+w4uaoQQh994IhCvpulN2W1CRCVia597lnGIuauRgks3h820puAMReJEAJjFFIc1X
+2ZPswwqqhOCiALX2ai02IQnuz9Iv6qnR/dEhjvA5qqKRq+mxvnxHcwIzTUtxhRQz
+xw0Y+BALVma9cUnj4J0lSxXUYeGvOp7YLNLoRBvJ/92xWu63VZS6jxlY7GMfi5WG
++dc9BTeGcTWcknRX5HJCvbwzqpQ6dfvyTpPb+HZanDVcgBj1b2LP0JGtzOobj4WP
+HDk+r5CI380cton5FwTZMXuVNv7Q//ssNKJTqG9QptklJGBocNMUG0HGNhtyxLmB
+9ChtqRhJdhHqn6j43TFxof1EIJMQejVp+4hOqLlR7fePMmZ671KUFvTyz5Rhqm9C
+FcboGAei3349+dbvSUq2DnHymlnr+yK3/wkuzM+FlT6Ot7h6PiHTJTvKCNDD9ROK
+ORpr0rwHfaNECZZNnGwyDNzhkQT+DyOmBfA+sgetaSslrLoru1DukH7pOomdEOV8
+4oF8nCo3HZo41MNerEOO/a6R5kXYXltG1h2vYEHEgkZ5wgYosvcHWLYAlwkqmvEb
+YaPJCVctPidd4+Hu1SW3ql5HKQDUDJBICQSLcnxAFYE/9Tae4mI=
+=skHT
+-----END PGP SIGNATURE-----
+--=-=-=--
