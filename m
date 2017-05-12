@@ -1,4 +1,9 @@
-Received: (qmail 26503 invoked by uid 550); 6 Jun 2025 01:49:32 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6637" "Friday" "12" "May" "2017" "10:45:30" "+0000" "Xen.org security team" "security@xen.org" "<E1d984g-00074N-Bd@xenbits.xenproject.org>" "167" "[oss-security] Xen Security Advisory 214 (CVE-2017-8904) - grant transfer allows PV guest to elevate privileges" nil nil nil "5" "2017051210:45:30" "[oss-security] Xen Security Advisory 214 (CVE-2017-8904) - grant transfer allows PV guest to elevate privileges" (number mark "U       security@xen May 12  167/6637  " thread-indent "\"[oss-security] Xen Security Advisory 214 (CVE-2017-8904) - grant transfer allows PV guest to elevate privileges\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24349 invoked by uid 550); 12 May 2017 10:46:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,51 +12,184 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21759 invoked from network); 6 Jun 2025 01:24:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1749173045;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gimQyNInV8ik9sdOMuPCgpGdMrMeb7ol55sh9etiP3I=;
-	b=GbVf/MgBNDDGefqUACIbKBJ07+OMRhrRLv1dvpdVu+8zBNGVTlZDxV0c65PjCQB8t/4TKB
-	5tZH++seavJlWVOjPk3B5z8axvvO7MEcKeBb8y1GkRfnp1MTV5n+/yIxoftX1nkhhguI/4
-	+91r0GgjTrZb7a72xev67WU67T4QWqMW/GmWq34iGRvd/qjdcDC19x+NXAAaUVcvdYA0Gg
-	u66IrhPQogo9nC+sqSQNXe/+aHfb7IUEAo4QqulUPsUeSEW6I4kvlslMaecTfWlpe2ZBDa
-	DLkhACgpE+jzzh0Lk+zpErYnaw3dE4b361wTqaV5hxQ+vsRjzCZJ/TdWmeWqww==
+Received: (qmail 24264 invoked from network); 12 May 2017 10:45:59 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Date: Thu, 05 Jun 2025 22:24:04 -0300
-From: Timothy Legge <timlegge@cpansec.org>
-To: Sam James <sam@gentoo.org>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <87frgdfzxc.fsf@gentoo.org>
-References: <af08b59edaa5fd29007603e146a3a43e@cpansec.org>
- <87frgdfzxc.fsf@gentoo.org>
-Message-ID: <a2f4aa2ef5d6d819b65dcd74cd7a8071@cpansec.org>
-X-Sender: timlegge@cpansec.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security@xen.org>
+Message-Id: <E1d984g-00074N-Bd@xenbits.xenproject.org>
+Date: Fri, 12 May 2017 10:45:30 +0000
+Subject: [oss-security] Xen Security Advisory 214 (CVE-2017-8904) - grant transfer allows
+ PV guest to elevate privileges
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdeggeduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhepggffhffvvefujghfkfigtgfgsehtjehjtddttddvnecuhfhrohhmpefvihhmohhthhihucfnvghgghgvuceothhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgqeenucggtffrrghtthgvrhhnpedvjedtvefgvdffffdukeetvdetvdeuteffkeehhffhgfehgeehkeetgfejvdduheenucffohhmrghinhepphgvrhhlrdhorhhgnecukfhppedutddrvddttddrvddtuddrudeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddtrddvtddtrddvtddurddukedphhgvlhhopeifvggsmhgrihhlrdhgrghnughirdhnvghtpdhmrghilhhfrhhomhepthhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgpdhnsggprhgtphhtthhopedvpdhrtghpthhtohepshgrmhesghgvnhhtohhordhorhhgpdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
-X-GND-Sasl: timlegge@cpansec.org
-Subject: Re: [oss-security] CVE-2011-10007: File::Find::Rule through 0.34 for
- Perl is vulnerable to Arbitrary Code Execution when `grep()` encounters a
- crafted file name
 
-On 2025-06-05 21:59, Sam James wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
->> A file handle is opened with the 2 argument form of `open()` allowing
->> an attacker controlled filename to provide the MODE parameter to
->> `open()`, turning the filename into a command to be executed.
->> 
-> 
-> FWIW, I've started a broader discussion on the future of 2-arg open on
-> p5p at 
-> https://www.nntp.perl.org/group/perl.perl5.porters/2025/06/msg269996.html.
+            Xen Security Advisory CVE-2017-8904 / XSA-214
+                              version 3
 
-Thanks, I just say that.  I was thinking it would be nice to have a way 
-to disable it.
+         grant transfer allows PV guest to elevate privileges
+
+UPDATES IN VERSION 3
+====================
+
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+The GNTTABOP_transfer operation allows one guest to transfer a page to
+another guest.  The internal processing of this, however, does not
+include zapping the previous type of the page being transferred.  This
+makes it possible for a PV guest to transfer a page previously used as
+part of a segment descriptor table to another guest while retaining the
+"contains segment descriptors" property.
+
+If the destination guest is a PV one of different bitness, it may gain
+access to segment descriptors it is not normally allowed to have, like
+64-bit code segments in a 32-bit PV guest.
+
+If the destination guest is a HVM one, that guest may freely alter the
+page contents and then hand the page back to the same or another PV
+guest.
+
+In either case, if the destination PV guest then inserts that page into
+one of its own descriptor tables, the page still having the designated
+type results in validation of its contents being skipped.
+
+IMPACT
+======
+
+A malicious pair of guests may be able to access all of system memory,
+allowing for all of privilege escalation, host crashes, and information
+leaks.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+Only x86 systems are affected.  ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+Running only one out of the three relevant classes of guest (namely:
+32-bit PV; 64-bit PV; HVM) on any given host will avoid the
+vulnerability.  (Note that this must also include any nonprivileged
+service domains such as stub device model domains.)
+
+The vulnerability can also be avoided if all guest kernels are
+controlled by the host rather than guest administrator, provided that
+further steps are taken to prevent the guest administrator from loading
+code into the kernel (e.g. by disabling loadable modules etc) or from
+using other mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa124.patch           xen-unstable, Xen 4.8.x, 4.7.x, 4.6.x, 4.5.x
+
+$ sha256sum xsa214*
+1c038c3927d08e6abdf3ce320bb8b0b68a106e6ac86b4e8194035dc5e4726d64  xsa214.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZFZIpAAoJEIP+FMlX6CvZHfsH+wdMlBxYgNB8pf405BLp6Jxy
+rv/8/cZjOYvIfHL3L4DnwROJ351AC4G3Yja1PqCl6/XFCuMYLIWlYknFAjE4kPTf
+lvvjYiogMR9SD60odieh5fqZdEBq2jIAD6h0Wn2klb5B3U3T5DdIgOOGnhz+OqX7
+/clQEWJsDD9sVmEO46weZxgIiOkTLyBBbrXE3+y4qdwEbo+yhLkFj7nKpA+v8NxZ
+heOKALALSW7OtYy2Zr2B4+n1FQyeqsyovl3YPK4MKB5BYDBboDUBuPn2YCYCa4JY
+UBIL4ZsWsqBUouVqccVvOUIF1PMr8lyB7+xopSOTC23/pTrT3gAetKUVxxB6uqI=
+=CGId
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa214.patch"
+Content-Disposition: attachment; filename="xsa214.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODY6IGRpc2NhcmQgdHlwZSBpbmZvcm1hdGlvbiB3aGVuIHN0ZWFsaW5n
+IHBhZ2VzCgpXaGlsZSBhIHBhZ2UgaGF2aW5nIGp1c3QgYSBzaW5nbGUgZ2Vu
+ZXJhbCByZWZlcmVuY2UgbGVmdCBuZWNlc3NhcmlseQpoYXMgYSB6ZXJvIHR5
+cGUgcmVmZXJlbmNlIGNvdW50IHRvbywgaXRzIHR5cGUgbWF5IHN0aWxsIGJl
+IHZhbGlkIChhbmQKaW4gdmFsaWRhdGVkIHN0YXRlOyBhdCBwcmVzZW50IHRo
+aXMgaXMgb25seSBwb3NzaWJsZSBhbmQgcmVsZXZhbnQgZm9yClBHVF9zZWdf
+ZGVzY19wYWdlLCBhcyBwYWdlIHRhYmxlcyBoYXZlIHRoZWlyIHR5cGUgZm9y
+Y2libHkgemFwcGVkIHdoZW4KdGhlaXIgdHlwZSByZWZlcmVuY2UgY291bnQg
+ZHJvcHMgdG8gemVybywgYW5kClBHVF97d3JpdGFibGUsc2hhcmVkfV9wYWdl
+IHBhZ2VzIGRvbid0IHJlcXVpcmUgYW55IHZhbGlkYXRpb24pLiBJbgpzdWNo
+IGEgY2FzZSB3aGVuIHRoZSBwYWdlIGlzIGJlaW5nIHJlLXVzZWQgd2l0aCB0
+aGUgc2FtZSB0eXBlIGFnYWluLAp2YWxpZGF0aW9uIGlzIGJlaW5nIHNraXBw
+ZWQuIEFzIHZhbGlkYXRpb24gY3JpdGVyaWEgZGlmZmVyIGJldHdlZW4KMzIt
+IGFuZCA2NC1iaXQgZ3Vlc3RzLCBwYWdlcyB0byBiZSB0cmFuc2ZlcnJlZCBi
+ZXR3ZWVuIGd1ZXN0cyBuZWVkIHRvCmhhdmUgdGhlaXIgdmFsaWRhdGlvbiBp
+bmRpY2F0b3IgemFwcGVkIChhbmQgd2l0aCBpdCB3ZSB6YXAgYWxsIG90aGVy
+CnR5cGUgaW5mb3JtYXRpb24gYXQgb25jZSkuCgpUaGlzIGlzIFhTQS0yMTQu
+CgpSZXBvcnRlZC1ieTogSmFubiBIb3JuIDxqYW5uaEBnb29nbGUuY29tPgpT
+aWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+
+ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0Bj
+aXRyaXguY29tPgoKLS0tIGEveGVuL2FyY2gveDg2L21tLmMKKysrIGIveGVu
+L2FyY2gveDg2L21tLmMKQEAgLTQ0NjYsNiArNDQ2NiwxNyBAQCBpbnQgc3Rl
+YWxfcGFnZSgKICAgICAgICAgeSA9IGNtcHhjaGcoJnBhZ2UtPmNvdW50X2lu
+Zm8sIHgsIHggJiB+UEdDX2NvdW50X21hc2spOwogICAgIH0gd2hpbGUgKCB5
+ICE9IHggKTsKIAorICAgIC8qCisgICAgICogV2l0aCB0aGUgc29sZSByZWZl
+cmVuY2UgZHJvcHBlZCB0ZW1wb3JhcmlseSwgbm8tb25lIGNhbiB1cGRhdGUg
+dHlwZQorICAgICAqIGluZm9ybWF0aW9uLiBUeXBlIGNvdW50IGFsc28gbmVl
+ZHMgdG8gYmUgemVybyBpbiB0aGlzIGNhc2UsIGJ1dCBlLmcuCisgICAgICog
+UEdUX3NlZ19kZXNjX3BhZ2UgbWF5IHN0aWxsIGhhdmUgUEdUX3ZhbGlkYXRl
+ZCBzZXQsIHdoaWNoIHdlIG5lZWQgdG8KKyAgICAgKiBjbGVhciBiZWZvcmUg
+dHJhbnNmZXJyaW5nIG93bmVyc2hpcCAoYXMgdmFsaWRhdGlvbiBjcml0ZXJp
+YSB2YXJ5CisgICAgICogZGVwZW5kaW5nIG9uIGRvbWFpbiB0eXBlKS4KKyAg
+ICAgKi8KKyAgICBCVUdfT04ocGFnZS0+dS5pbnVzZS50eXBlX2luZm8gJiAo
+UEdUX2NvdW50X21hc2sgfCBQR1RfbG9ja2VkIHwKKyAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgUEdUX3Bpbm5lZCkpOworICAgIHBh
+Z2UtPnUuaW51c2UudHlwZV9pbmZvID0gMDsKKwogICAgIC8qIFN3aXp6bGUg
+dGhlIG93bmVyIHRoZW4gcmVpbnN0YXRlIHRoZSBQR0NfYWxsb2NhdGVkIHJl
+ZmVyZW5jZS4gKi8KICAgICBwYWdlX3NldF9vd25lcihwYWdlLCBOVUxMKTsK
+ICAgICB5ID0gcGFnZS0+Y291bnRfaW5mbzsK
+
+--=separator--
