@@ -1,30 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/1
-Message-ID: <CALJHwhTW6d4uVqQDvDkn80AWvLSGXGsXT-9RE_ORyBXz59NNHA@mail.gmail.com>
-Date: Fri, 3 Feb 2017 15:52:19 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/8
+Message-ID: <87tw4pere6.fsf@frougon.crabdance.com>
+Date: Fri, 12 May 2017 22:45:05 +0200
+From: Florent Rougon <f.rougon@...e.fr>
 To: oss-security@...ts.openwall.com
-Subject: Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read
+Subject: CVE-2017-8921: directory traversal vulnerability in FlightGear
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+Hi,
 
-I'd like to ask for a CVE for the flaw the EXT4 filesystem as described as:
+Here is the info for CVE-2017-8921:
 
-Mounting a crafted EXT4 image read-only leads to a memory corruption and
-SLAB-Out-of-Bounds Reads (according to KASAN).  Since the mounting
-procedure is a privileged operation, an attacker is probably not able
-to trigger this vulnerability on the commandline.
-Instead the automatic mounting feature of the GUI via a crafted
-USB-device is required.
+[Suggested description]
+In FlightGear before 2017.2.1, the FGCommand interface allows
+overwriting any file the user has write access to, but not with
+arbitrary data: only with the contents of a FlightGear flightplan (XML).
+A resource such as a malicious third-party aircraft could exploit this
+to damage files belonging to the user. Both this issue and CVE-2016-9956
+are directory traversal vulnerabilities in Autopilot/route_mgr.cxx -
+this one exists because of an incomplete fix for CVE-2016-9956.
 
->From full disclosure at:
+------------------------------------------
 
-http://seclists.org/fulldisclosure/2016/Nov/75
+[Additional Information]
+We are not aware of any such malicious resource. The fix will be in
+FlightGear 2017.2.1 (expected in 1 or 2 weeks before the vulnerability
+was found). There may be a stable update too meanwhile (2017.1.4) with
+the fix, but I can't guarantee if so, and when.
 
-If it has been assigned elsewhere, I am unable to see it.
+This is not a duplicate of CVE-2016-9956.
 
-Thanks,
+------------------------------------------
 
-Wade Mealing
-Red Hat Product Security
+[Vulnerability Type]
+Incorrect Access Control
+
+------------------------------------------
+
+[Vendor of Product]
+FlightGear (http://flightgear.org/)
+
+------------------------------------------
+
+[Affected Product Code Base]
+FlightGear - Affected: releases earlier than 2017.2.1. Fixed in 'next'
+branch (commit faf872e7f71ca14c567ac7080561fc785d8d2fd0), currently
+referred to as FlightGear 2017.2.0 (this is *not* a release).
+
+------------------------------------------
+
+[Affected Component]
+source file: src/Autopilot/route_mgr.cxx in the FlightGear repository,
+executable: fgfs
+
+------------------------------------------
+
+[Attack Type]
+Local
+
+------------------------------------------
+
+[CVE Impact Other]
+Allows to overwrite any file the user has write access to, but not
+with arbitrary data: only with the contents of a FlightGear flightplan
+(XML).
+
+------------------------------------------
+
+[Attack Vectors]
+Trick users into installing a resource that, when run, can execute
+arbitrary FGCommands. For instance, a malicious third-party aircraft
+could do that.
+
+------------------------------------------
+
+[Reference]
+https://sourceforge.net/p/flightgear/flightgear/ci/faf872e7f71ca14c567ac7080561fc785d8d2fd0/
+
+------------------------------------------
+
+[Has vendor confirmed or acknowledged the vulnerability?]
+true
+
+------------------------------------------
+
+[Discoverer]
+Rebecca N. Palmer (FlightGear developer)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
