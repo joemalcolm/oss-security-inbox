@@ -1,37 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/23/4
-Message-ID: <20170123193803.4abc7401@pc1>
-Date: Mon, 23 Jan 2017 19:38:03 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: wavpack: multiple out of bounds memory reads
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/2
+Message-Id: <E1d984i-000765-Pi@xenbits.xenproject.org>
+Date: Fri, 12 May 2017 10:45:32 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 215 (CVE-2017-8905) - possible memory corruption via failsafe callback
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Fuzzing wavpack led to the discoverey of several invalid memory reads.
+            Xen Security Advisory CVE-2017-8905 / XSA-215
+                              version 3
 
-global buffer overread in read_code / read_words.c
-https://sourceforge.net/p/wavpack/mailman/message/35557889/
+           possible memory corruption via failsafe callback
 
-heap out of bounds read in WriteCaffHeader / caff.c
-https://sourceforge.net/p/wavpack/mailman/message/35561921/
+UPDATES IN VERSION 3
+====================
 
-heap out of bounds read in unreorder_channels / wvunpack.c
-https://sourceforge.net/p/wavpack/mailman/message/35561939/
+CVE assigned.
 
-heap oob read in read_new_config_info / open_utils.c
-https://sourceforge.net/p/wavpack/mailman/message/35561939/
+ISSUE DESCRIPTION
+=================
 
+Under certain special conditions Xen reports an exception resulting
+from returning to guest mode not via ordinary exception entry points,
+but via a so call failsafe callback.  This callback, unlike exception
+handlers, takes 4 extra arguments on the stack (the saved data
+selectors DS, ES, FS, and GS).  Prior to placing exception or failsafe
+callback frames on the guest kernel stack, Xen checks the linear
+address range to not overlap with hypervisor space.  The range spanned
+by that check was mistakenly not covering these extra 4 slots.
 
-All of them have been fixed with a single commit:
-https://github.com/dbry/WavPack/commit/4bc05fc490b66ef2d45b1de26abf1455b486b0dc
+IMPACT
+======
 
-Wavpack 5.1.0 has been released and fixes all issues.
+A malicious or buggy 64-bit PV guest may be able to modify part of a
+physical memory page not belonging to it, potentially allowing for all
+of privilege escalation, host or other guest crashes, and information
+leaks.
 
--- 
-Hanno Böck
-https://hboeck.de/
+VULNERABLE SYSTEMS
+==================
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+64-bit Xen versions 4.6 and earlier are vulnerable.  Xen versions 4.7
+and later are not vulnerable.
+
+Only x86 systems are affected.  ARM systems are not vulnerable.
+
+Only x86 systems with physical memory extending to a configuration
+dependent boundary (5Tb or 3.5Tb) may be affected.  Whether they are
+actually affected depends on actual physical memory layout.
+
+The vulnerability is only exposed to 64-bit PV guests.  HVM guests and
+32-bit PV guests can't exploit the vulnerability.
+
+MITIGATION
+==========
+
+Running only HVM or 32-bit PV guests will avoid the vulnerability.
+
+The vulnerability can be avoided if the guest kernel is controlled by
+the host rather than guest administrator, provided that further steps
+are taken to prevent the guest administrator from loading code into
+the kernel (e.g. by disabling loadable modules etc) or from using
+other mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa215.patch       Xen 4.6.x, Xen 4.5.x
+
+$ sha256sum xsa215*
+5be4ff661dd22890b0120f86beee3ec809e2a29f833db8c48bd70ce98e9691ee  xsa215.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZFZIqAAoJEIP+FMlX6CvZQUoIAMBeK3zz4qoOtlR92dLGyYkT
+PlITMMsz1PbkZapt/pdsuQFVRC0P7UXdJ/u1GjJLJqOBSsUOnlJ9m9uTjDW7KJTm
+5Dch1lYO0npQLAcpr32KvDGDFt5dp+Cqn0NiGFV4yFsdMLnhW8Wyugc8DhJgVcv9
+2PPZ5IlFFlrdCs4g6jMFy7rdM/r6d6wyPQukE6L0VObHv5MsqVgg+p01/yk/uDaz
+KHSlHdfAfuxpMbKPZ2cz/rWQYN2xwV6foZ2pn1WHQln9NxXzQWSR8J5KZj3BLXME
++i1cg/aRm3jHM+SZDRXwton51SAkTpCYW5/n+QqbGJd7NN6+GMk14t8Y3wKSZVA=
+=skSs
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa215.patch" of type "application/octet-stream" (1695 bytes)
