@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/4
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A35DFE3C1@EX02.corp.qihoo.net>
-Date: Fri, 3 Nov 2017 11:17:03 +0000
-From: 连一汉 <lianyihan@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [CVE-2017-15672]: ffmpeg: read out of bounds of buffer when it parsing an craft mp4 file.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/5
+Message-Id: <6543F18F-81C2-492A-917E-6F331F917D02@gmail.com>
+Date: Fri, 12 May 2017 12:09:30 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
+To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Subject: Multiple crashes in OpenEXR
 Content-Type: text/plain; charset=utf-8
 
-Affected package: ffmpeg
-Affected versions: <= 3.3.4
+Attached is a zip file of EXR images that cause segmentation faults in the OpenEXR library (tested against 2.2.0). http://www.openexr.com/downloads.html <http://www.openexr.com/downloads.html>
 
-FFmpeg could read out of bounds of buffer when it parsing an craft mp4 file.
+These were reported to ehanway@....com <mailto:ehanway@....com> on January 12, 2017, but no updates or information has been reported back. I have attempted to see what the status is, but no responses from ILM. Since this has surpassed the general 90-day mark as is standard for many disclosures, these are being disclosed. It’s actually been 120 days exactly.
 
-While ffmpeg calculating “bytestream_end” in ff_init_range_encoder() of libavcodec/rangecoder.c,
-it uses a small “buf_size”. But when using this structure in read_header() of libavcodec/ffv1dec.c,
-It will minus a bigger “trailer” than “buf_size” to read “size” through AV_RB24().
-So it reads the front memory of “bytestream”, and get an error “size”.
+You can see the last update to the OpenEXR codebase was on January 9. https://github.com/openexr/openexr <https://github.com/openexr/openexr>
 
-The issue was fixed with the following commit:
-http://git.videolan.org/?p=ffmpeg.git;a=commitdiff;h=c20f4fcb74da2d0432c7b54499bb98f48236b904
+Of note is that Adobe Photoshop actually ships with a version of OpenEXR for reading EXR images, so some of these images also crash Photoshop. ImageMagick also can support EXR image by using the OpenEXR library. https://github.com/ImageMagick/exr/tree/master/openexr <https://github.com/ImageMagick/exr/tree/master/openexr>
 
-Regards
+As of this writing, these issues are unfixed. No CVEs have been requested.
 
-Reported by Zhibin Hu and Yihan Lian from Qihoo 360 GearTeam
 
+
+Content of type "text/html" skipped
+
+Download attachment "ilm.zip" of type "application/zip" (15315 bytes)
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
