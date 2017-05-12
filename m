@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["814" "Tuesday" "17" "November" "2015" "15:16:07" "-0500" "Josh Bressers" "bressers@redhat.com" "<1637491389.15428660.1447791367866.JavaMail.zimbra@redhat.com>" "21" "Re: [oss-security] Re: Fwd: x86 ROP mitigation" nil nil nil "11" "2015111720:16:07" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "U       bressers@red Nov 17   21/814   " thread-indent "\"Re: [oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<564B7B6C.7090503@gmail.com>" ("<20151117153951.GA28672@openwall.com>" "<564B52D6.9090205@t-online.de>" "<564B54BA.6090203@redhat.com>" "<564B6536.2030908@redhat.com>" "<564B7757.6080100@gmail.com>" "<365956254.15394397.1447786639162.JavaMail.zimbra@redhat.com>" "<564B7B6C.7090503@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["601" "Friday" "12" "May" "2017" "09:24:56" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<138470974.7338270.1494595496637.JavaMail.zimbra@redhat.com>" "21" "[oss-security] CVE-2017-7487: Linux kernel: ipx: call ipxitf_put() in ioctl error path" nil nil nil "5" "2017051213:24:56" "[oss-security] CVE-2017-7487: Linux kernel: ipx: call ipxitf_put() in ioctl error path" (number mark "U       vdronov@redh May 12   21/601   " thread-indent "\"[oss-security] CVE-2017-7487: Linux kernel: ipx: call ipxitf_put() in ioctl error path\"\n") "<1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>" ("<1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11925 invoked by uid 550); 17 Nov 2015 20:16:21 -0000
+Received: (qmail 30709 invoked by uid 550); 12 May 2017 13:25:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11907 invoked from network); 17 Nov 2015 20:16:20 -0000
-Date: Tue, 17 Nov 2015 15:16:07 -0500 (EST)
-From: Josh Bressers <bressers@redhat.com>
+Received: (qmail 30691 invoked from network); 12 May 2017 13:25:09 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 250AD804E0
+Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=vdronov@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 250AD804E0
+Date: Fri, 12 May 2017 09:24:56 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
 To: oss-security@lists.openwall.com
-Message-ID: <1637491389.15428660.1447791367866.JavaMail.zimbra@redhat.com>
-In-Reply-To: <564B7B6C.7090503@gmail.com>
-References: <20151117153951.GA28672@openwall.com> <564B52D6.9090205@t-online.de> <564B54BA.6090203@redhat.com> <564B6536.2030908@redhat.com> <564B7757.6080100@gmail.com> <365956254.15394397.1447786639162.JavaMail.zimbra@redhat.com> <564B7B6C.7090503@gmail.com>
+Message-ID: <138470974.7338270.1494595496637.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>
+References: <1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.10.116.22]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF41 (Linux)/8.0.6_GA_5922)
-Thread-Topic: x86 ROP mitigation
-Thread-Index: 61jafPTcdYhLEgNyWIECaa2Lu/fxKw==
-Subject: Re: [oss-security] Re: Fwd: x86 ROP mitigation
+X-Originating-IP: [10.40.1.12, 10.4.195.2]
+Thread-Topic: CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings
+Thread-Index: 0cmp5i6vtxZ/c2BCxksViljVZTngJyPN3Gy0
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Fri, 12 May 2017 13:24:57 +0000 (UTC)
+Subject: [oss-security] CVE-2017-7487: Linux kernel: ipx: call ipxitf_put() in ioctl error
+ path
 
-> 
-> It's not going to be increasing the cost of exploit development if it
-> only means a script ends up finding different gadgets instead. Maybe it
-> leads to better tooling being developed if it's far enough along, but
-> that's one person investing their time once, not every exploit taking
-> more resources to develop. If it's incomplete, how is it a layer?
-> 
+Hello,
 
-It's the first step of a very long road.
+A reference counter leak in Linux kernel in ipxitf_ioctl function was found
+which results into use after free vulnerability that's triggerable from
+unprivileged userspace when IPX interface is configured.
 
-This attitude is quite pervasive across security people, and it's not a
-very good one. Just because the first iteration of a technology isn't
-perfect, or the ideas have room for improvement is no reason to go all
-negative.
+cvss3=5.6/CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:H
+cwe=CWE-416
 
-Sometimes great ideas start out like this. If it's a bad idea, it won't
-stick around for long. There are few instances where doing nothing is
-better than doing something.
+References:
 
--- 
-    JB
+https://patchwork.ozlabs.org/patch/757549/
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1447734
+
+Upstream patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ee0d8d8482345ff97a75a7d747efc309f13b0d80
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
