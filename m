@@ -1,48 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/9
-Message-ID: <CAFEMS4vaXWPFXqDk-PnhURiFRLTkOx=mL6RmxzAMC59-gxNi9w@mail.gmail.com>
-Date: Thu, 30 Nov 2017 17:15:47 +0000
-From: Keith W <keith.wall@...il.com>
-To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>, security@...che.org,  oss-security@...ts.openwall.com, announce@...che.org
-Subject: [SECURITY] [CVE-2017-15702] Apache Qpid Broker-J Authentication Vulnerability on HTTP Ports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/7
+Message-Id: <4DB80547-81B4-4091-BEDD-ADFF17ADAE6B@gmail.com>
+Date: Fri, 12 May 2017 13:48:16 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple crashes in OpenEXR
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-15702: Apache Qpid Broker-J authentication vulnerability on HTTP ports
 
-Severity: Important
+> On May 12, 2017, at 1:45 PM, Henri Salo <henri@...v.fi> wrote:
+> 
+> On Fri, May 12, 2017 at 12:09:30PM -0500, Brandon Perry wrote:
+>> As of this writing, <snip>. No CVEs have been requested.
+> 
+> Why not?
 
-Vendor: The Apache Software Foundation
+I’m lazy. I might this weekend.
 
-Versions Affected: Versions 0.18 through 0.32
+> 
+> --
+> Henri Salo
 
-Description:
 
-If the broker is configured with different authentication providers on
-different ports one of which is an HTTP port, then the broker can be
-tricked by a remote unauthenticated attacker connecting to the HTTP
-port into using an authentication provider that was configured on a
-different port.  The attacker still needs valid credentials with the
-authentication provider on the spoofed port.  This becomes an issue
-when the spoofed port has weaker authentication protection (e.g.,
-anonymous access, default accounts) and is normally protected by
-firewall rules or similar which can be circumvented by this
-vulnerability.  AMQP ports are not affected.  Versions 6.0.0 and newer
-are not affected.
-
-Resolution:
-
-Users of affected versions who have more than one port and different
-authentication providers configured on them should upgrade to a
-later unaffected version.
-
-Mitigation:
-
-If upgrading the broker is not possible then users should ensure all
-their authentication providers offer an equal amount of protection.
-In particular, authentication providers with default accounts and
-those with anonymous access should be removed if other providers in
-use require credentials.
-
-References:
-
-https://issues.apache.org/jira/browse/QPID-8039
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
