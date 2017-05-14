@@ -1,80 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/3
-Message-ID: <2047603.jilSxc2Osk@blackgate>
-Date: Mon, 16 Jan 2017 11:57:55 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/14/1
+Message-Id: <F98F0BB5-6485-45D0-BF61-186895EAAA33@technologysecure.com>
+Date: Sat, 13 May 2017 22:44:44 -0400
+From: Yury German <yury@...hnologysecure.com>
 To: oss-security@...ts.openwall.com
-Subject: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)
+Subject: Kernel 4.1.y might not contain patches for CVE-2016-10229
 Content-Type: text/plain; charset=utf-8
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+This is just a small notice that Linux Kernel 4.1.y might not contain patches to CVE-2016-10229 [1]. This is a reference to the Vanilla Linux sources without any distribution specific patching. Typically a number of distributions apply their own patches to the standard vanilla Kernel. 
 
-Another round of fuzzing shows that a crafted image causes an invalid memory 
-write.
+The patches might also not be needed for 4.1.y sources as were discussed on the mailing list [see [2]]. 
 
-The complete ASan output:
+Please check with the distribution you are using to see if the patches for CVE-2016-10229 have been applied to the kernel 4.1.y tree for the distribution that you are using. 
 
-# imginfo -f $FILE
-==24746==ERROR: AddressSanitizer: SEGV on unknown address 0x7ef94fe46c88 (pc 
-0x7efd4faa510d bp 0x7ffde2235af0 sp 0x7ffde2235900 T0)
-==24746==The signal is caused by a WRITE memory access.
-    #0 0x7efd4faa510c in dec_clnpass /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4
-    #1 0x7efd4faa510c in jpc_dec_decodecblk /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:283
-    #2 0x7efd4fa9ef89 in jpc_dec_decodecblks /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:177:11
-    #3 0x7efd4fa394f1 in jpc_dec_tiledecode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1085:6
-    #4 0x7efd4fa2acdf in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:658:7
-    #5 0x7efd4fa346b3 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:425:10
-    #6 0x7efd4fa346b3 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:262
-    #7 0x7efd4f996b84 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_image.c:444:16
-    #8 0x509eed in main /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/appl/imginfo.c:219:16
-    #9 0x7efd4ea9e61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #10 0x419978 in _init (/usr/bin/imginfo+0x419978)
+[1] http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-10229
+[2] https://www.spinics.net/lists/stable/msg167674.html
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4 
-in dec_clnpass
-==24746==ABORTING
-
-Affected version:
-1.900.27
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00055-jasper-invalidwrite-dec_clnpass
-
-Timeline:
-2016-11-20: bug discovered and reported upstream
-2017-01-16: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-write-in-dec_clnpass-jpc_t1dec-c
-
---
-Agostino
