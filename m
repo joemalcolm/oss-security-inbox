@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/04/1
-Message-ID: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
-Date: Fri, 4 Aug 2017 18:59:15 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/14/2
+Message-ID: <20170514104120.GA29066@kroah.com>
+Date: Sun, 14 May 2017 12:41:20 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: willemdebruijn.kernel@...il.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
-Subject: Reporting and disclosing Linux kernel vulnerabilities
+Subject: Re: Kernel 4.1.y might not contain patches for CVE-2016-10229
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Sat, May 13, 2017 at 10:44:44PM -0400, Yury German wrote:
+> This is just a small notice that Linux Kernel 4.1.y might not contain
+> patches to CVE-2016-10229 [1]. This is a reference to the Vanilla
+> Linux sources without any distribution specific patching. Typically a
+> number of distributions apply their own patches to the standard
+> vanilla Kernel. 
 
-It's not completely clear to me how to properly report and disclose
-Linux kernel security issues. There are a few different parties [1, 2,
-3] that need to be informed and coordinated. I couldn't find a
-publicly available actionable list of steps, so I've outlined it as I
-see it here:
+Given that the last 4.1.y kernel was released on March 13, there are
+lots of things missing in that tree at the moment :)
 
-https://github.com/google/syzkaller/blob/master/docs/linux_kernel_reporting_bugs.md#reporting-security-bugs
+thanks,
 
-Thoughts? Comments?
-
-Thanks!
-
-[1] https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
-
-[2] http://oss-security.openwall.org/wiki/mailing-lists/distros
-
-[3] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+greg k-h
