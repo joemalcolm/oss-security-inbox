@@ -1,81 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/1
-Message-ID: <1453-1513642461.788845@V4Go.Zsn0.ZlLm>
-Date: Tue, 19 Dec 2017 00:14:21 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/15/5
+Message-ID: <20170515165657.GA25897@hal>
+Date: Mon, 15 May 2017 18:56:57 +0200
+From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+Cc: Yao Wei <mwei@...e.org>
+Subject: Re: CVE-2017-8934 pcmanfm: single instance socket may be blocked by another user
 Content-Type: text/plain; charset=utf-8
 
-Leonid Isaev writes:
-> On Mon, Dec 18, 2017 at 08:21:56PM +0000, halfdog wrote:
->> The point in starting this thread was, that GnuPG does NOT
->> conveniently cover usecases for headless or scripting operation.
->> Thus it seems that the time has come to look for replacement,
->> as GnuPG is moving more in the "desktop" direction, as also
->> your comments indicate.
->
-> You are talking about policies here, not technical issues.
-> Gnupg is perfectly scriptable, see pacman-key(1) tool in Arch
-> Linux. Moreover, gpg-agent is easily usable on a headless machine.
-> At least, I mostly use it this way when checking email...
+* Yao Wei <mwei@...e.org> [2017-05-15 17:37]:
+> The socket placed in /tmp is predictable and public-writable. Therefore
+> if one user placed a symlink to another socket instead of socket for
+> another user then said another user will either be unable to use
+> pcmanfm, or may send requests to the first user's pcmanfm.
+> 
+> This bug has been assigned to CVE-2017-8934 [1].  A fix has been
+> committed to pcmanfm's git repository [2].  LXDE developers are
+> working on a release which fixes the problem.
+> 
+> [1]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8934
+> [2]: https://git.lxde.org/gitweb/?p=lxde/pcmanfm.git;a=commitdiff;h=bc8c3d871e9ecc67c47ff002b68cf049793faf08
 
-So maybe SSH cares for you to have sane pty with all the features
-needed to make gnupg run smoothly? Perhaps you may want to respond,
-that it is not gnupg at fault, if e.g. an embedded boot image
-does not use openvt and /dev/tty[1-6] during early boot in correct
-ways, thus causing problems. But the way gnupg reacts in that
-situation (not working and not giving meaningful error messages
-either) does not really help the user and gave me the impression,
-that those usecases are out of scope - and hence also of scope
-for testing.
-
-You may want to read [0] to see how another user on "gnupg-users"
-describes in more detail the "user experience" when trying
-to get TTYs, pinentry, gpg-agent ... up and running. The post
-quite reflects also my user experience, the difference is just
-that he writes lengthy mails to get things running, I write them
-to see if there are alternatives.
-
-> You will lose nothing if you just pkill(1) gpg-agent though. So
-> I don't understand why you claim that gpg is moving towards
-> desktop.
-
-Well, on a server running multiple concurring tasks, I feel somehow
-uncomfortable killing a process just by UID and process name.
-How to make sure, that not a parallel task is still using the
-agent?
-
-Signals are just fine for control: when a parent knows exactly
-its children and signals them. For processes starting automagically
-I just do not want to care about how their daemonizing works
-and if there might be races during that procedure, how to craft
-pkill regex to reduce the risk of killing the wrong agent under
-some circumstances, ...
-
->> That's really a strange argument. You fear PTRACING for key
->> extraction of a short-lived, per-key instance of gpg1 process
->> and solve that by putting all the key material into a single
->> long-lived gpg-agent process, not even providing convenient
->> commands to flush the keys from there?
->
-> pkill -hup gpg-agent. Please read the manpages.
-
-Please give realistic answers. And if you try, you may notice,
-that things are not just as simple as "send a signal to any process
-with a given name". Your backup system vendor and your colleagues
-will love you, when killing the sign/encryption process that way,
-yielding spurious errors from time to time. Could be quite some
-beer to spend when they completed their root cause analysis.
-
-Maybe your pkill would not cause those side effects, but I just
-do not want to care about them. I am quite sure, that they are
-ignorable on desktop environments or for e-mail reading, in a
-production environment they might just be a risk and an annoyance.
-Hence my argument about desktop and server.
-
-hd
-
-[0] https://lists.gnupg.org/pipermail/gnupg-users/2017-December/059600.html
-
-
+The "fix" is ifdef'd for glib >= 2.28.0, so the vulnerability
+still exists when compiling against an older version of glib.
+-- 
+Guido Berhoerster
