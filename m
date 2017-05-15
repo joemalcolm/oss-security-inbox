@@ -1,68 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/5
-Message-ID: <f803aa38-d504-38a1-d4e2-edb3d5faff57@redhat.com>
-Date: Thu, 17 Aug 2017 12:00:29 +0100
-From: Luke Hinds <lhinds@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: [OpenStack OSSN 0080] Aodh can be used to launder Keystone trusts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/15/4
+Message-ID: <20170515153450.263na5xnq2clfrtu@madoka.m-wei.net>
+Date: Mon, 15 May 2017 23:34:50 +0800
+From: Yao Wei <mwei@...e.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-8934 pcmanfm: single instance socket may be blocked by another user
 Content-Type: text/plain; charset=utf-8
 
-Aodh can be used to launder Keystone trusts
----
+The socket placed in /tmp is predictable and public-writable. Therefore
+if one user placed a symlink to another socket instead of socket for
+another user then said another user will either be unable to use
+pcmanfm, or may send requests to the first user's pcmanfm.
 
-### Summary ###
+This bug has been assigned to CVE-2017-8934 [1].  A fix has been
+committed to pcmanfm's git repository [2].  LXDE developers are
+working on a release which fixes the problem.
 
-When adding an alarm action with the scheme `trust+http:` Aodh does not
-verify that the user creating the alarm is the trustor or has the same
-rights as the trustor, nor that the trust is for the same project as the
-alarm.
+[1]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8934
+[2]: https://git.lxde.org/gitweb/?p=lxde/pcmanfm.git;a=commitdiff;h=bc8c3d871e9ecc67c47ff002b68cf049793faf08
 
-### Affected Services / Software ###
-
-Aodh the alarm engine of the Telemetry project.
-
-Pike, Ocata and Newton
-
-### Discussion ###
-
-When adding an alarm action with the scheme `trust+http:`, Aodh allows
-the user to provide a trust ID to acquire a token with which to make a
-webhook request. (If no trust ID is provided then Aodh creates a trust
-internally, in which case the issue is not present.) However, Aodh makes
-no attempt to verify that the user creating the alarm is the trustor or
-has the same rights as the trustor - it also does not attempt to check
-that the trust is for the same project as the alarm.
-
-The nature of the `trust+http:` alarm notifier is that it allows the
-user to obtain a token given the ID of a trust for which Aodh is the
-trustee, since the URL is arbitrary and not limited to services in the
-Keystone catalog.
-
-### Recommended Actions ###
-
-A patchfile is attached to the launchpad bug referenced below. It will
-block use of trust URLs which contain trust ID's and log an error
-message of "trust URL cannot contain a trust ID.". Any trust action
-without a trust ID will result in Aodh internally creating a trust ID as
-before.
-
-You will also need to restart the web server used for Aodh API. This is
-typically apache. In cases of eventlet (in older versions) it will
-require restart openstack-aodh-api for centos/RHEL/Suse and aodh-api
-for ubuntu.
-
-The fix has also been merged to master (Pike), Ocata and Newton.
-
-### Contacts / References ###
-Discoverer: Zane Bitter, Red Hat
-Author: Luke Hinds, Red Hat
-CVE: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-12440
-This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0080
-Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1649333
-OpenStack Security Project : https://launchpad.net/~openstack-ossg
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
