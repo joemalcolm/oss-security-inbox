@@ -1,4 +1,9 @@
-Received: (qmail 30664 invoked by uid 550); 4 Jul 2024 01:32:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["26602" "Monday" "15" "May" "2017" "12:57:22" "+0800" "=?utf-8?B?TWFyY2VsIELDtmhtZQ==?=" "boehme.marcel@gmail.com" "<660D1C70-CF56-48DF-8AC8-C8DE69193573@gmail.com>" "608" "[oss-security] Invalid writes and reads in libxml2" nil nil nil "5" "2017051504:57:22" "[oss-security] Invalid writes and reads in libxml2" (number mark "U       boehme.marce May 15  608/26602 " thread-indent "\"[oss-security] Invalid writes and reads in libxml2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29739 invoked by uid 550); 15 May 2017 04:57:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,163 +12,651 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30637 invoked from network); 4 Jul 2024 01:32:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=cc
-	:content-id:content-transfer-encoding:content-type:date:from
-	:in-reply-to:message-id:mime-version:references:subject:to; s=
-	qualyscom; bh=X9LQw4aJbUAcgXFZWYp8E3nDGpQ6WgxLkp4ejNJqe38=; b=Nc
-	UPsGDjoqfh7ie7jYsE2+oJOE6b51j107XDGLQjZEdE/+oBLGC32j6ZnOF2z6SzO/
-	9r8Qa6pPUAMNsgKdPZbqkTorZaeqZPYWV+ycfTFvhCmVIqCP6J/aYQeeS2LYeZio
-	Oo/WwHZWOVfZ+xTZDWzGAc6HGAgWcj7235KoBfg+X1xer4ImnNUSPQOIY1V5Rnhn
-	TmZu71ki9CIiuAQXlddKpbbPkazkXVZ0e3m5N5PynQB+q/Pbn0Rmc+Bwh87d6DIw
-	pk33OGbucc2mIv6TGaHt6Ib67Cl1dIicsoafSPt13TYbBgKlOWgxjlRIeZXLXqQ2
-	yy0RozOpf2ijAa2865Jw==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Vb1VEnvBRJvjbQlrUaMHsBRJmeI6Xiyao+uOPMlU5kcG9T5J9U40yIW8YbJfLVmA6WwKz02NBt6euQgx0ri+bMTGEKC31j35uPN+UOJN4ffjYmaz8l0G53TAoGLToTnJQqLP/u+7yNf1MO7/LudK77d7Unn7tSvmR6jO9dzfkSLRItAfwoda0OSq2slAx6X0ex6dl8j65yRzEzu+h6YxEnxrGYqwxjeoGEOFKdC23kfHNlgJPx0xX0c+DRXJZxaGj5GUprcpc5UcJEGJWZh9SZmut0tvZc2kVqIMXMbTeVymmmzBUkHF1TmUhVE3w7dWBlTlj3SZz8ZcDGyvCcD8lg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=X9LQw4aJbUAcgXFZWYp8E3nDGpQ6WgxLkp4ejNJqe38=;
- b=BEStzR4ZSfxeRD15gYFhIUo9Pu2whOGI8iwmpMrhyRQvRRR/FTDAIhLUqL7IJ+KpsQFM7XhbMRq9oUkOrhBQEU9mfGTYHLKIsemk7DzZ2wa4WmJWkbkCvsHPPZeFzOanj260OvjLxWa1iJwOmFkuo3JOoTEEcFMRX9MWxQGdHva/dRTArVv/RIt0IDmYj/1btyIS9o/P4vJPkkd2/8eK1QQH9UQTyVPXDI58vj1a7Wy22zUmIpaU+X9L3DV+IrQAY0IsjLRV/7eESXYZz5OfymaT1nAkq4Ng24eEL23rVR9dFzLOkYAzIsCrFmWNOi81Bg0GYeOateIUuuGsCMfyvw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
- dkim=pass header.d=qualys.com; arc=none
+Received: (qmail 29712 invoked from network); 15 May 2017 04:57:40 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=qualys.onmicrosoft.com; s=selector1-qualys-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=X9LQw4aJbUAcgXFZWYp8E3nDGpQ6WgxLkp4ejNJqe38=;
- b=jdqOdtD7y5TYeJ6Ron7N/Ezs+z7J7iKD+jXzCU+a8VPf7iAt9dib20rTuJkhuJBXtVQZp9CHGDR3aJFwaiIOPzzbXpBX/QCPrFkICAYjEMq+kPL4ydJBL7mDAlIGrimMov3scFMgyz/Ert7gxkNlZgUB4tK5H4TSLQJ8hp7YIxWKGExW2H+8U+6sdo6/BWHLxbC+H3qphIu4aFbnUpPUU3gdOo4ImVlNddesLSDbvRFkKrNzyCPGKVYyNczktg+QnOomSsV9hvoUJwwUZRBFEIJeHVpUSLu+dP1KbLmCylbaVzOVacDezBt8cnX1aINRQT406MhXIKpKDv+Te+150w==
-From: Qualys Security Advisory <qsa@qualys.com>
-To: Yves-Alexis Perez <corsac@debian.org>
-CC: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [oss-security] CVE-2024-6387: RCE in OpenSSH's server, on
- glibc-based Linux systems
-Thread-Index: AQHay5JGa9eb3rAM4U2ijmTpt4nx0LHlf0EAgABNRIA=
-Date: Thu, 4 Jul 2024 01:32:32 +0000
-Message-ID: <20240704013103.GA20170@localhost.localdomain>
-References: <20240701083838.GA12787@localhost.localdomain>
- <4ba5ff088a2619fe98f73b0d853fe6b3c682479d.camel@debian.org>
-In-Reply-To: <4ba5ff088a2619fe98f73b0d853fe6b3c682479d.camel@debian.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR06MB6910:EE_|CO6PR06MB7363:EE_
-x-ms-office365-filtering-correlation-id: 26983fd7-687a-4658-b31b-08dc9bc92cee
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|1800799024|366016|38070700018;
-x-microsoft-antispam-message-info: 
- =?us-ascii?Q?PB/Ma5Oz8YQl6MVmRX7xsqTAdGE0TGA0e5638JFzbAQoXVcc/uA/p7m/j6a7?=
- =?us-ascii?Q?DXi5a5W+mpyXzq0TOOdwEj4VYWTPv4UWsc4XaPnvdG2vrDOmrt5HRkkiXHyW?=
- =?us-ascii?Q?BiGqdROI2+c7gXqtsFct0s8jJVWali2VMg5T02LBDsSvnB3uO32bpJHTpSE2?=
- =?us-ascii?Q?fQiMqveHsz/UVHb4ZNFryFBNS+SxP3/yrGF10wTFBEY1sGQbI+JLyU/1cqT/?=
- =?us-ascii?Q?YAUL2G/Wm2yeUO8gd/mxWGAwPZ2keqsXEjVqc7iM+1umUUJuwhYRpZQMj73F?=
- =?us-ascii?Q?Bf6xQfzbuLgd5vE2RL4TOeVYpRAlh37ZFvg1KpmdT9jwcLKLy0VFmwe27xMX?=
- =?us-ascii?Q?oVdt5mSD2RjpYGUOjgVvSBYZ8Cr4TK+WiVbcRWl1XcBcxRh35Ve+VSDrpWLB?=
- =?us-ascii?Q?mMdGqsC36LiexkTRNQRJ0mA/kCl3FQHfM5jaMW94GgHz6t15GNDkIIDAxNVP?=
- =?us-ascii?Q?NAR2mEKMCfYiftrE2of26n05XvYG0BPsRT8TPvPGfpjhUVlyl4OZ7wQjEAsg?=
- =?us-ascii?Q?lh5ZE4m9Lsiibpa9LK7P79UHPUMf+f4dEZ5ssFqUevSFfp8+FBORgzHYXjAN?=
- =?us-ascii?Q?XU2mffMgms/uW3+Zuo9Vx3OHogmIIeMbaEBW5DTzDQaHv2qaPVNcel/tz+BW?=
- =?us-ascii?Q?bhvZLNqKLq6r0MPEX/7kFbtPDb9PrPkmR9rfxPdX9BPbZCkX1dNTLP+vyfn7?=
- =?us-ascii?Q?NKytL0npydpJ8cB1WCyw2kyPQZZKkZO7qur+kb3cKyO3yO6glQdkAII3zwds?=
- =?us-ascii?Q?525Q79783dy3Xg7vq491PhiBP1+qvrp/qbk4Hz1wqvwsm9qqlogTjpItuxS2?=
- =?us-ascii?Q?D7PPnB61cdx+Sbm2FC4QzIinV8KFu6BfojmUajf8jaXHP2oU7joEvRI7Z+hV?=
- =?us-ascii?Q?zJF0eHKJtPbc7o1Aq+vF1kkMBfWVY7wjTSY7W8eeSxrMshLpaHIzvgnZuW9d?=
- =?us-ascii?Q?WDQjtKWGbEYb6qCTnT2Phfc1CWp1fKsyMczn8WvnOJgW6PRtWoePyl0M7I5M?=
- =?us-ascii?Q?9GmwBaeoHb7TseqzOFvDWhukwZvOAXThE5DlhMIoQwBTfJa4Ko4hYAhvCsFr?=
- =?us-ascii?Q?kNT3bngkTaObgIHJEXYyblp17ZlWbp/RPSzHvZVnHaUgRHyhWMRICLai65aC?=
- =?us-ascii?Q?82Owl2lbmBnJUNsqu+oTHOrgnhgD05OOL6Sc7haG/HWNYdvqTJSUKSCSQ3f/?=
- =?us-ascii?Q?T4tdXdEkBlLX6LQTBDwndCCXT9LkMmzEc/Jl4507YCpnpgF5mjKAEM0r3FY/?=
- =?us-ascii?Q?zPmKuLMLXaNnAUIyaNFB92/xC041lGIYc8Q20g5s03B12jtXsBM1ew2cv9qj?=
- =?us-ascii?Q?DPALwPlnL5WuxjbgCNL0hrs/nkQWAVUZo6Lqefs7zjPbsmP/8+6rWw/PtvUv?=
- =?us-ascii?Q?lVzhzqLIV3vgzzqFXf/8Uw83+R7/uTW/hpLGTHml4mnNCmTbvA=3D=3D?=
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR06MB6910.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?us-ascii?Q?AW4PVDut5+EMjlpEuSvpPnghBqkl+0pa7OQQrM/4VFsYkh5Vk5rp7wihAjqB?=
- =?us-ascii?Q?Dd40ER6t3u56cmcClGJ88CqtO/aoUxZtdvCZvkQcQtaK/M10NDhnxZHxrTQW?=
- =?us-ascii?Q?bAw+IBL/8r1Yb36DfO10rfGHPUdgIhQbwmvYf5pLwRyD7FyeEWxjexOljvO5?=
- =?us-ascii?Q?twb/k4Cy+4DowOQXJRZgzor0GDtFue9DZvN7pRR26hcth3MVrb00hiYCZaZc?=
- =?us-ascii?Q?cSm46LDqQ9x0Gh/LsP6odaFyYFeizabCZ/O4+oPrh20k7yF+HlQVjPPfWclJ?=
- =?us-ascii?Q?32e1GUR+zxR8YrHyDJhKJN/+4KIOwpUK1Xz4N/7xwQgCLqdffESB2HVi28HN?=
- =?us-ascii?Q?U5NtOZOHDk52m05x7ccok6Dk/p53Ctgo2qt5F3ZB3y9qhWTsg8WHMrBmtRVu?=
- =?us-ascii?Q?vsALCP/K2ULYDkpV5rSvdPKtIQJj302oEobeVFciulxrmoPk+Urj88V6a28J?=
- =?us-ascii?Q?hupbs+71JWsnZzfL0sLxAFgTFv4Mi4qdxRaY7EQ3pQfq6uT9gbglaLnBPvwK?=
- =?us-ascii?Q?scLymo7VaayYNry7JuX0hLFl68K3iMTHPsIUJfw2snVqJBSmwR2YsYeZZhDY?=
- =?us-ascii?Q?h+COjsSHI8DZL7ML5g1gWNdqDu/T/mLrtCXCmc6NKuSOUWQ7siAp1KPfEvay?=
- =?us-ascii?Q?EEA/bkhGX8nguNOnRR6y8RmKD/43dvoAQTolhu6741ykkFkfmcbgO0CBmNmk?=
- =?us-ascii?Q?EvybDhJ7wET+C+vHyWzKYYcuptdQWbiRi1LGgaYyvQCLYiiQ3UX/T0M7bKJn?=
- =?us-ascii?Q?nq4hp0Qh6fgObuAdcGuipITg69XfoHwXklI8a9FLZiaJAkJ2bbl7OC81NyDQ?=
- =?us-ascii?Q?RSAUeROId8AzM+ZF0ssfoAOgIZ5MzTTgHa5xTDrpfxvlYxDi5knOuBkhEe//?=
- =?us-ascii?Q?O1pxmES+OxT8znGYBYjUfyr7qHTTKJ+nq+aEI2hrxsgz2T/++biYx7eHIOFn?=
- =?us-ascii?Q?wGZKM9qonB3DwUmQNc5KAgq02tEyfKHTRstakBoq6eYBYSk6/9cVjmJxCLBm?=
- =?us-ascii?Q?fh7yh4+9EHUZihTGdrx+aD3uK9n3MPA+6UX5wSaJ864AzD/tC0ApsnshtdSV?=
- =?us-ascii?Q?gAZ2XTJJqxoVKmFzCCBsNB9nHhiM8eVLKvwi1Q2rsyQuQOPS1Arhfjj6QIlz?=
- =?us-ascii?Q?+DVTLJ0dtxPh8R7Pd+Ri6Hiw7qtCw0ridXGpE0oD5HaiDJvCclCM4zeVUhAB?=
- =?us-ascii?Q?Ne1EhmlBMJEKz9Pk/kw60ZpleSGwRykqwN+atqAWfHKqymXyCFh+zBvB/E3d?=
- =?us-ascii?Q?arJoPq7HfY0j2Ws5OmImfE9/JP99A3Ut91m45YzuIkvl/QMBY9BLPHXQZw6N?=
- =?us-ascii?Q?3Oqzu57Wk/s/hlNrdwt8peONiIw9cIwL3dpKxGXWqKCD114Qq4XvS8Jf27Pu?=
- =?us-ascii?Q?Elds/dhI2/VeDvj3OtziFA+ChcJTkeVCp2gNwbPeLjtxXqG43ZPpDwMCqjuf?=
- =?us-ascii?Q?gJNUo+2ebueAUqgUATDb6PX9wAIUZCO+ok9pqvJrQYt/pD9idb4FGQr3prwU?=
- =?us-ascii?Q?bECD+BRuzKm3aJlFvUl6dP3LJG+3wMaXikaAInwnKfSV5YeI12Cmn0jOeVJ2?=
- =?us-ascii?Q?3l9kgLV8nPjjGevkqa/yg5hqARlDv72UJcONftz0JOuBeOJI7XQyscP0Y39c?=
- =?us-ascii?Q?GA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <89ED426323E2F4419236DE1A7B20CDA1@namprd06.prod.outlook.com>
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :cc:to;
+        bh=19OFMsCLpAZ3N4qQUmBctosIUW7C1soZlKm4fKbWGqg=;
+        b=UvHTbTu+/VVKf0Aw8AsaHeXarBg7AgB9eSHqMzb4G2hq3pbDEMQR6sDWhAaniwnSG0
+         RPhMLWNAVfJvPontJU8DkeKWpzNe7gtcekeV68yof8ZGU6MwpCpUU6l5srtWS7UJ42IH
+         lmJ7rkFEVF3CqcpfE/4ehUoX8+3fTzB0TYZP2Znsm77YtoE2zPX6KrK+6UXZBAfNCqlq
+         4e0p6imHYmWGzdnhaQvzzTAhGuNkJ8550TPOt6qIId3iCXWc7PL8Ry+j+vA+QwyUDNx4
+         5+7dAeDu0PomX0gR7lH40u+eiSWwvYmahY3JFM9ADDAG5f1QxHWtI/yJuBNMbeDjQpHj
+         AdhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:cc:to;
+        bh=19OFMsCLpAZ3N4qQUmBctosIUW7C1soZlKm4fKbWGqg=;
+        b=gOnnELpB/0MXWhghfr9WeIJ1dAdBKfvOHdJ96tsCZGkZD6FpUvPdLZh6eF9V05dVV8
+         +tddSr0kZ6hF0JLsC1JmQQqdJpffvEuaFOxTrDJpfak6wwlt9+9XxGo151/zcVG3WaNH
+         dombo8w9X+on7PJS2dDbyEbNSwp36WEoIbrN8gXXXRe0IGytlSJFGezK+MDKQV8db0nr
+         11ReCCL2TYNGfqkFqVLrc+iz165yJpsDl2sSs5fagQkVU91lKDMyYjkipi4ei3VcDqCH
+         ClIogpgltxqho6Czq9mU2nhfqu08HX80HTwWfZ0FlGz0JZcyW4C4+NI5AqA5z0Pkc+FU
+         SD0g==
+X-Gm-Message-State: AODbwcBM36qYa74J6ju89Gj87+3bpt6TkeSt4cPpZzUxkNxNS5esWVXP
+	0baDeU70AWXFKA==
+X-Received: by 10.84.236.7 with SMTP id q7mr5776397plk.176.1494824247770;
+        Sun, 14 May 2017 21:57:27 -0700 (PDT)
+From: =?utf-8?Q?Marcel_B=C3=B6hme?= <boehme.marcel@gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: qualys.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR06MB6910.namprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 26983fd7-687a-4658-b31b-08dc9bc92cee
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jul 2024 01:32:32.4128
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: O0Q7wgDNTFIgC/vF2Dd7dh5YXDw3YqotYj/YHZnEACfOUSjRW6yiiEsvteTgnLcoWtlIvPOcRJepi8YswufYQZOPKvC867ktZwb0BOpMdJs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR06MB7363
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-03_18,2024-07-03_01,2024-05-17_01
-Subject: Re: [oss-security] CVE-2024-6387: RCE in OpenSSH's server, on
- glibc-based Linux systems
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <660D1C70-CF56-48DF-8AC8-C8DE69193573@gmail.com>
+Date: Mon, 15 May 2017 12:57:22 +0800
+Cc: Thuan Pham <thuanpv.nus@gmail.com>,
+ Nguyen Manh Dung <dungnguy@comp.nus.edu.sg>,
+ veillard@redhat.com
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3273)
+Subject: [oss-security] Invalid writes and reads in libxml2
 
-Hi Yves-Alexis, all,
+Dear all,
 
-On Wed, Jul 03, 2024 at 10:54:30PM +0200, Yves-Alexis Perez wrote:
-> use `-e` on sshd command-line as a mitigation measure.
+In a fuzzing session with AFLGo, a directed version of AFL/AFLFast, we foun=
+d four crashers (two invalid writes and two invalid reads) in LibXML2. Thes=
+e were reported to the maintainers one month ago. We provided analysis and =
+patches and sent several email-reminders, explaining our intend to disclose=
+, but there has been no response. The bug reports are currently not public.=
+ So, in the spirit of full disclosure, we attach the bug reports with analy=
+sis and patches here. Using the record of this email, we are going to reque=
+st CVEs from MITRE.
 
-An interesting idea!
+We can reproduce these vulns in the DOM-validator of PHP (https://bugs.php.=
+net/bug.php?id=3D74459) and recommend to apply the patches provided below t=
+o prevent exploitation. Patches were checked against the regression test su=
+ite of PHP and LibXML2. However, these patches have *not* been reviewed, ye=
+t.
 
-> I agree with Hector that at first sight the `snprintf()` call look OK on =
-glibc
-> (no dynamic memory allocation or complicated handling that I could spot
-> either), and the write to stderr is done using write(2) (which is async-
-> signal-safe).
+Credits for finding, analysing, and patching the errors go to Marcel B=C3=
+=B6hme and Van-Thuan Pham of TSUNAMi Security Research Centre, National Uni=
+versity of Singapore.=20
+We thank Manh-Dung Nguyen for preparing this disclosure notice.
 
-We also agree: the glibc's snprintf() only calls malloc functions if the
-format string specifies positional parameters or floating points, which
-is not the case in sshd's SIGALRM handler.
++++++++++++++++++++++++++++++++++++++++++++++++
++  1) BUG 781333 - STACK OVERFLOW IN VALID.C
++  https://bugzilla.gnome.org/show_bug.cgi?id=3D781333
++++++++++++++++++++++++++++++++++++++++++++++++
 
-We double-checked this on Debian 12.5.0 and confirmed that the SIGALRM
-handler does not call any malloc function anymore if "-e" is used.
+Here is a quick analysis:
+The function xmlSnprintfElementContent in valid.c is supposed to recursivel=
+y dump the element content definition into a char buffer 'buf' of size 'siz=
+e'. The variable len is assigned strlen(buf). If the content->type is XML_E=
+LEMENT_CONTENT_ELEMENT, then (i) the content->prefix is appended to buf (if=
+ it actually fits) whereupon (ii) content->name is written to the buffer. H=
+owever, the check whether the content->name actually fits also uses 'len' r=
+ather than the updated buffer length strlen(buf). This allows us to write a=
+bout "size" many bytes beyond the allocated memory.
 
-> What are you thoughts on this mitigation?
+$ ./xmllint --version
+/src/libxml2/.libs/lt-xmllint: using libxml version 20904-GITv2.9.4-16-g074=
+1801
+  compiled with: Threads Tree Output Push Reader Patterns Writer SAXv1 FTP =
+HTTP DTDValid HTML Legacy C14N Catalog XPath XPointer XInclude Iconv ISO885=
+9X Unicode Regexps Automata Expr Schemas Schematron Modules Debug
 
-Perhaps surprisingly (given the above) we advise against this mitigation
-in the general case: unlike the "LoginGraceTime 0" mitigation, this "-e"
-mitigation still calls the SIGALRM handler, which has a long and complex
-history in sshd, so there is no guarantee that this mitigation is also
-safe for other distributions or versions of sshd.
+How to reproduce:
+$ s=3D$(printf "%-757s" "0")
+$ t=3D$(printf "%-4924s" "0")
+$ echo '<!DOCTYPEa[<!ELEMENT a (F'"${s// /0}:${t// /0}"')><!ATTLIST a><!ELE=
+MENT b EMPTY><!ATTLIST b s CDATA #IMPLIED>]><a/>' > bug1.xml
+$ ./xmllint --valid bug1.xml
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=3D=3D17183=3D=3DERROR: AddressSanitizer: stack-buffer-overflow on address
+0x7fffb66dac88 at pc 0x7f2daa004f13 bp 0x7fffb66d9820 sp 0x7fffb66d9818
+WRITE of size 4925 at 0x7fffb66dac88 thread T0
+   #0 0x7f2daa004f12 in xmlSnprintfElementContent__internal_alias /src/libx=
+ml2/valid.c:1323:9
+   #1 0x7f2daa039d58 in xmlValidateElementContent /src/libxml2/valid.c:5445=
+:6
+   #2 0x7f2daa039d58 in xmlValidateOneElement__internal_alias /src/libxml2/=
+valid.c:6152
+   #3 0x7f2daa49b106 in xmlSAX2EndElementNs__internal_alias /src/libxml2/SA=
+X2.c:2467:24
+   #4 0x7f2da9f1a4ca in xmlParseElement__internal_alias /src/libxml2/parser=
+.c:10212:3
+   #5 0x7f2da9f33758 in xmlParseDocument__internal_alias /src/libxml2/parse=
+r.c:10962:2
+   #6 0x7f2da9f622f5 in xmlDoRead /src/libxml2/parser.c:15445:5
+   #7 0x7f2da9f622f5 in xmlCtxtReadFile__internal_alias /src/libxml2/parser=
+.c:15690
+   #8 0x521133 in parseAndPrintFile /src/libxml2/xmllint.c:2391:9
+   #9 0x5184cd in main /src/libxml2/xmllint.c:3772:7
+   #10 0x7f2da8eb382f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6=
++0x2082f)
+   #11 0x41d2b8 in _start (/src/libxml2/.libs/lt-xmllint+0x41d2b8)
 
-> thanks Qualys for the outstanding research and detailed report (as always=
-).
+Address 0x7fffb66dac88 is located in stack of thread T0 at offset 5128 in f=
+rame
+   #0 0x7f2daa032e5f in xmlValidateOneElement__internal_alias /src/libxml2/=
+valid.c:5943
 
-Thank you very much for your kind words! With best regards,
+This frame has 5 object(s):
+    [32, 82) 'fn.i' (line 5288)
+    [128, 5128) 'expr.i' (line 5441)
+    [5392, 10392) 'list.i' (line 5442) <=3D=3D Memory access at offset 5128=
+ partially underflows this variable
+    [10656, 10660) 'extsubset' (line 5950)
+    [10672, 10722) 'fn' (line 6063)
 
---=20
-the Qualys Security Advisory team=
+PATCHED BY:
+--- a/valid.c=09
++++ a/valid.c=09
+@@ -1270,6 +1270,7 @@ xmlSnprintfElementContent(char *buf, int size, xmlEle=
+mentContentPtr content, int
+                }
+                strcat(buf, (char *) content->prefix);
+                strcat(buf, ":");
++               len +=3D xmlStrlen(content->prefix);
+            }
+            if (size - len < xmlStrlen(content->name) + 10) {
+                strcat(buf, " ...");
+
++++++++++++++++++++++++++++++++++++++++++++++++
++  BUG 781701 - ANOTHER STACK OVERFLOW in VALID.C
++  https://bugzilla.gnome.org/show_bug.cgi?id=3D 781701
++++++++++++++++++++++++++++++++++++++++++++++++
+
+Here is a quick analysis:
+The bug is related to but different from Bug 781333. Function xmlSnprintfEl=
+ementContent in valid.c is supposed to recursively dump the element content=
+ definition into a char buffer 'buf' of size 'size'. At the end of the rout=
+ine, the function may strcat two more characters without checking whether t=
+he current strlen(buf) + 2 < size.
+
+$ ./xmllint --version
+/src/libxml2/.libs/lt-xmllint: using libxml version 20904-GITv2.9.4-16-g074=
+1801
+  compiled with: Threads Tree Output Push Reader Patterns Writer SAXv1 FTP =
+HTTP DTDValid HTML Legacy C14N Catalog XPath XPointer XInclude Iconv ISO885=
+9X Unicode Regexps Automata Expr Schemas Schematron Modules Debug
+
+How to reproduce:
+$ ./xmllint --valid bug2.xml
+=3D=3D112703=3D=3DERROR: AddressSanitizer: stack-buffer-overflow on address
+0x7ffeff6f3428 at pc 0x7fd88f824d3c bp 0x7ffeff6f1fb0 sp 0x7ffeff6f1fa8
+WRITE of size 2 at 0x7ffeff6f3428 thread T0
+   #0 0x7fd88f824d3b in xmlSnprintfElementContent__internal_alias /src/libx=
+ml2/valid.c
+   #1 0x7fd88f859b8d in xmlValidateElementContent /src/libxml2/valid.c:5447=
+:6
+   #2 0x7fd88f859b8d in xmlValidateOneElement__internal_alias /src/libxml2/=
+valid.c:6154
+   #3 0x7fd89031cd6c in xmlSAX2EndElementNs__internal_alias /src/libxml2/SA=
+X2.c:2467:24
+   #4 0x7fd88f63b242 in xmlParseEndTag2 /src/libxml2/parser.c:9930:2
+   #5 0x7fd88f5fec12 in xmlParseElement__internal_alias /src/libxml2/parser=
+.c:10292:2
+   #6 0x7fd88f654709 in xmlParseDocument__internal_alias /src/libxml2/parse=
+r.c:10966:2
+   #7 0x7fd88f6d3647 in xmlDoRead /src/libxml2/parser.c:15449:5
+   #8 0x7fd88f6d3647 in xmlCtxtReadFile__internal_alias /src/libxml2/parser=
+.c:15694
+   #9 0x559158 in parseAndPrintFile /src/libxml2/xmllint.c:2391:9
+   #10 0x54b0e4 in main /src/libxml2/xmllint.c:3772:7
+   #11 0x7fd88e40b82f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6=
++0x2082f)
+   #12 0x41d0b8 in _start (/src/libxml2/.libs/lt-xmllint+0x41d0b8)
+
+Address 0x7ffeff6f3428 is located in stack of thread T0 at offset 5128 in f=
+rame
+   #0 0x7fd88f852c6f in xmlValidateOneElement__internal_alias
+/src/libxml2/valid.c:5945
+
+ This frame has 5 object(s):
+   [32, 82) 'fn.i' (line 5290)
+   [128, 5128) 'expr.i' (line 5443) <=3D=3D Memory access at offset 5128
+overflows this variable
+   [5392, 10392) 'list.i' (line 5444)
+   [10656, 10660) 'extsubset' (line 5952)
+   [10672, 10722) 'fn' (line 6065)
+HINT: this may be a false positive if your program uses some custom
+stack unwind mechanism or swapcontext
+     (longjmp and C++ exceptions *are* supported)
+SUMMARY: AddressSanitizer: stack-buffer-overflow /src/libxml2/valid.c
+in xmlSnprintfElementContent__internal_alias
+
+PATCHED BY:
+--- a/valid.c=09
++++ a/valid.c=09
+@@ -1320,6 +1320,7 @@ xmlSnprintfElementContent(char *buf, int size, xmlEle=
+mentContentPtr content, int
+                xmlSnprintfElementContent(buf, size, content->c2, 0);
+            break;
+     }
++    if (size - strlen(buf) <=3D 2) return;
+     if (englob)
+         strcat(buf, ")");
+     switch (content->ocur) {
+
++++++++++++++++++++++++++++++++++++++++++++++++
++  BUG 781205 - HEAP-BASED BUFFER OVERFLOW IN xmlDictComputeFastKey (NEW)
++  https://bugzilla.gnome.org/show_bug.cgi?id=3D 781205
++++++++++++++++++++++++++++++++++++++++++++++++
+
+We understand that a similar bug report (non-public) was filed before:
+https://bugzilla.gnome.org/show_bug.cgi?id=3D759398
+and fixed about a year ago in git revision 45752d2:
+https://github.com/GNOME/libxml2/commit/45752d2c334b50016666d8f0ec3691e2d68=
+0f0a0
+
+However, the patch was apparently incomplete.
+
+How to reproduce with xmllint:
+$ ./xmllint --version
+/src/libxml2/.libs/lt-xmllint: using libxml version 20904-GITv2.9.4-16-g074=
+1801
+  compiled with: Threads Tree Output Push Reader Patterns Writer SAXv1 FTP =
+HTTP DTDValid HTML Legacy C14N Catalog XPath XPointer XInclude Iconv ISO885=
+9X Unicode Regexps Automata Expr Schemas Schematron Modules Debug
+
+
+$ printf "%s\x0d%s\x0da\x09%s" '<?l?><!DOCTYPED[<!ENTITY' '%' '"<:0000">%a;=
+' > bug3.xml
+$ ./xmlint --memory --oldxml10 bug3.xml
+
+ASAN says (for libxml2 in trunk):
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=3D=3D18512=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address
+0x60200000020f at pc 0x7fb731bca172 bp 0x7ffe8fe8cd10 sp 0x7ffe8fe8cd08
+READ of size 1 at 0x60200000020f thread T0
+   #0 0x7fb731bca171 in xmlDictComputeFastKey /src/libxml2/dict.c:448:13
+   #1 0x7fb731bca171 in xmlDictLookup__internal_alias /src/libxml2/dict.c:8=
+51
+   #2 0x7fb7315f7760 in xmlParseNameComplex /src/libxml2/parser.c
+   #3 0x7fb7315f7760 in xmlParseName__internal_alias /src/libxml2/parser.c:=
+3487
+   #4 0x7fb7316afe66 in xmlParseQName /src/libxml2/parser.c:8900:10
+   #5 0x7fb7316691c5 in xmlParseStartTag2 /src/libxml2/parser.c:9419:17
+   #6 0x7fb7316643dc in xmlParseElement__internal_alias /src/libxml2/parser=
+.c:10179:16
+   #7 0x7fb73167f758 in xmlParseDocument__internal_alias /src/libxml2/parse=
+r.c:10962:2
+   #8 0x7fb7316ac7ac in xmlDoRead /src/libxml2/parser.c:15445:5
+   #9 0x7fb7316aceb4 in xmlReadMemory__internal_alias /src/libxml2/parser.c=
+:15531:13
+   #10 0x5214c0 in parseAndPrintFile /src/libxml2/xmllint.c:2371:9
+   #11 0x5184cd in main /src/libxml2/xmllint.c:3772:7
+   #12 0x7fb7305ff82f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6=
++0x2082f)
+   #13 0x41d2b8 in _start (/src/libxml2/.libs/lt-xmllint+0x41d2b8)
+
+0x60200000020f is located 1 bytes to the left of 6-byte region
+[0x602000000210,0x602000000216)
+allocated by thread T0 here:
+   #0 0x4d8018 in malloc /src/llvm/projects/compiler-rt/lib/asan/asan_mallo=
+c_linux.cc:66
+   #1 0x7fb7315f9fe3 in xmlNewBlanksWrapperInputStream /src/libxml2/parser.=
+c:2477:14
+   #2 0x7fb731642dd6 in xmlParsePEReference__internal_alias /src/libxml2/pa=
+rser.c:8122:14
+   #3 0x7fb73164218b in xmlParseMarkupDecl__internal_alias /src/libxml2/par=
+ser.c:7031:2
+   #4 0x7fb731680e66 in xmlParseInternalSubset /src/libxml2/parser.c:8482:6
+   #5 0x7fb73167eec4 in xmlParseDocument__internal_alias /src/libxml2/parse=
+r.c:10930:6
+   #6 0x7fb7316ac7ac in xmlDoRead /src/libxml2/parser.c:15445:5
+   #7 0x7fb7316aceb4 in xmlReadMemory__internal_alias /src/libxml2/parser.c=
+:15531:13
+   #8 0x5214c0 in parseAndPrintFile /src/libxml2/xmllint.c:2371:9
+   #9 0x5184cd in main /src/libxml2/xmllint.c:3772:7
+   #10 0x7fb7305ff82f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6=
++0x2082f)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /src/libxml2/dict.c:448:13 =
+in xmlDictComputeFastKey
+
+Valgrind says (for my installed version of xmllint)
+$  xmllint --version
+xmllint: using libxml version 20903
+  compiled with: Threads Tree Output Push Reader Patterns Writer SAXv1 FTP =
+HTTP DTDValid HTML Legacy C14N Catalog XPath XPointer XInclude Iconv ISO885=
+9X Unicode Regexps Automata Expr Schemas Schematron Modules Debug Zlib Lzma
+
+=3D=3D38641=3D=3D Invalid read of size 1
+=3D=3D38641=3D=3D    at 0x4F75CE8: xmlDictLookup (in /usr/lib/x86_64-linux-=
+gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E7C523: xmlParseName (in /usr/lib/x86_64-linux-g=
+nu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E8503C: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E852EB: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E8CE2E: xmlParseElement (in /usr/lib/x86_64-linu=
+x-gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E8D949: xmlParseDocument (in /usr/lib/x86_64-lin=
+ux-gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E947BD: xmlReadMemory (in /usr/lib/x86_64-linux-=
+gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x111F98: ??? (in /usr/bin/xmllint)
+=3D=3D38641=3D=3D    by 0x10EDFE: ??? (in /usr/bin/xmllint)
+=3D=3D38641=3D=3D    by 0x521582F: (below main) (libc-start.c:291)
+=3D=3D38641=3D=3D  Address 0x8303e7f is 1 bytes before a block of size 6 al=
+loc'd
+=3D=3D38641=3D=3D    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_m=
+emcheck-amd64-linux.so)
+=3D=3D38641=3D=3D    by 0x4E75FCB: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E8871F: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E88954: xmlParseMarkupDecl (in /usr/lib/x86_64-l=
+inux-gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E89214: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E8DB4E: xmlParseDocument (in /usr/lib/x86_64-lin=
+ux-gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E947BD: xmlReadMemory (in /usr/lib/x86_64-linux-=
+gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x111F98: ??? (in /usr/bin/xmllint)
+=3D=3D38641=3D=3D    by 0x10EDFE: ??? (in /usr/bin/xmllint)
+=3D=3D38641=3D=3D    by 0x521582F: (below main) (libc-start.c:291)
+=3D=3D38641=3D=3D
+=3D=3D38641=3D=3D Invalid read of size 1
+=3D=3D38641=3D=3D    at 0x4C32758: memcpy@@GLIBC_2.14 (in /usr/lib/valgrind=
+/vgpreload_memcheck-amd64-linux.so)
+=3D=3D38641=3D=3D    by 0x4F74FBD: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4F75C3C: xmlDictLookup (in /usr/lib/x86_64-linux-=
+gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E7C523: xmlParseName (in /usr/lib/x86_64-linux-g=
+nu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E8503C: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E852EB: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E8CE2E: xmlParseElement (in /usr/lib/x86_64-linu=
+x-gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E8D949: xmlParseDocument (in /usr/lib/x86_64-lin=
+ux-gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E947BD: xmlReadMemory (in /usr/lib/x86_64-linux-=
+gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x111F98: ??? (in /usr/bin/xmllint)
+=3D=3D38641=3D=3D    by 0x10EDFE: ??? (in /usr/bin/xmllint)
+=3D=3D38641=3D=3D    by 0x521582F: (below main) (libc-start.c:291)
+=3D=3D38641=3D=3D  Address 0x8303e7f is 1 bytes before a block of size 6 al=
+loc'd
+=3D=3D38641=3D=3D    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_m=
+emcheck-amd64-linux.so)
+=3D=3D38641=3D=3D    by 0x4E75FCB: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E8871F: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E88954: xmlParseMarkupDecl (in /usr/lib/x86_64-l=
+inux-gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E89214: ??? (in /usr/lib/x86_64-linux-gnu/libxml=
+2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E8DB4E: xmlParseDocument (in /usr/lib/x86_64-lin=
+ux-gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x4E947BD: xmlReadMemory (in /usr/lib/x86_64-linux-=
+gnu/libxml2.so.2.9.3)
+=3D=3D38641=3D=3D    by 0x111F98: ??? (in /usr/bin/xmllint)
+=3D=3D38641=3D=3D    by 0x10EDFE: ??? (in /usr/bin/xmllint)
+=3D=3D38641=3D=3D    by 0x521582F: (below main) (libc-start.c:291)
+=3D=3D38641=3D=3D
+
+PATCHED BY:
+--- a/parser.c=09
++++ a/parser.c=09
+@@ -3312,6 +3312,7 @@ xmlParseNameComplex(xmlParserCtxtPtr ctxt) {
+     int len =3D 0, l;
+     int c;
+     int count =3D 0;
++    size_t startPosition =3D 0;
+=20
+ #ifdef DEBUG
+     nbParseNameComplex++;
+@@ -3323,6 +3324,7 @@ xmlParseNameComplex(xmlParserCtxtPtr ctxt) {
+     GROW;
+     if (ctxt->instate =3D=3D XML_PARSER_EOF)
+         return(NULL);
++    startPosition =3D CUR_PTR - BASE_PTR;
+     c =3D CUR_CHAR(l);
+     if ((ctxt->options & XML_PARSE_OLD10) =3D=3D 0) {
+         /*
+@@ -3420,9 +3422,11 @@ xmlParseNameComplex(xmlParserCtxtPtr ctxt) {
+         xmlFatalErr(ctxt, XML_ERR_NAME_TOO_LONG, "Name");
+         return(NULL);
+     }
+-    if ((*ctxt->input->cur =3D=3D '\n') && (ctxt->input->cur[-1] =3D=3D '\=
+r'))
+-        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - (len + 1), len=
+));
+-    return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
++
++    if (BASE_PTR + startPosition + len > ctxt->input->end)
++      return(NULL);
++
++    return(xmlDictLookup(ctxt->dict, BASE_PTR + startPosition, len));
+ }
+=20
+ /**
+
++++++++++++++++++++++++++++++++++++++++++++++++
++  BUG 781361 - HEAP-BASED BUFFER OVERFLOW IN xmlDictAddString
++  https://bugzilla.gnome.org/show_bug.cgi?id=3D 781361
++++++++++++++++++++++++++++++++++++++++++++++++
+
+Again, we understand that a similar bug report was filed before:
+https://bugzilla.gnome.org/show_bug.cgi?id=3D758605 (CVE-2016-1839)
+and fixed about a year ago in git revision a820dbe:
+https://git.gnome.org/browse/libxml2/commit/?id=3Da820dbeac29d330bae4be05d9=
+ecd939ad6b4aa33
+
+However, this patch was apparently incomplete, as well.
+
+LIBXML version:
+$ ./xmllint --version
+/src/libxml2/.libs/lt-xmllint: using libxml version 20904-GITv2.9.4-16-g074=
+1801
+  compiled with: Threads Tree Output Push Reader Patterns Writer SAXv1 FTP =
+HTTP DTDValid HTML Legacy C14N Catalog XPath XPointer XInclude Iconv ISO885=
+9X Unicode Regexps Automata Expr Schemas Schematron Modules Debug
+
+How to reproduce:
+$ ./xmllint --oldxml10 bug4.xml
+
+ASAN says:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=3D=3D44604=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address
+0x603000000030 at pc 0x0000004c1685 bp 0x7ffc15d12290 sp
+0x7ffc15d11a40
+READ of size 109 at 0x603000000030 thread T0
+   #0 0x4c1684 in __asan_memcpy /src/llvm/projects/compiler-rt/lib/asan/asa=
+n_interceptors.cc:455
+   #1 0x7fa6e0af4b91 in xmlDictAddString /src/libxml2/dict.c:285:5
+   #2 0x7fa6e0af4b91 in xmlDictLookup__internal_alias /src/libxml2/dict.c:9=
+26
+   #3 0x7fa6e0522740 in xmlParseNameComplex /src/libxml2/parser.c
+   #4 0x7fa6e0522740 in xmlParseName__internal_alias /src/libxml2/parser.c:=
+3487
+   #5 0x7fa6e056afe6 in xmlParseElementDecl__internal_alias /src/libxml2/pa=
+rser.c:6718:16
+   #6 0x7fa6e056d4f0 in xmlParseMarkupDecl__internal_alias /src/libxml2/par=
+ser.c:6997:4
+   #7 0x7fa6e05abe66 in xmlParseInternalSubset /src/libxml2/parser.c:8482:6
+   #8 0x7fa6e05a9ec4 in xmlParseDocument__internal_alias /src/libxml2/parse=
+r.c:10930:6
+   #9 0x7fa6e05d7bd8 in xmlDoRead /src/libxml2/parser.c:15445:5
+   #10 0x7fa6e05d7bd8 in xmlReadFile__internal_alias /src/libxml2/parser.c:=
+15507
+   #11 0x521ac8 in parseAndPrintFile /src/libxml2/xmllint.c:2408:9
+   #12 0x51872d in main /src/libxml2/xmllint.c:3775:7
+   #13 0x7fa6df52a82f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6=
++0x2082f)
+   #14 0x41d2b8 in _start (/src/libxml2/.libs/lt-xmllint+0x41d2b8)
+
+0x603000000030 is located 0 bytes to the right of 32-byte region [0x6030000=
+00010,0x603000000030)
+allocated by thread T0 here:
+   #0 0x4d8018 in malloc /src/llvm/projects/compiler-rt/lib/asan/asan_mallo=
+c_linux.cc:66
+   #1 0x7fa6e0af4c73 in xmlDictLookup__internal_alias /src/libxml2/dict.c:9=
+32:10
+   #2 0x7fa6e05793b8 in xmlDetectSAX2 /src/libxml2/parser.c:1078:24
+   #3 0x7fa6e05a8a44 in xmlParseDocument__internal_alias /src/libxml2/parse=
+r.c:10844:5
+   #4 0x7fa6e05d7bd8 in xmlDoRead /src/libxml2/parser.c:15445:5
+   #5 0x7fa6e05d7bd8 in xmlReadFile__internal_alias /src/libxml2/parser.c:1=
+5507
+   #6 0x521ac8 in parseAndPrintFile /src/libxml2/xmllint.c:2408:9
+   #7 0x51872d in main /src/libxml2/xmllint.c:3775:7
+   #8 0x7fa6df52a82f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+=
+0x2082f)
+
+
+For the version of libxml that comes pre-installed on Ubuntu 16.04:
+$ xmllint --version
+xmllint: using libxml version 20903
+  compiled with: Threads Tree Output Push Reader Patterns Writer SAXv1 FTP =
+HTTP DTDValid HTML Legacy C14N Catalog XPath XPointer XInclude Iconv ISO885=
+9X Unicode Regexps Automata Expr Schemas Schematron Modules Debug Zlib Lzma
+
+VALGRIND says:
+=3D=3D146420=3D=3D ERROR SUMMARY: 216 errors from 2 contexts (suppressed: 0=
+ from 0)
+=3D=3D146420=3D=3D
+=3D=3D146420=3D=3D 54 errors in context 1 of 2:
+=3D=3D146420=3D=3D Invalid read of size 1
+=3D=3D146420=3D=3D    at 0x4C32758: memcpy@@GLIBC_2.14 (in /usr/lib/valgrin=
+d/vgpreload_memcheck-amd64-linux.so)
+=3D=3D146420=3D=3D    by 0x4F74FBD: ??? (in /usr/lib/x86_64-linux-gnu/libxm=
+l2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4F75C3C: xmlDictLookup (in /usr/lib/x86_64-linux=
+-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E7C523: xmlParseName (in /usr/lib/x86_64-linux-=
+gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E83B1F: xmlParseElementDecl (in /usr/lib/x86_64=
+-linux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E889F4: xmlParseMarkupDecl (in /usr/lib/x86_64-=
+linux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E89214: ??? (in /usr/lib/x86_64-linux-gnu/libxm=
+l2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E8DB4E: xmlParseDocument (in /usr/lib/x86_64-li=
+nux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E944FF: xmlReadFile (in /usr/lib/x86_64-linux-g=
+nu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x111EA3: ??? (in /usr/bin/xmllint)
+=3D=3D146420=3D=3D    by 0x10EDFE: ??? (in /usr/bin/xmllint)
+=3D=3D146420=3D=3D    by 0x521582F: (below main) (libc-start.c:291)
+=3D=3D146420=3D=3D  Address 0x830d378 is 0 bytes after a block of size 104 =
+alloc'd
+=3D=3D146420=3D=3D    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_=
+memcheck-amd64-linux.so)
+=3D=3D146420=3D=3D    by 0x4E735E1: xmlNewInputStream (in /usr/lib/x86_64-l=
+inux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E75FA3: ??? (in /usr/lib/x86_64-linux-gnu/libxm=
+l2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E8871F: ??? (in /usr/lib/x86_64-linux-gnu/libxm=
+l2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E88954: xmlParseMarkupDecl (in /usr/lib/x86_64-=
+linux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E89214: ??? (in /usr/lib/x86_64-linux-gnu/libxm=
+l2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E8DB4E: xmlParseDocument (in /usr/lib/x86_64-li=
+nux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E944FF: xmlReadFile (in /usr/lib/x86_64-linux-g=
+nu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x111EA3: ??? (in /usr/bin/xmllint)
+=3D=3D146420=3D=3D    by 0x10EDFE: ??? (in /usr/bin/xmllint)
+=3D=3D146420=3D=3D    by 0x521582F: (below main) (libc-start.c:291)
+=3D=3D146420=3D=3D
+=3D=3D146420=3D=3D
+=3D=3D146420=3D=3D 162 errors in context 2 of 2:
+=3D=3D146420=3D=3D Invalid read of size 1
+=3D=3D146420=3D=3D    at 0x4C32766: memcpy@@GLIBC_2.14 (in /usr/lib/valgrin=
+d/vgpreload_memcheck-amd64-linux.so)
+=3D=3D146420=3D=3D    by 0x4F74FBD: ??? (in /usr/lib/x86_64-linux-gnu/libxm=
+l2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4F75C3C: xmlDictLookup (in /usr/lib/x86_64-linux=
+-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E7C523: xmlParseName (in /usr/lib/x86_64-linux-=
+gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E83B1F: xmlParseElementDecl (in /usr/lib/x86_64=
+-linux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E889F4: xmlParseMarkupDecl (in /usr/lib/x86_64-=
+linux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E89214: ??? (in /usr/lib/x86_64-linux-gnu/libxm=
+l2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E8DB4E: xmlParseDocument (in /usr/lib/x86_64-li=
+nux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E944FF: xmlReadFile (in /usr/lib/x86_64-linux-g=
+nu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x111EA3: ??? (in /usr/bin/xmllint)
+=3D=3D146420=3D=3D    by 0x10EDFE: ??? (in /usr/bin/xmllint)
+=3D=3D146420=3D=3D    by 0x521582F: (below main) (libc-start.c:291)
+=3D=3D146420=3D=3D  Address 0x830d379 is 1 bytes after a block of size 104 =
+alloc'd
+=3D=3D146420=3D=3D    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_=
+memcheck-amd64-linux.so)
+=3D=3D146420=3D=3D    by 0x4E735E1: xmlNewInputStream (in /usr/lib/x86_64-l=
+inux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E75FA3: ??? (in /usr/lib/x86_64-linux-gnu/libxm=
+l2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E8871F: ??? (in /usr/lib/x86_64-linux-gnu/libxm=
+l2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E88954: xmlParseMarkupDecl (in /usr/lib/x86_64-=
+linux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E89214: ??? (in /usr/lib/x86_64-linux-gnu/libxm=
+l2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E8DB4E: xmlParseDocument (in /usr/lib/x86_64-li=
+nux-gnu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x4E944FF: xmlReadFile (in /usr/lib/x86_64-linux-g=
+nu/libxml2.so.2.9.3)
+=3D=3D146420=3D=3D    by 0x111EA3: ??? (in /usr/bin/xmllint)
+=3D=3D146420=3D=3D    by 0x10EDFE: ??? (in /usr/bin/xmllint)
+=3D=3D146420=3D=3D    by 0x521582F: (below main) (libc-start.c:291)
+=3D=3D146420=3D=3D
+=3D=3D146420=3D=3D ERROR SUMMARY: 216 errors from 2 contexts (suppressed: 0=
+ from 0)
+
+PATCHED BY:
+--- a/parser.c=09
++++ a/parser.c=09
+@@ -3312,6 +3312,7 @@ xmlParseNameComplex(xmlParserCtxtPtr ctxt) {
+     int len =3D 0, l;
+     int c;
+     int count =3D 0;
++    size_t startPosition =3D 0;
+=20
+ #ifdef DEBUG
+     nbParseNameComplex++;
+@@ -3323,6 +3324,7 @@ xmlParseNameComplex(xmlParserCtxtPtr ctxt) {
+     GROW;
+     if (ctxt->instate =3D=3D XML_PARSER_EOF)
+         return(NULL);
++    startPosition =3D CUR_PTR - BASE_PTR;
+     c =3D CUR_CHAR(l);
+     if ((ctxt->options & XML_PARSE_OLD10) =3D=3D 0) {
+         /*
+@@ -3420,9 +3422,11 @@ xmlParseNameComplex(xmlParserCtxtPtr ctxt) {
+         xmlFatalErr(ctxt, XML_ERR_NAME_TOO_LONG, "Name");
+         return(NULL);
+     }
+-    if ((*ctxt->input->cur =3D=3D '\n') && (ctxt->input->cur[-1] =3D=3D '\=
+r'))
+-        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - (len + 1), len=
+));
+-    return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
++
++    if (BASE_PTR + startPosition + len > ctxt->input->end)
++      return(NULL);
++
++    return(xmlDictLookup(ctxt->dict, BASE_PTR + startPosition, len));
+ }
+=20
+ /**
+Best regards,
+- Marcel
+
+---
+Marcel Boehme
+Postdoctoral Research Fellow
+TSUNAMi Security Research Centre
+National University of Singapore=
