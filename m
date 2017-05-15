@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/8
-Message-ID: <09b0b280-113c-e309-f507-27cd7de850f8@cleal.org>
-Date: Thu, 6 Apr 2017 14:22:55 +0100
-From: Dominic Cleal <dominic@...al.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/15/2
+Message-ID: <CALJHwhTK3+YqzhtPLa96QNYTkfDRv_YPc0bieXvLgQDRRoFRWQ@mail.gmail.com>
+Date: Mon, 15 May 2017 15:40:39 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2017-2672: Foreman image password disclosure in audit log
+Subject: CVE-2017-7495 kernel : information leak on ext4 when hardware reset.
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-2672: Foreman compute resource image passwords disclosed via
-audit log
+When a power failure (or hardware reset) occurs, applications writing to an
+ext4 filesystem system may create a situation in which writes to one file
+may appear in another file (ergo information leak).
 
-When images for compute resources (e.g. an OpenStack image) are
-added/registered in Foreman, the password used to log in is recorded in
-plain text in the audit log. This may allow users with access to view
-the audit log to access newly provisioned hosts using the stored
-credentials.
-
-Mitigation: remove view_audit_logs permission from users, change image
-passwords.
-
-This issue was reported by Daniel Kimsey.
-
-Affects Foreman 1.4 and higher
-Fix due to be released
-
-Patch:
-https://github.com/theforeman/foreman/commit/02489389f1a4443e1f437b86aa7ce245f1437020
-
-More information:
-https://theforeman.org/security.html#2017-2672
-http://projects.theforeman.org/issues/19169
-https://theforeman.org
-
--- 
-Dominic Cleal
-dominic@...al.org
+This may be at least data corruption, a controlled attacker may be able to
+leverage this to steal data from writes to the same ext4 subsystem.
 
 
+Reference:
 
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1450261
 
+Upstream patch:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=06bd3c36a733ac27962fea7d6f47168841376824
 
-Download attachment "signature.asc" of type "application/pgp-signature" (210 bytes)
+Thanks
+
+--
+
+Wade Mealing
+Red Hat Product Security
+
