@@ -1,34 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/07/2
-Message-ID: <73bb24ef-176d-0ea1-e0a3-5f4a9542ea50@tripleback.net>
-Date: Sun, 7 May 2017 12:12:59 -0400
-From: Kash Pande <kash@...pleback.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/8
+Message-ID: <20170516182830.GA8678@openwall.com>
+Date: Tue, 16 May 2017 20:28:30 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Alistair Crooks <agc@...src.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: NetBSD/pkgsrc membership on distros list
 Content-Type: text/plain; charset=utf-8
 
+On Tue, May 16, 2017 at 11:12:28AM -0700, Alistair Crooks wrote:
+> On 16 May 2017 at 10:21, Solar Designer <solar@...nwall.com> wrote:
+> > Over the last few days, there have been repeated requests to get a
+> > response specifically from NetBSD in a thread on the distros list.
+> > There was no response.  Additionally, the reporter of a vulnerability
+> > mentioned getting no response to their direct e-mail to your
+> > security-officer address.
+> 
+> It hit my inbox when I'd just come back from 2 weeks vacation.
+> 
+> When it finally got my attention, the mail itself did little to make
+> me think it was legit, since I saw an attachment and a subject line
+> that was generic in the extreme. Mentally, I filed it as spam.
+> Virtually, too.
+> 
+> I saw more traction on oss-security with the same subject, and
 
-On 03/05/17 04:32 PM, Dawid Golunski wrote:
-> Here's a paper I wrote back in December.  It was originally meant to go
-> into Phrack but the team wanted a more general article on parameter injection
-> as mail() was supposedly an outdated technique.
-> Meanwhile, the RCE-chain continues :) So I decided to post it as it is without
-> changing it as mail() injection deserves a separate article imho.
->
-> https://exploitbox.io/paper/Pwning-PHP-Mail-Function-For-Fun-And-RCE.html
+I think you mean on distros.
 
-This article purposely uses a litany of poor programming practices to 
-expose an alleged exploit in PHP mail().. I'd like to see the same 
-exploit, without assuming the developer on the software had no idea what 
-they're doing (passing non-sanitized variables to functions). As well, 
-you noted in your own article that this 'discovery' was first published 
-in 2011 by someone else.
+> realised (too late, I fear) that it wasn't yet another phishing
+> attempt. I also heard from other channels that people were trying to
+> contact me.
+> 
+> My fault. Sorry.
+> 
+> The security team at NetBSD have done an analysis, and have our own
+> comments to make. I'll do that in due course.
 
->
-> I reveal some exim code-execution vectors in there that should change
-> the whole game slightly :)
+OK.
 
-Not really, because it still relies on unfiltered input.
+For now, I'll resume NetBSD subscription with you as the only
+representative, since we still haven't heard from the other two persons
+who were subscribed for NetBSD (no need for them to post to oss-security
+now, but at least they can reply on the distros thread if they read it,
+or to me personally).  You were on vacation, but they could respond - in
+fact, that's an often cited reason to have multiple people subscribed.
 
+> I used to be on oss-security. Don't know what happened if I've been thrown off.
 
+I'll e-mail you off-list to figure this out.
 
+Thanks,
+
+Alexander
