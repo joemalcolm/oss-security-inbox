@@ -1,78 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/10
-Message-ID: <0295d4de82454ac79e4bc834c30d39b3@imshyb01.MITRE.ORG>
-Date: Tue, 29 Aug 2017 15:23:50 -0400
-From: <cve-request@...re.org>
-To: <ago@...too.org>
-CC: <cve-request@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: [scr379303] A bunch of duplicate CVEs requested for?? bho..
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/3
+Message-ID: <CAN5gJXpLO-FEsQ=EDjok1_9=K3OW91LG_CyxUWsx8Z88A0pvNw@mail.gmail.com>
+Date: Tue, 16 May 2017 10:04:12 -0700
+From: Alistair Crooks <agc@...src.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: NetBSD/pkgsrc membership on distros list
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Yeah, we're here, we are the same as previously, still trying to go
+about our business with maximum effect and minimal fuss, and we're
+listening.
 
-> https://nvd.nist.gov/vuln/detail/CVE-2017-13753 duplicate of:
-> https://nvd.nist.gov/vuln/detail/CVE-2016-9396
+We haven't contributed anything (much) recently, but we don't really
+go in for massive "me too"s, and had kinda hoped that the "no drama"
+approach would work here. It seems my assumptions were wrong. I will
+attempt to do a better job at posting - sorry about that, mea culpa.
 
-Yes, these are duplicates; we will reject CVE-2017-13753 and update
-CVE-2016-9396.
+What are we doing these days? We're looking into the pre-announcement
+that everyone else is looking at for NetBSD, and pkgsrc is even more
+vibrant than ever, runs on a huge number of platforms, and is still
+reporting CVEs in the usual way - we were told some minor Linux
+distributions use the pkgsrc notification mechanism, so, for their
+sakes, I'd ask that you continue to keep us in the loop, please.
 
-This occurred because the MITRE CVE team inadvertently populated
-CVE-2016-9396 with incorrect version information, and because the code
-changed between the two tested versions.
+With thanks (for the support you give),
+Alistair
 
-Specifically, CVE-2016-9396 had said "in JasPer before 1.900.12" but
-actually there was no reference stating that 1.900.12 was a fixed
-version. Also, the CVE-2017-13753 reference said "Assertion `qmfbid ==
-JPC_COX_RFT' failed" but the CVE-2016-9396 reference said "Assertion
-`qmfbid == 0x01' failed." These happen to be the same (there's a
-"#define JPC_COX_RFT 0x01" elsewhere), but it initially looked like
-the new report was about a different assertion that was problematic in
-1.900.12 and later versions.
-
-> months later we have:
-> https://nvd.nist.gov/vuln/detail/CVE-2017-11720
-> "There is a division-by-zero vulnerability in LAME 3.99.5, caused by a
-> malformed input file."
-
-When we worked on your CVE ID request for the
-https://blogs.gentoo.org/ago/2017/06/17/lame-divide-by-zero-in-parse_wave_header-get_audio-c/
-report, we had the information about the affected source-code pathname
-frontend/get_audio.c, and we had found the
-https://bugs.debian.org/777159 information about "this is all in the
-frontend code in frontend/get_audio.c:parse_wave_header() and not in
-the library." By contrast, the CVE-2017-11720 request had less
-technical detail about the source-code location, and the requester had
-checked the "Has vendor confirmed or acknowledged the vulnerability?"
-Yes box on our https://cveform.mitre.org web site. In general, if a
-problem is only a divide-by-zero in a command-line program, but the
-upstream vendor decided to categorize it as a vulnerability, then it
-gets a CVE. Admittedly, there was no direct proof of "decided to
-categorize it as a vulnerability" here. Also, if a CVE is already
-populated, and is about this type of valid crash report, then we do
-not retroactively reject it, even if we learn more about exploitation
-relevance. We will update CVE-2017-11720 with your reference, to help
-to show that you were the original discoverer.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJZpb6gAAoJEHb/MwWLVhi22IwQAJe2UP55hrbdFS8RK0ZNLws+
-4O2z1FQQV8MVcVAM0K7gFdliJzuhFcvhN9Ta1/N078f0tlAMIy9/nqcVnGXzi08/
-Xwce5Y8n0jivXEKeqSyH73k9hurcGeEhSiB/WdxrOeXq9Xnddt0QhUMkKmd6/RtO
-bxWIYSAYegx3i7fAb50oXb0e0hF44rcZoHq/iRMj1Ev8WoIJbZkV0TrNPsHmjJrI
-+hGWpAyfD2/T+FE1Q1WUpwcf6Pp1XXZcGrGxE52FE1SpfNuW9MhLXSdiM0Afa/DN
-OGtARAd7qjWN1tC68xr1KZu1coHgsC8KTtyy5g6K/M5gKnlqKpvx/LMWkzsoMSpU
-FUixt9Jyh9umO2j/tF3KXiPWq1rQo1wSY5ib9ULDigqmvMp/hUarTlPysLe/ddBL
-nHo+StZVqhu8NhIaR+XZBy/kr7D5UpTMpBmDXUtRYbxVLc7cUySVd8xJfAqHtdfv
-z1tUMWkCKb8lPJa6Mx+fVE6/tuOuUYBml9l+1/wtktwTfuV9f6Xvt9ZlxWPwuCvI
-/ZV5tM+5Pj8NY94YjYkRSsAbyeYRLJyxqpmqJhfapknR8Ib0RHMxmkS8Uh7bWjq7
-ycDToRIFjgDqJexExwtaOZybdaSVNCzj/lqt/N9xhIZE8w0jYQ8WtEmPY5y8OIug
-04kqg2X2uxrUI/8R1fnj
-=aEt4
------END PGP SIGNATURE-----
+On 16 May 2017 at 08:39, Solar Designer <solar@...nwall.com> wrote:
+> Hi,
+>
+> A few individuals from/for NetBSD/pkgsrc joined the non-public distros
+> list a while ago.  Unfortunately, lately they appear to have become
+> inactive.  Thus, I am likely to remove NetBSD/pkgsrc from the distros
+> list soon unless the membership is "renewed" through demonstrated
+> interest and vulnerability response by specific people from there.
+>
+> I notice NetBSD security team is still active in terms of issuing of
+> public security advisories (latest one posted on March 24), but the way
+> the situation looks to me (and I admit I could be wrong) those
+> advisories are not produced by the same people who had joined distros.
+> So maybe NetBSD needs to nominate their currently active security people
+> for distros membership on behalf of their project.
+>
+> I could figure out who the active NetBSD security people are now and
+> approach them, but that's mostly not how distros membership applications
+> worked so far - specifically, I'd like membership to be requested by
+> each distros' security team.  I don't want to be pinging them about it
+> myself, as that could result in some joining just because they were
+> invited/reminded like that rather than because of genuine interest.
+>
+> Similarly, I intentionally don't CC this posting to anyone - if someone
+> (perhaps from NetBSD) is not in here, then even if they're doing
+> security response for their distro they are not an ideal representative
+> for their distro on the distros list.  That's because we assume that the
+> distro also keeps track of whatever issues are being made public on
+> oss-security (with most of those issues never having been brought up on
+> the distros list, so by being only on distros the person would miss most
+> issues they might need to deal with).
+>
+> If anyone from NetBSD who is on oss-security has anything relevant to
+> say on this, please speak up.
+>
+> Thanks,
+>
+> Alexander
+>
