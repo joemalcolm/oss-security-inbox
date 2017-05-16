@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/07/3
-Message-ID: <CALy8Cw6nxZkzoodbfrdWJzj15GtyE8P08cDhP95bzHKGah4spQ@mail.gmail.com>
-Date: Tue, 07 Mar 2017 10:44:26 +0000
-From: Craig Small <csmall@....com.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/5
+Message-Id: <20170516174512.274A517FDA8@rebar.astron.com>
+Date: Tue, 16 May 2017 13:45:11 -0400
+From: christos@...las.com (Christos Zoulas)
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Wordpress: 6 security issues in Wordpress 4.7 2
+Subject: Re: NetBSD/pkgsrc membership on distros list
 Content-Type: text/plain; charset=utf-8
 
-Hello again,
- Wordpress 4.7.3 fixes 6 security issues.  Summer of Pwnage has reported 2
-here yesterday but here is the list from the wordpress site.
+On May 16,  5:39pm, solar@...nwall.com (Solar Designer) wrote:
+-- Subject: [oss-security] NetBSD/pkgsrc membership on distros list
 
-Cross-site scripting (XSS) via media file metadata. Reported by Chris Andrè
-Dale, Yorick Koster, and Simon P. Briggs.
+| If anyone from NetBSD who is on oss-security has anything relevant to
+| say on this, please speak up.
 
-Control characters can trick redirect URL validation. Reported by Daniel
-Chatfield.
+Hi Alexander,
 
-Unintended files can be deleted by administrators using the plugin deletion
-functionality. Reported by xuliang.
+I've contacted the pkgsrc people and I will get back to you (or they will).
+You are right; you should be chasing distros.
 
-Cross-site scripting (XSS) via video URL in YouTube embeds. Reported by
-Marc Montpas.
+Thanks,
 
-Cross-site scripting (XSS) via taxonomy term names. Reported by Delta.
-
-Cross-site request forgery (CSRF) in Press This leading to excessive use of
-server resources. Reported by Sipke Mellema.
-
-
-Reference:
-https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
--- 
-Craig Small (@smallsees)   http://dropbear.xyz/     csmall at : enc.com.au
-Debian GNU/Linux           http://www.debian.org/   csmall at : debian.org
-GPG fingerprint:        5D2F B320 B825 D939 04D2  0519 3938 F96B DF50 FEA5
-
+christos
