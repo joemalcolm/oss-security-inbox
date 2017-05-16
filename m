@@ -1,21 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/4
-Message-ID: <20170428030832.GB53619@wopr>
-Date: Thu, 27 Apr 2017 20:08:32 -0700
-From: Kurt H Maier <khm@...ops.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/1
+Message-ID: <20170516153945.GA4717@openwall.com>
+Date: Tue, 16 May 2017 17:39:45 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8291 ghostscript remote code execution
+Subject: NetBSD/pkgsrc membership on distros list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 28, 2017 at 01:50:04AM -0000, security@...assian.com wrote:
->  CVE-2017-8291 was reported initially to Ghostscript by the Atlassian Security Team. We worked with the developers of Ghostscript to address this vulnerability. This vulnerability impacts versions 9.21 and earlier, and is called from many other libraries, such as Pillow and ImageMagick. Fortunately, fixes have now been pushed to master and can be reviewed here: 
->
-> https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirKb6U3wFxO6cZ2MrfZFe9KXxeenPQ9IFz8TJhw6LOtOaFuB-2BSAw9BeCw0BhtT081tIKPb6Ah9qpSmP-2FzO2sx-2BjA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbIeCjEPp1RqnDE5ZMVkV8u-2FQck2RKXjMbDOcixr2-2BNtOmj3Wzq5XwkhDFXhU2AKyL9layYKe-2BQtxt0vvnrLW-2BhggU2jp-2FuYmlu1mgnKq3GLT-2BQs66xRLMVK0ptzU4dayw9UBPVRQ2Fkfj-2FJw1BXrk-2BY-3D 
+Hi,
 
-https://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=04b37bbce174eed24edec7ad5b920eb93db4d47d
+A few individuals from/for NetBSD/pkgsrc joined the non-public distros
+list a while ago.  Unfortunately, lately they appear to have become
+inactive.  Thus, I am likely to remove NetBSD/pkgsrc from the distros
+list soon unless the membership is "renewed" through demonstrated
+interest and vulnerability response by specific people from there.
 
-> and https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirJzYNkGRnjRAeENnIy4IlGMktl4IMwqOL-2F6c9eA2tuyk4XtZY7kQE2gU21K2S6Iame7IH19-2BL1vfBFf0SU6yEiA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbPyFjltEjXNsT3qz-2Fb9AtZOlxcf7srfg3ApNJwAPl06rQsoKGLAu393JsVQP6IMnwpmfkPtqhUc0Kd-2Fr-2BdA39SFaSuqgV1MSaFq7Bx7Osg3G1ng9ujPr9Xt71FOQOsCM9Ada5YhYxQbHq72hBUfE7-2Bo-3D
+I notice NetBSD security team is still active in terms of issuing of
+public security advisories (latest one posted on March 24), but the way
+the situation looks to me (and I admit I could be wrong) those
+advisories are not produced by the same people who had joined distros.
+So maybe NetBSD needs to nominate their currently active security people
+for distros membership on behalf of their project.
 
-https://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=4f83478c88c2e05d6e8d79ca4557eb039354d2f3
+I could figure out who the active NetBSD security people are now and
+approach them, but that's mostly not how distros membership applications
+worked so far - specifically, I'd like membership to be requested by
+each distros' security team.  I don't want to be pinging them about it
+myself, as that could result in some joining just because they were
+invited/reminded like that rather than because of genuine interest.
 
-khm
+Similarly, I intentionally don't CC this posting to anyone - if someone
+(perhaps from NetBSD) is not in here, then even if they're doing
+security response for their distro they are not an ideal representative
+for their distro on the distros list.  That's because we assume that the
+distro also keeps track of whatever issues are being made public on
+oss-security (with most of those issues never having been brought up on
+the distros list, so by being only on distros the person would miss most
+issues they might need to deal with).
+
+If anyone from NetBSD who is on oss-security has anything relevant to
+say on this, please speak up.
+
+Thanks,
+
+Alexander
