@@ -1,4 +1,9 @@
-Received: (qmail 17489 invoked by uid 550); 13 Apr 2023 20:36:11 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["665" "Tuesday" "16" "May" "2017" "16:59:51" "+0100" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGCdm4KJXhayd5tRcB0Fvzb7_nQiaEvi=azzSTqzbjys8A@mail.gmail.com>" "27" "[oss-security] Two new security advisories for Apache CXF Fediz" nil nil nil "5" "2017051615:59:51" "[oss-security] Two new security advisories for Apache CXF Fediz" (number mark "U       coheigea@apa May 16   27/665   " thread-indent "\"[oss-security] Two new security advisories for Apache CXF Fediz\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11533 invoked by uid 550); 16 May 2017 16:02:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,35 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17464 invoked from network); 13 Apr 2023 20:36:11 -0000
-X-Virus-Scanned: Debian amavisd-new at nerv.fi
-Date: Thu, 13 Apr 2023 23:36:27 +0300
-From: Henri Salo <henri@nerv.fi>
-To: Demi Marie Obenour <demi@invisiblethingslab.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <ZDhnttxQd7ENy8C/@cc.hsalo.nerv.fi>
-References: <18477145-F7AD-455D-A0AB-77B3E402A7B7@beckweb.net>
- <ZDg9kq+QJz7beBQ+@itl-email>
+Received: (qmail 10030 invoked from network); 16 May 2017 16:00:08 -0000
+X-Gm-Message-State: AODbwcCmSqkI46EThoXhhp0Q7YAZdORhS+ICVQMikxaf0J03nC9bk7F1
+	R/a7xFrTvwiC5G6pJknZaCpzlK+tcQ==
+X-Received: by 10.98.76.155 with SMTP id e27mr12614587pfj.77.1494950392091;
+ Tue, 16 May 2017 08:59:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZDg9kq+QJz7beBQ+@itl-email>
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins plugins
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Tue, 16 May 2017 16:59:51 +0100
+X-Gmail-Original-Message-ID: <CAB8XdGCdm4KJXhayd5tRcB0Fvzb7_nQiaEvi=azzSTqzbjys8A@mail.gmail.com>
+Message-ID: <CAB8XdGCdm4KJXhayd5tRcB0Fvzb7_nQiaEvi=azzSTqzbjys8A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="001a1135da9a13e03b054fa64326"
+Subject: [oss-security] Two new security advisories for Apache CXF Fediz
 
-On Thu, Apr 13, 2023 at 01:36:14PM -0400, Demi Marie Obenour wrote:
-> What is the reason for the large number of unfixed vulnerabilities?
-> To me, this seems like an argument for not using Jenkins (or at least
-> its plugins) at all.
-> -- 
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
+--001a1135da9a13e03b054fa64326
+Content-Type: text/plain; charset="UTF-8"
 
-It's better for organizations to be aware of the vulnerabilities and risks
-related to used software. Sometimes it is challenging to get the author/team to
-fix the security issues (busy/unresponsive/miscommunication etc). This is very
-common with plugins in different software as there are large number of
-developers. It's better for users and community to disclose the issues if no
-fix is provided as plugins can be disabled, WAF can be configured etc.
+All,
+
+Two new security advisories are released that are fixed in the latest
+Apache CXF Fediz releases:
+
+a) CVE-2017-7661: The Apache CXF Fediz Jetty and Spring plugins are
+vulnerable to CSRF attacks.
+
+b) CVE-2017-7662: The Apache CXF Fediz OIDC Client Registration Service is
+vulnerable to CSRF attacks
+
+The security advisory texts are available at the following link - please
+read them carefully if you are an Apache CXF Fediz user:
+
+http://cxf.apache.org/security-advisories.html
+
 
 -- 
-Henri Salo
+Colm O hEigeartaigh
+
+Talend Community Coder
+http://coders.talend.com
+
+--001a1135da9a13e03b054fa64326--
