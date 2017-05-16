@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/21/6
-Message-ID: <20170721132647.GA4223@openwall.com>
-Date: Fri, 21 Jul 2017 15:26:47 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Euan Kemp <euan.kemp@...eos.com>
-Cc: oss-security@...ts.openwall.com, keescook@...gle.com, Brandon Philips <brandon.philips@...eos.com>, Alex Crawford <alex.crawford@...eos.com>
-Subject: Re: CoreOS membership to linux-distros (updated)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/3
+Message-ID: <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
+Date: Wed, 17 May 2017 00:15:55 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 18, 2017 at 02:56:23PM -0700, Euan Kemp wrote:
-> I???ve listed each criterion and why I think we, the Container Linux team
-> at CoreOS, qualify.
+On Wed, May 17, 2017 at 12:03 AM, Solar Designer <solar@...nwall.com> wrote:
+> Jason, Robert -
+>
+> On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
+>> A harmless example from rxvt - pushing back the new-line character:
+>>
+>> $ echo -ne "\eGQ;"
+>> ;$ 0
+>> bash: 0: command not found
+>
+> Does this also affect rxvt-unicode?
 
-I intend to add CoreOS to linux-distros in early August unless there are
-any well-reasoned objections by then.
+It does, actually. I've CCd rxvt-unicode upstream on this in order to
+hear their assessment.
 
-> Based on your previous messages, it sounds like it???s expected for us to
-> inherit 'primary' for the administrative tasks of:
-> > 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date) - primary: CloudLinux, backup: vacant
-> > 2. If the proposed public disclosure date is not within list policy, insist on getting this corrected and propose a suitable earlier date - primary: CloudLinux, backup: vacant
-
-Right.  CloudLinux - please get ready to pick up some other task(s).
-
-> I???ll also volunteer us for the administrative task of:
-> > 6. If multiple issues are reported at once, see if any of them can reasonably be made public sooner than the rest, and if so help untangle them and stay on top of their disclosure process
-> 
-> We???ll be happy to be on the lookout for possible conflation of issues
-> and kick off discussion if we think something can be broken up.
-
-This works.  Thanks.
-
-> We???ll provide relevant GPG keys separately if our membership is accepted.
-
-> Kees Cook can vouch for Brandon Philips (both on cc).
-
-Please feel free to provide the GPG keys to me off-list.  Also, Brandon
-should vouch for the rest of your team (again, off-list to me is OK).
-
-Alexander
+Regards,
+Jason
