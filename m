@@ -1,31 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/13
-Message-Id: <0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>
-Date: Mon, 22 May 2017 15:13:42 -0600
-From: Kurt Seifried <kseifrie@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to request a CVE for open source projects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/4
+Message-ID: <20170516172124.GA6798@openwall.com>
+Date: Tue, 16 May 2017 19:21:24 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Alistair Crooks <agc@...src.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: NetBSD/pkgsrc membership on distros list
 Content-Type: text/plain; charset=utf-8
 
-Well actually they can. Why do you think we (DWF) have an extensible Json format with the data hosted in git? Hint: so people can contribute.
+Hi Alistair,
 
+Thank you for the prompt response.
 
--Kurt
-
-
-
-
-
-> On May 22, 2017, at 13:45, Kurt H Maier <khm@...ops.net> wrote:
+On Tue, May 16, 2017 at 10:04:12AM -0700, Alistair Crooks wrote:
+> Yeah, we're here, we are the same as previously, still trying to go
+> about our business with maximum effect and minimal fuss, and we're
+> listening.
 > 
->> On Mon, May 22, 2017 at 08:57:21PM +0200, Marcus Meissner wrote:
->> 
->> Please everyone do the distributors a favour and link to GIT commits with fixes for
->> the requested CVE or at least explicit single reproducers, as we have increasing trouble
->> of associating CVEs with the correct place in code.
-> 
-> This is only gonna get worse now that mitre cut the mailing list out of
-> the process, and third-party participants can no longer add commentary
-> and insight into the reported vulnerabilities.
-> 
-> khm
+> We haven't contributed anything (much) recently, but we don't really
+> go in for massive "me too"s, and had kinda hoped that the "no drama"
+> approach would work here. It seems my assumptions were wrong. I will
+> attempt to do a better job at posting - sorry about that, mea culpa.
+
+It wasn't just that, and in fact mere "me too"s are discouraged.
+
+Over the last few days, there have been repeated requests to get a
+response specifically from NetBSD in a thread on the distros list.
+There was no response.  Additionally, the reporter of a vulnerability
+mentioned getting no response to their direct e-mail to your
+security-officer address.
+
+At least the distros' list messages were being accepted by the NetBSD
+mail server.  (I checked our logs.)
+
+I think you're one of the people subscribed to distros for NetBSD (until
+I suspended the subscription for reasons mentioned above half an hour
+ago).  Right?  Did you receive those messages?  If not, let's
+troubleshoot that now.  If you did, then why the lack of response?
+
+Are you also on oss-security?  I can't find you among the subscribers.
+
+> What are we doing these days? We're looking into the pre-announcement
+> that everyone else is looking at for NetBSD, and pkgsrc is even more
+> vibrant than ever, runs on a huge number of platforms, and is still
+> reporting CVEs in the usual way - we were told some minor Linux
+> distributions use the pkgsrc notification mechanism, so, for their
+> sakes, I'd ask that you continue to keep us in the loop, please.
+
+Sounds reasonable, but let's figure out what went wrong above first.
+
+I'm sorry for maybe creating drama, but this was already first brought
+up on the distros list itself (and elicited no response from any NetBSD
+person), and besides stuff on the distros list isn't meant to stay
+private forever anyway (even though this normally applies to
+vulnerabilities rather than to administrivia).
+
+Thanks,
+
+Alexander
