@@ -1,4 +1,9 @@
-Received: (qmail 29899 invoked by uid 550); 27 Oct 2022 15:12:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1821" "Tuesday" "16" "May" "2017" "17:39:45" "+0200" "Solar Designer" "solar@openwall.com" "<20170516153945.GA4717@openwall.com>" "37" "[oss-security] NetBSD/pkgsrc membership on distros list" "^Date:" nil nil "5" "2017051615:39:45" "[oss-security] NetBSD/pkgsrc membership on distros list" (number mark "        solar@openwa May 16   37/1821  " thread-indent "\"[oss-security] NetBSD/pkgsrc membership on distros list\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 20018 invoked by uid 550); 16 May 2017 15:40:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,46 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19884 invoked from network); 16 May 2017 15:39:51 -0000
+Message-ID: <20170516153945.GA4717@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Date: Tue, 16 May 2017 17:39:45 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27923 invoked from network); 27 Oct 2022 09:51:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XZj4NfhP0hinLPKlzVuLjDKsDqV4xHieZMNpvHTiKeM=;
-        b=AhDKwIsgsacivOlczyPbcFxIjX0cj92H0PZ9TCZJQb0VYLIa4SZPRg2Pht7njYUPPd
-         9hVvHj4iXyHKsgBp6yn+/WUsnYOIvvT+adE2OX0MHYVKTHLVfid8VGKS1gIcfMeOLIec
-         56p9M6/fXv+nq21J+ie11hy2n+Da07XSHFXTicHpsq/fPUqQYV9ilwKfeMGCMnHM3h+o
-         VtMf2L6ScVAzYdyHnR+F2O+Ihg1wzBtlFp79jp5hD3xSmvm/pGwVvnAU69NvSKeiDfvZ
-         2RVIk6KiWnkcIS+yIZR3LTk6jqpp7oMgy3kQjW5H/3LBjtxGbY0hTCjA+EiE/TKsrmBs
-         2QSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XZj4NfhP0hinLPKlzVuLjDKsDqV4xHieZMNpvHTiKeM=;
-        b=iFPV0A40z1PAwQTpYhbBis5KGZT3Ol9Codlynfl++JVwuxttt1Atn996nvUyep53KW
-         TqRQdkiBNJiSbWiurNFcQc1j9v06YCAqkR9rS2q1kiWrtQ0s7L1k8qk7zRwOdP6m74cb
-         70Wf2qbfY1S15qA7ngU+mKboR+I5290Wwo96NKOHAOer3Zn0JSRS4B/htzpyTqY/h6CT
-         jUaQZBVYDnO/vOheVqJNmT8t6AJNLXqXpRRLzuMhsg+ikTmkOultSUu9jGPb8bfyQequ
-         NEPaQrcqu5Cc49abCxcyHJTU92muZhtAIrREzXBoxHhZApsBcUX/PTFfFrZeGWtVkGxB
-         81ww==
-X-Gm-Message-State: ACrzQf1uhHX1iO2bhdKaAJ2lkNeeZBZc/44+kx72/R0pWVK7HtfjUZnR
-	7ee91Y+lvVnfGumXJLxMOeYPYMqE+CbV8PzO5pEm8qqSPH8=
-X-Google-Smtp-Source: AMsMyM5fee7Hxj7rHpGTS7wzUai8p37PRq8gOzj5KQlMd+9kHvtneQeq3vRTx5OGX2zcW7Yx3DvLmqT5jBxhGwZDa8E=
-X-Received: by 2002:a05:6000:1f91:b0:231:ed90:2a1c with SMTP id
- bw17-20020a0560001f9100b00231ed902a1cmr30997146wrb.28.1666864255991; Thu, 27
- Oct 2022 02:50:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <db0d3f4e-ea16-83f0-2a2c-8186f42af180@openssl.org>
-In-Reply-To: <db0d3f4e-ea16-83f0-2a2c-8186f42af180@openssl.org>
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Thu, 27 Oct 2022 12:50:31 +0300
-Message-ID: <CAGUWgD8YHzKE7JALLLxQELxgz8f6+_9cKEmbZm38C_QHwhFpxQ@mail.gmail.com>
+Subject: [oss-security] NetBSD/pkgsrc membership on distros list
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Forthcoming OpenSSL Releases
 
-Is libressl affected by these?
+Hi,
 
-Haven't seen announcement from libressl.
+A few individuals from/for NetBSD/pkgsrc joined the non-public distros
+list a while ago.  Unfortunately, lately they appear to have become
+inactive.  Thus, I am likely to remove NetBSD/pkgsrc from the distros
+list soon unless the membership is "renewed" through demonstrated
+interest and vulnerability response by specific people from there.
+
+I notice NetBSD security team is still active in terms of issuing of
+public security advisories (latest one posted on March 24), but the way
+the situation looks to me (and I admit I could be wrong) those
+advisories are not produced by the same people who had joined distros.
+So maybe NetBSD needs to nominate their currently active security people
+for distros membership on behalf of their project.
+
+I could figure out who the active NetBSD security people are now and
+approach them, but that's mostly not how distros membership applications
+worked so far - specifically, I'd like membership to be requested by
+each distros' security team.  I don't want to be pinging them about it
+myself, as that could result in some joining just because they were
+invited/reminded like that rather than because of genuine interest.
+
+Similarly, I intentionally don't CC this posting to anyone - if someone
+(perhaps from NetBSD) is not in here, then even if they're doing
+security response for their distro they are not an ideal representative
+for their distro on the distros list.  That's because we assume that the
+distro also keeps track of whatever issues are being made public on
+oss-security (with most of those issues never having been brought up on
+the distros list, so by being only on distros the person would miss most
+issues they might need to deal with).
+
+If anyone from NetBSD who is on oss-security has anything relevant to
+say on this, please speak up.
+
+Thanks,
+
+Alexander
