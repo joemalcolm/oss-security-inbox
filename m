@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/1
-Message-ID: <CAH8yC8nDE3RG1yeWg3WbH1eZSJqTi9kdHfFL6Hfq_7cGZPEnDg@mail.gmail.com>
-Date: Wed, 5 Jul 2017 22:12:11 -0400
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/4
+Message-ID: <20170516221628.GA29020@nautica>
+Date: Wed, 17 May 2017 00:16:28 +0200
+From: Dominique Martinet <asmadeus@...ewreck.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 2, 2017 at 5:08 AM, Daniel Skowroński <daniel@...nf.net> wrote:
-> Just wanted to bring attention to issue with systemd not doing what is expected when parsing User that should run service.
-> When it fails to parse string starting with digit it fails back to root causing obvious threat to security.
->
-> See discussion with developer on github: https://github.com/systemd/systemd/issues/6237
+Solar Designer wrote on Wed, May 17, 2017:
+> On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
+> > A harmless example from rxvt - pushing back the new-line character:
+> > 
+> > $ echo -ne "\eGQ;"
+> > ;$ 0
+> > bash: 0: command not found
+> 
+> Does this also affect rxvt-unicode?
 
-Point 1 from https://github.com/systemd/systemd/issues/6237#issuecomment-312479534
-seems to be a problem:
+Yes (at least on rxvt-unicode 9.21 and 9.22)
 
-> systemd is not the one coming up with the restrictions on user names,
-> and while some distributions are less restrictive, many do enforce the
-> same restrictions as we do. In order to make systemd unit files
-> portable between systems we'll hence enforce something that
-> resembles more the universally accepted set, rather than accept the
-> most liberal set possible.
+Actually, on rxvt 2.7.10 this will try to execute the command '1'
+instead so I'd wager they meant urxvt from the start... But both are
+similarily affected anyhow.
 
-systemd is effectively setting policy where it has no business doing so.
-
-Jeff
+-- 
+Dominique Martinet
