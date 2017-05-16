@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/1
-Message-ID: <CAH468doehvXuMkgF3caMFmia4K+dXJp5=6JFRTrkNGkHFiNoow@mail.gmail.com>
-Date: Sun, 5 Mar 2017 21:16:22 -0500
-From: Anthony Sasadeusz <sasadeu1@...c.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/2
+Message-ID: <CAB8XdGCdm4KJXhayd5tRcB0Fvzb7_nQiaEvi=azzSTqzbjys8A@mail.gmail.com>
+Date: Tue, 16 May 2017 16:59:51 +0100
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-Request JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)
+Subject: Two new security advisories for Apache CXF Fediz
 Content-Type: text/plain; charset=utf-8
 
-admin@...172-31-13-10:~/jasper/build-asan/src/appl$ ./jasper --input
-../../../build-afl/src/appl/findings/crashes/id\:000000\,sig\:11\,src\:000002\,op\:havoc\,rep\:16
---output /dev/null --output-format jp2
-ASAN:SIGSEGV
-=================================================================
-==16088==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
-(pc 0x7f45f3104fe6 sp 0x7ffcd24052c0 bp 0x7ffcd24063d0 T0)
-    #0 0x7f45f3104fe5 in jp2_encode
-/home/admin/jasper/src/libjasper/jp2/jp2_enc.c:119
-    #1 0x7f45f30de187 in jas_image_encode
-/home/admin/jasper/src/libjasper/base/jas_image.c:471
-    #2 0x402494 in main /home/admin/jasper/src/appl/jasper.c:277
-    #3 0x7f45f2a1eb44 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b44)
-    #4 0x401908 (/home/admin/jasper/build-asan/src/appl/jasper+0x401908)
+All,
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV
-/home/admin/jasper/src/libjasper/jp2/jp2_enc.c:119 jp2_encode
-==16088==ABORTING
+Two new security advisories are released that are fixed in the latest
+Apache CXF Fediz releases:
+
+a) CVE-2017-7661: The Apache CXF Fediz Jetty and Spring plugins are
+vulnerable to CSRF attacks.
+
+b) CVE-2017-7662: The Apache CXF Fediz OIDC Client Registration Service is
+vulnerable to CSRF attacks
+
+The security advisory texts are available at the following link - please
+read them carefully if you are an Apache CXF Fediz user:
+
+http://cxf.apache.org/security-advisories.html
 
 
-This also happens on the latest master branch.
-The repo: https://github.com/mdadams/jasper
+-- 
+Colm O hEigeartaigh
 
-Crashing inputs found with afl:
-https://github.com/nullsector/jasper-fuzz/tree/master/testcases/crashes
+Talend Community Coder
+http://coders.talend.com
 
