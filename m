@@ -1,4 +1,9 @@
-Received: (qmail 3086 invoked by uid 550); 24 Oct 2024 09:44:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["729" "Wednesday" "17" "May" "2017" "16:27:01" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1705171622060.32210@wniryva>" "25" "[oss-security] CVE-2017-7493 Qemu: 9pfs: guest privilege escalation in virtfs mapped-file mode" nil nil nil "5" "2017051710:57:01" "[oss-security] CVE-2017-7493 Qemu: 9pfs: guest privilege escalation in virtfs mapped-file mode" (number mark "U       ppandit@redh May 17   25/729   " thread-indent "\"[oss-security] CVE-2017-7493 Qemu: 9pfs: guest privilege escalation in virtfs mapped-file mode\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13729 invoked by uid 550); 17 May 2017 10:57:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 12103 invoked from network); 24 Oct 2024 08:41:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=christopher-kunz.de;
-	s=202409; t=1729759279;
-	bh=k0nIEo9yMhc0mNC/VYw6Z0QNLO/7Xt6j8x+ZHI1YEeA=;
-	h=Date:Subject:From:To:Reply-To:References:In-Reply-To:From;
-	b=BKnbGFkhBqae0ubjB3N7u+OigRNpMFKSPpiiv10fAtVhFY+7DAlycYgblvCTAhICU
-	 tRJafuggVwrkSBLAbqVRLnvCagYZYX3ztjQgIN1rA1p5YhYGffVdjKObAIkA0+PPvt
-	 IMgAHlMy/viBfSJqCyGgippk6gd5xAZQyp5v8ZnWetIovQ70pslhFP2r3AvC48DxCq
-	 icxbWlTNzCntDvZDRYnROMJIfKXEQazjKJjdTSLjPMoLS+g16pq6CI7jYWdiVwRm6S
-	 Dww8bLcBP4BXetWb9CZuWDkrb9QKs+9REv0xAA3uJuXTJ+YN87VEKj/m2NevNDZ7yI
-	 qqFBUE0BY/wQQ==
-Authentication-Results: mail.absynth.de;
-	auth=pass smtp.auth=info@christopher-kunz.de smtp.mailfrom=info@christopher-kunz.de
-Message-ID: <2d5bc5c3-81b9-4ab3-b477-7cf19c7acdbd@christopher-kunz.de>
-Date: Thu, 24 Oct 2024 10:41:18 +0200
+Received: (qmail 13690 invoked from network); 17 May 2017 10:57:18 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com E862A80468
+Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com E862A80468
+Date: Wed, 17 May 2017 16:27:01 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Leo Gaspard <leo@gaspard.io>
+Message-ID: <alpine.LFD.2.20.1705171622060.32210@wniryva>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: "Dr. Christopher Kunz" <info@christopher-kunz.de>
-To: oss-security@lists.openwall.com
-References: <a1a68f6f1e98d46bb9766614636de4d8eb90a33d.camel@openssl.org>
- <93820967-9c9c-4a21-8611-418d56dfd645@christopher-kunz.de>
-Autocrypt: addr=info@christopher-kunz.de; keydata=
- xsDiBD3U55kRBADKaqmPY/RBZ0luAFvOsa2lqQN8qXEimlCrbe0+WWywWDYNO/0c5B1FhUt2
- heF12OV9u1ldDdynB/awdV3NYaoizce86XQzQGcPpIOlEgI9iTTc1FSP9zDkkljLMrMB8WGK
- Q8WH6yLT+BOTIoK/rMs9DEN0hcsxOZY1wTEzhOfewwCg/7fHkook6P1/O/iOG3k/r90Um98D
- /AvzlFtPaRn5qiCWjeopDW1RAJNLvWwKs1HHv8m1UOtMNisqObD3SuHn9lp4FfGAu7gaJoqI
- /l6Rk02dgmBq+gyV+qg8PYXMlhh0xEfEO/TPPjx+nZnDRvO59tOj0pg2GLpIvQtdlwow1Iq4
- r2XfHUk1b827GZGAg1+ckkkNSG24A/9l238stiojp+GYwpuYkGrxROSYX+0slzRc40DHjtrb
- Jidz2Usmilyvt5WA1iBmAKw3L2TLQKpLtxAkGWSrDfdnl38VrYGMEM6WVctY6TxrqzrQLhaw
- W+17goNN73S3uP3C0YrdVjZc5jl0xlfli4zP7HmxL1YyRlLQ22aVcdDmS80rQ2hyaXN0b3Bo
- ZXIgS3VueiA8aW5mb0BjaHJpc3RvcGhlci1rdW56LmRlPsJ4BBMRAgA4AhsDBgsJCAcDAgMV
- AgMDFgIBAh4BAheAFiEEyIKO0X3RkBHAiOpQXPou6zl6ysEFAmWdKLICGQEACgkQXPou6zl6
- ysEHsQCfeqMRH0HyzVzl6XyNrxXdi0kSacYAnjXCcViWthCxB04fgluoiFw7b02TzsFNBD3U
- 55kQCAD2Qle3CH8IF3KiutapQvMF6PlTETlPtvFuuUs4INoBp1ajFOmPQFXz0AfGy0OplK33
- TGSGSfgMg71l6RfUodNQ+PVZX9x2Uk89PY3bzpnhV5JZzf24rnRPxfx2vIPFRzBhznzJZv8V
- +bv9kV7HAarTW56NoKVyOtQa8L9GAFgr5fSI/VhOSdvNILSd5JEHNmszbDgNRR0PfIizHHxb
- LY7288kjwEPwpVsYjY67VYy4XTjTNP18F1dDox0YbN4zISy1Kv884bEpQBgRjXyEpwpy1obE
- AxnIByl6ypUM2Zafq9AKUJsCRtMIPWakXUGfnHy9iUsiGSa6q6Jew1XpMgs7AAICB/97dSwj
- NNOvwX1CYynQFaXrajIBF9fSZcOJNZ5vh/+ejkl2nobkQicbI97dKYttanBaF4O//lPjNcbO
- iXkiqEI8FQPyp5I+KIkVy6MiNM09zd0qHVwlihok2JG5wSGXfUsXjk3iPsxIVhWZSrB2q0By
- Av95xcvUtxQl5cCGGqTxBIsGjiN4wkDS0FNXFH2hOuH5pCl+cbDdZmYTc1O+aeSygvLN76gs
- tBgDODp8p2Fiu7RL99SRLTIHdniSvOr/bm4BDRYY0D6P/MoZQydZPMmZAOv3qnOkPox/9e5/
- zP8cmLm08gbez8wjfl6Rl5OjngTIatupEWXZK022C2+LJBeFwkwEGBECAAwFAj3U55kFGwwA
- AAAACgkQXPou6zl6ysHXxgCgw8C3Y9WTlhK6j3KgyciAF6X+odsAnja8RhnAa3HRM8YZbeaW
- DC6HBdDe
-In-Reply-To: <93820967-9c9c-4a21-8611-418d56dfd645@christopher-kunz.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2024-9143: OpenSSL: Low-level invalid GF(2^m)
- parameters lead to OOB memory access
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Wed, 17 May 2017 10:57:06 +0000 (UTC)
+Subject: [oss-security] CVE-2017-7493 Qemu: 9pfs: guest privilege escalation in virtfs
+ mapped-file mode
 
-Am 23.10.24 um 11:10 schrieb Dr. Christopher Kunz:
->
->
-> while OpenSSL rates this issue as "low severity", SuSE assesses it as 
-> "moderate", with a CVSS 3.1 of 7.0 
-> (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:H).
->
-> I'm curious about these two quite different assessments. Could OpenSSL 
-> and SuSE maybe elaborate a little? 
+   Hello,
 
-FWIW,
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to an improper access control issue. 
+It could occur while accessing virtfs metadata files in mapped-file security 
+mode.
 
-both parties answered off-list (I needed an answer during the german 
-business day and got held up by moderation).
+A guest user could use this flaw to escalate their privileges inside guest.
 
-The difference is that OpenSSL does not adhere to CVSS-style risk 
-assessment, but assesses the severity of the bug together with the 
-likelihood of exploitation. Due to the latter being extremely low, the 
-overall assessment is "low".
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-05/msg03663.html
 
-SuSE, however, used vanilla CVSS3.1 assessment which does not include 
-exploitability metrics beyond "AC:H".
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1451709
 
-That explains the different scores.
+'CVE-2017-7493' has been assigned to this issue by Red Hat Inc.
 
-Best regards,
+It was reported by Leo Gaspard.
 
---cku
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
