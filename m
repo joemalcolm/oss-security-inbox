@@ -1,57 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/06/1
-Message-ID: <7f4109defadd49dbb7668f463db5516e@imshyb02.MITRE.ORG>
-Date: Fri, 6 Jan 2017 03:16:14 -0500
-From: <cve-assign@...re.org>
-To: <ailin.nemui@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Irssi Multiple Vulnerabilities (2017/01)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/11
+Message-ID: <521736ac-f512-1562-1a6a-af51a017d8c4@securify.nl>
+Date: Wed, 17 May 2017 18:18:55 +0200
+From: Summer of Pwnage <lists@...urify.nl>
+To: oss-security@...ts.openwall.com
+Subject: Re: Cross-Site Request Forgery in WordPress Connection Information
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> (a) A NULL pointer dereference in the nickcmp function found by Joseph
->     Bisch. (CWE-690)
-
-Use CVE-2017-5193.
+This issue is resolved in WordPress version 4.7.5.
+https://wordpress.org/news/2017/05/wordpress-4-7-5/
 
 
-> (b) Use after free when receiving invalid nick message (Issue #466, CWE-146)
-
-Use CVE-2017-5194.
-
-
-> (c) Out of bounds read in certain incomplete control codes found by
->     Joseph Bisch. (CWE-126)
-
-Use CVE-2017-5195.
-
-
-> (d) Out of bounds read in certain incomplete character sequences found
->     by Hanno Boeck and independently by J. Bisch. (CWE-126)
-
-Use CVE-2017-5196.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYb1HsAAoJEHb/MwWLVhi2oxsP/jjLY6oz9mByhAkhID79sf2N
-E0n/K0n0t228gqe515xPe3+IKnNETQql8dkGbiyDZSh0XJk1VMstJV/wfy6kqPG/
-pP+zb8cfpOi3Y8ept5NowUauadzbWvMkxewXmtjsPinTJKPqYxg21Sg1itx6/3gL
-cLpxertHOzFZc7GG1mDhvlisQy0jsZNi/NznCJunYhqrOfjtEDSUiDClWLpO5qx2
-OAEXlxJqeNGmZ670NLs37oGH2AYqKbQMwOw+KyNoUHufIDkwyC+7nd69Y6b2a9Oc
-FpLUheRRzO6lQ8XrakNqdrWx+V47hhCwx4Fd7zshCalat91bCA3bhHNVvIIz7Jb0
-la+rFjHNhHbPtxj/BowDp374MbbUT+RJyi51HYPjghb7w89ztOUWoikWAJAGL9pz
-HWsO25KxxBL6fZowWLm0gUTAgmuULpxmHC9csaszZZQVTKQ1UVMFdhzihFRdS8hF
-sveMm3Td0bo0EuZ804sUxaYDFg48tyolld3BmPUscMfQ5BBQHypRzXnpc/jblxat
-52z5xVHpWwcfwB+GeGOVygeOGfRzckzm22L/I4hveJe7wtWn4QpB0IbYeSYr7RgN
-HnSxMmPx/f1FPPvD7/Z1RNCi2AhUIVCe9NONLLnHdSqCr+sD0h3899++BWbmV/xn
-Swdkrn3C9vrjcoAglyPY
-=udlU
------END PGP SIGNATURE-----
+On 21-04-17 00:30, Summer of Pwnage wrote:
+> ------------------------------------------------------------------------
+> Cross-Site Request Forgery in WordPress Connection Information
+> ------------------------------------------------------------------------
+> Yorick Koster, July 2016
+>
+> ------------------------------------------------------------------------
+> Abstract
+> ------------------------------------------------------------------------
+> The FTP/SSH form functionality of WordPress was found to be vulnerable
+> to Cross-Site Request Forgery. This vulnerability can be used to
+> overwrite the FTP or SSH connection settings of the affected WordPress
+> site. An attacker can use this issue to trick an Administrator into
+> logging into the attacker's FTP or SSH server, disclosing his/her login
+> credentials to the attacker. In order to exploit this vulnerability, the
+> attacker has to lure/force a logged on WordPress Administrator into
+> opening a malicious website.
+>
+>
+> ------------------------------------------------------------------------
+> OVE ID
+> ------------------------------------------------------------------------
+> OVE-20160717-0004
+>
+> ------------------------------------------------------------------------
+> Tested versions
+> ------------------------------------------------------------------------
+> This issue was successfully tested on the WordPress [2] version 4.5.3 up
+> till and including version 4.7.4.
+>
+> ------------------------------------------------------------------------
+> Fix
+> ------------------------------------------------------------------------
+> There is currently no fix available.
+>
+> ------------------------------------------------------------------------
+> Introduction
+> ------------------------------------------------------------------------
+> WordPress is web software you can use to create a website, blog, or
+> app. It was found that the FTP/SSH form functionality is vulnerable to
+> Cross-Site Request Forgery. This vulnerability can be used by an
+> attacker to overwrite the FTP or SSH connection settings of the affected
+> WordPress site. It can be used to trick in an Administrator into login
+> into the attacker's FTP or SSH server, disclosing his/her login
+> credentials to the attacker.
+>
+> ------------------------------------------------------------------------
+> Details
+> ------------------------------------------------------------------------
+> This issue exists in the method request_filesystem_credentials()
+> (/wp-admin/includes/file.php). It allows overwriting of the values:
+>
+> - hostname
+> - username
+> - connection_type
+>
+> The request_filesystem_credentials() method is called in various
+> locations in WordPress. The connection information is updated if a POST
+> request contains a password or public & private key value (in case of
+> connection type ssh). In order to trigger this issue, the WordPress
+> installation must not be able to write to the wp-content folder. Also,
+> the attacker has to lure/force a logged on WordPress Administrator into
+> opening a malicious website.
+>
+> ------------------------------------------------------------------------
+> Proof of concept
+> ------------------------------------------------------------------------
+> <html>
+>     <body>
+>         <form action="http://<target>/wp-admin/plugins.php" 
+> method="POST">
+>             <input type="hidden" name="hostname" value="sumofpwn.nl" />
+>             <input type="hidden" name="connection_type" value="ftp" />
+>             <input type="hidden" name="password" value="password" />
+>             <input type="submit" value="Submit request" />
+>         </form>
+>     </body>
+> </html>
+> ------------------------------------------------------------------------
+> References
+> ------------------------------------------------------------------------
+> [1] 
+> https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_connection_information.html
+> [2] https://wordpress.org/
+> ------------------------------------------------------------------------
+> Summer of Pwnage (https://sumofpwn.nl) is a Dutch community project. Its
+> goal is to contribute to the security of popular, widely used OSS
+> projects in a fun and educational way.
