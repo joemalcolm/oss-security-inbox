@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1948" "Friday" "20" "July" "2018" "18:05:03" "+0000" "Rodric Rabbah" "rabbah@apache.org" "<CAAC1_d4geVGr-+Ok95Gq9C9P81BXUDT3d9N7-2r+qsiPrM5r3w@mail.gmail.com>" "42" "[oss-security] [CVE] CVE-2018-11756 PHP Runtime for Apache OpenWhisk" nil nil nil "7" "2018072018:05:03" "[oss-security] [CVE] CVE-2018-11756 PHP Runtime for Apache OpenWhisk" (number mark "U       rabbah@apach Jul 20   42/1948  " thread-indent "\"[oss-security] [CVE] CVE-2018-11756 PHP Runtime for Apache OpenWhisk\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8976" "Wednesday" "17" "May" "2017" "14:28:57" "+0000" "Fiedler Roman" "Roman.Fiedler@ait.ac.at" "<2ECE9D9EEF1F524185270138AE23265955AA31F1@S0MSMAIL111.arc.local>" "148" "AW: [oss-security] terminal emulators' processing of escape sequences" "^CC:" nil nil "5" "2017051714:28:57" "AW: [oss-security] terminal emulators' processing of escape sequences" (number mark "        Roman.Fiedle May 17  148/8976  " thread-indent "\"AW: [oss-security] terminal emulators' processing of escape sequences\"\n") "<CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" "<20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>" "<CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32490 invoked by uid 550); 20 Jul 2018 19:59:48 -0000
+Received: (qmail 15406 invoked by uid 550); 17 May 2017 15:03:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,183 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30634 invoked from network); 20 Jul 2018 18:05:58 -0000
-X-Gm-Message-State: AOUpUlEipX2px/LLszd/i+1Liuv/KByEkkudNajpQssoSM2ahFleGgSx
-	vD2yggxCMBA5X0l9piSh+AM2pBScDwP9nu43jsg=
-X-Google-Smtp-Source: AAOMgpfu5JxKYoFxTma9A3D702QO5VC5WXWtDFfmL3bd+r1BKkVkFvyg7Ny1M2id6MOk89WJFijWA1sPhDVcD1JFzLc=
-X-Received: by 2002:a25:c844:: with SMTP id y65-v6mr1608641ybf.278.1532109943773;
- Fri, 20 Jul 2018 11:05:43 -0700 (PDT)
+Received: (qmail 14305 invoked from network); 17 May 2017 14:29:10 -0000
+Thread-Topic: [oss-security] terminal emulators' processing of escape
+ sequences
+Thread-Index: AQHSwpp7Htu7UH7kGk2Pt5H49IE0t6Hf2MMAgAAOlYCAF5J+gIAAYNd6gAB1y4CAADwnAA==
+Message-ID: <2ECE9D9EEF1F524185270138AE23265955AA31F1@S0MSMAIL111.arc.local>
+References: <20170501164428.GA12322@openwall.com>
+ <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
+ <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
+ <20170516220345.GA10874@openwall.com>
+ <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
+ <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>
+ <CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>
+In-Reply-To: <CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>
+Accept-Language: en-US, de-AT
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.30.249.121]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-From: Rodric Rabbah <rabbah@apache.org>
-Date: Fri, 20 Jul 2018 18:05:03 +0000
-X-Gmail-Original-Message-ID: <CAAC1_d4geVGr-+Ok95Gq9C9P81BXUDT3d9N7-2r+qsiPrM5r3w@mail.gmail.com>
-Message-ID: <CAAC1_d4geVGr-+Ok95Gq9C9P81BXUDT3d9N7-2r+qsiPrM5r3w@mail.gmail.com>
-To: Apache Security Team <security@apache.org>, oss-security@lists.openwall.com, 
-	announce@apache.org, dev@openwhisk.apache.org
-Cc: Ory Segal <ory@puresec.io>
-Content-Type: multipart/alternative; boundary="000000000000f4b251057172246b"
-Subject: [oss-security] [CVE] CVE-2018-11756 PHP Runtime for Apache OpenWhisk
+CC: "Jason@zx2c4.com" <Jason@zx2c4.com>,
+        "rxvt-unicode@lists.schmorp.de"
+	<rxvt-unicode@lists.schmorp.de>,
+        "rxvt@schmorp.de" <rxvt@schmorp.de>
+Date: Wed, 17 May 2017 14:28:57 +0000
+From: Fiedler Roman <Roman.Fiedler@ait.ac.at>
+Reply-To: oss-security@lists.openwall.com
+Subject: AW: [oss-security] terminal emulators' processing of escape
+ sequences
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---000000000000f4b251057172246b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Who is Affected: Apache OpenWhisk users with an explicitly created Docker
-action, and the Docker image used for the action inherits from the affected
-Docker tags:
-- openwhisk/action-php-v7.2 < 1.0.1
-- openwhisk/action-php-v7.1 < 1.0.2
-
-The PHP Runtime does not currently have any Apache releases.
-
-Description: A Docker action running as a serverless function (e.g., wsk
-action create <name> =E2=80=94docker <image>), where the Dockerfile used to=
- create
-the Docker image inherits one of the affected tags, may allow a carefully
-crafted parameter to overwrite the serverless function running inside the
-container. This requires the user included function to be vulnerable in
-some way, for example via parameter hijacking, remote code execution, or
-unsafe use of =E2=80=9Ceval()=E2=80=9D. Subsequent executions of the origin=
-al function in
-the same container will use the replaced implementation if the function was
-successfully exploited.
-
-Mitigation: Users that create their own Docker runtimes to run as Apache
-OpenWhisk Docker actions, and who pin their Docker runtime image (e.g.,
-Dockerfile starts with =E2=80=9CFROM openwhisk/action-php-v7.2:1.0.0=E2=80=
-=9D) should
-upgrade their Docker tag to the latest available tag. Users who build from
-source, should use the latest commit Git tag [1]. Operators of an Apache
-OpenWhisk deployment should check their runtime manifest to determine if
-they are affected, and if so, upgrade the tags in their runtimes manifest
-to automatically patch all actions runtimes when updating their deployment.
-
-Credit: This issue was discovered while investigating a related issue
-researched and reported by Yuri Shapira and Ory Segal of PureSec.
-
-[1]
-https://github.com/apache/incubator-openwhisk-runtime-php/commit/6caf902f52=
-7250ee4b7b695929b628d560e0dad1
-
---000000000000f4b251057172246b--
+PiBGcm9tOiBSb2JlcnQgxZp3acSZY2tpIFttYWlsdG86cm9iZXJ0QHN3aWVj
+a2kubmV0XQ0KPiANCj4gSGksDQo+IA0KPiA+PiA+IE9uIFR1ZSwgTWF5IDAy
+LCAyMDE3IGF0IDEyOjA1OjI3QU0gKzAyMDAsIFJvYmVydCA/P3dpPz9ja2kg
+d3JvdGU6DQo+ID4+ID4+IEEgaGFybWxlc3MgZXhhbXBsZSBmcm9tIHJ4dnQg
+LSBwdXNoaW5nIGJhY2sgdGhlIG5ldy1saW5lDQo+IGNoYXJhY3RlcjoNCj4g
+Pj4gPj4NCj4gPj4gPj4gJCBlY2hvIC1uZSAiXGVHUTsiDQo+ID4+ID4+IDsk
+IDANCj4gPj4gPj4gYmFzaDogMDogY29tbWFuZCBub3QgZm91bmQNCj4gPj4g
+Pg0KPiA+PiA+IERvZXMgdGhpcyBhbHNvIGFmZmVjdCByeHZ0LXVuaWNvZGU/
+DQo+ID4+DQo+ID4+IEl0IGRvZXMsIGFjdHVhbGx5LiBJJ3ZlIENDZCByeHZ0
+LXVuaWNvZGUgdXBzdHJlYW0gb24gdGhpcyBpbiBvcmRlciB0bw0KPiA+PiBo
+ZWFyIHRoZWlyIGFzc2Vzc21lbnQuDQo+ID4NCj4gPiBUaGVyZSBjYW4ndCBi
+ZSBhbiBhc3Nlc3NtZW50IHdpdGhvdXQga25vd2xlZGdlIG9mIHdoYXQgdG8g
+YXNzZXNzIC0NCj4gdGhlcmUNCj4gPiBpcyBsaXR0bGUgdG8gbm8gaW5mb3Jt
+YXRpb24gaW4geW91ciBtYWlsLiBJIGNhbiBvbmx5IGd1ZXNzIHRoYXQNCj4g
+c29tZWJvZHkNCj4gPiBmb3IgdGhlIGh1bmRyZWR0aCB0aW1lIGZvdW5kIG91
+dCB0aGF0IHRlcm1pbmFscyBhcmUgbW9yZSB0aGFuIGR1bWINCj4gPiBkaXNw
+bGF5IGRldmljZXMgYW5kIGdvdCBleGNpdGVkIHRoYXQsIHNvbWVob3csIHRo
+aXMgbWlnaHQgYmUgYQ0KPiBzZWN1cml0eQ0KPiA+IGlzc3VlLiBXaXRob3V0
+IGtub3dpbmcgZGV0YWlscywgSSBjYW4ndCBzYXkgZm9yIHN1cmUsIGJ1dCBt
+b3N0IGxpa2VseSwNCj4gPiB0aGlzIGlzIGEgc2VjdXJpdHkgaXNzdWUgdGhl
+IHNhbWUgd2F5IGJsaW5kbHkgZmVlZGluZyB1bmtub3duIGNvbW1hbmRzDQo+
+IHRvDQo+ID4geW91ciBzaGVsbCBpcywNCj4gDQo+IEdpdmVuIHRoYXQgYXJi
+aXRyYXJ5IGRhdGEgY2FuIGJlIHB1c2hlZCB0byB0ZXJtaW5hbCBlbXVsYXRv
+cnMgdmlhDQo+IHNlZW1pbmdseSBoYXJtbGVzcyBjb21tYW5kcyAobGlrZSBw
+aW5nLCB3aG9pcykgdGhhdCBwZW9wbGUgcmF0aGVyDQo+IHRydXN0IHRvIGJl
+IHJvYnVzdCBlbm91Z2ggdG8gaW50ZXRyYWN0IHdpdGggYXJiaXRyYXJ5IHdo
+b2lzIG9yIEROUw0KPiBzZXJ2ZXJzLCB0aGlzIG1pZ2h0IGJlIHNvbWUgcHJv
+YmxlbS4NCj4gDQo+IFBsZWFzZSBjb25zaWRlciB0aGUgZm9sbG93aW5nIGV4
+YW1wbGU6DQo+IA0KPiAkIHRhaWwgLW4xIC9ldGMvaG9zdHMgfCB4eGQNCj4g
+MDAwMDAwMDA6IDMxMzIgMzcyZSAzMDJlIDMwMmUgMzMwOSAxYjQ3IDUxM2Ig
+MjA1YSAgMTI3LjAuMC4zLi5HUTsgWg0KPiAwMDAwMDAxMDogNWE1YSAwYSAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBaWi4NCj4gJCBwaW5n
+IFpaWg0KPiBQSU5HIDsgKDEyNy4wLjAuMykgNTYoODQpIGJ5dGVzIG9mIGRh
+dGEuDQo+IF5bRzANCj4gNjQgYnl0ZXMgZnJvbSA7ICgxMjcuMC4wLjMpOiBp
+Y21wX3NlcT0xIHR0bD02NCB0aW1lPTAuMDM5IG1zDQo+IF5bRzANCj4gNjQg
+Ynl0ZXMgZnJvbSA7ICgxMjcuMC4wLjMpOiBpY21wX3NlcT0yIHR0bD02NCB0
+aW1lPTAuMDMyIG1zDQo+IF5bRzANCj4gXkMNCj4gLS0tIDsgcGluZyBzdGF0
+aXN0aWNzIC0tLQ0KPiAyIHBhY2tldHMgdHJhbnNtaXR0ZWQsIDIgcmVjZWl2
+ZWQsIDAlIHBhY2tldCBsb3NzLCB0aW1lIDEwMTRtcw0KPiBydHQgbWluL2F2
+Zy9tYXgvbWRldiA9IDAuMDMyLzAuMDM1LzAuMDM5LzAuMDA2IG1zDQo+IF5b
+RzANCj4gJCAwDQo+IGJhc2g6IDA6IGNvbW1hbmQgbm90IGZvdW5kDQo+IA0K
+PiBJJ20gbm90IHN1cmUgaWYgdGhpcyB3b3JrcyB3aXRoIHJlYWwgcmV2ZXJz
+ZSBETlMgbG9vay11cHMsIGJ1dCB3aXRoDQo+IC9ldGMvaG9zdHMgaXQgc2Vl
+bXMgc28uDQoNCkl0IG1pZ2h0LCBzYW1lIGFzIG1hbnkgb3RoZXIgcHJvZ3Jh
+bXMgbWlnaHQgcHJvZHVjZSBxdWl0ZSB1bmV4cGVjdGVkIHJlc3VsdHMuIEZv
+ciBleGFtcGxlIHRha2UgImFwdC1nZXQgdXBkYXRlIjogRE5TIGFuZCBIVFRQ
+IHRyYW5zZmVyIGlzIG5vdCB0cnVzdGVkLCBzbyBhcmJpdHJhcnkgdGVybWlu
+YWwgY29tbWFuZHMgY2FuIGV4ZWN1dGVkIGluIHRoZSB0ZXJtaW5hbC4gKElm
+IHlvdSBkbyBub3QgaGF2ZSBhIE1pdE0tZnJhbWV3b3JrIGF0IGhhbmQsIGp1
+c3QgdHJ5IHRoZSB1cGRhdGUgdXNpbmcgYSBzdGFuZGFyZCBBcGFjaGUgc2Vy
+dmVyIHdpdGggdGhpcyByZXdyaXRlIHJ1bGUgYW5kIHNlZSB0aGUgdGl0bGUg
+b2YgeW91ciB0ZXJtaW5hbCBjaGFuZ2U6ICJSZXdyaXRlUnVsZSBeLy4qIGh0
+dHA6Ly9zb21laG9zdGVuYW1lL3h4XCU0MVwlMWJcJTVkXCUzYnRlc3RcJTA3
+eHh4IFtORSxCLFIsTF0iIC0gYW5vdGhlciBnb29kIHJlYXNvbiB0byBydW4g
+eW91ciBvd24gbWlycm9ycyBvbiBhIG5ldHdvcmsgeW91IGNhbiB0cnkgdG8g
+cHJldmVudCBNaXRNLCBwZXJoYXBzIG92ZXIgU1NMLikNCg0KSW4gbXkgb3Bp
+bmlvbiwgdGhlIHVzZXIgb2YgdGhlIHRlcm1pbmFsIG1pZ2h0IHNvbWVob3cg
+YWxzbyBiZSBhdCBmYXVsdCBpbiB0aG9zZSBleGFtcGxlcy4gQW55b25lIHBl
+cmZvcm1pbmcgYW4gYWN0aW9uIHNob3VsZCBoYXZlIGFuIGVzdGltYXRpb24s
+IHdoYXQgcHJvYmFiaWxpdHkgb2YgbmVnYXRpdmUgb3V0Y29tZSBvZiBhbiBh
+Y3Rpb24gaXMgYWNjZXB0YWJsZS4gVGhlIHByb2JhYmlsaXR5IGlzIGFmZmVj
+dGVkIGJ5IHR3byB0aGluZ3M6IHByb2JhYmlsaXR5IHRoZSB1c2VyIGRvZXMg
+bm90IGJlaGF2ZSB3ZWxsIChtaXN0eXBlcywgZm9yZ2V0cyBzb21ldGhpbmcs
+IGRpZCBub3QgcmVhZCBhbGwgdGhlIG1hbnVhbHMgdGh1cyBtaXN1c2luZyB0
+aGUgdG9vbHMpIG9yIHRoZSBzb2Z0d2FyZSBtaXNiZWhhdmVzIChhY2NvcmRp
+bmcgdG8gbWFudWFsLCBpdCBzaG91bGQgZG8gc29tZXRoaW5nIGVsc2UgYnV0
+IGl0IGRvZXMgbm90KS4NCg0KU28gaWYgSSBkbyBub3QgcmVhbGx5IGNhcmUg
+YWJvdXQgcXVhbGl0eSBvZiBteSB3b3JrLCBJIGRvIG5vdCBmdWxseSByZWFk
+IHRoZSBtYW51YWxzLCBJIGRvIG5vdCBjYXJlIGFib3V0IHRvb2wgcXVhbGlm
+aWNhdGlvbiBhbmQgcmlzayBhc3Nlc3NtZW50LCAuLi4sIHNvIHByb2JhYmls
+aXR5IGZvciBzdWNoIGFuIHVuZXhwZWN0ZWQgc29mdHdhcmUgZmVhdHVyZSBv
+ciBidWcgKGlzIGl0IGEgYnVnPyB0aGVyZWZvcmUgdGhlIG1hbnVhbCBuZWVk
+cyB0byBzdGF0ZSB0aGUgY29ycmVjdCBiZWhhdmlvciBhbmQgSSBkaWQgbm90
+IGNvbXBsZXRlbHkgcmVhZCBpdCkgc2hvdWxkIG5vdCBiZSBoaWdoZXIgb3Ig
+bmVhciB0aGFuIG15IHByb2JhYmlsaXR5IG9mIGZhaWxpbmcuIFRoZSBwcm9i
+YWJpbGl0eSBvZiBmYWlsaW5nIG9mIGNvdXJzZSBpbmNsdWRlcyBhbHNvIHRo
+ZSBwcm9iYWJpbGl0eSBvZiBwcmVzZW5jZSBvZiBhIG1hbGljaW91cyBhY3Rv
+ciBhbmQgaGlzIGFiaWxpdHkgdG8gcmFpc2UgdGhlIHByb2JhYmlsaXR5IG9m
+IGZhaWx1cmUgZHVlIHRvIGF0dGFjayBzdXJmYWNlIG9mIHRvb2xzLg0KDQpX
+aGVuIHRyeWluZyB0byBkbyB0aGluZ3MgdG8gYmUgc2FmZSBhbmQgc2VjdXJl
+LCB0aGVuIHlvdSB3aWxsIGNhcmUgYWJvdXQgeW91ciBvd24gcXVhbGl0eSBv
+ZiB3b3JrIChTT1BzLCBhdXRvbWF0aW9uLCA0IGV5ZXMsIC4uKSBidXQgYWxz
+byBjYXJlIGFib3V0IHRoZSByaXNrIG9mIHNvZnR3YXJlIGZhaWx1cmUgYW5k
+IHRyeSB0byByZWR1Y2UgaXQuIE9uIHRoZSB0ZXJtaW5hbCB0b3BpYzoNCg0K
+KiBXaGVyZSByZWxldmFudCAocmVtb3RlIG1haW50ZW5hbmNlLCB3b3JraW5n
+IHdpdGggdXNlciBzdXBwbGllZCBkYXRhLCBmb3JlbnNpY3Mgb2YgY29tcHJv
+bWlzZWQgZXF1aXBtZW50LCAuLi4pIG1vc3QgbGlrZWx5IGV2ZXJ5dGhpbmcg
+aXMgZG9uZSB3aXRoaW4gc3lzdGVtIHZpcnR1YWxpemF0aW9uIHdpdGggc29t
+ZXRoaW5nIHNhbml0aXppbmcgYXdheSB1bmV4cGVjdGVkIGRhdGEuIFNvbWV0
+aGluZyBsaWtlICJzY3JlZW4gc2ggLWMgJ2V4ZWMgYmFzaCB8IHN0cmluZ3Mn
+IiBtaWdodCBjb21lIGluIGhhbmR5IG9yIHZpZXdpbmcgZmlsZXMgb25seSB3
+aXRoIHh4ZCAoaG93IGxpa2VseSBpcyBhIDE4a2IgYmluYXJ5IGxpbmtlZCB0
+byBsaWJjIG9ubHkgdG8gZmFpbD8pLiBJIGd1ZXNzIGl0IHNob3VsZCBiZSBj
+b21tb24gc2Vuc2UsIG5vdCB0byB0cnVzdCBhIHNvbWUgdGVybWluYWwgYmVp
+bmcgMTB4IHRoZSBzaXplIGFuZCBhZGRpdGlvbmFsbHkgbGlua2luZyA1IGxh
+cmdlIGxpYnJhcmllcyB3aGVuIGl0IGNvbWVzIHRvIHdvcmsgb24gc29tZXRo
+aW5nIHJlYWxseSB2YWx1YWJsZS4NCg0KKiBBcyB5b3UgYXJlIHNsb3dlZCBk
+b3duIGJ5IHRob3NlIG1lYXN1cmVzIChjb250cm9sc2VxdWVuY2VzIGZvciBo
+aWdobGlnaHRpbmcsIGNvbG9ycywgdHJ5IHJlYWRpbmcgIm1hbiBscyIgdGhh
+dCB3YXkpLCBlbmFibGluZyBzb21lIGNvbnRyb2wgc2VxdWVuY2VzIG1pZ2h0
+IGFsc28gaW1wcm92ZSB5b3VyIHF1YWxpdHkgb2Ygd29yay4gU28geW91IG5l
+ZWQgdG8gInRydXN0IiBzb21lIHByb2dyYW0gdG8gZG8gdGhhdCBmb3IgeW91
+LCBhbmQgcHJvYmFibHkgeW91IHdpbGwgdHJ1c3Qgc29tZSBtb3JlIHRoYW4g
+b3RoZXJzLiBFLmcuICJzY3JlZW4iIHB1cnBvc2UgaXMgbW9zdGx5IHNjcmVl
+biBtdWx0aXBsZXhpbmcgd2l0aCBjb250cm9sIHNlcXVlbmNlIHNhbml0YXRp
+b24sIHdoaWxlIGluIEdVSS10ZXJtaW5hbHMgaXQgaXMgb25seSBoYWxmIG9m
+IHRoZSBwcm9ncmFtIHJlcXVpcmVtZW50cy4NCg0KDQpKdXN0IGZvciB0ZXN0
+aW5nIHRvIHNlZSBob3cgaGFyZCBpdCBpcyB0byB1c2UgYWxsIHNvZnR3YXJl
+IGNvcnJlY3RseSBmb3IgdGhlIHBhcmFub2lkL21hbGljaW91cyB1c2UgY2Fz
+ZSwgdXNlIHh0ZXJtIHRvIHNlZSB0aGUgZGlmZmVyZW50IG91dGNvbWVzIG9m
+IGRhdGEgc2FuaXRhdGlvbiBtZWFzdXJlcy4gVHJ5IHRvIGF2b2lkIHRoZSBj
+cmFzaCBmcm9tICBweXRob24gLWMgJ3ByaW50ICJceDFiXTQ7NDsiKyJBIioo
+MTw8MjApKyJceDA3IicgLiBZb3VyIG1lYXN1cmVzIHdpbGwgdGhlbXNlbHZl
+cyBnZXQgcXVpdGUgYW5ub3lpbmcgd2hlbiB3b3JraW5nIG92ZXIgU1NIIGNv
+bm5lY3Rpb25zIGFzIGxvY2FsIGNvbnRyb2wgc3RyaXBwaW5nIGRvZXMgbm90
+IHdvcmsgbmljZWx5IHdpdGggcmVtb3RlIGNvbm5lY3Rpb25zIGFuZCBpbnRl
+cmFjdGl2ZSB0ZXJtaW5hbHMuIFdpdGggInNzaCAtVCIgeW91IGNhbiBhdCBs
+ZWFzdCByZWFkIG91dHB1dCBvZiAibHMiIHF1aXRlIG5vcm1hbC4gSXQgaXMg
+cmVhbGx5IGEgcGl0eSwgdGhhdCBTU0ggY2xpZW50IGRvZXMgbm90IHByb3Zp
+ZGUgY29udHJvbCBjaGFyYWN0ZXIgc3RyaXBwaW5nLiBBcyBzdWNoIGEgcHJv
+Z3JhbSB3aXRoICJzZWN1cmUiIGluIHRoZSBuYW1lLCBleHBlY3RhdGlvbiBp
+cyB0aGF0IHRoZXJlIGV4aXN0cyBhbiBhcHByb3ByaWF0ZSBkZXZlbG9wbWVu
+dCBwcm9jZXNzIGZvciBzZWN1cml0eSBhbmQgaGVuY2UgdGhlIHByb2dyYW0g
+aXMgbW9yZSBsaWtlbHkgdG8gZG8gaXQgcmlnaHQgdGhhbiBhbGwgdGhlIHZh
+cmlvdXMgdGVybXMgb3V0IHRoZXJlLg0KDQpDb25jbHVzaW86IHRlcm1pbmFs
+IGVzY2FwZSBzZXF1ZW5jZSBwcm9jZXNzaW5nIGlzIHdheSB0b28gY29tcGxl
+eCwgdG8gYWNjZXB0IGl0IG9uIGltcG9ydGFudCBzeXN0ZW1zLCBzbyBqdXN0
+IGRvIG5vdCBkbyBpdC4gWW91IHdvdWxkIG5vdCByZWFkIG1haWwgb3Igb3Bl
+biBhIHRleHQgZG9jdW1lbnQgb24geW91ciBhZG1pbmlzdHJhdGlvbiBtYWNo
+aW5lIGFsc28uDQoNCg0KTEcgUm9tYW4NCg0KUFM6IFRvIGZpbmQgb3V0LCB3
+aGljaCB0ZXJtaW5hbCBpcyBsZXNzIGR1bWIgdGhhbiBvdGhlcnMsIEkgdXNl
+ZCB0aGUgZm9sbG93aW5nIGJ6aXBlZCBwcm9ncmFtIHRvIHNlZSBpZiB0ZXJt
+aW5hbCBjcmFzaGVzLCB3cml0ZXMgZGF0YSB0byBzdGRpbiBvciBvdGhlcndp
+c2UgbWlzYmVoYXZlcyB0byBnZXQgYW4gZXN0aW1hdGlvbiBvZiB0aGUgcHJv
+YmFiaWxpdHkgb2Ygc29mdHdhcmUgZmFpbHVyZS4NCg0KUWxwb09URkJXU1pU
+V2NrT2ZNTUFBRWZmZ0ZRUWFlL3dtci8vLy80Ly8vLzBNQUZiVFFocVNhR2pS
+azBERURJQU1Sb3lHUnBrMEJvQg0KNmcxVDFUeW1hbWcwRFJrTkFESWFCa0FB
+QTBBQkpJS2VwNmhwaUZQMU5wR3BvOUpvQXhCbzlUUUR5VFpUMDFQVVZSRWZx
+OXRvc0dlNQ0KbVRIeDhFSVhZUHdMYmVFazRRVG5tUnNRL005S2NFamc0UUlr
+TWJsUkFnZDBIQmNFd1NnZ1VUQmlEQkxhMWpWcGV3eXBVMldFS0dUUQ0KS1N2
+aU1sZzBoNnRqTVhGSUNNQ0dqTWxiZndaNXluZDVRSUQ5OFMzeGpsY1lnVGRv
+dTRXWnNiaXJJWEF2NFhqeGhyT0hscHlLRXk1ag0KV0dXcytodlRjSU5UanV2
+WnRleFA3dDhIQ0dMa1cyR01jWmdRRTEwMU1BRHVSMUd2VkxzOTU2anR3cExj
+Yks2dGt1eHUyU1Bvc1VrRw0KMWFhYU5kS0tlQlZUVFRZcncvSGlTODZLNnR6
+RmFrZDdPM2dNcklyZThkQitZQXkvMVJTdUtnQ3FjOHVYY1VNTXhwVWNCWkh4
+RU1IaA0KWkJkZmE3UGlScVNtamxZTS83bUxTeGozbFVtWnZ6TzIxRWM5ZVVy
+WjR5VGhreEgvT2JNUkluT1BQRlVxeEs2a2lCZjR1NUlwd29TRw0KU0hQbUdB
+PT0NCg==
