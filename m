@@ -1,4 +1,9 @@
-Received: (qmail 11869 invoked by uid 550); 20 Dec 2023 08:40:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1880" "Wednesday" "17" "May" "2017" "09:40:57" "-0700" "Ian Zimmerman" "itz@primate.net" "<20170517162923.3855.16F61A97@matica.foolinux.mooo.com>" "59" "[oss-security] rxvt-unicode \"insecure\" setting [Was: terminal emulators' processing of escape sequences]" "^Date:" nil nil "5" "2017051716:40:57" "[oss-security] rxvt-unicode \"insecure\" setting [Was: terminal emulators' processing of escape sequences]" (number mark "        itz@primate. May 17   59/1880  " thread-indent "\"[oss-security] rxvt-unicode \"insecure\" setting [Was: terminal emulators' processing of escape sequences]\"\n") "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28417 invoked by uid 550); 17 May 2017 16:44:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,149 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11851 invoked from network); 20 Dec 2023 08:40:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1703061669; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0OIYkgOXJmZR3RojwugSDHDvygSqVdAQIYQDfpqw83E=;
-	b=XuLlPS7HfBiO+EZQS6ZIwwwK/b8hy8kg0W8ToZ3Ckh+FoMoX8Iwy6vEo1mfTB04tuxCcdi
-	9jPQVVuB3pgICccryACPmCKQd+mgdNb9SoeeDNyeK1UXxs1BtzsleiDLI3FOFM7d6G6Wxa
-	j3yNtWCi+iiis3FXcfOet+cVV/X77uk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1703061669;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0OIYkgOXJmZR3RojwugSDHDvygSqVdAQIYQDfpqw83E=;
-	b=h5Srm/gleKmqZrET31r6XoMoH1RKKH6VIKJQqRURtvYf+nW3uGEp5hnSv2oOix3C3Ab+zo
-	uBfKzexGFZhjxNAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1703061669; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0OIYkgOXJmZR3RojwugSDHDvygSqVdAQIYQDfpqw83E=;
-	b=XuLlPS7HfBiO+EZQS6ZIwwwK/b8hy8kg0W8ToZ3Ckh+FoMoX8Iwy6vEo1mfTB04tuxCcdi
-	9jPQVVuB3pgICccryACPmCKQd+mgdNb9SoeeDNyeK1UXxs1BtzsleiDLI3FOFM7d6G6Wxa
-	j3yNtWCi+iiis3FXcfOet+cVV/X77uk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1703061669;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0OIYkgOXJmZR3RojwugSDHDvygSqVdAQIYQDfpqw83E=;
-	b=h5Srm/gleKmqZrET31r6XoMoH1RKKH6VIKJQqRURtvYf+nW3uGEp5hnSv2oOix3C3Ab+zo
-	uBfKzexGFZhjxNAw==
-Date: Wed, 20 Dec 2023 09:41:07 +0100
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20231220084053.GD25373@suse.de>
-References: <a8637927-82b1-4f95-a7e8-7aa6cbaca455@rub.de>
- <6c354ad9-7d17-4b37-8e54-73cc4088f2b0@oracle.com>
+Received: (qmail 25981 invoked from network); 17 May 2017 16:41:10 -0000
+X-Authentication-Warning: acedia.primate.net: itz set sender to itz@primate.net using -f
+Message-ID: <20170517162923.3855.16F61A97@matica.foolinux.mooo.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20170501164428.GA12322@openwall.com>
+ <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
+ <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
+ <20170516220345.GA10874@openwall.com>
+ <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6c354ad9-7d17-4b37-8e54-73cc4088f2b0@oracle.com>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
- =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
- =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Authentication-Results: smtp-out1.suse.de;
-	none
-Subject: Re: [oss-security] CVE-2023-48795: Prefix Truncation Attacks in SSH
- Specification (Terrapin Attack)
+In-Reply-To: <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Wed, 17 May 2017 09:40:57 -0700
+From: Ian Zimmerman <itz@primate.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] rxvt-unicode "insecure" setting [Was: terminal emulators' processing
+ of escape sequences]
+To: oss-security@lists.openwall.com
 
-On Tue, Dec 19, 2023 at 01:31:03PM -0800, Alan Coopersmith wrote:
-> On 12/18/23 08:08, Fabian Bäumer wrote:
-> > ### Mitigations
-> > 
-> > To mitigate this protocol vulnerability, OpenSSH suggested a so-called
-> > "strict kex" which alters the SSH handshake to ensure a
-> > Man-in-the-Middle attacker cannot introduce unauthenticated messages as
-> > well as convey sequence number manipulation across handshakes. Support
-> > for strict key exchange has been added to a variety of SSH
-> > implementations, including OpenSSH itself, PuTTY, libssh, and more.
-> > 
-> > **Warning: To take effect, both the client and server must support this
-> > countermeasure.**
-> 
-> Open source projects I see have implemented this already are:
-> 
-> - AsyncSSH 2.14.2:
->   https://asyncssh.readthedocs.io/en/latest/changes.html#release-2-14-2-18-dec-2023
-> 
-> - Dropbear git:
->   https://github.com/mkj/dropbear/commit/6e43be5c7b99dbee49dc72b6f989f29fdd7e9356
-> 
-> - Erlang ssh 5.1.1:
->   https://www.erlang.org/doc/apps/ssh/notes
-> 
-> - golang.org/x/crypto 0.17.0:
->   https://groups.google.com/g/golang-announce/c/qA3XtxvMUyg
-> 
-> - libssh 0.10.6 and 0.9.8:
->   https://www.libssh.org/2023/12/18/libssh-0-10-6-and-libssh-0-9-8-security-releases/
-> 
-> - libssh2 git:
->   https://github.com/libssh2/libssh2/issues/1290
->   https://github.com/libssh2/libssh2/pull/1291
-> 
-> - OpenSSH 9.6:
->   https://www.openssh.com/txt/release-9.6
-> 
-> - Paramiko 3.4.0:
->   https://www.paramiko.org/changelog.html#3.4.0
-> 
-> - PuTTY 0.80:
->   https://lists.tartarus.org/pipermail/putty-announce/2023/000037.html
-> 
-> - russh 0.40.2:
->   https://github.com/warp-tech/russh/releases/tag/v0.40.2
-> 
-> - SFTPGo 2.5.6:
->   https://github.com/drakkan/sftpgo/releases/tag/v2.5.6
-> 
-> - ssh2 [node.js/npm] 1.15.0:
->   https://github.com/mscdex/ssh2/commits/v1.15.0
-> 
-> - Tera Term 5.1:
->   https://github.com/TeraTermProject/teraterm/releases/tag/v5.1
-> 
-> - Thrussh 0.35.1:
->   https://pijul.org/posts/2023-12-18-thrussh-cve/
-> 
-> There's also some open bugs against these open source projects that are not yet handled:
-> 
-> - Apache Mina:
->   https://github.com/apache/mina-sshd/issues/445
-> 
-> - ProFTPD (mod_sftp):
->   https://github.com/proftpd/proftpd/issues/1760
-> 
-> - SSHJ:
->   https://github.com/hierynomus/sshj/issues/916
+This is a bit tangential to this particular thread, but clearly
+security-related.
 
-some more
+Quoting "man urxvt", section "RESOURCES":
 
-Jsch (Java SSH): release 0.2.15 fixes it https://github.com/mwiede/jsch/releases/tag/jsch-0.2.15
+ insecure: boolean
 
-Also apache-sshd and trilead-ssh2 as Java SSH implementations are
-affected.
+  Enables "insecure" mode. Rxvt-unicode offers some escape sequences
+  that echo arbitrary strings like the icon name or the locale. This
+  could be abused if somebody gets 8-bit-clean access to your display,
+  whether through a mail client displaying mail bodies unfiltered or
+  through write(1) or any other means. Therefore, these sequences are
+  disabled by default. (Note that many other terminals, including xterm,
+  have these sequences enabled by default, which doesn't make it safer,
+  though).
 
-tinyssh affected, has a ticket open.
+  You can enable them by setting this boolean resource or specifying
+  -insecure as an option. At the moment, this enables display-answer,
+  locale, findfont, icon label and window title requests.
 
-rubygem-net-ssh also affected.
+My ~/.Xresources file, trimmed.  I am sure it is getting read, because
+of the cutchars, colors and geometry settings:
 
-The rust ecosystem has a ssh crate which fixates its used libssh version. "libssh2-sys", so
-crates and binaries referencing will need updates.
+ Rxvt.background: seashell
+ Rxvt.color10: green4
+ Rxvt.color11: orange2
+ Rxvt.color14: cyan4
+ Rxvt.color2: green3
+ Rxvt.color3: orange
+ Rxvt.color6: cyan3
+ Rxvt.cutchars: '"!' &()*,;<=>?@[]^{|} #$%+-./:
+ Rxvt.foreground: Gray40
+ Rxvt.geometry: 103x36
+ Rxvt.saveLines: 200
+ Rxvt.visualBell: on
+ URxvt.font: x:-misc-fixed-medium-r-semicondensed--13-*-*-*-*-*-iso10646-1
+ URxvt.perl-ext-common:
+ URxvt.insecure: false
 
-python Twisted has an SSH stack too, but no chacha or etm macs so far. 
+Finally, a chunk of my ~/.bashrc:
 
-Ciao, Marcus
+ # If this is an xterm set the title to something informative
+ case "$TERM" in
+         xterm*|rxvt*)
+             PROMPT_COMMAND="echo -ne \"\E]0; $$ ${LOGNAME}@${HOSTNAME}:\${PWD} \a\""
+             ;;
+         *)
+             ;;
+ esac
+
+And ... it works!
+
+Why?
+
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign:
+http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
