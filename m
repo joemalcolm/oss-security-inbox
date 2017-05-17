@@ -1,61 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/7
-Message-ID: <20171102212916.GC23769@256bit.org>
-Date: Thu, 2 Nov 2017 22:29:16 +0100
-From: Christian Brabandt <cb@...bit.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/2
+Message-ID: <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>
+Date: Wed, 17 May 2017 03:23:14 +0200
+From: Marc Lehmann <schmorp@...morp.de>
+To: "Jason A. Donenfeld" <Jason@...c4.com>
+Cc: oss-security <oss-security@...ts.openwall.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried wrote:
+On Wed, May 17, 2017 at 12:15:55AM +0200, "Jason A. Donenfeld" <Jason@...c4.com> wrote:
+> On Wed, May 17, 2017 at 12:03 AM, Solar Designer <solar@...nwall.com> wrote:
+> > Jason, Robert -
+> >
+> > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
+> >> A harmless example from rxvt - pushing back the new-line character:
+> >>
+> >> $ echo -ne "\eGQ;"
+> >> ;$ 0
+> >> bash: 0: command not found
+> >
+> > Does this also affect rxvt-unicode?
+> 
+> It does, actually. I've CCd rxvt-unicode upstream on this in order to
+> hear their assessment.
 
-> There is a flaw here, it appears on some distros that vim (and emacs) will
-> ignore a user's umask and go with less restrictive file permissions
-> (ideally you think vi would use the files existing perms, plus any umask
-> limitations as expected), for example vim failing:
-> 
-> [kseifrie@...alhost vi]$ umask
-> 0007
-> [kseifrie@...alhost vi]$ touch foo
-> [kseifrie@...alhost vi]$ ls -la
-> total 8
-> drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
-> drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
-> -rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
-> [kseifrie@...alhost vi]$ chmod o+r foo
-> [kseifrie@...alhost vi]$ ls -la
-> total 8
-> drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
-> drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
-> -rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
-> [kseifrie@...alhost vi]$ vi foo
-> 
-> in another terminal:
-> 
-> [kseifrie@...alhost vi]$ ls -la
-> total 12
-> drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
-> drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
-> -rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
-> -rw-r--r--.  1 kseifrie kseifrie 4096 Oct 31 10:50 .foo.swp
-> 
-> So vim ignores the umask of the user =(.
+There can't be an assessment without knowledge of what to assess - there
+is little to no information in your mail. I can only guess that somebody
+for the hundredth time found out that terminals are more than dumb
+display devices and got excited that, somehow, this might be a security
+issue. Without knowing details, I can't say for sure, but most likely,
+this is a security issue the same way blindly feeding unknown commands to
+your shell is, i.e., it's a problem somewhere else - the protocol between
+terminals and programs is not a (strong) security barrier.
 
-> So from a CVE perspective we have a situation where a user has explicitly
-> set a umask (of say 0007) which is to say they've made a security assertion
-> of "any file I create I want the rwx permissions for "other" removed" which
-> vim and emacs (and possibly others) are violating when they create swap
-> files/backups/whatever. To add insult to injury most other utilities that
-> create a file (e.g. cp, cat, dd) seem to respect umask.
-> 
-> Please use CVE-2017-1000382 for VIM version 8.0.1187 (and other versions
-> most likely) ignores umask when creating a swap file
-> (\"[ORIGINAL_FILENAME].swp\") resulting in files that may be world readable
-> or otherwise accessible in ways not intended by the user running the vi
-> binary.
+(your echo command is bash-specific, btw.)
 
-Vim copies the permission from the file being edited. Although the swap 
-file is readable by others this does not leak any information here, 
-since the file being edited is already readable by others.
-
-Christian
+-- 
+                The choice of a       Deliantra, the free code+content MORPG
+      -----==-     _GNU_              http://www.deliantra.net
+      ----==-- _       generation
+      ---==---(_)__  __ ____  __      Marc Lehmann
+      --==---/ / _ \/ // /\ \/ /      schmorp@...morp.de
+      -=====/_/_//_/\_,_/ /_/\_\
