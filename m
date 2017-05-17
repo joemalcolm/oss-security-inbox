@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2933" "Sunday" "25" "March" "2018" "19:26:15" "+0200" "Solar Designer" "solar@openwall.com" "<20180325172614.GA26989@openwall.com>" "73" "Re: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length" nil nil nil "3" "2018032517:26:15" "[oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length" (number mark "U       solar@openwa Mar 25   73/2933  " thread-indent "\"Re: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length\"\n") "<20180222172329.GA4137@openwall.com>" ("<20180218180945.GA22931@openwall.com>" "<20180222172329.GA4137@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4335" "Wednesday" "17" "May" "2017" "18:18:55" "+0200" "Summer of Pwnage" "lists@securify.nl" "<521736ac-f512-1562-1a6a-af51a017d8c4@securify.nl>" "92" "[oss-security] Re: Cross-Site Request Forgery in WordPress Connection Information" nil nil nil "5" "2017051716:18:55" "[oss-security] Re: Cross-Site Request Forgery in WordPress Connection Information" (number mark "U       lists@securi May 17   92/4335  " thread-indent "\"[oss-security] Re: Cross-Site Request Forgery in WordPress Connection Information\"\n") "<c1e731cf-2841-56d0-4be7-a2ae98edd66e@securify.nl>" ("<c1e731cf-2841-56d0-4be7-a2ae98edd66e@securify.nl>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30640 invoked by uid 550); 25 Mar 2018 17:28:30 -0000
+Received: (qmail 30150 invoked by uid 550); 17 May 2017 16:19:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,89 +12,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28605 invoked from network); 25 Mar 2018 17:26:27 -0000
-Date: Sun, 25 Mar 2018 19:26:15 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 30118 invoked from network); 17 May 2017 16:19:07 -0000
+X-Virus-Scanned: amavisd-new at edge2.intern.zimbra-login.net
 To: oss-security@lists.openwall.com
-Message-ID: <20180325172614.GA26989@openwall.com>
-References: <20180218180945.GA22931@openwall.com> <20180222172329.GA4137@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180222172329.GA4137@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] LibVNCServer rfbserver.c: rfbProcessClientNormalMessage() case rfbClientCutText doesn't sanitize msg.cct.length
+References: <c1e731cf-2841-56d0-4be7-a2ae98edd66e@securify.nl>
+From: Summer of Pwnage <lists@securify.nl>
+Organization: Securify B.V.
+Message-ID: <521736ac-f512-1562-1a6a-af51a017d8c4@securify.nl>
+Date: Wed, 17 May 2017 18:18:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <c1e731cf-2841-56d0-4be7-a2ae98edd66e@securify.nl>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Re: Cross-Site Request Forgery in WordPress Connection Information
 
-On Thu, Feb 22, 2018 at 06:23:29PM +0100, Solar Designer wrote:
-> On Sun, Feb 18, 2018 at 07:09:45PM +0100, Solar Designer wrote:
-> > https://github.com/LibVNC/libvncserver/issues/218
-> 
-> > libvncserver/rfbserver.c: rfbProcessClientNormalMessage() contains the
-> > following code:
-> > 
-> >     case rfbClientCutText:
-> > 
-> >         if ((n = rfbReadExact(cl, ((char *)&msg) + 1,
-> >                            sz_rfbClientCutTextMsg - 1)) <= 0) {
-> >             if (n != 0)
-> >                 rfbLogPerror("rfbProcessClientNormalMessage: read");
-> >             rfbCloseClient(cl);
-> >             return;
-> >         }
-> > 
-> >         msg.cct.length = Swap32IfLE(msg.cct.length);
-> > 
-> >         str = (char *)malloc(msg.cct.length);
-> >         if (str == NULL) {
-> >                 rfbLogPerror("rfbProcessClientNormalMessage: not enough memory");
-> >                 rfbCloseClient(cl);
-> >                 return;
-> >         }
-> > 
-> >         if ((n = rfbReadExact(cl, str, msg.cct.length)) <= 0) {
-> 
-> As I just wrote in a comment to the GitHub issue above:
-> 
-> There's another issue I had missed: the first rfbReadExact() reading the
-> msg header is only checked for <= 0, but that doesn't catch a partial
-> read e.g. on a prematurely closed connection.  The same issue is present
-> all over the codebase.  I guess "Exact" in the name was understood
-> literally, but the function doesn't guarantee that when a lower-level
-> read() or the like returns 0, such as when there's no more data to read.
-> Maybe the function itself should be adjusted to match the semantics the
-> callers expects from it (set errno to a value of its choosing and return
-> -1 on a partial read? it already does that on a timeout, so this change
-> wouldn't make it more inconsistent).
+This issue is resolved in WordPress version 4.7.5.
+https://wordpress.org/news/2017/05/wordpress-4-7-5/
 
-As Petr Pisar pointed out on the GitHub issue, I was wrong about that
-"another issue" above.  rfbReadExact() returns 0 on a partial read, so
-the "<= 0" checks do correctly detect this failure mode.  So, no,
-luckily the issue is not "present all over the codebase."
 
-The cause of the behavior I had observed, where rfbReadExact() was not
-"<= 0" on a partial read in my original test case, was different: it was
-implicit conversion of msg.cct.length to int (resulting in a negative
-value) when making the call to rfbReadExact().  In that case,
-rfbReadExactTimeout() and thus rfbReadExact() return 1:
-
-int
-rfbReadExactTimeout(rfbClientPtr cl, char* buf, int len, int timeout)
-{
-[...]
-    while (len > 0) {
-[...]
-    }
-[...]
-    return 1;
-}
-
-As I wrote in a comment to the GitHub issue, as a hardening measure
-"maybe rfbReadExactTimeout() semantics should be adjusted so that it'd
-return failure when called with negative len."
-
-Meanwhile, Petr fixed the original issue I had reported, by limiting the
-cut text length to 1 MiB (the same limit that QEMU uses):
-
-https://github.com/LibVNC/libvncserver/commit/b0c77391e6bd0a2305bbc9b37a2499af74ddd9ee
-
-Alexander
+On 21-04-17 00:30, Summer of Pwnage wrote:
+> ------------------------------------------------------------------------
+> Cross-Site Request Forgery in WordPress Connection Information
+> ------------------------------------------------------------------------
+> Yorick Koster, July 2016
+>
+> ------------------------------------------------------------------------
+> Abstract
+> ------------------------------------------------------------------------
+> The FTP/SSH form functionality of WordPress was found to be vulnerable
+> to Cross-Site Request Forgery. This vulnerability can be used to
+> overwrite the FTP or SSH connection settings of the affected WordPress
+> site. An attacker can use this issue to trick an Administrator into
+> logging into the attacker's FTP or SSH server, disclosing his/her login
+> credentials to the attacker. In order to exploit this vulnerability, the
+> attacker has to lure/force a logged on WordPress Administrator into
+> opening a malicious website.
+>
+>
+> ------------------------------------------------------------------------
+> OVE ID
+> ------------------------------------------------------------------------
+> OVE-20160717-0004
+>
+> ------------------------------------------------------------------------
+> Tested versions
+> ------------------------------------------------------------------------
+> This issue was successfully tested on the WordPress [2] version 4.5.3 up
+> till and including version 4.7.4.
+>
+> ------------------------------------------------------------------------
+> Fix
+> ------------------------------------------------------------------------
+> There is currently no fix available.
+>
+> ------------------------------------------------------------------------
+> Introduction
+> ------------------------------------------------------------------------
+> WordPress is web software you can use to create a website, blog, or
+> app. It was found that the FTP/SSH form functionality is vulnerable to
+> Cross-Site Request Forgery. This vulnerability can be used by an
+> attacker to overwrite the FTP or SSH connection settings of the affected
+> WordPress site. It can be used to trick in an Administrator into login
+> into the attacker's FTP or SSH server, disclosing his/her login
+> credentials to the attacker.
+>
+> ------------------------------------------------------------------------
+> Details
+> ------------------------------------------------------------------------
+> This issue exists in the method request_filesystem_credentials()
+> (/wp-admin/includes/file.php). It allows overwriting of the values:
+>
+> - hostname
+> - username
+> - connection_type
+>
+> The request_filesystem_credentials() method is called in various
+> locations in WordPress. The connection information is updated if a POST
+> request contains a password or public & private key value (in case of
+> connection type ssh). In order to trigger this issue, the WordPress
+> installation must not be able to write to the wp-content folder. Also,
+> the attacker has to lure/force a logged on WordPress Administrator into
+> opening a malicious website.
+>
+> ------------------------------------------------------------------------
+> Proof of concept
+> ------------------------------------------------------------------------
+> <html>
+>     <body>
+>         <form action="http://<target>/wp-admin/plugins.php" 
+> method="POST">
+>             <input type="hidden" name="hostname" value="sumofpwn.nl" />
+>             <input type="hidden" name="connection_type" value="ftp" />
+>             <input type="hidden" name="password" value="password" />
+>             <input type="submit" value="Submit request" />
+>         </form>
+>     </body>
+> </html>
+> ------------------------------------------------------------------------
+> References
+> ------------------------------------------------------------------------
+> [1] 
+> https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_connection_information.html
+> [2] https://wordpress.org/
+> ------------------------------------------------------------------------
+> Summer of Pwnage (https://sumofpwn.nl) is a Dutch community project. Its
+> goal is to contribute to the security of popular, widely used OSS
+> projects in a fun and educational way.
