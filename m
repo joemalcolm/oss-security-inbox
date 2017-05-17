@@ -1,4 +1,9 @@
-Received: (qmail 28397 invoked by uid 550); 30 May 2024 11:45:06 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4086" "Wednesday" "17" "May" "2017" "13:05:30" "+0200" "Solar Designer" "solar@openwall.com" "<20170517110530.GA11230@openwall.com>" "84" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Cc:" nil nil "5" "2017051711:05:30" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        solar@openwa May 17   84/4086  " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" "<20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30678 invoked by uid 550); 17 May 2017 11:06:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,124 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 30518 invoked from network); 17 May 2017 11:05:56 -0000
+Message-ID: <20170517110530.GA11230@openwall.com>
+References: <20170501164428.GA12322@openwall.com> <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com> <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com> <20170516220345.GA10874@openwall.com> <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com> <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>
+User-Agent: Mutt/1.4.2.3i
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+	oss-security <oss-security@lists.openwall.com>,
+	rxvt-unicode@lists.schmorp.de, rxvt@schmorp.de
+Date: Wed, 17 May 2017 13:05:30 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20262 invoked from network); 30 May 2024 09:18:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717060706; x=1717665506; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PqR2grkG5bZUNU5daYDKqaSYBycqO+yzPHB1JXg5zO4=;
-        b=g/zKo/ULYozp98hA8Es4r5SLkF/HZtvewypUAYBnZP0nWHmh1ER283gUOE+kfMa0Lu
-         tQ+FPXybouAi6Xwuh0zdG/ZxAFS03PwU8ZLxJ42E6xVwwwNtPlXWCjLuMhUruiWXjfsm
-         Xn4waKD/bEGA/SNaGeEXbNJECY2NqcGwKf3td+G3NzTiY3w+sZpGChXc/XI4Om4PCkGd
-         pF8+iRzZMm1lB6eQptOaPmUe7+/SnKJdAi/RElIY+/+Q8eUkII4FcbYNGhvpJw0MCx8g
-         uYfF3hv/YPudIykAExtStKIWZyk5BkbLGgXC+LxADkAYQvw28qK8n7fD6ZPwmLNIjQj5
-         3hHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717060706; x=1717665506;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PqR2grkG5bZUNU5daYDKqaSYBycqO+yzPHB1JXg5zO4=;
-        b=Vk1EBN6zJn7PqoHyr7IUkoClj+Dh9Iy3WczPMK2KUbAci7Dh/MFHwCbZCZc+1Lqe7k
-         zF/scegoPyHbDkviZ/YyCdHTHMna//H1IzgU3/HXDe+f37kp1BSdpo72Elg22ZgJDKZw
-         24gWsDkkW+/REwnjuLoCo4UWdSV1oU5Mukb/4KBxcC3PhHu/3VYXJryEoAYANju/j0KR
-         v0xKm2vfPAxhd0C2ploFDne6ZdjEFKtd4ES5J4/lgWhNqITnOZfryboz15f3rd0fx9Go
-         AbBqcE1HKf2AotJ9XD/5JznRBQsZEoj9ivjv2FXIBju36zfnOwMS15ZnNM7LZskyaLsl
-         GzPA==
-X-Gm-Message-State: AOJu0YwJ254G9YXlSNhlLqr02WhHGRBIpK5ebZImpq4Qf2oHV3ivubIw
-	dmxR7SIqI35phJixuOa1YKPgprmkeRhl+qPM0vWYwyGhxwJ9UdXQonHXF6A6lZnITx0TeBQcK3Q
-	ICFsE28u171Auyts2t4WuLqfyDEXu3Ikj
-X-Google-Smtp-Source: AGHT+IGZzKvGUjmfFhjiBlOz3GqFDnDTQ4X1y+ZwxAYqGqCfY7gTeILGjO4y2rHt5eig4Emd6AEBqq+/IXTnTfaj+I8=
-X-Received: by 2002:a05:6122:c9d:b0:4c9:b8a8:78d4 with SMTP id
- 71dfb90a1353d-4eaf216858cmr1582823e0c.3.1717060706336; Thu, 30 May 2024
- 02:18:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <CACVjhxWPjerPGKeJ=4ynPuJVH2E4nYGEt+cBaHhjqhS5=Fq+2w@mail.gmail.com>
- <CACVjhxVQm2LLSopp6CzXAjGaHFqtKWO=64oGvNcU43MuSwrB1w@mail.gmail.com>
-In-Reply-To: <CACVjhxVQm2LLSopp6CzXAjGaHFqtKWO=64oGvNcU43MuSwrB1w@mail.gmail.com>
-From: Yaron Shahrabani <sh.yaron@gmail.com>
-Date: Thu, 30 May 2024 12:18:00 +0300
-Message-ID: <CACVjhxUD21YUHf4ZMCqO_qzXT93p5ukSW6sKANvzDzxuXqaZCg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Security vulnerability in fprintd
+Subject: Re: [oss-security] terminal emulators' processing of escape sequences
+To: Marc Lehmann <schmorp@schmorp.de>
 
-Hi everyone, I'm writing to this mailing list since I've already
-shared the details with Benjamin Berg and Marco Trevisan privately,
-and we have yet to conclude about this vulnerability.
-This information was also disclosed to the fprintd mailing list:
-https://lists.freedesktop.org/archives/fprint/2024-May/001231.html
+On Wed, May 17, 2017 at 03:23:14AM +0200, Marc Lehmann wrote:
+> On Wed, May 17, 2017 at 12:15:55AM +0200, "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+> > On Wed, May 17, 2017 at 12:03 AM, Solar Designer <solar@openwall.com> wrote:
+> > > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
+> > >> A harmless example from rxvt - pushing back the new-line character:
+> > >>
+> > >> $ echo -ne "\eGQ;"
+> > >> ;$ 0
+> > >> bash: 0: command not found
+> > >
+> > > Does this also affect rxvt-unicode?
+> > 
+> > It does, actually. I've CCd rxvt-unicode upstream on this in order to
+> > hear their assessment.
+> 
+> There can't be an assessment without knowledge of what to assess - there
+> is little to no information in your mail. I can only guess that somebody
+> for the hundredth time found out that terminals are more than dumb
+> display devices and got excited that, somehow, this might be a security
+> issue. Without knowing details, I can't say for sure, but most likely,
+> this is a security issue the same way blindly feeding unknown commands to
+> your shell is, i.e., it's a problem somewhere else - the protocol between
+> terminals and programs is not a (strong) security barrier.
+> 
+> (your echo command is bash-specific, btw.)
 
-My sudo is configured to approve access with pam_fprintd; this is the
-config file:
+You're right that we provided "little to no information" - sorry.  I'll
+correct this now.
 
-#%PAM-1.0
+Jason's e-mail was in part prompted by my off-list message to him, where
+I wrote about this issue (or non-issue depending on one's perspective):
 
-auth            sufficient      pam_fprintd.so
-auth            include         system-auth
-account         include         system-auth
-session         include         system-auth
+---
+I think it's pretty bad, because unlike many other terminals' automated
+responses triggered by escapes, this one includes a linefeed.  So an
+attack tarball/directory/whatever would include e.g. a program called
+"1" and a text file with that escape sequence.  When someone cat's or
+more's the file, the program would automatically be invoked _if_ they
+have . in PATH.  While we normally shouldn't have . in PATH, I think
+some people might.
 
-So, unless I'm not already authenticated, running the following command:
-sudo whoami
-Replies with the following prompt:
-Place your finger on the fingerprint reader
+The risk probability is low, but this is nevertheless a valid security
+issue to patch.
+---
 
-Placing my finger on the fingerprint reader leads to the following output:
-root
+(The pasted text appears to vary between "0" and "1".)
 
-The security concern is that this process can also happen behind the
-scenes, so if I'm running a script that has a sudo prompt to delete
-something I care about, I can accidentally place my fingerprint on the
-fingerprint reader for any other reasons, and my beloved files will be
-removed.
+I haven't just "found out that terminals are more than dumb display
+devices" and I haven't "got excited".  This is indeed well-known, and
+has been discussed for decades.  I fully agree that the security barrier
+should be inside each program - if a program processes untrusted input,
+it must not blindly send that to the terminal.  Unfortunately, this
+often fails in practice - many programs don't bother, many programs
+don't do it right (e.g., it's common to let the 8-bit escapes through,
+especially with some now mostly obsolete 8-bit locales), there are
+subtle asynchronous multi-producer issues with UTF-8, and there are
+clueless or/and risk-taking users/sysadmins who "cat", etc.  untrusted
+files to terminals.  Sometimes the overhead of avoiding such risky
+actions is prohibitive - e.g., sometimes one does need to issue a SQL
+query for untrusted data from a SQL shell they already have started on
+their terminal.
 
-How do we recreate the issue?
-You can open your favorite console app on Linux.
-If it supports tabs open two tabs, if not just open another window.
-On the first tab, type: sudo whoami
-Switch to the second tab and type: echo Place your finger on the
-fingerprint reader;cat
-Place your fingerprint on the fingerprint reader
-Return to the first tab (You should see that the command was approved
-and the output is root)
+Thus, a sentiment expressed in past discussions in here is that terminal
+emulators shouldn't have the riskiest escape sequences supported by
+default.  It is fully expected that malicious escape sequences can make
+a terminal unusable, requiring reset.  It is unexpected by many users
+(as you correctly say, hundreds end up rediscovering this and bringing
+it up as an issue) that with some terminal emulators malicious escape
+sequences, through misfeatures (rather than implementation bugs, which
+often also exist), can also paste text into their shell prompt (as
+above), modify X clipboard contents (in xterm, luckily no longer in
+typical distros' default config), etc.  Those who are aware and expect
+this may prefer to have this risky and unneeded functionality disabled
+by default.
 
-Assume the user was running some background process and didn't see the
-fingerprint prompt from the other terminal. The second terminal may
-deceive the user into placing the finger on the fingerprint reader and
-elevating permissions without the user being fully aware.
+It's about defense-in-depth and about not having a loaded gun hanging on
+the wall unnecessarily.
 
-On Ubuntu, if I want to recreate the same configuration, all I have to
-do is enroll my fingerprints in System Settings,
-then install the pam-auth-update and select the Fingerprint
-authentication from the selection screen (apt specific) as described
-in the following SO thread:
-https://askubuntu.com/questions/1015416/use-fingerprint-authentication-not-only-for-login.
+In the message that started this current thread, I included links to
+some recent past threads covering some of the aspects mentioned above:
 
-This problem was solved in macOS by simply displaying a window; if the
-window is out of focus, the fingerprint won't work.
-Since we can't rely on any graphical window on Linux since it can be
-terminal only, we need to ensure that the user fingerprint is used
-only for the sole purpose of the request and with full attention to
-the specific action the fingerprint was requested for. Otherwise, the
-fingerprint can be hijacked (just like clickjacking).
+http://www.openwall.com/lists/oss-security/2017/05/01/13
 
-Benjamin was kind enough to respond, and I allowed myself to summarize
-his reply:
-It can happen with fprintd as with any other external authentication
-method (aside from password, we have Bluetooth proximity, NFC Tag,
-Smart Card, etc.), so it is not unique to fprintd.
-Benjamin also offered mitigating ways, such as changing the
-configuration or using pkexec instead of sudo.
-
-I addressed this issue with the sudo maintainer, Todd C. Miller, and
-again, I allowed myself to summarize his response:
-Although I understand the concern, I need a security attention
-mechanism to fix it.
-
-CVSS 4.0 ranked this CVE as 7.3.
-
-Thank you,
-PS, I'm not a security researcher, and I'm not affiliated with any organization.
-
-Yaron Shahrabani - DevOps, Hebrew translator
+Alexander
