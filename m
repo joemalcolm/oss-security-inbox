@@ -1,338 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/4
-Message-ID: <5357154.SVZ41LeQyt@arcadia>
-Date: Sun, 01 Jan 2017 16:48:02 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/14
+Message-Id: <A312BA48-B89C-422A-A75C-0C0C2502A9CF@gmail.com>
+Date: Wed, 17 May 2017 16:21:42 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: libtiff: multiple heap-based buffer overflow
+Cc: fulldisclosure@...lists.org
+Subject: Re: Dolibarr ERP & CRM - Multiple Issues
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Libtiff is a software that provides support for the Tag Image File Format 
-(TIFF), a widely used format for storing image data.
 
-Some crafted images, through a fuzzing revealed multiple overflow. Since the 
-number of the issues, I will post the relevant part of the stacktrace.
+> On May 17, 2017, at 3:08 PM, Stefan Pietsch <stefan.pietsch@...mole.com> wrote:
+> 
+> On 10.05.2017 10:28, FOXMOLE Advisories wrote:
+>> === FOXMOLE - Security Advisory 2017-02-23 ===
+>> 
+>> Dolibarr ERP & CRM  - Multiple Issues
+>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> 
+>> Affected Versions
+>> =================
+>> Dolibarr 4.0.4
+>> 
+>> Issue Overview
+>> ==============
+>> Vulnerability Type: SQL Injection, Cross Site Scripting,
+>>                    Weak Hash Algorithm without Salt, Weak Password Change Method
+>> Technical Risk: critical
+>> Likelihood of Exploitation: medium
+>> Vendor: Dolibarr
+>> Vendor URL: https://www.dolibarr.org/
+>> Credits: FOXMOLE employees Tim Herres and Stefan Pietsch
+>> Advisory URL: https://www.foxmole.com/advisories/foxmole-2017-02-23.txt
+>> Advisory Status: Public
+>> OVE-ID: OVE-20170223-0001
+>> CVE Number: CVE-2017-7886, CVE-2017-7887, CVE-2017-7888
+>> CVE URL: https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7886
+>>         https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7887
+>>         https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7888
+>> CWE-ID: CWE-79, CWE-89, CWE-327, CWE-620, CWE-759
+>> CVSS 2.0: 10.0 (AV:N/AC:L/Au:N/C:C/I:C/A:C)
+> 
+> --- snip ---
+> 
+> Here is a small update to our security advisory.
+> 
+> An additional CVE ID got assigned for the password change finding:
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8879 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8879>
+> 
+> 
+> Meanwhile the Dolibarr developers fixed more possible SQL injection bugs
+> in this git commit:
+> https://github.com/Dolibarr/dolibarr/commit/fa290c34fad108ec7c0751c0372ae9c4b4f63b06 <https://github.com/Dolibarr/dolibarr/commit/fa290c34fad108ec7c0751c0372ae9c4b4f63b06>
+> 
+> They still didn't release a fixed version of the Dolibarr software.
+> 
+> 
+> 
+> For CVE-2017-7886 I don't agree with the CVSS v2 scoring from the NIST.
+> They rated "Confidentiality Impact" as partial while I think it is
+> complete as we have full access to all tables.
+> 
 
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/5397a417e61258c69209904e652a1f409ec3b9df
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00068-libtiff-heapoverflow-_tiffWriteProc
-Relevant part of the stacktrace:
+But you don’t have access to the underlying system, such as configuration files with plaintext passwords or similar. Only in a poorly configured MySQL instance would you be able to read files in the first place. I agree that the Confidentiality Impact is partial.
 
-# tiffcp -i $FILE /tmp/foo
-==16440==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x62500000e861 at pc 0x0000004531de bp 0x7ffd2aba5c30 sp 0x7ffd2aba53e0
-READ of size 78490 at 0x62500000e861 thread T0
-    #1 0x7f280456d37b in _tiffWriteProc /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:115:23
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/5397a417e61258c69209904e652a1f409ec3b9df
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00066-libtiff-heapoverflow-TIFFReverseBits
-Relevant part of the stacktrace:
-
-# tiffcp -i $FILE /tmp/foo
-==14332==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x63000000f4f0 at pc 0x7f95e90c11ad bp 0x7ffd74ba5ca0 sp 0x7ffd74ba5c98
-READ of size 1 at 0x63000000f4f0 thread T0
-    #0 0x7f95e90c11ac in TIFFReverseBits /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_swab.c:289:27
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/1044b43637fa7f70fb19b93593777b78bd20da86
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00071-libtiff-heapoverflow-_TIFFmemcpy
-Relevant part of the stacktrace:
-
-#tiffcp -i $FILE /tmp/foo
-==10398==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60200000eef4 at pc 0x0000004bc235 bp 0x7fff3ebfa700 sp 0x7fff3ebf9eb0
-READ of size 512 at 0x60200000eef4 thread T0
-     #1 0x7fcaf590cf0d in _TIFFmemcpy /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:340:2
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/9a72a69e035ee70ff5c41541c8c61cd97990d018
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00074-libtiff-heapoverflow-TIFFFillStrip
-Relevant part of the stacktrace:
-
-# tiffcp -i $FILE /tmp/foo
-==15106==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60200000edd8 at pc 0x7f33918c5de3 bp 0x7ffc5abe6ba0 sp 0x7ffc5abe6b98
-READ of size 8 at 0x60200000edd8 thread T0
-    #0 0x7f33918c5de2 in TIFFFillStrip /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_read.c:523:22
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/9657bbe3cdce4aaa90e07d50c1c70ae52da0ba6a
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00100-libtiff-heapoverflow-_TIFFFax3fillruns
-Relevant part of the stacktrace:
-
-# tiffcrop -i $FILE /tmp/foo
-==9181==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x7fd3b2e277f8 at pc 0x7fd3b7a762cc bp 0x7ffffd6e2550 sp 0x7ffffd6e2548
-READ of size 1 at 0x7fd3b2e277f8 thread T0
-    #0 0x7fd3b7a762cb in _TIFFFax3fillruns /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_fax3.c:413:13
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/9657bbe3cdce4aaa90e07d50c1c70ae52da0ba6a
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00102-libtiff-heapoverflow-_TIFFmemcpy
-Relevant part of the stacktrace:
-
-# tiffcrop -i $FILE /tmp/foo
-==988==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62100001ccff 
-at pc 0x0000004bc00c bp 0x7fff920da690 sp 0x7fff920d9e40
-WRITE of size 1 at 0x62100001ccff thread T0
-    #1 0x7f49edd6af0d in _TIFFmemcpy /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:340:2
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/b4b41925115059b49f97432bda0613411df2f686
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00067-libtiff-heapoverflow-tiffcp
-Relevant part of the stacktrace:
-
-# tiffcp -i $FILE /tmp/foo
-==7788==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60200000edd3 at pc 0x0000004629ac bp 0x7ffe4adf8df0 sp 0x7ffe4adf85a0
-READ of size 1 at 0x60200000edd3 thread T0
-    #1 0x50d6a5 in tiffcp /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:784:57
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-Upstream said that the previous changes, fixes this too. It needs to be 
-bisected.
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00079-libtiff-heapoverflow-cpSeparateBufToContigBuf
-Relevant part of the stacktrace:
-
-# tiffcp -i $FILE /tmp/foo
-==25645==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x7f651cc3b800 at pc 0x00000051ef24 bp 0x7ffec0573a70 sp 0x7ffec0573a68
-READ of size 16 at 0x7f651cc3b800 thread T0
-    #0 0x51ef23 in cpSeparateBufToContigBuf /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1209:14
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/787c0ee906430b772f33ca50b97b8b5ca070faec
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00082-libtiff-heap-overflow-cpStripToTile
-Relevant part of the stacktrace:
-
-# tiffcp -i $FILE /tmp/foo
-==20438==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x7fef2adde803 at pc 0x00000051befa bp 0x7ffd3ee26b50 sp 0x7ffd3ee26b48
-WRITE of size 16 at 0x7fef2adde803 thread T0
-    #0 0x51bef9 in cpStripToTile /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1171:11
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-Upstream said that the previous changes, fixes this too. It needs to be 
-bisected.
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00103-libtiff-heapoverflow-NeXTDecode
-Relevant part of the stacktrace:
-
-# tiffcrop -i $FILE /tmp/foo
-==29649==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x62d00000a3fc at pc 0x0000004bc48c bp 0x7ffd6f23c680 sp 0x7ffd6f23be30
-WRITE of size 2048 at 0x62d00000a3fc thread T0
-      #1 0x7fcac5ac0033 in NeXTDecode /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_next.c:64:9
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-Upstream said that the previous changes, fixes this too. It needs to be 
-bisected.
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00102-libtiff-heapoverflow-_TIFFmemcpy
-Relevant part of the stacktrace:
-
-# tiffcrop -i $FILE /tmp/foo
-==23091==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60200000eed2 at pc 0x0000004629dc bp 0x7fff8d1e2950 sp 0x7fff8d1e2100
-READ of size 1 at 0x60200000eed2 thread T0
-   #1 0x53277f in writeCroppedImage /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcrop.c:7940:23
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/5ed9fea523316c2f5cec4d393e4d5d671c2dbc33
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00108-libtiff-heapoverflow-PSDataBW
-Relevant part of the stacktrace:
-
-# tiff2ps $FILE
-==32416==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60200000ee91 at pc 0x00000051ea78 bp 0x7ffd76b73dd0 sp 0x7ffd76b73dc8
-READ of size 1 at 0x60200000ee91 thread T0
-    #0 0x51ea77 in PSDataBW /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2ps.c:2703:21
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/5ed9fea523316c2f5cec4d393e4d5d671c2dbc33
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00107-libtiff-heapoverflow-PSDataColorContig
-Relevant part of the stacktrace:
-
-# tiff2ps $FILE
-==31384==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60200000ee54 at pc 0x000000518b75 bp 0x7fff437bfdb0 sp 0x7fff437bfda8
-READ of size 1 at 0x60200000ee54 thread T0
-    #0 0x518b74 in PSDataColorContig /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2ps.c:2470:2
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/bd9d7670d0224412b3bd146e221658211ece876e
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00101-libtiff-heapoverflow-combineSeparateSamples16bits
-Relevant part of the stacktrace:
-
-# tiffcrop -i $FILE /tmp/foo
-==8016==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60200000eef1 at pc 0x000000530805 bp 0x7ffeb0d41770 sp 0x7ffeb0d41768
-READ of size 1 at 0x60200000eef1 thread T0
-    #0 0x530804 in combineSeparateSamples16bits /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcrop.c:3913:20
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/c7153361a4041260719b340f73f2f76b0969235c
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00112-libtiff-heapoverflow-_TIFFmemcpy
-Relevant part of the stacktrace:
-
-# tiff2pdf $FILE -o foo
-==31315==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60200000ea11 at pc 0x0000004bc10c bp 0x7fffd59abc40 sp 0x7fffd59ab3f0
-WRITE of size 2 at 0x60200000ea11 thread T0
-    #1 0x7fd49c1adf0d in _TIFFmemcpy /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:340:2
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-N/A
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00109-libtiff-heapoverflow-putcontig8bitYCbCr44tile
-Relevant part of the stacktrace:
-
-# tiff2rgba $FILE /tmp/foo
-==20699==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x62500000ed12 at pc 0x7f49ab2c134c bp 0x7ffc7e4eda30 sp 0x7ffc7e4eda28                                                                                                                                      
-READ of size 1 at 0x62500000ed12 thread T0                                                                                                                                                                                                                                     
-    #0 0x7f49ab2c134b in putcontig8bitYCbCr44tile /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_getimage.c:1885:28
+> 
+> Regards,
+> Stefan
 
 
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
+Content of type "text/html" skipped
 
-Timeline:
-2016-11-20: started to post the issues to upstream
-2017-01-01: blog post about the issue
-
-Note:
-These bugs were found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-heap-based-buffer-overflow
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
