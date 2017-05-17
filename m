@@ -1,65 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/6
-Message-ID: <143C0AFC63FC204CB0C55BB88F3A8ABB33320994@EX02.corp.qihoo.net>
-Date: Mon, 13 Feb 2017 12:21:52 +0000
-From: 李强 <liqiang6-s@....cn>
-To: oss security list <oss-security@...ts.openwall.com>
-CC: P J P <ppandit@...hat.com>
-Subject: RE: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt copy backward mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/15
+Message-ID: <e59bd254-68c2-b809-6143-f822e3452481@suse.de>
+Date: Thu, 18 May 2017 08:35:40 +0930
+From: Simon Lees <sflees@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
-
-This is Li Qiang from the Gear Team, Qihoo 360 inc. I have discovered this vulnerability and make a patch for this, though 
-not complete. When I send patch to fix this issue, I did know the Cirrus vga is not the default vga in qemu. So I 
-just treat this as a normal issue. But afterwards we discovered that the libvirt and xen use this vga as default.
-We tested a lot of cloud platform in China, every of them uses the Cirrus vga as default. Most of them is affected by this
-issue. The only one doesn't be affected I think have fixed this issue. So we think this issue should be got more attention. We 
-strongly commend every cloud platform treat this issue seriously. Though this vulnerability has been fixed for 10+ days,
-For responsible vulnerability disclosure, we will not public the PoC in this email. The PoC will be public later.
-
-Thanks.
-
---
-Li Qiang / the Gear Team, Qihoo 360 Inc.
 
 
-> -----Original Message-----
-> From: P J P [mailto:ppandit@...hat.com]
-> Sent: Wednesday, February 01, 2017 5:50 PM
-> To: oss security list
-> Cc: 李强
-> Subject: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt
-> copy backward mode
+On 05/02/2017 02:14 AM, Solar Designer wrote:
+> Hi,
 > 
->    Hello,
+> It is a well-known feature, previously discussed in here, that data
+> printed to a terminal (emulator) may control that terminal, including
+> making it effectively unusable until reset, and in some cases even
+> pasting characters as if they were typed by the user.  Also as discussed
+> what characters may be pasted varies by terminal - sometimes they can be
+> arbitrary (e.g., if the terminal supports macro recording and playback
+> via escape sequences) and sometimes not so (like a terminal reporting
+> back its status, usually not followed by a linefeed, so not yet
+> executing a shell command until further user assistance).  Here are some
+> relevant threads:
 > 
-> Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
-> vulnerable to an out-of-bounds access issue. It could occur while copying VGA
-> data via bitblt copy in backward mode.
+> http://www.openwall.com/lists/oss-security/2015/08/11/8
+> http://www.openwall.com/lists/oss-security/2015/09/17/5
+> http://www.openwall.com/lists/oss-security/2016/11/04/12
 > 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS OR potentially execute arbitrary code on the host with
-> privileges of Qemu process on the host.
+> (I link to messages that started these threads, not necessarily to most
+> informative messages in the threads.  So you might want to go through
+> the threads with the "thread-next" links.)
 > 
-> Upstream patch
-> --------------
->    -> https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg00015.html
+> Besides (mis)features, there may also be implementation bugs.  A couple
+> of weeks ago, I brought in here vulnerabilities in terminal escape
+> handling in minicom and prl-vzvncserver (both already fixed in latest
+> versions by then):
 > 
-> It fixes
->    ->
-> http://git.qemu.org/?p=qemu.git;a=commit;h=d3532a0db02296e687711b8cdc
-> 7791924efccea0
+> http://www.openwall.com/lists/oss-security/2017/04/18/5
 > 
-> Reference:
-> ----------
->    -> https://bugzilla.redhat.com/show_bug.cgi?id=1418200
+> I already knew this wouldn't be the end of the story as some other
+> terminal emulators exhibited suspicious behavior when targeted with
+> streams of unusual escape sequences involving large or negative integer
+> parameters.  I sent the following to the distros list on April 17,
+> presented here with updates reflecting the current status.
 > 
-> This issue was reported by Li Qiang of 360.cn Inc.
 > 
-> CVE-2017-2615 was assigned to this issue by Red Hat Inc.
+> terminology:
 > 
-> Thank you.
-> --
-> Prasad J Pandit / Red Hat Product Security Team 47AF CE69 3A90 54AA 9045
-> 1053 DD13 3D32 FE5B 041F
+> ---
+> ERR<10676>:termpty termptyesc.c:1115 _handle_esc_csi() unhandled CSI 'x': 2147483647;0x
+> ERR<10676>:termpty termptyesc.c:1115 _handle_esc_csi() unhandled CSI 'x': 2147483647;0x
+> ERR<10676>:termpty termptyesc.c:1115 _handle_esc_csi() unhandled CSI 'x': 2147483647;0x
+> ---
+> 
+
+For reference terminology was fixed with this commit
+https://phab.enlightenment.org/rTRM63d65ed4bb06094e6a8b6cafdc7c4cbfc62dd677
+
+Thanks
+
+-- 
+
+Simon Lees (Simotek)                            http://simotek.net
+
+Emergency Update Team                           keybase.io/simotek
+SUSE Linux                           Adelaide Australia, UTC+10:30
+GPG Fingerprint: 5B87 DB9D 88DC F606 E489 CEC5 0922 C246 02F0 014B
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (485 bytes)
