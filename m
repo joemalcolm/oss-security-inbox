@@ -1,40 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/10
-Message-ID: <20170117111107.GA5591@inutil.org>
-Date: Tue, 17 Jan 2017 12:11:07 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/10
+Message-ID: <87inkzd1tg.fsf@fifthhorseman.net>
+Date: Wed, 17 May 2017 09:56:27 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Robert Święcki <robert@...ecki.net>, oss-security@...ts.openwall.com
+Cc: "Jason A. Donenfeld" <Jason@...c4.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 17, 2017 at 11:33:28AM +0100, Agostino Sarubbo wrote:
-> On Monday 16 January 2017 19:08:48 cve-assign@...re.org wrote:
-> > > []
-> > > https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-write-in-de
-> > > c_clnpass-jpc_t1dec-c
-> > > 
-> > > AddressSanitizer: SEGV on unknown address
-> > > The signal is caused by a WRITE memory access.
-> > > 
-> > > dec_clnpass ... jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4
-> > 
-> > Use CVE-2017-5503.
-> > 
-> > 
-> > --
-> > CVE Assignment Team
-> > M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> > [ A PGP key is available for encrypted communications at
-> >   http://cve.mitre.org/cve/request_id.html ]
-> 
-> The previous mail clearly state:
-> > Timeline:
-> > 2016-11-20: bug discovered and reported to upstream
-> 
-> Why a CVE-2017-* ?
+On Wed 2017-05-17 12:51:57 +0200, Robert Święcki wrote:
+> Please consider the following example:
+>
+> $ tail -n1 /etc/hosts | xxd
+> 00000000: 3132 372e 302e 302e 3309 1b47 513b 205a  127.0.0.3..GQ; Z
+> 00000010: 5a5a 0a                                  ZZ.
+> $ ping ZZZ
+> PING ; (127.0.0.3) 56(84) bytes of data.
+> ^[G0
+> 64 bytes from ; (127.0.0.3): icmp_seq=1 ttl=64 time=0.039 ms
+> ^[G0
+> 64 bytes from ; (127.0.0.3): icmp_seq=2 ttl=64 time=0.032 ms
+> ^[G0
+> ^C
+> --- ; ping statistics ---
+> 2 packets transmitted, 2 received, 0% packet loss, time 1014ms
+> rtt min/avg/max/mdev = 0.032/0.035/0.039/0.006 ms
+> ^[G0
+> $ 0
+> bash: 0: command not found
 
-Where was that reported upstream? Please add the bug numbers to your
-advisories.
+what version of ping are you using?  I was unable to replicate this with
+either the debian iputils-ping package version 3:20161105-1, or with
+debian inetutils-ping package version 2:1.9.4-2+b1.  neither of them seem to
+do a getnameinfo() at all if it is initially supplied with an IP
+address.
 
-Cheers,
-        Moritz
+That said, with the same last line of /etc/hosts, getent is willing
+to pass along the garbage chars:
+
+0 test@...t:~$ getent hosts 127.0.0.3
+127.0.0.3       ; ZZZ
+^[G0
+0 test@...t:~$ 0
+bash: 0: command not found
+127 test@...t:~$ 
+
+    --dkg
+
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
