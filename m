@@ -1,33 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/06/6
-Message-ID: <alpine.LFD.2.20.1702070101020.4225@wniryva>
-Date: Tue, 7 Feb 2017 01:02:31 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: usb: integer overflow in emulated_apdu_from_guest
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/7
+Message-ID: <20170517110530.GA11230@openwall.com>
+Date: Wed, 17 May 2017 13:05:30 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Marc Lehmann <schmorp@...morp.de>
+Cc: "Jason A. Donenfeld" <Jason@...c4.com>, oss-security <oss-security@...ts.openwall.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Wed, May 17, 2017 at 03:23:14AM +0200, Marc Lehmann wrote:
+> On Wed, May 17, 2017 at 12:15:55AM +0200, "Jason A. Donenfeld" <Jason@...c4.com> wrote:
+> > On Wed, May 17, 2017 at 12:03 AM, Solar Designer <solar@...nwall.com> wrote:
+> > > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
+> > >> A harmless example from rxvt - pushing back the new-line character:
+> > >>
+> > >> $ echo -ne "\eGQ;"
+> > >> ;$ 0
+> > >> bash: 0: command not found
+> > >
+> > > Does this also affect rxvt-unicode?
+> > 
+> > It does, actually. I've CCd rxvt-unicode upstream on this in order to
+> > hear their assessment.
+> 
+> There can't be an assessment without knowledge of what to assess - there
+> is little to no information in your mail. I can only guess that somebody
+> for the hundredth time found out that terminals are more than dumb
+> display devices and got excited that, somehow, this might be a security
+> issue. Without knowing details, I can't say for sure, but most likely,
+> this is a security issue the same way blindly feeding unknown commands to
+> your shell is, i.e., it's a problem somewhere else - the protocol between
+> terminals and programs is not a (strong) security barrier.
+> 
+> (your echo command is bash-specific, btw.)
 
-Quick Emulator(Qemu) built with the CCID Card device emulator support is 
-vulnerable to an integer overflow flaw. It could occur while passing message 
-via command/responses packets to and from the host.
+You're right that we provided "little to no information" - sorry.  I'll
+correct this now.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-on host resulting in DoS.
+Jason's e-mail was in part prompted by my off-list message to him, where
+I wrote about this issue (or non-issue depending on one's perspective):
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-02/msg01075.html
+---
+I think it's pretty bad, because unlike many other terminals' automated
+responses triggered by escapes, this one includes a linefeed.  So an
+attack tarball/directory/whatever would include e.g. a program called
+"1" and a text file with that escape sequence.  When someone cat's or
+more's the file, the program would automatically be invoked _if_ they
+have . in PATH.  While we normally shouldn't have . in PATH, I think
+some people might.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1419699
+The risk probability is low, but this is nevertheless a valid security
+issue to patch.
+---
 
-This issue was reported by Mr Li Qiang of 360.cn Inc.
+(The pasted text appears to vary between "0" and "1".)
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+I haven't just "found out that terminals are more than dumb display
+devices" and I haven't "got excited".  This is indeed well-known, and
+has been discussed for decades.  I fully agree that the security barrier
+should be inside each program - if a program processes untrusted input,
+it must not blindly send that to the terminal.  Unfortunately, this
+often fails in practice - many programs don't bother, many programs
+don't do it right (e.g., it's common to let the 8-bit escapes through,
+especially with some now mostly obsolete 8-bit locales), there are
+subtle asynchronous multi-producer issues with UTF-8, and there are
+clueless or/and risk-taking users/sysadmins who "cat", etc.  untrusted
+files to terminals.  Sometimes the overhead of avoiding such risky
+actions is prohibitive - e.g., sometimes one does need to issue a SQL
+query for untrusted data from a SQL shell they already have started on
+their terminal.
+
+Thus, a sentiment expressed in past discussions in here is that terminal
+emulators shouldn't have the riskiest escape sequences supported by
+default.  It is fully expected that malicious escape sequences can make
+a terminal unusable, requiring reset.  It is unexpected by many users
+(as you correctly say, hundreds end up rediscovering this and bringing
+it up as an issue) that with some terminal emulators malicious escape
+sequences, through misfeatures (rather than implementation bugs, which
+often also exist), can also paste text into their shell prompt (as
+above), modify X clipboard contents (in xterm, luckily no longer in
+typical distros' default config), etc.  Those who are aware and expect
+this may prefer to have this risky and unneeded functionality disabled
+by default.
+
+It's about defense-in-depth and about not having a loaded gun hanging on
+the wall unnecessarily.
+
+In the message that started this current thread, I included links to
+some recent past threads covering some of the aspects mentioned above:
+
+http://www.openwall.com/lists/oss-security/2017/05/01/13
+
+Alexander
