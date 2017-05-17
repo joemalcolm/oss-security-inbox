@@ -1,54 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/2
-Message-ID: <CAO5O-ELKaUKMBBvYHN5rC5WYM7Z0qVHhsWL6zbqAXUpVcThoZA@mail.gmail.com>
-Date: Thu, 28 Sep 2017 12:06:51 +0200
-From: Guido Vranken <guidovranken@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: OpenVPN CVE-2017-12166: remote buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/6
+Message-ID: <alpine.LFD.2.20.1705171622060.32210@wniryva>
+Date: Wed, 17 May 2017 16:27:01 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Leo Gaspard <leo@...pard.io>
+Subject: CVE-2017-7493 Qemu: 9pfs: guest privilege escalation in virtfs mapped-file mode
 Content-Type: text/plain; charset=utf-8
 
-This concerns a remote buffer overflow vulnerability in OpenVPN. It
-has been fixed in OpenVPN 2.4.4 and 2.3.18, released on 26 Sept 2017.
-It is suspected that only a small number of users is vulnerable to
-this issue, because it requires having explicitly enabled the outdated
-‘key method 1’.
+   Hello,
 
-The OpenVPN advisory can be found here:
-https://community.openvpn.net/openvpn/wiki/CVE-2017-12166
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to an improper access control issue. 
+It could occur while accessing virtfs metadata files in mapped-file security 
+mode.
 
-In ssl.c, key_method_1_read() calls read_key() which doesn’t perform
-adequate bounds checks. cipher_length and hmac_length are specified by
-the
-peer:
+A guest user could use this flaw to escalate their privileges inside guest.
 
-1643 uint8_t cipher_length;
-1644 uint8_t hmac_length;
-1645
-1646 CLEAR(*key);
-1647 if (!buf_read(buf, &cipher_length, 1))
-1648 {
-1649     goto read_err;
-1650 }
-1651 if (!buf_read(buf, &hmac_length, 1))
-1652 {
-1653     goto read_err;
-1654 }
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-05/msg03663.html
 
-And this many bytes of data are then read into key->cipher and key->hmac:
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1451709
 
-1656 if (!buf_read(buf, key->cipher, cipher_length))
-1657 {
-1658     goto read_err;
-1659 }
-1660 if (!buf_read(buf, key->hmac, hmac_length))
-1661 {
-1662     goto read_err;
-1663 }
+'CVE-2017-7493' has been assigned to this issue by Red Hat Inc.
 
-In other words, it’s a classic example of bounds check resulting in a
-buffer overflow.
+It was reported by Leo Gaspard.
 
-Like my previous set of OpenVPN vulnerabilities, this issue was also
-found with fuzzing.
-
-Guido
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
