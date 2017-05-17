@@ -1,30 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/1
-Message-ID: <50169957-6b4a-9e6e-e8d2-8e09918e6cbc@linux.com>
-Date: Tue, 29 Aug 2017 12:46:24 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: Seth Arnold <seth.arnold@...onical.com>, oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: fixed bug in net/core/flow_dissector.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/13
+Message-ID: <fd8ae002-bf60-d687-8d52-2a00378b1713@foxmole.com>
+Date: Wed, 17 May 2017 22:08:25 +0200
+From: Stefan Pietsch <stefan.pietsch@...mole.com>
+To: <oss-security@...ts.openwall.com>
+CC: <fulldisclosure@...lists.org>
+Subject: Re: Dolibarr ERP & CRM - Multiple Issues
 Content-Type: text/plain; charset=utf-8
 
-On 24.08.2017 21:03, Seth Arnold wrote:
-> On Thu, Aug 24, 2017 at 05:52:45PM +0300, Alexander Popov wrote:
->> I was asked to investigate a suspicious kernel crash on some Linux
->> server. It is at least a remote DoS (and maybe RCE): Linux is crashed by
->> receiving a single special MPLS packet.
->>
->> I bisected and found out that the bug was introduced in
->> commit b3baa0fbd02a1a9d493d8cb92ae4a4491b9e9d13
->> And was later fixed it in
->> commit a6e544b0a88b53114bfa5a57e21b7be7a8dfc9d0
+On 10.05.2017 10:28, FOXMOLE Advisories wrote:
+> === FOXMOLE - Security Advisory 2017-02-23 ===
 > 
->> Is it worth requesting a CVE ID for that issue?
+> Dolibarr ERP & CRM  - Multiple Issues
+> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > 
-> I think it is, it's an easy way to make sure all downstream consumers
-> are alerted to the issue.
+> Affected Versions
+> =================
+> Dolibarr 4.0.4
+> 
+> Issue Overview
+> ==============
+> Vulnerability Type: SQL Injection, Cross Site Scripting,
+>                     Weak Hash Algorithm without Salt, Weak Password Change Method
+> Technical Risk: critical
+> Likelihood of Exploitation: medium
+> Vendor: Dolibarr
+> Vendor URL: https://www.dolibarr.org/
+> Credits: FOXMOLE employees Tim Herres and Stefan Pietsch
+> Advisory URL: https://www.foxmole.com/advisories/foxmole-2017-02-23.txt
+> Advisory Status: Public
+> OVE-ID: OVE-20170223-0001
+> CVE Number: CVE-2017-7886, CVE-2017-7887, CVE-2017-7888
+> CVE URL: https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7886
+>          https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7887
+>          https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7888
+> CWE-ID: CWE-79, CWE-89, CWE-327, CWE-620, CWE-759
+> CVSS 2.0: 10.0 (AV:N/AC:L/Au:N/C:C/I:C/A:C)
 
-I've requested a CVE ID at https://cveform.mitre.org/ and got
-CVE-2017-13715 for this issue.
+--- snip ---
 
-Best regards,
-Alexander
+Here is a small update to our security advisory.
+
+An additional CVE ID got assigned for the password change finding:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8879
+
+
+Meanwhile the Dolibarr developers fixed more possible SQL injection bugs
+in this git commit:
+https://github.com/Dolibarr/dolibarr/commit/fa290c34fad108ec7c0751c0372ae9c4b4f63b06
+
+They still didn't release a fixed version of the Dolibarr software.
+
+
+
+For CVE-2017-7886 I don't agree with the CVSS v2 scoring from the NIST.
+They rated "Confidentiality Impact" as partial while I think it is
+complete as we have full access to all tables.
+
+
+Regards,
+Stefan
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
