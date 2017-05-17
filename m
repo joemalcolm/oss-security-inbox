@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/15
-Message-ID: <20171012172310.kejumlealja5qu2k@eldamar.local>
-Date: Thu, 12 Oct 2017 19:23:10 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Leon Zhao <leon.zhao.7@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Two DoS vulneribilities in libextractor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/1
+Message-ID: <CAP145pjmwx27VXaT8-njOL9DG205yjhLUrwWkbD0NthYOZQvfA@mail.gmail.com>
+Date: Wed, 17 May 2017 02:25:52 +0200
+From: Robert Święcki <robert@...ecki.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-On Wed, Oct 11, 2017 at 11:40:33AM +0800, Leon Zhao wrote:
-> Hello oss security,
-> 
-> I found two DoS vulneribilities in libextractor,
-> 
-> Affected version
-> 1.4
-> 
-> 1. Divide-By-Zero
-> https://bugzilla.redhat.com/show_bug.cgi?id=1499599
-> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00002.html
-> Fixed
+2017-05-17 0:03 GMT+02:00 Solar Designer <solar@...nwall.com>:
+>
+> Jason, Robert -
+>
+> On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
+> > A harmless example from rxvt - pushing back the new-line character:
+> >
+> > $ echo -ne "\eGQ;"
+> > ;$ 0
+> > bash: 0: command not found
+>
+> Does this also affect rxvt-unicode?
 
-This was assigned CVE-2017-15266.
+Yes,
 
-> 2. Null Pointer Dereference
-> https://bugzilla.redhat.com/show_bug.cgi?id=1499600
-> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00003.html
-> Fixed
+Tested with rxvt-unicode-9.22
 
-This was assigned CVE-2017-15267.
+$ echo -ne "\eGQ;"
+;$ 0
+bash: 0: command not found
+$
 
-Regards,
-Salvatore
+-- 
+Robert Święcki
