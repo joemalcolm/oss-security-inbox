@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1973" "Sunday" "10" "January" "2021" "19:08:42" "+0100" "Solar Designer" "solar@openwall.com" "<20210110180842.GA2432@openwall.com>" "44" "Re: [oss-security] distros list archive" nil nil nil "1" "2021011018:08:42" "[oss-security] distros list archive" (number mark "U       solar@openwa Jan 10   44/1973  " thread-indent "\"Re: [oss-security] distros list archive\"\n") "<20171120224205.GA14494@openwall.com>" ("<20170624163950.GA405@openwall.com>" "<20171120224205.GA14494@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] distros list archive" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1477" "Wednesday" "17" "May" "2017" "03:23:14" "+0200" "Marc Lehmann" "schmorp@schmorp.de" "<20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>" "34" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Cc:" nil nil "5" "2017051701:23:14" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        schmorp@schm May 17   34/1477  " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19661 invoked by uid 550); 10 Jan 2021 18:10:18 -0000
+Received: (qmail 20336 invoked by uid 550); 17 May 2017 01:50:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18034 invoked from network); 10 Jan 2021 18:08:54 -0000
-Date: Sun, 10 Jan 2021 19:08:42 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20210110180842.GA2432@openwall.com>
-References: <20170624163950.GA405@openwall.com> <20171120224205.GA14494@openwall.com>
-Mime-Version: 1.0
+Received: (qmail 7470 invoked from network); 17 May 2017 01:23:27 -0000
+Message-ID: <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>
+References: <20170501164428.GA12322@openwall.com>
+ <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>
+ <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
+ <20170516220345.GA10874@openwall.com>
+ <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171120224205.GA14494@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] distros list archive
+In-Reply-To: <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
+OpenPGP: id=904ad2f81fb16978e7536f726dea2ba30bc39eb6;
+ url=http://pgp.schmorp.de/schmorp-pgpkey.txt; preference=signencrypt
+Cc: oss-security <oss-security@lists.openwall.com>,
+	rxvt-unicode@lists.schmorp.de, rxvt@schmorp.de
+Date: Wed, 17 May 2017 03:23:14 +0200
+From: Marc Lehmann <schmorp@schmorp.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] terminal emulators' processing of escape sequences
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 
-Hi,
-
-I've just updated the headers-only archives of (linux-)distros mentioned
-in the message below to include headers of everything posted until
-December 31, 2020.  There was relatively little need for this for a
-while due to the statistics kindly maintained by Gentoo, but now those
-are lagging behind (last updated until September 2019 inclusive).  They
-will need to also be updated, and I felt updating these archives might
-help with hopefully making that upcoming update and with its review.
-
-Alexander
-
-On Mon, Nov 20, 2017 at 11:42:05PM +0100, Solar Designer wrote:
-> On Sat, Jun 24, 2017 at 06:39:50PM +0200, Solar Designer wrote:
-> > I've just set up these archives of the private lists up until June 19:
-> > 
-> > http://www.openwall.com/lists/linux-distros/
-> > http://www.openwall.com/lists/distros/
-> > 
-> > I did not decrypt the actual messages, but the statistics and the
-> > message headers should provide some visibility into how much and roughly
-> > what was discussed and when.
+On Wed, May 17, 2017 at 12:15:55AM +0200, "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+> On Wed, May 17, 2017 at 12:03 AM, Solar Designer <solar@openwall.com> wrote:
+> > Jason, Robert -
+> >
+> > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
+> >> A harmless example from rxvt - pushing back the new-line character:
+> >>
+> >> $ echo -ne "\eGQ;"
+> >> ;$ 0
+> >> bash: 0: command not found
+> >
+> > Does this also affect rxvt-unicode?
 > 
-> I've just updated these with message headers until November 19 (although
-> there was nothing posted after November 9, until further still-embargoed
-> messages appeared today).
-> 
-> > The messages appearing on distros should be strictly a subset of those
-> > appearing on linux-distros, as per the description of the lists here:
-> > 
-> > http://oss-security.openwall.org/wiki/mailing-lists/distros
-> > 
-> > As you may notice, the Subject lines sometimes contain [vs] and other
-> > times [vs-plain].  This reflects whether the messages traveled to the
-> > list exploder in encrypted or plaintext form, respectively.  They
-> > traveled to the list members in re-encrypted form either way.  The
-> > [vs-plain] case commonly occurs on messages CC'ed to other parties, for
-> > which the sender might not have had the keys.  MUAs generally don't
-> > allow a message to be encrypted to a subset of the addressees and sent
-> > in plaintext to others.
-> > 
-> > Enjoy.
-> 
-> Alexander
+> It does, actually. I've CCd rxvt-unicode upstream on this in order to
+> hear their assessment.
+
+There can't be an assessment without knowledge of what to assess - there
+is little to no information in your mail. I can only guess that somebody
+for the hundredth time found out that terminals are more than dumb
+display devices and got excited that, somehow, this might be a security
+issue. Without knowing details, I can't say for sure, but most likely,
+this is a security issue the same way blindly feeding unknown commands to
+your shell is, i.e., it's a problem somewhere else - the protocol between
+terminals and programs is not a (strong) security barrier.
+
+(your echo command is bash-specific, btw.)
+
+-- 
+                The choice of a       Deliantra, the free code+content MORPG
+      -----==-     _GNU_              http://www.deliantra.net
+      ----==-- _       generation
+      ---==---(_)__  __ ____  __      Marc Lehmann
+      --==---/ / _ \/ // /\ \/ /      schmorp@schmorp.de
+      -=====/_/_//_/\_,_/ /_/\_\
