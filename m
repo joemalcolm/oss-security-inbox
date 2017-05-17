@@ -1,15 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/30/1
-Message-ID: <49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>
-Date: Sun, 30 Jul 2017 12:47:35 +0800 (CST)
-From: sohu0106 <sohu0106@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/12
+Message-ID: <20170517162923.3855.16F61A97@matica.foolinux.mooo.com>
+Date: Wed, 17 May 2017 09:40:57 -0700
+From: Ian Zimmerman <itz@...mate.net>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak
+Subject: rxvt-unicode "insecure" setting [Was: terminal emulators' processing of escape sequences]
 Content-Type: text/plain; charset=utf-8
 
-net/irda/af_irda.c
+This is a bit tangential to this particular thread, but clearly
+security-related.
 
-Sometimes irda_getsockopt() doesn't initialize all members of list field of irda_device_list struct.  This structure is then copied to
-userland.  It leads to leaking of contents of kernel stack memory.  We have to initialize them to zero , or it will allows local users to obtain potentially sensitive information from kernel stack memory by reading a copy of this structure
+Quoting "man urxvt", section "RESOURCES":
 
-https://github.com/torvalds/linux/pull/440
+ insecure: boolean
+
+  Enables "insecure" mode. Rxvt-unicode offers some escape sequences
+  that echo arbitrary strings like the icon name or the locale. This
+  could be abused if somebody gets 8-bit-clean access to your display,
+  whether through a mail client displaying mail bodies unfiltered or
+  through write(1) or any other means. Therefore, these sequences are
+  disabled by default. (Note that many other terminals, including xterm,
+  have these sequences enabled by default, which doesn't make it safer,
+  though).
+
+  You can enable them by setting this boolean resource or specifying
+  -insecure as an option. At the moment, this enables display-answer,
+  locale, findfont, icon label and window title requests.
+
+My ~/.Xresources file, trimmed.  I am sure it is getting read, because
+of the cutchars, colors and geometry settings:
+
+ Rxvt.background: seashell
+ Rxvt.color10: green4
+ Rxvt.color11: orange2
+ Rxvt.color14: cyan4
+ Rxvt.color2: green3
+ Rxvt.color3: orange
+ Rxvt.color6: cyan3
+ Rxvt.cutchars: '"!' &()*,;<=>?@[]^{|} #$%+-./:
+ Rxvt.foreground: Gray40
+ Rxvt.geometry: 103x36
+ Rxvt.saveLines: 200
+ Rxvt.visualBell: on
+ URxvt.font: x:-misc-fixed-medium-r-semicondensed--13-*-*-*-*-*-iso10646-1
+ URxvt.perl-ext-common:
+ URxvt.insecure: false
+
+Finally, a chunk of my ~/.bashrc:
+
+ # If this is an xterm set the title to something informative
+ case "$TERM" in
+         xterm*|rxvt*)
+             PROMPT_COMMAND="echo -ne \"\E]0; $$ ${LOGNAME}@...OSTNAME}:\${PWD} \a\""
+             ;;
+         *)
+             ;;
+ esac
+
+And ... it works!
+
+Why?
+
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign:
+http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
