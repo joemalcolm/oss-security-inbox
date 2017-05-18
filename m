@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["375" "Monday" "17" "April" "2017" "16:13:04" "-0700" "Bryan Call" "bcall@apache.org" "<F4BD9382-D7C5-4322-BCDA-F555472B08F9@apache.org>" "15" "[oss-security] [ANNOUNCE] Chunking and content-length vulnerability in ATS - CVE-2017-5659" "^Date:" nil nil "4" "2017041723:13:04" "[oss-security] [ANNOUNCE] Chunking and content-length vulnerability in ATS - CVE-2017-5659" (number mark "U       bcall@apache Apr 17   15/375   " thread-indent "\"[oss-security] [ANNOUNCE] Chunking and content-length vulnerability in ATS - CVE-2017-5659\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["226" "Thursday" "18" "May" "2017" "06:10:57" "+0000" "=?UTF-8?B?U8OpYmFzdGllbg==?= Delafond" "seb@debian.org" "<20170518080707.635@usenet.piggo.com>" "13" "[oss-security] libytnef: CVE-2017-9058: heap-based buffer overflow in SIZECHECK (ytnef.c)" "^Date:" nil nil "5" "2017051806:10:57" "[oss-security] libytnef: CVE-2017-9058: heap-based buffer overflow in SIZECHECK (ytnef.c)" (number mark "U       seb@debian.o May 18   13/226   " thread-indent "\"[oss-security] libytnef: CVE-2017-9058: heap-based buffer overflow in SIZECHECK (ytnef.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22092 invoked by uid 550); 17 Apr 2017 23:38:53 -0000
+Received: (qmail 9606 invoked by uid 550); 18 May 2017 10:27:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +11,28 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7307 invoked from network); 17 Apr 2017 23:13:18 -0000
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <F4BD9382-D7C5-4322-BCDA-F555472B08F9@apache.org>
-X-Mailer: Apple Mail (2.3273)
-Date: Mon, 17 Apr 2017 16:13:04 -0700
-From: Bryan Call <bcall@apache.org>
+Received: (qmail 25831 invoked from network); 18 May 2017 06:11:21 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+Message-ID: <20170518080707.635@usenet.piggo.com>
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: slrn/1.0.3 (Linux)
+Date: Thu, 18 May 2017 06:10:57 +0000 (UTC)
+From: =?UTF-8?Q?S=C3=A9bastien?= Delafond <seb@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [ANNOUNCE] Chunking and content-length vulnerability in ATS -
- CVE-2017-5659
-To: dev <dev@trafficserver.apache.org>,
- users@trafficserver.apache.org,
- announce@trafficserver.apache.org,
- security@trafficserver.apache.org,
- oss-security@lists.openwall.com,
- bugtraq@securityfocus.com,
- persia@apache.org
+Subject: [oss-security] libytnef: CVE-2017-9058: heap-based buffer overflow in SIZECHECK
+ (ytnef.c)
+To: oss-security@lists.openwall.com
 
-There is a vulnerability in ATS with chunking and content-length that can l=
-ead to a DoS attack.  Versions 6.2.0 and prior are affected.  Please upgrad=
-e to ATS 6.2.1 or 7.0.0.
+Hello,
 
-Downloads:
-	https://trafficserver.apache.org/downloads
+CVE-2017-9058 has been assigned for the following vulnerability:
 
-Jira Ticket:
-	https://issues.apache.org/jira/browse/TS-4819
+  https://bugs.debian.org/862556
 
-CVE:
-	https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=3D2017-5659
+This was discovered by bingosxs@qq.com, and leads to a crash because of
+an incorrect boundary check.
 
+Cheers,
 
--Bryan
+--Seb
+
