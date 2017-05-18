@@ -1,65 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/17
-Message-ID: <20170914130443.GA21420@openwall.com>
-Date: Thu, 14 Sep 2017 15:04:43 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Denis Ovsienko <denis@...ienko.info>
-Subject: Re: tcpdump 4.9.2 is fully available
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/3
+Message-ID: <20170518022415.ygonweucssnxmazg@schmorp.de>
+Date: Thu, 18 May 2017 04:24:15 +0200
+From: Marc Lehmann <schmorp@...morp.de>
+To: "Jason A. Donenfeld" <Jason@...c4.com>
+Cc: oss-security <oss-security@...ts.openwall.com>, rxvt-unicode@...morp.de, "jer@...too.org" <jer@...too.org>
+Subject: Re: Defense in depth patch for rxvt-unicode
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 13, 2017 at 09:59:13PM +0100, Denis Ovsienko wrote:
-> As per Alexander's advice, let me comment for the avoidance of doubt that all deliverables for the tcpdump 4.9.2 release are public since today as advised last week. This includes individual commits in the public git repository with reference to particular CVE IDs and credits to the original reporter(s) and the author of each bugfix.
+On Wed, May 17, 2017 at 01:41:32PM +0200, "Jason A. Donenfeld" <Jason@...c4.com> wrote:
+> This email thread concerns my request to Marc to include the attached
+> patch inside rxvt-unicode upstream. My own downstream -- Gentoo's
+> jer@, also CCd -- won't include the patch until the agreement of
+> upstream. Thus, it's important we come to a good conclusion.
 
-Thank you, Denis.  I was hoping you'd post more like a full advisory,
-and include the credits and maybe the disclosure timeline.  I should
-have been more specific.
+I don't think we will include this patch upstream.
 
-Here's my reconstruction of the timeline:
+> On Wed, May 17, 2017 at 3:17 AM, Marc Lehmann <schmorp@...morp.de> wrote:
+> This patch was part of a larger discussion on which you were CCd from
+> distros. It seems possible that either those messages didn't make it
+> to you, or you didn't have time to read them.
 
-Unknown date(s) - issues found
+I only received a single message.
 
-Unknown date(s) - issues reported to upstream
+> In any case, the attached patch would be a useful defense in depth
+> measure to prevent future integer overflow bugs, such as the one that
+> was recently found in rxvt.
 
-September 3 - tcpdump 4.9.2 release prepared, but not supposed to be
-made public yet
+I am not convinced it is.
 
-Unknown date(s) - private disclosure (by upstream?) to some distros (not
-via the distros list) with CRD set to September 25 (since a 3 week
-embargo was mentioned elsewhere, this could have been on September 4)
+> Briefly looking though the code, it seems
+> like there is a considerable amount of unchecked integer arithmetic,
+> often passing between several functions in several files.
 
-September 4 - "The tar.gz turned up in the public release directory on 4
-September by an accident"
+Likely, yes.
 
-September 5 - "and was deleted on 5 September"
+> somehow auditing every arithmetic call path, a considerable
+> undertaking, Alexander and I would recommend simply limiting the range
+> of input from users.
 
-September 5 - at least Mageia and Fedora update their tcpdump packages,
-apparently due to these projects' automated monitoring for new upstream
-releases (IIRC, as confirmed by links to automatically-created bug
-tracking entries and such)
+This sounds big, but I don't quite see the patch achieving that, as input is
+processed at many places, yet the patch only changes one place.
 
-September 6 - upstream sends private message to some distros about the
-leak, moving the CRD to September 13
+> As Alexander wrote in a recent email to you, the general opinion of
+> this list is that terminal emulators should not support the most
+> dangerous uses of escape sequences, even if they're technically valid.
+> The attached patch falls into that category.
 
-September 6 - first notification to the distros list by NixOS, who are
-not on the list and who thought the information was already known to
-list members, saying in part "We don't think that the embargo can be
-sustained under these conditions, even for another week."
+I can't see why this patch somehow "unsupports" the most dangerous uses of
+escape sequences.
 
-September 6-8 - several people and distros try and fail to convince
-upstream to go public with the full detail ASAP, but nevertheless
-receive explicit permission to go ahead with releasing updated packages
+> You seem to have made the
+> argument that the patch "might break valid uses".
 
-September 7 - an Arch Linux developer (who is not on (linux-)distros and
-apparently was not aware of the distros list discussion) brings the
-issue to oss-security (it's unclear to me how that person knew of the
-September 25 initial CRD); I approve that message right away
+The parameter range is severely limited. This makes the patch rather
+disadvantageous, without any demonstrated benefit.
 
-September 8 - upstream posts a clarification to oss-security, confirming
-that distros are right to proceed with releasing updates; the tarball is
-placed on the tcpdump.org website
+> you a bit of the backstory and recent basis which motivates this
+> patch. If this is compelling, I'd rest well knowing it's accepted
+> upstream. If this is not compelling, could you indicate to the list
+> why "might break valid uses" outweighs the potential security
+> mitigations?
 
-September 13 - full detail is made public (I think this means individual
-commits rather than only the tree as a whole)
+Valid uses outweigh "potential security mitigations" simply because
+"potential security mitigations" is pretty weightless in itself.
 
-Alexander
+If you are aware of an actual security problem, that would be something to
+attack.
+
+-- 
+                The choice of a       Deliantra, the free code+content MORPG
+      -----==-     _GNU_              http://www.deliantra.net
+      ----==-- _       generation
+      ---==---(_)__  __ ____  __      Marc Lehmann
+      --==---/ / _ \/ // /\ \/ /      schmorp@...morp.de
+      -=====/_/_//_/\_,_/ /_/\_\
