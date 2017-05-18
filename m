@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/1
-Message-ID: <87wp63jgxn.fsf@fifthhorseman.net>
-Date: Wed, 16 Aug 2017 18:17:40 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Michael Orlitzky <michael@...itzky.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/5
+Message-ID: <CAHmME9ra5WDz77HHzY3mQwRUoxeOUh5yVLxw1VD-SbeqOHafNg@mail.gmail.com>
+Date: Thu, 18 May 2017 11:31:13 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: Marc Lehmann <schmorp@...morp.de>
+Cc: oss-security <oss-security@...ts.openwall.com>, rxvt-unicode@...morp.de,  "jer@...too.org" <jer@...too.org>
+Subject: Re: Defense in depth patch for rxvt-unicode
 Content-Type: text/plain; charset=utf-8
 
-On Wed 2017-08-16 12:10:09 -0400, Michael Orlitzky wrote:
-> The problem is avoided by creating the PID file as root, before
-> dropping privileges.
+On Thu, May 18, 2017 at 4:24 AM, Marc Lehmann <schmorp@...morp.de> wrote:
+> This sounds big, but I don't quite see the patch achieving that, as input is
+> processed at many places, yet the patch only changes one place.
 
-The problem can also be avoided by not using PID files at all, and
-relying instead on a service manager that actually keeps track of its
-children using more robust means (like wait() and SIGCHLD).
+The intent was to limit the bounds on the number at the very beginning
+of the call chain. I believe this patch does that, but if I've missed
+additional entry points, please let me know, and I'll roll another
+revision of the same technique.
 
-Even when a process isn't malicious, if it dies unexpectedly a different
-process may spawn re-using the PID stored in the pidfile, in an
-accidental collision.
+> I can't see why this patch somehow "unsupports" the most dangerous uses of
+> escape sequences.
 
-At what point do we treat hacks like pidfiles as security risks more
-generally?
+It prevents potential integer overflows during subsequent additions or
+multiplications. The range in the patch was chosen to be especially
+forgiving in that regard.
 
-pidfiles, self-daemonization, privilege-dropping, are all things that
-are easy to get subtly wrong.  What do we need to offer to developers of
-daemons to encourage them to just stop doing them?
+> The parameter range is severely limited. This makes the patch rather
+> disadvantageous, without any demonstrated benefit.
 
-  --dkg
+Could you list a valid use for a range larger than that?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+
+> Valid uses outweigh "potential security mitigations" simply because
+> "potential security mitigations" is pretty weightless in itself.
+>
+> If you are aware of an actual security problem, that would be something to
+> attack.
+
+That's not quite how "defense in depth" works.
