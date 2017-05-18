@@ -1,40 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/11
-Message-ID: <CAEwge-FqzrT+deCkNkM-EQZuKfg-XuqY4cGjFiqxoKBVduY1Zw@mail.gmail.com>
-Date: Fri, 29 Sep 2017 10:33:38 -0700
-From: Anthony Baker <abaker@...che.org>
-To: user@...de.apache.org, dev@...de.apache.org, announce@...che.org,  security@...che.org, oss-security@...ts.openwall.com
-Cc: Jared Stewart <jstewart@...otal.io>
-Subject: [SECURITY] CVE-2017-9794 Apache Geode gfsh query vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/4
+Message-ID: <20170518023950.gkj6diatbr4bfdmh@schmorp.de>
+Date: Thu, 18 May 2017 04:39:50 +0200
+From: Marc Lehmann <schmorp@...morp.de>
+To: Solar Designer <solar@...nwall.com>
+Cc: "Jason A. Donenfeld" <Jason@...c4.com>, oss-security <oss-security@...ts.openwall.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-9794 Apache Geode gfsh query vulnerability
+On Wed, May 17, 2017 at 01:05:30PM +0200, Solar Designer <solar@...nwall.com> wrote:
+> You're right that we provided "little to no information" - sorry.  I'll
+> correct this now.
+> 
+> Jason's e-mail was in part prompted by my off-list message to him, where
+> I wrote about this issue (or non-issue depending on one's perspective):
 
-Severity: Low
-CVSS Base Score 3.5 (CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:N)
+Thanks a lot, this makes a lot more sense. The confusing part was that the
+patch sent by Jason in his mail had nothing to do with this issue.
 
-Vendor: The Apache Software Foundation
+> I think it's pretty bad, because unlike many other terminals' automated
+> responses triggered by escapes, this one includes a linefeed.
 
-Versions Affected:
-Apache Geode 1.0.0 through 1.2.0
+I agree - rxvt-unicode shouldn't reply with a LF when in secure mode (this
+is a policy). The sequence in question is also not used (or even usable,
+as it queries the original rxvt graphics mode which is not implemented in
+urxvt), so the next version will have it disabled, at least in secure mode
+(the default).
 
-Description:
-When a cluster is operating in secure mode, a user with read
-privileges for specific data  regions can use the gfsh command line
-utility to execute queries.  The query results may contain data from
-another user’s concurrently executing gfsh query, potentially
-revealing data that the user is not authorized to view.
+> The risk probability is low, but this is nevertheless a valid security
+> issue to patch.
 
-Mitigation:
-Users of the affected versions should upgrade to Apache Geode 1.2.1 or later.
+I agree, it is a reasonable defense in depth mechanism where the benefit
+clearly outweighs the disadvantages.
 
-Credit:
-This issue was reported responsibly to the Apache Geode PMC by Jared
-Stewart from Pivotal.
+> (The pasted text appears to vary between "0" and "1".)
 
-References:
-[1] https://issues.apache.org/jira/browse/GEODE-3217
-[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
+urxvt always replies with "\033G0\012" to indicate "graphics mode not
+supported". It's quite possible the the original rxvt replies with other
+sequences.
 
----
-The Geode PMC
+> Thus, a sentiment expressed in past discussions in here is that terminal
+> emulators shouldn't have the riskiest escape sequences supported by
+> default.  It is fully expected that malicious escape sequences can make
+
+Again, I fully agree - I just couldn't make the connection between the
+patch sent and these "riskiest escape sequences".
+
+-- 
+                The choice of a       Deliantra, the free code+content MORPG
+      -----==-     _GNU_              http://www.deliantra.net
+      ----==-- _       generation
+      ---==---(_)__  __ ____  __      Marc Lehmann
+      --==---/ / _ \/ // /\ \/ /      schmorp@...morp.de
+      -=====/_/_//_/\_,_/ /_/\_\
