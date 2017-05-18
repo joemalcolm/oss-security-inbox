@@ -1,220 +1,232 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/25/1
-Message-ID: <31b16718-a4f7-8b38-20fe-d7636b36d049@igalia.com>
-Date: Tue, 25 Jul 2017 14:42:55 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2017-0006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/7
+Message-ID: <338779.738263355-sendEmail@localhost>
+Date: Thu, 18 May 2017 10:50:53 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: binutils: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2017-0006
-------------------------------------------------------------------------
+Description:
+binutils are a collection of binary tools necessary to build programs.
 
-Date reported      : July 25, 2017
-Advisory ID        : WSA-2017-0006
-Advisory URL       : https://webkitgtk.org/security/WSA-2017-0006.html
-CVE identifiers    : CVE-2017-7006, CVE-2017-7011, CVE-2017-7012,
-                     CVE-2017-7018, CVE-2017-7019, CVE-2017-7020,
-                     CVE-2017-7030, CVE-2017-7034, CVE-2017-7037,
-                     CVE-2017-7038, CVE-2017-7039, CVE-2017-7040,
-                     CVE-2017-7041, CVE-2017-7042, CVE-2017-7043,
-                     CVE-2017-7046, CVE-2017-7048, CVE-2017-7049,
-                     CVE-2017-7052, CVE-2017-7055, CVE-2017-7056,
-                     CVE-2017-7059, CVE-2017-7061, CVE-2017-7064.
+After the post on oss-security from Thuan Pham I was interested too into the fuzz of binutils to see what will happen…Here are the partial 
+results (I didn’t run the fuzzers against all command-line tools):
 
-Several vulnerabilities were discovered in WebKitGTK+.
+# readelf -a $FILE
+==12002==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000039 at pc 0x0000005a4f79 bp 0x7ffea5d104d0 sp 0x7ffea5d104c8
+READ of size 1 at 0x602000000039 thread T0
+    #0 0x5a4f78 in byte_get_little_endian /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/elfcomm.c:210:22
+    #1 0x565bc4 in process_mips_specific /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:15190:8
+    #2 0x52483a in process_arch_specific /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16565:14
+    #3 0x52483a in process_object /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16770
+    #4 0x50b57c in process_file /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17138:13
+    #5 0x50b57c in main /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17209
+    #6 0x7f2e28f6e680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x419f68 in dl_iterate_phdr (/usr/x86_64-pc-linux-gnu/binutils-bin/2.28/readelf+0x419f68)
 
-CVE-2017-7006
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to David Kohlbrenner of UC San Diego, an anonymous
-    researcher.
-    Impact: A malicious website may exfiltrate data cross-origin.
-    Description: Processing maliciously crafted web content may allow
-    cross-origin data to be exfiltrated by using SVG filters to conduct
-    a timing side-channel attack. This issue was addressed by not
-    painting the cross-origin buffer into the frame that gets filtered.
+0x602000000039 is located 0 bytes to the right of 9-byte region [0x602000000030,0x602000000039)
+allocated by thread T0 here:
+    #0 0x4cf918 in malloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x50be47 in get_data /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:392:9
+    #2 0x565a00 in process_mips_specific /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:15169:32
+    #3 0x52483a in process_arch_specific /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16565:14
+    #4 0x52483a in process_object /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16770
+    #5 0x50b57c in process_file /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17138:13
+    #6 0x50b57c in main /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17209
+    #7 0x7f2e28f6e680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-CVE-2017-7011
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to xisigr of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Visiting a malicious website may lead to address bar
-    spoofing. Description: A state management issue was addressed with
-    improved frame handling.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/elfcomm.c:210:22 in 
+byte_get_little_endian
+Affected version:
+2.28
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00258-binutils-readelf-heapoverflow2-byte_get_little_endian
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=f32ba72991d2406b21ab17edc234a2f3fa7fb23d
+CVE:
+CVE-2017-9038
 
-CVE-2017-7012
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Apple.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+###########################################
 
-CVE-2017-7018
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+# readelf -a $FILE
+==20389==ERROR: AddressSanitizer failed to allocate 0x18da5b8000 (106742644736) bytes of LargeMmapAllocator (error code: 12)
+[...]
+==20389==AddressSanitizer CHECK failed: 
+/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to 
+mmap")) != (0)" (0x0, 0x0)
+[...]
+    #8 0x66216d in xmalloc /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/libiberty/xmalloc.c:148:12
+    #9 0x5e32c0 in cmalloc /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/dwarf.c:7450:10
+    #10 0x582819 in get_program_headers /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:4761:33
+    #11 0x55ab15 in process_program_headers /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:4814:9
+    #12 0x52ea4f in process_object /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16751:7
+    #13 0x51780f in process_file /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17138:13
+    #14 0x51780f in main /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17209
+    #15 0x7f252d57178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #16 0x41a158 in getenv (/usr/x86_64-pc-linux-gnu/binutils-bin/2.28/readelf+0x41a158)
+Affected version:
+2.28
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00259-binutils-readelf-memallocfailure
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=82156ab704b08b124d319c0decdbd48b3ca2dac5
+CVE:
+CVE-2017-9039
 
-CVE-2017-7019
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Zhiyang Zeng of Tencent Security Platform Department.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+###########################################
 
-CVE-2017-7020
-    Versions affected: WebKitGTK+ before 2.16.1.
-    Credit to likemeng of Baidu Security Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+# readelf -a $FILE
+==25206==WARNING: AddressSanitizer failed to allocate 0x40000000000070 bytes
+==25206==AddressSanitizer's allocator is terminating the process instead of returning 0
+==25206==If you don't like this behavior set allocator_may_return_null=1
+==25206==AddressSanitizer CHECK failed: 
+/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_allocator.cc:221 "((0)) != (0)" 
+(0x0, 0x0)
+[...]
+    #6 0x66dcfd in xmalloc /tmp/portage/sys-devel/binutils-9999/work/binutils/libiberty/xmalloc.c:147:12
+    #7 0x5e5a20 in cmalloc /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/dwarf.c:8259:10
+    #8 0x5d2865 in process_mips_specific /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:15373:34
+    #9 0x54ac16 in process_arch_specific /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:17449:14
+    #10 0x54ac16 in process_object /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:17672
+    #11 0x5167f8 in process_file /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:18055:13
+    #12 0x5167f8 in main /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:18127
+    #13 0x7fca769b578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #14 0x41a088 in getenv (/usr/x86_64-pc-linux-gnu/binutils-bin/git/readelf+0x41a088)
+Affected version:
+master after commit 82156ab704b08b124d319c0decdbd48b3ca2dac5 which fixed the bug above
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00272-binutils-memallocfailure
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=7296a62a2a237f6b1ad8db8c38b090e9f592c8cf
+CVE:
+CVE-2017-9040
+###########################################
 
-CVE-2017-7030
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to chenqin of Ant-financial Light-Year Security Lab
-    (蚂蚁金服巴斯光年安全实验室).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+# readelf -a $FILE
+==20287==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000039 at pc 0x00000064c061 bp 0x7ffcc34b2580 sp 0x7ffcc34b2578
+READ of size 1 at 0x602000000039 thread T0
+    #0 0x64c060 in byte_get_little_endian /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/elfcomm.c:210:22
+    #1 0x5d31c5 in process_mips_specific /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:15190:8
+    #2 0x549e1d in process_arch_specific /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16565:14
+    #3 0x549e1d in process_object /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16770
+    #4 0x51780f in process_file /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17138:13
+    #5 0x51780f in main /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17209
+    #6 0x7fa5fc60b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x41a158 in getenv (/usr/x86_64-pc-linux-gnu/binutils-bin/2.28/readelf+0x41a158)
 
-CVE-2017-7034
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to chenqin of Ant-financial Light-Year Security Lab
-    (蚂蚁金服巴斯光年安全实验室).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+0x602000000039 is located 0 bytes to the right of 9-byte region [0x602000000030,0x602000000039)
+allocated by thread T0 here:
+    #0 0x4d9828 in malloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x518af2 in get_data /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:392:9
+    #2 0x5d2ee2 in process_mips_specific /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:15169:32
+    #3 0x549e1d in process_arch_specific /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16565:14
+    #4 0x549e1d in process_object /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16770
+    #5 0x51780f in process_file /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17138:13
+    #6 0x51780f in main /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17209
+    #7 0x7fa5fc60b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-CVE-2017-7037
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/elfcomm.c:210:22 in 
+byte_get_little_endian
+Affected version:
+2.28
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00258-binutils-readelf-heapoverflow2-byte_get_little_endian
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=75ec1fdbb797a389e4fe4aaf2e15358a070dcc19
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=c4ab9505b53cdc899506ed421fddb7e1f8faf7a3
+CVE:
+CVE-2017-9041
 
-CVE-2017-7038
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Neil Jenkins of FastMail Pty Ltd, Egor Karbutov
-    (@ShikariSenpai) of Digital Security and Egor Saltykov
-    (@ansjdnakjdnajkd) of Digital Security.
-    Impact: Processing maliciously crafted web content with DOMParser
-    may lead to cross site scripting. Description: A logic issue existed
-    in the handling of DOMParser. This issue was addressed with improved
-    state management.
+###########################################
 
-CVE-2017-7039
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+# readelf -a $FILE
+/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:9447:39: runtime error: signed integer overflow: 7443 - 
+-9223372036854775080 cannot be represented in type 'long'
+Affected version:
+master at 2017-04-12 (dunno about other versions)
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00275-binutils-signintoverflow
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=7296a62a2a237f6b1ad8db8c38b090e9f592c8cf
+CVE:
+CVE-2017-9042
 
-CVE-2017-7040
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+###########################################
 
-CVE-2017-7041
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+# readelf -a $FILE
+/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:16941:18: runtime error: shift exponent 64 is too large for 64-bit type 
+'unsigned long'
+Affected version:
+master at 2017-04-12 (dunno about other versions)
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00274-binutils-shifttoolarge
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=ddef72cdc10d82ba011a7ff81cafbbd3466acf54
+CVE:
+CVE-2017-9043
 
-CVE-2017-7042
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+###########################################
 
-CVE-2017-7043
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+# readelf -a $FILE
+==7569==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000004 (pc 0x0000005ca9f5 bp 0x7ffcef629b70 sp 0x7ffcef629b20 T0)
+==7569==The signal is caused by a READ memory access.
+==7569==Hint: address points to the zero page.
+    #0 0x5ca9f4 in print_symbol_for_build_attribute /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:16671:16
+    #1 0x5c2d08 in process_note /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c
+    #2 0x5bc388 in process_notes_at /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:17232:13
+    #3 0x5bbc82 in process_corefile_note_segments /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:17262:8
+    #4 0x548d86 in process_object /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c
+    #5 0x5167f8 in process_file /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:18055:13
+    #6 0x5167f8 in main /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:18127
+    #7 0x7f8ede38078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #8 0x41a088 in getenv (/usr/x86_64-pc-linux-gnu/binutils-bin/git/readelf+0x41a088)
 
-CVE-2017-7046
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:16671:16 in 
+print_symbol_for_build_attribute
+==7569==ABORTING
+Affected version:
+master at 2017-04-12 (dunno about other versions)
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00273-binutils-NULLptr-print_symbol_for_build_attribute
+Commit fix:
+N/A, seems to be fixed by one of the previous commits.
+CVE:
+CVE-2017-9044
 
-CVE-2017-7048
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+###########################################
 
-CVE-2017-7049
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved memory handling.
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
 
-CVE-2017-7052
-    Versions affected: WebKitGTK+ before 2.16.4.
-    Credit to cc working with Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Timeline:
+2017-04-01: first bug discovered and reported to upstream
+2017-05-12: blog post about the issue
+2017-05-18: CVE assigned
 
-CVE-2017-7055
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to The UK's National Cyber Security Centre (NCSC).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Note:
+These bugs were found with American Fuzzy Lop.
 
-CVE-2017-7056
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/12/binutils-multiple-crashes/
 
-CVE-2017-7059
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content with DOMParser
-    may lead to cross site scripting. Description: A logic issue existed
-    in the handling of DOMParser. This issue was addressed with improved
-    state management.
-
-CVE-2017-7061
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7064
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to lokihardt of Google Project Zero.
-    Impact: An application may be able to read restricted memory.
-    Description: A memory initialization issue was addressed through
-    improved memory handling.
-
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-July 25, 2017
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
