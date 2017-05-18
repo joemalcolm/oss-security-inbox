@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/08/2
-Message-ID: <87mv658rqa.fsf@dell.be.48ers.dk>
-Date: Fri, 08 Sep 2017 11:27:57 +0200
-From: Peter Korsgaard <peter@...sgaard.com>
-To: Raphael Geissert <geissert@...ian.org>
-Cc: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: Tcpdump 4.9.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/8
+Message-ID: <87bmqqc2n5.fsf@fifthhorseman.net>
+Date: Wed, 17 May 2017 22:36:14 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Robert Święcki <robert@...ecki.net>
+Cc: oss-security@...ts.openwall.com, "Jason A. Donenfeld" <Jason@...c4.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
->>>>> "Raphael" == Raphael Geissert <geissert@...ian.org> writes:
+On Thu 2017-05-18 02:05:24 +0200, Robert Święcki wrote:
+> I believe you should try with
+>
+> $ ping ZZZ
+>
+> With
+>
+> $ ping 127.0.0.3
+>
+> it doesn't do reverse lookups at all (as you'd pointed out).
 
-Hi,
+ah, absolutely right.  that does the trick. :(
 
- > Quoting the CHANGES file of the tarball[1]:
+"ping -c3 ZZZ" results in 6 attempted invocations of "0" after it
+completes, when using iputils-ping 3:20161105-1
 
-Wow!
+Regards,
 
- > [1] https://sources.archlinux.org/other/packages/tcpdump/tcpdump-4.9.2.tar.gz
-
-Can we please have this tarball officially released on tcpdump.org /
-4.9.2 tagged in git then?
-
--- 
-Bye, Peter Korsgaard
+    --dkg
