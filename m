@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4411" "Sunday" "1" "August" "2021" "18:31:27" "+0000" "John Helmert III" "jchelmert3@posteo.net" nil "89" "Re: [oss-security] Polipo: denial-of-service using range" nil nil nil "8" nil nil (number mark "U       jchelmert3@p Aug  1   89/4411  " thread-indent "\"Re: [oss-security] Polipo: denial-of-service using range\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Polipo: denial-of-service using range" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["12824" "Thursday" "18" "May" "2017" "10:50:53" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<338779.738263355-sendEmail@localhost>" "230" "[oss-security] binutils: multiple crashes" "^Date:" nil nil "5" "2017051810:50:53" "[oss-security] binutils: multiple crashes" (number mark "U       ago@gentoo.o May 18  230/12824 " thread-indent "\"[oss-security] binutils: multiple crashes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5783 invoked by uid 550); 1 Aug 2021 20:32:45 -0000
+Received: (qmail 13732 invoked by uid 550); 18 May 2017 10:51:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,243 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32701 invoked from network); 1 Aug 2021 18:31:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
-	t=1627842692; bh=loPe+pVdRcapaRt1esFhuYladXkOyoKaojZkT8p+6ns=;
-	h=Date:From:To:Subject:From;
-	b=SX9BT6nrNpyewSZjecLUkLHnrBx30cNEKFjedJ8S0o1aTIik++FtgtN5hKFX3uM2v
-	 1/50G9JrFXCQsNHJmYfFLSX24MiT9v8Gz+HkzCysRmSHJjIAwuu7tAczZgkfFOXvkC
-	 LnVZjQaNLQ5RxVDS5D/f70P2cu2V1TB0capcV7vG0tpuFmqVijZQLxTsD0yQMS6ked
-	 3gwECw6eigS+o0jQA/iEAfBYDKf6QHF3jmxtWwXDTgxQm8m3R2K87Fxl2uN2ZDlVUI
-	 IoF7G5kab7/8rXCAjP8IibKOwe1VEElTrHrx8gCdIEBXkskLJlo2R+xKnHfoJ+xvDf
-	 8GBULK+nHSx4w==
-Date: Sun,  1 Aug 2021 18:31:27 +0000
-From: John Helmert III <jchelmert3@posteo.net>
-To: oss-security@lists.openwall.com
-Message-ID: <YQbnc3DxV6iEaA3B@sol.nexus.lan>
-References: <20201118171206.443be0215d1b142b5ce7584e@gmail.com>
- <CAH8yC8nDTF9-aBtuKG+81rEYmf4QigMfwB3EEw8hwYiGHP+AeQ@mail.gmail.com>
- <20210728150151.3eadaae2@gmail.com>
+Received: (qmail 13691 invoked from network); 18 May 2017 10:51:10 -0000
+Message-ID: <338779.738263355-sendEmail@localhost>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="FNUf+iWh0REszXUg"
-Content-Disposition: inline
-In-Reply-To: <20210728150151.3eadaae2@gmail.com>
-Subject: Re: [oss-security] Polipo: denial-of-service using range
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-499630.879451619"
+Date: Thu, 18 May 2017 10:50:53 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] binutils: multiple crashes
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---FNUf+iWh0REszXUg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+------MIME delimiter for sendEmail-499630.879451619
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-How did you produce this? I can't seem to reproduce with the original
-PoC script. Running it, polipo outputs:
+Description:
+binutils are a collection of binary tools necessary to build programs.
 
-Empty DNS name.
-Host (unknown) lookup failed: empty name (22).
+After the post on oss-security from Thuan Pham I was interested too into the fuzz of binutils to see what will happen…Here are the partial 
+results (I didn’t run the fuzzers against all command-line tools):
 
-The script outputs:
+# readelf -a $FILE
+==12002==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000039 at pc 0x0000005a4f79 bp 0x7ffea5d104d0 sp 0x7ffea5d104c8
+READ of size 1 at 0x602000000039 thread T0
+    #0 0x5a4f78 in byte_get_little_endian /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/elfcomm.c:210:22
+    #1 0x565bc4 in process_mips_specific /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:15190:8
+    #2 0x52483a in process_arch_specific /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16565:14
+    #3 0x52483a in process_object /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16770
+    #4 0x50b57c in process_file /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17138:13
+    #5 0x50b57c in main /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17209
+    #6 0x7f2e28f6e680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x419f68 in dl_iterate_phdr (/usr/x86_64-pc-linux-gnu/binutils-bin/2.28/readelf+0x419f68)
 
-HTTP/1.1 504 Host (unknown) lookup failed: empty name
-Connection: keep-alive
-Date: Sun, 01 Aug 2021 18:07:07 GMT
-Content-Type: text/html
-Content-Length: 515
-Expires: 0
-Cache-Control: no-cache
-Pragma: no-cache
+0x602000000039 is located 0 bytes to the right of 9-byte region [0x602000000030,0x602000000039)
+allocated by thread T0 here:
+    #0 0x4cf918 in malloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x50be47 in get_data /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:392:9
+    #2 0x565a00 in process_mips_specific /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:15169:32
+    #3 0x52483a in process_arch_specific /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16565:14
+    #4 0x52483a in process_object /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16770
+    #5 0x50b57c in process_file /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17138:13
+    #6 0x50b57c in main /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17209
+    #7 0x7f2e28f6e680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head>
-<title>Proxy error: 504 Host (unknown) lookup failed: empty name.</title>
-</head><body>
-<h1>504 Host (unknown) lookup failed: empty name</h1>
-<p>The following error occurred while trying to access <strong>http://</strong>:<br><br>
-<strong>504 Host (unknown) lookup failed: empty name</strong></p>
-<hr>Generated Sun, 01 Aug 2021 13:07:07 CDT by Polipo on <em>localhost:8123</em>.
-</body></html>
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/elfcomm.c:210:22 in 
+byte_get_little_endian
+Affected version:
+2.28
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00258-binutils-readelf-heapoverflow2-byte_get_little_endian
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=f32ba72991d2406b21ab17edc234a2f3fa7fb23d
+CVE:
+CVE-2017-9038
+
+###########################################
+
+# readelf -a $FILE
+==20389==ERROR: AddressSanitizer failed to allocate 0x18da5b8000 (106742644736) bytes of LargeMmapAllocator (error code: 12)
+[...]
+==20389==AddressSanitizer CHECK failed: 
+/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to 
+mmap")) != (0)" (0x0, 0x0)
+[...]
+    #8 0x66216d in xmalloc /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/libiberty/xmalloc.c:148:12
+    #9 0x5e32c0 in cmalloc /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/dwarf.c:7450:10
+    #10 0x582819 in get_program_headers /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:4761:33
+    #11 0x55ab15 in process_program_headers /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:4814:9
+    #12 0x52ea4f in process_object /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16751:7
+    #13 0x51780f in process_file /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17138:13
+    #14 0x51780f in main /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17209
+    #15 0x7f252d57178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #16 0x41a158 in getenv (/usr/x86_64-pc-linux-gnu/binutils-bin/2.28/readelf+0x41a158)
+Affected version:
+2.28
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00259-binutils-readelf-memallocfailure
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=82156ab704b08b124d319c0decdbd48b3ca2dac5
+CVE:
+CVE-2017-9039
+
+###########################################
+
+# readelf -a $FILE
+==25206==WARNING: AddressSanitizer failed to allocate 0x40000000000070 bytes
+==25206==AddressSanitizer's allocator is terminating the process instead of returning 0
+==25206==If you don't like this behavior set allocator_may_return_null=1
+==25206==AddressSanitizer CHECK failed: 
+/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_allocator.cc:221 "((0)) != (0)" 
+(0x0, 0x0)
+[...]
+    #6 0x66dcfd in xmalloc /tmp/portage/sys-devel/binutils-9999/work/binutils/libiberty/xmalloc.c:147:12
+    #7 0x5e5a20 in cmalloc /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/dwarf.c:8259:10
+    #8 0x5d2865 in process_mips_specific /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:15373:34
+    #9 0x54ac16 in process_arch_specific /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:17449:14
+    #10 0x54ac16 in process_object /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:17672
+    #11 0x5167f8 in process_file /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:18055:13
+    #12 0x5167f8 in main /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:18127
+    #13 0x7fca769b578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #14 0x41a088 in getenv (/usr/x86_64-pc-linux-gnu/binutils-bin/git/readelf+0x41a088)
+Affected version:
+master after commit 82156ab704b08b124d319c0decdbd48b3ca2dac5 which fixed the bug above
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00272-binutils-memallocfailure
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=7296a62a2a237f6b1ad8db8c38b090e9f592c8cf
+CVE:
+CVE-2017-9040
+###########################################
+
+# readelf -a $FILE
+==20287==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000039 at pc 0x00000064c061 bp 0x7ffcc34b2580 sp 0x7ffcc34b2578
+READ of size 1 at 0x602000000039 thread T0
+    #0 0x64c060 in byte_get_little_endian /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/elfcomm.c:210:22
+    #1 0x5d31c5 in process_mips_specific /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:15190:8
+    #2 0x549e1d in process_arch_specific /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16565:14
+    #3 0x549e1d in process_object /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16770
+    #4 0x51780f in process_file /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17138:13
+    #5 0x51780f in main /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17209
+    #6 0x7fa5fc60b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x41a158 in getenv (/usr/x86_64-pc-linux-gnu/binutils-bin/2.28/readelf+0x41a158)
+
+0x602000000039 is located 0 bytes to the right of 9-byte region [0x602000000030,0x602000000039)
+allocated by thread T0 here:
+    #0 0x4d9828 in malloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x518af2 in get_data /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:392:9
+    #2 0x5d2ee2 in process_mips_specific /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:15169:32
+    #3 0x549e1d in process_arch_specific /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16565:14
+    #4 0x549e1d in process_object /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:16770
+    #5 0x51780f in process_file /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17138:13
+    #6 0x51780f in main /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/readelf.c:17209
+    #7 0x7fa5fc60b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/binutils/elfcomm.c:210:22 in 
+byte_get_little_endian
+Affected version:
+2.28
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00258-binutils-readelf-heapoverflow2-byte_get_little_endian
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=75ec1fdbb797a389e4fe4aaf2e15358a070dcc19
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=c4ab9505b53cdc899506ed421fddb7e1f8faf7a3
+CVE:
+CVE-2017-9041
+
+###########################################
+
+# readelf -a $FILE
+/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:9447:39: runtime error: signed integer overflow: 7443 - 
+-9223372036854775080 cannot be represented in type 'long'
+Affected version:
+master at 2017-04-12 (dunno about other versions)
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00275-binutils-signintoverflow
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=7296a62a2a237f6b1ad8db8c38b090e9f592c8cf
+CVE:
+CVE-2017-9042
+
+###########################################
+
+# readelf -a $FILE
+/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:16941:18: runtime error: shift exponent 64 is too large for 64-bit type 
+'unsigned long'
+Affected version:
+master at 2017-04-12 (dunno about other versions)
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00274-binutils-shifttoolarge
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=ddef72cdc10d82ba011a7ff81cafbbd3466acf54
+CVE:
+CVE-2017-9043
+
+###########################################
+
+# readelf -a $FILE
+==7569==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000004 (pc 0x0000005ca9f5 bp 0x7ffcef629b70 sp 0x7ffcef629b20 T0)
+==7569==The signal is caused by a READ memory access.
+==7569==Hint: address points to the zero page.
+    #0 0x5ca9f4 in print_symbol_for_build_attribute /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:16671:16
+    #1 0x5c2d08 in process_note /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c
+    #2 0x5bc388 in process_notes_at /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:17232:13
+    #3 0x5bbc82 in process_corefile_note_segments /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:17262:8
+    #4 0x548d86 in process_object /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c
+    #5 0x5167f8 in process_file /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:18055:13
+    #6 0x5167f8 in main /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:18127
+    #7 0x7f8ede38078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #8 0x41a088 in getenv (/usr/x86_64-pc-linux-gnu/binutils-bin/git/readelf+0x41a088)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/readelf.c:16671:16 in 
+print_symbol_for_build_attribute
+==7569==ABORTING
+Affected version:
+master at 2017-04-12 (dunno about other versions)
+Fixed version:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00273-binutils-NULLptr-print_symbol_for_build_attribute
+Commit fix:
+N/A, seems to be fixed by one of the previous commits.
+CVE:
+CVE-2017-9044
+
+###########################################
+
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2017-04-01: first bug discovered and reported to upstream
+2017-05-12: blog post about the issue
+2017-05-18: CVE assigned
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/12/binutils-multiple-crashes/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Fixing the script to GET a real website shows a bunch of memory alignment
-issues, but no heap overflow as far as I can tell:
+------MIME delimiter for sendEmail-499630.879451619--
 
-dns.c:1467:5: runtime error: store to misaligned address 0x7ffe1de13c69 for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13c69: note: pointer points here
- 63 6f 6d  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00
-              ^
-dns.c:1468:5: runtime error: store to misaligned address 0x7ffe1de13c6b for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13c6b: note: pointer points here
- 6d  00 00 01 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00
-              ^
-dns.c:1554:5: runtime error: load of misaligned address 0x7ffe1de13b69 for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13b69: note: pointer points here
- 63 6f 6d  00 00 01 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe
-              ^
-dns.c:1555:5: runtime error: load of misaligned address 0x7ffe1de13b6b for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13b6b: note: pointer points here
- 6d  00 00 01 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00
-              ^
-dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b6f for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13b6f: note: pointer points here
- 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00
-             ^
-dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b71 for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13b71: note: pointer points here
- c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40
-              ^
-dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b73 for type 'unsigned int', which requires 4 byte alignment
-0x7ffe1de13b73: note: pointer points here
- 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40 60 00
-              ^
-dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b77 for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13b77: note: pointer points here
- 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40 60 00 00  6b 3c e1
-             ^
-
---FNUf+iWh0REszXUg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEElFuPenBj6NvNLoABXP0dAeB+IzgFAmEG6HsACgkQXP0dAeB+
-Izjg1Q/+PLHfrc0fwC6uaIbUbV0tchnoiI5O5NN+LMYGOn3cQ62GTF5pdk+0/kDG
-/NvoVMtC1CJADJu+a/s0Ah+rsbcH4hAvgQ31WAKiBjzSt2m8Bc7YKh/zsL5LMrF8
-6IPUfrhOV0KQmjeOOn62r+sjiSzhIZBKb4fa1tWWTxpQ4XMFPVhW+U/sjzxe5l+L
-hkpbe8cMyB4OT1ntycMjpROayuH8iTpCEdaGUZV66Unx89kU1VMU8C39bfYcbkEe
-ky5mzMPKo7/KCrgxpU7xeZZlBw50tfFYZZIkkjrz0LWoovc9xL4IBikkcC7srcIF
-323JzPV+XmqacW0sHh7ZaoGxUg36sVyxu3wyS4tKm8iHvFH3Co65ND2lApX1GTGD
-xGCmmW54dyUE6kPfL3X3i7mLzn+L1LWF+CmaOpFuJXRNn0WaPKWjFa8I91dKqrXj
-0njciQUx5rCOiz2OeZ6NC08gZ9Zxec+dTRYVBa0VKBnG+w0WoYxq2lV6yv7epuZd
-Myb15cZVFAy5EXtLw/WbUQc0ci0oKVUoSwkDx9eRi8GMJA0wrUX+81xuue+f62cA
-NsONGOmXP1FM57sxXKVX8ziW8WMoI4wW1uKVB0JgXabfdn08ztCPpbQEbuQscgRm
-Ea1S7cnaq0iznGcQNv9Vsmvd5SH7R4KX3wVuN0wdWhiI5eZ9teE=
-=upkR
------END PGP SIGNATURE-----
-
---FNUf+iWh0REszXUg--
