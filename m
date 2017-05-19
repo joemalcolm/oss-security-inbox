@@ -1,14 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/4
-Message-ID: <20170714093401.GB865@sivokote.iziade.m$>
-Date: Fri, 14 Jul 2017 12:34:01 +0300
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Estimate for the total number of exploitable bugs in large linux distro?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/19/1
+Message-ID: <alpine.LFD.2.20.1705191544100.29617@wniryva>
+Date: Fri, 19 May 2017 15:48:44 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-9060 Qemu: virtio-gpu: host memory leakage in Virtio GPU device
 Content-Type: text/plain; charset=utf-8
 
-What is an estimate for the total number of exploitable bugs in large
-linux distro?
+   Hello,
 
-Also, does the total number decrease, increase or change in other way
-over time?
+Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
+vulnerable to a memory leakage issue. It could occur while processing 
+'VIRTIO_GPU_CMD_SET_SCANOUT:' command.
+
+A guest user/process could use this flaw to leak host memory resulting in Dos.
+
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=dd248ed7e204ee8a1873914e02b8b526e8f1b80d
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1452597
+
+This issue was reported by Li Qiang of Qihoo 360 Gear Team.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
