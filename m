@@ -1,31 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/15
-Message-ID: <CADxEXOgSQWqbWcQaK9cZjckN+QC-pOXSzdj+meNs5KUEm=jn+g@mail.gmail.com>
-Date: Tue, 31 Jan 2017 20:00:29 +0100
-From: Pierre Kim <pierre.kim.sec@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/19/2
+Message-ID: <mpro.oq7ncm06hxubw02mk.taviso@cmpxchg8b.com>
+Date: Fri, 19 May 2017 10:31:34 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: OpenBSD httpd - 2 DoS
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Robert Święcki <robert@...ecki.net> wrote:
 
-Can you assign 2 CVE entries regarding OpenBSD httpd ?
+> Hi again,
+> 
+> > 2017-05-17 15:56 GMT+02:00 Daniel Kahn Gillmor
+> > <dkg@...thhorseman.net>:
+> > > > Please consider the following example:
+> >>>
+> > > > $ tail -n1 /etc/hosts | xxd 00000000: 3132 372e 302e 302e 3309 1b47
+> > > > 513b 205a  127.0.0.3..GQ; Z 00000010: 5a5a 0a
+> > > > ZZ. $ ping ZZZ PING ; (127.0.0.3) 56(84) bytes of data.
+> > > > ^[G0 64 bytes from ; (127.0.0.3): icmp_seq=1 ttl=64 time=0.039 ms
+> > > > ^[G0 64 bytes from ; (127.0.0.3): icmp_seq=2 ttl=64 time=0.032 ms
+> > > > ^[G0 ^C --- ; ping statistics --- 2 packets transmitted, 2 received,
+> > > > 0% packet loss, time 1014ms rtt min/avg/max/mdev =
+> > > > 0.032/0.035/0.039/0.006 ms ^[G0 $ 0 bash: 0: command not found
+> >>
+> > > what version of ping are you using?  I was unable to replicate this
+> > > with either the debian iputils-ping package version 3:20161105-1, or
+> > > with debian inetutils-ping package version 2:1.9.4-2+b1.  neither of
+> > > them seem to do a getnameinfo() at all if it is initially supplied
+> > > with an IP address.
+> >
 
-- DoS: CPU exhaustion with SSL client-initiated renegotiation,
-- DoS: Memory exhaustion by sending crafted HTTP requests with Bytes-range.
+Browsing through the commands rxvt supports, I noticed you can set arbitrary
+X11 properties. That seems like the kind of thing some wm or de might trust
+for soemthing important (like gtk modules, etc).
 
-Errata for 6.0/5.9 is in progress, the memory exhaustion has been
-patched today in -current
-(see http://marc.info/?l=openbsd-cvs&m=148587359420912&w=2 ).
-The advisory will be posted when
-http://www.openbsd.org/errata{59,60}.html are updated.
+e.g.
 
-Thank you,
+$ printf "\e]3;%s=TEST\a" TEST_PROPERTY
+$ xprop -id $WINDOWID TEST_PROPERTY
+TEST_PROPERTY(UTF8_STRING) = "TEST"
 
-Regards,
+The properties Gnome looks at are listed here, maybe you could cause some
+confusion this way. Do other environments (Xfce, KDE, etc) support more
+interesting properties?
 
--- 
-Pierre Kim
-pierre.kim.sec@...il.com
-@PierreKimSec
-https://pierrekim.github.io/
+https://wiki.gnome.org/Attic/ApplicationSpecification
+
+Tavis.
+
