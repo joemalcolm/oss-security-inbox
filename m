@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2445" "Tuesday" "17" "November" "2015" "10:34:46" "-0700" "Jeff Law" "law@redhat.com" "<564B6536.2030908@redhat.com>" "56" "[oss-security] Re: Fwd: x86 ROP mitigation" "^Cc:" nil nil "11" "2015111717:34:46" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "        law@redhat.c Nov 17   56/2445  " thread-indent "\"[oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<564B54BA.6090203@redhat.com>" ("<20151117153951.GA28672@openwall.com>" "<564B52D6.9090205@t-online.de>" "<564B54BA.6090203@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1632" "Friday" "19" "May" "2017" "10:31:34" "-0700" "Tavis Ormandy" "taviso@cmpxchg8b.com" "<mpro.oq7ncm06hxubw02mk.taviso@cmpxchg8b.com>" "42" "[oss-security] Re: terminal emulators' processing of escape sequences" nil nil nil "5" "2017051917:31:34" "[oss-security] Re: terminal emulators' processing of escape sequences" (number mark "U       taviso@cmpxc May 19   42/1632  " thread-indent "\"[oss-security] Re: terminal emulators' processing of escape sequences\"\n") "<CAP145pioFwiNj8TGKE8dz__9HdcXeV3srat+OwcozeOzi5g3Ww@mail.gmail.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" "<20170516220345.GA10874@openwall.com>" "<CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>" "<20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>" "<CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>" "<87inkzd1tg.fsf@fifthhorseman.net>" "<CAP145pjG+OFBZ9x+4vbnPJo3ScC66xLO-OpvrvQPGViGAuAMTw@mail.gmail.com>" "<CAP145pioFwiNj8TGKE8dz__9HdcXeV3srat+OwcozeOzi5g3Ww@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14042 invoked by uid 550); 17 Nov 2015 17:34:59 -0000
+Received: (qmail 27791 invoked by uid 550); 19 May 2017 17:44:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13998 invoked from network); 17 Nov 2015 17:34:58 -0000
-References: <20151117153951.GA28672@openwall.com>
- <564B52D6.9090205@t-online.de> <564B54BA.6090203@redhat.com>
-Message-ID: <564B6536.2030908@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-Version: 1.0
-In-Reply-To: <564B54BA.6090203@redhat.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Cc: Bernd Schmidt <bschmidt@redhat.com>, oss-security@lists.openwall.com,
-        Florian Weimer <fweimer@redhat.com>
-Date: Tue, 17 Nov 2015 10:34:46 -0700
-From: Jeff Law <law@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Fwd: x86 ROP mitigation
-To: Solar Designer <solar@openwall.com>
+Received: (qmail 19809 invoked from network); 19 May 2017 17:31:57 -0000
+X-Injected-Via-Gmane: http://gmane.org/
+To: oss-security@lists.openwall.com
+From: Tavis Ormandy <taviso@cmpxchg8b.com>
+Date: Fri, 19 May 2017 10:31:34 -0700
+Message-ID: <mpro.oq7ncm06hxubw02mk.taviso@cmpxchg8b.com>
+References: <20170501164428.GA12322@openwall.com> 
+ <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com> 
+ <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com> 
+ <20170516220345.GA10874@openwall.com> 
+ <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com> 
+ <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de> 
+ <CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com> 
+ <87inkzd1tg.fsf@fifthhorseman.net> 
+ <CAP145pjG+OFBZ9x+4vbnPJo3ScC66xLO-OpvrvQPGViGAuAMTw@mail.gmail.com> 
+ <CAP145pioFwiNj8TGKE8dz__9HdcXeV3srat+OwcozeOzi5g3Ww@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: Messenger-Pro/2.72.0.3902 (Qt/4.8.6) (Windows-8)
+Subject: [oss-security] Re: terminal emulators' processing of escape sequences
 
-On 11/17/2015 09:24 AM, Bernd Schmidt wrote:
-> On 11/17/2015 04:39 PM, Solar Designer wrote:
->  > A few days ago, Bernd Schmidt posted this gcc patch:
->  >
->  > https://gcc.gnu.org/ml/gcc-patches/2015-11/msg01773.html
->  >
->  > "This adds a new -mmitigate-rop option to the i386 port. The idea is to
->  > mitigate against certain forms of attack called "return oriented
->  > programming" that some of our security folks are concerned about.
->  > [...]
->  > This patch is a small step towards preventing this kind of attack.
->  > I have a few more steps queued (not quite ready for stage 1), but
->  > additional work will be necessary to give reasonable protection."
->  >
->  > This was followed with a few tweets:
-> [...]
-> Obviously, I'm aware that this by itself isn't going to do very much. I
-> said so in my submission email! But you have to start somewhere, and
-> these pieces were ready.
-Right.  It's a small piece of a much longer term effort to start 
-spoiling ROP gadgets, both those which are inherent in the normal 
-instruction stream (ie function epilogues) and those which are a result 
-of the variable length instruction nature of the x86 ISA.
+Robert Święcki <robert@swiecki.net> wrote:
 
+> Hi again,
+> 
+> > 2017-05-17 15:56 GMT+02:00 Daniel Kahn Gillmor
+> > <dkg@fifthhorseman.net>:
+> > > > Please consider the following example:
+> >>>
+> > > > $ tail -n1 /etc/hosts | xxd 00000000: 3132 372e 302e 302e 3309 1b47
+> > > > 513b 205a  127.0.0.3..GQ; Z 00000010: 5a5a 0a
+> > > > ZZ. $ ping ZZZ PING ; (127.0.0.3) 56(84) bytes of data.
+> > > > ^[G0 64 bytes from ; (127.0.0.3): icmp_seq=1 ttl=64 time=0.039 ms
+> > > > ^[G0 64 bytes from ; (127.0.0.3): icmp_seq=2 ttl=64 time=0.032 ms
+> > > > ^[G0 ^C --- ; ping statistics --- 2 packets transmitted, 2 received,
+> > > > 0% packet loss, time 1014ms rtt min/avg/max/mdev =
+> > > > 0.032/0.035/0.039/0.006 ms ^[G0 $ 0 bash: 0: command not found
+> >>
+> > > what version of ping are you using?  I was unable to replicate this
+> > > with either the debian iputils-ping package version 3:20161105-1, or
+> > > with debian inetutils-ping package version 2:1.9.4-2+b1.  neither of
+> > > them seem to do a getnameinfo() at all if it is initially supplied
+> > > with an IP address.
+> >
 
->
->  > Bernd, I'd appreciate it if you describe your plan in a reply to this
->  > e-mail.  Please keep oss-security CC'ed.
->
-> I wouldn't call it my plan. I'm essentially in the role of implementing
-> requirements that others with more knowledge of the security issues come
-> up with.
->
-> The plan, as far as it goes, is to start picking low-hanging fruit, and
-> hopefully build up over time until we have something that actually
-> provides protection. Things that we've discussed include:
-Right.  I don't think anyone believes this stuff will make a significant 
-difference *at this stage*.  Thus, we aren't planning announcements or 
-any promotion of the work.
+Browsing through the commands rxvt supports, I noticed you can set arbitrary
+X11 properties. That seems like the kind of thing some wm or de might trust
+for soemthing important (like gtk modules, etc).
 
-The obvious idea is to keep knocking off sources of ROP gadgets, 
-hopefully reaching a point where ROP gadgets are reasonably hard to find 
-& exploit in GCC generated code at some point in the future.
+e.g.
 
-As each bundle of work reaches completion, it will be submitted to the 
-appropriate project (GCC & binutils).  There's no value in holding back 
-any particular mitigation technique.  They'll just keep dropping as 
-they're completed.  FWIW, mod R/M is the only work that I see landing in 
-GCC 6 given its development window closed earlier this week.
+$ printf "\e]3;%s=TEST\a" TEST_PROPERTY
+$ xprop -id $WINDOWID TEST_PROPERTY
+TEST_PROPERTY(UTF8_STRING) = "TEST"
 
-If you have any questions, feel free to contact me directly.
+The properties Gnome looks at are listed here, maybe you could cause some
+confusion this way. Do other environments (Xfce, KDE, etc) support more
+interesting properties?
 
-Jeff
+https://wiki.gnome.org/Attic/ApplicationSpecification
 
-
+Tavis.
 
