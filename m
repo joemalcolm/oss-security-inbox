@@ -1,26 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/18
-Message-ID: <a3beb7ec-c3e0-6506-cbbc-18a7f92eeca4@stoeckmann.org>
-Date: Thu, 23 Feb 2017 19:10:51 +0100
-From: Tobias Stöckmann <tobias@...eckmann.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/19/4
+Message-ID: <1622774.CTg74Sxca6@golgafrichnam>
+Date: Fri, 19 May 2017 22:36:40 +0200
+From: Martin <martin_s@...che.org>
+To: users@...hiva.apache.org, users@...en.apache.org, announce@...che.org
+Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [SECURITY] CVE-2017-5657: Apache Archiva CSRF vulnerability for REST endpoints
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+CVE-2017-5657: Apache Archiva CSRF vulnerabilities for various REST endpoints
 
-as I have discovered the issue, I can confirm that su of util-linux as
-well as shadow are affected.
+Severity: Important
 
-I have supplied patches to both maintainers and the shadow patch has
-been pushed now, too.
+Vendor:
+The Apache Software Foundation
 
-The code shares a common origin but differs slightly, which in fact made
-the patch for shadow a bit trickier.
+Versions Affected:
+    Archiva 2.0.0 - 2.2.1
+    The unsupported versions 1.x are also affected.  
 
-But as the code bases are so close to each other, I don't think that it
-takes another CVE-ID for this one.
+Several REST service endpoints of Apache Archiva are not protected against 
+Cross Site Request Forgery (CSRF) attacks. A malicious site opened in the same 
+browser as the archiva site, may send HTML response that performs arbitrary 
+actions on archiva services, with the same rights as the active archiva 
+session (e.g. adminstrator rights).
+
+Mitigation:
+  All users are recommended to upgrade to Archiva 2.2.3 or higher, 
+  where additional measures are taken to verify the origin of REST requests.
+
+References:
+http://archiva.apache.org/security.html#CVE-2017-5657
+
+The newest Archiva version can be downloaded from:
+http://archiva.apache.org/download.cgi
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
