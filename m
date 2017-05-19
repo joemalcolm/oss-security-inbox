@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/4
-Message-ID: <nycvar.YSQ.7.76.1710121158110.25482@wniryva>
-Date: Thu, 12 Oct 2017 12:00:30 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-15268. Qemu: I/O: potential memory exhaustion via websock connection to VNC
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/19/3
+Message-ID: <20170519185858.mbilbjdi3fafgl2j@kamui.lair>
+Date: Fri, 19 May 2017 21:58:58 +0300
+From: Yui Hirasawa <yui@...k.li>
+To: oss-security@...ts.openwall.com
+Subject: Re: terminal emulators' processing of escape sequences
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Wed, May 17, 2017 at 02:25:52AM +0200, Robert Święcki wrote:
+> Hi,
+>
+> 2017-05-17 0:03 GMT+02:00 Solar Designer <solar@...nwall.com>:
+> >
+> > Jason, Robert -
+> >
+> > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
+> > > A harmless example from rxvt - pushing back the new-line character:
+> > >
+> > > $ echo -ne "\eGQ;"
+> > > ;$ 0
+> > > bash: 0: command not found
+> >
+> > Does this also affect rxvt-unicode?
+>
+> Yes,
+>
+> Tested with rxvt-unicode-9.22
+>
+> $ echo -ne "\eGQ;"
+> ;$ 0
+> bash: 0: command not found
+> $
 
-Quick Emulator(Qemu) built with the I/O channels websockets support is 
-vulnerable to a memory leakage issue. It could occur while sending screen 
-updates to a client, which is slow to read and process them further.
+For me on rxvt-unicode 9.22 this command goes into command mode and
+executes the first command in the history, thanks to vi-mode in bash.
 
-A privileged guest user could use this flaw to cause a DoS on the host and/or 
-potentially crash the Qemu process instance on the host.
+In clear history it of course goes into infinite loop of re-executing
+itself.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-10/msg02278.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1496879
-
-CVE assigned via https://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Also works with the more portable `printf "\033GQ;"`
