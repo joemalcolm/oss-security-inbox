@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7347" "Tuesday" "15" "August" "2017" "12:05:57" "+0000" "Xen.org security team" "security@xen.org" "<E1dhabd-0006gl-Oo@xenbits.xenproject.org>" "179" "[oss-security] Xen Security Advisory 229 (CVE-2017-12134) - linux: Fix Xen block IO merge-ability calculation" nil nil nil "8" "2017081512:05:57" "[oss-security] Xen Security Advisory 229 (CVE-2017-12134) - linux: Fix Xen block IO merge-ability calculation" (number mark "U       security@xen Aug 15  179/7347  " thread-indent "\"[oss-security] Xen Security Advisory 229 (CVE-2017-12134) - linux: Fix Xen block IO merge-ability calculation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2475" "Saturday" "20" "May" "2017" "13:54:36" "-0400" "Leo Famulari" "leo@famulari.name" "<20170520175436.GA30962@jasmine>" "58" "Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" "^Date:" nil nil "5" "2017052017:54:36" "[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" (number mark "        leo@famulari May 20   58/2475  " thread-indent "\"Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder\"\n") "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>" ("<20170520072632.z5nbivrdwmqm3soe@eldamar.local>" "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19697 invoked by uid 550); 15 Aug 2017 12:06:24 -0000
+Received: (qmail 22442 invoked by uid 550); 20 May 2017 18:06:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,197 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19585 invoked from network); 15 Aug 2017 12:06:23 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 15440 invoked from network); 20 May 2017 17:54:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=famulari.name;
+	 h=content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=7e6y78AGe6CFfheSQTlaEh4QE6fXg9LPpurA+z
+	dvcys=; b=eFkL35oRf4QUkEyumeZ+stvv39xLTh+JeRoPe8iJjqX+J1x7skQuN0
+	oKLGKRJM39tERaEnGfYi02Np54iluTtVW7j6TAb8D1rXNMQtGfEhL8S5GB8gKmYj
+	X3eE/MyLc7ecIfZGivYYJkoHxluMyC9MPZVMmh58iCe0eWehDAJTo=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=7e6y78AGe6CFfheSQT
+	laEh4QE6fXg9LPpurA+zdvcys=; b=R3rbBv+MCQOhAW0ljbhVyOMDtx8maLbi1w
+	bYkwjUuGFSaY3FfuNJB+EXXQQKwFxXY0B+n2XRdMKECcXQ6K+ofICDZlIRD9/haK
+	8OIc+mK7nWxWjX4GEPD2XP4NywfqCr15OC4YHolCNd4ZTy9yXq04P/VT2a+p3b5R
+	HLc69yM+a3KH5rMwPEynVW+poAQn9bpBcqeXamKFakJCy4NCA8dYKXxBkHwRtUeX
+	jT+L1ov2BTiJbcNcmtJc/atxOSJiDoZbF2eiNGVRa8RO+P8G53cFLy9lFoPtwyF0
+	JUdPdi1YmHqGnoowZXEksqFK6QDj/TwcRnW7smMC6twkpE2K9Oxg==
+X-ME-Sender: <xms:3oIgWUbmdxhjFdy9NR1Ot0LENG_eFX7dpY5pVZZghYEqWgaIH2uZVg>
+X-Sasl-enc: BYS8u9sdTL1X7XYi78HedMuaOO9hf58LTHTJkhufBQmQ 1495302877
+Message-ID: <20170520175436.GA30962@jasmine>
+References: <20170520072632.z5nbivrdwmqm3soe@eldamar.local>
+ <20170520152406.2339.3B884775@matica.foolinux.mooo.com>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1dhabd-0006gl-Oo@xenbits.xenproject.org>
-Date: Tue, 15 Aug 2017 12:05:57 +0000
-Subject: [oss-security] Xen Security Advisory 229 (CVE-2017-12134) - linux: Fix Xen block
- IO merge-ability calculation
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="YiEDa0DAkWCtVeE4"
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20170520152406.2339.3B884775@matica.foolinux.mooo.com>
+User-Agent: Mutt/1.8.2 (2017-04-18)
+Date: Sat, 20 May 2017 13:54:36 -0400
+From: Leo Famulari <leo@famulari.name>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of
+ uninitialized memory in RLE decoder
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--YiEDa0DAkWCtVeE4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-            Xen Security Advisory CVE-2017-12134 / XSA-229
-                               version 3
+On Sat, May 20, 2017 at 08:26:36AM -0700, Ian Zimmerman wrote:
+> On 2017-05-20 09:26, Salvatore Bonaccorso wrote:
+>=20
+> > Chris Evans discovered that ImageMagick uses unitialized memory in the
+> > RLE decoder, allowing an attacker to leak sensitive information from
+> > process memory space. There is missing initialization in the
+> > ReadRLEImage function.
+> >=20
+> > Original article at:
+> >=20
+> > https://scarybeastsecurity.blogspot.com/2017/05/bleed-continues-18-byte=
+-file-14k-bounty.html
+>=20
+> It was good to see the discussion of how GraphicsMagick was affected, or
+> not.  I would love to see that in all *Magick weakness reports.
 
-            linux: Fix Xen block IO merge-ability calculation
+Chris Evans' report (copied in the email you replied to) says this:
 
-UPDATES IN VERSION 3
-====================
+GraphicsMagick vs. ImageMagick, again. Well, well, look at this :)
+GraphicsMagick fixed this issue in March 2016, for the v1.3.24 release, tuc=
+ked
+away in a changeset titled "Fix SourceForge bug #371 "out-of-bounds read in
+coders/rle.c:633:39" (see the second memset()). This is another case where =
+tons
+of vulnerabilities are being found and fixed in both GraphicsMagick and
+ImageMagick with little co-ordination. This seems like a waste of effort an=
+d a
+risk of 0-day (or is it 1-day?) exposure. It goes both ways: the RLE memory
+corruption I referenced in my previous blog post was only fixed in
+GraphicsMagick in March 2016, having been previously fixed in ImageMagick in
+Dec 2014.
 
-Public release.
+--YiEDa0DAkWCtVeE4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-ISSUE DESCRIPTION
-=================
-
-The block layer in Linux may choose to merge adjacent block IO requests.
-When Linux is running as a Xen guest, the default merging algorithm is
-replaced with a Xen-specific one.  When Linux is running as an x86 PV
-guest, some BIO's are erroneously merged, corrupting the data stream
-to/from the block device.
-
-This can result in incorrect access to an uncontrolled adjacent frame.
-
-IMPACT
-======
-
-A buggy or malicious guest can cause Linux to read or write incorrect
-memory when processing a block stream.  This could leak information from
-other guests in the system or from Xen itself, or be used to DoS or
-escalate privilege within the system.
-
-VULNERABLE SYSTEMS
-==================
-
-All x86 Xen systems using pvops Linux in a backend role (either as
-dom0, or as a disk device driver domain) are affected.  This includes
-upstream Linux versions 2.6.37 and later.  Systems using the older
-classic-linux fork are not affected.
-
-All PV x86 domains doing block IO on behalf of a guest, including dom0
-and any PV driver domains, are vulnerable.  (Any HVM driver domains
-running are not vulnerable.)  This includes Xen vbd backends such as
-blkback, but also direct IO performed for the guest via eg qemu.
-
-ARM systems are not affected.
-
-The vulnerability is only exposed if the underlying block device has
-request merging enabled.  See Mitigation.
-
-The vulnerability is only exposed to configurations which use grant
-mapping as a transport mechanism for the block data.  Configurations
-which use exclusively grant copy are not vulnerable.
-
-MITIGATION
-==========
-
-Disable bio merges on all relevant underlying backend block devices.
-For example,
-  echo 2 > /sys/block/nvme0n1/queue/nomerges
-
-CREDITS
-=======
-
-This issue was discovered by Jan H. Schönherr of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa229.patch           Linux
-
-$ sha256sum xsa229*
-5f96c72c8c5a971d52f5540475a3fc6f4fef2071ec772ef21392fdc238eda858  xsa229.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBCAAGBQJZkuNWAAoJEIP+FMlX6CvZBt4H/3tpKPBmzTaI5yKPdBf6wU7L
-hjmKG6QROeWV+EX3wmmmRi+iG0M90hDYFCTmhdNY4sjCdDEFDMB1KM8XA/LwHlz2
-3gX6TVKQ/cXQRJFhlWSZQUDDd5jPqZzDK7KnhS2DC+MjnKvnnuS6N2ibIfaHJmUG
-HL6VdS7GZ8Z434mgOZskWPFn5xeaWd1vXGV+GI9Ih2RRn/axe6l0RSzgDpfeGB3T
-hVRQdy9wW4aXrnnUXEuuz5JNlTU1fuGXGz7W5BDP8mu9l/dzmDye6NOgVqo5wAkz
-+l/fRbFrjdO9JnKDpASDjGuoOCZgkBBxmG2wUz8COi6JTA5X0IRysG5OMOYZ/KU=
-=lyzV
+iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAlkggtcACgkQJkb6MLrK
+fwgiMg//ds24CRVz7gI2V/uZHza73VQN2wUux6kQrPY5ncLIDFSvc1BulvgbH8gU
+tnATzd00BvE3KYlJklLPlranlXvZPdKfHEXZXMrSrDRLwNvZWb3vnnsxpJryM5f9
+MLd6qxb3bFnwv0j45ZFmr0T+AInbHs/HeGnXraaBzfPcUp2gXs77LSAuZ3DS1vZ2
+T4dckv/dQPV/FWViiO6mRRjaZ8Kr+8kgQO2suOsOEBrRO1c9mZVTdBGPA7mioGF/
+eyHsHiz0CfyCCEu2AJ+R0lakm8OFQfpO2puAdqcWB9a71q/2mRbg4/pSPQwNgOq9
+L4u5U58WDTMdx0CbkDFeWarzx+KmNTLSc+CT8RPmA2z9aOGbRS91rMoE3FHrRpwR
+cxg3kAtKrsVeAWFHusvr8vBN55uDP+ubZZeOX8vJXH7XSnBZLxoP/JDO29/weoe6
+H6kSKeMiDvkyhtOlbAJgeaIplqirEAXKz8axrqY0HnVwZvqVHq+Im3R/D7lA0m5p
+DSu/vyRf7LB8oeNz+LfJLQzB/lBS1sqKeToXQYAk7CuRUxCZOTd3w8w7kaQaqVYS
+EYgrQXhlqukAGIrA22qBUZ7PEVPNLQhiL3Z/qHSnjzflYjQzL9Plh17zA7Mnv9/N
+9BmNUHg+3CAkaks1OGvSTSEXQVm+DW7mxwif8WEXpFKe/28Q4oI=
+=Tf5d
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa229.patch"
-Content-Disposition: attachment; filename="xsa229.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA4NDg4MjEzM2U3OTMyOTlmNjg1OTkxZTIwYTk2MzFhY2ZkMGE1NjA4
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBSb2dlciBQYXUgTW9u
-bmUgPHJvZ2VyLnBhdUBjaXRyaXguY29tPgpEYXRlOiBUdWUsIDE4IEp1bCAy
-MDE3IDE1OjAxOjAwICswMTAwClN1YmplY3Q6IHhlbjogZml4IGJpbyB2ZWMg
-bWVyZ2luZwpNSU1FLVZlcnNpb246IDEuMApDb250ZW50LVR5cGU6IHRleHQv
-cGxhaW47IGNoYXJzZXQ9VVRGLTgKQ29udGVudC1UcmFuc2Zlci1FbmNvZGlu
-ZzogOGJpdAoKVGhlIGN1cnJlbnQgdGVzdCBmb3IgYmlvIHZlYyBtZXJnaW5n
-IGlzIG5vdCBmdWxseSBhY2N1cmF0ZSBhbmQgY2FuIGJlCnRyaWNrZWQgaW50
-byBtZXJnaW5nIGJpb3Mgd2hlbiBjZXJ0YWluIGdyYW50IGNvbWJpbmF0aW9u
-cyBhcmUgdXNlZC4KVGhlIHJlc3VsdCBvZiB0aGVzZSBtYWxpY2lvdXMgYmlv
-IG1lcmdlcyBpcyBhIGJpbyB0aGF0IGV4dGVuZHMgcGFzdAp0aGUgbWVtb3J5
-IHBhZ2UgdXNlZCBieSBhbnkgb2YgdGhlIG9yaWdpbmF0aW5nIGJpb3MuCgpU
-YWtlIGludG8gYWNjb3VudCB0aGUgZm9sbG93aW5nIHNjZW5hcmlvLCB3aGVy
-ZSBhIGd1ZXN0IGNyZWF0ZXMgdHdvCmdyYW50IHJlZmVyZW5jZXMgdGhhdCBw
-b2ludCB0byB0aGUgc2FtZSBtZm4sIGllOiBncmFudCAxIC0+IG1mbiBBLApn
-cmFudCAyIC0+IG1mbiBBLgoKVGhlc2UgcmVmZXJlbmNlcyBhcmUgdGhlbiB1
-c2VkIGluIGEgUFYgYmxvY2sgcmVxdWVzdCwgYW5kIG1hcHBlZCBieQp0aGUg
-YmFja2VuZCBkb21haW4sIHRodXMgb2J0YWluaW5nIHR3byBkaWZmZXJlbnQg
-cGZucyB0aGF0IHBvaW50IHRvCnRoZSBzYW1lIG1mbiwgcGZuIEIgLT4gbWZu
-IEEsIHBmbiBDIC0+IG1mbiBBLgoKSWYgdGhvc2UgZ3JhbnRzIGhhcHBlbiB0
-byBiZSB1c2VkIGluIHR3byBjb25zZWN1dGl2ZSBzZWN0b3JzIG9mIGEgZGlz
-awpJTyBvcGVyYXRpb24gYmVjb21pbmcgdHdvIGRpZmZlcmVudCBiaW9zIGlu
-IHRoZSBiYWNrZW5kIGRvbWFpbiwgdGhlCmNoZWNrcyBpbiB4ZW5fYmlvdmVj
-X3BoeXNfbWVyZ2VhYmxlIHdpbGwgc3VjY2VlZCwgYmVjYXVzZSBiZm4xID09
-IGJmbjIKKHRoZXkgYm90aCBwb2ludCB0byB0aGUgc2FtZSBtZm4pLiBIb3dl
-dmVyIGR1ZSB0byB0aGUgYmlvIG1lcmdpbmcsCnRoZSBiYWNrZW5kIGRvbWFp
-biB3aWxsIGVuZCB1cCB3aXRoIGEgYmlvIHRoYXQgZXhwYW5kcyBwYXN0IG1m
-biBBIGludG8KbWZuIEEgKyAxLgoKRml4IHRoaXMgYnkgbWFraW5nIHN1cmUg
-dGhlIGNoZWNrIGluIHhlbl9iaW92ZWNfcGh5c19tZXJnZWFibGUgdGFrZXMK
-aW50byBhY2NvdW50IHRoZSBvZmZzZXQgYW5kIHRoZSBsZW5ndGggb2YgdGhl
-IGJpbywgdGhpcyBiYXNpY2FsbHkKcmVwbGljYXRlcyB3aGF0cyBkb25lIGlu
-IF9fQklPVkVDX1BIWVNfTUVSR0VBQkxFIHVzaW5nIG1mbnMgKGJ1cwphZGRy
-ZXNzZXMpLiBXaGlsZSB0aGVyZSBhbHNvIHJlbW92ZSB0aGUgdXNhZ2Ugb2YK
-X19CSU9WRUNfUEhZU19NRVJHRUFCTEUsIHNpbmNlIHRoYXQncyBhbHJlYWR5
-IGNoZWNrZWQgYnkgdGhlIGNhbGxlcnMKb2YgeGVuX2Jpb3ZlY19waHlzX21l
-cmdlYWJsZS4KClJlcG9ydGVkLWJ5OiAiSmFuIEguIFNjaMO2bmhlcnIiIDxq
-c2Nob2VuaEBhbWF6b24uZGU+ClNpZ25lZC1vZmYtYnk6IFJvZ2VyIFBhdSBN
-b25u6SA8cm9nZXIucGF1QGNpdHJpeC5jb20+ClJldmlld2VkLWJ5OiBKdWVy
-Z2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+Ci0tLQogZHJpdmVycy94ZW4v
-YmlvbWVyZ2UuYyB8IDMgKy0tCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRp
-b24oKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy94
-ZW4vYmlvbWVyZ2UuYyBiL2RyaXZlcnMveGVuL2Jpb21lcmdlLmMKaW5kZXgg
-NGRhNjlkYmY3ZGNhLi4xYmRkMDJhNmQ2YWMgMTAwNjQ0Ci0tLSBhL2RyaXZl
-cnMveGVuL2Jpb21lcmdlLmMKKysrIGIvZHJpdmVycy94ZW4vYmlvbWVyZ2Uu
-YwpAQCAtMTAsOCArMTAsNyBAQCBib29sIHhlbl9iaW92ZWNfcGh5c19tZXJn
-ZWFibGUoY29uc3Qgc3RydWN0IGJpb192ZWMgKnZlYzEsCiAJdW5zaWduZWQg
-bG9uZyBiZm4xID0gcGZuX3RvX2JmbihwYWdlX3RvX3Bmbih2ZWMxLT5idl9w
-YWdlKSk7CiAJdW5zaWduZWQgbG9uZyBiZm4yID0gcGZuX3RvX2JmbihwYWdl
-X3RvX3Bmbih2ZWMyLT5idl9wYWdlKSk7CiAKLQlyZXR1cm4gX19CSU9WRUNf
-UEhZU19NRVJHRUFCTEUodmVjMSwgdmVjMikgJiYKLQkJKChiZm4xID09IGJm
-bjIpIHx8ICgoYmZuMSsxKSA9PSBiZm4yKSk7CisJcmV0dXJuIGJmbjEgKyBQ
-Rk5fRE9XTih2ZWMxLT5idl9vZmZzZXQgKyB2ZWMxLT5idl9sZW4pID09IGJm
-bjI7CiAjZWxzZQogCS8qCiAJICogWFhYOiBBZGQgc3VwcG9ydCBmb3IgbWVy
-Z2luZyBiaW9fdmVjIHdoZW4gdXNpbmcgZGlmZmVyZW50IHBhZ2UKLS0gCjIu
-MTEuMCAoQXBwbGUgR2l0LTgxKQoK
-
---=separator--
+--YiEDa0DAkWCtVeE4--
