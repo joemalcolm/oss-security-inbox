@@ -1,106 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/3
-Message-ID: <1499430413.31897.1.camel@gmail.com>
-Date: Fri, 07 Jul 2017 14:26:53 +0200
-From: Ailin Nemui <ailin.nemui@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/20/4
+Message-ID: <alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>
+Date: Sat, 20 May 2017 13:21:52 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Irssi 1.0.4: CVE-2017-10965, CVE-2017-10966.
+Subject: Re: Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
 Content-Type: text/plain; charset=utf-8
 
-> Irssi 1.0.4 has been released. This release fixes two remote crash 
-> issues in Irssi as well as a few bugs, correcting a mistake that was 
-> introduced in 1.0.3 while parsing some time-related settings. There 
-> are no new features. All Irssi users should upgrade to this version. 
-> See the NEWS for details.
+On Sat, 20 May 2017, Leo Famulari wrote:
 >
-> Our bug reporter Brian ‘geeknik’ Carpenter writes:
+> Chris Evans' report (copied in the email you replied to) says this:
 >
-> >    34 days after reading Fuzzing Irssi, my AFL instance was
-> >    finally able to trigger a null pointer dereference in irssi 
-> >    1.0.2. […] Hopefully this one isn’t fixed yet.
-> >
-> >    35 days after reading Fuzzing Irssi, my AFL instance triggered 
-> >    a heap-use-after-free in irssi 1.0.2. Compiled on Debian 8 x64 
-> >    following the instructions and patches of the referenced 
-> >    article. (;
->
-> For more information refer to the security advisory.
->
-> Thanks, Brian!
+> GraphicsMagick vs. ImageMagick, again. Well, well, look at this :)
+> GraphicsMagick fixed this issue in March 2016, for the v1.3.24 release, tucked
+> away in a changeset titled "Fix SourceForge bug #371 "out-of-bounds read in
+> coders/rle.c:633:39" (see the second memset()). This is another case where tons
+> of vulnerabilities are being found and fixed in both GraphicsMagick and
+> ImageMagick with little co-ordination. This seems like a waste of effort and a
+> risk of 0-day (or is it 1-day?) exposure. It goes both ways: the RLE memory
+> corruption I referenced in my previous blog post was only fixed in
+> GraphicsMagick in March 2016, having been previously fixed in ImageMagick in
+> Dec 2014.
 
-IRSSI-SA-2017-07 Irssi Security Advisory [1]
-============================================
-CVE-2017-10965, CVE-2017-10966.
+There is no co-ordination between the two projects and they have been 
+independent for 15 years already.  This in spite of one developer 
+being a member of both projects, and some contributions to 
+GraphicsMagick from heavy ImageMagick contributors.
 
-Description
------------
+Regardless, it is difficult for someone such as myself to know the 
+possible significance of each of the many issues which are fixed other 
+than obvious issues such as shell exploits and DOS.
 
-Two vulnerabilities have been located in Irssi.
+There is old code which was common at the time of the fork but many 
+issues pertain to newer code which is not common.
 
-(a) When receiving messages with invalid time stamps, Irssi would try
-    to dereference a NULL pointer. Found by Brian 'geeknik' Carpenter
-    of Geeknik Labs. (CWE-690)
-
-    CVE-2017-10965 [2] was assigned to this bug
-
-(b) While updating the internal nick list, Irssi may incorrectly use
-    the GHashTable interface and free the nick while updating it. This
-    will then result in use-after-free conditions on each access of
-    the hash table. Found by Brian 'geeknik' Carpenter of Geeknik
-    Labs. (CWE-416 caused by CWE-227)
-
-    CVE-2017-10966 [3] was assigned to this bug
-
-
-Impact
-------
-
-(a) May result in denial of service (remote crash).
-
-(b) Undefined behaviour.
-
-
-Affected versions
------------------
-
-All Irssi versions that we observed.
-
-
-Fixed in
---------
-
-Irssi 1.0.4
-
-
-Recommended action
-------------------
-
-Upgrade to Irssi 1.0.4. Irssi 1.0.4 is a maintenance release in the
-1.0 series, without any new features.
-
-After installing the updated packages, one can issue the /upgrade
-command to load the new binary. TLS connections will require
-/reconnect.
-
-
-Mitigating facts
-----------------
-
-(a) requires control over the ircd
-
-(b) should not happen with a conforming ircd
-
-
-Patch
------
-
-https://github.com/irssi/irssi/commit/5e26325317c72a04c1610ad952974e206
-384d291
-
-
-References
-----------
-
-[1] https://irssi.org/security/irssi_sa_2017_07.txt
-[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10965
-[3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10966
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
