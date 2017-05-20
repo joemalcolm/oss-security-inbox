@@ -1,24 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/2
-Message-ID: <20170316100821.GH759@scully.more-magic.net>
-Date: Thu, 16 Mar 2017 11:08:21 +0100
-From: Peter Bex <peter@...e-magic.net>
-To: Adam Maris <amaris@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/20/2
+Message-ID: <20170520152406.2339.3B884775@matica.foolinux.mooo.com>
+Date: Sat, 20 May 2017 08:26:36 -0700
+From: Ian Zimmerman <itz@...mate.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 16, 2017 at 10:31:17AM +0100, Adam Maris wrote:
-> Hi Peter,
+On 2017-05-20 09:26, Salvatore Bonaccorso wrote:
+
+> Chris Evans discovered that ImageMagick uses unitialized memory in the
+> RLE decoder, allowing an attacker to leak sensitive information from
+> process memory space. There is missing initialization in the
+> ReadRLEImage function.
 > 
-> oss-security mailing is no longer a place for requesting CVEs. Please,
-> request CVE from MITRE via https://cveform.mitre.org/ or also possibly
-> from DWF project via http://iwantacve.org/
+> Original article at:
+> 
+> https://scarybeastsecurity.blogspot.com/2017/05/bleed-continues-18-byte-file-14k-bounty.html
 
-Oh yeah, I forgot about that.  I've filled out the form, and I hope I've
-done this correctly.
+It was good to see the discussion of how GraphicsMagick was affected, or
+not.  I would love to see that in all *Magick weakness reports.
 
-Cheers,
-Peter
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign:
+http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
