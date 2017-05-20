@@ -1,53 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/1
-Message-ID: <20170228110806.GA541@sliver.coydogsoftware.net>
-Date: Tue, 28 Feb 2017 05:08:06 -0600
-From: php-dev@...dogsoftware.net
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PHP with Zend OPCache code permission/sensitive data protection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/20/1
+Message-ID: <20170520072632.z5nbivrdwmqm3soe@eldamar.local>
+Date: Sat, 20 May 2017 09:26:32 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 27, 2017 at 04:52:58PM -0600, php-dev@...dogsoftware.net wrote:
-> 
-> To briefly summarize, in PHP SAPI's where PHP interpreters share a
-> common parent process (eg. Apache mod_php and PHP-FPM), Zend OpCache
-> creates a shared memory object owned by the common parent during
-> initialization. Child PHP processes inherit the SHM descriptor, using it
-> to cache and retrieve compiled script bytecode ("opcode" in PHP jargon).
-> Cache keys vary depending on configuration, but filename is a central
-> key component, and compiled opcode can generally be run if a script's
-> filename is known or can be guessed.
-> 
-> Many common shared hosting configurations change EUID in child processes
-> to enforce privilege separation among hosted users. In these scenarios,
-> default Zend OpCache behavior defeats script file permissions by sharing
-> a single SHM cache among all child PHP processes.
-> 
-> PHP scripts often contain sensitive information: Think of CMS
-> configurations where reading or running another user's script usually
-> means gaining privileges to the CMS database.
-> 
->  
-> AFFECTED VERSIONS:
-> PHP7 < 7.0.14 and PHP5 < 5.6.29. Later versions are still vulnerable by
-> default unless opcache.validate_permission=1 is enabled.
-> 
-> AFFECTED COMPONENT:
-> Zend OpCache
-> 
-> VULNERABILITY TYPE:
-> Code permission/sensitive information disclosure
-> 
-> IMPACT:
-> Cross-user compromise of PHP web applications in shared hosting
-> environments.
-> 
-> REFERENCES:
-> http://marc.info/?l=php-internals&m=147921016724565&w=2
-> https://bugs.php.net/bug.php?id=69090
-> http://seclists.org/oss-sec/2016/q4/343
+Hi
 
-This has been assigned CVE-2015-8994 via cveform.mitre.org.
+Chris Evans discovered that ImageMagick uses unitialized memory in the
+RLE decoder, allowing an attacker to leak sensitive information from
+process memory space. There is missing initialization in the
+ReadRLEImage function.
 
---
-php-dev at coydogsoftware dot net
+Original article at:
+
+https://scarybeastsecurity.blogspot.com/2017/05/bleed-continues-18-byte-file-14k-bounty.html
+
+Upstream fix:
+
+https://github.com/ImageMagick/ImageMagick/commit/1c358ffe0049f768dd49a8a889c1cbf99ac9849b
+
+For reference and for list archivng purpose I'm attaching the text
+part of the finding.
+
+Regards,
+Salvatore
+
+View attachment "CVE-2017-9098.txt" of type "text/plain" (14990 bytes)
