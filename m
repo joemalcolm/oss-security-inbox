@@ -1,38 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/1
-Message-Id: <49E4F353-A157-4F25-B5D3-CFF0A89339A6@apache.org>
-Date: Tue, 27 Jun 2017 16:58:30 -0700
-From: Denis Magda <dmagda@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2017-7686] Apache Ignite Information Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/9
+Message-ID: <CANO=Ty2o9kXFFMmnDJu3hsY3G84CyJmA_Tnt3dR2-vHyxsdMfw@mail.gmail.com>
+Date: Mon, 22 May 2017 13:16:03 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+On Mon, May 22, 2017 at 12:05 PM, Michael Catanzaro <mcatanzaro@...lia.com>
+wrote:
 
-Vendor: The Apache Software Foundation
+> Hi,
+>
+> I'm aware that the CVE form [1] can now be used to request CVEs. However,
+> it does not seem to be designed for requesting CVEs in open source
+> products. The field "Vendor of the product(s)" says "Please ensure vendors
+> are on the products and sources list," indicating the intent of MITRE to
+> restrict usage of the form to specific products. This list [2] says "For
+> open source software products not listed below, request a CVE ID through
+> the Distributed Weakness Filing Project CNA." So, clearly we are supposed
+> to request a CVE through the DWF project. (Or perhaps via Red Hat, since it
+> seems like it's willing to allocate CVEs for miscellaneous Linux-related
+> issues.)
+>
+> Anyway, I attempted to request a CVE using the DWF project's request form
+> [3] several months ago, but have not yet received any response [4]. So I am
+> hesitant to request further CVEs from the DWF project, for fear that I
+> won't receive a response and will wind up needing to make a duplicate CVE
+> request somewhere else.
+>
 
-Versions Affected:
+Ah, I recently did a large number of CVE assignments, I haven't emailed out
+to the sequesters yet, yours was
+https://github.com/distributedweaknessfiling/DWF-CVE-2017-1000000/blob/f2e15ac3468dd382d9ffa3d5acc032c106f3248c/CVE-2017-1000025.json
+I believe.
 
-* Apache Ignite 1.0.0-RC3 to 2.0
 
-Impact:
 
-Apache Ignite Might Transfer Sensitive Information to 3rd Party Domain
+>
+> How are other people getting open source CVEs right now? Has anybody else
+> had luck getting a CVE via DWF? Should I be trying to do this through Red
+> Hat instead? Or just by filling out MITRE's CVE form even though we're not
+> really supposed to be using it?
+>
 
-Description:
+Part of the challenge of the DWF is this is more of an experiment to figure
+out what we need/how to do it, mostly so I can scale it out/up to the
+entire Open Source world. So CVEs are a bit slow right now, but that should
+get better over the next few months.
 
-Apache Ignite uses an update notifier component to update the users about new project releases that include additional functionality, bug fixes and performance improvements. To do that the component communicates to an external PHP server (http://ignite.run) where it needs to send some system properties like Apache Ignite or Java version. Some of the properties might contain user sensitive information.
 
-Mitigation:
+>
+> Michael
+>
+> [1] https://cveform.mitre.org/
+> [2] http://cve.mitre.org/cve/request_id.html#cna_coverage
+> [3] http://iwantacve.org/
+> [4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
+>
+>
 
-* The domain (http://ignite.run) was moved to ASF and the server was brought down. No data transfer longer happens by default. No extra actions are needed on the end user side.
 
-Credit:
+-- 
 
-The vulnerability was discovered by: 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-* Makoto Yui of Treasure Data, Inc.
-
-References:
-
-* http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7686
