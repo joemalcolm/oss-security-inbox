@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1751" "Thursday" "1" "June" "2017" "23:11:34" "+0200" "Solar Designer" "solar@openwall.com" "<20170601211134.GA10587@openwall.com>" "34" "Re: [oss-security] unresponsive distros" "^Date:" nil nil "6" "2017060121:11:34" "[oss-security] unresponsive distros" (number mark "        solar@openwa Jun  1   34/1751  " thread-indent "\"Re: [oss-security] unresponsive distros\"\n") "<20170601180053.GA4752@openwall.com>" ("<20170601180053.GA4752@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["592" "Monday" "22" "May" "2017" "16:44:08" "-0700" "Kurt H Maier" "khm@sciops.net" "<20170522234408.GA7465@wopr>" "13" "Re: [oss-security] How to request a CVE for open source projects" "^Date:" nil nil "5" "2017052223:44:08" "[oss-security] How to request a CVE for open source projects" (number mark "        khm@sciops.n May 22   13/592   " thread-indent "\"Re: [oss-security] How to request a CVE for open source projects\"\n") "<0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>" ("<1495476334.15944.2@mail.igalia.com>" "<20170522185720.GA13059@suse.de>" "<20170522194526.GC63527@wopr>" "<0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30351 invoked by uid 550); 1 Jun 2017 21:11:59 -0000
+Received: (qmail 5707 invoked by uid 550); 23 May 2017 00:49:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,33 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30201 invoked from network); 1 Jun 2017 21:11:41 -0000
-Message-ID: <20170601211134.GA10587@openwall.com>
-References: <20170601180053.GA4752@openwall.com>
-Mime-Version: 1.0
+Received: (qmail 32147 invoked from network); 22 May 2017 23:44:21 -0000
+Message-ID: <20170522234408.GA7465@wopr>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <1495476334.15944.2@mail.igalia.com>
+ <20170522185720.GA13059@suse.de>
+ <20170522194526.GC63527@wopr>
+ <0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170601180053.GA4752@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 1 Jun 2017 23:11:34 +0200
-From: Solar Designer <solar@openwall.com>
+In-Reply-To: <0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>
+Date: Mon, 22 May 2017 16:44:08 -0700
+From: Kurt H Maier <khm@sciops.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] unresponsive distros
+Subject: Re: [oss-security] How to request a CVE for open source projects
 To: oss-security@lists.openwall.com
 
-On Thu, Jun 01, 2017 at 08:00:53PM +0200, Solar Designer wrote:
-> As far as I can tell, MontaVista never posted to the list.
+On Mon, May 22, 2017 at 03:13:42PM -0600, Kurt Seifried wrote:
+> Well actually they can. Why do you think we (DWF) have an extensible Json format with the data hosted in git? Hint: so people can contribute.
 
-I was wrong.  I now found that they posted two messages in January 2012
-and August 2012, but that's all.  There was also some participation here
-on oss-security, and IIRC previously on vendor-sec.
+Is it the opaque Google Docs form that fosters contribution, or the
+gatekept pull-request process requiring a Github account that fosters
+contribution?
 
-> Being a user of the info
-> only, without participation in discussions, is not strictly disallowed,
-> but this time it's coupled with lack of response when specifically asked
-> to respond, and on an issue that is at least potentially relevant to the
-> distros (not just a responsiveness test).
+At what point in the DWF process is third-party input expected to occur?
+The matter is not addressed in the documentation repository.  Feel free 
+to mail me offlist if the answers would induce excessive cognitive 
+dissonance.
 
-On a related note, I think we should continue to allow distros with just
-one representative subscribed.  Some projects are genuinely small (which
-doesn't mean their userbase is proportionally small) - e.g., Slackware.
-Some have tiny security teams (even one-person) or few people who
-actually do stuff.  This does mean they will miss tests if that person
-is e.g. on vacation.  This also means they will occasionally miss real
-issues (non-tests), and not only on the distros list.  But this doesn't
-fully disqualify them.
-
-In fact, currently I am a single point of failure for many aspects of
-running the distros list.  Maybe I need to address that, but it's tricky
-to do without adding risks.
-
-Maybe it's more reasonable to require some participation - e.g., if you
-commented during the embargo period negotiation, that would have
-demonstrated you care.  Even if you said e.g. that you defer to others.
-Noise?  Not exactly.  Not when such feedback was explicitly requested by
-the reporter, and they got very few responses.  (Here "you" can refer to
-any distro, especially one with otherwise little observable activity.)
-
-Alexander
+khm
