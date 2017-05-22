@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/17/4
-Message-ID: <20170317145440.GA24878@openwall.com>
-Date: Fri, 17 Mar 2017 15:54:40 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/5
+Message-Id: <1495476334.15944.2@mail.igalia.com>
+Date: Mon, 22 May 2017 13:05:34 -0500
+From: Michael Catanzaro <mcatanzaro@...lia.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-3305 - The Riddle vulnerability in MySQL client (public disclosure)
+Subject: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 17, 2017 at 11:54:35AM +0100, Pali Roh??r wrote:
-> There is a new vulnerability in MySQL client versions 5.5 and 5.6 which 
-> is related to SSL/TLS encryption and to older BACKRONYM vulnerability.
-> 
-> As it is common, new vulnerability should have a name, logo and website. 
-> So enjoy the *Riddle* at http://riddle.link/
-> 
-> Affected are only Oracle's MySQL clients in all versions 5.5 and 5.6 
-> when SSL/TLS encryption is used. Verification of encryption parameters 
-> and existence of SSL/TLS layer by MySQL client is done *after* client 
-> successfully finish authentication.
-> 
-> For more details including mitigation, look at Technical section on 
-> vulnerability website: http://riddle.link/
+Hi,
 
-That's very nice, but per oss-security list content guidelines technical
-detail should also be included in postings.  Attached as text/plain, for
-archival.
+I'm aware that the CVE form [1] can now be used to request CVEs. 
+However, it does not seem to be designed for requesting CVEs in open 
+source products. The field "Vendor of the product(s)" says "Please 
+ensure vendors are on the products and sources list," indicating the 
+intent of MITRE to restrict usage of the form to specific products. 
+This list [2] says "For open source software products not listed below, 
+request a CVE ID through the Distributed Weakness Filing Project CNA." 
+So, clearly we are supposed to request a CVE through the DWF project. 
+(Or perhaps via Red Hat, since it seems like it's willing to allocate 
+CVEs for miscellaneous Linux-related issues.)
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+Anyway, I attempted to request a CVE using the DWF project's request 
+form [3] several months ago, but have not yet received any response 
+[4]. So I am hesitant to request further CVEs from the DWF project, for 
+fear that I won't receive a response and will wind up needing to make a 
+duplicate CVE request somewhere else.
 
-Alexander
+How are other people getting open source CVEs right now? Has anybody 
+else had luck getting a CVE via DWF? Should I be trying to do this 
+through Red Hat instead? Or just by filling out MITRE's CVE form even 
+though we're not really supposed to be using it?
 
-View attachment "riddle.txt" of type "text/plain" (13283 bytes)
+Michael
+
+[1] https://cveform.mitre.org/
+[2] http://cve.mitre.org/cve/request_id.html#cna_coverage
+[3] http://iwantacve.org/
+[4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
+
