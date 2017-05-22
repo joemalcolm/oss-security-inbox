@@ -1,4 +1,9 @@
-Received: (qmail 19896 invoked by uid 550); 31 Mar 2026 16:32:51 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2131" "Monday" "22" "May" "2017" "20:57:21" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170522185720.GA13059@suse.de>" "46" "Re: [oss-security] How to request a CVE for open source projects" "^Date:" nil nil "5" "2017052218:57:21" "[oss-security] How to request a CVE for open source projects" (number mark "        meissner@sus May 22   46/2131  " thread-indent "\"Re: [oss-security] How to request a CVE for open source projects\"\n") "<1495476334.15944.2@mail.igalia.com>" ("<1495476334.15944.2@mail.igalia.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 24487 invoked by uid 550); 22 May 2017 18:57:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,80 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23725 invoked from network); 31 Mar 2026 10:08:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1774951711;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8gplNX0pteaeQeiiacy+cKA8BOtM+lvpRTBf64sovMg=;
-	b=mCR8SgRIW0P10t7npfJ0I4YsGAGWZBExKN7gYtx2jGCTv1O0vhaO5b2vTXae2qjTDAbruA
-	6WTleHiBlFMnW65RV+9t9MPufKwvLCOibXD8UcZfBkE+/9CLNCWNysZIMooAscvZfE8v7t
-	87pYe5MOdvjwLIxCif1Diszvz2CMXEZkci3R3MYn5vHD55OZZn5bWrsDTQ6qLny07NQEIM
-	nyaC7xY6EGBs3W1oeB3VQW/8G+7/z3lzWa/esfvh/wUo9Uq2jYSPphAVqygVO46ufjUddD
-	pZ8iM4HrUtK9hrj9MWcXZcJNRBln49LiCR8oLTR1EWl6xhUrLC013430gjVu6Q==
-Message-ID: <b99763a0-470f-4299-97f1-40e67a619548@cpansec.org>
-Date: Tue, 31 Mar 2026 11:08:30 +0100
+Received: (qmail 24466 invoked from network); 22 May 2017 18:57:32 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20170522185720.GA13059@suse.de>
+References: <1495476334.15944.2@mail.igalia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB, en-ZA
-References: <5889e814-4cd1-4d8d-8587-8bd8b7741c1f@cpansec.org>
-From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1495476334.15944.2@mail.igalia.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Mon, 22 May 2017 20:57:21 +0200
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] How to request a CVE for open source projects
 To: oss-security@lists.openwall.com
-In-Reply-To: <5889e814-4cd1-4d8d-8587-8bd8b7741c1f@cpansec.org>
-X-Forwarded-Message-Id: <5889e814-4cd1-4d8d-8587-8bd8b7741c1f@cpansec.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTFxXFfyHM7K5JecM668J2ZjWSabSa2S7qVgHcYKlx0MbXcW4bNVzAB8I/PAkj2PwMgEEjmjFOP16Hg9Oq2CW8NQBz7q35XyiiyvvYHAicouz9RSZv2Qguq8/eAgw2e6s31z52LUOhf2/PpCfScbI1+8W33MbGhsxQIUZGdCGAG9K4yJg+BYQlZZ9QfNQy3eKBVOQgjPhOYOsPDbys4LRK6gmDkKjVmhCygs+wqDfXlbdyhDCdYnP02NOWpUB+i3F3xp3pdjebN84IxHZcXAxDbqF25z7WFQFo286dSzUHWG7IOk3qumByTjNWcl4ZAdAjf5x8JhHA1GZiaYUS/B2Fb6hFH2oTky8YmMtjCzd8CxwUbDARirgdFTxTwWjf9PU4o+QDeE9NzH227y4BOz6X4utEnNJ9YqiztzCLfh7YHq8UxULIB10wDCk4rirJ+gSxhUCwL2odigZXpvzJBtxo3Dg6dUH1HxisTheSuVlxq874nQxbvlQjtvf2qNd+gtmlXbLW6TqfOxmcaq9paL0oh3wlNJ6m9iAkMTngNS7n1wKRuLSmurdAdk6U0vXAQEsD35qd/g1NSA+jSLzXTGkMfk+Lb2JjUZvErHzHzXNlhaiV4RrilvqAyjxvmvKiJnWdOlG8HIbBVUKbFcEHfoAWKynYtdkxSJmatiygGfIApebA
-Subject: [oss-security] CVE-2025-15618: Business::OnlinePayment::StoredTransaction versions
- through 0.01 for Perl uses an insecure secret key
 
-========================================================================
-CVE-2025-15618                                       CPAN Security Group
-========================================================================
+Hi,
 
-         CVE ID:  CVE-2025-15618
-   Distribution:  Business-OnlinePayment-StoredTransaction
-       Versions:  through 0.01
+You can request CVEs for opensource projects via the Mitre webform.
 
-       MetaCPAN: 
-https://metacpan.org/dist/Business-OnlinePayment-StoredTransaction
+For e.g. the Linux Kernel I just used "Linux" as vendor, for Xen "Xen" and similar.
 
+(and in general:)
+Please everyone do the distributors a favour and link to GIT commits with fixes for
+the requested CVE or at least explicit single reproducers, as we have increasing trouble
+of associating CVEs with the correct place in code.
 
-Business::OnlinePayment::StoredTransaction versions through 0.01 for
-Perl uses an insecure secret key
+Ciao, Marcus
+On Mon, May 22, 2017 at 01:05:34PM -0500, Michael Catanzaro wrote:
+> Hi,
+> 
+> I'm aware that the CVE form [1] can now be used to request CVEs. However, it
+> does not seem to be designed for requesting CVEs in open source products.
+> The field "Vendor of the product(s)" says "Please ensure vendors are on the
+> products and sources list," indicating the intent of MITRE to restrict usage
+> of the form to specific products. This list [2] says "For open source
+> software products not listed below, request a CVE ID through the Distributed
+> Weakness Filing Project CNA." So, clearly we are supposed to request a CVE
+> through the DWF project. (Or perhaps via Red Hat, since it seems like it's
+> willing to allocate CVEs for miscellaneous Linux-related issues.)
+> 
+> Anyway, I attempted to request a CVE using the DWF project's request form
+> [3] several months ago, but have not yet received any response [4]. So I am
+> hesitant to request further CVEs from the DWF project, for fear that I won't
+> receive a response and will wind up needing to make a duplicate CVE request
+> somewhere else.
+> 
+> How are other people getting open source CVEs right now? Has anybody else
+> had luck getting a CVE via DWF? Should I be trying to do this through Red
+> Hat instead? Or just by filling out MITRE's CVE form even though we're not
+> really supposed to be using it?
+> 
+> Michael
+> 
+> [1] https://cveform.mitre.org/
+> [2] http://cve.mitre.org/cve/request_id.html#cna_coverage
+> [3] http://iwantacve.org/
+> [4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
+> 
 
-Description
------------
-Business::OnlinePayment::StoredTransaction versions through 0.01 for
-Perl uses an insecure secret key.
-
-Business::OnlinePayment::StoredTransaction generates a secret key by
-using a MD5 hash of a single call to the built-in rand function, which
-is unsuitable for cryptographic use.
-
-This key is intended for encrypting credit card transaction data.
-
-Problem types
--------------
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-- CWE-693 Protection Mechanism Failure
-
-Workarounds
------------
-Apply the patch that uses Crypt::URandom to generate a secret key.
-
-
-References
-----------
-https://metacpan.org/dist/Business-OnlinePayment-StoredTransaction/source/lib/Business/OnlinePayment/StoredTransaction.pm#L64-75
-https://security.metacpan.org/patches/B/Business-OnlinePayment-StoredTransaction/0.01/CVE-2025-15618-r1.patch
-
-
-
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
