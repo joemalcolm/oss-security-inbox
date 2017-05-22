@@ -1,4 +1,9 @@
-Received: (qmail 15873 invoked by uid 550); 24 Jun 2025 15:12:33 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1244" "Monday" "22" "May" "2017" "12:00:56" "-0500" "Jodie Cunningham" "jodie.cunningham@gmail.com" "<CABfY0L1Xz4QHXCzdO1-DNcdDqFgAXYzGr1woSAKW5j7_0RD8cA@mail.gmail.com>" "21" "Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" "^Date:" nil nil "5" "2017052217:00:56" "[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" (number mark "        jodie.cunnin May 22   21/1244  " thread-indent "\"Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder\"\n") "<20170520175436.GA30962@jasmine>" ("<20170520072632.z5nbivrdwmqm3soe@eldamar.local>" "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>" "<20170520175436.GA30962@jasmine>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30134 invoked by uid 550); 22 May 2017 17:01:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,72 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3610 invoked from network); 24 Jun 2025 08:41:31 -0000
+Received: (qmail 30116 invoked from network); 22 May 2017 17:01:09 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750754481; x=1751359281; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Cdqpf6r3T+sB3KTTK5vG6NFAnR6dCIQRqG4s/xtHrKQ=;
-        b=mgfZfHH4zRYyrTujUcoQeqZZHAHw3p5EBeMROvmWsDNiqAt94OHv3wWLwA01otumwo
-         MgGG5EzY5+J/6IKPeBTxuBCAPmGkWppj8nddiFVVjzgPtb+pSxlBHEQXWmMVW6H+bCi3
-         Jo4f2Y108ydHSUXL6hvO9nJ06SxNmv3gnq9a8DfKYzMH1PNZ9CyQtN3yAArWEtYJMH3g
-         9SGKEHLu/FwDBHzepzlajneCA8nc82RQjcspZe/pTFZl/lRtoYOMf2oIIEavqwbiHXKL
-         GrPz44fxBfQIKx488h/nbwNd1GJd1/DPo1lAsPMtxWCoZ5KjljPKlgyoUReBmaKlil17
-         cphg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=PD1TlbUHMyCnwDQQ/SqOWdD7GE46z8U793btXD212EA=;
+        b=hbDdD3iEdwR4fL9Rb9NHntrD28Pi6aSweUQwulZjpg7QneFo1qiuB4LTuzZckGk3BU
+         hFjFo1pxPqcCMG2N/FSw4oP+3lSyGt/zXzkDqNk+JKTFMKMVJdVqHI2uhUXKNiCi2v/r
+         i5tjbLvXZzmf2yf2kFouIQdntcPRl42r3kajhDz41strSZK5sCV/PxZr1H5mh3cF4Z5P
+         Ue5ekXIDprJCALVm2wptsGNhnMEGF7oul5Exl3swf74WnGik6JN1UpNSr0WhEAro7Pju
+         ugfoohgIkMc0bhcujoDOxRVpZtfIl6VqmUDr3+2Neocu0ZOOdR6G6j+VeVixh2rQXicA
+         ZOEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750754481; x=1751359281;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Cdqpf6r3T+sB3KTTK5vG6NFAnR6dCIQRqG4s/xtHrKQ=;
-        b=tr4q4re49neoUSzl1oBfPcas9gIjY1+ph5GpaG7vZyR4X7nRwu8RXPzHZmQn4u/T+v
-         eWLMqKo8Hi4+3/uoGWk9Thuze2mEdp1jL9A6ax60JUr1OOq+pNzlN4YfBPlJnMJd96ee
-         5cOi14KAAR5fH9+Za2r1lcVwqQHJnuTzQ9oe9IzkLrBDkUFuJcSxKxawODP0Vr8/t16T
-         gtf45PPp3jKrQot7GYi6O5FEDpchk2A8XoHXFMC/T3uYjh24K6pr7dwttFWPi0XdLmYg
-         c/m2mcA9+bYoEm4hNbFrVx9AIdQgM/VFf8f1HGOjUr08ZUqO9kFqvIDnF0FoIiNVCS4z
-         NPRA==
-X-Gm-Message-State: AOJu0YwlOSK5e4gPbGUTQKIrN5NPlfBqtf8GiMXnPeFp1dXx7Fbox9TW
-	lZUtxoguETtrlhm/XiVkX247y56Yx0KFHEjFeKYPxsl1b9KHDqQPrTohp5WOuof6E8ypws9x/j4
-	Z8g8JItBdx7pW0lxnxjRcGeMXOzeCc0n+P16lzRnG94mN
-X-Gm-Gg: ASbGnctpHRNNA/JGtGTQhjTtnIQ3/GtHE75NKQMGiDzRsx/PPwRUugBSg8AvUG7SGNJ
-	YiDwYCaoZFOqpNKSj/PaTnnuc6FePcskjfTaOnEwdpM5E6Yc3P3W3H7zKWkz0PCgYsQZs5aqhGm
-	q3hLmm+4d447YNiGpYovQk0WxNTWyHEeMBTdnmBLTzJw==
-X-Google-Smtp-Source: AGHT+IHOcKfxXVJ05J7Y47Kcfq9GJWynFJuFMR8r7MPpipa+5fFhacPCYRBHsMWLs2vPtHO4kb0HsnroDmVpnt6TF0k=
-X-Received: by 2002:a05:6902:1203:b0:e81:84ac:cd9 with SMTP id
- 3f1490d57ef6-e842bc887d8mr19336377276.16.1750754480810; Tue, 24 Jun 2025
- 01:41:20 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=PD1TlbUHMyCnwDQQ/SqOWdD7GE46z8U793btXD212EA=;
+        b=cyDau3hW1Zd0P0FCcHTIxaO49U+UmYkOzMSDf9IRbhUiUtZS9wTs70TpDfQGHUXccT
+         e44RELl9Ln/nxKpUpfMUJ0z+y6NLNlozgDhQuD0oky+7UYobnyuqgcXxOcbUgTz37Oti
+         F3panBo/mdhevEQYxHjJRCBZOYPLKZ32n3wz775/73b95UrGByM9+CAngDRVLOxs1cKv
+         uoeA+/el0VZ0fstm2knQorvBWDtZnHD6NF9jJYdlKWF7aU3ymIbjuSXuKI2BTKyPBUpZ
+         bFMJTypcLEhbz8oW54Fuuomm5HdDYEsD5nqQ26ajOL6DPqj5rJWL8hLlr6hKU8GYFloo
+         Q/pg==
+X-Gm-Message-State: AODbwcBAOBKWLwvODu2UXBEdynArKVOo/kOm7Lv9DlUvjk4Auoszxf24
+	H38iFUrFWrm+D4qLG7fLShMU/F4mscw5
+X-Received: by 10.176.74.66 with SMTP id r2mr13065347uae.39.1495472457051;
+ Mon, 22 May 2017 10:00:57 -0700 (PDT)
 MIME-Version: 1.0
-From: grape mingijung <mingijung.grape@gmail.com>
-Date: Tue, 24 Jun 2025 17:41:10 +0900
-X-Gm-Features: Ac12FXwx0qP_Oi0TY0mDZHYQA4FCjn2SmDldGcMPD_2L4y1c95Bx2Pt3xqHIc8c
-Message-ID: <CAFyT70hVsSX30bHYk-gjdUyi_a9am40Jw6bQmqtEetyCGVLV+g@mail.gmail.com>
-In-Reply-To: <20250623234529.GA10997@openwall.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000eaf02606384d4ac4"
-Subject: Re: [oss-security] xdg-open bypassing SameSite=Strict
-
---000000000000eaf02606384d4ac4
+In-Reply-To: <20170520175436.GA30962@jasmine>
+References: <20170520072632.z5nbivrdwmqm3soe@eldamar.local>
+ <20170520152406.2339.3B884775@matica.foolinux.mooo.com> <20170520175436.GA30962@jasmine>
+Message-ID: <CABfY0L1Xz4QHXCzdO1-DNcdDqFgAXYzGr1woSAKW5j7_0RD8cA@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Date: Mon, 22 May 2017 12:00:56 -0500
+From: Jodie Cunningham <jodie.cunningham@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of
+ uninitialized memory in RLE decoder
+To: oss-security@lists.openwall.com
 
-Hello,
+On Sat, May 20, 2017 at 12:54 PM, Leo Famulari <leo@famulari.name> wrote:
+>
+> Chris Evans' report (copied in the email you replied to) says this:
+>
+> GraphicsMagick vs. ImageMagick, again. Well, well, look at this :)
+> GraphicsMagick fixed this issue in March 2016, for the v1.3.24 release, tucked
+> away in a changeset titled "Fix SourceForge bug #371 "out-of-bounds read in
+> coders/rle.c:633:39" (see the second memset()). This is another case where tons
+> of vulnerabilities are being found and fixed in both GraphicsMagick and
+> ImageMagick with little co-ordination. This seems like a waste of effort and a
+> risk of 0-day (or is it 1-day?) exposure. It goes both ways: the RLE memory
+> corruption I referenced in my previous blog post was only fixed in
+> GraphicsMagick in March 2016, having been previously fixed in ImageMagick in
+> Dec 2014.
 
-Thank you again for your continued attention to this topic.
-
-With respect to sending SameSite=3DStrict cookies in CLI-initiated
-navigations, it seems that different browsers may take slightly different
-approaches to this issue. Because of that, it=E2=80=99s hard to predict how=
- things
-will develop going forward.
-
-My impression is that allowing SameSite=3DStrict cookies in CLI-initiated
-navigations is unlikely to cause significant compatibility issues in
-practice.
-
-I=E2=80=99ll be following any updates with interest.
-
-Best regards,
-grape mingijung
-
---000000000000eaf02606384d4ac4--
+I've worked with the GM team before - it's trivial as a researcher to
+keep Bob up to date on what you're coming across in IM.
+This problem doesn't stop at IM/GM - there are probably bugs you find
+in IM/GM that also trip up other software, and little effort is made
+to see the impact in other image software. We could probably benefit
+from a curated centralized corpus for this kind of thing.
