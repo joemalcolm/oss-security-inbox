@@ -1,52 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/07/4
-Message-ID: <1483795275.8979.125.camel@juliet.mcarpenter.org>
-Date: Sat, 07 Jan 2017 14:21:15 +0100
-From: Martin Carpenter <mcarpenter@...e.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/4
+Message-ID: <CABfY0L1Xz4QHXCzdO1-DNcdDqFgAXYzGr1woSAKW5j7_0RD8cA@mail.gmail.com>
+Date: Mon, 22 May 2017 12:00:56 -0500
+From: Jodie Cunningham <jodie.cunningham@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Firejail local root exploit
+Subject: Re: Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2017-01-06 at 18:08 +0100, sivmu wrote:
-> Non-priv users can run seccomp filter on anything anyway.
+On Sat, May 20, 2017 at 12:54 PM, Leo Famulari <leo@...ulari.name> wrote:
+>
+> Chris Evans' report (copied in the email you replied to) says this:
+>
+> GraphicsMagick vs. ImageMagick, again. Well, well, look at this :)
+> GraphicsMagick fixed this issue in March 2016, for the v1.3.24 release, tucked
+> away in a changeset titled "Fix SourceForge bug #371 "out-of-bounds read in
+> coders/rle.c:633:39" (see the second memset()). This is another case where tons
+> of vulnerabilities are being found and fixed in both GraphicsMagick and
+> ImageMagick with little co-ordination. This seems like a waste of effort and a
+> risk of 0-day (or is it 1-day?) exposure. It goes both ways: the RLE memory
+> corruption I referenced in my previous blog post was only fixed in
+> GraphicsMagick in March 2016, having been previously fixed in ImageMagick in
+> Dec 2014.
 
-prctl(PR_CAPBSET_DROP, ...) (see caps.c) requires CAP_SETPCAP. 
-
-
-> Seccomp does not rewuire any privileges and as far as I know it onl
-> restricts permissions (to use syscalls) and never expands them.
-
-To be clear I was pondering the SECCOMP_RET_ERRNO case (not the more
-typical case where uncatchable SIGKILL zaps the caller) and I don't
-think this is feasible with current firejail. "waiting to happen", as I
-said in my throwaway comment.
-
-But if a non-privileged user can make the OS lie to a privileged (eg
-setuid) program then there is clearly potential for shenanigans. There
-is some similarity with FUSE -- make the OS lie about the state of the
-file system -- but the barrier to entry is significantly higher for FUSE
-(fuse group, allow_root, etc).
-
-Maybe you could even persuade a seccomp-SIGKILLed process to leave the
-system in some weird exploitable state. Eg rather than racing a chmod,
-just have seccomp kill the process at that point. (That's a bit
-hand-wavy -- the race is the problem in that example -- but hopefully
-you can see what I'm trying to say).
-
-The fact that I can't easily reason about this, that I can't say "this
-strategy is safe", makes me uneasy.
-
-
-> Also the question is how many of these issues are specific to firejail
-> and how many of them also applied to (user)namespaces in general or
-> wrapper tool lke bubblewrap that utilise namespaces as firejail does.
-> 
-> Meaning some of these issues could applie to a lot more programms.
-
-Potentially, yes. Though bubblewrap is both more conservative and has a
-cleaner approach to privilege management. Nice cat, too.
-
-
-Martin.
-
-
+I've worked with the GM team before - it's trivial as a researcher to
+keep Bob up to date on what you're coming across in IM.
+This problem doesn't stop at IM/GM - there are probably bugs you find
+in IM/GM that also trip up other software, and little effort is made
+to see the impact in other image software. We could probably benefit
+from a curated centralized corpus for this kind of thing.
