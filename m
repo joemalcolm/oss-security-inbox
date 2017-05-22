@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1970" "Saturday" "4" "June" "2016" "13:04:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160604170442.A47D96C0729@smtpvmsrv1.mitre.org>" "42" "[oss-security] three vulnerabilities in ImageMagick before 7.0.1-2" nil nil nil "6" "2016060417:04:42" "[oss-security] three vulnerabilities in ImageMagick before 7.0.1-2" (number mark "U       cve-assign@m Jun  4   42/1970  " thread-indent "\"[oss-security] three vulnerabilities in ImageMagick before 7.0.1-2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2375" "Monday" "22" "May" "2017" "13:16:03" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2o9kXFFMmnDJu3hsY3G84CyJmA_Tnt3dR2-vHyxsdMfw@mail.gmail.com>" "64" "Re: [oss-security] How to request a CVE for open source projects" "^Date:" nil nil "5" "2017052219:16:03" "[oss-security] How to request a CVE for open source projects" (number mark "        kseifried@re May 22   64/2375  " thread-indent "\"Re: [oss-security] How to request a CVE for open source projects\"\n") "<1495476334.15944.2@mail.igalia.com>" ("<1495476334.15944.2@mail.igalia.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32660 invoked by uid 550); 4 Jun 2016 17:04:54 -0000
+Received: (qmail 24242 invoked by uid 550); 22 May 2017 19:16:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24222 invoked from network); 22 May 2017 19:16:15 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=metqhQ6Mre6X3pwvpBUsJwuvbjX97NDv/eDvuM6/PTc=;
+        b=Geqiv/jgbreRPmyneiir0FA8GIfxAKHZ8iuw4x8WF9M66BEko2V7EUHq+3Jfrs2mKo
+         VGHvtDy2BFqwmihL67c1oz6uveip7eLBTmXjTVggyGlQZ/JCMYSt1DRjd3f6xmZLwJ7o
+         KAvA24nK6FCj96+49+s2li7d6M7c6JPmZSGorA4XMS2GExU7WnqETZpwTjl2mmtMVr/Q
+         Ifd//7PHDZ22yLNrz3VbvK5lyhVispW8+/yhJDqFzm7KdEh13350mcPggvRHLAYAn8mb
+         RSmrC/CZcp7xXkgBWMZqoO4hJAd8Xkg2oqu+ibnh4Q5R7NPt24JaoG9BZUeJYD8O34v9
+         Vc+g==
+X-Gm-Message-State: AODbwcC/IH3VC0LedDs6YehQjR/ZLKXD/bi6cuYXxVCdA601WMWYYNKk
+	YUPLPf2EEBDmdY645NAOG+GwDPvrZ7WnCtzHwA==
+X-Received: by 10.157.28.135 with SMTP id l7mr12583744ota.87.1495480563803;
+ Mon, 22 May 2017 12:16:03 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <1495476334.15944.2@mail.igalia.com>
+References: <1495476334.15944.2@mail.igalia.com>
+Message-ID: <CANO=Ty2o9kXFFMmnDJu3hsY3G84CyJmA_Tnt3dR2-vHyxsdMfw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="f40304378ef4c646ce055021b3ec"
+Date: Mon, 22 May 2017 13:16:03 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32641 invoked from network); 4 Jun 2016 17:04:54 -0000
-From: cve-assign@mitre.org
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-Id: <20160604170442.A47D96C0729@smtpvmsrv1.mitre.org>
-Date: Sat,  4 Jun 2016 13:04:42 -0400 (EDT)
-Subject: [oss-security] three vulnerabilities in ImageMagick before 7.0.1-2
+Subject: Re: [oss-security] How to request a CVE for open source projects
+To: oss-security <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--f40304378ef4c646ce055021b3ec
+Content-Type: text/plain; charset="UTF-8"
 
-In case anyone needs background information about:
+On Mon, May 22, 2017 at 12:05 PM, Michael Catanzaro <mcatanzaro@igalia.com>
+wrote:
 
-  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4562
-  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4563
-  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4564
+> Hi,
+>
+> I'm aware that the CVE form [1] can now be used to request CVEs. However,
+> it does not seem to be designed for requesting CVEs in open source
+> products. The field "Vendor of the product(s)" says "Please ensure vendors
+> are on the products and sources list," indicating the intent of MITRE to
+> restrict usage of the form to specific products. This list [2] says "For
+> open source software products not listed below, request a CVE ID through
+> the Distributed Weakness Filing Project CNA." So, clearly we are supposed
+> to request a CVE through the DWF project. (Or perhaps via Red Hat, since it
+> seems like it's willing to allocate CVEs for miscellaneous Linux-related
+> issues.)
+>
+> Anyway, I attempted to request a CVE using the DWF project's request form
+> [3] several months ago, but have not yet received any response [4]. So I am
+> hesitant to request further CVEs from the DWF project, for fear that I
+> won't receive a response and will wind up needing to make a duplicate CVE
+> request somewhere else.
+>
 
-The person who requested these CVE IDs from MITRE provided a security
-advisory showing three independent problems (also with quite different
-attack methodologies) that each happens to have a resultant buffer
-overflow. However, they do not plan to make their security advisory
-public. The CVE descriptions are based only on the surface-level
-code-change information that is public in GitHub. For open-source
-software, it is relatively rare for someone to compose a detailed
-advisory about multiple CVEs and keep it permanently non-public, but
-this can happen. One of the effects of non-public advisories is that
-the number of CVEs may seem unrelated to the commit message.
+Ah, I recently did a large number of CVE assignments, I haven't emailed out
+to the sequesters yet, yours was
+https://github.com/distributedweaknessfiling/DWF-CVE-2017-1000000/blob/f2e15ac3468dd382d9ffa3d5acc032c106f3248c/CVE-2017-1000025.json
+I believe.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXUwPnAAoJEHb/MwWLVhi291MP/3wV+ZGCP8XJftP9nZez4apC
-VtgFMu00wh19tQDJoskUhagfuc0D74KSo0c9o/rrTpNVAIpxaPsEkjCqTCicThEv
-C55FqsDPIQo+XN8docdNFteYuuIwgt+thjMgmV1IuEdm4wbSCg0Ddm6vJGUUK9i7
-F965FZ2S8B10kDG3soX43VsRiRmJnyhJ+MhcyGyuaAKGqmtLUnw8rFm91qvhghD3
-abAV6PENb1abvBNzztYs1iWDtzCM/whIEVoRpH0qm/yTGin3/+Mo3SIcDVQ9/UQj
-VvpBhpzURoLJOrzVqrPWrQO4vOD8BYE0hwfn878//qKVPp0TfnPPqUzLpBTN9eZQ
-wv76w6/+1hoTKeuSrMfdAgqO/15pvB2iLWxBPjJcVVCyY32IalS1562LQxeVxqlC
-250OZWu4APlvXjoKos56WuV0CPohVEFhBtbmQ9qxoudkjejcDoWhmi/Z+Fh2ElHp
-n/LNiPWttWrrPzKb+s9GNvxXo2z9dDHbxVrBEOqppNwuynocCbmR4UGZc1vp9PQ7
-UhXFQ/y1guWTvOGw/NZR9kYJthN2o7p5P0ceHWRpPfqMQlTQEn0CTjShLCtXrZ2G
-nUiu3QT58FlP5hUfbjCQ+XGYj0lMcpBoN52AgiDxZL1BjKf15VIRsOLqwDSs144J
-UX+2kIOAvJIMLky69RL9
-=lITg
------END PGP SIGNATURE-----
+
+>
+> How are other people getting open source CVEs right now? Has anybody else
+> had luck getting a CVE via DWF? Should I be trying to do this through Red
+> Hat instead? Or just by filling out MITRE's CVE form even though we're not
+> really supposed to be using it?
+>
+
+Part of the challenge of the DWF is this is more of an experiment to figure
+out what we need/how to do it, mostly so I can scale it out/up to the
+entire Open Source world. So CVEs are a bit slow right now, but that should
+get better over the next few months.
+
+
+>
+> Michael
+>
+> [1] https://cveform.mitre.org/
+> [2] http://cve.mitre.org/cve/request_id.html#cna_coverage
+> [3] http://iwantacve.org/
+> [4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
+>
+>
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--f40304378ef4c646ce055021b3ec--
