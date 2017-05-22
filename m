@@ -1,76 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/9
-Message-ID: <20170603165813.GA20708@openwall.com>
-Date: Sat, 3 Jun 2017 18:58:13 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/7
+Message-ID: <20170522185720.GA13059@suse.de>
+Date: Mon, 22 May 2017 20:57:21 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Karel Zak <kzak@...hat.com>
-Subject: TIOCSTI not going away
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Many su-like programs can be used to run other programs with reduced (or
-otherwise different, rather than strictly elevated) privileges.  This
-includes su itself (such as when su'ing from root to a user), as well as
-various container entry commands, etc.
+You can request CVEs for opensource projects via the Mitre webform.
 
-Many (probably most) of those got it wrong at first, keeping the same
-tty across the privilege boundary.  Numerous such issues were reported:
+For e.g. the Linux Kernel I just used "Linux" as vendor, for Xen "Xen" and similar.
 
-https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=tiocsti
+(and in general:)
+Please everyone do the distributors a favour and link to GIT commits with fixes for
+the requested CVE or at least explicit single reproducers, as we have increasing trouble
+of associating CVEs with the correct place in code.
 
-http://www.openwall.com/lists/oss-security/2011/06/02/3
+Ciao, Marcus
+On Mon, May 22, 2017 at 01:05:34PM -0500, Michael Catanzaro wrote:
+> Hi,
+> 
+> I'm aware that the CVE form [1] can now be used to request CVEs. However, it
+> does not seem to be designed for requesting CVEs in open source products.
+> The field "Vendor of the product(s)" says "Please ensure vendors are on the
+> products and sources list," indicating the intent of MITRE to restrict usage
+> of the form to specific products. This list [2] says "For open source
+> software products not listed below, request a CVE ID through the Distributed
+> Weakness Filing Project CNA." So, clearly we are supposed to request a CVE
+> through the DWF project. (Or perhaps via Red Hat, since it seems like it's
+> willing to allocate CVEs for miscellaneous Linux-related issues.)
+> 
+> Anyway, I attempted to request a CVE using the DWF project's request form
+> [3] several months ago, but have not yet received any response [4]. So I am
+> hesitant to request further CVEs from the DWF project, for fear that I won't
+> receive a response and will wind up needing to make a duplicate CVE request
+> somewhere else.
+> 
+> How are other people getting open source CVEs right now? Has anybody else
+> had luck getting a CVE via DWF? Should I be trying to do this through Red
+> Hat instead? Or just by filling out MITRE's CVE form even though we're not
+> really supposed to be using it?
+> 
+> Michael
+> 
+> [1] https://cveform.mitre.org/
+> [2] http://cve.mitre.org/cve/request_id.html#cna_coverage
+> [3] http://iwantacve.org/
+> [4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
+> 
 
-http://www.openwall.com/lists/oss-security/2012/11/05/8
-
-http://www.openwall.com/lists/oss-security/2016/02/25/6
-http://www.openwall.com/lists/oss-security/2016/02/27/1
-http://www.openwall.com/lists/oss-security/2016/09/25/1
-
-This list is not exhaustive.
-
-Some programs got it right IIRC as of the first time I looked (maybe
-right from the start): SimplePAMApps su, vzctl.
-
-On LKML, CC'ed to the kernel-hardening mailing list, Matt Brown has been
-pushing for the upstream Linux kernel to introduce an option (likely to
-be disabled by default) that would block the TIOCSTI ioctl.  Alan Cox
-repeatedly NAK'ed this:
-
-http://www.openwall.com/lists/kernel-hardening/2017/05/
-
-Sorry there's no one specific message/thread to link to - there were
-multiple patch revisions, and multiple NAKs with different wording.
-
-Alan's reasoning is that userspace apps like this have to be allocating
-a new pty anyway, and the kernel change wouldn't help much since TIOCSTI
-isn't the only way to cause trouble (although per my reading of the
-examples given, other ways/troubles are either not exactly as bad or not
-exactly as generic).  Alan also suggested that all of the affected
-userspace apps have already been fixed.  I think that's still very far
-from true.  In fact, just 2 days ago util-linux 2.30 was released with
-the issue still deliberately not fixed:
-
-https://marc.info/?l=util-linux-ng&m=149640144016887
-
-| CVE-2016-2779 - This security issue is NOT FIXED yet.  It is possible to
-|   disable the ioctl TIOCSTI by setsid() only.  Unfortunately, setsid()
-|   has well-defined use cases in su(1) and runuser(1) and any changes
-|   would introduce regressions.  It seems we need a better way -- ideally
-|   another ioctl to disable TIOCSTI without setsid() or in a userspace
-|   implemented pty container (planned as experimental su(1) feature).
-
-I am posting this message primarily to let maintainers of userspace
-su-like programs know that they should in fact proceed to implement
-allocation of a separate pty, if they don't do that already.  Do not
-wait for the kernel to do some magic thing because it's been NAK'ed, it
-wouldn't fully address the issue, and it wouldn't be enabled by default.
-
-Another point Alan brought up is that if a program is careless enough
-not to allocate a new pty, it's probably also careless enough not to
-close any fd's that might be open in the parent shell or by the program
-itself.  Let's also not miss this reminder and review/correct/harden
-these same programs in this respect as well.
-
-Alexander
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
