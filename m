@@ -1,4 +1,9 @@
-Received: (qmail 24495 invoked by uid 550); 16 Aug 2024 17:46:49 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6219" "Monday" "22" "May" "2017" "13:47:43" "+0200" "Moritz Bechler" "mbechler@eenterphace.org" "<76bfe937-f6da-48e2-7844-65c889eb8e85@eenterphace.org>" "184" "[oss-security] Code Execution through a variety Java (Un-)Marshallers" nil nil nil "5" "2017052211:47:43" "[oss-security] Code Execution through a variety Java (Un-)Marshallers" (number mark "U       mbechler@een May 22  184/6219  " thread-indent "\"[oss-security] Code Execution through a variety Java (Un-)Marshallers\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9314 invoked by uid 550); 22 May 2017 11:48:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,127 +12,199 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19688 invoked from network); 16 Aug 2024 17:08:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723828078; x=1724432878; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=j7cZjZZFwaaoWf1Hxr848Yq25bv6YTu1iQKqwfWAiqo=;
-        b=pq6FA0q1wGD52QnQtSZ1Ml3oT2yrGTpA3xY/fit5YAcOhBYXW1xVhZSP22A3oPbVIk
-         iqpRpm5Hbnh9rKVsXLqldxXfJfAnoJ2JEYTBVaLaILTGxvP34kJPCKCQ2kPPKbR0FklV
-         Hs4F7r/yEXdE6rbrLtvsoz/eowXdqya6I0J3BcgsroG+Ht2+Z76nxpK0s1ulcSICZbAU
-         Cs88HkJObSFgC8+7FO8a9Wyluv3SmBXEXJX5OLJu+Z8+mZuP9FnR/ajjlpAm8Ls39itr
-         sFDfRVU+x7ufqv0bUXMJaabNjySpEK+TRGmeBopqeILmpPnW3ghfCohfSS8+jrnZiGMH
-         RPfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723828078; x=1724432878;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=j7cZjZZFwaaoWf1Hxr848Yq25bv6YTu1iQKqwfWAiqo=;
-        b=DO5pAGkyBS10bD7y8psaZO4xiOJOwSWODEc0PqDhi0tz8TkKbfhtSNKrdqCsrUdyjD
-         cQtx1BHUVMC9PMaQyy6/kyNd9dneXPnVQ6nFlexC0qm8lwZL8kOxpgDawdPX4cwa2nXW
-         y2bSIlPgZHT7vsKJBg1ISE/YEAZ3gND6eXzLY1TExDfy5nEaVhjLNBibTFkIGC2xK+R6
-         6/yi/ZVTvLLdI1uS/BNUhz4HIQDo5Axz8gjI6uJZScWdd+O75muR1q4qKqjpg4RtzFbb
-         GAohESqrqD+wDFz86Jwe23o1ecfiursz4H7N9GfIs7OUjojGRqz7uQJYTY38xLRn8SPI
-         cBLg==
-X-Gm-Message-State: AOJu0YwpgitoBhnYiMBlHoGcXNhKbL1jgHHKlsIXR2Kotvt3SvpYBegw
-	KUMr3ZFmqNh9FFhgLAAnufpF1UKqiN6k5jTJ9YdhJUqoYoAUUNftghAiYaGzDcHe28elbOPlNze
-	cdr5SZK4LkP0HSeq7OCA3b1Ss2r9UnP8s+BO9tvMPwgyEhhzrSj+I
-X-Google-Smtp-Source: AGHT+IFwTC42exOyCmL/UILrtX7+x3GPqWSEizfdaBoh5yEiJbekwUMnDWnIXqZPhWO2TKcZynA+naDJ7XMQ9niJYDs=
-X-Received: by 2002:a05:622a:46ce:b0:447:d7fd:63f with SMTP id
- d75a77b69052e-45377060c29mr1576641cf.19.1723828077482; Fri, 16 Aug 2024
- 10:07:57 -0700 (PDT)
-MIME-Version: 1.0
-From: Craig Ingram <cjingram@google.com>
-Date: Fri, 16 Aug 2024 13:07:46 -0400
-Message-ID: <CAHXwHVzF6HFyzWf+MyQ8+UxhdSZhLntDs8CcETTnr8czmxkHvg@mail.gmail.com>
+Received: (qmail 8024 invoked from network); 22 May 2017 11:47:55 -0000
+From: Moritz Bechler <mbechler@eenterphace.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000036d839061fd00087"
-Subject: [oss-security] [kubernetes] CVE-2024-7646: Ingress-nginx Annotation Validation Bypass
+Message-ID: <76bfe937-f6da-48e2-7844-65c889eb8e85@eenterphace.org>
+Date: Mon, 22 May 2017 13:47:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Code Execution through a variety Java (Un-)Marshallers
 
---00000000000036d839061fd00087
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Hello Kubernetes Community,
+(As per list policy I tried to include the most relevant information,
+but I don't think including the full details makes any sense - hope that
+is okay.)
 
-A security issue was discovered in ingress-nginx where an actor with
-permission to create Ingress objects (in the `networking.k8s.io` or
-`extensions` API group) can bypass annotation validation to inject
-arbitrary commands and obtain the credentials of the ingress-nginx
-controller. In the default configuration, that credential has access to all
-secrets in the cluster.
-
-This issue has been rated High (8.8)
-CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U=
-/C:H/I:H/A:H>
-and assigned CVE-2024-7646.
-
-Am I vulnerable?
-
-This bug affects ingress-nginx. If you do not have ingress-nginx installed
-on your cluster, you are not affected. You can check this by running
-`kubectl get po -A` and looking for `ingress-nginx-controller`.
-
-Multi-tenant environments where non-admin users have permissions to create
-Ingress objects are most affected by this issue.
-
-Affected Versions
-
-ingress-nginx controller < v1.11.2
-
-How do I mitigate this vulnerability?
-
-This issue can be mitigated by upgrading to the fixed version.
-
-Fixed Versions
-
-ingress-nginx controller v1.11.2
-
-Detection
-
-Review your Kubernetes audit logs for Ingress objects created with
-annotations (e.g. `nginx.ingress.kubernetes.io/auth-tls-verify-client`)
-that contain carriage returns (`\r`).
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-
-Additional Details
-
-See the GitHub issue for more details:
-
-https://github.com/kubernetes/kubernetes/issues/126744
-
-Acknowledgements
-
-This vulnerability was reported by Andr=C3=A9 Storfjord Kristiansen @dev-bi=
-o.
-
-The issue was fixed and coordinated by the fix team:
-
-Andr=C3=A9 Storfjord Kristiansen @dev-bio
-
-Jintao Zhang @tao12345666333
-
-Marco Ebert @Gacko
-
-Thank You,
-
-Craig Ingram on behalf of the Kubernetes Security Response Committee
+Full paper as well as payload generation tools are available at
+<https://www.github.com/mbechler/marshalsec/>
 
 
---
+Over the past two years we have seen a great number of vulnerabilities
+resulting from careless use of Java serialization.
 
-Craig Ingram
-Security Engineer
-cjingram@google.com
+This research shows that issues like that are in no way limited to
+mechanisms as expressive or "powerful" as Java serialization but can be
+generalized to a wide range of other ones.
 
---=20
+Any unmarshaller that performs object binding, implicitly (e.g. magic
+methods on collection insertion) or explicitly (e.g. property setters)
+executes behaviors attached to the object's type (read: calls
+methods/executes codes).
 
-Craig Ingram
-Security Engineer
-cjingram@google.com
+To do their work these mechanisms need to assume some kind of contract
+on these behaviors - simply put, they should not have any side effects.
+In practice however these conventions are broken quite often, either
+deliberately or unconsciously, and can lead to the execution of code
+with unwanted side-effects, in the worst case trigger command or remote
+code execution.
 
---00000000000036d839061fd00087--
+Many mechanisms embed type information in their outputs. In some form
+this is always required to properly restore polymorphic types (and pre
+Java 1.5 this was even required for regular collections as well).
+Insufficiently restricting the types that can be used there however
+means that an attacker can trigger these behaviors on more or less
+arbitrary types on the classpath (which in a normal Java projects is a
+humongous amount of code no-one fully understands - standard library
+alone...).
+
+That usually is enough to achieve RCE, in some cases using some third
+party library code, in many cases even universally through code in the
+Java standard library.
+
+Even the most restrictive implicit (technical) type restrictions (e.g.
+constructor requirements) that can be applied by these mechanisms are
+insufficient to prevent these issues. With Java's java.io.Serializable
+we have already seen a model fail where the types themselves declare
+their intent to be used in such a situation (for various reasons),
+although not having such a restriction seems even worse.
+
+The only option left is explicit restriction to types known to fulfill
+the contract by the user, be that in the form of registration (e.g. JAXB
+or a variety of mechanisms requiring schema definitions or compilation),
+an explicit whitelist or strict runtime type checking from a root type.
+Hybrid type checking and registration like found in GSON or Jackson with
+JsonTypeInfo.Id.Name so far seem to offer the best balance between
+convenience and security.
+
+While in the best case scenario one would restrict to data objects not
+containing any logic at all -- for practical purposes restricting to the
+types that are actually used seems good enough, usually it's the ton of
+code that you don't even care about that will get you pwned.
+
+
+
+(Open Source) marshaller libraries (some pretty rare, but for the sake
+of completeness) that allow(ed) for unmarshalling into arbitrary types,
+their their known worst case impacts and possible mitigations, are
+
+-------------------------------
+Apache BlazeDS AMF Marshalling
+- JDK only escalation to Java serialization
+- third party library RCEs (spring, c3p0)
+
+Mitigations: Configure a DeserializationValidator for type whitelisting.
+Upgrade to 4.7.3 which enables it by default (CVE-2017-5641).
+
+-------------------------------
+Hessian/Burlap:
+- third party library RCEs (spring, rome, xbean-naming, resin)
+
+Mitigation: Upgrade to 4.0.51 and enable type whitelisting through
+ClassFactory.
+
+-------------------------------
+Castor:
+-> POM dependency library RCE (spring)
+
+Mitigation: N/A
+
+-------------------------------
+Jackson:
+- >=2.7.0: not totally reliable JDK only RCE
+- possibly JDK only escalation to Java serialization
+- third party library RCEs (spring, c3p0)
+
+Jackson takes a somewhat special position here, in that by default it is
+unaffected but only becomes exploitable when class based polymorphism is
+enabled
+(https://github.com/FasterXML/jackson-docs/wiki/JacksonPolymorphicDeserialization)
+and there are unbounded or insufficiently bounded properties.
+
+Mitigation: Use explicit polymorphism with JsonTypeInfo.Id.Name
+
+-------------------------------
+Java serialization:
+- one new library gadget
+
+-------------------------------
+Java XMLDecoder:
+- well, we know about that one...
+
+-------------------------------
+json-io
+-> JDK only RCE
+
+Mitigation: N/A
+
+-------------------------------
+jYAML
+-> JDK only RCE
+
+Mitigation: N/A
+
+-------------------------------
+Kryo:
+- using default instantiation: third party RCEs (commons-beanutils, spring)
+- using StdInstantiatorStrategy: JDK only RCE
+
+Mitigation: Enforce type registration
+
+-------------------------------
+Red5 AMF Marshalling:
+-> JDK only RCE
+
+Mitigation: Upgrade to 1.0.8 which enables type blacklisting :( of the
+known bad ones
+
+-------------------------------
+SnakeYAML
+-> JDK only RCE
+
+Mitigation: Use SafeConstructor or a custom implementation for type
+whitelisting.
+
+-------------------------------
+XStream
+-> JDK only RCE
+
+Mitigation: Use XStream's TypePermission for type whitelisting.
+
+-------------------------------
+YAMLBeans:
+- third party library RCE (c3p0)
+
+Mitigation: N/A
+
+-------------------------------
+
+
+Vulnerabilities where one of these was exploitable under some
+circumstances identified as a part of this research and have been fixed
+include:
+
+- JBoss Resteasy - SnakeYAML (CVE-2016-9606)
+- Apache Camel - SnakeYAML/Jackson/... (CVE-2017-3159,CVE-2016-8749)
+- Apache Brooklyn - SnakeYAML (CVE-2016-8744)
+- Jenkins - XStream (CVE-2017-2608)
+- Red5 Media Server/Apache OpenMeetings (CVE-2017-5878)
+- Magnolia CMS - json-io (CVE N/A, tracking MGNLCACHE-165)
+- OpenNMS - Castor (CVE N/A, tracking NMS-9099/9100)
+- Atlassian Bamboo - XStream (CVE 2016-5229)
+- Adobe Coldfusion - BlazeDS (CVE 2017-3066)
+
+Other affected instances, which have been reported but the author hasn't
+recently received feedback on their current state include: Caucho Resin
+(Hessian), Netflix Eureka (XStream), Amazon's AWS Simple Workflow
+Library (Jackson).
+
+
+regards
+
+Moritz
+
+
