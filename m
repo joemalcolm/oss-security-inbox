@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2021" "Friday" "29" "April" "2016" "11:08:51" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160429150851.0723C8BC556@smtpvmsrv1.mitre.org>" "54" "[oss-security] Re: CVE request: Mplayer/Mencoder integer overflow parsing gif files" nil nil nil "4" "2016042915:08:51" "[oss-security] Re: CVE request: Mplayer/Mencoder integer overflow parsing gif files" (number mark "U       cve-assign@m Apr 29   54/2021  " thread-indent "\"[oss-security] Re: CVE request: Mplayer/Mencoder integer overflow parsing gif files\"\n") "<CACn5sdTKJd7hEo=YmpPmpuB76XDumiMORWJXGwiacq83_aUPmg@mail.gmail.com>" ("<CACn5sdTKJd7hEo=YmpPmpuB76XDumiMORWJXGwiacq83_aUPmg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1063" "Monday" "22" "May" "2017" "17:58:31" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1705221753220.23240@scrappy.simplesystems.org>" "31" "Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" "^cc:" nil nil "5" "2017052222:58:31" "[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" (number mark "        bfriesen@sim May 22   31/1063  " thread-indent "\"Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder\"\n") "<bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org>" ("<20170520072632.z5nbivrdwmqm3soe@eldamar.local>" "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>" "<20170520175436.GA30962@jasmine>" "<alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>" "<bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18208 invoked by uid 550); 29 Apr 2016 15:09:03 -0000
+Received: (qmail 24308 invoked by uid 550); 22 May 2017 22:58:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24287 invoked from network); 22 May 2017 22:58:47 -0000
+X-X-Sender: bfriesen@scrappy.simplesystems.org
+In-Reply-To: <bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org>
+Message-ID: <alpine.GSO.2.20.1705221753220.23240@scrappy.simplesystems.org>
+References: <20170520072632.z5nbivrdwmqm3soe@eldamar.local> <20170520152406.2339.3B884775@matica.foolinux.mooo.com> <20170520175436.GA30962@jasmine> <alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>
+ <bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="3735943886-925519912-1495493911=:23240"
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Mon, 22 May 2017 17:58:31 -0500 (CDT)
+cc: oss-security@lists.openwall.com
+Date: Mon, 22 May 2017 17:58:31 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18187 invoked from network); 29 Apr 2016 15:09:02 -0000
-From: cve-assign@mitre.org
-To: gustavo.grieco@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CACn5sdTKJd7hEo=YmpPmpuB76XDumiMORWJXGwiacq83_aUPmg@mail.gmail.com>
-Message-Id: <20160429150851.0723C8BC556@smtpvmsrv1.mitre.org>
-Date: Fri, 29 Apr 2016 11:08:51 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: Mplayer/Mencoder integer overflow parsing gif files
+Subject: Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized
+ memory in RLE decoder
+To: Thomas Deutschmann <whissi@gentoo.org>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--3735943886-925519912-1495493911=:23240
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 
-> A crash caused by an integer overflow parsing a gif was found in the last
-> revision of mplayer. It seems to affect older versions too. It was recently
-> fixed (r37857). Technical details and a reproducer are available here:
-> 
-> https://trac.mplayerhq.hu/ticket/2295
-> 
-> I verified that this issue affects mencoder
+On Mon, 22 May 2017, Thomas Deutschmann wrote:
 
->> Fixed in r37857.
->> 
->> The gif demuxes assumes in many places that width*height is <=
->> INT_MAX; this is not true with the sample. Fixed by validating the
->> picture size.
+> Hi,
+>
+> let me take the opportunity to jump into this.
+>
+> Bob, do you have any PoC you can share with ImageMagick project
+> regarding CVE-2017-6335?
+>
+> Your fix was
+> https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
+>
+> I asked ImageMagick project about that issue but they don't know without
+> a PoC, see https://github.com/ImageMagick/ImageMagick/issues/391
 
-Use CVE-2016-4352.
+I have attached the problematic TIFF file.  I don't know if binary 
+attachments are accepted by this list.  I can provide the full 
+original report which included a PDF file if you need it.
 
-This code was added to libmpdemux/demux_gif.c between r37856 and r37857:
+The fix was made in code which is specific to GraphicsMagick and the 
+problem may be specific to GraphicsMagick.
 
-   // Validate image size, most code in this demuxer assumes w*h <= INT_MAX
-   if ((int64_t)gif->SWidth * gif->SHeight > INT_MAX) {
-     mp_msg(MSGT_DEMUX, MSGL_ERR,
-            "[demux_gif] Unsupported picture size %dx%d.\n", gif->SWidth,
-            gif->SHeight);
-     if (DGifCloseFile(gif) == GIF_ERROR)
-       print_gif_error(NULL);
-     free(priv);
-     return NULL;
-   }
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXI3iYAAoJEHb/MwWLVhi2ndcQAIfNBWzI+O+D90r31xFgzNHh
-q5AYsp+VN48Z6f8Ctp6AVXWoD+I/KHC1AIBc5Pn9/ahDyQ+cv9ejMdizkohu7TpW
-q4vfeCsmp94pw2w8tKbT4wgI19mdERvWiFe03SD/1xpxaHc6gIZN4+zwmswyIJVq
-9UVl6cEbSD/NGDpudTwqNH2Tc6KPfpUTPDh05nHhdEYkoPepemS0E6dHZl0cnV38
-qFAF7EvF4h+1pQSfchVdtf58nPu5g7tuR7eudnqnq9g49PZlIOPBKB/cdra7ZON7
-eFvZp+0XZ3QtwvDiQ18uAHnobN2RdnonISfimOsd7zYDyoxtAttfOvBRaVRDtTBr
-U0hfDRA8g/d5JTmeLMcfm1NWG3+0nF90BVYjY7cziAVBAGoj17fo66mw6nM5Jn2A
-1T/9Cc/gqzIvlGlVQk/3KObdK0DbZvGxgFxo8pKTzrRo/thAS6Rp30X672pfGH1W
-DxWhbkJgnU+PmaW+86zrWsnHGqoX++bduSIxo/Y1jjigwetaTgCRHO6nFI0onWex
-dP0z76DjZ4jBAs7GzsFkv3ck/ZfaQ6MxjXjcR1yYZFeTp3WlD3VIZVuZwohg78wo
-IR/5QOoQjwoV5nbgH3l2f0h2pvrCJPvQiwbADzZJpklpg45D2Y8EIMtOQy64hZSz
-2kFgy6oWuYKbuQf49Wi4
-=oaGW
------END PGP SIGNATURE-----
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+--3735943886-925519912-1495493911=:23240--
