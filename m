@@ -1,80 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/6
-Message-ID: <0133192437e54518a5616bc3c8d074e2@imshyb01.MITRE.ORG>
-Date: Wed, 18 Jan 2017 11:33:57 -0500
-From: <cve-assign@...re.org>
-To: <nathan.van.gheem@...ne.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Plone Sandbox escape vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/13
+Message-Id: <0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>
+Date: Mon, 22 May 2017 15:13:42 -0600
+From: Kurt Seifried <kseifrie@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Well actually they can. Why do you think we (DWF) have an extensible Json format with the data hosted in git? Hint: so people can contribute.
 
-> [] Accessing private content via `str.format` in through-the-web templates
-> and scripts. See this blog post by Armin Ronacher (
-> http://lucumr.pocoo.org/2016/12/29/careful-with-str-format/) for the
-> general idea. Since the `format` method was introduced in Python 2.6, this
-> part of the hotfix is only relevant for Plone 4 and 5, not Plone 3.
->     Credit: Plone security team, Armin Ronacher
->     Reference: https://plone.org/security/hotfix/20170117/sandbox-escape
+
+-Kurt
+
+
+
+
+
+> On May 22, 2017, at 13:45, Kurt H Maier <khm@...ops.net> wrote:
 > 
-> Versions Affected:
-> 4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
+>> On Mon, May 22, 2017 at 08:57:21PM +0200, Marcus Meissner wrote:
+>> 
+>> Please everyone do the distributors a favour and link to GIT commits with fixes for
+>> the requested CVE or at least explicit single reproducers, as we have increasing trouble
+>> of associating CVEs with the correct place in code.
 > 
-> Code fixes:
-> https://pypi.python.org/pypi/Products.PloneHotfix20170117
-
-Use CVE-2017-5524.
-
-The scope of this CVE does not include the "reflected Cross Site
-Scripting attack (XSS) in the ZMI (manage_findResult)" mentioned on
-the PloneHotfix20170117 page. If that still needs a CVE ID, please let
-us know.
-
-In the http://lucumr.pocoo.org/2016/12/29/careful-with-str-format/ post,
-the exploitation scenarios are:
-
->     untrusted translators on string files. This is a big one because
->     many applications that are translated into multiple languages will
->     use new-style Python string formatting and not everybody will vet
->     all the strings that come in.
-
-We do not feel that a CVE would have been needed if this were the only
-exploitation scenario. We do not think there is a security boundary
-between "people who can contribute arbitrary code to a product" and
-"people who can contribute code that expresses translations." However,
-it is possible that an open-source project exists somewhere with a
-completely untrusted channel for translators.
-
->     user exposed configuration. One some systems users might be
->     permitted to configure some behavior and that might be exposed as
->     format strings. In particular I have seen it where users can
->     configure notification mails, log message formats or other basic
->     templates in web applications.
-
-This one seems completely valid, and might be the primary exploitation
-scenario for CVE-2017-5524.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYf5iGAAoJEHb/MwWLVhi27kcQAJHT6gBPBNBX+bevBoRdfS2h
-NtBgjZrd1s2KVCPnCdZGfnayAFz4nhtaSPul1riqH4on/krV9QkxZmRXxV/8R8ic
-IfmTWjg4DRuzYYwSGKKhrlNQa4OVWFVT/us4Rv4XDJwPTOXpf5qKFGjisp7udw8i
-SmFFTEYUV6r26ons2Q5u5RQenmiml3gdiS48XTQ5RFVXRNRKpCeswM1E+kG+S6bV
-G4Bx8QYUcRvCrRV2W1gEEjxBiI65FyOBQTX3jDg/N7DSn9v4dX4gZaSrbUaHIqLB
-YAzuTD4liH/G3ABAUQf3C2uiGEYbDUjGb4v5DFptcGr+xHMx3gtak3sJS+BS2mXq
-nrClrpO9BBoYFgQxV6QRTAEpuDoiAfcv6lB/Uj4/90Ub+hrqf94uqyS6XlGzyaxq
-r8kWPiVuUf8YbUVfT5H5YSeRZVH1gMK16Mci/4EWw3Al25CuK+HwrIZT/oA7ljez
-BL+zGzDGMPoIsHmge+PIS9yEbRvZ05Bim8p4yCE/0nFpWhipALEhNshADgVpkLME
-338NhrrW1fyNQoOCggacrcHp51hqpaAVRzJ5yM8DTmMz+SmAGhq2vemqFageQkyr
-B+P3VsnBCEFofULAXPgYYN1+Ub4tkWaO3enYCZ2YJIFe/Zj6ysKLnEW42l2edRNz
-T2eqS7U/9gxzMdHRkqIn
-=97Au
------END PGP SIGNATURE-----
+> This is only gonna get worse now that mitre cut the mailing list out of
+> the process, and third-party participants can no longer add commentary
+> and insight into the reported vulnerabilities.
+> 
+> khm
