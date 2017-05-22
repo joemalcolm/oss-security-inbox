@@ -1,48 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/7
-Message-ID: <877exa8oap.fsf@fifthhorseman.net>
-Date: Thu, 07 Sep 2017 12:29:50 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Simon McVittie <smcv@...ian.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/8
+Message-ID: <20170522190024.GE12842@openstack.org>
+Date: Mon, 22 May 2017 19:00:24 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
-On Thu 2017-09-07 16:27:25 +0100, Simon McVittie wrote:
-> Ideally, the sequence of events would be something that ensures that
-> the pid file already exists by the time readiness has been announced,
-> like this pseudocode:
->
->     have the necessary privileges to write a pid file
->     fork
->     if (parent) {
->         write child pid to pid file
->         exit    /* tells supervisor we are ready */
->     }
->     else /* child */ {
->         drop privileges
->         while (1) { process request }
->     }
+On 2017-05-22 13:05:34 -0500 (-0500), Michael Catanzaro wrote:
+[...]
+> How are other people getting open source CVEs right now? Has anybody else
+> had luck getting a CVE via DWF? Should I be trying to do this through Red
+> Hat instead? Or just by filling out MITRE's CVE form even though we're not
+> really supposed to be using it?
+[...]
 
-Is there a potential race condition here?  for example, if dropping
-privileges takes some amount of time, or if there is additional setup
-that ought to be done as non-root (building tables, pre-processing a
-dataset from the filesystem, initializing a PRNG), then this pattern is
-actually pretty hard to get right as a notification.
+OpenStack's been using MITRE's Web form to the best of our
+ability[*] and that seems to be working. Though it also has the side
+effect that a MITRE representative has reached out to us asking
+whether we'd like to become a CNA (our VMT is still trying to decide
+if that's worth pursuing).
 
-the options seem to be:
+[*] https://security.openstack.org/vmt-process.html#send-cve-request
+-- 
+Jeremy Stanley
 
- 0) if dropping privs is known to be fast, then move any lengthy
-    initialization/setup into the root/pre-fork side.  this is a
-    violation of the principle of least privilege.
-
- 1) establish a communication channel between the child and the parent,
-    and have the child explicitly signal to the parent that it is ready
-    so that the parent can exit() appropriately.
-
-but (1) is at least as much work as any of the other forms of explicit
-notification to the service manager directly, so it's not clear that
-forking is a great way to provide such notification.
-
-        --dkg
-
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
