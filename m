@@ -1,18 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/12
-Message-ID: <ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>
-Date: Tue, 30 May 2017 15:47:02 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Daniel Micay <danielmicay@...il.com>, oss-security@...ts.openwall.com
-Cc: Roee Hay <roeehay@...il.com>
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/10
+Message-ID: <CAH468dq50NUG9ohUFnXcAUG1gowU19=EZJwuoW8o=ygLgnGiMg@mail.gmail.com>
+Date: Mon, 22 May 2017 15:08:44 -0400
+From: Anthony Sasadeusz <sasadeu1@...c.edu>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
-On 05/30/2017 03:25 PM, Daniel Micay wrote:
-> Secure boot means verifying boot chain from a root of trust in hardware.
+Yeah, I'm kind of in the same boat. Used the DWF form, got a response
+basically asking to accept the Mitre Terms of Service, and nothing since.
 
-My comments were specifically about UEFI Secure Boot, which apparently
-behaves quite differently from what you expect.
+Anthony
 
-Thanks,
-Florian
+On Mon, May 22, 2017 at 2:05 PM, Michael Catanzaro <mcatanzaro@...lia.com>
+wrote:
+
+> Hi,
+>
+> I'm aware that the CVE form [1] can now be used to request CVEs. However,
+> it does not seem to be designed for requesting CVEs in open source
+> products. The field "Vendor of the product(s)" says "Please ensure vendors
+> are on the products and sources list," indicating the intent of MITRE to
+> restrict usage of the form to specific products. This list [2] says "For
+> open source software products not listed below, request a CVE ID through
+> the Distributed Weakness Filing Project CNA." So, clearly we are supposed
+> to request a CVE through the DWF project. (Or perhaps via Red Hat, since it
+> seems like it's willing to allocate CVEs for miscellaneous Linux-related
+> issues.)
+>
+> Anyway, I attempted to request a CVE using the DWF project's request form
+> [3] several months ago, but have not yet received any response [4]. So I am
+> hesitant to request further CVEs from the DWF project, for fear that I
+> won't receive a response and will wind up needing to make a duplicate CVE
+> request somewhere else.
+>
+> How are other people getting open source CVEs right now? Has anybody else
+> had luck getting a CVE via DWF? Should I be trying to do this through Red
+> Hat instead? Or just by filling out MITRE's CVE form even though we're not
+> really supposed to be using it?
+>
+> Michael
+>
+> [1] https://cveform.mitre.org/
+> [2] http://cve.mitre.org/cve/request_id.html#cna_coverage
+> [3] http://iwantacve.org/
+> [4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
+>
+>
+
