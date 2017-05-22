@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["692" "Saturday" "15" "April" "2017" "12:13:28" "+0200" "Andreas Lausch-Waas" "andreas@flausch.at" "<6cb75b56-b1b4-d381-1110-1e0cad5fb6b4@flausch.at>" "18" "Re: [oss-security] alloca in inline functions can be dangerous" "^Date:" nil nil "4" "2017041510:13:28" "[oss-security] alloca in inline functions can be dangerous" (number mark "        andreas@flau Apr 15   18/692   " thread-indent "\"Re: [oss-security] alloca in inline functions can be dangerous\"\n") "<CAJ6=jSCBZjEsKoOhq=AJMcF+HcDcks9=kz57a-xXWJDrKw7bTQ@mail.gmail.com>" ("<a18696795bb4b91a@frisell.zx2c4.com>" "<CAJ6=jSCBZjEsKoOhq=AJMcF+HcDcks9=kz57a-xXWJDrKw7bTQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1448" "Monday" "22" "May" "2017" "13:05:34" "-0500" "Michael Catanzaro" "mcatanzaro@igalia.com" "<1495476334.15944.2@mail.igalia.com>" "31" "[oss-security] How to request a CVE for open source projects" "^Date:" nil nil "5" "2017052218:05:34" "[oss-security] How to request a CVE for open source projects" (number mark "        mcatanzaro@i May 22   31/1448  " thread-indent "\"[oss-security] How to request a CVE for open source projects\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3441 invoked by uid 550); 15 Apr 2017 22:02:35 -0000
+Received: (qmail 32102 invoked by uid 550); 22 May 2017 18:48:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21996 invoked from network); 15 Apr 2017 10:13:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=flausch.at; s=dkim11;
-	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:To:Subject; bh=q5XK3XS1GN4+E06G4oy9f4fh0+iHm85yzHuynE9Qhy4=;
-	b=i7waAtOY3mlszlDuxqbanGFUcIBlEoabCWDIj9g/WXCJ9qf1JbF2PQDOUd0pewPAJYdYdPTGOFluAWiwpjLiHfv79eWe7aPtflOM90C9Vx1ps9Z/RM7j32AxP7Ey7Cv+pI5nbxARnhNT7P25vfhb3w7nx/uvBaUXgwL7451DxwE=;
-References: <a18696795bb4b91a@frisell.zx2c4.com>
- <CAJ6=jSCBZjEsKoOhq=AJMcF+HcDcks9=kz57a-xXWJDrKw7bTQ@mail.gmail.com>
-Message-ID: <6cb75b56-b1b4-d381-1110-1e0cad5fb6b4@flausch.at>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.0
+Received: (qmail 8166 invoked from network); 22 May 2017 18:06:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Type:MIME-Version:Message-Id:To:Subject:From:Date; bh=r/YVNerHQG3x8P4JqJJ/++W6OhZbOwtaFl0I/XF1w2E=;
+	b=SXmyhWrhT/FLQnRx85/fX8Kcg2fJh0LOgp0m9ubTb2cOFYS6Shk2F8ekT5p9CdUTteFEgq4dVzyplT8BbAU4GVvNCj+BfwTI9vLUcAqrM0Ohz+hnwPBckcC9ourFAU4tLmVWo34e4FcOHT+XhwMYJnBtzy6ypc440yKs3972OGRFNoumnY4U46t+FP9WkGJjCD9s3oTl3ZZDYm+GyJpslKDy01CYqFYlGAfh6zL4g8tQLXmbrVcwCivmEKG7/p+mu+xqthl6TdnhXojWrRpl/+WnmxYKxg84S5y1vlCcyb0/yRVwDaauSgTlDJRHmHq83B2swFCcChv/CRQTU0h1ZA==;
+Message-Id: <1495476334.15944.2@mail.igalia.com>
+X-Mailer: geary/0.11.3
 MIME-Version: 1.0
-In-Reply-To: <CAJ6=jSCBZjEsKoOhq=AJMcF+HcDcks9=kz57a-xXWJDrKw7bTQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-IE
-X-SA-Do-Not-Run: Yes
-X-AV-Do-Run: Yes
-X-SA-Exim-Connect-IP: 84.113.151.22
-X-SA-Exim-Mail-From: andreas@flausch.at
-X-SA-Exim-Scanned: No (on mx06lb.world4you.com); SAEximRunCond expanded to false
-Date: Sat, 15 Apr 2017 12:13:28 +0200
-From: Andreas Lausch-Waas <andreas@flausch.at>
+Date: Mon, 22 May 2017 13:05:34 -0500
+From: Michael Catanzaro <mcatanzaro@igalia.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] alloca in inline functions can be dangerous
+Subject: [oss-security] How to request a CVE for open source projects
 To: oss-security@lists.openwall.com
 
-On 2017-04-10 16:55, Leandro Pereira wrote:
-> On Mon, Apr 10, 2017 at 7:36 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->> I'm interested if anybody else has encountered this behavior or has any
->> thoughts about it.
-> Yes, and I usually mark those functions with __attribute__((noinline))
-> to avoid precisely this kind of behavior.
->
+Hi,
 
-This (VLAs in loops or inlines filling the stack) would be a gcc bug: 
-"Jumping or breaking out of the scope of the array name deallocates the 
-storage. Jumping into the scope is not allowed; you get an error message 
-for it.". See https://gcc.gnu.org/onlinedocs/gcc/Variable-Length.html
+I'm aware that the CVE form [1] can now be used to request CVEs. 
+However, it does not seem to be designed for requesting CVEs in open 
+source products. The field "Vendor of the product(s)" says "Please 
+ensure vendors are on the products and sources list," indicating the 
+intent of MITRE to restrict usage of the form to specific products. 
+This list [2] says "For open source software products not listed below, 
+request a CVE ID through the Distributed Weakness Filing Project CNA." 
+So, clearly we are supposed to request a CVE through the DWF project. 
+(Or perhaps via Red Hat, since it seems like it's willing to allocate 
+CVEs for miscellaneous Linux-related issues.)
 
-At least GCC 6.3.1 does not call alloca for VLAs.
+Anyway, I attempted to request a CVE using the DWF project's request 
+form [3] several months ago, but have not yet received any response 
+[4]. So I am hesitant to request further CVEs from the DWF project, for 
+fear that I won't receive a response and will wind up needing to make a 
+duplicate CVE request somewhere else.
 
+How are other people getting open source CVEs right now? Has anybody 
+else had luck getting a CVE via DWF? Should I be trying to do this 
+through Red Hat instead? Or just by filling out MITRE's CVE form even 
+though we're not really supposed to be using it?
 
---
-Andreas
+Michael
+
+[1] https://cveform.mitre.org/
+[2] http://cve.mitre.org/cve/request_id.html#cna_coverage
+[3] http://iwantacve.org/
+[4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
+
