@@ -1,4 +1,9 @@
-Received: (qmail 22415 invoked by uid 550); 30 May 2024 11:44:31 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1247" "Monday" "22" "May" "2017" "22:28:04" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20170522222804.2bc86921@jabberwock.cb.piermont.com>" "26" "Re: [oss-security] How to request a CVE for open source projects" "^Cc:" nil nil "5" "2017052302:28:04" "[oss-security] How to request a CVE for open source projects" (number mark "        perry@piermo May 22   26/1247  " thread-indent "\"Re: [oss-security] How to request a CVE for open source projects\"\n") "<66f867c6-a0da-52da-657b-b7ca4a8ee07d@redhat.com>" ("<1495476334.15944.2@mail.igalia.com>" "<20170522185720.GA13059@suse.de>" "<20170522194526.GC63527@wopr>" "<0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>" "<20170522234408.GA7465@wopr>" "<6c663f3b-985d-083e-8b00-d428e34b2e29@redhat.com>" "<20170523011349.GA10335@wopr>" "<66f867c6-a0da-52da-657b-b7ca4a8ee07d@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1810 invoked by uid 550); 23 May 2017 06:39:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,226 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30419 invoked from network); 30 May 2024 10:04:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717063430;
-	bh=+7P/X1lHcP6kgjz2+hLT2xiVi/EjfZ+3bDmoGkoOpMk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=egV30wpdfAnHpwOGBc33Tr3wg2J+/9CgpPqEwErsyyVc5v9qLXGf1SMnEfALFdQWb
-	 igwEeMI03OX9WM6SsNHB9v+XxkgcsD1jNIgiovIaRcTCHqw4Uy1Ns90LCr3bQwcZkf
-	 ZQbpq5JuVBPt95VOPOudV/QS9xJzlDpZLN1LnCP4=
-Date: Thu, 30 May 2024 12:03:55 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Dominique Martinet <asmadeus@codewreck.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <2024053015-convent-happiness-112a@gregkh>
-References: <ZlZ8nCsZUZxhKwCf@codewreck.org>
- <2024052926-moneyless-applause-a95b@gregkh>
- <ZlgEcxzxXXqh2bVt@codewreck.org>
+Received: (qmail 9840 invoked from network); 23 May 2017 02:28:23 -0000
+Message-ID: <20170522222804.2bc86921@jabberwock.cb.piermont.com>
+In-Reply-To: <66f867c6-a0da-52da-657b-b7ca4a8ee07d@redhat.com>
+References: <1495476334.15944.2@mail.igalia.com>
+	<20170522185720.GA13059@suse.de>
+	<20170522194526.GC63527@wopr>
+	<0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>
+	<20170522234408.GA7465@wopr>
+	<6c663f3b-985d-083e-8b00-d428e34b2e29@redhat.com>
+	<20170523011349.GA10335@wopr>
+	<66f867c6-a0da-52da-657b-b7ca4a8ee07d@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZlgEcxzxXXqh2bVt@codewreck.org>
-Subject: Re: [oss-security] List linux CVEs for a given stable release?
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: oss-security@lists.openwall.com
+Date: Mon, 22 May 2017 22:28:04 -0400
+From: "Perry E. Metzger" <perry@piermont.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] How to request a CVE for open source projects
+To: Kurt Seifried <kseifried@redhat.com>
 
-On Thu, May 30, 2024 at 01:45:39PM +0900, Dominique Martinet wrote:
-> Greg Kroah-Hartman wrote on Wed, May 29, 2024 at 09:23:50PM +0200:
-> > > The information is there in the json files, so it's just a matter of
-> > > writing some scripts to check them, but I can't believe there's none so
-> > > I probably have missed something.
-> > > 
-> > > Does someone have such a script that'd list the latest CVEs for a given
-> > > tree?
-> > 
-> > How about something as simple as the following to see what is in
-> > 5.10.101:
-> > 
-> > 	for id in $(git log --format="%H" v5.10.100..v5.10.101); do
-> > 		cve=$(cve_search ${id})
-> > 		cve_found=$?
-> > 		if [[ "${cve_found}" == "0" ]]; then
-> (pedantic: `if cve=$(cve_search "$id"); then` is a bit simpler/failproof)
-
-Very true, I do not claim to be a "robust" bash programmer at all :)
-
-> > 			echo "${cve} is in range"
-> > 		fi
-> > 	done
+On Mon, 22 May 2017 20:04:41 -0600 Kurt Seifried
+<kseifried@redhat.com> wrote:
+> > Primarily, freeform discussion of the sort that occurred on this
+> > list as a natural outcropping of the CVE request process led to
+> > people linking to verification code, temporary mitigations,
+> > highlighting of incomplete fixes, and the sort of information
+> > that was requested earlier in this thread.  This ability to
+> > easily chip in to ongoing situations wasn't just useful for mitre
+> > staff doing CVE work, it was also useful for the "community of
+> > practice" looking for the latest information regarding
+> > self-defense.  I've prevented more than one attack thanks to a
+> > one-off reply from someone in response to a CVE request.    
 > 
-> That's roughly what I had done earlier this week (handpicking the
-> commits that could impact our users), but this doesn't address my second
-> point as it won't catch any new CVE introduced before that tree that
-> wasn't fixed.
+> You can still do this. oss-security is a list run by Solar Designer
+> (openwall.com). I happen to be a long time poster/moderator, but I
+> have no official control/etc (I don't even block posts, that's up
+> to solar, I just allow stuff or ignore it when it's up for
+> moderation).
 
-True.
+Maybe after CVEs are assigned the forms could be emailed to the list
+as a replacement for the old request emails, to kick off
+discussion and alert people to their existence?
 
-> (also probably a bit more efficient to go by version tag since we have
-> the info in the json, more below)
-
-Yeah, but the json files have their own issues, more below...
-
-> > > My motivation here is double:
-> > > - We notify our users of notable CVEs fixed on every update to encourage
-> > > them to upgrade every time (it's sad, but in the embedded world not
-> > > updating is still the norm despite our efforts to make upgrades as
-> > > painless as possible... New regulations are coming so hopefully that
-> > > will slowly improve, but as of now such motivations help)
-> > 
-> > The issue is, CVEs are assigned usually long _AFTER_ the stable release
-> > has happened.  So if you want to do this type of report for the latest
-> > stable release, it will look like there are no CVEs.  But if you wait a
-> > few weeks, suddenly that old release will have many CVEs assigned to
-> > them.
-> > 
-> > This is just due to the process we currently have where we review each
-> > commit in the stable releases to determine if a CVE should be assigned
-> > or not.  Obviously this takes time and we are running a few weeks behind
-> > the current releases.
-> > 
-> > So you would have to run the script a lot, to keep it up to date, which
-> > is why a "how many CVEs are listed in the latest release" isn't really
-> > going to be all that valuable to your users.
-> 
-> Right; I don't need this to be 100% complete -- as long as a couple of
-> issues turn up it's probably good enough motivation.
-> 
-> In practice just listing a bunch of numbers probably won't change the
-> way people think, so I'm taking the time to briefly describe potential
-> impacts (what component, very broad trigger conditions e.g. network
-> packet or local access, likely risk if exploited e.g. RCE, memory
-> leak...); so ultimately it requires looking at things in more details
-> than I have time to check for all CVEs and will likely keep checking a
-> few "juicy" ones...
-> But it's a very good point, we should check again regularly and update
-> that list if some new bad thing stands out.
-
-Great.  Only you know your use cases, which is why we do not offer up
-any "grading" of kernel CVEs as Linux is used in so many different ways.
-
-> > > - I'm currently not watching patches entering newer stable branches as
-> > > closely, so if there are any new CVEs not fixed in the latest 5.10 I'd
-> > > like to check if some impact us and will help with backports as possible
-> > > (we're a small company so my time is limited, but might as well give
-> > > back when I can)
-> > 
-> > That would be great, for where we know, we list when a vulnerability was
-> > added to the tree, and where it was fixed.  That can leave many branches
-> > still vulnerable where we have not fixed the issue yet.  One example
-> > would be CVE-2024-26629.
-> > 
-> > You can see these in our repo by just doing:
-> > 	git grep "5\.10" | grep introduced | grep -v fixed
-> 
-> I didn't think of checking the mails, that's certainly easier to grep
-> than json as it's line-oriented.
-> It's going to take a bit more of processing to check not just bugs that
-> were backported in the stable trees, but things introduced in earlier
-> kernels... Someting like this?
-> 
->   rg -l 'Issue introduced in ([234]\.[0-9]* |5\.[0-9] |5\.10\.[0-9]* )' | sort > introduced_before_5.10
->   xargs rg -l 'fixed in 5\.10' < introduced_before_5.10 | sort > fixed_in_5.10
->   comm -3 introduced_before_5.10 fixed_in_5.10 |tail
-> cve/published/2024/CVE-2024-35844.mbox
-> cve/published/2024/CVE-2024-35904.mbox
-> cve/published/2024/CVE-2024-35951.mbox
-> cve/published/2024/CVE-2024-35971.mbox
-> cve/published/2024/CVE-2024-36009.mbox
-> cve/published/2024/CVE-2024-36013.mbox
->    grep 'Issue introdu' cve/published/2024/CVE-2024-35971.mbox
-> Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.1.87 with commit 492337a4fbd1
-> Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.6.28 with commit cba376eb036c
-> Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.8.7 with commit 49d5d70538b6
-> Issue introduced in 5.8 with commit 797047f875b5 and fixed in 6.9 with commit be0384bf599c
-> 
-> 
-> The regex is a bit too manual to make a generic search script, and that
-> feels very kludgy (at least mbox files do look like they get updated
-> together with json), but that can be enough for my local needs for now.
-
-The mbox files do get updated along with the json, but please, let's not
-parse mbox files, that was a bad example I gave here, sorry.
-
-> I was thinking something more along the line of parsing all the json
-> files for containers.cna.affected by release version item (versionType
-> != git);
-
-That might be good, but really, we already have the needed information
-here with the tool that creates all of this 'dyad', in the scripts/
-directory.  The output of that should be _much_ easier to parse:
-
-$ ./scripts/dyad be0384bf599c
-# ./scripts/dyad version: efdbc505ff2f
-# 	getting vulnerable:fixed pairs for git id be0384bf599cf1eb8d337517feeb732d71f75a6f
-5.8:797047f875b5463719cc70ba213eb691d453c946:6.1.87:492337a4fbd1421b42df684ee9b34be2a2722540
-5.8:797047f875b5463719cc70ba213eb691d453c946:6.6.28:cba376eb036c2c20077b41d47b317d8218fe754f
-5.8:797047f875b5463719cc70ba213eb691d453c946:6.8.7:49d5d70538b6b8f2a3f8f1ac30c1f921d4a0929b
-5.8:797047f875b5463719cc70ba213eb691d453c946:6.9:be0384bf599cf1eb8d337517feeb732d71f75a6f
-
-That tool generates a list of "vulnerable:fixed" pairs of version and
-git ids.  I have thought about checking in that output into the git repo
-as odds are that would be easier than forcing you to regenerate it all
-the time.
-
-Here you see that the 5.10.y branch does not have a fix yet, and might
-be easier than parsing the json files (which also show this), unless you
-have a good json parser (i.e. something other than just bash.)
-
-This output also catches where we introduce, and then fix, the issue in
-the same release.  dyad will show this, but as the issue never was in a
-public release, CVE will not let us list it as that isn't relevent
-there.  But it IS relevent for those that might cherry-pick random
-commits.
-
-> It should be possible for a given stable tag to check if a given CVE
-> applies or not immediately so it would be a matter of making this a bit
-> more searchable -- probably make a reverse index with all the edges for
-> faster search and keep appending new CVEs as they pop up.
-
-Sure, that would be great.  Usually when a commit is NOT in an older
-branch, that means it either did not apply, or it might be queued up for
-the next release.  Or sometimes, the stable developers just didn't know
-it needed to be backported at the time.  We probably should just sweep
-the current ids and catch that last issue now to make it easier for
-others going forward.  I'll add that to my long todo list...
-
-> But it's a bit more work, so I'll gratefully take the grep mailboxes
-> version for now :)
-
-Agreed, or again, look at how dyad works, that might be simpler too, at
-the expense that you have to compute it all the time, and it isn't the
-quickest tool around (it's in bash and has not been optimized at all,
-sorry.)
-
-> Ideally we'll want to limit duplicating this work for other
-> downstreams... So:
->  - get more people to look at these
->    - if unaffected (e.g. CVE-2024-35867 you singled out above as not
->      affecting 5.10), report it so the reference files can be updated
-
-Yes, if we "know" when a specific fix actually is introduced, we can add
-that to our tools to properly catch and mark the entries.  That
-information would be great to have.
-
->    - if affected backport patch, so it can be fixed and the refernece
->      file can also be updated.
->  - less work for everyone else!
-> 
-> But finding volunteers for that kind of work might not be quite as easy
-> as I make it sound like :)
-
-Too true, there are very few of us actually working on this type of
-thing, despite all of the people actually relying on it :(
-
-Any help is greatly appreciated.
-
-I will call out, we have had help from many developers from SuSE in
-reviewing the current CVE entries and helping find duplicates and issues
-we shouldn't have marked as such.  And we have help from other
-developers at other companies in doing reviews and seeing if commits
-should, or should not, get CVE entries.  All of that help is greatly
-appreciated and we can always use more.
-
-thanks,
-
-greg k-h
+Perry
+-- 
+Perry E. Metzger		perry@piermont.com
