@@ -1,65 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/21
-Message-Id: <EE692F78-EBE2-4DE6-A66D-B8597EF933EA@redhat.com>
-Date: Fri, 14 Jul 2017 13:52:37 -0600
-From: Kurt Seifried <kseifrie@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/17
+Message-ID: <A483915E-DBDD-496E-8CD2-313DEA16B033@apache.org>
+Date: Tue, 23 May 2017 15:16:46 -0700
+From: Madhan Neethiraj <madhan@...che.org>
+To: <dev@...as.incubator.apache.org>, <private@...as.incubator.apache.org>, <user@...as.incubator.apache.org>, <security@...che.org>, <oss-security@...ts.openwall.com>, <bugtraq@...urityfocus.com>
+Subject: CVE updates: fixes in Apache Atlas 0.8-incubating
 Content-Type: text/plain; charset=utf-8
 
-Ah I misunderstood the backup, I thought it meant people within a distro, not actual distros, I'm fine with a backup distro. As for the tasks I meant 1 and 2 technical, we generally do this work anyways.
+All,
+
+ 
+
+Please see below the details of CVE updates for Apache Atlas 0.8-incubating release. My apologies
+
+for the delay in sending this update.
+
+ 
+
+Thanks,
+
+Madhan
+
+ 
+
+-------------------------------------------------------------------------------------------------------
+
+CVE-2016-8752: Atlas web server allows user to browse webapp directory
+
+Severity: Normal
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: 0.6.0 or 0.7.0 or 0.7.1 versions of Apache Atlas
+
+Users affected: All users of Apache Atlas server
+
+Description: Atlas users can access the webapp directory contents by pointing to URIs like /js, /img
+
+Fix detail: Atlas was updated to prevent browsing of webapp directory contents
+
+Mitigation: Users should upgrade to Apache Atlas 0.8-incubating or later version
+
+-------------------------------------------------------------------------------------------------------
+
+ 
 
 
--Kurt
-
-
-
-
-
-> On Jul 14, 2017, at 12:54, Solar Designer <solar@...nwall.com> wrote:
-> 
->> On Fri, Jul 14, 2017 at 12:40:18PM -0600, kseifried@...hat.com wrote:
->> Sorry I thought I'd replied earlier to this thread
-> 
-> IIRC, you did, but you were not specific.
-> 
->> (phone email clients,
->> how do they work?) Red Hat will continue to help (let's pick #1 and #2
->> explicitly),
-> 
-> What's #1 and #2 - do you mean the technical or the administrative tasks?
-> 
-> Technical are:
-> 
-> 1. Propose (other) ways to fix, work around, or mitigate the reported issues
-> 
-> 2. Develop and share fixes, workarounds, or mitigations
-> 
-> and currently these are vacant.
-> 
-> Administrative are:
-> 
-> 1. Promptly review new issue reports for meeting the list's requirements
-> and confirm receipt of the report and, when necessary, inform the
-> reporter of any issues with their report (e.g., obviously not actionable
-> by the distros) and request and/or propose any required yet missing
-> information (most notably, a tentative public disclosure date) -
-> primary: CloudLinux, backup: vacant
-> 
-> 2. If the proposed public disclosure date is not within list policy,
-> insist on getting this corrected and propose a suitable earlier date -
-> primary: CloudLinux, backup: vacant
-> 
-> As you can see, the primary distro for them is currently CloudLinux, and
-> as discussed in here I'd like each new distro joining to take at least
-> task 1, unless they strongly prefer something else.  There's currently
-> no backup, so I will gladly list Red Hat as backup here if you confirm.
-> 
->> I know we already have more than 2 people on the list so I
->> don't think we need to nominate a backup?
-> 
-> If you're confident you'll fully handle a task without needing a backup
-> distro, then we may list that as such.  Right now, you do have Debian
-> listed as backup for the CVE tasks, though.
-> 
-> Alexander
