@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/25/3
-Message-ID: <20171125235030.GA24195@breadbox.private.spodhuis.org>
-Date: Sat, 25 Nov 2017 18:50:31 -0500
-From: Phil Pennock <oss-security-phil@...dhuis.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: RCE in Exim reported
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/8
+Message-ID: <20170523071046.GA4432@openwall.com>
+Date: Tue, 23 May 2017 09:10:46 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
 Content-Type: text/plain; charset=utf-8
 
-On 2017-11-24 at 22:59 -0500, Phil Pennock wrote:
-> In Post-Thanksgiving mail-catchup, I see that the Exim Project was
-> gifted with a couple of surprises in our public bugtracker on Thursday
-> morning.  Complete with proof-of-concept small Python script.
+On Mon, May 22, 2017 at 05:58:31PM -0500, Bob Friesenhahn wrote:
+> On Mon, 22 May 2017, Thomas Deutschmann wrote:
+> >Bob, do you have any PoC you can share with ImageMagick project
+> >regarding CVE-2017-6335?
+> >
+> >Your fix was
+> >https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
+> >
+> >I asked ImageMagick project about that issue but they don't know without
+> >a PoC, see https://github.com/ImageMagick/ImageMagick/issues/391
 > 
-> I've requested CVEs, don't have them yet.
+> I have attached the problematic TIFF file.  I don't know if binary 
+> attachments are accepted by this list.
 
-bugs.exim.org/2199 :
-  Use-after-free remote-code-execution
-  CVE-2017-16943
+Small binary attachments (total message size of up to 200 KB including
+overhead) are accepted, but unfortunately image/tiff was on the
+mimeremove list, so your attachment didn't get through.  I've just
+removed image/tiff from mimeremove.  Please resend (if small enough).
 
-bugs.exim.org/2201 :
-  stack-exhaustion remote DoS
-  CVE-2017-16944
+As to why have mimeremove at all: many people use MUAs or/and have
+signatures that always attach needless files (e.g., a text/html portion
+linking to a company logo, which is also included).  But I guess use of
+image/tiff for those is very unusual, so there was no good reason to
+have this MIME type removed.
 
-Fix for the former has been confirmed by the reporter and is in git.
+The current mimeremove is:
 
-The `exim-4_89+fixes` branch used by various OS packagers for major
-bug-fixes on top of the 4.89 release has the UAF fix backported.  Work
-on the DoS is under way.
+application/ms-tnef
+text/html
+text/x-vcard
+image/gif
+image/jpeg
+image/png
 
-  https://git.exim.org/exim.git/shortlog/refs/heads/exim-4_89+fixes
-
-Jeremy has created a `4.next` branch with work for 4.91, which includes
-re-working the API for the allocator which allowed the use-after-free to
-creep in.
-
--Phil
-
-Download attachment "signature.asc" of type "application/pgp-signature" (997 bytes)
+Alexander
