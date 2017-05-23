@@ -1,57 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/6
-Message-ID: <20170211044344.tcni4punke6z2a5v@sentinelchicken.org>
-Date: Fri, 10 Feb 2017 20:43:45 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/7
+Message-ID: <20170522222804.2bc86921@jabberwock.cb.piermont.com>
+Date: Mon, 22 May 2017 22:28:04 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
-
-> Once it's completely up and running, DWF should address these issues.
-> Researchers and organizations can easily become CNAs under DWF, with
-> assigned CVE blocks. For OSS, the process of getting a CVE (including
-> pre-publication) should be much simpler than it has been, especially
-> in recent years. It's not quite there yet, but Kurt and team have put
-> a lot of effort into laying the groundwork for a much better solution
-> than the ad-hoc "send an email and hope" process that we've become
-> accustomed to.
+On Mon, 22 May 2017 20:04:41 -0600 Kurt Seifried
+<kseifried@...hat.com> wrote:
+> > Primarily, freeform discussion of the sort that occurred on this
+> > list as a natural outcropping of the CVE request process led to
+> > people linking to verification code, temporary mitigations,
+> > highlighting of incomplete fixes, and the sort of information
+> > that was requested earlier in this thread.  This ability to
+> > easily chip in to ongoing situations wasn't just useful for mitre
+> > staff doing CVE work, it was also useful for the "community of
+> > practice" looking for the latest information regarding
+> > self-defense.  I've prevented more than one attack thanks to a
+> > one-off reply from someone in response to a CVE request.    
 > 
-> The old system was far from perfect, as is the interim MITRE web form
-> - hopefully with the help of the community, DWF will be able to
-> provide a better process for all involved. For OSS, DWF is the
-> solution we need to be focused on, and helping it to evolve to suit
-> the needs of everyone.
+> You can still do this. oss-security is a list run by Solar Designer
+> (openwall.com). I happen to be a long time poster/moderator, but I
+> have no official control/etc (I don't even block posts, that's up
+> to solar, I just allow stuff or ignore it when it's up for
+> moderation).
 
-Thanks for the update on where that is going.  I'm cautiously hopeful
-that this will be what open source folks need in the future.
+Maybe after CVEs are assigned the forms could be emailed to the list
+as a replacement for the old request emails, to kick off
+discussion and alert people to their existence?
 
-
-> > - The most telling though is the entire CNA program, particularly when
-> >   it allowed only commercial vendors.  If a vendor decides something
-> >   isn't a problem, they can block or slow CVE assignment.  It's a
-> >   corruption of service that ought to be for the public benefit.  (And
-> >   yes, this does happen.)
-> 
-> While I believe that DWF represents a substantial step forward for
-> OSS, and getting CVEs to those that need them, when they need them; my
-> feelings on CVEs for commercial software remain rather negative. I've
-> stopped requesting CVEs for commercial software due to all of the
-> issues - if I discover something where I believe a CVE is especially
-> important, I direct the request through CERT/CC or another
-> origination. But, this is getting off-topic.
-
-I'm glad I'm not the only one who is frustrated with this.  I too have
-given up on putting my effort into getting CVEs for most things.  If
-someone else gets it assigned in a timely manner and I happen to
-notice, fine I'll put it in an advisory, but I'm no longer requesting
-CVEs for vulns in commercial software.  (Were this resignation to be
-widespread, it should be a huge red flag for MITRE.)
-
-Corporate vendor vuln assignment does seem like this is a completely
-different animal than open source assignment now, based on how MITRE
-is (and has been) structuring things.  The fact that the two are
-treated differently is a big source of my loss of faith in their
-ability to run the program.
-
-tim
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
