@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2187" "Saturday" "21" "March" "2015" "19:59:22" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<550E21FA.6090704@redhat.com>" "63" "[oss-security] CVE for Kali Linux" nil nil nil "3" "2015032201:59:22" "[oss-security] CVE for Kali Linux" (number mark "        kseifried@re Mar 21   63/2187  " thread-indent "\"[oss-security] CVE for Kali Linux\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1282" "Tuesday" "23" "May" "2017" "09:10:46" "+0200" "Solar Designer" "solar@openwall.com" "<20170523071046.GA4432@openwall.com>" "35" "Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" "^Cc:" nil nil "5" "2017052307:10:46" "[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" (number mark "        solar@openwa May 23   35/1282  " thread-indent "\"Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder\"\n") "<alpine.GSO.2.20.1705221753220.23240@scrappy.simplesystems.org>" ("<20170520072632.z5nbivrdwmqm3soe@eldamar.local>" "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>" "<20170520175436.GA30962@jasmine>" "<alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>" "<bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org>" "<alpine.GSO.2.20.1705221753220.23240@scrappy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1682 invoked by uid 550); 22 Mar 2015 01:59:36 -0000
+Received: (qmail 7180 invoked by uid 550); 23 May 2017 07:11:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1661 invoked from network); 22 Mar 2015 01:59:35 -0000
-Message-ID: <550E21FA.6090704@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="6VW5WfxXw0xPPnc0rrfcaXg600X4bV4I9"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Date: Sat, 21 Mar 2015 19:59:22 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Received: (qmail 5796 invoked from network); 23 May 2017 07:10:52 -0000
+Message-ID: <20170523071046.GA4432@openwall.com>
+References: <20170520072632.z5nbivrdwmqm3soe@eldamar.local> <20170520152406.2339.3B884775@matica.foolinux.mooo.com> <20170520175436.GA30962@jasmine> <alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org> <bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org> <alpine.GSO.2.20.1705221753220.23240@scrappy.simplesystems.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.GSO.2.20.1705221753220.23240@scrappy.simplesystems.org>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com
+Date: Tue, 23 May 2017 09:10:46 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE for Kali Linux
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-        Assign a CVE Identifier <cve-assign@mitre.org>
+Subject: Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
+To: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 
---6VW5WfxXw0xPPnc0rrfcaXg600X4bV4I9
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, May 22, 2017 at 05:58:31PM -0500, Bob Friesenhahn wrote:
+> On Mon, 22 May 2017, Thomas Deutschmann wrote:
+> >Bob, do you have any PoC you can share with ImageMagick project
+> >regarding CVE-2017-6335?
+> >
+> >Your fix was
+> >https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
+> >
+> >I asked ImageMagick project about that issue but they don't know without
+> >a PoC, see https://github.com/ImageMagick/ImageMagick/issues/391
+> 
+> I have attached the problematic TIFF file.  I don't know if binary 
+> attachments are accepted by this list.
 
-=46rom RISKS, looks like it needs a CVE
+Small binary attachments (total message size of up to 200 KB including
+overhead) are accepted, but unfortunately image/tiff was on the
+mimeremove list, so your attachment didn't get through.  I've just
+removed image/tiff from mimeremove.  Please resend (if small enough).
 
-Date: Tue, 17 Mar 2015 07:37:50 -0700
-From: Henry Baker <hbaker1@pipeline.com>
-Subject: Kali Linux security is a joke!
+As to why have mimeremove at all: many people use MUAs or/and have
+signatures that always attach needless files (e.g., a text/html portion
+linking to a company logo, which is also included).  But I guess use of
+image/tiff for those is very unusual, so there was no good reason to
+have this MIME type removed.
 
-FYI -- Your best chance to hack the hackers...
+The current mimeremove is:
 
-  "Downloading Kali Linux"
+application/ms-tnef
+text/html
+text/x-vcard
+image/gif
+image/jpeg
+image/png
 
-  "Alert!  Always make certain you are downloading Kali Linux from official
-  sources, as well as verifying md5sums against official values.  It would
-  be easy for a malicious entity to modify a Kali install to contain
-  malicious code, and host it unofficially."
-  http://docs.kali.org/category/introduction
-
----
-
-No kidding!
-
-So how come whenever you do apt-get install in Kali Linux, it accesses
-http://security.kali.org and http://http.kali.org ??
-
-Hasn't Kali heard about MITM attacks against http ??
-
-What's the point of verifying md5 sums against "official values", if Kali
-can't even get the "official values" securely ??
-
-
-
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
---6VW5WfxXw0xPPnc0rrfcaXg600X4bV4I9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJVDiH6AAoJEBYNRVNeJnmTti8P/0Exo3M6vdc1tDkucMc+WxKw
-whFRZQDDLiYregTg1KUx76vLpWye/+3EMXQm33N0S4OUUWoJiVPXo3/LoJcAH85L
-BmwQkAxfhbZgtYnrpSAib7lFsamuLodeWyqzIXMysAab+4a+vm4aNsfBKiKATnOa
-YPzGFISU82li8Gg1iSXMmR3zsED9q13Nx/vSWtEx5RPvGjgOBKLOgiVZMXCPw0e1
-HSnCI2IROO3OptAOyHdbkP2qunwDjMhLMai84QHyC2M0b12NAJXBOrLRhhTRl1Oj
-49Wr00lCq07RMmfmHD7iP5r2IA+r8xAQmPujoQMmE946EOFcJBbigAav6toMHs7e
-U1JavEyOHssLOySlhzj8NJzAAlDkqdfClqiYZHgm1fKSAEvqFYjVg7nM25EVP/1a
-XERdKWYgPhPkXjMXAnziRj43sP7MgkhFeGlrr+uAYk2RRQp2aiYYvS/i+WFvbOw/
-0osSBBvlw09RCH8crnPAQoWOCMDzLfBAVxxk3ORuTq/M8v4s0VT11tpwxRAqYjp9
-sN146I8/X2CdzWSnrMF+DzGfffyKAILAiJZji9+lPej1Rz9sdTd4yWGYM+awWlSZ
-u72EHivZG57B2vFFTUIXBu+9Mck+U1iBgn1nyBQSUNoTYFUrZHXqahgzurTF4c0U
-V5PtXCvyinCBqjnBztrl
-=f/cj
------END PGP SIGNATURE-----
-
---6VW5WfxXw0xPPnc0rrfcaXg600X4bV4I9--
+Alexander
