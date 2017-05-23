@@ -1,82 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/10/2
-Message-ID: <iXtB5CpTryJAQZDKw3BO6URrMMnVSEovxuKwMlUoB5UiDo9R-YmfNUIQJO_iSpdNOqIm8wPxDWPvQtYG6xUY2z412ER8onCt2IAudAIAUks=@itk.swiss>
-Date: Fri, 10 Nov 2017 14:29:15 -0500
-From: Stiepan <stie@....swiss>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/14
+Message-ID: <alpine.GSO.2.20.1705230831540.6623@freddy.simplesystems.org>
+Date: Tue, 23 May 2017 08:34:04 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: Thomas Deutschmann <whissi@...too.org>
+cc: oss-security@...ts.openwall.com
+Subject: Re: Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
 Content-Type: text/plain; charset=utf-8
 
-> -------- Original Message --------
-> Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
-> Local Time: November 9, 2017 5:09 PM
-> UTC Time: November 9, 2017 5:09 PM
-> From: dwheeler@...eeler.com
-> To: oss-security <oss-security@...ts.openwall.com>
+On Tue, 23 May 2017, Thomas Deutschmann wrote:
+
+> Hi,
 >
->>> On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
->>>
->>>> I hate to ask, but why are you getting CVEs for bugs fixed over a
->>>> year ago, and are already in all stable kernel releases a year ago?  Why
->>>> does it matter?...
->>>>
->>>> On Tue, Nov 07, 2017 at 08:30:05PM +0000, Maier, Kurt H wrote:
->>
->>> Kernel maintainers' policy is clear, and nobody is asking for that to
->>> change, but please don't sandbag the process of keeping track of
->>> vulnerabilities. The fraction of "products" (regardless of vendor)
->>> that run linux and never get updates approaches unity. Being able to
->>> precisely catalog which linux releases suffer from which
->>> vulnerabilities is useful to many.
->>>
->>> On Wed, 8 Nov 2017 10:15:17 +0100, Greg KH greg@...ah.com wrote:
->>> Well, I'm working on fixing the "devices do not get updates" issue
->>> through other means, so don't just give up on that one just yet :)
->>>
->>> I applaud your work! I think getting CVE assignments may help, as I explain below.
->>>
->>> As for the "keep track of vulnerabilities", is that what is really
->>> happening here? Why pick a random bug fix from over a year ago for a
->>> CVE vs. the 100 other bugfixes in the past few weeks/months?
->>
->> I'm really curious as to what triggered this specific CVE request that
->> somehow misses the hundreds/thousands of other fixes that land in newer
->> kernel releases?
->>
->> Manufacturers & recipients often won't update unless there's a reason to update.
->> Documenting a number of specific CVEs in older kernel versions
->> provides clear documented reasons that an update needs to occur,
->> instead of a vague "you should upgrade" claim.
->>
->> Perhaps most importantly, once a vulnerability has a CVE id,
->> some laws and regulations can come into play. Manufacturers
->> will (correctly) argue that no one can track all the mailing lists, but if a
->> vulnerability has a CVE id, it's generally agreed that the
->> vulnerability is a publicly known vulnerability.
->> In the US, there has been recent proposed legislation that requires
->> that "Internet of Things" devices sold to the federal government cannot have
->> "known security vulnerabilities" ("Internet of Things Cybersecurity Improvement
->> Act of 2017" proposed by Senators Mark Warner (R-Va.) and Cory Gardner (D-Colo.)).
->> I suspect many other countries have or will pass similiar laws,
->> or will interpret their existing laws this way.
->> It's easy to argue that known security vulnerabilities are known flaws
->> that should be remediated by the manufacturer (at no cost to the consumer).
->>
->> I agree that many vulnerabilities don't have CVE ids.
->> You don't need to identify all vulnerabilities in old kernels... just enough to make
->> it easier to update the kernel than try to back-patch everything.
->> If manufacturers have to fix the CVEs to sell products, or to avoid massive returns,
->> that creates an economic reason for manufacturers to
->> begin responsibly maintain their products.
->>
->> There's no guarantee that this sequence of events will happen, but it's worth trying.
->>
->> --- David A. Wheeler
+> thanks! I received an tiff attachment. Could you please confirm its
+> SHA256 sum? I got
+>
+>> 790EF50E47EDCEF26DF6D6A7EB87B7706C1E32486D0EC3DB46A4E784E75C9DE8
 
-I would like to add that starting in May, 2018, companies will have the huge incentive of the European GDPR, with fines going up to 4% annual turnover of the company or group in case of a breach involving EU citizen's data. Here in Switzerland we will have a "light" version with fines capped to 250k CHF. But we're only about 8M (although, including many people and companies in a position to hire lawyers). This makes some incentives already. Now back to the specific question of CVE IDs, it's a tough one, knowing that not everyone might agree on that "single root of trust"... But I would say here, something is way better than nothing!
+That is what I get here.  Since there seems to be so much interest in 
+this file, I include a base64 encoding of it below.
 
-About the "fraction nearing unity", Linux-specific problem: this is why we are evaluating all possible open-source kernels for a secure "CEuniX"*, in collaboration with two EU-based organizations and a Canadian dev. First results should be published before the May 2018 deadline, giving people an early direction to follow in their journey to compliance. Actually this is a turning point - where law exceeds tech - instead of the reverse, which usually happens. Or perhaps better said, the rule of law will soon apply to the digital world, "fully". (Europe is far from being the only one, as was hinted by David; this is an international trend, where cultural differences will come into play and can have a crucial role in shaping how those laws are made and implemented in the real world, ultimately affecting our lives.)
+TU0AKgAACAj/AP8I/xD/GP8g/yn/Mf85/0H/Sv9S/1r/Yv9q/3P/e/+D/4v/lP+c/6T/rP+0/73/
+xf/N/9X/3v/m/+7/9v//9gD2CPYQ9hj2IPYp9jH2OfZB9kr2UvZa9mL2avZz9nv2g/aL9pT2nPak
+9qz2tPa99sX2zfbV9t725vbu9vb2/+4A7gjuEO4Y7iDuKe4x7jnuQe5K7lLuWu5i7mruc+577oPu
+i+6U7pzupO6s7rTuve7F7s3u1e7e7ubu7u727v/mAOYI5hDmGOYg5inmMeY55kHmSuZS5lrmYuZq
+5nPme+aD5ovmlOac5qTmrOa05r3mxebN5tXm3ubm5u7m9ub/3gDeCN4Q3hjeIN4p3jHeOd5B3kre
+Ut5a3mLeat5z3nveg96L3pTenN6k3qzetN693sXezd7V3t7e5t7u3vbe/9UA1QjVENUY1SDVKdUx
+1TnVQdVK1VLVWtVi1WrVc9V71YPVi9WU1ZzVpNWs1bTVvdXF1c3V1dXe1ebV7tX21f/NAM0IzRDN
+GM0gzSnNMc05zUHNSs1SzVrNYs1qzXPNe82DzYvNlM2czaTNrM20zb3Nxc3NzdXN3s3mze7N9s3/
+xQDFCMUQxRjFIMUpxTHFOcVBxUrFUsVaxWLFasVzxXvFg8WLxZTFnMWkxazFtMW9xcXFzcXVxd7F
+5sXuxfbF/70AvQi9EL0YvSC9Kb0xvTm9Qb1KvVK9Wr1ivWq9c717vYO9i72UvZy9pL2svbS9vb3F
+vc291b3evea97r32vf+0ALQItBC0GLQgtCm0MbQ5tEG0SrRStFq0YrRqtHO0e7SDtIu0lLSctKS0
+rLS0tL20xbTNtNW03rTmtO609rT/rACsCKwQrBisIKwprDGsOaxBrEqsUqxarGKsaqxzrHusg6yL
+rJSsnKykrKystKy9rMWszazVrN6s5qzurPas/6QApAikEKQYpCCkKaQxpDmkQaRKpFKkWqRipGqk
+c6R7pIOki6SUpJykpKSspLSkvaTFpM2k1aTepOak7qT2pP+cAJwInBCcGJwgnCmcMZw5nEGcSpxS
+nFqcYpxqnHOce5yDnIuclJycnKScrJy0nL2cxZzNnNWc3pzmnO6c9pz/lACUCJQQlBiUIJQplDGU
+OZRBlEqUUpRalGKUapRzlHuUg5SLlJSUnJSklKyUtJS9lMWUzZTVlN6U5pTulPaU/4sAiwiLEIsY
+iyCLKYsxizmLQYtKi1KLWotii2qLc4t7i4OLi4uUi5yLpIusi7SLvYvFi82L1Yvei+aL7ov2i/+D
+AIMIgxCDGIMggymDMYM5g0GDSoNSg1qDYoNqg3ODe4ODg4uDlIOcg6SDrIO0g72DxYPNg9WD3oPm
+g+6D9oP/ewB7CHsQexh7IHspezF7OXtBe0p7Untae2J7antze3t7g3uLe5R7nHuke6x7tHu9e8V7
+zXvVe9575nvue/Z7/3MAcwhzEHMYcyBzKXMxczlzQXNKc1JzWnNic2pzc3N7c4Nzi3OUc5xzpHOs
+c7RzvXPFc81z1XPec+Zz7nP2c/9qAGoIahBqGGogailqMWo5akFqSmpSalpqYmpqanNqe2qDaotq
+lGqcaqRqrGq0ar1qxWrNatVq3mrmau5q9mr/YgBiCGIQYhhiIGIpYjFiOWJBYkpiUmJaYmJiamJz
+Yntig2KLYpRinGKkYqxitGK9YsVizWLVYt5i5mLuYvZi/1oAWghaEFoYWiBaKVoxWjlaQVpKWlJa
+WlpiWmpac1p7WoNai1qUWpxapFqsWrRavVrFWs1a1VreWuZa7lr2Wv9SAFIIUhBSGFIgUilSMVI5
+UkFSSlJSUlpSYlJqUnNSe1KDUotSlFKcUqRSrFK0Ur1SxVLNUtVS3lLmUu5S9lL/SgBKCEoQShhK
+IEopSjFKOUpBSkpKUkpaSmJKakpzSntKg0qLSpRKnEqkSqxKtEq9SsVKzUrVSt5K5kruSvZK/0EA
+QQhBEEEYQSBBKUExQTlBQUFKQVJBWkFiQWpBc0F7QYNBi0GUQZxBpEGsQbRBvUHFQc1B1UHeQeZB
+7kH2Qf85ADkIORA5GDkgOSk5MTk5OUE5SjlSOVo5YjlqOXM5ezmDOYs5lDmcOaQ5rDm0Ob05xTnN
+OdU53jnmOe459jn/MQAxCDEQMRgxIDEpMTExOTFBMUoxUjFaMWIxajFzMXsxgzGLMZQxnDGkMawx
+tDG9McUxzTHVMd4x5jHuMfYx/ykAKQgpECkYKSApKSkxKTkpQSlKKVIpWiliKWopcyl7KYMpiymU
+KZwppCmsKbQpvSnFKc0p1SneKeYp7in2Kf8gACAIIBAgGCAgICkgMSA5IEEgSiBSIFogYiBqIHMg
+eyCDIIsglCCcIKQgrCC0IL0gxSDNINUg3iDmIO4g9iD/GAAYCBgQGBgYIBgpGDEYORhBGEoYUhha
+GGIYahhzGHsYgxiLGJQYnBikGKwYtBi9GMUYzRjVGN4Y5hjuGPYY/xAAEAgQEBAYECAQKRAxEDkQ
+QRBKEFIQWhBiEGoQcxB7EIMQixCUEJwQpBCsELQQvRDFEM0Q1RDeEOYQ7hD2EP8IAAgICBAIGAgg
+CCkIMQg5CEEISghSCFoIYghqCHMIewiDCIsIlAicCKQIrAi0CL0IxQjNCNUI3gjmCO4I9gj/AAAA
+CAAQABgAIAApADEAOQBBAEoAUgBaAGIAagBzAHsAgwCLAJQAnACkAKwAtAC9AMUAzQDVAN4A5gDu
+APYA/wARAQAAAwAAAAEAIgAAAQEAAwAAAAEAMAAAAQIAAwAAAAIACAAIAQMAAwAAAAEAAQAAAQYA
+AwAAAAEABQAAAREABAAAAAEAAAAIARIAAwAAAAEAAQAAARUAAwAAAAEAAgAAARYAAwAAAAEAIAAA
+ARcABAAAAAEAAAgAARoABQAAAAEAAAjaARsABQAAAAEAAAjiARwAAwAAAAEAAQAAASgAAwAAAAEA
+AgAAAVIAAwAAAAEAAgAAAVMAAwAAAAIAAQABh3MABwAAAAAAAABIAAA=
 
-Stiepan A. Kovac
-
-*please e-mail me for details about the project, which is an H2020 candidate, meaning it is likely to get funding from the European Commission
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
