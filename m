@@ -1,37 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/2
-Message-ID: <20170211001023.cfe5enzugromqdm6@sentinelchicken.org>
-Date: Fri, 10 Feb 2017 16:10:24 -0800
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/4
+Message-ID: <20170523011349.GA10335@wopr>
+Date: Mon, 22 May 2017 18:13:49 -0700
+From: Kurt H Maier <khm@...ops.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
+On Mon, May 22, 2017 at 06:53:42PM -0600, Kurt Seifried wrote:
+> 
+> 
+> On 2017-05-22 5:44 PM, Kurt H Maier wrote:
+> Neither, that's part of what I'm figuring out. Most likely it'll look
+> like a trusted pool of people (aka CVE Mentors) that can either
+> contribute or more easily gatekeep). Also the doc are out of date and
+> the process is evolving rapidly so I haven't really bothered updating
+> them since things keep changing.
 
+It might be worth noting that in the README file on the documentation
+repo.  It wouldn't take long and may prevent confusion in the meantime.
 
-> Your perception is incorrect.  
+> Good question. What exactly is it you want to input? CVE requests? CVE
+> assignments? Modify existing CVE entries?
 
-Actions speak louder than words.  Data points:
+Primarily, freeform discussion of the sort that occurred on this list as
+a natural outcropping of the CVE request process led to people linking
+to verification code, temporary mitigations, highlighting of incomplete
+fixes, and the sort of information that was requested earlier in this
+thread.  This ability to easily chip in to ongoing situations wasn't
+just useful for mitre staff doing CVE work, it was also useful for the
+"community of practice" looking for the latest information regarding
+self-defense.  I've prevented more than one attack thanks to a one-off
+reply from someone in response to a CVE request.  
 
-- The fact that so many lesser known researchers couldn't get an ID
-  for so long when they asked for one.
+The CVE assignment process was more than just a collaborative
+database-population effort.  With the shift to webforms and javascript
+the natural environment which promoted that discourse is being removed.
 
-- As already discussed, the web form's "Please ensure vendor or
-  product exists in the Products and Sources list".  For an open
-  source project, they give up and outsource the process, which then
-  can't be used for obtaining an ID before release.
-  
-- The most telling though is the entire CNA program, particularly when
-  it allowed only commercial vendors.  If a vendor decides something
-  isn't a problem, they can block or slow CVE assignment.  It's a
-  corruption of service that ought to be for the public benefit.  (And
-  yes, this does happen.)
+> Not really. the docs are out of date and I'm more concerned about
+> evolving this right now then updating documentation.
 
+Again, I strongly suggest you note on the README that this is the case.
+As matters stand the documentation represents itself as accurate.
 
-Reporting vulnerabilities in a "responsible" manner is already a huge
-pain in the ass.  Every year getting a CVE is harder and harder,
-particularly prior to publication (which is how it should be
-assigned, since the whole point of the CVE is to minimize confusion
-about which vulnerability we're talking about).
-
-tim
+khm
