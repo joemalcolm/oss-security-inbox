@@ -1,4 +1,9 @@
-Received: (qmail 29762 invoked by uid 550); 22 Jun 2022 14:11:35 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1365" "Monday" "22" "May" "2017" "18:53:42" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<6c663f3b-985d-083e-8b00-d428e34b2e29@redhat.com>" "32" "Re: [oss-security] How to request a CVE for open source projects" "^Date:" nil nil "5" "2017052300:53:42" "[oss-security] How to request a CVE for open source projects" (number mark "        kseifried@re May 22   32/1365  " thread-indent "\"Re: [oss-security] How to request a CVE for open source projects\"\n") "<20170522234408.GA7465@wopr>" ("<1495476334.15944.2@mail.igalia.com>" "<20170522185720.GA13059@suse.de>" "<20170522194526.GC63527@wopr>" "<0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>" "<20170522234408.GA7465@wopr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28439 invoked by uid 550); 23 May 2017 00:53:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,345 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28421 invoked from network); 23 May 2017 00:53:51 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=uwP5stoSX/13+AmCeN5EoHCZJdRG51nou6mB4IpYZLA=;
+        b=ieKo9KpY1uD+IZ5j0e4UeOng+jk+PkSETUW4dff9dXsKEJ2flBjJrnYlytjitCBeCp
+         YboBQu886ldmkRLWxKF1bpl/z/Rdzgyk7nGVGES7Uhw1hwzA0siJzvV4uMTlgvxCJnEP
+         nqQS+7V64WONdy5s6+pqQbcaJd4i41bFxOkGXq91OQa6HRawxHAf96Hw6I2ed1iwB+ni
+         79v/8BkKlKAi4MeRBwDexnP+UPmxtBrUU9kL9AgelclIAE4n0IIE7d7/jFf3wjV6qRN6
+         ef8Bybu3isiugr1q7reBp4k/5X5MmBFKOXqkRFzXsfVb2sjCLqiRHgCtO2fzc3tJKoMg
+         tPsA==
+X-Gm-Message-State: AODbwcDmxdaQq2V5EGL5qzbFSOD0Pt4wOma5oM3eRes3rDiQw1ip4P+C
+	9oFAglhtTF9Kx4yS8Vn20w==
+X-Received: by 10.36.123.137 with SMTP id q131mr482205itc.23.1495500819292;
+        Mon, 22 May 2017 17:53:39 -0700 (PDT)
+References: <1495476334.15944.2@mail.igalia.com>
+ <20170522185720.GA13059@suse.de> <20170522194526.GC63527@wopr>
+ <0D4054EB-CA8D-4E33-9DFE-A83E253AA96B@redhat.com>
+ <20170522234408.GA7465@wopr>
+Message-ID: <6c663f3b-985d-083e-8b00-d428e34b2e29@redhat.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
+ Gecko/20100101 Thunderbird/52.1.1
+MIME-Version: 1.0
+In-Reply-To: <20170522234408.GA7465@wopr>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+Date: Mon, 22 May 2017 18:53:42 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29720 invoked from network); 22 Jun 2022 14:11:34 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-Message-Id: <6D14D6C6-2FFB-49A2-BD66-C68DA4EF1ACC@beckweb.net>
-Date: Wed, 22 Jun 2022 16:11:23 +0200
+Subject: Re: [oss-security] How to request a CVE for open source projects
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3696.80.82.1.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1655907094;6a24a769;
-X-HE-SMSGID: 1o414l-0006ZM-7h
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
 
-The following releases contain fixes for security vulnerabilities:
 
-* Jenkins 2.356
-* Jenkins LTS 2.332.4 and 2.346.1
-* Embeddable Build Status Plugin 2.0.4
-* Hidden Parameter Plugin 0.0.5
-* JUnit Plugin 1119.1121.vc43d0fc45561
-* Nested View Plugin 1.26
-* Pipeline: Input Step Plugin 449.v77f0e8b_845c4
-* REST List Parameter Plugin 1.6.0
-* xUnit Plugin 3.1.0
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Agent Server Parameter Plugin
-* Beaker builder Plugin
-* Convertigo Mobile Platform Plugin
-* CRX Content Package Deployer Plugin
-* Date Parameter Plugin
-* Dynamic Extended Choice Parameter Plugin
-* EasyQA Plugin
-* Filesystem List Parameter Plugin
-* Image Tag Parameter Plugin
-* Jianliao Notification Plugin
-* Maven Metadata Plugin for Jenkins CI server Plugin
-* NS-ND Integration Performance Publisher Plugin
-* ontrack Jenkins Plugin
-* Package Version Plugin
-* Readonly Parameter Plugin
-* Repository Connector Plugin
-* Sauce OnDemand Plugin
-* Squash TM Publisher (Squash4Jenkins) Plugin
-* Stash Branch Parameter Plugin
-* ThreadFix Plugin
-* vRealize Orchestrator Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2022-06-22/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2781 / CVE-2022-34170 through CVE-2022-34173
-Multiple cross-site scripting (XSS) vulnerabilities in Jenkins 2.355 and
-earlier, LTS 2.332.3 and earlier allow attackers to inject HTML and
-JavaScript into the Jenkins UI:
-
-* SECURITY-2779 (CVE-2022-34170): Since Jenkins 2.320 and LTS 2.332.1, help
-  icon tooltips no longer escape the feature name, effectively undoing the
-  fix for SECURITY-1955.
-* SECURITY-2761 (CVE-2022-34171): Since Jenkins 2.321 and LTS 2.332.1, the
-  HTML output generated for new symbol-based SVG icons includes the `title`
-  attribute of `l:ionicon` until Jenkins 2.334 and `alt` attribute of
-  `l:icon` since Jenkins 2.335 without further escaping.
-* SECURITY-2776 (CVE-2022-34172): Since Jenkins 2.340, symbol-based icons
-  unescape previously escaped values of `tooltip` parameters.
-* SECURITY-2780 (CVE-2022-34173): Since Jenkins 2.340, the tooltip of the
-  build button in list views supports HTML without escaping the job display
-  name.
-
-These vulnerabilities are known to be exploitable by attackers with
-Job/Configure permission.
-
-
-SECURITY-2566 / CVE-2022-34174
-In Jenkins 2.355 and earlier, LTS 2.332.3 and earlier, an observable timing
-discrepancy on the login form allows distinguishing between login attempts
-with an invalid username, and login attempts with a valid username and
-wrong password, when using the Jenkins user database security realm. This
-allows attackers to determine the validity of attacker-specified usernames.
-
-
-SECURITY-2777 / CVE-2022-34175
-Jenkins uses the Stapler web framework to render its UI views. These views
-are frequently composed of several view fragments, enabling plugins to
-extend existing views with more content.
-
-Before SECURITY-534 was fixed in Jenkins 2.186 and LTS 2.176.2, attackers
-could in some cases directly access a view fragment containing sensitive
-information, bypassing any permission checks in the corresponding view.
-
-In Jenkins 2.335 through 2.355 (both inclusive), the protection added for
-SECURITY-534 is disabled for some views. As a result, attackers could in
-very limited cases directly access a view fragment containing sensitive
-information, bypassing any permission checks in the corresponding view.
-
-NOTE: As of publication, the Jenkins security team is unaware of any
-vulnerable view fragment across the Jenkins plugin ecosystem.
-
-
-SECURITY-2760 / CVE-2022-34176
-JUnit Plugin 1119.va_a_5e9068da_d7 and earlier does not escape descriptions
-of test results.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Run/Update permission.
-
-
-SECURITY-2705 / CVE-2022-34177
-Pipeline: Input Step Plugin 448.v37cea_9a_10a_70 and earlier allows
-Pipeline authors to specify `file` parameters for Pipeline `input` steps
-even though they are unsupported. Although the uploaded file is not copied
-to the workspace, Jenkins archives the file on the controller as part of
-build metadata using the parameter name without sanitization as a relative
-path inside a build-related directory.
-
-This allows attackers able to configure Pipelines to create or replace
-arbitrary files on the Jenkins controller file system with
-attacker-specified content.
-
-
-SECURITY-2567 / CVE-2022-34178
-Embeddable Build Status Plugin 2.0.3 allows specifying a `link` query
-parameter that build status badges will link to, without restricting
-possible values.
-
-This results in a reflected cross-site scripting (XSS) vulnerability.
-
-
-SECURITY-2792 / CVE-2022-34179
-Embeddable Build Status Plugin 2.0.3 and earlier allows specifying a
-`style` query parameter that is used to choose a different SVG image style
-without restricting possible values.
-
-This results in a relative path traversal vulnerability, allowing attackers
-without Overall/Read permission to specify paths to other SVG images on the
-Jenkins controller file system.
-
-
-SECURITY-2794 / CVE-2022-34180
-Embeddable Build Status Plugin 2.0.3 and earlier does not correctly perform
-the ViewStatus permission check in the HTTP endpoint it provides for
-"unprotected" status badge access.
-
-This allows attackers without any permissions to obtain the build status
-badge icon for any attacker-specified job and/or build.
-
-
-SECURITY-2549 / CVE-2022-34181
-xUnit Plugin 3.0.8 and earlier implements an agent-to-controller message
-that creates a user-specified directory if it doesn't exist, and parsing
-files inside it as test results.
-
-This allows attackers able to control agent processes to create an
-arbitrary directory on the Jenkins controller or to obtain test results
-from existing files in an attacker-specified directory.
-
-
-SECURITY-2768 / CVE-2022-34182
-Nested View Plugin 1.20 through 1.25 (both inclusive) does not escape
-search parameters.
-
-This results in a reflected cross-site scripting (XSS) vulnerability.
-
-
-SECURITY-2784 / CVE-2022-34183 through CVE-2022-34198
-Multiple plugins do not escape the name and description of the parameter
-types they provide:
-
-* Agent Server Parameter 1.1 and earlier (SECURITY-2731 / CVE-2022-34183)
-* CRX Content Package Deployer 1.9 and earlier (SECURITY-2727 /
-  CVE-2022-34184)
-* Date Parameter Plugin 0.0.4 and earlier (SECURITY-2711 / CVE-2022-34185)
-* Dynamic Extended Choice Parameter 1.0.1 and earlier (SECURITY-2712 /
-  CVE-2022-34186)
-* Filesystem List Parameter 0.0.7 and earlier (SECURITY-2716 /
-  CVE-2022-34187)
-* Hidden Parameter Plugin 0.0.4 and earlier (SECURITY-2755 /
-  CVE-2022-34188)
-* Image Tag Parameter 1.10 and earlier (SECURITY-2721 / CVE-2022-34189)
-* Maven Metadata for CI server 2.1 and earlier (SECURITY-2714 /
-  CVE-2022-34190)
-* NS-ND Integration Performance Publisher 4.8.0.77 and earlier
-  (SECURITY-2736 / CVE-2022-34191)
-* ontrack Jenkins 4.0.0 and earlier (SECURITY-2733 / CVE-2022-34192)
-* Package Version 1.0.1 and earlier (SECURITY-2735 / CVE-2022-34193)
-* Readonly Parameter 1.0.0 and earlier (SECURITY-2719 / CVE-2022-34194)
-* Repository Connector 2.2.0 and earlier (SECURITY-2666 / CVE-2022-34195)
-* REST List Parameter Plugin 1.5.2 and earlier (SECURITY-2730 /
-  CVE-2022-34196)
-* Sauce OnDemand 1.204 and earlier (SECURITY-2724 / CVE-2022-34197)
-* Stash Branch Parameter 0.3.0 and earlier (SECURITY-2725 / CVE-2022-34198)
-
-This results in stored cross-site scripting (XSS) vulnerabilites
-exploitable by attackers with Item/Configure permission.
-
-Exploitation of these vulnerabilities requires that parameters are listed
-on another page, like the "Build With Parameters" and "Parameters" pages
-provided by Jenkins (core), and that those pages are not hardened to
-prevent exploitation. Jenkins (core) has prevented exploitation of
-vulnerabilities of this kind on the "Build With Parameters" and
-"Parameters" pages since 2.44 and LTS 2.32.2 as part of the SECURITY-353 /
-CVE-2017-2601 fix. Additionally, several plugins have previously been
-updated to list parameters in a way that prevents exploitation by default,
-see SECURITY-2617 in the 2022-04-12 security advisory for a list.
-
-
-SECURITY-2064 / CVE-2022-34199
-Convertigo Mobile Platform Plugin 1.1 and earlier stores passwords
-unencrypted in job `config.xml` files on the Jenkins controller as part of
-its configuration.
-
-These passwords can be viewed by users with Item/Extended Read permission
-or access to the Jenkins controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2276 / CVE-2022-34200 (CSRF) & CVE-2022-34201 (missing permission =
-check)
-Convertigo Mobile Platform Plugin 1.1 and earlier does not perform a
-permission check in a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2066 / CVE-2022-34202
-EasyQA Plugin 1.0 and earlier stores user passwords unencrypted in its
-global configuration file `EasyQAPluginProperties.xml` on the Jenkins
-controller as part of its configuration.
-
-These passwords can be viewed by users with access to the Jenkins
-controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2281 / CVE-2022-34203 (CSRF) & CVE-2022-34204 (missing permission =
-check)
-EasyQA Plugin 1.0 and earlier does not perform a permission check in a
-method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified HTTP server.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2240 / CVE-2022-34205 (CSRF) & CVE-2022-34206 (missing permission =
-check)
-Jianliao Notification Plugin 1.1 and earlier does not perform a permission
-check in a method implementing form validation.
-
-This allows attackers with Overall/Read permission to send HTTP POST
-requests to an attacker-specified URL.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2248 / CVE-2022-34207 (CSRF) & CVE-2022-34208 (missing permission =
-check)
-Beaker builder Plugin 1.10 and earlier does not perform a permission check
-in a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2249 / CVE-2022-34209 (CSRF) & CVE-2022-34210 (missing permission =
-check)
-ThreadFix Plugin 1.5.4 and earlier does not perform a permission check in a
-method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2279 / CVE-2022-34211 (CSRF) & CVE-2022-34212 (missing permission =
-check)
-vRealize Orchestrator Plugin 3.0 and earlier does not perform a permission
-check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to send an HTTP POST
-request to an attacker-specified URL.
-
-Additionally, this HTTP endpoint does not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2089 / CVE-2022-34213
-Squash TM Publisher (Squash4Jenkins) Plugin 1.0.0 and earlier stores
-passwords unencrypted in its global configuration file
-`org.jenkinsci.squashtm.core.SquashTMPublisher.xml` on the Jenkins
-controller as part of its configuration.
-
-These passwords can be viewed by users with access to the Jenkins
-controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
+On 2017-05-22 5:44 PM, Kurt H Maier wrote:
+> On Mon, May 22, 2017 at 03:13:42PM -0600, Kurt Seifried wrote:
+>> Well actually they can. Why do you think we (DWF) have an extensible Json format with the data hosted in git? Hint: so people can contribute.
+> Is it the opaque Google Docs form that fosters contribution, or the
+> gatekept pull-request process requiring a Github account that fosters
+> contribution?
+Neither, that's part of what I'm figuring out. Most likely it'll look
+like a trusted pool of people (aka CVE Mentors) that can either
+contribute or more easily gatekeep). Also the doc are out of date and
+the process is evolving rapidly so I haven't really bothered updating
+them since things keep changing.
+
+> At what point in the DWF process is third-party input expected to occur?
+
+Good question. What exactly is it you want to input? CVE requests? CVE
+assignments? Modify existing CVE entries?
+> The matter is not addressed in the documentation repository.  Feel free 
+> to mail me offlist if the answers would induce excessive cognitive 
+> dissonance.
+Not really. the docs are out of date and I'm more concerned about
+evolving this right now then updating documentation.
+
+>
+> khm
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
