@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1378" "Tuesday" "19" "May" "2020" "08:29:05" "+0530" "Hardik Vyas" "hvyas@redhat.com" "<CAOo2v=DTvPoytxQ8QiEQuYvw2A+Us0ZVRmkuGr4zgQNMHAf=7Q@mail.gmail.com>" "40" "[oss-security] CVE-2020-10736 ceph: authorization bypass in monitor and manager daemons" nil nil nil "5" "2020051902:59:05" "[oss-security] CVE-2020-10736 ceph: authorization bypass in monitor and manager daemons" (number mark "U       hvyas@redhat May 19   40/1378  " thread-indent "\"[oss-security] CVE-2020-10736 ceph: authorization bypass in monitor and manager daemons\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-10736 ceph: authorization bypass in monitor and manager daemons" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["12257" "Tuesday" "23" "May" "2017" "08:06:34" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<889256.295838521-sendEmail@localhost>" "131" "[oss-security] qpdf: three infinite loop in libqpdf" nil nil nil "5" "2017052308:06:34" "[oss-security] qpdf: three infinite loop in libqpdf" (number mark "U       ago@gentoo.o May 23  131/12257 " thread-indent "\"[oss-security] qpdf: three infinite loop in libqpdf\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15630 invoked by uid 550); 19 May 2020 08:55:03 -0000
+Received: (qmail 9992 invoked by uid 550); 23 May 2017 08:06:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +12,143 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24169 invoked from network); 19 May 2020 02:59:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1589857160;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=e6SFTuDDS3WlzgrZpvCk2AJ+lzfr9j7SmOxtGX/dfa0=;
-	b=KcYOlrsrtnd1dMQxvaodVsxcWWAUT0FmQ0OLHnUAGtRKoonsXFniwmknUdWD8kDzU2rEac
-	V2NrHgawiuJLTq7l7H6h0PyZYAl6tmGH+36I82CZOHuj+Yt5Y3zTCCXPCU9YxdDdv1vQUW
-	jxrbiy180XjLv0xm4e9UA4ArkAL2+ks=
-X-MC-Unique: eczWmJbMObqhF0tHBVhl9g-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=e6SFTuDDS3WlzgrZpvCk2AJ+lzfr9j7SmOxtGX/dfa0=;
-        b=AOyZ9ocxJaDR76Wivg8D9wY5smXwzSlSokNg1hX6MmrKMYiNfG4dFRhgRmag6FdYgd
-         EbxU44t/U2lvBRezDqFeHVfOh2ydRvO25G/7D68cZYwcnGmfYml0iaNnlpgVFvjnrP4y
-         vDE2ZQxOMwaogyNRMy+LmG2XnxzR2AwZSzOeczRSm+S1/VviXN4ZF0koI88Jlo2NMoGx
-         dZkeoLDC24CMejfVCq0heQVkOmnuEO0Z23sMw66/Q1dk3Q0pusJrbKnssPDnUYxe6vr4
-         Gm5+9aJN4cCepv+RrkjazSyttfVo44878lL/LYh2CnOdBEjnn6jWekGSg+Z2NdLgFK+T
-         E3og==
-X-Gm-Message-State: AOAM533yWS4cxYbh/iXFLJ7YN6OX7ONey4fwSmvldPzGYDON4L6+OV3M
-	aBzILN/OYxC8Q4M7Q/xludc/EgsZt6Wll8j0dtzlVzgHGg2Ks/WXEFzRYKafsNW/VDJjkc3Ggiw
-	AlL22Su/Fs7eHZvBDw/ggs0Lcubtjdmf5vgYiCkh9eEFD
-X-Received: by 2002:aed:3788:: with SMTP id j8mr19347724qtb.113.1589857157252;
-        Mon, 18 May 2020 19:59:17 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyflj30GcSXHXNb5UxtpI5ooUob3dK0vqQRAQwv8Hv+2sjSUiSjfoXObnYtPnYD/YxDaIiAAIwUFco6QmcPOnI=
-X-Received: by 2002:aed:3788:: with SMTP id j8mr19347706qtb.113.1589857156904;
- Mon, 18 May 2020 19:59:16 -0700 (PDT)
+Received: (qmail 9952 invoked from network); 23 May 2017 08:06:51 -0000
+Message-ID: <889256.295838521-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Tue, 23 May 2017 08:06:34 +0000
 MIME-Version: 1.0
-From: Hardik Vyas <hvyas@redhat.com>
-Date: Tue, 19 May 2020 08:29:05 +0530
-Message-ID: <CAOo2v=DTvPoytxQ8QiEQuYvw2A+Us0ZVRmkuGr4zgQNMHAf=7Q@mail.gmail.com>
-To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="00000000000014cc1805a5f777d6"
-Subject: [oss-security] CVE-2020-10736 ceph: authorization bypass in monitor and manager daemons
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-999345.197183178"
+Subject: [oss-security] qpdf: three infinite loop in libqpdf
 
---00000000000014cc1805a5f777d6
-Content-Type: text/plain; charset="UTF-8"
+------MIME delimiter for sendEmail-999345.197183178
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Hello,
+Description:
+qpdf QPDF is a command-line program that does structural, content-preserving transformations on PDF files.
 
-An authorization bypass vulnerability was found in Ceph versions 15.2.0 and
-later, where the ceph-mon and ceph-mgr daemons do not properly restrict
-access, resulting in gaining access to unauthorized resources. This flaw
-allows an authenticated client to modify the configuration and possibly
-conduct further attacks.
+I discovered three infinite loop. Upstream didn’t provide a feedback, so they might have the same root cause.
 
-In ceph-mon daemon, the "kludge" for older clients in handle_command()
-allows any authenticated client access to the three whitelisted commands.
-An attacker with "mon r" caps can exploit this, e.g. to change
-configuration parameters using injectargs. For ceph-mgr daemon, in
-handle_command(MCommand), messages are queued to adminsocket without access
-checks if fsid is present. This can be exploited by an attacker without
-manager caps to run any MCommand including "config set".
+# qpdf $FILE -
+==8000==ERROR: AddressSanitizer: stack-overflow on address 0x7fff9cf4efd8 (pc 0x7f925abe7e23 bp 0x7fff9cf4f050 sp 0x7fff9cf4efe0 T0)
+    #0 0x7f925abe7e22 in QPDFObjectHandle::assertInitialized() const /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:1380
+    #1 0x7f925abe38aa in QPDFObjectHandle::isIndirect() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:241:5
+    #2 0x7f925abe38aa in QPDFObjectHandle::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:71
+    #3 0x7f925ad2ca5d in QPDFObjectHandle::ReleaseResolver::releaseResolved(QPDFObjectHandle&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDFObjectHandle.hh:554:8
+    #4 0x7f925ad2ca5d in QPDF_Array::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Array.cc:19
+    #5 0x7f925abe3c24 in QPDFObject::ObjAccessor::releaseResolved(QPDFObject*) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDFObject.hh:67:6
+    #6 0x7f925abe3c24 in QPDFObjectHandle::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:80
+    #7 0x7f925ad30a6e in QPDFObjectHandle::ReleaseResolver::releaseResolved(QPDFObjectHandle&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDFObjectHandle.hh:554:8
+    #8 0x7f925ad30a6e in QPDF_Dictionary::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Dictionary.cc:23
+    #9 0x7f925abe3c24 in QPDFObject::ObjAccessor::releaseResolved(QPDFObject*) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDFObject.hh:67:6
+    #10 0x7f925abe3c24 in QPDFObjectHandle::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:80
+    #11 0x7f925ad30a6e in QPDFObjectHandle::ReleaseResolver::releaseResolved(QPDFObjectHandle&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDFObjectHandle.hh:554:8
+    #12 0x7f925ad30a6e in QPDF_Dictionary::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Dictionary.cc:23
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00176-qpdf-infiniteloop1
+CVE:
+CVE-2017-9208
 
-CVE-2020-10736 has been assigned for this flaw. Octopus v15.2.2 release
-announcement : https://ceph.io/releases/v15-2-2-octopus-released/
+############################
 
-Upstream patches:
+# qpdf $FILE -
+    #0 0x427108 in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:323
+    #1 0x50ce78 in operator new(unsigned long) /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_new_delete.cc:78
+    #2 0x7fe47c18de58 in std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator const&) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf3e58)
+    #3 0x7fe47c18ec3a in std::string::_Rep::_M_clone(std::allocator const&, unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf4c3a)
+    #4 0x7fe47c18ece3 in std::string::reserve(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf4ce3)
+    #5 0x7fe47c656405 in std::string::push_back(char) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/basic_string.h:1072:10
+    #6 0x7fe47c656405 in std::string::operator+=(char) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/basic_string.h:968
+    #7 0x7fe47c656405 in QPDFTokenizer::presentCharacter(char) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFTokenizer.cc:189
+    #8 0x7fe47c65d19a in QPDFTokenizer::readToken(PointerHolder, std::string const&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFTokenizer.cc:519:6
+    #9 0x7fe47c61da83 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:873:23
+    #10 0x7fe47c61f018 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:939:15
+    #11 0x7fe47c6122d4 in QPDFObjectHandle::parse(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:841:12
+    #12 0x7fe47c553ec1 in QPDF::readObject(PointerHolder, std::string const&, int, int, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1017:31
+    #13 0x7fe47c542a0b in QPDF::reconstruct_xref(QPDFExc&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:393:7
+    #14 0x7fe47c57e826 in QPDF::readObjectAtOffset(bool, long long, std::string const&, int, int, int&, int&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1359:6
+    #15 0x7fe47c59e56d in QPDF::resolve(int, int) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1474:7
+    #16 0x7fe47c5f4854 in QPDF::Resolver::resolve(QPDF*, int, int) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDF.hh:520:19
+    #17 0x7fe47c5f4854 in QPDFObjectHandle::dereference() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:1520
+    #18 0x7fe47c626227 in QPDFObjectHandle::isName() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:184:5
+    #19 0x7fe47c626227 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:1074
+    #20 0x7fe47c61f018 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:939:15
+    #21 0x7fe47c6122d4 in QPDFObjectHandle::parse(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:841:12
+    #22 0x7fe47c553ec1 in QPDF::readObject(PointerHolder, std::string const&, int, int, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1017:31
+    #23 0x7fe47c542a0b in QPDF::reconstruct_xref(QPDFExc&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:393:7
+    #24 0x7fe47c57e826 in QPDF::readObjectAtOffset(bool, long long, std::string const&, int, int, int&, int&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1359:6
+    #25 0x7fe47c59e56d in QPDF::resolve(int, int) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1474:7
+    #26 0x7fe47c5f4854 in QPDF::Resolver::resolve(QPDF*, int, int) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDF.hh:520:19
+    #27 0x7fe47c5f4854 in QPDFObjectHandle::dereference() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:1520
+    #28 0x7fe47c626227 in QPDFObjectHandle::isName() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:184:5
+    #29 0x7fe47c626227 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:1074
+    #30 0x7fe47c61f018 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:939:15
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00177-pdf-infiniteloop2
+CVE:
+CVE-2017-9209
 
-[master]
-https://github.com/ceph/ceph/commit/c7e7009a690621aacd4ac2c70c6469f25d692868
-[v15.2.2]
-https://github.com/ceph/ceph/commit/f2cf2ce1bd9a86462510a7a12afa4e528b615df2
+############################
 
-Credit: Olle Segerdahl
+# qpdf $FILE -
+==13070==ERROR: AddressSanitizer: stack-overflow on address 0x7ffd0ba0efb0 (pc 0x00000042711b bp 0x7ffd0ba0f8a0 sp 0x7ffd0ba0efb0 T0)
+    #0 0x42711a in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:325
+    #1 0x50ce78 in operator new(unsigned long) /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_new_delete.cc:78
+    #2 0x7f949448ae58 in std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator const&) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf3e58)
+    #3 0x7f949448bc3a in std::string::_Rep::_M_clone(std::allocator const&, unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf4c3a)
+    #4 0x7f949448bce3 in std::string::reserve(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf4ce3)
+    #5 0x7f9494a4451d in std::string::push_back(char) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/basic_string.h:1072:10
+    #6 0x7f9494a4451d in std::string::operator+=(char) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/basic_string.h:968
+    #7 0x7f9494a4451d in QPDF_Name::normalizeName(std::string const&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Name.cc:24
+    #8 0x7f9494a3ddaa in QPDF_Dictionary::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Dictionary.cc:35:12
+    #9 0x7f949490c23f in QPDFObjectHandle::unparseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:699:23
+    #10 0x7f9494909e8c in QPDFObjectHandle::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:685:11
+    #11 0x7f9494a39cb0 in QPDF_Array::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Array.cc:30:20
+    #12 0x7f949490c23f in QPDFObjectHandle::unparseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:699:23
+    #13 0x7f9494909e8c in QPDFObjectHandle::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:685:11
+    #14 0x7f9494a3de56 in QPDF_Dictionary::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Dictionary.cc:36:27
+    #15 0x7f949490c23f in QPDFObjectHandle::unparseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:699:23
+    #16 0x7f9494909e8c in QPDFObjectHandle::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:685:11
+    #17 0x7f9494a39cb0 in QPDF_Array::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Array.cc:30:20
+    #18 0x7f949490c23f in QPDFObjectHandle::unparseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:699:23
+    #19 0x7f9494909e8c in QPDFObjectHandle::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:685:11
+    #20 0x7f9494a3de56 in QPDF_Dictionary::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Dictionary.cc:36:27
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00177-qpdf-infiniteloop3
+CVE:
+CVE-2017-9210
 
-Regards,
--- 
+############################
 
-Hardik Vyas / Red Hat Product Security
+Affected version:
+6.0.0
 
-BD48 C633 DE34 733A BBC3  3B72 8A14 AEBB D68B 9381
+Fixed version:
+N/A
 
---00000000000014cc1805a5f777d6--
+Commit fix:
+N/A
+
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2017-02-13: bug discovered and reported to upstream
+2017-05-21: blog post about the issue
+2017-05-23: CVE assigned
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/21/qpdf-three-infinite-loop-in-libqpdf/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-999345.197183178--
 
