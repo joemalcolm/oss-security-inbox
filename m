@@ -1,48 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/21/5
-Message-ID: <e36d328405be4573a772886c8af4f31b@imshyb01.MITRE.ORG>
-Date: Fri, 20 Jan 2017 22:26:54 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: display: virtio-gpu-3d: memory leakage in virgl_resource_attach_backing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/3
+Message-ID: <6c663f3b-985d-083e-8b00-d428e34b2e29@redhat.com>
+Date: Mon, 22 May 2017 18:53:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> [] Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is
-> vulnerable to a memory leakage issue. It could occur while processing
-> 'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
-> 
-> A guest user/process could use this flaw to leak host memory resulting in DoS.
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg00154.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1415281
-> http://git.qemu.org/?p=qemu.git;a=commit;h=33243031dad02d161225ba99d782616da133f689
 
-Use CVE-2017-5552 for this (i.e., a memory consumption issue, not an
-information disclosure issue).
+On 2017-05-22 5:44 PM, Kurt H Maier wrote:
+> On Mon, May 22, 2017 at 03:13:42PM -0600, Kurt Seifried wrote:
+>> Well actually they can. Why do you think we (DWF) have an extensible Json format with the data hosted in git? Hint: so people can contribute.
+> Is it the opaque Google Docs form that fosters contribution, or the
+> gatekept pull-request process requiring a Github account that fosters
+> contribution?
+Neither, that's part of what I'm figuring out. Most likely it'll look
+like a trusted pool of people (aka CVE Mentors) that can either
+contribute or more easily gatekeep). Also the doc are out of date and
+the process is evolving rapidly so I haven't really bothered updating
+them since things keep changing.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> At what point in the DWF process is third-party input expected to occur?
 
-iQIcBAEBCAAGBQJYgtMQAAoJEHb/MwWLVhi2Z6IP/3+ft1EpX+/Dn7Ja15Ss8CvI
-JBMEN+BQmrDJhNbGEGIUGectfmW4lB2cIyz4BsCbCx8Pxq13vRB2UxIytncBDyEz
-GPtRRp1eC5iLBfJwWXYLftOYDkst7yqbXenLavjoPu2VtvWnD412W+63BhR/fRGe
-105WM3tY1Tx7DcCi6Bnhv9cNDIazlgjFQ9YbKdjL99dkLwZo8EIlJD/rcHI82K1f
-ugotHzcZ3kw2f/W4lf4kNH1+bCGU3Te0osyNlSgXrAYzWAulnDWwW+F32Syzqnk0
-jQ5d0yDBuFOlu1uzb5kpI1Vv1M69lwOYf9XPhCxZ6mDub0BCq1JvNC9CRNNE5Yub
-V4CEM6Grgy/OhQs8ZEbGL7H7Sq2gwTGEC5lWKpyxKSpPpitnfOV+aXSaHw494Sl9
-LO5BmJvqImD8EjBfyLS+cJD3JLj0k1WIqbzlnGrNMg9kYURa0PJTnUSrNK3m/TpU
-KnqwodxLI/sX378ECCkPzz4ibMD5dgAIkyH1qJr/PS2f+LPjFhY9+40wGe5haUGa
-a0ibuJ2RNf7SfEDGRytkugwwk2mOs1DtNDhTDf/d3dPVwDywOYHu+WeT2zz6bZ51
-0l+576HoGuNtBj8UjofYGtcNIJk2LSe5/oNEd9kR+lzsWM+2jRuqWJSAaZ1p+XOG
-SfnRN1+bCmCMywfG4gYb
-=Z6dJ
------END PGP SIGNATURE-----
+Good question. What exactly is it you want to input? CVE requests? CVE
+assignments? Modify existing CVE entries?
+> The matter is not addressed in the documentation repository.  Feel free 
+> to mail me offlist if the answers would induce excessive cognitive 
+> dissonance.
+Not really. the docs are out of date and I'm more concerned about
+evolving this right now then updating documentation.
+
+>
+> khm
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
