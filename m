@@ -1,39 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/4
-Message-ID: <b3892063-b093-4353-88e3-49cbec582422@redhat.com>
-Date: Tue, 25 Apr 2017 11:20:12 +0200
-From: Andrej Nemec <anemec@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7477 kernel: net: Heap overflow in skb_to_sgvec in macsec.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/15
+Message-ID: <e1edcfd7-0547-c5c5-004e-fd6ade086b2e@redhat.com>
+Date: Tue, 23 May 2017 08:43:25 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "Perry E. Metzger" <perry@...rmont.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
-Hello folks,
 
-Red Hat has been notified about a possible heap overflow vulnerability
-in kernel networking, specifically in the macsec.c module. We have
-assigned a CVE-2017-7477 for this issue. Corresponding commit which
-fixes this issue can be found at [1]. There is no preliminary impact
-available as of now.
 
-Short description:
+On 2017-05-22 8:28 PM, Perry E. Metzger wrote:
+> On Mon, 22 May 2017 20:04:41 -0600 Kurt Seifried
+> <kseifried@...hat.com> wrote:
+>>> Primarily, freeform discussion of the sort that occurred on this
+>>> list as a natural outcropping of the CVE request process led to
+>>> people linking to verification code, temporary mitigations,
+>>> highlighting of incomplete fixes, and the sort of information
+>>> that was requested earlier in this thread.  This ability to
+>>> easily chip in to ongoing situations wasn't just useful for mitre
+>>> staff doing CVE work, it was also useful for the "community of
+>>> practice" looking for the latest information regarding
+>>> self-defense.  I've prevented more than one attack thanks to a
+>>> one-off reply from someone in response to a CVE request.    
+>> You can still do this. oss-security is a list run by Solar Designer
+>> (openwall.com). I happen to be a long time poster/moderator, but I
+>> have no official control/etc (I don't even block posts, that's up
+>> to solar, I just allow stuff or ignore it when it's up for
+>> moderation).
+> Maybe after CVEs are assigned the forms could be emailed to the list
+> as a replacement for the old request emails, to kick off
+> discussion and alert people to their existence?
+>
+> Perry
+The primary goals of the DWF are:
 
-A heap overflow vulnerability was found in the Linux kernel in macsec
-module. Specifying MAX_SKB_FRAGS + 1 and using NETIF_F_FRAGLIST which
-calls skb_to_sgvec will overflow the heap.
+1) Creating CVE Mentors that can do CVE assignments, train other CVE
+Mentors, and help create CNAs
+2) Creating CNAs for OpenSource so CVE assignments happen as close to
+the vulnerability as possible
+3) "retail" CVE assignments (e.g. people using iwantacve.org)
+4) Publishing that data to MITRE quickly as per the CNA guidelines, and
+the community in general (so at a minimum you can just monitor github,
+there may be more options moving forwards)
 
-This is now available as a Red Hat bugzilla at [2].
+And that's basically it. If people want to monitor the CVEs the DWF
+assigns and run a git to email gateway essentially they are welcome to
+assuming they get Solar's approval (it's his list so his rules), but
+it's out of scope for the DWF at this point.
 
-[1]
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4d6fa57b4dab0d77f4d8e9d9c73d1e63f6fe8fee
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=1445207
-
-Best Regards,
+If people want the cat to have a nice bell they may have to step up and
+actually put a bell on the cat.
 
 -- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
