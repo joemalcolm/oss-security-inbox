@@ -1,55 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/15/3
-Message-ID: <CANO=Ty3Wks6Jm0m13myBnuRMnDDipRc0A7ZgjU5R+j3EUtLLHQ@mail.gmail.com>
-Date: Sun, 15 Jan 2017 11:48:46 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: linux-distros subscription
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/6
+Message-ID: <20170523021702.GA15419@wopr>
+Date: Mon, 22 May 2017 19:17:02 -0700
+From: Kurt H Maier <khm@...ops.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jan 14, 2017 at 7:37 PM, Solar Designer <solar@...nwall.com> wrote:
-
-> Hi Michal,
+On Mon, May 22, 2017 at 08:04:41PM -0600, Kurt Seifried wrote:
 >
-> On Fri, Jan 13, 2017 at 10:36:11AM +0100, Michal Hrusecky wrote:
-> > I would like to request subscription to linux-distros mailing list. I'm
-> one of
-> > the maintainers of Turris OS - OpenWRT fork used on Turris and Turris
-> Omnia
-> > routers[1].
-> >
-> > Not sure what has to be part of application, on wiki[2] I found only
-> that I
-> > should request it here.
->
-> Right.  This basically tells us there's interest, and from whom and for
-> what reasons.  That's useful, so thanks for posting your request.
->
->
+> I disagree. If not assigning CVE's on the list kills this list, then...
+> wow. Good to know I personally kept this list up and running for a few
+> years.
 
-> I also notice you've been on oss-security for half a year.  That's good.
-> However, I wasn't able to find any record of your past participation in
-> this specific community.  You might want to get more involved first.
->
+Nobody said that, and I haven't said anything that wasn't said when this
+change was first dropped on us.  The difference you're talking around is
+that vulnerabilities used to appear on this list of necessity, and now
+we either have to hope reporters cross-post or else monitor some number
+of different databases and post everything ourselves.  If you'll recall,
+this is why it was suggested that non-embargoed webforum submissions
+automatically post here.  
 
-The problem is how do they do that? There are very few meaningful on ramps
-to information security, especially at the distribution level. If anyone
-has good answers for this please post here.
+But it's clear nobody was interested in making that happen, and now we
+get a pile of infrastructure instead.  Que sera sera, but I stand by 
+the opinion that the new processes have lost something along the way.
 
+> Which README specifically (there's a bunch), feel free to reply offlist.
 
->
-> And if/when we do re-open the list for additional distros, you'll be
-> able to re-request membership.
->
-> Alexander
->
+I've submitted a pull request, since that seems to be the primary form
+of human communication now.
 
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+khm
