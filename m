@@ -1,75 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/11
-Message-Id: <201705031910.52415@pali>
-Date: Wed, 3 May 2017 19:10:52 +0200
-From: Pali Rohár <pali.rohar@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: MySQL - Again Riddle vulnerability (public disclosure)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/2
+Message-ID: <b2da8b9c-d1f3-ff80-971f-86f8f032544c@redhat.com>
+Date: Mon, 22 May 2017 18:51:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Martin <martin.gubri@...masoft.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: How to request a CVE for open source projects
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 03 May 2017 18:23:09 Pali Rohár wrote:
-> Hi!
-> 
-> The Riddle vulnerability (CVE-2017-3305) we have it there again.
-> 
-> So what happened?
-> 
-> In 2015 was discovered BACKRONYM vulnerability (CVE-2015-3152) which
-> allowed an attacker to downgrade and snoop on the SSL encrypted
-> connection between MySQL client and server. Oracle claimed it was
-> fixed in MySQL 5.5.49. Later in February 2017 I discovered The
-> Riddle vulnerability (CVE-2017-3305) which allowed an attacker to do
-> man in the middle attack. Oracle claimed it was fixed in MySQL
-> 5.5.55.
-> 
-> And now in April 2017 I found out that it is still not fixed in MySQL
-> 5.5.55 properly and I named this defect Again Riddle. Basically fix
-> for The Riddle in 5.5.55 introduced Again Riddle.
-> 
-> And what is the problem?
-> 
-> If MySQL client library libmysqlclient.so is compiled from source
-> code without SSL support via cmake switch -DWITH_SSL=OFF, then all
-> SSL related functions from libmysqlclient.so return success
-> (non-error) value. And function mysql_real_connect() from
-> libmysqlclient.so connects to MySQL server via plain text protocol,
-> even if client enforced SSL mode with certificate verification.
-> Which means that function for enforcing SSL mode does nothing if
-> libmysqlclient.so is compiled without SSL support. So attacker can
-> do exactly same what for The Riddle vulnerability.
-> 
-> So every application which links to libmysqlclient.so and require SSL
-> encryption of MySQL protocol is affected.
-> 
-> I contacted Oracle, MariaDB and Percona security teams about this
-> problem and after discussion we scheduled public disclosure to May 3.
-> 
-> Oracle decided that this Again Riddle vulnerability would not have
-> CVE identifier and would be part of original The Riddle
-> vulnerability CVE-2017-3305.
-> 
-> I'm not sure if this is correct decision, as MariaDB 5.5 was not
-> affected by The Riddle vulnerability, but is affected by Again
-> Riddle.
-> 
-> I was told that prebuild binaries are not affected as they are
-> compiled with SSL support, but lot of distributions compile
-> libraries from source code by their own which means they could be
-> affected.
-> 
-> I prepared POC program written in C to verify if system installed
-> libmysqlclient.so library is vulnerable or not. You can find it on
-> the new Again Riddle website together with some Q&A:
-> 
-> http://again.riddle.link/
 
-Yesterday Oracle released new MySQL 5.5.56 which disable compilation 
-without SSL support, just to address this issue.
 
-So it is not possible to compile MySQL without SSL support anymore.
+On 2017-05-22 2:21 PM, Martin wrote:
+> On 22/05/2017 at 15:16, Kurt Seifried wrote:
+>
+>> Ah, I recently did a large number of CVE assignments, I haven't emailed out
+>> to the sequesters yet, yours was
+>> https://github.com/distributedweaknessfiling/DWF-CVE-2017-1000000/blob/f2e15ac3468dd382d9ffa3d5acc032c106f3248c/CVE-2017-1000025.json
+>> I believe.
+> I was in the same situation than Michael. I found mine now.
+> Is it normal that these CVE aren't accessible on MITRE?
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000025
+>
+We (MITRE, the CVE board and various CNAs) ar working on making that
+faster (read: automated). So yeah, it's bormal, but hopefully as time
+goes on it'll get better.
 
 -- 
-Pali Rohár
-pali.rohar@...il.com
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
