@@ -1,183 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/9
-Message-ID: <470644.641990901-sendEmail@localhost>
-Date: Tue, 23 May 2017 08:04:01 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: imageworsener: multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/16
+Message-ID: <CAA4i3gZUAwBc_ieNHF5qJOiQWBmmqxuqwQLthWj1aa8BkDRWkw@mail.gmail.com>
+Date: Tue, 23 May 2017 18:46:45 +0000
+From: Roee Hay <roeehay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux lp.c Out-of-Bounds Write via Kernel Command-line (CVE-2017-1000363)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-imageworsener is a utility for image scaling and processing.
+Details
+=======
+Due to a missing bounds check in the lp driver, and the fact that
+parport_ptr integer is static, a kernel command-line adversary (can happen
+due to bootloader vulnerabilities in Secure Boot environments, e.g. Nexus
+6's CVE-2016-10277) can overflow the parport_nr array in the following
+code, by appending many (>LP_NO) lp=none arguments to the command line.
+CONFIG_PRINTER=y is required.
 
-After have fuzzed the 1.3.0 release and have found something already documented in the previous posts, I re-tested the new release and the fuzzer turned up some issues. I don’t know if those issues were present also in the old releases or the recent commits introduced them.
+static int parport_nr[LP_NO] = { [0 ... LP_NO-1] = LP_PARPORT_UNSPEC };
+static char *parport[LP_NO];
+[...]
+#ifndef MODULE
+static int __init lp_setup (char *str)
+{
+static int parport_ptr;
+[...]
+} else if (!strncmp(str, "parport", 7)) {
+    int n = simple_strtoul(str+7, NULL, 10);
+    if (parport_ptr < LP_NO)
+        parport_nr[parport_ptr++] = n;
+    else
+        printk(KERN_INFO "lp: too many ports, %s ignored.\n",
+               str);
+} else if (!strcmp(str, "auto")) {
+    parport_nr[0] = LP_PARPORT_AUTO;
+} else if (!strcmp(str, "none")) {
+    parport_nr[parport_ptr++] = LP_PARPORT_NONE;
+[...]
+#endif
+[...]
+__setup("lp=", lp_setup);
 
-# imagew $FILE /tmp/out -outfmt bmp
-src/imagew-cmd.c:850:46: runtime error: division by zero
-src/imagew-cmd.c:850:29: runtime error: value inf is outside the range of representable values of type 'int'
-Commit fix:
-https://github.com/jsummers/imageworsener/commit/dc49c807926b96e503bd7c0dec35119eecd6c6fe
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00278-imageworsener-fpe-outside-int
-CVE:
-CVE-2017-9201
 
-############################
+Vulnerable:
+=======
+Linux 4.x (4.12-rc1 and below)
+Linux 3.x
+Linux 2.6.x
+Linux 2.4.x
+Linux 2.2.x
 
-# imagew $FILE /tmp/out -outfmt bmp
-src/imagew-cmd.c:854:45: runtime error: division by zero
-src/imagew-cmd.c:854:28: runtime error: value inf is outside the range of representable values of type 'int'
-Commit fix:
-https://github.com/jsummers/imageworsener/commit/dc49c807926b96e503bd7c0dec35119eecd6c6fe
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00279-imageworsener-fpe-outside-int_2
-CVE:
-CVE-2017-9202
+Patch:
+======
+https://github.com/torvalds/linux/commit/3e21f4af170bebf47c187c1ff8bf155583c9f3b1
 
-############################
-
-# imagew $FILE /tmp/out -outfmt bmp
-src/imagew-main.c:960:12: runtime error: index -1 out of bounds for type 'struct iw_channelinfo_out [4]'
-Commit fix:
-https://github.com/jsummers/imageworsener/commit/a4f247707f08e322f0b41e82c3e06e224240a654
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00280-imageworsener-oob-iw_channelinfo_out
-CVE:
-CVE-2017-9203
-
-############################
-
-# imagew $FILE /tmp/out -outfmt bmp
-==29040==ERROR: AddressSanitizer: SEGV on unknown address 0x60b00a000086 (pc 0x7f693a6b6a30 bp 0x7ffc6ae53710 sp 0x7ffc6ae536f0 T0)                  
-==29040==The signal is caused by a READ memory access.                                                                                               
-    #0 0x7f693a6b6a2f in iw_get_ui16le /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:405:23              
-    #1 0x7f693a6b6a2f in iw_get_ui16_e /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:435                 
-    #2 0x7f693a67d008 in iwjpeg_scan_exif_ifd /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:130:14       
-    #3 0x7f693a67d008 in iwjpeg_scan_exif /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:182              
-    #4 0x7f693a67d008 in iwjpeg_read_saved_markers /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:205     
-    #5 0x7f693a67d008 in iw_read_jpeg_file /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:430             
-    #6 0x7f693a5ed21d in iw_read_file_by_fmt /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-allfmts.c:43:12      
-    #7 0x510184 in iwcmd_run /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:1191:6                         
-    #8 0x50c1a6 in iwcmd_main /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:3018:7                        
-    #9 0x50c1a6 in main /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:3067                                
-    #10 0x7f69395f6680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                          
-    #11 0x41b048 in _init (/usr/bin/imagew+0x41b048)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:405:23 in iw_get_ui16le
-==29040==ABORTING
-Commit fix:
-https://github.com/jsummers/imageworsener/commit/b45cb1b665a14b0175b9cb1502ef7168e1fe0d5d
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00281-imageworsener-invalidread-iw_get_ui16le
-CVE:
-CVE-2017-9204
-
-############################
-
-# imagew $FILE /tmp/out -outfmt bmp
-==9730==ERROR: AddressSanitizer: SEGV on unknown address 0x60b0ff100086 (pc 0x7f4178fefadb bp 0x7fffcee12570 sp 0x7fffcee12550 T0)                   
-==9730==The signal is caused by a READ memory access.                                                                                                
-    #0 0x7f4178fefada in iw_get_ui16be /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:422:24              
-    #1 0x7f4178fefada in iw_get_ui16_e /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:436                 
-    #2 0x7f4178fb6008 in iwjpeg_scan_exif_ifd /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:130:14       
-    #3 0x7f4178fb6008 in iwjpeg_scan_exif /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:182              
-    #4 0x7f4178fb6008 in iwjpeg_read_saved_markers /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:205     
-    #5 0x7f4178fb6008 in iw_read_jpeg_file /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:430             
-    #6 0x7f4178f2621d in iw_read_file_by_fmt /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-allfmts.c:43:12      
-    #7 0x510184 in iwcmd_run /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:1191:6                         
-    #8 0x50c1a6 in iwcmd_main /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:3018:7                        
-    #9 0x50c1a6 in main /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:3067                                
-    #10 0x7f4177f2f680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                          
-    #11 0x41b048 in _init (/usr/bin/imagew+0x41b048)                                                                                                 
-                                                                                                                                                     
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:422:24 in iw_get_ui16be
-==9730==ABORTING
-Commit fix:
-https://github.com/jsummers/imageworsener/commit/b45cb1b665a14b0175b9cb1502ef7168e1fe0d5d
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00282-imageworsener-invalidread-iw_get_ui16be
-CVE:
-CVE-2017-9205
-
-############################
-
-# imagew $FILE /tmp/out -outfmt bmp
-==24197==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x608000000a70 at pc 0x7f1c90ffbb6b bp 0x7ffd41b1af40 sp 0x7ffd41b1af38            
-READ of size 1 at 0x608000000a70 thread T0                                                                                                           
-    #0 0x7f1c90ffbb6a in iw_get_ui16le /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:405:23              
-    #1 0x7f1c90ffbb6a in iw_get_ui16_e /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:435                 
-    #2 0x7f1c90fc2008 in iwjpeg_scan_exif_ifd /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:130:14       
-    #3 0x7f1c90fc2008 in iwjpeg_scan_exif /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:182              
-    #4 0x7f1c90fc2008 in iwjpeg_read_saved_markers /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:205     
-    #5 0x7f1c90fc2008 in iw_read_jpeg_file /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:430             
-    #6 0x7f1c90f3221d in iw_read_file_by_fmt /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-allfmts.c:43:12      
-    #7 0x510184 in iwcmd_run /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:1191:6                         
-    #8 0x50c1a6 in iwcmd_main /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:3018:7                        
-    #9 0x50c1a6 in main /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:3067                                
-    #10 0x7f1c8ff3b680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                          
-    #11 0x41b048 in _init (/usr/bin/imagew+0x41b048)                                                                                                 
-                                                                                                                                                     
-Address 0x608000000a70 is a wild pointer.
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:405:23 in iw_get_ui16le
-Commit fix:
-https://github.com/jsummers/imageworsener/commit/b45cb1b665a14b0175b9cb1502ef7168e1fe0d5d
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00283-imageworsener-heapoverflow-iw_get_ui16le
-CVE:
-CVE-2017-9206
-
-############################
-
-# imagew $FILE /tmp/out -outfmt bmp
-==9198==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x608000004070 at pc 0x7ffb620f1b97 bp 0x7fff09707940 sp 0x7fff09707938
-READ of size 1 at 0x608000004070 thread T0
-    #0 0x7ffb620f1b96 in iw_get_ui16be /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:422:24
-    #1 0x7ffb620f1b96 in iw_get_ui16_e /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:436
-    #2 0x7ffb620b8008 in iwjpeg_scan_exif_ifd /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:130:14
-    #3 0x7ffb620b8008 in iwjpeg_scan_exif /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:182
-    #4 0x7ffb620b8008 in iwjpeg_read_saved_markers /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:205
-    #5 0x7ffb620b8008 in iw_read_jpeg_file /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-jpeg.c:430
-    #6 0x7ffb6202821d in iw_read_file_by_fmt /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-allfmts.c:43:12
-    #7 0x510184 in iwcmd_run /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:1191:6
-    #8 0x50c1a6 in iwcmd_main /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:3018:7
-    #9 0x50c1a6 in main /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-cmd.c:3067
-    #10 0x7ffb61031680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #11 0x41b048 in _init (/usr/bin/imagew+0x41b048)
-
-Address 0x608000004070 is a wild pointer.
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-gfx/imageworsener-1.3.1/work/imageworsener-1.3.1/src/imagew-util.c:422:24 in iw_get_ui16be
-Commit fix:
-https://github.com/jsummers/imageworsener/commit/b45cb1b665a14b0175b9cb1502ef7168e1fe0d5d
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00284-imageworsener-heapoverflow-iw_get_ui16be
-CVE:
-CVE-2017-9207
-
-############################
-
-Affected version:
-1.3.1
-
-Fixed version:
-1.3.2 (not released atm)
-
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
 
 Timeline:
-2017-05-10: bugs discovered and reported to upstream
-2017-05-20: blog post about the issue
-
-Note:
-These bugs were found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/20/imageworsener-multiple-vulnerabilities/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
+=========
+23-May-17: Public disclosure.
+22-May-17: Patch available (Linux mainline 4.12-rc2).
+17-May-17: CVE-2017-1000363 assigned by Kurt Seifried, Red Hat Product
+Security.
+16-May-17: Patch available (Linux Char/Misc drivers development tree).
+16-May-17: Reported.
 
