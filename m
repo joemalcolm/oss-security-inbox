@@ -1,35 +1,217 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/3
-Message-ID: <alpine.LFD.2.20.1702131041330.18948@wniryva>
-Date: Mon, 13 Feb 2017 10:45:42 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-5957 Virglrenderer: stack overflow in vrend_decode_set_framebuffer_state
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/25/1
+Message-ID: <6df1ae14-5736-6a39-d761-41884c27ce2b@igalia.com>
+Date: Thu, 25 May 2017 14:56:31 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2017-0004
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0004
+------------------------------------------------------------------------
 
-Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
-for the virtio GPU, is vulnerable to an stack buffer overflow issue. It could 
-occur when in vrend_decode_set_framebuffer_state.
+Date reported      : May 25, 2017
+Advisory ID        : WSA-2017-0004
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0004.html
+CVE identifiers    : CVE-2017-2496, CVE-2017-2504, CVE-2017-2505,
+                     CVE-2017-2506, CVE-2017-2508, CVE-2017-2510,
+                     CVE-2017-2514, CVE-2017-2515, CVE-2017-2521,
+                     CVE-2017-2525, CVE-2017-2526, CVE-2017-2528,
+                     CVE-2017-2530, CVE-2017-2531, CVE-2017-2536,
+                     CVE-2017-2539, CVE-2017-2544, CVE-2017-2547,
+                     CVE-2017-2549, CVE-2017-6980, CVE-2017-6984.
 
-A guest user/process could use this flaw to crash the Qemu process instance 
-resulting DoS.
+Several vulnerabilities were discovered in WebKitGTK+.
 
-Upstream patch:
----------------
-   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=926b9b3460a48f6454d8bbe9e44313d86a65447f
+CVE-2017-2496
+    Versions affected: WebKitGTK+ before 2.16.3.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1421126
+CVE-2017-2504
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting (UXSS). Description: A logic issue
+    existed in the handling of WebKit Editor commands. This issue was
+    addressed with improved state management.
 
-This issue was reported by Li Qiang of 360.cn Inc.
+CVE-2017-2505
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
 
-'CVE-2017-5957' assigned via -> https://cveform.mitre.org/
+CVE-2017-2506
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to Zheng Huang of the Baidu Security Lab working with Trend
+    Micro’s Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+CVE-2017-2508
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting (UXSS). Description: A logic issue
+    existed in the handling of WebKit container nodes. This issue was
+    addressed with improved state management.
+
+CVE-2017-2510
+    Versions affected: WebKitGTK+ before 2.16.3.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting (UXSS). Description: A logic issue
+    existed in the handling of pageshow events. This issue was addressed
+    with improved state management.
+
+CVE-2017-2514
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2515
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2521
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2525
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to Kai Kang (4B5F5F4B) of Tencent’s Xuanwu Lab (tencent.com)
+    working with Trend Micro’s Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2526
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to Kai Kang (4B5F5F4B) of Tencent’s Xuanwu Lab (tencent.com)
+    working with Trend Micro’s Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2528
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting (UXSS). Description: A logic issue
+    existed in the handling of WebKit cached frames. This issue was
+    addressed with improved state management.
+
+CVE-2017-2530
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to Wei Yuan of Baidu Security Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2531
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2536
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to Samuel Groß and Niklas Baumstark working with Trend
+    Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2539
+    Versions affected: WebKitGTK+ before 2.16.3.
+    Credit to Richard Zhu (fluorescence) working with Trend Micro's Zero
+    Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2544
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to 360 Security (@mj0011sec) working with Trend Micro's Zero
+    Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2547
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to lokihardt of Google Project Zero, Team Sniper (Keen Lab
+    and PC Mgr) working with Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-2549
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting (UXSS). Description: A logic issue
+    existed in frame loading. This issue was addressed with improved
+    state management.
+
+CVE-2017-6980
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+CVE-2017-6984
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or cause a denial of service (memory
+    corruption and application crash). Description: Multiple memory
+    corruption issues were addressed with improved memory handling.
+
+
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+May 25, 2017
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
