@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["720" "Wednesday" "10" "May" "2017" "07:32:46" "-0400" "Insu Yun" "wuninsu@gmail.com" "<CAGoFzNdT-DJpZNs8TOpC-e8viGTrDNE4uQs8rR7v0YrhEQTAvQ@mail.gmail.com>" "22" "Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton" nil nil nil "5" "2017051011:32:46" "[oss-security] CVE Request: Denial of Service in Dropbox lepton" (number mark "U       wuninsu@gmai May 10   22/720   " thread-indent "\"Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton\"\n") "<CAGoFzNfv6-Ubx7-6t7rOdA_sU06hE=8UhxpCJG8w5xSocgH9rg@mail.gmail.com>" ("<CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>" "<20170510061953.GA3445@hunt>" "<CAGoFzNfv6-Ubx7-6t7rOdA_sU06hE=8UhxpCJG8w5xSocgH9rg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3425" "Thursday" "25" "May" "2017" "21:37:44" "+0200" "Solar Designer" "solar@openwall.com" "<20170525193744.GA18620@openwall.com>" "65" "[oss-security] independent volunteers on distros list" "^Date:" nil nil "5" "2017052519:37:44" "[oss-security] independent volunteers on distros list" (number mark "        solar@openwa May 25   65/3425  " thread-indent "\"[oss-security] independent volunteers on distros list\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10042 invoked by uid 550); 10 May 2017 11:32:59 -0000
+Received: (qmail 28323 invoked by uid 550); 25 May 2017 19:38:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28159 invoked from network); 25 May 2017 19:37:49 -0000
+Message-ID: <20170525193744.GA18620@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 25 May 2017 21:37:44 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10011 invoked from network); 10 May 2017 11:32:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=OXL+P9ZbxT5DpyU4ODduArRAH0SuPymp+0JunanPX8o=;
-        b=K603yCgznjcolf/rb0vrCNuCISE1LQA6PnsWjrGk2ceQLd7fkuUb5WgsnqCeojh33E
-         VvNBMlfetCAfvcgszG0rjHRy67bnEAtVJVDbI5sSUPUg+Q5aMclIwQI6Xopt+K+nDQ4h
-         oSytzDrHml+UNu7RTiyYNw0dE/HgeZ7hYM/Ax8yXplh26abLgvcoSXA2Se8jxh/P/G0I
-         qSEfQdUT8KNHBRIIPFi9WMLNQUUvACQaZlR7+OzZ9mDCiCbLCAT2GgLAazhV91FwMM4n
-         RKiUjgWajZU2WSbyaf1GJe+UfqSseipkVdWzIcdprLAvxUOYy3cXp6E+xYpoYpJ2m2Q9
-         TtmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=OXL+P9ZbxT5DpyU4ODduArRAH0SuPymp+0JunanPX8o=;
-        b=QG+gCt2kBWblHywVe8q5/boft4BK89rjqQJLnhiPTTwvxSGACgg8++CE8RddbS79aF
-         +0YXj7MEbKHLRmIUGaS0uVUtrS9OVCNOzq02CVx/ZSagIXo00UP/Mp63/zaydS4g0U4Y
-         rz0sY8OJMwOfOX43VzZm93AjI4SDregGmHDis4xhzj2xZEbqrCpi8R0qRQMJA+rGIiMg
-         QGs+6/bsj5ZkN2xRKxuZq5POtJidvcmGg5FJyUg5AlAW+SHWulLWbri4CYcp1EpJE7d2
-         IAIAOaDuf+EOXOSbBt0VUJVe8visYXBoGvEoBKGusL/XDMdGpgcJVnLeiVxRoLoZqBtG
-         UYtA==
-X-Gm-Message-State: AODbwcAanoiS6P4EINmORqCx5G3M6uWG8wH5BW/uBTKWhqrgh0hI4WOK
-	a1BQZA6+Cnjol7nIaPD/wlbliWEMnA==
-X-Received: by 10.159.48.151 with SMTP id j23mr2480809uab.12.1494415967238;
- Wed, 10 May 2017 04:32:47 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAGoFzNfv6-Ubx7-6t7rOdA_sU06hE=8UhxpCJG8w5xSocgH9rg@mail.gmail.com>
-References: <CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>
- <20170510061953.GA3445@hunt> <CAGoFzNfv6-Ubx7-6t7rOdA_sU06hE=8UhxpCJG8w5xSocgH9rg@mail.gmail.com>
-From: Insu Yun <wuninsu@gmail.com>
-Date: Wed, 10 May 2017 07:32:46 -0400
-Message-ID: <CAGoFzNdT-DJpZNs8TOpC-e8viGTrDNE4uQs8rR7v0YrhEQTAvQ@mail.gmail.com>
-To: oss-security@lists.openwall.com, Yeongjin Jang <Yeongjin.jang@gatech.edu>
-Content-Type: multipart/alternative; boundary=f403045dadaadfc366054f29d471
-Subject: Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton
+Subject: [oss-security] independent volunteers on distros list
+To: oss-security@lists.openwall.com
 
---f403045dadaadfc366054f29d471
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Oh, thank you, Seth!
+On the old vendor-sec list (1998(?) - 2011), there were not only distro
+vendors, but also individual volunteers (in fact, I was originally
+invited in that capacity, prior to Openwall having a Linux distro) and
+some major upstream projects (X.Org, Samba).  When vendor-sec ceased to
+exist, I setup the (linux-)distros list(s), intentionally calling them
+such to more clearly draw the line on who's to be accepted and to avoid
+slippery slope.
 
-Sent from a mobile. Excuse my typo.
+While I'm still of the opinion that non-distro upstream projects should
+not be on those lists (instead, they are being CC'ed when needed), nor
+subject matter experts with certain domain-specific knowledge (ditto),
+I'd like to change my mind regarding the non-distro volunteers (aka
+security researchers) with broad expertise and a track record of
+evaluating vulnerabilities and fixes and finding more issues in those.
+I am referring e.g. to the aftermath of Shellshock public disclosure.
+Rather than have this happen post-disclosure, we can take the slightly
+higher risk of leaks (from having just a few more people subscribed, and
+perhaps people who are better equipped to deal with confidential
+information than most distros' representatives are) and have better
+understanding and fixes pre-disclosure.
 
-2017. 5. 10. =EC=98=A4=EC=A0=84 2:19=EC=97=90 "Seth Arnold" <seth.arnold@ca=
-nonical.com>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
+I am convinced there are ways to avoid the slippery slope should the
+issue arise.  There are few people out there who are at the same time
+capable (broad expertise and a track record of finding more issues in
+the fixes), willing, and available to volunteer, and who someone already
+subscribed would vouch for and no one would object against.  Perhaps
+fewer such people than we have distros.  For now these are the criteria,
+but if necessary there are other potential policies we could introduce.
 
-On Tue, May 09, 2017 at 11:55:10PM -0400, Insu Yun wrote:
-> Please help assign a CVE to this vulnerability.
+Unlike people subscribed for distros (whose primary reason to be
+subscribed is that they make use of the info to prepare fixes for their
+distro), the non-distro volunteers must be active and helpful in
+discussions as a condition for their continued subscription.  (Indeed,
+being active and helpful is encouraged for the distro subscribers as
+well, but it isn't a strict requirement as long as the distro is making
+good use of the info to prepare fixes.)
 
-Hello Insu, CVE assignment is now handled via the web form at
-https://cveform.mitre.org/ -- fill out the details that you can, and
-when you get a response from the MITRE team (often within a dozen hours)
-please forward details about open source tools to this list.
+The volunteer subscriptions will be of them as individuals, unrelated
+to their employment (if any), and they would be expected not to share
+the information with their employer(s), nor with anyone else, unless
+explicitly permitted.  The employer(s)' vulnerability disclosure
+policies, if any, would not apply.  If this is inconsistent with a
+given researcher's employment, that researcher should not accept to be
+subscribed.
 
-Thanks
+Specifically, at this time I am going to subscribe Tavis Ormandy, who
+happens to have been on vendor-sec.  I've already discussed this with
+him, and he agreed.
 
---f403045dadaadfc366054f29d471--
+I first brought this to distros list itself yesterday (after some
+private discussions with some individual distros, both recently and way
+earlier), and received no objections.  Some of the subscribed distros'
+representatives spoke in favor of this change (some on the list, some
+privately to me) and some also made comments (in particular, that we
+should emphasize that "the volunteer subscriptions will be of them as
+individuals, unrelated to their employment ...", which I did above).
+
+I'd appreciate any further comments that the broader community might
+have, but for now it's a decision made and I'll proceed.
+
+Thanks,
+
+Alexander
