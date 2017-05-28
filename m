@@ -1,18 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/21/5
-Message-ID: <1910098.O2yQOzdY9B@storm.m.i2n>
-Date: Thu, 21 Sep 2017 17:36:59 +0200
-From: Thomas Jarosch <thomas.jarosch@...ra2net.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: code execution in Horde_Image 2.0.0 to 2.5.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/28/1
+Message-ID: <20170528093209.d3zwubz4n2b3f4az@eldamar.local>
+Date: Sun, 28 May 2017 11:32:09 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Gajim: CVE-2016-10376: possible to remote extract plain-text from encrypted sessions
 Content-Type: text/plain; charset=utf-8
 
-On Thursday, 21 September 2017 16:50:07 CEST Thomas Jarosch wrote:
-> Hello oss security,
+Hi
 
-just saw that CVE ids can no longer be requested via oss security.
-I'll request a CVE id and will post a follow up.
+MITRE has assigned CVE-2016-10376 for the following issue: Gajim
+unconditionally implements the "XEP-0146: Remote Controlling Clients"
+extension, which may be abused by malicious XMPP servers to, or
+example, extract plaintext from OTR encrypted sessions.
 
-Best regards,
-Thomas Jarosch / Intra2net AG
+References:
+ - Upstream issue: https://dev.gajim.org/gajim/gajim/issues/8378
+ - Upstream commit: https://dev.gajim.org/gajim/gajim/commit/cb65cfc5aed9efe05208ebbb7fb2d41fcf7253cc
+ - Debian Bug: https://bugs.debian.org/863445
 
+Regards,
+Salvatore
