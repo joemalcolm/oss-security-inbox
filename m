@@ -1,88 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/12
-Message-ID: <20170702224421.GA19376@openwall.com>
-Date: Mon, 3 Jul 2017 00:44:21 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/29/1
+Message-ID: <alpine.LRH.2.02.1705291635300.17002@argo.troja.mff.cuni.cz>
+Date: Mon, 29 May 2017 16:40:49 +0200 (CEST)
+From: Pavel Kankovsky <peak@...o.troja.mff.cuni.cz>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Subject: CVE-2017-9148 FreeRADIUS TLS resumption authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 02, 2017 at 01:20:43PM -0700, Anthony Liguori wrote:
-> I've been thinking about this list of items and also some of the
-> challenges of Stack Clash.  Something that frequently came up was
-> uncertainty about what the current set of patches were and there was
-> also lack of clarity on dates.
+Vendor: The FreeRADIUS Project
 
-This should become easier with the maximum of 14 days strictly enforced.
+Product: FreeRADIUS server
 
-> I think a lot of the administrative tasks outlined can be better
-> handled through a system other than email.
 
-This makes sense.  Text files, then? ;-)
+Affected Versions:
 
-On a more serious note, I am concerned that the person collecting
-statistics, etc. might end up entering the data into some online system,
-thereby incurring unnecessary risk.  We should ask the volunteering
-distros/people how they are processing the information, to discourage
-such occurrences.
+2.2.x (EOL but still found in some Linux distros): All versions.
 
-And text files is what I would use.  Seriously.  Much more convenient
-than an online system like Bugzilla for the low volume we're handling.
+3.0.x (stable): All versions before 3.0.14.
 
-> What do you think about having a public bugzilla (or similar system)
-> where tracked issues are kept as private bugs?
+3.1.x and 4.0.x (development): All versions before 2017-02-04.
 
-I dislike this idea.
 
-> I think this could be
-> hosted in a way that everyone felt comfortable with (ensuring enough
-> people had SSH access to for audit purposes).  It's relatively easy to
-> stick everything behind SSL.
+Description:
 
-How would we know this is a dedicated machine with no IPMI and such?
-It's the case for the current distros list machine.  No way for you all
-to check and confirm that as well, though.
+The implementation of TTLS and PEAP in FreeRADIUS skips inner
+authentication when it handles a resumed TLS connection. This is a feature
+but there is a critical catch: the server must never allow resumption of a
+TLS session until its initial connection gets to the point where inner
+authentication has been finished successfully.
 
-Now, I understand that many of the distros are probably entering stuff
-into their bug trackers anyway.  Often on shared or/and centrally
-managed systems.  I hope most only do so for bugs that are actually
-relevant to them, or at least that are likely to be relevant.
+Unfortunately, affected versions of FreeRADIUS fail to reliably prevent
+resumption of unauthenticated sessions unless the TLS session cache is
+disabled completely and allow an attacker (e.g. a malicious supplicant) 
+to elicit EAP Success without sending any valid credentials.
 
-Maybe we should make this limitation part of list policy ("do not enter
-the newly arriving issues into bug trackers unless and until you're
-reasonably confident the issues are relevant to you")?  Or forbid use of
-bug trackers for the embargoed issues arriving through the distros list
-altogether, but I'm quite sure many of the existing distros list members
-won't accept that. :-(
 
-> In addition to helping to make sure there's clear information (like a
-> summary, current patches, etc), I think the Project Zero approach of
-> making a private bug public post-embargo helps share information and
-> provide more transparency after the event.
+Mitigation:
 
-Yes, at P0 they definitely do the transparency thing well.  Better than
-us so far.  But they're also extremely courageous to have the info in a
-public-facing web app for up to 90 days.  I wouldn't dare.  We shouldn't.
+(a) Disable TLS session caching. Set enabled = no in the cache subsection 
+of eap module settings (raddb/mods-enabled/eap in the standard 
+v3.0.x-style layout).
 
-To improve transparency, I'd rather see someone write a mass-decrypter
-for mbox with OpenPGP messages.
+(b) Upgrade to version 3.0.14.
 
-> I'm not suggesting that a bug tracker eliminate the discussions on the
-> list, but really just supplement it.
 
-It's unlikely to work entirely that way.  It's more like a split.
+Credits:
 
-> If there's interest in this, we
-> would be very willing to set it up and deal with the hosting aspect of
-> it.
+Stefan Winter of the RESTENA Foundation (initial discovery)
 
-Thank you, but I hope we won't go that route.
+Luboš Pavlíček of the University of Economics, Prague (independent 
+rediscovery)
 
-BTW, your messages' text/plain parts don't always differentiate your
-added text vs. the previous message's quoted text - e.g., I had to
-correct that manually in your reply to Kristian while it was in the
-moderation queue.  I hope you don't mind; the alternative was rejecting
-the message as it was a total mess.  I had to look at the text/html
-part to figure out what came from where.
 
-Alexander
+Timeline:
+
+"a few months" ago: Vulnerability discovered and reported by Stefan Winter.
+
+2017-02-03: The first (and mostly ineffective) attempt to fix the
+vulnerability in v3.0.x branch (commits 5aabc3b1 and 6b909d0c).
+
+2017-02-04 Vulnerability fixed in v3.1.x and v4.0.x branches (commits
+813a93a7 and c703ad96, respectively).
+
+2017-03-06 Version 3.0.13 released without any explicit indication that it
+was supposed to fix a serious vulnerability (but it was probably better
+that way because the vulnerability was not really fixed).
+
+2017-04-24 Vulnerability rediscovered by Luboš Pavlíček.
+
+2017-04-25 PoC exploit developed and used to confirm 3.0.13 is still
+vulnerable. Vulnerability reported... again.
+
+2017-05-08 The second (and hopefuly final) attempt to fix the vulnerability
+in v3.0.x (commits af030bd4 and 8f53382c).
+
+2017-05-26 Version 3.0.14 released.
+
+
+References:
+
+[1] <http://freeradius.org/security.html>
+[2] <http://freeradius.org/press/index.html#3.0.14>
+
+-- 
+Pavel Kankovsky aka Peak                      "Que sçay-je?"
