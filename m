@@ -1,4 +1,9 @@
-Received: (qmail 10204 invoked by uid 550); 18 Oct 2025 18:25:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1961" "Tuesday" "30" "May" "2017" "09:36:22" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>" "51" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Cc:" nil nil "5" "2017053015:36:22" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        kseifried@re May 30   51/1961  " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>" "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30616 invoked by uid 550); 30 May 2017 15:36:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,197 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23577 invoked from network); 18 Oct 2025 07:48:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1760773679;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wDbKNZlFokDK+IQFzljy9dn2ygZ9X5ty43DW0+XJqtA=;
-	b=KzcDnmUhXcU2TzW7ANUUVK9pyQU/lSwUoJMWpruzWOOH4q9V5/iUm144DFDegt92GltcvR
-	eWGgSLj4TglVTwLUHa20ZgpahiZRj4SRXIeYziC7TEwtyQE3R+CIp5Qp61GQw2PHPyN2vi
-	4GZ1PFUtzxUwKLRhGMimvzLWoI+UdQjxv5QxsJSpNXnKUvq9t433iDLet2wGL3ldAVIXyM
-	Um+Aq4u735HGllnfFxGXLwPjE/c496B/00OJKexAdwzArtEq+0WqAh+bVD9r26tYACSFVy
-	94jx2obyxQaOwytbCv5Gqufoo29wWw4csaWlnQG7o+lHovcdywEZLdmqC+zyPA==
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1760773679; a=rsa-sha256;
-	cv=none;
-	b=vFxlhfeOVMxjAjP78KSdv7g7ijl8ivP14STQS9SqIdV6lZDLhJy7qGmMTunIRLOTXdXwec
-	Jkh0hEXweUiLL0Qx8KctYO1HEpBsps9xi3EhSSbJuQb1kI4LB8hnNHDQZXnQXT5NKIt6sm
-	0kM/z22X9NYUyaE+30ghJTY7IMaHl0M121P7ooBGHJvEYDLTBr49lPyqpRXzW6r+pEzxpH
-	6pt+NXiWvMyN8U0ErcpHbIf0VSfX/Qx1fDk0/okoEMfPXZuPd6TGvx2WPTsVdfP2tEuXVA
-	yhuKg5bOibcnTi04zuxA1Ih4ngGZX5DYVNWsvZ96teEg/YDFXmT8goXvwGMuFg==
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=bbb smtp.mailfrom=bbb@iki.fi
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1760773679;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wDbKNZlFokDK+IQFzljy9dn2ygZ9X5ty43DW0+XJqtA=;
-	b=RC9IIt3Btx+dU+NPJhpzK0XhNAejBaJIXj//29ymOZBfc+k+zZC7R1SIS5bLzCJEpL4Ttm
-	E9D2H8Ojq09IrCpsyGyNwcGgGbGSsqNr2vJfLtzGq664td5kunB6ZmA1kaJZV9Sm4z7RyW
-	N4TaB1LhIFiL3Ir8yRkL9ZaJ9GPIh4uw2z817r42abQVc5Ze05SLRk4+JffaENmwPCD7fE
-	JjmVd9NymE3E7V0sq6SoqO7Kaz85JIp7DMo+CdbDhgKvPwNXPK2HMcR9dXaJ/dHgU1OZJX
-	ENxLjkBg94VphwFzrTYcMT2vu443yTLqyzO87ei1F0jS6RB0cYvC9K8Jr2igUA==
-Date: Sat, 18 Oct 2025 03:47:56 -0400 (EDT)
-From: Billy Brumley <bbb@iki.fi>
-To: oss-security@lists.openwall.com
-In-Reply-To: <a5948a82-c85b-443c-9adb-9d6985359828@gmail.com>
-Message-ID: <d74cbc65-644-aa18-d2a0-7eb34c4ff@iki.fi>
-References: <fd686bd9-d2a7-89f9-f438-7ed38e127591@iki.fi>  <CAH8yC8nZDxYF1NyGjHn8yOADBioNwPB4WTjUZGPmbRTvPLq2tw@mail.gmail.com>  <ME0P300MB0713AA2595680B38B28287AEEEEAA@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>  <CAFRnB2XECXsKDSuvBCeWHwC9apboBdvhYCEFrUo2TuonHs1yFw@mail.gmail.com>
-  <CAF8qwaB=b0EDUTckx-ZHdAHkj-_kN9xPmfVFJP8XxCUq-W9Q5Q@mail.gmail.com> <a5948a82-c85b-443c-9adb-9d6985359828@gmail.com>
+Received: (qmail 30565 invoked from network); 30 May 2017 15:36:34 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=GwWwmvhbb1Cvb4sfLaKxqvEknppHKJINSlf3heZUpXM=;
+        b=fuUiqcNCfQoKIoAlZnxsZJl2SGBNI2wDvtKmzznHaGg43EyHNtKaKwH0LswPRsntbc
+         1KcscsPQkD5D5Hcliq8WBmF1/Nespk2CfyggYvxL5gYR77QrvatcBY3RS8If43JiiwLU
+         leWigzac5yWTvOJGtUkXcLlynUEUJI1QEziHJciQaTmEZFj9+VozB3LIATlSRH+ic7V/
+         5PXpZJx05Q2rIO/8aDamfJErFmrurPOBTU49hLg0Cj9F1VPw71QTMHC5WD/akbi+cGod
+         0hTzFWmOyJwk+o8CyV5K2SHyvUezPQEAVnp+h8CEE0nF1jE6yZm4Xlbk82NmEo2c2HB8
+         1m8w==
+X-Gm-Message-State: AODbwcA1MyUZ7TZsElnMgx+YWBp0WPdkxJxPvled4oh8fVuX5D+nDDIG
+	iewQRHXZ5P2iwtguPNhog19+kZ26wjME3GJWCA==
+X-Received: by 10.157.14.236 with SMTP id 99mr9110630otj.164.1496158582762;
+ Tue, 30 May 2017 08:36:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256; boundary="1757367822-1301164514-1760773679=:25770"
-Subject: Re: [oss-security] BoringSSL private key loading is not constant
- time
+In-Reply-To: <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
+References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
+ <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
+ <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com> <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
+Message-ID: <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="001a11372618da873c0550bf902f"
+Cc: "Designer, Solar" <solar@openwall.com>
+Date: Tue, 30 May 2017 09:36:22 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
+ controlled payload in get_options() function
+To: oss-security <oss-security@lists.openwall.com>
 
---1757367822-1301164514-1760773679=:25770
-Content-Type: multipart/mixed; boundary="1757367822-2081928780-1760773054=:25770"
-Content-ID: <8a98a9b4-99b1-4822-96ed-d410dff6137c@iki.fi>
+--001a11372618da873c0550bf902f
+Content-Type: text/plain; charset="UTF-8"
 
---1757367822-2081928780-1760773054=:25770
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <89488e4-a5b2-7af1-222-9d96ec205692@iki.fi>
+On Tue, May 30, 2017 at 9:20 AM, Daniel Micay <danielmicay@gmail.com> wrote:
 
-Howdy Folks,
+> That's not what secure/verified boot means to everyone else, and
+> there's nothing in mainline with those properties. To everyone else,
+> it's not an arbitrary bureaucratic/marketing feature. It's
+> verification of the whole base OS... i.e. Android, Android Things
+> (Brillo), ChromeOS, iOS and sane embedded Linux systems. Likely
+> Windows on mobile devices too, and I really doubt that Microsoft
+> doesn't plan on verifying the userspace OS if they don't already.
+>
 
-A lot of questions piled up directed at David Benjamin. I was patiently=20
-waiting for on-list responses, but I'm not seeing any, so I'll jump in.
+Red Hat is only associated with this in so far as I happen to work for Red
+Hat and I typically do the CVE assignments on the distros@ list (where this
+issue was initially reported).
 
-> Applications could emit warnings when loading such keys
 
-They could certainly do that, Hanno. I know you're aware of this but just=20
-for general knowledge, there's Vaudenay's seminal work on padding oracle=20
-attacks
+>
+> Anyway, good luck with meaningless Red Hat security theatre. These
+> "vulnerabilities" are just reinforcing the view that security people
+> are foolish. There isn't disagreement that it's a meaningless feature
+> with this level of incompleteness and yet a CVE is assigned for it?
+> Okay then...
+>
 
-https://en.wikipedia.org/wiki/Padding_oracle_attack
+I suggest you take this issue up with MITRE/CVE Board (disclaimer: I'm also
+on the CVE Board), they control CVE and the definitions of what is CVE
+worthy, and in this case it largely falls under the "advertised/implied
+security feature doesn't work as such". This is unlikely to change as it's
+well established and has been used for over a decade.
 
-Not that that maps directly here -- I'm just pointing out, even the act of=
-=20
-emitting a warning / error can be leaky, too and cause -- in general --=20
-security issues.
 
-Newer versions of OpenSSL silently modify these keys at runtime, but ofc=20
-that is not persisted
+>
+> Sorry for thinking that this should be about something more than
+> padding CVs and marketing materials.
+>
 
-$ cat priv_128_0.pem
------BEGIN PRIVATE KEY-----
-MC4CAQAwEAYHKoZIzj0CAQYFK4EEACIEFzAVAgEBBBCneCRP4EljgOADB0hiscbz
------END PRIVATE KEY-----
+I suggest then you take this up with the original researcher if you're
+worried about people padding their CVs. This discussion isn't
+productive/helpful and I suggest you take it off list.
 
-$ openssl pkey -in priv_128_0.pem
------BEGIN PRIVATE KEY-----
-ME4CAQAwEAYHKoZIzj0CAQYFK4EEACIENzA1AgEBBDAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAKd4JE/gSWOA4AMHSGKxxvM=3D
------END PRIVATE KEY-----
 
-For the young eager security researchers on the list, if you want to find=20
-some non-constant-time code to point at for your paper: script "git=20
-bisect" on the above openssl command, and it'll lead you to an OpenSSL=20
-commit where that's happening. (And my gut tells me it's very likely that=20
-correction is not constant time in the traditional model.)
+-- 
 
-> Does the file size of the private key file also leak this information?
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-At first glance it might seem so, Jacob. But the ECPrivateKey OID encoding=
-=20
-format contains lots of optional fields, and you don't know if those=20
-fields are present until you decode it :shrug:
-
-So when you see varying file sizes with these keys, it could be for many=20
-different reasons, unfortunately.
-
-> This appears to be a misunderstanding of the ECPrivateKey format
-
-No, David, there is no misunderstanding at all. We studied tons of=20
-different formats and wrote about it in 2019 (but you know that, already)
-
-https://www.usenix.org/conference/usenixsecurity20/presentation/garcia
-
-We even discussed with the BoringSSL security team in 2019, and you=20
-dismissed us. If you would've taken the time to read the paper and=20
-understand our contribution to the security community, you'd know that.
-
-> The issue is that =E2=80=9Crandme.py=E2=80=9D calls the Python hex() func=
-tion on an
-integer
-
-No, David, rofl.
-
-ROFL.
-
-For those still reading, this would be like when you submit a PoC exploit=20
-for an OOB write vulnerability, and you'd get a response like
-
-"The issue is in your harness, you're sending unexpected inputs"
-
-NO THAT'S NOT AN ISSUE OR BUG, IT'S THE WHOLE GOSH DARN EXPLOIT
-
-But ofc David knows it, he knows I'm encoding the keys deliberately like=20
-that, he's just trolling me on-list, and spreading misinformation in=20
-public in an attempt to wipe the egg from his face.
-
-Still waiting for the "sorry, we screwed up, we'll fix it" from BoringSSL.
-
-David, mea culpa is free, you can stop digging the hole any time you want.
-
-Cheers,
-
-BBB
-
---=20
-Dr. Billy B. Brumley, D.Sc. (Tech.)
-Director of Research, ESL Global Cybersecurity Institute (GCI)
-Kevin O'Sullivan Endowed Professor, Department of Cybersecurity (CSEC)
-Director, Platform Security Laboratory (PLATSEC)
-Rochester Institute of Technology
-Cybersecurity Hall 70-1770
-100 Lomb Memorial Drive
-Rochester, NY, 14623-5608, USA
-S/MIME public key: https://people.rit.edu/bbbics/bbbics@rit.edu.crt
-S/MIME public key: https://people.rit.edu/bbbics/bbb@iki.fi.crt
-https://www.rit.edu/directory/bbbics-billy-brumley
-https://www.rit.edu/cybersecurity/=
-
---1757367822-2081928780-1760773054=:25770--
-
---1757367822-1301164514-1760773679=:25770
-Content-Type: application/pkcs7-signature; name=smime.p7s
-Content-Transfer-Encoding: BASE64
-Content-Description: S/MIME Cryptographic Signature
-Content-Disposition: attachment; filename=smime.p7s
-
-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
-
---1757367822-1301164514-1760773679=:25770--
-
+--001a11372618da873c0550bf902f--
