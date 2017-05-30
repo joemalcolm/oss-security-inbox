@@ -1,37 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/19/2
-Message-ID: <3e602b65-602f-32f1-b5c7-f00c339ad9f0@apache.org>
-Date: Tue, 19 Sep 2017 14:07:07 +0100
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-12616 Apache Tomcat Information Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/10
+Message-ID: <099ea9a5-1f74-b837-bcae-aaba2c109a02@redhat.com>
+Date: Tue, 30 May 2017 15:05:34 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Daniel Micay <danielmicay@...il.com>, oss-security@...ts.openwall.com
+Cc: Roee Hay <roeehay@...il.com>
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-12616 Apache Tomcat Information Disclosure
+On 05/30/2017 03:02 PM, Daniel Micay wrote:
+> On Tue, 2017-05-30 at 14:52 +0200, Florian Weimer wrote:
+>> On 05/30/2017 01:51 PM, Daniel Micay wrote:
+>>> It's unreasonable to consider the kernel line untrusted. A CVE being
+>>> issued for one of these issues didn't make sense.
+>>
+>> It's a potential Secure Boot bypass, so it matters in some theoretical
+>> sense to some downstreams which carry those Secure Boot patches.
+>>
+>> (Although I have yet to see anyone to revoke a signature on a kernel
+>> with known root-to-ring-0 escalations, so the practical impact isn't
+>> large because an attack could still downgrade to a kernel with an
+>> exploitable vulnerability.)
+>>
+>> Florian
+> 
+> How is it a secure boot bypass? If the secure boot implementation
+> doesn't cover the kernel line it's already broken.
 
-Severity: Important
+That's not how the Secure Boot patches work.  They restrict some
+features so that they cannot be selected from the kernel command line
+(or later from userland), and they do not rely on a bootloader which
+does not provide any means for editing the kernel command line.
 
-Vendor: The Apache Software Foundation
+> The provided example was treated as a verified boot vulnerability by
+> Google and fixed. It isn't supposed to be possible to set the kernel
+> line with a locked bootloader on Nexus/Pixel devices. It was a bug.
 
-Versions Affected:
-Apache Tomcat 7.0.0 to 7.0.80
+I don't know how Google's user lockout works, so I can't comment on that.
 
-Description:
-When using a VirtualDirContext it was possible to bypass security
-constraints and/or view the source code of JSPs for resources served by
-the VirtualDirContext using a specially crafted request.
-
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Tomcat 7.0.81
-
-Credit:
-This issue was identified by the Tomcat Security Team while
-investigating CVE-2017-12615.
-
-History:
-2017-09-19 Original advisory
-
-References:
-[1] http://tomcat.apache.org/security-7.html
+Thanks,
+Florian
