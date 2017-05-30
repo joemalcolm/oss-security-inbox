@@ -1,21 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/25
-Message-ID: <20170714210857.GA22539@openwall.com>
-Date: Fri, 14 Jul 2017 23:08:57 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/14
+Message-ID: <1496154572.941.11.camel@gmail.com>
+Date: Tue, 30 May 2017 10:29:32 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com
+Cc: Roee Hay <roeehay@...il.com>
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 14, 2017 at 09:50:55PM +0200, Kristian Fiskerstrand wrote:
-> On 07/14/2017 08:54 PM, Solar Designer wrote:
-> > What's #1 and #2 - do you mean the technical or the administrative tasks?
-> 
-> To avoid confusion while discussing, would it make sense to designate
-> letters to the various sections, so it can be referred to as e.g A1, B3?
+init=/bin/bash -- arguments for bash running as real root
 
-We could, but DokuWiki's auto-numbering won't do that and the numbers
-aren't meant to be long-term stable anyway.  So to avoid confusion we
-should avoid referring to these tasks only by number.
+If a memory corruption bug via a kernel line option is a vulnerability,
+so is this. It's a vulnerability in the verified boot implementation if
+there's attacker control over the kernel line to this extent.
 
-Alexander
+Even if we're going to treat memory corruption specially, you can
+corrupt memory simply via crazy configuration on the kernel command
+line... that is parsed properly, but then breaks at runtime. You can
+also happily disable features like rodata to make your life easier,
+since... you control the kernel line. I can't understand what kind of
+threat model considers these valid CVEs.
