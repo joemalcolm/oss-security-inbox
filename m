@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/23/2
-Message-ID: <20171223081028.GA17654@lorien.valinor.li>
-Date: Sat, 23 Dec 2017 09:10:28 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/25
+Message-ID: <CAAeHK+wzhV4PBENUzD5SeCp_vjtT84B-ER+cWU9=FvZxfavJhw@mail.gmail.com>
+Date: Tue, 30 May 2017 21:12:40 +0200
+From: Andrey Konovalov <andreyknvl@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux >=4.9: eBPF memory corruption bugs
+Cc: idaifish@...il.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
+Subject: Linux kernel: CVE-2017-9242: out-of-bounds write in __ip6_append_data
 Content-Type: text/plain; charset=utf-8
 
-Hi
+The following CVE was assigned for an out-of-bounds write in IPv6
+socket buffers.
 
-MITRE has assigned 6 more CVEs for:
+The bug was found with syzkaller.
 
-CVE-2017-17857 [bpf: fix missing error return in check_stack_boundary()]
-Fixed by: https://git.kernel.org/linus/ea25f914dc164c8d56b36147ecc86bc65f83c469
+* CVE-2017-9242
 
-CVE-2017-17856 [bpf: force strict alignment checks for stack pointers]
-Fixed by: https://git.kernel.org/linus/a5ec6ae161d72f01411169a938fa5f8baea16e8f
+The __ip6_append_data function in net/ipv6/ip6_output.c in the Linux
+kernel through 4.11.3 is too late in checking whether an overwrite of
+an skb data structure may occur, which allows local users to cause a
+denial of service (system crash) via crafted system calls.
 
-CVE-2017-17855 [bpf: don't prune branches when a scalar is replaced with a pointer]
-Fixed by: https://git.kernel.org/linus/179d1c5602997fef5a940c6ddcf31212cbfebd14
-
-CVE-2017-17854 [bpf: fix integer overflows]
-Fixed by: https://git.kernel.org/linus/bb7f0f989ca7de1153bd128a40a71709e339fa03
-
-CVE-2017-17853 [bpf/verifier: fix bounds calculation on BPF_RSH]
-Fixed by: https://git.kernel.org/linus/4374f256ce8182019353c0c639bb8d0695b4c941
-
-CVE-2017-17852 [bpf: fix 32-bit ALU op verification]
-Fixed by: https://git.kernel.org/linus/468f6eafa6c44cb2c5d8aad35e12f06c240a812a
-
-Regards,
-Salvatore
+CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9242
+Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=232cd35d0804cc241eb887bb8d4d9b3b9881c64a
