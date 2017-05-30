@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/1
-Message-ID: <4A2FDA56-491B-4C2A-915F-C9D4A4BDB92A@apache.org>
-Date: Fri, 02 Jun 2017 11:10:55 +0530
-From: Varun Vasudev <vvasudev@...che.org>
-To: <general@...oop.apache.org>, user <user@...oop.apache.org>, "<security@...oop.apache.org>" <security@...oop.apache.org>, security <security@...che.org>, <bugtraq@...urityfocus.com>, <oss-security@...ts.openwall.com>
-Subject: CVE-2017-7669: Apache Hadoop privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/1
+Message-ID: <CAKoP-y-MQeQp4kKOAxRG2DdzkF2_eWy3C9Rqb+O8WmgY7uz-Fg@mail.gmail.com>
+Date: Mon, 29 May 2017 20:40:50 -0500
+From: Josh Bressers <josh@...ss.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: independent volunteers on distros list
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-7669: Apache Hadoop privilege escalation
+On Thu, May 25, 2017 at 2:37 PM, Solar Designer <solar@...nwall.com> wrote:
 
-Severity: Critical
+>
+> Specifically, at this time I am going to subscribe Tavis Ormandy, who
+> happens to have been on vendor-sec.  I've already discussed this with
+> him, and he agreed.
+>
+> I first brought this to distros list itself yesterday (after some
+> private discussions with some individual distros, both recently and way
+> earlier), and received no objections.  Some of the subscribed distros'
+> representatives spoke in favor of this change (some on the list, some
+> privately to me) and some also made comments (in particular, that we
+> should emphasize that "the volunteer subscriptions will be of them as
+> individuals, unrelated to their employment ...", which I did above).
+>
+> I'd appreciate any further comments that the broader community might
+> have, but for now it's a decision made and I'll proceed.
+>
+>
+I've had views on about every side of this topic in the past and I've not
+been involved with distros for quite some time.
 
-Vendor: The Apache Software Foundation
+However ...
 
-Versions affected: Hadoop 2.8.0, Hadoop 3.0.0-alpha1 and Hadoop 3.0.0-alpha2
+This strikes me as a wise decision. The work Tavis has been doing lately is
+quite good, and I have no doubt his wisdom and knowledge would go a long
+way on the distros list.
 
-Description:
-The LinuxContainerExecutor runs docker commands as root with
-insufficient input validation. When the docker feature is enabled,
-authenticated users can run commands as root
+Good luck to both of you ;)
 
-Mitigation:
-Users of Apache Hadoop 2.8.0 should leave Docker functionality disabled until Hadoop 2.8.1 is released.
-Users of Apache Hadoop 3.0.0-alpha1 and Hadoop 3.0.0-alpha2 should upgrade to Hadoop 3.0.0-alpha3 or later.
-
-Credit:
-This issue was discovered by Allen Wittenauer.
-
+-- 
+    JB
 
