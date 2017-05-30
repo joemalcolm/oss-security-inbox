@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/2
-Message-ID: <alpine.LFD.2.20.1705031419470.32279@wniryva>
-Date: Wed, 3 May 2017 14:22:50 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Jiangxin <jiangxin1@...wei.com>
-Subject: CVE-2017-8379 Qemu: input: host memory lekage via keyboard
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/5
+Message-ID: <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
+Date: Tue, 30 May 2017 12:41:38 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Roee Hay <roeehay@...il.com>
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Tue, 30 May 2017 at 08:17:54 +0400, Ilya Matveychikov wrote:
+> When using get_options() it's possible to specify a range of numbers,
+> like 1-100500. The problem is that it doesn't track array size while
+> calling internally to get_range() which iterates over the range and
+> fills the memory with numbers.
 
-Quick Emulator(Qemu) built with the keyboard input event handlers support is 
-vulnerable to a host memory leakage issue. It could occur if a guest user was 
-to generate large keyboard events, faster than Qemu could process them.
+Is there a realistic way in which an attacker can provide Linux kernel
+command-line arguments, without being able to achieve arbitrary code
+execution via those command-line arguments?
 
-A privileged user inside guest could use this flaw to exhaust host memory, 
-resulting in DoS.
+In other words, is this a security vulnerability, or just a bug?
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-04/msg05599.html
+(If the attacker can already achieve arbitrary code execution then
+this bug does not give them any capability they do not already have.)
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1446547
-
-This issue was reported by Jiang Xin (PSIRT Huawei Inc.)
-
-'CVE-2017-8379' allocated via -> http://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+    S
