@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4370" "Friday" "29" "September" "2017" "15:01:27" "+0200" "Sysdream Labs" "labs@sysdream.com" "<89daa805-6ad8-8738-dc2b-0b248716da38@sysdream.com>" "148" "[oss-security] [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell Escape" nil nil nil "9" "2017092913:01:27" "[oss-security] [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell Escape" (number mark "U       labs@sysdrea Sep 29  148/4370  " thread-indent "\"[oss-security] [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell Escape\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["648" "Tuesday" "30" "May" "2017" "10:29:32" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1496154572.941.11.camel@gmail.com>" "12" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Cc:" nil nil "5" "2017053014:29:32" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        danielmicay@ May 30   12/648   " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<1496153035.941.9.camel@gmail.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<1496145073.1459.1.camel@gmail.com>" "<3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>" "<1496149333.941.1.camel@gmail.com>" "<099ea9a5-1f74-b837-bcae-aaba2c109a02@redhat.com>" "<1496150738.941.5.camel@gmail.com>" "<ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>" "<1496153035.941.9.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13319 invoked by uid 550); 29 Sep 2017 13:01:44 -0000
+Received: (qmail 13672 invoked by uid 550); 30 May 2017 14:29:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,176 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13654 invoked from network); 30 May 2017 14:29:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mx+/PiOW6txXBm6L82VUBo7KxV+b7FXq73/ZedtmqA8=;
+        b=IBhXcRngWskkyX3DqaHp+VSIZ4gbQ51NTbLwHXsCrcnHq/coV2sl6mh6/sy5l/gVj3
+         YteZihETalEMTl7fecaVhHg6FxoHvyjs/XOfXl5GHCwIT1Z2Xa7JKKH9L2UjHEyKdd5o
+         qWYgAKxbVySFcFm0AigfSt0m1tkGI7fpPNuWj2KvixjwUpIF4t6Aw1NxoyW+N8haNBMU
+         uZGyUYsgil4zhjwsPDKWEn4Nz6HjYAPGsgF4cCCcDSdZxI9tciBL+VTG6eNc5GFC0u+U
+         wDjDxnNyNAHY9dwWgoojk+fS4Jy5EKz9XQsukxYr9IorCVx2B2TfY2z1OdOoJINSExrY
+         Ht7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mx+/PiOW6txXBm6L82VUBo7KxV+b7FXq73/ZedtmqA8=;
+        b=EN24cWVQA4iR/wd7tCdPs1hfmUJXD9WNmdCmAV59mcgxin5VWp7IIgfsCafnpl59Dg
+         QPIZesb4zklF+P1fmeuOyhqfpEx8hFktlEitn1jQ9qI9Pcj7NR9YLEcBdXvl5UpZuiY0
+         rXR7SH9qc0D2swz4Se9EBuBry+qPlrxAv4UnL1q0lVe/Q+4ylff4sLR4+dqG+na7h3D0
+         AM3pnCKXT069CRXN7o8PUhqoLvC/Aq10DVabZFtaVOs8igkLIehB5NbU2eUP49z0Ir/d
+         GgHbkKZ3YW8enFgNFZlEFyCGSDoBHUpIg5rE+8jCzyweMBBlgJvO677NYeY4O+TIoG4P
+         gr7A==
+X-Gm-Message-State: AODbwcBuubyy+WfJyvz+4KxlVlMyn09/5CARgomwbxCDbhUsctdt5XZ0
+	NWSetDZJtXeMEQ==
+X-Received: by 10.36.0.86 with SMTP id 83mr2325237ita.63.1496154575362;
+        Tue, 30 May 2017 07:29:35 -0700 (PDT)
+Message-ID: <1496154572.941.11.camel@gmail.com>
+In-Reply-To: <1496153035.941.9.camel@gmail.com>
+References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
+	 <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
+	 <1496145073.1459.1.camel@gmail.com>
+	 <3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>
+	 <1496149333.941.1.camel@gmail.com>
+	 <099ea9a5-1f74-b837-bcae-aaba2c109a02@redhat.com>
+	 <1496150738.941.5.camel@gmail.com>
+	 <ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>
+	 <1496153035.941.9.camel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.24.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Cc: Roee Hay <roeehay@gmail.com>
+Date: Tue, 30 May 2017 10:29:32 -0400
+From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12277 invoked from network); 29 Sep 2017 13:01:43 -0000
-DKIM-Filter: OpenDKIM Filter v2.9.2 mail.sysdream.com 774151A1434
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sysdream.com;
-	s=FEF1D5FC-BC6A-11E6-98AA-27E162F08D53; t=1506690090;
-	bh=S86E2G84bCkzUe6Y7qvbYOcnxm61gKLWEz2w3MM+tpw=;
-	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type;
-	b=Ag3H6uGybo5WZmH5ppbLr0bgUlbcHUWjbaihS/ntJ8T9iupZP5R+Qv5LITeQiDmZp
-	 Z4SYfHVCuD8l663wZTKcbnqIpr3nJeX/zwMNUUbDPL5BBVaG4Ux7gv2sFK6CBgZ2+J
-	 d+jXaYpvQ2EdGnoaYV6EICQNpQuvlgSRxLYFeaBU=
-X-Virus-Scanned: amavisd-new at sysdream.com
-To: fulldisclosure@seclists.org
-Cc: oss-security@lists.openwall.com
-From: Sysdream Labs <labs@sysdream.com>
-Message-ID: <89daa805-6ad8-8738-dc2b-0b248716da38@sysdream.com>
-Date: Fri, 29 Sep 2017 15:01:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="eQeAqpowrgb36cOMGa9hnf5eHoInpqBx1"
-Subject: [oss-security] [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell
- Escape
+Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
+ controlled payload in get_options() function
+To: Florian Weimer <fweimer@redhat.com>, oss-security@lists.openwall.com
 
---eQeAqpowrgb36cOMGa9hnf5eHoInpqBx1
-Content-Type: multipart/mixed; boundary="6dsSIWm2RpPRogpi6qxIjwWioSlm5OtNE";
- protected-headers="v1"
-From: Sysdream Labs <labs@sysdream.com>
-To: fulldisclosure@seclists.org
-Cc: oss-security@lists.openwall.com
-Message-ID: <89daa805-6ad8-8738-dc2b-0b248716da38@sysdream.com>
-Subject: [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell
- Escape
+init=/bin/bash -- arguments for bash running as real root
 
---6dsSIWm2RpPRogpi6qxIjwWioSlm5OtNE
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+If a memory corruption bug via a kernel line option is a vulnerability,
+so is this. It's a vulnerability in the verified boot implementation if
+there's attacker control over the kernel line to this extent.
 
-# [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell Escape
-
-## Asset Description
-
-UCOPIA solutions bring together a combination of software, appliance and cl=
-oud services serving small to large customers.
-
-More than 12,000 UCOPIA solutions are deployed and maintained by UCOPIA exp=
-ert partners all over the world.
-
-The affected asset in this report is a WiFi management appliance.
-
-
-## Vulnerability
-
-Shell Escape via `less` command.
-
-**Threat**
-
-Improper sanitization of system commands in the restricted shell interface =
-in UCOPIA Wireless Appliance, prior to 5.1.8, allows remote attackers to ga=
-in access to a system shell as the "admin" user.
-
-**CVE ID**: CVE-2017-11321
-
-**Access Vector**: network
-
-**Security Risk**: critical
-
-**Vulnerability**: CWE-78
-
-**CVSS Base Score**: 9.1 (Critical)
-
-**CVSS Vector**: CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H
-
-### Proof of Concept: Restricted Shell Escape
-
-By default, the UCOPIA wireless appliances exposes two shell access on port=
- 22 (SSH) and 222 (ShellInTheBox).
-
-A documented **admin** user exists on the system with the password **bhu85t=
-gb**.
-
-Quoted from the documentation :
-
-> You can also retrieve the IP address of the outgoing interface. For this,=
- you need to log in to the terminal of the virtual machine with
-the following username and password: admin/bhu85tgb, and then execute the i=
-nterface command.
-
-By logging in within these interfaces, we can access to a restricted shell =
-(*clish*) that allows only a few commands.
-
-However, the `less` command is allowed, and because `less` allows to execut=
-e shell commands when viewing a file, we can use it to escape the restricte=
-d shell.
-
-Steps :
-
-**1/** Login to the appliance using SSH or ShellInTheBox.
-
-**2/** Run the `less /etc/passwd` command.
-
-**3/** When viewing the file, type `!sh`
-
-**4/** You now have unrestricted `admin` user access to the appliance.
-
-```
-> less /etc/passwd
-!sh
-$ ls /
-bin dev etc home lib proc tmp user
-$ whoami
-admin
-```
-
-## Solution
-
-Update to UCOPIA 5.1.8
-
-## Timeline (dd/mm/yyyy)
-
-* 08/03/2017 : Vulnerability discovery.
-* 03/05/2017 : Initial contact.
-* 10/05/2017 : GPG Key exchange.
-* 10/05/2017 : Advisory sent to vendor.
-* 17/05/2017 : Request for feedback.
-* 22/05/2017 : Vendor acknowledge the vulnerabilities.
-* 21/06/2017 : Sysdream Labs request for an ETA, warning for public disclos=
-ure.
-* 21/06/2017 : Vendor say that the UCOPIA 5.1.8 fixes the issue.
-* 29/09/2017 : Public disclosure.
-
-## Credits
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
---=20
-SYSDREAM Labs <labs@sysdream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
---6dsSIWm2RpPRogpi6qxIjwWioSlm5OtNE--
-
---eQeAqpowrgb36cOMGa9hnf5eHoInpqBx1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEER9HhJMQ++ZIqLhVRjrSM2dWyWaEFAlnORCkACgkQjrSM2dWy
-WaGziA/+NUkfdv+zKWb6TNM3srKV5EwCcFFtQjce/7af7bd4YnMPTPwwHxQ1ygrc
-R6kx9a7xxlkYuMdoyhAkXFvLm2d6ZfUBXdS54+QeRgEzsuFajO5lM4JzLfrM+L9v
-FaBBQ5csrD7l0VeMWyBA2v8JTju7Jjc2Lyw1oCzjVx0vmDfDpwNYIiMzlbKVLGxG
-JP43BjNDskvgmKrJDOlEhCFQEQhodeayCX6bfGM/jemBI3BA9zpownSUyFd1HR/p
-EUWBcCbdgei0ShPIT15Slg0LqD/Cu8L01Sj140BXD9vQFBVM4aWrGJ3Uqs+W4xIy
-rQdR+5ERfOXI7FnAEQAWKp9HfSSkprXgd7Z90pCzzpZYp2s3XDMA/VGEigr9Kpvq
-3IjcSvQHB/raIprfQ1ry7+C8ym8mEI9mkMxTnaotrO5O0f0olhVzFtqqPW0GXJD5
-e94B7mdz11fZEbNE632ZEuBQ5XYnRzUe4QKUyZma4b3wXPOczjbbDL11Dx6DYvpf
-esCEoXKFJumkBoJUqXKnlVqPXVuySp4elmMjIY2NYfmcdS5wVoQifsVBZj0Ag7Kt
-9s7lcLJ7rrHEajJXk0MG+qaqZQSOMkZFu+IO5EEySLxZ57gEMjb3Wny/lVOjbBOp
-m1zLBEtGcf73dw8CVVNwL7O0z6rzRUp5A/pMBo9EJASAr0gRdus=
-=lkRH
------END PGP SIGNATURE-----
-
---eQeAqpowrgb36cOMGa9hnf5eHoInpqBx1--
+Even if we're going to treat memory corruption specially, you can
+corrupt memory simply via crazy configuration on the kernel command
+line... that is parsed properly, but then breaks at runtime. You can
+also happily disable features like rodata to make your life easier,
+since... you control the kernel line. I can't understand what kind of
+threat model considers these valid CVEs.
