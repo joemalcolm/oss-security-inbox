@@ -1,4 +1,9 @@
-Received: (qmail 15964 invoked by uid 550); 3 Apr 2024 13:49:21 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2663" "Tuesday" "30" "May" "2017" "12:09:20" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1496160560.6997.1.camel@gmail.com>" "62" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Cc:" nil nil "5" "2017053016:09:20" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        danielmicay@ May 30   62/2663  " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>" "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>" "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7944 invoked by uid 550); 30 May 2017 16:09:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,89 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1204 invoked from network); 3 Apr 2024 13:38:30 -0000
+Received: (qmail 7911 invoked from network); 30 May 2017 16:09:33 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712151500; x=1712756300; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DVK+6r9Wr6DzWiaSd3XSabHBo4jHwac8RIubZBxkMzY=;
-        b=gVQNzVU7nr1Cj4Ti8/jPChucwZRUSPZaQ5F5gB1L0jUiiLhDaXJHrLlHeoOr5tDfmP
-         BlX2Dw/QH9ZnF654HPFEwEZkN6kcOfP2/M8qGE8rMdpOdfb6yfRlIAhEYyxQg6ek4ndH
-         P4ZPm5P0G5W1R3ruZXiCBSaI+P282b2DkX25Ri532+l/tBCctyG7We/EUTDRkahBl0BH
-         AupwbAzj63JkNcJN0i03HBNmtSMW55MwqoYgu6zJ1aAL7SYm4UlGZXQHjxFbg9qcCigv
-         2u/RFFOgGhg9joR2t4y0MTNUKTmhpTKxVEmAiY9V8Ts0cIDdV+qVWFwXp/tg5imKVzBs
-         Z3rw==
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=V//4MDTg8uDlurldCocOUg6jcg2CJV0K0GiRnqJf4gM=;
+        b=IdWl/GeJvasu1uONkjpNsmdEHD59Gk37OTSw6AGN5PynwoKTfh2vn4v+ejTzOqDXIW
+         dlDDnz5DaVKx/sNQUClNRRbEg0ra2gA8iKcxlKG5gZOhyR/dmn9RgY8sICtvhWeBEzrk
+         +RNSTVbfL3PWvF0S/PBxvEE5ooM/p8DtDCrv9cE6mJQ4g0WwT6uhpF/x4EZlVmTE3Lkc
+         bVZDto5qFZ7Dwdx3+rMHEA52aCzQy4mrn7/NaZYu/f5pKDbs66F9c7r5r6xVNXjlz+VT
+         gQ9MRrY4M7aceA40pKbiaZK2pwcjwyh4QrIL2UiyjxVPabYYTTw5H9n36E3C6cfETgJV
+         0xog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712151500; x=1712756300;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DVK+6r9Wr6DzWiaSd3XSabHBo4jHwac8RIubZBxkMzY=;
-        b=Nr6PyDJB2ERm8CyTJ1DU3YmQ0ZzgYZRhyHPSGulQzvRFPWX45OtAelqAsmH6y5TRJv
-         DiGIkF7pogZH5preMB6POR1nyvcCAbsbuPQyy/neM8Z7EU6/hfxrqkInjzE4voRRsfZ0
-         wieircVtmDsnbTYeQ4H7WC305dDUI2QujlToUYk6JdCUZlHh6NY9FOAwb8tzESlbb4ey
-         xSehDCgfRzzf7VToCADDxZR7L/95vt97hwAvEjzAU7geJFJ7nQME6SLdvXlwD63iWeXb
-         BI9N/JevdrcHGhVgmivEnUISu9iOxTNMWEdhaD6s9FlBOFuYnpZXQb9bpVTUNTqpUbHJ
-         YjBw==
-X-Gm-Message-State: AOJu0YyEM/e+NsTDkxwjHWl5rx4XmO5LSEQ/e1Yv1WipfyTDPOkmiauf
-	TOBmJHVt7MRsk+7C/PpdrmHCYwM2NqzIhfNTBt8Fik48fNaozy/rJZNovzBfsHlPFxXUisCU08t
-	QH0QMVBD5Wy+9Sveh3hErgZy9RhxfN52Ok0g=
-X-Google-Smtp-Source: AGHT+IFNpuv5pv4VZovtZuszn6StZgkSr4hTM8WxLbc/bCmRkPAX1RQl1sfnh74j43c2s2MIuwtsVcBTE7bsRLTzVKk=
-X-Received: by 2002:a17:90a:710b:b0:29f:cf88:c2d2 with SMTP id
- h11-20020a17090a710b00b0029fcf88c2d2mr14131817pjk.12.1712151500323; Wed, 03
- Apr 2024 06:38:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me>
-In-Reply-To: <loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me>
-From: Stephen John Smoogen <smooge@gmail.com>
-Date: Wed, 3 Apr 2024 09:38:08 -0400
-Message-ID: <CANnLRdgMaDewcaKVq9OdiNBq-AsF-JchQsMLY0xuY033P6j=rw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000fa855a061531550c"
-Subject: Re: [oss-security] xz backdoor prevention using hosts.deny?
-
---000000000000fa855a061531550c
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=V//4MDTg8uDlurldCocOUg6jcg2CJV0K0GiRnqJf4gM=;
+        b=bgivJvwZMXbuZFoj901jvin7LqFc6KgfHbX+kOFxufx+C0qt/fAou5LIMuQYR865ro
+         odkKxB9WrHB/z4YbsAap5c+Re0yFx1hsC0UjEAn9OxqvSm237BjEj0LzmtiMm6iN72yf
+         X+jgatXKSJquhaBvxkVRZBb/vcAxTroAjXkbSiXIupD+YRlLzH6Bmw9gRpJYLLBvQ9dp
+         ewFZc5AdNxi1XkxlYUjxPilSiBj6wz6OIMexpQV/vXgPUCItgI94eWgLwCB8RXQw8TOS
+         Dp6CczIyo8KUMKH84S7pP9hBVr7SihDr8fW1pASOP1clDgSQoloHXmXvPi+bxeoSKE7d
+         pJGg==
+X-Gm-Message-State: AODbwcCrVGv6d5waAsF6MWeHOe2WOhp1ovpCblY7Ks6U0iBBu0IN/kz+
+	0y2MRynrHgDqJwkXA00=
+X-Received: by 10.107.164.231 with SMTP id d100mr17386024ioj.124.1496160561634;
+        Tue, 30 May 2017 09:09:21 -0700 (PDT)
+Message-ID: <1496160560.6997.1.camel@gmail.com>
+In-Reply-To: <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
+References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
+	 <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
+	 <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>
+	 <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
+	 <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.24.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Cc: "Designer, Solar" <solar@openwall.com>
+Date: Tue, 30 May 2017 12:09:20 -0400
+From: Daniel Micay <danielmicay@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
+ controlled payload in get_options() function
+To: oss-security@lists.openwall.com
 
-On Wed, 3 Apr 2024 at 09:07, Nick Sal <specialroumpa@proton.me> wrote:
+On Tue, 2017-05-30 at 09:36 -0600, Kurt Seifried wrote:
+> On Tue, May 30, 2017 at 9:20 AM, Daniel Micay <danielmicay@gmail.com>
+> wrote:
+> 
+> > That's not what secure/verified boot means to everyone else, and
+> > there's nothing in mainline with those properties. To everyone else,
+> > it's not an arbitrary bureaucratic/marketing feature. It's
+> > verification of the whole base OS... i.e. Android, Android Things
+> > (Brillo), ChromeOS, iOS and sane embedded Linux systems. Likely
+> > Windows on mobile devices too, and I really doubt that Microsoft
+> > doesn't plan on verifying the userspace OS if they don't already.
+> > 
+> 
+> Red Hat is only associated with this in so far as I happen to work for
+> Red
+> Hat and I typically do the CVE assignments on the distros@ list (where
+> this
+> issue was initially reported).
 
-> Hi,
->
-> Assume we filter SSH access only to a public domain subnet using the files
-> hosts.{deny,allow} as seen below.
-> Would this prevent an attack if a malicious payload was *not* sent from
-> the allowed subnet?
-> Trying to figure out if an attack like this was still possible, for the
-> few days in March the backdoor was active and undetected in rolling distros
-> (e.g. debian testing).
->
-> /etc/hosts.deny:  sshd: ALL
-> /etc/hosts.allow: sshd: "a_subnet"
->
->
+Linux isn't impacted in a security-relevant way by these bugs. You're
+claiming that some downstream code is implemented in a way that impacts
+security, but you can't explain how it compromises a meaningful security
+boundary.
 
-Does Debian still link hosts.allow/hosts.deny libwrapper with sshd? [or
-does sshd pull it in from another source?] I know some distributions no
-longer use this method to limit controls.
+> > Anyway, good luck with meaningless Red Hat security theatre. These
+> > "vulnerabilities" are just reinforcing the view that security people
+> > are foolish. There isn't disagreement that it's a meaningless
+> > feature
+> > with this level of incompleteness and yet a CVE is assigned for it?
+> > Okay then...
+> > 
+> 
+> I suggest you take this issue up with MITRE/CVE Board (disclaimer: I'm
+> also
+> on the CVE Board), they control CVE and the definitions of what is CVE
+> worthy, and in this case it largely falls under the
+> "advertised/implied
+> security feature doesn't work as such". This is unlikely to change as
+> it's
+> well established and has been used for over a decade.
 
+Nothing in Linux claims to work the way you're talking about. You've
+only brought up an incomplete implementation of verified boot based on a
+fork of the Linux kernel. It should be filed against that fork, but it
+really doesn't make any sense to have a CVE for a non-security feature
+being broken.
 
-> Moreover, allowing only public-key authentication for SSH does not help,
-> isn't this right?
->
->
-Most likely not because the code is looking for a specific publickey to
-unlock its payload.
+> > Sorry for thinking that this should be about something more than
+> > padding CVs and marketing materials.
+> > 
+> 
+> I suggest then you take this up with the original researcher if you're
+> worried about people padding their CVs. This discussion isn't
+> productive/helpful and I suggest you take it off list.
 
+I'm not just concerned about people padding their CVs, I'm concerned
+about vendors marketing incomplete snake oil as an implementation of
+security features that actually have a meaning and then turning it into
+nonsense like this.
 
-
-> Regards,
-> Nick
->
->
-
--- 
-Stephen J Smoogen.
-Let us be kind to one another, for most of us are fighting a hard battle.
--- Ian MacClaren
-
---000000000000fa855a061531550c--
+I suggest taking discussions about non-security bugs off list. It's not
+on topic here.
