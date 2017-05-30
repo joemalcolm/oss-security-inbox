@@ -1,112 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/4
-Message-ID: <707094.299697445-sendEmail@localhost>
-Date: Thu, 2 Mar 2017 16:34:57 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: podofo: heap-based buffer overflow in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/23
+Message-ID: <1496168173.9871.1.camel@gmail.com>
+Date: Tue, 30 May 2017 14:16:13 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+> This might or might not be a valid point, but I think handling the
+> issue
+> via the distros list (and thus with an embargo) was wrong.  It would
+> have been better to have this discussion (if we must) on oss-security
+> right away, rather than only now when a second related issue is
+> brought
+> in here later same month.
 
-A fuzz on it discovered an heap overflow. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+init= is just an example. Can also do things like enabling kernel kgdb /
+other debugging via headphone port / usb. Can mess with a lot of things
+via the kernel line. Disable the IOMMU, get full DMA access via USB-C
+perhaps. There are so many things that can be messed with and it really
+makes no sense to consider them vulnerabilities without doing something
+like *whitelisting* kernel cmdline arguments. Another easy one: disable
+dm-verity or change the dm-verity key, bypassing verified boot for the
+rest of the OS.
 
-The complete ASan output:
+Obtaining CVEs for these bugs presumes that the kernel line is not
+absolutely trusted by design, which it is. A CVE wouldn't be accepted
+for each of a hundred cmdline arguments that puts intentional trust in
+the cmdline, so it really shouldn't be accepted for ones that put
+unintentional trust in it. They are memory corruption bugs and should
+probably be fixed... but it's about as important as fixing the code
+style, not a security fix.
 
-# podofocolor dummy $FILE foo
-==5749==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62500000a0f8 at pc 0x000000529e84 bp 0x7ffee90e1ad0 sp 0x7ffee90e1ac8
-READ of size 1 at 0x62500000a0f8 thread T0
-    #0 0x529e83 in PoDoFo::PdfVariant::DelayedLoad() const /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/podofo/base/../../src/base/PdfVariant.h:545:10
-    #1 0x529e83 in PoDoFo::PdfVariant::GetReal() const /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/podofo/base/../../src/base/PdfVariant.h:675
-    #2 0x52887e in ColorChanger::GetColorFromStack(int, std::vector<PoDoFo::PdfVariant, std::allocator >&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:423:33
-    #3 0x525d4b in ColorChanger::ProcessColor(ColorChanger::EKeywordType, int, std::vector<PoDoFo::PdfVariant, std::allocator >&, GraphicsStack&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:449:28
-    #4 0x521b3c in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:214:31
-    #5 0x51ed8e in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:120:15
-    #6 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
-    #7 0x7f6c2623561f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #8 0x428718 in _start (/usr/bin/podofocolor+0x428718)
+The security fix for Android was CVE-2016-10277 in
 
-0x62500000a0f8 is located 8 bytes to the left of 8192-byte region [0x62500000a100,0x62500000c100)
-allocated by thread T0 here:
-    #0 0x518700 in operator new(unsigned long) /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_new_delete.cc:78
-    #1 0x52aa18 in __gnu_cxx::new_allocator::allocate(unsigned long, void const*) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/ext/new_allocator.h:104:27
-    #2 0x52aa18 in __gnu_cxx::__alloc_traits<std::allocator >::allocate(std::allocator&, unsigned long) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/ext/alloc_traits.h:182
-    #3 0x52aa18 in std::_Vector_base<PoDoFo::PdfVariant, std::allocator >::_M_allocate(unsigned long) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:170
-    #4 0x52aa18 in std::vector<PoDoFo::PdfVariant, std::allocator >::_M_insert_aux(__gnu_cxx::__normal_iterator<PoDoFo::PdfVariant*, std::vector<PoDoFo::PdfVariant, std::allocator > >, PoDoFo::PdfVariant const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/vector.tcc:353
-    #5 0x521bdd in std::vector<PoDoFo::PdfVariant, std::allocator >::push_back(PoDoFo::PdfVariant const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:925:4
-    #6 0x521bdd in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:170
-    #7 0x51ed8e in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:120:15
-    #8 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
-    #9 0x7f6c2623561f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+https://source.android.com/security/bulletin/2017-05-01
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/podofo/base/../../src/base/PdfVariant.h:545:10 in PoDoFo::PdfVariant::DelayedLoad() const
-Shadow bytes around the buggy address:
-  0x0c4a7fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c4a7fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c4a7fff93e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c4a7fff93f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c4a7fff9400: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c4a7fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa[fa]
-  0x0c4a7fff9420: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c4a7fff9430: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c4a7fff9440: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c4a7fff9450: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c4a7fff9460: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==5749==ABORTING
+I really don't buy into the idea the arbitrarily chosen methods to gain
+code exec via the cmdline are vulnerabilities themselves because there
+are many that don't even require bugs...
 
-Affected version:
-0.9.4
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00170-podofo-heapoverflow-PoDoFo-PdfTokenizer-GetNextToken
-
-Timeline:
-2017-02-13: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-heap-based-buffer-overflow-in-podofopdfvariantdelayedload-pdfvariant-h
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Might as well consider disabling NX, kernel rodata protection, setting
+up the IOMMU, setting memory region addresses (including breaking it /
+corrupting memory), etc. to be mitigation bypasses / vulnerabilities if
+these count.
