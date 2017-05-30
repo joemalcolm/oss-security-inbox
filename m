@@ -1,50 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/23
-Message-ID: <5c4ad2ea-c39f-776a-aa54-cf4a7b4a82e9@apache.org>
-Date: Mon, 10 Apr 2017 20:14:41 +0100
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-5648 Apache Tomcat Information Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/19
+Message-ID: <3cdc67a2-9858-5328-1d42-baa61d0ba97d@redhat.com>
+Date: Tue, 30 May 2017 09:29:08 -0600
+From: "kseifried@...hat.com" <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
+Subject: Re: Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-5648 Apache Tomcat Information Disclosure
 
-Severity: Low
 
-Vendor: The Apache Software Foundation
+On 05/30/2017 09:25 AM, Hanno Böck wrote:
+> On Tue, 30 May 2017 08:16:29 -0700
+> Qualys Security Advisory <qsa@...lys.com> wrote:
+> 
+>> Qualys Security Advisory
+>>
+>> CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
+> 
+> Did Mitre really just add multiple new digits to CVEs or is this a typo?
+> 
+> AFAIR they introduced 5-digit-CVEs relatively recently, going to
+> 7-digit without any public announcement seems unlikely.
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M17
-Apache Tomcat 8.5.0 to 8.5.11
-Apache Tomcat 8.0.0.RC1 to 8.0.41
-Apache Tomcat 7.0.0 to 7.0.75
-Apache Tomcat 6.0.x is not affected
+We did this 3 years ago:
 
-Description
-While investigating bug 60718, it was noticed that some calls to
-application listeners did not use the appropriate facade object. When
-running an untrusted application under a SecurityManager, it was
-therefore possible for that untrusted application to retain a reference
-to the request or response object and thereby access and/or modify
-information associated with another web application.
+https://cve.mitre.org/cve/identifiers/syntaxchange.html
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Tomcat 9.0.0.M18 or later
-- Upgrade to Apache Tomcat 8.5.12 or later
-- Upgrade to Apache Tomcat 8.0.42 or later
-- Upgrade to Apache Tomcat 7.0.76 or later
+Examples
 
-Credit:
-This issue was identified by the Tomcat security team.
+Examples of identifiers in the new CVE ID syntax are included below.
+There is no limit on the number of arbitrary digits. Leading 0’s will
+only be used in IDs 1 to 999, as shown in column one below.
 
-History:
-2017-04-10 Original advisory
+IDs with 4 digits	IDs with 5 digits	IDs with 6 digits	IDs with 7 digits
+CVE-2014-0001	CVE-2014-10000	CVE-2014-100000	CVE-2014-1000000
+CVE-2014-3127	CVE-2014-54321	CVE-2014-456132	CVE-2014-7654321
+CVE-2014-9999	CVE-2014-99999	CVE-2014-999999	CVE-2014-9999999
+NOTE: Some of the CVE ID examples above have not yet been assigned.
 
-References:
-[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60718
-[2] http://tomcat.apache.org/security-9.html
-[3] http://tomcat.apache.org/security-8.html
-[4] http://tomcat.apache.org/security-7.html
+The DWF CNA has the block CVE-YEAR-1000000 through CVE-YEAR-1999999 so
+yes, these are legitimate. E.g.:
 
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-1000001
+
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
