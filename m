@@ -1,56 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/9
-Message-ID: <e7a2d0fa-bb31-7320-44ba-47652bcfba47@Z5T1.com>
-Date: Wed, 1 Nov 2017 11:41:54 -0400
-From: Z5T1 <z5t1@...1.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/12
+Message-ID: <ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>
+Date: Tue, 30 May 2017 15:47:02 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Daniel Micay <danielmicay@...il.com>, oss-security@...ts.openwall.com
+Cc: Roee Hay <roeehay@...il.com>
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-Hello All. I'd just like to add my two sense to this conversation.
+On 05/30/2017 03:25 PM, Daniel Micay wrote:
+> Secure boot means verifying boot chain from a root of trust in hardware.
 
-I have reproduced this on Centos 6 and Cucumber Linux 1.0. It appears
-that the umask plays no role in the permissions on swap files; Vim
-creates its swap files with the same permissions as the file being
-edited. This is still a problem though, as configuration files in
-/var/www are usually readable by the httpd user, so the Vim .swp will
-also be readable by the httpd user and consequentially anyone connecting
-to the webserver.
+My comments were specifically about UEFI Secure Boot, which apparently
+behaves quite differently from what you expect.
 
-Storing the swap files in /tmp is a bad idea for all the reasons
-previously discussed; /tmp gets wiped on reboot on most (but not all)
-Linux distributions and storing the swap files in a location that is
-readable by every user on the system has is own security problems. For
-instance, what if root goes to edit /etc/shadow and the swap file is
-placed in /tmp?
-
-I have found this problem can be mitigated by changing the swap
-directory with the 'set directory' directive as Hanno originally
-suggested. I have added the following lines to my '/etc/vimrc':
-
-" Move the swap file location to protect against CVE-2017-1000382
-silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
-set directory=~/.vim/swap/
-
-This safely sets the swap file directory to a directory that should not
-cause any security problems. For added security, the directory is
-created so that only the owner has access to it, regardless of how the
-system's umask is set.
-
-Additionally, the swap file collision (if you edit both ~/foo/file and
-~/bar/file at the same time) is not a major issue; Vim detects this and
-gives the second swap file a different file extension. When you go to
-restore from the swap file, you get a prompt asking which swap file you
-want to use (if there are two swap files with the same basename), which
-doesn't strike me as being terribly problematic.
-
-I will be adding this to the default '/etc/vimrc' on Cucumber Linux in
-the next few hours. I thought it may be helpful for other distro
-maintainers to know as well.
-
-    - Scott
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Thanks,
+Florian
