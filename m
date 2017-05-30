@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/15/1
-Message-ID: <1436048890.32127631.1510746947605.JavaMail.zimbra@redhat.com>
-Date: Wed, 15 Nov 2017 06:55:47 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-15115: Linux kernel: sctp: use-after-free in sctp_cmp_addr_exact()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/7
+Message-ID: <3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>
+Date: Tue, 30 May 2017 14:52:58 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Daniel Micay <danielmicay@...il.com>
+Cc: Roee Hay <roeehay@...il.com>
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-Heololo,
+On 05/30/2017 01:51 PM, Daniel Micay wrote:
+> It's unreasonable to consider the kernel line untrusted. A CVE being
+> issued for one of these issues didn't make sense.
 
-It was found that in Linux kernel when peeling off an association to the socket
-in another network namespace, all transports in this association are not to be
-rehashed and keep use the old key in hashtable. A kernel would miss removing
-transports from hashtable when closing the socket and all transports are being
-freed. Later on a use-after-free could be caused when looking up an association
-and dereferencing the transports.
+It's a potential Secure Boot bypass, so it matters in some theoretical
+sense to some downstreams which carry those Secure Boot patches.
 
-This is a very old issue and it was fixed in Linux kernel v4.14-rc6, and may still
-be not fixed in other distributions.
+(Although I have yet to see anyone to revoke a signature on a kernel
+with known root-to-ring-0 escalations, so the practical impact isn't
+large because an attack could still downgrade to a kernel with an
+exploitable vulnerability.)
 
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1513345
-
-https://patchwork.ozlabs.org/patch/827077/
-
-An upstream patch:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=df80cd9b28b9ebaa284a41df611dbf3a2d05ca74
-
-PS: I do not see that this fix has got into any stable tree, so posting about this
-bug instead of the 100 other bugfixes in the past few weeks/months.
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
-
+Florian
