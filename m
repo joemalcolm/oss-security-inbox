@@ -1,4 +1,9 @@
-Received: (qmail 5131 invoked by uid 550); 28 Jan 2025 15:23:04 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4024" "Tuesday" "30" "May" "2017" "18:50:15" "+0200" "Solar Designer" "solar@openwall.com" "<20170530165015.GA4884@openwall.com>" "87" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Date:" nil nil "5" "2017053016:50:15" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        solar@openwa May 30   87/4024  " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>" "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>" "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28004 invoked by uid 550); 30 May 2017 16:50:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,58 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 27835 invoked from network); 30 May 2017 16:50:21 -0000
+Message-ID: <20170530165015.GA4884@openwall.com>
+References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com> <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk> <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com> <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com> <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Tue, 30 May 2017 18:50:15 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32005 invoked from network); 28 Jan 2025 05:46:56 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Ayush Saxena <ayushsaxena@apache.org>
+Subject: Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function
 To: oss-security@lists.openwall.com
-Message-ID: <4569cebf-b3b4-dbaf-6ca7-799e37bcfdf1@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 28 Jan 2025 05:45:27 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-23953: Apache Hive: Timing Attack Against Signature in
- LLAP util 
 
-Severity: important
+Hi all,
 
-Affected versions:
+Kurt CC'ed me, implying I should comment.  So I will.
 
-- Apache Hive 2.2.0 before 4.0.0
+I think Daniel is mostly right about the technical aspects of the issue.
+For most setups, it's non-security.
 
-Description:
+Roee Hay brought the below related issue to the distros list on May 16:
 
-Use of Arrays.equals() in LlapSignerImpl in=C2=A0Apache Hive to compare mes=
-sage signatures=C2=A0allows attacker to forge a valid signature for an arbi=
-trary message byte by byte. The attacker should be an authorized user of th=
-e product to perform this attack.=C2=A0Users are recommended to upgrade to =
-version 4.0.0, which fixes this issue.
+http://www.openwall.com/lists/oss-security/2017/05/23/16
 
-The problem occurs when an application doesn=E2=80=99t use a constant-time =
-algorithm for validating a signature.=C2=A0The method Arrays.equals()=C2=A0=
-returns false=C2=A0right away when it sees that one of the input=E2=80=99s =
-bytes are different. It means that the comparison time depends on the conte=
-nts of the arrays. This little thing may allow an attacker to forge a valid=
- signature for an arbitrary message byte by byte.=C2=A0So it might allow ma=
-licious users to submit splits/work with selected signatures to LLAP withou=
-t running as a privileged user, potentially leading to DDoS attack.
+I didn't participate in the discussion about it on distros as others
+appeared to be handling it OK'ish (within list policy).  In that
+discussion, Jason A. Donenfeld asked about init=/bin/sh, to which Roee
+Hay replied:
 
-More details in the reference section.
+| Great question! I think your point is perfectly valid, however please note that at least for the late AOSP boot/recovery images, the rootfs has contains a very limited set of binaries (see next). Moreover, a bootloader vuln could theoretically give you partial control only over the kernel cmdline (e.g. 'init=' and such are filtered, but 'lp=' is not).
+| 
+| Nexus 6:
+| shamu:/ # ls -la /sbin
+| adbd  healthd  slideshow ueventd  watchdogd
+| 
+| Nexus 6P:
+| angler:/ # ls /sbin
+| adbd  healthd  ueventd  watchdogd
 
-Credit:
+This might or might not be a valid point, but I think handling the issue
+via the distros list (and thus with an embargo) was wrong.  It would
+have been better to have this discussion (if we must) on oss-security
+right away, rather than only now when a second related issue is brought
+in here later same month.
 
-Andrea Cosentino (reporter)
+Going forward, I think I should insist that such mostly non-security and
+minor issues be made public right away.  Unfortunately, this will be
+spammy to oss-security, like this thread maybe was, but we do have a
+policy to bring everything from distros to oss-security eventually
+anyway, and I do not want to introduce my own judgement on what's a
+security issue vs. not, especially in cases where opinions vary as we've
+seen in this thread.
 
-References:
+Luckily, the latest issue that started this thread wasn't ever on the
+distros list.  That's an improvement.
 
-https://github.com/apache/hive
-https://github.com/apache/hive/commit/b418e3c9f479ba8e7d31e6470306111002ffa=
-809
-https://issues.apache.org/jira/browse/HIVE-28030
-https://blog.gypsyengineer.com/en/security/preventing-timing-attacks-with-c=
-odeql.html
-https://cqr.company/web-vulnerabilities/timing-attacks/
-https://hive.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-23953
+On Tue, May 30, 2017 at 09:36:22AM -0600, Kurt Seifried wrote:
+> Red Hat is only associated with this in so far as I happen to work for Red
+> Hat and I typically do the CVE assignments on the distros@ list (where this
+> issue was initially reported).
 
+I guess Daniel might be associating the other side's arguments with Red
+Hat's because Florian was posting from a redhat.com address.  I have no
+idea whether Florian actually spoke on behalf of Red Hat or not, but
+either way I think the focus on Red Hat is excessive - e.g., in the
+distros list thread on the previous issue, another distro vendor
+inquired about the proposed public disclosure date, implying they also
+might care.  A better summary would be: understanding & opinions vary.
+
+> > Sorry for thinking that this should be about something more than
+> > padding CVs and marketing materials.
+> 
+> I suggest then you take this up with the original researcher if you're
+> worried about people padding their CVs.
+
+I am not happy about judging other people (especially as I could be
+wrong) nor moderating the list based on such criteria.  It's irrelevant
+what someone's motivation is.(*)  It's relevant whether the messages are
+valuable, which I admit is questionable here.  Sometimes things get
+way too spammy such as in message wording or count.  In this thread,
+we're probably above the message count that this topic is worth.
+
+(*) While motivation is irrelevant to list moderation, it is
+nevertheless relevant to processes in this and related communities,
+which might affect software security.  It may also be relevant to risks
+from individual security issues, such as when some issues are first
+sold to a bug bounty program and are only made public when there's
+upstream fix.  But I digress.
+
+> This discussion isn't
+> productive/helpful and I suggest you take it off list.
+
+To me, it looks like the discussion had already ended, even if without
+people getting on the same page, by the time Kurt posted.  I can only
+confirm that, yes, we should probably end this thread here unless
+someone has something entirely new to add.
+
+Alexander
+
+P.S. What a waste of time.
