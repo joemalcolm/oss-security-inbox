@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1401" "Wednesday" "8" "November" "2017" "10:15:17" "+0100" "Greg KH" "greg@kroah.com" "<20171108091517.GA18656@kroah.com>" "36" "Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" nil nil nil "11" "2017110809:15:17" "[oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" (number mark "U       greg@kroah.c Nov  8   36/1401  " thread-indent "\"Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver\"\n") "<1510086603.29942.2.camel@pnnl.gov>" ("<906136424.28576814.1510085319128.JavaMail.zimbra@redhat.com>" "<1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>" "<20171107202237.GA10679@kroah.com>" "<1510086603.29942.2.camel@pnnl.gov>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1419" "Tuesday" "30" "May" "2017" "10:03:55" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1496153035.941.9.camel@gmail.com>" "30" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Cc:" nil nil "5" "2017053014:03:55" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        danielmicay@ May 30   30/1419  " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<1496145073.1459.1.camel@gmail.com>" "<3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>" "<1496149333.941.1.camel@gmail.com>" "<099ea9a5-1f74-b837-bcae-aaba2c109a02@redhat.com>" "<1496150738.941.5.camel@gmail.com>" "<ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5823 invoked by uid 550); 8 Nov 2017 09:15:18 -0000
+Received: (qmail 19849 invoked by uid 550); 30 May 2017 14:04:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19830 invoked from network); 30 May 2017 14:04:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=aolW9e1Dd/J0rVOBCjypKC0RxtmeubaYgKUn3hfTWt4=;
+        b=Qq9drlBXLo0dxXpUJFaTDpGQFdJAv20aBegbHXcQtOWvt2/KcQhduTSydgVTA7o414
+         baYi2v6GeEvWLPi1/L8qjw3UbNGx0af2tAFVBTdIUv431LWL5dhT6R1eEo1tq0u5yftQ
+         ed6UcnPzBteVtkpBlWBza1tvtH5Ibusm4pqu04h4/OYWspNy9coNes86TRJf7IuKNyEt
+         kqp8T+C5qjyabtkwN518B4JFycWNnTKt0nBLkceXSlpJlU4Z6/SJMR4OJrwRhN6IY9CS
+         WPUVymuwvTbxcoI5LbOCFq0RkMME5e431qTblxXA5e7w6AqY++dDjcUYlQ645JDnEpd9
+         4wmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=aolW9e1Dd/J0rVOBCjypKC0RxtmeubaYgKUn3hfTWt4=;
+        b=BwYmJhc89K3bcIa9peaV8akP9I3cQgAfY85GS/78k/Ze9dcteYkxDer+wQiOKGgMMH
+         ULQEzobOu0/HnqCz6P7Bm5uHOqzl0C9jA9kEHwxOXX8/ca8WfIl3O8WINA29uXSIFmyx
+         BSIwQVAk3O1Df7C64oMypA6jXyTAXK4JtPq3QNAZlOauI7M9o2FWfXfUgWLh+5hHUAW0
+         twup9eYT2BJUcRhViG0qGT1o8RoRLoTk2L2OEzxXc/v6Fxem3f5qAb2FVJ95OB3fLa6T
+         V6wGqKbkuBb5G5OyJE7gMamHeWWDnVJu0THUM4FubNC6VyISNRAWGAcoTCeOMP+rxQGc
+         5XnQ==
+X-Gm-Message-State: AODbwcBZ/Ng5iPfauyv60CVbrFtwXpCIzdsT4NHudMZfk6HYf6Q1Trxo
+	fWgiJjyNfmAEKg==
+X-Received: by 10.36.25.196 with SMTP id b187mr2040342itb.30.1496153036883;
+        Tue, 30 May 2017 07:03:56 -0700 (PDT)
+Message-ID: <1496153035.941.9.camel@gmail.com>
+In-Reply-To: <ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>
+References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
+	 <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
+	 <1496145073.1459.1.camel@gmail.com>
+	 <3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>
+	 <1496149333.941.1.camel@gmail.com>
+	 <099ea9a5-1f74-b837-bcae-aaba2c109a02@redhat.com>
+	 <1496150738.941.5.camel@gmail.com>
+	 <ab7a4164-1faf-67c2-deb7-f74998ae1dd6@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.24.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Cc: Roee Hay <roeehay@gmail.com>
+Date: Tue, 30 May 2017 10:03:55 -0400
+From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5784 invoked from network); 8 Nov 2017 09:15:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=v9W5o2
-	biWHL5KFVppa9x86Ks1yrWumeasEgFnoOrsDU=; b=Bkw94EKIqobuQDhU+x9gGS
-	jlhevyPtVUAmYTD2T0fDLIkbItmbwhe7x169TpnmYBPPRP0JJyGc2W8kaROImuyl
-	AOmd9DnHcqRt2fYBvqRxAi0mLpg+otfvoqrc/Mco54neElITLqqRxRIcGbNpbTSK
-	VjcZLSAKfUHBR5bpX5LgiRCa9+7FzLUx1y6G7AAawQZLizXy48Xo97Q4+OGO0ObP
-	AJM21nd+uR+PfSb6adbdPgOjFd4r1704wnMZ+7SD6jusVCCcYKigNQX5q0XPmBEr
-	WN+WodtW0WGAAHtngoeSx1xHoNTKCq2JaKxTsS6hym+6rKHY/93tsUsxKPbgfztg
-	==
-X-ME-Sender: <xms:GcsCWpsXZ-Iub-wdT1ict7Y1euiBeZm7YSDiOMBb058oaAG95U0-JQ>
-Date: Wed, 8 Nov 2017 10:15:17 +0100
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20171108091517.GA18656@kroah.com>
-References: <906136424.28576814.1510085319128.JavaMail.zimbra@redhat.com>
- <1539240847.28577626.1510085696543.JavaMail.zimbra@redhat.com>
- <20171107202237.GA10679@kroah.com>
- <1510086603.29942.2.camel@pnnl.gov>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1510086603.29942.2.camel@pnnl.gov>
-User-Agent: Mutt/1.9.1 (2017-09-22)
-Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due
- to a race condition in [legousbtower] driver
+Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
+ controlled payload in get_options() function
+To: Florian Weimer <fweimer@redhat.com>, oss-security@lists.openwall.com
 
-On Tue, Nov 07, 2017 at 08:30:05PM +0000, Maier, Kurt H wrote:
-> On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
-> > 
-> > I hate to ask, but why are you getting CVEs for bugs fixed over a
-> > year
-> > ago, and are already in all stable kernel releases a year ago?  Why
-> > does
-> > it matter?
-> > 
-> > Unless you happen to have a product that doesn't ever do kernel
-> > updates
-> > from the stable trees, and well, then you know what you are doing and
-> > don't need CVEs assigned either, right?  :)
-> > 
+On Tue, 2017-05-30 at 15:47 +0200, Florian Weimer wrote:
+> On 05/30/2017 03:25 PM, Daniel Micay wrote:
+> > Secure boot means verifying boot chain from a root of trust in
+> > hardware.
 > 
-> Kernel maintainers' policy is clear, and nobody is asking for that to
-> change, but please don't sandbag the process of keeping track of
-> vulnerabilities.  The fraction of "products" (regardless of vendor)
-> that run linux and never get updates approaches unity.  Being able to
-> precisely catalog which linux releases suffer from which
-> vulnerabilities is useful to many.
+> My comments were specifically about UEFI Secure Boot, which apparently
+> behaves quite differently from what you expect.
 
-Well, I'm working on fixing the "devices do not get updates" issue
-through other means, so don't just give up on that one just yet :)
+UEFI Secure Boot can be used for a useful verified boot implementation.
 
-As for the "keep track of vulnerabilities", is that what is really
-happening here?  Why pick a random bug fix from over a year ago for a
-CVE vs. the 100 other bugfixes in the past few weeks/months?
+It doesn't behave differently than I expect.
 
-I'm really curious as to what triggered this specific CVE request that
-somehow misses the hundreds/thousands of other fixes that land in newer
-kernel releases?
+Only covering the kernel without covering any of the userspace or even
+the kernel line is an incomplete implementation. It doesn't need to
+cover the whole userspace OS to be useful but if it doesn't even cover
+init and enough of the userspace OS to include some useful isolated code
+then it's not accomplishing anything.
 
-thanks,
+Secure / verified boot is useful primarily for preventing an attacker
+from persisting privileged code. A good implementation tries to fully
+prevent persistence, even of unprivileged code. The secondary value is
+making tampering a lot more difficult, but it can't ever fully prevent
+that. If there's no kernel line / userspace coverage, then it's not
+doing either of those... so the lack of an enforced boundary between
+root and the kernel at least without SELinux, etc. is an orthogonal
+issue to this.
 
-greg k-h
+What security property does verified boot provide without including the
+kernel line and at the very least enough of the core userspace OS to do
+*something* useful?
