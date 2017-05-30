@@ -1,62 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/5
-Message-ID: <ed10da959b8b4d51bdfc70e3820c6a89@imshyb01.MITRE.ORG>
-Date: Sat, 28 Jan 2017 15:47:39 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/13
+Message-ID: <1496153035.941.9.camel@gmail.com>
+Date: Tue, 30 May 2017 10:03:55 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com
+Cc: Roee Hay <roeehay@...il.com>
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, 2017-05-30 at 15:47 +0200, Florian Weimer wrote:
+> On 05/30/2017 03:25 PM, Daniel Micay wrote:
+> > Secure boot means verifying boot chain from a root of trust in
+> > hardware.
+> 
+> My comments were specifically about UEFI Secure Boot, which apparently
+> behaves quite differently from what you expect.
 
-> https://wordpress.org/news/2017/01/wordpress-4-7-2-security-release/
-> https://codex.wordpress.org/Version_4.7.2
+UEFI Secure Boot can be used for a useful verified boot implementation.
 
-> [] 1/ The user interface for assigning taxonomy terms in Press This is shown to
-> users who do not have permissions to use it. Reported by David Herrera of Alley
-> Interactive.
-> https://github.com/WordPress/WordPress/commit/21264a31e0849e6ff793a06a17de877dd88ea454
+It doesn't behave differently than I expect.
 
-Use CVE-2017-5610.
+Only covering the kernel without covering any of the userspace or even
+the kernel line is an incomplete implementation. It doesn't need to
+cover the whole userspace OS to be useful but if it doesn't even cover
+init and enough of the userspace OS to include some useful isolated code
+then it's not accomplishing anything.
 
+Secure / verified boot is useful primarily for preventing an attacker
+from persisting privileged code. A good implementation tries to fully
+prevent persistence, even of unprivileged code. The secondary value is
+making tampering a lot more difficult, but it can't ever fully prevent
+that. If there's no kernel line / userspace coverage, then it's not
+doing either of those... so the lack of an enforced boundary between
+root and the kernel at least without SELinux, etc. is an orthogonal
+issue to this.
 
-> [] 2/ WP_Query is vulnerable to a SQL injection (SQLi) when passing unsafe data.
-> WordPress core is not directly vulnerable to this issue, but we've added
-> hardening to prevent plugins and themes from accidentally causing a
-> vulnerability. Reported by Mo Jangda (batmoo).
-> https://github.com/WordPress/WordPress/commit/85384297a60900004e27e417eac56d24267054cb
-
-Use CVE-2017-5611.
-
-
-> [] 3/ A cross-site scripting (XSS) vulnerability was discovered in the posts list
-> table. Reported by Ian Dunn of the WordPress Security Team.
-> https://github.com/WordPress/WordPress/commit/4482f9207027de8f36630737ae085110896ea849
-
-Use CVE-2017-5612.
-
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYjQMaAAoJEHb/MwWLVhi29sYP/jzIGOAGx8INCPLVLnadqphE
-VDvhcdL6uWZEy5ykTVydja6UmUqSQ3rJULtE2+R86Nfl5EXpmPSvqTJRxaoWgJSu
-w0a+v/ZJMb6WNFx2DlR24EN8fKSWHRYR8eu9pquHJwqTgLHH2YKd4WeXCtGmraAg
-FOh4Dxecayh22RR2WrGN2oALW5vFz6CNnc3MhQWAzgEWvqBwm8VMznrT8NlvjLrA
-IyxaVbfUcKLw0cWPmHw0b/054wlXCfTLuFKlCp9QEjeF8+B7L5XlhEkEueV8a0Ir
-Cg1J+PVbPDpmp686rZWfULyI0WODOOpUIBFnXUOs529knkQxUyKY5ZB6j6a1Kaj6
-JbMh10sPSPVnGUAWH5I9fzOzwqkSqtqNGXKOOBTllGIW3WsKARckmex7eqJXydhD
-xef8UEFOYxVUbUDAUAUlSVvRXmKh6lFUE7iYG5drxRtOVeNkmdX7F4zOfl3Dkc9H
-G3nXPzPRJ1EiAMHzO0wHDrT1Y2tsvVrPGEYoNCgMPMpwIiCx9DUBEjhYqz/IytXd
-U23Zd2YRLn4LQ2RNkVlKgLKZj5wP1aHRA+NXow3VYNf9L66w/5zw7ouxg+c8aPEd
-G5UqJ3Bl3pUtOP5BsciINs5aXFXdIJvPcny4zg6Ta6/d+Jk/w9q1TX3nQ7xhcfff
-d3Jj+zNCED6LUCSRPtde
-=dkka
------END PGP SIGNATURE-----
+What security property does verified boot provide without including the
+kernel line and at the very least enough of the core userspace OS to do
+*something* useful?
