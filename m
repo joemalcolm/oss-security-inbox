@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1849" "Thursday" "1" "December" "2016" "11:24:59" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20161201112459.78cbf764@pc1>" "61" "[oss-security] gstreamer multiple issues" nil nil nil "12" "2016120110:24:59" "[oss-security] gstreamer multiple issues" (number mark "U       hanno@hboeck Dec  1   61/1849  " thread-indent "\"[oss-security] gstreamer multiple issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1397" "Tuesday" "30" "May" "2017" "09:29:08" "-0600" "kseifried@redhat.com" "kseifried@redhat.com" "<3cdc67a2-9858-5328-1d42-baa61d0ba97d@redhat.com>" "44" "Re: [oss-security] Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux" "^Date:" nil nil "5" "2017053015:29:08" "[oss-security] Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux" (number mark "        kseifried@re May 30   44/1397  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux\"\n") "<20170530172511.2b795fcb@pc1>" ("<20170530151629.GA19040@localhost.localdomain>" "<20170530172511.2b795fcb@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17989 invoked by uid 550); 1 Dec 2016 10:25:15 -0000
+Received: (qmail 11999 invoked by uid 550); 30 May 2017 15:29:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17957 invoked from network); 1 Dec 2016 10:25:13 -0000
-Date: Thu, 1 Dec 2016 11:24:59 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-Message-ID: <20161201112459.78cbf764@pc1>
-X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Received: (qmail 11981 invoked from network); 30 May 2017 15:29:22 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=PXRry/a5VnK6x8W4t2zdxV9xjuV8hNN9VTJJNejBkvw=;
+        b=jUIqZtzeCGLi88ihIy+l5FYokjlpIkmjLGbD2j8PKQcSsNtwJP3yybTXoDGSbiczg6
+         5AOvkqSJN0n23B5CexdpZcNQBp+yLkxFrWqzisu/d4xsM1fZkdDwUnkbBqWExZA/u0AS
+         uPOqCVpI0DSj1eMDd2D4ghdNhwBKTHvaP6pRV81f7t0YqKJUo35DO/WJVldV9bWP1Gv1
+         pxjkPBCBkSQISsAenwmCdySR6DSI9Ys1CzGoyMWmQWWBNhFtnCBv84hZqPr+KUvO08c4
+         el01obKsjgJEUDEhpvPWyK7Guf1GHOYsFhhRHH/0MIaSVoBVOrICmkpUPY5CCEukErk/
+         fJ6Q==
+X-Gm-Message-State: AODbwcDaBpafSQ+L19sZgf1AW9SVVHneLuGBVM7D9I8vLZkMdgaro0F1
+	RndmshbC2Op5QvJfrqJ88w==
+X-Received: by 10.55.4.65 with SMTP id 62mr11974224qke.198.1496158151094;
+        Tue, 30 May 2017 08:29:11 -0700 (PDT)
+References: <20170530151629.GA19040@localhost.localdomain>
+ <20170530172511.2b795fcb@pc1>
+Message-ID: <3cdc67a2-9858-5328-1d42-baa61d0ba97d@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] gstreamer multiple issues
-
-Hi,
-
-After the blogposts from Chris Evans about gstreamer insecurities I had
-a look.
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D774859
-Invalid memory read in flx_decode_chunks (gst-plugins-good)
-The fix is a larger rewrite of the affected code paths and probably
-fixed a bunch of other issues on the way. It also fixes the second flic
-bug reported by Chris Evans described here:
-https://scarybeastsecurity.blogspot.dk/2016/11/0day-poc-incorrect-fix-for-g=
-streamer.html
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D774896
-h264: one byte heap off by one read in gst_h264_parse_set_caps
-(gst-plugins-bad)
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D774897
-Invalid memory read in glib caused by one invalid unref call in the
-flxdec decoder. (gst-plugins-good)
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D774902
-4 byte heap out of bounds read in windows_icon_typefind
-(gst-plugins-base)
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D775048
-2 byte heap out of bounds read in gst_mpegts_section_new
-(gst-plugins-bad).
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D775120
-null pointer deref (segfault) in mpegts decoder / _parse_pat
-(gst-plugins-bad)
-
-A note about the memory access bugs: glib's slice allocator can hide
-them, so finding them with asan sometimes only works if one sets
-G_SLICE=3Dalways-malloc
-
-
-Stuff that's probably not security relevant:
-
-Asserts / traps only:
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D775130
-h264 decoder assert (gst-plugins-bad)
-
-https://bugzilla.gnome.org/show_bug.cgi?id=3D775219
-avidemux trap on invalid utf-8
+In-Reply-To: <20170530172511.2b795fcb@pc1>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Date: Tue, 30 May 2017 09:29:08 -0600
+From: "kseifried@redhat.com" <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Qualys Security Advisory - CVE-2017-1000367 in
+ Sudo's get_process_ttyname() for Linux
+To: oss-security@lists.openwall.com, =?UTF-8?Q?Hanno_B=c3=b6ck?=
+ <hanno@hboeck.de>
 
 
 
-The gstreamer devs were very quick in fixing all issues. The release
-1.10.2 should contain all the fixes.
-https://gstreamer.freedesktop.org/releases/gstreamer/1.10.2.html
+On 05/30/2017 09:25 AM, Hanno Böck wrote:
+> On Tue, 30 May 2017 08:16:29 -0700
+> Qualys Security Advisory <qsa@qualys.com> wrote:
+> 
+>> Qualys Security Advisory
+>>
+>> CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
+> 
+> Did Mitre really just add multiple new digits to CVEs or is this a typo?
+> 
+> AFAIR they introduced 5-digit-CVEs relatively recently, going to
+> 7-digit without any public announcement seems unlikely.
+
+We did this 3 years ago:
+
+https://cve.mitre.org/cve/identifiers/syntaxchange.html
+
+Examples
+
+Examples of identifiers in the new CVE ID syntax are included below.
+There is no limit on the number of arbitrary digits. Leading 0’s will
+only be used in IDs 1 to 999, as shown in column one below.
+
+IDs with 4 digits	IDs with 5 digits	IDs with 6 digits	IDs with 7 digits
+CVE-2014-0001	CVE-2014-10000	CVE-2014-100000	CVE-2014-1000000
+CVE-2014-3127	CVE-2014-54321	CVE-2014-456132	CVE-2014-7654321
+CVE-2014-9999	CVE-2014-99999	CVE-2014-999999	CVE-2014-9999999
+NOTE: Some of the CVE ID examples above have not yet been assigned.
+
+The DWF CNA has the block CVE-YEAR-1000000 through CVE-YEAR-1999999 so
+yes, these are legitimate. E.g.:
+
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-1000001
 
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
