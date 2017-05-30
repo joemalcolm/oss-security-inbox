@@ -1,15 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/3
-Message-ID: <14897455.GIhqfEeHBG@wanheda>
-Date: Fri, 01 Sep 2017 14:00:38 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/6
+Message-ID: <1496145073.1459.1.camel@gmail.com>
+Date: Tue, 30 May 2017 07:51:13 -0400
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: openjpeg: invalid memory write in tgatoimage (convert.c)
+Cc: Roee Hay <roeehay@...il.com>
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-This is CVE-2017-14040
+On Tue, 2017-05-30 at 12:41 +0100, Simon McVittie wrote:
+> On Tue, 30 May 2017 at 08:17:54 +0400, Ilya Matveychikov wrote:
+> > When using get_options() it's possible to specify a range of
+> > numbers,
+> > like 1-100500. The problem is that it doesn't track array size while
+> > calling internally to get_range() which iterates over the range and
+> > fills the memory with numbers.
+> 
+> Is there a realistic way in which an attacker can provide Linux kernel
+> command-line arguments, without being able to achieve arbitrary code
+> execution via those command-line arguments?
+> 
+> In other words, is this a security vulnerability, or just a bug?
+> 
+> (If the attacker can already achieve arbitrary code execution then
+> this bug does not give them any capability they do not already have.)
+> 
+>     S
 
+It's unreasonable to consider the kernel line untrusted. A CVE being
+issued for one of these issues didn't make sense.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+If there's verified boot, it needs to cover the kernel command-line. If
+it doesn't, that's a vulnerability. Memory corruption bugs aren't needed
+for an attacker to make use of the kernel line.
+
+Fixing these bugs makes sense, but treating them as vulnerabilities is
+just going to turn off the Linux kernel developers to security people
+even more since it's pretty much nonsense.
