@@ -1,39 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/3
-Message-Id: <BF31B87E-F34A-4206-961A-8B80B7AFCA54@gmail.com>
-Date: Mon, 22 May 2017 07:54:27 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/15
+Message-ID: <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>
+Date: Tue, 30 May 2017 08:50:43 -0600
+From: "kseifried@...hat.com" <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: Re: Multiple crashes in OpenEXR
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-
-> On May 12, 2017, at 1:48 PM, Brandon Perry <bperry.volatile@...il.com> wrote:
+On 05/30/2017 05:41 AM, Simon McVittie wrote:
+> On Tue, 30 May 2017 at 08:17:54 +0400, Ilya Matveychikov wrote:
+>> When using get_options() it's possible to specify a range of numbers,
+>> like 1-100500. The problem is that it doesn't track array size while
+>> calling internally to get_range() which iterates over the range and
+>> fills the memory with numbers.
 > 
+> Is there a realistic way in which an attacker can provide Linux kernel
+> command-line arguments, without being able to achieve arbitrary code
+> execution via those command-line arguments?
 > 
->> On May 12, 2017, at 1:45 PM, Henri Salo <henri@...v.fi> wrote:
->> 
->> On Fri, May 12, 2017 at 12:09:30PM -0500, Brandon Perry wrote:
->>> As of this writing, <snip>. No CVEs have been requested.
->> 
->> Why not?
+> In other words, is this a security vulnerability, or just a bug?
 > 
-> I’m lazy. I might this weekend.
+> (If the attacker can already achieve arbitrary code execution then
+> this bug does not give them any capability they do not already have.)
 > 
+>     S
 
-Attached is the email from MITRE regarding the 7 CVE allocations.
+Here's my response from the initial assignment:
+
+For the purposes of CVE this is a vulnerability (secureboot says you
+won't be monkeying with the kernel in general). In general: the promise
+of secureboot is not a fully secure system, the promise of secureboot is
+a secured bootchain, so for example the kernel itself is trusted and
+secure, once it goes to user space, then things go to "it depends" (e.g.
+if you have signed binaries that are secure, you would in theory have a
+secure userland, if you boot to unsigned binaries, then good luck and
+have fun). But code execution within the kernel is generally a definite
+no-no.
+
+Please use CVE-2017-1000363 for this issue.
 
 
+-- 
 
-Download attachment "Re_ [scr336814] OpenEXR - 2.2.0.eml" of type "message/rfc822" (27840 bytes)
-
-
->> 
->> --
->> Henri Salo
-> 
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
