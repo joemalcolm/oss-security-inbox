@@ -1,25 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/12
-Message-ID: <CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>
-Date: Wed, 3 May 2017 20:55:23 +0200
-From: Guido Vranken <guidovranken@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/17
+Message-ID: <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
+Date: Tue, 30 May 2017 11:20:05 -0400
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: rpcbomb: remote rpcbind denial-of-service
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-This vulnerability allows an attacker to allocate any amount of bytes
-(up to 4 gigabytes per attack) on a remote rpcbind host, and the
-memory is never freed unless the process crashes or the administrator
-halts or restarts the rpcbind service.
+That's not what secure/verified boot means to everyone else, and
+there's nothing in mainline with those properties. To everyone else,
+it's not an arbitrary bureaucratic/marketing feature. It's
+verification of the whole base OS... i.e. Android, Android Things
+(Brillo), ChromeOS, iOS and sane embedded Linux systems. Likely
+Windows on mobile devices too, and I really doubt that Microsoft
+doesn't plan on verifying the userspace OS if they don't already.
 
-Attacking a system is trivial; a single attack consists of sending a
-specially crafted payload of around 60 bytes through a UDP socket.
+Anyway, good luck with meaningless Red Hat security theatre. These
+"vulnerabilities" are just reinforcing the view that security people
+are foolish. There isn't disagreement that it's a meaningless feature
+with this level of incompleteness and yet a CVE is assigned for it?
+Okay then...
 
-This can slow down the system’s operations significantly or prevent
-other services (such as a web server) from spawning processes
-entirely.
-
-An extensive write-up can be found here:
-https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
-
-Exploit + patches: https://github.com/guidovranken/rpcbomb/
+Sorry for thinking that this should be about something more than
+padding CVs and marketing materials.
