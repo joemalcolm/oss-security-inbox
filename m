@@ -1,123 +1,146 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/02/4
-Message-Id: <E1d5WTf-0005MI-Tb@xenbits.xenproject.org>
-Date: Tue, 02 May 2017 12:00:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 215 - possible memory corruption via failsafe callback
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/16
+Message-ID: <20170530151629.GA19040@localhost.localdomain>
+Date: Tue, 30 May 2017 08:16:29 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
+To: oss-security@...ts.openwall.com
+Subject: Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-                    Xen Security Advisory XSA-215
-                              version 2
+Qualys Security Advisory
 
-           possible memory corruption via failsafe callback
+CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
 
-UPDATES IN VERSION 2
-====================
 
-Public release.
+========================================================================
+Contents
+========================================================================
 
-Added email header syntax to patches, for e.g. git-am.
+Analysis
+Exploitation
+Example
+Acknowledgments
 
-ISSUE DESCRIPTION
-=================
 
-Under certain special conditions Xen reports an exception resulting
-from returning to guest mode not via ordinary exception entry points,
-but via a so call failsafe callback.  This callback, unlike exception
-handlers, takes 4 extra arguments on the stack (the saved data
-selectors DS, ES, FS, and GS).  Prior to placing exception or failsafe
-callback frames on the guest kernel stack, Xen checks the linear
-address range to not overlap with hypervisor space.  The range spanned
-by that check was mistakenly not covering these extra 4 slots.
+========================================================================
+Analysis
+========================================================================
 
-IMPACT
-======
+We discovered a vulnerability in Sudo's get_process_ttyname() for Linux:
+this function opens "/proc/[pid]/stat" (man proc) and reads the device
+number of the tty from field 7 (tty_nr). Unfortunately, these fields are
+space-separated and field 2 (comm, the filename of the command) can
+contain spaces (CVE-2017-1000367).
 
-A malicious or buggy 64-bit PV guest may be able to modify part of a
-physical memory page not belonging to it, potentially allowing for all
-of privilege escalation, host or other guest crashes, and information
-leaks.
+For example, if we execute Sudo through the symlink "./     1 ",
+get_process_ttyname() calls sudo_ttyname_dev() to search for the
+non-existent tty device number "1" in the built-in search_devs[].
 
-VULNERABLE SYSTEMS
-==================
+Next, sudo_ttyname_dev() calls the function sudo_ttyname_scan() to
+search for this non-existent tty device number "1" in a breadth-first
+traversal of "/dev".
 
-64-bit Xen versions 4.6 and earlier are vulnerable.  Xen versions 4.7
-and later are not vulnerable.
+Last, we exploit this function during its traversal of the
+world-writable "/dev/shm": through this vulnerability, a local user can
+pretend that his tty is any character device on the filesystem, and
+after two race conditions, he can pretend that his tty is any file on
+the filesystem.
 
-Only x86 systems are affected.  ARM systems are not vulnerable.
+On an SELinux-enabled system, if a user is Sudoer for a command that
+does not grant him full root privileges, he can overwrite any file on
+the filesystem (including root-owned files) with his command's output,
+because relabel_tty() (in src/selinux.c) calls open(O_RDWR|O_NONBLOCK)
+on his tty and dup2()s it to the command's stdin, stdout, and stderr.
+This allows any Sudoer user to obtain full root privileges.
 
-Only x86 systems with physical memory extending to a configuration
-dependent boundary (5Tb or 3.5Tb) may be affected.  Whether they are
-actually affected depends on actual physical memory layout.
 
-The vulnerability is only exposed to 64-bit PV guests.  HVM guests and
-32-bit PV guests can't exploit the vulnerability.
+========================================================================
+Exploitation
+========================================================================
 
-MITIGATION
-==========
+To exploit this vulnerability, we:
 
-Running only HVM or 32-bit PV guests will avoid the vulnerability.
+- create a directory "/dev/shm/_tmp" (to work around
+  /proc/sys/fs/protected_symlinks), and a symlink "/dev/shm/_tmp/_tty"
+  to a non-existent pty "/dev/pts/57", whose device number is 34873;
 
-The vulnerability can be avoided if the guest kernel is controlled by
-the host rather than guest administrator, provided that further steps
-are taken to prevent the guest administrator from loading code into
-the kernel (e.g. by disabling loadable modules etc) or from using
-other mechanisms which allow them to run code at kernel privilege.
+- run Sudo through a symlink "/dev/shm/_tmp/     34873 " that spoofs the
+  device number of this non-existent pty;
 
-CREDITS
-=======
+- set the flag CD_RBAC_ENABLED through the command-line option "-r role"
+  (where "role" can be our current role, for example "unconfined_r");
 
-This issue was discovered by Jann Horn of Google Project Zero.
+- monitor our directory "/dev/shm/_tmp" (for an IN_OPEN inotify event)
+  and wait until Sudo opendir()s it (because sudo_ttyname_dev() cannot
+  find our non-existent pty in "/dev/pts/");
 
-RESOLUTION
-==========
+- SIGSTOP Sudo, call openpty() until it creates our non-existent pty,
+  and SIGCONT Sudo;
 
-Applying the attached patch resolves this issue.
+- monitor our directory "/dev/shm/_tmp" (for an IN_CLOSE_NOWRITE inotify
+  event) and wait until Sudo closedir()s it;
 
-xsa215.patch       Xen 4.6.x, Xen 4.5.x
+- SIGSTOP Sudo, replace the symlink "/dev/shm/_tmp/_tty" to our
+  now-existent pty with a symlink to the file that we want to overwrite
+  (for example "/etc/passwd"), and SIGCONT Sudo;
 
-$ sha256sum xsa215*
-5be4ff661dd22890b0120f86beee3ec809e2a29f833db8c48bd70ce98e9691ee  xsa215.patch
-$
+- control the output of the command executed by Sudo (the output that
+  overwrites "/etc/passwd"):
 
-DEPLOYMENT DURING EMBARGO
-=========================
+  . either through a command-specific method;
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+  . or through a general method such as "--\nHELLO\nWORLD\n" (by
+    default, getopt() prints an error message to stderr if it does not
+    recognize an option character).
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+To reliably win the two SIGSTOP races, we preempt the Sudo process: we
+setpriority() it to the lowest priority, sched_setscheduler() it to
+SCHED_IDLE, and sched_setaffinity() it to the same CPU as our exploit.
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+========================================================================
+Example
+========================================================================
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+We will publish our Sudoer-to-root exploit
+(Linux_sudo_CVE-2017-1000367.c) in the near future:
 
-iQEcBAEBCAAGBQJZCGsCAAoJEIP+FMlX6CvZulUH/38S+01LCZXAyAiPQTKGtJ09
-QZeqIriU1rFn/jXWvxnlC2eaKmrZvucOtYWK5Uccmj49Y2lgvoxTqSCa0S86POWU
-xvwBH2nGMsJ0Q4m1qQ4fZQ3lSsRlRoz0FyeTwdjdGlGVqGqPhDqB7Nm68IyOjr5j
-zhIxl8WCQulaqlWwCIgR+KQEgbyVDdsqmOYq7vIrYvyEEtM98l2sQ4E5kO3QfxUV
-aRbUBH4XrleGYNXQE3kXCNBJJIxl8LwsIHvk55hWAjEwmdRbu8o4+eBNn+lvDzQb
-+AEMk1VrDMYCsxB6bUryJm6AzNc69vBNsdgGo4o0UXZtrfhtyBsEXD6daWqu3/c=
-=zQpX
------END PGP SIGNATURE-----
+[john@...alhost ~]$ head -n 8 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
 
-Download attachment "xsa215.patch" of type "application/octet-stream" (1695 bytes)
+[john@...alhost ~]$ sudo -l
+[sudo] password for john:
+...
+User john may run the following commands on localhost:
+    (ALL) /usr/bin/sum
+
+[john@...alhost ~]$ ./Linux_sudo_CVE-2017-1000367 /usr/bin/sum $'--\nHELLO\nWORLD\n'
+[sudo] password for john:
+
+[john@...alhost ~]$ head -n 8 /etc/passwd
+/usr/bin/sum: unrecognized option '--
+HELLO
+WORLD
+'
+Try '/usr/bin/sum --help' for more information.
+ogin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+
+
+========================================================================
+Acknowledgments
+========================================================================
+
+We thank Todd C. Miller for his great work and quick response, and the
+members of the distros list for their help with the disclosure of this
+vulnerability.
+
