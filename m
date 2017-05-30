@@ -1,28 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/27/1
-Message-ID: <f17ddf39-6ace-8086-de6d-eef34945cf9f@cpanel.net>
-Date: Wed, 27 Dec 2017 09:21:41 -0600
-From: John Lightsey <jd@...nel.net>
-To: oss-security@...ts.openwall.com
-Subject: Path traversal flaws in awstats 7.6 and earlier.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/11
+Message-ID: <1496150738.941.5.camel@gmail.com>
+Date: Tue, 30 May 2017 09:25:38 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com
+Cc: Roee Hay <roeehay@...il.com>
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+On Tue, 2017-05-30 at 15:05 +0200, Florian Weimer wrote:
+> On 05/30/2017 03:02 PM, Daniel Micay wrote:
+> > On Tue, 2017-05-30 at 14:52 +0200, Florian Weimer wrote:
+> > > On 05/30/2017 01:51 PM, Daniel Micay wrote:
+> > > > It's unreasonable to consider the kernel line untrusted. A CVE
+> > > > being
+> > > > issued for one of these issues didn't make sense.
+> > > 
+> > > It's a potential Secure Boot bypass, so it matters in some
+> > > theoretical
+> > > sense to some downstreams which carry those Secure Boot patches.
+> > > 
+> > > (Although I have yet to see anyone to revoke a signature on a
+> > > kernel
+> > > with known root-to-ring-0 escalations, so the practical impact
+> > > isn't
+> > > large because an attack could still downgrade to a kernel with an
+> > > exploitable vulnerability.)
+> > > 
+> > > Florian
+> > 
+> > How is it a secure boot bypass? If the secure boot implementation
+> > doesn't cover the kernel line it's already broken.
+> 
+> That's not how the Secure Boot patches work.
 
-The cPanel Security Team discovered two path traversal flaws in awstats
-that could be leveraged for unauthenticated remote code execution. Both
-issues have been submitted to the DWF CVE request page at
-https://iwantacve.org/.
+Secure boot means verifying boot chain from a root of trust in hardware.
 
+It's you who doesn't seem to understand how it works, and yet you're
+telling that to me...
 
-Path traversal in the awstats.pl "config" parameter:
+The late stage bootloader needs to verify the kernel / initrd and then
+the kernel verifies the userspace OS if it's a full implementation. It
+doesn't make sense for the kernel line to be left unverified as part of
+that, and it isn't how ChromeOS / Android implement it. They verify the
+kernel line as part of the initrd and don't allow setting a custom one
+unless the bootloader is unlocked, which disables verified boot anyway.
 
-https://github.com/eldy/awstats/commit/cf219843a74c951bf5986f3a7fffa3dcf99c3899
+> They restrict some
+> features so that they cannot be selected from the kernel command line
+> (or later from userland), and they do not rely on a bootloader which
+> does not provide any means for editing the kernel command line.
 
+I think you're referring to something different: restricting module
+configuration parameters.
 
-Path traversal in the awstats.pl "migrate" parameter:
+> > The provided example was treated as a verified boot vulnerability by
+> > Google and fixed. It isn't supposed to be possible to set the kernel
+> > line with a locked bootloader on Nexus/Pixel devices. It was a bug.
+> 
+> I don't know how Google's user lockout works, so I can't comment on
+> that.
 
-https://github.com/eldy/awstats/commit/06c0ab29c1e5059d9e0279c6b64d573d619e1651
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3982 bytes)
+It's not "user lockout", it's verified boot. It isn't really part of the
+security model within the OS. A user on Android / ChromeOS doesn't have
+root access so while Android uses SELinux heavily (far more than RHEL /
+Fedora) it isn't really related to this at all.
