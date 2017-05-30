@@ -1,35 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/1
-Message-ID: <20171020012547.GT1627@oevtugenva.nrevsny.pk>
-Date: Thu, 19 Oct 2017 21:25:47 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/24
+Message-ID: <CAAeHK+zP+B4b=qDFBcivEt4O7ruLcE3rfSrSXs_9ZbixmX-FqQ@mail.gmail.com>
+Date: Tue, 30 May 2017 21:12:21 +0200
+From: Andrey Konovalov <andreyknvl@...gle.com>
 To: oss-security@...ts.openwall.com
-Cc: Felix Wilhelm <fwilhelm@...gle.com>, musl@...ts.openwall.com
-Subject: Re: CVE request: musl libc 1.1.16 and earlier dns buffer overflow
+Cc: Pray3r <pray3r.z@...il.com>, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
+Subject: Linux kernel: memory corruptions in IPv4/IPv6 TCP/SCTP/DCCP sockets
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 19, 2017 at 04:17:57PM -0400, Rich Felker wrote:
-> Felix Wilhelm has discovered a flaw in the dns response parsing for
-> musl libc 1.1.16 that leads to overflow of a stack-based buffer.
-> Earlier versions are also affected.
-> 
-> When an application makes a request via getaddrinfo for both IPv4 and
-> IPv6 results (AF_UNSPEC), an attacker who controls or can spoof the
-> nameservers configured in resolv.conf can reply to both the A and AAAA
-> queries with A results. Since A records are smaller than AAAA records,
-> it's possible to fit more addresses than the precomputed bound, and a
-> buffer overflow occurs.
-> 
-> Users are advised to upgrade to 1.1.17 or patch; the patch is simple
-> and should apply cleanly to all recent versions:
-> 
-> https://git.musl-libc.org/cgit/musl/patch/?id=45ca5d3fcb6f874bf5ba55d0e9651cef68515395
-> 
-> Users who cannot patch or upgrade immediately can mitigate the issue
-> by running a caching nameserver on localhost and pointing resolv.conf
-> to 127.0.0.1.
+A few CVEs were assigned for similar bugs causing kernel memory
+corruption (use-after-free followed by a double-free) in IPv4/IPv6
+TCP/SCTP/DCCP sockets. The details are below.
 
-CVE-2017-15650 has been assigned for this issue.
+The bugs were found with syzkaller.
 
-Rich
+* CVE-2017-8890
 
+The inet_csk_clone_lock function in net/ipv4/inet_connection_sock.c in
+the Linux kernel through 4.10.15 allows attackers to cause a denial of
+service (double free) or possibly have unspecified other impact by
+leveraging use of the accept system call.
+
+CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8890
+Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=657831ffc38e30092a2d5f03d385d710eb88b09a
+
+* CVE-2017-9075
+
+The sctp_v6_create_accept_sk function in net/sctp/ipv6.c in the Linux
+kernel through 4.11.1 mishandles inheritance, which allows local users
+to cause a denial of service or possibly have unspecified other impact
+via crafted system calls, a related issue to CVE-2017-8890.
+
+CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9075
+Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fdcee2cbb8438702ea1b328fb6e0ac5e9a40c7f8
+
+* CVE-2017-9076
+
+The dccp_v6_request_recv_sock function in net/dccp/ipv6.c in the Linux
+kernel through 4.11.1 mishandles inheritance, which allows local users
+to cause a denial of service or possibly have unspecified other impact
+via crafted system calls, a related issue to CVE-2017-8890.
+
+CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9076
+Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=83eaddab4378db256d00d295bda6ca997cd13a52
+
+* CVE-2017-9077
+
+The tcp_v6_syn_recv_sock function in net/ipv6/tcp_ipv6.c in the Linux
+kernel through 4.11.1 mishandles inheritance, which allows local users
+to cause a denial of service or possibly have unspecified other impact
+via crafted system calls, a related issue to CVE-2017-8890.
+
+CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9077
+Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=83eaddab4378db256d00d295bda6ca997cd13a52
