@@ -1,39 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/8
-Message-ID: <20170603142024.GA18904@openwall.com>
-Date: Sat, 3 Jun 2017 16:20:24 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/20
+Message-ID: <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
+Date: Tue, 30 May 2017 09:36:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "Designer, Solar" <solar@...nwall.com>
 Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 03, 2017 at 10:08:23AM -0400, Daniel Micay wrote:
-> I can't magically guess when someone is or isn't acting on behalf of
-> their employer
+On Tue, May 30, 2017 at 9:20 AM, Daniel Micay <danielmicay@...il.com> wrote:
 
-If/when you feel it matters, you can ask them.
+> That's not what secure/verified boot means to everyone else, and
+> there's nothing in mainline with those properties. To everyone else,
+> it's not an arbitrary bureaucratic/marketing feature. It's
+> verification of the whole base OS... i.e. Android, Android Things
+> (Brillo), ChromeOS, iOS and sane embedded Linux systems. Likely
+> Windows on mobile devices too, and I really doubt that Microsoft
+> doesn't plan on verifying the userspace OS if they don't already.
+>
 
-> When people post from @google.com I similarly consider that to be a
-> statement from a Google employee. Not *on behalf of Google* but speaking
-> as an employee of Google? Definitely.
+Red Hat is only associated with this in so far as I happen to work for Red
+Hat and I typically do the CVE assignments on the distros@ list (where this
+issue was initially reported).
 
-Fair enough.  I think there's a difference between "speaking as an
-employee of ..." (a lot of people often do) and "spokesperson for ..."
-(is rarely the case).
 
-> I don't think it was completely unproductive though.
+>
+> Anyway, good luck with meaningless Red Hat security theatre. These
+> "vulnerabilities" are just reinforcing the view that security people
+> are foolish. There isn't disagreement that it's a meaningless feature
+> with this level of incompleteness and yet a CVE is assigned for it?
+> Okay then...
+>
 
-That's my assessment too - "not completely unproductive".
+I suggest you take this issue up with MITRE/CVE Board (disclaimer: I'm also
+on the CVE Board), they control CVE and the definitions of what is CVE
+worthy, and in this case it largely falls under the "advertised/implied
+security feature doesn't work as such". This is unlikely to change as it's
+well established and has been used for over a decade.
 
-> And no I'm not going to be civil if
 
-That's a problem.  Please do try to be civil no matter what.  If you're
-deliberately not being civil when you post in here, that's a reason for
-me as a moderator to start rejecting your messages.
+>
+> Sorry for thinking that this should be about something more than
+> padding CVs and marketing materials.
+>
 
-And to make it clear: no reply is expected to this message, nor to
-anything else in this thread.  Let's end the thread right here.
+I suggest then you take this up with the original researcher if you're
+worried about people padding their CVs. This discussion isn't
+productive/helpful and I suggest you take it off list.
 
-Thanks!
 
-Alexander
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
