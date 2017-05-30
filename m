@@ -1,70 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/22/5
-Message-ID: <38472.5740618421-sendEmail@localhost>
-Date: Fri, 22 Sep 2017 07:49:50 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: bento4: NULL pointer dereference in AP4_AtomSampleTable::GetSample (Ap4AtomSampleTable.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/27
+Message-ID: <CAAY7cL-AGR=GeyLXfBjDkxnShLysjtAgq4=KZqNt4N4UoHpT3g@mail.gmail.com>
+Date: Tue, 30 May 2017 15:02:49 -0500
+From: Sergio Pena <sergio.pena@...udera.com>
+To: dev <dev@...e.apache.org>
+Cc: "security@...e.apache.org" <security@...e.apache.org>, "bcrawford@...tco.com" <bcrawford@...tco.com>,  "announce@...che.org" <announce@...che.org>,  "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "user@...e.apache.org" <user@...e.apache.org>
+Subject: Re: CVE-2016-3083: Apache Hive SSL vulnerability bug disclosure
 Content-Type: text/plain; charset=utf-8
 
-Description:
-bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
+Hi Vaibhav,
 
-The complete ASan output of the issue:
+Do you happen to know which JIRA or patches addressed this issue?
 
-# mp42aac $FILE out.aac
-ASAN:DEADLYSIGNAL
-=================================================================
-==6365==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000005cf94c bp 0x7fff5857d580 sp 0x7fff5857d4c0 T0)
-==6365==The signal is caused by a READ memory access.
-==6365==Hint: address points to the zero page.
-    #0 0x5cf94b in AP4_AtomSampleTable::GetSample(unsigned int, AP4_Sample&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomSampleTable.cpp
-    #1 0x58d158 in AP4_Track::GetSample(unsigned int, AP4_Sample&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Track.cpp:435:43
-    #2 0x58d158 in AP4_Track::ReadSample(unsigned int, AP4_Sample&, AP4_DataBuffer&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Track.cpp:469
-    #3 0x5430ad in WriteSamples(AP4_Track*, AP4_SampleDescription*, AP4_ByteStream*) /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:192:12
-    #4 0x5430ad in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:274
-    #5 0x7f41deb72680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
+- Sergio
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomSampleTable.cpp in AP4_AtomSampleTable::GetSample(unsigned int, AP4_Sample&)
-==6365==ABORTING
-Audio Track:
-  duration: 7848 ms
-  sample count: 169
+On Wed, May 24, 2017 at 5:56 PM, Vaibhav Gumashta <vgumashta@...tonworks.com
+> wrote:
 
-Affected version:
-1.5.0-617
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/axiomatic-systems/Bento4/commit/2f267f89f957088197f4b1fc254632d1645b415d
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14640
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00337-bento4-NULLptr-AP4_AtomSampleTable_GetSample
-
-Timeline:
-2017-09-08: bug discovered and reported to upstream
-2017-09-14: blog post about the issue
-2017-09-21: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/14/bento4-null-pointer-dereference-in-ap4_atomsampletablegetsample-ap4atomsampletable-cpp/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
+> Severity: Important
+>
+> Vendor: The Apache Software Foundation
+>
+> Versions Affected:
+> Apache Hive 0.13.x
+> Apache Hive 0.14.x
+> Apache Hive 1.0.0 - 1.0.1
+> Apache Hive 1.1.0 - 1.1.1
+> Apache Hive 1.2.0 - 1.2.1
+> Apache Hive 2.0.0
+>
+> Description:
+>
+> Apache Hive (JDBC + HiveServer2) implements SSL for plain TCP and HTTP
+> connections (it supports both transport modes). While validating the
+> server's certificate during the connection setup, the client doesn't seem
+> to be verifying the common name attribute of the certificate. In this way,
+> if a JDBC client sends an SSL request to server abc.com, and the server
+> responds with a valid certificate (certified by CA) but issued to xyz.com,
+> the client will accept that as a valid certificate and the SSL handshake
+> will go through.
+>
+> Mitigation:
+>
+> Upgrade to Apache Hive 1.2.2 for 1.x release line, or to Apache Hive 2.0.1
+> or later for 2.0.x release line, or to Apache Hive 2.1.0 and later for
+> 2.1.x release line.
+>
+> Credit: This issue was discovered by Branden Crawford from Inteco Systems
+> Limited (inetco.com).
+>
 
