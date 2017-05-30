@@ -1,64 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/30/4
-Message-ID: <20171030200927.pm3ypa3nomwgwq4h@eldamar.local>
-Date: Mon, 30 Oct 2017 21:09:27 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Quagga: CVE-2017-16227: BGP session termination due to rather long AS paths in update messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/21
+Message-ID: <1496160560.6997.1.camel@gmail.com>
+Date: Tue, 30 May 2017 12:09:20 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: "Designer, Solar" <solar@...nwall.com>
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Tue, 2017-05-30 at 09:36 -0600, Kurt Seifried wrote:
+> On Tue, May 30, 2017 at 9:20 AM, Daniel Micay <danielmicay@...il.com>
+> wrote:
+> 
+> > That's not what secure/verified boot means to everyone else, and
+> > there's nothing in mainline with those properties. To everyone else,
+> > it's not an arbitrary bureaucratic/marketing feature. It's
+> > verification of the whole base OS... i.e. Android, Android Things
+> > (Brillo), ChromeOS, iOS and sane embedded Linux systems. Likely
+> > Windows on mobile devices too, and I really doubt that Microsoft
+> > doesn't plan on verifying the userspace OS if they don't already.
+> > 
+> 
+> Red Hat is only associated with this in so far as I happen to work for
+> Red
+> Hat and I typically do the CVE assignments on the distros@ list (where
+> this
+> issue was initially reported).
 
-The following issue in Quagga got assigned CVE-2017-16227:
+Linux isn't impacted in a security-relevant way by these bugs. You're
+claiming that some downstream code is implemented in a way that impacts
+security, but you can't explain how it compromises a meaningful security
+boundary.
 
-It was discovered that the bgpd daemon in the Quagga routing suite does
-not properly calculate the length of multi-segment AS_PATH UPDATE
-messages, causing bgpd to drop a session and potentially resulting in
-loss of network connectivity.
+> > Anyway, good luck with meaningless Red Hat security theatre. These
+> > "vulnerabilities" are just reinforcing the view that security people
+> > are foolish. There isn't disagreement that it's a meaningless
+> > feature
+> > with this level of incompleteness and yet a CVE is assigned for it?
+> > Okay then...
+> > 
+> 
+> I suggest you take this issue up with MITRE/CVE Board (disclaimer: I'm
+> also
+> on the CVE Board), they control CVE and the definitions of what is CVE
+> worthy, and in this case it largely falls under the
+> "advertised/implied
+> security feature doesn't work as such". This is unlikely to change as
+> it's
+> well established and has been used for over a decade.
 
-It was reported as https://bugs.debian.org/879474 in the Debian bugtracker, and
-following up now here on oss-security. I'm going to fquote the detailed report:
+Nothing in Linux claims to work the way you're talking about. You've
+only brought up an incomplete implementation of verified boot based on a
+fork of the Linux kernel. It should be filed against that fork, but it
+really doesn't make any sense to have a CVE for a non-security feature
+being broken.
 
-> there is a longstanding bug in quagga where certain BGP update messages
-> cause a quagga bgpd to drop a session, possibly resulting in loss of
-> network connectivity.
+> > Sorry for thinking that this should be about something more than
+> > padding CVs and marketing materials.
+> > 
 > 
-> 
-> Details:
-> 
-> Long paths in update messages are segmented in BGP, and the bug is in
-> the recalculation of the framing information if there are more than two
-> segments. The resulting data is invalid but will will be used for
-> redistribution. At least if the receiver is another quagga bgpd, that
-> message is rejected, eventually resulting in a BGP session termination.
-> 
-> The receiver's log (if written) contains an error message like
-> | BGP: 172.23.97.181: BGP type 2 length 3074 is too large, attribute total length is 2069.  attr_endp is 0x562feb368121.  endp is 0x562feb367d2c
-> then.
-> 
-> So if a site's BGP peers all run quagga, that site will lose network
-> connectivity due to frequent session termination. Additionally, the
-> repeated initial full table transfer will result in a significantly
-> bigger network load, I've seen around 1 MByte/sec/link, compared to
-> usually less than one 1 kbyte/sec/link.
-> 
-> Such extremely long AS paths have occured in the global BGP table at
-> least four times since June. Last time started on Oct 13th around 20:43
-> UTC and lasted until the following week.
-> 
-> All versions of quagga in Debian are affected.
-> 
-> 
-> How to fix:
-> 
-> Kudos to Andreas Jaggi who identified the bug and provided a fix[1].
-> After some hours of work I was able to reproduce the issue and can
-> confirm this patch resolves the issues for all versions of quagga in
-> Debian (wheezy, jessie, stretch = buster = sid). Details about the
-> setup available upon request, it's just some stuff to write down.
->
-> [1] https://lists.quagga.net/pipermail/quagga-dev/2017-September/033284.html
->     http://git.savannah.gnu.org/cgit/quagga.git/commit/?id=7a42b78be9a4108d98833069a88e6fddb9285008
+> I suggest then you take this up with the original researcher if you're
+> worried about people padding their CVs. This discussion isn't
+> productive/helpful and I suggest you take it off list.
 
-Regards,
-Salvatore
+I'm not just concerned about people padding their CVs, I'm concerned
+about vendors marketing incomplete snake oil as an implementation of
+security features that actually have a meaning and then turning it into
+nonsense like this.
+
+I suggest taking discussions about non-security bugs off list. It's not
+on topic here.
