@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/13
-Message-ID: <20171031181051.GA75618@wopr>
-Date: Tue, 31 Oct 2017 11:10:51 -0700
-From: Kurt H Maier <khm@...ops.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/31/1
+Message-ID: <alpine.LFD.2.20.1705311213560.8996@wniryva>
+Date: Wed, 31 May 2017 12:16:25 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-9310 Qemu: net: infinite loop in e1000e NIC emulation
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 31, 2017 at 10:54:08AM -0700, Tim wrote:
-> 
-> Sure, you can argue that maybe some systems should ignore these files,
-> block access, etc, but it is pretty absurd to expect every other piece
-> of software in the universe to work around very unsafe defaults of text
-> editors.  
+   Hello,
 
-It's also fairly absurd to insist that people can run whatever program
-they want, wherever they want, on a production web server, without being
-familiar enough with the program to understand the risks.
+Qemu emulator built with the e1000e NIC emulation support is vulnerable to an 
+infinite loop issue. It could occur while processing data via transmit or 
+receive descriptors, provided the initial receive/transmit descriptor 
+head(TDH/RDH) is set outside the allocated descriptor buffer.
 
-Anyone who edits files in the deployment path with an insufficient
-education is going to have problems, and not having noswapfile set is
-the least of them.
+A privileged user inside guest could use this flaw to crash the Qemu instance 
+resulting in DoS.
 
-khm
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=4154c7e03fa55b4cf52509a83d50d6c09d743b7
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1452620
+
+This issue was reported by Li Qiang of Qihoo 360 Gear Team.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
