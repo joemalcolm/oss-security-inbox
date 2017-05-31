@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/10
-Message-ID: <CALLT8khyoJnN0vcmNna9Ah6mODNdfeYiMFuNNfNHs7t_=Zuuwg@mail.gmail.com>
-Date: Thu, 18 May 2017 19:27:58 -0400
-From: "Alex O'Ree" <alexoree@...che.org>
-To: oss-security@...ts.openwall.com,  "user@...di.apache.org" <user@...di.apache.org>, dev@...di.apache.org, bugtraq@...urityfocus.com,  awillard@...egroundsecurity.com, pavelp@...hat.com
-Subject: jUDDI Security Bulletin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/31/8
+Message-ID: <20170531203037.hxl4v36govklpenk@pisco.westfalen.local>
+Date: Wed, 31 May 2017 22:30:37 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Information on recent sqlite3 issues?
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2015-5241
-[PRODUCT]:Apache jUDDI
-[VERSION]: 3.1.2, 3.1.3, 3.1.4, and 3.1.5 utilize the portlets based
-user interface also known as 'Pluto', 'jUDDI Portal', 'UDDI Portal' or
-'uddi-console'
+Hi,
+one of the latest Apple advisories mentions several vulnerabilities in sqlite:
+https://support.apple.com/en-us/HT207798
 
-[PROBLEMTYPE]:Open Redirect
-[REFERENCES]:http://juddi.apache.org/security.html
+CVE-2017-2513: found by OSS-Fuzz
+CVE-2017-2518: found by OSS-Fuzz
+CVE-2017-2520: found by OSS-Fuzz
+CVE-2017-2519: found by OSS-Fuzz
+CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+CVE-2017-6991: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
 
-[DESCRIPTION]: After logging into the portal, the logout jsp page
-redirects the browser back to the login page after. It is feasible for
-malicious user to redirect the browser to an unintended web page. User
-session data, credentials, and auth tokens are cleared before the
-redirect.
+Does anyone have additional information on those and whether that
+applies to the standard sqlite releases or Apple-specific changes?
 
-
-Mitigation:
-
-1) Remove or disable the portlet's based user interface.
-
-2) Upgrade to newer versions of jUDDI (v3.2 and newer) which is not
-affected by this issue
-
-3) If upgrading or disabling the portlet based user interface is not
-an option, the following can be used to resolve the issue. Modify the
-file located at "uddi-portlets/logout.jsp", replacing the following
-text
-
-> "String redirectURL = (String) request.getParameter("urlredirect");
-> if (redirectURL==null) redirectURL = "/pluto/Logout";
-
-with this text
-> String redirectURL = "/pluto/Logout";
-
-No patches or releases are planned for the affected versions since
-jUDDI v3.2 replaced the user interface.
+Cheers,
+        Moritz
+	 
