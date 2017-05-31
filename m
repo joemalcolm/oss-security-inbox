@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1738" "Friday" "11" "November" "2016" "02:07:06" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<67442b1d219447cc8a6dfce7f08a43b1@imshyb02.MITRE.ORG>" "43" "[oss-security] Re: CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core" nil nil nil "11" "2016111107:07:06" "[oss-security] Re: CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core" (number mark "U       cve-assign@m Nov 11   43/1738  " thread-indent "\"[oss-security] Re: CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core\"\n") "<CACn5sdRbBPaw4MCTH7eskU5r1xfM8WGAaLU--=aNjy6x0B6-QQ@mail.gmail.com>" ("<CACn5sdRbBPaw4MCTH7eskU5r1xfM8WGAaLU--=aNjy6x0B6-QQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2698" "Wednesday" "31" "May" "2017" "14:14:32" "+0200" "Solar Designer" "solar@openwall.com" "<20170531121432.GA8671@openwall.com>" "56" "Re: [oss-security] I found Crash in tcpdump and radare2." "^Cc:" nil nil "5" "2017053112:14:32" "[oss-security] I found Crash in tcpdump and radare2." (number mark "        solar@openwa May 31   56/2698  " thread-indent "\"Re: [oss-security] I found Crash in tcpdump and radare2.\"\n") "<20170531131615.58752cc0@pc1>" ("<8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com>" "<20170531131615.58752cc0@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18412 invoked by uid 550); 11 Nov 2016 07:07:18 -0000
+Received: (qmail 1925 invoked by uid 550); 31 May 2017 12:15:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 1657 invoked from network); 31 May 2017 12:14:48 -0000
+Message-ID: <20170531121432.GA8671@openwall.com>
+References: <8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com> <20170531131615.58752cc0@pc1>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170531131615.58752cc0@pc1>
+User-Agent: Mutt/1.4.2.3i
+Cc: Qhdwns123 <qhdwns123@protonmail.com>
+Date: Wed, 31 May 2017 14:14:32 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18394 invoked from network); 11 Nov 2016 07:07:18 -0000
-From: <cve-assign@mitre.org>
-To: <gustavo.grieco@gmail.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CACn5sdRbBPaw4MCTH7eskU5r1xfM8WGAaLU--=aNjy6x0B6-QQ@mail.gmail.com>
-Message-ID: <67442b1d219447cc8a6dfce7f08a43b1@imshyb02.MITRE.ORG>
-Date: Fri, 11 Nov 2016 02:07:06 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core
+Subject: Re: [oss-security] I found Crash in tcpdump and radare2.
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, May 31, 2017 at 01:16:15PM +0200, Hanno B??ck wrote:
+> On Wed, 31 May 2017 06:39:12 -0400 Qhdwns123 <qhdwns123@protonmail.com> wrote:
+> 
+> > I found Crash in tcpdump and radare2.
+> > 
+> > It points to the heap overflow as the result of analysis by ASAN.
+> > 
+> > What steps should I take to report this issue?
+> 
+> Please report the issues first to their respective developers and
+> provide the crashing files to them.
+> 
+> tcpdump has a contact address for security issues:
+> http://www.tcpdump.org/#security
+> 
+> I think radare2 has no specific security reporting process, you can
+> report it through their github tracker:
+> https://github.com/radare/radare2/issues
+> 
+> When the bugs are fixed you can post details to this list.
 
-> We recently found a read out-of-bounds parsing JavaScript code in the last
-> revision of WebKit
+Thanks, Hanno!
 
-> WTF::ParkingLot::parkConditionallyImpl
+My opinion, both personal and as oss-security list admin:
 
-CVE IDs for WebKit are typically assigned by Google. Perhaps you are
-testing WebKit code that is too new to affect Chrome. Possibly
-applicable references are:
+It is rarely sensible to delay posting the detail to oss-security until
+the bugs are fixed - e.g., what if a bug is never fixed upstream?  We
+would still like to have the detail here - in fact, the detail should be
+in here no later (or not much later - e.g., same day) as it's made
+public elsewhere.  So if a bug report to an upstream project is made via
+a public GitHub issue (as may need to be the case for radare2, and
+that's fine), the detail should also be posted in here at about the same
+time, please.  For tcpdump, it may be OK to give the upstream some sane
+amount of time, like 7 or 14 days, but to notify them of this limited
+time along with the initial notification, and to post the detail to
+oss-security when the bug is fixed or when the time runs out, whichever
+occurs first.  Also, ask the upstream whether they expect to have a fix
+within the offered amount of time - if not, then post right away.
 
-  https://webkit.org/blog/6161/locking-in-webkit/
-  https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/wtf/
-  https://www.google.com/about/appsecurity/chrome-rewards/
+I don't know if the tcpdump project specifically is able to fix bugs
+reasonably fast - what was the precedent so far?  If not, then no point
+in giving them any advance notice (but you should notify them anyway,
+along with making the issue public).  I am speaking about notifying
+upstreams in general, using this as an example.
 
-If you can confirm that Chrome is unaffected or that your report
-wasn't accepted at
-https://code.google.com/p/chromium/issues/entry?template=Security%20Bug
-then we can send a CVE ID here.
+Frankly, for the few issues I brought in here myself, I sometimes
+happened to give upstreams too much time or/and to discuss those issues
+in other public places for a while.  However, this is merely how it
+happened, for reasons including my own lack of time to stay on top of
+issues and because of initially unclear nature of some issues (e.g.,
+security or not?)  As I wrote above, I think that ideally if an issue is
+already being discussed in public elsewhere (such as with upstream), it
+should also be in here at the same time, and for issues reported to
+upstreams privately the amount of time offered should quite limited.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYJW0PAAoJEHb/MwWLVhi2tAAP/0YPJtWUwAUpo9ei5DxUQpVF
-nKNQjnUR3lCVGwTGDqD3F9nnoWsyrAePbAYvRyodh/KFBLbdoN9EN6N7l8HaRqgy
-gbpetQ1WEJECggmarKk1HveIK82g5yfIKsAfk8ybkPl7FvObd60oQiB6TEZaZRZp
-WqT1eNuJM7fB9f+8GkDhuwMNkq3Q09BMhnM4GOJP8i6afaeh6R9Ih1cVOYwmNxsF
-c/+6ba2QQbCfN3G1P4Sy/0qt0Iuuh/6iN8aXu+c1Ghajx86/w5sPH5hy9BFusJ1i
-e3rSYLDVknDY87gKertfHnK1fkRBvlsABVvEdCiY0a0f8e5wCHB/aTx8fgE9RvCn
-M9767qljP3ea/8GAtSPwwskOx+yMNUJPYBlo6C5NDHW98sCHOlWS4yB3k8zvNWMz
-vS+skFo/GrqnX3RsuNoOdvpUpwt/mBoTr6sVK/oA9xY9U+lvdGiWCRri5ugSjgSK
-Dv1VpxzsQHE7fQBy8RJg5AtFS6VTKGAsTy68hAFkSTZV3aEZNJNsoRmdmCRImQs+
-jKM7cT4MbSrEUEtEFysPt5AWbe5C8E8dwbhg/FNtZV7Zz+B8n7aRBfdcHMCkG0O9
-NsVs9dJkv7w1mOdibownVMvTV/UqzMRr+lzzmUPbeWGetaxmCr3mn6+kx4uKYabH
-aqWJRCKdup0fmNUs/xSW
-=2oQn
------END PGP SIGNATURE-----
+Alexander
