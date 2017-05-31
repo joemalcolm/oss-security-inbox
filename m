@@ -1,31 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/11/1
-Message-ID: <88a548e3-7fda-25bf-c87c-6a25bc20439e@treenet.co.nz>
-Date: Sat, 11 Nov 2017 16:02:09 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/31/5
+Message-ID: <8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com>
+Date: Wed, 31 May 2017 06:39:12 -0400
+From: Qhdwns123 <qhdwns123@...tonmail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: I found Crash in tcpdump and radare2.
 Content-Type: text/plain; charset=utf-8
 
-On 10/11/17 06:09, David A. Wheeler wrote:
-> I agree that many vulnerabilities don't have CVE ids.
-> You don't need to identify *all* vulnerabilities in old kernels... just enough to make
-> it easier to update the kernel than try to back-patch everything.
-> If manufacturers have to fix the CVEs to sell products, or to avoid massive returns,
-> that creates an *economic* reason for manufacturers to
-> begin responsibly maintain their products.
+Hi.
 
-The argument is knee-capped by CVE being slowly and incrementally assigned.
+I found Crash in tcpdump and radare2.
 
-The cost of incremental change is nowhere near as visible to vendors. 
-They just patch issues one by one equally as slowly then blame the end 
-users for not upgrading/patching firmware. When the firmware upgrade 
-process itself is shrouded by lots of scary warnings and technical 
-actions that prevent home users doing it.
+It points to the heap overflow as the result of analysis by ASAN.
 
+What steps should I take to report this issue?
 
-The stick doesn't work too well with vendors and distributors. Too much 
-greed these days. And that means the carrot works better - we just have 
-to figure out what the best carrot looks like.
-
-AYJ
+Thanks.
