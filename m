@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1013" "Friday" "25" "October" "2019" "14:15:40" "+0200" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" "<20191025141540.10b322fe@computer>" "34" "Re: [oss-security] Formal verification of open source software" "^Date:" nil nil "10" "2019102512:15:40" "[oss-security] Formal verification of open source software" (number mark "        hanno@hboeck Oct 25   34/1013  " thread-indent "\"Re: [oss-security] Formal verification of open source software\"\n") "<CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>" ("<CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Formal verification of open source software" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["934" "Thursday" "1" "June" "2017" "00:24:10" "+0200" "Andreas Stieger" "astieger@suse.com" "<95c188ba-76a3-7190-94ea-a369d011ae6c@suse.com>" "28" "Re: [oss-security] Information on recent sqlite3 issues?" "^Date:" nil nil "6" "2017053122:24:10" "[oss-security] Information on recent sqlite3 issues?" (number mark "        astieger@sus Jun  1   28/934   " thread-indent "\"Re: [oss-security] Information on recent sqlite3 issues?\"\n") "<20170531203037.hxl4v36govklpenk@pisco.westfalen.local>" ("<20170531203037.hxl4v36govklpenk@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24098 invoked by uid 550); 25 Oct 2019 12:15:52 -0000
+Received: (qmail 5503 invoked by uid 550); 31 May 2017 22:24:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24075 invoked from network); 25 Oct 2019 12:15:52 -0000
-Message-ID: <20191025141540.10b322fe@computer>
-In-Reply-To: <CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>
-References: <CAGUWgD_5HCt1T7ck4ai1=8Tn4L5nnGDiEvGdTdt_jMTD0ziK=A@mail.gmail.com>
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Received: (qmail 5479 invoked from network); 31 May 2017 22:24:23 -0000
+References: <20170531203037.hxl4v36govklpenk@pisco.westfalen.local>
+Organization: SUSE Linux GmbH
+Message-ID: <95c188ba-76a3-7190-94ea-a369d011ae6c@suse.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 25 Oct 2019 14:15:40 +0200
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+In-Reply-To: <20170531203037.hxl4v36govklpenk@pisco.westfalen.local>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Date: Thu, 1 Jun 2017 00:24:10 +0200
+From: Andreas Stieger <astieger@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Formal verification of open source software
+Subject: Re: [oss-security] Information on recent sqlite3 issues?
 To: oss-security@lists.openwall.com
 
-On Fri, 25 Oct 2019 13:43:57 +0300
-Georgi Guninski <gguninski@gmail.com> wrote:
-
-> Are there success stories of formal verification of open source
-> software?
-
-There's been a lot of work in the crypto community in this direction.
-Most of it is code under OSS licenses:
-
-Hacl* is a formally verified crypto library. Some of the crypto
-algorithm implementations are used in Mozilla's NSS:
-https://blog.mozilla.org/security/2017/09/13/verified-cryptography-firefox-=
-57/
-
-Also NSS/Mozilla, they have identified a flaw in their gcm
-implementation with cryptol:
-https://timtaubert.de/blog/2017/06/verified-binary-multiplication-for-ghash/
-
-There's been a formal verification of (a subset of) PolarSSL:
-https://blog.regehr.org/archives/1261
-
-This is an incomplete list, just the first things I remembered, there's
-a lot more.
-
-In terms of operating system kernels there's sel4:
-https://sel4.systems/
+Hello,
 
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+On 05/31/2017 10:30 PM, Moritz Muehlenhoff wrote:
+> one of the latest Apple advisories mentions several vulnerabilities in sqlite:
+> https://support.apple.com/en-us/HT207798
+>
+> CVE-2017-2513: found by OSS-Fuzz
+> CVE-2017-2518: found by OSS-Fuzz
+> CVE-2017-2520: found by OSS-Fuzz
+> CVE-2017-2519: found by OSS-Fuzz
+> CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+> CVE-2017-6991: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+>
+> Does anyone have additional information on those and whether that
+> applies to the standard sqlite releases or Apple-specific changes?
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+SUSE has asked Apple, but has not yet received an answer as far as I am
+aware.
+
+Andreas
+
+-- 
+Andreas Stieger <astieger@suse.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
+
