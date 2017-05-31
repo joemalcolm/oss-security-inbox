@@ -1,61 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/11/3
-Message-ID: <8662b4c6-c830-bb09-0414-67e4aa52981d@orlitzky.com>
-Date: Mon, 11 Sep 2017 15:58:45 -0400
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/31/4
+Message-ID: <20170531091132.GH4590@scully.more-magic.net>
+Date: Wed, 31 May 2017 11:11:32 +0200
+From: Peter Bex <peter@...e-magic.net>
 To: oss-security@...ts.openwall.com
-Cc: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
+Subject: Re: CVE request form not working
 Content-Type: text/plain; charset=utf-8
 
-On 09/07/2017 12:22 PM, Daniel Kahn Gillmor wrote:
+On Wed, May 31, 2017 at 11:02:44AM +0200, Agostino Sarubbo wrote:
+> On Wednesday 31 May 2017 10:42:24 Peter Bex wrote:
+> > Hi all,
+> > 
+> > Today I wanted to request another CVE, but cveform.mitre.org seems to
+> > be down (it just loads forever here).  Can anyone please fix this?
+> > 
+> > Cheers,
+> > Peter Bex
 > 
->> I've found services that run with *two* PID files...
-> 
-> sigh.  are you cataloging these somewhere?  this is really valuable
-> work, and it'd be great to see a list of common failures.  Do you know
-> if any of them are collected under CWE or any other widely-accepted
-> taxonomy?
+> It works for me. However is missing a redirect from http to https.
 
-I collected a bunch of common problems into a pull request for OpenRC:
+Thanks, I didn't remember to check https.  The http version is what loads
+forever.
 
-   https://github.com/OpenRC/openrc/pull/162
+Cheers,
+Peter
 
-I would like to have something more comprehensive for init script
-writers, but we would need to consolidate some of the existing
-documentation from both OpenRC and various Gentoo sources. With OpenRC
-we get to cheat a little, because we always have the option to run the
-daemon in the foreground and supervise it. A comparable document for
-SysV init script writers would need different workarounds for the
-problems that OpenRC services solve in that manner.
-
-The motivation for those tips can be found in the Gentoo bugs I've been
-filing on bugs.gentoo.org. You can find most of them by searching for
-"pid" in the summary with "mjo@...too.org" as the reporter (don't forget
-to include resolved bugs). It's slow going because I'm trying to provide
-either a complete list of suggestions, or a rewritten init script that
-does things right.
-
-
-> Is there any way to automate these tests, or do we need a human to read
-> each initscript and look for flaws?  Are other people helping you in
-> this review?  how are you tracking/coordinating your reviews?
-
-It's just me as far as I know. I stumbled onto this by accident while
-cleaning up an OpenRC init script that was shipped as part of an
-upstream package. I updated it, and then noticed that my init script was
-vulnerable to the PID file trick. Then I realized that everybody else
-has the same problem.
-
-You probably need a human to make the final decision on whether or not
-an init script is vulnerable, but my lame heuristic so far has been
-hilariously accurate: does the init script mess with file/directory
-ownership? If so, it's probably vulnerable to *something*.
-
-I've still got a list of 100 or so to investigate that change ownership
-of a directory under /var/run. Very few of those will be false positives
--- it's OK to put a socket or lock file there, but not a PID file.
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (982 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
