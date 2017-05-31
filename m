@@ -1,22 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/15/4
-Message-ID: <20170515153450.263na5xnq2clfrtu@madoka.m-wei.net>
-Date: Mon, 15 May 2017 23:34:50 +0800
-From: Yao Wei <mwei@...e.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-8934 pcmanfm: single instance socket may be blocked by another user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/31/2
+Message-ID: <20170531084224.GG4590@scully.more-magic.net>
+Date: Wed, 31 May 2017 10:42:24 +0200
+From: Peter Bex <peter@...e-magic.net>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request form not working
 Content-Type: text/plain; charset=utf-8
 
-The socket placed in /tmp is predictable and public-writable. Therefore
-if one user placed a symlink to another socket instead of socket for
-another user then said another user will either be unable to use
-pcmanfm, or may send requests to the first user's pcmanfm.
+Hi all,
 
-This bug has been assigned to CVE-2017-8934 [1].  A fix has been
-committed to pcmanfm's git repository [2].  LXDE developers are
-working on a release which fixes the problem.
+Today I wanted to request another CVE, but cveform.mitre.org seems to
+be down (it just loads forever here).  Can anyone please fix this?
 
-[1]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8934
-[2]: https://git.lxde.org/gitweb/?p=lxde/pcmanfm.git;a=commitdiff;h=bc8c3d871e9ecc67c47ff002b68cf049793faf08
+Cheers,
+Peter Bex
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
