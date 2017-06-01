@@ -1,107 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/14/3
-Message-ID: <20170814223948.w4j6rsznsgixhc43@jwilk.net>
-Date: Tue, 15 Aug 2017 00:39:48 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: UnRAR: directory traversal + memory safety bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/2
+Message-ID: <20170601072313.GM4590@scully.more-magic.net>
+Date: Thu, 1 Jun 2017 09:23:13 +0200
+From: Peter Bex <peter@...e-magic.net>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE-2017-9334 CHICKEN Scheme: denial of service due to invalid pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-(I'm not sure UnRAR bugs are on-topic here. UnRAR is not free software, even 
-though the source is available. But the last time UnRAR was discussed nobody 
-objected, so hey, let me try too.)
+Hi all,
 
-I found directory traversal and a few memory safety bugs in UnRAR 5.5.6. These 
-bugs have been fixed in UnRAR 5.5.7.
+I just received my assignment of CVE-2017-9334 for this issue:
 
-The memory safety bugs were found using American Fuzzy Lop.
+An incorrect "pair?" check in the Scheme "length" procedure results in                                                                  
+an unsafe pointer dereference in all CHICKEN Scheme versions prior to                                                                   
+4.13, which allows an attacker to cause a denial of service by passing                                                                  
+an improper list to an application that calls "length" on it.                                                                           
 
-Here are details of the bugs:
+Original announcement:
+http://lists.nongnu.org/archive/html/chicken-announce/2017-05/msg00000.html
 
-* Directory traversal
+Patch:
+http://lists.nongnu.org/archive/html/chicken-hackers/2017-05/msg00099.html
 
-The PoC (traversal.rar) contains two symlinks and a regular file:
+Cheers,
+Peter
 
-   cur -> .
-   cur/par -> ..
-   par/moo
-
-This setup defeats UnRAR's directory traversal protections:
-
-   $ ls ../moo
-   /bin/ls: cannot access '../moo': No such file or directory
-
-   $ unrar x traversal.rar
-   ...
-   Extracting  cur                                                       OK
-   Extracting  cur/par                                                   OK
-   Extracting  par/moo                                                   OK
-   All OK
-
-   $ ls ../moo
-   ../moo
-
-The code that was used to generate the PoC is available here:
-https://github.com/jwilk/path-traversal-samples
-
-
-* Out-of-bounds read in Archive::ReadHeader15 / EncodeFileName::Decode
-
-The Archive::ReadHeader15 method contains the following code (with boring parts 
-omitted):
-
-   size_t NameSize=Raw.Get2();
-   // ...
-   char FileName[NM*4];
-   size_t ReadNameSize=Min(NameSize,ASIZE(FileName)-1);
-   Raw.GetB((byte *)FileName,ReadNameSize);
-   FileName[ReadNameSize]=0;
-
-   if (FileBlock)
-   {
-     if ((hd->Flags & LHD_UNICODE)!=0)
-     {
-       EncodeFileName NameCoder;
-       size_t Length=strlen(FileName);
-       Length++;
-       NameCoder.Decode(FileName,(byte *)FileName+Length,
-                        NameSize-Length,hd->FileName,
-                        ASIZE(hd->FileName));
-   // ...
-
-If NameSize is bigger than NM*4, this can make EncodeFileName::Decode read past 
-the bounds of the FileName array.
-
-PoC: oob-archive-readheader15.rar
-
-
-* Out-of-bounds reads in Unpack::Unpack20
-
-This method contains:
-
-     int DistNumber=DecodeNumber(Inp,&BlockTables.DD);
-     unsigned int Distance=DDecode[DistNumber]+1;
-
-The array size is 48; but for the PoC (oob-unpack-unpack20.rar), DistNumber is 
-58.
-
-
-* Buffer overflow in Unpack::LongLZ
-
-This method contains:
-
-   ChSetB[DistancePlace]=ChSetB[NewDistancePlace];
-
-The array size is 256; but for the PoC (oob-unpack-longlz.rar), DistancePlace 
-is 256.
-
--- 
-Jakub Wilk
-
-Download attachment "traversal.rar" of type "application/rar" (161 bytes)
-
-Download attachment "oob-archive-readheader15.rar" of type "application/rar" (8256 bytes)
-
-Download attachment "oob-unpack-unpack20.rar" of type "application/rar" (272 bytes)
-
-Download attachment "oob-unpack-longlz.rar" of type "application/rar" (25 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
