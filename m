@@ -1,36 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/9
-Message-ID: <91c63b3c-0baf-cb69-2520-8ad6c1cd198a@redhat.com>
-Date: Tue, 25 Apr 2017 17:25:35 +0200
-From: Andrej Nemec <anemec@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/14
+Message-ID: <20170601211134.GA10587@openwall.com>
+Date: Thu, 1 Jun 2017 23:11:34 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: remote heap overflow in linux networking stack
+Subject: Re: unresponsive distros
 Content-Type: text/plain; charset=utf-8
 
-Hi Jason,
+On Thu, Jun 01, 2017 at 08:00:53PM +0200, Solar Designer wrote:
+> As far as I can tell, MontaVista never posted to the list.
 
-Great, thanks for confirmation. Mitre already lists [1] so it seems we
-are fine.
+I was wrong.  I now found that they posted two messages in January 2012
+and August 2012, but that's all.  There was also some participation here
+on oss-security, and IIRC previously on vendor-sec.
 
-[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7477
+> Being a user of the info
+> only, without participation in discussions, is not strictly disallowed,
+> but this time it's coupled with lack of response when specifically asked
+> to respond, and on an issue that is at least potentially relevant to the
+> distros (not just a responsiveness test).
 
-Best Regards,
+On a related note, I think we should continue to allow distros with just
+one representative subscribed.  Some projects are genuinely small (which
+doesn't mean their userbase is proportionally small) - e.g., Slackware.
+Some have tiny security teams (even one-person) or few people who
+actually do stuff.  This does mean they will miss tests if that person
+is e.g. on vacation.  This also means they will occasionally miss real
+issues (non-tests), and not only on the distros list.  But this doesn't
+fully disqualify them.
 
--- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+In fact, currently I am a single point of failure for many aspects of
+running the distros list.  Maybe I need to address that, but it's tricky
+to do without adding risks.
 
+Maybe it's more reasonable to require some participation - e.g., if you
+commented during the embargo period negotiation, that would have
+demonstrated you care.  Even if you said e.g. that you defer to others.
+Noise?  Not exactly.  Not when such feedback was explicitly requested by
+the reporter, and they got very few responses.  (Here "you" can refer to
+any distro, especially one with otherwise little observable activity.)
 
-
-On 04/25/2017 03:53 PM, Jason A. Donenfeld wrote:
-> Hey Andrej,
->
-> I actually didn't submit this to Mitre, just to you, so I don't think
-> there'll be a duplicate.
->
-> Jason
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Alexander
