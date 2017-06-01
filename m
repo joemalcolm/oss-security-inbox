@@ -1,42 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/10
-Message-ID: <20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>
-Date: Fri, 14 Jul 2017 11:05:39 -0400
-From: Santiago Torres <torresariass@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/1
+Message-ID: <3719551.uSXB2Z6hFG@wanheda>
+Date: Thu, 01 Jun 2017 08:47:43 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
+Cc: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: Information on recent sqlite3 issues?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 14, 2017 at 12:34:01PM +0300, Georgi Guninski wrote:
-> What is an estimate for the total number of exploitable bugs in large
-> linux distro?
+On Wednesday 31 May 2017 22:30:37 Moritz Muehlenhoff wrote:
+> Hi,
+> one of the latest Apple advisories mentions several vulnerabilities in
+> sqlite: https://support.apple.com/en-us/HT207798
 > 
+> CVE-2017-2513: found by OSS-Fuzz
+> CVE-2017-2518: found by OSS-Fuzz
+> CVE-2017-2520: found by OSS-Fuzz
+> CVE-2017-2519: found by OSS-Fuzz
+> CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with
+> Trend Micro's Zero Day Initiative CVE-2017-6991: Chaitin Security Research
+> Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+> 
+> Does anyone have additional information on those and whether that
+> applies to the standard sqlite releases or Apple-specific changes?
+> 
+> Cheers,
+>         Moritz
 
-You may want to look at[1] for the case of ArchLinux. Do consider the
-caveat brought up by other people on the list: CVE numbers are not a 1:1
-mapping to bugs (or even exploitable bugs). For example, there are
-vendors that group all bugs discovered in a period (or with a conceputal
-similarity) under one CVE number, whereas others take mutliple
-variations of a bug and request an individual CVE for each. Needless to
-say, some bugs never get a CVE ;).
+Hi.
 
-> Also, does the total number decrease, increase or change in other way
-> over time?
+I don't know about apple itself but in the clusterfuzz reports I see 4 public 
+bugs about sqlite.
+However they have a very small (2 days) range of regression, i.e. a commit 
+made in those two days causes the problem.
+I didn't check, but I suspect they didn't go in any release.
 
-You could use the json api[2] on [1] to get a rolling count if you'd like
-to measure this (also pasted on [3]]):
+FTR, the time you are seeing in the regression range is UTC:
+https://github.com/google/oss-fuzz/issues/563
 
->>> import json, requests
->>> response = requests.get("https://security.archlinux.org/vulnerable/json")
->>> data = json.loads(response.content)
->>> len(data)
-34
+At this point I don't know if apple referer to those issues or the mentioned 
+issues are not public.
 
-Cheers!
--Santiago.
-
-[1] https://security.archlinux.org/vulnerable
-[2] https://security.archlinux.org/vulnerable/json
-[3] https://bpaste.net/show/faa58aab9b1e 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
