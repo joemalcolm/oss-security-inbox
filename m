@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["708" "Thursday" "21" "February" "2019" "13:36:45" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1902211335290.504@xnncv>" "19" "[oss-security] CVE-2019-8934 QEMU: ppc64: sPAPR emulator leaks the host hardware identity" "^Date:" nil nil "2" "2019022108:06:45" "[oss-security] CVE-2019-8934 QEMU: ppc64: sPAPR emulator leaks the host hardware identity" (number mark "        ppandit@redh Feb 21   19/708   " thread-indent "\"[oss-security] CVE-2019-8934 QEMU: ppc64: sPAPR emulator leaks the host hardware identity\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1012" "Thursday" "1" "June" "2017" "20:19:06" "+0200" "Solar Designer" "solar@openwall.com" "<20170601181906.GA5071@openwall.com>" "25" "Re: [oss-security] unresponsive distros" "^Date:" nil nil "6" "2017060118:19:06" "[oss-security] unresponsive distros" (number mark "        solar@openwa Jun  1   25/1012  " thread-indent "\"Re: [oss-security] unresponsive distros\"\n") "<1496340239333.24020@amazon.com>" ("<20170601180053.GA4752@openwall.com>" "<1496340239333.24020@amazon.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1286 invoked by uid 550); 21 Feb 2019 08:07:01 -0000
+Received: (qmail 6048 invoked by uid 550); 1 Jun 2017 18:20:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1265 invoked from network); 21 Feb 2019 08:07:01 -0000
-X-X-Sender: pjp@kaapi
-Message-ID: <nycvar.YSQ.7.76.1902211335290.504@xnncv>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Thu, 21 Feb 2019 08:06:49 +0000 (UTC)
-Date: Thu, 21 Feb 2019 13:36:45 +0530 (IST)
-From: P J P <ppandit@redhat.com>
+Received: (qmail 5569 invoked from network); 1 Jun 2017 18:19:17 -0000
+Message-ID: <20170601181906.GA5071@openwall.com>
+References: <20170601180053.GA4752@openwall.com> <1496340239333.24020@amazon.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1496340239333.24020@amazon.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 1 Jun 2017 20:19:06 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2019-8934 QEMU: ppc64: sPAPR emulator leaks the host hardware
- identity
-To: oss security list <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] unresponsive distros
+To: oss-security@lists.openwall.com
 
-   Hello,
+Anthony,
 
-It was found that the KVM PPC64 emulator for the sPAPR machine leaks the host 
-hardware identity to all running guests. The sPAPAR(hw/ppc/spapr.c) emulator 
-populates the device tree for the guest with two fields "host-serial" and 
-"host-model". The values for these fields are taken via hypervisor from the 
-host device tree data exposed in "/proc/device-tree/system-id" and 
-"/proc/device-tree/model" file respectively.
+On Thu, Jun 01, 2017 at 06:03:59PM +0000, Liguori, Anthony wrote:
+> Hrm, I've been following the thread but apparently missed your request Solar.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2019-02/msg04821.html
+Wow, that was quick.  I don't see how you could have been following the
+thread, including in the period since May 27, and miss the request,
+since most other distros replied to that very same thread.  With the
+replies quoting parts of my request, it was many messages.  I mentioned
+the 3 non-responsive distros by name in two messages - yesterday and
+today (a few hours before bringing this to oss-security).
 
-CVE-2019-8934 assigned via https://cveform.mitre.org/
+What was it about the oss-security posting that made you notice it,
+unlike the many messages on the distros list?
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Is it the encryption that causes you not to read some messages, or to
+postpone doing so (for days)?
+
+With such selective reading, you'd also miss some new issues that are
+being brought up as part of this same thread.  The Subject stays since
+it's unencrypted, but discussion deviates and expands to new topics.
+
+Thanks,
+
+Alexander
