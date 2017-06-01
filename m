@@ -1,70 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/7
-Message-ID: <390386.279297189-sendEmail@localhost>
-Date: Wed, 4 Oct 2017 15:44:46 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: binutils: divide-by-zero in decode_line_info (dwarf2.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/4
+Message-ID: <20170601062046.GI15203@suse.com>
+Date: Thu, 1 Jun 2017 08:20:46 +0200
+From: Johannes Segitz <jsegitz@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Information on recent sqlite3 issues?
 Content-Type: text/plain; charset=utf-8
 
-Description:
-binutils is a set of tools necessary to build programs.
+On Thu, Jun 01, 2017 at 12:24:10AM +0200, Andreas Stieger wrote:
+> Hello,
+> 
+> 
+> On 05/31/2017 10:30 PM, Moritz Muehlenhoff wrote:
+> > one of the latest Apple advisories mentions several vulnerabilities in sqlite:
+> > https://support.apple.com/en-us/HT207798
+> >
+> > CVE-2017-2513: found by OSS-Fuzz
+> > CVE-2017-2518: found by OSS-Fuzz
+> > CVE-2017-2520: found by OSS-Fuzz
+> > CVE-2017-2519: found by OSS-Fuzz
+> > CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+> > CVE-2017-6991: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+> >
+> > Does anyone have additional information on those and whether that
+> > applies to the standard sqlite releases or Apple-specific changes?
+> 
+> SUSE has asked Apple, but has not yet received an answer as far as I am
+> aware.
 
-The complete ASan output of the issue:
+They replied:
 
- # nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==11125==ERROR: AddressSanitizer: FPE on unknown address 0x7f5e01fd42e5 (pc 0x7f5e01fd42e5 bp 0x7ffdaa5de290 sp 0x7ffdaa5de0e0 T0)
-    #0 0x7f5e01fd42e4 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c
-    #1 0x7f5e01fe192b in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3608:26
-    #2 0x7f5e01fe192b in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
-    #3 0x7f5e01fde94f in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4755:11
-    #4 0x7f5e01f1c20b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
-    #5 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
-    #6 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #7 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #8 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #9 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #10 0x7f5e00e61680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #11 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
+>Thank you for contacting the Apple Product Security team.
+>
+>Please contact the SQLite maintainers to coordinate.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: FPE /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c in decode_line_info
-==11125==ABORTING
+I think it is problematic that they assign CVEs but don't provice any
+details even if it's not only their code. I contacted the sqlite-devs for
+details but didn't receive a reply up to this point.
 
-Affected version:
-2.29.51.20170921 and maybe past releases
+Johannes
+-- 
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
 
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=d8010d3e75ec7194a4703774090b27486b742d48
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-15025
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00372-binutils-FPE-decode_line_info
-
-Timeline:
-2017-09-22: bug discovered and reported to upstream
-2017-09-24: upstream released a patch
-2017-10-03: blog post about the issue
-2017-10-04: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
-Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/10/03/binutils-divide-by-zero-in-decode_line_info-dwarf2-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
