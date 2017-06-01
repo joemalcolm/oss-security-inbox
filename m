@@ -1,4 +1,9 @@
-Received: (qmail 6041 invoked by uid 550); 14 Nov 2022 09:25:34 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3184" "Thursday" "1" "June" "2017" "21:13:52" "+0200" "Solar Designer" "solar@openwall.com" "<20170601191352.GA6332@openwall.com>" "58" "Re: [oss-security] unresponsive distros" "^Date:" nil nil "6" "2017060119:13:52" "[oss-security] unresponsive distros" (number mark "        solar@openwa Jun  1   58/3184  " thread-indent "\"Re: [oss-security] unresponsive distros\"\n") "<1496341589723.65404@amazon.com>" ("<20170601180053.GA4752@openwall.com>" "<1496341589723.65404@amazon.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18074 invoked by uid 550); 1 Jun 2017 19:14:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,37 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17928 invoked from network); 1 Jun 2017 19:14:08 -0000
+Message-ID: <20170601191352.GA6332@openwall.com>
+References: <20170601180053.GA4752@openwall.com> <1496341589723.65404@amazon.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1496341589723.65404@amazon.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 1 Jun 2017 21:13:52 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26550 invoked from network); 13 Nov 2022 22:49:16 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jarek Potiuk <potiuk@apache.org>
+Subject: Re: [oss-security] unresponsive distros
 To: oss-security@lists.openwall.com
-Message-ID: <e300bb4d-e2ce-79e2-42fc-7ddcd4602a42@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 13 Nov 2022 22:48:47 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-40127: RCE in Apache Airflow <2.4.0 bash example 
 
-Severity: low
+On Thu, Jun 01, 2017 at 06:26:29PM +0000, Liguori, Anthony wrote:
+> To be a bit more transparent.
 
-Description:
+I appreciate that!
 
-A vulnerability in Example Dags of Apache Airflow allows an attacker with U=
-I access who can trigger DAGs, to execute arbitrary commands via manually p=
-rovided run_id parameter.  This issue affects Apache Airflow Apache Airflow=
- versions prior to 2.4.0.
+> The ideal thing for us would be to use a non-personally owned key for decryption so we could automate ingestion.  Encryption is fine but I will not tie my personal key into Amazon infrastructure.
+> 
+> Normally what we do with disclosure lists is have automation that pages people on every message.  As an example, I get paged for every email sent to the Xen disclosure list.
 
-Mitigation:
+The use of per-person keys is in part to discourage the kinds of setup
+you describe.  Yes, automation is great, but it's also elevated risk.
 
-Do not enable example dags on systems that should not allow UI user to exec=
-ute an arbitrary command.
+If by "automate ingestion" you mean creating tracking tickets in some
+system even for issues that upon your reading would clearly be
+irrelevant to Amazon (so you wouldn't be creating tickets for them now),
+then I'm glad the current setup prevents that.  Leaks via bug trackers
+is currently my primary concern.
 
-Credit:
+> The encrypted thread is a single thread with a high volume of messages.  The later part of the thread loses the context of you explicitly asking for a response.
+> 
+> Coupled with the holiday weekend, that meant when I read through the thread I read too quickly and missed your explicit request.
 
-Apache Airflow PMC would like to thank L3yx of Syclover Security Team.
+Fair enough, although I think the need for a response from all
+resurfaced in several messages.
 
-References:
+> Had you changed the subject of the thread for the request, it would have been noticed immediately but I don't mean to point too many fingers here.
 
-https://github.com/apache/airflow/pull/25960
+Not changing the Subject was part of the test, and it's not an arbitrary
+test: in this very same thread, several other/new issues were brought up
+also without a Subject change (including something new today).  So I was
+wondering: is this working?  Now I know: works for most distros, but not
+for all.  I don't know whether it works for 50%+ of people, though,
+since many of the distros have multiple people subscribed, whereas I
+only required one response per distro.  Maybe I'll do a per-person test
+another time. ;-)
 
+For new software issues, maybe we should be bringing the additional
+affected component names into the Subject each time.  After all, it's
+not sensitive info that any and all software has bugs.  By saying e.g.
+"Sudo" in the Subject, we merely reveal what we currently discuss, not
+that there's suddenly anything special about Sudo.  No one sane would
+have expected Sudo not to contain any more vulnerabilities ever, so the
+very fact there's another vulnerability is mostly not actionable for an
+attacker (unless they'd use it to decide on whether/when to attack the
+distros list infrastructure or/and specific list members maybe? seems
+far-fetched - in practice, either they'd attack and try to retain
+access, or fail at it, or not do that at all).  We reveal the same by
+CC'ing Todd anyway.  Things get trickier when e.g. a new issue is found
+in the same component - do we use e.g. "Sudo another issue", not to
+reveal the specifics?
+
+It's tough.  What's clearer to me is that I should insist on fewer and
+shorter embargoes.
+
+To summarize: I am speaking out loud, and not suggesting any particular
+change right now.  Amazon will stay subscribed as-is for now.
+
+Alexander
