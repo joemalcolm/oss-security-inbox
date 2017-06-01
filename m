@@ -1,44 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/08/3
-Message-ID: <3cd6d83d8565413891ad2de83f725a6f@imshyb02.MITRE.ORG>
-Date: Tue, 7 Feb 2017 20:19:19 -0500
-From: <cve-assign@...re.org>
-To: <jens.heyens@...pa.saarland>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <stock@...uni-saarland.de>
-Subject: Re: CVE Request - Code execution vulnerability in GNU/bash v4.4 autocompletion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/6
+Message-ID: <20170601134213.GA23889@inutil.org>
+Date: Thu, 1 Jun 2017 15:42:13 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Information on recent sqlite3 issues?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Jun 01, 2017 at 07:14:46AM -0600, Kurt Seifried wrote:
+> I will bring this up at the next cve board meeting (2 weeks from now).
 
-> https://github.com/jheyens/bash_completion_vuln/raw/master/2017-01-17.bash_completion_report.pdf
-> http://git.savannah.gnu.org/cgit/bash.git/commit/?id=4f747edc625815f449048579f6e65869914dd715
+Thanks! That also goes beyond sqlite, BTW. There's also a number of
+CVE IDs issued by Apple for libxml/libxslt which are in the same 
+position.
 
-Use CVE-2017-5932.
+libxml:
+CVE-2016-4619 CVE-2016-4616 CVE-2016-4615 CVE-2016-4614 CVE-2015-7116
+CVE-2015-7115
 
-The scope of this CVE is the single vulnerability resulting from the
-combination of the "Double dequoting of dirname" issue and the "Flags
-not being forwarded in expand_word_internal" issue.
+libxslt:
+CVE-2017-2477 CVE-2016-4612 CVE-2016-4610 CVE-2016-4609 CVE-2016-4608
+CVE-2016-4607
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYmm+6AAoJEHb/MwWLVhi2m+gP/A9e0TfQWk4soMJkiZCQAOBt
-yGI3xQtDUWGqMBvKTajCNufdRRU3mTjWmf5RDZNmF6HRbinwqiMSxUDpWC/+Rofk
-CD/8u0VHRVuZ1DLiN1mbhjLlbZxWxzCX4uJgU5fabYTXxvbnIK36mxNS+MSa9dr/
-zUBMs7eOM19wcNcbVr53sURjEqroEKB7qX+JxE1kSvh8BxDi/mLDM5AAQk8cOXPh
-qK+cPhejya1QMq16iozxZsOdd7gsiPE63TGBYjXeoN40ypmfNDduPe474gnIyChc
-kfKpjWT9+8SwyC8MPmteEJkdgTtJymmoxh7u9Z13KPNjZrafvbVH1HokwwGRkzGo
-J5rg6wWE0JOF72t3f+v3abZYaoETuGjeSWKU/v0qTdQQnFYOVN7s6VvDTd/Uc0lD
-0a/ZZl4QvQ/gl5gczAU8rElVTZcQ/DnEwGy2vkbs9vu1/Baxf+v7Hs6r2oaGLbgN
-HixcoyE9P0ftuqXqEjnS6juXGijl7Yrg/lbWKidbuL+G+u09XY6qzI03+2MPNScA
-xtDxwQHXY7htROuvWuWW1kSFwAL28hvdA4b0Qi3s7OfgW+X6obaVR5JTeAvPNFQN
-2LU3ZS5Qi5yjBX9iB1/nuybLCxN/5JCBQgvAij6dV1PAD2IiO4Kz3wC8uPV5D+eb
-NuHugptNphEzgZaSOI5u
-=v+0f
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
