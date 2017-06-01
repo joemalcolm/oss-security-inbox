@@ -1,23 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/13
-Message-ID: <20170621151552.ncx7w746qpg2wpi5@symphytum.spacehopper.org>
-Date: Wed, 21 Jun 2017 16:15:52 +0100
-From: Stuart Henderson <stu@...cehopper.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/11
+Message-ID: <1496341419911.6271@amazon.com>
+Date: Thu, 1 Jun 2017 18:23:40 +0000
+From: "Liguori, Anthony" <aliguori@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: unresponsive distros
 Content-Type: text/plain; charset=utf-8
 
-On 2017/06/21 16:36, Solar Designer wrote:
->                                                 Granted, they can now
-> prepare their updates within hours or days due to the work done by SUSE,
-> Red Hat, and others on the distros list, hopefully in time before
-> attacks using the Qualys findings start or become widespread, but
-> nevertheless they are at a disadvantage.
+Hi Solar,
 
-People doing this might want to note that Icinga ran into problems
-with the fix in RHEL/Centos kernels when using setrlimit to restrict
-the stack size below the default.
+The encrypted thread is a single thread with a high volume of messages.  The later part of the thread loses the context of you explicitly asking for a response.
 
-The Red Hat ticket is currently locked but there's some information at
-https://bugs.centos.org/view.php?id=13453.
+Coupled with the holiday weekend, that meant when I read through the thread I read too quickly and missed your explicit request.
+
+Had you changed the subject of the thread for the request, it would have been noticed immediately but I don't mean to point too many fingers here.
+
+Regards,
+
+Anthony Liguori
+________________________________________
+From: Solar Designer <solar@...nwall.com>
+Sent: Thursday, June 1, 2017 11:19 AM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] unresponsive distros
+
+Anthony,
+
+On Thu, Jun 01, 2017 at 06:03:59PM +0000, Liguori, Anthony wrote:
+> Hrm, I've been following the thread but apparently missed your request Solar.
+
+Wow, that was quick.  I don't see how you could have been following the
+thread, including in the period since May 27, and miss the request,
+since most other distros replied to that very same thread.  With the
+replies quoting parts of my request, it was many messages.  I mentioned
+the 3 non-responsive distros by name in two messages - yesterday and
+today (a few hours before bringing this to oss-security).
+
+What was it about the oss-security posting that made you notice it,
+unlike the many messages on the distros list?
+
+Is it the encryption that causes you not to read some messages, or to
+postpone doing so (for days)?
+
+With such selective reading, you'd also miss some new issues that are
+being brought up as part of this same thread.  The Subject stays since
+it's unencrypted, but discussion deviates and expands to new topics.
+
+Thanks,
+
+Alexander
 
