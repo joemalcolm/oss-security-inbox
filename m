@@ -1,77 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/1
-Message-ID: <69c817560b7e40d0995ab6ed8b2e8f32@imshyb01.MITRE.ORG>
-Date: Sat, 4 Feb 2017 21:32:29 -0500
-From: <cve-assign@...re.org>
-To: <advisories@...mole.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/9
+Message-ID: <1496340239333.24020@amazon.com>
+Date: Thu, 1 Jun 2017 18:03:59 +0000
+From: "Liguori, Anthony" <aliguori@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: unresponsive distros
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hrm, I've been following the thread but apparently missed your request Solar.
 
-> https://www.foxmole.com/advisories/foxmole-2016-07-05.txt
-> The following findings are only examples there are quite more.
+Regards,
 
-> 1)Cross Site Scripting (XSS)
+Anthony Liguori
+________________________________________
+From: Solar Designer <solar@...nwall.com>
+Sent: Thursday, June 1, 2017 11:00 AM
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] unresponsive distros
 
-> [] index.php?view=request&
-> request=log&
-> task=download&
-> key=a9fef1f4&
-> format=[XSS]
+Hi,
 
-Use CVE-2016-10201.
+A certain issue being handled on the distros list provided for a
+particularly good opportunity for me to test whether/which distros are
+actually paying attention and intend to respond to issues during the
+embargo period.  In the middle of a lengthy thread with a somewhat
+generic Subject (since it travels unencrypted), I asked literally all
+(and I emphasized that) distros to respond to the thread with status
+updates regarding their handling of the issue.  That was on May 27.
+I gave distros time until May 30 (Tuesday) to respond.  I then gave them
+about 2 days more, as you can see.
 
+Most distros responded, with varying amount of detail.  But 3 did not:
 
-> [] index.php/[XSS]
+FreeBSD
+Amazon Linux AMI
+MontaVista Software
 
-Use CVE-2016-10202.
+We had heard from FreeBSD earlier in the thread, although I would have
+expected them to reply to the specific request as well (and I did say so
+explicitly).  Maybe it's fatigue from too many encrypted messages, most
+of which happen to be focusing on Linux-specific aspects of the issue.
+That's not great at all, but it is somewhat understandable.  Part of the
+problem is that when an issue is potentially relevant to both *BSD and
+Linux, we're rarely careful to separate postings and sub-threads between
+the distros and linux-distros lists, resulting in "spamming" (and risk
+of leaks) of the Linux-specific aspects to (and via) the *BSD's.  This
+is something for us all to improve.  (Some of the sub-threads were in
+fact correctly separated to go only to linux-distros in this present
+case, though.)
 
+As to Amazon and MontaVista, it is likely they'll have to leave the
+distros list for inactivity.
 
-> [] Creating a new monitor using [XSS in] the name
+As far as I can tell, last posting/reply on the (linux-)distros list by
+Amazon was in July 2016 and before that in November 2014.  As far as I
+can tell, MontaVista never posted to the list.  Being a user of the info
+only, without participation in discussions, is not strictly disallowed,
+but this time it's coupled with lack of response when specifically asked
+to respond, and on an issue that is at least potentially relevant to the
+distros (not just a responsiveness test).
 
-Use CVE-2016-10203.
+At this point, there will have to be a very good reason to justify
+keeping Amazon and MontaVista on the list.  Is there any?
 
+OTOH, there's just one person subscribed for each of Amazon and
+MontaVista, and all messages are encrypted to the recipient's own keys
+(but of course the headers are unencrypted, including the Subjects).
+So e.g. an unattended mailbox isn't that much of a risk.
 
-> [] 2)SQL Injection
-> Parameter: limit (POST)
+I am not going to ping Amazon and MontaVista directly (just like I did
+not ping NetBSD directly last month, although others promptly did
+anyway).  If they missed the messages on the distros list and also miss
+the message here, so be it.
 
-Use CVE-2016-10204.
+While I am at it: there have been 3624 messages on linux-distros (and a
+subset of those on distros) since the list was setup on April 3, 2011
+and until today.  That's about 1.6 messages per day on average, but
+sometimes there are spikes (like there is now) and sometimes there are
+quiet periods.
 
+Alexander
 
-> [] 3)Session Fixation
-> After a successful authentication the Session Cookie ZMSESSID remains the same.
-
-Use CVE-2016-10205.
-
-
-> [] 4)No CSRF Protection
-> A possible CSRF attack form, which changes the password of the admin
-
-Use CVE-2016-10206.
-
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYlo37AAoJEHb/MwWLVhi2nWEP/219hKMVosSqRw9bj9SbRjbL
-bRGYYuYjwbE7/JWLFL0o0IdjoO3Rndkwg39SAn4Bf92ZbSk+mrTLDHyM+sOI0JBD
-5m9/yE1Oh/Nnlw0dwNSL74Qo1LeHlj6Dq1WbALwQy+Nr46PYrKTeK2RyOFtX2mXF
-ogzDiPv6vzkRaAp90T5eVkTLUm6WUhvo0lsE0w2B5iJLDXZ9JWyCyRiagJhwTqCa
-pRfvRG/0k6rar7lsyxVVC1LhAAhKiJUo7ZKH+3RAcvd+0S0FOWUH2SEhiDpqvnQS
-WAx8Y/iE6Ijuymlmd0U+CeEg3dIpnqFu6haof/m+g5pNFXJlQbnElwW80rH2b56n
-rhG8xNx+hd9tUKqtfTIX+T4dXkGcWEe5A9dqBN6BNmzNXWJ6tmSuFyGTDfsyMWxH
-ima3jgZVmoIYlVxfUXNrUMetsdD1nDr1bGFsecN+WV8JaTf9lo1vEum1NHMr4ruC
-hxFmDVGsmxJa2VEmqcRrAGs6JYvJKiQT0gu7y8g2EeYzRiprdlh9sLaPnG9aXgQa
-M+OD0M2tgcc4hFCbS65jxyf8NmaIKBR2UuApkDQxIO4uv7neuIuBvJr16STE2baZ
-jkWbYAtZDyXtJ5Vs5+Nb6IhdYcq6eW6/2qfz7AI48cSZHWop6l8o6q01VkgrLU/h
-0pxDmijjxjLENgyn6Mg0
-=jw7Y
------END PGP SIGNATURE-----
