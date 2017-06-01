@@ -1,35 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/11
-Message-ID: <1485294749.1902.0.camel@gmail.com>
-Date: Tue, 24 Jan 2017 16:52:29 -0500
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/7
+Message-ID: <54005790-f2e6-2654-fdbb-41652f32060d@hpe.com>
+Date: Thu, 1 Jun 2017 07:17:41 -0600
+From: Nicholas Luedtke <nsl@....com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Headsup: systemd v228 local root exploit (CVE-2016-10156)
+Subject: Re: Information on recent sqlite3 issues?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2017-01-25 at 01:20 +0500, Alexander E. Patrakov wrote:
-> 2017-01-24 13:55 GMT+05:00 Sebastian Krahmer <krahmer@...e.com>:
-> > Hi
-> > 
-> > This is a heads up for a trivial systemd local root exploit, that
-> > was silently fixed in the upstream git as:
-> > 
-> > commit 06eeacb6fe029804f296b065b3ce91e796e1cd0e
-> > Author: ....
-> > Date:   Fri Jan 29 23:36:08 2016 +0200
-> > 
-> >     basic: fix touch() creating files with 07777 mode
-> 
-> That's important for users of Arch Linux and other rolling
-> distributions.
-> 
-> If the system has booted the vulnerable version of systemd at least
-> once, then the files with dangerous permissions will be there. There
-> is no code in systemd that fixes permissions on already existing stamp
-> files. There is no postinstall script in Arch that does it, either.
-> So, you have to fix permissions to 0644 or remove the stamp files
-> manually, once, even though the commit appeared in Arch repositories
-> long time ago.
 
-/run is a tmpfs
-Download attachment "signature.asc" of type "application/pgp-signature" (867 bytes)
+On 06/01/2017 07:14 AM, Kurt Seifried wrote:
+> I will bring this up at the next cve board meeting (2 weeks from now).
+>
+>
+> -Kurt
+Thanks Kurt, its worth noting this happens often with libxml as well.
+
+>> On Jun 1, 2017, at 00:20, Johannes Segitz <jsegitz@...e.de> wrote:
+>>
+>>> On Thu, Jun 01, 2017 at 12:24:10AM +0200, Andreas Stieger wrote:
+>>> Hello,
+>>>
+>>>
+>>>> On 05/31/2017 10:30 PM, Moritz Muehlenhoff wrote:
+>>>> one of the latest Apple advisories mentions several vulnerabilities in sqlite:
+>>>> https://support.apple.com/en-us/HT207798
+>>>>
+>>>> CVE-2017-2513: found by OSS-Fuzz
+>>>> CVE-2017-2518: found by OSS-Fuzz
+>>>> CVE-2017-2520: found by OSS-Fuzz
+>>>> CVE-2017-2519: found by OSS-Fuzz
+>>>> CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+>>>> CVE-2017-6991: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+>>>>
+>>>> Does anyone have additional information on those and whether that
+>>>> applies to the standard sqlite releases or Apple-specific changes?
+>>> SUSE has asked Apple, but has not yet received an answer as far as I am
+>>> aware.
+>> They replied:
+>>
+>>> Thank you for contacting the Apple Product Security team.
+>>>
+>>> Please contact the SQLite maintainers to coordinate.
+>> I think it is problematic that they assign CVEs but don't provice any
+>> details even if it's not only their code. I contacted the sqlite-devs for
+>> details but didn't receive a reply up to this point.
+>>
+>> Johannes
+
+-- 
+Nicholas Luedtke
+HPE Linux Security, Hewlett-Packard Enterprise
+
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
