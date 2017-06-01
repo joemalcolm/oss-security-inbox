@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1684" "Tuesday" "28" "June" "2016" "11:00:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160628150056.1C1B7332021@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: CVE Request: integer overflow in ALSA snd_compress_check_input" nil nil nil "6" "2016062815:00:56" "[oss-security] Re: CVE Request: integer overflow in ALSA snd_compress_check_input" (number mark "U       cve-assign@m Jun 28   41/1684  " thread-indent "\"[oss-security] Re: CVE Request: integer overflow in ALSA snd_compress_check_input\"\n") "<20160628105410.GB23113@suse.de>" ("<20160628105410.GB23113@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2333" "Thursday" "1" "June" "2017" "18:26:29" "+0000" "Liguori, Anthony" "aliguori@amazon.com" "<1496341589723.65404@amazon.com>" "66" "Re: [oss-security] unresponsive distros" "^Date:" nil nil "6" "2017060118:26:29" "[oss-security] unresponsive distros" (number mark "        aliguori@ama Jun  1   66/2333  " thread-indent "\"Re: [oss-security] unresponsive distros\"\n") "<1496341419911.6271@amazon.com>" ("<20170601180053.GA4752@openwall.com>" "<1496340239333.24020@amazon.com>" "<20170601181906.GA5071@openwall.com>" "<1496341419911.6271@amazon.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21528 invoked by uid 550); 28 Jun 2016 15:01:08 -0000
+Received: (qmail 26546 invoked by uid 550); 1 Jun 2017 18:32:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,103 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 21855 invoked from network); 1 Jun 2017 18:26:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1496341603; x=1527877603;
+  h=from:to:subject:date:message-id:references:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=z+BLh0vRnhbrBKvetkY0v/qrOD+tvSuvB8V1NcNEczc=;
+  b=sweZTZ4kH8k/ShzmDtsxdDVd3tYVfxCx3GWZGDon/umIS23JZ0eL9vb5
+   lys2xh6jU1b8BsuXJlbTnk3VhlRhEAdnzD0R7NvTlhe2Uy3HFoY/OmF5a
+   sZIzfwF9cyipRyx/u+7p5pkCmwX3zdZKSzLv2ndV6qyMT3P9BhneDqJwQ
+   I=;
+X-IronPort-AV: E=Sophos;i="5.39,280,1493683200"; 
+   d="scan'208";a="672766846"
+Thread-Topic: [oss-security] unresponsive distros
+Thread-Index: AQHS2wEa3VHSqTrNjU+8YAvS7z+TWqIQTH+rgAAEmgCAAACLK4AAASDu
+Message-ID: <1496341589723.65404@amazon.com>
+References: <20170601180053.GA4752@openwall.com>
+ <1496340239333.24020@amazon.com>,<20170601181906.GA5071@openwall.com>,<1496341419911.6271@amazon.com>
+In-Reply-To: <1496341419911.6271@amazon.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.43.160.38]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Date: Thu, 1 Jun 2017 18:26:29 +0000
+From: "Liguori, Anthony" <aliguori@amazon.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21510 invoked from network); 28 Jun 2016 15:01:08 -0000
-From: cve-assign@mitre.org
-To: meissner@suse.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, tiwai@suse.de
-In-Reply-To: <20160628105410.GB23113@suse.de>
-Message-Id: <20160628150056.1C1B7332021@smtpvbsrv1.mitre.org>
-Date: Tue, 28 Jun 2016 11:00:56 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: integer overflow in ALSA snd_compress_check_input
+Subject: Re: [oss-security] unresponsive distros
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+To be a bit more transparent.  The ideal thing for us would be to use a non=
+-personally owned key for decryption so we could automate ingestion.  Encry=
+ption is fine but I will not tie my personal key into Amazon infrastructure.
 
-> but there was no 2012 CVE assignment to the original fixing commit b35cc8225845 as far as I see:
-> 
-> commit b35cc8225845112a616e3a2266d2fde5ab13d3ab
-> Author: Dan Carpenter <dan.carpenter@oracle.com>
-> Date:   Wed Sep 5 15:32:18 2012 +0300
-> 
->     ALSA: compress_core: integer overflow in snd_compr_allocate_buffer()
->     
->     These are 32 bit values that come from the user, we need to check for
->     integer overflows or we could end up allocating a smaller buffer than
->     expected.
+Normally what we do with disclosure lists is have automation that pages peo=
+ple on every message.  As an example, I get paged for every email sent to t=
+he Xen disclosure list.
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b35cc8225845112a616e3a2266d2fde5ab13d3ab
+Regards,
 
-Use CVE-2012-6703.
+Anthony Liguori
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+________________________________________
+From: Liguori, Anthony
+Sent: Thursday, June 1, 2017 11:23 AM
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] unresponsive distros
 
-iQIcBAEBCAAGBQJXcpCGAAoJEHb/MwWLVhi2aMYP/j9JEZplRgptXAOO/yVII9Bd
-sUd/mJuGgc9HRMzppMPhu8GLjA0IIG1Ms0T3OL37ESBGOqKAMaWQO2E1WNl61igq
-QzrZGE6t8aYLoP4rESXWmSbZ2QQHxKpXfre48Uaek/Flc4sVMeCW0TfwZANv5CEB
-mdLLpDNDDpgUWDzAE27PG1+zSJoE+aI+HM72rKfRYTpSmzqcGbA7rxGB+/8whkVO
-yaUeIRrZ1Tn8m320+HEA7pfUF48cS5i5RCir99eViLhXlk1rTDDrHUYxhnD9cSi0
-dR9JZNLfPNhJKjAe/NjqnsLVLk97wKGP0vKnSvm9TSt26DGeg99jEelc073/tGIR
-xEgcnSZ8enle+O6T1nJFykOKolujeqzzu2AApZTSTs4uofLPl0pnIptfaC+j4Vxv
-0Myl38AzITonRBMVQprhcKg3A5AF+dMdZeRycwZauVTy4q6AgfHnLo0ahpDD515U
-T2a+2W8Yo3n8b/GDN8P4HGvo7rrVuyMyVyT53U0qgdz2Ls6qQX9Z0pAHINRJNujD
-BJivsm49vw9NnzDo0opxh9fiO3MLoT/4lot//c1NyBvEaJzrOAMic6MthYFaIGSI
-lTE796ibKjdk6v3G6YdQs5vug2HvFe4I8yYl1OPwF4Qb29DzkQ52rPT1GezD/nJA
-Avd/cqOXOsknyoDGR5k5
-=J3ot
------END PGP SIGNATURE-----
+Hi Solar,
+
+The encrypted thread is a single thread with a high volume of messages.  Th=
+e later part of the thread loses the context of you explicitly asking for a=
+ response.
+
+Coupled with the holiday weekend, that meant when I read through the thread=
+ I read too quickly and missed your explicit request.
+
+Had you changed the subject of the thread for the request, it would have be=
+en noticed immediately but I don't mean to point too many fingers here.
+
+Regards,
+
+Anthony Liguori
+________________________________________
+From: Solar Designer <solar@openwall.com>
+Sent: Thursday, June 1, 2017 11:19 AM
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] unresponsive distros
+
+Anthony,
+
+On Thu, Jun 01, 2017 at 06:03:59PM +0000, Liguori, Anthony wrote:
+> Hrm, I've been following the thread but apparently missed your request So=
+lar.
+
+Wow, that was quick.  I don't see how you could have been following the
+thread, including in the period since May 27, and miss the request,
+since most other distros replied to that very same thread.  With the
+replies quoting parts of my request, it was many messages.  I mentioned
+the 3 non-responsive distros by name in two messages - yesterday and
+today (a few hours before bringing this to oss-security).
+
+What was it about the oss-security posting that made you notice it,
+unlike the many messages on the distros list?
+
+Is it the encryption that causes you not to read some messages, or to
+postpone doing so (for days)?
+
+With such selective reading, you'd also miss some new issues that are
+being brought up as part of this same thread.  The Subject stays since
+it's unencrypted, but discussion deviates and expands to new topics.
+
+Thanks,
+
+Alexander
+
