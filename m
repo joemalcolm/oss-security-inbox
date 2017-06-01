@@ -1,18 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/3
-Message-ID: <nrmsHhyyTCZ9wdWRLqD7UlQdEzusSmlviPEAI5nPS3AlPASZE1lcA4vwJkUp4a-_zDY398M6MWHAodgKRFV4Go153IFdFvXQs80Ibv-O6so=@protonmail.com>
-Date: Fri, 02 Jun 2017 09:09:09 -0400
-From: Qhdwns123 <qhdwns123@...tonmail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: What happens in order to get CVE numbers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/10
+Message-ID: <20170601181906.GA5071@openwall.com>
+Date: Thu, 1 Jun 2017 20:19:06 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: unresponsive distros
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Anthony,
 
-What happens in order to get CVE numbers
+On Thu, Jun 01, 2017 at 06:03:59PM +0000, Liguori, Anthony wrote:
+> Hrm, I've been following the thread but apparently missed your request Solar.
 
-I emailed the developer with a vulnerability report.
+Wow, that was quick.  I don't see how you could have been following the
+thread, including in the period since May 27, and miss the request,
+since most other distros replied to that very same thread.  With the
+replies quoting parts of my request, it was many messages.  I mentioned
+the 3 non-responsive distros by name in two messages - yesterday and
+today (a few hours before bringing this to oss-security).
 
-The developer has not contacted yet.
+What was it about the oss-security posting that made you notice it,
+unlike the many messages on the distros list?
 
-Do I have to wait for a contact?
+Is it the encryption that causes you not to read some messages, or to
+postpone doing so (for days)?
+
+With such selective reading, you'd also miss some new issues that are
+being brought up as part of this same thread.  The Subject stays since
+it's unencrypted, but discussion deviates and expands to new topics.
+
+Thanks,
+
+Alexander
