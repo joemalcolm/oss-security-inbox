@@ -1,86 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/5
-Message-ID: <CAFLBxZYDfzwa_Te7ESD8syt7N79pZzgTEXDZE4=PuHzn0jHSug@mail.gmail.com>
-Date: Mon, 13 Feb 2017 14:26:11 +0000
-From: George Dunlap <dunlapg@...ch.edu>
-To: Roger Pau Monné <roger.pau@...rix.com>
-Cc: "Xen.org security team" <security@....org>, "xen-users@...ts.xen.org" <xen-users@...ts.xen.org>,  xen-announce@...ts.xen.org, oss-security@...ts.openwall.com,  "xen-devel@...ts.xen.org" <xen-devel@...ts.xen.org>
-Subject: Re: [Xen-devel] [Xen-users] Xen Security Advisory 208 (CVE-2017-2615) - oob access in cirrus bitblt copy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/12
+Message-ID: <1496341589723.65404@amazon.com>
+Date: Thu, 1 Jun 2017 18:26:29 +0000
+From: "Liguori, Anthony" <aliguori@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: unresponsive distros
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Feb 11, 2017 at 8:49 AM, Roger Pau Monné <roger.pau@...rix.com> wrote:
-> On Fri, Feb 10, 2017 at 12:43:17PM +0000, Xen.org security team wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->>
->>             Xen Security Advisory CVE-2017-2615 / XSA-208
->>
->>                    oob access in cirrus bitblt copy
->>
->> ISSUE DESCRIPTION
->> =================
->>
->> When doing bitblt copy backwards, qemu should negate the blit width.
->> This avoids an oob access before the start of video memory.
->>
->> IMPACT
->> ======
->>
->> A malicious guest administrator can cause an out of bounds memory
->> access, possibly leading to information disclosure or privilege
->> escalation.
->>
->> VULNERABLE SYSTEMS
->> ==================
->>
->> Versions of qemu shipped with all Xen versions are vulnerable.
->>
->> Xen systems running on x86 with HVM guests, with the qemu process
->> running in dom0 are vulnerable.
->>
->> Only guests provided with the "cirrus" emulated video card can exploit
->> the vulnerability.  The non-default "stdvga" emulated video card is
->> not vulnerable.  (With xl the emulated video card is controlled by the
->> "stdvga=" and "vga=" domain configuration options.)
->>
->> ARM systems are not vulnerable.  Systems using only PV guests are not
->> vulnerable.
->>
->> For VMs whose qemu process is running in a stub domain, a successful
->> attacker will only gain the privileges of that stubdom, which should
->> be only over the guest itself.
->>
->> Both upstream-based versions of qemu (device_model_version="qemu-xen")
->> and `traditional' qemu (device_model_version="qemu-xen-traditional")
->> are vulnerable.
->>
->> MITIGATION
->> ==========
->>
->> Running only PV guests will avoid the issue.
->>
->> Running HVM guests with the device model in a stubdomain will mitigate
->> the issue.
->>
->> Changing the video card emulation to stdvga (stdvga=1, vga="stdvga",
->> in the xl domain configuration) will avoid the vulnerability.
->>
->> RESOLUTION
->> ==========
->>
->> Applying the appropriate attached patch resolves this issue.
->>
->> xsa208-qemuu.patch    qemu-xen, mainline qemu
->
-> The patch doesn't apply cleanly against the QEMU-upstream found in Xen 4.7.1:
->
-> http://beefy9.nyi.freebsd.org/data/110amd64-default/433828/logs/xen-tools-4.7.1_2.log
+To be a bit more transparent.  The ideal thing for us would be to use a non-personally owned key for decryption so we could automate ingestion.  Encryption is fine but I will not tie my personal key into Amazon infrastructure.
 
-I'm working on an updated advisory., but in the meantime, Stefano
-checked in backported patches to the qemu-xen tree already; you can
-get those from the staging-4.* branches.
+Normally what we do with disclosure lists is have automation that pages people on every message.  As an example, I get paged for every email sent to the Xen disclosure list.
 
-(That doesn't address the qemu-traditional issues -- for those you'll
-have to wait for the updated advisory.)
+Regards,
 
- -George
+Anthony Liguori
+
+________________________________________
+From: Liguori, Anthony
+Sent: Thursday, June 1, 2017 11:23 AM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] unresponsive distros
+
+Hi Solar,
+
+The encrypted thread is a single thread with a high volume of messages.  The later part of the thread loses the context of you explicitly asking for a response.
+
+Coupled with the holiday weekend, that meant when I read through the thread I read too quickly and missed your explicit request.
+
+Had you changed the subject of the thread for the request, it would have been noticed immediately but I don't mean to point too many fingers here.
+
+Regards,
+
+Anthony Liguori
+________________________________________
+From: Solar Designer <solar@...nwall.com>
+Sent: Thursday, June 1, 2017 11:19 AM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] unresponsive distros
+
+Anthony,
+
+On Thu, Jun 01, 2017 at 06:03:59PM +0000, Liguori, Anthony wrote:
+> Hrm, I've been following the thread but apparently missed your request Solar.
+
+Wow, that was quick.  I don't see how you could have been following the
+thread, including in the period since May 27, and miss the request,
+since most other distros replied to that very same thread.  With the
+replies quoting parts of my request, it was many messages.  I mentioned
+the 3 non-responsive distros by name in two messages - yesterday and
+today (a few hours before bringing this to oss-security).
+
+What was it about the oss-security posting that made you notice it,
+unlike the many messages on the distros list?
+
+Is it the encryption that causes you not to read some messages, or to
+postpone doing so (for days)?
+
+With such selective reading, you'd also miss some new issues that are
+being brought up as part of this same thread.  The Subject stays since
+it's unencrypted, but discussion deviates and expands to new topics.
+
+Thanks,
+
+Alexander
+
