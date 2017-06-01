@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6294" "Tuesday" "14" "November" "2017" "17:43:51" "+0000" "Eddie Chapman" "eddie@ehuk.net" "<4c4e1ee3-81c8-f2c0-d483-dd9a4bc58006@ehuk.net>" "120" "Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" nil nil nil "11" "2017111417:43:51" "[oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver" (number mark "U       eddie@ehuk.n Nov 14  120/6294  " thread-indent "\"Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver\"\n") "<20171114123228.GA18751@grsecurity.net>" ("<20171113151524.GA16983@kroah.com>" "<E1eEPJ5-0006vL-TF@rmmprod07.runbox>" "<20171114073720.GA27647@kroah.com>" "<20171114123228.GA18751@grsecurity.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2143" "Thursday" "1" "June" "2017" "09:23:13" "+0200" "Peter Bex" "peter@more-magic.net" "<20170601072313.GM4590@scully.more-magic.net>" "52" "[oss-security] CVE-2017-9334 CHICKEN Scheme: denial of service due to invalid pointer dereference" "^Date:" nil nil "6" "2017060107:23:13" "[oss-security] CVE-2017-9334 CHICKEN Scheme: denial of service due to invalid pointer dereference" (number mark "        peter@more-m Jun  1   52/2143  " thread-indent "\"[oss-security] CVE-2017-9334 CHICKEN Scheme: denial of service due to invalid pointer dereference\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26230 invoked by uid 550); 14 Nov 2017 17:58:11 -0000
+Received: (qmail 9831 invoked by uid 550); 1 Jun 2017 07:23:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,150 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11443 invoked from network); 14 Nov 2017 17:44:03 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 schatzi.steelbluetech.co.uk 64B0F10CFD5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1510681431; bh=utGHR9EEnmv9hp/gDxCWleujc399c5wVezTAlVzHpEk=;
-	h=Subject:To:Cc:References:From:Reply-To:Date:In-Reply-To:From;
-	b=u0OcaALQ1Hth0ZNcuQxDCG4utcZloP/+/qzBwabITUe4Tz3C2FxGtS9IHCzYGNsRq
-	 fkHnRmga4KKDm21UY3mLkSnPJTAZBIdYhJhm6u6n0DTONFQDoCUJbHF0MsItDRN1K4
-	 Qclh25NKwbvfQv3Ofh8x0g40y7lgQeRbq2eHOlIs=
-To: oss-security@lists.openwall.com, Brad Spengler <spender@grsecurity.net>
-Cc: Vladis Dronov <vdronov@redhat.com>
-References: <20171113151524.GA16983@kroah.com>
- <E1eEPJ5-0006vL-TF@rmmprod07.runbox> <20171114073720.GA27647@kroah.com>
- <20171114123228.GA18751@grsecurity.net>
-From: Eddie Chapman <eddie@ehuk.net>
-Message-ID: <4c4e1ee3-81c8-f2c0-d483-dd9a4bc58006@ehuk.net>
-Date: Tue, 14 Nov 2017 17:43:51 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
+Received: (qmail 9812 invoked from network); 1 Jun 2017 07:23:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=more-magic.net; s=dkim-2016-12;
+	h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=2m+Zn7toniiIgTBUryjkCVW6eJ/y2ywG5rBFKdzGp9U=;
+	b=kfqdvKviqr0cLGyaPsH+BZED4US4qSg75gVQ4Z2AKuk57kTa2JGgm9ucHBsaCb1EBV1Z0AYKd4BddELgwZlmNZeSg0TAzizVuYi3Oe4Z2dA46nU2PARKe28TKmLwP6WkXFcFKk9ZdRyiOiBlOWjpyshbWAPo68ZPG1EesNNyoxg=;
+Message-ID: <20170601072313.GM4590@scully.more-magic.net>
+Mail-Followup-To: Open Source Security <oss-security@lists.openwall.com>
 MIME-Version: 1.0
-In-Reply-To: <20171114123228.GA18751@grsecurity.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2017-15102: Linux kernel: usb: NULL-deref due
- to a race condition in [legousbtower] driver
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZVOC9e0LfXEId8h2"
+Content-Disposition: inline
+X-PGP-Key: http://www.more-magic.net/peter-bex.asc
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Thu, 1 Jun 2017 09:23:13 +0200
+From: Peter Bex <peter@more-magic.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-9334 CHICKEN Scheme: denial of service due to invalid
+ pointer dereference
+To: Open Source Security <oss-security@lists.openwall.com>
 
-On 14/11/17 12:32, Brad Spengler wrote:
-> Hi Greg,
-> 
-> We're all aware of your objection, you bring it up every time
-> anyone mentions Linux kernel security on this list.  However,
-> please remember that all the people contributing on this list are
-> taking on the responsiblity you and the majority of other upstream
-> developers have abdicated.
+--ZVOC9e0LfXEId8h2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Does Linus, Greg, Al, etc, etc, etc owe anyone anything? Yes, they're 
-time is paid by companies and/or the Linux Foundation, but do those orgs 
-have a responsibility to anyone? They're working incredibly hard on 
-probably one of the most difficult project management feats anyone could 
-attempt, which anyone can take the end results of, and use without 
-monetary cost. Linus has the right to treat security in whatever way he 
-wishes to, according to his own personal philosophy, ultimately it is 
-his project and he answers to no-one other than himself.
+Hi all,
 
-You say everyone on this list is taking on this "responsibility". So 
-what? Some are making a living or business out of that. Maybe it is 
-right that the "community" sifts through all the bug fixes and 
-identifies issues that have a security impact. Kernel development is 
-hard enough, someone committing a fix has already done a lot of work. Do 
-they have an obligation to do the extra thinking and documenting in the 
-commit log in order to identify how someone might maliciously take 
-advantage of a flaw? It seems we have a whole industry of people who are 
-good at that, so why shouldn't that industry take on that task? Would 
-you, Brad, be in business with your product if the kernel people handled 
-security perfectly? I have nothing against grsecurity and your efforts, 
-I see no harm in companies making a business out of kernel security.
+I just received my assignment of CVE-2017-9334 for this issue:
 
-> Vladis' original mail made it clear the bug was
-> already fixed with the included upstream fix link, so your
-> follow-up was unnecessary.
+An incorrect "pair?" check in the Scheme "length" procedure results in=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+an unsafe pointer dereference in all CHICKEN Scheme versions prior to=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+4.13, which allows an attacker to cause a denial of service by passing=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+an improper list to an application that calls "length" on it.=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
 
-I don't see a problem on this list with too many people making 
-unnecessary, frivolous contributions. If you feel your rant was worthy 
-of being posted, then I'd say Greg's comments, which were polite and 
-without a hint of vitriol, were also worthy of contribution. I think you 
-should leave it up to the moderator who does a good job of supervising 
-this list, rather than suggesting that anyone's comments are unnecessary.
+Original announcement:
+http://lists.nongnu.org/archive/html/chicken-announce/2017-05/msg00000.html
 
-> If you truly believe there is no uniqueness to security bugs, I
-> would advise you to shut down security@kernel.org.
+Patch:
+http://lists.nongnu.org/archive/html/chicken-hackers/2017-05/msg00099.html
 
-Regardless of what anyone at the top of the kernel project may have said 
-in the past, I think the reality shows that kernel people on the whole 
-take security relatively seriously. After all, nearly everyone involved 
-is a user as well as a developer, and I don't think any of them would 
-seriously claim to not have any concerns about their own boxen getting 
-compromised. Yes, there is room for improvement, and reaction to 
-individual security issues can be debated, but it is unfair to 
-characterise the kernel community as not caring at all about security. 
-Personally I see a lot of examples of kernel people genuinely making 
-efforts to make the kernel more secure, and very few (by comparison), 
-isolated cases of issues being dismissed, or security impact being 
-downplayed. I'm sure examples can be dragged up from the past involving 
-prominent people.  But I've seen plenty of evidence of a genuine desire 
-(even on the part of Linus himself, in what he writes in commit logs) to 
-make the kernel more secure, not less.
+Cheers,
+Peter
 
->  I would also
-> ask that you come up with a better solution to the problem than
-> demanding people run the latest version of Linux. According to my
-> current records someone taking that advice would be exposed to a
-> bug that can brick systems that seems nowhere close to resolution,
-> and one that makes it impossible to run KVM guests on AMD (which went
-> unfixed for 3 months, and the current fix isn't cc'd for stable --
-> makes me wonder how much testing -rc really gets).
+--ZVOC9e0LfXEId8h2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Regardless of what anyone might *say*, the reality is that there is no 
-reason for anyone to feel compelled to run the very latest kernel in 
-order to stay secure. The list of kernels receiving regular backported 
-fixes is frankly more than is really needed. Greg himself goes above and 
-beyond in this regard and works incredibly hard in maintaining, at the 
-time of writing, 3.18 (unofficially), 4.4, 4.9, and 4.13, usually with 2 
-or 3 releases a month each. All branches have well defined projected EOL 
-dates. If that is not enough, there are other people actively 
-maintaining 3.2, 3.10 (though just became EOL), 3.16 and 4.1! And that 
-is just the vanilla kernels, when you factor in distro kernels with 
-their own kernel teams backporting security fixes, the choice of secure 
-kernels to run is incredible, we've never had it so good.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> You might want to focus your time on getting your own house in
-> order instead of constantly pestering the people on this list -- we
-> work in the trenches and aren't swayed by nonsense arguments that
-> have no viable solution attached.
+iQEcBAEBAgAGBQJZL8DhAAoJEBEdufnLRYmwFJkH/2B6a5dhrhThLWgLzKCQhWZf
+8mxaw+BAnxV2RBClhLxY8+egqnCsGAPatkw4qLsWIR6V4PIUssmQLcQup34dqUVm
+VHGAC+y21KBDiKhQ7v/3l7ClR4jXbrvH8dRXGpX2SDeRoGkYoRUJNJE276hITByF
+GJqZsyF2WaT6F4kcwY66UCgCVVi8dGn5K6SbHCdvwMvmp76GeTmfL//TkddreIwj
+YPCiArxmj7/gsyNzejWSbxOur+5X1lZg6oidnSDMIG2np33K43RdkNQFCoqSfTlH
+ZxUYaf71WdCaGovarhbjEHBtg8XoSo82d5S8OLtENYvCwNIw74gDrCH4JuaPxN0=
+=6pnV
+-----END PGP SIGNATURE-----
 
-I think the kernel community can hardly be characterised as needing to 
-put its "house in order", that is a gross exaggeration. It's not perfect 
-and improvemets are needed. I welcome the efforts Greg is making to 
-improve things, and his efforts to participate here, and I certainly 
-don't think Brad speaks for everyone, at least not for me.
-
-Eddie
-
-> 
-> Thanks,
-> -Brad
-> 
-> On Tue, Nov 14, 2017 at 08:37:20AM +0100, Greg KH wrote:
->> On Mon, Nov 13, 2017 at 07:42:27PM -0500, David A. Wheeler wrote:
->>> On Mon, 13 Nov 2017 16:15:24 +0100, Greg KH <greg@kroah.com> wrote:
->>>> It's the arbitrarily nature here that I am curious about, it feels like
->>>> it should be "all or nothing", for CVEs to mean much here.  Right now it
->>>> seems like it is just, "all that we care to track"?  :)
->>>
->>> "All" would be awesome, though unlikely.  But even if that's the eventual goal,
->>> "good starts" are still good starts.
->>
->> But really, this isn't even a "good start", it's identifying a bug fixed
->> over a year ago for a kernel that only one company seems to care about
->> because they are _not_ following the recommended upstream stable kernel
->> patches because they "know better" :)
->>
->> That's my objection here.
->>
->> thanks,
->>
->> greg k-h
+--ZVOC9e0LfXEId8h2--
