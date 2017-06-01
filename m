@@ -1,48 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/15
-Message-ID: <CA+PdXcvmTRrks_ZnXB_EyMHdm6ahap9yNHmf4hV5gLwVBoz_Vw@mail.gmail.com>
-Date: Mon, 7 Aug 2017 15:32:13 -0400
-From: Glenn Randers-Pehrson <glennrp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/13
+Message-ID: <20170601191352.GA6332@openwall.com>
+Date: Thu, 1 Jun 2017 21:13:52 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Cve issue discussion
+Subject: Re: unresponsive distros
 Content-Type: text/plain; charset=utf-8
 
-It doesn't occur on my own Ubuntu platform without ASAN.  But anyone
-running with
-a malloc that initializes the memory (trusted systems, etc) would be affected
+On Thu, Jun 01, 2017 at 06:26:29PM +0000, Liguori, Anthony wrote:
+> To be a bit more transparent.
 
-On Mon, Aug 7, 2017 at 1:22 PM, Jesse Hertz <jesse_hertz@...le.com> wrote:
-> fwiw, double check and make sure the issue occurs in libpng without ASAN. Sometimes ASAN can cause "heisenbugs" which only happen if ASAN is used.
->
->> On Aug 7, 2017, at 9:57 AM, Glenn Randers-Pehrson <glennrp@...il.com> wrote:
->>
->> OK I'll request a CVE for this libpng issue.
->>
->> Glenn
->>
->> On Mon, Aug 7, 2017 at 9:05 AM, John Haxby <john.haxby@...cle.com> wrote:
->>> On 07/08/17 13:47, Glenn Randers-Pehrson wrote:
->>>> It's not causing a crash, just a delay.  You'll safely get either an OOM
->>>> message or an EOF message.and no memory leak.
->>>>
->>>
->>> That's scant comfort when your browser is the one hit by the OOM killer
->>> and then again when you restart it.  And also while you're wondering
->>> what's going on because your laptop is basically completely
->>> non-responsive ...
->>>
->>> So yes, it's a remote DoS and definitely worth a CVE.  We have had other
->>> similar CVEs in the past with image handling libraries not being
->>> sufficiently paranoid.
->>>
->>> jch
->>>
->>>> Glenn
->>>>
->>>> On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@...e.de> wrote:
->>>>> Hi,
->>>>>
->>>>> if it could crash the image reader I would consider it "remote denial of service"
->>>>> classed and CVE worthy.
->>>
->
+I appreciate that!
+
+> The ideal thing for us would be to use a non-personally owned key for decryption so we could automate ingestion.  Encryption is fine but I will not tie my personal key into Amazon infrastructure.
+> 
+> Normally what we do with disclosure lists is have automation that pages people on every message.  As an example, I get paged for every email sent to the Xen disclosure list.
+
+The use of per-person keys is in part to discourage the kinds of setup
+you describe.  Yes, automation is great, but it's also elevated risk.
+
+If by "automate ingestion" you mean creating tracking tickets in some
+system even for issues that upon your reading would clearly be
+irrelevant to Amazon (so you wouldn't be creating tickets for them now),
+then I'm glad the current setup prevents that.  Leaks via bug trackers
+is currently my primary concern.
+
+> The encrypted thread is a single thread with a high volume of messages.  The later part of the thread loses the context of you explicitly asking for a response.
+> 
+> Coupled with the holiday weekend, that meant when I read through the thread I read too quickly and missed your explicit request.
+
+Fair enough, although I think the need for a response from all
+resurfaced in several messages.
+
+> Had you changed the subject of the thread for the request, it would have been noticed immediately but I don't mean to point too many fingers here.
+
+Not changing the Subject was part of the test, and it's not an arbitrary
+test: in this very same thread, several other/new issues were brought up
+also without a Subject change (including something new today).  So I was
+wondering: is this working?  Now I know: works for most distros, but not
+for all.  I don't know whether it works for 50%+ of people, though,
+since many of the distros have multiple people subscribed, whereas I
+only required one response per distro.  Maybe I'll do a per-person test
+another time. ;-)
+
+For new software issues, maybe we should be bringing the additional
+affected component names into the Subject each time.  After all, it's
+not sensitive info that any and all software has bugs.  By saying e.g.
+"Sudo" in the Subject, we merely reveal what we currently discuss, not
+that there's suddenly anything special about Sudo.  No one sane would
+have expected Sudo not to contain any more vulnerabilities ever, so the
+very fact there's another vulnerability is mostly not actionable for an
+attacker (unless they'd use it to decide on whether/when to attack the
+distros list infrastructure or/and specific list members maybe? seems
+far-fetched - in practice, either they'd attack and try to retain
+access, or fail at it, or not do that at all).  We reveal the same by
+CC'ing Todd anyway.  Things get trickier when e.g. a new issue is found
+in the same component - do we use e.g. "Sudo another issue", not to
+reveal the specifics?
+
+It's tough.  What's clearer to me is that I should insist on fewer and
+shorter embargoes.
+
+To summarize: I am speaking out loud, and not suggesting any particular
+change right now.  Amazon will stay subscribed as-is for now.
+
+Alexander
