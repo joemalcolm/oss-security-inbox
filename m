@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/4
-Message-ID: <20171106071158.GC9438@256bit.org>
-Date: Mon, 6 Nov 2017 08:11:58 +0100
-From: Christian Brabandt <cb@...bit.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/4
+Message-ID: <PVUnAZzWQ8f0rd5-Ie-aBolsYcjjhMDobF4RyKS65EgbkEN4afROZfrtOtSQplyixFRdLfVEPwxxWxRmTZkKllcyWGqaEaydd5DNv8BgdyA=@protonmail.com>
+Date: Fri, 02 Jun 2017 12:22:27 -0400
+From: Qhdwns123 <qhdwns123@...tonmail.com>
+To: Leo Famulari <leo@...ulari.name>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: What happens in order to get CVE numbers
 Content-Type: text/plain; charset=utf-8
 
+The developer has not yet patched it.
 
-On So, 05 Nov 2017, Solar Designer wrote:
+Can I request CVE before committing?
 
-> Yes, let's also force 0600 for "undo and backup files", please.
+-------- Original Message --------
+Subject: Re: [oss-security] What happens in order to get CVE numbers
+Local Time: June 3, 2017 12:41 AM
+UTC Time: June 2, 2017 3:41 PM
+From: leo@...ulari.name
+To: Qhdwns123 <qhdwns123@...tonmail.com>
+oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
 
-Backup files and undo files are not created by default, only when Vim is 
-configured to do so. Also the undofile does not leak any information, 
-because as soon as the original file has been slightly altered, the undo 
-information is discarded.
+On Fri, Jun 02, 2017 at 09:09:09AM -0400, Qhdwns123 wrote:
+> Hi
+>
+> What happens in order to get CVE numbers
 
-Christian
--- 
-Den ungerechtesten Frieden finde ich immer noch besser als den
-gerechtesten Krieg.
-		-- Marcus Tullius Cicero (106-43 v.Chr.)
+In order to get a CVE assignment, you can fill out the CVE request form:
+
+https://cveform.mitre.org/
