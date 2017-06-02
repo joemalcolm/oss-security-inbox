@@ -1,27 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/15/3
-Message-ID: <6cb75b56-b1b4-d381-1110-1e0cad5fb6b4@flausch.at>
-Date: Sat, 15 Apr 2017 12:13:28 +0200
-From: Andreas Lausch-Waas <andreas@...usch.at>
-To: oss-security@...ts.openwall.com
-Subject: Re: alloca in inline functions can be dangerous
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/3
+Message-ID: <nrmsHhyyTCZ9wdWRLqD7UlQdEzusSmlviPEAI5nPS3AlPASZE1lcA4vwJkUp4a-_zDY398M6MWHAodgKRFV4Go153IFdFvXQs80Ibv-O6so=@protonmail.com>
+Date: Fri, 02 Jun 2017 09:09:09 -0400
+From: Qhdwns123 <qhdwns123@...tonmail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: What happens in order to get CVE numbers
 Content-Type: text/plain; charset=utf-8
 
-On 2017-04-10 16:55, Leandro Pereira wrote:
-> On Mon, Apr 10, 2017 at 7:36 AM, Jason A. Donenfeld <Jason@...c4.com> wrote:
->> I'm interested if anybody else has encountered this behavior or has any
->> thoughts about it.
-> Yes, and I usually mark those functions with __attribute__((noinline))
-> to avoid precisely this kind of behavior.
->
+Hi
 
-This (VLAs in loops or inlines filling the stack) would be a gcc bug: 
-"Jumping or breaking out of the scope of the array name deallocates the 
-storage. Jumping into the scope is not allowed; you get an error message 
-for it.". See https://gcc.gnu.org/onlinedocs/gcc/Variable-Length.html
+What happens in order to get CVE numbers
 
-At least GCC 6.3.1 does not call alloca for VLAs.
+I emailed the developer with a vulnerability report.
 
+The developer has not contacted yet.
 
---
-Andreas
+Do I have to wait for a contact?
