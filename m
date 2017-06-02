@@ -1,37 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/21/3
-Message-ID: <CAKG8Do5JY9-nP-Fqecf8dfPCO8A_ruz2Ff578thrvwYQ_D8=1A@mail.gmail.com>
-Date: Tue, 21 Mar 2017 20:34:17 +0100
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: subscription-manager: CVE-2017-2663 unsafe dbus interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/5
+Message-ID: <85839596-be62-7c0f-dc7a-49d0cad4f0f9@redhat.com>
+Date: Fri, 2 Jun 2017 10:52:08 -0600
+From: "kseifried@...hat.com" <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Qhdwns123 <qhdwns123@...tonmail.com>
+Subject: Re: What happens in order to get CVE numbers
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+When to ask for a CVE Identifier
 
-CVE-2017-2663 has been assigned for the following issue :
+CVE Identifiers (also called “CVE names,” “CVE numbers,” “CVE-IDs,” and
+“CVEs”) are unique, common identifiers for publicly known information
+security vulnerabilities.
 
-Subscription-manager's new DBus interface provides methods that can be used
-for malicious usage. It allows an unprivileged local user to have access to
-information known to root only, and/or to modify subscription-manager
-configuration file, allowing, for example, privilege escalation.
+In other words a CVE is an identifier for something that we know is a
+vulnerability (in other words we have to be sure that it is a
+vulnerability and not just a hardening issue), and the issue will become
+public at some point.
 
--> Upstream patch :
- * Lock down Facts object to be accessible to root only.
-https://github.com/candlepin/subscription-manager/commit/882bb587a
--> Followed by this one :
- * 1434094: Deny D-BUS Config.Set from non-root
-https://github.com/candlepin/subscription-manager/commit/afa0f7afee
+In other words as soon as you know something is a security issue, and
+you can be reasonably certain that the issue will be made public (which
+may or may not include fixing it) you can get a CVE. In fact it’s much
+better to get a CVE as early as possible in the process, then the CVE
+can be used in things like commits that fix the issue, it can be applied
+to bug entries/issues, and ideally used in Change Logs or release notes
+when the fix is released.
 
-Affected versions : from subscription-manager-1.19.0-1 (information
-disclosure) & subscription-manager-1.19.3-1 (configuration modification)
+As for who exactly asks for the CVE there are a few simple rules:
 
-Fixed version : subscription-manager-1.19.4-1
+1) If the software belongs to an entity that is a CNA (CVE Numbering
+Authority, e.g. Red Hat, Apache, Microsoft) then you MUST ask the CNA to
+assign the CVE first, if this does not work you can go to the CNA’s
+parent (e.g. MITRE) and then ask them.
 
+2) If the software belongs to an entity that is NOT a CNA (e.g. most
+projects) then for Open Source you can either ask the DWF, or MITRE, and
+for closed source you can ask MITRE. Either the researcher or the
+project can ask for the CVE, but we do ask that you coordinate so that
+multiple requests are not sent in.
 
-Thanks,
+TL;DR: Anyone can ask for the CVE, we only ask that the request be
+reasonably certain that it is an actual vulnerability and that they
+ideally coordinate with the project responsible for the software. We
+also suggest that the CVE be requested as early on as possible to make
+coordination and identification easier.
+
+DWF: https://iwantacve.org/
+MITRE: https://cveform.mitre.org/
 
 -- 
-Cedric Buissart,
-Product Security
 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
