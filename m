@@ -1,31 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/4
-Message-ID: <1493423850.22912433.1487077339134.JavaMail.zimbra@redhat.com>
-Date: Tue, 14 Feb 2017 08:02:19 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: Reachable BUG_ON from userspace in sctp_wait_for_sndbuf()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/10
+Message-ID: <20170602154155.GB3713@jasmine>
+Date: Fri, 2 Jun 2017 11:41:55 -0400
+From: Leo Famulari <leo@...ulari.name>
+To: Qhdwns123 <qhdwns123@...tonmail.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: What happens in order to get CVE numbers
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Jun 02, 2017 at 09:09:09AM -0400, Qhdwns123 wrote:
+> Hi
+> 
+> What happens in order to get CVE numbers
 
-I'm not sure if now I should be posting this on os-sec@ after requesting
-a CVE-ID via MITRE's web-form. Anyway.
+In order to get a CVE assignment, you can fill out the CVE request form:
 
-It was reported that with Linux kernel, earlier than version v4.10-rc8, an application
-may trigger a BUG_ON() in sctp_wait_for_sndbuf() if the socket TX buffer is full, a thread
-is waiting on it to queue more data, and meanwhile another thread peels off the association
-being used by the first thread.
-
-References:
-
-https://lkml.org/lkml/2017/1/30/238
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1420276
-
-Upstream patch:
-
-https://github.com/torvalds/linux/commit/2dcab598484185dea7ec22219c76dcdd59e3cb90
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+https://cveform.mitre.org/
