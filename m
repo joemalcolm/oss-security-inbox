@@ -1,4 +1,9 @@
-Received: (qmail 29919 invoked by uid 550); 4 Dec 2025 15:11:14 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["617" "Friday" "2" "June" "2017" "09:16:06" "+0200" "Marek =?ISO-8859-1?Q?Hul=E1n?=" "mhulan@redhat.com" "<2395094.PLkjrNgCai@tony>" "17" "[oss-security] CVE-2017-7505: User scoped in organization with permissions for user management can manage administrators that are not assigned to any organization on Foreman 1.5+" "^Cc:" nil nil "6" "2017060207:16:06" "[oss-security] CVE-2017-7505: User scoped in organization with permissions for user management can manage administrators that are not assigned to any organization on Foreman 1.5+" (number mark "U       mhulan@redha Jun  2   17/617   " thread-indent "\"[oss-security] CVE-2017-7505: User scoped in organization with permissions for user management can manage administrators that are not assigned to any organization on Foreman 1.5+\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19864 invoked by uid 550); 2 Jun 2017 08:02:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,48 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9937 invoked from network); 4 Dec 2025 14:50:29 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Eric Covener <covener@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <c2934340-dc06-85df-dccd-afa955b35576@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 04 Dec 2025 14:45:37 +0000
+Received: (qmail 21659 invoked from network); 2 Jun 2017 07:16:20 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com A752723205A
+Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=mhulan@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com A752723205A
+Message-ID: <2395094.PLkjrNgCai@tony>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-66200: Apache HTTP Server: mod_userdir+suexec bypass via
- AllowOverride FileInfo 
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Fri, 02 Jun 2017 07:16:08 +0000 (UTC)
+Cc: foreman-security@googlegroups.com
+Date: Fri, 02 Jun 2017 09:16:06 +0200
+From: Marek =?ISO-8859-1?Q?Hul=E1n?= <mhulan@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-7505: User scoped in organization with permissions for user management can manage administrators that are not assigned to any organization on Foreman 1.5+
+To: oss-security@lists.openwall.com
 
-Severity: moderate=20
+CVE-2017-7505: User scoped in organization with permissions for user 
+management can manage administrators that are not assigned to any organization 
+on Foreman 1.5+
 
-Affected versions:
+It has been found that user with user management permission who is assigned to 
+some organization(s) can do all operations granted by these permissions on all 
+administrator user objects.
 
-- Apache HTTP Server 2.4.7 through 2..4.65
+Affects Foreman 1.5 and higher.
 
-Description:
+Patch available at https://github.com/theforeman/foreman/pull/4545
+Fix will be released in Foreman 1.15.1 (to be released)
+For more information please see the Redmine issue http://
+projects.theforeman.org/issues/19612
 
-mod_userdir+suexec bypass via AllowOverride FileInfo vulnerability in Apach=
-e HTTP Server. Users with access to use the RequestHeader directive in htac=
-cess can cause some CGI scripts to run under an unexpected userid.
-
-This issue affects Apache HTTP Server: from 2.4.7 through 2.4.65.
-
-Users are recommended to upgrade to version 2.4.66, which fixes the issue.
-
-Credit:
-
-Mattias =C3=85sander (Ume=C3=A5 University) (finder)
-
-References:
-
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-66200
-
-Timeline:
-
-2025-11-19: reported
-2025-12-01: fixed in 2.4.x by r1930168
-
+--
+Marek
