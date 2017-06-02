@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/10
-Message-ID: <alpine.GSO.2.20.1702110917490.2297@freddy.simplesystems.org>
-Date: Sat, 11 Feb 2017 09:20:55 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/1
+Message-ID: <4A2FDA56-491B-4C2A-915F-C9D4A4BDB92A@apache.org>
+Date: Fri, 02 Jun 2017 11:10:55 +0530
+From: Varun Vasudev <vvasudev@...che.org>
+To: <general@...oop.apache.org>, user <user@...oop.apache.org>, "<security@...oop.apache.org>" <security@...oop.apache.org>, security <security@...che.org>, <bugtraq@...urityfocus.com>, <oss-security@...ts.openwall.com>
+Subject: CVE-2017-7669: Apache Hadoop privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 11 Feb 2017, Moritz Muehlenhoff wrote:
->
-> Having CVEs assigned is of lesser importance, this was never primarily
-> why we posted security vulnerabilities here. Obtaining CVE IDs caused
-> little overhead on our side, but if that changes (and the announced
-> changes sound like that), then there will simply be less CVE coverage
-> I'm afraid.
+CVE-2017-7669: Apache Hadoop privilege escalation
 
-In my perhaps limited experience, Debian package maintainers do not 
-take action to correct a security issue in stable distributions unless 
-a CVE is assigned.  They do not usually act merely based on the 
-upstream package developer/maintainer reporting that they discovered 
-and fixed a security issue.  If it is more challenging to get a CVE 
-assigned, then many more security issues in stable distributions will 
-remain unfixed.
+Severity: Critical
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Vendor: The Apache Software Foundation
+
+Versions affected: Hadoop 2.8.0, Hadoop 3.0.0-alpha1 and Hadoop 3.0.0-alpha2
+
+Description:
+The LinuxContainerExecutor runs docker commands as root with
+insufficient input validation. When the docker feature is enabled,
+authenticated users can run commands as root
+
+Mitigation:
+Users of Apache Hadoop 2.8.0 should leave Docker functionality disabled until Hadoop 2.8.1 is released.
+Users of Apache Hadoop 3.0.0-alpha1 and Hadoop 3.0.0-alpha2 should upgrade to Hadoop 3.0.0-alpha3 or later.
+
+Credit:
+This issue was discovered by Allen Wittenauer.
+
+
