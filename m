@@ -1,4 +1,9 @@
-Received: (qmail 32086 invoked by uid 550); 25 Jul 2023 12:32:08 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["339" "Friday" "2" "June" "2017" "12:55:10" "-0600" "Todd C. Miller" "Todd.Miller@courtesan.com" "<85f955b3d43c6455@courtesan.com>" "9" "Re: [oss-security] Arbitrary terminal access via sudo on Linux" "^Date:" nil nil "6" "2017060218:55:10" "[oss-security] Arbitrary terminal access via sudo on Linux" (number mark "        Todd.Miller@ Jun  2    9/339   " thread-indent "\"Re: [oss-security] Arbitrary terminal access via sudo on Linux\"\n") "<CANO=Ty2J67rVs2agjkgxQ65eGnAn=iUKXy16HpTrWay_XEQPPQ@mail.gmail.com>" ("<85f9558a0a5e1fa9@courtesan.com>" "<CANO=Ty2J67rVs2agjkgxQ65eGnAn=iUKXy16HpTrWay_XEQPPQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 18321 invoked by uid 550); 2 Jun 2017 19:34:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,112 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32065 invoked from network); 25 Jul 2023 12:32:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1690288316; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PqRo2rwM3n/C7ZZ3GLhPnk/hQOViWq/p14crVX1Ia9w=;
-	b=YpUuFkTL2tcvGUi9Vy7SE2OIfCPVTiwIf1WF0dfqZ/z/HHmS22sv92dDlNG+3wX9NKmcUS
-	H8+AskMkx3dSwrQtoJI6Pd3U3O14fT4rU4jtxy1D8OzXRbKBurrMjA4Uu7G703wquAiFo7
-	g7Kfk+lNxDc+fM1A8aZtZ0DEDrDcUMI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1690288316;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PqRo2rwM3n/C7ZZ3GLhPnk/hQOViWq/p14crVX1Ia9w=;
-	b=grSKQiG3JgvFgyHS76JSfdGiGu0qpRVb9WcQobxmAxkv+xW9RjmjBx+TOkGyGYSd/+z21O
-	5X0DqoFXVyARGkBw==
-Date: Tue, 25 Jul 2023 14:31:55 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Cc: Tamas Koczka <poprdi@chromium.org>
-Message-ID: <20230725123152.GG19212@suse.de>
-References: <CAEviOmOzG=KTzqee5hsrLUsCSL2ic7Kj-CzrBhEx7PxXx=5FKA@mail.gmail.com>
- <20230714180656.GA30858@openwall.com>
- <20230719074714.GA6211@suse.de>
+Received: (qmail 24397 invoked from network); 2 Jun 2017 18:55:22 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=courtesan.com; h=from:to
+	:subject:in-reply-to:references:mime-version:content-type
+	:content-id:date:message-id; s=selector1; bh=w6ZkAigqfwXf9Nqi49n
+	ilEFbpwU=; b=NTTfFancYTNGkrsKLvnmbXgkXq6f9zr82SgqnJhJW3jhFqZho8z
+	haYjCFFfNRKlA6OmONjB7U6LmkEF4O9s5BjHLIVLzps2K+Upjngtzl9fPxlhgG6C
+	qHLVtzY/YqVTIJ7crgfLgPYyBm5bsu2lrtZQKNguSGtOkIa8+QHz3SXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=courtesan.com; h=from:to
+	:subject:in-reply-to:references:mime-version:content-type
+	:content-id:date:message-id; q=dns; s=selector1; b=P8ZvF+C6j9eJO
+	+pTCjZqmT8VZ6EP4V9ZEdjy0MM4jIeiCjU2U2MXJl16jmOidqR0i7zuGrSGB9/i8
+	Ywr7aXwpXj1pwA3Dw3H1eFvSORiZ/+fgDQfkb6Kirhb67H1krKCQwXzUaM3LaTI9
+	aNfkwMg7l8CwTzKMNkMpymbcsa7V0A=
+In-reply-to: Your message of "Fri, 02 Jun 2017 12:51:55 -0600."
+             <CANO=Ty2J67rVs2agjkgxQ65eGnAn=iUKXy16HpTrWay_XEQPPQ@mail.gmail.com>
+References: <85f9558a0a5e1fa9@courtesan.com> <CANO=Ty2J67rVs2agjkgxQ65eGnAn=iUKXy16HpTrWay_XEQPPQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230719074714.GA6211@suse.de>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
- =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
- =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] Our learnings from 42 Linux kernel exploits, we
- are limiting io_uring
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <38995.1496429710.1@xerxes.courtesan.com>
+Message-Id: <85f955b3d43c6455@courtesan.com>
+Date: Fri, 02 Jun 2017 12:55:10 -0600
+From: "Todd C. Miller" <Todd.Miller@courtesan.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Arbitrary terminal access via sudo on Linux
+To: oss-security@lists.openwall.com
 
-Hi,
+On Fri, 02 Jun 2017 12:51:55 -0600, Kurt Seifried wrote:
 
-https://yanglingxi1993.github.io/dirty_pagetable/dirty_pagetable.html
+> which says it is NOT exploitable, but you're saying that it is actually
+> exploitable? If confirmed yes I'll get you a new CVE for this asap. Thanks.
 
-has been updated with exploit information.
+The file overwrite issue is not exploitable in 1.8.20p1.
+However, the arbitrary tty access IS exploitable in 1.8.20p1.
 
-I tried to backtrack through kernel git to find the exact commit where
-this locking problem got fixed, but I gave up after a while after multiple
-refactoring (and a filemove) in the io_uring codel.
-
-Cia, Marcus
-
-On Wed, Jul 19, 2023 at 09:47:15AM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> On Fri, Jul 14, 2023 at 08:06:56PM +0200, Solar Designer wrote:
-> > Hi,
-> > 
-> > Thank you for bringing this to oss-security back then.  I have a few
-> > questions below that I think you could clarify for everyone.  I'll quote
-> > more of your message than I normally do since it's been a while.
-> 
-> ...
-> 
-> > There's a recent write-up on an exploitation technique that also
-> > partially describes CVE-2023-21400, "a double free vulnerability in
-> > io_uring [...] found by Ye Zhang and [Nicolas Wu] last year, affecting
-> > kernel 5.10. [...] we exploit CVE-2023-21400 with Dirty Pagetable on
-> > Google Pixel 7."
-> > 
-> > Dirty Pagetable: A Novel Exploitation Technique To Rule Linux Kernel
-> > https://yanglingxi1993.github.io/dirty_pagetable/dirty_pagetable.html
-> > 
-> > I wish this vulnerability and exploitation technique were properly
-> > brought to oss-security on its own, and in a context not limited to
-> > Google Pixel.  Maybe it will be once the full description is made
-> > public, as right now the write-up above omits vulnerability detail.
-> > 
-> > It appears that this got patched in the July 5 update for Google Pixel:
-> > 
-> > Pixel Update Bulletin - July 2023
-> > Published July 5, 2023
-> > https://source.android.com/docs/security/bulletin/pixel/2023-07-01
-> > 
-> > "For Google devices, security patch levels of 2023-07-05 or later
-> > address all issues in this bulletin and all issues in the July 2023
-> > Android Security Bulletin."
-> > 
-> > "CVE-2023-21400	A-264663832 *	EoP	Moderate	Kernel io_uring"
-> > 
-> > Nothing is mentioned about seccomp-bpf on either of the above web pages,
-> > although maybe it's factored into the Moderate severity rating?
-> > 
-> > I understand that with vulnerability detail still not public you might
-> > not be able to tell much, but I am wondering whether there's any
-> > inconsistency here (seccomp-bpf on Android was meant to prevent this,
-> > but did not?) or just a misunderstanding or something else.  I wonder
-> > if a vulnerability in io_uring could be such that it's exploitable
-> > without io_uring access directly from the attacking app.
-> 
-> FWIW we reached out to the Android CNA team, but their statement back
-> to us was that they pulled quite a number of backport commits into their 5.5
-> and 5.10 based trees, but did either not specify nor identify specific commits
-> fixing the issue (or further details) so far.
-> 
-> Ciao, Marcus
-
--- 
-Marcus Meissner (he/him), Distinguished Engineer / Senior Project Manager Security
-SUSE Software Solutions Germany GmbH, Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Martje Boudien Moerman, HRB 36809, AG Nuernberg
+ - todd
