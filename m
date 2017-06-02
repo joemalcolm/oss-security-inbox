@@ -1,17 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/10
-Message-ID: <20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>
-Date: Tue, 24 Jan 2017 22:28:56 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/2
+Message-ID: <2395094.PLkjrNgCai@tony>
+Date: Fri, 02 Jun 2017 09:16:06 +0200
+From: Marek Hulán <mhulan@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: abe@...ian.org
-Subject: CVE request: GNU screen escalation
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2017-7505: User scoped in organization with permissions for user management can manage administrators that are not assigned to any organization on Foreman 1.5+
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for this vulnerability in GNU screen:
-https://lists.gnu.org/archive/html/screen-devel/2017-01/msg00025.html
+CVE-2017-7505: User scoped in organization with permissions for user 
+management can manage administrators that are not assigned to any organization 
+on Foreman 1.5+
 
-Cheers,
-        Moritz
+It has been found that user with user management permission who is assigned to 
+some organization(s) can do all operations granted by these permissions on all 
+administrator user objects.
 
+Affects Foreman 1.5 and higher.
+
+Patch available at https://github.com/theforeman/foreman/pull/4545
+Fix will be released in Foreman 1.15.1 (to be released)
+For more information please see the Redmine issue http://
+projects.theforeman.org/issues/19612
+
+--
+Marek
