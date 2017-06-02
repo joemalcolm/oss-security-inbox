@@ -1,88 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/5
-Message-ID: <20170713154344.GG21662@suse.com>
-Date: Thu, 13 Jul 2017 17:43:44 +0200
-From: Johannes Segitz <jsegitz@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-1000083: evince: Command injection vulnerability in CBT handler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/7
+Message-Id: <85f9558a0a5e1fa9@courtesan.com>
+Date: Fri, 02 Jun 2017 12:48:20 -0600
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Arbitrary terminal access via sudo on Linux
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+The fix for CVE-2017-1000367 present in sudo 1.8.20p1 was incomplete
+as it did not address the posibility of a program name that contains
+a newline character.  This was fixed by sudo 1.8.20p2.  At the time,
+this was not believed to be a security issue due to the change in
+/dev traversal that was also part of sudo 1.8.20p1.
 
-we were asked to bring this to distros and per list policy it is now made
-public on this list.
+However, there is another vector that can be exploited in sudo's
+get_process_ttyname() function under Linux.  The user can choose a
+device number that corresponds to a terminal currently in use by
+another user.  This allows an attacker to run any command allowed
+by sudo with read and write access to an arbitrary terminal device.
+Depending on the command, it may be possible to read sensitive data
+(such as a password) from another user's terminal.
 
-From: Felix Wilhelm
-=========================
-The comic book backend in evince 3.24.0 is vulnerable to a command
-injection bug that can be used to execute arbitrary commands when a cbt
-file is opened:
+This alternate vector is still exploitable in sudo 1.8.20p1 when a
+symbolic link is made from the sudo binary to a name that contains
+a newline followed by a valid device number.  The full fix is
+included in sudo 1.8.20p2, released May 31, 2017.
 
-cbt files are simple tar archives containing images. When a cbt file is
-processed, evince calls
-"tar -xOf $archive $filename" for every image file in the archive:
+I have updated https://www.sudo.ws/alerts/linux_tty.html accordingly.
+As before, the bug is specific to Linux systems that have SELinux
+enabled.  Sudo reopens the terminal device after changing its SELinux
+context when a role or type is specified on the command line.
 
-// backend/comics/comics-document.c: 914
-        command_line = g_strdup_printf ("%s %s %s",
-                                        comics_document->extract_command,
-                                        quoted_archive,
-                                        quoted_filename);
+Thanks to Stephane Chazelas, who pointed out that the original patch
+did not address command names that include a newline, and Solar
+Designer, who noticed that the bug could also be used to access
+another user's terminal.
 
-While both the archive name and the filename are quoted to not be
-interpreted by the shell,
-the filename is completely attacker controlled an can start with "--"
-which leads to tar interpreting it
-as a command line flag.
-
-This can be exploited by creating a tar archive with an embedded file
-named something
-like this: "--checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg"
-
-(Make sure evince is not sandboxed by apparmor before trying to reproduce
-the attached POC)
-
-fwilhelm@box $ tar -tf poc.cbt
---checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg
-fwilhelm@box $ ls -la ~/covfefe.evince
-ls: cannot access covfefe.evince: No such file or directory
-fwilhelm@box $ evince poc.cbt
-fwilhelm@box $ ls -la ~/covfefe.evince
--rw-r----- 1 fwilhelm eng 0 Jun 28 11:05 /home/fwilhelm/covfefe.evince
-
-An easy way to fix this would be to change the  ComicBookDecompressCommand
-entry for tar to
-{"%s -xOf --"          , "%s -tf -- %s"      , NULL             , FALSE,
-NO_OFFSET}
-
-Please credit Felix Wilhelm from the Google Security Team in all releases,
-patches and advisories related to this issue.
-=========================
-
-Additional information by Michael Catanzaro:
-=========================
-It looks like the affected code was deleted right after the Evince 3.24.0
-release, so master is not vulnerable. But current releases are. I'll ask
-around to see how we want to handle this.
-=========================
-
-and
-
-=========================
-Since it looks like this can probably be used to take over a user account
-with no user interaction beyond visiting a malicious webpage (via drive-by
-web browser download -> nautilus thumbnailer) I guess we should probably do
-a coordinated disclosure instead of just dropping new releases with no
-warning.
-=========================
-
-This is tracked as CVE-2017-1000083, further information can be found at
-https://bugzilla.gnome.org/show_bug.cgi?id=784630
-
-Johannes
--- 
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nürnberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+ - todd
