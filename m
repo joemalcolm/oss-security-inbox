@@ -1,52 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/14
-Message-ID: <13a9a29f65f54f3498314ef5a425d9bc@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 11:40:57 -0500
-From: <cve-assign@...re.org>
-To: <dmoppert@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <i.elsayed92@...il.com>
-Subject: Re: CVE request: lcms2 heap OOB read parsing crafted ICC profile
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/8
+Message-ID: <CANO=Ty2J67rVs2agjkgxQ65eGnAn=iUKXy16HpTrWay_XEQPPQ@mail.gmail.com>
+Date: Fri, 2 Jun 2017 12:51:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Arbitrary terminal access via sudo on Linux
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, Jun 2, 2017 at 12:48 PM, Todd C. Miller <Todd.Miller@...rtesan.com>
+wrote:
 
-> An out-of-bounds heap read in lcms2 ("Little Colour Management System"),
-> in the function Type_MLU_Read in cmstypes.c. This could be triggered by
-> an untrusted image with a crafted ICC profile.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1367357
-> 
-> https://github.com/mm2/Little-CMS/commit/5ca71a7bc18b6897ab21d815d15e218e204581e2
+> The fix for CVE-2017-1000367 present in sudo 1.8.20p1 was incomplete
+> as it did not address the posibility of a program name that contains
+> a newline character.  This was fixed by sudo 1.8.20p2.  At the time,
+> this was not believed to be a security issue due to the change in
+> /dev traversal that was also part of sudo 1.8.20p1.
+>
+> However, there is another vector that can be exploited in sudo's
+> get_process_ttyname() function under Linux.  The user can choose a
+> device number that corresponds to a terminal currently in use by
+> another user.  This allows an attacker to run any command allowed
+> by sudo with read and write access to an arbitrary terminal device.
+> Depending on the command, it may be possible to read sensitive data
+> (such as a password) from another user's terminal.
+>
+> This alternate vector is still exploitable in sudo 1.8.20p1 when a
+> symbolic link is made from the sudo binary to a name that contains
+> a newline followed by a valid device number.  The full fix is
+> included in sudo 1.8.20p2, released May 31, 2017.
+>
 
->> Added an extra check to MLU bounds
+Ok, I read the diff:
 
->> http://www.openwall.com/lists/oss-security/2016/08/15/9
++       Sudo 1.8.20p2
++       [47836f4c9834]
++
++       * src/ttyname.c:
++       A command name may also contain newline characters so read
++       /proc/self/stat until EOF. It is not legal for /proc/self/stat to
++       contain embedded NUL bytes so treat the file as corrupt if we see
++       any. With help from Qualys.
++
++       This is not exploitable due to the /dev traversal changes in sudo
++       1.8.20p1 (thanks Solar!).
 
->> The vulnerability is read read-out-of 
->> bounds which enables me to read most of the data in the heap.
+which says it is NOT exploitable, but you're saying that it is actually
+exploitable? If confirmed yes I'll get you a new CVE for this asap. Thanks.
 
-Use CVE-2016-10165.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+>
+> I have updated https://www.sudo.ws/alerts/linux_tty.html accordingly.
+> As before, the bug is specific to Linux systems that have SELinux
+> enabled.  Sudo reopens the terminal device after changing its SELinux
+> context when a role or type is specified on the command line.
+>
+> Thanks to Stephane Chazelas, who pointed out that the original patch
+> did not address command names that include a newline, and Solar
+> Designer, who noticed that the bug could also be used to access
+> another user's terminal.
+>
+>  - todd
+>
 
-iQIcBAEBCAAGBQJYiNShAAoJEHb/MwWLVhi2tNYQAIIsVVuBdlAUm922u1XxVFd0
-TvjrdIxzVWumze5hyQEdcGHdPZENi3OS2lpHvll3ePXjic4FNUhPaQYp1FWjk+Oy
-QZmM1sS/vKeeSXaGjeRkvCdaI3eG6W/qF+Znsm6t5aUVrMgb4CO5LnG89JghsVcC
-lknYsY84/9AjmxyyTuIwHwmirbzKC0MSxCTUz/7bMt3JTA/FmFhVGNjD8886XFmN
-ihlRBxixjsW/9GjOKy3aszA3ejhlMrLHrjeo03CFHeNHA6u8zOtg08ysOa+U//wK
-grvFTd99vn/tioP5RaoLOQ2qgXb0Pr196S0/2eJwxfpyxdE7unfGnbH/u91ge+t6
-uqS4sNt3COGCSiksDOjC1fQJoV/CkgofkIFjyKA252SnBN5YAobQdoF4tSrNQqiE
-ywDAeh/Nss/GNrNXfAfC3OCa9zXay6gQZeYs6/8Wn7CrRMuVN946wnQbPd0rbA10
-gLOR3kEIg38KFmFPoXFAqorXeHiE/mt7luAtzqmlGhr0GV53Kp+dwmxA95S0pdWS
-+Cu7zQFqFMiQI8mO8/MB1BNLrIz41kLqbziuVxYO40DC4dkXJDNnyeoSM0CrCd5z
-LwAyeO+JdIrwOiAzRoPnjhcQP8vZX82aCmjhg29XN6NN1HV7BDUGyOVhzu48GvKL
-Qqok7Oon7vjbFPBLJR8J
-=XkOt
------END PGP SIGNATURE-----
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
