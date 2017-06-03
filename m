@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1072" "Tuesday" "7" "June" "2016" "09:49:00" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160607074900.GA10065@lorien.valinor.li>" "34" "Re: [oss-security] Please reject duplicate CVE for libxml2" nil nil nil "6" "2016060707:49:00" "[oss-security] Please reject duplicate CVE for libxml2" (number mark "U       carnil@debia Jun  7   34/1072  " thread-indent "\"Re: [oss-security] Please reject duplicate CVE for libxml2\"\n") "<87wpm1wixw.fsf@redhat.com>" ("<87wpm1wixw.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1399" "Saturday" "3" "June" "2017" "08:56:40" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1496494600.21640.9.camel@gmail.com>" "24" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Date:" nil nil "6" "2017060312:56:40" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        danielmicay@ Jun  3   24/1399  " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<1496493018.21640.5.camel@gmail.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>" "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>" "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>" "<20170530165015.GA4884@openwall.com>" "<06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>" "<1496493018.21640.5.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20431 invoked by uid 550); 7 Jun 2016 07:49:15 -0000
+Received: (qmail 10124 invoked by uid 550); 3 Jun 2017 12:56:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20411 invoked from network); 7 Jun 2016 07:49:15 -0000
+Received: (qmail 10095 invoked from network); 3 Jun 2017 12:56:53 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+qTO+KWjOdJbRVWJ/CCHtKwxDc39iCa2uI4B+G9Z+UI=;
-        b=G7QStAsmuVmXKOcAdAmhmHvvbmo6jbqs038rsVsWYmZdc7bR07mKFuyb7L0TjV083t
-         JRZexNWOOI4lx8fCl/lIclgvWWRYFb+DyEUNC2sQEh4Ps31JrcZc5KeMwPORKGjoSWb+
-         cBsdg6ctyKnqowyqqAXatGyz6f4hQRxRBTgZke0GWhqIywp85QLlfe+LDv13mVBnH9Ob
-         0GaOZSmk2BIm9d1zsRLjmnr5bhD32qk53hYL6pbd/JrS2l4pfTQkYDcv+R5q6rynTORu
-         OwAK7kn7Kv7p3x7aegUiNXzCI6giisPI4A+V2RJdyd/SxoamYhmktH4b/0tAdYoTqwUi
-         1g6w==
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=lWorOe4HqNFEcRP4gL/aA1IBWqHh71/1Pul96UpcDjA=;
+        b=tz8ztUgKi/pA3umLnzN8TtmzeefkeXvvx+BZgxV+gBsmNfaZM6NGWJxTAJBMj4gJAI
+         sqxYeQvH6PikAzA8BkR1EPcg3h5EbpJuctco9ci9ZJQemxKP+eO3VNT/A/P0yY7dKrIv
+         9M9fYImvY7TP0YLwNfquDxOFnKSmSlfocs7LZyc4ivU02QIaXOamX20nsZZZ8gdyXOxR
+         8YcF3yHpw8fa4+YCBOg8My1KVYMZ1uIlrHkK5rYidQ4NSlkQqF7OQEG4QNA6rvQ4Wu1R
+         CZmw1DuEExCl69hVrr7dl37lPjk+4E3bVgffv9hS9L7zMpprm0GysrTUAKJPY+Ajj81a
+         51SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+qTO+KWjOdJbRVWJ/CCHtKwxDc39iCa2uI4B+G9Z+UI=;
-        b=WzpLwJhi3pUfClPTCq/osaexXAO92YsUtDpv7ceEt8oxyVSQpBZP8S8XbO75ZDuxK+
-         aJnc8gi9OQK4bjsZ3qBlj/EVXHMzsGduA5ahx0j2oDe9ifctzDuwAuvhTeH/3s+HmX8t
-         GddSznBUPLDE8ECPv3jRu65fiybXZXect4vPQyoWr3ISWgFymJZPzDNrocc6MQIR09z3
-         RiuZYJy24z1hAHBmCzX119jo+35HJHYcEiyI5RoNdfcu83EvTr7CyNwEmmDBF9q5GGFK
-         Z9RJMQ4bL5Hpi7unjIQ+9veojGbokkCKyxkY14SVwhAmsg3TvG7I/xxa9lCwOa44CqsK
-         SyLQ==
-X-Gm-Message-State: ALyK8tIjf1z/J9YIz57SEGwz7ZntHiFmsgdnLfRWvwPoZGA+NSwyznPia9Mpz4q1K+IZzA==
-X-Received: by 10.28.8.17 with SMTP id 17mr1234806wmi.67.1465285744100;
-        Tue, 07 Jun 2016 00:49:04 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 7 Jun 2016 09:49:00 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lWorOe4HqNFEcRP4gL/aA1IBWqHh71/1Pul96UpcDjA=;
+        b=FZcJ2+D/ieGEsp5r32ouDyYEWz0JVoF++NcBe2ooWMVFdDtH49ZDqvUfMAr46f2NYP
+         lxNVwnnZPx2s0NpJdRjY/T0E8vhlU0UOr99th8tNxYXWm6v0FRECwlI/aa1q20TfsPzK
+         Q0q5leyr/UM2crYkazCrsNLKj7eAjtFeNgXUaZd4bzbV1qUcnf7ZXMy9iNDVDHTRMKsp
+         mUg+eSeEkZ2zdKskgae55tPj8NQQa30CcdNhJrXkeKC5AX0SRAp8cgDG9Qb/S0Y6B8Vp
+         VQS4u4yUeF7wROKq0c1J3I++UwE6bk6EFo3YDrvyql1/QBLKsxojBFbhPFr1nh046Gxa
+         J4fg==
+X-Gm-Message-State: AODbwcA8IVh+s2T9LFsxznieRBLHULih0gJ8tnvC9dlxu2SaSyD6KsiM
+	jueyoF8JJZI+JHGeynhUfw==
+X-Received: by 10.107.13.148 with SMTP id 142mr2179950ion.158.1496494601953;
+        Sat, 03 Jun 2017 05:56:41 -0700 (PDT)
+Message-ID: <1496494600.21640.9.camel@gmail.com>
+In-Reply-To: <1496493018.21640.5.camel@gmail.com>
+References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
+	 <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
+	 <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>
+	 <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
+	 <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
+	 <20170530165015.GA4884@openwall.com>
+	 <06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>
+	 <1496493018.21640.5.camel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.24.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Date: Sat, 03 Jun 2017 08:56:40 -0400
+From: Daniel Micay <danielmicay@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
+ controlled payload in get_options() function
 To: oss-security@lists.openwall.com
-Cc: Mitre CVE assign department <cve-assign@mitre.org>
-Message-ID: <20160607074900.GA10065@lorien.valinor.li>
-References: <87wpm1wixw.fsf@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87wpm1wixw.fsf@redhat.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: Re: [oss-security] Please reject duplicate CVE for libxml2
 
-Hi,
+> Here's why the Android-based justification given earlier is bogus: you
+> can boot from a usb flash drive as real root, without SELinux
+> containing
+> the init launched from there. It has full control over the kernel. In
+> fact, there is no way to contain real root on those devices. They have
+> DMA access over the kernel via peripherals that are not contained by
+> the
+> IOMMU with APIs exposed to userspace offering that control.
 
-On Tue, Jun 07, 2016 at 09:34:51AM +0200, Martin Prpic wrote:
-> Hi, it seems two CVEs were assigned for the same issue in libxml2:
-> 
-> http://seclists.org/oss-sec/2016/q1/683
-> http://seclists.org/oss-sec/2016/q2/214
-> 
-> Daniel Veillard reported to us that these issues are the same and fixed
-> by:
-> 
-> https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
-> 
-> The upstream bug is:
-> 
-> https://bugzilla.gnome.org/show_bug.cgi?id=762100
-> 
-> Can CVE-2016-4483 please be rejected as a duplicate of CVE-2016-3627?
+I fail to see why this rootfs / initrd / init control matters though. I
+can't see how it's a vulnerability. Android covers the kernel line with
+verified boot and control over it is a verified boot bypass. If you
+found a way to persist as root after getting that temporary root access
+via the verified boot bypass, that would be *another* verified boot
+bypass, but you can persist as the system user (less than root but not
+in a way that matters to a user) by design since vanilla Android doesn't
+yet cover enough of userspace with verified boot to do much more than
+guarantee that factory resets (which wipe all persistent state, but
+don't touch the OS) purge root / system malware.
 
-What though is confusing is that the two commits are tagged
-accordingly in the upstream git repository:
-
-Tagged for CVE-2016-4483:
-https://git.gnome.org/browse/libxml2/commit/?id=c97750d11bb8b6f3303e7131fe526a61ac65bcfd
-
-Tagged for CVE-2016-3627:
-https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
-
-For the updates in Debian thus we have used both and referenced both
-CVEs, think Ubuntu has done the same in USN 2994
-(http://www.ubuntu.com/usn/usn-2994-1/)
-
-Regards,
-Salvatore
+The DMA access issues matter because some of those processes could be
+contained if it wasn't for the driver issues. However, it can't just be
+considered a vulnerability unless it was intended for that to be case.
+If they intended to contain those processes, it's a vulnerability.
