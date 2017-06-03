@@ -1,61 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/11
-Message-ID: <3533882.5TzxdV0c9i@wanheda>
-Date: Tue, 29 Aug 2017 21:40:21 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/5
+Message-ID: <1496494600.21640.9.camel@gmail.com>
+Date: Sat, 03 Jun 2017 08:56:40 -0400
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Henri S." <henri@...v.fi>, robert@...rs.sf.net
-Subject: Re: A bunch of duplicate CVEs requested for?? bho..
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-On martedì 29 agosto 2017 20:19:25 CEST Henri S. wrote:
-> Hello ago,
-> 
-> On Tue, Aug 29, 2017 at 02:46:22PM +0200, Agostino Sarubbo wrote:
-> > Some CVEs about lame was issued, also there are an high number of
-> > vulnerabilities never confirmed by upstream nor posted on their bug
-> > tracking system. Yes, sometimes I receive emails that say that the bug is
-> > not reproducible but I'm always trying to help to reproduce. Instead some
-> > report says: "If you want the poc please contact me at $email"
-> 
-> I'm currently fuzzing LAME with help from Robert Hegemann who is upstream. I
-> understand that the latest LAME release in the web page is from 2012, but
-> hopefully we will get a new release after the fuzzing is finished. If there
-> are any outstanding issues from your fuzzing feel free to contact me and I
-> can verify that those are fixed in the CVS version of it (link below). I
-> can check your blog for related issues at least. Robert has been fixing the
-> issues very quickly after reports. I also plan to fuzz other argument
-> combinations. Maybe we can even include LAME to oss-fuzz later on if
-> upstream agrees.
-> 
-> http://lame.cvs.sourceforge.net/viewvc/lame/lame/
-> 
-> Recently closed issues:
-> 
-> https://sourceforge.net/p/lame/bugs/464/
-> https://sourceforge.net/p/lame/bugs/465/
-> https://sourceforge.net/p/lame/bugs/466/
-> https://sourceforge.net/p/lame/bugs/467/
-> https://sourceforge.net/p/lame/bugs/468/
-> https://sourceforge.net/p/lame/bugs/470/
-> https://sourceforge.net/p/lame/bugs/472/
-> 
-> All feedback is welcome regarding my fuzzing activities. You can also
-> contact me via IRC in e.g. #afl-users in Freenode if you want to
-> participate in CVS build fuzzing. If not I can also notify you after the
-> next release.
-> > How to avoid to file duplicate?
-> 
-> Maybe giving them a link for documentation how to avoid this in the future.
-> 
-> CCing robert without permission :)
+> Here's why the Android-based justification given earlier is bogus: you
+> can boot from a usb flash drive as real root, without SELinux
+> containing
+> the init launched from there. It has full control over the kernel. In
+> fact, there is no way to contain real root on those devices. They have
+> DMA access over the kernel via peripherals that are not contained by
+> the
+> IOMMU with APIs exposed to userspace offering that control.
 
+I fail to see why this rootfs / initrd / init control matters though. I
+can't see how it's a vulnerability. Android covers the kernel line with
+verified boot and control over it is a verified boot bypass. If you
+found a way to persist as root after getting that temporary root access
+via the verified boot bypass, that would be *another* verified boot
+bypass, but you can persist as the system user (less than root but not
+in a way that matters to a user) by design since vanilla Android doesn't
+yet cover enough of userspace with verified boot to do much more than
+guarantee that factory resets (which wipe all persistent state, but
+don't touch the OS) purge root / system malware.
 
-Hello Henri,
-
-lame was just an example, but it wasn't the point. The point was about the 
-reporter's behavior and the world around the cve assignments.
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+The DMA access issues matter because some of those processes could be
+contained if it wasn't for the driver issues. However, it can't just be
+considered a vulnerability unless it was intended for that to be case.
+If they intended to contain those processes, it's a vulnerability.
