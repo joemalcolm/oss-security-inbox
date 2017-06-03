@@ -1,136 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/12
-Message-ID: <2630972.8N57SaZZCj@blackgate>
-Date: Wed, 01 Feb 2017 16:09:29 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/1
+Message-ID: <CANO=Ty37M4dTtMHiRAJ1nbp6sz33SuCDZedY3dysg6SKOh7i5g@mail.gmail.com>
+Date: Fri, 2 Jun 2017 18:17:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Leo Famulari <leo@...ulari.name>
+Subject: Re: What happens in order to get CVE numbers
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+You can request a CVE Identifier as soon as you can answer the following
+questions:
 
-A fuzz on it discovered an infinite loop. The upstream project denies me to 
-open a new ticket. So, I’m unable to communicate with them.
+1) What software is affected? Product name? Product version?
+2) What is the problem type? (in some cases we accept "unknown" but you
+better have a reproducer that does something nasty like crash the system or
+execute code)
+3) A description of the issue (which includes affected software. problem
+type and ideally the impact)
+4) A reference URL, and I know the DWF will accept URL's that don't exist
+yet as long as you are trustworthy (e.g. "we will post the advisory at URL
+X"), typically for open source something like a link to the issue or the
+affected code is more than sufficient.
 
-The complete ASan output:
+So yes, you can ask for a CVE well before you commit a fix (and in some
+cases before you even fully understand the issue).
 
-# podofopdfinfo $FILE
-==8407==ERROR: AddressSanitizer: stack-overflow on address 0x7ffcff058fe0 (pc 
-0x000000425a5f bp 0x6400000003f0 sp 0x7ffcff058fe0 T0)
-    #0 0x425a5e in GenericScopedLock /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_mutex.h:179
-    #1 0x425a5e in __sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>::PopulateFreeList(__sanitizer::AllocatorStats*, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->*, unsigned long, __sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>::RegionInfo*) /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:540
-    #2 0x426297 in __sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>::AllocateBatch(__sanitizer::AllocatorStats*, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->*, unsigned long) /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:359
-    #3 0x4262f6 in 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->::Refill(__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>*, unsigned long) /tmp/portage/sys-
-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1003
-    #4 0x4298ed in 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->::Allocate(__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>*, unsigned long) /tmp/portage/sys-
-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:952
-    #5 0x4298ed in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator 
->::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->*, unsigned long, unsigned long, bool, bool) /tmp/portage/sys-
-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1324
-    #6 0x4298ed in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-
-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/asan_allocator.cc:368
-    #7 0x50e8b8 in operator new(unsigned long) /tmp/portage/sys-
-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/asan_new_delete.cc:78
-    #8 0x7f2e77512621 in PoDoFo::PdfVariant::PdfVariant(PoDoFo::PdfDictionary 
-const&) /tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.cpp:151:20
-    #9 0x7f2e77495f6d in PoDoFo::PdfObject::PdfObject(PoDoFo::PdfReference 
-const&, char const*) /tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfObject.cpp:62:7
-    #10 0x7f2e7751dcf8 in 
-PoDoFo::PdfVecObjects::GetObject(PoDoFo::PdfReference const&) const 
-/tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVecObjects.cpp:151:15
-    #11 0x7f2e7749afe1 in PoDoFo::PdfObject::GetIndirectKey(PoDoFo::PdfName 
-const&) const /tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfObject.cpp:237:30
-    #12 0x7f2e77741533 in PoDoFo::PdfPage::GetInheritedKeyFromObject(char 
-const*, PoDoFo::PdfObject const*) const /tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfPage.cpp:230:26
-    #13 0x7f2e777415a4 in PoDoFo::PdfPage::GetInheritedKeyFromObject(char 
-const*, PoDoFo::PdfObject const*) const /tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfPage.cpp:232:20
-    [.....]
-    #254 0x7f2e777415a4 in PoDoFo::PdfPage::GetInheritedKeyFromObject(char 
-const*, PoDoFo::PdfObject const*) const /tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfPage.cpp:232:20
 
-SUMMARY: AddressSanitizer: stack-overflow /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_mutex.h:179 in GenericScopedLock
-==8407==ABORTING
 
-Affected version:
-0.9.4
+On Fri, Jun 2, 2017 at 10:22 AM, Qhdwns123 <qhdwns123@...tonmail.com> wrote:
 
-Fixed version:
-N/A
+> The developer has not yet patched it.
+>
+> Can I request CVE before committing?
+>
+> -------- Original Message --------
+> Subject: Re: [oss-security] What happens in order to get CVE numbers
+> Local Time: June 3, 2017 12:41 AM
+> UTC Time: June 2, 2017 3:41 PM
+> From: leo@...ulari.name
+> To: Qhdwns123 <qhdwns123@...tonmail.com>
+> oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
+>
+> On Fri, Jun 02, 2017 at 09:09:09AM -0400, Qhdwns123 wrote:
+> > Hi
+> >
+> > What happens in order to get CVE numbers
+>
+> In order to get a CVE assignment, you can fill out the CVE request form:
+>
+> https://cveform.mitre.org/
+>
 
-Commit fix:
-N/A
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00145-podofo-infiniteloop-PdfPage
-
-Timeline:
-2017-01-05: bug discovered
-2017-02-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/01/podofo-infinite-loop-in-podofopdfpagegetinheritedkeyfromobject-pdfpage-cpp
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
