@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["946" "Tuesday" "25" "January" "2022" "15:56:37" "+0100" "=?UTF-8?B?SmVhbi1CYXB0aXN0ZSBPbm9mcsOp?=" "jbonofre@apache.org" nil "32" "[oss-security] [SECURITY] New security advisory for CVE-2022-22932" nil nil nil "1" nil nil (number mark "U       jbonofre@apa Jan 25   32/946   " thread-indent "\"[oss-security] [SECURITY] New security advisory for CVE-2022-22932\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] New security advisory for CVE-2022-22932" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2094" "Saturday" "3" "June" "2017" "15:19:20" "+0200" "Solar Designer" "solar@openwall.com" "<20170603131919.GA18438@openwall.com>" "42" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Date:" nil nil "6" "2017060313:19:20" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        solar@openwa Jun  3   42/2094  " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<1496493018.21640.5.camel@gmail.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>" "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>" "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>" "<20170530165015.GA4884@openwall.com>" "<06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>" "<1496493018.21640.5.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17608 invoked by uid 550); 25 Jan 2022 14:57:58 -0000
+Received: (qmail 3198 invoked by uid 550); 3 Jun 2017 13:23:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 30007 invoked from network); 3 Jun 2017 13:20:15 -0000
+Message-ID: <20170603131919.GA18438@openwall.com>
+References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com> <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk> <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com> <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com> <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com> <20170530165015.GA4884@openwall.com> <06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com> <1496493018.21640.5.camel@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1496493018.21640.5.camel@gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sat, 3 Jun 2017 15:19:20 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13664 invoked from network); 25 Jan 2022 14:57:21 -0000
-X-Gm-Message-State: AOAM532GVpkPuE61cPAgxLvVMScnS1U4rXqLdjg2Ub7i9NCFBX10fon+
-	ITMb6sgoRnbl96+crXA9giypG2tuxFz0pH06ZNY=
-X-Google-Smtp-Source: ABdhPJwuG/7pjpBvmpRS513c+VaEEPkOiByEANCaFeH6n5+ShuXUihNFzg1XcbvQj1IZ/CfzMQPC66hYBJNaxG5G7dQ=
-X-Received: by 2002:a2e:b557:: with SMTP id a23mr5908107ljn.294.1643122608128;
- Tue, 25 Jan 2022 06:56:48 -0800 (PST)
-MIME-Version: 1.0
-From: =?UTF-8?Q?Jean=2DBaptiste_Onofr=C3=A9?= <jbonofre@apache.org>
-Date: Tue, 25 Jan 2022 15:56:37 +0100
-X-Gmail-Original-Message-ID: <CAB8EV3SjWzULpV46s_Yss1EA3-g5UpLCYNB0QzwK3OvSuo5Mug@mail.gmail.com>
-Message-ID: <CAB8EV3SjWzULpV46s_Yss1EA3-g5UpLCYNB0QzwK3OvSuo5Mug@mail.gmail.com>
-To: announce@apache.org, user@karaf.apache.org, dev@karaf.apache.org, 
-	security@apache.org, oss-security@lists.openwall.com, securitylab@github.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [SECURITY] New security advisory for CVE-2022-22932
+Subject: Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function
+To: oss-security@lists.openwall.com
 
-A new security advisory has been released for Apache Karaf, which was
-fixed in the 4.2.15 and 4.3.6 runtime releases
+Oh, and there I was hoping this thread had ended.
 
-CVE-2022-22932: Path traversal flaws
+On Sat, Jun 03, 2017 at 08:30:18AM -0400, Daniel Micay wrote:
+> On Sat, 2017-06-03 at 12:06 +0200, Florian Weimer wrote:
+> > I'm not a Red Hat spokesperson, and I did not speak for Red Hat.
 
-Severity: Low
+> If you don't want to act as a Red Hat spokesperson, use a
+> personal email address
 
-Vendor: The Apache Software Foundation
+Daniel, I think that's too much.
 
-Versions Affected: all versions of Apache Karaf prior to 4.2.15 or 4.3.6
+> > Part of the problem with UEFI Secure Boot is that no one
+> > has documented clear security objectives for UEFI Secure Boot.  Fedora
+> > sort of evolved into "no unsigned code running in ring 0 without
+> > virtualization".  From what I can tell, Microsoft picked that up and
+> > urged other distributions under their trust root to implement that as
+> > well.
+> 
+> So, no meaningful security objective
 
-Description:
+This might be right.  Maybe there's a compliance objective: Microsoft
+would let distros use their trust root under some conditions, and from
+distros' point of view it doesn't matter much whether those conditions
+are meaningful or not as long as they're easy to meet.  Then maybe
+treating those bypasses as non-security is a risk, as it draws attention
+to the current convenient terms of Microsoft not making security sense,
+and thus a risk of those terms changing to something more demanding.
+If so, it's technically off-topic for oss-security (and probably for
+CVE), but with the different opinions and without certainty about this
+interpretation I am not going to use this for moderation decisions just
+yet.  I will not be rejecting messages on new (non-)issues in this area.
+I just ask that we please refrain from lengthy threads on each and every
+such (non-)issue.  I will be pushing them from the (linux-)distros list
+to the public right away, if any more are brought to the private lists.
 
-Apache Karaf obr:* commands and run goal on the karaf-maven-plugin have partial
-path traversal which allows to break out of expected folder.
+I haven't participated in past discussions on this, nor had any interest
+in them.  (I am dragged into this now as list admin/moderator; if
+someone else ran the list, I would not be posting to this thread.)
+I might very well be wrong in the above paragraph (which is a reason why
+no decision to reject new (non-)issues).
 
-The risk is low as obr:* commands are not very used and the entry is
-set by user.
-
-This has been fixed in revision:
-
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=36a2bc4
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=52b70cf
-
-Mitigation: Apache Karaf users should upgrade to 4.2.15 or 4.3.6
-or later as soon as possible, or use correct path.
-
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-7326
-
-
-Credit: This issue was discovered and reported by GHSL team member
-Jaroslav Lobacevski..
+Alexander
