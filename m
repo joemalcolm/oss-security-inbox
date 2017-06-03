@@ -1,60 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/24
-Message-ID: <20170209145409.GE2569@scully.more-magic.net>
-Date: Thu, 9 Feb 2017 15:54:09 +0100
-From: Peter Bex <peter@...e-magic.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/6
+Message-ID: <20170603131919.GA18438@openwall.com>
+Date: Sat, 3 Jun 2017 15:19:20 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: MITRE is adding data intake to its CVE ID process
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 09, 2017 at 02:26:01PM +0000, Jeremy Stanley wrote:
-> Agreed, having tried to figure out the form it seems geared toward
-> requesting CVE IDs for vulnerabilities you've found in someone
-> else's software, and not for maintainers of software to request CVE
-> IDs for vulnerabilities which have been disclosed to them. The
-> little detail callout icons for the vendor and product fields link
-> to the CNA coverage list[0]
+Oh, and there I was hoping this thread had ended.
 
-I'm also concerned about this.  Last time I asked a MITRE employee
-about this as a result of the automated mail that oss-security
-sends out when it detects a CVE request, and I did not receive a
-reply.
+On Sat, Jun 03, 2017 at 08:30:18AM -0400, Daniel Micay wrote:
+> On Sat, 2017-06-03 at 12:06 +0200, Florian Weimer wrote:
+> > I'm not a Red Hat spokesperson, and I did not speak for Red Hat.
 
-So far I've only requested CVE IDs for projects that have no
-obvious CNA.
+> If you don't want to act as a Red Hat spokesperson, use a
+> personal email address
 
-> which in turn instructs, "For open
-> source software products not listed below, request a CVE ID through
-> the Distributed Weakness Filing Project[1] CNA." So I guess that's
-> what our project will be using in the future, or maybe just stop
-> bothering to obtain CVEs on our own and let the various downstream
-> redistributors of our software who are themselves CNAs issue them as
-> needed and then fight over whose is the correct one.
-> [0] http://cve.mitre.org/cve/request_id.html#cna_coverage
-> [1] https://docs.google.com/forms/d/e/1FAIpQLSeiY7ldJAx-fjU6eSnXDaX5TB--L1ujCQpmGAKnqBSJOcBShw/viewform
+Daniel, I think that's too much.
 
-For me, having to use a Google docs form is unacceptable.  I try to
-avoid Google in my life as much as possible.  I'd rather avoid
-requesting a CVE ID, or let someone else do it, if that's the only
-remaining option for non-listed free software projects.
+> > Part of the problem with UEFI Secure Boot is that no one
+> > has documented clear security objectives for UEFI Secure Boot.  Fedora
+> > sort of evolved into "no unsigned code running in ring 0 without
+> > virtualization".  From what I can tell, Microsoft picked that up and
+> > urged other distributions under their trust root to implement that as
+> > well.
+> 
+> So, no meaningful security objective
 
-The oss-security list was a reasonably good solution for me.  The only
-disadvantage is that time passes between initial announcement and the
-CVE ID, because (AFAIK) a CVE request needs to contain a reference to
-the announcement as "proof" that the vulnerability is real and not a
-duplicate.  In an ideal world, free software project leaders should be
-able to request a CVE ID _before_ announcing a vulnerability to their
-user base.  If there were some way to register people as project leaders,
-the "proof" should not be necessary, they should be able to request a
-CVE ID with authority.
+This might be right.  Maybe there's a compliance objective: Microsoft
+would let distros use their trust root under some conditions, and from
+distros' point of view it doesn't matter much whether those conditions
+are meaningful or not as long as they're easy to meet.  Then maybe
+treating those bypasses as non-security is a risk, as it draws attention
+to the current convenient terms of Microsoft not making security sense,
+and thus a risk of those terms changing to something more demanding.
+If so, it's technically off-topic for oss-security (and probably for
+CVE), but with the different opinions and without certainty about this
+interpretation I am not going to use this for moderation decisions just
+yet.  I will not be rejecting messages on new (non-)issues in this area.
+I just ask that we please refrain from lengthy threads on each and every
+such (non-)issue.  I will be pushing them from the (linux-)distros list
+to the public right away, if any more are brought to the private lists.
 
-This delay between announcement and getting a CVE ID has always bothered
-me about CVE requests via oss-security.  On the other hand, I like the
-fact that there's a somewhat centralised place to watch for important
-and early(!) free software security information.
+I haven't participated in past discussions on this, nor had any interest
+in them.  (I am dragged into this now as list admin/moderator; if
+someone else ran the list, I would not be posting to this thread.)
+I might very well be wrong in the above paragraph (which is a reason why
+no decision to reject new (non-)issues).
 
-Cheers,
-Peter Bex
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Alexander
