@@ -1,133 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/15/2
-Message-Id: <E1dhabV-0006du-B7@xenbits.xenproject.org>
-Date: Tue, 15 Aug 2017 12:05:49 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 227 (CVE-2017-12137) - x86: PV privilege escalation via map_grant_ref
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/7
+Message-ID: <1496498903.22395.3.camel@gmail.com>
+Date: Sat, 03 Jun 2017 10:08:23 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> Daniel, I think that's too much.
 
-            Xen Security Advisory CVE-2017-12137 / XSA-227
-                               version 3
+I can't magically guess when someone is or isn't acting on behalf of
+their employer if they're not stating so and they're using a work email
+address for work-related stuff by pushing the view of their employer.
 
-            x86: PV privilege escalation via map_grant_ref
+I'm hardly the first person to note that and I don't buy into feigning
+misunderstanding when that's how it's interpreted particularly when it's
+common. I'm not going to post from daniel.micay@...perhead.co unless
+it's on behalf of Copperhead because that's the impression that it gives
+to many people, and I'm one of those people. Even if someone states they
+aren't speaking for their employer, they're still speaking as an
+employee if they do it from a work email address...
 
-UPDATES IN VERSION 3
-====================
+When people post from @google.com I similarly consider that to be a
+statement from a Google employee. Not *on behalf of Google* but speaking
+as an employee of Google? Definitely. If that's not the intention there
+is an easy way to avoid that.
 
-Public release.
+> I just ask that we please refrain from lengthy threads on each and
+> ever
+> such (non-)issue.  I will be pushing them from the (linux-)distros
+> list
+> to the public right away, if any more are brought to the private list.
 
-ISSUE DESCRIPTION
-=================
-
-When mapping a grant reference, a guest must inform Xen of where it
-would like the grant mapped.  For PV guests, this is done by nominating
-an existing linear address, or an L1 pagetable entry, to be altered.
-
-Neither of these PV paths check for alignment of the passed parameter.
-The linear address path suitably truncates the linear address when
-calculating the L1 entry to use, but the path which uses a directly
-nominated L1 entry performs no checks.
-
-This causes Xen to make an incorrectly-aligned update to a pagetable,
-which corrupts both the intended entry and the subsequent entry with
-values which are largely guest controlled.  If the misaligned value
-crosses a page boundary, then an arbitrary other heap page is
-corrupted.
-
-IMPACT
-======
-
-A PV guest can elevate its privilege to that of the host.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-Only x86 systems are vulnerable.
-
-Any system running untrusted PV guests is vulnerable.
-
-The vulnerability is exposed to PV stub qemu serving as the device model
-for HVM guests.  Our default assumption is that an HVM guest has
-compromised its PV stub qemu.  By extension, it is likely that the
-vulnerability is exposed to HVM guests which are served by a PV stub
-qemu.
-
-MITIGATION
-==========
-
-Running only HVM guests, served by a dom0-based qemu, will avoid this
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa227.patch           xen-unstable, Xen 4.9.x, 4.8.x, 4.7.x
-xsa227-4.6.patch       Xen 4.6.x
-xsa227-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa227*
-c48cc3be47e81a4ceebcf60659b8755516c68916fc5150920ed42c6b61e3f219  xsa227.meta
-9923a47e5f86949800887596f098954a08ef73a01d74b1dbe16cab2e6b1fabb2  xsa227.patch
-6f83d0d9ff853192840d2b82d26d8fde21473bf4ac1441a153f3ee02efd1dd67  xsa227-4.5.patch
-162b991b27b86f210089526a01cae715563d3a069c92f42538b423bba7709fcc  xsa227-4.6.patch
-$
-
-(The .meta file is a prototype machine-readable file for describing
-which patches are to be applied how.)
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZkuNOAAoJEIP+FMlX6CvZ9wsH/3/DA8EENxPdhgoNEihvHgPP
-rquggFGcmgiJZyuy6+e3PZKUwQmUcVdPuVE5h+8NWYRCTjxa15LC/auAmkMHP170
-f7nkSA6oU0zT1mxxqWWjht+CCJ56dmpJN+WGXQMasVEO9PLYR7gOxf90rqDuzqE8
-zcQA4OyIOpsEH4Y2k2hjYFeLleWSLZKSPAy8fupZv34FakZDDLgxPMdWSrYQX/pP
-r2QmLoVk4pSQYZzy5aAZWgLugR+ewOmgYTntzGYSEB2VqEgl6vtA8STVqB5WsYZ4
-eumUUZRBUeo9n2U9TgWPmKr5JtvC9w2/cjV6HysO5vUwuLJUICX25O9BE3VnBs0=
-=ulEd
------END PGP SIGNATURE-----
-
-Download attachment "xsa227.meta" of type "application/octet-stream" (1867 bytes)
-
-Download attachment "xsa227.patch" of type "application/octet-stream" (1535 bytes)
-
-Download attachment "xsa227-4.5.patch" of type "application/octet-stream" (1934 bytes)
-
-Download attachment "xsa227-4.6.patch" of type "application/octet-stream" (1977 bytes)
+Sure, can simply link back to this annoying discussion for any future
+ones. I don't think it was completely unproductive though. And no I'm
+not going to be civil if someone feels like telling me I don't
+understand what verified / secure boot is but rather than definition
+built around the limitations of their product's current limitations.
