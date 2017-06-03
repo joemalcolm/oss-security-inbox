@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["749" "Wednesday" "27" "April" "2016" "15:19:16" "-0400" "Tony Homer" "ajh158@gmail.com" "<CAKkdKCC_PKa-s=jk9+Bq+bXcJ3_RmOH-Gs3BjDGMOje9WwMNUw@mail.gmail.com>" "17" "[oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS" nil nil nil "4" "2016042719:19:16" "[oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS" (number mark "U       ajh158@gmail Apr 27   17/749   " thread-indent "\"[oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1465" "Saturday" "3" "June" "2017" "12:06:23" "+0200" "Florian Weimer" "fweimer@redhat.com" "<06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>" "29" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Date:" nil nil "6" "2017060310:06:23" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        fweimer@redh Jun  3   29/1465  " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<20170530165015.GA4884@openwall.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>" "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>" "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>" "<20170530165015.GA4884@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3653 invoked by uid 550); 27 Apr 2016 19:24:26 -0000
+Received: (qmail 32006 invoked by uid 550); 3 Jun 2017 10:06:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1712 invoked from network); 27 Apr 2016 19:19:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=gbemxcgG5lma4rKX3Wr+2HO7XzatUcRqVAoWV5LoXX0=;
-        b=Nsjej2rtGL7LEt3F6KuSbKPtGA2W2Csop+6QfXs7W3cNPiG+Hbxekuul0YJ8QBZLpL
-         sL9oIZI/nXuXR6k+NVUssIJ1xFVuVY+bn46sle9N5oS8+GSv+c6x7jLhFC7nLTrrFI89
-         brV0reJWqU+/ipyjpanrPheuoacf6rgTxVtnbgd17bmAEEXidSGn4VgE4MXThvnn37+j
-         RILmK9T7edoetoxJ0otPKXjAcn9OY76fEPsPjksFupjg+LipaBHU2ZiTllq3wapzUmai
-         H6+XctT9D2yi3mo//K3kdSCe4MseuNjzPDx3+Gn/GZWvzNOciRxdkFJjwxtcySgbMCyn
-         0ewA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=gbemxcgG5lma4rKX3Wr+2HO7XzatUcRqVAoWV5LoXX0=;
-        b=ElARaZqXY0bPvggqONB3LfMpArPQCmN+QjuAxZEx0EeoM84HuXmjzMEVvnBfEo307A
-         4uMytxB6OuVwueEj8AJlYewarnv03KqxKY9NGmDuaERh2Nk6yiVMoa23CDp2hG+g9by7
-         8JdiS7B2a/8uM74Ky9ruxeGKn0BUoEkpKGrlM0stUZk/vNxJPheT23XynCfQajJGM52P
-         L15tWrqZW78GTI/wD50m2uVI5a/t609/PDAlsE8iCvMnHZ8ps0RRJhkq8c3nIw8t5RG2
-         rYtN/a1+vRJBoroYNNHCZwuY7zfSGD0eO0/G4tuESSBqhiB7A0xoVaSxX9M7A7VeGA3o
-         eKpw==
-X-Gm-Message-State: AOPr4FX7Yi3oFtkxFLLDUUpse4RFbW1wpKQtW+WrZWpXdFEWrH91/GgcvkolPuvWJB/WgT2tEb+p6GCEzB0H+A==
+Received: (qmail 31977 invoked from network); 3 Jun 2017 10:06:38 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 926904E4CB
+Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fweimer@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 926904E4CB
+References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
+ <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
+ <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>
+ <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
+ <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
+ <20170530165015.GA4884@openwall.com>
+Message-ID: <06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
 MIME-Version: 1.0
-X-Received: by 10.50.146.196 with SMTP id te4mr29112361igb.3.1461784756434;
- Wed, 27 Apr 2016 12:19:16 -0700 (PDT)
-Date: Wed, 27 Apr 2016 15:19:16 -0400
-Message-ID: <CAKkdKCC_PKa-s=jk9+Bq+bXcJ3_RmOH-Gs3BjDGMOje9WwMNUw@mail.gmail.com>
-From: Tony Homer <ajh158@gmail.com>
-To: dev@cordova.apache.org, private@cordova.apache.org, 
-	"JPCERT/CC" <vuls@jpcert.or.jp>, security@apache.org, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
-Content-Type: multipart/alternative; boundary=001a11c1c47425580405317c492b
-Subject: [oss-security] CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
+In-Reply-To: <20170530165015.GA4884@openwall.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Sat, 03 Jun 2017 10:06:25 +0000 (UTC)
+Date: Sat, 3 Jun 2017 12:06:23 +0200
+From: Florian Weimer <fweimer@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
+ controlled payload in get_options() function
+To: oss-security@lists.openwall.com
 
---001a11c1c47425580405317c492b
-Content-Type: text/plain; charset=UTF-8
+On 05/30/2017 06:50 PM, Solar Designer wrote:
+> I guess Daniel might be associating the other side's arguments with Red
+> Hat's because Florian was posting from a redhat.com address.  I have no
+> idea whether Florian actually spoke on behalf of Red Hat or not, but
 
-CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
-Severity: High
-Vendor: The Apache Software Foundation
-Versions Affected:cordova-ios 3.9.1 and below
-Description:Apache Cordova iOS contains 2 methods to bypass the URL access
-restrictions provided by the whitelist. An attacker can use any of the 2
-methods to load malicious resources in an app that uses a whitelist to only
-load trusted resources.
-Upgrade path:Developers who are concerned about this issue should install
-version 4.0.0 or higher of the cordova-ios platform.
-Credit:This issue was discovered by Muneaki Nishimura (nishimunea) of
-Recruit Technologies Co.,Ltd.
+I'm not a Red Hat spokesperson, and I did not speak for Red Hat.  I hope
+I don't have to include a silly disclaimer in every message to counter
+such assumptions.
 
---001a11c1c47425580405317c492b--
+> either way I think the focus on Red Hat is excessive - e.g., in the
+> distros list thread on the previous issue, another distro vendor
+> inquired about the proposed public disclosure date, implying they also
+> might care.  A better summary would be: understanding & opinions vary.
+
+Right, I think those distributions that strive to boot under the
+Microsoft trust root for UEFI Secure Boot may also have concerns about
+this issue.  Part of the problem with UEFI Secure Boot is that no one
+has documented clear security objectives for UEFI Secure Boot.  Fedora
+sort of evolved into “no unsigned code running in ring 0 without
+virtualization”.  From what I can tell, Microsoft picked that up and
+urged other distributions under their trust root to implement that as well.
+
+If restricted access to ring 0 is the goal (and I think it currently
+is), then Linux kernel command line parsing bugs exploitable for code
+execution can be used to bypass an intended security policy, and
+qualifies as a security vulnerability.
+
+Thanks,
+Florian
