@@ -1,67 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/04/3
-Message-ID: <5995128.rBqAYY1dqO@arcadia>
-Date: Sat, 04 Feb 2017 13:20:17 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/8
+Message-ID: <20170603142024.GA18904@openwall.com>
+Date: Sat, 3 Jun 2017 16:20:24 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: pax-utils: dumpelf: multiple divide-by-zero in dumpelf.c
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-Description:
-pax-utils is a set of tools that check files for security relevant properties.
+On Sat, Jun 03, 2017 at 10:08:23AM -0400, Daniel Micay wrote:
+> I can't magically guess when someone is or isn't acting on behalf of
+> their employer
 
-A fuzz on dumpelf shows multiple divide-by-zero . They was reported to vapier 
-which fixed the issues immediately.
-Unfortunately I can’t get the ASan stacktrace, so I will show only the 
-useful(not at all) part of the crash.
+If/when you feel it matters, you can ask them.
 
-# dumpelf $FILE
- FPE on unknown address 0x00000051ca65 (pc 0x00000051ca65 bp 0x7ffc31bb6f80 sp 
-0x7ffc31bb6e40 T0)
+> When people post from @google.com I similarly consider that to be a
+> statement from a Google employee. Not *on behalf of Google* but speaking
+> as an employee of Google? Definitely.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00137-pax-utils-dumpelf-fpe1
+Fair enough.  I think there's a difference between "speaking as an
+employee of ..." (a lot of people often do) and "spokesperson for ..."
+(is rarely the case).
 
-# dumpelf $FILE
-  FPE on unknown address 0x00000051d335 (pc 0x00000051d335 bp 0x7ffc17babf80 
-sp 0x7ffc17babe40 T0)
+> I don't think it was completely unproductive though.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00138-pax-utils-dumpelf-fpe2
+That's my assessment too - "not completely unproductive".
 
-# dumpelf $FILE
-  FPE on unknown address 0x00000051db76 (pc 0x00000051db76 bp 0x7ffdf90fff80 
-sp 0x7ffdf90ffe40 T0)
+> And no I'm not going to be civil if
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00139-pax-utils-dumpelf-fpe3
+That's a problem.  Please do try to be civil no matter what.  If you're
+deliberately not being civil when you post in here, that's a reason for
+me as a moderator to start rejecting your messages.
 
-Affected version:
-1.2.2
+And to make it clear: no reply is expected to this message, nor to
+anything else in this thread.  Let's end the thread right here.
 
-Fixed version:
-N/A
+Thanks!
 
-Commit fix:
-https://github.com/gentoo/pax-utils/commit/4609f57a690b4a5670baeb93167dab5300d07d4e
-
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2017-01-30: bug discovered and reported to upstream
-2017-02-01: upstream released a patch
-2017-02-04: blog post about the issue
-
-Note:
-These bugs were found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/04/pax-utils-dumpelf-multiple-divide-by-zero-in-dumpelf-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Alexander
