@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/11
-Message-ID: <90035e7d-491a-84fb-e2bc-4ca7c237ba45@hpe.com>
-Date: Tue, 26 Sep 2017 07:23:14 -0600
-From: Nicholas Luedtke <nicholas.luedtke@....com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/2
+Message-ID: <06202a69-0da3-68fa-a2b3-6a10c1599014@redhat.com>
+Date: Sat, 3 Jun 2017 12:06:23 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
 Content-Type: text/plain; charset=utf-8
 
-On 9/26/2017 1:32 AM, Greg KH wrote:
+On 05/30/2017 06:50 PM, Solar Designer wrote:
+> I guess Daniel might be associating the other side's arguments with Red
+> Hat's because Florian was posting from a redhat.com address.  I have no
+> idea whether Florian actually spoke on behalf of Red Hat or not, but
 
-> But it turns out it's not all written down anywhere in one place, for
-> people to easily understand, so I've started to do so.  I'm giving a
-> talk about this very topic tomorrow at a conference, and should be
-> turning it into a document sometime in the near future that I will
-> publish somewhere.
-In the meantime, in a past position I've needed this information for
-automation work and, FWIW, I made as much of the output data available
-as I could at https://github.com/nluedtke/linux_kernel_cves/.
+I'm not a Red Hat spokesperson, and I did not speak for Red Hat.  I hope
+I don't have to include a silly disclaimer in every message to counter
+such assumptions.
 
--Nicholas
+> either way I think the focus on Red Hat is excessive - e.g., in the
+> distros list thread on the previous issue, another distro vendor
+> inquired about the proposed public disclosure date, implying they also
+> might care.  A better summary would be: understanding & opinions vary.
 
+Right, I think those distributions that strive to boot under the
+Microsoft trust root for UEFI Secure Boot may also have concerns about
+this issue.  Part of the problem with UEFI Secure Boot is that no one
+has documented clear security objectives for UEFI Secure Boot.  Fedora
+sort of evolved into “no unsigned code running in ring 0 without
+virtualization”.  From what I can tell, Microsoft picked that up and
+urged other distributions under their trust root to implement that as well.
 
+If restricted access to ring 0 is the goal (and I think it currently
+is), then Linux kernel command line parsing bugs exploitable for code
+execution can be used to bypass an intended security policy, and
+qualifies as a security vulnerability.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Thanks,
+Florian
