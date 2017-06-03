@@ -1,61 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/07/3
-Message-ID: <20170507184739.c4tdfs6zaywbgbdr@eldamar.local>
-Date: Sun, 7 May 2017 20:47:39 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/9
+Message-ID: <20170603165813.GA20708@openwall.com>
+Date: Sat, 3 Jun 2017 18:58:13 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: rpcbomb: remote rpcbind denial-of-service
+Cc: Karel Zak <kzak@...hat.com>
+Subject: TIOCSTI not going away
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-On Fri, May 05, 2017 at 11:52:49AM +0200, Florian Weimer wrote:
-> On 05/05/2017 11:22 AM, Marcus Meissner wrote:
-> > On Wed, May 03, 2017 at 05:55:20PM -0700, Seth Arnold wrote:
-> > > On Wed, May 03, 2017 at 08:55:23PM +0200, Guido Vranken wrote:
-> > > > This vulnerability allows an attacker to allocate any amount of bytes
-> > > > (up to 4 gigabytes per attack) on a remote rpcbind host, and the
-> > > > memory is never freed unless the process crashes or the administrator
-> > > > halts or restarts the rpcbind service.
-> > > > [...]
-> > > > An extensive write-up can be found here:
-> > > > https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
-> > > > 
-> > > > Exploit + patches: https://github.com/guidovranken/rpcbomb/
-> > > 
-> > > Hello Guido, nice find. Have CVE numbers been requested for this issue
-> > > yet? Have you investigated if ntirpc is affected too? Much of the code
-> > > looks similar:
-> > > 
-> > > http://sources.debian.net/src/ntirpc/1.4.3-3/src/rpc_generic.c/#L728
-> > 
-> > We also saw glibc affected.
-> > 
-> > https://bugzilla.suse.com/show_bug.cgi?id=1037559#c7
-> > 
-> > That said, your reproducer allocates virtual memory, and on systems with overcommit
-> > there is only neglible impact on overall memory pressure.
-> > 
-> > The rpc service will however likely crash at some point though when there is no virtual
-> > address space left for it.
-> 
-> Thanks, I filed it upstream as well:
-> 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=21461
-> 
-> Looks like both xdr_bytes and xdr_string have a similar bug.
-> 
-> I'd appreciate some guidance on reusing or not reusing CVE IDs here.
+Many su-like programs can be used to run other programs with reduced (or
+otherwise different, rather than strictly elevated) privileges.  This
+includes su itself (such as when su'ing from root to a user), as well as
+various container entry commands, etc.
 
-A separate CVE should be used for this issue as clarified with MITRE.
+Many (probably most) of those got it wrong at first, keeping the same
+tty across the privilege boundary.  Numerous such issues were reported:
 
-It was assigned CVE-2017-8804.
+https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=tiocsti
 
-https://sourceware.org/bugzilla/show_bug.cgi?id=21461
+http://www.openwall.com/lists/oss-security/2011/06/02/3
 
-Patch posted at
-https://sourceware.org/ml/libc-alpha/2017-05/msg00105.html by Florian
-Weimer.
+http://www.openwall.com/lists/oss-security/2012/11/05/8
 
-Regards,
-Salvatore
+http://www.openwall.com/lists/oss-security/2016/02/25/6
+http://www.openwall.com/lists/oss-security/2016/02/27/1
+http://www.openwall.com/lists/oss-security/2016/09/25/1
+
+This list is not exhaustive.
+
+Some programs got it right IIRC as of the first time I looked (maybe
+right from the start): SimplePAMApps su, vzctl.
+
+On LKML, CC'ed to the kernel-hardening mailing list, Matt Brown has been
+pushing for the upstream Linux kernel to introduce an option (likely to
+be disabled by default) that would block the TIOCSTI ioctl.  Alan Cox
+repeatedly NAK'ed this:
+
+http://www.openwall.com/lists/kernel-hardening/2017/05/
+
+Sorry there's no one specific message/thread to link to - there were
+multiple patch revisions, and multiple NAKs with different wording.
+
+Alan's reasoning is that userspace apps like this have to be allocating
+a new pty anyway, and the kernel change wouldn't help much since TIOCSTI
+isn't the only way to cause trouble (although per my reading of the
+examples given, other ways/troubles are either not exactly as bad or not
+exactly as generic).  Alan also suggested that all of the affected
+userspace apps have already been fixed.  I think that's still very far
+from true.  In fact, just 2 days ago util-linux 2.30 was released with
+the issue still deliberately not fixed:
+
+https://marc.info/?l=util-linux-ng&m=149640144016887
+
+| CVE-2016-2779 - This security issue is NOT FIXED yet.  It is possible to
+|   disable the ioctl TIOCSTI by setsid() only.  Unfortunately, setsid()
+|   has well-defined use cases in su(1) and runuser(1) and any changes
+|   would introduce regressions.  It seems we need a better way -- ideally
+|   another ioctl to disable TIOCSTI without setsid() or in a userspace
+|   implemented pty container (planned as experimental su(1) feature).
+
+I am posting this message primarily to let maintainers of userspace
+su-like programs know that they should in fact proceed to implement
+allocation of a separate pty, if they don't do that already.  Do not
+wait for the kernel to do some magic thing because it's been NAK'ed, it
+wouldn't fully address the issue, and it wouldn't be enabled by default.
+
+Another point Alan brought up is that if a program is careless enough
+not to allocate a new pty, it's probably also careless enough not to
+close any fd's that might be open in the parent shell or by the program
+itself.  Let's also not miss this reminder and review/correct/harden
+these same programs in this respect as well.
+
+Alexander
