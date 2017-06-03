@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/2
-Message-ID: <CAB8XdGCdm4KJXhayd5tRcB0Fvzb7_nQiaEvi=azzSTqzbjys8A@mail.gmail.com>
-Date: Tue, 16 May 2017 16:59:51 +0100
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: Two new security advisories for Apache CXF Fediz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/04/1
+Message-ID: <20170603231528.o7zt7koxarjzdpag@ws.net.home>
+Date: Sun, 4 Jun 2017 01:15:28 +0200
+From: Karel Zak <kzak@...hat.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: TIOCSTI not going away
 Content-Type: text/plain; charset=utf-8
 
-All,
+On Sat, Jun 03, 2017 at 06:58:13PM +0200, Solar Designer wrote:
+> In fact, just 2 days ago util-linux 2.30 was released with
+> the issue still deliberately not fixed:
+> 
+> https://marc.info/?l=util-linux-ng&m=149640144016887
+> 
+> | CVE-2016-2779 - This security issue is NOT FIXED yet.  It is possible to
+> |   disable the ioctl TIOCSTI by setsid() only.  Unfortunately, setsid()
+> |   has well-defined use cases in su(1) and runuser(1) and any changes
+> |   would introduce regressions.  It seems we need a better way -- ideally
+> |   another ioctl to disable TIOCSTI without setsid() or in a userspace
+> |   implemented pty container (planned as experimental su(1) feature).
+> 
+> I am posting this message primarily to let maintainers of userspace
+> su-like programs know that they should in fact proceed to implement
 
-Two new security advisories are released that are fixed in the latest
-Apache CXF Fediz releases:
+I'm working on this (su-* branches on github), but I'd like to do some 
+refactoring to implement. So, let's hope the next release.
 
-a) CVE-2017-7661: The Apache CXF Fediz Jetty and Spring plugins are
-vulnerable to CSRF attacks.
-
-b) CVE-2017-7662: The Apache CXF Fediz OIDC Client Registration Service is
-vulnerable to CSRF attacks
-
-The security advisory texts are available at the following link - please
-read them carefully if you are an Apache CXF Fediz user:
-
-http://cxf.apache.org/security-advisories.html
+    Karel
 
 
 -- 
-Colm O hEigeartaigh
-
-Talend Community Coder
-http://coders.talend.com
-
+ Karel Zak  <kzak@...hat.com>
+ http://karelzak.blogspot.com
