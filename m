@@ -1,77 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/21/4
-Message-ID: <20170821140808.nwvjj5nmdmf45vro@f195.suse.de>
-Date: Mon, 21 Aug 2017 16:08:08 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/04/3
+Message-ID: <20170604120010.GA4034@inutil.org>
+Date: Sun, 4 Jun 2017 14:00:11 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: tcmu-runner: multiple vulnerabilities in tcmu-runner daemon allowing local DoS, information leak and a memory leak
+Subject: Re: Information on recent sqlite3 issues?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, Jun 01, 2017 at 03:42:13PM +0200, Moritz Muehlenhoff wrote:
+> On Thu, Jun 01, 2017 at 07:14:46AM -0600, Kurt Seifried wrote:
+> > I will bring this up at the next cve board meeting (2 weeks from now).
+> 
+> Thanks! That also goes beyond sqlite, BTW. There's also a number of
+> CVE IDs issued by Apple for libxml/libxslt which are in the same 
+> position.
+> 
+> libxml:
+> CVE-2016-4619 CVE-2016-4616 CVE-2016-4615 CVE-2016-4614 CVE-2015-7116
+> CVE-2015-7115
+> 
+> libxslt:
+> CVE-2017-2477 CVE-2016-4612 CVE-2016-4610 CVE-2016-4609 CVE-2016-4608
+> CVE-2016-4607
 
-CVEs have been assigned now:
+And also for libarchive, BTW:
+CVE-2017-2390
+CVE-2016-4736
 
-> ------------------------------------------------------------------------
-> glfs handler allows local DoS via crafted CheckConfig strings
-> ------------------------------------------------------------------------
-[...]
->   https://github.com/open-iscsi/tcmu-runner/commit/61bd03e600d2abf309173e9186f4d465bb1b7157
-
-CVE-2017-1000198
-
-> ------------------------------------------------------------------------
-> UnregisterHandler dbus method in tcmu-runner daemon for non-existing
-> handler causes DoS
-> ------------------------------------------------------------------------
-[...]
-> - upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/e2d953050766ac538615a811c64b34358614edce
-
-CVE-2017-1000201
-
-> ------------------------------------------------------------------------
-> UnregisterHandler D-Bus method in tcmu-runner daemon for internal
-> handler causes DoS
-> ------------------------------------------------------------------------
-[...]
-> - upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/bb80e9c7a798f035768260ebdadffb6eb0786178
-
-CVE-2017-1000200
-
-> ------------------------------------------------------------------------
-> Memory leaks can be triggered in tcmu-runner daemon by calling D-Bus
-> method for (Un)RegisterHandler
-> ------------------------------------------------------------------------
-[...]
-> - upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/7a78eda52d973d3edc06fea84ad874678d6055f0
-
-CVE for this one is still pending
-
-> ------------------------------------------------------------------------
-> qcow handler opens up an information leak via the CheckConfig D-Bus
-> method
-> ------------------------------------------------------------------------
-[...]
->   https://github.com/open-iscsi/tcmu-runner/commit/8cf8208775022301adaa59c240bb7f93742d1329
-
-CVE-2017-1000190
-
-also see my summary in comment at
-
-https://github.com/open-iscsi/tcmu-runner/pull/200#issuecomment-323750247
-
-Best regards
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-
-SUSE Linux GmbH 
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-On Mon, Jul 24, 2017 at 12:12:04PM +0200, Matthias Gerstner wrote:
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Cheers,
+        Moritz
