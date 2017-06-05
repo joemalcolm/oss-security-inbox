@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["12176" "Saturday" "8" "October" "2016" "22:23:13" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<8583684.bKZSpiVIs8@arcadia>" "249" "[oss-security] graphicsmagick: memory allocation failure in MagickMalloc (memory.c)" nil nil nil "10" "2016100820:23:13" "[oss-security] graphicsmagick: memory allocation failure in MagickMalloc (memory.c)" (number mark "U       ago@gentoo.o Oct  8  249/12176 " thread-indent "\"[oss-security] graphicsmagick: memory allocation failure in MagickMalloc (memory.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["709" "Monday" "5" "June" "2017" "17:06:51" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1706051704190.26243@wniryva>" "23" "[oss-security] CVE-2017-9375 Qemu: usb: xhci infinite recursive call via xhci_kick_ep" nil nil nil "6" "2017060511:36:51" "[oss-security] CVE-2017-9375 Qemu: usb: xhci infinite recursive call via xhci_kick_ep" (number mark "U       ppandit@redh Jun  5   23/709   " thread-indent "\"[oss-security] CVE-2017-9375 Qemu: usb: xhci infinite recursive call via xhci_kick_ep\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11554 invoked by uid 550); 8 Oct 2016 20:23:06 -0000
+Received: (qmail 28251 invoked by uid 550); 5 Jun 2017 11:37:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,263 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11379 invoked from network); 8 Oct 2016 20:23:03 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Sat, 08 Oct 2016 22:23:13 +0200
-Message-ID: <8583684.bKZSpiVIs8@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
+Received: (qmail 28227 invoked from network); 5 Jun 2017 11:37:10 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 43512C0587CF
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 43512C0587CF
+Date: Mon, 5 Jun 2017 17:06:51 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1706051704190.26243@wniryva>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] graphicsmagick: memory allocation failure in MagickMalloc (memory.c)
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Mon, 05 Jun 2017 11:36:58 +0000 (UTC)
+Subject: [oss-security] CVE-2017-9375 Qemu: usb: xhci infinite recursive call via
+ xhci_kick_ep
 
-Description:
-Graphicsmagick is an Image Processing System.
+   Hello,
 
-After the first round of fuzzing where I discovered some slowness issues that 
-make the fuzz hard, the second round revealed a memory allocation failure.
+Quick emulator(Qemu) built with the USB xHCI controller emulator support is 
+vulnerable to an infinite recursive call loop issue. It could occur while 
+processing control transfer descriptors' sequence in xhci_kick_epctx.
 
-The complete ASan output:
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-# gm identify $FILE
-==20592==ERROR: AddressSanitizer failed to allocate 0x7fff03000 (34358702080) 
-bytes of LargeMmapAllocator (error code: 12)
-==20592==Process memory map follows:
-        0x000000400000-0x000000522000   /usr/bin/gm
-        0x000000722000-0x000000723000   /usr/bin/gm
-        0x000000723000-0x000000726000   /usr/bin/gm
-        0x000000726000-0x000001399000
-        0x00007fff7000-0x00008fff7000
-        0x00008fff7000-0x02008fff7000
-        0x02008fff7000-0x10007fff8000
-        0x600000000000-0x602000000000
-        0x602000000000-0x602000010000
-        0x602000010000-0x603000000000
-        0x603000000000-0x603000010000
-        0x603000010000-0x604000000000
-        0x604000000000-0x604000010000
-        0x604000010000-0x606000000000
-        0x606000000000-0x606000010000
-        0x606000010000-0x607000000000
-        0x607000000000-0x607000010000
-        0x607000010000-0x608000000000
-        0x608000000000-0x608000010000
-        0x608000010000-0x60a000000000
-        0x60a000000000-0x60a000010000
-        0x60a000010000-0x60b000000000
-        0x60b000000000-0x60b000010000
-        0x60b000010000-0x60c000000000
-        0x60c000000000-0x60c000010000
-        0x60c000010000-0x60d000000000
-        0x60d000000000-0x60d000010000
-        0x60d000010000-0x60f000000000
-        0x60f000000000-0x60f000010000
-        0x60f000010000-0x610000000000
-        0x610000000000-0x610000010000
-        0x610000010000-0x611000000000
-        0x611000000000-0x611000010000
-        0x611000010000-0x612000000000
-        0x612000000000-0x612000010000
-        0x612000010000-0x614000000000
-        0x614000000000-0x614000020000
-        0x614000020000-0x616000000000
-        0x616000000000-0x616000020000
-        0x616000020000-0x618000000000
-        0x618000000000-0x618000020000
-        0x618000020000-0x619000000000
-        0x619000000000-0x619000020000
-        0x619000020000-0x61a000000000
-        0x61a000000000-0x61a000020000
-        0x61a000020000-0x61b000000000
-        0x61b000000000-0x61b000020000
-        0x61b000020000-0x61d000000000
-        0x61d000000000-0x61d000020000
-        0x61d000020000-0x61e000000000
-        0x61e000000000-0x61e000020000
-        0x61e000020000-0x621000000000
-        0x621000000000-0x621000020000
-        0x621000020000-0x623000000000
-        0x623000000000-0x623000020000
-        0x623000020000-0x624000000000
-        0x624000000000-0x624000020000
-        0x624000020000-0x625000000000
-        0x625000000000-0x625000020000
-        0x625000020000-0x640000000000
-        0x640000000000-0x640000003000
-        0x7f889986d000-0x7f889988b000   
-/usr/lib64/GraphicsMagick-1.3.25/modules-Q32/coders/sgi.so
-        0x7f889988b000-0x7f8899a8a000   
-/usr/lib64/GraphicsMagick-1.3.25/modules-Q32/coders/sgi.so
-        0x7f8899a8a000-0x7f8899a8b000   
-/usr/lib64/GraphicsMagick-1.3.25/modules-Q32/coders/sgi.so
-        0x7f8899a8b000-0x7f8899a8c000   
-/usr/lib64/GraphicsMagick-1.3.25/modules-Q32/coders/sgi.so
-        0x7f8899a8c000-0x7f8899a8e000
-        0x7f8899a8e000-0x7f88a0100000   /usr/lib64/locale/locale-archive
-        0x7f88a0100000-0x7f88a0200000
-        0x7f88a0300000-0x7f88a0400000
-        0x7f88a049b000-0x7f88a27ed000
-        0x7f88a27ed000-0x7f88a27f6000   /usr/lib64/libltdl.so.7.3.1
-        0x7f88a27f6000-0x7f88a29f5000   /usr/lib64/libltdl.so.7.3.1
-        0x7f88a29f5000-0x7f88a29f6000   /usr/lib64/libltdl.so.7.3.1
-        0x7f88a29f6000-0x7f88a29f7000   /usr/lib64/libltdl.so.7.3.1
-        0x7f88a29f7000-0x7f88a2a0c000   /lib64/libz.so.1.2.8
-        0x7f88a2a0c000-0x7f88a2c0b000   /lib64/libz.so.1.2.8
-        0x7f88a2c0b000-0x7f88a2c0c000   /lib64/libz.so.1.2.8
-        0x7f88a2c0c000-0x7f88a2c0d000   /lib64/libz.so.1.2.8
-        0x7f88a2c0d000-0x7f88a2c1c000   /lib64/libbz2.so.1.0.6
-        0x7f88a2c1c000-0x7f88a2e1b000   /lib64/libbz2.so.1.0.6
-        0x7f88a2e1b000-0x7f88a2e1c000   /lib64/libbz2.so.1.0.6
-        0x7f88a2e1c000-0x7f88a2e1d000   /lib64/libbz2.so.1.0.6
-        0x7f88a2e1d000-0x7f88a2ec4000   /usr/lib64/libfreetype.so.6.12.3
-        0x7f88a2ec4000-0x7f88a30c4000   /usr/lib64/libfreetype.so.6.12.3
-        0x7f88a30c4000-0x7f88a30ca000   /usr/lib64/libfreetype.so.6.12.3
-        0x7f88a30ca000-0x7f88a30cb000   /usr/lib64/libfreetype.so.6.12.3
-        0x7f88a30cb000-0x7f88a311f000   /usr/lib64/liblcms2.so.2.0.6
-        0x7f88a311f000-0x7f88a331e000   /usr/lib64/liblcms2.so.2.0.6
-        0x7f88a331e000-0x7f88a331f000   /usr/lib64/liblcms2.so.2.0.6
-        0x7f88a331f000-0x7f88a3324000   /usr/lib64/liblcms2.so.2.0.6
-        0x7f88a3324000-0x7f88a34b7000   /lib64/libc-2.22.so
-        0x7f88a34b7000-0x7f88a36b7000   /lib64/libc-2.22.so
-        0x7f88a36b7000-0x7f88a36bb000   /lib64/libc-2.22.so
-        0x7f88a36bb000-0x7f88a36bd000   /lib64/libc-2.22.so
-        0x7f88a36bd000-0x7f88a36c1000
-        0x7f88a36c1000-0x7f88a36d7000   /usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-        0x7f88a36d7000-0x7f88a38d6000   /usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-        0x7f88a38d6000-0x7f88a38d7000   /usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-        0x7f88a38d7000-0x7f88a38d8000   /usr/lib64/gcc/x86_64-pc-linux-
-gnu/4.9.3/libgcc_s.so.1
-        0x7f88a38d8000-0x7f88a38de000   /lib64/librt-2.22.so
-        0x7f88a38de000-0x7f88a3ade000   /lib64/librt-2.22.so
-        0x7f88a3ade000-0x7f88a3adf000   /lib64/librt-2.22.so
-        0x7f88a3adf000-0x7f88a3ae0000   /lib64/librt-2.22.so
-        0x7f88a3ae0000-0x7f88a3af7000   /lib64/libpthread-2.22.so
-        0x7f88a3af7000-0x7f88a3cf6000   /lib64/libpthread-2.22.so
-        0x7f88a3cf6000-0x7f88a3cf7000   /lib64/libpthread-2.22.so
-        0x7f88a3cf7000-0x7f88a3cf8000   /lib64/libpthread-2.22.so
-        0x7f88a3cf8000-0x7f88a3cfc000
-        0x7f88a3cfc000-0x7f88a3df9000   /lib64/libm-2.22.so
-        0x7f88a3df9000-0x7f88a3ff8000   /lib64/libm-2.22.so
-        0x7f88a3ff8000-0x7f88a3ff9000   /lib64/libm-2.22.so
-        0x7f88a3ff9000-0x7f88a3ffa000   /lib64/libm-2.22.so
-        0x7f88a3ffa000-0x7f88a3ffc000   /lib64/libdl-2.22.so
-        0x7f88a3ffc000-0x7f88a41fc000   /lib64/libdl-2.22.so
-        0x7f88a41fc000-0x7f88a41fd000   /lib64/libdl-2.22.so
-        0x7f88a41fd000-0x7f88a41fe000   /lib64/libdl-2.22.so
-        0x7f88a41fe000-0x7f88a4a0d000   /usr/lib64/libGraphicsMagick.so.3.15.1
-        0x7f88a4a0d000-0x7f88a4c0d000   /usr/lib64/libGraphicsMagick.so.3.15.1
-        0x7f88a4c0d000-0x7f88a4c3e000   /usr/lib64/libGraphicsMagick.so.3.15.1
-        0x7f88a4c3e000-0x7f88a4cc4000   /usr/lib64/libGraphicsMagick.so.3.15.1
-        0x7f88a4cc4000-0x7f88a4d3f000
-        0x7f88a4d3f000-0x7f88a4d61000   /lib64/ld-2.22.so
-        0x7f88a4eab000-0x7f88a4ec0000
-        0x7f88a4ec0000-0x7f88a4ec7000   /usr/lib64/gconv/gconv-modules.cache
-        0x7f88a4ec7000-0x7f88a4eea000   
-/usr/share/locale/it/LC_MESSAGES/libc.mo
-        0x7f88a4eea000-0x7f88a4f54000
-        0x7f88a4f54000-0x7f88a4f60000
-        0x7f88a4f60000-0x7f88a4f61000   /lib64/ld-2.22.so
-        0x7f88a4f61000-0x7f88a4f62000   /lib64/ld-2.22.so
-        0x7f88a4f62000-0x7f88a4f63000
-        0x7ffe83ea9000-0x7ffe83eca000   [stack]
-        0x7ffe83f49000-0x7ffe83f4b000   [vvar]
-        0x7ffe83f4b000-0x7ffe83f4d000   [vdso]
-        0xffffffffff600000-0xffffffffff601000   [vsyscall]
-==20592==End of process memory map.
-==20592==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
-(0)" (0x0, 0x0)
-    #0 0x4c9aed in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
-    #1 0x4d0623 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159
-    #2 0x4d0811 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
-const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183
-    #3 0x4d984a in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_posix.cc:122
-    #4 0x421bdf in 
-__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
-unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
-    #5 0x421bdf in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator 
->::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
-    #6 0x421bdf in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
-    #7 0x421bdf in __asan::asan_malloc(unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
-    #8 0x4c01b1 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
-    #9 0x7f88a479e12d in MagickMalloc /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/memory.c:156:10
-    #10 0x7f88a479e12d in MagickMallocArray /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/memory.c:347
-    #11 0x7f8899872d7a in ReadSGIImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/coders/sgi.c:498:19
-    #12 0x7f88a4558b13 in ReadImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/constitute.c:1607:13
-    #13 0x7f88a4556a94 in PingImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/constitute.c:1370:9
-    #14 0x7f88a446bb25 in IdentifyImageCommand /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:8375:17
-    #15 0x7f88a447197c in MagickCommand /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:8865:17
-    #16 0x7f88a44e96fe in GMCommandSingle /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:17379:10
-    #17 0x7f88a44e7926 in GMCommand /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:17432:16
-    #18 0x7f88a334461f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #19 0x418c88 in _init (/usr/bin/gm+0x418c88)
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=96d87bdda3919bb16f754b3d3fd1227e1f38f13c
 
-Affected version:
-1.3.25
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1458744
 
-Fixed version:
-1.3.26 (not yet released)
+This issue was reported by Li Qiang Qihoo 360 Gear Team.
 
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/c53725cb5449
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-09-09: bug discovered
-2016-09-09: bug reported privately to upstream
-2016-09-10: no upstream response
-2016-09-15: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-memory-allocation-failure-in-magickmalloc-memory-c/
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
