@@ -1,18 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/25
-Message-ID: <9917317.bvZ6nie1ul@blackgate>
-Date: Thu, 09 Feb 2017 16:38:23 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/05/1
+Message-ID: <alpine.LFD.2.20.1706051454450.26243@wniryva>
+Date: Mon, 5 Jun 2017 15:05:01 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-9373 Qemu: ide: ahci host memory leakage during hotunplug
 Content-Type: text/plain; charset=utf-8
 
-The upstream commit which fixes the issue:
+    Hello,
 
-http://www.ghostscript.com/cgi-bin/findgit.cgi?
-2c4e5867ee699b1081527bc6c6ea0e99a35a5c27
+Quick emulator built with the IDE AHCI Emulation support is vulnerable to a 
+host memory leakage issue. It could occur while hot-unplugging the AHCI 
+device.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+A privileged user inside guest could use this flaw to leak host memory 
+resulting in DoS.
 
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=d68f0f778e7f4fbd674627274267f269e40f0b04
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1458270
+
+This issue was reported by Li Qiang of Qihoo 360 Gear Team.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
