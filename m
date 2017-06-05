@@ -1,51 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/2
-Message-ID: <CY4PR11MB1592EFB766E40EEBE5D9F749DADD0@CY4PR11MB1592.namprd11.prod.outlook.com>
-Date: Wed, 28 Jun 2017 02:27:58 +0000
-From: Sven Dowideit <sven@...cher.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CoreOS membership to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/05/2
+Message-ID: <alpine.LFD.2.20.1706051704190.26243@wniryva>
+Date: Mon, 5 Jun 2017 17:06:51 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-9375 Qemu: usb: xhci infinite recursive call via xhci_kick_ep
 Content-Type: text/plain; charset=utf-8
 
-I'm also curious to know where the lines are.
+   Hello,
 
+Quick emulator(Qemu) built with the USB xHCI controller emulator support is 
+vulnerable to an infinite recursive call loop issue. It could occur while 
+processing control transfer descriptors' sequence in xhci_kick_epctx.
 
-I'm responsible for RancherOS, and think that both I, and my users would prefer that I had access to the embargoed information earlier, so preparing a response would have been less of a rush.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=96d87bdda3919bb16f754b3d3fd1227e1f38f13c
 
-One of the things that would have made my last week less worrying, is to have some access to exploit code - so as to verify the changes actually had a useful effect.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1458744
 
+This issue was reported by Li Qiang Qihoo 360 Gear Team.
 
-RancherOS is a container oriented micro-linux distro with uptake in hybrid and on-premis clouds
-
-We have the beginnings of an advisory page at http://rancher.com/docs/os/security/
-
-And are happy to comply with embargos.
-
-Also - keep up the awesome work - its impressive!
-
-
-________________________________
-From: Euan Kemp <euan.kemp@...eos.com>
-Sent: 27 June 2017 15:52:49
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] CoreOS membership to linux-distros
-
-On 06/27/2017 03:13 PM, Kurt Seifried wrote:
-> My main question would be what expertise do you have in helping with
-> security issues, e.g. kernel/glibc/other engineering talent? Or do you
-> simply need this as a consumer of such data (e.g. so you can get containers
-> ready to respin for embargoed issues, and to be clear, I'm not opposed to
-> this type of consumption if it's in the public interest, you won't break
-> embargoes, etc.).
-
-To clarify your example, we're primarily concerned with preparing
-updates for our distribution's kernel and userland, not for containers.
-
-We'd be happy to help when we're able to, but our intent is mainly
-consumption for the security of our users.
-We'll, of course, respect embargoes.
-
-- Euan
-
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
