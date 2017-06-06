@@ -1,33 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/18
-Message-ID: <alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>
-Date: Tue, 26 Sep 2017 12:31:38 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/06/4
+Message-ID: <1496784716.2351.0.camel@gmail.com>
+Date: Tue, 06 Jun 2017 23:31:56 +0200
+From: Ailin Nemui <ailin.nemui@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+Subject: FYI: Irssi Security Advisory 2017/06
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 26 Sep 2017, Agostino Sarubbo wrote:
+IRSSI-SA-2017-06 Irssi Security Advisory [1]
+============================================
 
-> This certainly does not answer to the original question, but upstream should
-> consider to do something like ffmpeg does here:
-> https://www.ffmpeg.org/security.html
->
-> I guess this would be benefit for all.
+Description
+-----------
 
-It is incredibly difficult for most non-commercial upstreams to do 
-this since they have limited manpower, they are not informed of all 
-the applicable CVEs, and the CVE information received is essentially 
-hearsay, received from unknown/unverifiable sources.  I am thinking 
-that it is best for most non-commercial upstreams to not mention CVEs 
-at all.
+Two vulnerabilities have been located in Irssi.
 
-If someone (e.g. with identity 'bugmeister@...d.cn') informs me (an 
-upsteam maintainer) that some particular bug has been assigned a 
-particular CVE then how can I know that to be a fact?
+(a) When receiving a DCC message without source nick/host, Irssi would
+    attempt to dereference a NULL pointer. Found by Joseph
+    Bisch. (CWE-690)
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+(b) When receiving certain incorrectly quoted DCC files, Irssi would
+    try to find the terminating quote one byte before the allocated
+    memory. Found by Joseph Bisch. (CWE-129, CWE-127)
+
+
+Impact
+------
+
+(a) May result in denial of service (remote crash).
+
+(b) May result in denial of service (remote crash), but in practice
+    this seems to be very unlikely unless address sanitizer is
+    enabled.
+
+
+Affected versions
+-----------------
+
+All Irssi versions that we observed.
+
+
+Fixed in
+--------
+
+Irssi 1.0.3
+
+
+Recommended action
+------------------
+
+Upgrade to Irssi 1.0.3. Irssi 1.0.3 is a maintenance release in the
+1.0 series, without any new features.
+
+After installing the updated packages, one can issue the /upgrade
+command to load the new binary. TLS connections will require
+/reconnect.
+
+
+Mitigating facts
+----------------
+
+(a) requires control over the ircd
+
+
+Patch
+-----
+
+https://github.com/irssi/irssi/commit/fb08fc7f1aa6b2e616413d003bf021612
+301ad55
+
+
+References
+----------
+
+[1] https://irssi.org/security/irssi_sa_2017_06.txt
