@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["294" "Thursday" "29" "September" "2016" "13:00:23" "-0400" "Mike Kienenberger" "mkienenb@gmail.com" "<CAM1yOjaPOgtTyEu9+H2eJGCqQS_95DqmyavAyvBUguWM-binYw@mail.gmail.com>" "5" "[oss-security] Re: CVE-2016-5019: MyFaces Trinidad view state deserialization security vulnerability" nil nil nil "9" "2016092917:00:23" "[oss-security] Re: CVE-2016-5019: MyFaces Trinidad view state deserialization security vulnerability" (number mark "U       mkienenb@gma Sep 29    5/294   " thread-indent "\"[oss-security] Re: CVE-2016-5019: MyFaces Trinidad view state deserialization security vulnerability\"\n") "<CAM1yOjZV28=4LFjZtYWPB5W6HXRzxVttU2eXaUzCfUyLakN4Zg@mail.gmail.com>" ("<CAM1yOjZV28=4LFjZtYWPB5W6HXRzxVttU2eXaUzCfUyLakN4Zg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1203" "Monday" "5" "June" "2017" "21:32:11" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8mSj_StFpa8P3kAVAd+cUrQXqcOpLibd9cX2rON1LMzSw@mail.gmail.com>" "30" "[oss-security] Crypto++ and invalid read in decompressor class" "^Date:" nil nil "6" "2017060601:32:11" "[oss-security] Crypto++ and invalid read in decompressor class" (number mark "        noloader@gma Jun  5   30/1203  " thread-indent "\"[oss-security] Crypto++ and invalid read in decompressor class\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31924 invoked by uid 550); 29 Sep 2016 17:03:40 -0000
+Received: (qmail 6119 invoked by uid 550); 6 Jun 2017 07:11:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30228 invoked from network); 29 Sep 2016 17:00:55 -0000
+Received: (qmail 20025 invoked from network); 6 Jun 2017 01:32:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jfPX/ufOWw8OATv/n333CKXVEAUbniJ413Zo8xgWQwI=;
-        b=EAtGYwOFnPrVNYexoZsTTXHNexiO0NR0cRLWLTEj8A1mzAV2SENEplxuHz8grZonCt
-         Qxbzy/nJOnXodK2LSbg6tx3ZnlqUMisRBJq8LArHp9AWOdyl1V2hamp4uHE4cjscJMnK
-         pVJtJxwZOEcG8tTOfylLVq2ASMIVmUugd3suGv/aojY218M0Xv66snMBw4uOZzFDvmiG
-         UTz0LuaE8srRI/E/rDOyLlOD+fH9KyHz0k1yb8JxfdpcXgeuQ/dLRTnBdG8q40S1vs1J
-         b54H5tYdt7maNTnoDmTF/Mj/b2aH7xUaRVJwmsctDCPa/QsTdVTQhpTTN5/36Dk9/Q8V
-         liOg==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=IS/c4y/0E5tzlOFR1ekbW5QEwABekMGI/dFRD4mqpjw=;
+        b=SpCPYiirZAqEE8p6ppEN+wLt8ryekqvOw/yejDG3eOQGUjVqVrQBaD9s5n6Kmt7KA0
+         UmFTgOQb+P+lufTf/cv7IIRMzD9tRAKrWoh+EtT92e02ncFSsQMgeRtEvTHWgFMOj81B
+         CSQEPJUUKSp4/4PthGgC0PiWOrRRowRhBOorEL5sYcimna5JEA8rlmhSUMQZhsc+LvFU
+         XSPyiT7oGej4FLtpr4TjggN3+HjeXZ0JiZGQk5SybX/ol987jptLgtWQGraydCpLzCNG
+         6nNj2Cxxizxx7ZdJ8zMlAQZw5d08MPPk6m+2+zuCzuvHpGznXSSTxdjN+MJ/xm0GrhL3
+         NCeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jfPX/ufOWw8OATv/n333CKXVEAUbniJ413Zo8xgWQwI=;
-        b=kBhzI/pv5SJKNGlCaLNW0krS5YDs1JRoUijCMiRmIHdYKrSlSHhZ1JaN3PtyXvVm5t
-         YPDoppBHMXeAPWCTMJcCXN2M8WvwhoRoe5eAwGmKSvhT+LcB8rFktYwCAMoCTuc/at5n
-         w/Yk5wQziEZscIeozn9Gkw1VoUTdazeSrd9bNUAUb++bHnEanDuGOcACg6Jt9Wx9dSel
-         70KZ/uZ116JPhH/x70+PbZ6jYy55weN0/gKHeXnRsOU09vqDRnnWwOx+JwzQiP1jSie7
-         mK/qolS/SecW5Yqvq/fl5fxB1A+0YxE6JXaevrBDiSfA5SCGNeg0InrdWhCsGfjKL107
-         ePGA==
-X-Gm-Message-State: AA6/9RnLnLaKapydX2EijLF+pJ9v1bdJUQKtPKNFH0SBqOFgbTWNC7VFWmLb986pA9s+HBoD/EetZsBDvQHX7Q==
-X-Received: by 10.202.51.8 with SMTP id z8mr2251049oiz.76.1475168443833; Thu,
- 29 Sep 2016 10:00:43 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=IS/c4y/0E5tzlOFR1ekbW5QEwABekMGI/dFRD4mqpjw=;
+        b=ITeEYktA1YvNSuO6xRPBq/00VnKebD8FNcFBwlEcCkKdSiTO2d0t3s26Rsdi5FlpEu
+         aDREuswQGHfAmp09TqUj4fq5Is8WPYp7ljBCrpNCEbuRlXLthdV5/JgjHSgpKLirKjqv
+         XMg7yEVpMowFXjJVqC6Z7VRSzwTYIbTjU3k2OgoG9FHr7Pk5naOS1fFtWAYfiSRdDhv8
+         k9CEurCCpcUm+cm2xr66gQFfo0o/xNNciyLOPPj3zsU+SIdTQQLiBeZNtzSRaTcLpWtk
+         ppN3oBcetnQoBbeqCMUXf1+XrQ7s9LRaGO0Uj8KhQUvRCdFdcLcDPzfqnNAMoSSzMRFz
+         S+6A==
+X-Gm-Message-State: AODbwcA/zNGGIeDKfqOssP07ZruqgEJjTldRhjW1mDW1ISmdGU4pe850
+	W/5/f50oierPGq+Xdp3UOCWNygJzkvAxCQE=
+X-Received: by 10.202.217.4 with SMTP id q4mr11238318oig.87.1496712732058;
+ Mon, 05 Jun 2017 18:32:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAM1yOjZV28=4LFjZtYWPB5W6HXRzxVttU2eXaUzCfUyLakN4Zg@mail.gmail.com>
-References: <CAM1yOjZV28=4LFjZtYWPB5W6HXRzxVttU2eXaUzCfUyLakN4Zg@mail.gmail.com>
-From: Mike Kienenberger <mkienenb@gmail.com>
-Date: Thu, 29 Sep 2016 13:00:23 -0400
-Message-ID: <CAM1yOjaPOgtTyEu9+H2eJGCqQS_95DqmyavAyvBUguWM-binYw@mail.gmail.com>
+Message-ID: <CAH8yC8mSj_StFpa8P3kAVAd+cUrQXqcOpLibd9cX2rON1LMzSw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Mon, 5 Jun 2017 21:32:11 -0400
+From: Jeffrey Walton <noloader@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Crypto++ and invalid read in decompressor class
 To: oss-security@lists.openwall.com
-Cc: "security@apache.org" <security@apache.org>
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] Re: CVE-2016-5019: MyFaces Trinidad view state deserialization
- security vulnerability
 
-Clarification: The first line in this CVE was a copy&paste error
-during message composition and is not part of the CVE.  This line can
-make it sound as if CVE-2016-5019 is only an information disclosure
-vulnerability rather than a deserialization attack vector.  I
-apologize for the confusion.
+Hi Everyone,
+
+Crypto++'s (https://www.cryptopp.com/) is a free and open source
+library of cryptographic schemes originally written by Wei Dai. Smart
+fuzzing revealed Crypto++'s Zinflate class, used by classes like
+Gunzip and Inflator, could perform an out-of-bounds read when
+decompressing data.
+
+The out-of-bounds read occurs on a table with 30 elements. The table
+is static and its storage is allocated in initialized memory. The
+attacker can craft a ZIP file that allows a read of the last two
+non-existent elements. We believe an attacker can only read 0-bytes
+due to the storage allocation. We were not able to escalate it to a
+write. We believe its a low risk finding.
+
+We were not able to induce failures in other classes using the
+techniques. Other classes include those that are related, like
+compressors; and those which are unrelated, like public and private
+keys.
+
+The issue is being tracked by the library at
+https://github.com/weidai11/cryptopp/issues/414. The Gentoo folks
+assigned CVE-2017-9434 to track the issue.
+
+The fix is available in Master. It is also available for several
+versions of the library at
+https://github.com/weidai11/cryptopp/issues/414#issuecomment-300671740
+.
+
+Jeff
