@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1197" "Thursday" "17" "November" "2016" "09:18:26" "-0500" "Pierre Ernst" "pernst@salesforce.com" "<CAO8=cJ9qRB4_4TMcES57a4+J-Fwf-ZzDNaLvq93JC7yNndBD2g@mail.gmail.com>" "57" "[oss-security] Re: CVE request - textract 1.4.0 - OS Command Injection" nil nil nil "11" "2016111714:18:26" "[oss-security] Re: CVE request - textract 1.4.0 - OS Command Injection" (number mark "U       pernst@sales Nov 17   57/1197  " thread-indent "\"[oss-security] Re: CVE request - textract 1.4.0 - OS Command Injection\"\n") "<CAO8=cJ-0zddSyndp=8ot8BHxyeC2r0Ln0nQvbFx0JQ3Dpg=0dA@mail.gmail.com>" ("<CAO8=cJ-0zddSyndp=8ot8BHxyeC2r0Ln0nQvbFx0JQ3Dpg=0dA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["816" "Tuesday" "6" "June" "2017" "07:20:25" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20170606052025.hnwrsb5kmnf54v7r@lorien.valinor.li>" "28" "Re: [oss-security] Information on recent sqlite3 issues?" "^Date:" nil nil "6" "2017060605:20:25" "[oss-security] Information on recent sqlite3 issues?" (number mark "        carnil@debia Jun  6   28/816   " thread-indent "\"Re: [oss-security] Information on recent sqlite3 issues?\"\n") "<20170601134213.GA23889@inutil.org>" ("<20170531203037.hxl4v36govklpenk@pisco.westfalen.local>" "<95c188ba-76a3-7190-94ea-a369d011ae6c@suse.com>" "<20170601062046.GI15203@suse.com>" "<EC58D857-2282-4632-95E5-00205A75C51D@redhat.com>" "<20170601134213.GA23889@inutil.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15418 invoked by uid 550); 17 Nov 2016 14:25:57 -0000
+Received: (qmail 23559 invoked by uid 550); 6 Jun 2017 05:20:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,93 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9897 invoked from network); 17 Nov 2016 14:18:39 -0000
+Received: (qmail 22495 invoked from network); 6 Jun 2017 05:20:40 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=salesforce.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=VYuT86B8UMseIRI7HyK3BfL7bjtgM9N0eeMVvOG5exg=;
-        b=A4jk/gp+ALq/zKv5+79b9ysbkmnVmKmggkYemO0c4pJlPCqG3udsvXaYIZqGPt+mwc
-         YqbQOIqP/a6Bl9OvTvCpbr1CIotmLYGLurHPRvt6U+ktCGPRGFRyAMWij4/eh9ZGJ1oq
-         czP8CH+CVZFmsdtuVISkJRnX5m3lNwTaheZ/M=
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Wz05A0Wp1LeWbUxg/BQ0XyCbzwpfWdERw9mrTkTTcOw=;
+        b=ufKH3lsLvFM/a8cy92us+txByOzniRCSwvO/y5maH19vzi+m6c2aPDsAWfiydhgcgC
+         pADeG4jjiVGHY3IgBwAh45AlPu6BlIk/nlSXL7fuf9OLZoLC1y8iOnDpvs0qasLhZo3l
+         zdiGwbIAZ+2tQOcdlfry6/MZpWZSfA5mM3FYeNbm6dwcKQ4yQf1JmmzpbELV3t02mHSY
+         pwG+y/IidyL63rp1aa0Lm54MJdxaz/2VMVJp5Y38t2rglcpFB3Lm+X4XcxDNFJfPGcnh
+         CkFMlTLSYDIizXaa+zbXX8RiWzEQb7V7ucE6KVTo/PVLBsUL+9X/xfujZ3nr4tC1Ebsl
+         DrRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=VYuT86B8UMseIRI7HyK3BfL7bjtgM9N0eeMVvOG5exg=;
-        b=XQOqNkHoXZXnJMKlIngFI7sCLODrI2mwbMYRF1vTkEpWPwgf48FTStRRfZi9kcmMSO
-         9k/9wGABZy5cs3zP+o078ALCFv6CgQia+CAYqc+3c+SxGZKOBJKMQpY7vhRILVTlKmH2
-         K4SOFhEVkoW0XrcWp0eVa2BAcUI4Mmvrr0AkvbH9YE0cuJsu7X4xkF/lSF06xS/eeUJL
-         sI0GUVp8cOt2MsQ6E1vnaS6BhR8aR2avkvObY5anxKxvnlhztpqgr3xXEjPO867oFm3Z
-         tAbJMFoydRiXsFDwVpdbrAm1Fd9YAmqJeHcullHh3bGsWgi79NGgZRb4VGBFGQgVUne+
-         0AIg==
-X-Gm-Message-State: ABUngvfjcDuYemig2pcV9v62Guihoj7xzf4t19VNNxIl7Wargp6BviOGxB+uWaKxDcs8dTdZCha9Gux7MbU5wtyz
-X-Received: by 10.46.69.2 with SMTP id s2mr1438789lja.56.1479392307336; Thu,
- 17 Nov 2016 06:18:27 -0800 (PST)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Wz05A0Wp1LeWbUxg/BQ0XyCbzwpfWdERw9mrTkTTcOw=;
+        b=Lus59aTYwFupPGxgR/c1mKoYTnQntkto0yrY6G4jjvOVLrfgKWdwrxGhXfI4hlaGLg
+         /uNh+UGIIz33Zu8Oni3sGSCf7frSaBxCfG5QDNKmryqjfTPwjICAX9MBqyhUuhaUH+WV
+         A1MqEYdtUpWuOPwzW/EajvEQYymw+si0WFm5Akst74/oQlNjnyDgFT0yXQnryN8UnWNZ
+         W3a9LYTvFYaRE00L539PcavOoLwQ7VgwtdDe2aFQdEKrEbzMEgySgH0uXPodosE+sycW
+         CmElVVGH0rhgFAeVR1ZqYFJzhDk1GP/l6dUjUBFvIZedxwtA/vRwc7fUBCbR72OxkVbe
+         leGQ==
+X-Gm-Message-State: AODbwcAK6+iJnS/G13VKSKAWouiLnYWokJJIZpOVZJIs00kaZmlrMlDw
+	NpKGNerPDlp2A9QU
+X-Received: by 10.107.13.196 with SMTP id 187mr23239418ion.168.1496726428392;
+        Mon, 05 Jun 2017 22:20:28 -0700 (PDT)
+Message-ID: <20170606052025.hnwrsb5kmnf54v7r@lorien.valinor.li>
+References: <20170531203037.hxl4v36govklpenk@pisco.westfalen.local>
+ <95c188ba-76a3-7190-94ea-a369d011ae6c@suse.com>
+ <20170601062046.GI15203@suse.com>
+ <EC58D857-2282-4632-95E5-00205A75C51D@redhat.com>
+ <20170601134213.GA23889@inutil.org>
 MIME-Version: 1.0
-In-Reply-To: <CAO8=cJ-0zddSyndp=8ot8BHxyeC2r0Ln0nQvbFx0JQ3Dpg=0dA@mail.gmail.com>
-References: <CAO8=cJ-0zddSyndp=8ot8BHxyeC2r0Ln0nQvbFx0JQ3Dpg=0dA@mail.gmail.com>
-From: Pierre Ernst <pernst@salesforce.com>
-Date: Thu, 17 Nov 2016 09:18:26 -0500
-Message-ID: <CAO8=cJ9qRB4_4TMcES57a4+J-Fwf-ZzDNaLvq93JC7yNndBD2g@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170601134213.GA23889@inutil.org>
+User-Agent: NeoMutt/20170306 (1.8.0)
+Date: Tue, 6 Jun 2017 07:20:25 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] Information on recent sqlite3 issues?
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a114b072cf6a0d405417fdc8e
-Subject: [oss-security] Re: CVE request - textract 1.4.0 - OS Command Injection
 
---001a114b072cf6a0d405417fdc8e
-Content-Type: text/plain; charset=UTF-8
+On Thu, Jun 01, 2017 at 03:42:13PM +0200, Moritz Muehlenhoff wrote:
+> On Thu, Jun 01, 2017 at 07:14:46AM -0600, Kurt Seifried wrote:
+> > I will bring this up at the next cve board meeting (2 weeks from now).
+> 
+> Thanks! That also goes beyond sqlite, BTW. There's also a number of
+> CVE IDs issued by Apple for libxml/libxslt which are in the same 
+> position.
+> 
+> libxml:
+> CVE-2016-4619 CVE-2016-4616 CVE-2016-4615 CVE-2016-4614 CVE-2015-7116
+> CVE-2015-7115
+> 
+> libxslt:
+> CVE-2017-2477 CVE-2016-4612 CVE-2016-4610 CVE-2016-4609 CVE-2016-4608
+> CVE-2016-4607
 
-Version 1.5.0 includes a fix for this
+On a query to Apple's product security team we got confirmed that
 
-https://github.com/deanmalmgren/textract/releases/tag/v1.5.0
+CVE-2016-4612 is a duplicate of CVE-2016-1683 (libxslt)
 
+and
 
-On Thu, Oct 20, 2016 at 5:40 PM, Pierre Ernst <pernst@salesforce.com> wrote:
+CVE-2016-4619 is a duplicate of CVE-2015-8317 (libxml2)
 
-> The Python textract component (https://github.com/
-> deanmalmgren/textract/tree/v1.4.0) is vulnerable to OS command injection.
->
-> this fork contains a fix:
-> https://github.com/pierre-ernst/textract
->
->
-> Parsing a file with a malicious name leads to arbitrary OS command
-> injection, this is especially risky when parsing user-supplied files on a
-> server (e.g. uploaded files)
->
-> PoC:
->
-> import textract
-> import sys
-> import os
->
-> # create a file with a malicious name and arbitrary content
-> fileName = './test";gnome-calculator;#.pdf'
-> file = open(fileName,'w+')
-> file.write('Pierre Ernst, Salesforce')
-> file.close()
->
-> # parse newly created file
-> text = textract.process(fileName)
-> print text
->
-> # cleanup
-> os.remove(fileName);
->
->
-> --
-> Pierre Ernst
-> Salesforce
->
->
+But no other information for the other CVEs.
 
-
--- 
-Pierre Ernst
-Senior Application Security Engineer
-M&A Security
-Salesforce.com
-mobile: +1 613-404-1450
-timezone: EDT
-
---001a114b072cf6a0d405417fdc8e--
+Regards,
+Salvatore
