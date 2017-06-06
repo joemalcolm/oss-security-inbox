@@ -1,57 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/2
-Message-ID: <20171008214807.GA17602@nb4>
-Date: Sun, 8 Oct 2017 23:48:07 +0200
-From: Michael Niedermayer <michael@...dermayer.cc>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/06/2
+Message-ID: <CAH8yC8mSj_StFpa8P3kAVAd+cUrQXqcOpLibd9cX2rON1LMzSw@mail.gmail.com>
+Date: Mon, 5 Jun 2017 21:32:11 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
+Subject: Crypto++ and invalid read in decompressor class
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi Everyone,
 
-On Mon, Oct 02, 2017 at 11:01:19AM +0000, Reed Loden wrote:
-> On Fri, Sep 29, 2017 at 6:12 AM Hanno Böck <hanno@...eck.de> wrote:
-> 
-> > On Thu, 28 Sep 2017 23:13:22 -0700
-> > Reed Loden <reed@...dloden.com> wrote:
-> >
-> > > Separately, we're happy to announce that libav (
-> > > https://git.libav.org/?p=libav.git;a=summary) was added to the scope
-> > > earlier today.
-> >
-> > I'm surprised by this. When I saw the ibb-data bounty I immediately
-> > wondered whether ffmpeg should be in there.
-> >
-> > Is there a reason libav is in and ffmpeg is not? Were there concerns by
-> > the ffmpeg devs? (I'm not taking a side in the libav/ffmpeg wars, but
-> > my impression is that many distros who had used libav for some time
-> > have switched back and ffmpeg is clearly the more widely used of the
-> > forks.)
-> 
-> 
-> We’d love to have FFmpeg in-scope, but the simple reason is that they don’t
-> reply to our e-mails. All projects participating must explicitly opt-in,
-> and we can’t get anybody at FFmpeg to let us know their thoughts on if they
-> would like to be added or not.
+Crypto++'s (https://www.cryptopp.com/) is a free and open source
+library of cryptographic schemes originally written by Wei Dai. Smart
+fuzzing revealed Crypto++'s Zinflate class, used by classes like
+Gunzip and Inflator, could perform an out-of-bounds read when
+decompressing data.
 
-Your mails where misidentified as spam on my side at least, and while
-i admit i saw them and wanted to reply later i forgot and somehow
-apparently everyone else forgot to reply too.
-Finally replied and yes of course FFmpeg wants to participate
+The out-of-bounds read occurs on a table with 30 elements. The table
+is static and its storage is allocated in initialized memory. The
+attacker can craft a ZIP file that allows a read of the last two
+non-existent elements. We believe an attacker can only read 0-bytes
+due to the storage allocation. We were not able to escalate it to a
+write. We believe its a low risk finding.
 
-Thanks
+We were not able to induce failures in other classes using the
+techniques. Other classes include those that are related, like
+compressors; and those which are unrelated, like public and private
+keys.
 
-> 
-> If somebody could help with that (or at least put us in contact with the
-> appropriate folks), would appreciate it. :-)
-> 
-> ~reed
-> (For the IBB)
+The issue is being tracked by the library at
+https://github.com/weidai11/cryptopp/issues/414. The Gentoo folks
+assigned CVE-2017-9434 to track the issue.
 
--- 
-Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
+The fix is available in Master. It is also available for several
+versions of the library at
+https://github.com/weidai11/cryptopp/issues/414#issuecomment-300671740
+.
 
-If a bugfix only changes things apparently unrelated to the bug with no
-further explanation, that is a good sign that the bugfix is wrong.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+Jeff
