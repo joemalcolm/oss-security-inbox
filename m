@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/17/1
-Message-ID: <nycvar.YSQ.7.76.1711171112070.7823@wniryva>
-Date: Fri, 17 Nov 2017 11:14:21 +0530 (IST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/06/3
+Message-ID: <alpine.LFD.2.20.1706061738020.10792@wniryva>
+Date: Tue, 6 Jun 2017 17:40:00 +0530 (IST)
 From: P J P <ppandit@...hat.com>
 To: oss security list <oss-security@...ts.openwall.com>
-cc: Cyrille Chatras <cyrille.chatras@...nge.com>
-Subject: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-9374 Qemu: usb: ehci host memory leakage during hotunplug
 Content-Type: text/plain; charset=utf-8
 
    Hello,
 
-Quick Emulator(Qemu) built with the PS/2 keyboard and mouse emulation support 
-along with the migration feature enabled is vulnerable to an information 
-leakage flaw. It could occur while loading a migrated snapshot on the 
-destination host in PS2 post_load routine.
+Quick Emulator(Qemu) built with the USB EHCI Emulation support is vulnerable 
+to a memory leakage issue. It could occur while hot-unplugging the device, as 
+it does not release the memory allocated at initialisation.
 
-A privileged user could use this flaw to leak destination host memory bytes.
+A guest user/process could use this issue to leak host memory, resulting in 
+DoS for host.
 
 Upstream patch:
 ---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02982.html
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=d710e1e7bd3d5bfc26b631f02ae87901ebe646b0
 
-This issue was reported by Cyrille Chatras of Orange.com.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1459132
+
+This issue was reported by Li Qiang of Qihoo 360 Gear Team.
 
 Thank you.
 --
