@@ -1,39 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/04/6
-Message-ID: <om2v65$asp$1@blaine.gmane.org>
-Date: Sat, 5 Aug 2017 01:15:23 +0200
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-12419: Arbitrary File Read in MantisBT install.php script
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/6
+Message-ID: <221972.752685787-sendEmail@localhost>
+Date: Wed, 7 Jun 2017 12:54:10 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: ytnef: heap-based buffer overflow in SwapDWord (ytnef.c)
 Content-Type: text/plain; charset=utf-8
 
-If, after a successful installation of MantisBT on MySQL/MariaDB the
-administrator does not remove the 'admin' directory (as recommended in
-the "Post-installation and upgrade tasks" section of the MantisBT Admin
-Guide [1]), and the MySQL client has a local_infile setting enabled (in
-php.ini mysqli.allow_local_infile, or the MySQL client config file,
-depending on the PHP setup), an attacker may take advantage of MySQL's
-"connect file read" feature [2] to remotely access files on the MantisBT
-server.
+Description:
+ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
 
-Affected versions: All 1.x and 2.x
-Fixed in versions: N/A
+The complete ASan output of the issue:
 
-At the moment, we do not have a way to patch this vulnerability from
-the code, so we advise administrators to secure their installations
-following our recommendation (i.e. deleting the 'admin' directory,
-disabling mysqli.allow_local_infile in php.ini). As a stopgap measure,
-we have improved documentation and added warnings in several places to
-better inform administrators of the risks they incur.
+# ytnefprint $FILE
+==12532==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000014 at pc 0x7f8e3c35544e bp 0x7ffeb883d890 sp 0x7ffeb883d888                                                                         
+READ of size 1 at 0x602000000014 thread T0                                                                                                                                                                        
+    #0 0x7f8e3c35544d in SwapDWord /tmp/ytnef-1.9.2/lib/ytnef.c:180:28                                                                                                                                            
+    #1 0x7f8e3c35544d in TNEFFillMapi /tmp/ytnef-1.9.2/lib/ytnef.c:430                                                                                                                                            
+    #2 0x7f8e3c360b47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15                                                                                                                                           
+    #3 0x7f8e3c35f9d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10                                                                                                                                       
+    #4 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9                                                                                                                                                   
+    #5 0x7f8e3b47578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                        
+    #6 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)                                                                                                                                                          
+                                                                                                                                                                                                                  
+0x602000000014 is located 0 bytes to the right of 4-byte region [0x602000000010,0x602000000014)                                                                                                                   
+allocated by thread T0 here:                                                                                                                                                                                      
+    #0 0x4cf7e0 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74                                                                          
+    #1 0x7f8e3c36072a in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1154:12                                                                                                                                           
+    #2 0x7f8e3c35f9d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10                                                                                                                                       
+    #3 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9                                                                                                                                                   
+    #4 0x7f8e3b47578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                        
+                                                                                                                                                                                                                  
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/ytnef-1.9.2/lib/ytnef.c:180:28 in SwapDWord                                                                                                                  
+Shadow bytes around the buggy address:                                                                                                                                                                            
+  0x0c047fff7fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+  0x0c047fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+  0x0c047fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+  0x0c047fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+=>0x0c047fff8000: fa fa[04]fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                 
+  0x0c047fff8010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                 
+  0x0c047fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                 
+  0x0c047fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                 
+  0x0c047fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                 
+  0x0c047fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                 
+Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                              
+  Addressable:           00                                                                                                                                                                                       
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==12532==ABORTING
+Affected version:
+1.9.2
 
-Credits:
-- Reported by aLLy from ONSEC (https://twitter.com/IamSecurity)
+Fixed version:
+N/A
 
-References:
-- MantisBT issue tracker https://mantisbt.org/bugs/view.php?id=23173
+Commit fix:
+N/A
 
-[1]
-http://mantisbt.org/docs/master/en-US/Admin_Guide/html-desktop/#admin.install.postcommon
-[2] http://russiansecurity.expert/2016/04/20/mysql-connect-file-read/
-    https://dev.mysql.com/doc/refman/5.7/en/load-data-local.html
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-9472
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00245-ytnef-heapoverflow-SwapDWord
+
+Timeline:
+2017-03-27: bug discovered and reported to upstream
+2017-05-24: blog post about the issue
+2017-06-07: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/24/ytnef-heap-based-buffer-overflow-in-swapdword-ytnef-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
