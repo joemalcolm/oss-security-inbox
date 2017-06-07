@@ -1,47 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/19
-Message-ID: <20170210222953.GA30129@hal>
-Date: Fri, 10 Feb 2017 23:29:53 +0100
-From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
-To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/7
+Message-ID: <752768.651672767-sendEmail@localhost>
+Date: Wed, 7 Jun 2017 12:55:26 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: ytnef: memory allocation failure in TNEFFillMapi (ytnef.c)
 Content-Type: text/plain; charset=utf-8
 
-* Seth Arnold <seth.arnold@...onical.com> [2017-02-10 21:59]:
-> On Fri, Feb 10, 2017 at 03:40:45PM +0000, Priedhorsky, Reid wrote:
-> > I’ve been using the CVE requests on oss-security to maintain a
-> > reasonably comprehensive and timely list of vulnerabilities for specific
-> > products. It’s not clear to me how to do this when CVE requests happen
-> > offline in a web form.
-> > 
-> > Has this use case been considered? Is there an alternate way to
-> > accomplish my goal?
-> 
-> Another part of the email from MITRE included "When you enter a
-> vulnerability description on the web form, the CVE and description will
-> typically be available on the NVD and CVE web sites at the same time or
-> shortly after we email the CVE ID to you."
-> 
-> While the oss-security list has been the best resource of information for
-> CVEs for us, part of our CVE ingestion is to download data from NVD and
-> MITRE directly:
-> 
-> https://nvd.nist.gov/download
-> https://cve.mitre.org/data/downloads/allitems.xml
-> 
-> Debian's database is also very useful to us:
-> https://anonscm.debian.org/viewvc/secure-testing/data/CVE/
-> 
-> And of course our database is freely available as well:
-> https://code.launchpad.net/~ubuntu-security/ubuntu-cve-tracker/master
-> 
-> I hope this can help you adapt your processes as MITRE adapts theirs.
+Description:
+ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
 
-One significant advantage of monitoring this list was that requests
-were immediately visible and there are sometimes significant
-delays between a CVE request and the response from MITRE. Or in some
-cases requests were rejected with a rationale or did not receive a
-response at all -- with the web form such cases will now just
-disappear in a black hole.
--- 
-Guido Berhoerster
+The complete ASan output of the issue:
+
+# ytnefprint $FILE
+==11998==AddressSanitizer CHECK failed: /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" (0x0, 0x0)
+    #0 0x4d95cf in __asan::AsanCheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_rtl.cc:69
+    #1 0x4f4335 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_termination.cc:79
+    #2 0x4e3962 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_common.cc:120
+    #3 0x4ed265 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_posix.cc:132
+    #4 0x424c6a in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
+    #5 0x424c6a in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
+    #6 0x424c6a in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:407
+    #7 0x41f1fb in __asan::Allocator::Calloc(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:605
+    #8 0x41f1fb in __asan::asan_calloc(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:786
+    #9 0x4cf7ba in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:75
+    #10 0x7fe45c3e4e53 in TNEFFillMapi /tmp/ytnef-1.9.2/lib/ytnef.c:424:19
+    #11 0x7fe45c3e1384 in TNEFMapiProperties /tmp/ytnef-1.9.2/lib/ytnef.c:396:7
+    #12 0x7fe45c3f6b47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15
+    #13 0x7fe45c3f59d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
+    #14 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
+    #15 0x7fe45b50b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #16 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
+
+Affected version:
+1.9.2
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-9473
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00246-ytnef-memallocfailures
+
+Timeline:
+2017-03-27: bug discovered and reported to upstream
+2017-05-24: blog post about the issue
+2017-06-07: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/24/ytnef-memory-allocation-failure-in-tneffillmapi-ytnef-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
