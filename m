@@ -1,105 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/11/5
-Message-ID: <4ec90439-635a-adba-a27e-9aed3af232d8@oracle.com>
-Date: Fri, 11 Aug 2017 12:17:52 -0700
-From: Yiteng Zhang <yiteng.zhang@...cle.com>
-To: oss-security@...ts.openwall.com, curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>
-Subject: Re: [SECURITY ADVISORY] curl: FILE buffer read out of bounds
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/8
+Message-ID: <998404.854533391-sendEmail@localhost>
+Date: Wed, 7 Jun 2017 12:56:02 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: ytnef: heap-based buffer overflow in DecompressRTF (ytnef.c)
 Content-Type: text/plain; charset=utf-8
 
-Bug Filed:
+Description:
+ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
 
-26620281 - CVE-2017-1000099 curl: FILE buffer read out of bounds
+The complete ASan output of the issue:
 
-Yiteng
+# ytnefprint $FILE
+==22808==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61800000039e at pc 0x7f6b57c2fcb8 bp 0x7ffd8ca179d0 sp 0x7ffd8ca179c8
+READ of size 1 at 0x61800000039e thread T0
+    #0 0x7f6b57c2fcb7 in DecompressRTF /tmp/ytnef-1.9.2/lib/ytnef.c:1549:31
+    #1 0x7f6b57c20195 in MAPIPrint /tmp/ytnef-1.9.2/lib/ytnef.c:1417:39
+    #2 0x508f50 in PrintTNEF /tmp/ytnef-1.9.2/ytnefprint/main.c:169:5
+    #3 0x50882e in main /tmp/ytnef-1.9.2/ytnefprint/main.c:84:5
+    #4 0x7f6b56d3f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #5 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
 
-On 08/ 8/17 11:05 PM, Daniel Stenberg wrote:
-> FILE buffer read out of bounds
-> ==============================
->
-> Project curl Security Advisory, August 9th 2017 -
-> [Permalink](https://curl.haxx.se/docs/adv_20170809C.html)
->
-> VULNERABILITY
-> -------------
->
-> When asking to get a file from a file:// URL, libcurl provides a 
-> feature that
-> outputs meta-data about the file using HTTP-like headers.
->
-> The code doing this would send the wrong buffer to the user (stdout or 
-> the
-> application's provide callback), which could lead to other private 
-> data from
-> the heap to get inadvertently displayed.
->
-> The wrong buffer was an uninitialized memory area allocated on the 
-> heap and if
-> it turned out to not contain any zero byte, it would continue and 
-> display the
-> data following that buffer in memory.
->
-> We are not aware of any exploit of this flaw.
->
-> INFO
-> ----
->
-> This flaw also affects the curl command line tool.
->
-> The Common Vulnerabilities and Exposures (CVE) project has assigned 
-> the name
-> CVE-2017-1000099 to this issue.
->
-> AFFECTED VERSIONS
-> -----------------
->
-> This bug has been was pushed to curl in commit
-> [7c312f84ea930d8](https://github.com/curl/curl/commit/7c312f84ea930d8), 
-> April
-> 2017.
->
-> - Affected versions: libcurl 7.54.1
-> - Not affected versions: libcurl < 7.54.1 and >= 7.55.0
->
-> libcurl is used by many applications, but not always advertised as such.
->
-> THE SOLUTION
-> ------------
->
-> The function now sends the correct buffer to the application.
->
-> A [patch for 
-> CVE-2017-1000099](https://curl.haxx.se/CVE-2017-1000099.patch) is
-> available.
->
-> RECOMMENDATIONS
-> ---------------
->
-> We suggest you take one of the following actions immediately, in order of
-> preference:
->
->  A - Upgrade curl and libcurl to version 7.55.0
->
->  B - Apply the patch to your version and rebuild
->
->  C - Do not use `CURLOPT_NOBODY` *and* `CURLOPT_HEADER` with file:// URLs
->
-> TIME LINE
-> ---------
->
-> It was reported to the curl project on July 15, 2017. We contacted
-> distros@...nwall on August 1.
->
-> libcurl 7.55.0 was released on August 9 2017, coordinated with the 
-> publication
-> of this advisory.
->
-> CREDITS
-> -------
->
-> Reported by Even Rouault. Discovery: credit to OSS-Fuzz. Patch by Even 
-> Rouault.
->
-> Thanks a lot!
->
+0x61800000039e is located 0 bytes to the right of 798-byte region [0x618000000080,0x61800000039e)
+allocated by thread T0 here:
+    #0 0x4cf7e0 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
+    #1 0x7f6b57c1a527 in TNEFFillMapi /tmp/ytnef-1.9.2/lib/ytnef.c:513:26
+    #2 0x7f6b57c15384 in TNEFMapiProperties /tmp/ytnef-1.9.2/lib/ytnef.c:396:7
+    #3 0x7f6b57c2ab47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15
+    #4 0x7f6b57c299d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
+    #5 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
+    #6 0x7f6b56d3f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/ytnef-1.9.2/lib/ytnef.c:1549:31 in DecompressRTF
+Shadow bytes around the buggy address:
+  0x0c307fff8020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c307fff8030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c307fff8040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c307fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c307fff8060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c307fff8070: 00 00 00[06]fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c307fff8080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c307fff8090: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c307fff80a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c307fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c307fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==22808==ABORTING
+
+Affected version:
+1.9.2
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-9474
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00244-ytnef-heapoverflow-DecompressRTF
+
+Timeline:
+2017-03-27: bug discovered and reported to upstream
+2017-05-24: blog post about the issue
+2017-06-07: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/24/ytnef-heap-based-buffer-overflow-in-decompressrtf-ytnef-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
