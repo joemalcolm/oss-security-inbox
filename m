@@ -1,20 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/8
-Message-ID: <4ef3c586-e897-98fd-28b9-f0ad7ffe9866@redhat.com>
-Date: Tue, 13 Jun 2017 18:35:45 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Fiedler Roman <Roman.Fiedler@....ac.at>
-Subject: Re: Vixie/ISC Cron group crontab to root escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/2
+Message-ID: <1496823511.2524.1.camel@gmail.com>
+Date: Wed, 07 Jun 2017 10:18:31 +0200
+From: Ailin Nemui <ailin.nemui@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-9468, CVE-2017-9469: Irssi Security Advisory 2017/06
 Content-Type: text/plain; charset=utf-8
 
-On 06/13/2017 02:32 PM, Fiedler Roman wrote:
-> Well, partially: what O_PATH can do, you could also do before O_PATH using 
-> repeated single-level open(NO_FOLLOW)/fstat-checks. So you had to do all the 
-> verification by yourself.
+On Tue, 2017-06-06 at 23:31 +0200, Ailin Nemui wrote:
+> (a) When receiving a DCC message without source nick/host, Irssi would
+>     attempt to dereference a NULL pointer. Found by Joseph
+>     Bisch. (CWE-690)
 
-That's not completely accurate because open/close on device nodes can
-have side effects (the classic example is a rewinding tape device).
-O_PATH gives you an opportunity to perform these policy checks before
-the side effect happens.
+      CVE-2017-9468 [2] was assigned to this bug
 
-Florian
+> (b) When receiving certain incorrectly quoted DCC files, Irssi would
+>     try to find the terminating quote one byte before the allocated
+>     memory. Found by Joseph Bisch. (CWE-129, CWE-127)
+
+      CVE-2017-9469 [3] was assigned to this bug
+
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9468
+[3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9469
+
