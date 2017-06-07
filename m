@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1391" "Thursday" "28" "January" "2016" "01:37:29" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160128063729.1D3D26C0056@smtpvmsrv1.mitre.org>" "35" "[oss-security] Re: Heap buffer overflow in fgetwln function of libbsd" "^Cc:" nil nil "1" "2016012806:37:29" "[oss-security] Re: Heap buffer overflow in fgetwln function of libbsd" (number mark "        cve-assign@m Jan 28   35/1391  " thread-indent "\"[oss-security] Re: Heap buffer overflow in fgetwln function of libbsd\"\n") "<20160127220326.5a8828a2@pc1>" ("<20160127220326.5a8828a2@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4087" "Wednesday" "7" "June" "2017" "12:55:26" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<752768.651672767-sendEmail@localhost>" "66" "[oss-security] ytnef: memory allocation failure in TNEFFillMapi (ytnef.c)" "^Date:" nil nil "6" "2017060712:55:26" "[oss-security] ytnef: memory allocation failure in TNEFFillMapi (ytnef.c)" (number mark "        ago@gentoo.o Jun  7   66/4087  " thread-indent "\"[oss-security] ytnef: memory allocation failure in TNEFFillMapi (ytnef.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9368 invoked by uid 550); 28 Jan 2016 06:37:41 -0000
+Received: (qmail 3508 invoked by uid 550); 7 Jun 2017 12:55:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9350 invoked from network); 28 Jan 2016 06:37:40 -0000
-In-Reply-To: <20160127220326.5a8828a2@pc1>
-Message-Id: <20160128063729.1D3D26C0056@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 28 Jan 2016 01:37:29 -0500 (EST)
-From: cve-assign@mitre.org
+Received: (qmail 3259 invoked from network); 7 Jun 2017 12:55:42 -0000
+Message-ID: <752768.651672767-sendEmail@localhost>
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-363338.398587988"
+Date: Wed, 7 Jun 2017 12:55:26 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Heap buffer overflow in fgetwln function of libbsd
-To: hanno@hboeck.de
+Subject: [oss-security] ytnef: memory allocation failure in TNEFFillMapi (ytnef.c)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------MIME delimiter for sendEmail-363338.398587988
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-> this check is off by one, therefore an out of bounds write happens.
-> 
-> https://blog.fuzzing-project.org/36-Heap-buffer-overflow-in-fgetwln-function-of-libbsd.html
-> https://bugs.freedesktop.org/show_bug.cgi?id=93881
-> http://cgit.freedesktop.org/libbsd/commit/?id=c8f0723d2b4520bdd6b9eb7c3e7976de726d7ff7
+Description:
+ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
 
-> fgetwln.c
+The complete ASan output of the issue:
 
-Use CVE-2016-2090.
+# ytnefprint $FILE
+==11998==AddressSanitizer CHECK failed: /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" (0x0, 0x0)
+    #0 0x4d95cf in __asan::AsanCheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_rtl.cc:69
+    #1 0x4f4335 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_termination.cc:79
+    #2 0x4e3962 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_common.cc:120
+    #3 0x4ed265 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/sanitizer_common/sanitizer_posix.cc:132
+    #4 0x424c6a in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
+    #5 0x424c6a in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
+    #6 0x424c6a in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:407
+    #7 0x41f1fb in __asan::Allocator::Calloc(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:605
+    #8 0x41f1fb in __asan::asan_calloc(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_allocator.cc:786
+    #9 0x4cf7ba in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:75
+    #10 0x7fe45c3e4e53 in TNEFFillMapi /tmp/ytnef-1.9.2/lib/ytnef.c:424:19
+    #11 0x7fe45c3e1384 in TNEFMapiProperties /tmp/ytnef-1.9.2/lib/ytnef.c:396:7
+    #12 0x7fe45c3f6b47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15
+    #13 0x7fe45c3f59d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
+    #14 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
+    #15 0x7fe45b50b78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #16 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Affected version:
+1.9.2
 
-iQIcBAEBCAAGBQJWqbaKAAoJEL54rhJi8gl59xkP/04TTXdnPf8d7KiSwvOPJ3qO
-coK4/oALkMFfzC8qgYjtZeZMXj1EEDJJdTdiZXF2EKCMVQc3U0qmpsTFYHZHw7tJ
-Goa5m9byhMUV3w16uaFLcf+tSsPQzePWmAVP/oSIfHweiN11Zz4h/Zvn7JLd2b/I
-lTn3ThjC1HlS7LwGcqmj9QAUq2vrWBs34afIOmUd166vdZdZPNTZ4sKAOitWmMo6
-IPV0BEv/EBO0RolGd/A/GdCXGcqrcTSKAJVHsUoiaPUSPJFzG4XavgqOf/i9Ky+b
-cal2LDTQQrIwSXw3eqCFtpLfhAkAnHQhUIW/3wysUmEq52b+tko8+4A6EF9/dw6g
-xpPRhBHO+iP5qQ0PfkGO6QxGtFL+S9su6IU+UE9kCIgCvqQLeKTpD/ZrH9BEw+zX
-SbxkdqW+Oa57+2kzvBEO3NfxqhcPavrZnPQ9uf00biPa3rO7z9D1IRLAZPqb3mx2
-xQGN39/RglFaPWKpvMFqV6ZxaM5oRZqkWag8wSOSkImAfsE1KujqmtCw182Jnpwh
-Z7gjSxfAjuN5RlSez5WTRfOKT6JpOoh4LduX+uhw8hdXj3tCj9ibmxf63NQ7t2nU
-+tPSZ/7k2NChu2i2lfPrSQTP/F6rEABjq/7osfNQlaWTonIA1Q+G794j7ioveVCf
-HiAK2pUK75NFHSOvy+qT
-=qJqt
------END PGP SIGNATURE-----
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-9473
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00246-ytnef-memallocfailures
+
+Timeline:
+2017-03-27: bug discovered and reported to upstream
+2017-05-24: blog post about the issue
+2017-06-07: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/24/ytnef-memory-allocation-failure-in-tneffillmapi-ytnef-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-363338.398587988--
+
