@@ -1,80 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/18/1
-Message-ID: <016901d2b81b$5a69da00$0f3d8e00$@gmail.com>
-Date: Tue, 18 Apr 2017 09:11:16 +0100
-From: "Simon Steiner" <simonsteiner1984@...il.com>
-To: <general@...graphics.apache.org>, <batik-users@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <oss-security@...ts.openwall.com>, <bugtraq@...urityfocus.com>
-Cc: "'Pierre Ernst'" <pernst@...esforce.com>
-Subject: [CVE-2017-5662] Apache Batik information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/9
+Message-Id: <ECBAEA0F-C443-4B00-8928-E8577E20001C@apache.org>
+Date: Wed, 7 Jun 2017 16:31:01 -0400
+From: Velmurugan Periasamy <vel@...che.org>
+To: security <security@...che.org>, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Cc: private@...ger.apache.org, dev@...ger.apache.org, user@...ger.apache.org
+Subject: CVE update - fixed in Apache Ranger 0.7.1
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-5662:
+Hello:
 
-        Apache Batik information disclosure vulnerability
+Please find below details on CVEs fixed in Ranger 0.7.1 release. Release details can be found at https://cwiki.apache.org/confluence/display/RANGER/0.7.1+Release+-+Apache+Ranger 
 
- 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CVE-2017-7676: Apache Ranger policy evaluation ignores characters after ‘*’ wildcard character
+Severity: Critical
+Vendor: The Apache Software Foundation
+Versions Affected: 0.5.x/0.6.x/0.7.0 versions of Apache Ranger
+Users affected: Environments that use Ranger policies with characters after ‘*’ wildcard character – like my*test, test*.txt
+Description: Policy resource matcher ignores characters after ‘*’ wildcard character, which can result in unintended behavior.
+Fix detail: Ranger policy resource matcher was updated to correctly handle wildcard matches.
+Mitigation: Users should upgrade to 0.7.1 or later version of Apache Ranger with the fix.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CVE-2017-7677: Apache Ranger Hive Authorizer should check for RWX permission when external location is specified
+Severity: Critical
+Vendor: The Apache Software Foundation
+Versions Affected: 0.5.x/0.6.x/0.7.0 versions of Apache Ranger
+Users affected: Environments that use external location for hive tables 
+Description: In environments that use external location for hive tables, Apache Ranger Hive Authorizer should check for RWX permission for the external location specified for create table.
+Fix detail: Ranger Hive Authorizer was updated to correctly handle permission check with external location.
+Mitigation: Users should upgrade to 0.7.1 or later version of Apache Ranger with the fix.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Severity:
-
-        Medium
-
- 
-
-Vendor:
-
-        The Apache Software Foundation
-
- 
-
-Versions Affected:
-
-        Batik 1.0 - 1.8
-
- 
-
-Description:
-
-        Files lying on the filesystem of the server which uses batik can
-
-        be revealed to arbitrary users who send maliciously formed SVG
-
-        files. The file types that can be shown depend on the user context
-
-        in which the exploitable application is running. If the user is root
-
-        a full compromise of the server--including confidential or sensitive
-
-        files--would be possible.
-
- 
-
-        XXE can also be used to attack the availability of the server
-
-        via denial of service as the references within a xml document
-
-        can trivially trigger an amplification attack.
-
- 
-
-Mitigation:
-
-        Users should upgrade to Batik 1.9+
-
- 
-
-Credit:
-
-        This issue was independently reported by Lars Krapf of Adobe and
-Pierre Ernst at Salesforce.
-
- 
-
-References:
-
-        http://xmlgraphics.apache.org/security.html
-
- 
-
-The Apache XML Graphics team.
-
-
+Thank you,
+Velmurugan Periasamy
