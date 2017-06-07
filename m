@@ -1,34 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/22
-Message-ID: <20170714205741.GB21266@openwall.com>
-Date: Fri, 14 Jul 2017 22:57:41 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/4
+Message-ID: <569426.726873161-sendEmail@localhost>
+Date: Wed, 7 Jun 2017 12:53:10 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: ytnef: NULL pointer dereference in MAPIPrint (ytnef.c)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 14, 2017 at 01:52:37PM -0600, Kurt Seifried wrote:
-> Ah I misunderstood the backup, I thought it meant people within a distro, not actual distros, I'm fine with a backup distro. As for the tasks I meant 1 and 2 technical,
+Description:
+ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
 
-Great.  I've just listed Red Hat for those.
+The complete ASan output of the issue:
 
-> we generally do this work anyways.
+# ytnefprint $FILE
+==12467==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f59364c62b6 bp 0x7ffe1b8d4af0 sp 0x7ffe1b8d4278 T0)
+==12467==The signal is caused by a READ memory access.
+==12467==Hint: address points to the zero page.
+    #0 0x7f59364c62b5 in strlen /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76
+    #1 0x43e99c in __interceptor_strlen.part.31 /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:282
+    #2 0x7f593734a162 in MAPIPrint /tmp/ytnef-1.9.2/lib/ytnef.c:1437:15
+    #3 0x508f50 in PrintTNEF /tmp/ytnef-1.9.2/ytnefprint/main.c:169:5
+    #4 0x50882e in main /tmp/ytnef-1.9.2/ytnefprint/main.c:84:5
+    #5 0x7f593646878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
 
-I didn't collect statistics, but my impression is that Red Hat generally
-works on fixes for issues that Red Hat itself brings to distros, which
-is a great contribution (doubly so).  Red Hat also worked on glibc fixes
-for Stack Clash.  Other than that, for issues brought to distros by
-third-parties I think Red Hat's contributions of fixes do not stand out
-compared to some other distros'.  Maybe that will now improve. :-)
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76 in strlen
+==12467==ABORTING
+Affected version:
+1.9.2
 
-And I am not complaining.  Maybe this means those other distros are
-doing their part too, which is great.
+Fixed version:
+N/A
 
-> On Jul 14, 2017, at 12:54, Solar Designer <solar@...nwall.com> wrote:
-> > Technical are:
-> > 
-> > 1. Propose (other) ways to fix, work around, or mitigate the reported issues
-> > 
-> > 2. Develop and share fixes, workarounds, or mitigations
+Commit fix:
+N/A
 
-Alexander
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-9470
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00241-ytnef-nullptr-MAPIPrint
+
+Timeline:
+2017-03-27: bug discovered and reported to upstream
+2017-05-24: blog post about the issue
+2017-06-07: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/24/ytnef-null-pointer-dereference-in-mapiprint-ytnef-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
