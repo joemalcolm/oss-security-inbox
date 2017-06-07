@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1112" "Wednesday" "12" "September" "2018" "10:05:25" "+0000" "Andrea Cosentino" "ancosen1985@yahoo.com" "<77328247.2610677.1536746725418@mail.yahoo.com>" "38" "[oss-security] [SECURITY] New security advisory CVE-2018-8041 released for Apache Camel" nil nil nil "9" "2018091210:05:25" "[oss-security] [SECURITY] New security advisory CVE-2018-8041 released for Apache Camel" (number mark "U       ancosen1985@ Sep 12   38/1112  " thread-indent "\"[oss-security] [SECURITY] New security advisory CVE-2018-8041 released for Apache Camel\"\n") "<77328247.2610677.1536746725418.ref@mail.yahoo.com>" ("<77328247.2610677.1536746725418.ref@mail.yahoo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4397" "Wednesday" "7" "June" "2017" "12:52:37" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<181022.281616123-sendEmail@localhost>" "101" "[oss-security] ytnef: heap-based buffer overflow in PrintTNEF (ytnefprint/main.c)" "^Date:" nil nil "6" "2017060712:52:37" "[oss-security] ytnef: heap-based buffer overflow in PrintTNEF (ytnefprint/main.c)" (number mark "        ago@gentoo.o Jun  7  101/4397  " thread-indent "\"[oss-security] ytnef: heap-based buffer overflow in PrintTNEF (ytnefprint/main.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26604 invoked by uid 550); 12 Sep 2018 11:17:34 -0000
+Received: (qmail 9829 invoked by uid 550); 7 Jun 2017 12:52:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,114 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9931 invoked from network); 12 Sep 2018 10:05:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1536746726; bh=Kh2/y3E0jZ0/8xnb8tzKBFQeDKx7qUGksoQ9VTriZME=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=Nfgn+uHpU5XGqdeTDs6U/YHaj8qyt/WKn11z/riz0KwEDKoFpPB/umxw5h40bcd21LI6pFjbUPmKIs0sKCotn6ojxxWYjy9a/gTJ3jZhy1lDNXQiKA4DepTe2pBOCUwN3/yBNcwp3DeQoeflS4uNPOoOeY6UD7lBRsSkKqAihrcylaxqzgfocHZELSmmUpFlr+l4Kv5BtTGdoiBui9nqrV+D2lwfgG/HwX8rGNylmxwacxmbH/5/XEX6stg7m4IFsP06aVNmtYVkqCgQ+9kK6dWcteS4m/2kEWz1wHYrvQH/0jisKPKtgiwthU/mD54hj3Usz+asX7xknLa7B1/qtw==
-X-YMail-OSG: 4kWe7XkVM1mheR3CbDBHC0L585R2h9.wLIrh4Ky_SCdNcuCTLXGGondb50oNj40
- 7j6ZJ.n3JbBRMAx4KNUQdqMhLL7s2sdYtUe6QX2jOGqYAQQYIgvXBINzaAC3j6sKxAzim1TqsD1U
- r3sXjNquo5dlJA9W2ue_VoIiLk3.feLVY0haeQX3r563kxh45fOxLkKVm_EVWtIa.OhgNp.OoLyh
- .bEG9j2uT6S5FNTBel_Shftz6dCg2ihW84UEXVO0LgRk9wkpShkNAFUY83yEDfoOYFpIJLAPbPAU
- oXEQEljOGlYrLo.NPPgKVSqefe9uzLJdLmd6WYz4w26sUxSC0vwA_rdAWLR4Ml_UReLl.VoxVWWT
- TcqiidYvt5G.FQyNgx3hWkiGhOm8KiwtsZUL8CyH0N.Cccd1UkaYim1Jc4b8gQheKBM_5MDHDqxD
- UBRIHK9g47tDU_5LVx4vRBzc3Va3PpmHA1JsgupWZF_6_ng2bP4JWjXEAVUsjDHKgNljzwVeIj._
- r9GWr9PnpOUtlXa7Ve1hy7.zGxj.Tal3uAttZpET8TKi4viXqVGtNJ_QqFio885mzm1CVEUc0oh2
- TLlkPSkUz0l0tDwHFOKm5bpObFCXNzXhLfgQvxblUp5xLYUKihe2mgP.BHU0zGCuFuOR7uVeolGn
- gtt4TsaM8_S9bOL96fAPZ06jBBd9G.kIlkTjZ6KRxGAuR5lHftte0IGeQO.mSVBkGgKagNMnttQh
- yVxsmmM0e0mHHeTxskP1N56k3tUQPpV5SiCXSOQcE5SOR7U1tDIuVGAJMwabCmOh5r3mKsCWksOw
- imviyjfjoNWLKmubZClBvGNituLgnYmDc3rA3.u4LEE0vaF1QYalbquKS183s_jfD9FZpnmqbEy9
- BYd_iAHu.PQR_gCsGgsdqDKzAPL2AyyLaeKnCg56a6AoEtQFBfyl3ZMJgY9VIEnzYLrIhO4wP.Ri
- OVDklA04w7PiRYD6jpH.Mbvlv_BMOdM6EdxvHueHtV16RFPH9fQ--
-Date: Wed, 12 Sep 2018 10:05:25 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@yahoo.com>
-To: Dev <dev@camel.apache.org>, Users <users@camel.apache.org>, 
-	Apache Security Team <security@apache.org>, 
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
-	"Shapira Eedo (GE Digital)" <eedo.shapira@ge.com>
-Message-ID: <77328247.2610677.1536746725418@mail.yahoo.com>
+Received: (qmail 9785 invoked from network); 7 Jun 2017 12:52:55 -0000
+Message-ID: <181022.281616123-sendEmail@localhost>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-References: <77328247.2610677.1536746725418.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.12406 YMailNorrin Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36
-Subject: [oss-security] [SECURITY] New security advisory CVE-2018-8041 released for Apache
- Camel
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-73961.7753579331"
+Date: Wed, 7 Jun 2017 12:52:37 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] ytnef: heap-based buffer overflow in PrintTNEF (ytnefprint/main.c)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.20.4, 2.21.2 and 2.22.1 releases:
+------MIME delimiter for sendEmail-73961.7753579331
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-CVE-2018-8041: Apache Camel's Mail is vulnerable to path traversal
+Not security relevant at all since the crash happens in the command line tool, but I'm sharing it as well.
 
-Severity: MEDIUM
+Description:
+ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
 
-Vendor: The Apache Software Foundation
+The complete ASan output of the issue:
 
-Versions Affected: Camel 2.20.0 to 2.20.3, Camel 2.21.0 to 2.21.1 and Camel=
- 2.22.0=C2=A0
+# ytnefprint $FILE
+==11928==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000001031 at pc 0x00000049df8d bp 0x7ffd1e1feb20 sp 0x7ffd1e1fe2d0
+READ of size 2 at 0x602000001031 thread T0
+    #0 0x49df8c in printf_common(void*, char const*, __va_list_tag*) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors_format.inc:544
+    #1 0x49ea7a in __interceptor_vprintf /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1388
+    #2 0x49eb37 in printf /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1434
+    #3 0x509747 in PrintTNEF /tmp/ytnef-1.9.2/ytnefprint/main.c:195:7
+    #4 0x50882e in main /tmp/ytnef-1.9.2/ytnefprint/main.c:84:5
+    #5 0x7f16830da78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
 
-The unsupported Camel 2.x (2.19 and earlier) versions may be also affected.
+0x602000001031 is located 0 bytes to the right of 1-byte region [0x602000001030,0x602000001031)
+allocated by thread T0 here:
+    #0 0x4cf7e0 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
+    #1 0x7f1683faf8bb in TNEFAttachmentFilename /tmp/ytnef-1.9.2/lib/ytnef.c:752:19
+    #2 0x7f1683fc5b47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15
+    #3 0x7f1683fc49d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
+    #4 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
+    #5 0x7f16830da78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Description: Apache Camel's Mail is vulnerable to path traversal
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors_format.inc:544 in 
+printf_common(void*, char const*, __va_list_tag*)
+Shadow bytes around the buggy address:
+  0x0c047fff81b0: fa fa 00 00 fa fa 04 fa fa fa 00 00 fa fa 00 fa
+  0x0c047fff81c0: fa fa 00 00 fa fa 00 fa fa fa 00 00 fa fa 04 fa
+  0x0c047fff81d0: fa fa 00 00 fa fa 00 05 fa fa 00 00 fa fa 00 00
+  0x0c047fff81e0: fa fa 05 fa fa fa 00 00 fa fa 00 05 fa fa 00 00
+  0x0c047fff81f0: fa fa 00 00 fa fa fd fd fa fa fd fd fa fa fd fd
+=>0x0c047fff8200: fa fa fd fa fa fa[01]fa fa fa 00 00 fa fa 04 fa
+  0x0c047fff8210: fa fa 00 00 fa fa 04 fa fa fa 00 00 fa fa 04 fa
+  0x0c047fff8220: fa fa 00 00 fa fa 04 fa fa fa 00 00 fa fa 00 fa
+  0x0c047fff8230: fa fa 00 00 fa fa 00 fa fa fa 00 00 fa fa 04 fa
+  0x0c047fff8240: fa fa 00 00 fa fa 00 00 fa fa 00 00 fa fa 01 fa
+  0x0c047fff8250: fa fa 00 00 fa fa 00 00 fa fa 00 00 fa fa fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==11928==ABORTING
+Affected version:
+1.9.2
 
-Mitigation: 2.20.x users should upgrade to 2.20.4, 2.21.0 users should upgr=
-ade to 2.21.2 and Camel 2.22.x users should upgrade to 2.22.1
+Fixed version:
+N/A
 
-The JIRA tickets: https://issues.apache.org/jira/browse/CAMEL-12630=C2=A0
-refers to the various commits that resovoled the issue, and have more detai=
-ls.
+Commit fix:
+N/A
 
-Credit: This issue was discovered by Eedo Shapira <eedo dot shapira at ge d=
-ot com> from GE .
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-On behalf of the Apache Camel PMC
+CVE:
+N/A
 
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00242-ytnef-heapoverflow-PrintTNEF
+
+Timeline:
+2017-03-27: bug discovered and reported to upstream
+2017-05-24: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/05/24/ytnef-heap-based-buffer-overflow-in-printtnef-ytnefprintmain-c/
 
 --
-Andrea Cosentino=C2=A0
-----------------------------------
-Apache Camel PMC Chair
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@yahoo.com
-Twitter: @oscerd2
-Github: oscerd
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-73961.7753579331--
+
