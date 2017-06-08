@@ -1,65 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/2
-Message-ID: <521982.786801772-sendEmail@localhost>
-Date: Mon, 1 May 2017 11:26:02 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libsndfile: invalid memory read in flac_buffer_copy (flac.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/12
+Message-ID: <20170608224258.11820.2FC34D65@matica.foolinux.mooo.com>
+Date: Thu, 8 Jun 2017 15:44:41 -0700
+From: Ian Zimmerman <itz@...mate.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vixie/ISC Cron group crontab to root escalation
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libsndfile is a C library for reading and writing files containing sampled sound.
+On 2017-06-08 20:05, Solar Designer wrote:
 
-The complete ASan output of the issue:
+> Gentoo has a wiki page describing their Vixie Cron here:
+> 
+> https://wiki.gentoo.org/wiki/Cron#vixie-cron
+> 
+> Per their description, it's based on 4.1 and has some Linux specifics
+> added (SELinux, PAM, etc.)  I don't know whether they use group
+> crontab.
 
-# sndfile-resample -to 24000 -c 1 $FILE out
-==19624==ERROR: AddressSanitizer: SEGV on unknown address 0x000000004000 (pc 0x7fe14fe3f2b3 bp 0x000000004000 sp 0x7ffcb49c4d50 T0)    
-==19624==The signal is caused by a READ memory access. 
-    #0 0x7fe14fe3f2b2 in flac_buffer_copy /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:287    
-    #1 0x7fe14fe403d7 in flac_read_loop /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:928 
-    #2 0x7fe14fe404d4 in flac_read_flac2f /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:999    
-    #3 0x7fe14fe34925 in sf_readf_float /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:1945  
-    #4 0x50a525 in sample_rate_convert /tmp/portage/media-libs/libsamplerate-0.1.9/work/libsamplerate-0.1.9/examples/sndfile-resample.c:206:29   
-    #5 0x50a525 in main /tmp/portage/media-libs/libsamplerate-0.1.9/work/libsamplerate-0.1.9/examples/sndfile-resample.c:156 
-    #6 0x7fe14ef70680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
-    #7 0x419fa8 in _init (/usr/bin/sndfile-resample+0x419fa8)    
+Yes:
 
-AddressSanitizer can not provide additional info. 
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:287 in flac_buffer_copy    
-==19624==ABORTING
+~$ ls -l /usr/bin/crontab
+-rwxr-sr-x 1 root crontab 44336 Oct 12  2016 /usr/bin/crontab
 
-Affected version:
-1.0.28
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/erikd/libsndfile/commit/ef1dbb2df1c0e741486646de40bd638a9c4cd808
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8362
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00264-libsndfile-invalidread-flac_buffer_copy
-
-Timeline:
-2017-04-12: bug discovered and reported to upstream
-2017-04-14: upstream released a patch
-2017-04-29: blog post about the issue
-2017-04-30: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/29/libsndfile-invalid-memory-read-in-flac_buffer_copy-flac-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign:
+http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
