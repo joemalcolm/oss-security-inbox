@@ -1,42 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/07/2
-Message-ID: <4c8ff4e2-cef7-e228-ae65-c1f2f86b06da@chbi.eu>
-Date: Sat, 7 Oct 2017 13:14:56 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: Reflected XSS vulnerability in Shaarli v0.9.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/1
+Message-ID: <alpine.LFD.2.20.1706081138160.21700@wniryva>
+Date: Thu, 8 Jun 2017 11:40:32 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Zhangyanyu <zyy4013@....ouc.edu.cn>
+Subject: CVE-2017-9503 Qemu: scsi: null pointer dereference while processing megasas command
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-I've discovered a security issue in Shaarli v0.9.1
-(https://github.com/shaarli/Shaarli)
+Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
+emulation support is vulnerable to a null pointer dereference issue. It could 
+occur while processing megasas commands via megasas_command_complete().
 
+A privileged user inside guest could use this flaw to crash the Qemu process 
+on the host resulting in DoS.
 
-A reflected XSS vulnerability in Shaarli v0.9.1 allows an
-unauthenticated attacker to inject JavaScript. If the victim is an
-administrator, an attacker can (for example) takeover the admin session
-or change global settings or add/delete links. It is also possible to
-execute JavaScript against unauthenticated users.
+Upstream patches:
+-----------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-06/msg01313.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-06/msg01309.html
 
-Fix:
-https://github.com/shaarli/Shaarli/pull/987
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1459477
 
+This issue was reported by Zhangyanyu.
 
-The issue is fixed in Shaarli v0.9.2.
-
-https://github.com/shaarli/Shaarli/releases/tag/v0.9.2
-
-
-I've requested a CVE ID (MITRE).
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
