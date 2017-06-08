@@ -1,56 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/27/2
-Message-ID: <20171027160953.vriub4ox5ztmyzkj@eldamar.local>
-Date: Fri, 27 Oct 2017 18:09:53 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Advisory X41-2017-010: Command Execution in Shadowsocks-libev
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/8
+Message-ID: <alpine.GSO.2.20.1706081553010.6802@scrappy.simplesystems.org>
+Date: Thu, 8 Jun 2017 15:57:22 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Is not memory allocation failure a bug?
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Thu, 8 Jun 2017, Qhdwns123 wrote:
 
-On Fri, Oct 13, 2017 at 06:44:21PM +0200, X41 D-Sec GmbH Advisories wrote:
-> 
-> X41 D-Sec GmbH Security Advisory: X41-2017-010
-> 
-> Command Execution in Shadowsocks-libev
-> ======================================
-> 
-> Overview
-> --------
-> Severity Rating: High
-> Confirmed Affected Versions: 3.1.0
-> Confirmed Patched Versions: N/A
-> Vendor: Shadowsocks
-> Vendor URL: https://github.com/shadowsocks/shadowsocks-libev
-> Vector: Local
-> Credit: X41 D-Sec GmbH, Niklas Abel
-> Status: Public
-> CVE: not yet assigned
-> Advisory-URL:
-> https://www.x41-dsec.de/lab/advisories/x41-2017-010-shadowsocks-libev/
-> 
-> 
-> Summary and Impact
-> ------------------
-> Shadowsocks-libev offers local command execution per configuration file
-> or/and additionally, code execution per UDP request on 127.0.0.1.
-> 
-> The configuration file on the file system or the JSON configuration
-> received via UDP request is parsed and the arguments are passed to the
-> "add_server" function.
-> The function calls "construct_command_line(manager, server);" which
-> returns a string from the parsed configuration.
-> The string gets executed at line 486 "if (system(cmd) == -1) {", so if a
-> configuration parameter contains "||evil command&&" within the "method"
-> parameter, the evil command will get executed.
-> 
-> The ss-manager uses UDP port 8830 to get control commands on 127.0.0.1.
-> By default no authentication is required, although a password can be set
-> with the '-k' parameter.
+> HI
+>
+> I found a memory allocation failure and reported it to the developer.
+>
+> But in the process of communicating, they are not bugs.
+>
+> Do you have experience similar to me?
 
-CVE-2017-15924 has been assigned for this issue.
+Memory allocation failures are normal since there are always finite 
+memory resources and requests may be based on the amount of work to be 
+performed.  If a memory allocation failure can be unreasonably induced 
+(e.g. a 100 byte input file consumes 100 GB of memory) and the 
+impacted software (or whole system) is expected to remain running 
+continually in order to provide service for many users, then there 
+would be a denial of service opportunity, which could be serious.
 
-Regards,
-Salvatore
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
