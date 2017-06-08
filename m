@@ -1,17 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/9
-Message-ID: <8491986.Rf34Ez7Glo@blackgate>
-Date: Thu, 06 Apr 2017 15:31:23 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Interger overflow vulnerability in ptp_unpack_EOS_CustomFuncEx function of  libmtp (version 1.1.12 and below)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/2
+Message-ID: <8490d99d-bb3f-a827-4c22-74a0d22244a4@oracle.com>
+Date: Thu, 8 Jun 2017 10:00:57 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: "qflb.wu" <qflb.wu@...ppsecurity.com.cn>, fulldisclosure@...lists.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [FD] libcroco multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-The CVE assignments don't happen anymore here.
-Please refer to https://cveform.mitre.org/ 
+These appear to be reported to the maintainers as:
 
-If you obtain a CVE, would be great let this list know.
+https://bugzilla.gnome.org/show_bug.cgi?id=782647
+https://bugzilla.gnome.org/show_bug.cgi?id=782649
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Please include info about the upstream bugs when possible as it helps others
+track when fixes are available.
+
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+
+On 06/ 6/17 08:35 PM, qflb.wu wrote:
+> libcroco multiple vulnerabilities
+> ================
+> Author : qflb.wu
+> ===============
+> 
+> 
+> Introduction:
+> =============
+> Libcroco is a standalone css2 parsing and manipulation library.
+> The parser provides a low level event driven SAC like api and a css object model like api.
+> Libcroco provides a CSS2 selection engine and an experimental xml/css rendering engine.
+> 
+> 
+> Affected version:
+> =====
+> 0.6.12
+> 
+> 
+> Vulnerability Description:
+> ==========================
+> 1.
+> the cr_tknzr_parse_comment function in cr-tknzr.c in libcroco 0.6.12 can cause a denial of service (memory allocation error) via a crafted CSS file.
+> 
+> 
+> ./csslint-0.6 --dump-location libcroco_0_6_12_memory_allocation_error.css
+> 
+> 
+> ==21841==ERROR: AddressSanitizer failed to allocate 0x20002000 (536879104) bytes of LargeMmapAllocator: 12
+> ...
+> ==21841==AddressSanitizer CHECK failed: /build/buildd/llvm-toolchain-3.4-3.4/projects/compiler-rt/lib/sanitizer_common/sanitizer_posix.cc:68 "(("unable to mmap" && 0)) != (0)" (0x0, 0x0)
+>      ...
+>      #10 0x7fd78c2fcb4d in cr_tknzr_parse_comment /home/a/Downloads/libcroco-0.6.12/src/cr-tknzr.c:462
+>      #11 0x7fd78c2fcb4d in cr_tknzr_get_next_token /home/a/Downloads/libcroco-0.6.12/src/cr-tknzr.c:2218
+>      #12 0x7fd78c356f6e in cr_parser_try_to_skip_spaces_and_comments /home/a/Downloads/libcroco-0.6.12/src/cr-parser.c:634
+>      #13 0x7fd78c368a43 in cr_parser_parse_stylesheet /home/a/Downloads/libcroco-0.6.12/src/cr-parser.c:2538
+>      #14 0x7fd78c368a43 in cr_parser_parse /home/a/Downloads/libcroco-0.6.12/src/cr-parser.c:4381
+>      #15 0x480a8e in sac_parse_and_display_locations /home/a/Downloads/libcroco-0.6.12/csslint/csslint.c:960
+>      #16 0x480a8e in main /home/a/Downloads/libcroco-0.6.12/csslint/csslint.c:1001
+>      #17 0x7fd78b397f44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+>      #18 0x47c95c in _start (/home/a/Downloads/libcroco-0.6.12/csslint/.libs/lt-csslint-0.6+0x47c95c)
+> 
+> 
+>      Reproducer:
+>      libcroco_0_6_12_memory_allocation_error.css
+>      CVE:
+>      CVE-2017-8834
+> 
+> 
+> 2.
+> The cr_parser_parse_selector_core function in cr-parser.c in libcroco 0.6.12 can cause a denial of service(infinite loop and CPU consumption) via a crafted CSS file.
+> 
+> 
+> ./csslint-0.6 --dump-location libcroco_0_6_12_infinite_loop.css
+> 
+> 
+> Reproducer:
+> libcroco_0_6_12_infinite_loop.css
+> CVE:
+> CVE-2017-8871
+> 
+> 
+> ===============================
+> 
+> 
+> qflb.wu () dbappsecurity com cn
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> _______________________________________________
+> Sent through the Full Disclosure mailing list
+> https://nmap.org/mailman/listinfo/fulldisclosure
+> Web Archives & RSS: http://seclists.org/fulldisclosure/
+> 
+
+
