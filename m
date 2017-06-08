@@ -1,53 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/19
-Message-ID: <3cdc67a2-9858-5328-1d42-baa61d0ba97d@redhat.com>
-Date: Tue, 30 May 2017 09:29:08 -0600
-From: "kseifried@...hat.com" <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
-Subject: Re: Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/10
+Message-ID: <f576c0cf-d5dc-7451-2e89-8c8d74f660a0@redhat.com>
+Date: Thu, 8 Jun 2017 15:54:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Glenn Randers-Pehrson <glennrp@...il.com>
+Subject: Re: Is not memory allocation failure a bug?
 Content-Type: text/plain; charset=utf-8
 
 
 
-On 05/30/2017 09:25 AM, Hanno Böck wrote:
-> On Tue, 30 May 2017 08:16:29 -0700
-> Qualys Security Advisory <qsa@...lys.com> wrote:
-> 
->> Qualys Security Advisory
->>
->> CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
-> 
-> Did Mitre really just add multiple new digits to CVEs or is this a typo?
-> 
-> AFAIR they introduced 5-digit-CVEs relatively recently, going to
-> 7-digit without any public announcement seems unlikely.
-
-We did this 3 years ago:
-
-https://cve.mitre.org/cve/identifiers/syntaxchange.html
-
-Examples
-
-Examples of identifiers in the new CVE ID syntax are included below.
-There is no limit on the number of arbitrary digits. Leading 0’s will
-only be used in IDs 1 to 999, as shown in column one below.
-
-IDs with 4 digits	IDs with 5 digits	IDs with 6 digits	IDs with 7 digits
-CVE-2014-0001	CVE-2014-10000	CVE-2014-100000	CVE-2014-1000000
-CVE-2014-3127	CVE-2014-54321	CVE-2014-456132	CVE-2014-7654321
-CVE-2014-9999	CVE-2014-99999	CVE-2014-999999	CVE-2014-9999999
-NOTE: Some of the CVE ID examples above have not yet been assigned.
-
-The DWF CNA has the block CVE-YEAR-1000000 through CVE-YEAR-1999999 so
-yes, these are legitimate. E.g.:
-
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-1000001
-
-
-
+On 2017-06-08 3:04 PM, Glenn Randers-Pehrson wrote:
+> I just checked a fix for one of those into Firefox yesterday.  It wasn't
+> considered a serious problem because the malloc would eventually
+> fail safely, but it's better to predict the problem ahead of time and not
+> even try to malloc all available memory.
+>
+> See https://bugzilla.mozilla.org/show_bug.cgi?id=1368407
+> in which a tiny PNG file tries to claim Gigabytes of memory.
+Ok so I tested it, no crash/huge memory thing, but the CPU got maxed and
+even when I closed the tab for the image Firefox kept eating CPU, I
+wasn't able to close Firefox, had to use the kill command (which worked
+fine) so this clearly falls into the DoS camp and may need a CVE, has
+Mozilla commented on why they have elected to NOT give it a CVE?
 
 -- 
-
 Kurt Seifried -- Red Hat -- Product Security -- Cloud
 PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Red Hat Product Security contact: secalert@...hat.com
+
+
