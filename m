@@ -1,62 +1,163 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/05/2
-Message-ID: <1507235866.17141.24.camel@debian.org>
-Date: Thu, 05 Oct 2017 22:37:46 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/11
+Message-Id: <201706082349.03355@pali>
+Date: Thu, 8 Jun 2017 23:49:03 +0200
+From: Pali Rohár <pali.rohar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2017-14604] .desktop vulnerability again
+Cc: security@...iadb.org, secalert_us@...cle.com, security@...cona.com, Andrea Barisani <andrea@...ersepath.com>, Michiel Beijen <michiel.beijen@...il.com>, Alceu Rodrigues de Freitas Junior <glasswalk3r@...oo.com.br>, cve-assign@...re.org
+Subject: MySQL - use-after-free after mysql_stmt_close()
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+Hello!
 
-I'm currently in the process of uploading a nautilus package fixing CVE-2017-
-14604 which is again a vulnerability in the handling of desktop file. As I
-don't think it's been discussed here, it might be a good idea to do a wrap-up, 
-and maybe start a discussion if people are interested and have good ideas.
+MySQL applications written according to Oracle's MySQL documentation & 
+examples for mysql_stmt_close() function call are vulnerable to use-
+after-free defect.
 
-There was some publicity on this at beginning of the year with a blog post
-using that vulnerability in order to break out of SubGraph OS (https://micahfl
-ee.com/2017/04/breaking-the-security-model-of-subgraph-os/)
+In mysql_stmt_close() documentation [1] for return value is written:
+"Zero for success. Nonzero if an error occurred." And there are defined 
+two errors: CR_SERVER_GONE_ERROR CR_UNKNOWN_ERROR. From other parts of 
+documentation can be understood that error messages for statements could 
+be obtained by mysql_stmt_error() function [2].
 
-Last time we had a vulnerability related to the handling of .desktop file, it
-was handled by refusing to run it unless it has the executable bit.
-Unfortunately, this permission bit is maintained when storing inside a
-tarball, for example, so if an attacker wraps an executable .desktop file
-posing (for example) as a PDF inside a tarball, a victim could extract the
-file and double click on the PDF and the system will happily execute the
-command inside the Exec= field of the .desktop file.
+Whole example of usage is written in mysql_stmt_execute() function [3]. 
+The relevant part for mysql_stmt_close() is at the end of example:
 
-Some bugs were opened against various file managers:
+/* Close the statement */
+if (mysql_stmt_close(stmt))
+{
+  fprintf(stderr, " failed while closing the statement\n");
+  fprintf(stderr, " %s\n", mysql_stmt_error(stmt));
+  exit(0);
+}
 
-Nautilus (GNOME): https://bugzilla.gnome.org/show_bug.cgi?id=777991
-Caja (Mate): https://github.com/mate-desktop/caja/issues/727
-Nemo (Cinnamon): https://github.com/linuxmint/nemo/issues/1404
-PCManFM (LXDE): https://github.com/lxde/pcmanfm-qt/issues/449
-Thunar (Xfce): https://bugzilla.xfce.org/show_bug.cgi?id=13329
+And here is a problem, use-after-free defect. Current implementation of 
+mysql_stmt_close() function unconditionally free passed statement 
+structure and therefore following mysql_stmt_error() call is defective 
+to use-after-free.
 
-I'm not sure if a bug was opened against others, like KDE's Dolphin.
+Relevant part of implementation of mysql_stmt_close() function is:
 
-As far as I understand it only Nautilus got a CVE. If we consider it a
-vulnerability I guess every file manager should get a CVE, but I'm interested
-in other opinions on this.
+my_bool mysql_stmt_close(MYSQL_STMT *stmt)
+{
+  int rc=0;
+...
+  if ((rc= stmt_command(mysql, COM_STMT_CLOSE, buff, 4, stmt)))
+    set_stmt_errmsg(stmt, &mysql->net);
+...
+  my_free(stmt);
+  return rc;
+}
 
-Scanning through the various bugs, not everyone agree on how to fix this:
+As you can see it stores real error message into stmt structure, but at 
+the end it is freed. Which means error message is no longer available 
+and caller is not able to read it (even via mysql_stmt_error() call).
 
-- Nautilus doesn't use the executable bit anymore but store a trusted
-attribute in a gio/gvfs metadata, which is stored on the filesystem in
-XDG_DATA_DIR/.gvfs-metada (usually ~/.local/share/gvfs-metadata) which I guess
-should not be reachable from a tarball unless the extraction process has a
-directory traversal vulnerability
-- there's PR on Nemo to basically do the same thing
-- PCManFM now treats .desktop file like it apparently treats executable, and
-always request explicit user permission before running it
-- Thunar and Cara are not yet fixed.
+As such defective code is in example of the usage, probably couple of 
+MySQL applications written according to that defective documentations 
+are affected to this issue.
 
-Obviously there's a usability vs. security tradeoff here and I'm unsure if
-there's a good solution. For now I'll just push the Debian updates for
-Nautilus and keep an eye on this.
+There is reported real bug for MySQL DBI driver that is affected by this 
+issue [4]. Reporter probably compiled MySQL library or driver itself 
+with some compiler options which could detect buffer overflows and 
+uncovered this issue.
 
-Regards,
+
+In April 17 I reported this issue to oCERT team and it was forwarded to 
+MySQL, MariaDB and Percona security teams.
+
+MariaDB team answered that this is problem in Oracle & MySQL and their 
+documentation as MariaDB do not have such vulnerable example in their 
+documentation.
+
+Oracle team was unwilling to tell anything, provide any information how 
+to handle such issue or what to do, therefore with suggestion from oCERT 
+I decided to make this report public and open public discussion for 
+other people on oss-security list how to handle this problem.
+
+
+As Oracle fully ignored this problem and have not stated if problem is 
+in documentation, implementation or both, I see probably 3 different 
+solutions:
+
+1) Documentation with examples is correct and this is how it should be 
+used. What is wrong is implementation.
+
+It would mean that function mysql_stmt_error() and mysql_stmt_errno() 
+needs to specially handle statement pointers which were already freed by 
+mysql_stmt_close(). This can be done e.g. by storing hash table of 
+pointers and assigning for them last received error.
+
+Or clarifying that mysql_stmt_close() does not always free passed 
+memory. Because from current description in documentation it is not 
+fully unambiguous what happen if function fails.
+
+In this case implementation of mysql_stmt_close(), mysql_stmt_error() 
+and mysql_stmt_errno() are vulnerable to use-after-free defect and needs 
+to be fixed. And it should be assigned CVE for MySQL for this problem.
+
+2) Implementation is correct, documentation is wrong.
+
+Documentation needs to be fixed to properly describe how are those 
+functions implemented. Important note must be that if function 
+mysql_stmt_close() fails it is not possible to take error code via 
+mysql_stmt_error() or mysql_stmt_errno(). Also examples needs to be 
+fixed.
+
+And then all MySQL applications which were written according to wrong 
+documentation needs to be fixed and for each one needs to be assigned 
+CVE. Number of those applications is unknown, to get it first every 
+application which uses libmysqlclient.so needs to be checked and 
+verified. What we know now is that MySQL Perl DBI is affected.
+
+3) Documentation is wrong, but implementation of mysql_stmt_close() is 
+not-so-correct.
+
+Which would mean that return value of mysql_stmt_close() is fully 
+meaningless as there is no way to recover from bad state. Currently 
+mysql_stmt_close() unconditionally free memory for statement, so no 
+recover is possible.
+
+There are two options what can be done:
+
+* Always return value zero which means no error occurred. This basically 
+mitigate use-after-free vulnerability in Oracle's documentation and also 
+all applications which were written according to documentation.
+
+* When error occurred, do not free memory of passed structure. This 
+would mean that following mysql_stmt_error() call would not be affected 
+by use-after-free anymore.
+
+
+As Oracle ignored this security related problem (***) I would like to 
+ask, how to handle this problem? And to which software needs to be 
+requested for CVE? To MySQL itself (as described in option 1)? Or to 
+every one software which uses MySQL (as described in option 2)?
+
+I think you understand me, that MySQL DBD driver needs to be fixed, 
+ideally ASAP. Bug report on github is from April 13 [4]. And as Oracle 
+is not willing to do anything, I hope that people on public oss-security 
+list give some advice how to handle this situation.
+
+I'm CCing all relevant security teams, when replaying please do not 
+forget to include them + me. Thanks!
+
+--
+
+[1] - https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-close.html
+[2] - https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-error.html
+[3] - https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-execute.html
+[4] - https://github.com/perl5-dbi/DBD-mysql/issues/120
+
+(***) - This is not a first time! Previous two security issues reported 
+by me were ignored too. Oracle is the worst company in handling security 
+issues. It is useless to report them anything. They just start threaten 
+if you make information about issue public. And they are not competent 
+to start working on it or fix it in less then 6 months! Really I suggest 
+to not report any security bug to Oracle, it is just wasting of time.
+
 -- 
-Yves-Alexis
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Pali Rohár
+pali.rohar@...il.com
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
