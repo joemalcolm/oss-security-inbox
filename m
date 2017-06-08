@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/18/2
-Message-ID: <CAC1ju523-hOdd3tO1xkqZyxyvPVwM+CFETec2c14wrVa6K6hVg@mail.gmail.com>
-Date: Mon, 18 Dec 2017 12:35:21 +0200
-From: Arina Ielchiieva <arina@...che.org>
-To: user <user@...ll.apache.org>, dev@...ll.apache.org,  Sanjog <sanjogpandasp@...il.com>, security <security@...che.org>,  oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-12630 Apache Drill XSS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/09/1
+Message-ID: <5EOR8OtyY9_fUB8CL_yLVwXelHrU0XwXaJsUYwvyvape2Rk2aNA5UVFmF6STrWQKvAh-g5SxLF3MH5oeLiRbsOyWdeXjptEE_8FhX0WbcmI=@protonmail.com>
+Date: Thu, 08 Jun 2017 19:49:46 -0400
+From: Qhdwns123 <qhdwns123@...tonmail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Security bug report read-protected
 Content-Type: text/plain; charset=utf-8
 
-*CVE-2017-12630 Apache Drill XSS vulnerability*
+Hi.
 
-*Severity*: Important
+If you are reporting bugs to the bugzilla site,
 
-*Vendor:* The Apache Software Foundation
+When an anonymous user accesses the page, the following message is displayed and access is blocked.
 
-*Versions Affected:*
-Apache Drill 1.11.0 and earlier
+"You are not authorized to access bug #632521. To see this bug, you must first log in to an account with the appropriate permissions"
 
-*Description*
-In Apache Drill 1.11.0 and earlier when submitting form from Query page
-users are able to pass arbitrary script or HTML which will take effect on
-Profile page afterwards.
+As far as I know, when you request a CVE, you need to create an accessible reference address for anonymous users.
 
-Example:
-After submitting special script that returns cookie information from Query
-page, malicious user may obtain this information from Profile page
-afterwards.
+If you have a solution, let me know.
 
-*Mitigation:*
-Users of the affected versions should upgrade to Apache Drill to 1.12.0 and
-later.
-
-*Credit:*
-Sanjog Panda
-
-Kind regards
-Arina
-
+Thanks.
