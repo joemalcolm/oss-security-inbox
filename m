@@ -1,23 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/27/1
-Message-ID: <1621585.jUp2hzoFSL@blackgate>
-Date: Mon, 27 Feb 2017 11:52:36 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/09/6
+Message-Id: <20170609174117.DBE0617FDA8@rebar.astron.com>
+Date: Fri, 9 Jun 2017 13:41:17 -0400
+From: christos@...las.com (Christos Zoulas)
 To: oss-security@...ts.openwall.com
-Subject: Re: potrace: invalid memory access in findnext (decompose.c)
+Subject: Re: Vixie/ISC Cron group crontab to root escalation
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 08 October 2016 22:29:54 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2016/08/29/potrace-invalid-memory-access-in-fin
-> dnext-decompose-c/
+On Jun 9,  6:27pm, solar@...nwall.com (Solar Designer) wrote:
+-- Subject: Re: [oss-security] Vixie/ISC Cron group crontab to root escalatio
 
-I'd like to notify that upstream released a patch here:
-http://potrace.sourceforge.net/patches/potrace-1.13-CVE-2016-8685.patch
+| Oh, I did in fact mention this in the private discussion, so I'll quote:
+| 
+| | Another detail: somehow in Owl we introduced lstat() prior to open, and
+| | check lstat()'s struct for all the required properties before proceeding
+| | with open() with O_NOFOLLOW.  Then we check that st_dev/st_ino stayed
+| | the same.  We also kept the post-open() checks.  I don't recall exactly
+| | why we added this, but maybe because of the possibility of side-effects
+| | on open() for hard links to device files (like with tape drives).  And
+| | it looks like we neglected to add the same for at jobs (perhaps didn't
+| | revisit this when support for at jobs appeared via our update to later
+| | OpenBSD code) - maybe we should.
 
-and it is fixed in the 1.14 release
+Thanks, perhaps a comment in the code can't hurt...
+Or even O_NODEV which does not exist, or O_PATH (linux only)..
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
-
+christos
