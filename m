@@ -1,45 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/2
-Message-ID: <6a99e3df9a9449dcb2ea3a4358c469b0@imshyb01.MITRE.ORG>
-Date: Mon, 16 Jan 2017 19:08:48 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/09/4
+Message-Id: <20170609154755.2597617FDAB@rebar.astron.com>
+Date: Fri, 9 Jun 2017 11:47:55 -0400
+From: christos@...las.com (Christos Zoulas)
+To: oss-security@...ts.openwall.com
+Subject: Re: Vixie/ISC Cron group crontab to root escalation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Jun 8,  8:05pm, solar@...nwall.com (Solar Designer) wrote:
+-- Subject: [oss-security] Vixie/ISC Cron group crontab to root escalation
 
-> [] https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-write-in-dec_clnpass-jpc_t1dec-c
-> 
-> AddressSanitizer: SEGV on unknown address
-> The signal is caused by a WRITE memory access.
-> 
-> dec_clnpass ... jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4
+In this patch:
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/vixie-cron/vixie-cron-4.1.20040916-owl-crond.diff
 
-Use CVE-2017-5503.
+Why do:
 
++	if (lstat(tabname, &lstatbuf) < OK) {
++		log_it(fname, getpid(), "CAN'T LSTAT", tabname);
++		goto next_crontab;
++	}
++	if (!S_ISREG(lstatbuf.st_mode)) {
++		log_it(fname, getpid(), "NOT REGULAR", tabname);
++		goto next_crontab;
++	}
++	if ((!pw && (lstatbuf.st_mode & 07533) != 0400) ||
++	    (pw && (lstatbuf.st_mode & 07577) != 0400)) {
++		log_it(fname, getpid(), "BAD FILE MODE", tabname);
++		goto next_crontab;
++	}
++	if (lstatbuf.st_nlink != 1) {
++		log_it(fname, getpid(), "BAD LINK COUNT", tabname);
++		goto next_crontab;
++	}
++
+ 	if ((crontab_fd = open(tabname, O_RDONLY|O_NONBLOCK|O_NOFOLLOW, 0)) < OK) {
+ 		/* crontab not accessible?
+ 		 */
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Instead of doing the open first and then fstat(2) to prevent TOCTOU?
 
-iQIcBAEBCAAGBQJYfV+OAAoJEHb/MwWLVhi2MgsP/RhVEboMm9UMLEpF8m4ZYraO
-lDJaf20dpH2yKmiGnxl1ZGr3FxPdLW7TG50sJdJ6aJ6uXcI9j5mgNBsHP/d7Iccv
-i3oYr7QFGY+vTmi8HvXTCPVJmeGLZiniUWZaGmnblWkRHBlBU1zOrv+C3R78BvGR
-XcrYX/E6fUSZEVe0kdb+8lMUG7NHpPqF3xsp1Ys1Yoyj2AAt2EkEP9sR0qc3xD0X
-69IRLfV4v6KNzqYp72uJ7JrETKY0VKAGjM1PKRtLZdcEL1HJBHL1J/BkvjtHH3hk
-cEEROgbamXFX2B2LjQAFdL4emcAIvPRBztR4cojmNwi3lEwP3ZsLjTIWyX+3ZyCv
-V3TAy9tDdO9e8oBUGQSdMzSH8zh6Yb0alJZYcBRNOQhgDnxuLGtKEbSiE3+lbNmJ
-Z4mTR4xlH9KGjFkseHmdD0UoNUJrYNzokeoy0sXJUkBDUERkc935gmeUWAKnJ/s1
-U5MZpyKydRJsk+qulp7r+1I2MRXChx6kZiKkRu2iI931GH2f/TGiQxB6I7JZqtLX
-mhq+UUR6aYoSKxNAWciDiTrrbFuAyHtQ90uvwxTU/ySpzHuJN4CUPJ3iUzjauPMa
-BOfP6lhwlV6t/1x5volP5A55xNsyhCnmguacdoK0r8YkPjfIyraEd8VX17sCq2FS
-DJIvlsjb/y8uB9Dh5KYN
-=etAz
------END PGP SIGNATURE-----
+christos
