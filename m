@@ -1,4 +1,9 @@
-Received: (qmail 3243 invoked by uid 550); 4 May 2026 16:06:33 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["995" "Friday" "9" "June" "2017" "11:47:55" "-0400" "Christos Zoulas" "christos@zoulas.com" "<20170609154755.2597617FDAB@rebar.astron.com>" "33" "Re: [oss-security] Vixie/ISC Cron group crontab to root escalation" "^Date:" nil nil "6" "2017060915:47:55" "[oss-security] Vixie/ISC Cron group crontab to root escalation" (number mark "        christos@zou Jun  9   33/995   " thread-indent "\"Re: [oss-security] Vixie/ISC Cron group crontab to root escalation\"\n") "<20170608180534.GA27098@openwall.com>" ("<20170608180534.GA27098@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 10097 invoked by uid 550); 9 Jun 2017 16:22:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,59 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17416 invoked from network); 9 Jun 2017 15:48:07 -0000
+In-Reply-To: <20170608180534.GA27098@openwall.com>
+       from Solar Designer (Jun  8,  8:05pm)
+Organization: Astron Software
+X-Mailer: Mail User's Shell (7.2.6 beta(4.pl1)+dynamic 20000103)
+Message-Id: <20170609154755.2597617FDAB@rebar.astron.com>
+Date: Fri, 9 Jun 2017 11:47:55 -0400
+From: christos@zoulas.com (Christos Zoulas)
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22078 invoked from network); 4 May 2026 07:11:02 -0000
-X-KPN-MessageId: 62aebbed-4788-11f1-afe2-005056994fde
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=xs4all.nl; s=xs4all01;
-	h=content-type:mime-version:message-id:subject:to:from:date;
-	bh=T+ep45eVg6NZyI8DYiY0uqeCpNfcBgnB5WZtmcCYr1w=;
-	b=Stl3317rScGaVdqXb4IHJEFREztHCLX25/oeMnq8SWCo1NYHUAmwRHgJ/PQdrjGQecnJuunALwt2S
-	 cqaXL85znEYz/EtBbjdbkFbAPZJgAFZHVBqPv26+ZMXRIU0mTGITSw2Q8Hbb42ggbTbKguQbLuzyQd
-	 7WF1EPxNGub2+xoXNCoxMKSAEVFHjkf2Del94+bHwIOAJBiBXJcl/anjH0V5Fa1glMRI4IqgdevNMn
-	 2VNkQzSYamNa+D80DgGDd55545pRqMiojDeJMNRA9n+ZpmuUIlo9S+5lq9xcHtPzSbg/O7CIoIOPrN
-	 4FSWVWeh2eyK12bW7NraeGNePL5Plpw==
-X-KPN-MID: 33|jMnLIGlq4krVzmoGlc7dr409DZBml+56m7Ua9lc5Y4sx/B0YkN8r42nbsYkTU/8
- bFx+sRppMCxaZkLx+RNIzwQFcCb0xRHS75S0ibMhPH80=
-X-KPN-VerifiedSender: Yes
-X-CMASSUN: 33|tBNRqbKXCEJACXSXD8+tJewnARrNwTTYS0a4BGzf9qt98UNKpeINKlSTX99sdeR
- 6w/OhfyFr6+FHfRtVzyryAQ==
-X-Originating-IP: 82.169.217.143
-Date: Mon, 4 May 2026 09:10:51 +0200
-From: Jeroen Roovers <jer@xs4all.nl>
-To: Sam James <sam@gentoo.org>
-Cc: oss-security@lists.openwall.com, Taeyang Lee <0wn@theori.io>, Brad
- Spengler <spender@grsecurity.net>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Solar Designer <solar@openwall.com>
-Message-ID: <20260504091051.734f6e7e@del.fritz.box>
-In-Reply-To: <878qa0b1o9.fsf@gentoo.org>
-References: <afJorKIje4O6dXbH@netmeister.org>
-	<87v7d4b7a3.fsf@gentoo.org>
-	<87jytkb2gv.fsf@gentoo.org>
-	<878qa0b1o9.fsf@gentoo.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.50; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Precise disclosure contents for copyfail (Re:
- [oss-security] CVE-2026-31431: CopyFail: linux local privilege scalation)
+Subject: Re: [oss-security] Vixie/ISC Cron group crontab to root escalation
+To: oss-security@lists.openwall.com
 
-On Sun, 03 May 2026 22:53:10 +0100
-Sam James <sam@gentoo.org> wrote:
+On Jun 8,  8:05pm, solar@openwall.com (Solar Designer) wrote:
+-- Subject: [oss-security] Vixie/ISC Cron group crontab to root escalation
 
-> There's also a link to the kernel MLs from 2026-03-27 (!) where they
-> say "page-cache exposure" [0].
+In this patch:
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/vixie-cron/vixie-cron-4.1.20040916-owl-crond.diff
 
-> [0]
-> https://lore.kernel.org/all/CAH-2XvLaZR+Ee+q35wXexKEh3AE7R0w1AGC__kV9To_6sLMdhQ@mail.gmail.com/
+Why do:
 
-Or perhaps even a day earlier:
++	if (lstat(tabname, &lstatbuf) < OK) {
++		log_it(fname, getpid(), "CAN'T LSTAT", tabname);
++		goto next_crontab;
++	}
++	if (!S_ISREG(lstatbuf.st_mode)) {
++		log_it(fname, getpid(), "NOT REGULAR", tabname);
++		goto next_crontab;
++	}
++	if ((!pw && (lstatbuf.st_mode & 07533) != 0400) ||
++	    (pw && (lstatbuf.st_mode & 07577) != 0400)) {
++		log_it(fname, getpid(), "BAD FILE MODE", tabname);
++		goto next_crontab;
++	}
++	if (lstatbuf.st_nlink != 1) {
++		log_it(fname, getpid(), "BAD LINK COUNT", tabname);
++		goto next_crontab;
++	}
++
+ 	if ((crontab_fd = open(tabname, O_RDONLY|O_NONBLOCK|O_NOFOLLOW, 0)) < OK) {
+ 		/* crontab not accessible?
+ 		 */
 
-$ TZ=GMT date -d 'Fri, 27 Mar 2026 02:43:23 +0900'
-Thu 26 Mar 17:43:23 GMT 2026
+Instead of doing the open first and then fstat(2) to prevent TOCTOU?
 
-
-
-Kind regards,
-     jer
+christos
