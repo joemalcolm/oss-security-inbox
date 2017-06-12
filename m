@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/13
-Message-ID: <20170623212041.GT26922@waldemar-brodkorb.de>
-Date: Fri, 23 Jun 2017 23:20:41 +0200
-From: Waldemar Brodkorb <wbx@...ibc-ng.org>
-To: fefe <qbenjin@...com>
-Cc: Peter Korsgaard <peter@...sgaard.com>, "Anthony G. Basile" <basile@...eharbor.net>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: two vulns in  uClibc-0.9.33.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/12/4
+Message-ID: <0e26614d-b994-e8d1-1bce-c33038ad2232@oracle.com>
+Date: Mon, 12 Jun 2017 14:31:57 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Casper.Dik@...cle.com
+Subject: Re: Vixie/ISC Cron group crontab to root escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-fefe wrote,
-
-> >> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
+On 06/12/17 11:15 AM, Casper.Dik@...cle.com wrote:
 > 
-> >uClibc is dead. Active development happens on uClibc-ng. Is uClibc-ng
-> also affected by these issues?
+>> On Jun 9,  6:27pm, solar@...nwall.com (Solar Designer) wrote:
+>> -- Subject: Re: [oss-security] Vixie/ISC Cron group crontab to root escalatio
+>>
+>> | Oh, I did in fact mention this in the private discussion, so I'll quote:
+>> |
+>> | | Another detail: somehow in Owl we introduced lstat() prior to open, and
+>> | | check lstat()'s struct for all the required properties before proceeding
+>> | | with open() with O_NOFOLLOW.  Then we check that st_dev/st_ino stayed
+>> | | the same.  We also kept the post-open() checks.  I don't recall exactly
+>> | | why we added this, but maybe because of the possibility of side-effects
+>> | | on open() for hard links to device files (like with tape drives).  And
+>> | | it looks like we neglected to add the same for at jobs (perhaps didn't
+>> | | revisit this when support for at jobs appeared via our update to later
+>> | | OpenBSD code) - maybe we should.
+>>
+>> Thanks, perhaps a comment in the code can't hurt...
+>> Or even O_NODEV which does not exist, or O_PATH (linux only)..
 > 
-> 
-> uclibc_ng is also affected.
- 
-I tried to cross-compile attached code and run it in
-qemu-system-arm.
+> As there is a O_DIRECTORY it would be more orthogonal to have O_REGULAR
+> (open only a regular file).  But that becomes more and more icky as we're
+> running out of 32 bits of O_*)
 
-What should be the result?
+If we're adding flags to open() instead of defining one per file type it
+seems like it would be better to define O_MATCH_IFMT to require that the
+file's (mode & S_IFMT) match the (mode & S_IFMT) passed in the third
+argument to open.
 
-I see a segfault for poc2.c. But this also happens with glibc
-based system.
-
-Is the complete app code just plain wrong?
-Can you provide full application code and the results showing the
-issue?
-
-best regards
- Waldemar
-
-View attachment "poc1.c" of type "text/x-csrc" (335 bytes)
-
-View attachment "poc2.c" of type "text/x-csrc" (458 bytes)
+-- 
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
