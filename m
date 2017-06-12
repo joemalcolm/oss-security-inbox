@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/7
-Message-ID: <20170613152313.te53ju5sh77ptnix@jwilk.net>
-Date: Tue, 13 Jun 2017 17:23:13 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: OpenJDK: java(1): untrusted search path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/12/1
+Message-ID: <alpine.LFD.2.20.1706121430420.20327@wniryva>
+Date: Mon, 12 Jun 2017 14:33:33 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2017-9524 Qemu: nbd: segmentation fault due to client non-negotiation
 Content-Type: text/plain; charset=utf-8
 
-Running "java -help" can load code from a subdirectory of cwd:
+    Hello,
 
-    $ javac launcher_en.java
-    $ mkdir -p sun/launcher/resources/
-    $ mv launcher_en.class sun/launcher/resources/
-    $ java -help
-     _______
-    < pwned >
-     -------
-            \   ^__^
-             \  (oo)\_______
-                (__)\       )\/\
-                    ||----w |
-                    ||     ||
+Quick Emulator(Qemu) built with the Network Block Device(NBD) Server support 
+is vulnerable to a null pointer dereference issue. It could occur while 
+releasing a client, which was not initialised due to failed negotiation.
 
-This happens because:
+A remote user/process could use this flaw to crash the qemu-nbd server 
+resulting in DoS.
 
-* By default (i.e. when CLASSPATH env var was unset and neither -cp nor -jar 
-was specified), java sets "." as the user class path:
-https://docs.oracle.com/javase/8/docs/technotes/tools/findingclasses.html#userclass
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-05/msg06240.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-06/msg02321.html
 
-* The help message is apparently supposed to be internationalized.
+'CVE-2017-9524' assigned via -> https://cveform.mitre.org/
 
-* The Java's localization machinery loads classes:
-https://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html
-
-
-On Debian systems, jarwrapper (a binfmt-misc thing for running executable jar 
-files) is affected. It contains the following code:
-
-    if java -d32 2>&1 | grep "does not support" > /dev/null; then
-    ...
-
-On 32-bit systems, this causes java to print the help message.
-
--- 
-Jakub Wilk
-
-View attachment "launcher_en.java" of type "text/x-java" (413 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
