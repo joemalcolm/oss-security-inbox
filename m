@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1428" "Monday" "16" "August" "2021" "14:04:06" "-0500" "Eric Blake" "eblake@redhat.com" nil "32" "Re: [oss-security] STARTTLS vulnerabilities" "^Date:" nil nil "8" nil nil (number mark "        eblake@redha Aug 16   32/1428  " thread-indent "\"Re: [oss-security] STARTTLS vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] STARTTLS vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3681" "Monday" "12" "June" "2017" "19:27:51" "+0200" "Alexander Potapenko" "glider@google.com" "<CAG_fn=W+kiQAmmtXeEwECmyabiJwaEQVyxo0D29-PTXwzgF9jg@mail.gmail.com>" "85" "[oss-security] Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a data race in ALSA timer" "^Cc:" nil nil "6" "2017061217:27:51" "[oss-security] Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a data race in ALSA timer" (number mark "        glider@googl Jun 12   85/3681  " thread-indent "\"[oss-security] Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a data race in ALSA timer\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22014 invoked by uid 550); 16 Aug 2021 19:04:23 -0000
+Received: (qmail 13492 invoked by uid 550); 12 Jun 2017 17:34:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,127 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21993 invoked from network); 16 Aug 2021 19:04:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1629140651;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4vHRY+pF65RTmNkzz5Kuta1LnEmOWBCCdxVYbWw3uFI=;
-	b=bnYo6/Gi0hxsd1W/rEfib27jEIgh7xs2sg42xkdKcYtIVz1PzEhDlVFL0YGn4Y7VJGJJTj
-	SkJgj+58+hRFeR9M8+NNszGB1qtOJuBF4A8icYnmcE/AnYmyK7vbzpkJ+w1kllA/NgZwPk
-	ijc/8IB14H6iPqydbnSPxhZxuvqNnyA=
-X-MC-Unique: mTwWec8rP7yC2RaY54VbyQ-1
-Message-ID: <20210816190406.fmt3myvwvycywfv4@redhat.com>
-References: <20210810122113.3fe65cc9@computer>
- <20210810134156.GF1599104@hal>
- <20210811081634.15143171@computer>
- <20210811153158.gt6uk4qqaqw7lzo2@redhat.com>
- <20210811180235.65375940@computer>
+Received: (qmail 7408 invoked from network); 12 Jun 2017 17:28:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=JD9h3VmTgarqAn1DXQ27fTk9oig9j8wMSocsPibvo60=;
+        b=Cx9UtZzav3m3iYMJeHx5vVGVbaxCx58XGNQ1IlQMW9m6Zm7u/4HPXK8leuz4AANoJA
+         s8t2kCi1cmom7BtbWFu2c0O9vMn2fNaAzcZp5MTYruJkOxTM/MlvK1b+PyhHKpyhSbmW
+         4DLi+NYIACoEKc8C1xTie4N5ejFAr1CV8vxj2b6bKKFZo8sqdFC/IKolc9S0JhH4uGv9
+         t1zU24uJqgl/HZSKIaNcfxdohWrsoqlvcXxDfMEoq63QDQKywQz0wBXZUPPR61KP3EVI
+         tPquNTt65gmdmCDB/3/l6Q5KZIVSdCPSrexJJtO01sJ6XKpj0tXVVTlimKAguh2k/g9v
+         lQ/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=JD9h3VmTgarqAn1DXQ27fTk9oig9j8wMSocsPibvo60=;
+        b=rFIEi75glN0wvTG311fbQjH/AZ5BaUOX+ks4S+e48LZE/lFLW2srueOfXop8IcnvhK
+         +uPFzHJ887OainE4z1BbKXmpv31e29+bvRMchGjHOl3PizTfTYi3B0r3T1WCAkBNvdhc
+         t7wpV9B6k/rf3RwwOQJ/eoM5X8xAExYL3Dpbb/3BUkfn6XTJCVoADhJKAJ3/KHzxeVJ8
+         zFzxco63kknZy1LSyH/W/D025p16ZU3ELBnerUQQU3nhOgnQeE4uRXizNGgDlEfwcIKp
+         j13N/f8s/zqgTDQtQRi2TkhK/DWIHvqAiePZQNkmo6QPGYTnUfwu4Ukz83DsOHpIV7Xj
+         X2gQ==
+X-Gm-Message-State: AODbwcCq0lYpz0fYGblP5tRwTFn4Oa1r5SFDx10MAdbI2zZmcYLQKBnZ
+	8qzdAGqRqx0Z8pI2PZ1/dn7nSHaOKP7+CkRFhg==
+X-Received: by 10.31.61.13 with SMTP id k13mr20686679vka.43.1497288472080;
+ Mon, 12 Jun 2017 10:27:52 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210811180235.65375940@computer>
-User-Agent: NeoMutt/20210205-719-68949a
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=eblake@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Date: Mon, 16 Aug 2021 14:04:06 -0500
-From: Eric Blake <eblake@redhat.com>
+Message-ID: <CAG_fn=W+kiQAmmtXeEwECmyabiJwaEQVyxo0D29-PTXwzgF9jg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Cc: Dmitriy Vyukov <dvyukov@google.com>, Kostya Serebryany <kcc@google.com>, Takashi Iwai <tiwai@suse.de>, 
+	Andrey Konovalov <andreyknvl@google.com>
+Date: Mon, 12 Jun 2017 19:27:51 +0200
+From: Alexander Potapenko <glider@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] STARTTLS vulnerabilities
+Subject: [oss-security] Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a data race in ALSA timer
 To: oss-security@lists.openwall.com
 
-On Wed, Aug 11, 2021 at 06:02:35PM +0200, Hanno Böck wrote:
-> On Wed, 11 Aug 2021 10:31:58 -0500
-> Eric Blake <eblake@redhat.com> wrote:
-> 
-> > Not mentioned in that list was ndb, but as far as I can tell, that
-> > project has already documented the ramifications of opportunistic
-> > encryption as being a security risk, and all known implementations
-> > (both servers and clients) with TLS support have a mode of execution
-> > that ensures the connection is dropped if a downgrade attack is
-> > attempted:
-> 
-> I should point out that our research is not on simple downgrade attacks.
-> These are kinda obvious by the design of STARTTLS if you implement it
-> in an opportunistic way.
-> 
-> The buffering vulnerabilities we found are in STARTTLS implementations
-> that have the expectation to enforce a secure connection, but suffer
-> from various vulnerabilities in the implementation.
+Hi all,
 
-Thank you for persisting.  As a result, I have found a security bug in
-nbdkit, which improperly cached the result of NBD_OPT_STRUCTURED_REPLY
-from a plaintext MitM attacker prior to acting on NBD_OPT_STARTTLS, to
-the potential confusion of a client that does not expect structured
-replies.  I will follow up again when I have a CVE number.
+Until recently, /dev/snd/timer driver was prone to a data race, which
+led to uninitialized memory from the kernel heap being copied to the
+userspace.
+KernelMemorySanitizer (http://github.com/google/kmsan) reported it as
+follows (line numbers relative to 4.11-rc5):
 
-https://listman.redhat.com/archives/libguestfs/2021-August/msg00077.html
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+BUG: KMSAN: use of uninitialized memory in snd_timer_user_read+0x6c4/0xa10
+CPU: 0 PID: 1037 Comm: probe Not tainted 4.11.0-rc5+ #2739
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Bochs 01/01/2011
+Call Trace:
+ __dump_stack lib/dump_stack.c:16
+ dump_stack+0x143/0x1b0 lib/dump_stack.c:52
+ kmsan_report+0x12a/0x180 mm/kmsan/kmsan.c:1007
+ kmsan_check_memory+0xc2/0x140 mm/kmsan/kmsan.c:1086
+ copy_to_user ./arch/x86/include/asm/uaccess.h:725
+ snd_timer_user_read+0x6c4/0xa10 sound/core/timer.c:2004
+ do_loop_readv_writev fs/read_write.c:716
+ __do_readv_writev+0x94c/0x1380 fs/read_write.c:864
+ do_readv_writev fs/read_write.c:894
+ vfs_readv fs/read_write.c:908
+ do_readv+0x52a/0x5d0 fs/read_write.c:934
+ SYSC_readv+0xb6/0xd0 fs/read_write.c:1021
+ SyS_readv+0x87/0xb0 fs/read_write.c:1018
+ entry_SYSCALL_64_fastpath+0x13/0x94 arch/x86/entry/entry_64.S:204
+RIP: 0033:0x43fb70
+RSP: 002b:00007f736e41a930 EFLAGS: 00000293 ORIG_RAX: 0000000000000013
+RAX: ffffffffffffffda RBX: 00007f736e41b700 RCX: 000000000043fb70
+RDX: 0000000000000001 RSI: 00007f736e41a980 RDI: 0000000000000003
+RBP: 00007ffe39b29920 R08: 0000000000000000 R09: 00007f736e41b700
+R10: 00007f736e41b9d0 R11: 0000000000000293 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007f736e41b9c0 R15: 00007f736e41b700
+origin: 00000000b2800057
+ save_stack_trace+0x59/0x60 arch/x86/kernel/stacktrace.c:59
+ kmsan_save_stack_with_flags mm/kmsan/kmsan.c:352
+ kmsan_internal_poison_shadow+0xb1/0x1a0 mm/kmsan/kmsan.c:247
+ kmsan_kmalloc+0x7f/0xe0 mm/kmsan/kmsan.c:387
+ __kmalloc+0x1bb/0x260 mm/slub.c:3788
+ kmalloc ./include/linux/slab.h:495
+ snd_timer_user_tselect sound/core/timer.c:1636
+ __snd_timer_user_ioctl sound/core/timer.c:1914
+ snd_timer_user_ioctl+0x2c46/0x5af0 sound/core/timer.c:1944
+ vfs_ioctl fs/ioctl.c:45
+ do_vfs_ioctl+0xa8e/0x2060 fs/ioctl.c:685
+ SYSC_ioctl+0x20d/0x2a0 fs/ioctl.c:700
+ SyS_ioctl+0x87/0xb0 fs/ioctl.c:691
+ entry_SYSCALL_64_fastpath+0x13/0x94 arch/x86/entry/entry_64.S:204
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.           +1-919-301-3266
-Virtualization:  qemu.org | libvirt.org
+The above means that the heap buffer allocated in
+snd_timer_user_tselect() while handling ioctl(fd,
+SNDRV_TIMER_IOCTL_SELECT, ...) sometimes remains uninitialized till
+it's being copied to user space by a readv() call.
 
+The bug allows a local user having access to /dev/snd/timer to sniff
+data belonging to other users, if that data was previously copied to
+the kernel space.
+
+Takashi Iwai has fixed the issue in the upstream kernel in the
+following commits:
+https://github.com/torvalds/linux/commit/d11662f4f798b50d8c8743f433842c3e40=
+fe3378
+https://github.com/torvalds/linux/commit/ba3021b2c79b2fa9114f92790a99deb27a=
+65b728
+
+I'll be disclosing the PoC exploit for this bug on Tuesday, June 20,
+16:00 CEST, unless other exploits for the same issue appear earlier.
+
+--=20
+Alexander Potapenko
+Software Engineer
+
+Google Germany GmbH
+Erika-Mann-Stra=C3=9Fe, 33
+80636 M=C3=BCnchen
+
+Gesch=C3=A4ftsf=C3=BChrer: Matthew Scott Sucherman, Paul Terence Manicle
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
