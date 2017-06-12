@@ -1,48 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/3
-Message-ID: <c5fea488-4723-ae60-3a48-15a9c234bb70@gmail.com>
-Date: Thu, 27 Apr 2017 10:09:13 +0200
-From: Emilio Pozuelo Monfort <pochu27@...il.com>
-To: oss-security@...ts.openwall.com, Antoine Beaupré <anarcat@...ngeseeds.org>
-Subject: Re: kedpm: Information leak via the command history file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/12/3
+Message-Id: <201706121815.v5CIF6jp021733@room101.nl.oracle.com>
+Date: Mon, 12 Jun 2017 20:15:06 +0200
+From: Casper.Dik@...cle.com
+To: oss-security@...ts.openwall.com
+Subject: Re: Vixie/ISC Cron group crontab to root escalation 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On 26/04/17 22:52, Antoine Beaupré wrote:
-> A vulnerability was discovered in the kedpm password manager that may
-> expose the master password when changed, if passed on the commandline.
-> 
-> Example, good:
-> 
-> kedpm> passwd
-> New password:
-> Repeat password:
-> Password changed.
-> kedpm>
-> 
-> Example, bad:
-> 
-> kedpm:/> passwd bar
-> Password changed
-> 
-> The former will show "passwd" in the ~/.kedpm/history file while the
-> latter will show "passwd bar" in the history file, divulging the
-> password in clear text.
-> 
-> Also, all password *names* that are created or consulted are saved in
-> the history file, something that users may not expect (although you have
-> to wonder how they thought history worked).
-> 
-> This is documented in the Debian bugtracker:
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=860817
-> 
-> But I would like to get a CVE assigned for wider diffusion.
+>On Jun 9,  6:27pm, solar@...nwall.com (Solar Designer) wrote:
+>-- Subject: Re: [oss-security] Vixie/ISC Cron group crontab to root escalatio
+>
+>| Oh, I did in fact mention this in the private discussion, so I'll quote:
+>| 
+>| | Another detail: somehow in Owl we introduced lstat() prior to open, and
+>| | check lstat()'s struct for all the required properties before proceeding
+>| | with open() with O_NOFOLLOW.  Then we check that st_dev/st_ino stayed
+>| | the same.  We also kept the post-open() checks.  I don't recall exactly
+>| | why we added this, but maybe because of the possibility of side-effects
+>| | on open() for hard links to device files (like with tape drives).  And
+>| | it looks like we neglected to add the same for at jobs (perhaps didn't
+>| | revisit this when support for at jobs appeared via our update to later
+>| | OpenBSD code) - maybe we should.
+>
+>Thanks, perhaps a comment in the code can't hurt...
+>Or even O_NODEV which does not exist, or O_PATH (linux only)..
 
-You need to request it at https://cveform.mitre.org/
+As there is a O_DIRECTORY it would be more orthogonal to have O_REGULAR 
+(open only a regular file).  But that becomes more and more icky as we're 
+running out of 32 bits of O_*)
 
-You can follow up here with the number when you get one assigned.
+Casper
 
-Cheers,
-Emilio
