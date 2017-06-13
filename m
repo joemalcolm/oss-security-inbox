@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/4
-Message-ID: <20170923135727.2uys3wgimmyczgy2@perpetual.pseudorandom.co.uk>
-Date: Sat, 23 Sep 2017 14:57:27 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/11
+Message-ID: <e84de9d7-409e-1346-87a6-0950030449fe@insomniasec.com>
+Date: Wed, 14 Jun 2017 09:24:26 +1200
+From: Murray McAllister <murray.mcallister@...omniasec.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+Subject: Re: Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory in vmw_gb_surface_define_ioctl()
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 23 Sep 2017 at 13:44:18 +0200, Hanno Böck wrote:
-> Debian+Ubuntu took more than a day after disclosure to fix. According
-> to the Debian bug tracker the bug got only opened after the public
-> disclosure[2].
+On 13/06/17 15:39, Murray McAllister wrote:
+> The vmw_gb_surface_define_ioctl() function (accessible via
+> DRM_IOCTL_VMW_GB_SURFACE_CREATE) defines a backup_handle variable but
+> does not give it an initial value. If you attempt to create a GB
+> surface, and provide a previously-allocated DMA buffer to be used as a
+> backup buffer, the backup_handle variable does not get written to and is
+> then later returned to user-space.
+> 
+> Upstream commit:
+> 
+> https://github.com/torvalds/linux/commit/07678eca2cf9c9a18584e546c2b2a0d0c9a3150c
+> 
+> CVE:
+> 
+> I'll request one now and reply once I have one.
+> 
 
-The Debian bug tracker (bugs.debian.org) is always public and has no
-mechanism for embargoing individual bugs, so it is never used before
-public disclosure.
+MITRE assigned CVE-2017-9605.
 
-It's entirely possible that your conclusion is correct in this case
-(I don't have any more information than you do on whether the Debian
-security team or package maintainer made use of the embargo period
-for this vulnerability), but the late opening of a bug is not evidence
-that no work was done before public disclosure.
-
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777545 is an example
-of a vulnerability for which the package maintainer (me) was definitely
-aware before the bug was filed.
-
-    S
+Thanks
