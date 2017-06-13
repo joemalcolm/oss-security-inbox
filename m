@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/3
-Message-ID: <455b67a9-6d14-b374-8140-51546a53738d@redhat.com>
-Date: Thu, 6 Apr 2017 08:04:47 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/2
+Message-ID: <58b3f24c-90fe-a92e-1ae8-dc8ad702401f@insomniasec.com>
+Date: Tue, 13 Jun 2017 15:39:26 +1200
+From: Murray McAllister <murray.mcallister@...omniasec.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: libxslt math.random issue
+Subject: Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory in vmw_gb_surface_define_ioctl()
 Content-Type: text/plain; charset=utf-8
 
-On 04/06/2017 07:44 AM, Marcus Meissner wrote:
+The vmw_gb_surface_define_ioctl() function (accessible via
+DRM_IOCTL_VMW_GB_SURFACE_CREATE) defines a backup_handle variable but
+does not give it an initial value. If you attempt to create a GB
+surface, and provide a previously-allocated DMA buffer to be used as a
+backup buffer, the backup_handle variable does not get written to and is
+then later returned to user-space.
 
-> FWIW, why is glibc not doing srand(RANDOMVECTOR) during startup... :/
+Upstream commit:
 
-The C standard does not allow it.
+https://github.com/torvalds/linux/commit/07678eca2cf9c9a18584e546c2b2a0d0c9a3150c
 
-”
-If rand is called before any calls to srand have been made, the same 
-sequence shall be generated as when srand is first called with a seed 
-value of 1.
-”
+CVE:
 
-Thanks,
-Florian
+I'll request one now and reply once I have one.
+
+Chur
