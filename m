@@ -1,35 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/2
-Message-ID: <alpine.LFD.2.20.1702131021590.18948@wniryva>
-Date: Mon, 13 Feb 2017 10:30:38 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-5956 virglrenderer: Virglrenderer: OOB access while in vrend_draw_vbo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/10
+Message-ID: <yxvPHItNI50y6jtPr94_GiCzhOzViGCZGO2BZ6xprBuRH4unl1EP0tRDPhgheue19XEBukMCxbeOOLsh6ehCrsZaNIwbOMat-Q9v7TNOFYQ=@itk.swiss>
+Date: Tue, 13 Jun 2017 16:48:04 -0400
+From: Stiepan <stie@....swiss>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: OpenJDK: java(1): untrusted search path
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi, confirmed on Ubuntu 32-bit running OpenJDK 1.8.0_131 (modified slightly your exploit to use "echo pwned" instead of using cowsay pwned).
 
-Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
-for the virtio GPU, is vulnerable to an OOB array access issue. It could occur 
-when in vrend_draw_vbo.
+Stiepan
 
-A guest user/process could use this flaw to crash the Qemu process instance 
-resulting DoS.
+-------- Original Message --------
+Subject: [oss-security] OpenJDK: java(1): untrusted search path
+Local Time: June 13, 2017 3:23 PM
+UTC Time: June 13, 2017 3:23 PM
+From: jwilk@...lk.net
+To: oss-security@...ts.openwall.com
 
-Upstream patch:
----------------
-   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=a5ac49940c40ae415eac0cf912eac7070b4ba95d
+Running "java -help" can load code from a subdirectory of cwd:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1421073
+$ javac launcher_en.java
+$ mkdir -p sun/launcher/resources/
+$ mv launcher_en.class sun/launcher/resources/
+$ java -help
+_______
+&lt; pwned &gt;
+-------
+\ ^__^
+\ (oo)\_______
+(__)\ )\/\
+||----w |
+|| ||
 
-This issue was reported by Li Qiang of 360.cn Inc.
+This happens because:
 
-'CVE-2017-5956' assigned via -> https://cveform.mitre.org/
+* By default (i.e. when CLASSPATH env var was unset and neither -cp nor -jar
+was specified), java sets "." as the user class path:
+https://docs.oracle.com/javase/8/docs/technotes/tools/findingclasses.html#userclass
 
-Thank you.
+* The help message is apparently supposed to be internationalized.
+
+* The Java"s localization machinery loads classes:
+https://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html
+
+On Debian systems, jarwrapper (a binfmt-misc thing for running executable jar
+files) is affected. It contains the following code:
+
+if java -d32 2&gt;&amp;1 | grep "does not support" &gt; /dev/null; then
+...
+
+On 32-bit systems, this causes java to print the help message.
+
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Jakub Wilk
