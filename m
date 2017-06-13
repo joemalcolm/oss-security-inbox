@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2022" "Friday" "11" "December" "2015" "10:36:02" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151211153602.450948BC15E@smtpvmsrv1.mitre.org>" "57" "[oss-security] Re: CVE request - read underflow in libpng 1.2.55, 1.0.65, 1.4.18, and 1.5.25 (pngwutil.c)" "^Cc:" nil nil "12" "2015121115:36:02" "[oss-security] Re: CVE request - read underflow in libpng 1.2.55, 1.0.65, 1.4.18, and 1.5.25 (pngwutil.c)" (number mark "        cve-assign@m Dec 11   57/2022  " thread-indent "\"[oss-security] Re: CVE request - read underflow in libpng 1.2.55, 1.0.65, 1.4.18, and 1.5.25 (pngwutil.c)\"\n") "<2064c74f.134f0.1518c34b429.Coremail.xiaoqixue_1@163.com>" ("<2064c74f.134f0.1518c34b429.Coremail.xiaoqixue_1@163.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7806" "Tuesday" "13" "June" "2017" "16:42:06" "+0000" "Fiedler Roman" "Roman.Fiedler@ait.ac.at" "<2ECE9D9EEF1F524185270138AE23265955AB06DE@S0MSMAIL112.arc.local>" "141" "Re: [oss-security] Vixie/ISC Cron group crontab to root escalation" "^Date:" nil nil "6" "2017061316:42:06" "[oss-security] Vixie/ISC Cron group crontab to root escalation" (number mark "        Roman.Fiedle Jun 13  141/7806  " thread-indent "\"Re: [oss-security] Vixie/ISC Cron group crontab to root escalation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12066 invoked by uid 550); 11 Dec 2015 15:36:15 -0000
+Received: (qmail 30001 invoked by uid 550); 13 Jun 2017 17:36:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,164 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12042 invoked from network); 11 Dec 2015 15:36:14 -0000
-In-Reply-To: <2064c74f.134f0.1518c34b429.Coremail.xiaoqixue_1@163.com>
-Message-Id: <20151211153602.450948BC15E@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, yuchen@mail.tsinghua.edu.cn
-Date: Fri, 11 Dec 2015 10:36:02 -0500 (EST)
-From: cve-assign@mitre.org
+Received: (qmail 28322 invoked from network); 13 Jun 2017 16:42:21 -0000
+Thread-Topic: [oss-security] Vixie/ISC Cron group crontab to root escalation
+Thread-Index: AdLkY/v1ebg3KZBPThaG0+Vfk+VFjg==
+Message-ID: <2ECE9D9EEF1F524185270138AE23265955AB06DE@S0MSMAIL112.arc.local>
+Accept-Language: en-US, de-AT
+Content-Language: de-DE
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.30.249.121]
+Content-Type: multipart/signed; micalg=2.16.840.1.101.3.4.2.1;
+	protocol="application/x-pkcs7-signature";
+	boundary="----=_NextPart_000_00E7_01D2E474.C1860210"
+MIME-Version: 1.0
+Date: Tue, 13 Jun 2017 16:42:06 +0000
+From: Fiedler Roman <Roman.Fiedler@ait.ac.at>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request - read underflow in libpng 1.2.55, 1.0.65, 1.4.18, and 1.5.25 (pngwutil.c)
-To: xiaoqixue_1@163.com
+Subject: Re: [oss-security] Vixie/ISC Cron group crontab to root escalation
+To: "fweimer@redhat.com" <fweimer@redhat.com>,
+        "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------=_NextPart_000_00E7_01D2E474.C1860210
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-> there is a underflow read in png_check_keyword in pngwutil.c in libpng-1.2.54
+> Von: Florian Weimer [mailto:fweimer@redhat.com]
+>
+> On 06/13/2017 02:32 PM, Fiedler Roman wrote:
+> > Well, partially: what O_PATH can do, you could also do before O_PATH
+> using
+> > repeated single-level open(NO_FOLLOW)/fstat-checks. So you had to do
+> all the
+> > verification by yourself.
+>
+> That's not completely accurate because open/close on device nodes can
+> have side effects (the classic example is a rewinding tape device).
+> O_PATH gives you an opportunity to perform these policy checks before
+> the side effect happens.
 
-> if the data of "key" is only ' ' (0x20), it will read a byte before the buffer in line 1288.
+So true, I know about this case. But my initial messages was not intended to 
+compare subtle differences O_PATH with other OS file access functionality 
+already available but - prove me wrong - to argue for extending open 
+functionality in general using features O_PATH to my knowledge cannot provide. 
+But all that content was removed in the first reply to the message.
 
-> it also impacts libpng 1.2.55, 1.0.65, 1.4.18, and 1.5.25 .
+LG Roman
 
->> The bug was introduced in libpng-0.90, was fixed in libpng-1.6.0, and will be
->> fixed in libpng-1.0.66, 1.2.56, 1.4.19, and 1.5.26.
+------=_NextPart_000_00E7_01D2E474.C1860210
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
 
-> https://sourceforge.net/p/libpng/bugs/244/
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG
+9w0BBwEAAKCCDL0wggX9MIID5aADAgECAgkAkvp1Fx1x2IMwDQYJKoZIhvcN
+AQELBQAwgawxCzAJBgNVBAYTAkFUMQ8wDQYDVQQIDAZWaWVubmExDzANBgNV
+BAcMBlZpZW5uYTEyMDAGA1UECgwpQUlUIEF1c3RyaWFuIEluc3RpdHV0ZSBv
+ZiBUZWNobm9sb2d5IEdtYkgxLTArBgNVBAsMJENlbnRlciBmb3IgRGlnaXRh
+bCBTYWZldHkgJiBTZWN1cml0eTEYMBYGA1UEAwwPQUlUIERTUyByb290IENB
+MB4XDTE3MDMwOTE1MTI1NloXDTI3MDMxMDE1MTI1NlowgawxCzAJBgNVBAYT
+AkFUMQ8wDQYDVQQIDAZWaWVubmExDzANBgNVBAcMBlZpZW5uYTEyMDAGA1UE
+CgwpQUlUIEF1c3RyaWFuIEluc3RpdHV0ZSBvZiBUZWNobm9sb2d5IEdtYkgx
+LTArBgNVBAsMJENlbnRlciBmb3IgRGlnaXRhbCBTYWZldHkgJiBTZWN1cml0
+eTEYMBYGA1UEAwwPQUlUIERTUyByb290IENBMIICIjANBgkqhkiG9w0BAQEF
+AAOCAg8AMIICCgKCAgEAxGoc+0dcZdumBz9T9+kB4HCojrjmR6k8jkDwW9jn
+X0tLqBuwlfWf7oTBfHRH0phPhShdTs0WRVqEGScWgnf2F8iS85aytRHRnW9r
+jeJH8xOxqFsugZbmOWGhw8kM9iw6GMyPKhfKh0Z6wUS8zAu3ZMj8QA2SZzkx
+iazZA8AjmfOjhkUStD5rYxEQueFSq5zgIN6sdQnTLbiLlRlSklGIgViBen8N
+fy9maZnXnyQSeqv+AJvusw4tq/qPA9fwXSf/4Fo+YgzbcoRpkpZ3GA3eArb6
+38l4uqLZekynVpzPO6fltw1nV0WNj02gw+NckHuHGBMTFWLzGtMx4TSvzXRd
+Ry4bApphNyefO8digyBC1Wzl2mL/w97tpTLMo9RHa1DMRd4CBV2YbdRkHAhR
+dsuAId2CXgFBS26OJjnccfgviqBlAKyDKR30D6DImvjFOS88IQ8uyP6Aedl+
+eQd5+4rCrf4Aclk+idD46d7QkxPJvyCIhLzjeWQU+O1GWEwiy1aKkA9WLF7K
+s88pJ2y7esHciEidwemSrS2ffaToa/K4VqBkmn3ppHjmj6D2gSdQstEhChPK
+xToF/LCQBQc6o0vpH4eUFkHM/aKxBu9sKwZDMIMumNPyox2l/ewa526uuS5O
+joPg83YDnxxDQ1XWrx4yIo+j1FtqROV4sEVFSgJZjV8CAwEAAaMgMB4wDwYD
+VR0TAQH/BAUwAwEB/zALBgNVHQ8EBAMCAQYwDQYJKoZIhvcNAQELBQADggIB
+AHNwDZs17W6Lg4Cxvax++h2WeTLGlnX+l1iybi5cG65rcwDrRdqPv/T7FUzy
+H7c2hLLFuyGZuCXrhrPkmknVYPNOt0SQtbZuf6mSC7HVgdcEwgBRVldfY7qy
+3KLMX6H2zZJF3eWWEWvctHGn1O9BD1I4vvSMD2FwSmy3hQq94/c/Wl2Tj6+Z
+eONFKS4vT2wNIFesBXDJRmKLermIenV7EkiBO5qxnN5Q25+W3WEkrbuiPO5s
+1KSQ1QxL88f+R9MJl8AJEXA2gzOBxKqMabJ/+NGUTt0yy7PJX0QucJ/ESwic
+VQBjMKmfJxRuPkqYRpd9BQ7mp2jNzqmMiXZsdfH7NZ7UKkNevNkA13fV7k3M
+D1oeZhe5MeVObzyB+hO7sb8fiNV5QSR1c3/uyAt3OEs7s1JD7vL8dmHULh5C
+sVHvdr8V7Zjm4wta+7DaLBtz0mhgb9OagLZy5vS6GSKqiuf996epsTAgBFpj
+JMOYYOEOlOzvnF11irl+7YMcHdOaHk+lccqwEe1oDNIjysM9aj8Uu2S9aEf6
+NACA5UB4DG27yptRsXMQwOu10/lQ1Ju5H6Ed4Od5+HoTFJvVfxuelHvggce9
+En1vQ9JTIm10MV1HwdkxQObweGZH4mt/HJkHKPm/X3hJCztmpOugQ50lMitC
+BOk095ufDatc6TWbeie9/nFoMIIGuDCCBKCgAwIBAgIhAPyFSUbhuCR1JHvV
+d3fEehZlFVSMVIrD5sezDgn+++vfMA0GCSqGSIb3DQEBCwUAMIGsMQswCQYD
+VQQGEwJBVDEPMA0GA1UECAwGVmllbm5hMQ8wDQYDVQQHDAZWaWVubmExMjAw
+BgNVBAoMKUFJVCBBdXN0cmlhbiBJbnN0aXR1dGUgb2YgVGVjaG5vbG9neSBH
+bWJIMS0wKwYDVQQLDCRDZW50ZXIgZm9yIERpZ2l0YWwgU2FmZXR5ICYgU2Vj
+dXJpdHkxGDAWBgNVBAMMD0FJVCBEU1Mgcm9vdCBDQTAeFw0xNzA2MDgwODU2
+MDJaFw0yMDA2MDgwODU2MDJaMIHSMQswCQYDVQQGEwJBVDEPMA0GA1UECAwG
+Vmllbm5hMQ8wDQYDVQQHDAZWaWVubmExMjAwBgNVBAoMKUFJVCBBdXN0cmlh
+biBJbnN0aXR1dGUgb2YgVGVjaG5vbG9neSBHbWJIMS0wKwYDVQQLDCRDZW50
+ZXIgZm9yIERpZ2l0YWwgU2FmZXR5ICYgU2VjdXJpdHkxFjAUBgNVBAMMDVJv
+bWFuIEZpZWRsZXIxJjAkBgkqhkiG9w0BCQEWF3JvbWFuLmZpZWRsZXJAYWl0
+LmFjLmF0MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2vuUrQTa
+CeYHx0XlnnFZbwNJIAYGtwcX+WNnTOVQpRk9aAImyomxvowzTyfXZVhNjqHw
+sBKN4+Xa7LA0GimyRN6v2eBelrrtJ7ziX+nvGVPlUy/EXgzY/knBX+DD2SCm
+rdMao4U+M3+zk0UhZLn0LnuKKxE9rL78E+8dszLTWh3W9jMYuD3Gx91vFxC5
+JfU8Bv7+4CZ/aMpG1j6ebRdyZhNb5H8O5RERPLszKNcEvc9pAeKxjMI/77kn
+BT92EDxVULD9HLaD/HLWsPP2H6/ELoe/RJ8Yxh2TSICKJGUk95Ryo9qWP+9X
+3zVfiVuwd00O2RX5Z4R9cVFawFRmrxC7yzHoJaHc6rpcw8ca7H9DBC5l4N4B
+wW/JJpdVaIlOKa0HkMZmxZ4rAuQakuvKj7w/6UR+dnoP4Ao5p5uozOfCY8OM
+8OOoh/tnI90Ubil1+niquspba1GiEPDuOzDmLb0le2LzOKf1PSckne2crUtD
+L1PS9lcbFjiiZN93qYPJoqp7QY9tSxF6wyiW9FY14s+TifpEWLjECMn4d4gA
+z+LWo+xG1suBelvPdSCusUFDWRGctewfi8rgOKR3Lb6HSE/1jppsMfNm1xbH
+aCv/y4XvrokA7OY+XdupTvf5SDQVDmilPocTlihqi4czUC7gKsRrP8Rgf3cx
+/xMGQAfoCgwpTY8CAwEAAaOBnDCBmTAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB
+/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwIgYDVR0R
+BBswGYEXcm9tYW4uZmllZGxlckBhaXQuYWMuYXQwNgYDVR0fBC8wLTAroCmg
+J4YlaHR0cDovL2Rzcy5haXQuYWMuYXQvQWl0RHNzUm9vdENhLmNybDANBgkq
+hkiG9w0BAQsFAAOCAgEAlmfH6IKcvELSCvkJN73s+fBUvZsreH+VM4nv6mwO
+G2otjCOimXdoJPIKAdQJMG02miEhSxcnhaCzM7D2NQcI5+Uj4kEsTNXaZ3PT
+p8pClVuVhvUX3xWTRaXypBu7+EYReGXDLrzQHAUS59T1vPTjGWz/uyzZV0T0
+l/h2Nu48JAgUZWqegXtS6A2L0dkyHpLg9v1DWynzSHe/TaiMvLcGhRFX25bv
+QKqmQpOSDJvyDjUzIEBl7ta+pFSCcFvOeJXl9Pyx9Jz1LrKlyHb20gq6BXxR
+dRl1l3h4H+Dxcm+dSh3tgMGxn649Jrr7aESqTgAWgv1JNfTXu0X1TB2ApD3d
+gzvpb6S+VMpzTUPG347m0kMzQ1VsZXbnXMceAd5PGEeCw8mfBY1SCscK87cC
+e4MARvGhKLsbOOn8gti2/iTEyDGTSvKRP1IStFzJdXRApz+tZu9K9vaWx/53
+jV+yhtZCGIXr1XkFp/RYsWap8Ml2q06h0Tgr1fardKPTrVXPs2THDVVN9eV9
+uUJHkqAxnHp8hg5zPVcc6p+Q1ZzxUyG2b4Q1FJ9jSk0upeIIDkv39mUh/q5x
+j35Oe+i3B0Juw3nA3dE7TH6T+XtD8v216UF0XzEiWwtnQxyxd+GQbO+fIzr1
+eyN1QUAY+d2CrAmlfr5zRBstbxx2nqx9xEXlE995gSYxggXPMIIFywIBATCB
+0jCBrDELMAkGA1UEBhMCQVQxDzANBgNVBAgMBlZpZW5uYTEPMA0GA1UEBwwG
+Vmllbm5hMTIwMAYDVQQKDClBSVQgQXVzdHJpYW4gSW5zdGl0dXRlIG9mIFRl
+Y2hub2xvZ3kgR21iSDEtMCsGA1UECwwkQ2VudGVyIGZvciBEaWdpdGFsIFNh
+ZmV0eSAmIFNlY3VyaXR5MRgwFgYDVQQDDA9BSVQgRFNTIHJvb3QgQ0ECIQD8
+hUlG4bgkdSR71Xd3xHoWZRVUjFSKw+bHsw4J/vvr3zANBglghkgBZQMEAgEF
+AKCCAs0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
+DxcNMTcwNjEzMTY0MjA2WjAvBgkqhkiG9w0BCQQxIgQgIAP9Gv7Fl0YqvFnb
+HlrlZvBMJ9SvsyyEodK0EJQ5OS8wgZMGCSqGSIb3DQEJDzGBhTCBgjALBglg
+hkgBZQMEASowCwYJYIZIAWUDBAEWMAoGCCqGSIb3DQMHMAsGCWCGSAFlAwQB
+AjAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwCwYJYIZIAWUDBAIB
+MAsGCWCGSAFlAwQCAzALBglghkgBZQMEAgIwBwYFKw4DAhowgeMGCSsGAQQB
+gjcQBDGB1TCB0jCBrDELMAkGA1UEBhMCQVQxDzANBgNVBAgMBlZpZW5uYTEP
+MA0GA1UEBwwGVmllbm5hMTIwMAYDVQQKDClBSVQgQXVzdHJpYW4gSW5zdGl0
+dXRlIG9mIFRlY2hub2xvZ3kgR21iSDEtMCsGA1UECwwkQ2VudGVyIGZvciBE
+aWdpdGFsIFNhZmV0eSAmIFNlY3VyaXR5MRgwFgYDVQQDDA9BSVQgRFNTIHJv
+b3QgQ0ECIQD8hUlG4bgkdSR71Xd3xHoWZRVUjFSKw+bHsw4J/vvr3zCB5QYL
+KoZIhvcNAQkQAgsxgdWggdIwgawxCzAJBgNVBAYTAkFUMQ8wDQYDVQQIDAZW
+aWVubmExDzANBgNVBAcMBlZpZW5uYTEyMDAGA1UECgwpQUlUIEF1c3RyaWFu
+IEluc3RpdHV0ZSBvZiBUZWNobm9sb2d5IEdtYkgxLTArBgNVBAsMJENlbnRl
+ciBmb3IgRGlnaXRhbCBTYWZldHkgJiBTZWN1cml0eTEYMBYGA1UEAwwPQUlU
+IERTUyByb290IENBAiEA/IVJRuG4JHUke9V3d8R6FmUVVIxUisPmx7MOCf77
+698wDQYJKoZIhvcNAQEBBQAEggIACkN4UNQUEVMI01zIJ1MBdVPLD/IAy/O0
+YtVVwKrv1mtJ9h4xWrFR3Dt7HAshNr+h7jteFeH9UTve2Ytt5rup5IgMJFfE
+RdFcXe/J3BApcyID50JRfhxkbUHD7cSC3M6S2F9+mIt/gszcAW8CtwWFkajF
+qGOI9zjgPrDH27uMULCt5/KC3wIlwYeut4+z2EOOHk35Nmq17RXiPIjzpgsf
+BM2nB/uujVNcxctwT7KHXm6c2rdGitdCA4jqmf6SeKU/JZZ7qbtIvOVcDnPV
+OtUWJkexUzWa/mIUMSocqQUU69yA6iIW1VBHMgzk3ayAdlmyrLC7sZpC13V/
+fEZ4JxwMecmTMez4JFPK3TJ50ZM4LB1tQZXCEjQoZ1m1cLc5229e7dqVzWIv
+Xw/dd5UZsOFTBX0L0Xf1hKNtjlnORsm/s+a1JHB5zkM+bJdKRpUagFsHboSf
+CNaZ2VF3fFdUNWbW4C+NTMkw3kT3uPevRJlb17582QARfxSd7Ef/YEZ70vQq
+02Haaxgg+OEZBFrWc0VAfoqOM3BZt8qEMmZDolhWlFrafQa9rvDcHYDEJTb8
+ArBgC14rMUoSTcqZRH38vTb/VgC3SFnO43k1Y7DyypfgUz/p72txt9vuinth
+MSK/7ia6kBnqMv4cIMgEA3wjhyZL6aQW4Ii2inj8Cmhu+wj6ROEAAAAAAAA=
 
-This says the problem was on a "1288 while (kp == ' ')" line but that
-seems very confusing because that line doesn't appear to be present in
-libpng-1.2.54 or any other version. As far as we can tell, the
-unpatched code has
-
-  while (*kp == ' ')
-
-and the patched code has
-
-  while (key_len && *kp == ' ')
-
-See
-
-  http://sourceforge.net/p/libpng/code/ci/d9006f683c641793252d92254a75ae9b815b42ed/
-
-Use CVE-2015-8540.
-
-Any instance of "kp ==" instead of "*kp ==" would have been a
-different type of problem but we don't think that problem ever
-occurred.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWab8eAAoJEL54rhJi8gl5SlYP/A779vmL+vtcTcO1vhnhU4Z/
-hr7Qm2C8sE7TUvgWc7bUqthJjNs4T2jEhgYGGcRHeuzm+qneBVkh3w2R5pD/gn04
-/sD2FH+c7MaAMGWWZYzudqgh2zNrVud9zY5VFjJTbNAWGsTnU6ix3A94TC6KUq9C
-zLVxrc7c5BxFhvgtg+rdb/TSj9lfzUXNJqVENGONUK3PDth567FvVJkJJPlvxPts
-yZx9467dLcR9yJSSWVsDPg4PqhIc2oU6f8fdt9tYI16lc7wMFRn71B2xuvcOvzRO
-yWYd8xNvfY+sb0iWwuRgDTI+2b0gd2sDwAHR0KCq2vQwVUQOWa4hhbC0X2UxLOHg
-TKwXrXg9HVpXUYQr7wE+QO+V4fLnkUI3mRb+9enVcL9mSvzAA49gtIh6oee+wGeF
-dMNWR02dxjitTSK0FcgNvzKLzff2l1K6WSY5cFzrOXqUkNdXZOEHAWGdBYCv0/Sv
-LKrz3IoO4kpRRSGk0ZRWDCi7r2fjZQh2BAFWjKMqoMGRG33wLCHqQ5Me65FtleMc
-VLfmcITghJHhWi3J9aihshJ6QouoS6jzVaiOnw3X3ZNW4Uw/Jvh5XTDbGbAY93Z+
-rZZqMCE1YJqBjvx8N/lGxPJIQHLgw4pT+Z6MKc23EqdchTVEM0Sh39x5RoZKb3Wg
-MHAIUGPZQf7YS/kpzTHE
-=h4md
------END PGP SIGNATURE-----
+------=_NextPart_000_00E7_01D2E474.C1860210--
