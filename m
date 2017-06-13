@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1061" "Thursday" "19" "October" "2017" "21:25:47" "-0400" "Rich Felker" "dalias@libc.org" "<20171020012547.GT1627@brightrain.aerifal.cx>" "25" "Re: [oss-security] CVE request: musl libc 1.1.16 and earlier dns buffer overflow" nil nil nil "10" "2017102001:25:47" "[oss-security] CVE request: musl libc 1.1.16 and earlier dns buffer overflow" (number mark "U       dalias@libc. Oct 19   25/1061  " thread-indent "\"Re: [oss-security] CVE request: musl libc 1.1.16 and earlier dns buffer overflow\"\n") "<20171019201757.GA31838@brightrain.aerifal.cx>" ("<20171019201757.GA31838@brightrain.aerifal.cx>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1998" "Tuesday" "13" "June" "2017" "16:48:04" "-0400" "Stiepan" "stie@itk.swiss" "<yxvPHItNI50y6jtPr94_GiCzhOzViGCZGO2BZ6xprBuRH4unl1EP0tRDPhgheue19XEBukMCxbeOOLsh6ehCrsZaNIwbOMat-Q9v7TNOFYQ=@itk.swiss>" "38" "Re: [oss-security] OpenJDK: java(1): untrusted search path" "^Date:" nil nil "6" "2017061320:48:04" "[oss-security] OpenJDK: java(1): untrusted search path" (number mark "        stie@itk.swi Jun 13   38/1998  " thread-indent "\"Re: [oss-security] OpenJDK: java(1): untrusted search path\"\n") "<20170613152313.te53ju5sh77ptnix@jwilk.net>" ("<20170613152313.te53ju5sh77ptnix@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5517 invoked by uid 550); 20 Oct 2017 02:59:38 -0000
+Received: (qmail 24387 invoked by uid 550); 13 Jun 2017 20:55:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27653 invoked from network); 20 Oct 2017 01:26:00 -0000
-Date: Thu, 19 Oct 2017 21:25:47 -0400
-From: Rich Felker <dalias@libc.org>
-To: oss-security@lists.openwall.com
-Cc: Felix Wilhelm <fwilhelm@google.com>, musl@lists.openwall.com
-Message-ID: <20171020012547.GT1627@brightrain.aerifal.cx>
-References: <20171019201757.GA31838@brightrain.aerifal.cx>
+Received: (qmail 16118 invoked from network); 13 Jun 2017 20:48:18 -0000
+Authentication-Results: mail2.protonmail.ch; dkim=none
+Message-ID: <yxvPHItNI50y6jtPr94_GiCzhOzViGCZGO2BZ6xprBuRH4unl1EP0tRDPhgheue19XEBukMCxbeOOLsh6ehCrsZaNIwbOMat-Q9v7TNOFYQ=@itk.swiss>
+In-Reply-To: <20170613152313.te53ju5sh77ptnix@jwilk.net>
+References: <20170613152313.te53ju5sh77ptnix@jwilk.net>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171019201757.GA31838@brightrain.aerifal.cx>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: Rich Felker <dalias@aerifal.cx>
-Subject: Re: [oss-security] CVE request: musl libc 1.1.16 and earlier dns
- buffer overflow
+Content-Type: multipart/alternative;
+	boundary="b1_61e42bfdcb8937839d31dab0b2272ee1"
+Date: Tue, 13 Jun 2017 16:48:04 -0400
+From: Stiepan <stie@itk.swiss>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] OpenJDK: java(1): untrusted search path
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-On Thu, Oct 19, 2017 at 04:17:57PM -0400, Rich Felker wrote:
-> Felix Wilhelm has discovered a flaw in the dns response parsing for
-> musl libc 1.1.16 that leads to overflow of a stack-based buffer.
-> Earlier versions are also affected.
-> 
-> When an application makes a request via getaddrinfo for both IPv4 and
-> IPv6 results (AF_UNSPEC), an attacker who controls or can spoof the
-> nameservers configured in resolv.conf can reply to both the A and AAAA
-> queries with A results. Since A records are smaller than AAAA records,
-> it's possible to fit more addresses than the precomputed bound, and a
-> buffer overflow occurs.
-> 
-> Users are advised to upgrade to 1.1.17 or patch; the patch is simple
-> and should apply cleanly to all recent versions:
-> 
-> https://git.musl-libc.org/cgit/musl/patch/?id=45ca5d3fcb6f874bf5ba55d0e9651cef68515395
-> 
-> Users who cannot patch or upgrade immediately can mitigate the issue
-> by running a caching nameserver on localhost and pointing resolv.conf
-> to 127.0.0.1.
+--b1_61e42bfdcb8937839d31dab0b2272ee1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-CVE-2017-15650 has been assigned for this issue.
+SGksIGNvbmZpcm1lZCBvbiBVYnVudHUgMzItYml0IHJ1bm5pbmcgT3BlbkpE
+SyAxLjguMF8xMzEgKG1vZGlmaWVkIHNsaWdodGx5IHlvdXIgZXhwbG9pdCB0
+byB1c2UgImVjaG8gcHduZWQiIGluc3RlYWQgb2YgdXNpbmcgY293c2F5IHB3
+bmVkKS4KClN0aWVwYW4KCi0tLS0tLS0tIE9yaWdpbmFsIE1lc3NhZ2UgLS0t
+LS0tLS0KU3ViamVjdDogW29zcy1zZWN1cml0eV0gT3BlbkpESzogamF2YSgx
+KTogdW50cnVzdGVkIHNlYXJjaCBwYXRoCkxvY2FsIFRpbWU6IEp1bmUgMTMs
+IDIwMTcgMzoyMyBQTQpVVEMgVGltZTogSnVuZSAxMywgMjAxNyAzOjIzIFBN
+CkZyb206IGp3aWxrQGp3aWxrLm5ldApUbzogb3NzLXNlY3VyaXR5QGxpc3Rz
+Lm9wZW53YWxsLmNvbQoKUnVubmluZyAiamF2YSAtaGVscCIgY2FuIGxvYWQg
+Y29kZSBmcm9tIGEgc3ViZGlyZWN0b3J5IG9mIGN3ZDoKCiQgamF2YWMgbGF1
+bmNoZXJfZW4uamF2YQokIG1rZGlyIC1wIHN1bi9sYXVuY2hlci9yZXNvdXJj
+ZXMvCiQgbXYgbGF1bmNoZXJfZW4uY2xhc3Mgc3VuL2xhdW5jaGVyL3Jlc291
+cmNlcy8KJCBqYXZhIC1oZWxwCl9fX19fX18KJmx0OyBwd25lZCAmZ3Q7Ci0t
+LS0tLS0KXCBeX19eClwgKG9vKVxfX19fX19fCihfXylcIClcL1wKfHwtLS0t
+dyB8Cnx8IHx8CgpUaGlzIGhhcHBlbnMgYmVjYXVzZToKCiogQnkgZGVmYXVs
+dCAoaS5lLiB3aGVuIENMQVNTUEFUSCBlbnYgdmFyIHdhcyB1bnNldCBhbmQg
+bmVpdGhlciAtY3Agbm9yIC1qYXIKd2FzIHNwZWNpZmllZCksIGphdmEgc2V0
+cyAiLiIgYXMgdGhlIHVzZXIgY2xhc3MgcGF0aDoKaHR0cHM6Ly9kb2NzLm9y
+YWNsZS5jb20vamF2YXNlLzgvZG9jcy90ZWNobm90ZXMvdG9vbHMvZmluZGlu
+Z2NsYXNzZXMuaHRtbCN1c2VyY2xhc3MKCiogVGhlIGhlbHAgbWVzc2FnZSBp
+cyBhcHBhcmVudGx5IHN1cHBvc2VkIHRvIGJlIGludGVybmF0aW9uYWxpemVk
+LgoKKiBUaGUgSmF2YSJzIGxvY2FsaXphdGlvbiBtYWNoaW5lcnkgbG9hZHMg
+Y2xhc3NlczoKaHR0cHM6Ly9kb2NzLm9yYWNsZS5jb20vamF2YXNlLzgvZG9j
+cy9hcGkvamF2YS91dGlsL1Jlc291cmNlQnVuZGxlLmh0bWwKCk9uIERlYmlh
+biBzeXN0ZW1zLCBqYXJ3cmFwcGVyIChhIGJpbmZtdC1taXNjIHRoaW5nIGZv
+ciBydW5uaW5nIGV4ZWN1dGFibGUgamFyCmZpbGVzKSBpcyBhZmZlY3RlZC4g
+SXQgY29udGFpbnMgdGhlIGZvbGxvd2luZyBjb2RlOgoKaWYgamF2YSAtZDMy
+IDImZ3Q7JmFtcDsxIHwgZ3JlcCAiZG9lcyBub3Qgc3VwcG9ydCIgJmd0OyAv
+ZGV2L251bGw7IHRoZW4KLi4uCgpPbiAzMi1iaXQgc3lzdGVtcywgdGhpcyBj
+YXVzZXMgamF2YSB0byBwcmludCB0aGUgaGVscCBtZXNzYWdlLgoKLS0KSmFr
+dWIgV2lsaw==
 
-Rich
+--b1_61e42bfdcb8937839d31dab0b2272ee1--
 
