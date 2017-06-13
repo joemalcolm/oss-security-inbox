@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/10
-Message-ID: <2fa23b64-faec-39ee-879a-9f03922f7edd@virtuozzo.com>
-Date: Thu, 22 Jun 2017 17:24:17 +0300
-From: Vasily Averin <vvs@...tuozzo.com>
-To: Greg KH <greg@...ah.com>, oss-security@...ts.openwall.com
-Cc: Konstantin Khorenko <khorenko@...tuozzo.com>
-Subject: Re: stackguard fix in Red Hat and Ubuntu kernels
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/9
+Message-ID: <2ECE9D9EEF1F524185270138AE23265955AB06DE@S0MSMAIL112.arc.local>
+Date: Tue, 13 Jun 2017 16:42:06 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "fweimer@...hat.com" <fweimer@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Vixie/ISC Cron group crontab to root escalation
 Content-Type: text/plain; charset=utf-8
 
-As far as I know this problem (SIGSEGV on access to mmap area) was not affect mainline,
-mainline patch was correct.
+> Von: Florian Weimer [mailto:fweimer@...hat.com]
+>
+> On 06/13/2017 02:32 PM, Fiedler Roman wrote:
+> > Well, partially: what O_PATH can do, you could also do before O_PATH
+> using
+> > repeated single-level open(NO_FOLLOW)/fstat-checks. So you had to do
+> all the
+> > verification by yourself.
+>
+> That's not completely accurate because open/close on device nodes can
+> have side effects (the classic example is a rewinding tape device).
+> O_PATH gives you an opportunity to perform these policy checks before
+> the side effect happens.
 
-We observe some problem with stack grow down,
-https://patchwork.kernel.org/patch/9802797/
+So true, I know about this case. But my initial messages was not intended to 
+compare subtle differences O_PATH with other OS file access functionality 
+already available but - prove me wrong - to argue for extending open 
+functionality in general using features O_PATH to my knowledge cannot provide. 
+But all that content was removed in the first reply to the message.
 
-and all responsible developers are informed already.
+LG Roman
 
-Thank you,
-	Vasily Averin
-
-On 2017-06-22 16:38, Greg KH wrote:
-> On Thu, Jun 22, 2017 at 02:18:33PM +0200, Marcus Meissner wrote:
->> Hi,
->>
->> Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
-> 
-> The patches upstream in Linus's tree should resolve these crashes,
-> correct?  If not, please let the kernel developers know, as we ended up
-> going with a different set of changes than the distros shipped, and are
-> still working on getting these backported to older stable kernels at the
-> moment.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
