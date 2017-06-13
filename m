@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/3
-Message-ID: <1498305503.26646.5.camel@debian.org>
-Date: Sat, 24 Jun 2017 13:58:23 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: daniel.salzman@....cz
-Cc: oss-sec <oss-security@...ts.openwall.com>,  Ondřej Surý <ondrej@...ian.org>
-Subject: CVE for the TSIG issue in knot?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/4
+Message-ID: <20170613112638.axsgfjy5ntrzylb3@jwilk.net>
+Date: Tue, 13 Jun 2017 13:26:38 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vixie/ISC Cron group crontab to root escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi Daniel,
+* Fiedler Roman <Roman.Fiedler@....ac.at>, 2017-06-13, 07:45:
+>>>Thanks, perhaps a comment in the code can't hurt...
+>>>Or even O_NODEV which does not exist, or O_PATH (linux only)..
+>>
+>>As there is a O_DIRECTORY it would be more orthogonal to have O_REGULAR (open 
+>>only a regular file). But that becomes more and more icky as we're running 
+>>out of 32 bits of O_*)
+>
+>Why not stop that at all and have an O_POLICY,
 
-I noticed the recent issue in knot with TSIG bypass (https://lists.nic.cz/pipe
-rmail/knot-dns-users/2017-June/001144.html)
+With help of O_PATH, you can implement almost any sanity check in userspace.
+No need to reinvent this particular wheel.
 
-Was a CVE assigned for this?
-
-Regards,
 -- 
-Yves-Alexis
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Jakub Wilk
