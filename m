@@ -1,16 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/4
-Message-ID: <4GxILgTIeIpYqkPabp2dQC7Kb3bOdGX5P5YEE8ERcb5PQR-UeJ15Ic6zXAr91lI-5VvCV2Q7zumeI7wdEaCOiO-ejJSNK9PYj22_7aEWnHM=@protonmail.com>
-Date: Thu, 08 Jun 2017 14:32:43 -0400
-From: Qhdwns123 <qhdwns123@...tonmail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: How long does DWF usually take to issue cve?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/7
+Message-ID: <20170613152313.te53ju5sh77ptnix@jwilk.net>
+Date: Tue, 13 Jun 2017 17:23:13 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: OpenJDK: java(1): untrusted search path
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+Running "java -help" can load code from a subdirectory of cwd:
 
-I sent a report a week ago, but I did not get an answer
+    $ javac launcher_en.java
+    $ mkdir -p sun/launcher/resources/
+    $ mv launcher_en.class sun/launcher/resources/
+    $ java -help
+     _______
+    < pwned >
+     -------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
 
-How long does DWF usually take to issue cve?
+This happens because:
 
-Thanks.
+* By default (i.e. when CLASSPATH env var was unset and neither -cp nor -jar 
+was specified), java sets "." as the user class path:
+https://docs.oracle.com/javase/8/docs/technotes/tools/findingclasses.html#userclass
+
+* The help message is apparently supposed to be internationalized.
+
+* The Java's localization machinery loads classes:
+https://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html
+
+
+On Debian systems, jarwrapper (a binfmt-misc thing for running executable jar 
+files) is affected. It contains the following code:
+
+    if java -d32 2>&1 | grep "does not support" > /dev/null; then
+    ...
+
+On 32-bit systems, this causes java to print the help message.
+
+-- 
+Jakub Wilk
+
+View attachment "launcher_en.java" of type "text/x-java" (413 bytes)
