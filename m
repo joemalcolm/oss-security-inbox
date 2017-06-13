@@ -1,106 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/12
-Message-ID: <1647177.aZQByZBLXH@blackgate>
-Date: Thu, 09 Feb 2017 14:43:08 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: zziplib: heap-based buffer overflow in zzip_mem_entry_extra_block (memdisk.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/5
+Message-ID: <2ECE9D9EEF1F524185270138AE23265955AB0414@S0MSMAIL112.arc.local>
+Date: Tue, 13 Jun 2017 12:32:10 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Vixie/ISC Cron group crontab to root escalation
 Content-Type: text/plain; charset=utf-8
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+> From: Jakub Wilk [mailto:jwilk@...lk.net]
+>
+> * Fiedler Roman <Roman.Fiedler@....ac.at>, 2017-06-13, 07:45:
+> >>>Thanks, perhaps a comment in the code can't hurt...
+> >>>Or even O_NODEV which does not exist, or O_PATH (linux only)..
+> >>
+> >>As there is a O_DIRECTORY it would be more orthogonal to have
+> O_REGULAR (open
+> >>only a regular file). But that becomes more and more icky as we're
+> running
+> >>out of 32 bits of O_*)
+> >
+> >Why not stop that at all and have an O_POLICY,
+>
+> With help of O_PATH, you can implement almost any sanity check in
+> userspace.
+> No need to reinvent this particular wheel.
 
-A fuzz on it discovered an heap overflow.
+Well, partially: what O_PATH can do, you could also do before O_PATH using 
+repeated single-level open(NO_FOLLOW)/fstat-checks. So you had to do all the 
+verification by yourself. fts [1] does that the same in a secure manner. But 
+often implementation was too complex using syscalls or not easy to do using 
+the library, so not many programmers did it. The resulting programs were more 
+prone to be vulnerable.
 
-The complete ASan output:
+With O_PATH/fts und own fstat calls, you can also do all the things mentioned 
+above, but again, I fear, not many will use them, there for convenience 
+syscalls/libraries should help out.
 
-# unzzipcat-mem $FILE
-==7970==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x60300000f2c8 at pc 0x7f59277fd153 bp 0x7fff136e1e30 sp 0x7fff136e1e28                                                                                                                                       
-READ of size 2 at 0x60300000f2c8 thread T0                                                                                                                                                                                                                                     
-    #0 0x7f59277fd152 in zzip_mem_entry_extra_block /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:248:20                                                                                                                                        
-    #1 0x7f59277fd152 in zzip_mem_entry_new /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:218                                                                                                                                                   
-    #2 0x7f59277fd152 in zzip_mem_disk_load /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137                                                                                                                                                   
-    #3 0x7f59277fb8b7 in zzip_mem_disk_open /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5                                                                                                                                                  
-    #4 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12                                                                                                                                                               
-    #5 0x7f592693b61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
-    #6 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                                                               
-AddressSanitizer can not describe address in more detail (wild memory access 
-suspected).                                                                                                                                                                                       
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:248:20 in 
-zzip_mem_entry_extra_block                                                                                                              
-Shadow bytes around the buggy address:                                                                                                                                                                                                                                         
-  0x0c067fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c067fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c067fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c067fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c067fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-=>0x0c067fff9e50: fa fa fa fa fa fa fa fa fa[fa]fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c067fff9e60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c067fff9e70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c067fff9e80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c067fff9e90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c067fff9ea0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                                                                                           
-  Addressable:           00                                                                                                                                                                                                                                                    
-  Partially addressable: 01 02 03 04 05 06 07                                                                                                                                                                                                                                  
-  Heap left redzone:       fa                                                                                                                                                                                                                                                  
-  Heap right redzone:      fb                                                                                                                                                                                                                                                  
-  Freed heap region:       fd                                                                                                                                                                                                                                                  
-  Stack left redzone:      f1                                                                                                                                                                                                                                                  
-  Stack mid redzone:       f2                                                                                                                                                                                                                                                  
-  Stack right redzone:     f3                                                                                                                                                                                                                                                  
-  Stack partial redzone:   f4                                                                                                                                                                                                                                                  
-  Stack after return:      f5                                                                                                                                                                                                                                                  
-  Stack use after scope:   f8                                                                                                                                                                                                                                                  
-  Global redzone:          f9                                                                                                                                                                                                                                                  
-  Global init order:       f6                                                                                                                                                                                                                                                  
-  Poisoned by user:        f7                                                                                                                                                                                                                                                  
-  Container overflow:      fc                                                                                                                                                                                                                                                  
-  Array cookie:            ac                                                                                                                                                                                                                                                  
-  Intra object redzone:    bb                                                                                                                                                                                                                                                  
-  ASan internal:           fe                                                                                                                                                                                                                                                  
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==7970==ABORTING
+So decision could be a) do nothing, b) blow up libc or c) blow up syscall 
+interface. Specific libraries or programming best practices might not be easy 
+enough to be applied.
 
-Affected version:
-0.13.62
+LG Roman
 
-Fixed version:
-N/A
+[1] https://www.freebsd.org/cgi/man.cgi?query=fts&sektion=3
 
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00152-zziplib-heapoverflow-zzip_mem_entry_extra_block
-
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-zzip_mem_entry_extra_block-memdisk-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
