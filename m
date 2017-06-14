@@ -1,33 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/5
-Message-ID: <1496494600.21640.9.camel@gmail.com>
-Date: Sat, 03 Jun 2017 08:56:40 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/14/1
+Message-ID: <alpine.DEB.2.20.1706140819140.16652@tvnag.unkk.fr>
+Date: Wed, 14 Jun 2017 08:20:27 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: URL file scheme drive letter buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-> Here's why the Android-based justification given earlier is bogus: you
-> can boot from a usb flash drive as real root, without SELinux
-> containing
-> the init launched from there. It has full control over the kernel. In
-> fact, there is no way to contain real root on those devices. They have
-> DMA access over the kernel via peripherals that are not contained by
-> the
-> IOMMU with APIs exposed to userspace offering that control.
+URL file scheme drive letter buffer overflow
+============================================
 
-I fail to see why this rootfs / initrd / init control matters though. I
-can't see how it's a vulnerability. Android covers the kernel line with
-verified boot and control over it is a verified boot bypass. If you
-found a way to persist as root after getting that temporary root access
-via the verified boot bypass, that would be *another* verified boot
-bypass, but you can persist as the system user (less than root but not
-in a way that matters to a user) by design since vanilla Android doesn't
-yet cover enough of userspace with verified boot to do much more than
-guarantee that factory resets (which wipe all persistent state, but
-don't touch the OS) purge root / system malware.
+Project curl Security Advisory, June 14th 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_20170614.html)
 
-The DMA access issues matter because some of those processes could be
-contained if it wasn't for the driver issues. However, it can't just be
-considered a vulnerability unless it was intended for that to be case.
-If they intended to contain those processes, it's a vulnerability.
+VULNERABILITY
+-------------
+
+When libcurl is given either
+
+  1. a file: URL that doesn't use two slashes following the colon, or
+  2. is told that file is the default scheme to use for URLs without scheme
+
+... and the given path starts with a drive letter and libcurl is built for
+Windows or DOS, then libcurl would copy the path with a wrong offset, so that
+the end of the given path would write beyond the malloc buffer. Up to seven
+bytes too much.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw also affects the curl command line tool. It was introduced in commit
+[1d4202ade602](https://github.com/curl/curl/commit/1d4202ade602), discussed in
+[issue #1124](https://github.com/curl/curl/pull/1124).
+
+HTTP redirects to file: URLs are not affected.
+
+For version 7.54.1, the function that cleans up the file: URLs is fixed to not
+copy things out of the buffer!
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-9502 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This bug is present on libcurl builds that accept drive letters in file names,
+which is limited to Windows and DOS builds, including cygwin.
+
+- Affected versions: libcurl 7.53.0 to and including 7.54.0
+- Not affected versions: libcurl < 7.53.0 and >= 7.54.1
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+The function now takes better care to allocate memory enough to store what's
+copied and to copy the strings to the correct output offsets.
+
+A [patch for CVE-2017-9502](https://curl.haxx.se/CVE-2017-9502.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.54.1
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use file URLs on Windows
+
+TIME LINE
+---------
+
+It was reported to the curl project on June 4, 2017.  We contacted MITRE on
+June 7.
+
+libcurl 7.54.1 was released on June 14 2017, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Marcel Raad. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
