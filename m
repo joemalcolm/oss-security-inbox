@@ -1,73 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/14/3
-Message-ID: <CADRx3PMtBZ2Tf8mOdeFd6JbBFah6HVFV-x0L1+4eHdLP66nApA@mail.gmail.com>
-Date: Sat, 14 Jan 2017 22:36:28 +1000
-From: Paul King <paulk@...che.org>
-To: paulk@...che.org
-Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [CVE-2016-6814] Apache Groovy Information Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/14/4
+Message-ID: <d4e8f699-30e1-59f7-47f2-d78b42066728@isc.org>
+Date: Wed, 14 Jun 2017 18:31:00 -0500
+From: ISC Security Officer <security-officer@....org>
+To: oss-security@...ts.openwall.com
+Cc: ISC Security Officer <security-officer@....org>
+Subject: BIND9 CVE-2017-3140 & CVE-2017-3141
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+Today ISC announced CVE-2017-3140, CVE-2017-3141, and an operational
+notification regarding LMDB in BIND 9.11
 
-Vendor: The Apache Software Foundation
 
-Versions Affected:
+CVE-2017-3140 is a denial-of-service vulnerability affecting 9.9.10,
+9.10.5, 9.11.0->9.11.1, 9.9.10-S1, and 9.10.5-S1 when configured with
+Response Policy Zones (RPZ) utilizing NSIP or NSDNAME rules.
 
-* Unsupported Codehaus versions of Groovy from 1.7.0 to 2.4.3
-* Apache Groovy 2.4.4 to 2.4.7
-* Fixed in version 2.4.8
+We are aware that some subscribers to this list maintain BIND packages
+which have diverged from the official ISC code branches.  While we
+cannot always offer specific guidance, in the case of CVE-2017-3140
+maintainers who have selectively backported BIND changes are advised to
+check whether they have included change #4377, as that change has been
+determined to be a cause of CVE-2017-3140.
 
-Impact:
 
-Remote execution of untrusted code, DoS
+CVE-2017-3141 is a Windows privilege escalation vector affecting
+9.2.6-P2+, 9.3.2-P1+, 9.4.x, 9.5.x, 9.6.x, 9.7.x, 9.8.x, 9.9.0->9.9.10,
+9.10.0->9.10.5, 9.11.0->9.11.1, 9.9.3-S1->9.9.10-S1, and 9.10.5-S1.  The
+BIND Windows installer failed to properly quote the service paths,
+possibly allowing a local user to achieve privilege escalation, if
+allowed by file system permissions.
 
-Description:
 
-When an application with Groovy on classpath uses standard
-Java serialization mechanisms, e.g. to communicate between servers
-or to store local data, it is possible for an attacker to bake a special
-serialized object that will execute code directly when deserialized.
-All applications which rely on serialization and do not isolate the
-code which deserializes objects are subject to this vulnerability.
-This is similar to CVE-2015-3253 but this exploit involves extra
-wrapping of objects and catching of exceptions which are now safe
-guarded against.
+BIND 9.11.0 and 9.11.1 carries a number of integration problems with
+LMDB (liblmdb) that will be addressed in BIND 9.11.2, planned for
+release in July/August 2017.
 
-Mitigation:
 
-Users of Groovy relying on (de)serialization with the affected versions
-should apply one of the following mitigations:
+Our full CVE text can be found at:
 
-* Isolate the code doing the (de)serialization
-* Upgrade to Apache Groovy 2.4.8 or later
-* Users of older versions of Groovy can apply the following patch to the
-`MethodClosure` class
-(`src/main/org/codehaus/groovy/runtime/MethodClosure.java`):
+  https://kb.isc.org/article/AA-01495/74/CVE-2017-3140
+  https://kb.isc.org/article/AA-01496/74/CVE-2017-3141
 
-```
-public class MethodClosure extends Closure {
-+    private void readObject(java.io.ObjectInputStream stream) throws
-IOException, ClassNotFoundException {
-+        if (ALLOW_RESOLVE) {
-+            stream.defaultReadObject();
-+        }
-+        throw new UnsupportedOperationException();
-+    }
-```
+The full operational notification can be found at:
 
-Credit:
+  https://kb.isc.org/article/AA-01497/169/LMDB-integration-problems.html
 
-This vulnerability was discovered by:
+New releases of BIND, including security fixes for these
+vulnerabilities, are available at: http://www.isc.org/downloads/
 
-* Sam Thomas of Pentest Limited working with Trend Micro's Zero Day Initiative
+Release notes can be obtained using the following links:
 
-History:
+  ftp://ftp.isc.org/isc/bind9/9.9.10-P1/
+  ftp://ftp.isc.org/isc/bind9/9.10.5-P1/
+  ftp://ftp.isc.org/isc/bind9/9.11.1-P1/
 
-* 2016-09-20 Original advisory
-* 2017-01-12 Updated information on affected versions
+Brian Conry
+Security Officer
 
-References:
 
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6814
-* http://groovy-lang.org/security.html
+
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
