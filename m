@@ -1,54 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/22
-Message-ID: <CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>
-Date: Tue, 26 Sep 2017 14:03:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Agostino Sarubbo <ago@...too.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/14/2
+Message-ID: <20170614165926.GH8074@localhost.localdomain>
+Date: Wed, 14 Jun 2017 09:59:26 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
 Content-Type: text/plain; charset=utf-8
 
-If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
-CVE FORM (yes, I am shouting).
+Hi all,
 
-https://cveform.mitre.org
+Since a working exploit has been published already
+(https://github.com/c0d3z3r0/sudo-CVE-2017-1000367), please find our
+Sudoer-to-root exploit (Linux_sudo_CVE-2017-1000367.c) attached to this
+mail. Thank you very much!
 
-Choose "Request an update to an existing CVE entry" and then for "Type of
-update requested" choose "Update References" and then eneter the CVE #, the
-ifo and URL and hit "Submit Request"
-
-TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
-(the CVE community) didn't make it easy to contribute. Well now we have
-made it easy to contribute, so please do.
-
-
-On Tue, Sep 26, 2017 at 1:07 PM, Agostino Sarubbo <ago@...too.org> wrote:
-
-> On martedì 26 settembre 2017 20:18:38 CEST Kurt Seifried wrote:
-> > You can check the CVE Database? There is the official MITRE one:
-> > cve.mitre.org and the DWF for Open Source (and yes, I lag in
-> submissions to
-> > MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/
-> in
-> > both cases the CVEs will have reference link(s) that ideally point to the
-> > upstream making it easy to match up.
->
-> As pointed out in the past (maybe spender?) the real issue is when there
-> is a
-> silent fix of a vulnerability where the commit message does not clearly
-> state
-> about the security implication. Afaik it happens frequently.
->
-> --
-> Agostino Sarubbo
-> Gentoo Linux Developer
->
-
-
+With best regards,
 
 -- 
+the Qualys Security Advisory team
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+View attachment "Linux_sudo_CVE-2017-1000367.c" of type "text/plain" (4705 bytes)
