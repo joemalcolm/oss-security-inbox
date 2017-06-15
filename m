@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/8
-Message-ID: <20170522190024.GE12842@openstack.org>
-Date: Mon, 22 May 2017 19:00:24 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to request a CVE for open source projects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/10
+Message-ID: <87a858dhaf.fsf@prune.linuxpenguins.xyz>
+Date: Fri, 16 Jun 2017 08:20:40 +1000
+From: Brian May <brian@...uxpenguins.xyz>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
 Content-Type: text/plain; charset=utf-8
 
-On 2017-05-22 13:05:34 -0500 (-0500), Michael Catanzaro wrote:
-[...]
-> How are other people getting open source CVEs right now? Has anybody else
-> had luck getting a CVE via DWF? Should I be trying to do this through Red
-> Hat instead? Or just by filling out MITRE's CVE form even though we're not
-> really supposed to be using it?
-[...]
+Kurt Seifried <kseifried@...hat.com> writes:
 
-OpenStack's been using MITRE's Web form to the best of our
-ability[*] and that seems to be working. Though it also has the side
-effect that a MITRE representative has reached out to us asking
-whether we'd like to become a CNA (our VMT is still trying to decide
-if that's worth pursuing).
+> Should we assign CVEs for code examples/documentation? E.g. We assign CVEs
+> for code shipped to people in digital form. Why not assign CVEs for code in
+> documentation or commonly used examples? We can go with the rational that
+> CVEs get assigned to the affected code bases (e.g. when someone implements
+> that documentation/code), but it might also be good to educate the
+> community about bad examples/documentation/etc.
 
-[*] https://security.openstack.org/vmt-process.html#send-cve-request
+For a prior example, in this case of documentation suggesting insecure
+configuration, see:
+
+http://www.openwall.com/lists/oss-security/2015/03/28/7
+
+I note that the documentation still has the bad example listed, with no
+indication that this is bad.
+
+http://www.openldap.org/doc/admin24/guide.html#Access Control Examples
 -- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Brian May <brian@...uxpenguins.xyz>
+https://linuxpenguins.xyz/brian/
