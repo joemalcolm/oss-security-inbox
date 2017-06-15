@@ -1,90 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/8
-Message-ID: <706317.355713935-sendEmail@localhost>
-Date: Thu, 14 Sep 2017 07:05:44 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: mp3gain: memcpy-param-overlap in set_pointer (mpglibDBL/common.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/2
+Message-ID: <CANO=Ty0mQugCFyHqxzSVyc+2NUQcL5f42xXu9w=NQ5XvJHU75w@mail.gmail.com>
+Date: Thu, 15 Jun 2017 08:21:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: pali.rohar@...il.com
+Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
 Content-Type: text/plain; charset=utf-8
 
-Additionally to the previous discovered bugs there a memcpy-param-overlap. Under a non-asan build the crash does not occur, so there is no CVE, but you may want to have it fixed in your repository.
+This does bring up an old question:
+
+Should we assign CVEs for code examples/documentation? E.g. We assign CVEs
+for code shipped to people in digital form. Why not assign CVEs for code in
+documentation or commonly used examples? We can go with the rational that
+CVEs get assigned to the affected code bases (e.g. when someone implements
+that documentation/code), but it might also be good to educate the
+community about bad examples/documentation/etc.
+
+My thinking is:
+
+1) Official documentation that says "do this [insecure thing]" should
+probably get a CVE (e.g. "turn off all the encryption to make it work more
+easily"). This should probably get a CVE, especially as it results in
+operational changes which won't get a CVE (since it's not in code that
+"ships", it's just on the end of whoever is using it).
+
+2) Official code examples, as above, actual implementations get CVEs, it
+might be useful to raise awareness that the example is bad.
+
+3) Unofficial but commonly used documentation and code examples, I guess
+the best example here is stackoverflow and friends?
+
+Thoughts/comments (feel free to reply privately if you don't want to be
+public)? I'd like to collect what people think and then present it to the
+CVE board later (this has been on my long term todo list).
 
 
-Description:
-mp3gain is a program to analyze and adjust MP3 files to same volume.
+On Thu, Jun 15, 2017 at 7:50 AM, Adam Maris <amaris@...hat.com> wrote:
 
-The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
-The upstream project seems to be dead, so the issue wasn’t communicated to them.
+> On Mon, 2017-06-12 at 23:47 +0200, Pali Rohár wrote:
+> > Hello!
+> >
+> > Any idea how to handle this particular problem?
+> >
+> >
+>
+> Hi!
+>
+> Given that Oracle (silently) updated the vulnerable example in their
+> documentation, this likely indicates the way to handle this -
+> applications that copied the vulnerable example needs to be fixed and
+> CVEs will be assigned per application.
+>
+> Best Regards,
+>
+> --
+> Adam Mariš, Red Hat Product Security
+> 1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
+>
 
-The complete ASan output of the issue:
 
-# aacgain -f $FILE
-==23175==ERROR: AddressSanitizer: memcpy-param-overlap: memory ranges [0x7f004fb593ff,0x7f004fb594fd) and [0x7f004fb59381, 0x7f004fb5947f) overlap
-    #0 0x7f00532d5906  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5c906)
-    #1 0x8e9b25 in set_pointer /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/common.c:328
-    #2 0x8cd58d in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1582
-    #3 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643
-    #4 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
-    #5 0x7f00525ee680 in __libc_start_main (/lib64/libc.so.6+0x20680)
-    #6 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
 
-Address 0x7f004fb593ff is located in stack of thread T0 at offset 21503 in frame
-    #0 0x4341ff in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:1411
+-- 
 
-  This frame has 7 object(s):
-    [32, 33) 'maxgain'
-    [96, 97) 'mingain'
-    [160, 164) 'nprocsamp'
-    [224, 232) 'maxsample'
-    [288, 9504) 'lsamples'
-    [9536, 18752) 'rsamples'
-    [18784, 50704) 'mp' <== Memory access at offset 21503 is inside this variable
-HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
-      (longjmp and C++ exceptions *are* supported)
-Address 0x7f004fb59381 is located in stack of thread T0 at offset 21377 in frame
-    #0 0x4341ff in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:1411
-
-  This frame has 7 object(s):
-    [32, 33) 'maxgain'
-    [96, 97) 'mingain'
-    [160, 164) 'nprocsamp'
-    [224, 232) 'maxsample'
-    [288, 9504) 'lsamples'
-    [9536, 18752) 'rsamples'
-    [18784, 50704) 'mp' <== Memory access at offset 21377 is inside this variable
-HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
-      (longjmp and C++ exceptions *are* supported)
-SUMMARY: AddressSanitizer: memcpy-param-overlap (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5c906) 
-==23175==ABORTING
-
-Affected version:
-1.5.2
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00349-aacgain-memcpyparamoverlap-set_pointer
-
-Timeline:
-2017-08-28: bug discovered
-2017-09-08: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/08/mp3gain-memcpy-param-overlap-in-set_pointer-mpglibdblcommon-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
