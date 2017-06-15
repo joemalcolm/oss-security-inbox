@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5588" "Wednesday" "6" "June" "2018" "13:33:59" "+0200" "Tomas Hoger" "thoger@redhat.com" "<20180606133359.149aeded@redhat.com>" "136" "Re: [oss-security] [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114" "^Cc:" nil nil "6" "2018060611:33:59" "[oss-security] [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114" (number mark "        thoger@redha Jun  6  136/5588  " thread-indent "\"Re: [oss-security] [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114\"\n") "<CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>" ("<CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1981" "Thursday" "15" "June" "2017" "11:29:26" "-0600" "kseifried@redhat.com" "kseifried@redhat.com" "<d86f3fc7-7fab-4059-6c6c-14bea996d50d@redhat.com>" "48" "Re: [oss-security] Re: MySQL - use-after-free after mysql_stmt_close()" "^Date:" nil nil "6" "2017061517:29:26" "[oss-security] Re: MySQL - use-after-free after mysql_stmt_close()" (number mark "        kseifried@re Jun 15   48/1981  " thread-indent "\"Re: [oss-security] Re: MySQL - use-after-free after mysql_stmt_close()\"\n") "<20170615172804.GA21944@wopr>" ("<201706082349.03355@pali>" "<201706122347.54536@pali>" "<1497534642.3053.3.camel@redhat.com>" "<CANO=Ty0mQugCFyHqxzSVyc+2NUQcL5f42xXu9w=NQ5XvJHU75w@mail.gmail.com>" "<20170615172804.GA21944@wopr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26014 invoked by uid 550); 6 Jun 2018 11:34:16 -0000
+Received: (qmail 26266 invoked by uid 550); 15 Jun 2017 17:34:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,158 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25993 invoked from network); 6 Jun 2018 11:34:15 -0000
-Message-ID: <20180606133359.149aeded@redhat.com>
-In-Reply-To: <CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>
-References: <CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>
+Received: (qmail 26242 invoked from network); 15 Jun 2017 17:34:36 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=6q5nJkYKtIO8p1I9KNm9dYgix5rfaELVxXsaZddl2Ys=;
+        b=kUEKfNANgSkAuN34GksOFEpZbQXOKbiZbu6D1/4IbEFFSkFHym9vJmjoaCsvSJuXOy
+         uFXuCRrMfhQEyEbKThVYbf607Tm0NZ9KC0/P6TSXtK8UBOWZMjvbbJsnpZzUD2sGEIZd
+         58guz1M2M8CBpPwfiOuya/c7yDpnHB0gbXtr3W6ZemrUgBpFHT6KOVe1enIPm0oP5sp6
+         +m9WFhCiJSJ/MBGv4ODjSb69CxKuSnj60BesxgonXGOK+A+UR7IUxpwhgPE2gbMz4V+L
+         CoB4Rqyt9HglmfYuFSZQsQ+V2QL9pTj2x5RVYxYRu7EqsgLL2fsa/0/fs6wPB3FBbNW1
+         SXwg==
+X-Gm-Message-State: AKS2vOy0BYxtnTG7hpxZe+G8PEPLwIMbvgXEMry542dIdBBgv9eZD2IN
+	fCsxgtJqBWaFQ4M9vBwbYw==
+X-Received: by 10.36.76.214 with SMTP id a205mr6593049itb.35.1497548064307;
+        Thu, 15 Jun 2017 10:34:24 -0700 (PDT)
+References: <201706082349.03355@pali> <201706122347.54536@pali>
+ <1497534642.3053.3.camel@redhat.com>
+ <CANO=Ty0mQugCFyHqxzSVyc+2NUQcL5f42xXu9w=NQ5XvJHU75w@mail.gmail.com>
+ <20170615172804.GA21944@wopr>
+Message-ID: <d86f3fc7-7fab-4059-6c6c-14bea996d50d@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <20170615172804.GA21944@wopr>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.79 on 10.11.54.5
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.5]); Wed, 06 Jun 2018 11:34:03 +0000 (UTC)
-X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.5]); Wed, 06 Jun 2018 11:34:03 +0000 (UTC) for IP:'10.11.54.5' DOMAIN:'int-mx05.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'thoger@redhat.com' RCPT:''
-Cc: oss-security@lists.openwall.com, dev <dev@ignite.apache.org>, "Rai,
- Harendra" <harendra.rai@ncr.com>
-Date: Wed, 6 Jun 2018 13:33:59 +0200
-From: Tomas Hoger <thoger@redhat.com>
+Date: Thu, 15 Jun 2017 11:29:26 -0600
+From: "kseifried@redhat.com" <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [CVE-2014-0114]: Apache Ignite is vulnerable to
- existing CVE-2014-0114
-To: Denis Magda <dmagda@apache.org>
+Subject: Re: [oss-security] Re: MySQL - use-after-free after
+ mysql_stmt_close()
+To: oss-security@lists.openwall.com
 
-Hi Denis!
 
-On Fri, 1 Jun 2018 10:16:50 -0700 Denis Magda wrote:
 
-> [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114
+On 06/15/2017 11:28 AM, Kurt H Maier wrote:
+> On Thu, Jun 15, 2017 at 08:21:29AM -0600, Kurt Seifried wrote:
+>> 1) Official documentation that says "do this [insecure thing]" should
+>> probably get a CVE (e.g. "turn off all the encryption to make it work more
+>> easily"). This should probably get a CVE, especially as it results in
+>> operational changes which won't get a CVE (since it's not in code that
+>> "ships", it's just on the end of whoever is using it).
 > 
-> Severity: Important
+> I really like this idea.  What would be the approach to software whose
+> documentation starts out with "turn off selinux," out of curiosity?
+
+Good question. I would rephrase it was "turn off the firewall" or "turn
+off the Anti virus" and I think we're definitely into the "yes, that
+needs a CVE" territory (even if it can't be fixed, at least people will
+be more aware and maybe make more informed decisions when picking).
+
+> Obviously this lessens the security stance of the system, but presumably
+> the system is designed to be operable without selinux.  Would CVEs get
+> assigned for all bad ideas, or just those that expose actual attack
+> vectors?
+
+I would say that being told/forced (e.g. most systems that say turn off
+SELinux say that because they couldn't make it work with SELinux on) do
+definitely expose the system and people need to be aware of this.
+
 > 
-> Vendor: The Apache Software Foundation
+>> 3) Unofficial but commonly used documentation and code examples, I guess
+>> the best example here is stackoverflow and friends?
 > 
-> Versions Affected: Apache Ignite 2.4 or earlier
+> This is going to cause you to hit INT_MAX relatively quickly.
+
+Well part of it would be the current test case of "does anyone care",
+e.g. do people actually use this/care enough to do the work to assign a
+CVE, if someone wants to spend their time being the CNA for
+stackoverflow and put out good CVEs I'm fine with that.
+
 > 
-> Impact:
-> An attacker can execute arbitrary code on Ignite nodes in the case
-> when Ignite classpath contains arbitrary vulnerable classes.
 > 
-> Description:
-> Apache Ignite used commons-beanutils-1.8.3.jar library which did not
-> suppress the class property, which allowed remote attackers to
-> "manipulate" the ClassLoader and execute arbitrary code via the class
-> parameter, as demonstrated by the passing of this parameter to the
-> getClass method of the ActionForm object in Struts 1.
-
-This announcement is very light on details.  Would it be possible to
-provide more details, ideally a link to the fix that was applied to
-address this issue?
-
-Searching for more information, I found out that the upstream Jira
-ticket for this issue should be:
-
-https://issues.apache.org/jira/browse/IGNITE-8472
-
-The ticket is non-public, but its content is leaked via a mailing list:
-
-https://www.mail-archive.com/search?l=issues%40ignite.apache.org&q=subject%3AIGNITE-8472
-
-This has some important info, indicating that the problem (only?)
-affects Ignite for .NET.  The reported problem basically seems to be:
-Ignite for .NET bundles commons-beanutils 1.8.3 and that should be
-upgraded to 1.9.2.  Looking into apache.ignite.2.4.0.nupkg and
-apache.ignite.2.5.0.nupkg, I can see that commons-beanutils upgrade as
-requested did happen in 2.5.0.
-
-Note that I do not see any commons-beanutils jar in
-apache-ignite-fabric-2.4.0-bin.zip and
-apache-ignite-fabric-2.5.0-bin.zip.  Are those, as well as source
-distribution, considered unaffected?
-
-Now back to the CVE - I do not believe that your re-use of the old
-CVE-2014-0114 is correct.  In the report, there was some ambiguity
-whether Struts or Commons-BeanUtils should be blamed for the flaw,
-however it seems to be explicit enough that the CVE-2014-0114 is for
-Struts:
-
-http://openwall.com/lists/oss-security/2014/06/15/10
-
-As noted in the mail, the problem wasn't fixed in Commons-BeanUtils,
-which only added mechanisms to make it easy for applications using
-Commons-BeanUtils to easily disable processing of the "class"
-property.  It did not even disable processing by default, as noted in
-the release notes:
-
-http://commons.apache.org/proper/commons-beanutils/javadocs/v1.9.2/RELEASE-NOTES.txt
-
-"""
-Release 1.9.2 mainly addresses a potential security issue when accessing
-properties in an uncontrolled way. In a nutshell, if an application that uses
-Commons BeanUtils passes property paths from an external source directly to
-the getProperty() method of BeanUtilsBean, an attacker can access the class
-loader via the class property available on all Java objects.
-
-In version 1.9.2 now a special BeanIntrospector class was added which allows
-suppressing this property. Note that this BeanIntrospector is NOT enabled by
-default! Commons BeanUtils is a low-level library, and on this layer it cannot
-be decided whether access to a certain property is legal or not. Therefore,
-an application has to activate this suppressing BeanIntrospector explicitly.
-This can be done with the following lines of code:
-
-BeanUtilsBean bub = new BeanUtilsBean();
-bub.getPropertyUtils().addBeanIntrospector(
-    SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS);
-
-Now all access to properties has to be done via the specially configured
-BeanUtilsBean instance. More information about this issue can be found at
-https://issues.apache.org/jira/browse/BEANUTILS-463 or in section 2.5
-of the user's guide.
-"""
-
-Note that there was a request to assign a separate CVE for the
-BeanUtils part that was rejected (actually, CVE-2014-3540 was assigned
-and later rejected), see this post from Mitre for details:
-
-http://openwall.com/lists/oss-security/2014/07/08/1
-
-It has few parts that are relevant to Ignite:
-
-"""
-In particular, the 1597344 change has this documentation:
-
-   Adding this instance as BeanIntrospector to an instance of
-   PropertyUtilsBean suppresses the class property; it can then no
-   longer be accessed.
-
-This is an additional step that would need to be followed for any
-currently shipped product that relies on commons-beanutils. Simply
-picking up version 1.9.2 does not solve the problem. The product's
-source code must additionally be modified by (for example) changing
-or adding an addBeanIntrospector method call.
-"""
-
-Did Ignite get any other changes related to this issue apart from
-upgrading Commons-BeanUtils?  If not, Commons-BeanUtils upgrade should
-not be expected to solve the problem (if Ignite actually was affected /
-used Commons-BeanUtils in a vulnerable way, which isn't demonstrated in
-the IGNITE-8472).
-
-Another relevant part is:
-
-"""
-If any other product makes a security announcement that they have
-added
-addBeanIntrospector(SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS)
-or equivalent code as a change to the default behavior, then there can
-be an individual CVE ID for that product. However, if any other product
-simply makes a security announcement that they have decided to ship
-commons-beanutils 1.9.2 -- but the class property remains exposed in
-the product as it is shipped and installed by default -- then a CVE ID
-would not be assigned.
-"""
-
-If Ignite got/gets a fix that leverages the SUPPRESS_CLASS from
-Commons-BeanUtils 1.9.2 to disable processing of the class property, it
-should get its own CVE assigned.
+> khm
+> 
 
 -- 
-Tomas Hoger / Red Hat Product Security
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
