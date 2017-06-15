@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/9
-Message-ID: <877467503.21605361.1508329271692.JavaMail.zimbra@redhat.com>
-Date: Wed, 18 Oct 2017 08:21:11 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/9
+Message-ID: <CAF1AS2h9QxW2Gj67_Oo6HYgWrLR9zsv9meT2CVSaf6dqQq-VfA@mail.gmail.com>
+Date: Thu, 15 Jun 2017 17:33:48 -0400
+From: Alexandre Rebert <alex@...allsecure.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors
+Subject: CVE request: sthttpd remote heap buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 Hello,
 
-A patch fixing this issue was accepted upstream:
+sthttpd [1], is a fork of thttpd, a small, fast, multiplexing webserver.
+Our fuzzing tools recently found a heap buffer overflow in the request
+parsing code that can be triggered remotely. The patch was recently fixed
+[2], and the bug was introduced in [3].  It seems that it's also affecting
+thttpd 2.25b present in OpenSUSE [4].
 
-commit 95d78c28b5a85bacbc29b8dba7c04babb9b0d467 fix unbalanced page refcounting in bio_map_user_iov
+Let us know if you need more information.
 
-I would also consider next 2 related patches if backporting:
+Thanks
+Alex from ForAllSecure
 
-commit 2b04e8f6bbb196cab4b232af0f8d48ff2c7a8058 more bio_map_user_iov() leak fixes
-commit 1cfd0ddd82232804e03f3023f6a58b50dfef0574 bio_copy_user_iov(): don't ignore ->iov_offset #v4.5+
+[1] https://github.com/blueness/sthttpd
+[2]
+https://github.com/blueness/sthttpd/commit/c0dc63a49d8605649f1d8e4a96c9b468b0bff660
+[3]
+https://github.com/blueness/sthttpd/commit/aa3f36c0bf2aef1ffb17f5188ccf5e8afc13d3dc
+[4]
+https://build.opensuse.org/package/view_file/server:http/thttpd/thttpd-2.25b-strcpy.patch?expand=1
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
