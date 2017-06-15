@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/30/5
-Message-ID: <20170430182826.ovpqricwr7ucjtg7@eldamar.local>
-Date: Sun, 30 Apr 2017 20:28:26 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: radicale: CVE-2017-8342: prone to timing oracles and simple bruteforce attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/4
+Message-ID: <20170615172804.GA21944@wopr>
+Date: Thu, 15 Jun 2017 10:28:04 -0700
+From: Kurt H Maier <khm@...ops.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Thu, Jun 15, 2017 at 08:21:29AM -0600, Kurt Seifried wrote:
+> 1) Official documentation that says "do this [insecure thing]" should
+> probably get a CVE (e.g. "turn off all the encryption to make it work more
+> easily"). This should probably get a CVE, especially as it results in
+> operational changes which won't get a CVE (since it's not in code that
+> "ships", it's just on the end of whoever is using it).
 
-The following CVE assignment was done via the
-https://cveform.mitre.org:
+I really like this idea.  What would be the approach to software whose
+documentation starts out with "turn off selinux," out of curiosity?
+Obviously this lessens the security stance of the system, but presumably
+the system is designed to be operable without selinux.  Would CVEs get
+assigned for all bad ideas, or just those that expose actual attack
+vectors?
 
-Radicale, a simple calendar and addressbook server, before 1.1.2 and
-2.x before 2.0.0rc2 is prone to timing oracles and simple brute-force
-attacks when using the htpasswd authentication method.
+> 3) Unofficial but commonly used documentation and code examples, I guess
+> the best example here is stackoverflow and friends?
 
-References:
-https://bugs.debian.org/861514
-https://github.com/Kozea/Radicale/commit/059ba8dec1f22ccbeab837e288b3833a099cee2d
-https://github.com/Kozea/Radicale/commit/190b1dd795f0c552a4992445a231da760211183b
-https://github.com/Kozea/Radicale/blob/1.1.2/NEWS.rst
+This is going to cause you to hit INT_MAX relatively quickly.
 
-CVE-2017-8342 was assigned for this issue.
 
-Regards,
-Salvatore
+khm
