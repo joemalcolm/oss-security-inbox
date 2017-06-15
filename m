@@ -1,64 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/1
-Message-ID: <20170624005003.GB27479@grsecurity.net>
-Date: Fri, 23 Jun 2017 20:50:03 -0400
-From: Brad Spengler <spender@...ecurity.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/6
+Message-ID: <d86f3fc7-7fab-4059-6c6c-14bea996d50d@redhat.com>
+Date: Thu, 15 Jun 2017 11:29:26 -0600
+From: "kseifried@...hat.com" <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: torvalds@...ux-foundation.org, pageexec@...email.hu
-Subject: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
+Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
 Content-Type: text/plain; charset=utf-8
 
-I know this is no longer the place to request CVEs, but CVEs should be
-allocated for the following issues (this is in addition to the two dozen
-or so already allocated for CONFIG_VMAP_STACK):
 
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=b05c73bd1e3ec60357580eb042ee932a5ed754d5
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=942a48730faf149ccbf3e12ac718aee120bb3529
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=942a48730faf149ccbf3e12ac718aee120bb3529
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=0bd193d62b4270a2a7a09da43ad1034c7ca5b3d3
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=628c2893d44876ddd11602400c70606ade62e129
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5165da5923d6c7df6f2927b0113b2e4d9288661e
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e9ff56ac352446f55141aaef1553cee662b2e310
 
-Given my recent blog post mentioning CONFIG_VMAP_STACK:
-https://grsecurity.net/an_ancient_kernel_hole_is_not_closed.php
-I believe a CVE should also be allocated to it due to failing to handle
-VLAs (which as I've noted have been exploited in the past in the kernel)
-and is being marketed as a stack overflow prevention equivalent to what's
-present in grsecurity (which it is not).
+On 06/15/2017 11:28 AM, Kurt H Maier wrote:
+> On Thu, Jun 15, 2017 at 08:21:29AM -0600, Kurt Seifried wrote:
+>> 1) Official documentation that says "do this [insecure thing]" should
+>> probably get a CVE (e.g. "turn off all the encryption to make it work more
+>> easily"). This should probably get a CVE, especially as it results in
+>> operational changes which won't get a CVE (since it's not in code that
+>> "ships", it's just on the end of whoever is using it).
+> 
+> I really like this idea.  What would be the approach to software whose
+> documentation starts out with "turn off selinux," out of curiosity?
 
-Here's a fix for a UAF introduced by upstream's refcount_t work (aka introducing
-the vulns the defense is supposed to prevent, and it won't be the last):
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=92347cfd62c174ab91ad97dd4bfbaa1d4aa28e67
+Good question. I would rephrase it was "turn off the firewall" or "turn
+off the Anti virus" and I think we're definitely into the "yes, that
+needs a CVE" territory (even if it can't be fixed, at least people will
+be more aware and maybe make more informed decisions when picking).
 
-Also, over two months ago I mentioned a CONFIG_STRICT_DEVMEM bypass that
-still required fixes to the mmap side:
-http://seclists.org/oss-sec/2017/q2/76
-As predicted, everyone ignored the comment about the mmap side and fixes
-were only committed and backported to stable kernels for the read/write
-side.  Thus the Secure Boot bypass still exists today, over two months later
-in all upstream kernels -- a CVE should be allocated for this separate issue
-as well.
+> Obviously this lessens the security stance of the system, but presumably
+> the system is designed to be operable without selinux.  Would CVEs get
+> assigned for all bad ideas, or just those that expose actual attack
+> vectors?
 
-Also a shout out to Linus for his recent trade disparagement:
-https://www.spinics.net/lists/kernel/msg2540934.html
-It's big talk coming from a guy who hasn't protected his users for the past
-16 years, who authored the broken stack gap patch that crashed machines and
-broke apps in 2010 and introduced the userland ABI changes that are now causing
-problems with the proper fix (that oh, surprise, looks a lot like PaX's fix
-from 2010).  We've heard these kinds of nonsense claims from Linus before,
-like here:
-https://lkml.org/lkml/2011/6/6/306
-Maybe someone pointed him to it and the embarrassment from realizing he was
-completely wrong was too much that he's decided to lash out?
+I would say that being told/forced (e.g. most systems that say turn off
+SELinux say that because they couldn't make it work with SELinux on) do
+definitely expose the system and people need to be aware of this.
 
-Yes Linus, our patches are such garbage the KSPP can't manage to do anything
-other than copy+paste from them, and you're slowly merging them (along
-with our registered copyrights).  How do our table scraps taste?
+> 
+>> 3) Unofficial but commonly used documentation and code examples, I guess
+>> the best example here is stackoverflow and friends?
+> 
+> This is going to cause you to hit INT_MAX relatively quickly.
 
-BTW, we're happy to go toe-to-toe with you here in public on actual facts
-instead of pathetic ad hominems.
+Well part of it would be the current test case of "does anyone care",
+e.g. do people actually use this/care enough to do the work to assign a
+CVE, if someone wants to spend their time being the CNA for
+stackoverflow and put out good CVEs I'm fine with that.
 
--Brad
+> 
+> 
+> khm
+> 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
