@@ -1,51 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/9
-Message-ID: <20170616204437.GC2269@hunt>
-Date: Fri, 16 Jun 2017 13:44:37 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/5
+Message-ID: <5942C07E.403@oracle.com>
+Date: Thu, 15 Jun 2017 10:14:38 -0700
+From: Feng Cao <feng.cao@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: two vulns in  uClibc-0.9.33.2
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 16, 2017 at 11:53:09AM +0800, fefe wrote:
-> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
-> [...]
-> The poc code like:
-> 	
-> 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
-> 	{		
->         	reg1match_t pmatch[1];
-> 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
-> 		regfree(&regtmp);
-> 	}
-> 
-> [...]
-> 
-> The poc code like:	
-> 	
-> 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
-> 	{		
->         	reg1match_t pmatch[1];
-> 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
-> 		regfree(&regtmp);
-> 	}
 
-A question to the wider list:
+There are several issues which need to be addressed before considering
+CVE for documentation. First, most of the documentations have no version
+control. Second, CPE doesn't have such a category. Third, it can easily
+generate the confusion with CVE for the code fix.
 
-Does it make sense to assign CVEs to regex compilation? Very few toolkits
-handle this well, and even given how many regex toolkits use backtracking,
-even 'safe' regexes can lead to essentially unbounded execution time.
+My vote is no.
 
-Some regex engines like Rust's regex and Go's regex should handle
-untrusted inputs well: they're non-backtracking engines and type-safe
-languages.  Hypothetical crashes like this probably would qualify for
-CVEs in either of these environments. But I'm less convinced it makes
-sense with C-based engines to allow untrusted inputs.
+Thanks,
 
-http://www.etalabs.net/compare_libcs.html suggests that uclibc's regex is
-DFA-based thus it's probably intended to allow untrusted inputs -- but is
-that explicitely stated as a goal anywhere?
+--Feng
 
-Thanks
+On 6/15/2017 7:21 AM, Kurt Seifried wrote:
+> This does bring up an old question:
+>
+> Should we assign CVEs for code examples/documentation? E.g. We assign CVEs
+> for code shipped to people in digital form. Why not assign CVEs for code in
+> documentation or commonly used examples? We can go with the rational that
+> CVEs get assigned to the affected code bases (e.g. when someone implements
+> that documentation/code), but it might also be good to educate the
+> community about bad examples/documentation/etc.
+>
+> My thinking is:
+>
+> 1) Official documentation that says "do this [insecure thing]" should
+> probably get a CVE (e.g. "turn off all the encryption to make it work more
+> easily"). This should probably get a CVE, especially as it results in
+> operational changes which won't get a CVE (since it's not in code that
+> "ships", it's just on the end of whoever is using it).
+>
+> 2) Official code examples, as above, actual implementations get CVEs, it
+> might be useful to raise awareness that the example is bad.
+>
+> 3) Unofficial but commonly used documentation and code examples, I guess
+> the best example here is stackoverflow and friends?
+>
+> Thoughts/comments (feel free to reply privately if you don't want to be
+> public)? I'd like to collect what people think and then present it to the
+> CVE board later (this has been on my long term todo list).
+>
+>
+> On Thu, Jun 15, 2017 at 7:50 AM, Adam Maris <amaris@...hat.com> wrote:
+>
+>> On Mon, 2017-06-12 at 23:47 +0200, Pali Rohár wrote:
+>>> Hello!
+>>>
+>>> Any idea how to handle this particular problem?
+>>>
+>>>
+>> Hi!
+>>
+>> Given that Oracle (silently) updated the vulnerable example in their
+>> documentation, this likely indicates the way to handle this -
+>> applications that copied the vulnerable example needs to be fixed and
+>> CVEs will be assigned per application.
+>>
+>> Best Regards,
+>>
+>> --
+>> Adam Mariš, Red Hat Product Security
+>> 1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
+>>
+>
+>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
