@@ -1,64 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/4
-Message-ID: <20170124085501.GA9322@suse.de>
-Date: Tue, 24 Jan 2017 09:55:01 +0100
-From: Sebastian Krahmer <krahmer@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/3
+Message-ID: <20170615144050.GA25094@openwall.com>
+Date: Thu, 15 Jun 2017 16:40:50 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Headsup: systemd v228 local root exploit (CVE-2016-10156)
+Subject: Re: Berkeley DB reads DB_CONFIG from cwd
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Sun, Jun 11, 2017 at 12:06:13AM +0200, Jakub Wilk wrote:
+> Apparently Berkeley DB reads the DB_CONFIG configuration file from the 
+> current working directory by default[*]. This is surprising and AFAICT 
+> undocumented.
+> 
+> Here's how to exploit it against pam_ccreds:
+> 
+>    $ cat /etc/shadow
+>    cat: /etc/shadow: Permission denied
+>    $ ln -sf /etc/shadow DB_CONFIG
+>    $ /sbin/ccreds_chkpwd moo < /dev/null
+>    BDB1584 line 1: 
+>    root:$1$QRCEVRMX$sPppjXE42AZnUPuEWf87D.:17327:0:99999:7:::: incorrect 
+>    name-value pair
+> 
+> (The above was tested on Debian jessie.)
+> 
+> In the past, nss_db was also exploitable:
+> CVE-2010-0826
+> 
+> 
+> [*] More precisely, this seem to happen when you call db_create() with 
+> dbenv=NULL; or if you use the dbm_open() function.
 
-This is a heads up for a trivial systemd local root exploit, that
-was silently fixed in the upstream git as:
+Besides possibly updating Postfix, what are distros going to do about
+this?  What is upstream going to do?  Have they been contacted?
 
-commit 06eeacb6fe029804f296b065b3ce91e796e1cd0e
-Author: ....
-Date:   Fri Jan 29 23:36:08 2016 +0200
+In the source code, it isn't necessarily as simple as commenting out the
+undocumented functionality.  There doesn't appear to be any code
+specific to the undocumented functionality, since it is documented that
+the DB_CONFIG file is read from the environment's home directory and the
+code is there primarily for that purpose.  Problems arise when the
+environment is uninitialized, and it is unclear to me whether this was
+possibly meant to imply the environment's home directory is the current
+directory (but even if so, this behavior is dangerous and needs to go).
 
-    basic: fix touch() creating files with 07777 mode
-    
-    mode_t is unsigned, so MODE_INVALID < 0 can never be true.
-    
-    This fixes a possible DoS where any user could fill /run by writing to
-    a world-writable /run/systemd/show-status.
+At first, I tried checking for dbenv being NULL in __dbenv_config(),
+which is where the hard-coded DB_CONFIG file name is found.  However, at
+least when testing with Postfix' postmap program (without the recent
+workaround), dbenv is non-NULL there, and per strace postmap does indeed
+try to open DB_CONFIG in the current directory.  Thus, for now I opted
+for this patch checking for and curing the symptom:
 
-The analysis says that is a "possible DoS", but its a local root
-exploit indeed. Mode 07777 also contains the suid bit, so files
-created by touch() are world writable suids, root owned. Such
-as /var/lib/systemd/timers/stamp-fstrim.timer thats found on a non-nosuid mount.
+--- db-4.3.29/env/env_open.c.orig       2004-12-23 02:58:21 +0000
++++ db-4.3.29/env/env_open.c    2017-06-15 13:59:43 +0000
+@@ -500,7 +500,7 @@ __dbenv_config(dbenv, db_home, flags)
+        if (p == NULL)
+                fp = NULL;
+        else {
+-               fp = fopen(p, "r");
++               fp = strcmp(p, "DB_CONFIG") ? fopen(p, "r") : NULL;
+                __os_free(dbenv, p);
+        }
 
-This is trivially exploited by something like:
+This passes the postmap test for me (postmap no longer tries to open the
+file), but I wonder if it possibly broke db's own tests.  I can't easily
+run the tests as --enable-test says it needs TCL, which we don't
+package.
 
-http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/CreateSetgidBinary.c
+While at it, I found that rep/rep_backup.c has a comment saying it skips
+DB_CONFIG, but the code actually skips DB_CONFIG* (that is, any filename
+starting with DB_CONFIG) due to use of strncmp():
 
-with minimal changes, so I wont provide a PoC here.
+                /*
+                 * Skip DB-owned files: ., ..,  __db*, DB_CONFIG, log*
+                 */
+                if (strcmp(names[i], ".") == 0)
+                        continue;
+                if (strcmp(names[i], "..") == 0)
+                        continue;
+                if (strncmp(names[i], "__db", 4) == 0)
+                        continue;
+                if (strncmp(names[i], "DB_CONFIG", 9) == 0)
+                        continue;
+                if (strncmp(names[i], "log", 3) == 0)
+                        continue;
 
-The bug was possibly introduced via:
+Either the comment or the code is wrong (I think the code is wrong), but
+this is unimportant.
 
-commit ee735086f8670be1591fa9593e80dd60163a7a2f
-Author: ...
-Date:   Wed Nov 11 22:54:56 2015 +0100
-
-    util-lib: use MODE_INVALID as invalid value for mode_t everywhere
-
-
-So we believe that this mostly affects v228 of systemd, but its recommended
-that distributors cross-check their systemd versions for vulnerable
-touch_*() functions. We requested
-a CVE for this issue from MITRE by ourselfs: CVE-2016-10156
-
-We would like to see that systemd upstream retrieves CVE's themself
-for their own bugs, even if its believed that its just a local DoS.
-This would make distributors life much easier when we read the git logs
-to spot potential issues. The systemd git log is really huge, with
-lots of commits each week ("new services as a service").
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
-
+Alexander
