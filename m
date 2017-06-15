@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/17/4
-Message-ID: <ffe4aba0-426e-89c0-4760-1d4b315a88a1@cpanel.net>
-Date: Fri, 17 Nov 2017 14:58:43 -0600
-From: John Lightsey <jd@...nel.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: phusion passenger CVE-2017-1000384
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/1
+Message-ID: <1497534642.3053.3.camel@redhat.com>
+Date: Thu, 15 Jun 2017 15:50:42 +0200
+From: Adam Maris <amaris@...hat.com>
+To: pali.rohar@...il.com, oss-security@...ts.openwall.com
+Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
 Content-Type: text/plain; charset=utf-8
 
-On 11/17/17 2:15 PM, Kurt Seifried wrote:
-> Assigned CVE-2017-1000384 to
-> https://github.com/phusion/passenger/commit/a63f1e9cd8148dfaac08b00d74ef2b59bc2c9dd4
+On Mon, 2017-06-12 at 23:47 +0200, Pali Rohár wrote:
+> Hello!
 > 
-> https://bugs.gentoo.org/634452
+> Any idea how to handle this particular problem?
 > 
-> Please note: you have to have Phusion Passenger in a dir not owned by root,
-> and then run it as root (hint: that's never a good idea with anything).
-> 
+> 
 
-The commit for the arbitrary file read vulnerability mentioned in the
-Gentoo bug report is actually this one:
+Hi!
 
-https://github.com/phusion/passenger/commit/4043718264095cde6623c2cbe8c644541036d7bf
+Given that Oracle (silently) updated the vulnerable example in their
+documentation, this likely indicates the way to handle this -
+applications that copied the vulnerable example needs to be fixed and
+CVEs will be assigned per application.
 
-I'm not sure if the other commit was fixing an actual flaw or just
-intended as hardening.
+Best Regards,
 
-Passenger switches IDs to the user that's supposed to run the passenger
-application. The problem we reported was that some of the application
-data was read and stored before the ID switching took place.
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3982 bytes)
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
