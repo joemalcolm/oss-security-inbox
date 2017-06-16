@@ -1,50 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/15
-Message-ID: <CAFE48uTYA=5jsW09sMVMT9FOH2oBYgi86myziRPtJo0kx466KQ@mail.gmail.com>
-Date: Tue, 17 Jan 2017 20:25:19 +0530
-From: Lokesh Ubuntu <lokesh.ubuntu@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/6
+Message-ID: <06780369-357d-1413-cec6-f8befecd2566@redhat.com>
+Date: Fri, 16 Jun 2017 08:29:38 +0200
+From: Andrej Nemec <anemec@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- linux kernel: crash by spawning mcrypt(alg) with incompatible algorithm
+Subject: Re: CVE request: sthttpd remote heap buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Do we have CVE for this? If not so why don't we have one? Thanks!
+Hello Alexandre,
 
-Regards, Lokesh
+Unfortunately, CVE assignments are not done through this list anymore.
+You need to visit [1] and request the CVE by filing out the form. Could
+you please look at it and let the list know about the assigned CVE?
 
-On Jan 17, 2017 19:51, "Vladis Dronov" <vdronov@...hat.com> wrote:
+Thanks!
 
+[1] https://cveform.mitre.org/
+
+Best Regards,
+
+-- 
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+
+
+On 06/15/2017 11:33 PM, Alexandre Rebert wrote:
 > Hello,
 >
-> Algorithms not compatible with mcryptd could be spawned by mcryptd with a
-> direct
-> crypto_alloc_tfm invocation using a "mcryptd(alg)" name construct. This
-> causes
-> mcryptd to crash the kernel if an arbitrary "alg" is incompatible and not
-> intended
-> to be used with mcryptd.
+> sthttpd [1], is a fork of thttpd, a small, fast, multiplexing webserver.
+> Our fuzzing tools recently found a heap buffer overflow in the request
+> parsing code that can be triggered remotely. The patch was recently fixed
+> [2], and the bug was introduced in [3].  It seems that it's also affecting
+> thttpd 2.25b present in OpenSUSE [4].
 >
-> This could be a potential attack to crash the kernel by user program using
-> AF_ALG
-> to request an invalid algorithm such as mcryptd(md5).
+> Let us know if you need more information.
 >
-> Initial discussion:
+> Thanks
+> Alex from ForAllSecure
 >
-> https://marc.info/?l=dm-devel&m=148063708010538&w=2
->
-> Suggested Patch:
->
-> http://marc.info/?l=linux-crypto-vger&m=148096718218312&w=2
->
-> Upstream patch:
->
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/
-> linux.git/commit/?id=48a992727d82cb7db076fa15d372178743b1f4cd
->
-> Red Hat Product Security Bugzilla:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1404200
->
-> Best regards,
-> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+> [1] https://github.com/blueness/sthttpd
+> [2]
+> https://github.com/blueness/sthttpd/commit/c0dc63a49d8605649f1d8e4a96c9b468b0bff660
+> [3]
+> https://github.com/blueness/sthttpd/commit/aa3f36c0bf2aef1ffb17f5188ccf5e8afc13d3dc
+> [4]
+> https://build.opensuse.org/package/view_file/server:http/thttpd/thttpd-2.25b-strcpy.patch?expand=1
 >
 
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
