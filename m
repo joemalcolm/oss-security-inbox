@@ -1,80 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/16
-Message-ID: <4817444.ggVtDkFeZg@blackgate>
-Date: Thu, 09 Feb 2017 14:47:14 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/9
+Message-ID: <20170616204437.GC2269@hunt>
+Date: Fri, 16 Jun 2017 13:44:37 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: zziplib: NULL pointer dereference in prescan_entry (fseeko.c)
+Subject: Re: two vulns in  uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+On Fri, Jun 16, 2017 at 11:53:09AM +0800, fefe wrote:
+> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
+> [...]
+> The poc code like:
+> 	
+> 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+> 	{		
+>         	reg1match_t pmatch[1];
+> 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
+> 		regfree(&regtmp);
+> 	}
+> 
+> [...]
+> 
+> The poc code like:	
+> 	
+> 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+> 	{		
+>         	reg1match_t pmatch[1];
+> 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
+> 		regfree(&regtmp);
+> 	}
 
-The unzzipcat-seeko utility provided by the package, by default, without any 
-crafted zip shows a NULL pointer access. For completeness I’m attaching my 
-reproducer.
+A question to the wider list:
 
-The complete ASan output:
+Does it make sense to assign CVEs to regex compilation? Very few toolkits
+handle this well, and even given how many regex toolkits use backtracking,
+even 'safe' regexes can lead to essentially unbounded execution time.
 
-# unzzipcat-seeko $FILE
-==3376==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x00000041f8da bp 0xbebebebebebebeae sp 0x7ffe6020c2a0 T0)                                                                                                                                         
-==3376==The signal is caused by a READ memory access.                                                                                                                                                                                                                          
-==3376==Hint: address points to the zero page.                                                                                                                                                                                                                                 
-    #0 0x41f8d9 in __asan::Allocator::Reallocate(void*, unsigned long, 
-__sanitizer::BufferedStackTrace*) /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:550                                                          
-    #1 0x41f8d9 in __asan::asan_realloc(void*, unsigned long, 
-__sanitizer::BufferedStackTrace*) /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:748                                                                   
-    #2 0x4d29a1 in __interceptor_realloc /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:85                                                                                                                        
-    #3 0x7f21bce0f146 in prescan_entry /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/fseeko.c:189:25                                                                                                                                                      
-    #4 0x7f21bce0f146 in zzip_entry_findfirst /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/fseeko.c:324                                                                                                                                                  
-    #5 0x509cb3 in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat-seeko.c:79:22                                                                                                                                                             
-    #6 0x7f21bbf5261f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
-    #7 0x4197e8 in _init (/usr/bin/unzzipcat-seeko+0x4197e8)                                                                                                                                                                                                                   
-                                                                                                                                                                                                                                                                               
-AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:550 in 
-__asan::Allocator::Reallocate(void*, unsigned long, 
-__sanitizer::BufferedStackTrace*)                                          
-==3376==ABORTING
+Some regex engines like Rust's regex and Go's regex should handle
+untrusted inputs well: they're non-backtracking engines and type-safe
+languages.  Hypothetical crashes like this probably would qualify for
+CVEs in either of these environments. But I'm less convinced it makes
+sense with C-based engines to allow untrusted inputs.
 
-Affected version:
-0.13.62
+http://www.etalabs.net/compare_libcs.html suggests that uclibc's regex is
+DFA-based thus it's probably intended to allow untrusted inputs -- but is
+that explicitely stated as a goal anywhere?
 
-Fixed version:
-N/A
+Thanks
 
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00157-zziplib-nullptr-prescan_entry
-
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with Address Sanitizer.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-prescan_entry-fseeko-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
