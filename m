@@ -1,21 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/7
-Message-ID: <20170214161014.2182.0AAC08B5@matica.foolinux.mooo.com>
-Date: Tue, 14 Feb 2017 08:12:48 -0800
-From: Ian Zimmerman <itz@...mate.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: A note about the multiple crashes in zziplib
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/1
+Message-ID: <q9GnziJFIgpS6F561_2bPEQXnRjUmAK7A5jNWRzfrN-eWZA531SMyZwbld9orzTcGJdxW5dZyoQntvNWC2hxkHqIVVuXVswje5AAQALTfNY=@protonmail.com>
+Date: Thu, 15 Jun 2017 20:02:53 -0400
+From: Qhdwns123 <qhdwns123@...tonmail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Do I have to inform someone about CVE?
 Content-Type: text/plain; charset=utf-8
 
-On 2017-02-14 10:50, Agostino Sarubbo wrote:
+Hi.
 
-> All CVEs where assigned via https://cveform.mitre.org
+I received a CVE.
 
-Thank you very much for posting this.  Until (unless?) the new CVE
-requesting process is smoothed out, posts like this will keep the list
-useful.
+Do I have to inform someone about CVE?
 
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
+Thanks.
