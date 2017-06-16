@@ -1,4 +1,9 @@
-Received: (qmail 32727 invoked by uid 550); 26 Apr 2024 20:59:27 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2252" "Friday" "16" "June" "2017" "13:44:37" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20170616204437.GC2269@hunt>" "65" "Re: [oss-security] two vulns in  uClibc-0.9.33.2" "^Date:" nil nil "6" "2017061620:44:37" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        seth.arnold@ Jun 16   65/2252  " thread-indent "\"Re: [oss-security] two vulns in  uClibc-0.9.33.2\"\n") "<tencent_18C312B86EA079DA42B11D83@qq.com>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16203 invoked by uid 550); 16 Jun 2017 20:44:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,61 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32709 invoked from network); 26 Apr 2024 20:59:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=qQKonZLy/G1nwlnZ5zl4/kBinlbpzE4q7hNIrmQqFxU=; b=UfPTeadVtwxeIaBBWVpDTuQ7Nc
-	sDqnNWswHQ/VXkOSfT7+W0ZUrOmZpDS2mNNSKR1NPgLHO/alv29kwsdlZi9X/3+ozaX9DNRaMUiDk
-	Ob6xllqk5u02ywyRHTzTwQXiagRd5bBR0nFZldCmykwR/agAdJAu3xn62zU06XBnvCONSPYOQnSzf
-	HBhqjmtQasEr1YdG5evP3iQvj5mfjn511oqkfeheopizCcvnMxHd1gWlfvsEWZcR+A6RmoXv/z61S
-	DCTHMqZk444OZ9Od68xPWugAayF7mX6P5Hnz4jLhhCA34B1mMI6KjhiN7Vz/katnA5xdV3dTePQQt
-	V6f0dqAQ==;
-Date: Fri, 26 Apr 2024 21:59:06 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZiwVmhV2muRhsAfy@remnant.pseudorandom.co.uk>
-References: <20240426135217.a103ce0c-a775-4a49-ae2c-94dfd64f6695@korelogic.com>
+Received: (qmail 16185 invoked from network); 16 Jun 2017 20:44:50 -0000
+Message-ID: <20170616204437.GC2269@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <tencent_18C312B86EA079DA42B11D83@qq.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="KN5l+BnMqAQyZLvT"
+Content-Disposition: inline
+In-Reply-To: <tencent_18C312B86EA079DA42B11D83@qq.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Fri, 16 Jun 2017 13:44:37 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] two vulns in  uClibc-0.9.33.2
+To: oss-security@lists.openwall.com
+
+--KN5l+BnMqAQyZLvT
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240426135217.a103ce0c-a775-4a49-ae2c-94dfd64f6695@korelogic.com>
-X-Debian-User: smcv
-Subject: Re: [oss-security] Update on the distro-backdoor-scanner effort
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 26 Apr 2024 at 14:06:16 -0600, Hank Leininger wrote:
->   - Turns out serial numbers are made up and the points don't matter.
->     But still, this author appears to have _thought_ they were
->     important.
+On Fri, Jun 16, 2017 at 11:53:09AM +0800, fefe wrote:
+> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
+> [...]
+> The poc code like:
+>=20=09
+> 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB =
+)=3D=3D0)
+> 	{=09=09
+>         	reg1match_t pmatch[1];
+> 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
+> 		regfree(&regtmp);
+> 	}
+>=20
+> [...]
+>=20
+> The poc code like:=09
+>=20=09
+> 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3=
+F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\x=
+BD", REG_EXTENDED|REG_ICASE | REG_NOSUB )=3D=3D0)
+> 	{=09=09
+>         	reg1match_t pmatch[1];
+> 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
+> 		regfree(&regtmp);
+> 	}
 
-The serial number of a m4 file matters if the attacker wants their back
-door to remain in place when a distro runs autoreconf -fi or similar
-(as many Autoconf-built Debian packages do, for example); or, less
-maliciously, if the author of a legitimate set of Autoconf macros wants
-their bug fixes to remain in place when an older distro does the same.
+A question to the wider list:
 
-The purpose of the serial number is so that autoreconf can upgrade bundled
-macros in the `make dist` tarball to the distro version if it happens
-to be newer (for example if I prepared a Flatpak release on Debian 12
-but you are building it on Arch), without downgrading to an older distro
-version that might be lacking newer features or bug fixes (for example
-when someone else builds that same Flatpak release on Debian 11).
+Does it make sense to assign CVEs to regex compilation? Very few toolkits
+handle this well, and even given how many regex toolkits use backtracking,
+even 'safe' regexes can lead to essentially unbounded execution time.
 
-If a developer of Autoconf macros is following its documentation, the
-serial number should go up whenever the code changes. The observant
-will of course notice that this doesn't account for the possibility of
-non-linear development (macros being modified in a non-canonical location,
-forked, edited collaboratively, or otherwise not having a monotonically
-increasing version number) which I think is a reflection of what was
-and wasn't considered to be normal when it was designed - it's very much
-from the "cathedral" era.
+Some regex engines like Rust's regex and Go's regex should handle
+untrusted inputs well: they're non-backtracking engines and type-safe
+languages.  Hypothetical crashes like this probably would qualify for
+CVEs in either of these environments. But I'm less convinced it makes
+sense with C-based engines to allow untrusted inputs.
 
-(Many projects don't follow the documentation and do make changes without
-incrementing the serial number, which is a bug.)
+http://www.etalabs.net/compare_libcs.html suggests that uclibc's regex is
+DFA-based thus it's probably intended to allow untrusted inputs -- but is
+that explicitely stated as a goal anywhere?
 
-Beyond that single purpose, yes, the serial number is made up and doesn't
-matter.
+Thanks
 
-    smcv
+--KN5l+BnMqAQyZLvT
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCgAGBQJZREM1AAoJEPMhclmdjS6X/ToH/jc1YtF2nb4pbFxe0iaH+k7W
+xTtrni84e4ec0jiHBFOaE5SeYDqYF2esyea8d70WxXVuLd2jf5xXnHhaa5Ghhncc
+M7jcb5vNH3OFixQ8mhYWvYzu9m+coi0GC1vWbMf/xo3MMBX7ntfSyraSTM37y3+t
+e/Z7q4O9g+LrvOAn21Y6Wb1/CUO8K1pvBskew4pFgeSH+cIJa1eDBHR9z5KRqGh0
+7V5T6j/hdHRCUqRjaZaioSntRZYkaXRl4SSNN3g9cp4i5T6X1J5mPZlG323sY/fu
+jWRiUmxUsaBz0w4xc3EGHoIKiQ9ojDYiNw9If5fmmLrIX/jwTZambagcALRkoqQ=
+=Hevg
+-----END PGP SIGNATURE-----
+
+--KN5l+BnMqAQyZLvT--
