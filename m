@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/1
-Message-ID: <1498109986.32057.1.camel@gmail.com>
-Date: Thu, 22 Jun 2017 01:39:46 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: Jeff Law <law@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: Re: Qualys Security Advisor -- The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/3
+Message-ID: <3a481763-0461-fca6-72d3-15c3bbe1120f@redhat.com>
+Date: Thu, 15 Jun 2017 21:35:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Do I have to inform someone about CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2017-06-21 at 11:33 -0600, Jeff Law wrote:
-> On 06/20/2017 12:44 AM, Daniel Micay wrote:
-> 
-> > I think it's also worth mentioning the segmented stack support in
-> > GCC
-> > and LLVM that was added for Go. It's possible to use it for C with
-> > the
-> > __morestack call set up to simply abort when stack space is
-> > exhausted.
-> > 
-> > That's what Rust was doing after it dropped segmented stacks, but
-> > they
-> > wanted to move to stack probes for efficiency and prematurely
-> > dropped
-> > these function prelude checks.
-> > 
-> > It's not efficient, but it works, unlike -fstack-check.
-> > 
-> > I don't think it makes sense for general purpose distributions to
-> > adopt
-> > it but it's an available option for others with more concern about
-> > this
-> > issue.
-> 
-> Yup.  go's split-stacks are another option.  As you mention, probably
-> not performant enough for a general purpose distribution, but could be
-> interesting for more specialized needs.
-> 
-> jeff
+When you have a CVE the simple rule is:
 
-It can be used with large fixed size stacks and no actual expansion, but
-yeah it's expensive to add a check to every non-leaf prelude. It's not
-as expensive as the SSP check for a function but it needs to cover many.
+If you got it publicly the CNA (CVE Numbering Authority) you got it from
+should have published it to their upstream (e.g. MITRE).
 
-Since probes can be so much more efficient, it only makes sense to
-consider it if getting probes fully working is going to take a long
-time.
+If you got it embargoed and it's now public you should tell the CNA you
+got it from that it is public, and ideally also tell MITRE
+(https://cveform.mitre.org/).
+
+Rule of thumb is: when it goes public, tell the issuer, and/or MITRE so
+they can publish it.
+
+
+On 2017-06-15 6:02 PM, Qhdwns123 wrote:
+> Hi.
+>
+> I received a CVE.
+>
+> Do I have to inform someone about CVE?
+>
+> Thanks.
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
