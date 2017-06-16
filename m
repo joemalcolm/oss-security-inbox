@@ -1,105 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/8
-Message-ID: <20170706124603.GA4970@openwall.com>
-Date: Thu, 6 Jul 2017 14:46:03 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Libgcrypt 1.7.8 fixes "Sliding right into disaster" RSA side-channel attack (CVE-2017-7526)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/10
+Message-ID: <CANO=Ty2QDq=85miG_W0EixwAsVRfO_8bExCHPNX1D5Coe6UBaw@mail.gmail.com>
+Date: Fri, 16 Jun 2017 15:09:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: two vulns in uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Jun 16, 2017 at 2:44 PM, Seth Arnold <seth.arnold@...onical.com>
+wrote:
 
-Last week, Libgcrypt 1.7.8 was announced as follows:
+> On Fri, Jun 16, 2017 at 11:53:09AM +0800, fefe wrote:
+> > I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
+> > [...]
+> > The poc code like:
+> >
+> >       if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE |
+> REG_NOSUB )==0)
+> >       {
+> >               reg1match_t pmatch[1];
+> >               regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
+> >               regfree(&regtmp);
+> >       }
+> >
+> > [...]
+> >
+> > The poc code like:
+> >
+> >       if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\
+> x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD",
+> REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
+> >       {
+> >               reg1match_t pmatch[1];
+> >               regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
+> >               regfree(&regtmp);
+> >       }
+>
+> A question to the wider list:
+>
+> Does it make sense to assign CVEs to regex compilation? Very few toolkits
+> handle this well, and even given how many regex toolkits use backtracking,
+> even 'safe' regexes can lead to essentially unbounded execution time.
+>
 
-https://lists.gnupg.org/pipermail/gnupg-announce/2017q2/000408.html
+I would say it depends, are they actually exploitable in a realistic sense
+by an attacker? (e.g. dir globbing on ftp servers should not let anonymous
+ftp users eat all the CPU/RAM).
 
-| Noteworthy changes in version 1.7.8 (2017-06-29)  [C21/A1/R8]
-| ===================================
-| 
-|  * Bug fixes:
-| 
-|    - Mitigate a flush+reload side-channel attack on RSA secret keys
-|      dubbed "Sliding right into disaster".  For details see
-|      <https://eprint.iacr.org/2017/627>.  [CVE-2017-7526]
-| 
-| 
-| Note that this side-channel attack requires that the attacker can run
-| arbitrary software on the hardware where the private RSA key is used.
 
-This affects versions of GnuPG 2 that bundle or otherwise use versions
-of Libgcrypt older than 1.7.8.
+>
+> Some regex engines like Rust's regex and Go's regex should handle
+> untrusted inputs well: they're non-backtracking engines and type-safe
+> languages.  Hypothetical crashes like this probably would qualify for
+> CVEs in either of these environments. But I'm less convinced it makes
+> sense with C-based engines to allow untrusted inputs.
+>
+> http://www.etalabs.net/compare_libcs.html suggests that uclibc's regex is
+> DFA-based thus it's probably intended to allow untrusted inputs -- but is
+> that explicitely stated as a goal anywhere?
+>
 
-In a discussion on gnupg-users, Werner Koch answered that GnuPG 1.4
-(which does not yet use the separate Libgcrypt library) is "Maybe"
-vulnerable to this attack as well, "And probably also to a lot of other
-local side channel attacks":
+I would also suggest we look at common usage. E.g.:
 
-https://lists.gnupg.org/pipermail/gnupg-users/2017-July/058598.html
+https://docs.python.org/2/library/pickle.html
 
-As referenced further in that thread, Marcus Brinkmann came up with a
-backport of the fix from Libgcrypt 1.7.8:
+Warning
 
-https://dev.gnupg.org/rC8725c99ffa41778f382ca97233183bcd687bb0ce
 
-to GnuPG 1.4:
+The pickle <https://docs.python.org/2/library/pickle.html#module-pickle> module
+is not secure against erroneous or maliciously constructed data. Never
+unpickle data received from an untrusted or unauthenticated source.
 
-https://dev.gnupg.org/D438
 
-but it's unclear whether Werner would want to merge it and release an
-update of GnuPG 1.4 or not (there's a discussion in the comments at the
-URL above).
+However:
 
-To keep the context recorded in here (in case any of the above URLs are
-gone later), here's the Libgcrypt commit, where the commit message
-helpfully quotes the paper's abstract:
 
-| Authored by gniibe on Thu, Jun 29, 4:11 AM.
-| 
-| Description
-| 
-| rsa: Add exponent blinding.
-| 
-| * cipher/rsa.c (secret_core_crt): Blind secret D with randomized
-| nonce R for mpi_powm computation.
-| 
-| The paper describing attack: https://eprint.iacr.org/2017/627
-| 
-| Sliding right into disaster: Left-to-right sliding windows leak
-| by Daniel J. Bernstein and Joachim Breitner and Daniel Genkin and
-| Leon Groot Bruinderink and Nadia Heninger and Tanja Lange and
-| Christine van Vredendaal and Yuval Yarom
-| 
-| It is well known that constant-time implementations of modular
-| exponentiation cannot use sliding windows. However, software
-| libraries such as Libgcrypt, used by GnuPG, continue to use sliding
-| windows. It is widely believed that, even if the complete pattern of
-| squarings and multiplications is observed through a side-channel
-| attack, the number of exponent bits leaked is not sufficient to
-| carry out a full key-recovery attack against RSA. Specifically,
-| 4-bit sliding windows leak only 40% of the bits, and 5-bit sliding
-| windows leak only 33% of the bits.
-| 
-| In this paper we demonstrate a complete break of RSA-1024 as
-| implemented in Libgcrypt. Our attack makes essential use of the fact
-| that Libgcrypt uses the left-to-right method for computing the
-| sliding-window expansion. We show for the first time that the
-| direction of the encoding matters: the pattern of squarings and
-| multiplications in left-to-right sliding windows leaks significantly
-| more information about exponent bits than for right-to-left. We show
-| how to incorporate this additional information into the
-| Heninger-Shacham algorithm for partial key reconstruction, and use
-| it to obtain very efficient full key recovery for RSA-1024. We also
-| provide strong evidence that the same attack works for RSA-2048 with
-| only moderately more computation.
-| 
-| Exponent blinding is a kind of workaround to add noise. Signal (leak)
-| is still there for non-constant-time implementation.
-| 
-|     Co-authored-by: Werner Koch <wk@...pg.org>
-|     Signed-off-by: NIIBE Yutaka <gniibe@...j.org>
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=python+pickle
 
-I've attached Marcus' patch for GnuPG 1.4 from D438 referenced above.
 
-Alexander
+and if you search github for socket and pickle... well.. yeah.
 
-View attachment "gnupg-1.4-D438.diff" of type "text/plain" (1606 bytes)
+
+>
+> Thanks
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
