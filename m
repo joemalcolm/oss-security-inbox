@@ -1,94 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/12/1
-Message-ID: <513133.504052774-sendEmail@localhost>
-Date: Wed, 12 Apr 2017 09:12:58 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/17/5
+Message-ID: <20170617122716.gsaalyhxkv7ekmdm@perpetual.pseudorandom.co.uk>
+Date: Sat, 17 Jun 2017 13:27:16 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: two vulns in uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libsamplerate is a Sample Rate Converter for audio.
+On Fri, 16 Jun 2017 at 20:54:14 -0700, Michal Zalewski wrote:
+> > Uclibc is a C library like GNU libc.  Why would a JS engine not use it?
+> 
+> Because they usually use stuff like pcre or irregexp.
 
-This bug was initially discovered and silently fixed by the upstream author Erik de Castro Lopo (erikd). As usual I’m providing the stacktrace and the reproducer so that all release distros can test and 
-patch their own version of the package.
+Not all regular expressions are equal.
 
-# sndfile-resample -to 24000 -c 1 $FILE out
-==13807==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f44bc709a3c at pc 0x7f44bc6b1d6b bp 0x7fffec8f5e20 sp 0x7fffec8f5e18                                                                       
-READ of size 4 at 0x7f44bc709a3c thread T0                                                                                                                                                                        
-    #0 0x7f44bc6b1d6a in calc_output_single /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/src_sinc.c:296:48                                                                         
-    #1 0x7f44bc6b1d6a in sinc_mono_vari_process /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/src_sinc.c:400                                                                        
-    #2 0x7f44bc6a3659 in src_process /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/samplerate.c:174:11                                                                              
-    #3 0x51369a in sample_rate_convert /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/examples/sndfile-resample.c:221:16                                                                 
-    #4 0x51369a in main /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/examples/sndfile-resample.c:163                                                                                   
-    #5 0x7f44bb55278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                        
-    #6 0x419f88 in _init (/usr/bin/sndfile-resample+0x419f88)                                                                                                                                                     
-                                                                                                                                                                                                                  
-0x7f44bc709a3c is located 0 bytes to the right of global variable 'slow_mid_qual_coeffs' defined in '/tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/mid_qual_coeffs.h:37:3' 
-(0x7f44bc6f3ba0) of size 89756
-SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/libsamplerate-0.1.8-r1/work/libsamplerate-0.1.8/src/src_sinc.c:296:48 in calc_output_single                                             
-Shadow bytes around the buggy address:                                                                                                                                                                            
-  0x0fe9178d92f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-  0x0fe9178d9300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-  0x0fe9178d9310: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-  0x0fe9178d9320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-  0x0fe9178d9330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
-=>0x0fe9178d9340: 00 00 00 00 00 00 00[04]f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-  0x0fe9178d9350: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-  0x0fe9178d9360: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-  0x0fe9178d9370: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-  0x0fe9178d9380: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-  0x0fe9178d9390: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9                                                                                                                                                 
-Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                              
-  Addressable:           00                                                                                                                                                                                       
-  Partially addressable: 01 02 03 04 05 06 07                                                                                                                                                                     
-  Heap left redzone:       fa                                                                                                                                                                                     
-  Freed heap region:       fd                                                                                                                                                                                     
-  Stack left redzone:      f1                                                                                                                                                                                     
-  Stack mid redzone:       f2                                                                                                                                                                                     
-  Stack right redzone:     f3                                                                                                                                                                                     
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==13807==ABORTING
-Affected version:
-1.0.8
+JavaScript regular expressions use the regex dialect originating in
+Perl, which is also used in Python and libpcre (and, via libpcre,
+in PHP). The two standardized POSIX dialects implemented by Unix C
+libraries (basic regexes as used in grep and sed, and extended regexes
+as used in grep -E and sed -E) aren't fully compatible with the Perl
+syntax: for example \s matches the letter s in BREs or EREs, but
+matches any whitespace character in the Perl-derived dialects. This makes
+the POSIX regex functions not particularly useful for implementors of
+a JavaScript runtime.
 
-Fixed version:
-1.0.9
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Erik de Castro Lopo and Agostino Sarubbo.
-
-CVE:
-CVE-2017-7697
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00262-libsamplerate-globaloverflow-calc_output_single
-
-Timeline:
-2017-04-11: bug discovered and reported to upstream
-2017-04-11: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/11/libsamplerate-global-buffer-overflow-in-calc_output_single-src_sinc-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+    S
