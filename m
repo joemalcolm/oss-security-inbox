@@ -1,57 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/2
-Message-ID: <20170616004008.GA31031@openwall.com>
-Date: Fri, 16 Jun 2017 02:40:08 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Qhdwns123 <qhdwns123@...tonmail.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Do I have to inform someone about CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/17/7
+Message-ID: <e499fcaf-3255-5db3-7b3e-43261bbf8a9d@pipping.org>
+Date: Sun, 18 Jun 2017 01:20:31 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
+To: oss-security@...ts.openwall.com
+Subject: Expat 2.2.1 security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi Qhdwns123,
+Hi!
 
-As a list moderator, this is most likely the very last message I've
-accepted from you, until and unless you finally report a security issue
-in here.  So maybe now is the time. ;-)
 
-On Thu, Jun 15, 2017 at 08:02:53PM -0400, Qhdwns123 wrote:
-> I received a CVE.
-> 
-> Do I have to inform someone about CVE?
+Expat 2.2.1 has been released.  The change log has more details [2] than
+this mail, including commit SHA1s.
+For a quick overview of the security fixes and CVEs, we have:
 
-Please inform this very mailing list about actual security issues you
-find, whether you have CVE IDs for them or not.  Now that you say you do
-have a CVE ID, please include it in your notification indeed.  But not
-having a CVE ID was never a reason to delay notifying us of the issue.
+   CVE-2017-9233  External entity infinite loop DoS [1]
+  (CVE-2016-9063) Integer overflow (re-fix)
+             n/a  More integer overflow fixes
+  (CVE-2016-0718) Fix regression bugs from 2.2.0's fix to CVE-2016-0718
+  (CVE-2016-5300) Use os-specific entropy sources like getrandom
+             n/a  No longer leak parser pointer information
+             n/a  Prevent use of uninitialised variables
+             n/a  Add missing API parameter validation (NULL, len<0)
+  (CVE-2012-0876) Counter hash flooding with SipHash
 
-Of course, the issue must be in Open Source software.  (If not, then
-post it to the full-disclosure mailing list instead.)
+If you control copies of Expat somewhere, please get them updated.
 
-Also, let me repeat publicly what I wrote to you off-list last week:
+Best
 
-| Your use of the oss-security list is weird:
-|  
-| You don't appear to be subscribed, yet you ask questions.  Are you
-| possibly subscribed via some other address?  If not, you'd only learn of
-| possible answers via a web archive of the list, but you would not be
-| able to easily reply to the same thread.
-|  
-| We do not appreciate it when you start new threads for each minor
-| re-wording or detail of your question(s) or development in your issue
-| reporting.  You have posted several messages on the process already, but
-| you're yet to bring a single actual security issue to the list.
-|  
-| Personally, I would rather see you post the actual security issue(s)
-| right to the list, instead of you asking where/how to report them and
-| how to obtain CVE IDs.  Who cares about the IDs when there might not be
-| an actual issue in the first place?
-|  
-| Would you please join the list, then participate in discussion(s) that
-| might result from your postings?
 
-You're still not subscribed.  Apparently, you tried to, but you never
-confirmed the subscription.  Please correct that.
 
-Thanks,
+Sebastian
 
-Alexander
+
+[1] https://libexpat.github.io/doc/cve-2017-9233/
+[2] https://github.com/libexpat/libexpat/blob/master/expat/Changes
