@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2131" "Monday" "23" "November" "2015" "02:59:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151123075950.3224E6C0934@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: CVE-2015-5257 - Weak Randomization of BridgeSecret for Apache Cordova Android" nil nil nil "11" "2015112307:59:50" "[oss-security] Re: CVE-2015-5257 - Weak Randomization of BridgeSecret for Apache Cordova Android" (number mark "U       cve-assign@m Nov 23   50/2131  " thread-indent "\"[oss-security] Re: CVE-2015-5257 - Weak Randomization of BridgeSecret for Apache Cordova Android\"\n") "<20151122175003.GA13876@eldamar.local>" ("<20151122175003.GA13876@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["324" "Saturday" "17" "June" "2017" "11:40:34" "+0200" "Florian Weimer" "fweimer@redhat.com" "<0b51611b-36c2-3dc6-2a69-b9b49fdd2700@redhat.com>" "8" "Re: [oss-security] two vulns in uClibc-0.9.33.2" "^Date:" nil nil "6" "2017061709:40:34" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        fweimer@redh Jun 17    8/324   " thread-indent "\"Re: [oss-security] two vulns in uClibc-0.9.33.2\"\n") "<alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>" "<20170616204437.GC2269@hunt>" "<CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>" "<alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 4085 invoked by uid 550); 23 Nov 2015 08:00:07 -0000
+Received: (qmail 7678 invoked by uid 550); 17 Jun 2017 09:40:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7654 invoked from network); 17 Jun 2017 09:40:49 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 4AF1E37E60
+Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fweimer@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 4AF1E37E60
+References: <tencent_18C312B86EA079DA42B11D83@qq.com>
+ <20170616204437.GC2269@hunt>
+ <CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>
+ <alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>
+Message-ID: <0b51611b-36c2-3dc6-2a69-b9b49fdd2700@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
+MIME-Version: 1.0
+In-Reply-To: <alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Sat, 17 Jun 2017 09:40:37 +0000 (UTC)
+Date: Sat, 17 Jun 2017 11:40:34 +0200
+From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4044 invoked from network); 23 Nov 2015 08:00:02 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, DAVIDKA@il.ibm.com, ROEEH@il.ibm.com, private@cordova.apache.org, dev@cordova.apache.org, security@apache.org
-In-Reply-To: <20151122175003.GA13876@eldamar.local>
-Message-Id: <20151123075950.3224E6C0934@smtpvmsrv1.mitre.org>
-Date: Mon, 23 Nov 2015 02:59:50 -0500 (EST)
-Subject: [oss-security] Re: CVE-2015-5257 - Weak Randomization of BridgeSecret for Apache Cordova Android
+Subject: Re: [oss-security] two vulns in uClibc-0.9.33.2
+To: oss-security@lists.openwall.com,
+ Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 06/17/2017 04:02 AM, Bob Friesenhahn wrote:
+> Uclibc is a C library like GNU libc.  Why would a JS engine not use it?
 
->> CVE-2015-5257: Weak Randomization of BridgeSecret for Apache Cordova Android
+Javascript has 16-bit strings, like Java, Windows, and some UNIX
+variants.  GNU/Linux C libraries typically offer only 8-bit (multi-byte)
+or 32-bit (wchar_t) strings, so they are a poor match.
 
-> Is there a typo here? CVE-2015-5257 was already assigned for an issue
-> in drivers/usb/serial/whiteheat.c in the Linux kernel. see
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5257
-
-The outcome here is that this BridgeSecret vulnerability is now known
-as CVE-2015-8320, not CVE-2015-5257. (Nobody working on Cordova was
-involved in any typo or misuse of a CVE ID; however, that does not
-change the outcome.) CVE-2015-5256 is unaffected by this event.
-
-For additional details, see some or all of the following URLs
-later today or tomorrow:
-
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5257
-
-  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-5256
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5256
-
-  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8320
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8320
-
-  https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-5275
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5275
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWUsYoAAoJEL54rhJi8gl5ymkQAJftRBBnk52E/5xni8vgGSBR
-Ar0ihQ2/SwiTh4cu/N2FvxPWtdw1G+xHsFyiknW3tDlUJhVy04HJ23gYf5AJTXn6
-31yL1mPZz+AsM87sCupr9lqKzS+/HBbuVBPzz+Zs8Vb4pQYiuz/8Z0yCD4HR6iH8
-OGLf9K+mZ07TqyaZkI8a23PjX5BaYqRxNR+vRsRNVuiFTiPq86++mrMUm+AUTNMJ
-I1MyOZITMTCdITonmWIZj2XaFjyRZNd285bf/UqSirYAatinyuptEBlgHmgefYyU
-UT/hYMnwiE6ajP5Ep8wbWBEmGqq22LFpaEVAkcTg3kFHxnYV/vt3Wt7l33yLPDwL
-Gl3sQ71Njf681afx31ztv9CY+No2GTUtUjpUw074d/8SrIj0VWi+uzxNKtHtNaPR
-jCfYVWWdbWm7wOfxjRk4O6F0SLh1fnkeVlHUpLTFJ/+j6j3c5BYrnTDL87+Uv/Bc
-5WPjQ9xvctATout0bKszsgL70nOpSBYaFhct9wX5cdPgKiWB9upjW0nM25EMPK42
-EE4Q2bgeDGGLfUubn//NSR33zI9OrglQNn9VeY9BrvyvKZ97nS2YRs5ZvTpY6miu
-YjOe+NTzr0NcurMOVg/8Jx17UNVcbawd8lg0fA7AUqIzIMoJgI6k6MF+sIipfhj0
-oEUUJNT0CzLYuIhkEB5n
-=MJhw
------END PGP SIGNATURE-----
+Florian
