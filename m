@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/19/4
-Message-ID: <1622774.CTg74Sxca6@golgafrichnam>
-Date: Fri, 19 May 2017 22:36:40 +0200
-From: Martin <martin_s@...che.org>
-To: users@...hiva.apache.org, users@...en.apache.org, announce@...che.org
-Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [SECURITY] CVE-2017-5657: Apache Archiva CSRF vulnerability for REST endpoints
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/17/6
+Message-ID: <20170617162423.7xrekndbw25zpzeh@jwilk.net>
+Date: Sat, 17 Jun 2017 18:24:23 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: two vulns in uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-5657: Apache Archiva CSRF vulnerabilities for various REST endpoints
+* Simon McVittie <smcv@...ian.org>, 2017-06-17, 13:27:
+>The two standardized POSIX dialects implemented by Unix C libraries (basic 
+>regexes as used in grep and sed, and extended regexes as used in grep -E and 
+>sed -E) aren't fully compatible with the Perl syntax: for example \s matches 
+>the letter s in BREs or EREs,
 
-Severity: Important
+Actually POSIX says outside a bracket expression, \s is undefined. (But in the 
+GNU libc regcomp() implementation, it matches a whitespace character.)
 
-Vendor:
-The Apache Software Foundation
+Inside a bracket expression \s is meant literally, i.e. it matches either a 
+backslash or a letter "s". 
 
-Versions Affected:
-    Archiva 2.0.0 - 2.2.1
-    The unsupported versions 1.x are also affected.  
+>but matches any whitespace character in the Perl-derived dialects. This makes 
+>the POSIX regex functions not particularly useful for implementors of a 
+>JavaScript runtime.
 
-Several REST service endpoints of Apache Archiva are not protected against 
-Cross Site Request Forgery (CSRF) attacks. A malicious site opened in the same 
-browser as the archiva site, may send HTML response that performs arbitrary 
-actions on archiva services, with the same rights as the active archiva 
-session (e.g. adminstrator rights).
+Right.
 
-Mitigation:
-  All users are recommended to upgrade to Archiva 2.2.3 or higher, 
-  where additional measures are taken to verify the origin of REST requests.
-
-References:
-http://archiva.apache.org/security.html#CVE-2017-5657
-
-The newest Archiva version can be downloaded from:
-http://archiva.apache.org/download.cgi
-
-
-
+-- 
+Jakub Wilk
