@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2965" "Tuesday" "18" "August" "2015" "21:46:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150819014608.32B3AB2E092@smtpvbsrv1.mitre.org>" "66" "[oss-security] Re: CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue" nil nil nil "8" "2015081901:46:08" "[oss-security] Re: CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue" (number mark "U       cve-assign@m Aug 18   66/2965  " thread-indent "\"[oss-security] Re: CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue\"\n") "<CANzWz4HNTYJgq=6-6yH-gwMugY=ck=CwxxtysXsbv9xAKP5X9Q@mail.gmail.com>" ("<CANzWz4HNTYJgq=6-6yH-gwMugY=ck=CwxxtysXsbv9xAKP5X9Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["817" "Saturday" "17" "June" "2017" "13:27:16" "+0100" "Simon McVittie" "smcv@debian.org" "<20170617122716.gsaalyhxkv7ekmdm@perpetual.pseudorandom.co.uk>" "18" "Re: [oss-security] two vulns in uClibc-0.9.33.2" "^Date:" nil nil "6" "2017061712:27:16" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        smcv@debian. Jun 17   18/817   " thread-indent "\"Re: [oss-security] two vulns in uClibc-0.9.33.2\"\n") "<CALx_OUCYUQO2Xdzp9XDGjZ=xXLzjxhNt6Z92N1anR67tEr-4EA@mail.gmail.com>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>" "<20170616204437.GC2269@hunt>" "<CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>" "<alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>" "<CALx_OUCYUQO2Xdzp9XDGjZ=xXLzjxhNt6Z92N1anR67tEr-4EA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5209 invoked by uid 550); 19 Aug 2015 01:46:21 -0000
+Received: (qmail 9472 invoked by uid 550); 17 Jun 2017 12:27:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9451 invoked from network); 17 Jun 2017 12:27:32 -0000
+Message-ID: <20170617122716.gsaalyhxkv7ekmdm@perpetual.pseudorandom.co.uk>
+References: <tencent_18C312B86EA079DA42B11D83@qq.com>
+ <20170616204437.GC2269@hunt>
+ <CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>
+ <alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>
+ <CALx_OUCYUQO2Xdzp9XDGjZ=xXLzjxhNt6Z92N1anR67tEr-4EA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALx_OUCYUQO2Xdzp9XDGjZ=xXLzjxhNt6Z92N1anR67tEr-4EA@mail.gmail.com>
+User-Agent: NeoMutt/20170306 (1.8.0)
+Date: Sat, 17 Jun 2017 13:27:16 +0100
+From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5188 invoked from network); 19 Aug 2015 01:46:20 -0000
-From: cve-assign@mitre.org
-To: sreepriya1111@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CANzWz4HNTYJgq=6-6yH-gwMugY=ck=CwxxtysXsbv9xAKP5X9Q@mail.gmail.com>
-Message-Id: <20150819014608.32B3AB2E092@smtpvbsrv1.mitre.org>
-Date: Tue, 18 Aug 2015 21:46:08 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: ATutor LMS Version 2.2 with stored XSS and file upload issue
+Subject: Re: [oss-security] two vulns in uClibc-0.9.33.2
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> There are a few Stored XSS ... vulnerabilities in the software.
-> Issue: https://github.com/atutor/ATutor/issues/103
-
-Use CVE-2015-6521 for all of these XSS issues. We think they don't
-overlap CVE-2010-0971.
-
-
-> There are ... file upload vulnerabilities in the software.
-> Issue: https://github.com/atutor/ATutor/issues/103
+On Fri, 16 Jun 2017 at 20:54:14 -0700, Michal Zalewski wrote:
+> > Uclibc is a C library like GNU libc.  Why would a JS engine not use it?
 > 
-> 2) File Upload in course
-> There are illegal file extensions mentioned where all the executable
-> files are checked. But a file without any extension is accepted. This
-> could be a binary executable file.
-> 
-> Against file upload: Use a white list of extensions that are allowed
-> to be uploaded rather than extensions that are not allowed (black
-> list).
+> Because they usually use stuff like pcre or irregexp.
 
-We don't think this is a type of issue for which a CVE ID is typically
-assigned. See also the second-to-last part of the
-http://www.openwall.com/lists/oss-security/2015/08/06/6 post.
+Not all regular expressions are equal.
 
-For web applications, file upload is often of interest because the
-attacker can upload a file with an extension recognized by a web
-server as an executable file, e.g., an extension listed on an
-AddHandler line in an Apache HTTP Server configuration. We're not sure
-whether there are any web servers that, in their default
-configuration, have an AddHandler equivalent for all extensionless
-files. Although a web application might want to block uploads of any
-file that has a native executable-file format recognized by the
-underlying operating system, we don't think this is a commonly
-recommended feature, and we don't believe we should be assigning CVE
-IDs to every web application that omits this feature. (We're not
-disputing that the feature could sometimes be useful. Most web
-applications aren't intended to receive native executables through an
-upload mechanism, and there might be attack methodologies that rely on
-these uploads, e.g., uploading something like Staog --
-https://en.wikipedia.org/wiki/Staog -- to a Linux machine with a
-filename of Staog and no extension.)
+JavaScript regular expressions use the regex dialect originating in
+Perl, which is also used in Python and libpcre (and, via libpcre,
+in PHP). The two standardized POSIX dialects implemented by Unix C
+libraries (basic regexes as used in grep and sed, and extended regexes
+as used in grep -E and sed -E) aren't fully compatible with the Perl
+syntax: for example \s matches the letter s in BREs or EREs, but
+matches any whitespace character in the Perl-derived dialects. This makes
+the POSIX regex functions not particularly useful for implementors of
+a JavaScript runtime.
 
-If there is something about a web application that makes native
-executables especially dangerous (e.g., local users are somehow
-encouraged to open all non-PHP files uploaded by web visitors) or if a
-vendor was actually trying to block all native executables but the
-code was wrong, then a CVE ID could exist.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJV097NAAoJEKllVAevmvmsC5IH/2Pr//NPyWiWIpZghzARBhcf
-xtVlAg40ENtz1Bi89soNQeBnoDYiJww22ZNyAWs6C4Tx3mwCSH0QZaWEpOWWqZ8q
-ewxth6fUMmWC+c21DN5DrANxWa/kufXURRS7HHzrnMp8XozhBLUfDnh2cqGdGMSN
-93vyoZi1bzkK+rtaCwII89Io31xMDWF3Bz8MUbFc5xKAWhHdFOSNnuAhEHbi5UGb
-R69HmoPY6bBO/i25oKnO/RSmYj46PcHALN37IESCfcxPXZiOOwWVpibEcdFOhE4R
-IKXtyThPD4TrlUsba4hwXDt8IhCJaNy4V7YjqvQab4ZS832ERqNt0taf1Hu5B7c=
-=/WDp
------END PGP SIGNATURE-----
+    S
