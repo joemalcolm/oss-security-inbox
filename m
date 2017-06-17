@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["404" "Friday" "10" "August" "2018" "09:29:05" "+1000" "Dave Horsfall" "dave@horsfall.org" "<alpine.BSF.2.21.9999.1808100926020.19950@aneurin.horsfall.org>" "11" "Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" "^Date:" nil nil "8" "2018080923:29:05" "[oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)" (number mark "        dave@horsfal Aug 10   11/404   " thread-indent "\"Re: [oss-security] Linux TCP implementation vulnerable to Denial of Service (CVE 2018-5390)\"\n") "<zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>" ("<CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com>" "<zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["905" "Sunday" "18" "June" "2017" "01:20:31" "+0200" "Sebastian Pipping" "sebastian@pipping.org" "<e499fcaf-3255-5db3-7b3e-43261bbf8a9d@pipping.org>" "28" "[oss-security] Expat 2.2.1 security fixes" "^Date:" nil nil "6" "2017061723:20:31" "[oss-security] Expat 2.2.1 security fixes" (number mark "        sebastian@pi Jun 18   28/905   " thread-indent "\"[oss-security] Expat 2.2.1 security fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11853 invoked by uid 550); 10 Aug 2018 06:26:08 -0000
+Received: (qmail 24417 invoked by uid 550); 17 Jun 2017 23:20:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 4074 invoked from network); 9 Aug 2018 23:29:21 -0000
-X-RG-Spam: Unknown
-X-RazorGate-Vade-Verdict: clean 0
-X-RazorGate-Vade-Classification: clean
-X-RazorGate-Vade: gggruggvucftvghtrhhoucdtuddrgedtjedrtdehgddvvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfupfevtfgpvffgnffuvfftteenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvufgjkfhffgggtgesthdttddttdervdenucfhrhhomhepffgrvhgvucfjohhrshhfrghllhcuoegurghvvgeshhhorhhsfhgrlhhlrdhorhhgqeenucfkphepuddutddrudeguddrudelfedrvdeffeenucfrrghrrghmpehhvghloheprghnvghurhhinhdrhhhorhhsfhgrlhhlrdhorhhgpdhinhgvthepuddutddrudeguddrudelfedrvdeffedpmhgrihhlfhhrohhmpeeouggrvhgvsehhohhrshhfrghllhdrohhrgheqpdhrtghpthhtohepoehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhmqeenucevlhhushhtvghrufhiiigvpedt
-X-RG-VS-CLASS: clean
-X-Authentication-Warning: aneurin.horsfall.org: dave owned process doing -bs
-In-Reply-To: <zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>
-Message-ID: <alpine.BSF.2.21.9999.1808100926020.19950@aneurin.horsfall.org>
-References: <CACdnJuvnc9iwaK6n9T_+PO0CUz9HYErQQ6eY+sJZM_o_h9tfaw@mail.gmail.com> <zNUITbiErWCUUDg_EPIWn8eZBFHlC7rwJsZ8XinnBTSFr6OydsAZUvPs8nXHKBxi0DJFw8K2KmePb8dysPMxfPcOURSJ6QR2HcKgaVRmmTs=@itk.swiss>
-User-Agent: Alpine 2.21.9999 (BSF 287 2018-06-16)
-X-GPG-Public-Key: http://www.horsfall.org/gpgkey.pub
-X-GPG-Fingerprint: 05B4 FFBC 0218 B438 66E0  587B EF46 7357 EF5E F58B
-X-Home-Page: http://www.horsfall.org/
-X-Witty-Saying: "chmod 666 the_mode_of_the_beast"
+Received: (qmail 24382 invoked from network); 17 Jun 2017 23:20:43 -0000
+Message-ID: <e499fcaf-3255-5db3-7b3e-43261bbf8a9d@pipping.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Date: Fri, 10 Aug 2018 09:29:05 +1000 (EST)
-From: Dave Horsfall <dave@horsfall.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: aGFydHdvcmtAYmluZXJhLmRl
+Date: Sun, 18 Jun 2017 01:20:31 +0200
+From: Sebastian Pipping <sebastian@pipping.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux TCP implementation vulnerable to Denial of
- Service (CVE 2018-5390)
+Subject: [oss-security] Expat 2.2.1 security fixes
 To: oss-security@lists.openwall.com
 
-On Thu, 9 Aug 2018, Stiepan wrote:
+Hi!
 
-> Could you please provide some more details on the issue? About the same 
-> period, our secure e-mail provider suffered an unprecedented DDoS with 
-> some e-mail messages never reaching us.
 
-Would this be the well-known TCP re-assembly bug?  Send lots of small 
-packets (say out of order), and the CPU spends most of its time in glueing 
-them back together.
+Expat 2.2.1 has been released.  The change log has more details [2] than
+this mail, including commit SHA1s.
+For a quick overview of the security fixes and CVEs, we have:
 
--- Dave
+   CVE-2017-9233  External entity infinite loop DoS [1]
+  (CVE-2016-9063) Integer overflow (re-fix)
+             n/a  More integer overflow fixes
+  (CVE-2016-0718) Fix regression bugs from 2.2.0's fix to CVE-2016-0718
+  (CVE-2016-5300) Use os-specific entropy sources like getrandom
+             n/a  No longer leak parser pointer information
+             n/a  Prevent use of uninitialised variables
+             n/a  Add missing API parameter validation (NULL, len<0)
+  (CVE-2012-0876) Counter hash flooding with SipHash
+
+If you control copies of Expat somewhere, please get them updated.
+
+Best
+
+
+
+Sebastian
+
+
+[1] https://libexpat.github.io/doc/cve-2017-9233/
+[2] https://github.com/libexpat/libexpat/blob/master/expat/Changes
