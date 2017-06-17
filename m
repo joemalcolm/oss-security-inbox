@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/05/1
-Message-ID: <20170305105226.smsiuiqnhkrjnh6j@eldamar.local>
-Date: Sun, 5 Mar 2017 11:52:26 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: TeX Live: CVE-2016-10243: whitelists a insecure binary/utility to be run as external program
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/17/2
+Message-ID: <alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>
+Date: Fri, 16 Jun 2017 21:02:31 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: two vulns in uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-Hi
-
-Via http://cveform.mitre.org/ CVE-2016-10243 was assigned for the
-following issue in the TeX Live system:
-
-> The TeX system allows for calling external programs from within the
-> TeX source code (called \write18). This has been restricted to a
-> small set of programs since a long time ago.
+On Fri, 16 Jun 2017, Michal Zalewski wrote:
 >
-> Unfortunately it turned out that one program in the list, mpost
-> (also shipped with TeX Live), allows in turn to specify other
-> programs to be run, which allows arbitrary code execution when
-> compiling a TeX document.
+> Probably no JS engine using uclibc, though.
 
-Upstream commit addressing the issue:
+Uclibc is a C library like GNU libc.  Why would a JS engine not use 
+it?
 
-https://www.tug.org/svn/texlive?view=revision&revision=42605
-
-Report on the issue:
-
-https://scumjr.github.io/2016/11/28/pwning-coworkers-thanks-to-latex/
-
-Regards,
-Salvatore
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
