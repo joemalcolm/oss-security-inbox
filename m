@@ -1,23 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/31/3
-Message-ID: <2308024.l19IxOpFt6@wanheda>
-Date: Wed, 31 May 2017 11:02:44 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request form not working
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/17/1
+Message-ID: <CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>
+Date: Fri, 16 Jun 2017 18:45:12 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: two vulns in uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 31 May 2017 10:42:24 Peter Bex wrote:
-> Hi all,
-> 
-> Today I wanted to request another CVE, but cveform.mitre.org seems to
-> be down (it just loads forever here).  Can anyone please fix this?
-> 
-> Cheers,
-> Peter Bex
+> Does it make sense to assign CVEs to regex compilation? Very few toolkits
+> handle this well, and even given how many regex toolkits use backtracking,
+> even 'safe' regexes can lead to essentially unbounded execution time.
 
-It works for me. However is missing a redirect from http to https.
+One use case are "sandbox" languages, such as JavaScript. JS engines
+often use third-party regex libraries with attacker-controlled
+regexes. They don't particularly about OOM / CPU exhaustion, but RCE
+that allows a malicious program to escape containment would be bad
+news.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Probably no JS engine using uclibc, though.
+
+/mz
