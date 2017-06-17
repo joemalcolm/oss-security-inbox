@@ -1,48 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/4
-Message-ID: <20170601062046.GI15203@suse.com>
-Date: Thu, 1 Jun 2017 08:20:46 +0200
-From: Johannes Segitz <jsegitz@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Information on recent sqlite3 issues?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/17/4
+Message-ID: <CALx_OUCYUQO2Xdzp9XDGjZ=xXLzjxhNt6Z92N1anR67tEr-4EA@mail.gmail.com>
+Date: Fri, 16 Jun 2017 20:54:14 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: two vulns in uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 01, 2017 at 12:24:10AM +0200, Andreas Stieger wrote:
-> Hello,
-> 
-> 
-> On 05/31/2017 10:30 PM, Moritz Muehlenhoff wrote:
-> > one of the latest Apple advisories mentions several vulnerabilities in sqlite:
-> > https://support.apple.com/en-us/HT207798
-> >
-> > CVE-2017-2513: found by OSS-Fuzz
-> > CVE-2017-2518: found by OSS-Fuzz
-> > CVE-2017-2520: found by OSS-Fuzz
-> > CVE-2017-2519: found by OSS-Fuzz
-> > CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
-> > CVE-2017-6991: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
-> >
-> > Does anyone have additional information on those and whether that
-> > applies to the standard sqlite releases or Apple-specific changes?
-> 
-> SUSE has asked Apple, but has not yet received an answer as far as I am
-> aware.
+> Uclibc is a C library like GNU libc.  Why would a JS engine not use it?
 
-They replied:
-
->Thank you for contacting the Apple Product Security team.
->
->Please contact the SQLite maintainers to coordinate.
-
-I think it is problematic that they assign CVEs but don't provice any
-details even if it's not only their code. I contacted the sqlite-devs for
-details but didn't receive a reply up to this point.
-
-Johannes
--- 
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nürnberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Because they usually use stuff like pcre or irregexp.
