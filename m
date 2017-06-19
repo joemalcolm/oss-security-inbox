@@ -1,46 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/5
-Message-ID: <CAFJuDmNbvyh=qy__VTjOP9PuL158E8ENeRN+Fx7ciSCwTCoc4w@mail.gmail.com>
-Date: Fri, 10 Feb 2017 22:44:48 -0500
-From: Adam Caudill <adam@...mcaudill.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/13
+Message-ID: <63607fd4-70b6-dc8f-6aae-82148d38880b@apache.org>
+Date: Mon, 19 Jun 2017 15:15:26 -0700
+From: Jacob Champion <jchampion@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-3167: Apache httpd 2.x ap_get_basic_auth_pw authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 10, 2017 at 7:10 PM, Tim <tim-security@...tinelchicken.org> wrote:
-> - The fact that so many lesser known researchers couldn't get an ID
->   for so long when they asked for one.
->
-> - As already discussed, the web form's "Please ensure vendor or
->   product exists in the Products and Sources list".  For an open
->   source project, they give up and outsource the process, which then
->   can't be used for obtaining an ID before release.
+CVE-2017-3167: ap_get_basic_auth_pw authentication bypass
 
-Once it's completely up and running, DWF should address these issues.
-Researchers and organizations can easily become CNAs under DWF, with
-assigned CVE blocks. For OSS, the process of getting a CVE (including
-pre-publication) should be much simpler than it has been, especially
-in recent years. It's not quite there yet, but Kurt and team have put
-a lot of effort into laying the groundwork for a much better solution
-than the ad-hoc "send an email and hope" process that we've become
-accustomed to.
+Severity: Important
 
-The old system was far from perfect, as is the interim MITRE web form
-- hopefully with the help of the community, DWF will be able to
-provide a better process for all involved. For OSS, DWF is the
-solution we need to be focused on, and helping it to evolve to suit
-the needs of everyone.
+Vendor: The Apache Software Foundation
 
-> - The most telling though is the entire CNA program, particularly when
->   it allowed only commercial vendors.  If a vendor decides something
->   isn't a problem, they can block or slow CVE assignment.  It's a
->   corruption of service that ought to be for the public benefit.  (And
->   yes, this does happen.)
+Versions Affected:
+httpd 2.2.0 to 2.2.32
+httpd 2.4.0 to 2.4.25
 
-While I believe that DWF represents a substantial step forward for
-OSS, and getting CVEs to those that need them, when they need them; my
-feelings on CVEs for commercial software remain rather negative. I've
-stopped requesting CVEs for commercial software due to all of the
-issues - if I discover something where I believe a CVE is especially
-important, I direct the request through CERT/CC or another
-origination. But, this is getting off-topic.
+Description:
+Use of the ap_get_basic_auth_pw() by third-party modules outside of the
+authentication phase may lead to authentication requirements being
+bypassed.
+
+Mitigation:
+2.2.x users should either apply the patch available at
+https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-3167.patch
+or upgrade in the future to 2.2.33, which is currently unreleased.
+
+2.4.x users should upgrade to 2.4.26.
+
+Third-party module writers SHOULD use ap_get_basic_auth_components(),
+available in 2.2.33 and 2.4.26, instead of ap_get_basic_auth_pw().
+Modules which call the legacy ap_get_basic_auth_pw() during the
+authentication phase MUST either immediately authenticate the user after
+the call, or else stop the request immediately with an error response,
+to avoid incorrectly authenticating the current request.
+
+Credit:
+The Apache HTTP Server security team would like to thank Emmanuel
+Dreyfus for reporting this issue.
+
+References:
+https://httpd.apache.org/security_report.html
