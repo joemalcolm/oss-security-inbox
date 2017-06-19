@@ -1,77 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/02/1
-Message-ID: <803014.236127154-sendEmail@localhost>
-Date: Sat, 2 Sep 2017 18:41:51 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libzip: memory allocation failure in _zip_cdir_grow (zip_dirent.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/9
+Message-ID: <748a3bed-a04e-a82e-0459-4627af0d6387@redhat.com>
+Date: Mon, 19 Jun 2017 15:15:23 -0600
+From: Jeff Law <law@...hat.com>
+To: oss-security@...ts.openwall.com, Daniel Micay <danielmicay@...il.com>
+Subject: Re: Re: Qualys Security Advisor -- The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libzip is a library for manipulating zip archives.
+On 06/19/2017 12:52 PM, Daniel Micay wrote:
+> On Mon, 2017-06-19 at 11:26 -0600, Jeff Law wrote:
+>> I would consider those two GCC BZs (68065, 66479) a separate an
+>> distinct
+>> issue.
+>>
+>> It is far more important to address design issues around the existing
+>> -fstack-check first.  I think we've got a pretty good handle on how to
+>> address those problems and discussions with the upstream GCC community
+>> have already started.
+>>
+>> In an ideal world we'll get to a place where the new -fstack-check
+>> does
+>> not change program semantics, never misses probes and is efficient
+>> enough to just turn on and forget everywhere.  The existing
+>> -fstack-check fails all three of those criteria.
+>>
+>> Jeff
+> 
+> AFAIK, the main efficiency issue (reserving a register) was fixed for
+> GCC 6. I might be missing something but it seems very cheap now, at
+> least for x86_64. It definitely doesn't really work though.
+> 
+> Is there an example of it changing program semantics? I haven't seen
+> anything since the generic arch stuff was fixed.
+Absolutely -fstack-check, as currently implemented, can change program
+semantics.  It's related to -fstack-check moving objects from statically
+allocated space into dynamically allocated space (because the generic
+code can't handle large static frames).  It creates the alloca'd objects
+at the wrong scope.  This doesn't happen on all architectures, but it
+does happen on architectures I have to care about.
 
-The relevant ASan output of the issue:
+WRT efficiency, -fstack-check is marginal -- even with its clever code
+of assuming that it can elide probes into the first two pages of a
+static frame (because the caller must have probed those two frames).
+Consistently when we looked at code it's over-probing.  Sadly, it's
+over-probing in all the wrong places (because it's trying so damn hard
+to ensure there's always 2 free pages the signal handler can use).
 
-# ziptool $FILE cat index
-==16798==ERROR: AddressSanitizer failed to allocate 0xc0a96a2000 (827476025344) bytes of LargeMmapAllocator (error code: 12)
-==16798==Process memory map follows:
-==16798==End of process memory map.
-==16798==AddressSanitizer CHECK failed: /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" (0x0, 0x0)
-    #0 0x4da9ef in AsanCheckFailed /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_rtl.cc:69
-    #1 0x4f5755 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_termination.cc:79
-    #2 0x4e4d82 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120
-    #3 0x4ee685 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_posix.cc:132
-    #4 0x42608a in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
-    #5 0x42608a in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
-    #6 0x42608a in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:407
-    #7 0x420d3f in __asan::asan_realloc(void*, unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:791
-    #8 0x4d0df1 in realloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:93
-    #9 0x7f4edab1b7e5 in _zip_cdir_grow /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_dirent.c:108:37
-    #10 0x7f4edab1b7e5 in _zip_cdir_new /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_dirent.c:82
-    #11 0x7f4edab390d0 in _zip_read_eocd64 /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:854:13
-    #12 0x7f4edab390d0 in _zip_read_cdir /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:285
-    #13 0x7f4edab390d0 in _zip_find_central_dir /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:613
-    #14 0x7f4edab390d0 in _zip_open /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:200
-    #15 0x7f4edab369b7 in zip_open_from_source /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:148:11
-    #16 0x7f4edab35e93 in zip_open /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:74:15
-    #17 0x513392 in read_from_file /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/src/ziptool.c:698:13
-    #18 0x513392 in main /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/src/ziptool.c:1113
-    #19 0x7f4ed9c43680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #20 0x41b058 in _init (/usr/bin/ziptool+0x41b058)
+WRT probing correctness -- -fstack-check skips probes on the assumption
+that an earlier caller in the call chain should have probed those pages.
+ But that's a fundamentally flawed assumption unless the entire
+application is compiled with -fstack-check.  In fact, by eliding those
+probes, it actually misses the most important cases in mixed environment!
 
-Affected version:
-1.2.0
+-fstack-check also has the nasty habit of probing into unallocated
+areas.  This tends to cause valgrind problems.  Both in the sense of
+getting far too many false positives, but on two platforms the code
+generated by -fstack-check actually crashes valgrind.  These issues are
+directly related to -fstack-check wanting to probe all the pages before
+doing any allocations.
 
-Fixed version:
-1.3.0
+FWIW, we initially thought we were going to be able to use -fstack-check
+with some slight tweaks.  But the deeper we got into -fstack-check the
+more we ended up rewriting the probe generation from scratch.  In fact,
+we were unable to use the existing -fstack-check probing code from *any*
+target.
 
-Commit fix:
-https://github.com/nih-at/libzip/commit/9b46957ec98d85a572e9ef98301247f39338a3b5
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14107
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00330-libzip-memallocfailure-_zip_cdir_grow
-
-Timeline:
-2017-08-24: bug discovered and reported to upstream
-2017-08-29: upstream released a fix
-2017-09-01: blog post about the issue
-2017-09-01: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/01/libzip-memory-allocation-failure-in-_zip_cdir_grow-zip_dirent-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+jeff
