@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/3
-Message-ID: <c66b6384d0834cb09b4c472e15f2131c@imshyb01.MITRE.ORG>
-Date: Tue, 24 Jan 2017 03:12:09 -0500
-From: <cve-assign@...re.org>
-To: <murray.mcallister@...omniasec.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/12
+Message-ID: <3e2ebfb9-f0ad-b61b-f1ed-abf9810d8c09@apache.org>
+Date: Mon, 19 Jun 2017 15:16:21 -0700
+From: Jacob Champion <jchampion@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-3169: Apache httpd 2.x mod_ssl null pointer dereference
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2017-3169: mod_ssl null pointer dereference
 
-> [PATCH 1/2] drm/vc4: Fix an integer overflow in temporary allocation layout.
-> https://lkml.org/lkml/2017/1/17/761
+Severity: Important
 
-Use CVE-2017-5576.
+Vendor: The Apache Software Foundation
 
+Versions Affected:
+httpd 2.2.0 to 2.2.32
+httpd 2.4.0 to 2.4.25
 
-> [PATCH 2/2] drm/vc4: Return -EINVAL on the overflow checks failing.
-> https://lkml.org/lkml/2017/1/17/759
+Description:
+mod_ssl may dereference a NULL pointer when third-party modules call
+ap_hook_process_connection() during an HTTP request to an HTTPS port.
 
-Use CVE-2017-5577.
+Mitigation:
+2.2.x users should either apply the patch available at
+https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-3169.patch
+or upgrade in the future to 2.2.33, which is currently unreleased.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+2.4.x users should upgrade to 2.4.26.
 
-iQIcBAEBCAAGBQJYhwunAAoJEHb/MwWLVhi2S/wP/jt59qeY74I02n9My1lTZEYd
-jy7AWveL6n8B/Z3JTcJq+70wVn8wQ0j+oKI+Hd4PdQzK0inBYINgRvuPnrtFaY0R
-yNgJhfrOHyw+FRwrAqgjQeo/0iiWmmOus3iQeK/4z4snHFdo3nXkQULAS3hh5J0y
-U0EEubTWGp8czySRj325Lz05ZyRsTW8A3oIm/mtbocuh85r2OdHrisE8SxRvzmdM
-plXtCFqLzwnw4ay23VB7AsZOjJUknyxwohARgyQBLjIyRD/GGhKhblfAzbsJ1GeS
-C43os7VZkxlkZMIJJMt/C4iZJdihzVSuQ9sA70exo8bwBMcAs6Fa1IG8HuZTPQH5
-bU1sBzKu55b/Iyo2CK3+fTDkNbvAggF0RzJkTUZ7FDuqupbpDgCCPOxqFc67cnkY
-0sS4iVJRQctUSV2DCcbGvlxL3SMA1raBGzVszoPuhrM1KQP6cHGEj6Zkx/q2/UKh
-sCD9dV7ZUXo/HRGGfdgWmkMC1quhQ0Vbh7KQYna2Sb6CrUFVPfyyAymv4daF4xe/
-HjjxrtLcsr75GbI4m7z7HvMHuR3Ec2ok6cx3NMM/G1ya8nhbjDJkgOd87DFohgYV
-OHvBTQbk1g955spSJsQNsI0W9UcORJ2/b7N0PR9JP4Xtn/61A1VNdZSUKijFl/s/
-F6HMPX7zYdSE8i9NWJ7D
-=vnRT
------END PGP SIGNATURE-----
+Credit:
+The Apache HTTP Server security team would like to thank Vasileios
+Panopoulos and AdNovum Informatik AG for reporting this issue.
+
+References:
+https://httpd.apache.org/security_report.html
