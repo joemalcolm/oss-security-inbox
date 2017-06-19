@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/04/1
-Message-ID: <20170304164823.3fb862c4@pc1>
-Date: Sat, 4 Mar 2017 16:48:23 +0100
-From: Hanno Böck <hanno@...eck.de>
-To:  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: One byte stack buffer overflow in keepassxc / zxcvbn-c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/3
+Message-ID: <1497890780.6892.2.camel@gmail.com>
+Date: Mon, 19 Jun 2017 12:46:20 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com, Qualys Security Advisory <qsa@...lys.com>
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, 2017-06-19 at 09:40 -0600, kseifried@...hat.com wrote:
+> On 06/19/2017 09:28 AM, Qualys Security Advisory wrote:
+> > 
+> > Qualys Security Advisory
+> > 
+> > The Stack Clash
+> 
+> I just want to publicly thank Qualys for working with the Open Source
+> community so we (Linux and *BSD) could all get this fixed properly.
+> There was a lot of work from everyone involved and it all went pretty
+> smoothly.
 
-I recently reported a one byte buffer overflow in keepassxc [1] [2].
-It's a pretty typical C bug: An array supposed to hold a string of a
-certain size plus a trailing zero byte is one byte too small (i.e. the
-size doesn't consider the trailing zero).
-Given that the overflow happens right at the application's startup I
-doubt it's exploitable in a meaningful way.
-The bug was discovered simply by compiling with asan and running
-keepassxc.
+Fixing it properly would really also include fixing these:
 
-The code comes from zxcvbn-c (a checker for password quality), where
-I've also reported it [3] (together with another minor bug regarding a
-misuse of new [] / delete).
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68065
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66479
 
-keepassxc is a fork of keepassx. However keepassx is not affected, as
-it doesn't contain the zxcvbn password quality checking code.
+and actually implementing -fstack-check as not just a no-op in Clang.
 
-One takeaway of this is that even amongst developers of security tools
-the use of address sanitizer is still not a standard practice
-everyone's using to test their C code.
+Windows has working stack probes, even in Windows XP and perhaps even
+earlier. LLVM has working stack probes there (not sure if GCC deals with
+it properly) yet doesn't make them available elsewhere.
 
-
-[1] https://github.com/keepassxreboot/keepassxc/pull/363
-[2] https://github.com/keepassxreboot/keepassxc/pull/365
-[3] https://github.com/tsyrogit/zxcvbn-c/pull/11
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Rust is 'memory safe' but has this same stack exhaustion issue. It
+didn't used to have the issue, since it kept around the LLVM segmented
+stack code generation after it dropped segmented stacks to check for
+stack overflow in function preludes. That got dropped for a 1-3%
+performance win from using stack probes instead... which was a good
+idea, but without implementing stack probes... making it a terrible
+idea. It was deferred to some later date. That was in July 2015, and 2
+years later it's not done.
