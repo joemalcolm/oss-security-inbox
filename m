@@ -1,56 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/10
-Message-Id: <1493134410.v5lp2nuxd8.tristanC@fedora>
-Date: Tue, 25 Apr 2017 15:40:02 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/4
+Message-ID: <20170619164836.GQ20604@suse.de>
+Date: Mon, 19 Jun 2017 18:48:36 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2017-004] federated user gets wrong role (CVE-2017-2673)
+Cc: Qualys Security Advisory <qsa@...lys.com>
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-================================================================
-OSSA-2017-004: Incorrect role assignment with federated Keystone
-================================================================
+On Mon, Jun 19, 2017 at 12:46:20PM -0400, Daniel Micay wrote:
+> On Mon, 2017-06-19 at 09:40 -0600, kseifried@...hat.com wrote:
+> > On 06/19/2017 09:28 AM, Qualys Security Advisory wrote:
+> > > 
+> > > Qualys Security Advisory
+> > > 
+> > > The Stack Clash
+> > 
+> > I just want to publicly thank Qualys for working with the Open Source
+> > community so we (Linux and *BSD) could all get this fixed properly.
+> > There was a lot of work from everyone involved and it all went pretty
+> > smoothly.
+> 
+> Fixing it properly would really also include fixing these:
+> 
+> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68065
+> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66479
+> 
+> and actually implementing -fstack-check as not just a no-op in Clang.
+> 
+> Windows has working stack probes, even in Windows XP and perhaps even
+> earlier. LLVM has working stack probes there (not sure if GCC deals with
+> it properly) yet doesn't make them available elsewhere.
+> 
+> Rust is 'memory safe' but has this same stack exhaustion issue. It
+> didn't used to have the issue, since it kept around the LLVM segmented
+> stack code generation after it dropped segmented stacks to check for
+> stack overflow in function preludes. That got dropped for a 1-3%
+> performance win from using stack probes instead... which was a good
+> idea, but without implementing stack probes... making it a terrible
+> idea. It was deferred to some later date. That was in July 2015, and 2
+> years later it's not done.
 
-:Date: April 25, 2017
-:CVE: CVE-2017-2673
+The GCC team at least has been working on patches on this topic and they will also
+continue to work on this publically soon.
 
-
-Affects
-~~~~~~~
-- Keystone: >=10.0.0 <=10.0.1, ==11.0.0
-
-
-Description
-~~~~~~~~~~~
-Boris Bobrov from Mail.Ru reported a vulnerability in Keystone
-Federation. An authenticated user may receive all the roles assigned
-to the user's project regardless of the federation mapping when there
-are rules in which group-based assignments are not used. For example,
-by requesting an admin user to get a role in their project, the user
-may be granted the admin privileges for new scoped tokens. All setups
-using the Keystone federation without group based assignments rules
-are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/459713 (Newton)
-- https://review.openstack.org/459732 (Ocata)
-- https://review.openstack.org/459705 (Pike)
-
-
-Credits
-~~~~~~~
-- Boris Bobrov from Mail.Ru (CVE-2017-2673)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1677723
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-2673
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-Content of type "application/pgp-signature" skipped
+Ciao, Marcus
