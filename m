@@ -1,4 +1,9 @@
-Received: (qmail 28376 invoked by uid 550); 28 Sep 2025 15:39:16 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["974" "Monday" "19" "June" "2017" "15:17:03" "-0700" "Jacob Champion" "jchampion@apache.org" "<d95393cd-f9f9-4ddf-d8bd-9bb972214230@apache.org>" "31" "[oss-security] CVE-2017-7668: Apache httpd 2.x ap_find_token buffer overread" nil nil nil "6" "2017061922:17:03" "[oss-security] CVE-2017-7668: Apache httpd 2.x ap_find_token buffer overread" (number mark "U       jchampion@ap Jun 19   31/974   " thread-indent "\"[oss-security] CVE-2017-7668: Apache httpd 2.x ap_find_token buffer overread\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5971 invoked by uid 550); 19 Jun 2017 22:54:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,65 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26566 invoked from network); 28 Sep 2025 15:31:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=selector1; bh=0XcBkQZFR8
-	12DM3ajEsLjYAJBPOAAu1RrEcxoVx2aLo=; h=date:references:in-reply-to:
-	subject:cc:to:from; d=openbsd.org; b=YPGQVl8CzEKgL1MHML4X8AOPaAaKm4V9h
-	U/opBxG6wrgyFgwFbIh7lfs9KHBUPWMkJPzpwAwrEAhNTML5rvwQR+jknRs98Uwk52whb8
-	/UnyhSz5DCw5UOr63Iy2WUGLNdXP2Y73wdHRKulve9evSYbkoD+LlpEKfjktzKYvc+cDfN
-	BaeON3MYYoJYTA9QKrlqFiEj9WcbBAfLuBgjiRAU7bJEzlF/+oT4rBG92V8v402fLLKvE/
-	t+NU4s8H5HK/FFQTjIRORqa19mRcUYn3h+wd3zR5hlyTxZ620BWzt/PxsaFkmNz4iVXpAT
-	ZJ/53vd6RcKkyb5YsEAwwxgqOcbwg==
-From: "Theo de Raadt" <deraadt@openbsd.org>
-To: "Adiletta, Andrew" <ajadiletta@wpi.edu>
-cc: Damien Miller <djm@mindrot.org>, Solar Designer <solar@openwall.com>,
-    "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-    "openssh@openssh.com" <openssh@openssh.com>,
-    "Tol,
-    Caner" <mtol@wpi.edu>, "Sunar, Berk" <sunar@wpi.edu>,
-    "Doroz,
-    Yarkin" <ydoroz@wpi.edu>,
-    "Todd C. Miller" <Todd.Miller@courtesan.com>,
-    "pgut001@cs.auckland.ac.nz" <pgut001@cs.auckland.ac.nz>
-In-reply-to: <BL1PR01MB772375CA93AF5608280A224FC118A@BL1PR01MB7723.prod.exchangelabs.com>
-References: <92a89d5d-e0de-c713-e7d2-83f971574eff@mindrot.org> <20250923032113.GA14348@openwall.com> < BL1PR01MB772308134BF946DF07159A05C11CA%BL1PR01MB7723.prod.exchangelabs.com@mailhub.eait.uq.edu.au> <c5d66517-f422-1fe7-03a0-d79cf4af1fbf@mindrot.org> <76091.1759068746@cvs.openbsd.org> <BL1PR01MB772375CA93AF5608280A224FC118A@BL1PR01MB7723.prod.exchangelabs.com>
-Comments: In-reply-to "Adiletta, Andrew" <ajadiletta@wpi.edu>
-   message dated "Sun, 28 Sep 2025 15:22:43 -0000."
+Received: (qmail 6077 invoked from network); 19 Jun 2017 22:17:18 -0000
+From: Jacob Champion <jchampion@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <d95393cd-f9f9-4ddf-d8bd-9bb972214230@apache.org>
+Date: Mon, 19 Jun 2017 15:17:03 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 28 Sep 2025 09:30:38 -0600
-Message-ID: <13391.1759073438@cvs.openbsd.org>
-Subject: [oss-security] Re: [EXT] Re: [oss-security] CVE-2023-51767: a bogus CVE in OpenSSH
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2017-7668: Apache httpd 2.x ap_find_token buffer overread
 
-Adiletta, Andrew <ajadiletta@wpi.edu> wrote:
+CVE-2017-7668: ap_find_token buffer overread
 
-> As far as SSH is concerned there are ways to handle synchronization (we o=
-utline them
-> in the paper). The POC concept we present in the paper should be acceptab=
-le to anybody
-> who is fluent in the Rowhammer/microarch attack literature.
+Severity: Important
 
-I disagree.  I believe your simulation is fake.=20
+Vendor: The Apache Software Foundation
 
-> There are numerous results
-> where the target is slowed down to solve synchronization. We don=E2=80=99=
-t brush aside or hide
-> the synchronization issue in the paper but discuss it explicitly.
+Versions Affected:
+httpd 2.2.32
+httpd 2.4.24 (unreleased)
+httpd 2.4.25
 
-Then why don't you produce exactly such a synchronization without any sourc=
-e code
-changes, in any actual distribution build system??
+Description:
+The HTTP strict parsing changes added in 2.2.32 and 2.4.24 introduced a
+bug in token list parsing, which allows ap_find_token() to search past
+the end of its input string. By maliciously crafting a sequence of
+request headers, an attacker may be able to cause a segmentation fault,
+or to force ap_find_token() to return an incorrect value.
 
-It's not that you brush or hide; it is that you overplay the seriousness by
-providing an entirely synthetic example.
+Mitigation:
+2.2.32 users should either apply the patch available at
+https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-7668.patch
+or upgrade in the future to 2.2.33, which is currently unreleased.
 
-Unless your document is amended, non-astute readers in the future will
-read this as "serious OpenSSH problem" instead of "entirely synthetic
-and fake demonstration".
+2.4.25 users should upgrade to 2.4.26.
 
-I think you made a mistake choosing OpenSSH as a demonstration target
-for reputational benefit, that hand-waving about realistic attacks when
-you didn't execute one, and I'm calling you out for what is effectively
-academic malpractice.
+Credit:
+The Apache HTTP Server security team would like to thank Javier Jiménez
+(javijmor@gmail.com) for reporting this issue.
+
+References:
+https://httpd.apache.org/security_report.html
