@@ -1,103 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/19/5
-Message-ID: <5a73a86bba0443d0bf2ddfba52218ecb@imshyb01.MITRE.ORG>
-Date: Thu, 19 Jan 2017 12:34:48 -0500
-From: <cve-assign@...re.org>
-To: <dmoppert@...hat.com>, <seb@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: python-pysaml2 XML external entity attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/10
+Message-ID: <0877e497-44ea-bb10-efff-605a67794b4c@apache.org>
+Date: Mon, 19 Jun 2017 15:17:40 -0700
+From: Jacob Champion <jchampion@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-7679: Apache httpd 2.x mod_mime buffer overread
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2017-7679: mod_mime buffer overread
 
->> Use CVE-2016-10127
-> I think this CVE needs some clarification.
+Severity: Important
 
-We agree. Here is a rewrite of our entire earlier message that made this
-CVE ID assignment.
+Vendor: The Apache Software Foundation
 
-REPLACE ALL OF THIS EARLIER TEXT:
+Versions Affected:
+httpd 2.2.0 to 2.2.32
+httpd 2.4.0 to 2.4.25
 
-   > python-pysaml2 does
-   > not sanitize SAML XML requests or responses:
-   >
-   >   https://github.com/rohe/pysaml2/issues/366
-   >   https://github.com/rohe/pysaml2/pull/379
-   >   https://bugs.debian.org/850716
-   >   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
-   
-   Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
-   parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
-   
-   The scope of this CVE does not include the various other issues that
-   may be found in the above references:
-   
-    - it does not include any aspect of
-      https://bugzilla.gnome.org/show_bug.cgi?id=772726
-   
-    - it does not include any vulnerabilities in the XML Security Library
-      (xmlsec), such as ones that are now, or previously were, listed at
-      https://github.com/lsh123/xmlsec/issues
-   
-    - it does not include any CWE-776 (Entity Expansion) issues that may
-      have been fixed as a side effect of
-      6e09a25d9b4b7aa7a506853210a9a14100b8bc9b (possibly there are new
-      test cases in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b for CWE-776)
+Description:
+mod_mime can read one byte past the end of a buffer when sending a
+malicious Content-Type response header.
 
-WITH THIS REWRITE:
+Mitigation:
+2.2.x users should either apply the patch available at
+https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-7679.patch
+or upgrade in the future to 2.2.33, which is currently unreleased.
 
-   > python-pysaml2 does
-   > not sanitize SAML XML requests or responses:
-   >
-   >   https://github.com/rohe/pysaml2/issues/366
-   >   https://github.com/rohe/pysaml2/pull/379
-   >   https://bugs.debian.org/850716
-   >   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
-   
-   Use CVE-2016-10127 for any XXE vulnerability that exists within the
-   pysaml2 code (i.e., not in an underlying library). This vulnerability
-   is described in the "Oct 6, 2016" portion of the
-   https://github.com/rohe/pysaml2/issues/366 reference. There isn't yet
-   a complete rationale for why the pysaml2 code itself should be
-   considered responsible for XXE, or about what changes to the pysaml2
-   code itself would resolve XXE. However, it is still potentially useful
-   to track XXE at the pysaml2 level.
-   
-   The scope of this CVE does not include the various other issues that
-   may be found in the above references:
-   
-    - it does not include any aspect of
-      https://bugzilla.gnome.org/show_bug.cgi?id=772726 (CVE-2016-9318
-      is applicable to that XXE discussion)
-   
-    - it does not include any vulnerabilities in the XML Security Library
-      (xmlsec), such as ones that are now, or previously were, listed at
-      https://github.com/lsh123/xmlsec/issues
-   
-    - it does not include any CWE-776 (Entity Expansion) issue fixed
-      in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b. The ID for this
-      CWE-776 problem in pysaml2 is CVE-2016-10149.
+2.4.x users should upgrade to 2.4.26.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Credit:
+The Apache HTTP Server security team would like to thank ChenQin and
+Hanno Böck for reporting this issue.
 
-iQIcBAEBCAAGBQJYgPg3AAoJEHb/MwWLVhi2P5kP/i5lCVmVMrE8LyRe7thLApfH
-i+T4cuyt3ydZOXJCWgirp5/jEKXhjA5FLMZNpo1J1iinkIW9gJeP3XgJcmaVRr1K
-iY/lKkf98Pcd5G1xNKurb+CqlE/wPYLT58pLxaolSVHj9oFPuhFfC/3ECMv8FKdV
-ealV3n7pQ/0CJCORqL/mVA30jGJblCVRWv9uNFAEXRSAvGnAzJbu3sCsc2zmWmtp
-aeJsgr7giNgNQX/nufUysm1t8xSH/1LQlwbRrEisn8pIgek4pjRa1jJyXs0WPb//
-tbrzL7maBVQJPIxLGID4dHMY3d33rkaeAHyfFc/nddzAP1REbamxOTDHnZdqWwAl
-uHSNhMpM+WSfiOl2khP0YID6mPNywbFXjHyGas70E2Cob9biwc4qdl94qz4x5VeI
-O1Iae59q829zwOZlo1PtYqX8d7X3DSuB4opXaZR3CT58pIg68Q7HfgFhppEEUPF3
-c+vdGNOIP6bTrqXraibMGya5IAYTZqmqg6Bjc+Kul+DGNFbnDD41OfcTin6PWFSt
-o1a3xVy6qJ0lQMC2QUvPXWNO4Q2SpnAQdTJv3A8rV6fg4bJ4d4vAeYmIO4xyyym0
-mszWpmX1CcpHd+HyN4bQsG7VpqX3k5M3DZWP0nDnKFPlhDxjTt69PfhCTP8MXdFi
-p3Dt50ewDtHBNqBWConl
-=jh5c
------END PGP SIGNATURE-----
+References:
+https://httpd.apache.org/security_report.html
