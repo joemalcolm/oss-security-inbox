@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1239" "Sunday" "19" "April" "2015" "10:15:41" "-0700" "Michal Zalewski" "lcamtuf@coredump.cx" "<CALx_OUD3cMU9-do-SW6mHVSTyKN1c0x6VbMa2wHQakN7LRagRw@mail.gmail.com>" "35" "Re: [oss-security] libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment" nil nil nil "4" "2015041917:15:41" "[oss-security] libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment" (number mark "        lcamtuf@core Apr 19   35/1239  " thread-indent "\"Re: [oss-security] libxml2 issue: out-of-bounds memory access when parsing an unclosed HTML comment\"\n") "<CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>" ("<CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["776" "Monday" "19" "June" "2017" "15:16:21" "-0700" "Jacob Champion" "jchampion@apache.org" "<3e2ebfb9-f0ad-b61b-f1ed-abf9810d8c09@apache.org>" "27" "[oss-security] CVE-2017-3169: Apache httpd 2.x mod_ssl null pointer dereference" nil nil nil "6" "2017061922:16:21" "[oss-security] CVE-2017-3169: Apache httpd 2.x mod_ssl null pointer dereference" (number mark "U       jchampion@ap Jun 19   27/776   " thread-indent "\"[oss-security] CVE-2017-3169: Apache httpd 2.x mod_ssl null pointer dereference\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13555 invoked by uid 550); 19 Apr 2015 17:16:14 -0000
+Received: (qmail 10226 invoked by uid 550); 19 Jun 2017 22:55:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13534 invoked from network); 19 Apr 2015 17:16:13 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=TKZJvT17h8kHaAMtedYdZ/dNNSrct5iAqxbKEsvLOho=;
-        b=XYIj3cS3DqCQ4QG9MQDLY5aLIiidaoztRzgKq4i15oju6Ir6wu0GOHEuPO9RqO94b0
-         NoB2es91vKJFLmJgEPpmS0W0+k7aqKBiDRcdVrOcd6vuaQdDPaHj17LPt1p/M6R3nU3M
-         6V2wAAhjo+KJ9Gc8RmbOVZq+SWIgmLGP2pJ7Z2B92l6YTF+DK8m+9I9JneMZg5KzFDbY
-         l/eeKtJUtc4XlKZH6FAnZTiVBN/zmYGG46vZORAR3OFTImupjOmZHcQ1YeVFlaNYN+Un
-         DF6gPSuJrh3uB2nG1rkI/OSEUW8vc82jasFj/pQsx4RvCXhfbVp2XrmtUzFFuXdwpLxc
-         1alg==
-X-Gm-Message-State: ALoCoQmBDS2y/SuUJbNDH3G8OOaraKHsCFRcu50wyAEjMsXwIHA/HG0KWgVNamkzxUu7xKNJeYPs
-X-Received: by 10.66.144.201 with SMTP id so9mr13145111pab.78.1429463761669;
- Sun, 19 Apr 2015 10:16:01 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>
-References: <CALPTtNW6v=fPnjNj5ra9vGfqMFo4bUKyb+a+415MNjsR-5hKjQ@mail.gmail.com>
-Message-ID: <CALx_OUD3cMU9-do-SW6mHVSTyKN1c0x6VbMa2wHQakN7LRagRw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 19 Apr 2015 10:15:41 -0700
-From: Michal Zalewski <lcamtuf@coredump.cx>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] libxml2 issue: out-of-bounds memory access when
- parsing an unclosed HTML comment
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 5824 invoked from network); 19 Jun 2017 22:16:34 -0000
+From: Jacob Champion <jchampion@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <3e2ebfb9-f0ad-b61b-f1ed-abf9810d8c09@apache.org>
+Date: Mon, 19 Jun 2017 15:16:21 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2017-3169: Apache httpd 2.x mod_ssl null pointer dereference
 
-Uh, so I guess we could also mention this one:
+CVE-2017-3169: mod_ssl null pointer dereference
 
-https://bugzilla.gnome.org/show_bug.cgi?id=744980
+Severity: Important
 
-I wasn't sure it would ever cause anything serious / interesting,
-though. Perhaps for some exotic uses?
+Vendor: The Apache Software Foundation
 
-/mz
+Versions Affected:
+httpd 2.2.0 to 2.2.32
+httpd 2.4.0 to 2.4.25
 
+Description:
+mod_ssl may dereference a NULL pointer when third-party modules call
+ap_hook_process_connection() during an HTTP request to an HTTPS port.
 
-On Sun, Apr 19, 2015 at 10:11 AM, Reed Loden <reed@reedloden.com> wrote:
-> (saw this randomly today on Twitter, so figured I'd send it on to make sure
-> it gets a CVE and actually gets fixed)
->
-> https://hackerone.com/reports/57125#activity-384861
->
-> """
-> This is an out-of-bounds memory access in libxml2. By entering a unclosed
-> html comment such as <!-- the libxml2 parser didn't stop parsing at the end
-> of the buffer, causing random memory to be included in the parsed comment
-> that was returned to ruby. In Shopify, this caused ruby objects from
-> previous http requests to be disclosed in the rendered page.
->
-> Link to the issue in libxml2's bugtracker:
-> https://bugzilla.gnome.org/show_bug.cgi?id=746048
->
-> A patched version of nokogiri (which uses a embedded libxml2) is available
-> here:
-> https://github.com/Shopify/nokogiri/compare/1b1fcad8bd64ab70256666c38d2c998e86ade8c0...master
->
-> This bug is still not patched upstream, but both libxml2 and nokogiri
-> developers are aware of the issue.
-> """
->
-> ~reed
+Mitigation:
+2.2.x users should either apply the patch available at
+https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-3169.patch
+or upgrade in the future to 2.2.33, which is currently unreleased.
+
+2.4.x users should upgrade to 2.4.26.
+
+Credit:
+The Apache HTTP Server security team would like to thank Vasileios
+Panopoulos and AdNovum Informatik AG for reporting this issue.
+
+References:
+https://httpd.apache.org/security_report.html
