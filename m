@@ -1,126 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/22/1
-Message-ID: <90a93b0c-f36a-7a69-03cb-2203b9167d68@oracle.com>
-Date: Tue, 22 Aug 2017 12:57:09 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, winsonliu(刘科) <winsonliu@...cent.com>
-Cc: cve-assign <cve-assign@...re.org>
-Subject: Re: CVE Request: Multiple security issues in OpenJPEG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/5
+Message-Id: <BFFF480A-5C76-47A9-89B0-EFDA2D110D73@apache.org>
+Date: Mon, 19 Jun 2017 12:43:40 -0400
+From: Jim Jagielski <jim@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-7659: mod_http2 null pointer dereference 
 Content-Type: text/plain; charset=utf-8
 
-Most of these seem to be fixed now in OpenJPEG's recent 2.2.0 release.
-Did CVE id's ever get assigned for them?
+CVE-2017-7659: mod_http2 null pointer dereference 
 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+Severity: Important
 
-On 09/18/16 07:00 PM, winsonliu(刘科) wrote:
-> Hi,
-> 
-> This is Ke Liu of Tencent's Xuanwu LAB. I reported some security issues to OpenJPEG some months ago. Could you please assign some CVE numbers for them? Thanks.
-> 
-> The memory issues may lead to code execution, other issues may simply lead to DoS problems.
-> 
-> BTW, proof-of-concept files for all issues were supplied. For more details, please click the issue links below.
-> 
-> 1. Out-of-Bounds Write in opj_mqc_byteout of mqc.c
-> 
-> An Out-of-Bounds Write issue can be triggered in function opj_mqc_byteout of mqc.c during executing opj_compress. This issue was caused by a malformed BMP file.
-> 
-> AddressSanitizer: heap-buffer-overflow, WRITE of size 1
-> Report date: 2016/09/12
-> Status: Not fixed
-> Url: https://github.com/uclouvain/openjpeg/issues/835
-> Root cause: not clear
-> Patch: no patch supplied
-> 
-> 2. Out-of-Bounds Read in function bmp24toimage of convertbmp.c
-> 
-> An Out-of-Bounds Read issue was found in function bmp24toimage of convertbmp.c during executing opj_compress. The root cause of this issue was an Integer Overflow issue. This issue was caused by a malformed BMP file.
-> 
-> AddressSanitizer: heap-buffer-overflow, READ of size 1
-> Report date: 2016/09/12
-> Status: Not fixed
-> Url: https://github.com/uclouvain/openjpeg/issues/833
-> Root cause: integer overflow
-> Patch: https://github.com/uclouvain/openjpeg/pull/834
-> 
-> 3. Null Pointer Access in function sycc422_to_rgb of color.c
-> A null pointer access issue was found in function sycc422_to_rgb of color.c during executing opj_decompress. This issue was caused by a malformed J2K file.
-> 
-> AddressSanitizer: SEGV on unknown address 0x00000000
-> Report date: 2016/06/28
-> Status: Not fixed
-> Url: https://github.com/uclouvain/openjpeg/issues/792
-> Root cause: null pointer dereference
-> Patch: easy to fix, check before accessing
-> 
-> 4. Null Pointer Access in function color_esycc_to_rgb of color.c
-> A null pointer access issue was found in function color_esycc_to_rgb of color.c during executing opj_decompress. This issue was caused by a malformed J2K file.
-> 
-> AddressSanitizer: SEGV on unknown address 0x00000000
-> Report date: 2016/05/25
-> Status: Not fixed
-> Url: https://github.com/uclouvain/openjpeg/issues/785
-> Root cause: null pointer dereference
-> Patch: easy to fix, check before accessing
-> 
-> 5. Null Pointer Access in function sycc444_to_rgb of color.c
-> A null pointer access issue was found in function sycc444_to_rgb of color.c during executing opj_decompress. This issue was caused by a malformed J2K file.
-> 
-> AddressSanitizer: SEGV on unknown address 0x00000000
-> Report date: 2016/05/25
-> Status: Not fixed
-> Url: https://github.com/uclouvain/openjpeg/issues/784
-> Root cause: null pointer dereference
-> Patch: easy to fix, check before accessing
-> 
-> 6. Null Pointer Access in function imagetopnm of convert.c
-> A null pointer access issue was found in function imagetopnm of convert.c during executing opj_decompress. This issue was caused by a malformed J2K file.
-> 
-> AddressSanitizer: SEGV on unknown address 0x00000000
-> Report date: 2016/05/06
-> Status: Not fixed
-> Url: https://github.com/uclouvain/openjpeg/issues/776
-> Root cause: null pointer dereference
-> Patch: easy to fix, check before accessing
-> 
-> 7. Multiple division-by-zero issues in function opj_pi_next_rpcl of pi.c
-> Multiple division-by-zero issues were found in function opj_pi_next_rpcl of pi.c during executing opj_decompress. The issues were caused by malformed J2K files.
-> 
-> AddressSanitizer: SIGFPE, Arithmetic exception
-> Report date: 2016/05/06
-> Status: Not fixed
-> Url1: https://github.com/uclouvain/openjpeg/issues/780
-> Url2: https://github.com/uclouvain/openjpeg/issues/779
-> Root cause: division-by-zero
-> Patch: easy to fix, check before dividing
-> 
-> 8. Multiple division-by-zero issues in function opj_pi_next_pcrl of pi.c
-> Multiple division-by-zero issues were found in function opj_pi_next_pcrl of pi.c during executing opj_decompress. The issues were caused by malformed J2K files.
-> 
-> AddressSanitizer: SIGFPE, Arithmetic exception
-> Report date: 2016/05/06
-> Status: Not fixed
-> Url1: https://github.com/uclouvain/openjpeg/issues/777
-> Url2: https://github.com/uclouvain/openjpeg/issues/778
-> Root cause: division-by-zero
-> Patch: easy to fix, check before dividing
-> 
-> 9. Multiple division-by-zero issues in function opj_pi_next_cprl of pi.c
-> Multiple division-by-zero issues were found in function opj_pi_next_cprl of pi.c during executing opj_decompress. The issues were caused by malformed J2K files.
-> 
-> AddressSanitizer: SIGFPE, Arithmetic exception
-> Report date: 2016/03/28
-> Status: Not fixed
-> Url1: https://github.com/uclouvain/openjpeg/issues/731
-> Url2: https://github.com/uclouvain/openjpeg/issues/732
-> Root cause: division-by-zero
-> Patch: easy to fix, check before dividing
-> 
-> Regards,
-> Ke
-> Tencent's Xuanwu LAB
-> 
+Vendor: The Apache Software Foundation
 
+Versions Affected:
+httpd 2.4.24 (unreleased)
+httpd 2.4.25
+
+Description:
+A maliciously constructed HTTP/2 request could cause mod_http2 to
+dereference a NULL pointer and crash the server process.
+
+Mitigation:
+2.4.25 users of mod_http2 should upgrade to 2.4.26.
+
+Credit:
+The Apache HTTP Server security team would like to thank Robert Święcki
+for reporting this issue.
+
+References:
+https://httpd.apache.org/security_report.html
 
