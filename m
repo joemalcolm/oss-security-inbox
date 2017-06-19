@@ -1,4 +1,9 @@
-Received: (qmail 20372 invoked by uid 550); 13 Apr 2023 18:31:06 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10112" "Monday" "19" "June" "2017" "22:39:33" "+0200" "Solar Designer" "solar@openwall.com" "<20170619203933.GA910@openwall.com>" "186" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017061920:39:33" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        solar@openwa Jun 19  186/10112 " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>" ("<20170619152843.GC7769@localhost.localdomain>" "<2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5931 invoked by uid 550); 19 Jun 2017 20:45:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,325 +11,203 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 31979 invoked from network); 19 Jun 2017 20:39:59 -0000
+Message-ID: <20170619203933.GA910@openwall.com>
+References: <20170619152843.GC7769@localhost.localdomain> <2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Mon, 19 Jun 2017 22:39:33 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17551 invoked from network); 13 Apr 2023 17:36:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1681407381; x=1681493781; bh=2XfRibQAYyJ2znCiV+LRr1UGexblcnz5O2w
-	Dfc+pYiE=; b=jblRC71WQoHVs+/5RnqEcaLQ5eOq6HQorKQldoDSSyIh7ubbkYn
-	5nE/wSa0MaOqxAVLZ7ZKIQ44HBeOX8KR7MW4NqtVLuhwOU+W8VbVaBHfpHsCqyY6
-	EJ19lt1r1pM0g2W53TWpAFJdGGUJyFa7iJbteN1o/bYTZQtOdvJuMxweevyDaaim
-	0XqrsM0395BeJlFI5LEbW+YB/v27ZLUTOQd4Ocs/Ap4Z/lBmmX+OKy+Wo32R9L7z
-	gikaKxGXwrmAiDb9Bt/vEcNVCimbIMxyOG8VgMwGyDH2QliVmGoFeIycqDGwgrNZ
-	81/PdECtUaYESp4JKWCFP9TVvAPfarxFuuw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1681407381; x=1681493781; bh=2XfRibQAYyJ2z
-	nCiV+LRr1UGexblcnz5O2wDfc+pYiE=; b=SijKwGGsHCoE/yYHk8qufVtqIWHXU
-	+gxXZ3HfXEQOLL/UbeQi3S9bQWyMZtaG9amh6tufckpUaoSp8LT+JdiqoFABBdtc
-	UThTrT4u3zo2dpxZLW3lOGbRr34gEmPtS8wZoFTejdVSlvZ+xVoDg0UyChifzjMV
-	HkjMXBKgB+JzIe0gRoFt4nM7lnbHzFjH6SwkzFOhf8HjW4t9Gm8pE0c4vDz8a3hL
-	ImqbfBpZFiXHmCRQs0AXTwhNmGIK+kpkeQ+XdUBnRxbmoWahkbfPCqzzGFUiqEts
-	kS6xjWS5/ut5enz4xwOMoJqgvucueb4owjwZJWWn3okqqDDPAsh28kjig==
-X-ME-Sender: <xms:lD04ZPR7WsUrnEyVSoV06FW8HCadkq1g7iyAtWLR0LYg1yI9fCs7Kw>
-    <xme:lD04ZAwbyndcTK7fFNlSb-oJj3Ju29NkK3TQ_wPLvw8KHF3MbADdyjuK-BuO-rmca
-    eF46QE6fDwO4I4>
-X-ME-Received: <xmr:lD04ZE2kyuObdSwKQO9jXhkDxWP2zAkPYxm8YC3LrQ2Tmlf6vhZ0aI8S3KM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekkedgudduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecuogfuuhhsphgvtghtffhomhgrihhnucdlgeelmd
-    enucfjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepffgvmhhi
-    ucforghrihgvucfqsggvnhhouhhruceouggvmhhisehinhhvihhsihgslhgvthhhihhngh
-    hslhgrsgdrtghomheqnecuggftrfgrthhtvghrnheptdfhveelgeefffegvdeugefhkeek
-    hedtgfetiedttedtteejheegjeehffdvvdeinecuffhomhgrihhnpehjvghnkhhinhhsrd
-    hiohdpghhoohhglhgvrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepuggvmhhisehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtg
-    homh
-X-ME-Proxy: <xmx:lD04ZPCOxI5E8v9KEww-DKZOkX9Af_TOLCD2PViYAc2BbXhe-Tsz2g>
-    <xmx:lD04ZIhAoIPbYVH8ZNrG8a4Wk8KAfrJxaalmGiZOunLiMGvTR4hNcQ>
-    <xmx:lD04ZDpGfPMK5OyGCyvjeBY0BKQcRM3tm43tzoKX5q2DzRXDgrP1ww>
-    <xmx:lT04ZDvxOqZGRgx80qyUYTU3gj5VBiox8iywNP9kaMbwWM7NxZ9BJg>
-Feedback-ID: iac594737:Fastmail
-Date: Thu, 13 Apr 2023 13:36:14 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
 To: oss-security@lists.openwall.com
-Message-ID: <ZDg9kq+QJz7beBQ+@itl-email>
-References: <18477145-F7AD-455D-A0AB-77B3E402A7B7@beckweb.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ioCrDYweSTUQPLjj"
-Content-Disposition: inline
-In-Reply-To: <18477145-F7AD-455D-A0AB-77B3E402A7B7@beckweb.net>
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
---ioCrDYweSTUQPLjj
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 13 Apr 2023 13:36:14 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins plugins
+On Mon, Jun 19, 2017 at 09:40:28AM -0600, kseifried@redhat.com wrote:
+> I just want to publicly thank Qualys for working with the Open Source
+> community so we (Linux and *BSD) could all get this fixed properly.
+> There was a lot of work from everyone involved and it all went pretty
+> smoothly.
 
-On Wed, Apr 12, 2023 at 06:14:15PM +0200, Daniel Beck wrote:
-> Jenkins is an open source automation server which enables developers arou=
-nd
-> the world to reliably build, test, and deploy their software.
->=20
-> The following releases contain fixes for security vulnerabilities:
->=20
-> * Azure Key Vault Plugin 188.vf46b_7fa_846a_1
-> * Kubernetes Plugin 3910.ve59cec5e33ea_
->=20
-> Additionally, we announce unresolved security issues in the following
-> plugins:
->=20
-> * Assembla merge request builder Plugin
-> * Consul KV Builder Plugin
-> * Fogbugz Plugin
-> * Image Tag Parameter Plugin
-> * Lucene-Search Plugin
-> * NeuVector Vulnerability Scanner Plugin
-> * Quay.io trigger Plugin
-> * Report Portal Plugin
-> * Thycotic DevOps Secrets Vault Plugin
-> * Thycotic Secret Server Plugin
-> * TurboScript Plugin
-> * WSO2 Oauth Plugin
->=20
-> Summaries of the vulnerabilities are below. More details, severity, and
-> attribution can be found here:
-> https://www.jenkins.io/security/advisory/2023-04-12/
->=20
-> We provide advance notification for security updates on this mailing list:
-> https://groups.google.com/d/forum/jenkinsci-advisories
->=20
-> If you discover security vulnerabilities in Jenkins, please report them as
-> described here:
-> https://www.jenkins.io/security/#reporting-vulnerabilities
->=20
-> ---
->=20
-> SECURITY-3075 / CVE-2023-30513 (Kubernetes) & CVE-2023-30514 (Azure Key V=
-ault)
->   & CVE-2023-30515 (Thycotic DevOps Secrets Vault)
-> Multiple plugins do not properly mask (i.e., replace with asterisks)
-> credentials printed in the build log from Pipeline steps like `sh` and
-> `bat`, when both of the following conditions are met:
->=20
-> * The credentials are printed in build steps executing on an agent
->   (typically inside a `node` block).
-> * Push mode for durable task logging is enabled. This is a hidden option
->   in Pipeline: Nodes and Processes that can be enabled through the Java=20
->   system property `org.jenkinsci.plugins.workflow.steps.durable_task.Dura=
-bleTaskStep.USE_WATCHING`.
->   It is also automatically enabled by some plugins, e.g., OpenTelemetry
->   and Pipeline Logging over CloudWatch.
->=20
-> The following plugins are affected by this vulnerability:
->=20
-> * Kubernetes 3909.v1f2c633e8590 and earlier (SECURITY-3079 /
->   CVE-2023-30513)
-> * Azure Key Vault 187.va_cd5fecd198a_ and earlier (SECURITY-3051 /
->   CVE-2023-30514)
-> * Thycotic DevOps Secrets Vault 1.0.0 (SECURITY-3078 / CVE-2023-30515)
->=20
->=20
-> SECURITY-2840 / CVE-2023-30516
-> Image Tag Parameter Plugin 2.0 improperly introduces an option to opt out
-> of SSL/TLS certificate validation when connecting to Docker registries.
->=20
-> Job configurations using Image Tag Parameters that were created before 2.0
-> will have SSL/TLS certificate validation disabled by default.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2841 / CVE-2023-30517
-> NeuVector Vulnerability Scanner Plugin 1.22 and earlier unconditionally
-> disables SSL/TLS certificate and hostname validation when connecting to a
-> configured NeuVector Vulnerability Scanner server.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2837 / CVE-2023-30518
-> Thycotic Secret Server Plugin 1.0.2 and earlier does not perform a
-> permission check in an HTTP endpoint.
->=20
-> This allows attackers with Overall/Read permission to enumerate credentia=
-ls
-> IDs of credentials stored in Jenkins. Those can be used as part of an
-> attack to capture the credentials using another vulnerability.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2849 / CVE-2023-30519
-> Quay.io trigger Plugin provides a webhook endpoint at `/quayio-webhook/`
-> that can be used to trigger builds of jobs configured to use a specified
-> repository.
->=20
-> In Quay.io trigger Plugin 0.1 and earlier, this endpoint can be accessed
-> without authentication.
->=20
-> This allows unauthenticated attackers to trigger builds of jobs
-> corresponding to the attacker-specified repository.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2850 / CVE-2023-30520
-> Quay.io trigger Plugin 0.1 and earlier does not limit URL schemes for
-> repository homepage URLs submitted via Quay.io trigger webhooks.
->=20
-> This results in a stored cross-site scripting (XSS) vulnerability
-> exploitable by attackers able to submit crafted Quay.io trigger webhook
-> payloads.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2872 / CVE-2023-30521
-> Assembla merge request builder Plugin provides a webhook endpoint at
-> `/assembla-webhook/` that can be used to trigger builds of jobs configured
-> to use a specified repository.
->=20
-> In Assembla merge request builder Plugin 1.1.13 and earlier, this endpoint
-> can be accessed without authentication.
->=20
-> This allows unauthenticated attackers to trigger builds of jobs
-> corresponding to the attacker-specified repository.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2873 / CVE-2023-30522
-> Fogbugz Plugin provides a webhook endpoint at `/fbTrigger/` that can be
-> used to trigger builds of any jobs.
->=20
-> In Fogbugz Plugin 2.2.17 and earlier, this endpoint can be accessed by
-> attackers with Item/Read permission, allowing them to trigger builds of
-> jobs specified in a `jobname` request parameter.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2945 / CVE-2023-30523 (storage) & CVE-2023-30524 (masking)
-> Report Portal Plugin 0.5 and earlier stores ReportPortal access tokens
-> unencrypted in job `config.xml` files on the Jenkins controller as part of
-> its configuration.
->=20
-> These tokens can be viewed by users with Item/Extended Read permission or
-> access to the Jenkins controller file system.
->=20
-> Additionally, the configuration form does not mask these tokens, increasi=
-ng
-> the potential for attackers to observe and capture them.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2950 / CVE-2023-30525 (CSRF) & CVE-2023-30526 (missing permissio=
-n check)
-> Report Portal Plugin 0.5 and earlier does not perform a permission check =
-in
-> a method implementing form validation.
->=20
-> This allows attackers with Overall/Read permission to connect to an
-> attacker-specified URL using attacker-specified bearer token
-> authentication.
->=20
-> Additionally, this form validation method does not require POST requests,
-> resulting in a cross-site request forgery (CSRF) vulnerability.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2992 / CVE-2023-30527 (storage) & CVE-2023-30528 (masking)
-> WSO2 Oauth Plugin 1.0 and earlier stores the WSO2 Oauth client secret
-> unencrypted in the global `config.xml` file on the Jenkins controller as
-> part of its configuration.
->=20
-> This client secret can be viewed by users with access to the Jenkins
-> controller file system.
->=20
-> Additionally, the global configuration form does not mask the WSO2 Oauth
-> client secret, increasing the potential for attackers to observe and
-> capture it.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-3013 / CVE-2023-30529
-> Lucene-Search Plugin 387.v938a_ecb_f7fe9 and earlier does not require POST
-> requests for an HTTP endpoint, resulting in a cross-site request forgery
-> (CSRF) vulnerability.
->=20
-> This vulnerability allows attackers to reindex the database.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2944 / CVE-2023-30530 (storage) & CVE-2023-30531 (masking)
-> Consul KV Builder Plugin 2.0.13 and earlier stores the HashiCorp Consul A=
-CL
-> Token unencrypted in its global configuration file
-> `org.jenkinsci.plugins.consulkv.GlobalConsulConfig.xml` on the Jenkins
-> controller as part of its configuration.
->=20
-> This token can be viewed by users with access to the Jenkins controller
-> file system.
->=20
-> Additionally, the global configuration form does not mask the token,
-> increasing the potential for attackers to observe and capture it.
->=20
-> As of publication of this advisory, there is no fix.
->=20
->=20
-> SECURITY-2851 / CVE-2023-30532
-> TurboScript Plugin provides a webhook endpoint at `/turbo-webhook/` that
-> can be used to trigger builds of jobs configured to use a specified
-> repository.
->=20
-> In TurboScript Plugin 1.3 and earlier, this endpoint can be accessed by
-> attackers with Item/Read permission to trigger builds of jobs correspondi=
-ng
-> to the attacker-specified repository.
->=20
-> As of publication of this advisory, there is no fix.
++1
 
-What is the reason for the large number of unfixed vulnerabilities?
-To me, this seems like an argument for not using Jenkins (or at least
-its plugins) at all.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+It's excellent research by Qualys, building upon yet exceeding what was
+previously known about this vulnerability class.  The quality of Qualys'
+writing is also rare these days.
 
---ioCrDYweSTUQPLjj
-Content-Type: application/pgp-signature; name="signature.asc"
+That said, we owe apologies to the community for violating the published
+distros list policy regarding the maximum embargo duration.  Personally
+and as distros list admin, I do apologize for letting this happen.
 
------BEGIN PGP SIGNATURE-----
+I think we shouldn't have let it happen.
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmQ4PZIACgkQsoi1X/+c
-IsECTQ/8Dcw43TJODjCHjZkGe/PlqdqYHivToPn655+iWEvicM5azgubgYiMcsjR
-ydv/pe9Hmjo6UrsJ/s97SS8fNTbCU1kh43eBD0cS9UtF6Q3Vbu+h/414ZgVxY/Dq
-BSsynyT9jq4CzLBNdswJ2LAseLEGK76RJg6UmoyDv+u14VBp8TcpSldkjOWTSasR
-45sksOErds27+lJ8S51SO+vmGlUXNr295zJ9BUQLMbJMx0ZpqQrBX7cGqE3Md5c2
-GYmO9KJcyCovfDbR38lhun3rmSGrCsTanIk855P/0AEXhcfNwKSMZfV4xEpPExzj
-CL59V3jBQKxrcjGXiD0J5qxsfGaBJeMHoDm4HGq4VlAk6CAN7NsxuNqit/K/xtUS
-dr60GscmbIwpYPnAxPGn43IJFzwO2sfCCFzEA27yNmOtdt8IH5dT/EOLbtXy2iAN
-h+z5VrmEmyV1Z4pRZ54pIqVilHCf07JnFB9jqO3XKJkXVGt/9c3kFTfiA1bciNLF
-3S32nnutlegQbXDpaDxpdoY7euPu0axSlqGi5caP+bkwBDL9LgKZFSNog28VNy5d
-AvcUCBs7o9RJHJjb7yVG1vp2YV/AQdkUGWL3rotwnV1COzSn0Bs/NVECEBu2CAP/
-3FqiJZhnix1yL+NzgMKyNSU2K4zr1Vy/30Flt22vSIJeatPAFsQ=
-=O0qu
------END PGP SIGNATURE-----
+The stated argument for extending the embargo duration beyond list
+policy's maximum was that fixes presumably wouldn't be ready.
 
---ioCrDYweSTUQPLjj--
+However, there were also arguments in favor of disclosing on the
+originally planned date, which was within list policy: interim
+workarounds and mitigations could be ready in time for that, the fixes
+that would be ready by the later date (thus, presumably are ready now)
+are not the end of the story anyway (specifically, gcc -fstack-check
+wasn't expected to be ready, and isn't - let alone having distros'
+userlands rebuilt with that option), the general issue wasn't new, and
+all the usual arguments against long embargoes (some of the affected
+parties being left out of the discussion, inconvenient and maybe less
+productive discussion in the smaller private community, risk of leaks,
+risk of rediscovery).
+
+Apparently, the workarounds and mitigations just were not enterprisey
+enough for the bigger players.  Releasing interim updates first would
+mean the vendors would have to acknowledge that some (I think obscure)
+functionality might be temporarily(?) gone, until a later final update
+that would include the more invasive fixes for the underlying issues
+while optionally removing the previously introduced workarounds and
+mitigations (although personally I would prefer to make them standard,
+as security hardening).  The vendors could also provide a knob (e.g., a
+sysctl) to restore the questionable functionality right away (in this
+case, it's things like limited debugging of dynamic linking on SUID/SGID
+exec, and multi-megabyte command-line argument lists to SUID/SGID
+programs) for those customers who prefer no risk of breakage over
+security.  I understand it's a tough trade-off to expose to a paying
+customer.  Yet I think it would have been most reasonable from a purely
+technical and community friendliness points of view.
+
+As Qualys advisory says, relevant security hardening for Linux kernel is
+already found in grsecurity (per my quick check, some of it since 2012,
+some earlier).  Relevant security hardening for glibc has been in Owl's
+and ALT Linux's packages (always enabled - no knob) since at least 2005
+(some or all of it probably also since 2000-2001, but I didn't re-review
+how complete older revisions of that patch were).  Merging some of those
+changes (at least the least invasive ones, sufficient to deal with the
+most promising and most immediate attacks - short of the currently more
+hypothetical remote attacks on system services) into distros' kernels
+and glibc could surely be done in 14 days, including QA.
+
+Apparently, companies disclosing security issues are concerned of being
+held to a higher standard (than individuals) with regard to being (or
+appearing) responsible.  If a company's disclosure is deemed
+irresponsible by some (like we've seen happen before), that company (and
+others) might become more cautious next time (which might be what
+happened here), or worse - they might no longer fund security research
+(luckily not the case here).
+
+When I say these things, I don't mean to blame anyone, nor any company.
+Everyone was probably doing their best under their circumstances.  I am
+merely sharing my thoughts with the community.
+
+Qualys first informed the distros list about this upcoming set of issues
+on May 3.  This initial notification didn't say Stack Clash nor anything
+like that, but merely expressed intent to disclose the issues and
+concern that the list's maximum embargo duration of 14 to 19 days might
+not be sufficient in this case.  In the resulting discussion, I agreed
+to consider extending the embargo beyond list policy should there be
+convincing reasons for that.  In retrospect, I think I shouldn't have
+agreed to that.
+
+Qualys posted the detail to distros on May 17 with public disclosure
+planned for May 30, which was within list policy.  Due in part to
+requests by Red Hat (who were going to do much of the work needed by
+other distros, in particular on glibc) and presumably Qualys' internal
+reasoning, on May 23 Qualys unilaterally said they were extending the
+embargo until June 19 (the date previously requested by Red Hat, and
+IIRC one that Qualys had said was also known good for Oracle Solaris,
+although Oracle was OK with others publishing on May 30), and they said
+they were already in the process of informing others (those they had
+notified beyond the distros list membership) of this extension.
+
+This was against what I had said previously, where I offered merely to
+consider extending the embargo, not to unconditionally accept a decision
+like this from Qualys nor anyone else.  At this point, I was still in my
+right to insist on the originally planned date, and to make it happen
+technically - just post the detail to oss-security myself on May 30, as
+that wouldn't have violated any agreement I had.  (Of course, people
+would be mad at me.)  Instead:
+
+On Tue, May 23, 2017 at 11:21:01AM +0200, Solar Designer wrote:
+> That's really bad.  I don't support you in your decision as from my
+> perspective it's wrong, but I also don't want to go against it.
+> So I reluctantly accept it
+
+I didn't say it at the time, but frankly part of my reasoning for the
+reluctant acceptance was that I had no idea what might have been going
+on inside Qualys, nor wanted to have that inside info.  I understand
+it's rare for companies to do quality security research, and I didn't
+want my action to have hampered the stream of quality security research
+we're seeing from Qualys lately.
+
+Distro vendors saying they wouldn't be ready wasn't as important to me.
+In fact, most distros hadn't yet expressed a clear opinion by then and I
+was still NAK'ing Red Hat's requests at the time of Qualys' decision.
+
+I am really not blaming Red Hat here.  They were the ones making the
+request largely because they were also one of two distros, the other
+being SUSE, doing much of the work on shared upstream code, for benefit
+of most other Linux distros.
+
+Anyhow, with the unfortunate embargo extension in place, my remaining
+goal was to minimize the damage.  I helped disentangle and push out two
+of the sub-issues - with Sudo and ISC/Vixie Cron - on dates that are
+within list policy (no more than 14 days since initial disclosure of
+vulnerability detail on the distros list).  I also used the opportunity
+to test which of the distros are actually reading the lengthy thread
+(resulting in one distro, which was represented by just one person,
+getting removed from the distros list).  Finally, it's also in this
+context that I decided to accept some non-distro volunteers to help with
+patch review (unfortunately, this hasn't worked well enough yet -
+although some patch review did occur and changes were made, an important
+issue with the first Sudo patch was missed).
+
+Timeline:
+
+May 3 - preliminary notification by Qualys, no detail
+May 17 - detail posted by Qualys on Stack Clash and Sudo
+May 23 - embargo extension
+May 26 - detail posted by Qualys on Cron
+May 30 - initially planned public disclosure date for all Qualys issues
+May 30 - Sudo issue public:
+http://www.openwall.com/lists/oss-security/2017/05/30/16
+May 31 - Sudo incomplete fix fixed in 1.8.20p2
+June 2 - Sudo incomplete fix and its fix announced:
+http://www.openwall.com/lists/oss-security/2017/06/02/7
+June 8 - Cron minor issue public (along with some fixes):
+http://www.openwall.com/lists/oss-security/2017/06/08/3
+June 19 - Stack Clash public
+
+Since we were making this public in pieces like that, I have to say: no,
+there's nothing else left to publish as part of this series of Qualys'
+findings.  Everything Qualys brought to distros so far is now public.
+
+Given this experience, I am not going to give any impression I could
+agree to an embargo extension beyond list policy again.  I am going to
+enforce the stated list policy.  Unfortunately, this means that next
+time someone or some company who's extra careful about being/appearing
+responsible wants to inform distros of an issue, they might opt to work
+with individual distros off-list or through some other channel.  That's
+life.  At least the distros list would not be contributing to that.
+Having this discussion explode on the distros list was not great in
+other aspects anyway - it's too many too frequent messages for too long
+to conveniently handle on an encrypted list.  This wasn't worth it.
+
+I am also going to remove the "up to 19 days" option, where an embargo
+longer than 14 days (up to 19) could be applied for issues posted to
+distros too close to or on a weekend, so that the embargo time could be
+"rounded up" to expire next Tuesday after the normal maximum of 2 weeks.
+Part of the reason for this removal, besides desire to shorten embargoes
+in general and on average, is to remove the wrong incentive to report
+issues to distros close to a weekend just to have (and give distros)
+more time (much of that being an extra weekend).  The original issue
+this option tried to address can also be addressed by "rounding down"
+(e.g., to last Wednesday or Thursday before 14 days would run out on a
+weekend), so let's be doing that.
+
+This wrong incentive didn't play a role this time, but it was mentioned.
+
+Alexander
+
+P.S. While I am at it, for those reading this in web archives of the
+list here's a link to a portion of this thread on gcc issues, which I
+think inadvertently broke off:
+
+http://www.openwall.com/lists/oss-security/2017/06/19/6
