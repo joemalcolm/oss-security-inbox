@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/18/4
-Message-Id: <3DAE0CC3-13ED-4C99-8A76-CCE95011D24F@beckweb.net>
-Date: Sat, 18 Nov 2017 08:26:47 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/2
+Message-ID: <2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>
+Date: Mon, 19 Jun 2017 09:40:28 -0600
+From: "kseifried@...hat.com" <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Qualys Security Advisory <qsa@...lys.com>
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-
-> On 8. Nov 2017, at 11:56, Daniel Beck <ml@...kweb.net> wrote:
+On 06/19/2017 09:28 AM, Qualys Security Advisory wrote:
 > 
-> SECURITY-499
-> Jenkins stores metadata related to "people", which encompasses actual user 
-> accounts, as well as users appearing in SCM, in directories corresponding 
-> to the user ID on disk. These directories used the user ID for their name 
-> without additional escaping. This potentially resulted in a number of 
-> problems, such as the following:
-> 1. User names consisting of a single forward slash would have their user 
-> record stored in the parent directory; deleting this user deleted all user 
-> records.
-> 2. User names containing character sequences such as .. could be used to 
-> clobber other configuration files in Jenkins.
-> 3. User names could consist of reserved names such as COM (on Windows).
+> Qualys Security Advisory
+> 
+> The Stack Clash
 
+I just want to publicly thank Qualys for working with the Open Source
+community so we (Linux and *BSD) could all get this fixed properly.
+There was a lot of work from everyone involved and it all went pretty
+smoothly.
 
-CVE-2017-1000391
-
-
-> SECURITY-641
-> Autocompletion suggestions for text fields were not escaped, resulting in a 
-> persisted cross-site scripting vulnerability if the source for the 
-> suggestions allowed specifying text that includes HTML metacharacters like 
-> less-than and greater-than characters.
-
-
-CVE-2017-1000392
-
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
