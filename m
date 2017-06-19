@@ -1,180 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/1
-Message-Id: <201706122347.54536@pali>
-Date: Mon, 12 Jun 2017 23:47:54 +0200
-From: Pali Rohár <pali.rohar@...il.com>
-To: oss-security@...ts.openwall.com, security@...iadb.org, secalert_us@...cle.com, security@...cona.com, Andrea Barisani <andrea@...ersepath.com>, Michiel Beijen <michiel.beijen@...il.com>, Alceu Rodrigues de Freitas Junior <glasswalk3r@...oo.com.br>
-Subject: Re: MySQL - use-after-free after mysql_stmt_close()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/7
+Message-ID: <1497898323.1005.1.camel@gmail.com>
+Date: Mon, 19 Jun 2017 14:52:03 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Qualys Security Advisor -- The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+On Mon, 2017-06-19 at 11:26 -0600, Jeff Law wrote:
+> I would consider those two GCC BZs (68065, 66479) a separate an
+> distinct
+> issue.
+> 
+> It is far more important to address design issues around the existing
+> -fstack-check first.  I think we've got a pretty good handle on how to
+> address those problems and discussions with the upstream GCC community
+> have already started.
+> 
+> In an ideal world we'll get to a place where the new -fstack-check
+> does
+> not change program semantics, never misses probes and is efficient
+> enough to just turn on and forget everywhere.  The existing
+> -fstack-check fails all three of those criteria.
+> 
+> Jeff
 
-Any idea how to handle this particular problem?
+AFAIK, the main efficiency issue (reserving a register) was fixed for
+GCC 6. I might be missing something but it seems very cheap now, at
+least for x86_64. It definitely doesn't really work though.
 
-On Thursday 08 June 2017 23:49:03 Pali Rohár wrote:
-> Hello!
-> 
-> MySQL applications written according to Oracle's MySQL documentation
-> & examples for mysql_stmt_close() function call are vulnerable to
-> use- after-free defect.
-> 
-> In mysql_stmt_close() documentation [1] for return value is written:
-> "Zero for success. Nonzero if an error occurred." And there are
-> defined two errors: CR_SERVER_GONE_ERROR CR_UNKNOWN_ERROR. From
-> other parts of documentation can be understood that error messages
-> for statements could be obtained by mysql_stmt_error() function [2].
-> 
-> Whole example of usage is written in mysql_stmt_execute() function
-> [3]. The relevant part for mysql_stmt_close() is at the end of
-> example:
-> 
-> /* Close the statement */
-> if (mysql_stmt_close(stmt))
-> {
->   fprintf(stderr, " failed while closing the statement\n");
->   fprintf(stderr, " %s\n", mysql_stmt_error(stmt));
->   exit(0);
-> }
-> 
-> And here is a problem, use-after-free defect. Current implementation
-> of mysql_stmt_close() function unconditionally free passed statement
-> structure and therefore following mysql_stmt_error() call is
-> defective to use-after-free.
-> 
-> Relevant part of implementation of mysql_stmt_close() function is:
-> 
-> my_bool mysql_stmt_close(MYSQL_STMT *stmt)
-> {
->   int rc=0;
-> ...
->   if ((rc= stmt_command(mysql, COM_STMT_CLOSE, buff, 4, stmt)))
->     set_stmt_errmsg(stmt, &mysql->net);
-> ...
->   my_free(stmt);
->   return rc;
-> }
-> 
-> As you can see it stores real error message into stmt structure, but
-> at the end it is freed. Which means error message is no longer
-> available and caller is not able to read it (even via
-> mysql_stmt_error() call).
-> 
-> As such defective code is in example of the usage, probably couple of
-> MySQL applications written according to that defective documentations
-> are affected to this issue.
-> 
-> There is reported real bug for MySQL DBI driver that is affected by
-> this issue [4]. Reporter probably compiled MySQL library or driver
-> itself with some compiler options which could detect buffer
-> overflows and uncovered this issue.
-> 
-> 
-> In April 17 I reported this issue to oCERT team and it was forwarded
-> to MySQL, MariaDB and Percona security teams.
-> 
-> MariaDB team answered that this is problem in Oracle & MySQL and
-> their documentation as MariaDB do not have such vulnerable example
-> in their documentation.
-> 
-> Oracle team was unwilling to tell anything, provide any information
-> how to handle such issue or what to do, therefore with suggestion
-> from oCERT I decided to make this report public and open public
-> discussion for other people on oss-security list how to handle this
-> problem.
-> 
-> 
-> As Oracle fully ignored this problem and have not stated if problem
-> is in documentation, implementation or both, I see probably 3
-> different solutions:
-> 
-> 1) Documentation with examples is correct and this is how it should
-> be used. What is wrong is implementation.
-> 
-> It would mean that function mysql_stmt_error() and mysql_stmt_errno()
-> needs to specially handle statement pointers which were already freed
-> by mysql_stmt_close(). This can be done e.g. by storing hash table
-> of pointers and assigning for them last received error.
-> 
-> Or clarifying that mysql_stmt_close() does not always free passed
-> memory. Because from current description in documentation it is not
-> fully unambiguous what happen if function fails.
-> 
-> In this case implementation of mysql_stmt_close(), mysql_stmt_error()
-> and mysql_stmt_errno() are vulnerable to use-after-free defect and
-> needs to be fixed. And it should be assigned CVE for MySQL for this
-> problem.
-> 
-> 2) Implementation is correct, documentation is wrong.
-> 
-> Documentation needs to be fixed to properly describe how are those
-> functions implemented. Important note must be that if function
-> mysql_stmt_close() fails it is not possible to take error code via
-> mysql_stmt_error() or mysql_stmt_errno(). Also examples needs to be
-> fixed.
-> 
-> And then all MySQL applications which were written according to wrong
-> documentation needs to be fixed and for each one needs to be assigned
-> CVE. Number of those applications is unknown, to get it first every
-> application which uses libmysqlclient.so needs to be checked and
-> verified. What we know now is that MySQL Perl DBI is affected.
-> 
-> 3) Documentation is wrong, but implementation of mysql_stmt_close()
-> is not-so-correct.
-> 
-> Which would mean that return value of mysql_stmt_close() is fully
-> meaningless as there is no way to recover from bad state. Currently
-> mysql_stmt_close() unconditionally free memory for statement, so no
-> recover is possible.
-> 
-> There are two options what can be done:
-> 
-> * Always return value zero which means no error occurred. This
-> basically mitigate use-after-free vulnerability in Oracle's
-> documentation and also all applications which were written according
-> to documentation.
-> 
-> * When error occurred, do not free memory of passed structure. This
-> would mean that following mysql_stmt_error() call would not be
-> affected by use-after-free anymore.
-> 
-> 
-> As Oracle ignored this security related problem (***) I would like to
-> ask, how to handle this problem? And to which software needs to be
-> requested for CVE? To MySQL itself (as described in option 1)? Or to
-> every one software which uses MySQL (as described in option 2)?
-> 
-> I think you understand me, that MySQL DBD driver needs to be fixed,
-> ideally ASAP. Bug report on github is from April 13 [4]. And as
-> Oracle is not willing to do anything, I hope that people on public
-> oss-security list give some advice how to handle this situation.
-> 
-> I'm CCing all relevant security teams, when replaying please do not
-> forget to include them + me. Thanks!
-> 
-> --
-> 
-> [1] - https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-close.html
-> [2] - https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-error.html
-> [3] - https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-execute.html
-> [4] - https://github.com/perl5-dbi/DBD-mysql/issues/120
-
-Just to note that Oracle silently updated above documentation pages
-after I sent this email. Original versions are available in web.archive:
-
-[1] - http://web.archive.org/web/20161220021610/https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-close.html
-[2] - http://web.archive.org/web/20161220021610/https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-error.html
-[3] - http://web.archive.org/web/20161220021610/https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-execute.html
-
-> (***) - This is not a first time! Previous two security issues
-> reported by me were ignored too. Oracle is the worst company in
-> handling security issues. It is useless to report them anything.
-> They just start threaten if you make information about issue public.
-> And they are not competent to start working on it or fix it in less
-> then 6 months! Really I suggest to not report any security bug to
-> Oracle, it is just wasting of time.
-
--- 
-Pali Rohár
-pali.rohar@...il.com
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Is there an example of it changing program semantics? I haven't seen
+anything since the generic arch stuff was fixed.
