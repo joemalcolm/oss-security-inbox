@@ -1,60 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/8
-Message-ID: <20170711100202.27a42e9b@sturbolzen>
-Date: Tue, 11 Jul 2017 10:02:02 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/11
+Message-ID: <d95393cd-f9f9-4ddf-d8bd-9bb972214230@apache.org>
+Date: Mon, 19 Jun 2017 15:17:03 -0700
+From: Jacob Champion <jchampion@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
+Subject: CVE-2017-7668: Apache httpd 2.x ap_find_token buffer overread
 Content-Type: text/plain; charset=utf-8
 
-Thanks to all for the clarifications.
+CVE-2017-7668: ap_find_token buffer overread
 
-Am Mon, 10 Jul 2017 20:24:01 -0600
-schrieb Kurt Seifried <kseifried@...hat.com>: 
+Severity: Important
 
-> On 2017-07-10 8:04 PM, Michal Zalewski wrote:
-> >> It's hard to see a security issue here  
-> > I'm not sure this applies here, but the use of uninitialized memory
-> > can be an issue when, say, a website calls your code to convert
-> > user-controlled audio (e.g., to optimize it for streaming).
+Vendor: The Apache Software Foundation
 
-Yeah, in this case it is read access spilling over to adjacent static
-variables in the code. They are either contstant at compile-time or
-initialised to the same values on each run.
+Versions Affected:
+httpd 2.2.32
+httpd 2.4.24 (unreleased)
+httpd 2.4.25
 
-> Heartbleed was "only" 64k (that's actually a pretty huge amount for
-> sensitive data).
+Description:
+The HTTP strict parsing changes added in 2.2.32 and 2.4.24 introduced a
+bug in token list parsing, which allows ap_find_token() to search past
+the end of its input string. By maliciously crafting a sequence of
+request headers, an attacker may be able to cause a segmentation fault,
+or to force ap_find_token() to return an incorrect value.
 
-Here, it's 128 bytes of an adjacent table instead of the intended one
-(planned for a 4-bit index, got a 5-bit one). It's bad audio being
-produced, but from input that very likely was bad to begin with (still
-no valid input data at hand that triggers this).
+Mitigation:
+2.2.32 users should either apply the patch available at
+https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-7668.patch
+or upgrade in the future to 2.2.33, which is currently unreleased.
 
-I would like the CVE description to mention that this is only Denial of
-Service with something like the AddressSanitizer, as it is guaranteed
-to be memory belonging to the respective process, just up to 128 bytes
-off the mark. Not even heap buffers involved. Of course this was not
-clear when reporting, but it's really just those 128 bytes inside
-static variables in the code. My program accesses memory that belongs
-to my program … unless the compiler inserts forbidden zones in there.
+2.4.25 users should upgrade to 2.4.26.
 
-I am not bothered enough to dispute the CVE. In the end it's a bug and
-it had to be fixed. But I won't mention the CVE in the commit message
-as it's already done and you don't change history with subversion. You
-will have to make do with the entry in the NEWS file on release;-)
+Credit:
+The Apache HTTP Server security team would like to thank Javier Jiménez
+(javijmor@...il.com) for reporting this issue.
 
-
-Alrighty then,
-
-Thomas
-
--- 
-Dr. Thomas Orgis
-Universität Hamburg
-RRZ / Basisinfrastruktur / HPC
-Schlüterstr. 70
-20146 Hamburg
-Tel.: 040/42838 8826
-Fax: 040/428 38 6270
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (5898 bytes)
+References:
+https://httpd.apache.org/security_report.html
