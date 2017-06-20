@@ -1,4 +1,9 @@
-Received: (qmail 15492 invoked by uid 550); 28 Mar 2023 14:00:52 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5922" "Tuesday" "20" "June" "2017" "14:31:03" "+0800" "xiaoqixue_1" "xiaoqixue_1@163.com" "<1c36c757.6889.15cc43283d4.Coremail.xiaoqixue_1@163.com>" "102" "[oss-security] CVE-request: heap-buffer-overflow in jasper" nil nil nil "6" "2017062006:31:03" "[oss-security] CVE-request: heap-buffer-overflow in jasper" (number mark "U       xiaoqixue_1@ Jun 20  102/5922  " thread-indent "\"[oss-security] CVE-request: heap-buffer-overflow in jasper\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11305 invoked by uid 550); 20 Jun 2017 10:48:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,76 +12,130 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15392 invoked from network); 28 Mar 2023 14:00:32 -0000
-Date: Tue, 28 Mar 2023 16:00:22 +0200
-From: Solar Designer <solar@openwall.com>
-To: Zhenghan Wang <wzhmmmmm@gmail.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20230328140022.GA11153@openwall.com>
-References: <CAOvp68HCA1VXqCpnM9hMOo=BTCghgXfy85e6QxzUVFsaykiwvw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOvp68HCA1VXqCpnM9hMOo=BTCghgXfy85e6QxzUVFsaykiwvw@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2023-28464: Linux: Bluetooth: hci_conn_cleanup function has double free
+Received: (qmail 7464 invoked from network); 20 Jun 2017 06:31:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=Xeqha
+	j6osE2ggpSvoimOnTL81DCm0U3P5G9ve5taN2k=; b=jqGz8bRe7WdcWXeR4yfu2
+	2HDnLkXuvPB/M7+H/DHMSYSYicHljSAhg7gvJ2yaUOV6n9FXxeyIEUca6OPRDuPN
+	cjBYdeve5tcAl4M8vLhvt389erAWlLKOgmkqamE9Yb40aZweAXi/OwO5Ad3hS4ib
+	GiQIK/c6BZMF721D+tvA44=
+X-Originating-IP: [220.181.171.96]
+Date: Tue, 20 Jun 2017 14:31:03 +0800 (CST)
+From: xiaoqixue_1 <xiaoqixue_1@163.com>
+To: oss-security@lists.openwall.com
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20160729(86883.8884) Copyright (c) 2002-2017 www.mailtech.cn 163com
+X-CM-CTRLDATA: qYQnRGZvb3Rlcl9odG09NTkzNjo1Ng==
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_97572_221430856.1497940263891"
+MIME-Version: 1.0
+Message-ID: <1c36c757.6889.15cc43283d4.Coremail.xiaoqixue_1@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:YcGowACHU2IowUhZbxU3AA--.50000W
+X-CM-SenderInfo: 50ld015l0xvsqr6rljoofrz/1tbivwj8vVWBXwkbRgAAsp
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Subject: [oss-security] CVE-request: heap-buffer-overflow in jasper
 
-Hi Zhenghan Wang,
+------=_Part_97572_221430856.1497940263891
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Thank you for bringing this to oss-security.
+CgpEZXNjcmlwdGlvbjoKamFzcGVyIGlzIGFuIG9wZW4tc291cmNlIGluaXRp
+YXRpdmUgdG8gcHJvdmlkZSBhIGZyZWUgc29mdHdhcmUtYmFzZWQgcmVmZXJl
+bmNlIAppbXBsZW1lbnRhdGlvbiBvZiB0aGUgY29kZWMgc3BlY2lmaWVkIGlu
+IHRoZSBKUEVHLTIwMDAgUGFydC0xIHN0YW5kYXJkLgoKCkEgY3JhZnRlZCBp
+bWFnZSBjYXVzZXMgYSByZWFkIG92ZXJmbG93IGluIHRoZSBsYXRlc3QgdmVy
+c2lvbiAyLjAuMTIuIApBbmQgdGhpcyBpc3N1ZSBhbHNvIGV4c2l0cyBpbiB0
+aGUgbGF0ZXN0IGNvbW1pdCBvZiBnaXRodWIgcmVwby4gCihodHRwczovL2dp
+dGh1Yi5jb20vbWRhZGFtcy9qYXNwZXIpCgoKCgoKClRoZSBjb21wbGV0ZSBB
+U2FuIG91dHB1dDoKIyAuL2luc3RhbGwvYmluL2phc3BlciAtZiAkRklMRSAt
+RiAvdG1wLzEucG5tIC1UIHBubQo9PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQo9PTEy
+MjA9PUVSUk9SOiBBZGRyZXNzU2FuaXRpemVyOiBoZWFwLWJ1ZmZlci1vdmVy
+ZmxvdyBvbiBhZGRyZXNzIDB4NjAzMDAwMDBlZTE4IGF0IHBjIDB4N2ZlOGEx
+ZTAyMTFiIGJwIDB4N2ZmZmI0YTZjYjIwIHNwIDB4N2ZmZmI0YTZjYjE4ClJF
+QUQgb2Ygc2l6ZSA4IGF0IDB4NjAzMDAwMDBlZTE4IHRocmVhZCBUMAogICAg
+IzAgMHg3ZmU4YTFlMDIxMWEgaW4ganAyX2RlY29kZSAvZGF0YS94cXgvdGVz
+dHMvbGliamFzcGVyLXRlc3QvY29kZXMvamFzcGVyLTIuMC4xMi9zcmMvbGli
+amFzcGVyL2pwMi9qcDJfZGVjLmM6NDA1CiAgICAjMSAweDdmZThhMWRkYzE5
+MiBpbiBqYXNfaW1hZ2VfZGVjb2RlIC9kYXRhL3hxeC90ZXN0cy9saWJqYXNw
+ZXItdGVzdC9jb2Rlcy9qYXNwZXItMi4wLjEyL3NyYy9saWJqYXNwZXIvYmFz
+ZS9qYXNfaW1hZ2UuYzo0NDQKICAgICMyIDB4NDAyMTdhIGluIG1haW4gL2Rh
+dGEveHF4L3Rlc3RzL2xpYmphc3Blci10ZXN0L2NvZGVzL2phc3Blci0yLjAu
+MTIvc3JjL2FwcGwvamFzcGVyLmM6MjM2CiAgICAjMyAweDdmZThhMWEwMGY0
+NCBpbiBfX2xpYmNfc3RhcnRfbWFpbiAoL2xpYi94ODZfNjQtbGludXgtZ251
+L2xpYmMuc28uNisweDIxZjQ0KQogICAgIzQgMHg0MDE5NTggKC9kYXRhL3hx
+eC90ZXN0cy9saWJqYXNwZXItdGVzdC9jb2Rlcy9hYnVpbGQvaW5zdGFsbC9i
+aW4vamFzcGVyKzB4NDAxOTU4KQoKCjB4NjAzMDAwMDBlZTE4IGlzIGxvY2F0
+ZWQgMCBieXRlcyB0byB0aGUgcmlnaHQgb2YgMjQtYnl0ZSByZWdpb24gWzB4
+NjAzMDAwMDBlZTAwLDB4NjAzMDAwMDBlZTE4KQphbGxvY2F0ZWQgYnkgdGhy
+ZWFkIFQwIGhlcmU6CiAgICAjMCAweDdmZThhMjEyNTg2MiBpbiBfX2ludGVy
+Y2VwdG9yX21hbGxvYyAoL3Vzci9saWIveDg2XzY0LWxpbnV4LWdudS9saWJh
+c2FuLnNvLjErMHg1NDg2MikKICAgICMxIDB4N2ZlOGExZGU1ZWMzIGluIGph
+c19tYWxsb2MgL2RhdGEveHF4L3Rlc3RzL2xpYmphc3Blci10ZXN0L2NvZGVz
+L2phc3Blci0yLjAuMTIvc3JjL2xpYmphc3Blci9iYXNlL2phc19tYWxsb2Mu
+YzoyNDIKICAgICMyIDB4N2ZlOGExZGU2MDcyIGluIGphc19hbGxvYzIgL2Rh
+dGEveHF4L3Rlc3RzL2xpYmphc3Blci10ZXN0L2NvZGVzL2phc3Blci0yLjAu
+MTIvc3JjL2xpYmphc3Blci9iYXNlL2phc19tYWxsb2MuYzoyNzUKICAgICMz
+IDB4N2ZlOGExZGZiODk2IGluIGpwMl9jZGVmX2dldGRhdGEgL2RhdGEveHF4
+L3Rlc3RzL2xpYmphc3Blci10ZXN0L2NvZGVzL2phc3Blci0yLjAuMTIvc3Jj
+L2xpYmphc3Blci9qcDIvanAyX2NvZC5jOjQ2OAogICAgIzQgMHg3ZmU4YTFk
+ZmFhNDYgaW4ganAyX2JveF9nZXQgL2RhdGEveHF4L3Rlc3RzL2xpYmphc3Bl
+ci10ZXN0L2NvZGVzL2phc3Blci0yLjAuMTIvc3JjL2xpYmphc3Blci9qcDIv
+anAyX2NvZC5jOjMwMwogICAgIzUgMHg3ZmU4YTFlMDAxNWEgaW4ganAyX2Rl
+Y29kZSAvZGF0YS94cXgvdGVzdHMvbGliamFzcGVyLXRlc3QvY29kZXMvamFz
+cGVyLTIuMC4xMi9zcmMvbGliamFzcGVyL2pwMi9qcDJfZGVjLmM6MTU5CiAg
+ICAjNiAweDdmZThhMWRkYzE5MiBpbiBqYXNfaW1hZ2VfZGVjb2RlIC9kYXRh
+L3hxeC90ZXN0cy9saWJqYXNwZXItdGVzdC9jb2Rlcy9qYXNwZXItMi4wLjEy
+L3NyYy9saWJqYXNwZXIvYmFzZS9qYXNfaW1hZ2UuYzo0NDQKICAgICM3IDB4
+NDAyMTdhIGluIG1haW4gL2RhdGEveHF4L3Rlc3RzL2xpYmphc3Blci10ZXN0
+L2NvZGVzL2phc3Blci0yLjAuMTIvc3JjL2FwcGwvamFzcGVyLmM6MjM2CiAg
+ICAjOCAweDdmZThhMWEwMGY0NCBpbiBfX2xpYmNfc3RhcnRfbWFpbiAoL2xp
+Yi94ODZfNjQtbGludXgtZ251L2xpYmMuc28uNisweDIxZjQ0KQoKClNVTU1B
+Ulk6IEFkZHJlc3NTYW5pdGl6ZXI6IGhlYXAtYnVmZmVyLW92ZXJmbG93IC9k
+YXRhL3hxeC90ZXN0cy9saWJqYXNwZXItdGVzdC9jb2Rlcy9qYXNwZXItMi4w
+LjEyL3NyYy9saWJqYXNwZXIvanAyL2pwMl9kZWMuYzo0MDUganAyX2RlY29k
+ZQpTaGFkb3cgYnl0ZXMgYXJvdW5kIHRoZSBidWdneSBhZGRyZXNzOgogIDB4
+MGMwNjdmZmY5ZDcwOiBmYSBmYSBmZCBmZCBmZCBmYSBmYSBmYSBmZCBmZCBm
+ZCBmYSBmYSBmYSBmZCBmZAogIDB4MGMwNjdmZmY5ZDgwOiBmZCBmYSBmYSBm
+YSBmZCBmZCBmZCBmYSBmYSBmYSBmZCBmZCBmZCBmYSBmYSBmYQogIDB4MGMw
+NjdmZmY5ZDkwOiBmZCBmZCBmZCBmYSBmYSBmYSBmZCBmZCBmZCBmYSBmYSBm
+YSBmZCBmZCBmZCBmYQogIDB4MGMwNjdmZmY5ZGEwOiBmYSBmYSBmZCBmZCBm
+ZCBmYSBmYSBmYSBmZCBmZCBmZCBmYSBmYSBmYSBmZCBmZAogIDB4MGMwNjdm
+ZmY5ZGIwOiBmZCBmYSBmYSBmYSBmZCBmZCBmZCBmZCBmYSBmYSBmZCBmZCBm
+ZCBmYSBmYSBmYQo9PjB4MGMwNjdmZmY5ZGMwOiAwMCAwMCAwMFtmYV1mYSBm
+YSAwMCAwMCAwMCAwMCBmYSBmYSAwMCAwMCAwMCAwMAogIDB4MGMwNjdmZmY5
+ZGQwOiBmYSBmYSAwMCAwMCAwMCAwMiBmYSBmYSAwMCAwMCAwNyBmYSBmYSBm
+YSAwMCAwMAogIDB4MGMwNjdmZmY5ZGUwOiAwNSBmYSBmYSBmYSAwMCAwMCAw
+NyBmYSBmYSBmYSAwMCAwMCAwMCAwNiBmYSBmYQogIDB4MGMwNjdmZmY5ZGYw
+OiAwMCAwMCAwMCAwNiBmYSBmYSAwMCAwMCAwMCAwNiBmYSBmYSAwMCAwMCAw
+NiBmYQogIDB4MGMwNjdmZmY5ZTAwOiBmYSBmYSBmYSBmYSBmYSBmYSBmYSBm
+YSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYQogIDB4MGMwNjdmZmY5ZTEwOiBm
+YSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBm
+YQpTaGFkb3cgYnl0ZSBsZWdlbmQgKG9uZSBzaGFkb3cgYnl0ZSByZXByZXNl
+bnRzIDggYXBwbGljYXRpb24gYnl0ZXMpOgogIEFkZHJlc3NhYmxlOiAgICAg
+ICAgICAgMDAKICBQYXJ0aWFsbHkgYWRkcmVzc2FibGU6IDAxIDAyIDAzIDA0
+IDA1IDA2IDA3CiAgSGVhcCBsZWZ0IHJlZHpvbmU6ICAgICAgIGZhCiAgSGVh
+cCByaWdodCByZWR6b25lOiAgICAgIGZiCiAgRnJlZWQgaGVhcCByZWdpb246
+ICAgICAgIGZkCiAgU3RhY2sgbGVmdCByZWR6b25lOiAgICAgIGYxCiAgU3Rh
+Y2sgbWlkIHJlZHpvbmU6ICAgICAgIGYyCiAgU3RhY2sgcmlnaHQgcmVkem9u
+ZTogICAgIGYzCiAgU3RhY2sgcGFydGlhbCByZWR6b25lOiAgIGY0CiAgU3Rh
+Y2sgYWZ0ZXIgcmV0dXJuOiAgICAgIGY1CiAgU3RhY2sgdXNlIGFmdGVyIHNj
+b3BlOiAgIGY4CiAgR2xvYmFsIHJlZHpvbmU6ICAgICAgICAgIGY5CiAgR2xv
+YmFsIGluaXQgb3JkZXI6ICAgICAgIGY2CiAgUG9pc29uZWQgYnkgdXNlcjog
+ICAgICAgIGY3CiAgQ29udGlndW91cyBjb250YWluZXIgT09COmZjCiAgQVNh
+biBpbnRlcm5hbDogICAgICAgICAgIGZlCj09MTIyMD09QUJPUlRJTkcKCgoK
+CgoKQWZmZWN0ZWQgdmVyc2lvbjoKdGhlIExhdGVzdCB2ZXJzaW9uIDIuMC4x
+MiwgYW5kIGFsc28gaW4gdGhlIGxhdGVzdCBjb21taXQgMWNjZTI3Ny4KCgpG
+aXhlZCB2ZXJzaW9uOgpOL0EKCgpDb21taXQgZml4OgpOL0EKCgpDcmVkaXQ6
+CnRoZSBidWcgaXMgZm91bmQgYnkgUWl4dWUgWGlhbyBhbmQgS2FuZyBMaS4K
+CgpDVkU6Ck4vQQoKClJlcHJvZHVjZXI6Cmh0dHBzOi8vZ2l0aHViLmNvbS94
+aWFvcXgvcG9jcy9ibG9iL21hc3Rlci8wMjYtamFzcGVyLWpwc19kZWNvZGUt
+aGVhcG92ZXJmbG93CgoKVGltZWxpbmU6CjIwMTctMDYtMTQ6IGJ1ZyBkaXNj
+b3ZlcmVkIGFuZCByZXBvcnRlZCB1cHN0cmVhbQoKCk5vdGU6ClRoaXMgYnVn
+IHdhcyBmb3VuZCB3aXRoIEFtZXJpY2FuIEZ1enp5IExvcC4KCgoKCi0tIAp4
+aWFvcWl4dWVfMUAxNjMuY29t
 
-On Tue, Mar 28, 2023 at 08:00:00AM +0800, Zhenghan Wang wrote:
-> This patch drop the hci_dev_put and hci_conn_put function call in
-> hci_conn_cleanup function, because the object isfreed in hci_conn_del_sysfs
-> function.
-> https://lore.kernel.org/lkml/20230309074645.74309-1-wzhmmmmm@gmail.com/
+------=_Part_97572_221430856.1497940263891--
 
-Please remind the Bluetooth subsystem maintainers, such as by "replying"
-to your own message you had sent them on March 9.  When doing so, please
-also inform them of the CVE ID and of the oss-security posting.
-
-For others on oss-security: Zhenghan Wang brought this issue to
-linux-distros and s@k.o on March 8, brought it to the subsystem
-maintainers and public Linux mailing lists on March 9 (of which
-linux-distros and s@k.o were not specifically informed), and then there
-was no progress until Carlos Lopez from SUSE sent a reminder when we
-were already just past the maximum embargo duration for linux-distros.
-
-Of course, it was inappropriate that no one stayed on top of the issue
-during the embargo.  The corresponding contributing-back task is:
-
-https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-
-"9. Stay on top of issues to ensure progress is being made, remind
-others when there's no apparent progress, as well as when the public
-disclosure date for an issue is approaching and when it's finally
-reached (unless the reporter beats you to it by making their mandatory
-posting to oss-security first) - primary: Gentoo, backup: Amazon"
-
-I brought this up on linux-distros and we already heard from Anthony
-Liguori for Amazon, who as you can see from another thread on
-oss-security is now also contributing the list statistics, which could
-help detect such delays too.  Thanks, Anthony!
-
-However, we have not heard from Gentoo, who are "primary" on this and a
-couple of other related tasks.  Gentoo, please let us all know whether
-you intend to handle these tasks, or should we remove the assignment?
-
-As to the public message on Linux mailing lists on March 9, this time
-linux-distros did not specifically evaluate whether it was too revealing
-or not, and whether it'd make sense to keep the issue "embargoed" after
-such publication.  Like I wrote above, the very fact that such a posting
-was made was brought to linux-distros rather late.  However, for further
-occasions we do have a separate problem here - while we did introduce an
-exception for Linux kernel where such double-think is accepted, would
-this one have gotten too far?  The posting did not say "security",
-"vulnerability", nor mention a CVE ID.  However, it did mention "double
-free" in Bluetooth, and it kind of had to - no other reasonable way to
-justify the patch.  Now, not all double free bugs are vulnerabilities -
-some are not attacker-exposed.  (BTW, I did not look into whether this
-one is.)  Yet a bug of this category in a network subsystem would
-reasonably attract potential attackers' attention.  Also or OTOH,
-"KASAN: slab-use-after-free Read in hci_conn_hash_flush" in syzbot could
-have attracted attention, too.
-
-Alexander
