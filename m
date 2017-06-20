@@ -1,234 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/17
-Message-ID: <20170628200239.GA25525@openwall.com>
-Date: Wed, 28 Jun 2017 22:02:40 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/4
+Message-ID: <11de85af.6e3c.15cc442dcd2.Coremail.xiaoqixue_1@163.com>
+Date: Tue, 20 Jun 2017 14:48:55 +0800 (CST)
+From: xiaoqixue_1  <xiaoqixue_1@....com>
 To: oss-security@...ts.openwall.com
-Subject: accepting new members to (linux-)distros lists
+Subject: CVE-request: heap-buffer-overflow in jasper
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I have finally specified the criteria for accepting new members to the
-(linux-)distros lists.  I intend to process the requests, which are to
-be posted to new threads each (one thread per distro wanting to join).
 
-I put quite some thought (and experience so far) into these criteria,
-but I welcome any comments and suggested changes this community might
-have.  The list of criteria will be maintained on the wiki:
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros#membership-criteria
 
-Currently, to be eligible for (linux-)distros list membership, your
-distro should:
+A crafted image causes a read overflow in the latest version 2.0.12. 
+And this issue also exsits in the latest commit of github repo. 
+(https://github.com/mdadams/jasper)
 
-1. Be an actively maintained Unix-like operating system distro with
-substantial use of Open Source components
 
-2. Have a userbase not limited to your own organization
 
-3. Have a publicly verifiable track record, dating back at least 1 year
-and continuing to present day, of fixing security issues (including some
-that had been handled on (linux-)distros, meaning that membership would
-have been relevant to you) and releasing the fixes within 10 days (and
-preferably much less than that) of the issues being made public (if it
-takes you ages to fix an issue, your users wouldn't substantially
-benefit from the additional time, often around 7 days and sometimes up
-to 14 days, that list membership could give you)
+The complete ASan output:
+# ./install/bin/jasper -f $FILE -F /tmp/1.pnm -T pnm
+=================================================================
+==1220==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60300000ee18 at pc 0x7fe8a1e0211b bp 0x7fffb4a6cb20 sp 0x7fffb4a6cb18
+READ of size 8 at 0x60300000ee18 thread T0
+    #0 0x7fe8a1e0211a in jp2_decode /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/jp2/jp2_dec.c:405
+    #1 0x7fe8a1ddc192 in jas_image_decode /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/base/jas_image.c:444
+    #2 0x40217a in main /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/appl/jasper.c:236
+    #3 0x7fe8a1a00f44 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+    #4 0x401958 (/data/xqx/tests/libjasper-test/codes/abuild/install/bin/jasper+0x401958)
 
-4. Not be (only) downstream or a rebuild of another distro (or else we
-need convincing additional justification of how the list membership
-would enable you to release fixes sooner, presumably not relying on the
-upstream distro having released their fixes first?)
 
-5. Be a participant and preferably an active contributor in relevant
-public communities (most notably, if you're not watching for issues
-being made public on oss-security, which are a superset of those that
-had been handled on (linux-)distros, then there's no valid reason for
-you to be on (linux-)distros)
+0x60300000ee18 is located 0 bytes to the right of 24-byte region [0x60300000ee00,0x60300000ee18)
+allocated by thread T0 here:
+    #0 0x7fe8a2125862 in __interceptor_malloc (/usr/lib/x86_64-linux-gnu/libasan.so.1+0x54862)
+    #1 0x7fe8a1de5ec3 in jas_malloc /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/base/jas_malloc.c:242
+    #2 0x7fe8a1de6072 in jas_alloc2 /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/base/jas_malloc.c:275
+    #3 0x7fe8a1dfb896 in jp2_cdef_getdata /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/jp2/jp2_cod.c:468
+    #4 0x7fe8a1dfaa46 in jp2_box_get /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/jp2/jp2_cod.c:303
+    #5 0x7fe8a1e0015a in jp2_decode /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/jp2/jp2_dec.c:159
+    #6 0x7fe8a1ddc192 in jas_image_decode /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/base/jas_image.c:444
+    #7 0x40217a in main /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/appl/jasper.c:236
+    #8 0x7fe8a1a00f44 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
 
-6. Accept the list policy:
-http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-members
-(also quoted below)
 
-7. Be able and willing to contribute back, preferably in specific ways
-announced in advance (so that you're responsible for a specific area and
-so that we know what to expect from which member), and demonstrate
-actual contributions once you've been a member for a while:
-http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-(also quoted below)
+SUMMARY: AddressSanitizer: heap-buffer-overflow /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/jp2/jp2_dec.c:405 jp2_decode
+Shadow bytes around the buggy address:
+  0x0c067fff9d70: fa fa fd fd fd fa fa fa fd fd fd fa fa fa fd fd
+  0x0c067fff9d80: fd fa fa fa fd fd fd fa fa fa fd fd fd fa fa fa
+  0x0c067fff9d90: fd fd fd fa fa fa fd fd fd fa fa fa fd fd fd fa
+  0x0c067fff9da0: fa fa fd fd fd fa fa fa fd fd fd fa fa fa fd fd
+  0x0c067fff9db0: fd fa fa fa fd fd fd fd fa fa fd fd fd fa fa fa
+=>0x0c067fff9dc0: 00 00 00[fa]fa fa 00 00 00 00 fa fa 00 00 00 00
+  0x0c067fff9dd0: fa fa 00 00 00 02 fa fa 00 00 07 fa fa fa 00 00
+  0x0c067fff9de0: 05 fa fa fa 00 00 07 fa fa fa 00 00 00 06 fa fa
+  0x0c067fff9df0: 00 00 00 06 fa fa 00 00 00 06 fa fa 00 00 06 fa
+  0x0c067fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Contiguous container OOB:fc
+  ASan internal:           fe
+==1220==ABORTING
 
-8. Be able and willing to handle PGP-encrypted e-mail
 
-9. Have someone already on the private list, or at least someone else
-who has been active on oss-security for years but is not affiliated with
-your distro nor your organization, vouch for at least one of the people
-requesting membership on behalf of your distro (then that one
-vouched-for person will be able to vouch for others on your team, in
-case you'd like multiple people subscribed)
 
-Membership requests should provide answers per each of these criteria.
+Affected version:
+the Latest version 2.0.12, and also in the latest commit 1cce277.
 
-I came up with many current tasks/roles that a new or existing member
-could usefully help with, thereby contributing to the team effort.
-Currently the wiki page lists a total of 18 such items: 5 technical and
-13 administrative.  I'd prefer that new membership requests include
-specifics on what the new member will contribute - this can be work on
-some of these 18 items or/and something else.
 
-Right now, most of these things I listed are everyone's and thus no
-one's responsibility (and they often fall back on me as list admin).
-I want this to change.  Ideally, we'd list specific distros for each one
-of these tasks/roles... and if something required is not done or goes
-wrong per one of those roles, we'll ask them to explain why and correct
-that for further occasions.  This will also serve to verify that they're
-still active and paying attention, replacing my responsiveness tests.
+Fixed version:
+N/A
 
-Here are the current tasks/roles to choose from or/and add to:
 
-Technical (in arbitrary order):
+Commit fix:
+N/A
 
-1. Propose (other) ways to fix, work around, or mitigate the reported
-issues
 
-2. Develop and share fixes, workarounds, or mitigations
+Credit:
+the bug is found by Qixue Xiao and Kang Li.
 
-3. Review and/or test the proposed patches and point out potential
-issues with them (such as incomplete fixes for the originally reported
-issues, additional issues you might notice, and newly introduced bugs)
 
-4. Generalize the reported issues to see if other closely related issues
-exist (e.g., if a bug is reported against one implementation of X, see
-if a similar bug exists in another implementation of X and inform the
-list of either result)
+CVE:
+N/A
 
-5. Produce and share well-reasoned estimates for the time required to
-handle the issues under embargo (such as to (re)negotiate the public
-disclosure date and/or to choose between the different ways to handle an
-issue)
 
-Administrative (roughly in chronological order, although many of these
-activities overlap):
+Reproducer:
+https://github.com/xiaoqx/pocs/blob/master/026-jasper-jps_decode-heapoverflow
 
-1. Promptly review new issue reports for meeting the list's requirements
-and confirm receipt of the report and, when necessary, inform the
-reporter of any issues with their report (e.g., obviously not actionable
-by the distros) and request and/or propose any required yet missing
-information (most notably, a tentative public disclosure date)
 
-2. See if the proposed public disclosure date is within list policy, and
-if not then insist on getting this corrected and propose a suitable
-earlier date
+Timeline:
+2017-06-14: bug discovered and reported upstream
 
-3. Evaluate if the issue (or one of the issues) is effectively already
-public (e.g., a fix is committed upstream with a descriptive message)
-or/and is low severity and thus the report (or its portion pertaining to
-the issue) should be made public right away for one or both of these
-reasons, get a few other list members to confirm this understanding, and
-if there are no objections then communicate this strong preference to
-the reporter
 
-4. Evaluate relevance to other parties, such as the upstream, other
-affected distros (not present here), and other Open Source projects, see
-if the report mentions notifying any of these, communicate your findings
-and possible concerns to the reporter and the list, and stay on top of
-the resulting discussion until a decision is made on who else to
-possibly notify (or not) and any such notifications are in fact made
+Note:
+This bug was found with American Fuzzy Lop.
 
-5. If multiple issues are reported at once, see if any of them can
-reasonably be made public sooner than the rest, and if so help untangle
-them and stay on top of their disclosure process
 
-6. If CVE IDs are requested, the report is valid, and you're a CNA,
-assign those (requesting any required information from the reporter
-first)
 
-7. If the report does not mention CVE IDs (neither requests nor provides
-them, and doesn't mention the reporter having requested them elsewhere),
-yet the report is valid and it looks like distros will need CVE IDs, and
-you're a CNA, ask the reporter whether they have already requested CVE
-IDs elsewhere, then assign those if they haven't been requested
-elsewhere
 
-8. Stay on top of issues to ensure progress is being made, remind others
-when there's no apparent progress, as well as when the public disclosure
-date for an issue is approaching and when it's finally reached (unless
-the reporter beats you to it by making their mandatory posting to
-oss-security first)
+-- 
+xiaoqixue_1@....com
 
-9. Monitor relevant public channels (mailing lists, code repositories,
-etc.) and inform the reporter and the list in case an issue is made
-public prematurely (that is, leaks or is independently rediscovered)
 
-10. Make sure the mandatory oss-security posting is made promptly and is
-sufficiently detailed, and remind the reporter if not
 
-11. If exploit(s) were shared on the list, make sure that either they're
-included in the oss-security posting along with the issue detail or the
-posting includes an announcement of planned later posting of the
-exploits (with the delay being within list policy), and in the latter
-case also make sure that the later posting is in fact made as planned,
-and remind the reporter if not
 
-12. Help evaluate new (linux-)distros list membership requests per the
-current criteria (participating in the corresponding oss-security
-threads)
-
-13. Vouch for people wanting to join in on behalf of a new distro member
-as long as you are confident of their trustworthiness, expected proper
-use of the list, and contributions
-
-Finally, I also came up with specific policy on handling of embargoed
-information.  Most of this was taken for granted so far, and this worked
-well, but there were a few gray areas.  The currently proposed policy,
-which list members have to agree to, is as follows:
-
-Aside from your participation in discussions with the reporter and on
-the (linux-)distros lists (including possibly continuing to CC other
-prior recipients of the information), the information you receive
-through the (linux-)distros lists must not be made public, shared, nor
-even hinted at anywhere beyond the need-to-know within your distro's
-team, until the agreed upon public disclosure date/time, the reporter's
-explicit approval, or substantially complete publication by others.
-
-Neither you nor others you inform may use the information for anything
-other than getting the issue fixed for your distro's users and, only in
-rare extreme cases, for deployment of maximally non-revealing changes to
-maintain security of your distro's infrastructure most essential to the
-distro users' security in face of the security issue being dealt with.
-The need-to-know condition is met only if the person needs to
-participate in one of these two activities.
-
-Before you share the information with others within your distro's team
-based on their need-to-know, you need to get these people to agree to
-these same terms, optionally (and preferably) with the additional
-limitation that they may not share the information further (not even
-with others on the team, not even based on need-to-know) without
-explicit approval by you or another individual directly subscribed to
-the (linux-)distros list for your distro.
-
-In the unfortunate event that you happen to share or/and use the
-information beyond what's allowed by this policy (thus, creating a
-leak), you must urgently (right after you became aware of the leak)
-inform the reporter and the (linux-)distros (sub-)list you had received
-the information from of the leak and of its extent (if readily known).
-You must also conduct an internal investigation of the leak, and inform
-the reporter and the list of the exact extent of the leak (to the best
-of your knowledge) and of measures (intended to be) taken to prevent
-such leaks going forward.
-
-The above is the main policy definition, but in case you prefer the
-Traffic Light Protocol, in its terms this is TLP:AMBER with the
-need-to-know condition as specified above and with the following
-additional limitation on sharing: you must not share the information
-with anyone outside of your distro's team, including not within the rest
-of your organization nor with your clients or customers, including not
-in any derived form (not even through delivering or deploying
-undocumented fixes).  Once the embargo is over, this is TLP:WHITE.
-
-I am sorry for the long message.  I quote these pieces from the wiki in
-here to allow for quoting in a possible discussion thread - such as for
-distros (both those already on the private lists and not) to volunteer
-for specific roles (please do!)
-
-Alexander
+ 
