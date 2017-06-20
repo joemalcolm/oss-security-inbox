@@ -1,52 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/9
-Message-ID: <20170626205012.GA17038@openwall.com>
-Date: Mon, 26 Jun 2017 22:50:12 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/6
+Message-Id: <E1dNHpI-00065J-5W@xenbits.xenproject.org>
+Date: Tue, 20 Jun 2017 12:00:08 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 221 - NULL pointer deref in event channel poll
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Yes, I too would like the discussions in here to stay civilized.
+                    Xen Security Advisory XSA-221
+                              version 2
 
-Brad wrote to Linus:
+               NULL pointer deref in event channel poll
 
-On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@...ecurity.net> wrote:
-> With no technical content coming from your end, there's no need to discuss
-> anything further -- don't waste your time because I won't reply.
+UPDATES IN VERSION 2
+====================
 
-and I hope that Linus won't reply (as far as I can see, he did not so
-far) and this does in fact end that thread.
+Public release.
 
-On Mon, Jun 26, 2017 at 03:16:06PM -0400, Mansour Moufid wrote:
-> Is there another mailing list for discussions of Linux security? Or forum?
+ISSUE DESCRIPTION
+=================
 
-At Openwall, we also host the kernel-hardening mailing list, but we
-currently moderate it similarly - that is, we're not preventing
-occasional/infrequent threads like this right away, letting a sensible
-number of messages to pass through, even if with insults and such.
-Usually those threads end on their own.  In fact, I only recall one very
-recent thread in there where I intervened and technically shut it down.
-If the pro-grsecurity and/or anti-grsecurity folks try much harder,
-we'll probably have to start moderating the lists much stricter.
+When polling event channels, in general arbitrary port numbers can be
+specified.  Specifically, there is no requirement that a polled event
+channel ports has ever been created.  When the code was generalised
+from an earlier implementation, introducing some intermediate
+pointers, a check should have been made that these intermediate
+pointers are non-NULL.  However, that check was omitted.
 
-There are probably other suitable mailing lists and forums as well.
-Maybe someone else would share some.
+IMPACT
+======
 
-> I have been thinking of sharing a few patches for the last couple months.
-> I don't think this is the right place after the kind of insults I saw this week.
+A malicious or buggy guest may cause the hypervisor to access
+addresses it doesn't control, usually leading to a host crash (Denial
+of Service).  Information leaks cannot be excluded.
 
-This sounds weird to me: you've been sitting on those patches for "the
-last couple months" and now a thread "this week" finally made you decide
-not to post them in here.  Anyhow, if those patches would be on-topic in
-here or on kernel-hardening, please feel free to reconsider.
+VULNERABLE SYSTEMS
+==================
 
-Off-list, someone else also explained to me that the recent dirt in here
-discouraged them from posting certain reasonable content.  So this is
-probably happening, and that's a pity.  I ask that anyone who thinks
-they have higher quality content than what we see in this thread does
-post that.  Let this be your response.
+Xen versions 4.4 and newer are vulnerable.  Xen versions 4.3 and
+earlier are not affected.
 
-Alexander
+Both x86 and ARM systems are vulnerable.
+
+While all guest kinds can cause a Denial of Service, only x86 PV guests
+may be able to leverage the possible information leaks.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Ankur Arora of Oracle.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa221.patch           Xen 4.4.x and later, including xen-unstable
+
+$ sha256sum xsa221*
+2425396a713466808b0f75f91337be4dd20a4dee7733972b04489773c6e97655  xsa221.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZSQ3TAAoJEIP+FMlX6CvZw20H/jCUm+eX4rPUCQ6CL+Ya/dXH
+th34nPKQnq60gm3469sDQQMNbuvfgBItAAAjO87NC6P2BSyYPMny5SvqSsmkWow1
+8OkAWq5ZZ3L7ksPhkP6aco+ks1a99SxJX4YfjwOFq9ct6/zfrcW1ThEqs9j87JeP
+6RGPYgXc0mP9IOk27JnUVgiej7/v4a8v5FcWrG3bHpw2vp9tY3hdvkfc6wJiuplx
+kkqIVkqTpCNu7QYGv3de1RpDeI5mN8TGY+6ahs9eZFEFmRGWiAahhZRnwGVNE7Tl
+QcHzaphlzp/etub8sHgZPH90xLaeILJ+9oz29b/SLUVqahRxzTD1bLUElEu2su0=
+=xR3U
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa221.patch" of type "application/octet-stream" (7411 bytes)
