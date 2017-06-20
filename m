@@ -1,127 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/15/1
-Message-Id: <E1dhabS-0006cM-Ce@xenbits.xenproject.org>
-Date: Tue, 15 Aug 2017 12:05:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 226 (CVE-2017-12135) - multiple problems with transitive grants
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/1
+Message-ID: <alpine.DEB.2.20.1706200808380.17390@tvnag.unkk.fr>
+Date: Tue, 20 Jun 2017 08:09:39 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: c-ares development <c-ares@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] c-ares NAPTR parser out of bounds access
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+c-ares NAPTR parser out of bounds access
+========================================
 
-            Xen Security Advisory CVE-2017-12135 / XSA-226
-                               version 5
+Project c-ares Security Advisory, June 20, 2017 -
+[Permalink](https://c-ares.haxx.se/adv_20170620.html)
 
-               multiple problems with transitive grants
+VULNERABILITY
+-------------
 
-UPDATES IN VERSION 5
-====================
+The c-ares function `ares_parse_naptr_reply()`, which is used for parsing
+NAPTR responses, could be triggered to read memory outside of the given input
+buffer if the passed in DNS response packet was crafted in a particular way.
 
-Public release.
+We are not aware of any exploits of this flaw.
 
-ISSUE DESCRIPTION
-=================
+INFO
+----
 
-1) Code to handle copy operations on transitive grants has built in
-   retry logic, involving a function reinvoking itself with unchanged
-   parameters.  Such use assumes that the compiler would also translate
-   this to a so called "tail call" when generating machine code.
-   Empirically, this is not commonly the case, allowing for
-   theoretically unbounded nesting of such function calls.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-1000381 to this issue.
 
-2) The reference counting and locking discipline for transitive grants
-   is broken.  Concurrent use of the transitive grant can leak
-   references on the transitively-referenced grant.
+AFFECTED VERSIONS
+-----------------
 
-IMPACT
-======
+This flaw exists in the following c-ares versions.
 
-A malicious or buggy guest may be able to crash Xen.  Privilege
-escalation and information leaks cannot be ruled out.  A malicious or
-buggy guest can leak references on grants it has been given, amounting
-to a DoS against the grantee.
+- Affected versions: c-ares 1.8.0 to and including 1.12.0
+- Not affected versions: c-ares >= 1.13.0
 
-VULNERABLE SYSTEMS
-==================
+THE SOLUTION
+------------
 
-All versions of Xen are vulnerable.
+In version 1.13.0, the `RR_len` value gets checked properly and the function
+is also added to the fuzz testing. It was previously accidentally left out
+from that.
 
-MITIGATION
-==========
+A [patch for CVE-2017-1000381](https://c-ares.haxx.se/CVE-2017-1000381.patch)
+is available.
 
-There is no known mitigation.
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade c-ares to version 1.13.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use `ares_parse_naptr_reply()`.
+
+TIME LINE
+---------
+
+It was reported to the c-ares project on May 20. We contacted distros@...nall
+on June 16.
+
+c-ares 1.13.0 was released on June 20 2017, coordinated with the publication
+of this advisory.
 
 CREDITS
-=======
+-------
 
-This issue was discovered by Jan Beulich of SUSE.
+Thanks to LCatro for the report and to David Drysdale for the fix.
 
-The security team would also like to thank Amazon for helping to identify that
-the problems with transitive grants were deeper than originally believed.
+-- 
 
-RESOLUTION
-==========
-
-Applying the appropriate attached patch works around this issue by disabling
-transitive grants by default.
-
-xsa226.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x
-xsa226-4.7.patch       Xen 4.7.x
-xsa226-4.6.patch       Xen 4.6.x
-xsa226-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa226*
-b09e07aaf422ae04a4ece5e2c5b5e54036cfae5b5c632bfc6953a0cacd6f60ff  xsa226.patch
-ca8b92b2ff58b87e8bec137a34784cbf11e2820659046df6e1d71e23bf7e7dee  xsa226-4.5.patch
-28c7df7edabb91fb2f1fa3fc7d6906bfae75a6e701f1cd335baafaae3e087696  xsa226-4.6.patch
-fffcc0a4428723e6aea391ff4f1d27326b5a3763d2308cbde64e6a786502c702  xsa226-4.7.patch
-$
-
-(The .meta file is a prototype machine-readable file for describing
-which patches are to be applied how.)
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZkuNKAAoJEIP+FMlX6CvZUHMIALQcTfo00unwBX9RO7lBy4na
-LSkFE9yaPtA/pg5RRGo7Nrwl2nIDRc6Xc0ZkhNm0rfi1gnR0htP3jyJXxkXv1sah
-jkBP0bZYfWDHRxSdVBbNNn8q0mhuanycFhVuEiu+vmTPKRUTyODkAdAoi/TkY9Iq
-XD24clIrjY2xIDO3pKbDTJUZ86rHD0nepHdnnvN2rywyBd2VkJfJWGavqHgs61XX
-j9jX0nI4Wcm4nQKx37MBUwwN3oYeEKrzYQY3+AGVKQEWuULP4sWRKhxZaqclCbfd
-Cx/9gACwPEORU6bRXE/vzlxn7Ks6yf2tqgNAGCTrZgwW8q3SFNASHzaAM3EXz3w=
-=VNkV
------END PGP SIGNATURE-----
-
-Download attachment "xsa226.patch" of type "application/octet-stream" (4517 bytes)
-
-Download attachment "xsa226-4.5.patch" of type "application/octet-stream" (4545 bytes)
-
-Download attachment "xsa226-4.6.patch" of type "application/octet-stream" (4510 bytes)
-
-Download attachment "xsa226-4.7.patch" of type "application/octet-stream" (4521 bytes)
+  / daniel.haxx.se
