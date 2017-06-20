@@ -1,67 +1,142 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/5
-Message-ID: <CAP145pjXuwa2QwR18Vq29i4aBYqSweHTWt-QYge=JrDxEmZnSQ@mail.gmail.com>
-Date: Wed, 17 May 2017 12:51:57 +0200
-From: Robert Święcki <robert@...ecki.net>
-To: oss-security@...ts.openwall.com
-Cc: "Jason A. Donenfeld" <Jason@...c4.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/15
+Message-Id: <E1dNIMo-0003Gy-Ei@xenbits.xenproject.org>
+Date: Tue, 20 Jun 2017 12:34:46 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 216 - blkif responses leak backend stack data
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
->> > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
->> >> A harmless example from rxvt - pushing back the new-line character:
->> >>
->> >> $ echo -ne "\eGQ;"
->> >> ;$ 0
->> >> bash: 0: command not found
->> >
->> > Does this also affect rxvt-unicode?
->>
->> It does, actually. I've CCd rxvt-unicode upstream on this in order to
->> hear their assessment.
->
-> There can't be an assessment without knowledge of what to assess - there
-> is little to no information in your mail. I can only guess that somebody
-> for the hundredth time found out that terminals are more than dumb
-> display devices and got excited that, somehow, this might be a security
-> issue. Without knowing details, I can't say for sure, but most likely,
-> this is a security issue the same way blindly feeding unknown commands to
-> your shell is,
+                    Xen Security Advisory XSA-216
+                              version 4
 
-Given that arbitrary data can be pushed to terminal emulators via
-seemingly harmless commands (like ping, whois) that people rather
-trust to be robust enough to intetract with arbitrary whois or DNS
-servers, this might be some problem.
+                blkif responses leak backend stack data
 
-Please consider the following example:
+UPDATES IN VERSION 4
+====================
 
-$ tail -n1 /etc/hosts | xxd
-00000000: 3132 372e 302e 302e 3309 1b47 513b 205a  127.0.0.3..GQ; Z
-00000010: 5a5a 0a                                  ZZ.
-$ ping ZZZ
-PING ; (127.0.0.3) 56(84) bytes of data.
-^[G0
-64 bytes from ; (127.0.0.3): icmp_seq=1 ttl=64 time=0.039 ms
-^[G0
-64 bytes from ; (127.0.0.3): icmp_seq=2 ttl=64 time=0.032 ms
-^[G0
-^C
---- ; ping statistics ---
-2 packets transmitted, 2 received, 0% packet loss, time 1014ms
-rtt min/avg/max/mdev = 0.032/0.035/0.039/0.006 ms
-^[G0
-$ 0
-bash: 0: command not found
+Move "For patch:" Reported-by to patches as intended.
 
-I'm not sure if this works with real reverse DNS look-ups, but with
-/etc/hosts it seems so.
+ISSUE DESCRIPTION
+=================
 
-> i.e., it's a problem somewhere else - the protocol between
-> terminals and programs is not a (strong) security barrier.
->
-> (your echo command is bash-specific, btw.)
+The block interface response structure has some discontiguous fields.
+Certain backends populate the structure fields of an otherwise
+uninitialized instance of this structure on their stacks, leaking
+data through the (internal or trailing) padding field.
 
--- 
-Robert Święcki
+IMPACT
+======
+
+A malicious unprivileged guest may be able to obtain sensitive
+information from the host or other guests.
+
+VULNERABLE SYSTEMS
+==================
+
+All Linux versions supporting the xen-blkback, blkback, or blktap
+drivers are vulnerable.
+
+FreeBSD, NetBSD and Windows (with or without PV drivers) are not
+vulnerable (either because they do not have backends at all, or
+because they use a different implementation technique which does not
+suffer from this problem).
+
+All qemu versions supporting the Xen block backend are vulnerable.  The
+qemu-xen-traditional code base does not include such code, so is not
+vulnerable.  Note that an instance of qemu will be spawned to provide
+the backend for most non-raw-format disks; so you may need to apply the
+patch to qemu even if you use only PV guests.
+
+MITIGATION
+==========
+
+There's no mitigation available for x86 PV and ARM guests.
+
+For x86 HVM guests it may be possible to change the guest
+configuaration such that a fully virtualized disk is being made
+available instead.  However, this would normally entail changes inside
+the guest itself.
+
+CREDITS
+=======
+
+This issue was discovered by Anthony Perard of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa216-linux-4.11.patch           Linux 4.5 ... 4.11
+xsa216-linux-4.4.patch            Linux 3.3 ... 4.4
+xsa216-qemuu.patch                qemu-upstream master, 4.8
+xsa216-qemuu-4.7.patch            qemu-upstream 4.7, 4.6
+xsa216-qemuu-4.5.patch            qemu-upstream 4.5
+xsa216-linux-2.6.18-xen.patch     linux-2.6.18-xen.hg
+
+$ sha256sum xsa216*
+d316e16f8da2078966e9d7d516dd0a9ed5a29c3bc479974374c8fa778859913d  xsa216-linux-2.6.18-xen.patch
+4440fe324b61baf0f3f5a73352c4d9ac6f94917e216d8421263a5e67445852db  xsa216-linux-4.4.patch
+eb24bfc0303e13e08fd3710463aea139a92a3f83db7f35119c4d3831154a6453  xsa216-linux-4.11.patch
+b4b8f68fa05d718c5be7023c84d942e43725bcc563ea15556ee9646f6f9bf7e7  xsa216-qemuu.patch
+4fc3665ff07ec79fb31ac66a3fd360a45b7ec546c549c04284f0128ad0c5beba  xsa216-qemuu-4.5.patch
+a0e0dfd5ea2643ae14c220124194388017a3656db3e6ce430913cda800c43aad  xsa216-qemuu-4.7.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+However, deployment of the mitigation is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.  This is because this produces a guest-visible
+change which will indicate which component contains the vulnerability.
+
+Additionally, distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZSRYiAAoJEIP+FMlX6CvZILQIALI17G6L+BIr6rXHglleL6Lz
+E9Rvlng8K3e5088Hzs5gwq0c9jeK7i9B8PIjdgTH8OS1YjwpWF4wdPveSNACules
+590SQVdwN2+Q1oTqdEECnaaCdl7eiEiv+2vRr+LYXNSLJuIRclnc/Fv3nTz/iuTM
+5vwIVS/rpdETDBcMJVbCRvUbMeCx/ZM8+lNmEe20QP6h++pmc8wT7B54yGVwk6LT
+eknzRMFYhUqcF8eLTJ/QyHf94x1mujVCHNKbOXkMQ27lWAJ5Jt2ut0IZeA6CFAlw
+j/u8azGv9VIpXGLp2R1OWPYbEYeAzvjNC7+qoixiscSvfPkiSTfAv7pmr52jvGg=
+=+gya
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa216-linux-2.6.18-xen.patch" of type "application/octet-stream" (5698 bytes)
+
+Download attachment "xsa216-linux-4.4.patch" of type "application/octet-stream" (3699 bytes)
+
+Download attachment "xsa216-linux-4.11.patch" of type "application/octet-stream" (3764 bytes)
+
+Download attachment "xsa216-qemuu.patch" of type "application/octet-stream" (4455 bytes)
+
+Download attachment "xsa216-qemuu-4.5.patch" of type "application/octet-stream" (4431 bytes)
+
+Download attachment "xsa216-qemuu-4.7.patch" of type "application/octet-stream" (4431 bytes)
