@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/18/3
-Message-ID: <CAB8XdGDnqiF8VwmK8K8bst5icRcdyjxK82-2ocmJ8EcA6uqpgQ@mail.gmail.com>
-Date: Tue, 18 Apr 2017 13:01:31 +0100
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: "users@....apache.org" <users@....apache.org>, "dev@....apache.org" <dev@....apache.org>
-Cc: Apache Security Response Team <security@...che.org>, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
-Subject: New security advisories for Apache CXF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/16
+Message-ID: <20170620132204.GA6240@openwall.com>
+Date: Tue, 20 Jun 2017 15:22:04 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Qualys Security Advisory <qsa@...lys.com>
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-The Apache CXF project has released two new security advisories:
+On Mon, Jun 19, 2017 at 10:39:33PM +0200, Solar Designer wrote:
+> Since we were making this public in pieces like that, I have to say: no,
+> there's nothing else left to publish as part of this series of Qualys'
+> findings.  Everything Qualys brought to distros so far is now public.
 
-a) CVE-2017-5653: Apache CXF JAX-RS XML Security streaming clients do not
-validate that the service response was signed or encrypted.
+I have to correct the above statement as I totally forgot about the
+exploits.  While all issues Qualys brought to distros so far are now
+public, Qualys' own exploits for them are not public yet.  IIRC, Qualys
+selectively sent the exploits to affected vendors, but that included
+sending the Linux-specific exploits to the linux-distros sub-list.
 
-b) CVE-2017-5656: Apache CXF's STSClient uses a flawed way of caching
-tokens that are associated with delegation tokens.
+Qualys, I suggest that, like you did with the Sudo exploit, you publish
+your Stack Clash exploits in here as soon as third-party exploits of
+comparable functionality appear, or next Tuesday, whichever is earlier.
 
-More details, including the text of the security advisories, are available
-at:
+Please confirm that you intend to do so in a reply to this message, so
+that everyone in here knows what to expect.
 
-http://cxf.apache.org/security-advisories.html
-
-Colm.
-
--- 
-Colm O hEigeartaigh
-
-Talend Community Coder
-http://coders.talend.com
-
+Alexander
