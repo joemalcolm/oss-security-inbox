@@ -1,93 +1,169 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/29/3
-Message-ID: <alpine.DEB.2.20.1711280939500.30591@tvnag.unkk.fr>
-Date: Wed, 29 Nov 2017 10:34:22 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: FTP wildcard out of bounds read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/10
+Message-Id: <E1dNHpH-000643-NI@xenbits.xenproject.org>
+Date: Tue, 20 Jun 2017 12:00:07 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 220 - x86: PKRU and BND* leakage between vCPU-s
 Content-Type: text/plain; charset=utf-8
 
-FTP wildcard out of bounds read
-===============================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Project curl Security Advisory, November 29th 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_2017-ae72.html)
+                    Xen Security Advisory XSA-220
+                              version 2
 
-VULNERABILITY
--------------
+               x86: PKRU and BND* leakage between vCPU-s
 
-libcurl contains a read out of bounds flaw in the FTP wildcard function.
+UPDATES IN VERSION 2
+====================
 
-libcurl's FTP wildcard matching feature, which is enabled with the
-`CURLOPT_WILDCARDMATCH` option can use a built-in wildcard function or a user
-provided one. The built-in wildcard function has a flaw that makes it not
-detect the end of the pattern string if it ends with an open bracket (`[`) but
-instead it will continue reading the heap beyond the end of the URL buffer
-that holds the wildcard.
+Public release.
 
-For applications that use HTTP(S) URLs, allow libcurl to handle redirects and
-have FTP wildcards enabled, this flaw can be triggered by malicious servers
-that can redirect clients to a URL using such a wildcard pattern.
+ISSUE DESCRIPTION
+=================
 
-We are not aware of any exploit of this flaw.
+Memory Protection Extensions (MPX) and Protection Key (PKU) are features in
+newer processors, whose state is intended to be per-thread and context
+switched along with all other XSAVE state.
 
-INFO
-----
+Xen's vCPU context switch code would save and restore the state only
+if the guest had set the relevant XSTATE enable bits.  However,
+surprisingly, the use of these features is not dependent (PKU) or may
+not be dependent (MPX) on having the relevant XSTATE bits enabled.
 
-This bug was introduced in commit
-[0825cd80a62c](https://github.com/curl/curl/commit/0825cd80a62c), May 2010.
+VMs which use MPX or PKU, and context switch the state manually rather
+than via XSAVE, will have the state leak between vCPUs (possibly,
+between vCPUs in different guests).  This in turn corrupts state in
+the destination vCPU, and hence may lead to weakened protections
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-8817 to this issue.
+Experimentally, MPX appears not to make any interaction with BND*
+state if BNDCFGS.EN is set but XCR0.BND{CSR,REGS} are clear.  However,
+the SDM is not clear in this case; therefore MPX is included in this
+advisory as a precaution.
 
-AFFECTED VERSIONS
------------------
+IMPACT
+======
 
-- Affected versions: libcurl 7.21.0 to and including 7.56.1
-- Not affected versions: libcurl < 7.21.0 and >= 7.57.0
+There is an information leak, of control information mentioning
+pointers into guest address space; this may weaken address space
+randomisation and make other attacks easier.
 
-curl is used by many applications, but not always advertised as such.
+When an innocent guest acquires leaked state, it will run with
+incorrect protection state.  This could weaken the protection intended
+by the MPX or PKU features, making other attacks easier which would
+otherwise be excluded; and the incorrect state could also cause a
+denial of service by preventing legitimate accesses.
 
-THE SOLUTION
-------------
+VULNERABLE SYSTEMS
+==================
 
-In libcurl version 7.57.0, there's a better check for the end of the
-string. Additionally, the wildcard feature is turned off if the URL passed to
-libcurl is not using FTP(S), so a redirect to an FTP URL cannot trigger
-wildcard functionality.
+Xen 4.4 and earlier are not vulnerable, as they do not use or expose
+MPX or PKU to guests.  Xen 4.5 and later expose MPX to guests.  Xen
+4.7 and later expose PKU to guests.  Therefore, Xen 4.5 and later are
+vulnerable.
 
-A [patch for CVE-2017-8817](https://curl.haxx.se/CVE-2017-8817.patch) is
-available.
+Only x86 hardware implementing the MPX or PKU features is vulnerable.
+At the time of writing, these are Intel Skylake (and later) processors
+for MPX, and Intel Skylake Server (and later) processors for PKU.
 
-RECOMMENDATIONS
----------------
+ARM hardware is not vulnerable.
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+The vulnerability is only exposed to HVM guests.  PV guests cannot
+exploit the vulnerability.
 
-  A - Upgrade curl to version 7.57.0
+Vulnerable guest operating systems
+- ----------------------------------
 
-  B - Apply the patch to your version and rebuild
+Guests which use XSAVE for context switching PKU and MPX state are not
+vulnerable to inbound corruption caused by another malicious domain.
 
-  C - Do not use `CURLOPT_WILDCARDMATCH` without carfully verifying the
-      patterns used.
+With respect to PKU, the remaining outbound information leak is of no
+conceivable consequence.  And, experimentally, MPX does not appear to
+have a real vulnerability, even though the CPU documentation is not
+clear.
 
-TIME LINE
----------
+Therefore we think that these guests (those which use XSAVE) are not
+vulnerable.
 
-It was reported to the curl project on November 10, 2017.  We contacted
-distros@...nwall on November 21.
+Linux uses XSAVE, so is therefore not vulnerable.
 
-curl 7.57.10 was released on November 29 2017, coordinated with the
-publication of this advisory.
+MITIGATION
+==========
+
+Passing "pku=0" on the hypervisor command line will avoid the PKU
+vulnerability (by not advertising the feature to guests).
+
+There is no corresponding option for the probably-theoretical MPX
+vulnerability.
 
 CREDITS
--------
+=======
 
-Reported by OSS-Fuzz. Researched by Max Dymond. Patch by Daniel Stenberg.
+This issue was discovered by Andrew Cooper of Citrix.
 
-Thanks a lot!
+RESOLUTION
+==========
 
--- 
+Applying the appropriate attached patch resolves this issue.
 
-  / daniel.haxx.se
+xsa220.patch           xen-unstable
+xsa220-4.8.patch       Xen 4.8
+xsa220-4.7.patch       Xen 4.7
+xsa220-4.6.patch       Xen 4.6
+xsa220-4.5.patch       Xen 4.5
+
+$ sha256sum xsa220*
+8b86d9a284c0b14717467e672e63aebfc2bce201658493a54c64fb7c1863ce49  xsa220.patch
+4b53ad5748313fb92c68eac1160b00d1bf7310019657028122a455855334252b  xsa220-4.5.patch
+befe5ca5321d903428fc496abeee3a3b5eb0cee27a382e20d3caf8cc7bdfced2  xsa220-4.6.patch
+555fa741348909943393aaf73571bc7817b30eafcff73dbfcd73911113db5d7f  xsa220-4.7.patch
+7a41ad9c6f9d46536abae051c517456bdfa3564278e98f80222a904df749fb0c  xsa220-4.8.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZSQ3QAAoJEIP+FMlX6CvZ6ogH/3HavoXiL0zhOEfVyCJqMk8N
+4gqV1U++wSP3/C+r/W0joZGnTtr7yDQi+zR0ElDBbwMZynJm4VXwFzCJr7HDc3JF
+Pdx3YD3d75QVzJxS1yGF2uGTqlDywqsabja5BqVc4tY78Sxj9dKyKkcR+HNsYDyA
+RoqQeOPN7GiAq1gtN5MW2HaUVDWOFCEbyMQhndqs6ZPmhxU9qQdSzltuMuLc/tNb
+f9YtxPydfXTYZXSQA8poqySESBikeCUosbLX9hJB0GBoxV9PlPVLSA14nrYPS6Sd
+kX9OJ2M4EoYNCROs5FFusbQwNdwLyMK8dNuTzOlZ9S9v5CpIwMQqs2Ypb1BVRqE=
+=c/uv
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa220.patch" of type "application/octet-stream" (3131 bytes)
+
+Download attachment "xsa220-4.5.patch" of type "application/octet-stream" (3223 bytes)
+
+Download attachment "xsa220-4.6.patch" of type "application/octet-stream" (3203 bytes)
+
+Download attachment "xsa220-4.7.patch" of type "application/octet-stream" (4442 bytes)
+
+Download attachment "xsa220-4.8.patch" of type "application/octet-stream" (3119 bytes)
