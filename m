@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1868" "Saturday" "25" "June" "2016" "12:25:17" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160625162517.21FF36C02B4@smtpvmsrv1.mitre.org>" "45" "[oss-security] Re: CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls - Linux kernel" nil nil nil "6" "2016062516:25:17" "[oss-security] Re: CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls - Linux kernel" (number mark "U       cve-assign@m Jun 25   45/1868  " thread-indent "\"[oss-security] Re: CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls - Linux kernel\"\n") "<1466753023.11831.9.camel@ellerman.id.au>" ("<1466753023.11831.9.camel@ellerman.id.au>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["971" "Tuesday" "20" "June" "2017" "15:22:04" "+0200" "Solar Designer" "solar@openwall.com" "<20170620132204.GA6240@openwall.com>" "19" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Cc:" nil nil "6" "2017062013:22:04" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        solar@openwa Jun 20   19/971   " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<20170619203933.GA910@openwall.com>" ("<20170619152843.GC7769@localhost.localdomain>" "<2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>" "<20170619203933.GA910@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5150 invoked by uid 550); 25 Jun 2016 16:25:29 -0000
+Received: (qmail 16381 invoked by uid 550); 20 Jun 2017 13:22:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16265 invoked from network); 20 Jun 2017 13:22:12 -0000
+Message-ID: <20170620132204.GA6240@openwall.com>
+References: <20170619152843.GC7769@localhost.localdomain> <2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com> <20170619203933.GA910@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170619203933.GA910@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: Qualys Security Advisory <qsa@qualys.com>
+Date: Tue, 20 Jun 2017 15:22:04 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5132 invoked from network); 25 Jun 2016 16:25:29 -0000
-From: cve-assign@mitre.org
-To: mpe@ellerman.id.au
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1466753023.11831.9.camel@ellerman.id.au>
-Message-Id: <20160625162517.21FF36C02B4@smtpvmsrv1.mitre.org>
-Date: Sat, 25 Jun 2016 12:25:17 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls - Linux kernel
+Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Jun 19, 2017 at 10:39:33PM +0200, Solar Designer wrote:
+> Since we were making this public in pieces like that, I have to say: no,
+> there's nothing else left to publish as part of this series of Qualys'
+> findings.  Everything Qualys brought to distros so far is now public.
 
-> We've found an issue in the handling of Transactional Memory on powerpc
-> systems. An unprivileged local user can crash the kernel by starting a
-> transaction, suspending it, and then calling any of the exec() class system
-> calls.
-> 
-> https://patchwork.ozlabs.org/patch/636776/
+I have to correct the above statement as I totally forgot about the
+exploits.  While all issues Qualys brought to distros so far are now
+public, Qualys' own exploits for them are not public yet.  IIRC, Qualys
+selectively sent the exploits to affected vendors, but that included
+sending the Linux-specific exploits to the linux-distros sub-list.
 
->> Userspace can quite legitimately perform an exec() syscall with a
->> suspended transaction. exec() does not return to the old process,
->> rather it load a new one and starts that, the expectation therefore is
->> that the new process starts not in a transaction. Currently exec() is
->> not treated any differently to any other syscall which creates
->> problems.
+Qualys, I suggest that, like you did with the Sudo exploit, you publish
+your Stack Clash exploits in here as soon as third-party exploits of
+comparable functionality appear, or next Tuesday, whichever is earlier.
 
-Use CVE-2016-5828.
+Please confirm that you intend to do so in a reply to this message, so
+that everyone in here knows what to expect.
 
-This is not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/arch/powerpc/kernel/process.c
-but may be there later.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXbq+vAAoJEHb/MwWLVhi2fJcP/0BcGb5bh7e/KURhMlhCN5Pd
-FPqvNvpTdpLzDnW6ert9mD7wBrHbvf3CdSbNTUI2seRHAcV+ga4Z7gRvmqLtcTCC
-9qdsZymXU6i/ptFKImrHgPbFuqXT8ogOt87usL8RHOaAajRwWYasWsCKWOc0ZJKb
-b819G7I9aXgdLqon+EFcTm0NgU/6VxvK2hrE8b0bGkqw7rflWWIbMYxsb46VoqKe
-BklhgJZUp9kVd2hpNN1Fpv57e8kQ3JtV9obDEW16W68bpiuKIR5HEvZRsBbydNd7
-CqRG7Q4WaqUdlrr9TT3cFHQFOyDZc+rkzrn+yc39xwzOtHJGRHG8bs+wZ0IjihYg
-/VpbjOu6/H1tCBZ2FFH+WEN0PZsqtRy4P9FJzIc2hdsVaj6xC5XxMoh4vH1ryuDp
-gwMc2nZDgtZRN9XQe7n8f6Zd1M4EsSDDrBHp77WgtBmVJTOIF31iN8/tFEjzN0d7
-f5ExKTsMBiEcmK1gZ2YQnlhKtoEEpar95/meGd9FHzsrKg7TV0oc6pChWfTGV5rl
-BvrRJOOs5E433vIIPiTl40QzVPZDnCiqAnH2bzy60ugr7gxTi7vdE/M7VBdUK6yw
-6Oq25iahfH6LOgevzImbDEmQrOf07exQZinXrn+y0e6iYkaPJ78mmBtshX+XUrB7
-K4Cb5KrtVl/PVf5dy3mi
-=y7Xd
------END PGP SIGNATURE-----
+Alexander
