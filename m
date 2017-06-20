@@ -1,67 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/18/3
-Message-Id: <E2B70189-9191-4E7D-9371-69ABD5F9B5BB@beckweb.net>
-Date: Sat, 18 Nov 2017 08:26:09 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/2
+Message-ID: <1497941077.15414.1.camel@gmail.com>
+Date: Tue, 20 Jun 2017 02:44:37 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: Jeff Law <law@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: Re: Qualys Security Advisor -- The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-
-> On 23. Oct 2017, at 14:20, Daniel Beck <ml@...kweb.net> wrote:
+On Mon, 2017-06-19 at 15:15 -0600, Jeff Law wrote:
+> On 06/19/2017 12:52 PM, Daniel Micay wrote:
+> > On Mon, 2017-06-19 at 11:26 -0600, Jeff Law wrote:
+> > > I would consider those two GCC BZs (68065, 66479) a separate an
+> > > distinct
+> > > issue.
+> > > 
+> > > It is far more important to address design issues around the
+> > > existing
+> > > -fstack-check first.  I think we've got a pretty good handle on
+> > > how to
+> > > address those problems and discussions with the upstream GCC
+> > > community
+> > > have already started.
+> > > 
+> > > In an ideal world we'll get to a place where the new -fstack-check
+> > > does
+> > > not change program semantics, never misses probes and is efficient
+> > > enough to just turn on and forget everywhere.  The existing
+> > > -fstack-check fails all three of those criteria.
+> > > 
+> > > Jeff
+> > 
+> > AFAIK, the main efficiency issue (reserving a register) was fixed
+> > for
+> > GCC 6. I might be missing something but it seems very cheap now, at
+> > least for x86_64. It definitely doesn't really work though.
+> > 
+> > Is there an example of it changing program semantics? I haven't seen
+> > anything since the generic arch stuff was fixed.
 > 
-> SECURITY-470
-> Active Choices plugin allowed users with Job/Configure permission to
-> provide arbitrary HTML to be shown on the Build With Parameters page
-> through the Active Choices Reactive Reference Parameter type. This could
-> include, for example, arbitrary JavaScript.
-
-
-CVE-2017-1000386
-
-
-> SECURITY-50
-> Some URLs provided by global-build-stats plugin returned a JSON response 
-> that contained request parameters. These responses had the 
-> Content-Type: text/html, so could have been interpreted as HTML by clients,
-> resulting in a potential reflected cross-site scripting vulnerability.
+> Absolutely -fstack-check, as currently implemented, can change program
+> semantics.  It's related to -fstack-check moving objects from
+> statically
+> allocated space into dynamically allocated space (because the generic
+> code can't handle large static frames).  It creates the alloca'd
+> objects
+> at the wrong scope.  This doesn't happen on all architectures, but it
+> does happen on architectures I have to care about.
 > 
-> Additionally, some URLs provided by global-build-stats plugin that modify 
-> data did not require POST requests to be sent, resulting in a potential 
-> cross-site request forgery vulnerability.
-
-
-CVE-2017-1000389
-
-
-> SECURITY-57
-> Dependency Graph Viewer plugin did not perform permission checks for the 
-> API endpoint that modifies the dependency graph, allowing anyone with 
-> Overall/Read permission to modify this data.
-
-
-CVE-2017-1000388
-
-
-> SECURITY-378
-> Build-Publisher plugin stores credentials to other Jenkins instances in the 
-> file hudson.plugins.build_publisher.BuildPublisher.xml in the Jenkins 
-> master home directory. These credentials were stored unencrypted, allowing 
-> anyone with local file system access to access them.
+> WRT efficiency, -fstack-check is marginal -- even with its clever code
+> of assuming that it can elide probes into the first two pages of a
+> static frame (because the caller must have probed those two frames).
+> Consistently when we looked at code it's over-probing.  Sadly, it's
+> over-probing in all the wrong places (because it's trying so damn hard
+> to ensure there's always 2 free pages the signal handler can use).
 > 
-> Additionally, the credentials were also transmitted in plain text as part 
-> of the configuration form. This could result in exposure of the API key 
-> through browser extensions, cross-site scripting vulnerabilities, and 
-> similar situations.
+> WRT probing correctness -- -fstack-check skips probes on the
+> assumption
+> that an earlier caller in the call chain should have probed those
+> pages.
+>  But that's a fundamentally flawed assumption unless the entire
+> application is compiled with -fstack-check.  In fact, by eliding those
+> probes, it actually misses the most important cases in mixed
+> environment!
+> 
+> -fstack-check also has the nasty habit of probing into unallocated
+> areas.  This tends to cause valgrind problems.  Both in the sense of
+> getting far too many false positives, but on two platforms the code
+> generated by -fstack-check actually crashes valgrind.  These issues
+> are
+> directly related to -fstack-check wanting to probe all the pages
+> before
+> doing any allocations.
+> 
+> FWIW, we initially thought we were going to be able to use -fstack-
+> check
+> with some slight tweaks.  But the deeper we got into -fstack-check the
+> more we ended up rewriting the probe generation from scratch.  In
+> fact,
+> we were unable to use the existing -fstack-check probing code from
+> *any*
+> target.
+> 
+> jeff
 
+I think it's also worth mentioning the segmented stack support in GCC
+and LLVM that was added for Go. It's possible to use it for C with the
+__morestack call set up to simply abort when stack space is exhausted.
 
-CVE-2017-1000387
+That's what Rust was doing after it dropped segmented stacks, but they
+wanted to move to stack probes for efficiency and prematurely dropped
+these function prelude checks.
 
+It's not efficient, but it works, unlike -fstack-check.
 
-> JENKINS-36333
-> Multijob plugin did not check permissions in the Resume Build action, 
-> allowing anyone with Job/Read permission to resume the build.
-
-
-CVE-2017-1000390
-
+I don't think it makes sense for general purpose distributions to adopt
+it but it's an available option for others with more concern about this
+issue.
