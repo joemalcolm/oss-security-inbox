@@ -1,67 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/12
-Message-ID: <CY4PR11MB15923C857FBA8F9B884AF2A2DADD0@CY4PR11MB1592.namprd11.prod.outlook.com>
-Date: Wed, 28 Jun 2017 13:22:42 +0000
-From: Sven Dowideit <sven@...cher.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CoreOS membership to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/3
+Message-ID: <1c36c757.6889.15cc43283d4.Coremail.xiaoqixue_1@163.com>
+Date: Tue, 20 Jun 2017 14:31:03 +0800 (CST)
+From: xiaoqixue_1 <xiaoqixue_1@....com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: heap-buffer-overflow in jasper
 Content-Type: text/plain; charset=utf-8
 
-TBH, the biggest worry I have is the fact that until there are actual exploits available, we're just hoping that the tests we write are reasonable - its a game of chinese whispers, where we think we grok the information correctly, and completely - but we we're playing with a very partial deck.
 
 
-I did already find a few test tools - and thanks - yours also suggests that with the RancherOS release I made a few days ago, that we've done what we can (ok, so I actually delayed and didn't release the patched version I gleaned was the set - I was able to use 4.9.34 - as we're trying hard to be pure upstream whenever possible)
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
 
-IDK - I wouldn't call it "on a golden platter" - I'm trying to suggest that the bigger players have a tonne more knowledge and experience than we newer and smaller players do - but perhaps we can work out how the smaller distros can also get some early information and guidance - and perhaps that'll help mentor us up into doing more.
+A crafted image causes a read overflow in the latest version 2.0.12. 
+And this issue also exsits in the latest commit of github repo. 
+(https://github.com/mdadams/jasper)
 
 
-Sven
-
-________________________________
-From: Dominique Martinet <asmadeus@...ewreck.org>
-Sent: 27 June 2017 23:58:26
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] CoreOS membership to linux-distros
-
-Sven Dowideit wrote on Wed, Jun 28, 2017:
-> I'm responsible for RancherOS, and think that both I, and my users
-> would prefer that I had access to the embargoed information earlier,
-> so preparing a response would have been less of a rush.
-
-I can relate to the rush feeling, even with few users/"private" distro
-here, having a custom kernel makes this kind of fixes annoying...
-But given the delayed exploit release I'd say it does not really matter
-if you take a few days for this, especially in this case with the low
-success rate on 64bit linux. As soon as reasonably possible does not
-necessarily mean rush.
-
-As a rhel/centos spin-off though we would have liked the bug brought up
-here ( https://bugzilla.redhat.com/show_bug.cgi?id=1463241 ) to have its
-fix published faster though, it's apparently been ready for a week but
-not been published... I don't mind bugs, but if it's fixed it's annoying
-to keep it behind closed doors.
 
 
-> One of the things that would have made my last week less worrying, is
-> to have some access to exploit code - so as to verify the changes
-> actually had a useful effect.
-
-You don't need an actual exploit to test this. You're not the first
-person who have told me this so I actually took some time this morning
-to whip up a "tester" -- it's probably far from perfect but will run
-successfully on older debian/rhel and crash with a patched kernel as
-expected, and is as inoffensive as it can get.
-
-I'm sure there are other better testers online, I didn't try looking as
-I don't get much chance to play with this kind of stuff :)
 
 
-Qualys gave a lot of details in their report (kudos to well written
-advisories like that!), I agree having everything on a golden plate is
-better but it really isn't much work left for smaller distros if you
-trust the big ones or even just upstream, once bugs got steamed out.
+The complete ASan output:
+# ./install/bin/jasper -f $FILE -F /tmp/1.pnm -T pnm
+=================================================================
+==1220==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60300000ee18 at pc 0x7fe8a1e0211b bp 0x7fffb4a6cb20 sp 0x7fffb4a6cb18
+READ of size 8 at 0x60300000ee18 thread T0
+    #0 0x7fe8a1e0211a in jp2_decode /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/jp2/jp2_dec.c:405
+    #1 0x7fe8a1ddc192 in jas_image_decode /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/base/jas_image.c:444
+    #2 0x40217a in main /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/appl/jasper.c:236
+    #3 0x7fe8a1a00f44 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+    #4 0x401958 (/data/xqx/tests/libjasper-test/codes/abuild/install/bin/jasper+0x401958)
 
---
-Asmadeus | Dominique Martinet
 
+0x60300000ee18 is located 0 bytes to the right of 24-byte region [0x60300000ee00,0x60300000ee18)
+allocated by thread T0 here:
+    #0 0x7fe8a2125862 in __interceptor_malloc (/usr/lib/x86_64-linux-gnu/libasan.so.1+0x54862)
+    #1 0x7fe8a1de5ec3 in jas_malloc /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/base/jas_malloc.c:242
+    #2 0x7fe8a1de6072 in jas_alloc2 /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/base/jas_malloc.c:275
+    #3 0x7fe8a1dfb896 in jp2_cdef_getdata /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/jp2/jp2_cod.c:468
+    #4 0x7fe8a1dfaa46 in jp2_box_get /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/jp2/jp2_cod.c:303
+    #5 0x7fe8a1e0015a in jp2_decode /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/jp2/jp2_dec.c:159
+    #6 0x7fe8a1ddc192 in jas_image_decode /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/base/jas_image.c:444
+    #7 0x40217a in main /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/appl/jasper.c:236
+    #8 0x7fe8a1a00f44 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /data/xqx/tests/libjasper-test/codes/jasper-2.0.12/src/libjasper/jp2/jp2_dec.c:405 jp2_decode
+Shadow bytes around the buggy address:
+  0x0c067fff9d70: fa fa fd fd fd fa fa fa fd fd fd fa fa fa fd fd
+  0x0c067fff9d80: fd fa fa fa fd fd fd fa fa fa fd fd fd fa fa fa
+  0x0c067fff9d90: fd fd fd fa fa fa fd fd fd fa fa fa fd fd fd fa
+  0x0c067fff9da0: fa fa fd fd fd fa fa fa fd fd fd fa fa fa fd fd
+  0x0c067fff9db0: fd fa fa fa fd fd fd fd fa fa fd fd fd fa fa fa
+=>0x0c067fff9dc0: 00 00 00[fa]fa fa 00 00 00 00 fa fa 00 00 00 00
+  0x0c067fff9dd0: fa fa 00 00 00 02 fa fa 00 00 07 fa fa fa 00 00
+  0x0c067fff9de0: 05 fa fa fa 00 00 07 fa fa fa 00 00 00 06 fa fa
+  0x0c067fff9df0: 00 00 00 06 fa fa 00 00 00 06 fa fa 00 00 06 fa
+  0x0c067fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Contiguous container OOB:fc
+  ASan internal:           fe
+==1220==ABORTING
+
+
+
+
+
+
+Affected version:
+the Latest version 2.0.12, and also in the latest commit 1cce277.
+
+
+Fixed version:
+N/A
+
+
+Commit fix:
+N/A
+
+
+Credit:
+the bug is found by Qixue Xiao and Kang Li.
+
+
+CVE:
+N/A
+
+
+Reproducer:
+https://github.com/xiaoqx/pocs/blob/master/026-jasper-jps_decode-heapoverflow
+
+
+Timeline:
+2017-06-14: bug discovered and reported upstream
+
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+
+
+
+-- 
+xiaoqixue_1@....com
