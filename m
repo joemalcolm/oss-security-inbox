@@ -1,45 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/4
-Message-ID: <e442aa4c259f4f8f855d4e2125208702@imshyb01.MITRE.ORG>
-Date: Mon, 16 Jan 2017 19:11:33 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: jasper: invalid memory read in jas_matrix_asl (jas_seq.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/12
+Message-Id: <E1dNHpJ-000683-14@xenbits.xenproject.org>
+Date: Tue, 20 Jun 2017 12:00:09 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 223 - ARM guest disabling interrupt may crash Xen
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> [] https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jas_matrix_asl-jas_seq-c
-> 
-> AddressSanitizer: SEGV on unknown address
-> The signal is caused by a READ memory access.
-> 
-> jas_matrix_asl ... jasper-1.900.27/src/libjasper/base/jas_seq.c:376:11
+                    Xen Security Advisory XSA-223
+                              version 2
 
-Use CVE-2017-5505.
+              ARM guest disabling interrupt may crash Xen
 
+UPDATES IN VERSION 2
+====================
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Virtual interrupt injection could be triggered by a guest when sending
+an SGI (e.g IPI) to any vCPU or by configuring timers. When the virtual
+interrupt is masked, a missing check in the injection path may result in
+reading invalid hardware register or crashing the host.
+
+IMPACT
+======
+
+A guest may cause a hypervisor crash, resulting in a Denial of Service
+(DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions which support ARM are affected.
+
+x86 systems are not affected.
+
+MITIGATION
+==========
+
+On systems where the guest kernel is controlled by the host rather than
+guest administrator, running only kernels which do not disable SGI and
+PPI (i.e IRQ < 32) will prevent untrusted guest users from exploiting
+this issue. However untrusted guest administrators can still trigger it
+unless further steps are taken to prevent them from loading code into
+the kernel (e.g by disabling loadable modules etc) or from using other
+mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of ARM.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa223.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
+
+$ sha256sum xsa223*
+b5c8d8e8dac027069bec7dd812cff3f6f99e5949dd4a8ee729255c38274958b1  xsa223.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYfV+YAAoJEHb/MwWLVhi2JbMQAKJyXcljg++i7XUckrbXk7aw
-rtgu6dCKSX2Vuaj1A16M0z4axW5rBztxCIKYW8YsB9h5WtQaEmN2S5yVHvnWZXAm
-/FYxaAWXsGKBEpL/V/MH7xbcBgoqgwDhV4RqS/qdJqesftimzep8DN0Ko88ix2Qd
-Sqbn0YpPEIj/BeWib7Sji7wX/9a615hL4wdEK2GmmFOUeWSIyVUEL42aGxNlWSe1
-FLNg3/YC+LV+8XSB2HKg2gAKtQICj0ZBQAiJRJqAtSWrKCdc8wrVHRZfX9eSuPdp
-1YiCiNoQu6yQTopiWPY8HzILhMIg9Ao0gQVplHt1Uwqmke37oQTO+rzPQ1bY8R8m
-i/3HqRMmMh8DYPtYd09GZ5YERvuGXC6I46hQNFL1aTK71tMJjHwoypO+1Zh50wkZ
-uv9+tYu2uFm4FSk/ngaxphfqqr/Kchuni5xU7IVGRgyE6I7akMK3+lBrff1ppFYN
-cewXe3/Kb7SpudiEKRPfhLMSf9xbwt9p6k/osc5KUYfNpH9hSC5+DzTuZeBvuo9z
-dCD7LN6HeYRYLtw8z7gvCykQo1ij2j51n4C7gYo9Ju7qElceEskHjNhx9En52vxd
-TqJ5ru/07S60soE1aOHBQW+262Kr6/0BmbJrQe/DEeDkPczO4GfX1vHZ205yyyyf
-ODkC2oAB3jzKmXez32l1
-=w95I
+iQEcBAEBCAAGBQJZSQ3WAAoJEIP+FMlX6CvZpxQH/0nQaJEWEuVZlQliIaB3TUK2
+nnXBf3cFMsNCBIsrQtYXetZ8amA7cjULd2SX8/WIR60CPZ5Uj/YQtld5cq4LfxMj
+Ngma8mPDUMlu6t+n07vee/fte5fZYOpci0teC9NCLDbG5eTWoJ0K7CzN2JUQWLAb
+IgeJAVgyNr3ZibqdB8xBb5KlA+hOBE77MQ6yt8qZeltoYezIxprwgcqE/BgMVrcj
++7pz0WtJtdTe7i8i6jGcqvzbl3WhmcppiDLNhv310V+dV+T2e9cJia5EuapbqYD7
+mkMLnOTRngJq97q1RwTQlsLMOp+/deZpqueLKttVCSR6VP4GtKpgr/0O1NW91YU=
+=hATV
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa223.patch" of type "application/octet-stream" (1999 bytes)
