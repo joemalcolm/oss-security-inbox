@@ -1,45 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/22/2
-Message-ID: <CAJmMGNt9RgxmdygDZ2Y08pCHkuC9penaowe1=JjfOmE+sWduVA@mail.gmail.com>
-Date: Sat, 22 Jul 2017 19:04:35 +0200
-From: Patrick Uiterwijk <puiterwijk@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: pagure: private repositories accessible through ssh
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/7
+Message-Id: <E1dNHpJ-0006BC-Uo@xenbits.xenproject.org>
+Date: Tue, 20 Jun 2017 12:00:09 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 225 - arm: vgic: Out-of-bound access when sending SGIs
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 22, 2017 at 2:20 PM, Stefan Bühler <stbuehler@...httpd.net> wrote:
-> Hi,
->
-> pagure [1], a git-centered forge, supports private repositories [2]:
->
->> PRIVATE_PROJECTS
->> ~~~~~~~~~~~~~~~~
->>
->> This configuration key allows you to host private repositories. These
->> repositories are visible only to the creator of the repository and to
->> the users who are given access to the repository.  No information is
->> leaked about the private repository which means redis doesn't have the
->> access to the repository and even fedmsg doesn't get any
->> notifications.
->>
->> Defaults to: ``False``
->
-> But the gitolite config, which is used to configure SSH-access, allows
-> "@all" users to access all repositories - private or not.
->
-> I proposed the attached patch upstream in [3].
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This issue has been assigned CVE-2017-1002151.
+                    Xen Security Advisory XSA-225
+                              version 2
 
->
-> After patching you should ensure gitolite.conf gets regenerated from
-> scratch.
->
-> cheers,
-> Stefan
->
-> [1]: https://pagure.io/pagure
-> [2]: https://pagure.io/pagure/blob/master/f/doc/configuration.rst
-> [3]: https://pagure.io/pagure/pull-request/2426
+           arm: vgic: Out-of-bound access when sending SGIs
 
-Patrick
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+ARM guests can send SGI (i.e. IPI) targeting a list of vCPUs using the
+MMIO register GICD_SGIR (GICv2) or System Register ICC_SGI1R (GICv3).
+However, the emulation code does not sanitize the list and will
+directly access an array without checking whether the array index is
+within bounds.
+
+IMPACT
+======
+
+A guest may cause a hypervisor crash, resulting in a Denial of Service
+(DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.6 and onwards are affected.  Xen versions 4.5 and
+earlier are not affected.
+
+Only ARM systems are affected.  x86 systems are not affected.
+
+MITIGATION
+==========
+
+On systems where the guest kernel is controlled by the host rather than
+guest administrator, running only kernels which only send sane IPIs
+(i.e. targeting valid CPUs) will prevent untrusted guest users from
+exploiting this issue.  However untrusted guest administrators can
+still trigger it unless further steps are taken to prevent them from
+loading code into the kernel (e.g by disabling loadable modules etc) or
+from using other mechanisms which allow them to run code at kernel
+privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of ARM.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa225.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
+
+$ sha256sum xsa225*
+a52d90a2586b74d6dd0d17390c940bf414c1332a6b4ccb87f10b7d97af3b3877  xsa225.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZSQ3mAAoJEIP+FMlX6CvZ/TAH/Role6HA+csMGO/DshXbfuhN
+/S+DOPKU7NwynExZhf43Afj37EI4cw3xUcpRrZJbRExhGtlnBInsjUq8V9kmWcZL
+pJOgVcTOMyeR6Mc3B/tLqamH49uJdEGoi3zHVtckXY/A8a8+iyT5faSibmsWgl1t
+mYylB33xg9JmQ6gEa4NtbXOFi/f7BHjXUqVr8+P/KAyqvEramxoH+lp21Wrc1JZd
+wvpeEVnIlXjNBJB3ERqIENc/E0jlHY73mTLPK1br8OkkrJPnwkbC246Nd1cIosVt
+v8fe/Lin8yq2K+dPU6VFk/ZawDmOUtOtwJCL8klteIs6iiT+m2F3nGHMoQAGaBk=
+=lwE9
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa225.patch" of type "application/octet-stream" (1491 bytes)
