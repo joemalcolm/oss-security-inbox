@@ -1,72 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/04/1
-Message-ID: <20170904042044.iz5eke67pq3ruk6z@lorien.valinor.li>
-Date: Mon, 4 Sep 2017 06:20:44 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/17
+Message-ID: <CAG_fn=UmeU0K9HRVz1mrkxsTejVHMMG3fwrxWdcwMCpTrR8hYw@mail.gmail.com>
+Date: Tue, 20 Jun 2017 17:35:00 +0200
+From: Alexander Potapenko <glider@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: unrar-free/unrar-gpl: directory traversal and other issues
+Subject: Re: Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a data race in ALSA timer
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Tue, Jun 13, 2017 at 5:18 PM, Adam Maris <amaris@...hat.com> wrote:
+>
+>> > https://github.com/torvalds/linux/commit/d11662f4f798b50d8c8743f43384
+> 2c3e40fe3378
+>> > https://github.com/torvalds/linux/commit/ba3021b2c79b2fa9114f92790a99
+> deb27a65b728
+>>
+>>
+>
+> For reference, CVE-2017-1000380 was assigned for this issue.
+>
+> Regards,
+>
+> --
+> Adam Mariš, Red Hat Product Security
+> 1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
 
-FTR three CVEs were assigned, and for Debian I raised the question if
-unrar-free should be removed from the archive via:
+Please find the PoC exploit attached.
 
-https://bugs.debian.org/874065
 
-On Sun, Aug 20, 2017 at 09:34:32PM +0200, Hanno Böck wrote:
-> Issue 1: Directory Traversal
-> 
-> Creating a rar v2 archive with path names of the form ../[filename]
-> will unpack them into the upper directory.
+-- 
+Alexander Potapenko
+Software Engineer
 
-This was assigned CVE-2017-14120
+Google Germany GmbH
+Erika-Mann-Straße, 33
+80636 München
 
-> Issue 2: Stack overread
-> 
-> A malformed archive can cause a stack overread, detectable with asan.
-> This issue doesn't happen reliably, I haven't investigated further.
-> 
-> ==2585==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7fff76184120 at pc 0x000000445d25 bp 0x7fff76183ef0 sp 0x7fff761836a0
-> READ of size 519 at 0x7fff76184120 thread T0
->     #0 0x445d24 in __interceptor_strchr.part.33 (/r/unrar-gpl/unrar+0x445d24)
->     #1 0x516d0d in stricomp /f/unrar-gpl/unrar/src/unrarlib.c:851:19
->     #2 0x511613 in ExtrFile /f/unrar-gpl/unrar/src/unrarlib.c:745:20
->     #3 0x510b02 in urarlib_get /f/unrar-gpl/unrar/src/unrarlib.c:303:13
->     #4 0x50b249 in unrar_extract_file /f/unrar-gpl/unrar/src/unrar.c:343:8
->     #5 0x50be32 in unrar_extract /f/unrar-gpl/unrar/src/unrar.c:483:9
->     #6 0x50c69c in main /f/unrar-gpl/unrar/src/unrar.c:556:14
->     #7 0x7f632d3834f0 in __libc_start_main (/lib64/libc.so.6+0x204f0)
->     #8 0x419e19 in _start (/r/unrar-gpl/unrar+0x419e19)
-> 
-> Address 0x7fff76184120 is located in stack of thread T0 at offset 544 in frame
->     #0 0x516c1f in stricomp /f/unrar-gpl/unrar/src/unrarlib.c:844
-> 
->   This frame has 2 object(s):
->     [32, 544) 'S1'
->     [608, 1120) 'S2' <== Memory access at offset 544 partially
->     underflows this variable
+Geschäftsführer: Matthew Scott Sucherman, Paul Terence Manicle
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
 
-This was assigned CVE-2017-14122
-
-> Issue 3: Null pointer
-> 
-> A malformed input file can cause a null pointer read.
-> 
-> ==3328==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000020 (pc 0x00000051ed2c bp 0x000000278b18 sp 0x7fffc410e300 T0)
-> ==3328==The signal is caused by a READ memory access.
-> ==3328==Hint: address points to the zero page.
->     #0 0x51ed2b in DecodeNumber /f/unrar-gpl/unrar/src/unrarlib.c:1649:16
->     #1 0x5186f5 in Unpack /f/unrar-gpl/unrar/src/unrarlib.c:1148:4
->     #2 0x511c47 in ExtrFile /f/unrar-gpl/unrar/src/unrarlib.c:799:10
->     #3 0x510b02 in urarlib_get /f/unrar-gpl/unrar/src/unrarlib.c:303:13
->     #4 0x50b249 in unrar_extract_file /f/unrar-gpl/unrar/src/unrar.c:343:8
->     #5 0x50be32 in unrar_extract /f/unrar-gpl/unrar/src/unrar.c:483:9
->     #6 0x50c69c in main /f/unrar-gpl/unrar/src/unrar.c:556:14
->     #7 0x7f0a337df4f0 in __libc_start_main (/lib64/libc.so.6+0x204f0)
->     #8 0x419e19 in _start (/r/unrar-gpl/unrar+0x419e19)
-
-This was assigned CVE-2017-14121
-
-Regards,
-Salvatore
+View attachment "snd_timer.c" of type "text/x-csrc" (7623 bytes)
