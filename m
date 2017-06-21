@@ -1,70 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/7
-Message-ID: <CANO=Ty0+7=X0u+o6yyvZcjbEmvj-_c0QzDQiSRxgUAFy7mF6hw@mail.gmail.com>
-Date: Tue, 29 Aug 2017 10:49:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: A bunch of duplicate CVEs requested for?? bho..
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/17
+Message-ID: <c5d05c8e-ae1e-e570-beb5-1c070b87e1a5@redhat.com>
+Date: Wed, 21 Jun 2017 11:33:59 -0600
+From: Jeff Law <law@...hat.com>
+To: Daniel Micay <danielmicay@...il.com>, oss-security@...ts.openwall.com
+Subject: Re: Re: Qualys Security Advisor -- The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 29, 2017 at 10:44 AM, Bob Friesenhahn <
-bfriesen@...ple.dallas.tx.us> wrote:
+On 06/20/2017 12:44 AM, Daniel Micay wrote:
 
-> On Tue, 29 Aug 2017, Agostino Sarubbo wrote:
->
-> Hi all.
->>
->> In the last time there are some people that run afl for fuzzing...that's
->> just
->> fine and great. Some people miss to communicate their findings to
->> upstream and
->> request a CVE from mitre.
->> However I'm noticing that every day there are new duplicates, let me post
->> some
->> examples:
->>
->
-> It is important to keep in mind that CVEs are issued against "products".
-> There might be a CVE issued against a software version distributed by Red
-> Hat or Debian which is not applicable to the upstream version.  Since each
-> distribution patches their version it is difficult to know the "product"
-> that a particular CVE is applicable to.
+> I think it's also worth mentioning the segmented stack support in GCC
+> and LLVM that was added for Go. It's possible to use it for C with the
+> __morestack call set up to simply abort when stack space is exhausted.
+> 
+> That's what Rust was doing after it dropped segmented stacks, but they
+> wanted to move to stack probes for efficiency and prematurely dropped
+> these function prelude checks.
+> 
+> It's not efficient, but it works, unlike -fstack-check.
+> 
+> I don't think it makes sense for general purpose distributions to adopt
+> it but it's an available option for others with more concern about this
+> issue.
+Yup.  go's split-stacks are another option.  As you mention, probably
+not performant enough for a general purpose distribution, but could be
+interesting for more specialized needs.
 
-
-Actually no, that is incorrect. Please see the CVE counting rules, it's a
-LOT more nuanced than "CVEs are issued against products". THe docs are at
-
-https://cve.mitre.org/cve/editorial_policies/counting_rules.html
-
-TL;DR: CNT1 comes into play and you get situations like libxml/gzip being
-embedded all over the place, but only a single CVE because 1) it's a single
-code based that's copied everywhere and 2) pragmatism.
-
-
->
-> I agree that in my personal experience upstream maintainers are rarely
-> involved in the CVE process.
-
-
-Something I am trying to change. If you are an upstream and you want to
-become a CVE Numbering Authority (CNA) for your project(s) please contact
-me.
-
-
->
->
-> Bob
-> --
-> Bob Friesenhahn
-> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
->
-
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+jeff
