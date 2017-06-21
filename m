@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/9
-Message-ID: <3273963.DqXE5nWNLs@wanheda>
-Date: Fri, 29 Sep 2017 17:22:31 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Efraim Flashner <efraim@...shner.co.il>
-Subject: Re: binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/22
+Message-ID: <594AE554.22038.7198001A@pageexec.freemail.hu>
+Date: Wed, 21 Jun 2017 23:29:56 +0200
+From: "PaX Team" <pageexec@...email.hu>
+To: oss-security@...ts.openwall.com, Agostino Sarubbo <ago@...too.org>
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-On mercoledì 27 settembre 2017 12:20:15 CEST Efraim Flashner wrote:
-> On Tue, Sep 26, 2017 at 07:03:41AM +0000, Agostino Sarubbo wrote:
-> > Affected version:
-> > 2.29.51.20170921 and maybe past releases
-> 
-> As best as I can see, it looks like the bug was introduced after the
-> 2.28 series was frozen/split-off, and there is no part of the patch that
-> applies to the 2.28.1 release.
-> 
-> I have not, however, tried the reproducer.
+On 21 Jun 2017 at 10:22, Jeff Law wrote:
 
-The provided testcase works for me after the commit 
-98c5dfc99444094652c2f2259126f70e5cacf56f
+> On 06/21/2017 04:46 AM, Agostino Sarubbo wrote:
+> > On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
+> >> III. Solutions
+> >> - Recompile all userland code (ld.so, libraries, binaries) with GCC's
+> >>   "-fstack-check" option, which prevents the stack-pointer from moving
+> >>   into another memory region without accessing the stack guard-page (it
+> >>   writes one word to every 4KB page allocated on the stack).
+> > 
+> > For the record, Gentoo Hardened enables by default -fstack-check=specific
+> And if you were to look at the generated code, you'll see that it
+> happily skips 2-3 pages of probes in prologues as well as within alloca
+> spaces.  It's a false sense of security.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Gentoo Hardened uses the grsecurity kernel which enforces a 64kB heap-stack
+gap by default (it's also user adjustable). are you saying that the gcc
+probes are not sufficient to prevent jumping over that range?
+
