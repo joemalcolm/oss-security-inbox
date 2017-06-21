@@ -1,23 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/9
-Message-ID: <1496149413.941.3.camel@gmail.com>
-Date: Tue, 30 May 2017 09:03:33 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/16
+Message-ID: <1498063472.27465.6.camel@gmail.com>
+Date: Wed, 21 Jun 2017 12:44:32 -0400
 From: Daniel Micay <danielmicay@...il.com>
-To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com
-Cc: Roee Hay <roeehay@...il.com>
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2017-05-30 at 14:52 +0200, Florian Weimer wrote:
-> On 05/30/2017 01:51 PM, Daniel Micay wrote:
-> > It's unreasonable to consider the kernel line untrusted. A CVE being
-> > issued for one of these issues didn't make sense.
+> Ditto for the "move mmap_area and PIE binaries away from the stack"
+> patch series posted to LKML and CC'ed to kernel-hardening on June 2:
 > 
-> It's a potential Secure Boot bypass, so it matters in some theoretical
-> sense to some downstreams which carry those Secure Boot patches.
+> http://www.openwall.com/lists/kernel-hardening/2017/06/02/
 
-Also not sure what you mean by patches. Secure boot doesn't require
-applying patches. The kernel has to be verified by an early boot chain
-and dm-verity is in mainline for verifying the rest of the OS as Android
-and ChromeOS do. Android does have some tweaks for dm-verity but they're
-workarounds for bureaucracy rather than true technical requirements.
+That's tied to this, and talking to Riel about it on IRC, since he's
+interested in upstreaming these kinds of changes:
+
+https://gist.github.com/thestinger/b43b460cfccfade51b5a2220a0550c35
+
+He submitted an initial set of the changes moving towards being able to
+tie the stack mapping entropy to the mmap_rnd_bits sysctl upstream, and
+likely increasing the default value to match the current stack entropy
+on 32-bit. It wasn't motivated by stack exhaustion bugs. The stack
+rlimit calculation bug and ASLR range overlap issue are something that
+has been publicly discussed not tied to this context.
+
+RAND_THREADSTACK wasn't in the scope of that effort because CopperheadOS
+does ASLR for secondary stacks in userspace where it can randomize lower
+bits along with splitting a region for libraries (incl. dlopen) from the
+rest of the mmap usage.
+
+I didn't get early disclosure access or a leak of this round of issues.
+I wouldn't have done anything in response to it. I already went through
+the userspace Android Open Source Project alloca / VLA uses last year
+due to the unavailability of -fstack-check in Clang and only found CVE-
+2016-3922 (unbounded VLA at a local privilege boundary), a few bugs that
+I considered security bugs but that Google did not and a bunch of bugs
+that I ruled out as possible security issues. Some of those are now gone
+due to rewrites from C and C style C++ to higher level C++ or Java.
+
+It looks like https://reviews.llvm.org/D34386 is finally going to land
+for Rust and then it's straightforward to have Clang stop implementing
+-fstack-check as a no-op for architectures where that gets ported. It'll
+be nice not needing to carry an out-of-tree patch derived from a failed
+past attempt to land it.
