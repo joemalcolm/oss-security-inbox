@@ -1,40 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/12
-Message-ID: <CANO=Ty2TdNjz6NzOTsmaiYegKwGck5S07V4LAbW7p1NcXP27sw@mail.gmail.com>
-Date: Wed, 1 Nov 2017 10:32:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/8
+Message-ID: <CAKoP-y-NnHqx=87K+m_6UibGG3jzFcGNzU=3Y5o52FVLJ75m-g@mail.gmail.com>
+Date: Wed, 21 Jun 2017 07:35:34 -0500
+From: Josh Bressers <josh@...ss.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-One note on something a lot of people seem to be getting confused about:
+On Mon, Jun 19, 2017 at 3:39 PM, Solar Designer <solar@...nwall.com> wrote:
+>
+>
+> That said, we owe apologies to the community for violating the published
+> distros list policy regarding the maximum embargo duration.  Personally
+> and as distros list admin, I do apologize for letting this happen.
+>
+> I think we shouldn't have let it happen.
+>
+>
+I suspect the extended embargo was exactly correct in this instance. Having
+a policy you follow no matter what isn't ideal either (in fact it's
+probably dangerous).
 
-umask is a mask that is applied to permissions when a file is created.
+We've all been through a lot of embargoes, two weeks is more than
+acceptable for most of them, it's a very good thing to have a forcing
+function when needed. This one was special, nobody can deny that. It was
+big, complex, and amazing. It ticked all the boxes. It affected a
+substantial portion of the Internet. Had a name. Is a very old bug. Was
+very serious. Had a great advisory and organization behind it.
 
-umask is NOT the reverse of the permissions your programs/etc are supposed
-to create files with.
+Yet nobody flipped out. It was unexciting.
 
-E.g.:
+I suspect it was all so smooth because on Monday because everyone was
+ready, everyone knew what was going on. There was no rushing, nothing was
+on fire. There was time to develop patches properly. Everyone had their
+story straight. It's quite likely if you force a release in two weeks
+because that's the rule, someone not ready would create a story where one
+shouldn't exist.
 
-1) if I have a umask of 0002 I'm saying "never create a file that is
-readable by 'other'"
-2) if I have a umask of 0007 I'm saying "never create a file that is rwx by
-'other'"
-3) if I have a umask of 0077 I'm saying "never create a file that is rwx by
-'group' or 'other'"
-
-A umask of e.g. 0007 is NOT saying "create my files with rwxrwx----", it is
-saying "remove 'rwx' from other when creating a file, I don't really care
-what you do with user and group permissions"
-
-So programs are free to create files with less permissions, e.g.
-ssh-keygen, it creates files rw-r-----, minus whatever your umask is, so if
-you apply a umask of 0077 you'll get files with rw-------- which is what
-you' expect.
+I applaud everyone involved. I'm sure there were issues, but I doubt such a
+large effort could have gone better. Rules such as this exist to guide us,
+don't let them constrain us.
 
 -- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+    JB
 
