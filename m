@@ -1,55 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/1
-Message-Id: <E1eEPJ5-0006vL-TF@rmmprod07.runbox>
-Date: Mon, 13 Nov 2017 19:42:27 -0500 (EST)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-CC: "Vladis Dronov" <vdronov@...hat.com>, "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/1
+Message-ID: <tencent_453378A5461E2AE54D551FA1@qq.com>
+Date: Wed, 21 Jun 2017 11:28:17 +0800
+From: "fefe" <qbenjin@...com>
+To: "Peter Korsgaard" <peter@...sgaard.com>, "wbx" <wbx@...nadk.org>
+Cc: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: two vulns in  uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 13 Nov 2017 16:15:24 +0100, Greg KH <greg@...ah.com> wrote:
-> It's the arbitrarily nature here that I am curious about, it feels like
-> it should be "all or nothing", for CVEs to mean much here.  Right now it
-> seems like it is just, "all that we care to track"?  :)
+>> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
 
-"All" would be awesome, though unlikely.  But even if that's the eventual goal,
-"good starts" are still good starts.
+>uClibc is dead. Active development happens on uClibc-ng. Is uClibc-ng
+also affected by these issues?
 
-I think a very reasonable (and more practical) alternative is
-"enough CVEs to convince you to upgrade your kernel (or whatever) instead".
-In particular, if there are several CVEs assigned where the only
-reasonable mitigation is "you must upgrade your kernel", then
-you don't really *need* to assign more CVEs for purposes of telling
-people what they should do to mitigate their risks.  If those CVEs apply
-to them, then they know they should upgrade & what the urgency is.
 
-It'd be *nice* to "have all vulnerabilities assigned CVEs", because that'd
-enable better statistical analysis of CVEs.  In particular, developers would then have
-a better sense about the types of vulnerabilities that are really out there, in a specific
-product or in products in general.  It'd be especially useful for seeing
-what mitigations work, and what doesn't.  But I don't see that as a likely event
-in the near term.  In any case, it is certainly not necessary
-for the main reason most people look at CVEs, where they simply need
-to answer the question, "What is the urgency to upgrade this component?".
+uclibc_ng is also affected.
+>> one is about line 2682 of get_subexp.c :
 
-There are definitely problems in using CVEs to answer that question,
-because everyone *knows* the CVEs are incomplete & the assignment response time is
-less than ideal.  And I *absolutely* agree that the current delays in upgrading
-kernels are a serious problem - Greg, I wish you EVERY piece of luck you
-can manage as you work on that!!
+>I take it you are referring to libc/misc/regex/regexec.c?
 
-However, today,
-"always upgrade the kernel when it costs $billions and we know the new version
-has vulnerabilities too and it's not clear how important it is to upgrade anyway"
-is not a compelling argument to most people.  If you want people to upgrade
-*today* with any urgency, you need to give them a good reason, because
-currently the upgrade process is often painful.
 
-CVEs, while imperfect, give people a *reason* to go through the painful process
-of upgrading.  If we can make software upgrades much easier in the future,
-then the reasons don't need to be as compelling, but that's not the case today.
-
-Thanks!
-
---- David A. Wheeler
+yes. i am sorry！
