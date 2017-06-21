@@ -1,55 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/8
-Message-ID: <7032124.quzkmsXj2i@arcadia>
-Date: Sun, 01 Jan 2017 16:53:34 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/10
+Message-ID: <20170621122526.GA32701@grsecurity.net>
+Date: Wed, 21 Jun 2017 08:25:26 -0400
+From: Brad Spengler <spender@...ecurity.net>
 To: oss-security@...ts.openwall.com
-Subject: libtiff: assertion failure in readSeparateTilesIntoBuffer (tiffcp.c)
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Libtiff is a software that provides support for the Tag Image File Format 
-(TIFF), a widely used format for storing image data.
+On Wed, Jun 21, 2017 at 12:46:28PM +0200, Agostino Sarubbo wrote:
+> On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
+> > III. Solutions
+> > - Recompile all userland code (ld.so, libraries, binaries) with GCC's
+> >   "-fstack-check" option, which prevents the stack-pointer from moving
+> >   into another memory region without accessing the stack guard-page (it
+> >   writes one word to every 4KB page allocated on the stack).
+> 
+> For the record, Gentoo Hardened enables by default -fstack-check=specific
 
-A crafted tiff file revealed an assertion failure.
+I'd also like to mention for the record, that despite tweets like:
+https://twitter.com/kurtseifried/status/876818809079816193
+"CVE-2017-1000377 Oh you thought running GRsecurity PAX was going to save 
+you?"
+https://twitter.com/GentooHardened/status/877309872714522624
+(the latter apparently having been removed, while the former is
+still going strong solely due to the stubbornness of its author)
 
-The complete output:
+grsecurity was the only project without a valid CVE assigned to it.
 
-# tiffcp -i $FILE /tmp/foo
-tiffcp: /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1390:
-int readSeparateTilesIntoBuffer(TIFF *, uint8 *, uint32, uint32, tsample_t):
-Assertion `bps % 8 == 0' failed.
+Kurt Seifried of Red Hat chose to make use of the 4 weeks he had in 
+private to assign a bogus CVE against grsecurity (let's ignore that Kurt 
+thinks "GRsecurity" is a vendor and "PAX" is a product), then shot off 
+with a claim completely opposite from that present in the advisory.  
+Despite being called out on it by numerous people in public, and despite 
+my offering in private to allow him to correct his own almost 
+gleefully-published lies, he's instead chosen to waste two full days of 
+our time and that of several others, including Qualys, who for the public 
+record did not request the CVE against grsecurity.  Kurt Seifried of Red 
+Hat chose to do it himself, and even provided private emails 
+demonstrating as such.
 
-Affected version:
-4.0.7
+In my view, this taints the CVE process when someone apparently so
+biased fails to take responsibility for their own actions, and uses their
+position as judge, jury, and executioner of the DWF/CVE process to dole
+out damaging claims that are in direct opposition to what was stated in
+the advisory in the first place, for anyone who had read it at all.
 
-Fixed version:
-N/A
+Either Kurt Seifried of Red Hat didn't read the advisory at all in those
+4 weeks, or he was too incompetent to understand the clear statements
+being made in it, and too stubborn to admit his mistake, choosing to
+leave his tweet up even now, apparently waiting for the news cycle to
+end on this issue.
 
-Commit fix:
-https://github.com/vadz/libtiff/commit/7ff9652da2eec4c65279dcbc7e55c0418e87bbc8
+I was not contacted about this CVE ahead of time where it would have
+been trivial to correct any incompetence on the part of Kurt prior to
+the CVE being incorrectly issued -- my first notification was his
+childish tweet, not something I would expect from a supposed professional
+during work hours at his Red Hat employment.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Kurt gave excuse after excuse, finally hiding behind the CVE process 
+itself, insisting Qualys would need to provide some reason for rejection 
+of the CVE (which they did, despite it not being necessary for them to do 
+so as they never requested the CVE in the first place).  This was purely 
+the fault of Kurt Seifried, and he alone chose to intentionally delay the 
+entire process of correcting the matter, and also gave no justification 
+as to why his completely false tweet still remained despite there being 
+no formal process required there once it was abundantly clear he was in 
+the wrong.  I would be happy to assume Kurt was simply incompetent and 
+either didn't read the advisory or didn't understand the simple facts 
+contained in it (like that the PoC would take over 1500 years to work 
+against grsecurity under even an intentionally weakened configuration), 
+but his stubborn refusal to remove or correct a tweet he is clearly aware 
+now is wrong suggests to me nothing other than maliciousness.
 
-CVE:
-N/A
+If I am wrong about something, I am happy to own up to it ASAP -- why
+is it so difficult for certain other people to act decently?
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00072-libtiff-assert-readSeparateTilesIntoBuffer
+It doesn't bode well for the embargoing process if this is how things
+are going to work for projects that don't participate.  Is the purpose
+to prepare Red Hat's marketing materials in advance?  To hide the fact
+that this issue should have been obvious to them many years ago but
+due to their lack of investment in security despite being a
+multi-billion dollar company they failed to protect their customers
+against it?  Was the purpose for upstream developers to spend 4 weeks
+NIH'ing our existing fix for this issue from 2010, repeating the same
+events from 2010 as they've yet again produced a broken patch that oopses
+machines and failed under trivial fuzzing?
 
-Timeline:
-2016-11-23: bug discovered and reported to upstream
-2016-12-03: upstream released a patch
-2017-01-01: blog post about the issue
+Because if any lesson can be taken away from this whole mess, it's
+certainly not whatever these others that didn't protect their users
+for all these years have to say about it.  It's a clear vindication of
+our security strategy and a demonstration of what happens when actual
+investment and effective original ideas informed by offense are put
+into security.
 
-Note:
-This bug was found with American Fuzzy Lop.
+Finally, one thing I noted was missing from Solar's timeline is that
+on May 18th, the day after the private distros list was notified with
+details, this commit appeared in public:
+https://github.com/openbsd/src/commit/4ed6bfeac112229466414b94cdbd983fb8017796
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/01/libtiff-assertion-failure-in-readseparatetilesintobuffer-tiffcp-c
+OpenBSD publishing this commit, in combination with Solar making repeated
+mentions here on oss-sec about a cross-OS issue being worked on was enough
+for me to know that the underlying issue being discussed was what we had
+widely discussed publicly in 2010 on LWN and elsewhere.  What's the official
+explanation for this, and is any action being taken for what I assume is a
+member of the private list breaking the embargo?
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Appendix:
+Famous last words from the PaX Team in reply to Linus' broken heap stack gap
+code from 2010:
+https://lkml.org/lkml/2011/6/6/306
+"what a pity that now you get to revert the whole shit
+and implement it properly (i don't need to tell you where you can find such
+a working solution, do i)."
+(the whole post is quite good as an example of the dangers of NIH)
+
+-Brad
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
