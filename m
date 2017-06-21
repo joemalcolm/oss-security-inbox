@@ -1,100 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/04/3
-Message-ID: <20170804173658.GA31208@openwall.com>
-Date: Fri, 4 Aug 2017 19:36:58 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Andrey Konovalov <andreyknvl@...il.com>
-Cc: oss-security@...ts.openwall.com, willemdebruijn.kernel@...il.com, Dmitry Vyukov <dvyukov@...gle.com>, Kostya Serebryany <kcc@...gle.com>
-Subject: Re: Reporting and disclosing Linux kernel vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/18
+Message-ID: <743a5703-e206-9304-cb30-71c76cde9bef@igalia.com>
+Date: Wed, 21 Jun 2017 20:18:39 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2017-0005
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 04, 2017 at 06:59:15PM +0200, Andrey Konovalov wrote:
-> It's not completely clear to me how to properly report and disclose
-> Linux kernel security issues. There are a few different parties [1, 2,
-> 3] that need to be informed and coordinated. I couldn't find a
-> publicly available actionable list of steps, so I've outlined it as I
-> see it here:
-> 
-> https://github.com/google/syzkaller/blob/master/docs/linux_kernel_reporting_bugs.md#reporting-security-bugs
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0005
+------------------------------------------------------------------------
 
-Thank you!  I'm afraid the reality is that preferences vary, including
-even between different upstream developers.  That said, we should in
-fact probably try to come up with guidelines similar to what you made a
-start at.
+Date reported      : June 21, 2017
+Advisory ID        : WSA-2017-0005
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0005.html
+CVE identifiers    : CVE-2017-2538, CVE-2017-2424.
 
-Here are some assorted comments from me:
+Several vulnerabilities were discovered in WebKitGTK+.
 
-Please inform oss-security as soon as the issue is made public,
-anywhere.  There's no need to wait for a CVE, patch, nor anything to do
-that.  If the issue is public, it must be on oss-security right away.
-You should add CVE, patch, etc. by "replying" to your own message later.
-This especially makes a difference in your "Reporting minor security
-bugs", where making the issue public is currently listed as step 1, and
-posting it to oss-security as step 3, with a potentially time-consuming
-step 2 inbetween (waiting for a CVE).  Both must be part of step 1, or
-for clarity they may be steps 1 and 2 if there's expected to be no delay
-between them.
+CVE-2017-2538
+    Versions affected: WebKitGTK+ before 2.16.4.
+    Credit to Richard Zhu (fluorescence) working with Trend Micro's Zero
+    Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-In "Reporting major security bugs", you could make it clearer that
-there's no or little delay between notification to security@k.o and to
-linux-distros.  As currently written, it is unclear whether you
-recommend to wait for security@k.o to come up with a patch before
-informing linux-distros.
+CVE-2017-2424
+    Versions affected: WebKitGTK+ before 2.16.0.
+    Credit to Paul Thomson (using the GLFuzz tool) of the Multicore
+    Programming Group, Imperial College London.
+    Impact: Processing maliciously crafted web content may result in the
+    disclosure of process memory. Description: An information disclosure
+    issue existed in the processing of OpenGL shaders. This issue was
+    addressed through improved memory management.
 
-I hear that for netdev bugs, security@k.o is likely to ask you to post
-such bugs to the public netdev list right away, without any embargo.
-You could want to see whether this is in fact the case, and adjust your
-instructions if so.
 
-I don't know whether the CNAs on linux-distros have control to "make the
-CVE description public" as you suggest as one of the steps.  This is a
-question to them - can they?  I assume this means the description isn't
-available to MITRE nor anyone outside of linux-distros (and the distros'
-people with need-to-know) before that step.
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
 
-Just like in "Reporting minor security bugs", there should be almost no
-delays between the different public disclosure steps - CVE description,
-distros' updates, upstream commit, notification to oss-security.  All of
-these should be on the same day, at worst.  Perhaps clarify this.
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
 
-When you refer to linux-distros, please ask people to carefully read the
-distros list wiki page before sending anything to the list.  They must
-be aware of list policy, and they must learn of the magic string to
-include in the Subject from there (do not list this magic string in your
-own instructions, though - just like you correctly don't do it now).
+The WebKitGTK+ team,
+June 21, 2017
 
-The "good example" of oss-security posting that you refer to does in
-fact demonstrate a good oss-security posting, but it also demonstrates
-problematic handling of the issue before that point.  Here's the
-timeline found in that message:
 
-2016-11-28: Bug reported to security () kernel org
-2016-11-30: Patch submitted to netdev, notification sent to linux-distros
-2016-12-02: Patch committed to mainline kernel
-2016-12-06: Public announcement
 
-"2016-11-30: Patch submitted to netdev" essentially means making the
-issue public.  (I guess this is an instance of what I had meant above
-regarding netdev issues being forced to the public from security@....)
-After that time, there was no point in "notification sent to
-linux-distros" (which is for private issues only), and instead
-"2016-12-06: Public announcement" should have occurred on oss-security
-right away on 2016-11-30 (all linux-distros members are supposed to
-monitor oss-security).  Keeping the issue "semi-"public like that is
-generally wrong.
-
-(I don't recall the details of why we let it happen the way it did for
-that one issue last year.  My comments above are in general.)
-
-That's it for now.  I'm sorry for not having a set of clear and simple
-edits to your current proposal, but I do hope this thread will result in
-a better "publicly available actionable list of steps", as you suggest.
-Thank you for working on it!
-
-> [1] https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
-> 
-> [2] http://oss-security.openwall.org/wiki/mailing-lists/distros
-> 
-> [3] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
