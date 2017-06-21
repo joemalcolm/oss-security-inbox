@@ -1,42 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/30/2
-Message-ID: <d9773cc8-16e8-e0f8-445b-023be2c835b4@orlitzky.com>
-Date: Mon, 30 Oct 2017 10:09:55 -0400
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/11
+Message-ID: <20170621135727.GA12852@openwall.com>
+Date: Wed, 21 Jun 2017 15:57:27 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Magento: Leaking of config file local.xml
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-On 10/30/2017 05:24 AM, Hanno Böck wrote:
-> Magento is a web shop written in PHP.
-> 
-> Magento stores its configuration in a file local.xml, stored in the
-> webroot under app/etc/local.xml. As it is an xml file by default a web
-> server will not parse it in any way, but directly expose it to users.
+On Wed, Jun 21, 2017 at 08:25:26AM -0400, Brad Spengler wrote:
+> Finally, one thing I noted was missing from Solar's timeline is that
+> on May 18th, the day after the private distros list was notified with
+> details, this commit appeared in public:
+> https://github.com/openbsd/src/commit/4ed6bfeac112229466414b94cdbd983fb8017796
 
-Thanks for publicizing this, it's an ancient issue, see e.g.
+IIRC, they also committed a relevant fix to their qsort().
 
-https://tomrobertshaw.net/2012/11/magento-security-check-your-appetclocal-xml-file/
+> OpenBSD publishing this commit, in combination with Solar making repeated
+> mentions here on oss-sec about a cross-OS issue being worked on was enough
+> for me to know that the underlying issue being discussed was what we had
+> widely discussed publicly in 2010 on LWN and elsewhere.  What's the official
+> explanation for this, and is any action being taken for what I assume is a
+> member of the private list breaking the embargo?
 
-I think it may finally be fixed in the 2.x series of Magento which now
-has a "pub" directory beside "app" in the tree. With DocumentRoot =
-"pub", your local.xml should be safe.
+OpenBSD isn't a member of the distros list - they were notified by
+Qualys separately.  This matter was discussed, and some folks were
+unhappy about OpenBSD's action, but in the end it was decided that
+since, as you correctly say, the underlying issue was already publicly
+known, OpenBSD's commits don't change things much.  Sure this draws
+renewed attention to the problem, but probably not to the extent and in
+the many specific ways the Qualys findings cover.  So it was decided to
+keep the embargo on the detail.
 
+Ditto for the "move mmap_area and PIE binaries away from the stack"
+patch series posted to LKML and CC'ed to kernel-hardening on June 2:
 
-> Magento protects against this by shipping an .htaccess file that blocks
-> access to that directory. However that is not a sufficient
-> protection. .htaccess files are specific to the Apache web server.
+http://www.openwall.com/lists/kernel-hardening/2017/06/02/
 
-Indeed. And since you mentioned Drupal, they've done the same thing in
-the past (search "code execution"):
+which might have been inspired by Qualys work known to Red Hat engineers
+internally.  A difference is that Red Hat is a member of the distros
+list.  I brought this up on the distros list, and another Red Hat person
+said "We'll deal with this internally."  Given the circumstances, I find
+this response satisfactory.
 
-https://www.drupal.org/forum/newsletters/security-advisories-for-drupal-core/2013-11-20/sa-core-2013-003-drupal-core
+I am far more concerned about the total embargo duration here than about
+these two semi-leaks.
 
-What's worse is that the Drupal status report will warn you about the
-issue, but the "vulnerability check" that it does simply checks for the
-existence of an .htaccess! So if you're running nginx and if you have
-their impotent .htaccess file laying around, Drupal will tell you that
-everything's OK.
-
-(And of course, if you fix the issue properly, the status report will
-tell you that you're vulnerable...)
+Alexander
