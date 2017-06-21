@@ -1,39 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/5
-Message-id: <4EBCE262-F53E-4DAC-90E4-913D8E81C063@me.com>
-Date: Mon, 06 Mar 2017 12:32:30 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Remote file upload vulnerabilities in multiple wordpress plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/23
+Message-ID: <87efud2ewm.fsf@example.com>
+Date: Wed, 21 Jun 2017 22:45:45 +0100
+From: nospam@...so.re
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
+Qualys Security Advisory <qsa@...lys.com>
+writes:
+
+> Hi Solar, all,
+>
+> On Tue, Jun 20, 2017 at 03:22:04PM +0200, Solar Designer wrote:
+>> Qualys, I suggest that, like you did with the Sudo exploit, you publish
+>> your Stack Clash exploits in here as soon as third-party exploits of
+>> comparable functionality appear, or next Tuesday, whichever is earlier.
+>
+> We have discussed this internally, and we will first publish the Stack
+> Clash exploits and proofs-of-concepts that we sent to the distros@ and
+> linux-distros@ lists, plus our Linux ld.so exploit for amd64, and our
+> Solaris rsh exploit.
+>
+> We will do so next Tuesday, but we will publish our Linux exploits and
+> proofs-of-concept if and only if Fedora updates are ready by then, our
+> NetBSD proof-of-concept if and only if NetBSD patches are ready by then,
+> and our FreeBSD proofs-of-concept if and only if FreeBSD patches are
+> ready by then.
+>
+> If someone happens to know of another major distribution that has not
+> published patches and updates yet, please let us all know by replying
+> here to oss-security. Thank you very much!
+>
+> With best regards,
+
+(posting from gmane... I hope it's OK)
 
 Hello,
 
-All of these plugins include unlicensed software developed by http://www.invedion.com/ that is vulnerable, I am unable to get 
-more details from the vendor as to what the software name and version are and therefor can't issue a CVE for just
-that software.  I've issued CVEs for the impacted plugins I know of:
+not sure it counts as a major distribution (probably not), but NixOS
+(https://nixos.org) is gaining traction and, as far as I understand,
+they are working on patches but they don't seem to be ready yet.
 
-CVE-2017-1002000
-Remote file upload vulnerability in Wordpress Plugin mobile-friendly-app-builder-by-easytouch v3.0
-Example: http://example.com/wordpress/wp-content/plugins/mobile-friendly-app-builder-by-easytouch/server/images.php
-http://www.vapidlabs.com/advisory.php?v=179
+Many thanks to everybody for your work,
 
-CVE-2017-1002001
-Remote file upload vulnerability in Wordpress Plugin mobile-app-builder-by-appress v1.05
-Example: http://example.com/wordpress/wp-content/plugins/mobile-app-builder-by-wappress/server/images.php
-http://www.vapidlabs.com/advisory.php?v=180
+-- S.
 
-CVE-2017-1002002
-Remote file upload vulnerability in Wordpress Plugin webapp-builder v2.0
-Example: http://example.com/wordpress/wp-content/plugins/webapp-builder/server/images.php
-http://www.vapidlabs.com/advisory.php?v=181
-
-
-CVE-2017-1002003
-Remote file upload vulnerability in Wordpress Plugin wp2android-turn-wp-site-into-android-app v1.1.4
-Example: http://example.com/wordpress/wp-content/plugins/wp2android-turn-wp-site-into-android-app/server/images.php
-http://www.vapidlabs.com/advisory.php?v=182
-
-@muntopia provided an exploit for all of them here:
-https://github.com/alienwithin/Scripts-Sploits/blob/master/zen_app_mobile_wp_rfu.py
