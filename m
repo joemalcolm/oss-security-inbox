@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2378" "Sunday" "22" "March" "2015" "13:42:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150322174207.F18F16C001C@smtpvmsrv1.mitre.org>" "55" "[oss-security] Re: Possible CVE Request: dulwich: does not prevent to write files in commits with invalid paths to working tree" nil nil nil "3" "2015032217:42:07" "[oss-security] Re: Possible CVE Request: dulwich: does not prevent to write files in commits with invalid paths to working tree" (number mark "        cve-assign@m Mar 22   55/2378  " thread-indent "\"[oss-security] Re: Possible CVE Request: dulwich: does not prevent to write files in commits with invalid paths to working tree\"\n") "<20150321092624.GA10087@eldamar.local>" ("<20150321092624.GA10087@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["624" "Wednesday" "21" "June" "2017" "11:28:17" "+0800" "=?gb18030?B?ZmVmZQ==?=" "qbenjin@qq.com" "<tencent_453378A5461E2AE54D551FA1@qq.com>" "16" "Re: [oss-security] two vulns in  uClibc-0.9.33.2" "^Cc:" nil nil "6" "2017062103:28:17" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        qbenjin@qq.c Jun 21   16/624   " thread-indent "\"Re: [oss-security] two vulns in  uClibc-0.9.33.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16225 invoked by uid 550); 22 Mar 2015 17:42:20 -0000
+Received: (qmail 19686 invoked by uid 550); 21 Jun 2017 04:10:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16207 invoked from network); 22 Mar 2015 17:42:20 -0000
-In-Reply-To: <20150321092624.GA10087@eldamar.local>
-Message-Id: <20150322174207.F18F16C001C@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, jelmer@debian.org
-Date: Sun, 22 Mar 2015 13:42:07 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 18062 invoked from network); 21 Jun 2017 03:28:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1498015702; bh=ebeBjy8f2yS7iPJg7Lfr5scmhNXxdiyKF+Cn6L+AayU=;
+	h=From:To:Cc:Subject:Mime-Version:Content-Type:Content-Transfer-Encoding:Date:Message-ID;
+	b=HjHsmUizR4QV00hZDkshweGjnQgMBCIuQHbo6AhQJF/crqJ4VoSwtvYbjCsIAVFVH
+	 mfLJSMXoFj0xp8L54Yl1RHApYFUPoOj74Uial6WOxlXXUbO8M3YhtARV28ULpsSvMH
+	 NAhbvIGWDIu6QzMwXdlq+3Qyt6m/MFcSIBBEdMuo=
+X-QQ-FEAT: tu76sEmqBkiDKo+vO1BxGcuBsMyx0wSn7hUAKqRCxzJ2SxxCcUqb4E21jypUd
+	d3Fp9oMVve3hTntdZ/uHNjm/lgQHNjJ1M8I+jfYvksTYh87ZBWqVu5x16y4hMNSTWix4kfa
+	AhlsPs73DyJDgZ9qFpqaBlk87pWMqfJfDF3SCqsZ7GI5jT8OVJ2d8BnnNhpZddfIc1j7u06
+	xmNGCSVU7wK5pZIZ9sI5g9dt7xH7IuDebkWzm2hv5ZsT3I9kmdz2lX3TQG8NUevg1i9ie6h
+	5pqg==
+X-QQ-SSF: 0000000000000020000000000000001
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-QQ-DNTY: 1
+X-Originating-IP: 118.114.163.243
+X-QQ-STYLE: 
+X-QQ-mid: webmail448t1498015697t2728571
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_5949E7D1_08F45DB0_03A7D025"
+Content-Transfer-Encoding: 8Bit
+X-Priority: 3
+Message-ID: <tencent_453378A5461E2AE54D551FA1@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+X-QQ-FName: 2C9F7A823C254D00A6249A161EBFE14E
+X-QQ-LocalIP: 10.198.131.167
+Cc: "=?gb18030?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
+Date: Wed, 21 Jun 2017 11:28:17 +0800
+From: "=?gb18030?B?ZmVmZQ==?=" <qbenjin@qq.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Possible CVE Request: dulwich: does not prevent to write files in commits with invalid paths to working tree
-To: carnil@debian.org
+Subject: Re: [oss-security] two vulns in  uClibc-0.9.33.2
+To: "=?gb18030?B?UGV0ZXIgS29yc2dhYXJk?=" <peter@korsgaard.com>, "=?gb18030?B?d2J4?=" <wbx@openadk.org>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+------=_NextPart_5949E7D1_08F45DB0_03A7D025
+Content-Type: text/plain;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
 
-> Does the scope of CVE-2014-9390 also include these bits
-> from the above:
+Pj4gSSBmb3VuZCB0d28gdnVsbnMgaW4gIHVDbGliYy0wLjkuMzMuMiAoaHR0
+cHM6Ly91Y2xpYmMub3JnLykNCg0KPnVDbGliYyBpcyBkZWFkLiBBY3RpdmUg
+ZGV2ZWxvcG1lbnQgaGFwcGVucyBvbiB1Q2xpYmMtbmcuIElzIHVDbGliYy1u
+Zw0KYWxzbyBhZmZlY3RlZCBieSB0aGVzZSBpc3N1ZXM/DQoNCg0KdWNsaWJj
+X25nIGlzIGFsc28gYWZmZWN0ZWQuDQo+PiBvbmUgaXMgYWJvdXQgbGluZSAy
+NjgyIG9mIGdldF9zdWJleHAuYyA6DQoNCj5JIHRha2UgaXQgeW91IGFyZSBy
+ZWZlcnJpbmcgdG8gbGliYy9taXNjL3JlZ2V4L3JlZ2V4ZWMuYz8NCg0KDQp5
+ZXMuIGkgYW0gc29ycnmjoQ==
 
-> dulwich happily clones a repository which contains commit with invalid
-> paths, say .git/hooks/pre-commit, and thus allowing execution of code
-> on subsequent commits.
+------=_NextPart_5949E7D1_08F45DB0_03A7D025--
 
-No, the scope of CVE-2014-9390 does not include that. Use
-CVE-2014-9706 for this vulnerability in dulwich.
-
-The scope of CVE-2014-9390 is currently undefined, in part because
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-9390
-intentionally doesn't have any related information. Usage of
-CVE-2014-9390 is, very roughly, concerned with "The string .git/ for a
-directory name has always been considered Very Special. Therefore,
-other strings with equivalence relationships to .git/ must also be
-considered Very Special."
-
-The root cause of the problem in dulwich seems to be "The string .git/
-for a directory name was not considered Very Special." This is
-completely distinct conceptually, and is a much simpler case for CVE
-coverage.
-
-There are two types of concerns with CVE-2014-9390. First,
-CVE-2014-9390 can only apply to omitted equivalence-relationship
-handling in source code that is, or is directly copied from, "Git
-before 1.8.5.6, 1.9.x before 1.9.5, 2.0.x before 2.0.5, 2.1.x before
-2.1.4, and 2.2.x before 2.2.1" source code. It is not possible to have
-a CVE for a cross-implementation vulnerability class of this
-equivalence-relationship handling. Second, usage of CVE-2014-9390
-seems to span multiple types of problems, possibly including all of:
-
-  http://cwe.mitre.org/data/definitions/178.html
-  http://cwe.mitre.org/data/definitions/180.html
-  http://cwe.mitre.org/data/definitions/182.html
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVDv4oAAoJEKllVAevmvmsH7EH/3hpPNXiEwIlDR24GR1NuYfi
-74PTVtFPPWDajblRV+RTMbZbxp2MdtUR2AmvYYUF5YyqTAOiGm0tWB6EVARhXCMu
-QBzYu/9MMUTw2cajei33bFpTfQ+M0XeYBK6Mx7hw86j4zMT2gWSzN05CDcXyaFtC
-y02TbwLTGv4CShWlN3ArMaBRYhBRxtF51VnbMvYeygZokdIdNAO9VULshgbBLijc
-ZMs4yH9wje9Lctz/x5T2nKEW24pm8pHQAs7v8WwWtSnQ0FfTo5vjdu+iT4zpaOSB
-MYmFxjBy4T4YaWQaO/XUP+IUue1lkuwY9olTYCpTVxhD6wAY86MTSDro1QNugFk=
-=sxen
------END PGP SIGNATURE-----
