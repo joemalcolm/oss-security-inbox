@@ -1,110 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/04/3
-Message-Id: <E1cvNhy-0000Vj-CZ@xenbits.xenproject.org>
-Date: Tue, 04 Apr 2017 12:37:14 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 212 (CVE-2017-7228) - x86: broken check in memory_exchange() permits PV guest breakout
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/15
+Message-ID: <cbf49fff-2cd8-cb8c-59b8-07c2b7c37b0f@redhat.com>
+Date: Wed, 21 Jun 2017 10:22:20 -0600
+From: Jeff Law <law@...hat.com>
+To: oss-security@...ts.openwall.com, Agostino Sarubbo <ago@...too.org>
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 06/21/2017 04:46 AM, Agostino Sarubbo wrote:
+> On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
+>> III. Solutions
+>> - Recompile all userland code (ld.so, libraries, binaries) with GCC's
+>>   "-fstack-check" option, which prevents the stack-pointer from moving
+>>   into another memory region without accessing the stack guard-page (it
+>>   writes one word to every 4KB page allocated on the stack).
+> 
+> For the record, Gentoo Hardened enables by default -fstack-check=specific
+And if you were to look at the generated code, you'll see that it
+happily skips 2-3 pages of probes in prologues as well as within alloca
+spaces.  It's a false sense of security.
 
-            Xen Security Advisory CVE-2017-7228 / XSA-212
-                              version 3
+jeff
 
-       x86: broken check in memory_exchange() permits PV guest breakout
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The XSA-29 fix introduced an insufficient check on XENMEM_exchange
-input, allowing the caller to drive hypervisor memory accesses outside
-of the guest provided input/output arrays.
-
-IMPACT
-======
-
-A malicious or buggy 64-bit PV guest may be able to access all of
-system memory, allowing for all of privilege escalation, host crashes,
-and information leaks.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are vulnerable.
-
-Only x86 systems are affected.  ARM systems are not vulnerable.
-
-The vulnerability is only exposed to 64-bit PV guests.  HVM guests and
-32-bit PV guests can't exploit the vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM or 32-bit PV guests will avoid the vulnerability.
-
-The vulnerability can be avoided if the guest kernel is controlled by
-the host rather than guest administrator, provided that further steps
-are taken to prevent the guest administrator from loading code into
-the kernel (e.g. by disabling loadable modules etc) or from using
-other mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Jann Horn of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa212.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
-
-$ sha256sum xsa212*
-be1255bcda06158cdb86eb5297e8a271e05318e88cd21035c58a67f9ada6ccba  xsa212.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJY45NxAAoJEIP+FMlX6CvZMRMH/jGfTS4hcPuPAiarYhD4D4YQ
-pVir0eM/gm/8yJE/CT3m3dieKjjl+GAFW4ehRMoIoxVdSlhiwskx5V+8I5qR/Lo6
-6F9BPJw6eaEM62yw7YvMl7EuSexP3WgQeyRSf3BckZ0oxEPSHrIUi0/p0B7FNOFr
-C1EqK9d08dMKA5AEugpXgDI0t7fbYg3Kkm8SVnW5B8+5OI/iyTOOkFoPx1sbEvWX
-k+zgzodsDuoh8O25+pKVs+verknzGJm9UdCD7vHW8elLg1+1nS2BlfTSr478cDTE
-FnbnpuE7r1X/HHd2hPHDAZu3g2IUqfBJCLeYZfhIM9Eioei6bVLXh0f33DvlH/U=
-=L74k
------END PGP SIGNATURE-----
-
-Download attachment "xsa212.patch" of type "application/octet-stream" (3392 bytes)
