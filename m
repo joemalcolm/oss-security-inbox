@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2058" "Wednesday" "14" "March" "2018" "07:55:08" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1803132312370.29869@tvnag.unkk.fr>" "81" "[oss-security] [SECURITY ADVISORY] curl: LDAP NULL pointer dereference" nil nil nil "3" "2018031406:55:08" "[oss-security] [SECURITY ADVISORY] curl: LDAP NULL pointer dereference" (number mark "U       daniel@haxx. Mar 14   81/2058  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: LDAP NULL pointer dereference\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["729" "Wednesday" "21" "June" "2017" "12:40:57" "+0200" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-EJqSUT8PcMzEjDF8k8CwxsyHqVSEYbku3HaAhvvKjgCbQ@mail.gmail.com>" "15" "[oss-security] 4 remote vulnerabilities in OpenVPN" "^Date:" nil nil "6" "2017062110:40:57" "[oss-security] 4 remote vulnerabilities in OpenVPN" (number mark "        guidovranken Jun 21   15/729   " thread-indent "\"[oss-security] 4 remote vulnerabilities in OpenVPN\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1543 invoked by uid 550); 14 Mar 2018 06:55:24 -0000
+Received: (qmail 30590 invoked by uid 550); 21 Jun 2017 10:53:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,101 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1356 invoked from network); 14 Mar 2018 06:55:21 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 14 Mar 2018 07:55:08 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1803132312370.29869@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 28416 invoked from network); 21 Jun 2017 10:41:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=C9hxxJWqQFGXC40RJM50U5gFE1FTfrIPDVrytV7H98s=;
+        b=qfFz/1MRCRbyUmFMrRzOuKAcENTdqjqTW/wiaBdnrc/fuFxU1yIlfJBNkL/kop0vvC
+         lmOFmaSrnneKMVD1SastoDXIiQ3c8oaLavB6uzW0gByv7zOz/xs5GWM8/vGTEp7o/m+T
+         xUNVFB3wPl+DOmHj/NemrrLwbkU5WQwf1rsOk5H/v1JRNQaiTIwAR7zzIO1SPrpCvTjW
+         BR3fUaYlPenuZaMPlSSjUznEj9K29Rv9thNWGZl5D8HHo7R/9XmOR1ert3C32HP5itkL
+         6BJ6PrguiaGynIur/Nm5DYmTo7EA5DYGK+XuPn6m0PJJwjKayyAWXYxjR7tF7c10iVkE
+         wJvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=C9hxxJWqQFGXC40RJM50U5gFE1FTfrIPDVrytV7H98s=;
+        b=DveL4DpPquP8qA7Nr6EhuUWGOSlhaJen5JXiq/tHUUAWAKbSMSN+yOjAUEinCaIzJG
+         6QHd9bI3YQV2bQ44jyl6i/fdgXbLte00m02R6NEcKIB1JRHiuS1j/5JwCL7dmoRQdb/N
+         aJhab5eodA2Y/m1VntpaiN57fmyL7SE06MR97ldVRUT6oz8/5xU9ywyuK+O5pCO1Egb0
+         mqd4V7BtE8WiFUbu+z3dtseWyXxsQyhRU2bxTnfvAqbmFyBmmyYHdypyPwaHyxOooXRs
+         ZIE8o4Lx/uxgBoF7nOAm8mJBNlMPBEiP3w3SRVRkJbi9ZNZtPwJDWoDuXA7J6g0jgdDj
+         1mxA==
+X-Gm-Message-State: AKS2vOznDeO95oHK53GSors04oUn/fmi4EX9Xax9ni6rlsh7nW1orplD
+	ofmtxE8oKyirFzzZOCa1pWgIFQSnO+/w
+X-Received: by 10.176.82.73 with SMTP id j9mr9364909uaa.74.1498041658222; Wed,
+ 21 Jun 2017 03:40:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: LDAP NULL pointer dereference
+Message-ID: <CAO5O-EJqSUT8PcMzEjDF8k8CwxsyHqVSEYbku3HaAhvvKjgCbQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Wed, 21 Jun 2017 12:40:57 +0200
+From: Guido Vranken <guidovranken@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] 4 remote vulnerabilities in OpenVPN
+To: oss-security@lists.openwall.com
 
-LDAP NULL pointer dereference
-=============================
+An extensive effort to find security vulnerabilities in OpenVPN has
+resulted in 4 vulnerabilities of such severity that they have been
+kept under embargo until today.
+Interestingly, this comes shortly after the results of two source code
+audits were released, which both failed to detect these problems.
+The worst vulnerability of the 4 allows a client the drain the
+server's memory, which, due to a particular technical circumstance,
+may be exploited to achieve remote code execution.
 
-Project curl Security Advisory, March 14th 2018 -
-[Permalink](https://curl.haxx.se/docs/adv_2018-97a2.html)
+An extensive write-up can be found here:
+https://guidovranken.wordpress.com/2017/06/21/the-openvpn-post-audit-bug-bonanza/
+. A technical explanation for every vulnerability is provided, and I
+ponder the efficacy of source code audits.
 
-VULNERABILITY
--------------
-
-curl might dereference a near-NULL address when getting an LDAP URL.
-
-The function `ldap_get_attribute_ber()` is called to get attributes, but it
-turns out that it can return `LDAP_SUCCESS` and still return a `NULL` pointer
-in the result pointer when getting a particularly crafted response. This was a
-surprise to us and to the code.
-
-libcurl-using applications that allow LDAP URLs, or that allow redirects to
-LDAP URLs could be made to crash by a malicious server.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The bug is only present in curl versions built to use OpenLDAP.
-
-This bug was introduced in May 2010 in [this
-commit](https://github.com/curl/curl/commit/2e056353b00d09).
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2018-1000121 to this issue.
-
-CWE-476: NULL Pointer Dereference
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.21.0 to and including curl 7.58.0
-- Not affected versions: curl < 7.21.0 and curl >= 7.59.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In curl version 7.59.0, curl checks the pointer properly before using it.
-
-A [patch for CVE-2018-1000121](https://curl.haxx.se/CVE-2018-1000121.patch) is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.59.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Make sure you disable LDAP in your transfers
-
-TIME LINE
----------
-
-It was reported to the curl project on March 6, 2018
-
-We contacted distros@openwall on March 7, 2018.
-
-curl 7.59.0 was released on March 14 2018, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-Reported by Dario Weisser. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Guido
