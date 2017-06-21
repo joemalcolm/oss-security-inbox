@@ -1,52 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/11
-Message-ID: <1496341419911.6271@amazon.com>
-Date: Thu, 1 Jun 2017 18:23:40 +0000
-From: "Liguori, Anthony" <aliguori@...zon.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: unresponsive distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/25
+Message-ID: <8e3931f4-b5b1-817d-eaed-0b88eac70f05@redhat.com>
+Date: Wed, 21 Jun 2017 16:48:14 -0600
+From: Jeff Law <law@...hat.com>
+To: oss-security@...ts.openwall.com, PaX Team <pageexec@...email.hu>, Agostino Sarubbo <ago@...too.org>
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-Hi Solar,
+On 06/21/2017 03:29 PM, PaX Team wrote:
+> On 21 Jun 2017 at 10:22, Jeff Law wrote:
+> 
+>> On 06/21/2017 04:46 AM, Agostino Sarubbo wrote:
+>>> On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
+>>>> III. Solutions
+>>>> - Recompile all userland code (ld.so, libraries, binaries) with GCC's
+>>>>   "-fstack-check" option, which prevents the stack-pointer from moving
+>>>>   into another memory region without accessing the stack guard-page (it
+>>>>   writes one word to every 4KB page allocated on the stack).
+>>>
+>>> For the record, Gentoo Hardened enables by default -fstack-check=specific
+>> And if you were to look at the generated code, you'll see that it
+>> happily skips 2-3 pages of probes in prologues as well as within alloca
+>> spaces.  It's a false sense of security.
+> 
+> Gentoo Hardened uses the grsecurity kernel which enforces a 64kB heap-stack
+> gap by default (it's also user adjustable). are you saying that the gcc
+> probes are not sufficient to prevent jumping over that range?
+With a 64k guard, you should be OK and protected.  -fstack-check will
+consistently skip 8218 bytes on x86 (8192 on most architectures).  Even
+if you combined the skipped space from the prologue and the skipped
+space in the dynamic area, you're only at just over 16k -- and it's not
+clear the two skipped areas could be combined like that anyway.
 
-The encrypted thread is a single thread with a high volume of messages.  The later part of the thread loses the context of you explicitly asking for a response.
 
-Coupled with the holiday weekend, that meant when I read through the thread I read too quickly and missed your explicit request.
+Given the larger guard you should be in good shape.  Sorry to have
+sounded alarmist without having full information about your
+configuration, particularly WRT the expanded guard page.
 
-Had you changed the subject of the thread for the request, it would have been noticed immediately but I don't mean to point too many fingers here.
 
-Regards,
+--
 
-Anthony Liguori
-________________________________________
-From: Solar Designer <solar@...nwall.com>
-Sent: Thursday, June 1, 2017 11:19 AM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] unresponsive distros
+There's one theoretical approach I'm aware of that one could use the
+skip the guard in your situation.  I'm not aware of any code in practice
+that would have the right properties to trigger *and* triggering would
+require a particular optimization that neither LLVM nor GCC perform to
+the best my knowledge (nor are they likely to as the optimization would
+not likely improve any hot path performance).
 
-Anthony,
+We'll be making that theoretical attack significantly harder to exploit
+as part of the upstream GCC work around a new -fstack-check implementation.
 
-On Thu, Jun 01, 2017 at 06:03:59PM +0000, Liguori, Anthony wrote:
-> Hrm, I've been following the thread but apparently missed your request Solar.
 
-Wow, that was quick.  I don't see how you could have been following the
-thread, including in the period since May 27, and miss the request,
-since most other distros replied to that very same thread.  With the
-replies quoting parts of my request, it was many messages.  I mentioned
-the 3 non-responsive distros by name in two messages - yesterday and
-today (a few hours before bringing this to oss-security).
-
-What was it about the oss-security posting that made you notice it,
-unlike the many messages on the distros list?
-
-Is it the encryption that causes you not to read some messages, or to
-postpone doing so (for days)?
-
-With such selective reading, you'd also miss some new issues that are
-being brought up as part of this same thread.  The Subject stays since
-it's unencrypted, but discussion deviates and expands to new topics.
-
-Thanks,
-
-Alexander
-
+Jeff
