@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/10
-Message-ID: <0877e497-44ea-bb10-efff-605a67794b4c@apache.org>
-Date: Mon, 19 Jun 2017 15:17:40 -0700
-From: Jacob Champion <jchampion@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/5
+Message-ID: <CAO5O-EJqSUT8PcMzEjDF8k8CwxsyHqVSEYbku3HaAhvvKjgCbQ@mail.gmail.com>
+Date: Wed, 21 Jun 2017 12:40:57 +0200
+From: Guido Vranken <guidovranken@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7679: Apache httpd 2.x mod_mime buffer overread
+Subject: 4 remote vulnerabilities in OpenVPN
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-7679: mod_mime buffer overread
+An extensive effort to find security vulnerabilities in OpenVPN has
+resulted in 4 vulnerabilities of such severity that they have been
+kept under embargo until today.
+Interestingly, this comes shortly after the results of two source code
+audits were released, which both failed to detect these problems.
+The worst vulnerability of the 4 allows a client the drain the
+server's memory, which, due to a particular technical circumstance,
+may be exploited to achieve remote code execution.
 
-Severity: Important
+An extensive write-up can be found here:
+https://guidovranken.wordpress.com/2017/06/21/the-openvpn-post-audit-bug-bonanza/
+. A technical explanation for every vulnerability is provided, and I
+ponder the efficacy of source code audits.
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-httpd 2.2.0 to 2.2.32
-httpd 2.4.0 to 2.4.25
-
-Description:
-mod_mime can read one byte past the end of a buffer when sending a
-malicious Content-Type response header.
-
-Mitigation:
-2.2.x users should either apply the patch available at
-https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-7679.patch
-or upgrade in the future to 2.2.33, which is currently unreleased.
-
-2.4.x users should upgrade to 2.4.26.
-
-Credit:
-The Apache HTTP Server security team would like to thank ChenQin and
-Hanno Böck for reporting this issue.
-
-References:
-https://httpd.apache.org/security_report.html
+Guido
