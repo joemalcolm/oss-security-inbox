@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["707" "Tuesday" "30" "June" "2015" "09:04:22" "+1000" "David Jorm" "david.jorm@gmail.com" "<CAO33bZW-Gz9ZThev_XPZeUL4bRixFAYHa9sdeYsOZgqft00c9A@mail.gmail.com>" "22" "[oss-security] OpenDaylight security advisory: CVE-2015-3414 CVE-2015-3416 SQLite memory corruption, CVE-2015-4000 LOGJAM TLS MITM" nil nil nil "6" "2015062923:04:22" "[oss-security] OpenDaylight security advisory: CVE-2015-3414 CVE-2015-3416 SQLite memory corruption, CVE-2015-4000 LOGJAM TLS MITM" (number mark "        david.jorm@g Jun 30   22/707   " thread-indent "\"[oss-security] OpenDaylight security advisory: CVE-2015-3414 CVE-2015-3416 SQLite memory corruption, CVE-2015-4000 LOGJAM TLS MITM\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4598" "Wednesday" "21" "June" "2017" "16:36:31" "+0200" "Solar Designer" "solar@openwall.com" "<20170621143631.GA13275@openwall.com>" "95" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062114:36:31" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        solar@openwa Jun 21   95/4598  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<CAKoP-y-NnHqx=87K+m_6UibGG3jzFcGNzU=3Y5o52FVLJ75m-g@mail.gmail.com>" ("<20170619152843.GC7769@localhost.localdomain>" "<2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>" "<20170619203933.GA910@openwall.com>" "<CAKoP-y-NnHqx=87K+m_6UibGG3jzFcGNzU=3Y5o52FVLJ75m-g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12266 invoked by uid 550); 29 Jun 2015 23:04:39 -0000
+Received: (qmail 1536 invoked by uid 550); 21 Jun 2017 14:36:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12229 invoked from network); 29 Jun 2015 23:04:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=8G0CM40iNDjs/LXcnMJKd/Z8iRNvdHI6EEJEdU8OX1A=;
-        b=Ak7bBRtPZfj+k5w2Tf0Zvl5LUESNMEfBWPkCOD2li09XyROrjIRpTiS9I5EW4bXuFd
-         K9CyuONTB+v93x+/6pHTX2SVIXoxTni3A/0FMBLNgt/7cKSETqPmsOfY6slsHM7uaMOs
-         yn5b/zw+UNsAvlJzDvdzPbjBOABjfvCFcrDjRtCUvDrPGbU4m4PGuf89U3TcY6Cf4w+H
-         JRe1qRhRTLRK+f+D6zJzn1fNwNOsy5zTq5SBfkLBOvnvv5ZX4pzkQIdeZfEAX2DVm/qd
-         3X6v82gMGoHBkvQN8/PiVWRKJzfQuZmZGjaia6RV1cnm2ujbcIxYvz4tuSyCuKpcgdjQ
-         b5gQ==
-MIME-Version: 1.0
-X-Received: by 10.202.59.212 with SMTP id i203mr14682800oia.33.1435619062553;
- Mon, 29 Jun 2015 16:04:22 -0700 (PDT)
-Message-ID: <CAO33bZW-Gz9ZThev_XPZeUL4bRixFAYHa9sdeYsOZgqft00c9A@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113ccd8e41a20a0519b01cf0
-Date: Tue, 30 Jun 2015 09:04:22 +1000
-From: David Jorm <david.jorm@gmail.com>
+Received: (qmail 1392 invoked from network); 21 Jun 2017 14:36:35 -0000
+Message-ID: <20170621143631.GA13275@openwall.com>
+References: <20170619152843.GC7769@localhost.localdomain> <2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com> <20170619203933.GA910@openwall.com> <CAKoP-y-NnHqx=87K+m_6UibGG3jzFcGNzU=3Y5o52FVLJ75m-g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKoP-y-NnHqx=87K+m_6UibGG3jzFcGNzU=3Y5o52FVLJ75m-g@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Wed, 21 Jun 2017 16:36:31 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] OpenDaylight security advisory: CVE-2015-3414 CVE-2015-3416 SQLite
- memory corruption, CVE-2015-4000 LOGJAM TLS MITM
-To: oss-security@lists.openwall.com, 
-	opendaylight-announce@lists.opendaylight.org, 
-	security-announce@lists.opendaylight.org
+Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
+To: oss-security@lists.openwall.com
 
---001a113ccd8e41a20a0519b01cf0
-Content-Type: text/plain; charset=UTF-8
+On Wed, Jun 21, 2017 at 07:35:34AM -0500, Josh Bressers wrote:
+> I suspect the extended embargo was exactly correct in this instance.
 
-Hi All
+There are certainly good arguments in favor of the extended embargo, and
+a lot of people will agree with you.
 
-OpenDaylight Lithium GA has now been released, including patches for
-several security vulnerabilities:
+There are also good arguments in favor of not having extended the
+embargo, and to me those are more convincing overall.
 
-[Moderate] CVE-2015-3414 CVE-2015-3416 AAA: SQLite memory corruption
-leading to DoS and possible code execution
+So it's not an instance of us having done something unambiguously wrong,
+nor something unambiguously right.  It's a matter of different
+approaches and opinions.  But there's also the list policy, and it is
+such for good reasons.
 
-[Moderate] CVE-2015-4000 OpenDaylight: TLS connections which support export
-grade DHE key-exchange are vulnerable to MITM attacks (LOGJAM)
+> Having
+> a policy you follow no matter what isn't ideal either (in fact it's
+> probably dangerous).
 
-Full details, including links to patched builds, are available on the
-OpenDaylight security advisories page:
+This is why there have been occasional exceptions so far, and I tried to
+note and explain each one of those publicly here on oss-security.  This
+is also why I agreed to "consider" making an exception in this case, but
+I dislike what this resulted in.  Naturally, my mandatory explanation
+reflects that.
 
-https://wiki.opendaylight.org/view/Security_Advisories
-Thanks
-David Jorm on behalf of the OpenDaylight security response team
+> We've all been through a lot of embargoes, two weeks is more than
+> acceptable for most of them, it's a very good thing to have a forcing
+> function when needed. This one was special, nobody can deny that. It was
+> big, complex, and amazing. It ticked all the boxes. It affected a
+> substantial portion of the Internet. Had a name. Is a very old bug. Was
+> very serious. Had a great advisory and organization behind it.
 
---001a113ccd8e41a20a0519b01cf0--
+It was an excellent stress-test for the distros list, people's ability
+to read lots of encrypted e-mail, etc.  But let's not do it again.
+
+> Yet nobody flipped out. It was unexciting.
+
+Well, almost.  For something shared with so many organizations and
+people, it is in fact unexciting we haven't seen a full public leak.
+
+When the embargo extension was made, it was also decided that distros
+should in fact be prepared for leaks, which means preparing or being
+ready to prepare emergency updates with what I called mitigations and
+workarounds.  What I think we should have done instead is work in this
+emergency mode from the start, releasing those mitigations and
+workarounds first and only then work in public on longer-term fixes.
+
+> I suspect it was all so smooth because on Monday because everyone was
+> ready, everyone knew what was going on. There was no rushing, nothing was
+> on fire. There was time to develop patches properly. Everyone had their
+> story straight. It's quite likely if you force a release in two weeks
+> because that's the rule, someone not ready would create a story where one
+> shouldn't exist.
+
+Yes.  However, one Linux distro vendor who is not currently on distros
+(despite of asking privately to join before) e-mailed me off-list saying
+they were indeed on fire (even if largely in terms of publicity and
+customer support rather than security).  And that's just one who
+bothered to e-mail - I'm sure there were more.  Granted, they can now
+prepare their updates within hours or days due to the work done by SUSE,
+Red Hat, and others on the distros list, hopefully in time before
+attacks using the Qualys findings start or become widespread, but
+nevertheless they are at a disadvantage.  They also confirmed to me that
+for them me either shutting down the distros list or accepting them onto
+the list would be a better option than the status quo.
+
+So I am in fact planning to do one of these things.  My removal of the
+"19 days" option is also a way to counter-balance the negative impact of
+possibly adding a few more distros.  I wish we could go for 7 days max,
+but currently this appears unrealistic (we should have the average below
+7 days, though).  So I'll open up the distros list for more members
+shortly, but I am going to enforce the policy more(*) strictly.  If this
+fails, then I'll shut the list down.
+
+(*) This means there might still be an exception for something truly
+exceptional, but to be specific: nothing handled on the (linux-)distros
+lists so far was exceptional enough for that, so under the kind of
+policy enforcement I am currently planning, there would have been no
+exceptions so far.
+
+> I applaud everyone involved. I'm sure there were issues, but I doubt such a
+> large effort could have gone better.
+
+I agree.
+
+However, we need to learn from this occasion and do better next time.
+
+> Rules such as this exist to guide us, don't let them constrain us.
+
+I see no other reasonable choice than letting the rules constrain us,
+given what my willingness to "consider" an exception resulted in.
+
+That said, I intend to stay reasonable - just having learned and made
+adjustments from the experience so far.
+
+Alexander
