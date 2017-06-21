@@ -1,55 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/9
-Message-ID: <20170623200538.GS27071@port70.net>
-Date: Fri, 23 Jun 2017 22:05:38 +0200
-From: Szabolcs Nagy <nsz@...t70.net>
-To: oss-security@...ts.openwall.com
-Cc: Jeff Law <law@...hat.com>
-Subject: Re: Re: Qualys Security Advisor -- The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/6
+Message-ID: <20170621111755.GA12401@openwall.com>
+Date: Wed, 21 Jun 2017 13:17:55 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Guido Vranken <guidovranken@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: 4 remote vulnerabilities in OpenVPN
 Content-Type: text/plain; charset=utf-8
 
-* Daniel Micay <danielmicay@...il.com> [2017-06-22 01:39:46 -0400]:
-> On Wed, 2017-06-21 at 11:33 -0600, Jeff Law wrote:
-> > On 06/20/2017 12:44 AM, Daniel Micay wrote:
-> > > I think it's also worth mentioning the segmented stack support in
-> > > GCC
-> > > and LLVM that was added for Go. It's possible to use it for C with
-> > > the
-> > > __morestack call set up to simply abort when stack space is
-> > > exhausted.
-> > > 
-> > > That's what Rust was doing after it dropped segmented stacks, but
-> > > they
-> > > wanted to move to stack probes for efficiency and prematurely
-> > > dropped
-> > > these function prelude checks.
-> > > 
-> > > It's not efficient, but it works, unlike -fstack-check.
-> > > 
-> > > I don't think it makes sense for general purpose distributions to
-> > > adopt
-> > > it but it's an available option for others with more concern about
-> > > this
-> > > issue.
-> > 
-> > Yup.  go's split-stacks are another option.  As you mention, probably
-> > not performant enough for a general purpose distribution, but could be
-> > interesting for more specialized needs.
-> > 
-> > jeff
+On Wed, Jun 21, 2017 at 12:40:57PM +0200, Guido Vranken wrote:
+> An extensive effort to find security vulnerabilities in OpenVPN has
+> resulted in 4 vulnerabilities of such severity that they have been
+> kept under embargo until today.
+> Interestingly, this comes shortly after the results of two source code
+> audits were released, which both failed to detect these problems.
+> The worst vulnerability of the 4 allows a client the drain the
+> server's memory, which, due to a particular technical circumstance,
+> may be exploited to achieve remote code execution.
 > 
-> It can be used with large fixed size stacks and no actual expansion, but
-> yeah it's expensive to add a check to every non-leaf prelude. It's not
-> as expensive as the SSP check for a function but it needs to cover many.
-> 
-> Since probes can be so much more efficient, it only makes sense to
-> consider it if getting probes fully working is going to take a long
-> time.
+> An extensive write-up can be found here:
+> https://guidovranken.wordpress.com/2017/06/21/the-openvpn-post-audit-bug-bonanza/
+> . A technical explanation for every vulnerability is provided, and I
+> ponder the efficacy of source code audits.
 
-split stack is broken, it cannot be mixed with non-split-stack
-code reliably, the runtime provided by the compiler cannot possibly
-be conforming for thread creation, thread exit, user allocated
-stacks and it can crash randomly.
+That's very cool, but we have a policy here to include actual
+vulnerability detail in the list postings.  Your blog might be gone in
+some years, but hopefully some oss-security archives will stay around.
 
-but it is not even supported on some targets so i think it's
-not a viable workaround anyway.
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should remain
+valuable even with all of the external resources gone."
+
+I've attached a text/plain export of your blog post to this message.
+
+Alexander
+
+View attachment "openvpn-post-audit-bug-bonanza.txt" of type "text/plain" (21532 bytes)
