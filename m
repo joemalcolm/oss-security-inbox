@@ -1,66 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/3
-Message-ID: <2a724b72b93347198689962487eb2cfa@imshyb02.MITRE.ORG>
-Date: Tue, 10 Jan 2017 22:35:30 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <cjwatson@...ark.greenend.org.uk>
-Subject: Re: CVE Request: icoutils: exploitable crash in wrestool programm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/20
+Message-ID: <20170621214006.GB28151@localhost.localdomain>
+Date: Wed, 21 Jun 2017 14:40:06 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Solar, all,
 
-> It turns out that this is not enough, so upstream has issued
-> 
-> http://git.savannah.gnu.org/cgit/icoutils.git/commit/?id=4fbe9222fd79ee31b7ec031b0be070a9a400d1d3
-> 
-> Could you please assign a further CVE for this follow up fix?
+Thank you very much for this constructive feedback.  For the sake of
+transparency and an improved disclosure process in the future, we will
+do the same now, and also address some of the concerns that have been
+expressed since Monday.
 
-Use CVE-2017-5331.
+But first, we would like to thank everyone who was involved in this
+disclosure, for their hard work and patience, and especially Solar for
+creating and administering the mailing-lists that made it possible (and
+for accepting, although reluctantly, the embargo extension).
 
+On Mon, Jun 19, 2017 at 10:39:33PM +0200, Solar Designer wrote:
+> The stated argument for extending the embargo duration beyond list
+> policy's maximum was that fixes presumably wouldn't be ready.
 
-> Furthermore I would like to ask if the following two commits from upstream,
-> can have as well an identifier assigned:
-> 
-> http://git.savannah.gnu.org/cgit/icoutils.git/commit/?id=1aa9f28f7bcbdfff6a84a15ac8d9a87559b1596a
-> http://git.savannah.gnu.org/cgit/icoutils.git/commit/?id=1a108713ac26215c7568353f6e02e727e6d4b24a
+This was not the only reason why we eventually decided to extend the
+embargo;  here is what we wrote in an e-mail to distros@, on May 28:
 
-Yes, but because these are immediately consecutive commits, the CVE
-mapping may seem unusual.
+"""
+The discussions that
+took place here on distros eventually forced us to extend the embargo
+from the original CRD (May 30) to June 19:
 
-Use CVE-2017-5332 for all of 1aa9f28f7bcbdfff6a84a15ac8d9a87559b1596a
-and also the index correction in
-1a108713ac26215c7568353f6e02e727e6d4b24a. In other words, the change
-from "entries[c]" to "entries[c-skipped]" in
-1a108713ac26215c7568353f6e02e727e6d4b24a cannot have a new CVE ID
-because the code was never "shipped" with "entries[c]" in use. There
-aren't two independent problems related to establishing a maximum
-allowable value of the size variable.
+- there are serious problems with the two solutions that we proposed
+  ("Increase the size of the stack guard-page" and "Recompile all
+  userland code with GCC's -fstack-check option");
 
-Use CVE-2017-5333 for the separate vulnerability fixed by the
-introduction of the "size >= sizeof(uint16_t)*2" test in
-1a108713ac26215c7568353f6e02e727e6d4b24a.
+- please see Red Hat's analysis, attached;
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+- when we asked here if distros would be ready by May 30, only three
+  answered (two "yes", one "no"), and hoping for the best ("the ones who
+  did not answer will surely be ready") was not an option, and "let's
+  publish anyway on May 30, distros should have been ready" was not an
+  option either (the end users would be the ones suffering from such a
+  debacle).
+"""
 
-iQIcBAEBCAAGBQJYdacWAAoJEHb/MwWLVhi2Uh4QAKcBj4W4AS+E9hGkW21JOLU2
-LuXjv0EkgogMNeCGP271wW7KBW/QTx47wFkTjqIRImD9zfM0J/mylwRXwRs1sdLV
-f+c3TNA1SnTQTHjtDdsK9hx2bwG8Ief9POuyqpjsosFv246+2bkzNtne0IOCRZWi
-8VVL44osOA0QIXkYwlyDTO756yfQow3S12OUX+zjirxz+bxmJxJwxniX1xZfKerz
-2EhWGrqTlFTW73EazzpjXHv5UxQ2HHOckduLIGNOfObFP2PBDwAVflb7fIT2zLcJ
-d/d7R4f2B4wA4kFg9ZYwr1Llofj9Ke8WW/mK38YmeNihsfR/0na0oACNZT9Qjt63
-mSDw9+sG5Msn0uVQtXkomMD1VrMmtIfSrknrMsfJQ5yIntWDKqXwAK2xvAkoRYGU
-dbX6eYO2P2/S8ZI8PpVBk20np5pSEpMtR6fh8c8JuUGkYL4DcVxjSwYbvVvWvCm2
-vUXt67Ez42IAkDGObU7eO/gII3lPdMfnBCw+Qllpn+pW5uOFwl38wtzVnq92FvbM
-+n1IDWPnHp8BoXjq3TKf+WvlSmvaj6eCG0vHOH4hTHquLzS2a5gxs/h3Gkn7Fw03
-SkUeh1zly8wwTpY1x58N8gmwkPiopXB9BbTtrfFMDNyGhIMwhNe4qrKSoI7ooo58
-2KJ16gxRfv2BGepMe9fm
-=6LBf
------END PGP SIGNATURE-----
+The first problem was that 1MB is not enough on all architectures;  the
+second problem was that -fstack-check does not always "touch" all pages;
+and Red Hat's analysis was an extensive report about the fixes needed in
+the kernel, the glibc, and gcc.
+
+All of this, plus the third reason mentioned above, and our own
+assessment of the situation, helped us make our decision to extend the
+embargo.
+
+> I understand
+> it's rare for companies to do quality security research, and I didn't
+> want my action to have hampered the stream of quality security research
+> we're seeing from Qualys lately.
+
+Thank you very much.  However, we must admit that this coordinated
+release has been one of the most stressful and painful experiences we
+ever had:  we were torn between those who wanted to publish early and
+those who wanted to publish later, and in the middle of all this
+coordination we were trying to complete our research (we had not
+successfully exploited 64-bit Linux yet when we first contacted
+distros@).
+
+Such a responsible disclosure could have been, and should have been,
+easier and simpler, even with so many vendors involved.  How could such
+a situation be handled better next time?  We are open to suggestions.
+
+Finally, we would like to address a concern that has been voiced by
+Chris Evans (who has also quoted Solar's mail, thus answering here):
+
+"""
+There's also the question of whether "customers" get access to details
+before patches are available
+"""
+
+Absolutely not:  we have not shared a single detail of these
+vulnerabilities with anyone outside of Qualys before the Coordinated
+Release Date;  and even within Qualys, we have kept this
+compartmentalized until the very end.
+
+Thank you very much!
+
+With best regards,
+
+-- 
+the Qualys Security Advisory team
