@@ -1,77 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/25/1
-Message-ID: <20170325001057.GA31046@openwall.com>
-Date: Sat, 25 Mar 2017 01:10:57 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Eric Dumazet <edumazet@...gle.com>, Andrey Konovalov <andreyknvl@...gle.com>, "David S. Miller" <davem@...emloft.net>, Alexey Kuznetsov <kuznet@....inr.ac.ru>, James Morris <jmorris@...ei.org>, Hideaki YOSHIFUJI <yoshfuji@...ux-ipv6.org>, Patrick McHardy <kaber@...sh.net>, netdev <netdev@...r.kernel.org>, LKML <linux-kernel@...r.kernel.org>, Vasily Kulikov <segoon@...nwall.com>
-Subject: Re: Linux kernel ping socket / AF_LLC connect() sin_family race
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/3
+Message-ID: <c8b219b1-2b44-06af-d770-27e02de6359c@debian.org>
+Date: Wed, 21 Jun 2017 10:19:35 +0200
+From: Emilio Pozuelo Monfort <pochu@...ian.org>
+To: oss-security@...ts.openwall.com, xiaoqixue_1 <xiaoqixue_1@....com>
+Subject: Re: CVE-request: heap-buffer-overflow in jasper
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 24, 2017 at 03:21:06PM -0700, Eric Dumazet wrote:
-> Looks easy enough to fix ?
+Hi,
 
-Oh.  Probably.  Thanks.  Need to test, but I guess you already did?
+These days you need to request CVEs by filling the form in
+https://cveform.mitre.org/. Please follow up here when you get the CVE.
 
-> diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
-> index
-> 2af6244b83e27ae384e96cf071c10c5a89674804..ccfbce13a6333a65dab64e4847dd510dfafb1b43
-> 100644
-> --- a/net/ipv4/ping.c
-> +++ b/net/ipv4/ping.c
-> @@ -156,17 +156,18 @@ int ping_hash(struct sock *sk)
->  void ping_unhash(struct sock *sk)
->  {
->         struct inet_sock *isk = inet_sk(sk);
-> +
->         pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
-> +       write_lock_bh(&ping_table.lock);
->         if (sk_hashed(sk)) {
-> -               write_lock_bh(&ping_table.lock);
->                 hlist_nulls_del(&sk->sk_nulls_node);
->                 sk_nulls_node_init(&sk->sk_nulls_node);
->                 sock_put(sk);
->                 isk->inet_num = 0;
->                 isk->inet_sport = 0;
->                 sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
-> -               write_unlock_bh(&ping_table.lock);
->         }
-> +       write_unlock_bh(&ping_table.lock);
->  }
->  EXPORT_SYMBOL_GPL(ping_unhash);
+On 20/06/17 08:31, xiaoqixue_1 wrote:
+> Timeline:
+> 2017-06-14: bug discovered and reported upstream
 
-FWIW, in Pavel's original implementation for 2.4.32 (unused), this was:
+How was this reported upstream? Perhaps you could link to the bug report, if
+there's one.
 
-static void ping_v4_unhash(struct sock *sk)
-{
-	DEBUG(("ping_v4_unhash(sk=%p,sk->num=%u)\n", sk, sk->num));
-	write_lock_bh(&ping_hash_lock);
-	if (sk->pprev) {
-		if (sk->next)
-		       sk->next->pprev = sk->pprev;
-		*sk->pprev = sk->next;
-		sk->pprev = NULL;
-		sk->num = 0;
-		sock_prot_dec_use(sk->prot);
-		__sock_put(sk);
-	}
-	write_unlock_bh(&ping_hash_lock);
-}
-
-Looks like the erroneous optimization (not expecting concurrent activity
-on the same socket?) was introduced during conversion to 2.6's hlists.
-
-So far this cursed function had 3 bugs, two of them security (including
-this one) and one probably benign (or if not, then effectively a subset
-of this bug as it performed some unneeded / stale debugging work before
-acquiring the lock), with all 3 introduced in forward-porting.  Maybe
-the nature of forward-porting activity makes people relatively
-inattentive ("compiles with the new interfaces and still works? must be
-correct"), compared to when writing new code.
-
-Anyhow, I share some responsibility for this mess, for having advocated
-this patch being forward-ported and merged back then.  I still like
-having this functionality and its userspace security benefits... but I
-don't like the kernel bugs.
-
-Alexander
+Cheers,
+Emilio
