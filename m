@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/5
-Message-ID: <20171103120109.sjaunqwdpfnkfymn@jwilk.net>
-Date: Fri, 3 Nov 2017 13:01:10 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/9
+Message-ID: <20170621122001.GA3350@intrepid>
+Date: Wed, 21 Jun 2017 14:20:01 +0200
+From: Alexander Bergmann <abergmann@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
+Cc: cve-assign@...re.org
+Subject: CVE Request: unrar: VMSF_DELTA filter allows arbitrary memory write
 Content-Type: text/plain; charset=utf-8
 
-* Fiedler Roman <Roman.Fiedler@....ac.at>, 2017-11-03, 11:07:
->POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user 
->root when editing file in directory owned by other user is available on 
->request, disclosure after one week or if list discussion indicates 
->other timing.
+Hi,
 
-By default[1], when vim wants to overwrite the file "foo", it does:
+It was reported that unrar fixed a VMSF_DELTA memory corruption issue in
+there latest version unrarsrc-5.5.5.tar.gz. This problem was reported to
+Sophos AV in 2012 but never reach upstream rar.
 
-   rename("foo", "foo~")                   = 0
-   open("foo", O_WRONLY|O_CREAT|O_TRUNC|O_LARGEFILE, 0600) = 3
+https://bugs.chromium.org/p/project-zero/issues/detail?id=1286&desc=6#maincol
 
-There's a race window between the two syscalls when the attacker could 
-re-create "foo", and then vim would happily write to it.
+Reproducer:
 
-Is this the attack you meant?
+Base64-encoded RAR file to trigger the VMSF_DELTA issue:
 
-NB, vim disables this behavior for files in /tmp (but not /var/tmp)[2].
+UmFyIRoHAPlOcwAADgAAAAAAAAAAMAh0AAAmAI4AAAAAAAAAAhBBUiEAAAAAHQAGAAAAACBzdGRv
+dXQgIVUMzRDNmBGByDAda+AXaSv4KvQr1K/oejL05mXmXmww5tEk8gA9k8nmieyeyeswuOR6cx69
+a2Hd6zQwu3aoMDDwMEswADAAMD4P938w+dydoRFwAmwAAAAAvv////+/////+9W3QFgAAQAGAAAA
+Ooimhd12AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+As far as I can tell no CVE was assigned to this issue so far.
 
 
-[1] http://vimdoc.sourceforge.net/htmldoc/options.html#%27writebackup%27
-[2] http://vimdoc.sourceforge.net/htmldoc/options.html#%27backupskip%27
+Regrads,
+Alex~
 
 -- 
-Jakub Wilk
+Alexander Bergmann <abergmann@...e.com>, Security Engineer, GPG:9FFA4886
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
