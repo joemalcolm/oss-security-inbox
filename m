@@ -1,52 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/04/4
-Message-ID: <20170804175151.GA13252@kroah.com>
-Date: Fri, 4 Aug 2017 10:51:51 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: willemdebruijn.kernel@...il.com, Dmitry Vyukov <dvyukov@...gle.com>, Kostya Serebryany <kcc@...gle.com>
-Subject: Re: Reporting and disclosing Linux kernel vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/19
+Message-ID: <20170621212835.GA28151@localhost.localdomain>
+Date: Wed, 21 Jun 2017 14:28:35 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 04, 2017 at 06:59:15PM +0200, Andrey Konovalov wrote:
-> Hi!
-> 
-> It's not completely clear to me how to properly report and disclose
-> Linux kernel security issues.
+Hi Solar, all,
 
-As your document shows, it all depends on what type of issue it is, and
-what _you_ want to get out of it. [1]
+On Tue, Jun 20, 2017 at 03:22:04PM +0200, Solar Designer wrote:
+> Qualys, I suggest that, like you did with the Sudo exploit, you publish
+> your Stack Clash exploits in here as soon as third-party exploits of
+> comparable functionality appear, or next Tuesday, whichever is earlier.
 
-> There are a few different parties [1, 2, 3] that need to be informed
-> and coordinated.
+We have discussed this internally, and we will first publish the Stack
+Clash exploits and proofs-of-concepts that we sent to the distros@ and
+linux-distros@ lists, plus our Linux ld.so exploit for amd64, and our
+Solaris rsh exploit.
 
-Again, it depends on what you want to do :)
+We will do so next Tuesday, but we will publish our Linux exploits and
+proofs-of-concept if and only if Fedora updates are ready by then, our
+NetBSD proof-of-concept if and only if NetBSD patches are ready by then,
+and our FreeBSD proofs-of-concept if and only if FreeBSD patches are
+ready by then.
 
-> I couldn't find a publicly available actionable list of steps, so I've
-> outlined it as I see it here:
-> 
-> https://github.com/google/syzkaller/blob/master/docs/linux_kernel_reporting_bugs.md#reporting-security-bugs
-> 
-> Thoughts? Comments?
+If someone happens to know of another major distribution that has not
+published patches and updates yet, please let us all know by replying
+here to oss-security. Thank you very much!
 
-That looks like a good start, nice job.
+With best regards,
 
-thanks,
-
-greg k-h
-
-[1] This matters a lot.  Here's my feeling on the matter:
-
-    If you just want the bug fixed so you can get on with whatever else
-    you were doing, just notify security@...nel.org, the bug will get
-    fixed and pushed out to all kernel.org trees as soon as possible.
-
-    If you think it affects users of the "traditional" Linux distros,
-    then contact distros and hope someone contacts security@k.o later to
-    get the issue resolved for everyone else.
-
-    If it affects only an odd one-off or embedded device that will never
-    get updated, again, security@k.o and oss-security to get some public
-    leverage to try to get the vendor to fix the issue.
-
-    If you don't really care what happens to anyone, oss-security works :)
+-- 
+the Qualys Security Advisory team
