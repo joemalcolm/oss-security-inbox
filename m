@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/10
-Message-ID: <CAHzNyaDjaD5kp0Xe5CSUNGoPbiRg1r=wphfBL6n1=ow00CTV5A@mail.gmail.com>
-Date: Thu, 12 Jan 2017 11:15:44 +0100
-From: Casper Thomsen <ct@...arhaus.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/26
+Message-ID: <20170622010316.6a70d902@yolovo>
+Date: Thu, 22 Jun 2017 01:03:16 +0200
+From: Franz Pletz <fpletz@...rdicwalking.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)
+Subject: Re: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 10, 2017 at 4:50 PM, Cesar Pereida Garcia
-<cesar.pereidagarcia@....fi> wrote:
-> Vendor: OpenSSL, LibreSSL, BoringSSL
+On Wed, 21 Jun 2017 22:45:45 +0100
+nospam@...so.re wrote:
 
-Noticed on https://nacl.cr.yp.to/features.html:
+> not sure it counts as a major distribution (probably not), but NixOS
+> (https://nixos.org) is gaining traction and, as far as I understand,
+> they are working on patches but they don't seem to be ready yet.
 
-> Support for standard primitives
-> Whenever NaCl includes (...) a newly proposed signature system, etc., it also includes (...) [TO DO:] an older standard signature system (e.g., ECDSA using the NIST P-256 elliptic curve)
+Hi,
 
-I couldn't find traces of ECDSA in NaCl and the "[TO DO]" suggest that
-there are in fact none.
+there is an open pull request[0] that will be merged soon.
 
-Anyone able to reject the "non-findings"?
+Unfortunately we can't yet fulfill all of the requirements of the
+distros mailing list. That's why we had no prior notice.
 
-Kindly,
--- 
-Casper Thomsen
+NixOS does have an active security team[1] though.
+
+Cheers,
+Franz
+
+[0]: https://github.com/NixOS/nixpkgs/pull/26750
+[1]: https://nixos.org/nixos/security.html
+
+Content of type "application/pgp-signature" skipped
