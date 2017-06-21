@@ -1,33 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/6
-Message-ID: <20171003152213.u6zlrgu3nb7yk7ng@eldamar.local>
-Date: Tue, 3 Oct 2017 17:22:13 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: FreeBSD kernel, double-fetch bug in smb_strdupin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/7
+Message-ID: <CAO5O-ELxoCUOr-7afEc6fsNLF5KAzLMtavws48RhKCGoE4vSsw@mail.gmail.com>
+Date: Wed, 21 Jun 2017 13:19:30 +0200
+From: Guido Vranken <guidovranken@...il.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: 4 remote vulnerabilities in OpenVPN
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Thank you! I will take this into account next time.
 
-On Tue, Oct 03, 2017 at 02:39:55PM +0000, Xu, Meng wrote:
-> Hello,
-> 
-> In function  smb_strdupin()  of file sys/netsmb/smb_subr.c,
-> smb_strdupin() tried to roll a copyin() based strlen to allocate a buffer
-> and then blindly copyin that size.  Of course, a malicious user program
-> could simultaneously manipulate the buffer, resulting in a non-terminated
-> string being copied.
-> 
-> Bug report: https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=222687
-> Patch: https://svnweb.freebsd.org/base?view=revision&revision=324102
-> 
-> Please help assign a CVE to it.
+Guido
 
-CVE's are not anymore requested via the oss-security list. If you want
-to request one please have a look at https://cveform.mitre.org/
-
-Once you have the CVE assigned, can you please loop back the
-assignement in this thread?
-
-Regards,
-Salvatore
+On Wed, Jun 21, 2017 at 1:17 PM, Solar Designer <solar@...nwall.com> wrote:
+> On Wed, Jun 21, 2017 at 12:40:57PM +0200, Guido Vranken wrote:
+>> An extensive effort to find security vulnerabilities in OpenVPN has
+>> resulted in 4 vulnerabilities of such severity that they have been
+>> kept under embargo until today.
+>> Interestingly, this comes shortly after the results of two source code
+>> audits were released, which both failed to detect these problems.
+>> The worst vulnerability of the 4 allows a client the drain the
+>> server's memory, which, due to a particular technical circumstance,
+>> may be exploited to achieve remote code execution.
+>>
+>> An extensive write-up can be found here:
+>> https://guidovranken.wordpress.com/2017/06/21/the-openvpn-post-audit-bug-bonanza/
+>> . A technical explanation for every vulnerability is provided, and I
+>> ponder the efficacy of source code audits.
+>
+> That's very cool, but we have a policy here to include actual
+> vulnerability detail in the list postings.  Your blog might be gone in
+> some years, but hopefully some oss-security archives will stay around.
+>
+> http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+>
+> "At least the most essential part of your message (e.g., vulnerability
+> detail and/or exploit) should be directly included in the message itself
+> (and in plain text), rather than only included by reference to an
+> external resource.  Posting links to relevant external resources as well
+> is acceptable, but posting only links is not.  Your message should remain
+> valuable even with all of the external resources gone."
+>
+> I've attached a text/plain export of your blog post to this message.
+>
+> Alexander
