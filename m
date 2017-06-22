@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1588" "Wednesday" "17" "October" "2018" "08:30:43" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1810170816290.3841@freddy.simplesystems.org>" "35" "Re: [oss-security] ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" "^Date:" nil nil "10" "2018101713:30:43" "[oss-security] ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" (number mark "        bfriesen@sim Oct 17   35/1588  " thread-indent "\"Re: [oss-security] ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284\"\n") "<20181017061446.GM5150@brightrain.aerifal.cx>" ("<CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>" "<20181016155722.32978ab2@jabberwock.cb.piermont.com>" "<CAJ_zFkJog41qbQ6DgP=jcEts-pDo+z1AKhcnYC7kJCri=+5qSQ@mail.gmail.com>" "<20181017061446.GM5150@brightrain.aerifal.cx>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5877" "Thursday" "22" "June" "2017" "14:13:30" "+0200" "Solar Designer" "solar@openwall.com" "<20170622121330.GA18550@openwall.com>" "183" "[oss-security] stackguard fix in Red Hat and Ubuntu kernels" nil nil nil "6" "2017062212:13:30" "[oss-security] stackguard fix in Red Hat and Ubuntu kernels" (number mark "U       solar@openwa Jun 22  183/5877  " thread-indent "\"[oss-security] stackguard fix in Red Hat and Ubuntu kernels\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5450 invoked by uid 550); 17 Oct 2018 13:30:57 -0000
+Received: (qmail 23782 invoked by uid 550); 22 Jun 2017 12:14:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,200 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5419 invoked from network); 17 Oct 2018 13:30:56 -0000
-X-X-Sender: bfriesen@freddy.simplesystems.org
-In-Reply-To: <20181017061446.GM5150@brightrain.aerifal.cx>
-Message-ID: <alpine.GSO.2.20.1810170816290.3841@freddy.simplesystems.org>
-References: <CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com> <20181016155722.32978ab2@jabberwock.cb.piermont.com> <CAJ_zFkJog41qbQ6DgP=jcEts-pDo+z1AKhcnYC7kJCri=+5qSQ@mail.gmail.com> <20181017061446.GM5150@brightrain.aerifal.cx>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Wed, 17 Oct 2018 08:30:43 -0500 (CDT)
-Date: Wed, 17 Oct 2018 08:30:43 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ghostscript: 1Policy operator gives access to
- .forceput CVE-2018-18284
+Received: (qmail 23601 invoked from network); 22 Jun 2017 12:13:45 -0000
+Date: Thu, 22 Jun 2017 14:13:30 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: Vasily Averin <vvs@virtuozzo.com>,
+	Konstantin Khorenko <khorenko@virtuozzo.com>
+Message-ID: <20170622121330.GA18550@openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="jI8keyz6grp/JLjh"
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] stackguard fix in Red Hat and Ubuntu kernels
 
-On Wed, 17 Oct 2018, Rich Felker wrote:
->>
->> Even with the easy to exploit stuff compiled out (which upstream do not
->> support), I haven't been bothering to get CVE's for all the memory
->> corruption or UaF I've been reporting, because nobody can keep up with
->> these operator leaks anyway.
->
-> An obvious fix for UaF's would be just removing the frees. Use of gs
-> as an interactive program where leaks would matter is a historical
-> curiosity; the only meaningful modern use is as a converter.
+--jI8keyz6grp/JLjh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Memory allocations would build to extremely large values across 
-hundreds of rendered pages.  Use of Ghostscript in interactive 
-programs is still surely common.  Programs using libgs will inherit 
-any leaks.  These leaks and other issues should be fixed.
+I think the below should be in here regardless of whether it was already
+known or not, so forwarding.
 
-Keep in mind that Ghostscript is also used to render/view PDF files. 
-When interactively viewing it is common to do just-in-time rendering. 
-Even for bulk conversions, conversion on a page-by-page basis will 
-save resources when dealing with many pages.
+I've re-attached the reproducer program.
 
-Alternatives do exist now for PDF due to Xpdf and the derived Poppler 
-project and Poppler has become heavily used.
+Thanks, Vasily and Konstantin.
 
-Ghostscript is still more competent at rendering PDF than Poppler is. 
-Ghostscript is able to deal with CMYK color spaces, per-object 
-colorspaces, and transparency, and it is able to render to various 
-quality levels (bilevel, grayscale, RGB, RGBA, CMYK) depending on the 
-output driver selected.
+(And yes, I've verified that both Vasily's and Konstantin's e-mail
+addresses here were already publicly known.  It's something everyone
+should do before forwarding stuff to a public mailing list.)
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+----- Forwarded message from Vasily Averin <vvs@virtuozzo.com> -----
+
+From: Vasily Averin <vvs@virtuozzo.com>
+To: Solar Designer <solar@openwall.com>
+Cc: Konstantin Khorenko <khorenko@virtuozzo.com>
+Subject: stackguard fix in RedHat and Ubuntu kernels
+Date: Thu, 22 Jun 2017 14:40:02 +0300
+
+Dear Alexander,
+probably it is already known,
+otherwise please share it in oss-security@
+I've noticed the problem on Red Hat kernels first, and reported to Red Hat already,
+but now I've found the same problem on Ubuntu kernels.
+It does not affect mainline patch "mm: larger stack guard gap, between vmas"
+but seems distributors have used some other incorrect patch (shared in linux-distros@ ??? )
+
+Description of problem:
+mmap(MAP_GROUWSDOWN) works incorrectly on Red Hat and Ubuntu kernels with stackguard fix.
+
+We have application that creates stack by using MAP_GROUWSDOWN , provide this area into clone(), 
+where it fails on access to mapped area.
+
+Steps to Reproduce:
+execute attached reproducer.
+It maps 2 pages with MAP_GROUWSDOWN, an access to 2nd page mapped page triggers SIGBUS or SIGSEGV
+
+Actual results:
+- access to end of mapped area generated SIGBUS or SIGSEGV
+- /proc/<pid>/maps shows incorrect start address for allocated area
+please see details below
+
+Expected results:
+on previous Ubuntu/RHEL kernels this testcase works well without crashes
+http://man7.org/linux/man-pages/man2/mmap.2.html
+
+       MAP_GROWSDOWN
+              This flag is used for stacks.  It indicates to the kernel
+              virtual memory system that the mapping should extend downward
+              in memory.  The return address is one page lower than the
+              memory area that is actually created in the process's virtual
+              address space.  Touching an address in the "guard" page below
+              the mapping will cause the mapping to grow by a page.  This
+              growth can be repeated until the mapping grows to within a
+              page of the high end of the next lower mapping, at which point
+              touching the "guard" page will result in a SIGSEGV signal.
+
+On new Ubuntu kernel 4.4.0-81-generic (with stackguard fix)
+
+20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
+(gdb) n
+
+(changes in /proc/<pid>/maps)
+ 7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
+ 7ffff7dd7000-7ffff7dfd000 r-xp 00000000 fc:00 524776                     /lib/x86_64-linux-gnu/ld-2.23.so
+ 7ffff7feb000-7ffff7fee000 rw-p 00000000 00:00 0 
++7ffff80f4000-7ffff7ff6000 rw-p 00000000 00:00 0  <<<< incorrect start address is shown here 
+ 7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
+ 7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
+ 7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
+
+23		printf("stack = %p\n", stack);
+(gdb) n
+stack = 0x7ffff7ff4000
+24		end = stack + STACK_SIZE - 8;
+(gdb) n
+25		printf("end = %p\n", end);
+(gdb) n
+end = 0x7ffff7ff5ff8
+26		printf("write to *end\n");
+(gdb) n
+write to *end
+27		*end = 0;
+(gdb) n
+
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000040062f in main () at sk.c:27
+
+
+on Ubuntu 4.4.0-79-generic  -- works as expected
+
+mmap return address of guard page,
+access to end of mapped area works works correctly,
+touch on guard page grows stack down,
+then touch of previous page grows stack down again.
+
+20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
+(gdb) n
+23		printf("stack = %p\n", stack);
+(gdb) n
+stack = 0x7ffff7ff4000
+
+ 7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
+ 7ffff7dd7000-7ffff7dfd000 r-xp 00000000 08:01 27001906                   /lib/x86_64-linux-gnu/ld-2.23.so
+ 7ffff7fc8000-7ffff7fcb000 rw-p 00000000 00:00 0 
++7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
+ 7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
+ 7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
+ 7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
+
+24		end = stack + STACK_SIZE - 8;
+(gdb) n
+25		printf("end = %p\n", end);
+(gdb) n
+end = 0x7ffff7ff5ff8
+26		printf("write to *end\n");
+(gdb) n
+write to *end
+27		*end = 0;
+(gdb) n
+28		printf("write to *stack\n");
+(gdb) n
+write to *stack
+29		*(stack) = 0;
+(gdb) n
+
+-7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
++7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0   <<<< Stack grow down
+
+30		printf("write to *(stack-1)\n");
+(gdb) n
+write to *(stack-1)
+31		*(stack-1) = 0;
+(gdb) n
+32	}
+
+-7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0 
++7ffff7ff3000-7ffff7ff6000 rw-p 00000000 00:00 0 <<<< Stack grows down again
+
+----- End forwarded message -----
+
+--jI8keyz6grp/JLjh
+Content-Type: text/x-c; charset=us-ascii
+Content-Disposition: attachment; filename="sk.c"
+
+
+#define _GNU_SOURCE
+
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/param.h>
+#include <sys/mman.h>
+
+#define STACK_SIZE	2*4096
+
+int main()
+{
+	unsigned char *end;
+	/* Allocate stack */
+        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
+			MAP_PRIVATE | MAP_ANON | MAP_GROWSDOWN, 0, 0);
+
+	printf("stack = %p\n", stack);
+	end = stack + STACK_SIZE - 8;
+	printf("end = %p\n", end);
+	printf("write to *end\n");
+	*end = 0;
+	printf("write to *stack\n");
+	*(stack) = 0;
+	printf("write to *(stack-1)\n");
+	*(stack-1) = 0;
+}
+
+--jI8keyz6grp/JLjh--
