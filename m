@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7967" "Wednesday" "19" "October" "2016" "16:30:25" "+0000" "Seaman, Chad" "cseaman@akamai.com" "<9C4ECF53-C1C6-4FC9-894E-F2135DDED744@akamai.com>" "131" "Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "10" "2016101916:30:25" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       cseaman@akam Oct 19  131/7967  " thread-indent "\"Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<6CEE412D-0C61-4835-B685-465BF38B6F7B@akamai.com>" ("<CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>" "<20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>" "<CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>" "<6CEE412D-0C61-4835-B685-465BF38B6F7B@akamai.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1812" "Thursday" "22" "June" "2017" "14:56:38" "+0200" "Alexander Bergmann" "abergmann@suse.com" "<20170622125636.GC3350@intrepid>" "58" "Re: [oss-security] CVE Request: unrar: VMSF_DELTA filter allows arbitrary memory write" nil nil nil "6" "2017062212:56:38" "[oss-security] CVE Request: unrar: VMSF_DELTA filter allows arbitrary memory write" (number mark "U       abergmann@su Jun 22   58/1812  " thread-indent "\"Re: [oss-security] CVE Request: unrar: VMSF_DELTA filter allows arbitrary memory write\"\n") "<20170621122001.GA3350@intrepid>" ("<20170621122001.GA3350@intrepid>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16158 invoked by uid 550); 19 Oct 2016 16:30:38 -0000
+Received: (qmail 15722 invoked by uid 550); 22 Jun 2017 13:06:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,171 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16137 invoked from network); 19 Oct 2016 16:30:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; s=a1;
-	t=1476894626; bh=8ZXforW+cVDJ1pD7xtYDOAZPvS7T0DhjczjnpC5+Tc0=;
-	l=8044; h=From:To:CC:Date:References:In-Reply-To:From;
-	b=Ica4PTmi8XEwVSHaa4ErsNqj/UqcAUz7RhTqmO7vuUy6RwklQEO01kksIRApTmUYH
-	 TEr5c2jLfT/ZGZ0uEMRpXXvbOqLrDpTlrH91da8pmtkz4uvB8W5yj6AYCzN63ciJdt
-	 lC2nfgkLnltOiR1EZ0xvcS7uBbXdX7p9E+ga8NjY=
-From: "Seaman, Chad" <cseaman@akamai.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "CVE
- ID Requests" <cve-assign@mitre.org>
-CC: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-Thread-Topic: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to
- DoS amplification attack
-Thread-Index: AQHSKXTAAXVb6GT6MEa3Bd6CqDW/pqCvSHMAgAAhwoCAAJ8PgIAAAMiA
-Date: Wed, 19 Oct 2016 16:30:25 +0000
-Message-ID: <9C4ECF53-C1C6-4FC9-894E-F2135DDED744@akamai.com>
-References: <CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>
- <20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>
- <CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>
- <6CEE412D-0C61-4835-B685-465BF38B6F7B@akamai.com>
-In-Reply-To: <6CEE412D-0C61-4835-B685-465BF38B6F7B@akamai.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Microsoft-MacOutlook/f.18.0.160709
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.19.133.57]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <BA3697F15643334DAFDB7BA65721A2F7@akamai.com>
-Content-Transfer-Encoding: base64
+Received: (qmail 9423 invoked from network); 22 Jun 2017 12:56:52 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20170622125636.GC3350@intrepid>
+References: <20170621122001.GA3350@intrepid>
 MIME-Version: 1.0
-Subject: Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to
- DoS amplification attack
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="yVhtmJPUSI46BTXb"
+Content-Disposition: inline
+In-Reply-To: <20170621122001.GA3350@intrepid>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: thomasdullien@google.com
+Date: Thu, 22 Jun 2017 14:56:38 +0200
+From: Alexander Bergmann <abergmann@suse.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request: unrar: VMSF_DELTA filter allows
+ arbitrary memory write
+To: oss-security@lists.openwall.com
 
-MSBtb3JlIHRoaW5nLg0KDQpJIHdhcyBpbiBjb21tdW5pY2F0aW9ucyB3aXRo
-IGEgY29udGFjdCBmcm9tIENpc2NvIGFuZCB0aGUgSUtFIFJGQyBjb21taXR0
-ZWUuICBXaGlsZSB0aGlzIENWRSByZXF1ZXN0L2Rpc2N1c3Npb24gc2VlbXMg
-c2NvcGVkIGZvciBJS0V2MSwgdGhlcmUgYXJlIGEgc2VsZWN0aW9uIG9mIGhv
-c3RzIHJ1bm5pbmcgSUtFdjIgdGhhdCBhcHBlYXIgdG8gcmV1c2UgdGhlaXIg
-c29mdHdhcmUgc3RhY2svbG9naWMsIGNhdXNpbmcgc29tZSBpbnN0YW5jZXMg
-b2YgSUtFdjIgZXhoaWJpdGluZyBzaW1pbGFyIGZ1bmN0aW9uYWxpdHkgYW5k
-IHByb3ZpZGluZyAoRClEb1MgcG90ZW50aWFsLg0KDQpSZWdhcmRzLA0KQ2hh
-ZA0KDQpPbiAxMC8xOS8xNiwgMTI6MjcgUE0sICJTZWFtYW4sIENoYWQiIDxj
-c2VhbWFuQGFrYW1haS5jb20+IHdyb3RlOg0KDQogICAgSGkgQWxsLA0KICAg
-IA0KICAgIEnigJltIGEgbGl0dGxlIGxhdGUgdG8gdGhlIGNvbnZlcnNhdGlv
-biBidXQgSSBkaWQgc29tZSBmYWlybHkgZXh0ZW5zaXZlIHJlc2VhcmNoIG9u
-IHRoaXMgdG9waWMgYWJvdXQgOSBtb250aHMgYWdvLCB3aGl0ZSBwYXBlciBo
-ZXJlLg0KICAgIA0KICAgIGh0dHBzOi8vY29tbXVuaXR5LmFrYW1haS5jb20v
-ZG9jcy9ET0MtNTI4OQ0KICAgIA0KICAgIFJlZ2FyZHMsDQogICAgQ2hhZA0K
-ICAgIA0KICAgIE9uIDEwLzE4LzE2LCAxMDo1OCBQTSwgIkt1cnQgU2VpZnJp
-ZWQiIDxrc2VpZnJpZWRAcmVkaGF0LmNvbT4gd3JvdGU6DQogICAgDQogICAg
-ICAgIE9uIFR1ZSwgT2N0IDE4LCAyMDE2IGF0IDY6NTcgUE0sIDxjdmUtYXNz
-aWduQG1pdHJlLm9yZz4gd3JvdGU6DQogICAgICAgID4NCiAgICAgICAgPiBU
-aGVyZSBhcmUgYXQgbGVhc3QgdGhyZWUgZGlmZmVyZW50IHNjZW5hcmlvczoN
-CiAgICAgICAgPg0KICAgICAgICA+ICAxLiBBbXBsaWZpY2F0aW9uIG9ubHkg
-ZXhpc3RzIGJlY2F1c2Ugb2YgYSBzZXJ2ZXItc2lkZSBjb2RpbmcgZXJyb3Is
-DQogICAgICAgID4gICAgIGFuZCBmaXhpbmcgdGhhdCBlcnJvciBoYXMgbm8g
-YWR2ZXJzZSBpbXBhY3Qgb24gY2xpZW50cyBhbmQNCiAgICAgICAgPiAgICAg
-cmVxdWlyZXMgbm8gY2xpZW50LXNpZGUgY2hhbmdlcy4gRm9yIGV4YW1wbGU6
-IGZvciB0aGUgcHJvdG9jb2wgaW4NCiAgICAgICAgPiAgICAgcXVlc3Rpb24s
-IHRoZSBjbGllbnQgc2ltcGx5IG5ldmVyIG5lZWRzIGFuIHVuYXV0aGVudGlj
-YXRlZCBVRFANCiAgICAgICAgPiAgICAgcmVxdWVzdCB0byByZXN1bHQgaW4g
-YSBsYXJnZXIgVURQIHJlcGx5Lg0KICAgICAgICA+DQogICAgICAgID4gIDIu
-IEFtcGxpZmljYXRpb24gaXMgbm90IGNhdXNlZCBieSBhIGNvZGluZyBlcnJv
-ciwgYnV0IGl0IGlzIHBvc3NpYmxlDQogICAgICAgID4gICAgIHRvIHJlZHVj
-ZSB0aGUgYW1wbGlmaWNhdGlvbiByYXRpbyB3aXRob3V0IGNvbXBsZXRlbHkg
-YnJlYWtpbmcgdGhlDQogICAgICAgID4gICAgIGFiaWxpdHkgb2YgY2xpZW50
-cyB0byBjb21tdW5pY2F0ZSB3aXRoIHNlcnZlcnMuDQogICAgICAgID4NCiAg
-ICAgICAgPiAgMy4gQW1wbGlmaWNhdGlvbiBpcyBub3QgY2F1c2VkIGJ5IGEg
-Y29kaW5nIGVycm9yLCBhbmQgaXQgaXMgbm90DQogICAgICAgID4gICAgIHBv
-c3NpYmxlIHRvIHJlZHVjZSB0aGUgYW1wbGlmaWNhdGlvbiByYXRpbyB3aXRo
-b3V0IGNvbXBsZXRlbHkNCiAgICAgICAgPiAgICAgYnJlYWtpbmcgdGhlIGFi
-aWxpdHkgb2YgY2xpZW50cyB0byBjb21tdW5pY2F0ZSB3aXRoIHNlcnZlcnMu
-IFRoZQ0KICAgICAgICA+ICAgICBvbmx5IG9wdGlvbnMgYXJlIHRvIG1pdGln
-YXRlIGF0dGFja3MgKGFzIGluDQogICAgICAgID4gICAgIGh0dHBzOi8vY2Fw
-ZWMubWl0cmUub3JnL2RhdGEvZGVmaW5pdGlvbnMvNDkwLmh0bWwpIG9yIHRv
-IGNoYW5nZQ0KICAgICAgICA+ICAgICB0aGUgcHJvdG9jb2wuDQogICAgICAg
-ID4NCiAgICAgICAgPiBJZiBzb21lb25lIGNhbiByZXF1ZXN0IGEgQ1ZFIElE
-IGZvciBhbnkgb2YgdGhlc2UgdGhyZWUgc2NlbmFyaW9zLA0KICAgICAgICA+
-IHNob3VsZCB3ZSBlbmNvdXJhZ2UgdGhlbSB0byBiZSBtb3N0IGxpYmVyYWwg
-d2l0aCBDVkUgSUQgcmVxdWVzdHMgaW4NCiAgICAgICAgPiBzY2VuYXJpbyAx
-LCBhbmQgbW9zdCBjb25zZXJ2YXRpdmUgd2l0aCBDVkUgSUQgcmVxdWVzdHMg
-aW4gc2NlbmFyaW8gMz8NCiAgICAgICAgPiBPciBkbyB3ZSBpZGVhbGx5IHdh
-bnQgdG8gZW51bWVyYXRlIGV2ZXJ5dGhpbmcsIGV2ZW4gYSAxOjEuMSByYXRp
-bw0KICAgICAgICA+IHRoYXQncyBiYWtlZCBpbnRvIGEgcHJvdG9jb2wgZGVz
-aWduLCBhbmQgY2FuJ3QgYmUgZml4ZWQgd2l0aG91dA0KICAgICAgICA+IGNo
-YW5naW5nIGV2ZXJ5IGNsaWVudCBhbmQgc2VydmVyPw0KICAgICAgICA+DQog
-ICAgICAgID4gRmluYWxseSwgZG8gd2Ugd2FudCBDVkVzIGZvciBhbGwgdHlw
-ZXMgb2YgYW1wbGlmaWNhdGlvbiwgb3Igb25seQ0KICAgICAgICA+IGFtcGxp
-ZmljYXRpb24gdGhhdCBjYW4gYmUgdXNlZCBmb3IgRG9TIGF0dGFja3MgYWdh
-aW5zdCB1bnJlbGF0ZWQgdGhpcmQNCiAgICAgICAgPiBwYXJ0aWVzPyBGb3Ig
-ZXhhbXBsZSwgdGhlcmUncyBhIGNsYXNzIG9mIGFtcGxpZmljYXRpb24gaXNz
-dWVzDQogICAgICAgID4gYWZmZWN0aW5nIGF1dG9tYXRlZCBlcnJvciByZXBv
-cnRpbmcuIFRoaXMgY2FuIGV4aXN0IGluIHNlcnZlci1zaWRlDQogICAgICAg
-ID4gY29kZSBpbiB3aGljaCBleGNlcHRpb24gaGFuZGxlcnMgKHNvbWV0aGlu
-ZyBsaWtlICJjb25zdHJhaW50DQogICAgICAgID4gdmlvbGF0aW9uOiBsZW5n
-dGhfYSA+IGxlbmd0aF9iIikgYXJlIGFibGUgdG8gc2VuZCBvdXRib3VuZCBu
-ZXR3b3JrDQogICAgICAgID4gdHJhZmZpYyB0byBhIHZlbmRvcidzIHNlcnZl
-ci4gSGVyZSwgdGhlcmUgY2FuIGJlIGNhc2VzIHdoZXJlIGFuDQogICAgICAg
-ID4gYXR0YWNrZXIgc2VuZHMgYW4gdW5hdXRoZW50aWNhdGVkIGh1bmRyZWQt
-Ynl0ZSBwYWNrZXQgdG8gYSBjdXN0b21lcidzDQogICAgICAgID4gc2VydmVy
-LCBhbmQgdGhlIGN1c3RvbWVyJ3Mgc2VydmVyIHRoZW4gaW1tZWRpYXRlbHkg
-c2VuZHMgYQ0KICAgICAgICA+IG1pbGxpb24tYnl0ZSBzeXN0ZW0taGVhbHRo
-IHJlcG9ydCB0byB0aGUgdmVuZG9yLiBUaGUgYXR0YWNrZXINCiAgICAgICAg
-PiBnZW5lcmFsbHkgY2FuIHJlcGVhdCB0aGlzLCBhbHRob3VnaCB0aGVyZSBt
-aWdodCBiZSBhIHJhdGUgbGltaXQuDQogICAgICAgID4gU3VwcG9zZSB0aGF0
-IHRoZSBjdXN0b21lciB3YW50cyB0byBzZW5kIHRoZXNlIHJlcG9ydHMsIGFu
-ZCB0aGUgdmVuZG9yDQogICAgICAgID4gd2FudHMgdG8gcmVjZWl2ZSB0aGVz
-ZSByZXBvcnRzLCBhbmQgKG1heWJlPykgdGhlIGludGVydmVuaW5nIElTUHMg
-Y2FuDQogICAgICAgID4gaGFuZGxlIHRoZSBsb2FkLiBXb3VsZCB0aGlzIGJl
-IGEgQ1ZFIGJlY2F1c2Ugb2YgdGhlIGh1Z2UgYW1wbGlmaWNhdGlvbg0KICAg
-ICAgICA+IHJhdGlvLCBvciBpcyBhbXBsaWZpY2F0aW9uIGEgQ1ZFIG9ubHkg
-aW4gY2VydGFpbiBzcGVjaWFsIGNhc2VzPw0KICAgICAgICA+DQogICAgICAg
-IA0KICAgICAgICBTbyBzb21lIGFkZGl0aW9uYWwgY29tbWVudHMvY3JpdGVy
-aWE6DQogICAgICAgIA0KICAgICAgICAxKSBjYW4gdGhpcyBhY3R1YWxseSBi
-ZSBleHBsb2l0ZWQgaW4gcHJhY3RpY2UgaW4gYSByZWFzb25hYmxlIG1hbm5l
-ciAoZS5nLg0KICAgICAgICBhIDE6MTAwMCBhbXBsaWZpY2F0aW9uIEkgdGhp
-bmsgd2UnZCBhbGwgYWdyZWUgaXMgYSByZWFsaXN0aWMgcHJvYmxlbSkNCiAg
-ICAgICAgMikgaXMgdGhpcyBiZWluZyBhY3RpdmVseSB1c2VkIGluIHRoZSB3
-aWxkIHRvIGV4cGxvaXQgc3lzdGVtcyBvciBjYXVzZSBEb1MNCiAgICAgICAg
-c2l0dWF0aW9ucz8gSW4gdGhlIGNhc2Ugb2YgdGhpcyBJS0V2MSBpc3N1ZSBp
-dCBzb3VuZHMgbGlrZSB5ZXMNCiAgICAgICAgDQogICAgICAgIGFuZCBteSBm
-YXZvcml0ZSAic2hvdWxkIHRoaXMgZ2V0IGEgQ1ZFIHRlc3QiIHF1ZXN0aW9u
-Og0KICAgICAgICANCiAgICAgICAgMykgY2FuIGl0IGJlIGZpeGVkIGluIGEg
-d2F5IHRoYXQgc3RpbGwgbGV0cyB0aGUgc2VydmljZS9jbGllbnRzIHdvcms/
-DQogICAgICAgIA0KICAgICAgICBJZiBpdCBjYW4gYmUgZml4ZWQgaW4gYSB3
-YXkgdGhhdCBsZWF2ZXMgdGhlIHNlcnZpY2UvY2xpZW50cyB3b3JraW5nIG9r
-IHRoZW4NCiAgICAgICAgY2hhbmNlcyBhcmUgdGhlIG9sZCBiZWhhdmlvciBp
-cyBub3Qgc29tZXRoaW5nIHdlIHdhbnQgdG8gbGl2ZSB3aXRoIGFueW1vcmUN
-CiAgICAgICAgYW5kIHdlIG5lZWQgdG8gZ2V0IHJpZCBvZiBpdC4NCiAgICAg
-ICAgDQogICAgICAgIA0KICAgICAgICA+DQogICAgICAgID4gLSAtLQ0KICAg
-ICAgICA+IENWRSBBc3NpZ25tZW50IFRlYW0NCiAgICAgICAgPiBNL1MgTTMw
-MCwgMjAyIEJ1cmxpbmd0b24gUm9hZCwgQmVkZm9yZCwgTUEgMDE3MzAgVVNB
-DQogICAgICAgID4gWyBBIFBHUCBrZXkgaXMgYXZhaWxhYmxlIGZvciBlbmNy
-eXB0ZWQgY29tbXVuaWNhdGlvbnMgYXQNCiAgICAgICAgPiAgIGh0dHA6Ly9j
-dmUubWl0cmUub3JnL2N2ZS9yZXF1ZXN0X2lkLmh0bWwgXQ0KICAgICAgICA+
-IC0tLS0tQkVHSU4gUEdQIFNJR05BVFVSRS0tLS0tDQogICAgICAgID4gVmVy
-c2lvbjogR251UEcgdjENCiAgICAgICAgPg0KICAgICAgICA+IGlRSWNCQUVC
-Q0FBR0JRSllCc1FBQUFvSkVMNTRyaEppOGdsNTZXMFAvanRyOGJnMTlDZ2l0
-cXRXdjhHd1lkS3oNCiAgICAgICAgPiBLaVZJc0FxVlpxdTNJWW5uQklwd3lG
-UUR2U28rdXRxQW43L2hlVVU3VjE4Sk14c1V0dFBOSlZBcndMcFpaNTdzDQog
-ICAgICAgID4gNzFIWUR1cWxoRHRxTEwySGt3VTdiVTJYdENiVWlPL0xBQWxu
-RnVLeHNiSE1vWWxreitEZ2ZjZDVndGRiSmhjRw0KICAgICAgICA+IFdtTGNS
-UmdEU1pWM3c3eVdnaEJUaENHQWdqUldVM1B3MHFxbzFwL2ErYWJSOEJ5M05H
-STF5Uml3aGo1SnhjL3UNCiAgICAgICAgPiBOWVJRTHdxYlFJdTFxSDlPSlhj
-T2Y4VG5CMWx5dFRDd0trMHUzaFhYeUlXTlNEZFJBWVF2NDcxMkFmN3NTdVZo
-DQogICAgICAgID4gK2pZT0d1M21ock9CamFtdFpORE1ySjlyaUZUUm5vSWJP
-U0UrbUNML0twK3JUcTIyTlgrclkzcGtoL1ZmdkNDMg0KICAgICAgICA+IC9q
-RjRhTzFIVWp4SEtFbUthdVZvVEFPMTB3NkZQemxSbU9NajdrTTIyb3k1NjhN
-RDZMeWdXc3BOYzljL0x2SlgNCiAgICAgICAgPiBOL2hFYXp1Mk5pVVgzd05z
-THNBNHoxbUxVZWJ0ampCb0wvQmdBQWtKMVMxYW9LMkpFbjl5NXJLNHdmMXZD
-YmlhDQogICAgICAgID4gWGt3SHhvTHUwQk16blRJT0hpUDcyRzFZWnMyRkpk
-L3BOdzlpRnZpNkdSeFBkTFJSOFRyOUZDUmp2NFY3bXZSZw0KICAgICAgICA+
-IEU4cmdZZTNWbHo4WTlBMVNZd21MTFRLcXFOZ0IvR25RTlUzcUtsVWptQWZH
-aUsyVkdqdkhhaDNCY09ZNEd1dHENCiAgICAgICAgPiB4Y3liNEhkeS9reXZ4
-T1FvNmlIcGFiWlB4WUhHS1ZJTStDUlRDbG5FcVFNMk9XaU14bXYvcGZWdjhz
-TDcxdVRKDQogICAgICAgID4gVk14Mm9BSVlCb0V4b3ZKcmIycEcNCiAgICAg
-ICAgPiA9eE5JSg0KICAgICAgICA+IC0tLS0tRU5EIFBHUCBTSUdOQVRVUkUt
-LS0tLQ0KICAgICAgICA+DQogICAgICAgIA0KICAgICAgICANCiAgICAgICAg
-DQogICAgICAgIC0tIA0KICAgICAgICANCiAgICAgICAgLS0NCiAgICAgICAg
-S3VydCBTZWlmcmllZCAtLSBSZWQgSGF0IC0tIFByb2R1Y3QgU2VjdXJpdHkg
-LS0gQ2xvdWQNCiAgICAgICAgUEdQIEE5MEIgRjk5NSA3MzUwIDE0OEYgNjZC
-RiA3NTU0IDE2MEQgNDU1MyA1RTI2IDc5OTMNCiAgICAgICAgUmVkIEhhdCBQ
-cm9kdWN0IFNlY3VyaXR5IGNvbnRhY3Q6IHNlY2FsZXJ0QHJlZGhhdC5jb20N
-CiAgICAgICAgDQogICAgDQogICAgDQoNCg==
+--yVhtmJPUSI46BTXb
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jun 21, 2017 at 02:20:01PM +0200, Alexander Bergmann wrote:
+> Hi,
+>=20
+> It was reported that unrar fixed a VMSF_DELTA memory corruption issue in
+> there latest version unrarsrc-5.5.5.tar.gz. This problem was reported to
+> Sophos AV in 2012 but never reach upstream rar.
+>=20
+> https://bugs.chromium.org/p/project-zero/issues/detail?id=3D1286&desc=3D6=
+#maincol
+>=20
+> Reproducer:
+>=20
+> Base64-encoded RAR file to trigger the VMSF_DELTA issue:
+>=20
+> UmFyIRoHAPlOcwAADgAAAAAAAAAAMAh0AAAmAI4AAAAAAAAAAhBBUiEAAAAAHQAGAAAAACBzd=
+GRv
+> dXQgIVUMzRDNmBGByDAda+AXaSv4KvQr1K/oejL05mXmXmww5tEk8gA9k8nmieyeyeswuOR6c=
+x69
+> a2Hd6zQwu3aoMDDwMEswADAAMD4P938w+dydoRFwAmwAAAAAvv////+/////+9W3QFgAAQAGA=
+AAA
+> Ooimhd12AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+>=20
+> As far as I can tell no CVE was assigned to this issue so far.
+
+Mitre.org assigned CVE-2012-6706 to this issue.
+
+
+Regards,
+Alex~
+
+
+--=20
+Alexander Bergmann <abergmann@suse.com>, Security Engineer, GPG:9FFA4886
+SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
+HRB 21284 (AG N=FCrnberg)
+
+--yVhtmJPUSI46BTXb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBAgAGBQJZS76EAAoJEN5U6HWf+kiGlI8IAIyJVvz2WNXSx10eRdjzeW1v
+oPhAKEIMbH7GwtJVWcB0zcJJbxJxe4orqUbBrJLT3BKh/K3U0aEc9xfz5B0R0r+r
+puPt6m8oD51ajfRW3Sex6FDUTuHqW5C4lNU2FBJdX+3NPDHd/DsUHJpxILu522Z9
+4D6MWSm6Q7s1l9P3Eia6X89DteCp17MsfBbD+Pkmzl6PMTIbfzJ0yf1fnrcDGfXC
+gA+UIIuYb7vIcF4nht2Fiha3YoDGXr0Dq8cR7t8mNao4MHjhkY1RGCFERh7ph8UK
+sj+FcNz6vANyzevWiQihoGlF3MocuJMb2k3A8EY/0P2CwFQvLt0GxODZ+b9fI1Q=
+=NFcU
+-----END PGP SIGNATURE-----
+
+--yVhtmJPUSI46BTXb--
