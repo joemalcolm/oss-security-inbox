@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/13
-Message-ID: <20170211181452.GA2514@openwall.com>
-Date: Sat, 11 Feb 2017 19:14:52 +0100
-From: Solar Designer <solar@...nwall.com>
-To: pali@...n.org
-Cc: oss-security@...ts.openwall.com
-Subject: posting without being subscribed (was: Use after free in libmysqlclient.so)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/2
+Message-ID: <1498111252.32057.3.camel@gmail.com>
+Date: Thu, 22 Jun 2017 02:00:52 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com, Qualys Security Advisory <qsa@...lys.com>
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Feb 11, 2017 at 06:46:43PM +0100, pali@...n.org wrote:
-> On Friday 10 February 2017 17:39:45 Solar Designer wrote:
-> > As far as I can tell, pali@...n.org is not subscribed.
-> 
-> No, I'm not. I hope it is not a requirement.
+Is it planned to have glibc use a larger 1M gap for secondary stacks
+rather than a single guard page? That would be a *lot* easier than it
+was to set it up for the main thread stack. It follows the main thread
+stack rlimit as a guideline so it seems to make sense to use the same
+guard region size too. If it ends up exposed as a sysctl, it could read
+the current value from there.
 
-Not a requirement, but you should expect to miss replies if you're not
-subscribed, especially if you didn't state so in your posting.
-
-Another issue is that now that you brought the reply back to the list,
-you almost broke the thread.  I fixed that by manually editing the
-headers on your message before approving it (as a list admin).
-Sometimes I do that, although I don't consider it to be part of my
-"job".  If a co-moderator were to approve your message first, then your
-message would have started a new thread rather than being added to the
-existing thread.  That's not great.
-
-So we'd appreciate it if you do subscribe to the list for the duration
-of discussions you participate in, or at least explicitly state when
-you're posting without being subscribed (ask to be CC'ed on replies).
-
-Alexander
+For the local setuid/setgid/setcap binary attack surface, the main
+thread stack is most relevant, but in general many cases of large stack
+frames that were found are called in threads other than the initial one.
+Secondary stacks are also mixed in with other mmap allocations rather
+than having a separate ASLR base and glibc doesn't do any secondary
+stack ASLR. IIRC, it does cache color the stacks but not randomly and I
+don't remember how much space it currently reserves for that.
