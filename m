@@ -1,38 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/5
-Message-ID: <308352c2-f020-aa8b-0ea7-f4cc7b14ada2@redhat.com>
-Date: Mon, 10 Jul 2017 20:24:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Michal Zalewski <lcamtuf@...edump.cx>
-Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/13
+Message-ID: <20170622210110.zqlh2rn5cnzsre65@perpetual.pseudorandom.co.uk>
+Date: Thu, 22 Jun 2017 22:01:10 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions
 Content-Type: text/plain; charset=utf-8
 
+Impact: privilege escalation
+Attack range: local
+Vulnerable: all versions < 0.8.7, 0.9.x < 0.9.6
+Fixed in: 0.8.x >= 0.8.7, all versions >= 0.9.6
+Reference: https://github.com/flatpak/flatpak/issues/845
 
+Flatpak is a desktop application distribution framework for Linux.
 
-On 2017-07-10 8:04 PM, Michal Zalewski wrote:
->> It's hard to see a security issue here
-> I'm not sure this applies here, but the use of uninitialized memory
-> can be an issue when, say, a website calls your code to convert
-> user-controlled audio (e.g., to optimize it for streaming). For
-> libraries, this could leak some information about the audio converted
-> for other users, possibly revealing it to the attacker. For one-shot
-> conversions with a command-line tool, this is unlikely, but the
-> uninitialized memory could still end up leaking some system-specific
-> secrets (e.g., ASLR memory layout, credentials, etc).
-Just a reminder to all, a worst case scenario to the above:
+Colin Walters discovered a security vulnerability in versions of Flatpak
+prior to 0.8.7. A third-party app repository could include malicious apps
+that contain files with inappropriate permissions, for example setuid or
+world-writable. Older Flatpak versions would deploy the files with those
+permissions, which would let a local attacker run the setuid executable
+(escalating their privileges) or write to the world-writable location.
 
-https://twitter.com/taviso/status/832744397800214528?lang=en
-> Not that this is necessarily a risk here; depends on how much memory
-> is accessed, what happens with it later on, whether anyone is even
-> using the library / tool this way, whether doing so is sane in the
-> first place, etc.
->
-> /mz
-Heartbleed was "only" 64k (that's actually a pretty huge amount for
-sensitive data).
+In the case of the system helper used when an app is installed
+system-wide, files deployed as part of the app are owned by root, so
+in the worst case the app repository could arrange for a setuid root
+executable to be present.
 
+There are several mitigations:
+
+* The sandboxed apps installed by Flatpak are run with PR_SET_NO_NEW_PRIVS,
+  so the Flatpak app itself cannot escalate privileges via setuid.
+* The attacker making use of these inappropriate permissions to escalate
+  privileges must be local.
+* If you are using Flatpak to install apps from a third-party vendor,
+  then there is already a trust relationship: the app is sandboxed, but
+  the third-party vendor chooses what parameters are used for the sandbox.
+* The default polkit policies will not allow apps to be installed
+  system-wide unless a privileged (root-equivalent) user has added the
+  third-party app repository, which indicates that the privileged user
+  trusts the operator of that repository.
+
+This vulnerability is tracked as
+<https://github.com/flatpak/flatpak/issues/845>, and as CVE-2017-9780.
+
+In the 0.8.x stable branch this vulnerability was fixed in version 0.8.7.
+
+In the 0.9.x development branch this vulnerability was fixed in version
+0.9.6.
+
+Regards,
+    S
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Simon McVittie
+Collabora Ltd. / Debian
