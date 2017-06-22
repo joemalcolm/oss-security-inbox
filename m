@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["15181" "Tuesday" "9" "October" "2018" "13:41:26" "+0200" "Solar Designer" "solar@openwall.com" "<20181009114126.GA7166@openwall.com>" "333" "[oss-security] Linux kernel: \"Meltdown leaks with Global kernel mapping\"" "^Cc:" nil nil "10" "2018100911:41:26" "[oss-security] Linux kernel: \"Meltdown leaks with Global kernel mapping\"" (number mark "        solar@openwa Oct  9  333/15181 " thread-indent "\"[oss-security] Linux kernel: \"Meltdown leaks with Global kernel mapping\"\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6309" "Thursday" "22" "June" "2017" "14:18:33" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170622121833.GI32005@suse.de>" "183" "Re: [oss-security] stackguard fix in Red Hat and Ubuntu kernels" nil nil nil "6" "2017062212:18:33" "[oss-security] stackguard fix in Red Hat and Ubuntu kernels" (number mark "U       meissner@sus Jun 22  183/6309  " thread-indent "\"Re: [oss-security] stackguard fix in Red Hat and Ubuntu kernels\"\n") "<20170622121330.GA18550@openwall.com>" ("<20170622121330.GA18550@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1266 invoked by uid 550); 9 Oct 2018 11:41:51 -0000
+Received: (qmail 5287 invoked by uid 550); 22 Jun 2017 12:18:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,349 +11,206 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1076 invoked from network); 9 Oct 2018 11:41:34 -0000
-Message-ID: <20181009114126.GA7166@openwall.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="pf9I7BMVVzbSWLtt"
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Date: Tue, 9 Oct 2018 13:41:26 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Linux kernel: "Meltdown leaks with Global kernel mapping"
+Received: (qmail 5266 invoked from network); 22 Jun 2017 12:18:44 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Thu, 22 Jun 2017 14:18:33 +0200
+From: Marcus Meissner <meissner@suse.de>
 To: oss-security@lists.openwall.com
-
---pf9I7BMVVzbSWLtt
+Cc: Vasily Averin <vvs@virtuozzo.com>,
+	Konstantin Khorenko <khorenko@virtuozzo.com>
+Message-ID: <20170622121833.GI32005@suse.de>
+References: <20170622121330.GA18550@openwall.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20170622121330.GA18550@openwall.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] stackguard fix in Red Hat and Ubuntu kernels
 
 Hi,
 
-I didn't look into this closely, but I think it needs to be brought in
-here.  Back in August, Dave Hansen reported what may be ways to bypass
-PTI protection in the Linux kernel in some cases.  Dave's fixes got into
-Linux 4.18.5, but maybe not into any other releases nor into distros,
-except for those that updated to 4.18.5 (apparently, some SUSE branch
-and some Yocto branch?)
+Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
 
-Start of a relevant thread:
+Ciao, Marcus
+On Thu, Jun 22, 2017 at 02:13:30PM +0200, Solar Designer wrote:
+> I think the below should be in here regardless of whether it was already
+> known or not, so forwarding.
+> 
+> I've re-attached the reproducer program.
+> 
+> Thanks, Vasily and Konstantin.
+> 
+> (And yes, I've verified that both Vasily's and Konstantin's e-mail
+> addresses here were already publicly known.  It's something everyone
+> should do before forwarding stuff to a public mailing list.)
+> 
+> ----- Forwarded message from Vasily Averin <vvs@virtuozzo.com> -----
+> 
+> From: Vasily Averin <vvs@virtuozzo.com>
+> To: Solar Designer <solar@openwall.com>
+> Cc: Konstantin Khorenko <khorenko@virtuozzo.com>
+> Subject: stackguard fix in RedHat and Ubuntu kernels
+> Date: Thu, 22 Jun 2017 14:40:02 +0300
+> 
+> Dear Alexander,
+> probably it is already known,
+> otherwise please share it in oss-security@
+> I've noticed the problem on Red Hat kernels first, and reported to Red Hat already,
+> but now I've found the same problem on Ubuntu kernels.
+> It does not affect mainline patch "mm: larger stack guard gap, between vmas"
+> but seems distributors have used some other incorrect patch (shared in linux-distros@ ??? )
+> 
+> Description of problem:
+> mmap(MAP_GROUWSDOWN) works incorrectly on Red Hat and Ubuntu kernels with stackguard fix.
+> 
+> We have application that creates stack by using MAP_GROUWSDOWN , provide this area into clone(), 
+> where it fails on access to mapped area.
+> 
+> Steps to Reproduce:
+> execute attached reproducer.
+> It maps 2 pages with MAP_GROUWSDOWN, an access to 2nd page mapped page triggers SIGBUS or SIGSEGV
+> 
+> Actual results:
+> - access to end of mapped area generated SIGBUS or SIGSEGV
+> - /proc/<pid>/maps shows incorrect start address for allocated area
+> please see details below
+> 
+> Expected results:
+> on previous Ubuntu/RHEL kernels this testcase works well without crashes
+> http://man7.org/linux/man-pages/man2/mmap.2.html
+> 
+>        MAP_GROWSDOWN
+>               This flag is used for stacks.  It indicates to the kernel
+>               virtual memory system that the mapping should extend downward
+>               in memory.  The return address is one page lower than the
+>               memory area that is actually created in the process's virtual
+>               address space.  Touching an address in the "guard" page below
+>               the mapping will cause the mapping to grow by a page.  This
+>               growth can be repeated until the mapping grows to within a
+>               page of the high end of the next lower mapping, at which point
+>               touching the "guard" page will result in a SIGSEGV signal.
+> 
+> On new Ubuntu kernel 4.4.0-81-generic (with stackguard fix)
+> 
+> 20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
+> (gdb) n
+> 
+> (changes in /proc/<pid>/maps)
+>  7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
+>  7ffff7dd7000-7ffff7dfd000 r-xp 00000000 fc:00 524776                     /lib/x86_64-linux-gnu/ld-2.23.so
+>  7ffff7feb000-7ffff7fee000 rw-p 00000000 00:00 0 
+> +7ffff80f4000-7ffff7ff6000 rw-p 00000000 00:00 0  <<<< incorrect start address is shown here 
+>  7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
+>  7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
+>  7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
+> 
+> 23		printf("stack = %p\n", stack);
+> (gdb) n
+> stack = 0x7ffff7ff4000
+> 24		end = stack + STACK_SIZE - 8;
+> (gdb) n
+> 25		printf("end = %p\n", end);
+> (gdb) n
+> end = 0x7ffff7ff5ff8
+> 26		printf("write to *end\n");
+> (gdb) n
+> write to *end
+> 27		*end = 0;
+> (gdb) n
+> 
+> Program received signal SIGSEGV, Segmentation fault.
+> 0x000000000040062f in main () at sk.c:27
+> 
+> 
+> on Ubuntu 4.4.0-79-generic  -- works as expected
+> 
+> mmap return address of guard page,
+> access to end of mapped area works works correctly,
+> touch on guard page grows stack down,
+> then touch of previous page grows stack down again.
+> 
+> 20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
+> (gdb) n
+> 23		printf("stack = %p\n", stack);
+> (gdb) n
+> stack = 0x7ffff7ff4000
+> 
+>  7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
+>  7ffff7dd7000-7ffff7dfd000 r-xp 00000000 08:01 27001906                   /lib/x86_64-linux-gnu/ld-2.23.so
+>  7ffff7fc8000-7ffff7fcb000 rw-p 00000000 00:00 0 
+> +7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
+>  7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
+>  7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
+>  7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
+> 
+> 24		end = stack + STACK_SIZE - 8;
+> (gdb) n
+> 25		printf("end = %p\n", end);
+> (gdb) n
+> end = 0x7ffff7ff5ff8
+> 26		printf("write to *end\n");
+> (gdb) n
+> write to *end
+> 27		*end = 0;
+> (gdb) n
+> 28		printf("write to *stack\n");
+> (gdb) n
+> write to *stack
+> 29		*(stack) = 0;
+> (gdb) n
+> 
+> -7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
+> +7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0   <<<< Stack grow down
+> 
+> 30		printf("write to *(stack-1)\n");
+> (gdb) n
+> write to *(stack-1)
+> 31		*(stack-1) = 0;
+> (gdb) n
+> 32	}
+> 
+> -7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0 
+> +7ffff7ff3000-7ffff7ff6000 rw-p 00000000 00:00 0 <<<< Stack grows down again
+> 
+> ----- End forwarded message -----
 
-https://lists.openwall.net/linux-kernel/2018/08/02/976
-
-The Subject says "close two Meltdown leaks with Global kernel mapping",
-but it isn't immediately clear to me what "two" leaks there are.  Only
-one appears to be clearly described:
-
-https://lists.openwall.net/linux-kernel/2018/08/02/979
-
-The corresponding commit:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/commit/?h=x86/pti-urgent&id=c40a56a7818cfe735fc93a69e1875f8bba834483
-
-There are mentions of "r/w kernel text issue" and "unused hole" issue -
-is this why "two"?  But "r/w kernel text" feels irrelevant to Meltdown.
-
-I've attached the two LKML postings above for archival on oss-security
-as well.
-
-Alexander
-
---pf9I7BMVVzbSWLtt
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="lkml-close-two-meltdown-leaks.txt"
-
-Date:   Thu, 02 Aug 2018 15:58:23 -0700
-From:   Dave Hansen <dave.hansen@...ux.intel.com>
-To:     linux-kernel@...r.kernel.org
-Cc:     Dave Hansen <dave.hansen@...ux.intel.com>, keescook@...gle.com,
-        tglx@...utronix.de, mingo@...nel.org, aarcange@...hat.com,
-        jgross@...e.com, jpoimboe@...hat.com, gregkh@...uxfoundation.org,
-        peterz@...radead.org, hughd@...gle.com,
-        torvalds@...ux-foundation.org, bp@...en8.de, luto@...nel.org,
-        ak@...ux.intel.com
-Subject: [PATCH 0/7] [v2] x86/mm/pti: close two Meltdown leaks with Global kernel mapping
-
-
-The fixes for the problem Hugh reported took a bit more surgery
-than I would have liked, but they do appear to work.  Note that
-the last two patches are unnecessary cleanups that could be removed
-from backports.
-
-Changes from v1:
- * Modify set_memory_np() to avoid messing with the direct map
-   by limiting its changes to the high kernel image map.
-
---
-
-This applies to 4.17 and 4.18.
-
-Thanks to Hugh Dickins for initially finding the r/w kernel text
-issue and coming up with an initial fix.  I found the "unused
-hole" part and came up with different approach for fixing the
-mess.
-
---
-
-Background:
-
-Process Context IDentifiers (PCIDs) are a hardware feature that
-allows TLB entries to survive page table switches (CR3 writes).
-As an optimization, the PTI code currently allows the kernel image
-to be Global when running on hardware without PCIDs.  This results
-in fewer TLB misses, especially upon entry.
-
-The downside is that these Global areas are theoretically
-susceptible to Meltdown.  The logic is that there are no secrets
-in the kernel image, so why pay the cost of TLB misses.
-
-Problem:
-
-The current PTI code leaves the entire area of the kernel binary
-between '_text' and '_end' as Global (on non-PCID hardware).
-However, that range contains both read-write kernel data, and two
-"unused" holes in addition to text.  The areas which are not text
-or read-only might contain secrets once they are freed back into
-the allocator.
-
-This issue affects systems which are susceptible to Meltdown, do not
-have PCIDs and which are using the default PTI_AUTO mode (no
-pti=on/off on the cmdline).
-
-PCIDs became generally available for servers in ~2010 (Westmere)
-and desktop (client) parts in roughly 2011 (Sandybridge).  This
-is not expected to affect anything newer than that.
-
-Solution:
-
-The solution for the read-write area is to clear the global bit
-for the area (patch #1).
-
-The "unused" holes need a bit more work since we free them in a
-bit of an ad-hoc way, but we fix this up in patches 2-5.
-
-Cc: Kees Cook <keescook@...gle.com>
-Cc: Thomas Gleixner <tglx@...utronix.de>
-Cc: Ingo Molnar <mingo@...nel.org>
-Cc: Andrea Arcangeli <aarcange@...hat.com>
-Cc: Juergen Gross <jgross@...e.com>
-Cc: Josh Poimboeuf <jpoimboe@...hat.com>
-Cc: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-Cc: Peter Zijlstra <peterz@...radead.org>
-Cc: Hugh Dickins <hughd@...gle.com>
-Cc: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Borislav Petkov <bp@...en8.de>
-Cc: Andy Lutomirski <luto@...nel.org>
-Cc: Andi Kleen <ak@...ux.intel.com>
-
---pf9I7BMVVzbSWLtt
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="lkml-remove-freed-kernel-image-areas.txt"
-
-Date:   Thu, 02 Aug 2018 15:58:31 -0700
-From:   Dave Hansen <dave.hansen@...ux.intel.com>
-To:     linux-kernel@...r.kernel.org
-Cc:     Dave Hansen <dave.hansen@...ux.intel.com>, keescook@...gle.com,
-        tglx@...utronix.de, mingo@...nel.org, aarcange@...hat.com,
-        jgross@...e.com, jpoimboe@...hat.com, gregkh@...uxfoundation.org,
-        peterz@...radead.org, hughd@...gle.com,
-        torvalds@...ux-foundation.org, bp@...en8.de, luto@...nel.org,
-        ak@...ux.intel.com
-Subject: [PATCH 5/7] x86/mm/init: remove freed kernel image areas from alias mapping
-
-
-From: Dave Hansen <dave.hansen@...ux.intel.com>
-
-The kernel image is mapped into two places in the virtual address
-space (addresses without KASLR, of course):
-
-        1. The kernel direct map (0xffff880000000000)
-        2. The "high kernel map" (0xffffffff81000000)
-
-We actually execute out of #2.  If we get the address of a kernel
-symbol, it points to #2, but almost all physical-to-virtual
-translations point to #1.
-
-Parts of the "high kernel map" alias are mapped in the userspace
-page tables with the Global bit for performance reasons.  The
-parts that we map to userspace do not (er, should not) have
-secrets.
-
-This is fine, except that some areas in the kernel image that
-are adjacent to the non-secret-containing areas are unused holes.
-We free these holes back into the normal page allocator and
-reuse them as normal kernel memory.  The memory will, of course,
-get *used* via the normal map, but the alias mapping is kept.
-
-This otherwise unused alias mapping of the holes will, by default
-keep the Global bit, be mapped out to userspace, and be
-vulnerable to Meltdown.
-
-Remove the alias mapping of these pages entirely.  This is likely
-to fracture the 2M page mapping the kernel image near these areas,
-but this should affect a minority of the area.
-
-The pageattr code changes *all* aliases mapping the physical pages
-that it operates on (by default).  We only want to modify a single
-alias, so we need to tweak its behavior.
-
-This unmapping behavior is currently dependent on PTI being in
-place.  Going forward, we should at least consider doing this for
-all configurations.  Having an extra read-write alias for memory
-is not exactly ideal for debugging things like random memory
-corruption and this does undercut features like DEBUG_PAGEALLOC
-or future work like eXclusive Page Frame Ownership (XPFO).
-
-Before this patch:
-
-current_kernel:---[ High Kernel Mapping ]---
-current_kernel-0xffffffff80000000-0xffffffff81000000          16M                               pmd
-current_kernel-0xffffffff81000000-0xffffffff81e00000          14M     ro         PSE     GLB x  pmd
-current_kernel-0xffffffff81e00000-0xffffffff81e11000          68K     ro                 GLB x  pte
-current_kernel-0xffffffff81e11000-0xffffffff82000000        1980K     RW                     NX pte
-current_kernel-0xffffffff82000000-0xffffffff82600000           6M     ro         PSE     GLB NX pmd
-current_kernel-0xffffffff82600000-0xffffffff82c00000           6M     RW         PSE         NX pmd
-current_kernel-0xffffffff82c00000-0xffffffff82e00000           2M     RW                     NX pte
-current_kernel-0xffffffff82e00000-0xffffffff83200000           4M     RW         PSE         NX pmd
-current_kernel-0xffffffff83200000-0xffffffffa0000000         462M                               pmd
-
-  current_user:---[ High Kernel Mapping ]---
-  current_user-0xffffffff80000000-0xffffffff81000000          16M                               pmd
-  current_user-0xffffffff81000000-0xffffffff81e00000          14M     ro         PSE     GLB x  pmd
-  current_user-0xffffffff81e00000-0xffffffff81e11000          68K     ro                 GLB x  pte
-  current_user-0xffffffff81e11000-0xffffffff82000000        1980K     RW                     NX pte
-  current_user-0xffffffff82000000-0xffffffff82600000           6M     ro         PSE     GLB NX pmd
-  current_user-0xffffffff82600000-0xffffffffa0000000         474M                               pmd
+> 
+> #define _GNU_SOURCE
+> 
+> #include <stdio.h>
+> #include <errno.h>
+> #include <string.h>
+> #include <unistd.h>
+> #include <stdlib.h>
+> #include <sys/stat.h>
+> #include <sys/types.h>
+> #include <sys/param.h>
+> #include <sys/mman.h>
+> 
+> #define STACK_SIZE	2*4096
+> 
+> int main()
+> {
+> 	unsigned char *end;
+> 	/* Allocate stack */
+>         unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
+> 			MAP_PRIVATE | MAP_ANON | MAP_GROWSDOWN, 0, 0);
+> 
+> 	printf("stack = %p\n", stack);
+> 	end = stack + STACK_SIZE - 8;
+> 	printf("end = %p\n", end);
+> 	printf("write to *end\n");
+> 	*end = 0;
+> 	printf("write to *stack\n");
+> 	*(stack) = 0;
+> 	printf("write to *(stack-1)\n");
+> 	*(stack-1) = 0;
+> }
 
 
-After this patch:
-
-current_kernel:---[ High Kernel Mapping ]---
-current_kernel-0xffffffff80000000-0xffffffff81000000          16M                               pmd
-current_kernel-0xffffffff81000000-0xffffffff81e00000          14M     ro         PSE     GLB x  pmd
-current_kernel-0xffffffff81e00000-0xffffffff81e11000          68K     ro                 GLB x  pte
-current_kernel-0xffffffff81e11000-0xffffffff82000000        1980K                               pte
-current_kernel-0xffffffff82000000-0xffffffff82400000           4M     ro         PSE     GLB NX pmd
-current_kernel-0xffffffff82400000-0xffffffff82488000         544K     ro                     NX pte
-current_kernel-0xffffffff82488000-0xffffffff82600000        1504K                               pte
-current_kernel-0xffffffff82600000-0xffffffff82c00000           6M     RW         PSE         NX pmd
-current_kernel-0xffffffff82c00000-0xffffffff82c0d000          52K     RW                     NX pte
-current_kernel-0xffffffff82c0d000-0xffffffff82dc0000        1740K                               pte
-
-  current_user:---[ High Kernel Mapping ]---
-  current_user-0xffffffff80000000-0xffffffff81000000          16M                               pmd
-  current_user-0xffffffff81000000-0xffffffff81e00000          14M     ro         PSE     GLB x  pmd
-  current_user-0xffffffff81e00000-0xffffffff81e11000          68K     ro                 GLB x  pte
-  current_user-0xffffffff81e11000-0xffffffff82000000        1980K                               pte
-  current_user-0xffffffff82000000-0xffffffff82400000           4M     ro         PSE     GLB NX pmd
-  current_user-0xffffffff82400000-0xffffffff82488000         544K     ro                     NX pte
-  current_user-0xffffffff82488000-0xffffffff82600000        1504K                               pte
-  current_user-0xffffffff82600000-0xffffffffa0000000         474M                               pmd
-
-Signed-off-by: Dave Hansen <dave.hansen@...ux.intel.com>
-Cc: Kees Cook <keescook@...gle.com>
-Cc: Thomas Gleixner <tglx@...utronix.de>
-Cc: Ingo Molnar <mingo@...nel.org>
-Cc: Andrea Arcangeli <aarcange@...hat.com>
-Cc: Juergen Gross <jgross@...e.com>
-Cc: Josh Poimboeuf <jpoimboe@...hat.com>
-Cc: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-Cc: Peter Zijlstra <peterz@...radead.org>
-Cc: Hugh Dickins <hughd@...gle.com>
-Cc: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Borislav Petkov <bp@...en8.de>
-Cc: Andy Lutomirski <luto@...nel.org>
-Cc: Andi Kleen <ak@...ux.intel.com>
----
-
- b/arch/x86/include/asm/set_memory.h |    1 +
- b/arch/x86/mm/init.c                |   25 +++++++++++++++++++++++--
- b/arch/x86/mm/pageattr.c            |   13 +++++++++++++
- 3 files changed, 37 insertions(+), 2 deletions(-)
-
-diff -puN arch/x86/include/asm/set_memory.h~x86-unmap-freed-areas-from-kernel-image arch/x86/include/asm/set_memory.h
---- a/arch/x86/include/asm/set_memory.h~x86-unmap-freed-areas-from-kernel-image 2018-08-02 14:14:49.462483274 -0700
-+++ b/arch/x86/include/asm/set_memory.h 2018-08-02 14:14:49.471483274 -0700
-@@ -46,6 +46,7 @@ int set_memory_np(unsigned long addr, in
- int set_memory_4k(unsigned long addr, int numpages);
- int set_memory_encrypted(unsigned long addr, int numpages);
- int set_memory_decrypted(unsigned long addr, int numpages);
-+int set_memory_np_noalias(unsigned long addr, int numpages);
-
- int set_memory_array_uc(unsigned long *addr, int addrinarray);
- int set_memory_array_wc(unsigned long *addr, int addrinarray);
-diff -puN arch/x86/mm/init.c~x86-unmap-freed-areas-from-kernel-image arch/x86/mm/init.c
---- a/arch/x86/mm/init.c~x86-unmap-freed-areas-from-kernel-image        2018-08-02 14:14:49.463483274 -0700
-+++ b/arch/x86/mm/init.c        2018-08-02 14:14:49.471483274 -0700
-@@ -780,8 +780,29 @@ void free_init_pages(char *what, unsigne
-  */
- void free_kernel_image_pages(void *begin, void *end)
- {
--       free_init_pages("unused kernel image",
--                       (unsigned long)begin, (unsigned long)end);
-+       unsigned long begin_ul = (unsigned long)begin;
-+       unsigned long end_ul = (unsigned long)end;
-+       unsigned long len_pages = (end_ul - begin_ul) >> PAGE_SHIFT;
-+
-+
-+       free_init_pages("unused kernel image", begin_ul, end_ul);
-+
-+       /*
-+        * PTI maps some of the kernel into userspace.  For
-+        * performance, this includes some kernel areas that
-+        * do not contain secrets.  Those areas might be
-+        * adjacent to the parts of the kernel image being
-+        * freed, which may contain secrets.  Remove the
-+        * "high kernel image mapping" for these freed areas,
-+        * ensuring they are not even potentially vulnerable
-+        * to Meltdown regardless of the specific optimizations
-+        * PTI is currently using.
-+        *
-+        * The "noalias" prevents unmapping the direct map
-+        * alias which is needed to access the freed pages.
-+        */
-+       if (cpu_feature_enabled(X86_FEATURE_PTI))
-+               set_memory_np_noalias(begin_ul, len_pages);
- }
-
- void __ref free_initmem(void)
-diff -puN arch/x86/mm/pageattr.c~x86-unmap-freed-areas-from-kernel-image arch/x86/mm/pageattr.c
---- a/arch/x86/mm/pageattr.c~x86-unmap-freed-areas-from-kernel-image    2018-08-02 14:14:49.466483274 -0700
-+++ b/arch/x86/mm/pageattr.c    2018-08-02 14:14:49.472483274 -0700
-@@ -53,6 +53,7 @@ static DEFINE_SPINLOCK(cpa_lock);
- #define CPA_FLUSHTLB 1
- #define CPA_ARRAY 2
- #define CPA_PAGES_ARRAY 4
-+#define CPA_NO_CHECK_ALIAS 8 /* Do not search for aliases */
-
- #ifdef CONFIG_PROC_FS
- static unsigned long direct_pages_count[PG_LEVEL_NUM];
-@@ -1486,6 +1487,9 @@ static int change_page_attr_set_clr(unsi
-
-        /* No alias checking for _NX bit modifications */
-        checkalias = (pgprot_val(mask_set) | pgprot_val(mask_clr)) != _PAGE_NX;
-+       /* Never check aliases if the caller asks for it explicitly: */
-+       if (checkalias && (in_flag & CPA_NO_CHECK_ALIAS))
-+               checkalias = 0;
-
-        ret = __change_page_attr_set_clr(&cpa, checkalias);
-
-@@ -1772,6 +1776,15 @@ int set_memory_np(unsigned long addr, in
-        return change_page_attr_clear(&addr, numpages, __pgprot(_PAGE_PRESENT), 0);
- }
-
-+int set_memory_np_noalias(unsigned long addr, int numpages)
-+{
-+       int cpa_flags = CPA_NO_CHECK_ALIAS;
-+
-+       return change_page_attr_set_clr(&addr, numpages, __pgprot(0),
-+                                       __pgprot(_PAGE_PRESENT), 0,
-+                                       cpa_flags, NULL);
-+}
-+
- int set_memory_4k(unsigned long addr, int numpages)
- {
-        return change_page_attr_set_clr(&addr, numpages, __pgprot(0),
-_
-
---pf9I7BMVVzbSWLtt--
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
