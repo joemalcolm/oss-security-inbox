@@ -1,65 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/12
-Message-ID: <20170714175607.GA19141@openwall.com>
-Date: Fri, 14 Jul 2017 19:56:07 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/8
+Message-ID: <20170622125636.GC3350@intrepid>
+Date: Thu, 22 Jun 2017 14:56:38 +0200
+From: Alexander Bergmann <abergmann@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Cc: thomasdullien@...gle.com
+Subject: Re: CVE Request: unrar: VMSF_DELTA filter allows arbitrary memory write
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 08, 2017 at 04:11:25PM +0200, Salvatore Bonaccorso wrote:
-> On Wed, Jun 28, 2017 at 10:02:40PM +0200, Solar Designer wrote:
-> > 6. If CVE IDs are requested, the report is valid, and you're a CNA,
-> > assign those (requesting any required information from the reporter
-> > first)
-> > 
-> > 7. If the report does not mention CVE IDs (neither requests nor provides
-> > them, and doesn't mention the reporter having requested them elsewhere),
-> > yet the report is valid and it looks like distros will need CVE IDs, and
-> > you're a CNA, ask the reporter whether they have already requested CVE
-> > IDs elsewhere, then assign those if they haven't been requested
-> > elsewhere
+On Wed, Jun 21, 2017 at 02:20:01PM +0200, Alexander Bergmann wrote:
+> Hi,
 > 
-> Speaking for Debian: Debian beeing a CNA can *help* monitoring those
-> explicitly and assign where needed CVEs from the assigned pool.
+> It was reported that unrar fixed a VMSF_DELTA memory corruption issue in
+> there latest version unrarsrc-5.5.5.tar.gz. This problem was reported to
+> Sophos AV in 2012 but never reach upstream rar.
+> 
+> https://bugs.chromium.org/p/project-zero/issues/detail?id=1286&desc=6#maincol
+> 
+> Reproducer:
+> 
+> Base64-encoded RAR file to trigger the VMSF_DELTA issue:
+> 
+> UmFyIRoHAPlOcwAADgAAAAAAAAAAMAh0AAAmAI4AAAAAAAAAAhBBUiEAAAAAHQAGAAAAACBzdGRv
+> dXQgIVUMzRDNmBGByDAda+AXaSv4KvQr1K/oejL05mXmXmww5tEk8gA9k8nmieyeyeswuOR6cx69
+> a2Hd6zQwu3aoMDDwMEswADAAMD4P938w+dydoRFwAmwAAAAAvv////+/////+9W3QFgAAQAGAAAA
+> Ooimhd12AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+> 
+> As far as I can tell no CVE was assigned to this issue so far.
 
-I've listed Debian as backup for the two CVE tasks above.  I've also
-listed Red Hat as primary for these two tasks, based on Red Hat's
-contributions so far.  And I've listed Cloud Linux and Gentoo beside
-the tasks they kindly volunteered for in postings in here.
+Mitre.org assigned CVE-2012-6706 to this issue.
 
-I see that Gentoo is already active at their tasks, including reminding
-reporters to post to oss-security and taking care of the SPICE posting
-(when the reporter wasn't available to make it on time):
 
-http://www.openwall.com/lists/oss-security/2017/07/14/1
+Regards,
+Alex~
 
-as well as collecting statistics.  Thanks!
 
-> We are already as well contributing to other tasks, and will continue
-> to do so as time permits.
+-- 
+Alexander Bergmann <abergmann@...e.com>, Security Engineer, GPG:9FFA4886
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
 
-Thank you!
-
-However, many tasks remain vacant, with no distro responsible for them.
-This doesn't mean they're not getting done - just that no particular
-distro is responsible - yet that's something I'd like to see change.
-
-Specifically, all 6 of the technical tasks and 5 of 13 administrative
-tasks are now fully vacant.  Additionally, 11 of the administrative
-tasks have no backup.
-
-These distros have no task assigned: ALT Linux, Amazon Linux AMI, Arch
-Linux, Chrome OS, Openwall, Oracle, Slackware, SUSE, Ubuntu, Wind River,
-FreeBSD, NetBSD/pkgsrc.
-
-Openwall might be exempt for now for us running the lists and being the
-last resort fallback for most tasks. ;-)  The rest should volunteer for
-some tasks now!
-
-Red Hat almost made this list, except that I listed them for the two CVE
-tasks on my own.
-
-http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
