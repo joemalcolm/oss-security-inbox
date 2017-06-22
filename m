@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/25/2
-Message-ID: <20171025124241.12925hypflmm08sg@webmail.alunos.dcc.fc.up.pt>
-Date: Wed, 25 Oct 2017 12:42:41 +0200
-From: up201407890@...nos.dcc.fc.up.pt
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/12
+Message-ID: <20170622162341.GC11634@u40b0340c692b58f6553c.ant.amazon.com>
+Date: Thu, 22 Jun 2017 09:23:41 -0700
+From: Eduardo Valentin <eduval@...zon.com>
+To: <oss-security@...ts.openwall.com>
+CC: Vasily Averin <vvs@...tuozzo.com>, Konstantin Khorenko <khorenko@...tuozzo.com>
+Subject: Re: stackguard fix in Red Hat and Ubuntu kernels
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, Jun 22, 2017 at 09:38:13PM +0800, Greg KH wrote:
+> On Thu, Jun 22, 2017 at 02:18:33PM +0200, Marcus Meissner wrote:
+> > Hi,
+> > 
+> > Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
+> 
+> The patches upstream in Linus's tree should resolve these crashes,
+> correct?  If not, please let the kernel developers know, as we ended up
 
-I've written a quick exploit for that vulnerability.
-Instead of using it for malicious purposes, I use it to actually  
-increase my systems security.
+We could not repro the segv with the upstream version at our end. So, I think upstream is fine for this case.
 
-$ id
-uid=1000
-$ ./a.out
-[+] Leak size=144 bytes
-[+] Got kernel base: 0xffffffffb5200000
-[+] Got selinux_enforcing: 0xffffffffb611cc90
-[+] Got selinux_enabled: 0xffffffffb5eb1350
-[+] Overwriting selinux_enforcing...
-[+] Overwriting selinux_enabled...
-[+] SELinux disabled!
+> going with a different set of changes than the distros shipped, and are
 
-Enjoy,
-Federico Bento.
+Just to my understanding, do you know why we ended up having a version for linux-distro and another for upstream?
 
-PS: It's just a joke :)
+> still working on getting these backported to older stable kernels at the
+> moment.
 
+Thanks!!
 
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-
-View attachment "selinux.c" of type "text/x-csrc" (2943 bytes)
+-- 
+All the best,
+Eduardo Valentin
