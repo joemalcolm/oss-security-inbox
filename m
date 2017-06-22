@@ -1,28 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/11/1
-Message-ID: <CALy8Cw6aiwPBKyW_ObB8OmBdxwWm5ypFUVCg6hbbJGE4oBuczw@mail.gmail.com>
-Date: Sat, 11 Mar 2017 21:11:30 +0000
-From: Craig Small <csmall@...ian.org>
-To: Kurt Seifried <kseifried@...hat.com>, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Wordpress: 6 security issues in Wordpress 4.7 2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/4
+Message-ID: <20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>
+Date: Wed, 21 Jun 2017 20:26:05 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
-  As someone who seems to ask about the CVEs for wordpress the most I'll
-put my hand up to raise the CVEs for wordpress. I am only the Debian
-packager for wordpress so if the wordpress project itself wants to raise
-these CVEs then I'm all for handing it over to them.
+:Still, if OpenBSD was able to resolve the issues necessary after 
+:notification without leaking full details to the public, shouldn't 
+:this have been possible for the other projects without an embargo, 
 
-Annoyingly, the mitre website breaks if you enter more than 2 requests in
-(or it doesn't like something I typed). Something deep in
-ScriptResource.axd gives a 500 error, so it will take a while to key all 6
-in. This also explains why all 6 were not entered in one go.
+Several open-source distros fixing the same flavor of issue in the
+same timeframe might've raised suspicions in a way that one distro
+alone wouldn't have.  Heck, I've tracked down embargoed security
+issues just from what multiple closed source vendors documented in
+their release notes.
 
- - Craig
+:My take on the embargoing process (outside of what's already mentioned
+:on https://grsecurity.net/an_ancient_kernel_hole_is_not_closed.php ):
+:I've always been concerned by the fact that smaller distros seem to 
+:be barred from distros-list membership; it seems the arrangement 
+:lends itself too much to enabling the marketing of the larger 
+:companies and in fact perhaps even disincentivizing their investment 
+:in security as the embargo process enables them to skirt much of the 
+:public pain they'd otherwise have to experience (for in this 
+:instance what was a completely avoidable problem).  I get the practical
+:reasons for the policy (increased leak risk, major distros often do
+:the actual fixing work, etc) but from a level of principle it's always
+:rubbed me the wrong way.
 
->
-> --
-Craig Small (@smallsees)   http://dropbear.xyz/     csmall at : enc.com.au
-Debian GNU/Linux           http://www.debian.org/   csmall at : debian.org
-GPG fingerprint:        5D2F B320 B825 D939 04D2  0519 3938 F96B DF50 FEA5
+In the past, I've proposed that the embargo mailing list archives
+themselves have an "embargo", after which they become public.  That
+way, there's after-the-fact transparency, and it gives the folks who
+care a good idea of what happened.  Is there anything sensitive at
+this point in, say, the March 2017 linux-distros archives??   
 
+-Mike
+
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Well done is better than well said."                           -Ben Franklin
+
+Download attachment "signature.asc" of type "application/pgp-signature" (188 bytes)
