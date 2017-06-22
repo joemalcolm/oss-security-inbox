@@ -1,43 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/4
-Message-ID: <2c23bf0d-0e48-e1b2-9db7-25ecba46d6e9@census-labs.com>
-Date: Wed, 26 Apr 2017 09:42:27 +0300
-From: Dimitrios Glynos <dimitris@...sus-labs.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/3
+Message-ID: <a6f98d7e-7cc4-46f4-3cb9-743950c90a86@redhat.com>
+Date: Thu, 22 Jun 2017 12:19:35 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Daniel Micay <danielmicay@...il.com>, Qualys Security Advisory <qsa@...lys.com>
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
+On 06/22/2017 08:00 AM, Daniel Micay wrote:
+> Is it planned to have glibc use a larger 1M gap for secondary stacks
+> rather than a single guard page? That would be a *lot* easier than it
+> was to set it up for the main thread stack. It follows the main thread
+> stack rlimit as a guideline so it seems to make sense to use the same
+> guard region size too. If it ends up exposed as a sysctl, it could read
+> the current value from there.
 
+On the glibc side, we are waiting for the kernel interface for the
+configurable gap size to materialize upstream.
 
-On 25/04/2017 11:56 μμ, Stuart Gathman wrote:
-> On 04/24/2017 05:14 PM, Dawid Golunski wrote:
->> SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
->>
->> Desc.:
->> SquirrelMail is affected by a critical Remote Code Execution vulnerability
->> which stems from insufficient escaping of user-supplied data when
->> SquirrelMail has been configured with Sendmail as the main transport.
->> An authenticated attacker may be able to exploit the vulnerability
->> to execute arbitrary commands on the target and compromise the remote
->> system.
-> We deploy squirrelmail NOT using sendmail for sending mail ($useSendmail
-> = false).  There is no reason not to use SMTP instead of running
-> sendmail directly.  It doesn't seem to be vulnerable that way - and I
-> suggest that as a mitigation.  Just to be sure, after reading this
-> advisory I added  $sendmail_path  = '/usr/sbin/false'; (We always avoid
-> direct command execution with PHP because PHP is prone to quoting bugs.) 
-> 
-> OT: is there already a utility that *safely* logs arguments and stdin
-> (as was apparently used to explain the exploit)?  I could write a C
-> prog, or a carefully quoted bash script - but would rather use an
-> already proven utility.
-> 
-
-For execve logging (just arguments) see 'snoopy'. It catches exec
-calls using LDPRELOAD, so it misses them only if the calls are
-made from a static binary (which I don't believe php or sendmail
-are).
-
-HTH,
-
-Dimitris
+Thanks,
+Florian
