@@ -1,62 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/10
-Message-ID: <20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>
-Date: Wed, 5 Jul 2017 14:53:20 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/9
+Message-ID: <20170622133812.GA1672@kroah.com>
+Date: Thu, 22 Jun 2017 21:38:13 +0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: Daniel Skowroński <daniel@...nf.net>
-Subject: Re: systemd fails to parse user that should run service
+Cc: Vasily Averin <vvs@...tuozzo.com>, Konstantin Khorenko <khorenko@...tuozzo.com>
+Subject: Re: stackguard fix in Red Hat and Ubuntu kernels
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@...cle.com wrote:
-> >2) If user name specified in systemd unit file is syntactically correct
-> >(according to systemd check) but user name does not exist then systemd
-> >refuse to start that unit.
+On Thu, Jun 22, 2017 at 02:18:33PM +0200, Marcus Meissner wrote:
+> Hi,
 > 
-> Should systemd really valid usernames?  I would think that you would 
-> either use getpwnam(username) and if that fails you may then parse it as a 
-> numeric value.  If "0day" isn't a valid username according to getpwnam(), 
-> when converting it to a numeric uid should *also* fail because "0day" 
-> isn't a properly numeric value.
+> Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
 
-It *does* fail. The problem is in the handling of that failure. systemd
-interprets that failure as "this line is nonsense, so behave as though the
-line didn't exist" rather than "this line can be positively identified as
-an attempt to name a nonexistent or unacceptable user, so fail to load
-the unit". So User=7up does the same thing as User=0day - it doesn't
-run as uid 7, which is 'lp' on my Debian system.
+The patches upstream in Linus's tree should resolve these crashes,
+correct?  If not, please let the kernel developers know, as we ended up
+going with a different set of changes than the distros shipped, and are
+still working on getting these backported to older stable kernels at the
+moment.
 
-    % cat /etc/systemd/system/demo.service
-    [Unit]
-    Description=Demonstration
+thanks,
 
-    [Service]
-    Type=oneshot
-    ExecStart=/usr/bin/id
-    User=7up
-    % sudo systemctl daemon-reload
-    % sudo systemctl start demo.service
-    % sudo systemctl status demo.service
-    ...
-    Jul 05 14:47:11 host systemd[1]: /etc/systemd/system/demo.service:7:
-    Invalid user/group name or numeric ID, ignoring: 7up
-    Jul 05 14:47:11 host systemd[1]: Starting Demonstration...
-    Jul 05 14:47:11 host id[27282]: uid=0(root) gid=0(root) groups=0(root)
-    Jul 05 14:47:11 host systemd[1]: Started Demonstration.
-    Jul 05 14:47:11 host systemd[1]: /etc/systemd/system/demo.service:7:
-    Invalid user/group name or numeric ID, ignoring: 7up
-    Jul 05 14:47:17 host systemd[1]: /etc/systemd/system/demo.service:7:
-    Invalid user/group name or numeric ID, ignoring: 7up
-    Jul 05 14:48:25 host systemd[1]: /etc/systemd/system/demo.service:7:
-    Invalid user/group name or numeric ID, ignoring: 7up
-
-(The error message in the Journal is presumably repeated because systemd
-re-parses User when looking for ExecStartPre, ExecStart, ExecStop and
-ExecStopPost commands, even though in this case there is only ExecStart.)
-
-The default user to run system units, if no user is specified, is root,
-because for system services that's the right thing more often than not,
-analogous to how LSB init scripts always run as root and can drop
-privileges themselves if they want to.
-
-    S
+greg k-h
