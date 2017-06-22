@@ -1,80 +1,193 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/24/1
-Message-ID: <88316492-8fc4-3062-f48b-756aa3497606@orlitzky.com>
-Date: Wed, 23 Aug 2017 19:52:09 -0400
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/7
+Message-ID: <20170622121833.GI32005@suse.de>
+Date: Thu, 22 Jun 2017 14:18:33 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-13649: UnrealIRCd privilege escalation via PID file manipulation
+Cc: Vasily Averin <vvs@...tuozzo.com>, Konstantin Khorenko <khorenko@...tuozzo.com>
+Subject: Re: stackguard fix in Red Hat and Ubuntu kernels
 Content-Type: text/plain; charset=utf-8
 
-Product: UnrealIRCd (Unreal IRC daemon)
-Versions-affected: 4.0.13 and earlier
-Bug-report: https://bugs.unrealircd.org/view.php?id=4990
-Author: Michael Orlitzky
+Hi,
 
-== Summary ==
+Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
 
-The unrealircd daemon creates its PID file after dropping
-privileges. This represents a minor security issue when used with a
-traditional SysV-style init script; additional factors are needed to
-make it exploitable.
+Ciao, Marcus
+On Thu, Jun 22, 2017 at 02:13:30PM +0200, Solar Designer wrote:
+> I think the below should be in here regardless of whether it was already
+> known or not, so forwarding.
+> 
+> I've re-attached the reproducer program.
+> 
+> Thanks, Vasily and Konstantin.
+> 
+> (And yes, I've verified that both Vasily's and Konstantin's e-mail
+> addresses here were already publicly known.  It's something everyone
+> should do before forwarding stuff to a public mailing list.)
+> 
+> ----- Forwarded message from Vasily Averin <vvs@...tuozzo.com> -----
+> 
+> From: Vasily Averin <vvs@...tuozzo.com>
+> To: Solar Designer <solar@...nwall.com>
+> Cc: Konstantin Khorenko <khorenko@...tuozzo.com>
+> Subject: stackguard fix in RedHat and Ubuntu kernels
+> Date: Thu, 22 Jun 2017 14:40:02 +0300
+> 
+> Dear Alexander,
+> probably it is already known,
+> otherwise please share it in oss-security@
+> I've noticed the problem on Red Hat kernels first, and reported to Red Hat already,
+> but now I've found the same problem on Ubuntu kernels.
+> It does not affect mainline patch "mm: larger stack guard gap, between vmas"
+> but seems distributors have used some other incorrect patch (shared in linux-distros@ ??? )
+> 
+> Description of problem:
+> mmap(MAP_GROUWSDOWN) works incorrectly on Red Hat and Ubuntu kernels with stackguard fix.
+> 
+> We have application that creates stack by using MAP_GROUWSDOWN , provide this area into clone(), 
+> where it fails on access to mapped area.
+> 
+> Steps to Reproduce:
+> execute attached reproducer.
+> It maps 2 pages with MAP_GROUWSDOWN, an access to 2nd page mapped page triggers SIGBUS or SIGSEGV
+> 
+> Actual results:
+> - access to end of mapped area generated SIGBUS or SIGSEGV
+> - /proc/<pid>/maps shows incorrect start address for allocated area
+> please see details below
+> 
+> Expected results:
+> on previous Ubuntu/RHEL kernels this testcase works well without crashes
+> http://man7.org/linux/man-pages/man2/mmap.2.html
+> 
+>        MAP_GROWSDOWN
+>               This flag is used for stacks.  It indicates to the kernel
+>               virtual memory system that the mapping should extend downward
+>               in memory.  The return address is one page lower than the
+>               memory area that is actually created in the process's virtual
+>               address space.  Touching an address in the "guard" page below
+>               the mapping will cause the mapping to grow by a page.  This
+>               growth can be repeated until the mapping grows to within a
+>               page of the high end of the next lower mapping, at which point
+>               touching the "guard" page will result in a SIGSEGV signal.
+> 
+> On new Ubuntu kernel 4.4.0-81-generic (with stackguard fix)
+> 
+> 20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
+> (gdb) n
+> 
+> (changes in /proc/<pid>/maps)
+>  7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
+>  7ffff7dd7000-7ffff7dfd000 r-xp 00000000 fc:00 524776                     /lib/x86_64-linux-gnu/ld-2.23.so
+>  7ffff7feb000-7ffff7fee000 rw-p 00000000 00:00 0 
+> +7ffff80f4000-7ffff7ff6000 rw-p 00000000 00:00 0  <<<< incorrect start address is shown here 
+>  7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
+>  7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
+>  7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
+> 
+> 23		printf("stack = %p\n", stack);
+> (gdb) n
+> stack = 0x7ffff7ff4000
+> 24		end = stack + STACK_SIZE - 8;
+> (gdb) n
+> 25		printf("end = %p\n", end);
+> (gdb) n
+> end = 0x7ffff7ff5ff8
+> 26		printf("write to *end\n");
+> (gdb) n
+> write to *end
+> 27		*end = 0;
+> (gdb) n
+> 
+> Program received signal SIGSEGV, Segmentation fault.
+> 0x000000000040062f in main () at sk.c:27
+> 
+> 
+> on Ubuntu 4.4.0-79-generic  -- works as expected
+> 
+> mmap return address of guard page,
+> access to end of mapped area works works correctly,
+> touch on guard page grows stack down,
+> then touch of previous page grows stack down again.
+> 
+> 20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
+> (gdb) n
+> 23		printf("stack = %p\n", stack);
+> (gdb) n
+> stack = 0x7ffff7ff4000
+> 
+>  7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
+>  7ffff7dd7000-7ffff7dfd000 r-xp 00000000 08:01 27001906                   /lib/x86_64-linux-gnu/ld-2.23.so
+>  7ffff7fc8000-7ffff7fcb000 rw-p 00000000 00:00 0 
+> +7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
+>  7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
+>  7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
+>  7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
+> 
+> 24		end = stack + STACK_SIZE - 8;
+> (gdb) n
+> 25		printf("end = %p\n", end);
+> (gdb) n
+> end = 0x7ffff7ff5ff8
+> 26		printf("write to *end\n");
+> (gdb) n
+> write to *end
+> 27		*end = 0;
+> (gdb) n
+> 28		printf("write to *stack\n");
+> (gdb) n
+> write to *stack
+> 29		*(stack) = 0;
+> (gdb) n
+> 
+> -7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
+> +7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0   <<<< Stack grow down
+> 
+> 30		printf("write to *(stack-1)\n");
+> (gdb) n
+> write to *(stack-1)
+> 31		*(stack-1) = 0;
+> (gdb) n
+> 32	}
+> 
+> -7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0 
+> +7ffff7ff3000-7ffff7ff6000 rw-p 00000000 00:00 0 <<<< Stack grows down again
+> 
+> ----- End forwarded message -----
 
-== Details ==
+> 
+> #define _GNU_SOURCE
+> 
+> #include <stdio.h>
+> #include <errno.h>
+> #include <string.h>
+> #include <unistd.h>
+> #include <stdlib.h>
+> #include <sys/stat.h>
+> #include <sys/types.h>
+> #include <sys/param.h>
+> #include <sys/mman.h>
+> 
+> #define STACK_SIZE	2*4096
+> 
+> int main()
+> {
+> 	unsigned char *end;
+> 	/* Allocate stack */
+>         unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
+> 			MAP_PRIVATE | MAP_ANON | MAP_GROWSDOWN, 0, 0);
+> 
+> 	printf("stack = %p\n", stack);
+> 	end = stack + STACK_SIZE - 8;
+> 	printf("end = %p\n", end);
+> 	printf("write to *end\n");
+> 	*end = 0;
+> 	printf("write to *stack\n");
+> 	*(stack) = 0;
+> 	printf("write to *(stack-1)\n");
+> 	*(stack-1) = 0;
+> }
 
-The purpose of the PID file is to hold the PID of the running daemon,
-so that later it can be stopped, restarted, or otherwise signalled
-(many daemons reload their configurations in response to a SIGHUP).
-To fulfill that purpose, the contents of the PID file need to be
-trustworthy. If the PID file is writable by a non-root user, then he
-can replace its contents with the PID of a root process. Afterwards,
-any attempt to signal the PID contained in the PID file will instead
-signal a root process chosen by the non-root user (a vulnerability).
 
-This is commonly exploitable through init scripts that are run as root
-and which blindly trust the contents of their PID files.
-
-== Exploitation ==
-
-There is only a risk of exploitation when some other user relies on
-the data in the PID file. An example of a problematic scenario
-involving an init script would be,
-
-1. I run "/etc/init.d/unrealircd start" to start the daemon.
-
-2. unrealircd drops to the "unrealircd" user.
-
-3. unrealircd writes its PID file, now owned by the "unrealircd" user.
-
-4. Someone compromises the daemon.
-
-5. The attacker is generally limited in what he can do because the
-   daemon doesn't run as root. However, he can write "1" into the
-   PID file, and he does.
-
-6. I run "/etc/init.d/unrealircd stop" to stop the daemon while I
-   investigate the weird behavior resulting from the hack.
-
-7. The machine reboots, because I killed PID 1 (this is normally
-   restricted to root).
-
-== Workaround ==
-
-The UnrealIRCd team provides limited support for SysV-style init
-scripts. The documented way to run the daemon is to start it either
-manually or through cron, as a restricted user. Afterwards, you can
-stop or reload the daemon as the same restricted user. This avoids the
-vulnerability because the reload/stop signals aren't sent as root; the
-PID file is controlled by "you," i.e. the user who started and is
-signaling the daemon. These steps are documented on the following
-wiki pages:
-
-  * https://www.unrealircd.org/docs/Installing_from_source
-  * https://www.unrealircd.org/docs/Do_not_run_as_root
-  * https://www.unrealircd.org/docs/Cron_job
-
-Another possible workaround, if you are using a supervising init
-system, is to run unrealircd in the foreground, and let the init
-system manage its PID file. The "-F" flag can be passed to the
-daemon to run it in the foreground; the init system will then
-create and utilize the PID file safely. This is sufficient for
-systemd, OpenRC, and the like.
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
