@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/22
-Message-ID: <20170705171128.2dab8a48@jabberwock.cb.piermont.com>
-Date: Wed, 5 Jul 2017 17:11:28 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Pali Rohár <pali.rohar@...il.com>
-Cc: oss-security@...ts.openwall.com, Ben Tasker <ben@...tasker.co.uk>
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/11
+Message-ID: <20170622143402.GN32005@suse.de>
+Date: Thu, 22 Jun 2017 16:34:02 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Vasily Averin <vvs@...tuozzo.com>, Konstantin Khorenko <khorenko@...tuozzo.com>
+Subject: Re: stackguard fix in Red Hat and Ubuntu kernels
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Jul 2017 22:03:45 +0200 Pali Rohár <pali.rohar@...il.com>
-wrote:
-> Is somebody going to ask Mitre for CVE? Or should it be done by Red
-> Hat? Because upstream bug is locked, it is not possible to ask in
-> upstream...
+On Thu, Jun 22, 2017 at 09:38:13PM +0800, Greg KH wrote:
+> On Thu, Jun 22, 2017 at 02:18:33PM +0200, Marcus Meissner wrote:
+> > Hi,
+> > 
+> > Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
+> 
+> The patches upstream in Linus's tree should resolve these crashes,
+> correct?  If not, please let the kernel developers know, as we ended up
+> going with a different set of changes than the distros shipped, and are
+> still working on getting these backported to older stable kernels at the
+> moment.
 
-It really doesn't matter who does it, but someone should request a
-CVE. This is an actual issue, and it requires an identifier.
+For a bit of history...
 
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
+We used the patch developed by Michal Hocko, which was apparently adjusted/rewritten
+by Hugh Dickins for upstream inclusion.
+
+We are working on the improvements on those for our 3.0 kernel, but take
+a backport of the mainline fix for 3.12 and 4.4 kernels.
+
+Ciao, Marcus
