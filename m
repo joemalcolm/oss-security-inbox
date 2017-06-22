@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1237" "Monday" "14" "November" "2016" "19:58:01" "+0100" "Sebastian Pipping" "sebastian@pipping.org" "<5147e375-7b26-a93d-b052-85cd8222c9fa@pipping.org>" "49" "Re: [oss-security] Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow" nil nil nil "11" "2016111418:58:01" "[oss-security] Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow" (number mark "U       sebastian@pi Nov 14   49/1237  " thread-indent "\"Re: [oss-security] Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow\"\n") "<035e3ddda98d4ac9aea967809fd37fd9@imshyb02.MITRE.ORG>" ("<035e3ddda98d4ac9aea967809fd37fd9@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2400" "Wednesday" "21" "June" "2017" "20:26:05" "-0400" "Mike O'Connor" "mjo@dojo.mi.org" "<20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>" "56" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062200:26:05" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        mjo@dojo.mi. Jun 21   56/2400  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<20170621212742.GA28766@grsecurity.net>" ("<20170619152843.GC7769@localhost.localdomain>" "<14558692.afnJ5aRU9J@wanheda>" "<20170621122526.GA32701@grsecurity.net>" "<20170621135727.GA12852@openwall.com>" "<20170621212742.GA28766@grsecurity.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1569 invoked by uid 550); 14 Nov 2016 18:58:13 -0000
+Received: (qmail 14158 invoked by uid 550); 22 Jun 2017 11:46:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1551 invoked from network); 14 Nov 2016 18:58:13 -0000
-To: oss-security@lists.openwall.com
-References: <035e3ddda98d4ac9aea967809fd37fd9@imshyb02.MITRE.ORG>
-Cc: Antonio Ceballos <aceballos@gmail.com>
-From: Sebastian Pipping <sebastian@pipping.org>
-Message-ID: <5147e375-7b26-a93d-b052-85cd8222c9fa@pipping.org>
-Date: Mon, 14 Nov 2016 19:58:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+Received: (qmail 7829 invoked from network); 22 Jun 2017 00:26:37 -0000
+X-PGP-Key-Fingerprint: 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9 C1
+X-Organization: noitazinagrO-X
+X-AS#: 26096
+Message-ID: <20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>
+References: <20170619152843.GC7769@localhost.localdomain>
+ <14558692.afnJ5aRU9J@wanheda>
+ <20170621122526.GA32701@grsecurity.net>
+ <20170621135727.GA12852@openwall.com>
+ <20170621212742.GA28766@grsecurity.net>
 MIME-Version: 1.0
-In-Reply-To: <035e3ddda98d4ac9aea967809fd37fd9@imshyb02.MITRE.ORG>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: aGFydHdvcmtAYmluZXJhLmRl
-Subject: Re: [oss-security] Re: CVE needed? / gnuchess 6.2.4 fixed user input
- buffer overflow
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jxtsxw3qh7j7ngze"
+Content-Disposition: inline
+In-Reply-To: <20170621212742.GA28766@grsecurity.net>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.3 (angus.mystery.com [127.0.0.1]); Wed, 21 Jun 2017 20:26:23 -0400 (EDT)
+Date: Wed, 21 Jun 2017 20:26:05 -0400
+From: "Mike O'Connor" <mjo@dojo.mi.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
+To: oss-security@lists.openwall.com
 
-Thanks for pointing to -u / UCI mode.
+--jxtsxw3qh7j7ngze
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I guess it does make sense to request/assign a CVE then.
+:Still, if OpenBSD was able to resolve the issues necessary after=20
+:notification without leaking full details to the public, shouldn't=20
+:this have been possible for the other projects without an embargo,=20
 
-The initial report seems to be by Antti Karjalainen at
-http://lists.gnu.org/archive/html/bug-gnu-chess/2015-10/msg00002.html .
+Several open-source distros fixing the same flavor of issue in the
+same timeframe might've raised suspicions in a way that one distro
+alone wouldn't have.  Heck, I've tracked down embargoed security
+issues just from what multiple closed source vendors documented in
+their release notes.
 
-Best, Sebastian
+:My take on the embargoing process (outside of what's already mentioned
+:on https://grsecurity.net/an_ancient_kernel_hole_is_not_closed.php ):
+:I've always been concerned by the fact that smaller distros seem to=20
+:be barred from distros-list membership; it seems the arrangement=20
+:lends itself too much to enabling the marketing of the larger=20
+:companies and in fact perhaps even disincentivizing their investment=20
+:in security as the embargo process enables them to skirt much of the=20
+:public pain they'd otherwise have to experience (for in this=20
+:instance what was a completely avoidable problem).  I get the practical
+:reasons for the policy (increased leak risk, major distros often do
+:the actual fixing work, etc) but from a level of principle it's always
+:rubbed me the wrong way.
 
+In the past, I've proposed that the embargo mailing list archives
+themselves have an "embargo", after which they become public.  That
+way, there's after-the-fact transparency, and it gives the folks who
+care a good idea of what happened.  Is there anything sensitive at
+this point in, say, the March 2017 linux-distros archives??=20=20=20
 
-On 14.11.2016 10:42, cve-assign@mitre.org wrote:
-> The reference for this bug is:
-> 
->   http://svn.savannah.gnu.org/viewvc?view=rev&root=chess&revision=134
-> 
->> may need some other application in front (e.g. a website
->> using gnuchess for a backend or some mobile/desktop application
->> forwarding evil input to gnuchess with improper validation) to attack.
-> 
-> Is it vulnerable without such an application if launched as
-> "gnuchess -u" (UCI mode)? For example, is it taking untrusted input of
-> 4096 characters and sending it to the ValidateMove function that is
-> expecting 128?
-> 
-> 
->   #define BUF_SIZE 4096
-> 
->   #define MAXSTR 128
-> 
-> 
->   if ( flags & UCI )
->   ...
->   NextEngineCmd();
->   ...
->   ReadFromEngine();
-> 
-> 
->   static char engineinputbuf[BUF_SIZE]="";
-> 
-> 
->   nread = read( pipefd_a2f[0], engineinputaux, BUF_SIZE );
->   strcat( engineinputbuf, engineinputaux );
-> 
-> 
->   char enginemovestr[BUF_SIZE]="";
->   enginemove = ValidateMove( enginemovestr );
-> 
-> 
+-Mike
 
+--=20
+ Michael J. O'Connor                                          mjo@dojo.mi.o=
+rg
+ =3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=
+=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D=
+--=3D
+"Well done is better than well said."                           -Ben Frankl=
+in
+
+--jxtsxw3qh7j7ngze
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQBVAwUBWUsOnZEu6kwgW799AQK+QgH7B1VlEx9fVTecuAILb/OOhux/juvMN2Td
+npG++cKDfWNQfmIljjk5x1S9EFeEhDazh+MyKFP12xNqmW62SoiYXg==
+=TCBL
+-----END PGP SIGNATURE-----
+
+--jxtsxw3qh7j7ngze--
