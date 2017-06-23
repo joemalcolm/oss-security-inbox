@@ -1,24 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/12
-Message-ID: <775c0f6a-3a9a-913c-de4a-40208159a6ad@tripleback.net>
-Date: Thu, 27 Apr 2017 11:46:49 -0400
-From: Kash Pande <kash@...pleback.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/9
+Message-ID: <20170623200538.GS27071@port70.net>
+Date: Fri, 23 Jun 2017 22:05:38 +0200
+From: Szabolcs Nagy <nsz@...t70.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+Cc: Jeff Law <law@...hat.com>
+Subject: Re: Re: Qualys Security Advisor -- The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
+* Daniel Micay <danielmicay@...il.com> [2017-06-22 01:39:46 -0400]:
+> On Wed, 2017-06-21 at 11:33 -0600, Jeff Law wrote:
+> > On 06/20/2017 12:44 AM, Daniel Micay wrote:
+> > > I think it's also worth mentioning the segmented stack support in
+> > > GCC
+> > > and LLVM that was added for Go. It's possible to use it for C with
+> > > the
+> > > __morestack call set up to simply abort when stack space is
+> > > exhausted.
+> > > 
+> > > That's what Rust was doing after it dropped segmented stacks, but
+> > > they
+> > > wanted to move to stack probes for efficiency and prematurely
+> > > dropped
+> > > these function prelude checks.
+> > > 
+> > > It's not efficient, but it works, unlike -fstack-check.
+> > > 
+> > > I don't think it makes sense for general purpose distributions to
+> > > adopt
+> > > it but it's an available option for others with more concern about
+> > > this
+> > > issue.
+> > 
+> > Yup.  go's split-stacks are another option.  As you mention, probably
+> > not performant enough for a general purpose distribution, but could be
+> > interesting for more specialized needs.
+> > 
+> > jeff
+> 
+> It can be used with large fixed size stacks and no actual expansion, but
+> yeah it's expensive to add a check to every non-leaf prelude. It's not
+> as expensive as the SSP check for a function but it needs to cover many.
+> 
+> Since probes can be so much more efficient, it only makes sense to
+> consider it if getting probes fully working is going to take a long
+> time.
 
-On 27/04/17 11:31 AM, Solar Designer wrote:
-> I am a bit concerned that MITRE's change may
-> result in us getting notified in fewer cases, especially if we continue
-> to redirect to MITRE those CVE requests that still arrive in here.  This
-> is going to result in not only fewer CVE requests sent in here, but also
-> in fewer vulnerabilities being disclosed in here - or at least in them
-> being brought in here with an extra delay (after MITRE has assigned a
-> CVE ID and reminded the person that they should notify oss-security,
-> which thankfully they do).
+split stack is broken, it cannot be mixed with non-split-stack
+code reliably, the runtime provided by the compiler cannot possibly
+be conforming for thread creation, thread exit, user allocated
+stacks and it can crash randomly.
 
-I share with you these concerns, thank you for articulating them.
-
-
-Kash Pande
+but it is not even supported on some targets so i think it's
+not a viable workaround anyway.
