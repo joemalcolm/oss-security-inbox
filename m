@@ -1,89 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/12
-Message-ID: <20170125093956.GB30424@lorien.valinor.li>
-Date: Wed, 25 Jan 2017 10:39:56 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/12
+Message-ID: <20170623162626.GA3446@jasmine.lan>
+Date: Fri, 23 Jun 2017 12:26:26 -0400
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: jasper: invalid memory read in jas_matrix_bindsub (jas_seq.c)
+Subject: Re: CVE-2017-9772: OCaml release 4.04.2
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Fri, Jun 23, 2017 at 12:24:47PM -0400, Leo Famulari wrote:
+> Hi Anil,
+> 
+> Can you tell us where to get OCaml 4.04.2? It's not available here:
+> 
+> https://ocaml.org/releases/
 
-On Wed, Jan 25, 2017 at 10:12:23AM +0100, Agostino Sarubbo wrote:
-> Description:
-> jasper is an open-source initiative to provide a free software-based reference 
-> implementation of the codec specified in the JPEG-2000 Part-1 standard.
-> 
-> Another round of fuzzing shows that a crafted image causes an invalid memory 
-> read.
-> 
-> The complete ASan output:
-> 
-> # imginfo -f $FILE
-> warning: ignoring unknown marker segment (0xff59)
-> type = 0xff59 (UNKNOWN); len = 20;00 40 40 00 00 00 00 69 00 00 00 00 00 00 00 
-> 00 00 00 warning: ignoring unknown marker segment (0xff46)
-> type = 0xff46 (UNKNOWN); len = 20;01 40 40 00 00 00 00 00 00 00 00 00 00 00 12 
-> 00 94 7f ASAN:DEADLYSIGNAL
-> =================================================================
-> ==22653==ERROR: AddressSanitizer: SEGV on unknown address 0x60180000ec30 (pc 
-> 0x7f410df421b7 bp 0x7ffdc80abaf0 sp 0x7ffdc80aba60 T0)
-> ==22653==The signal is caused by a READ memory access.
->     #0 0x7f410df421b6 in jas_matrix_bindsub /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_seq.c:254:18
->     #1 0x7f410df951a1 in jpc_dec_tileinit /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:835:5
->     #2 0x7f410df951a1 in jpc_dec_process_sod /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:594
->     #3 0x7f410dfa1853 in jpc_dec_decode /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:425:10
->     #4 0x7f410dfa1853 in jpc_decode /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:262
->     #5 0x7f410df71231 in jp2_decode /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:218:21
->     #6 0x7f410df33214 in jas_image_decode /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
->     #7 0x50a3be in main /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
->     #8 0x7f410d01378f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-> r3/work/glibc-2.23/csu/../csu/libc-start.c:289
->     #9 0x419cd8 in _start (/usr/bin/imginfo+0x419cd8)
-> 
-> AddressSanitizer can not provide additional info.
-> SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_seq.c:254:18 in 
-> jas_matrix_bindsub
-> ==22653==ABORTING
-> 
-> Affected version:
-> 2.0.10
-> 
-> Fixed version:
-> N/A
-> 
-> Commit fix:
-> N/A
-> 
-> Credit:
-> This bug was discovered by Agostino Sarubbo of Gentoo.
-> 
-> CVE:
-> N/A
-> 
-> Reproducer:
-> https://github.com/asarubbo/poc/blob/master/00125-jasper-invalidread-jas_matrix_bindsub
-> 
-> Timeline:
-> 2017-01-21: bug discovered and reported upstream
-> 2017-01-25: blog post about the issue
-> 
-> Note:
-> This bug was found with American Fuzzy Lop.
-> 
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/01/25/jasper-invalid-memory-read-in-jas_matrix_bindsub-jas_seq-c
+Sorry for the noise, I see that it's available on GitHub:
 
-This one should be https://github.com/mdadams/jasper/issues/113
+https://github.com/ocaml/ocaml/releases
 
-Regards,
-Salvatore
+Is that the new canonical source of OCaml releases?
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
