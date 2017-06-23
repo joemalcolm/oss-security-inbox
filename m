@@ -1,39 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/7
-Message-ID: <1496498903.22395.3.camel@gmail.com>
-Date: Sat, 03 Jun 2017 10:08:23 -0400
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/2
+Message-ID: <20170623071216.ddio6ve4f54yy2hf@perpetual.pseudorandom.co.uk>
+Date: Fri, 23 Jun 2017 08:12:39 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+Subject: Re: CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions
 Content-Type: text/plain; charset=utf-8
 
-> Daniel, I think that's too much.
+On Fri, 23 Jun 2017 at 07:37:54 +0200, Florian Weimer wrote:
+> On 06/22/2017 11:01 PM, Simon McVittie wrote:
+> > * If you are using Flatpak to install apps from a third-party vendor,
+> >   then there is already a trust relationship: the app is sandboxed, but
+> >   the third-party vendor chooses what parameters are used for the sandbox.
+> 
+> Doesn't this qualify as a vulnerability in its own right?  Flatpak
+> advertises countermeasures against malicious applications
 
-I can't magically guess when someone is or isn't acting on behalf of
-their employer if they're not stating so and they're using a work email
-address for work-related stuff by pushing the view of their employer.
+Hmm, yes, that mitigation is overstated. The extent of the trust
+relationship depends whether you consider the arbiter of app permissions
+to be the user of Flatpak (who has the opportunity to check and deny
+requested permissions, but will frequently not take that opportunity)
+or the repository maintainer (the app author sets the permissions that
+will be used in the absence of further user action, and the repository
+maintainer chooses what apps they are willing to publish).
 
-I'm hardly the first person to note that and I don't buy into feigning
-misunderstanding when that's how it's interpreted particularly when it's
-common. I'm not going to post from daniel.micay@...perhead.co unless
-it's on behalf of Copperhead because that's the impression that it gives
-to many people, and I'm one of those people. Even if someone states they
-aren't speaking for their employer, they're still speaking as an
-employee if they do it from a work email address...
+The flatpak(1) low-level CLI tool is non-interactive (CLI, not TUI), so
+it can't prompt for acceptance/rejection of permissions, but they can
+be viewed between installation and run with "flatpak info", and taken
+away (or indeed added) with "flatpak override". I believe the intention
+is that interactive GUIs for Flatpak (like GNOME Software) will query
+requested permissions in advance[1], more like the way Android does it.
 
-When people post from @google.com I similarly consider that to be a
-statement from a Google employee. Not *on behalf of Google* but speaking
-as an employee of Google? Definitely. If that's not the intention there
-is an easy way to avoid that.
+CVE-2017-9780 applies after merely installing a Flatpak app, even if
+the user intends to remove permissions before running it, so it breaks
+that model.
 
-> I just ask that we please refrain from lengthy threads on each and
-> ever
-> such (non-)issue.  I will be pushing them from the (linux-)distros
-> list
-> to the public right away, if any more are brought to the private list.
+> Flatpak's sandboxing technology prevents exploits and hinders malicious
+> applications.
 
-Sure, can simply link back to this annoying discussion for any future
-ones. I don't think it was completely unproductive though. And no I'm
-not going to be civil if someone feels like telling me I don't
-understand what verified / secure boot is but rather than definition
-built around the limitations of their product's current limitations.
+I think "prevents exploits" is stronger than is justified (I didn't
+write that text). If nothing else, most current Linux desktops use X11,
+which has very little privilege separation; and in practice GUI Flatpak
+apps all ask for access to the X11 socket, because otherwise their GUIs
+would not work on non-Wayland systems.
+
+The sandbox certainly *hinders* malicious applications - in particular
+some aspects of the sandbox, such as NO_NEW_PRIVS, cannot be turned off
+by configuration - but it is not enough to render malicious code
+harmless to run.
+
+I would recommend talking to Flatpak's maintainer directly if you have
+comments on this - I am not going to be adding useful value by acting
+as a man-in-the-middle.
+
+    S
+
+[1] Where possible, user consent for actions outside the sandbox is
+    obtained at the time of use by "portals": for instance opening
+    a file outside the sandbox is mediated by an ordinary File->Open
+    dialog running outside the sandbox, and only the user-selected
+    file is made available inside the sandbox. However, not all
+    permissions are feasible to use this way; in particular, the
+    framework needs to know when the app is run whether to set up
+    an isolated network namespace or allow sharing the host's
+    network namespace. In the above, and when I wrote "parameters
+    for the sandbox" in the advisory, I mean the permissions that
+    can't be prompted for on-use.
