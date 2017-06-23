@@ -1,95 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/7
-Message-ID: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
-Date: Thu, 9 Feb 2017 00:00:09 -0500
-From: <cve-assign@...re.org>
-To: <oss-security@...ts.openwall.com>
-CC: <cve-assign@...re.org>
-Subject: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/5
+Message-ID: <alpine.LFD.2.20.1706231946010.19155@wniryva>
+Date: Fri, 23 Jun 2017 19:48:13 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2017-7518 Kernel: KVM: debug exception via syscall emulation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+    Hello,
 
-oss-security Mailing List Members,
+Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
+is vulnerable to an incorrect debug exception(#DB) error. It could occur while 
+emulating a syscall instruction.
 
-To more efficiently assign and publish CVE IDs and to enable
-automation and data sharing within CVE operations, MITRE is changing
-the way it accepts CVE ID requests on the oss-security mailing list.
-Starting today, please direct CVE ID requests to this web form
-<https://cveform.mitre.org/>. Through this form, you can request a new
-CVE ID, update a CVE ID that was already assigned, and submit
-questions or feedback to the CVE Team.
+A user/process inside guest could use this flaw to potentially escalate their 
+privileges inside guest.
 
-The Distributed Weakness Filing (DWF) Project
-<https://distributedweaknessfiling.org/> is the root CVE Numbering
-Authority (CNA, described more at
-<https://cve.mitre.org/cve/cna.html>) that handles open-source
-software vulnerability requests. Please note that the DWF CNA is not
-yet ready to handle volume assignments, however they are actively
-working towards this in the coming weeks and months. Once ready, they
-will be responsible for the assignment of CVE IDs for open-source
-software (not covered by another CNA) through their own structured
-intake web form. At that time, we will inform the community of the
-change and direct them to the DWF web form. Until that time, MITRE
-will continue to handle any requests for CVE IDs from oss-security
-list users who submit them through the web form at
-<https://cveform.mitre.org/>.
+Note: Linux guests are not affected.
 
-We understand that oss-security is for vulnerabilities that should
-have immediate public disclosure. You can continue to send details to
-oss-security and propose that a CVE ID should exist. To actually
-obtain the CVE ID, please also visit the web form at
-<https://cveform.mitre.org/>. When you enter a vulnerability
-description on the web form, the CVE and description will typically be
-available on the NVD and CVE web sites at the same time or shortly
-after we email the CVE ID to you. Because of this, we strongly prefer
-that you enter a complete description (including the product name and
-affected versions) that can be published as-is. Please do not submit
-only a link URL or only code.
+Upstream patch:
+---------------
+   -> https://www.spinics.net/lists/kvm/msg151817.html
 
-The CVE team will continue to watch the oss-security list for any
-disputes or clarifications about whether a CVE ID should exist or is a
-duplicate. (More specifically, you can use the oss-security forum to
-quickly downvote a CVE ID proposal before the CVE ID ever exists.) The
-CVE team will track this information and include it when considering a
-CVE assignment. CVE is not abandoning the substantial crowdsourcing
-value that the mailing list traffic has been providing.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1464473
+   -> https://www.spinics.net/lists/kvm/msg151819.html
+   -> https://xenbits.xen.org/xsa/advisory-204.html
 
-If you have had trouble using the <https://cveform.mitre.org/> site,
-please let us know specifically what happened and how it did not meet
-your expectations. We would also like to hear your thoughts about what
-vulnerability information should appear both in an oss-security
-posting and in the CVE List, and whether some types of information
-should be in one of these but not the other (e.g., if you want the CVE
-List to specify the impact whenever possible but not list every
-exploitation step).
-  
-For more information or questions regarding this change, you can
-contact MITRE at cve@...re.org, submit a comment at
-<https://cveform.mitre.org/>, or visit us at <https://cve.mitre.org/>.
+'CVE-2017-7518' has been assigned to this issue by Red Hat Inc.
 
-Regards,
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYm/ZBAAoJEHb/MwWLVhi2SfwP/i77jANJyU3F5dvy+4rcrjIE
-xZRgCDUzBxz+ZMFiMuk1SqBDTNy1Rw0gE6mhRvWZQ6IDGSDBQHaE5T1eQCbgWkyp
-3vpFshLUnbMVv+xy/Qvfv9E2jsSyq/lrDPzWCBmBUKT43s7hM+2VLvmtNWlbNyj6
-1JwbHMqxdJzqfvr5a3tPJY8T/kwq6IWxNYNmUEXX7qHMqslhCd7bTMxVJYyJiwXh
-bvynBCYY8PsOXxonfQ8mEZWdrKTwcGgaHcrhH1ugOyOlDa65FUsHAxH4Fo4g0UfB
-txseo1ID3i0eRH85nPyvPmBU+gSqnGLgX5Apl+09gVqejfAom51/elRmFZMZxpkX
-caT+PHY3iryJyeYPklujnpp69F+CyQH/tWLCWn8CoEePmbUfM7QCom+tlJKIelrr
-Mhz5YYJiISBl1UgCwJrgF8P0xEaMR7eL2hA8LddQBaDAAxiaHdjJ4PjyA5uylfXz
-x7KCWstR6+LgVezML6nS16bMWS5F9/rYVU4ZR8/c/B7B7+0K53lnRfjoIuqTizPC
-zemXxV+K/5hRBAjgXbjq8yewtOxhUMrGrNlacQYlJf/auhWWLvvvaMdigJdQf+Ba
-xlOo3BzE/Rkj0zBXlTqevpGsMK7Sj1wNvtqBK6Tc7spjlSSb8724H4Rksg9jToCn
-JR3Cc2QWqDTEQfyWUKid
-=v+Dk
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
