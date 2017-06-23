@@ -1,59 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/21
-Message-ID: <20170705170556.146ce33d@jabberwock.cb.piermont.com>
-Date: Wed, 5 Jul 2017 17:05:56 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: Ben Tasker <ben@...tasker.co.uk>
-Cc: oss-security@...ts.openwall.com, Daniel Skowroński <daniel@...nf.net>
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/6
+Message-Id: <6D989FE0-69C8-4AE0-B897-B440B8F92C69@recoil.org>
+Date: Fri, 23 Jun 2017 16:28:28 +0100
+From: Anil Madhavapeddy <anil@...oil.org>
+To: oss-security@...ts.openwall.com
+Cc: Damien Doligez <damien.doligez@...ia.fr>
+Subject: CVE-2017-9772: OCaml release 4.04.2
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Jul 2017 13:28:43 +0100 Ben Tasker <ben@...tasker.co.uk>
-wrote:
-> You'd really hope it'd be consistent. If they want to enforce a
-> policy that user names cannot start with a digit (which as
-> Poettering notes, many distro's do) that's fine, but the resulting
-> behaviour should be safe, well defined and expected. I wouldn't say
-> running the service as root falls under that definition, personally.
+Anyone packaging OCaml 4.04.0 or OCaml 4.04.1 and installing setuid binaries
+with it should be aware of this CVE, and upgrade their distribution packaging
+accordingly.  Please get in touch with me if you are having any issues with
+upgrading to the latest OCaml 4.04.2.
 
-1) However, not all distributions enforce such a rule, and a has been
-noted, such a rule doesn't exist in POSIX. Indeed, a quick check on a
-PDP-11 simulator demonstrates that Unix at least back to v7 handled
-such names without trouble.
+Anil
 
-2) The lack of fail safety is disturbing. It is probably important for
-systems code like this to always fail safely, rather than unsafely.
+> Begin forwarded message:
+> 
+> From: Damien Doligez <Damien.Doligez@...ia.fr>
+> Subject: [Caml-list] OCaml release 4.04.2
+> Date: 23 June 2017 at 16:18:44 BST
+> To: caml announce <caml-announce@...ia.fr>, caml users <caml-list@...ia.fr>
+> Reply-To: Damien Doligez <Damien.Doligez@...ia.fr>
+> 
+> 
+> Dear OCaml users,
+> 
+> We have the pleasure of celebrating the birthday of Alan Turing by
+> announcing the release of OCaml version 4.04.2.
+> 
+> This minor release fixes the security issue described in
+> CVE-2017-9772 (included below).
+> 
+> All users should eventually upgrade to 4.04.2 from 4.04.0 and 4.04.1.
+> Any user who produces setuid programs with OCaml should read the CVE
+> and upgrade immediately.
+> 
+> It is available as an OPAM switch, or as a source download here:
+>  https://caml.inria.fr/pub/distrib/ocaml-4.04/
+>  https://github.com/ocaml/ocaml/archive/4.04.2.tar.gz
+> 
+> Happy hacking,
+> 
+> -- Damien Doligez for the OCaml team.
+> 
+> 
+> OCaml 4.04.2 (23 Jun 2017):
+> ---------------------------
+> 
+> ### Security fix:
+> 
+> - PR#7557: Local privilege escalation issue with ocaml binaries.
+>  (Damien Doligez, report by Eric Milliken, review by Xavier Leroy)
+> 
+> --------------------------------------------------------------------
+> 
+> CVE-2017-9772: Privilege escalation in OCaml runtime for SUID executables
+> 
+> The environment variables CAML_CPLUGINS, CAML_NATIVE_CPLUGINS, and
+> CAML_BYTE_CPLUGINS can be used to auto-load code into any ocamlopt-compiled
+> executable or any ocamlc-compiled executable in ‘custom runtime mode’.
+> This can lead to privilege escalation if the executable is marked setuid.
+> 
+> Vulnerable versions: OCaml 4.04.0 and 4.04.1
+> 
+> Workarounds:
+>   - Upgrade to OCaml 4.04.2 or higher.
+> or - Compile the OCaml distribution with the "-no-cplugins" configure option.
+> or - OPAM users can "opam update && opam switch recompile 4.04.1", as
+>     the repository has had backported patches applied.
+> 
+> Impact: This only affects binaries that have been installed on Unix-like
+> operating systems (including Linux and macOS) with the setuid bit set.
+> However, in that situation, any user who execute the program gains all
+> the privileges of the owner of the executable (meaning that root-owned
+> setuid executables provide root access).
+> 
+> Fix: OCaml 4.04.2 mitigates this by modifying Sys.getenv and Unix.getenv
+> to raise an exception if the process has ever had elevated privileges.
+> The OCaml runtime has also been modified to use this function for
+> retrieving all of the runtime environment variables which could potentially
+> cause files to be accessed or modified.  The older behaviour is available
+> in Sys.unsafe_getenv for applications that require strict compatibility.
+> 
+> Credits: This was originally reported by Eric Milliken on the OCaml Mantis
+> bug tracker. https://caml.inria.fr/mantis/view.php?id=7557
+> 
+> References: see CVE-2017-9779 for a lesser vulnerability in older versions.
+> 
+> CVSS v2 Vector:
+> AV:L/AC:L/Au:S/C:C/I:C/A:N/E:F/RL:OF/RC:C/CDP:H/TD:L/CR:H/IR:H/AR:L
+> CWE ID: 114
+> 
+> 
+> -- 
+> Caml-list mailing list.  Subscription management and archives:
+> https://sympa.inria.fr/sympa/arc/caml-list
+> Beginner's list: http://groups.yahoo.com/group/ocaml_beginners
+> Bug reports: http://caml.inria.fr/bin/caml-bugs
 
-> Honestly, I think upstream have done an *awful *job of handling it
-> so far (and it's far from the only example of Poettering taking the
-> not-a-bug approach questionably).
 
-I've long since come to the conclusion that systemd is not safe to run
-on a security critical machine. The developers are simply too lax
-about safety.
-
-If you're going to write a piece of systems code that has to run on
-essentially every Linux box on earth and which runs much of the time
-as root, extreme care has to be taken. You need to program defensively.
-
-Instead, what we seem to have is a set of highly interdependent
-shotgun parsers written without much regard to the rules people have
-developed (of necessity) for writing code that must run with high
-privileges. In other words, the code is _not_ written defensively.
-
-(For those not familiar with the term "shotgun parser", which the
-LangSec community introduced, do learn about it. It's a useful
-concept.)
-
-> FWIW, I'd be inclined to agree that it needs a CVE so that
-> downstream distro's can at least refer to it, and decide how (and
-> if) they want to address it.
-
-+1
-
-I don't care much if the developers deny that this is a problem. It is
-a problem.
-
-Perry
--- 
-Perry E. Metzger		perry@...rmont.com
