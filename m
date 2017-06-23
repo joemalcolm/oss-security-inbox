@@ -1,73 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/16/1
-Message-ID: <20170216044608.2fvz6snvyzuufviz@eldamar.local>
-Date: Thu, 16 Feb 2017 05:46:08 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Ben Hutchings <benh@...ian.org>
-Subject: Linux: CVE-2017-6001: Incomplete fix for CVE-2016-6786: perf/core: Fix concurrent sys_perf_event_open() vs. 'move_group' race
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/13
+Message-ID: <20170623212041.GT26922@waldemar-brodkorb.de>
+Date: Fri, 23 Jun 2017 23:20:41 +0200
+From: Waldemar Brodkorb <wbx@...ibc-ng.org>
+To: fefe <qbenjin@...com>
+Cc: Peter Korsgaard <peter@...sgaard.com>, "Anthony G. Basile" <basile@...eharbor.net>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: two vulns in  uClibc-0.9.33.2
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
+fefe wrote,
 
-The original fix for CVE-2016-6786 ws incomplete. Upstream has
-commited
-
-https://git.kernel.org/linus/321027c1fe77f892f4ea07846aeae08cefbbb290
-
-which is in v4.10-rc4 (and also backported to 4.9.x in v4.9.7). This
-has been assigned a new CVE identifier: CVE-2017-6001 (assigned via ->
-https://cveform.mitre.org/).
-
-Commit message reads as:
-
-> commit 321027c1fe77f892f4ea07846aeae08cefbbb290
-> Author: Peter Zijlstra <peterz@...radead.org>
-> Date:   Wed Jan 11 21:09:50 2017 +0100
+> >> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
 > 
->     perf/core: Fix concurrent sys_perf_event_open() vs. 'move_group' race
->     
->     Di Shen reported a race between two concurrent sys_perf_event_open()
->     calls where both try and move the same pre-existing software group
->     into a hardware context.
->     
->     The problem is exactly that described in commit:
->     
->       f63a8daa5812 ("perf: Fix event->ctx locking")
->     
->     ... where, while we wait for a ctx->mutex acquisition, the event->ctx
->     relation can have changed under us.
->     
->     That very same commit failed to recognise sys_perf_event_context() as an
->     external access vector to the events and thereby didn't apply the
->     established locking rules correctly.
->     
->     So while one sys_perf_event_open() call is stuck waiting on
->     mutex_lock_double(), the other (which owns said locks) moves the group
->     about. So by the time the former sys_perf_event_open() acquires the
->     locks, the context we've acquired is stale (and possibly dead).
->     
->     Apply the established locking rules as per perf_event_ctx_lock_nested()
->     to the mutex_lock_double() for the 'move_group' case. This obviously means
->     we need to validate state after we acquire the locks.
->     
->     Reported-by: Di Shen (Keen Lab)
->     Tested-by: John Dias <joaodias@...gle.com>
->     Signed-off-by: Peter Zijlstra (Intel) <peterz@...radead.org>
->     Cc: Alexander Shishkin <alexander.shishkin@...ux.intel.com>
->     Cc: Arnaldo Carvalho de Melo <acme@...nel.org>
->     Cc: Arnaldo Carvalho de Melo <acme@...hat.com>
->     Cc: Jiri Olsa <jolsa@...hat.com>
->     Cc: Kees Cook <keescook@...omium.org>
->     Cc: Linus Torvalds <torvalds@...ux-foundation.org>
->     Cc: Min Chong <mchong@...gle.com>
->     Cc: Peter Zijlstra <peterz@...radead.org>
->     Cc: Stephane Eranian <eranian@...gle.com>
->     Cc: Thomas Gleixner <tglx@...utronix.de>
->     Cc: Vince Weaver <vincent.weaver@...ne.edu>
->     Fixes: f63a8daa5812 ("perf: Fix event->ctx locking")
->     Link: http://lkml.kernel.org/r/20170106131444.GZ3174@twins.programming.kicks-ass.net
->     Signed-off-by: Ingo Molnar <mingo@...nel.org>
+> >uClibc is dead. Active development happens on uClibc-ng. Is uClibc-ng
+> also affected by these issues?
+> 
+> 
+> uclibc_ng is also affected.
+ 
+I tried to cross-compile attached code and run it in
+qemu-system-arm.
 
-Regards,
-Salvatore
+What should be the result?
+
+I see a segfault for poc2.c. But this also happens with glibc
+based system.
+
+Is the complete app code just plain wrong?
+Can you provide full application code and the results showing the
+issue?
+
+best regards
+ Waldemar
+
+View attachment "poc1.c" of type "text/x-csrc" (335 bytes)
+
+View attachment "poc2.c" of type "text/x-csrc" (458 bytes)
