@@ -1,4 +1,9 @@
-Received: (qmail 28487 invoked by uid 550); 17 Apr 2026 22:52:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1234" "Friday" "23" "June" "2017" "22:53:56" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9pFsfuGgvY6pkAZPoJYXUzabqxiWbo54Qo7LufhJB-J1w@mail.gmail.com>" "31" "[oss-security] Remotely exploitable crash in dhcpcd" nil nil nil "6" "2017062320:53:56" "[oss-security] Remotely exploitable crash in dhcpcd" (number mark "U       Jason@zx2c4. Jun 23   31/1234  " thread-indent "\"[oss-security] Remotely exploitable crash in dhcpcd\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1900 invoked by uid 550); 23 Jun 2017 20:54:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,48 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 29841 invoked from network); 17 Apr 2026 17:03:13 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jarek Potiuk <potiuk@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <78c45490-4e00-17a4-4849-496f1410991d@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Apr 2026 17:00:40 +0000
+Received: (qmail 1867 invoked from network); 23 Jun 2017 20:54:11 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+	:from:date:message-id:subject:to:cc:content-type; s=mail; bh=ql7
+	W+i7Ksrc6fHHoCOgjewjB/m4=; b=mRBKyRYDv7PhX1Zz8P6qR0LRtwwJVkiUHBQ
+	GVrnsloxn5Fo+9LmtNUo5yAUbEIS+f2bdvbfefENQkiTsCtyc2t6lzK0UsRGw/UE
+	7AMYHz1k56y7j8JeZvAaNO0CiTkXSyAd+Q93zbFO1abwvIw7PciDtzqQUZ+FF2Gj
+	3vHRUUSMR7fXt68X52ihn376BYtBhuU9BYw8ZkjdjYxznzECDYu4ferb9hOklY//
+	WlPvkKBl1mGYTfpUO/iSwtz0nUAsDggcb8Wp/nBtFxlFpp2yY0hkPamta6Bhge2+
+	f5j8HGQu5F7xl8yGby6GHLTDcymKp93/0zUR6ltLz0EYf9PLOwQ==
+X-Gm-Message-State: AKS2vOwxlcV2M0i5kwt4mUWnBaOeo4RbqYlLxl8G0q5LcDHsLu8OVH/c
+	iJukahTZHex9Zlmyp3IBrJ8O5zFsyA==
+X-Received: by 10.202.182.86 with SMTP id g83mr1310106oif.4.1498251238056;
+ Fri, 23 Jun 2017 13:53:58 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] =?UTF-8?Q?CVE-2026-40948=3A_Apache_Airflow_Keycloa?=
- =?UTF-8?Q?k_Provider=3A_OAuth_Login_CSRF_=E2=80=94?=
- =?UTF-8?Q?_Missing_State_Parameter_in_Keycloak_Aut?=
- =?UTF-8?Q?h_Manager=20?=
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 23 Jun 2017 22:53:56 +0200
+X-Gmail-Original-Message-ID: <CAHmME9pFsfuGgvY6pkAZPoJYXUzabqxiWbo54Qo7LufhJB-J1w@mail.gmail.com>
+Message-ID: <CAHmME9pFsfuGgvY6pkAZPoJYXUzabqxiWbo54Qo7LufhJB-J1w@mail.gmail.com>
+To: dhcpcd-discuss@marples.name, Roy Marples <roy@marples.name>
+Cc: oss-security <oss-security@lists.openwall.com>
+Content-Type: multipart/mixed; boundary="001a113cf188d451940552a6cc5a"
+Subject: [oss-security] Remotely exploitable crash in dhcpcd
 
-Severity: low=20
+--001a113cf188d451940552a6cc5a
+Content-Type: text/plain; charset="UTF-8"
 
-Affected versions:
+Hi Roy,
 
-- Apache Airflow Keycloak Provider (apache-airflow-providers-keycloak) 0.0.=
-1 before 0.7.0
+I found that by sending the same exact DHCP response to two different
+DHCP requests on different interfaces, I was able to segfault dhcpcd.
+The attached patch fixes the problem, though you might want to
+investigate a bit further precisely why this is necessary.
 
-Description:
+Regards,
+Jason
 
-The Keycloak authentication manager in `apache-airflow-providers-keycloak` =
-did not generate or validate the OAuth 2.0 `state` parameter on the login /=
- login-callback flow, and did not use PKCE. An attacker with a Keycloak acc=
-ount in the same realm could deliver a crafted callback URL to a victim's b=
-rowser and cause the victim to be logged into the attacker's Airflow sessio=
-n (login-CSRF / session fixation), where any credentials the victim subsequ=
-ently stored in Airflow Connections would be harvestable by the attacker. U=
-sers are advised to upgrade `apache-airflow-providers-keycloak` to 0.7.0 or=
- later.
+--001a113cf188d451940552a6cc5a
+Content-Type: text/x-patch; charset="US-ASCII"; name="dhcpcd-7.0.0-crash-fix.patch"
+Content-Disposition: attachment; filename="dhcpcd-7.0.0-crash-fix.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_j4ac300d0
 
-Credit:
+ZGlmZiAtcnUgZGhjcGNkLTcuMC4wLXJjMS9zcmMvaXB2NC5jIGRoY3BjZC03
+LjAuMC1yYzEtZml4ZWQvc3JjL2lwdjQuYwotLS0gZGhjcGNkLTcuMC4wLXJj
+MS9zcmMvaXB2NC5jCTIwMTctMDUtMTAgMTI6MjQ6MjguMDAwMDAwMDAwICsw
+MjAwCisrKyBkaGNwY2QtNy4wLjAtcmMxLWZpeGVkL3NyYy9pcHY0LmMJMjAx
+Ny0wNi0yMyAyMjozNzo1NS45Mjk4NTc5MDggKzAyMDAKQEAgLTI1NSw3ICsy
+NTUsNyBAQAogCWludCBuOwogCiAJc3RhdGUgPSBEX0NTVEFURShpZnApOwot
+CWlmIChzdGF0ZSA9PSBOVUxMIHx8IHN0YXRlLT5zdGF0ZSAhPSBESFNfQk9V
+TkQpCisJaWYgKHN0YXRlID09IE5VTEwgfHwgc3RhdGUtPnN0YXRlICE9IERI
+U19CT1VORCB8fCBzdGF0ZS0+YWRkciA9PSBOVUxMKQogCQlyZXR1cm4gMDsK
+IAogCVRBSUxRX0lOSVQoJm5yb3V0ZXMpOwo=
 
-Haruki Oyama (Waseda University) (finder)
-Aritra Basu (remediation developer)
-
-References:
-
-https://github.com/apache/airflow/pull/64114
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-40948
-
+--001a113cf188d451940552a6cc5a--
