@@ -1,25 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/02/1
-Message-Id: <68CFC008-17E9-46A4-BF96-19FD7F7DC056@gmail.com>
-Date: Sun, 1 Jan 2017 19:32:45 -0600
-From: Brandon Perry <bperry.volatile@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/4
+Message-ID: <bc61fe61-7d1a-2263-252e-9b0196dfd7c2@redhat.com>
+Date: Fri, 23 Jun 2017 08:02:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple issues in OpenH264 1.5.1
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-Recently, Firefox updated their OpenH264 plugin to 1.6. Earlier this year, I reported multiple crashes I had found while fuzzing version 1.5.1 of the decoder (which was what was shipped at the time).
+On 2017-06-23 7:56 AM, Jeff Law wrote:
+> On 06/21/2017 03:27 PM, Brad Spengler wrote:
+>>> OpenBSD isn't a member of the distros list - they were notified by
+>>> Qualys separately.  This matter was discussed, and some folks were
+>>> unhappy about OpenBSD's action, but in the end it was decided that
+>>> since, as you correctly say, the underlying issue was already publicly
+>>> known, OpenBSD's commits don't change things much.  Sure this draws
+>>> renewed attention to the problem, but probably not to the extent and in
+>>> the many specific ways the Qualys findings cover.  So it was decided to
+>>> keep the embargo on the detail.
+>> Thank you for clarifying that, my assumption was indeed wrong then.
+>>
+>> Still, if OpenBSD was able to resolve the issues necessary after 
+>> notification without leaking full details to the public, shouldn't 
+>> this have been possible for the other projects without an embargo, 
+>> let alone an extended one?  
+> I  really doubt it for GCC for a variety of reasons.  Hell, I doubt I
+> could have gotten even a good discussion going about the problems with
+> -fstack-check without the details of the embargo'd CVE.
+>
+> Even if I was able to get interest from other key GCC contributors, the
+> level of detail I'd have to disclose to those key contributors to make
+> progress would likely have violated the embargo.
+>
+> Perhaps part of the difference is OpenBSD can move fairly independently
+> while something like GCC requires larger scale coordination and public
+> discussion.
+>
+> Jeff
+>
+OpenBSD made changes to the then known qsort() issue, and implemented
+what was then thought to be the solution to the stack guard issue, the 1
+megabyte guard pages. Subsequent discussion (without OpenBSD present,
+due to them breaking the embargo) took place and as you know we ended up
+with some pretty significant changes to glibc (I don't know if OpenBSD
+has picked this group of fixes up or not).
 
-While these issues have been resolved on the 1.6 branch of the openh264 codebase for some time (a year?), it doesn’t seem like Firefox got the update until recently (correct me if I’m wrong), which is why I am releasing my fuzz results. I initially reported these to Mozilla, but collided with Tyler Smith, one of their security engineers who had also been fuzzing the decoder. I am not sure if these issues got CVEs or not, but I don’t see any.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-https://raw.githubusercontent.com/brandonprry/openh264-fuzz/ <https://raw.githubusercontent.com/brandonprry/openh264-fuzz/>
-
-Attached is the README for the linked GitHub repo, which shows the three distinct bugs and their stack traces. There might be another bug or two that I missed during triage. None of the crashes work on 1.6, which is now shipped with up-to-date Firefox installs.
-
-Happy New Year!
-
-
-Content of type "text/html" skipped
-
-View attachment "README.md" of type "text/markdown" (9348 bytes)
-
-Content of type "text/html" skipped
