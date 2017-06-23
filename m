@@ -1,57 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/5
-Message-Id: <EC58D857-2282-4632-95E5-00205A75C51D@redhat.com>
-Date: Thu, 1 Jun 2017 07:14:46 -0600
-From: Kurt Seifried <kseifrie@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Information on recent sqlite3 issues?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/7
+Message-Id: <E3819982-B8D2-42EF-9345-5E8221023B85@recoil.org>
+Date: Fri, 23 Jun 2017 17:33:39 +0100
+From: Anil Madhavapeddy <anil@...oil.org>
+To: Leo Famulari <leo@...ulari.name>
+Cc: oss-security@...ts.openwall.com, Damien Doligez <damien.doligez@...ia.fr>
+Subject: Re: CVE-2017-9772: OCaml release 4.04.2
 Content-Type: text/plain; charset=utf-8
 
-I will bring this up at the next cve board meeting (2 weeks from now).
+Hi Leo,
 
+The ocaml.org <http://ocaml.org/> site is just being rebuilt in CI so it will be a few minutes
+before the release is on the live site.  In the meanwhile, all the distribution
+tarballs are available at:
 
--Kurt
+https://caml.inria.fr/pub/distrib/ocaml-4.04/ <https://caml.inria.fr/pub/distrib/ocaml-4.04/>
 
+regards,
+Anil
 
-
-
-
-> On Jun 1, 2017, at 00:20, Johannes Segitz <jsegitz@...e.de> wrote:
+> On 23 Jun 2017, at 17:24, Leo Famulari <leo@...ulari.name> wrote:
 > 
->> On Thu, Jun 01, 2017 at 12:24:10AM +0200, Andreas Stieger wrote:
->> Hello,
+> Hi Anil,
+> 
+> Can you tell us where to get OCaml 4.04.2? It's not available here:
+> 
+> https://ocaml.org/releases/
+> 
+> On Fri, Jun 23, 2017 at 04:28:28PM +0100, Anil Madhavapeddy wrote:
+>> Anyone packaging OCaml 4.04.0 or OCaml 4.04.1 and installing setuid binaries
+>> with it should be aware of this CVE, and upgrade their distribution packaging
+>> accordingly.  Please get in touch with me if you are having any issues with
+>> upgrading to the latest OCaml 4.04.2.
 >> 
+>> Anil
 >> 
->>> On 05/31/2017 10:30 PM, Moritz Muehlenhoff wrote:
->>> one of the latest Apple advisories mentions several vulnerabilities in sqlite:
->>> https://support.apple.com/en-us/HT207798
+>>> Begin forwarded message:
 >>> 
->>> CVE-2017-2513: found by OSS-Fuzz
->>> CVE-2017-2518: found by OSS-Fuzz
->>> CVE-2017-2520: found by OSS-Fuzz
->>> CVE-2017-2519: found by OSS-Fuzz
->>> CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
->>> CVE-2017-6991: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+>>> From: Damien Doligez <Damien.Doligez@...ia.fr>
+>>> Subject: [Caml-list] OCaml release 4.04.2
+>>> Date: 23 June 2017 at 16:18:44 BST
+>>> To: caml announce <caml-announce@...ia.fr>, caml users <caml-list@...ia.fr>
+>>> Reply-To: Damien Doligez <Damien.Doligez@...ia.fr>
 >>> 
->>> Does anyone have additional information on those and whether that
->>> applies to the standard sqlite releases or Apple-specific changes?
+>>> 
+>>> Dear OCaml users,
+>>> 
+>>> We have the pleasure of celebrating the birthday of Alan Turing by
+>>> announcing the release of OCaml version 4.04.2.
+>>> 
+>>> This minor release fixes the security issue described in
+>>> CVE-2017-9772 (included below).
+>>> 
+>>> All users should eventually upgrade to 4.04.2 from 4.04.0 and 4.04.1.
+>>> Any user who produces setuid programs with OCaml should read the CVE
+>>> and upgrade immediately.
+>>> 
+>>> It is available as an OPAM switch, or as a source download here:
+>>> https://caml.inria.fr/pub/distrib/ocaml-4.04/
+>>> https://github.com/ocaml/ocaml/archive/4.04.2.tar.gz
+>>> 
+>>> Happy hacking,
+>>> 
+>>> -- Damien Doligez for the OCaml team.
+>>> 
+>>> 
+>>> OCaml 4.04.2 (23 Jun 2017):
+>>> ---------------------------
+>>> 
+>>> ### Security fix:
+>>> 
+>>> - PR#7557: Local privilege escalation issue with ocaml binaries.
+>>> (Damien Doligez, report by Eric Milliken, review by Xavier Leroy)
+>>> 
+>>> --------------------------------------------------------------------
+>>> 
+>>> CVE-2017-9772: Privilege escalation in OCaml runtime for SUID executables
+>>> 
+>>> The environment variables CAML_CPLUGINS, CAML_NATIVE_CPLUGINS, and
+>>> CAML_BYTE_CPLUGINS can be used to auto-load code into any ocamlopt-compiled
+>>> executable or any ocamlc-compiled executable in ‘custom runtime mode’.
+>>> This can lead to privilege escalation if the executable is marked setuid.
+>>> 
+>>> Vulnerable versions: OCaml 4.04.0 and 4.04.1
+>>> 
+>>> Workarounds:
+>>>  - Upgrade to OCaml 4.04.2 or higher.
+>>> or - Compile the OCaml distribution with the "-no-cplugins" configure option.
+>>> or - OPAM users can "opam update && opam switch recompile 4.04.1", as
+>>>    the repository has had backported patches applied.
+>>> 
+>>> Impact: This only affects binaries that have been installed on Unix-like
+>>> operating systems (including Linux and macOS) with the setuid bit set.
+>>> However, in that situation, any user who execute the program gains all
+>>> the privileges of the owner of the executable (meaning that root-owned
+>>> setuid executables provide root access).
+>>> 
+>>> Fix: OCaml 4.04.2 mitigates this by modifying Sys.getenv and Unix.getenv
+>>> to raise an exception if the process has ever had elevated privileges.
+>>> The OCaml runtime has also been modified to use this function for
+>>> retrieving all of the runtime environment variables which could potentially
+>>> cause files to be accessed or modified.  The older behaviour is available
+>>> in Sys.unsafe_getenv for applications that require strict compatibility.
+>>> 
+>>> Credits: This was originally reported by Eric Milliken on the OCaml Mantis
+>>> bug tracker. https://caml.inria.fr/mantis/view.php?id=7557
+>>> 
+>>> References: see CVE-2017-9779 for a lesser vulnerability in older versions.
+>>> 
+>>> CVSS v2 Vector:
+>>> AV:L/AC:L/Au:S/C:C/I:C/A:N/E:F/RL:OF/RC:C/CDP:H/TD:L/CR:H/IR:H/AR:L
+>>> CWE ID: 114
+>>> 
+>>> 
+>>> -- 
+>>> Caml-list mailing list.  Subscription management and archives:
+>>> https://sympa.inria.fr/sympa/arc/caml-list
+>>> Beginner's list: http://groups.yahoo.com/group/ocaml_beginners
+>>> Bug reports: http://caml.inria.fr/bin/caml-bugs
 >> 
->> SUSE has asked Apple, but has not yet received an answer as far as I am
->> aware.
-> 
-> They replied:
-> 
->> Thank you for contacting the Apple Product Security team.
->> 
->> Please contact the SQLite maintainers to coordinate.
-> 
-> I think it is problematic that they assign CVEs but don't provice any
-> details even if it's not only their code. I contacted the sqlite-devs for
-> details but didn't receive a reply up to this point.
-> 
-> Johannes
-> -- 
-> GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-> Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-> SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-> HRB 21284 (AG Nürnberg)
+
+
