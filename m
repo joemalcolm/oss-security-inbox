@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3481" "Thursday" "23" "July" "2020" "20:45:14" "+0200" "Solar Designer" "solar@openwall.com" nil "78" nil "^Cc:" nil nil "7" nil nil (number mark "        solar@openwa Jul 23   78/3481  " thread-indent "\"Re: [oss-security] Flatcar membership on the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Flatcar membership on the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["598" "Friday" "23" "June" "2017" "07:37:54" "+0200" "Florian Weimer" "fweimer@redhat.com" "<af227933-a69f-6a1f-5ab1-00a1031e8819@redhat.com>" "19" "Re: [oss-security] CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions" nil nil nil "6" "2017062305:37:54" "[oss-security] CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions" (number mark "U       fweimer@redh Jun 23   19/598   " thread-indent "\"Re: [oss-security] CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions\"\n") "<20170622210110.zqlh2rn5cnzsre65@perpetual.pseudorandom.co.uk>" ("<20170622210110.zqlh2rn5cnzsre65@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5598 invoked by uid 550); 23 Jul 2020 18:45:43 -0000
+Received: (qmail 11515 invoked by uid 550); 23 Jun 2017 05:38:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5475 invoked from network); 23 Jul 2020 18:45:19 -0000
-Message-ID: <20200723184514.GA22802@openwall.com>
-References: <CAHp2X_Q=2=8qauHjTQRqUOdfUxW5s7pypwLYBwpNQ5yFyE4p+w@mail.gmail.com> <20200720183532.GA11008@openwall.com> <CAHp2X_S_3DC00CE8Yt_RkY+dhYH-BJX2sj9EzP_ip9Sp2T+DJQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHp2X_S_3DC00CE8Yt_RkY+dhYH-BJX2sj9EzP_ip9Sp2T+DJQ@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: "Alban Crequy (Kinvolk)" <alban@kinvolk.io>, volkerdi@slackware.com
-Date: Thu, 23 Jul 2020 20:45:14 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Flatcar membership on the linux-distros list
-To: oss-security@lists.openwall.com
+Received: (qmail 11484 invoked from network); 23 Jun 2017 05:38:08 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com C9E247F6AE
+Authentication-Results: ext-mx01.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx01.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fweimer@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com C9E247F6AE
+To: oss-security@lists.openwall.com, Simon McVittie <smcv@debian.org>
+References: <20170622210110.zqlh2rn5cnzsre65@perpetual.pseudorandom.co.uk>
+From: Florian Weimer <fweimer@redhat.com>
+Message-ID: <af227933-a69f-6a1f-5ab1-00a1031e8819@redhat.com>
+Date: Fri, 23 Jun 2017 07:37:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
+MIME-Version: 1.0
+In-Reply-To: <20170622210110.zqlh2rn5cnzsre65@perpetual.pseudorandom.co.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Fri, 23 Jun 2017 05:37:57 +0000 (UTC)
+Subject: Re: [oss-security] CVE-2017-9780: Flatpak: privilege escalation via
+ setuid/world-writable file permissions
 
-On Thu, Jul 23, 2020 at 02:06:14PM -0400, Vincent Batts wrote:
-> On Mon, Jul 20, 2020 at 2:36 PM Solar Designer <solar@openwall.com> wrote:
-> > Vincent, as far as I could find, you personally have subscribed to
-> > oss-security 2 months ago, and I couldn't find anyone else from Flatcar
-> > Linux subscribed.  (Maybe people are with personal addresses that I
-> > didn't associate with Flatcar Linux.)
-> 
-> For sure.
-> While I personally have been near the core of a couple of distributions, I
-> never was involved in the contributing-side with oss-security or vendor-sec.
-> 2 months ago I joined the Kinvolk team, and now squarely involved in this
-> aspect.
-> As for security disclosure overlap, there will now be a decent overlap with
-> an operating system component being containers. As I facilitate and lead
-> the Open Containers Initiative (OCI) security list, which hosts code like
-> runc, specifications and API definitions for container registries.
-> https://github.com/opencontainers/.github/blob/master/SECURITY.md
+On 06/22/2017 11:01 PM, Simon McVittie wrote:
+> * If you are using Flatpak to install apps from a third-party vendor,
+>   then there is already a trust relationship: the app is sandboxed, but
+>   the third-party vendor chooses what parameters are used for the sandbox.
 
-Quite some overlap with (linux-)distros in the approach you use to
-pre-public-disclosure handling of security issues, indeed.  One notable
-difference is you don't appear to have a maximum embargo time.
+Doesn't this qualify as a vulnerability in its own right?  Flatpak
+advertises countermeasures against malicious applications:
 
-> Alban Crequy (CC'ed) who is on the team has had interactions (which
-> pre-date flatcar):
-> https://seclists.org/oss-sec/2015/q2/722
-> https://seclists.org/oss-sec/2014/q3/4
+“
+Secure, sandboxed applications
 
-Oh, as I understand from your e-mail signature, Alban is one of your
-company's directors.  If so, I do find it convincing for Flatcar Linux's
-membership that one of your directors has personally contributed to
-security vulnerability discovery and handling.
+Flatpak's sandboxing technology prevents exploits and hinders malicious
+applications.
+”
 
-> Otherwise, the majority of contributions are involved in the respective
-> upstreams of the projects.
+But maybe it's like selling a VPN which isn't encrypted.
 
-Such contributions are relevant, too.
-
-> > As I recall other applications to join the linux-distros list since we
-> > introduced this contribute-back requirement, distros volunteered for
-> > some tasks right away, not "after being a member for a period."  What
-> > you say makes sense, but would be a deviation from the practice so far.
-> > I'd appreciate not needing to make an exception for you.
-> 
-> Yeah, no worries! We can begin immediately with:
-> * Check if related issues exist in implementations of similar functionality
-> in other software
-
-Great.  Ubuntu already signed up as primary for this task, so Flatcar
-can be backup.
-
-> * Promptly review new issue reports for meeting the list's requirements and
-> confirm receipt of the report and, when necessary, inform the reporter of
-> any issues with their report
-
-This one already has both a primary and a backup.  So unless you choose
-another second task for you (that doesn't already have two distros
-signed up for it), you'll initially be just a backup for "Check if
-related issues exist in ... other software", which is fine.
-
-> The number of packages in distro is drastically reduced, and we'll be on
-> this.
-
-I don't understand this comment and its relevance, but nevermind.
-
-> > > Pat Volkerding can vouch for me (CC???ed), and maybe others, but I asked
-> > > volkerdi first :-)
-> >
-> > We haven't yet heard from Pat Volkerding.  Given your LinkedIn profile,
-> > I guess someone from Red Hat could vouch for you as well.
-> 
-> Pat operates at his time. :-)
-> I was not heavily involved on this team at RH, but am asking there and a
-> few others as well.
-
-OK.  It looks like we'll add Flatcar as soon as an existing member
-vouches for you.
-
-Alexander
+Thanks,
+Florian
