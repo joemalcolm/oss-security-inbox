@@ -1,110 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/11
-Message-Id: <E1dTTiB-0002BO-O5@xenbits.xenproject.org>
-Date: Fri, 07 Jul 2017 13:54:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 225 (CVE-2017-10923) - arm: vgic: Out-of-bound access when sending SGIs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/13
+Message-ID: <20170624163950.GA405@openwall.com>
+Date: Sat, 24 Jun 2017 18:39:50 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: distros list archive
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2017-10923 / XSA-225
-                              version 3
+I've just set up these archives of the private lists up until June 19:
 
-           arm: vgic: Out-of-bound access when sending SGIs
+http://www.openwall.com/lists/linux-distros/
+http://www.openwall.com/lists/distros/
 
-UPDATES IN VERSION 3
-====================
+I did not decrypt the actual messages, but the statistics and the
+message headers should provide some visibility into how much and roughly
+what was discussed and when.
 
-CVE assigned.
+The messages appearing on distros should be strictly a subset of those
+appearing on linux-distros, as per the description of the lists here:
 
-ISSUE DESCRIPTION
-=================
+http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-ARM guests can send SGI (i.e. IPI) targeting a list of vCPUs using the
-MMIO register GICD_SGIR (GICv2) or System Register ICC_SGI1R (GICv3).
-However, the emulation code does not sanitize the list and will
-directly access an array without checking whether the array index is
-within bounds.
+As you may notice, the Subject lines sometimes contain [vs] and other
+times [vs-plain].  This reflects whether the messages traveled to the
+list exploder in encrypted or plaintext form, respectively.  They
+traveled to the list members in re-encrypted form either way.  The
+[vs-plain] case commonly occurs on messages CC'ed to other parties, for
+which the sender might not have had the keys.  MUAs generally don't
+allow a message to be encrypted to a subset of the addressees and sent
+in plaintext to others.
 
-IMPACT
-======
+Enjoy.
 
-A guest may cause a hypervisor crash, resulting in a Denial of Service
-(DoS).
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.6 and onwards are affected.  Xen versions 4.5 and
-earlier are not affected.
-
-Only ARM systems are affected.  x86 systems are not affected.
-
-MITIGATION
-==========
-
-On systems where the guest kernel is controlled by the host rather than
-guest administrator, running only kernels which only send sane IPIs
-(i.e. targeting valid CPUs) will prevent untrusted guest users from
-exploiting this issue.  However untrusted guest administrators can
-still trigger it unless further steps are taken to prevent them from
-loading code into the kernel (e.g by disabling loadable modules etc) or
-from using other mechanisms which allow them to run code at kernel
-privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of ARM.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa225.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
-
-$ sha256sum xsa225*
-a52d90a2586b74d6dd0d17390c940bf414c1332a6b4ccb87f10b7d97af3b3877  xsa225.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZX5I4AAoJEIP+FMlX6CvZm7oIAMpza3K23Dh57zjVhFoKSrK7
-C/l5LbgxQB53uqlgDWeLlGxoRBuYOUg4i8rYzwI5NJAy8Y7n5z3kf8V8IcHa2+9E
-Oums8O2jpGEjiGddtOW06wRCQQPaNo/ivrjRCeLEVVTc6Lvni22Bp38vjTPykIYY
-SOspEAg9VU7BUp+K8LYF16/tYV5QyPf5JQDHWX4xKjlT0F3sRtrO5hXY3uZUJlMt
-GqLXFcD1CQqjwiaqeD/kZOpJiWCXTrMk9DoSMO2HcsJniZfLdom9MdL9YTPQNi9R
-oQkVSDt5Szt8pGTojgDymYEi8F3+LdDrauGPGUl4CNao7Yv/L1BMcNEcukiCTDY=
-=KiJw
------END PGP SIGNATURE-----
-
-Download attachment "xsa225.patch" of type "application/octet-stream" (1491 bytes)
+Alexander
