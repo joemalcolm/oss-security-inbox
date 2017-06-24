@@ -1,28 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/02/1
-Message-ID: <1493697035.1191.0@ssh.steve.org.uk>
-Date: Tue, 02 May 2017 03:50:35 +0000
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/10
+Message-ID: <CABniQZPtHV+-XiHPRUGcDe+KwEd1JpPdcDb2Xn63t2Z_Os6ETQ@mail.gmail.com>
+Date: Sat, 24 Jun 2017 23:26:00 +0800
+From: Shawn <citypw@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: 
-Subject: Re: terminal emulators' processing of escape sequences
+Cc: Brad Spengler <spender@...ecurity.net>, pageexec@...email.hu,  kernel-hardening@...ts.openwall.com
+Subject: Re: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
 Content-Type: text/plain; charset=utf-8
 
+Hi Linus,
 
-> Yves-Alexis Perez of Debian pointed out that whether these crashes occur
-> or not may be related to the version of vte.  I'll leave it up to him to
-> post a follow-up on that.
+Not sure how you got the conclusion like "Their patches are pure
+garbage."( https://www.spinics.net/lists/kernel/msg2540934.html). I'm
+wondering why there's a group of ppl called themselves KSPP got paid
+by big corps are still trying to copy+paste PaX/Grsecurity to the
+upstream if you think it's a garbage? Did you try to tell KSPP guys to
+stop their work( cc'ing kernel-hardening mailinglist)? It's so obvious
+to see the most security work( more than just a specific OS)
+originally done by PaX/Grsecurity:
 
-  The mention of vte reminded me of a security issue I reported a while 
- back in the evilvte emulator - shell execution via improper quotation
- handling in hyperlinks:
+https://github.com/hardenedlinux/grsecurity-101-tutorials/blob/master/kernel_mitigation.md
 
-    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=854585
+And my customers has been suffering from your philosophical ideas of
+"A bug is bug" for too long. I really respect your contributions(
+linux kernel/git) to the FLOSS world. But even the open source king
+can't change the truth:
 
-  I didn't ask for a CVE ID because the process seems a bit more
- complicated these days, but perhaps topical.
+https://github.com/hardenedlinux/grsecurity-101-tutorials/blob/master/kernel_vuln_exp.md
+
+btw: You didn't answer Brad's question.
 
 
-Steve
+On Sat, Jun 24, 2017 at 9:04 AM, Linus Torvalds
+<torvalds@...ux-foundation.org> wrote:
+> On Fri, Jun 23, 2017 at 5:50 PM, Brad Spengler <spender@...ecurity.net> wrote:
+>>
+>> BTW, we're happy to go toe-to-toe with you here in public on actual facts
+>> instead of pathetic ad hominems.
+>
+> Quite frankly, I'd much rather see *you* actually send in patches that
+> are acceptable for inclusion, something you've never done.
+>
+> As it is, other people have tried to clean up parts of the grsecurity
+> patches, and tried to make them acceptable.
+>
+> Wouldn't it be nice if you actually tried to make the baseline actually better?
+>
+> Please.
+>
+>                 Linus
+
+
+
 -- 
-https://steve.fi/
+GNU powered it...
+GPL protect it...
+God blessing it...
+
+regards
+Shawn
