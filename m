@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1920" "Monday" "18" "June" "2018" "21:45:21" "+0100" "Alex Rudyy" "orudyy@apache.org" "<CAP3WMuQfUAc9pP95Et_aQN5ko+6EYe4nYD7zwNXp8+5KPsz8XQ@mail.gmail.com>" "47" "[oss-security] [SECURITY] [CVE-2018-8030] Apache Qpid Broker-J Denial of Service Vulnerability when AMQP 0-8...0-91 messages exceed maximum size limit" "^Date:" nil nil "6" "2018061820:45:21" "[oss-security] [SECURITY] [CVE-2018-8030] Apache Qpid Broker-J Denial of Service Vulnerability when AMQP 0-8...0-91 messages exceed maximum size limit" (number mark "        orudyy@apach Jun 18   47/1920  " thread-indent "\"[oss-security] [SECURITY] [CVE-2018-8030] Apache Qpid Broker-J Denial of Service Vulnerability when AMQP 0-8...0-91 messages exceed maximum size limit\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1034" "Saturday" "24" "June" "2017" "16:57:14" "+0200" "Solar Designer" "solar@openwall.com" "<20170624145714.GA30830@openwall.com>" "19" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062414:57:14" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        solar@openwa Jun 24   19/1034  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>" ("<20170619152843.GC7769@localhost.localdomain>" "<14558692.afnJ5aRU9J@wanheda>" "<20170621122526.GA32701@grsecurity.net>" "<20170621135727.GA12852@openwall.com>" "<20170621212742.GA28766@grsecurity.net>" "<20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20420 invoked by uid 550); 18 Jun 2018 22:45:56 -0000
+Received: (qmail 3501 invoked by uid 550); 24 Jun 2017 14:57:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11330 invoked from network); 18 Jun 2018 20:45:36 -0000
-X-Gm-Message-State: APt69E0+9ejGhppNjizaQyATqEdwQsTvZfQK+CyCb9nyzpVjtcM51BgN
-	f9CB9oZkfSmoqroasNli7xzz/sWiWzSDPOTF+xM=
-X-Google-Smtp-Source: ADUXVKJ8vXn0ieAlgJ1fqwkft65yiAF4/DdjY3T5sT9U0Uq0TqgILjsJd+nFPk5fhUNu48wnJyjbEi++jmSxqNpR0SM=
-X-Received: by 2002:a2e:9ac4:: with SMTP id p4-v6mr9104452ljj.60.1529354721775;
- Mon, 18 Jun 2018 13:45:21 -0700 (PDT)
-MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CAP3WMuQfUAc9pP95Et_aQN5ko+6EYe4nYD7zwNXp8+5KPsz8XQ@mail.gmail.com>
-Message-ID: <CAP3WMuQfUAc9pP95Et_aQN5ko+6EYe4nYD7zwNXp8+5KPsz8XQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Mon, 18 Jun 2018 21:45:21 +0100
-From: Alex Rudyy <orudyy@apache.org>
+Received: (qmail 3279 invoked from network); 24 Jun 2017 14:57:17 -0000
+Message-ID: <20170624145714.GA30830@openwall.com>
+References: <20170619152843.GC7769@localhost.localdomain> <14558692.afnJ5aRU9J@wanheda> <20170621122526.GA32701@grsecurity.net> <20170621135727.GA12852@openwall.com> <20170621212742.GA28766@grsecurity.net> <20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>
+User-Agent: Mutt/1.4.2.3i
+Date: Sat, 24 Jun 2017 16:57:14 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY] [CVE-2018-8030] Apache Qpid Broker-J Denial of Service
- Vulnerability when AMQP 0-8...0-91 messages exceed maximum size limit
-To: "users@qpid.apache.org" <users@qpid.apache.org>, "dev@qpid.apache.org" <dev@qpid.apache.org>, 
-	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com, announce@apache.org
+Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
+To: oss-security@lists.openwall.com
 
-CVE-2018-8030: Apache Qpid Broker-J Denial of Service Vulnerability
-when AMQP 0-8...0-91 messages exceed maximum size limit
+On Wed, Jun 21, 2017 at 08:26:05PM -0400, Mike O'Connor wrote:
+> In the past, I've proposed that the embargo mailing list archives
+> themselves have an "embargo", after which they become public.  That
+> way, there's after-the-fact transparency, and it gives the folks who
+> care a good idea of what happened.  Is there anything sensitive at
+> this point in, say, the March 2017 linux-distros archives??
 
-Severity: Important
+There shouldn't be anything sensitive in old archives, such as in your
+example.  Technically, we can easily extract and make public the message
+Subjects.  For full messages, we need a way to mass-decrypt an mbox
+containing PGP/MIME messages.  Maybe I should list implementing a
+program that would do that(*) as one of the options that a new distros
+list member could choose as their contribution back to the community.
 
-Vendor: The Apache Software Foundation
+(*) Mutt hack maybe?  Mutt processes those messages great, so having it
+output them in decrypted form into another mbox and automatically loop
+over all messages in the input mbox might do the trick.
 
-Versions Affected: Versions 7.0.0-7.0.4
-
-Description:
-
-A Denial of Service vulnerability [1] was found in Apache Qpid Broker-J
-versions 7.0.0-7.0.4 when AMQP protocols 0-8, 0-9 or 0-91 are used to
-publish messages with size greater than allowed maximum message size limit
-(100MB by default). The broker crashes due to the defect. AMQP protocols
-0-10 and 1.0 are not affected.
-
-Resolution:
-
-Users of Broker-J versions 7.0.0-7.0.4 utilizing AMQP protocols 0-8, 0-9 or 0-91
-for message publishing must upgrade to version 7.0.5 [2] or later.
-
-Mitigation:
-
-If upgrade of the broker is not possible, the maximum message size limit can be
-disabled by setting context variable "qpid.max_message_size" to "0" or
-any negative value. The change can be made either directly in the broker
-configuration file, or by using management interfaces (for example,
-REST API [3])
-or by using JVM option -Dqpid.max_message_size=0. A broker restart is required
-for the change to take effect.
-Alternatively, the support for AMQP protocols 0-8...0-91 can be removed on
-AMQP ports. The change can be made either directly in the broker configuration
-file or by using management interfaces. An example of REST API call
-restricting AMQP port to support only AMQP 1.0 and AMQP 0-10 using curl utility
-is provided below:
-
-curl --user <user-name> -X POST  -d '{"protocols":["AMQP_1_0","AMQP_0_10"]}' \
-https://<broker host>:<broker port>/api/latest/port/<port name>
-
-Credit: This issue was found by the Qpid development team.
-
-References:
-
-[1] https://issues.apache.org/jira/browse/QPID-8203
-[2] https://qpid.apache.org/releases/qpid-broker-j-7.0.5/index.html
-[3] https://qpid.apache.org/releases/qpid-broker-j-7.0.5/book/Java-Broker-Management-Channel-REST-API.html
+Alexander
