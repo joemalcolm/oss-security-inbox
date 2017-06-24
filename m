@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/3
-Message-ID: <c8b219b1-2b44-06af-d770-27e02de6359c@debian.org>
-Date: Wed, 21 Jun 2017 10:19:35 +0200
-From: Emilio Pozuelo Monfort <pochu@...ian.org>
-To: oss-security@...ts.openwall.com, xiaoqixue_1 <xiaoqixue_1@....com>
-Subject: Re: CVE-request: heap-buffer-overflow in jasper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/14
+Message-ID: <CA+55aFyZpWutYKccn1eZBV5Lj_bF7gEZqy=LgjDOBqHk4poeTA@mail.gmail.com>
+Date: Sat, 24 Jun 2017 09:46:12 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Brad Spengler <spender@...ecurity.net>
+Cc: oss-security@...ts.openwall.com, Pax Team <pageexec@...email.hu>
+Subject: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sat, Jun 24, 2017 at 8:15 AM, Brad Spengler <spender@...ecurity.net> wrote:
+>
+> So Linus, you called the patches garbage when someone asked how we fixed the heap
+> stack gap issue 7 years ago when you failed to.  Can you provide any technical details
+> demonstrating why that fix is garbage,
 
-These days you need to request CVEs by filling the form in
-https://cveform.mitre.org/. Please follow up here when you get the CVE.
+I didn't call "that fix" garbage.
 
-On 20/06/17 08:31, xiaoqixue_1 wrote:
-> Timeline:
-> 2017-06-14: bug discovered and reported upstream
+I called the grsecurity patches garbage.
 
-How was this reported upstream? Perhaps you could link to the bug report, if
-there's one.
+Why?
 
-Cheers,
-Emilio
+They aren't split up, there has never been any effort by you to make
+them palatable to upstream, and when somebody else *dioes* try to make
+them palatable to upstream, you start crying about how people are
+taking advantage of your work (hah), and try to make them private
+instead.
+
+So tell me, why shouldn't I consider them garbage?  They are.
+
+It's literally less work for people to re-implement things than look
+at your mixed-up patches, and YOU SEEM TO BE DOING THAT ON PURPOSE.
+
+Now, prove *me* wrong. Start trying to integrate your work upstream,
+and send individual patches with commit logs that can be integrated.
+
+> Put up or shut up, for once.
+
+Indeed, Brad.
+
+                  Linus
