@@ -1,44 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/15/7
-Message-ID: <17c021e8-7b27-32ef-cfa1-1bbc51389359@chbi.eu>
-Date: Tue, 15 Aug 2017 20:54:01 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-12850, CVE-2017-12851: Privilege Escalation in Kanboard <= v1.0.45
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/2
+Message-ID: <CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>
+Date: Fri, 23 Jun 2017 18:04:00 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Brad Spengler <spender@...ecurity.net>
+Cc: oss-security@...ts.openwall.com, pageexec@...email.hu
+Subject: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Jun 23, 2017 at 5:50 PM, Brad Spengler <spender@...ecurity.net> wrote:
+>
+> BTW, we're happy to go toe-to-toe with you here in public on actual facts
+> instead of pathetic ad hominems.
 
-there are two security issues in Kanboard <= v1.0.45 (https://kanboard.net)
+Quite frankly, I'd much rather see *you* actually send in patches that
+are acceptable for inclusion, something you've never done.
 
+As it is, other people have tried to clean up parts of the grsecurity
+patches, and tried to make them acceptable.
 
-CVE-2017-12850:
-By altering form data an authenticated standard user can set a new
-password for any other user (including the admin) to takeover the account.
+Wouldn't it be nice if you actually tried to make the baseline actually better?
 
-Fix:
-https://github.com/kanboard/kanboard/commit/88dd6abbf3f519897f2f6280e95c9eec9123a4ae
+Please.
 
-
-CVE-2017-12851:
-By altering form data an authenticated standard user can change the mail
-address of the admin account to set a new password via "Forgot
-password?" to takeover the admin account.
-
-Fix:
-https://github.com/kanboard/kanboard/commit/b79b18efd7a1a8b591753a4eddd473f88d55b7df
-
-
-Both issues are fixed in Kanboard v1.0.46.
-
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+                Linus
