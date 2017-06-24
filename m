@@ -1,102 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/5
-Message-ID: <250752.937604801-sendEmail@localhost>
-Date: Thu, 14 Sep 2017 07:02:19 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: mp3gain: stack-based buffer overflow in dct36 (mpglibDBL/layer3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/1
+Message-ID: <20170624005003.GB27479@grsecurity.net>
+Date: Fri, 23 Jun 2017 20:50:03 -0400
+From: Brad Spengler <spender@...ecurity.net>
+To: oss-security@...ts.openwall.com
+Cc: torvalds@...ux-foundation.org, pageexec@...email.hu
+Subject: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
 Content-Type: text/plain; charset=utf-8
 
-Description:
-mp3gain is a program to analyze and adjust MP3 files to same volume.
+I know this is no longer the place to request CVEs, but CVEs should be
+allocated for the following issues (this is in addition to the two dozen
+or so already allocated for CONFIG_VMAP_STACK):
 
-The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
-The upstream project seems to be dead, so the issue wasn’t communicated to them.
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=b05c73bd1e3ec60357580eb042ee932a5ed754d5
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=942a48730faf149ccbf3e12ac718aee120bb3529
+https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=942a48730faf149ccbf3e12ac718aee120bb3529
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=0bd193d62b4270a2a7a09da43ad1034c7ca5b3d3
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=628c2893d44876ddd11602400c70606ade62e129
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5165da5923d6c7df6f2927b0113b2e4d9288661e
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e9ff56ac352446f55141aaef1553cee662b2e310
 
-The complete ASan output of the issue:
+Given my recent blog post mentioning CONFIG_VMAP_STACK:
+https://grsecurity.net/an_ancient_kernel_hole_is_not_closed.php
+I believe a CVE should also be allocated to it due to failing to handle
+VLAs (which as I've noted have been exploited in the past in the kernel)
+and is being marketed as a stack overflow prevention equivalent to what's
+present in grsecurity (which it is not).
 
-# aacgain -f $FILE
-==13869==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7fa590d1b958 at pc 0x0000008b2341 bp 0x7ffc23c02b70 sp 0x7ffc23c02b68
-READ of size 8 at 0x7fa590d1b958 thread T0
-    #0 0x8b2340 in dct36 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1279
-    #1 0x8d26e6 in III_hybrid /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1504
-    #2 0x8d26e6 in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1695
-    #3 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643
-    #4 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
-    #5 0x7fa5937b1680 in __libc_start_main (/lib64/libc.so.6+0x20680)
-    #6 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
+Here's a fix for a UAF introduced by upstream's refcount_t work (aka introducing
+the vulns the defense is supposed to prevent, and it won't be the last):
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=92347cfd62c174ab91ad97dd4bfbaa1d4aa28e67
 
-Address 0x7fa590d1b958 is located in stack of thread T0 at offset 18776 in frame
-    #0 0x4341ff in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:1411
+Also, over two months ago I mentioned a CONFIG_STRICT_DEVMEM bypass that
+still required fixes to the mmap side:
+http://seclists.org/oss-sec/2017/q2/76
+As predicted, everyone ignored the comment about the mmap side and fixes
+were only committed and backported to stable kernels for the read/write
+side.  Thus the Secure Boot bypass still exists today, over two months later
+in all upstream kernels -- a CVE should be allocated for this separate issue
+as well.
 
-  This frame has 7 object(s):
-    [32, 33) 'maxgain'
-    [96, 97) 'mingain'
-    [160, 164) 'nprocsamp'
-    [224, 232) 'maxsample'
-    [288, 9504) 'lsamples'
-    [9536, 18752) 'rsamples'
-    [18784, 50704) 'mp' 0x0ff53219b720: 00 00 00 00 00 00 00 00 f2 f2 f2[f2]00 00 00 00
-  0x0ff53219b730: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff53219b740: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff53219b750: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff53219b760: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff53219b770: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==13869==ABORTING
+Also a shout out to Linus for his recent trade disparagement:
+https://www.spinics.net/lists/kernel/msg2540934.html
+It's big talk coming from a guy who hasn't protected his users for the past
+16 years, who authored the broken stack gap patch that crashed machines and
+broke apps in 2010 and introduced the userland ABI changes that are now causing
+problems with the proper fix (that oh, surprise, looks a lot like PaX's fix
+from 2010).  We've heard these kinds of nonsense claims from Linus before,
+like here:
+https://lkml.org/lkml/2011/6/6/306
+Maybe someone pointed him to it and the embarrassment from realizing he was
+completely wrong was too much that he's decided to lash out?
 
-Affected version:
-1.5.2
+Yes Linus, our patches are such garbage the KSPP can't manage to do anything
+other than copy+paste from them, and you're slowly merging them (along
+with our registered copyrights).  How do our table scraps taste?
 
-Fixed version:
-N/A
+BTW, we're happy to go toe-to-toe with you here in public on actual facts
+instead of pathetic ad hominems.
 
-Commit fix:
-N/A
+-Brad
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14408
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00351-aacgain-stackoverflow-dct36
-
-Timeline:
-2017-08-28: bug discovered
-2017-09-08: blog post about the issue
-2017-09-13: CVE Assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/08/mp3gain-stack-based-buffer-overflow-in-dct36-mpglibdbllayer3-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
