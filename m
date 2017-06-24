@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1184" "Monday" "27" "July" "2015" "11:38:38" "+0100" "Luis Henriques" "luis.henriques@canonical.com" "<20150727103838.GA12581@charon.olymp>" "34" "Re: [oss-security] Re: Linux x86_64 NMI security issues" nil nil nil "7" "2015072710:38:38" "[oss-security] Re: Linux x86_64 NMI security issues" (number mark "U       luis.henriqu Jul 27   34/1184  " thread-indent "\"Re: [oss-security] Re: Linux x86_64 NMI security issues\"\n") "<55B328E0.8050701@amacapital.net>" ("<CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>" "<CA+5PVA7MZCryECtCVw1zLacEqvRWrsq3rSnZKPBJjcwC3e0h=g@mail.gmail.com>" "<55B328E0.8050701@amacapital.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["773" "Saturday" "24" "June" "2017" "14:28:20" "+0200" "Solar Designer" "solar@openwall.com" "<20170624122820.GB29096@openwall.com>" "15" "Re: [oss-security] CVE for the TSIG issue in knot?" "^Date:" nil nil "6" "2017062412:28:20" "[oss-security] CVE for the TSIG issue in knot?" (number mark "        solar@openwa Jun 24   15/773   " thread-indent "\"Re: [oss-security] CVE for the TSIG issue in knot?\"\n") "<1498305503.26646.5.camel@debian.org>" ("<1498305503.26646.5.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9530 invoked by uid 550); 29 Jul 2015 00:57:07 -0000
+Received: (qmail 12072 invoked by uid 550); 24 Jun 2017 12:28:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,32 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13968 invoked from network); 27 Jul 2015 10:38:51 -0000
-Date: Mon, 27 Jul 2015 11:38:38 +0100
-From: Luis Henriques <luis.henriques@canonical.com>
-To: oss-security@lists.openwall.com
-Cc: Josh Boyer <jwboyer@fedoraproject.org>
-Message-ID: <20150727103838.GA12581@charon.olymp>
-References: <CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>
- <CA+5PVA7MZCryECtCVw1zLacEqvRWrsq3rSnZKPBJjcwC3e0h=g@mail.gmail.com>
- <55B328E0.8050701@amacapital.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Received: (qmail 11959 invoked from network); 24 Jun 2017 12:28:41 -0000
+Message-ID: <20170624122820.GB29096@openwall.com>
+References: <1498305503.26646.5.camel@debian.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <55B328E0.8050701@amacapital.net>
-Subject: Re: [oss-security] Re: Linux x86_64 NMI security issues
+In-Reply-To: <1498305503.26646.5.camel@debian.org>
+User-Agent: Mutt/1.4.2.3i
+Date: Sat, 24 Jun 2017 14:28:20 +0200
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE for the TSIG issue in knot?
+To: oss-security@lists.openwall.com
 
-On Fri, Jul 24, 2015 at 11:12:48PM -0700, Andy Lutomirski wrote:
-> On 07/24/2015 07:16 AM, Josh Boyer wrote:
-> > On Wed, Jul 22, 2015 at 2:12 PM, Andy Lutomirski <luto@amacapital.net> wrote:
-> >> Note: Several of these fixes each depend on a few patches immediately
-> >> before them.  The NMI stack switching fix also depends on changes made
-> >> in 4.2 and will appear to apply but crash on older kernels.  I have a
-> >> different variant that's more portable.
-> > 
-> > Given that none of these are going to apply cleanly on older kernels,
-> > do you have backports available for 4.1.y and the longterm stable
-> > kernels?
-> > 
-> 
-> There's this:
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/luto/linux.git/commit/?h=x86/nmi-backport
-> 
-> which is a combined effort of me and Ben Hutchings.  It's not synced up
-> to the fixes in Linus' tree.
->
+On Sat, Jun 24, 2017 at 01:58:23PM +0200, Yves-Alexis Perez wrote:
+> I noticed the recent issue in knot with TSIG bypass
+> (https://lists.nic.cz/pipermail/knot-dns-users/2017-June/001144.html)
 
-Thank you all for working on these backports.  I'm planning to use
-them (and more specifically the patches in the Debian kernel) for the
-3.16 stable kernel.
+Is is inappropriate to post only a link in here.  In cases like this,
+please also quote at least the most essential portion of the content
+you're referring to, which is:
 
-Cheers,
---
-Luís
+"CZ.NIC has released Knot DNS 2.5.2 and Knot DNS 2.4.5. Beside several fixes and improvements,
+these versions fix a flaw within the TSIG protocol implementation that would allow an attacker
+with a valid key name and algorithm to bypass the TSIG authentication if no additional ACL
+restrictions is set. This vulnerability was discovered by security experts from Synacktiv.
+Special thanks to them!"
 
-
-> Note that even Linus' tree doesn't have the synchronous modify_ldt fix
-> yet.  I sent a hopefully final version of that out a few minutes ago.
-> 
-> --Andy
+Alexander
