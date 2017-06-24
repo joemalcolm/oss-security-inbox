@@ -1,53 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/24
-Message-ID: <bd686d9b-f123-995b-3620-1efa03b86709@apache.org>
-Date: Mon, 10 Apr 2017 20:14:45 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/7
+Message-ID: <20170624141442.GA29443@openwall.com>
+Date: Sat, 24 Jun 2017 16:14:42 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-5647 Apache Tomcat Information Disclosure
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-5647 Apache Tomcat Information Disclosure
+On Fri, Jun 23, 2017 at 08:02:36AM -0600, Kurt Seifried wrote:
+> OpenBSD made changes to the then known qsort() issue, and implemented
+> what was then thought to be the solution to the stack guard issue, the 1
+> megabyte guard pages. Subsequent discussion (without OpenBSD present,
+> due to them breaking the embargo) took place and as you know we ended up
+> with some pretty significant changes to glibc (I don't know if OpenBSD
+> has picked this group of fixes up or not).
 
-Severity: Important
+I think Kurt's words "without OpenBSD present, due to them breaking the
+embargo" are Kurt's (and maybe others') impression only (and maybe these
+people's personal decision(s) not to inform OpenBSD going forward, as
+Kurt mentioned he did help ping OpenBSD this time when Qualys wasn't
+getting a response from them in early May).  No decision on the distros
+list at large was made to either inform or not inform OpenBSD of further
+issues.  As it happened, we did CC the discussion around Cron to Todd
+(although like I said in my posting about Cron in here, there was no
+point in having that minor issue embargoed in the first place).  The
+glibc issues and fixes are most likely irrelevant to *BSD libc's - in
+fact, we should have been more careful not to spam the full distros list
+with them (I think some sub-threads correctly went to linux-distros
+only, but some did not).
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M18
-Apache Tomcat 8.5.0 to 8.5.12
-Apache Tomcat 8.0.0.RC1 to 8.0.42
-Apache Tomcat 7.0.0 to 7.0.76
-Apache Tomcat 6.0.0 to 6.0.52
-
-Description
-A bug in the handling of the pipelined requests when send file was used
-resulted in the pipelined request being lost when send file processing
-of the previous request completed. This could result in responses
-appearing to be sent for the wrong request. For example, a user agent
-that sent requests A, B and C could see the correct response for request
-A, the response for request C for request B and no response for request C.
-
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Switch to the BIO HTTP where available
-- Disable send file
-- Upgrade to Apache Tomcat 9.0.0.M19 or later
-- Upgrade to Apache Tomcat 8.5.13 or later
-- Upgrade to Apache Tomcat 8.0.43 or later
-- Upgrade to Apache Tomcat 7.0.77 or later
-- Upgrade to Apache Tomcat 6.0.53 or later
-
-Credit:
-This issue was identified by the Tomcat security team.
-
-History:
-2017-04-10 Original advisory
-
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[4] http://tomcat.apache.org/security-6.html
-
+Alexander
