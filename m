@@ -1,41 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/8
-Message-Id: <B1C068C5-DD6F-406D-BA2D-C6F685416F7C@gmail.com>
-Date: Tue, 9 May 2017 09:34:23 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: Numerous FreeTDS crashes fixed on master
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/8
+Message-ID: <20170624145714.GA30830@openwall.com>
+Date: Sat, 24 Jun 2017 16:57:14 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-Attached is a zip file of reported TDS streams that cause segmentation faults in the FreeTDS library. The ‘tsql’ binary was used for the fuzzing, so these most likely only affect client-side functionality. These have been resolved on master and the 1.0 branch.
+On Wed, Jun 21, 2017 at 08:26:05PM -0400, Mike O'Connor wrote:
+> In the past, I've proposed that the embargo mailing list archives
+> themselves have an "embargo", after which they become public.  That
+> way, there's after-the-fact transparency, and it gives the folks who
+> care a good idea of what happened.  Is there anything sensitive at
+> this point in, say, the March 2017 linux-distros archives??
 
-Also included in the zip file is a bucket.txt, a crashwalk db dump detailing the crashes for the files in the zip file.
+There shouldn't be anything sensitive in old archives, such as in your
+example.  Technically, we can easily extract and make public the message
+Subjects.  For full messages, we need a way to mass-decrypt an mbox
+containing PGP/MIME messages.  Maybe I should list implementing a
+program that would do that(*) as one of the options that a new distros
+list member could choose as their contribution back to the community.
 
-You can find the bucket.txt itself in the following Github gist as well. No CVE’s have been requested.
+(*) Mutt hack maybe?  Mutt processes those messages great, so having it
+output them in decrypted form into another mbox and automatically loop
+over all messages in the input mbox might do the trick.
 
-https://gist.github.com/brandonprry/bfb0e58682d464e2d2d319644790bdf5 <https://gist.github.com/brandonprry/bfb0e58682d464e2d2d319644790bdf5>
-
-To test, you can compile FreeTDS, then use preeny to redirect network IO to stdin/stdout.
-
-export LD_PRELOAD=~/preeny/x86_64-linux-gnu/desock.so
-unzip freetds_crashed.zip
-cd rpt
-for i in id*; do valgrind ~/freetds/build/src/apps/tsql -S 127.0.0.1 -U fdsa -P fdsa -I ~/tdsconfig < $i; done
-
-A simple tdsconfig file can be used to speed things up a bit.
-
-[global]
-timeout = 1
-connect timeout = 1
-
-
-Many thanks to Frediano Ziglio, the maintainer of FreeTDS, for quick communication and bug fix turn arounds.
-
-
-Content of type "text/html" skipped
-
-Download attachment "freetds_crashes.zip" of type "application/zip" (56842 bytes)
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Alexander
