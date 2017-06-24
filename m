@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/5
-Message-ID: <alpine.LFD.2.20.1706231946010.19155@wniryva>
-Date: Fri, 23 Jun 2017 19:48:13 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-7518 Kernel: KVM: debug exception via syscall emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/5
+Message-ID: <15cda08f0b0.2768.595dd7c4cc70d453d3914ebcaf051657@sury.org>
+Date: Sat, 24 Jun 2017 14:17:18 +0200
+From: Ondřej Surý <ondrej@...y.org>
+To: "Yves-Alexis Perez" <corsac@...ian.org>, <daniel.salzman@....cz>
+CC: "oss-sec" <oss-security@...ts.openwall.com>, Ondřej Surý <ondrej@...ian.org>
+Subject: Re: CVE for the TSIG issue in knot?
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+Hi Yves-Alexis,
 
-Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
-is vulnerable to an incorrect debug exception(#DB) error. It could occur while 
-emulating a syscall instruction.
+we have requested CVE via DWF form, but without any response yet.
 
-A user/process inside guest could use this flaw to potentially escalate their 
-privileges inside guest.
+Cheers,
+Ondřej
 
-Note: Linux guests are not affected.
 
-Upstream patch:
----------------
-   -> https://www.spinics.net/lists/kvm/msg151817.html
+On 24 June 2017 13:58:39 Yves-Alexis Perez <corsac@...ian.org> wrote:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1464473
-   -> https://www.spinics.net/lists/kvm/msg151819.html
-   -> https://xenbits.xen.org/xsa/advisory-204.html
+> Hi Daniel,
+>
+> I noticed the recent issue in knot with TSIG bypass (https://lists.nic.cz/pipe
+> rmail/knot-dns-users/2017-June/001144.html)
+>
+> Was a CVE assigned for this?
+>
+> Regards,
+> --
+> Yves-Alexis
 
-'CVE-2017-7518' has been assigned to this issue by Red Hat Inc.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
