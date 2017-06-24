@@ -1,99 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/21/6
-Message-ID: <alpine.DEB.2.20.1702220042370.24142@tvnag.unkk.fr>
-Date: Wed, 22 Feb 2017 00:43:28 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY]: curl SSL_VERIFYSTATUS ignored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/4
+Message-ID: <20170624015457.GA31145@grsecurity.net>
+Date: Fri, 23 Jun 2017 21:54:57 -0400
+From: Brad Spengler <spender@...ecurity.net>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: oss-security@...ts.openwall.com, pageexec@...email.hu
+Subject: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
 Content-Type: text/plain; charset=utf-8
 
-SSL_VERIFYSTATUS ignored
-========================
+On Fri, Jun 23, 2017 at 06:04:00PM -0700, Linus Torvalds wrote:
+> On Fri, Jun 23, 2017 at 5:50 PM, Brad Spengler <spender@...ecurity.net> wrote:
+> >
+> > BTW, we're happy to go toe-to-toe with you here in public on actual facts
+> > instead of pathetic ad hominems.
+> 
+> Quite frankly, I'd much rather see *you* actually send in patches that
+> are acceptable for inclusion, something you've never done.
+> 
+> As it is, other people have tried to clean up parts of the grsecurity
+> patches, and tried to make them acceptable.
+> 
+> Wouldn't it be nice if you actually tried to make the baseline actually better?
 
-Project curl Security Advisory, February 22, 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_20170222.html)
+Are you delusional?  Sorry, you don't get to weasel your way out of 
+calling us clowns, that our code is garbage, with this weak reply where 
+you can pretend you didn't just say those things and now would love for 
+us to provide our "garbage" code directly.  Also you might be in 
+confusion as to the extent to which KSPP is "cleaning up" parts of our 
+code -- they're definitely introducing bugs and renaming variables.  
+Other than that, they have a tendency to misrepresent the source of 
+their ideas, so I can understand the cause of your confusion.  This, for 
+instance: http://www.openwall.com/lists/kernel-hardening/2017/06/20/34 
+was simply someone realizing we had updated the code they previously 
+copy+pasted, and copy+pasted the newer version.  He is being funded to 
+do this.  He even emailed me for help figuring out the code he was being
+paid to copy+paste.
 
-VULNERABILITY
--------------
+Wouldn't it be nice if you didn't demand free work of us in our free 
+time? We publicly gave permission for any company involved in the KSPP 
+to publish the private details of any supposed offers made to us, 
+including any financial terms.  No such offers have ever materialized in 
+public, I wonder why that is?
 
-curl and libcurl support "OCSP stapling", also known as the TLS Certificate
-Status Request extension (using the `CURLOPT_SSL_VERIFYSTATUS` option). When
-telling curl to use this feature, it uses that TLS extension to ask for a
-fresh proof of the server's certificate's validity. If the server doesn't
-support the extension, or fails to provide said proof, curl is expected to
-return an error.
+Until you acknowledge the KSPP is business competition dreamed up by 
+Google, who made a conscious decision somewhere higher up in the company 
+than Kees to compete with us instead of cooperating with us, there is no 
+negotiation. You thought you'd get away with it by being able to 
+continue using our own test patches against us, and now look at the mess 
+you've all created.  How many dozens of incompetent people are you going 
+to fund full time to avoid getting help from the people with real 
+knowledge?  Linux's technical debt is only going to increase, and when 
+the KSPP contributors veer into original idea territory (which they're 
+soon going to have to do a lot more of), the results make Linux look as 
+dumb as OpenBSD preventing NOP-sliding into ROP gadgets.
 
-Due to a coding mistake, the code that checks for a test success or failure,
-ends up always thinking there's valid proof, even when there is none or if the
-server doesn't support the TLS extension in question. Contrary to how it used
-to function and contrary to how this feature is documented to work.
+If you really wanted our help, you would know how to get it -- we've posted
+about it publicly (and I'll publish it here too for the record if this
+mail is allowed through despite being totally off-topic and non-technical):
+1) Forget 'bugs are bugs'
+2) Stop obfuscating commit messages
+3) Actually put someone (or someones) in charge of security, start having
+actual responsibility instead of pretending you guys are just doing the
+work in your free time.  If Jon Corbet has to submit a fix himself, something
+is clearly broken.
+4) Have a basic level of respect
+5) Fund our work so that we have the free time to help out.  As it stands,
+any time spent helping takes away from our own work (which becomes the
+security of Linux a decade from now, quite literally).
 
-This could lead to users not detecting when a server's certificate goes
-invalid or otherwise be mislead that the server is in a better shape than it
-is in reality.
+It's that simple, but you (collectively) seem to be unwilling to do any of
+the above.
 
-This flaw also exists in the command line tool
-([--cert-status](https://curl.haxx.se/docs/manpage.html#--cert-status)).
+-Brad
 
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The mistake happened in a large code merge for the HTTPS proxy feature (commit
-cb4e2be7c6d42ca0780) and went unnoticed primarily because we have no automated
-tests for this feature!
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-2629 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-curl has supported this option since version 7.41.0.
-
-This flaw exists in the following curl and libcurl versions.
-
-- Affected versions: 7.52.0 to and including 7.52.1
-- Not affected versions: < 7.52.0 and >= 7.53.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.53.0, the actual result of the check is properly used.
-
-A [patch for CVE-2017-2629](https://curl.haxx.se/CVE-2017-2629.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.53.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use the cert status feature
-
-TIME LINE
----------
-
-It was first reported to the curl project on January 12.
-
-We contacted distros@...nwall on February XX.
-
-curl 7.53.0 was released on February 22 2017, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Marcus Hoffmann
-
--- 
-
-  / daniel.haxx.se
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
