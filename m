@@ -1,131 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/12/5
-Message-Id: <E1eOjEM-0002G1-6w@xenbits.xenproject.org>
-Date: Tue, 12 Dec 2017 12:00:14 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 251 - improper bug check in x86 log-dirty handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/25/1
+Message-ID: <20170625013537.GA21637@grsecurity.net>
+Date: Sat, 24 Jun 2017 21:35:37 -0400
+From: Brad Spengler <spender@...ecurity.net>
+To: oss-security@...ts.openwall.com
+Cc: Pax Team <pageexec@...email.hu>, torvalds@...ux-foundation.org
+Subject: Re: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+So Linus, you failed to answer any of my questions (no surprise there).
 
-                    Xen Security Advisory XSA-251
-                              version 2
+And now you've weaseled your words back and apparently forgot what
+you said about breaking userland, you still haven't provided anything
+technical to back that up or how it was relevant at all to the question
+asked to you by Andy.
 
-             improper bug check in x86 log-dirty handling
+So we come to your definition of "garbage": apparently you're admitting
+you're calling our work garbage because we're not doing exactly what you
+want for free (and seemingly knowing full well how people would interpret
+your use of the word garbage, even though it's completely irrelevant to
+them).  Nevermind that you had no interest in our work (modulo ripping off
+ASLR etc) and actually were quite hostile to it until I assume your corporate
+sponsors forced your hand from the impending fallout of the Washington Post
+article.  Let me ask you: what do you think would be told to us if
+we demanded you do work specifically for us in your free time?  I'm sure
+"buzz off" would be the least offensive way you'd put it.  So why do you
+expect any different from us?  You're getting paid full-time for your
+work, we are not.  Do you want us to shine your shoes too?  Wash your
+convertible(s)?
 
-UPDATES IN VERSION 2
-====================
+Boy, those multi-billion dollar corporations that ignored security for
+years, gotta feel so sorry for them.  Just can't catch a break.
 
-Public release.
+You know, Red Hat produces big monolithic patches too.  Are their kernels
+garbage?  Or won't you say that because they fund you?
 
-Provide information for Xen 4.10-in-preparation branch in .meta.
+Here's how it works: we create patches for users who use them.  We have
+limited time so we spend it on things that matter to us and our users --
+when you pay for our time you can have some say in how we allocate it.
+It's not as if we're technically unable to split up patches, but it
+certainly doesn't save us or our users any time.  I've even done this work
+before for a paid engagement and commented up all the code to explain every
+single line:
+-rw-r--r--   1 spender spender    1049 Jun  9  2016 pax_aout.diff
+-rw-r--r--   1 spender spender   20327 Jun  9  2016 pax_aslr_hardening.diff
+-rw-r--r--   1 spender spender   55187 Jun  9  2016 pax_constify_final.diff
+-rw-r--r--   1 spender spender   66211 Jun  9  2016 pax_kernexec_final.diff
+-rw-r--r--   1 spender spender   38217 Jun  9  2016 pax_uderef_final.diff
+-rw-r--r--   1 spender spender    4099 Jun  9  2016 pax_usercopy.diff
+-rw-r--r--   1 spender spender   26954 Jun  9  2016 pax_usercopy_final.diff
+-rw-r--r--   1 spender spender   46265 Jun  9  2016 pax_userland_final.diff
 
-ISSUE DESCRIPTION
-=================
+Just like you spend your time focusing on versions of Linux nobody actually
+uses (they use stable kernels or distro kernels) but which benefits your
+corporate sponsors and maintains the churn you want to force everyone to
+contribute to.  The days of Linux being a community project are long gone,
+it's a fairy tale at this point.
 
-Memory sharing, available to x86 HVM guests only, uses a special value
-in the global machine to physical address translation table (M2P).  PV
-guests have full control over M2P entries corresponding to pages they
-own.  A bug check (specifically, an assertion that an M2P entry is not
-the special "shared" indicator) was insufficiently qualified, and as a
-consequence is triggerable by PV guests in log-dirty mode
-(e.g. because of being live migrated).
+BTW, here's some more 0day just to prove a point.  Sitting in our patch since
+near the beginning of KSTACKOVERFLOW there's been a DMA on stack fix for
+sound/usb/line6/driver.c (usb_control_msg use with a stack argument).  It's
+still not fixed upstream -- how is that possible if supposedly no one uses
+grsec kernels and everyone's using the latest upstream kernel?  How is it
+that 6 months after the release of Linux 4.9 there still apparently has been
+no static analysis done to find and fix these problems?  How are you actually
+securing the systems people actually use when nobody's bothering to backport
+the security features?  I thought they cared about securing the world and not
+just providing some marketing value to their company?
 
-IMPACT
-======
+Here's a good example, let's talk about the kernel security of Wind River
+Linux 9.0 (Wind River is owned by Intel, is a Linux Foundation member and
+part of the KSPP).  They bought in to the KSPP hype and are using it in
+their latest product.  I wonder if they told their customers their latest
+product has worse security than the older ones?
 
-A malicious or buggy PV guest may cause a hypervisor crash, resulting in
-a Denial of Service (DoS) affecting the entire host.
+They recently started publishing their code publicly.  Here's the kernel tree
+for 9.0:
+https://github.com/WindRiver-Labs/kernel-cache/tree/WRLINUX_9_0_HEAD
+Here we can see their "kernel-hardening" features:
+https://github.com/WindRiver-Labs/kernel-cache/tree/WRLINUX_9_0_HEAD/features/kernel-hardening
+Let's see what they enable:
+https://github.com/WindRiver-Labs/kernel-cache/blob/WRLINUX_9_0_HEAD/features/kernel-hardening/kernel-hardening.cfg
+CONFIG_CC_STACKPROTECTOR=y
+CONFIG_CC_STACKPROTECTOR_STRONG=y
+CONFIG_HARDENED_USERCOPY=y
+CONFIG_SLAB_FREELIST_RANDOM=y
+CONFIG_PAGE_POISONING=y
+CONFIG_RANDOMIZE_BASE=y
+CONFIG_RANDOMIZE_MEMORY=y
+CONFIG_DEBUG_RODATA=y
+CONFIG_DEBUG_SET_MODULE_RONX=y
+CONFIG_LEGACY_VSYSCALL_NONE=y
 
-VULNERABLE SYSTEMS
-==================
+One watered down version of PAX_USERCOPY with crippled security
+(2c7b1c535543ddf7d97052b7b6adc7c31f79d02039dabe0739a5399f5b9622b8)
+one watered down version of PAX_MEMORY_SANITIZE, one useless KSPP feature that
+introduced privilege escalation, SSP which has never prevented a kernel exploit
+that I'm aware of, the useless KASLR, and the upstream RONX code.  This
+KSPP member hasn't even backported newer KSPP features to their 4.8 kernel!
 
-Xen versions 4.0 and later are affected.  Xen versions 3.4 and earlier
-are not affected.
+You're out of touch with reality Linus.  In what world would anyone sign up
+for your "generous" offer to be called clowns, that their patches are garbage,
+that they should do thousands of hours of work for free for a bunch of
+multi-billion dollar corporations that aren't contributing a single dime or
+any direct work back?  Please note that distinction of "direct" before you
+talk about the incredible debt we owe somehow simply for basing our code off
+Linux.  You realize right that all we got in return for the nearly 2 years of
+the KSPP was a single incomplete typo fix?  Guess what happened when we asked
+for some GCC changes that would eliminate false positives from the
+SIZE_OVERFLOW plugin a year and a half ago?  No work at all was done on it --
+sound familiar at all?
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+It's no surprise that CII's 2016 report said:
+https://www.coreinfrastructure.org/sites/cii/files/cii_annualreport_2016_fnl_digital.pdf
+"One challenge we've encountered this year is finding skilled
+people to take on the work. While the desire to work on
+open source exists, without compensation it's simply not
+feasible for many developers to do so."
 
-x86 HVM guests cannot exploit this vulnerability.
+How could they know that calling people clowns and their work garbage wasn't
+payment enough?
 
-Only x86 PV guests can exploit this vulnerability, and only when being
-run in shadow mode.  PV guests are typically run in shadow mode for live
-migration, as well as for features like VM snapshot.
+With no technical content coming from your end, there's no need to discuss
+anything further -- don't waste your time because I won't reply.
 
-Note that save / restore does *not* use shadow mode, and so does not
-expose this vulnerability.  Some downstreams also  include a "non-live
-migration" feature, which also does not use shadow mode (and thus does
-not expose this vulnerability).
+Good luck to you and anyone else stupid enough to do any work at all for
+you and your multi-billion dollar sponsors for free.
 
-MITIGATION
-==========
+-Brad
 
-Running only HVM guests avoids the vulnerability.
-
-Avoiding live migration of x86 PV guests also avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa251.patch           xen-unstable, Xen 4.9.x
-xsa251-4.8.patch       Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
-xsa251-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa251*
-152cf5c88c3e441af01cdf5749877cabb6ab961afee9f29ae3077e725b703aa2  xsa251.meta
-0dfbcfe459f051abb571d3fbedbe9760a4c6cd540ab5d525627050e3eeb9234e  xsa251.patch
-345a6e004e0d0d89c7fc8db55d48d68f53402a521bd1aa3cb4168043e1ae5673  xsa251-4.5.patch
-f8cecf013a3628038e0a4566778852a560b25a1ce2f3872a989087ab2fc9a913  xsa251-4.8.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlovuNkMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZvOgIALWR2TD54KrdAAtdp0q6b9eo4VcMi5BACeuOIxoY
-Ek0YA8CLVhj/zmT4/JFH8hZl4Jq0YkWCmxieAw8RvvzFD8WjS7CjTGjseYLL39rZ
-tyz+GTJ4ws1AVm/HL0JcYqoIWHv3I5M1OdoEKcAyYt4qoHTC00YtQFoSz0Gkruk0
-37OMyAfSo3ex+YUpN4S5RXnXB0gdvIOnZJU2WAYYsXxncsOXSP87ohiK55QfK3zO
-HcSPbcux/NonLG1KqFGzEIXq3wFv1hXo9MGdKnmoeTkr0uaGjxxWySbTyZ5pPzXD
-Vyr6/W5GwQjee/48KzYEr/UggfeutUpYfSVnW/KL/CCqqy0=
-=sgSx
------END PGP SIGNATURE-----
-
-Download attachment "xsa251.meta" of type "application/octet-stream" (2407 bytes)
-
-Download attachment "xsa251.patch" of type "application/octet-stream" (680 bytes)
-
-Download attachment "xsa251-4.5.patch" of type "application/octet-stream" (760 bytes)
-
-Download attachment "xsa251-4.8.patch" of type "application/octet-stream" (666 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
