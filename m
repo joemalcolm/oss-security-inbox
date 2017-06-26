@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/4
-Message-ID: <20170927125149.GA2500@openwall.com>
-Date: Wed, 27 Sep 2017 14:51:49 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/3
+Message-ID: <20170626064355.GA14009@kroah.com>
+Date: Mon, 26 Jun 2017 08:43:55 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+Subject: Re: Can someone explain all the CONFIG_VMAP_STACK CVEs lately?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 27, 2017 at 10:14:04AM +0100, Muhammed Mustapha Abiola wrote:
-> Isn't this exactly what Vendor-Sec tried to solve?
+On Sun, Jun 25, 2017 at 08:49:43PM -0700, Andy Lutomirski wrote:
+> I haven't checked what USB does, but I suspect it's a wildly
+> out-of-bounds DMA transfer that's more likely to result in a
+> straight-up abort than easily exploitable corruption.
 
-No.  Not even similar.
+For USB, yes, it's just a totally failed DMA transaction and the driver
+will not work at all.  It's been that way since the 2.2 kernel days,
+nothing new there, it's just that this can now happen on "common"
+architectures :)
 
-vendor-sec was / linux-distros is solely about the subset of issues that
-are initially embargoed, but OTOH not limited to the Linux kernel.
-So there wasn't / isn't meant to be more than a slight overlap between
-issues handled on those lists vs. all Linux kernel security issues/fixes.
+thanks,
 
-Besides, Greg focuses on the problem that some ignore the stable kernels
-or the "curated and tested stream of fixes" that could be seen in there,
-whereas another concern mentioned earlier in the thread is that the
-stream is also incomplete because some security fixes are not marked as
-such and not CC'ed to stable.  So that's two problems mentioned in the
-thread, but vendor-sec was not / linux-distros is not related to either.
-
-Alexander
-
-> On Tue, Sep 26, 2017 at 4:04 PM, Greg KH <greg@...ah.com> wrote:
-> > The rule for the kernel is, "if a distro/company/user is not following
-> > the stable kernel updates, they are on their own".  I recommend either
-> > using the stable kernels, or paying for a company that knows what they
-> > are doing in this area and provides support (Red Hat, SuSE, etc.)
-> >
-> > And if you try to argue "just tell us what needs to be fixed", well, we
-> > are, am, we are providing about 10-12 patches a day that people should
-> > be incorporating into their kernels.  Why they ignore that curated and
-> > tested stream of fixes is beyond me...
+greg k-h
