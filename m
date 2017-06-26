@@ -1,57 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/3
-Message-ID: <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
-Date: Thu, 19 Oct 2017 20:32:55 +0000
-From: Robert Watson <robertcwatson1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/6
+Message-ID: <CALogXGW++8_OVkE_hyREa_fYjK1eDkinZQfBDVYVJ=vA0Nw-dg@mail.gmail.com>
+Date: Mon, 26 Jun 2017 15:16:06 -0400
+From: Mansour Moufid <mansourmoufid@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+Cc: Pax Team <pageexec@...email.hu>
+Subject: Re: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
 Content-Type: text/plain; charset=utf-8
 
-Scripts depend on the underlying functionality of the various utilities
-like rsync that they call. I'm having trouble understanding how a script
-could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
+Hello.
 
-We are overwhelmed with more vulnerabilities than can be fixed quickly
-already.
+On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@...ecurity.net> wrote:
 
-Are "just to be safer" type things really a wise use of our resources?
+> How could they know that calling people clowns and their work garbage wasn't
+> payment enough?
+>
+> With no technical content coming from your end, there's no need to discuss
+> anything further -- don't waste your time because I won't reply.
+>
+> Good luck to you and anyone else stupid enough to do any work at all for
+> you and your multi-billion dollar sponsors for free.
+>
+> -Brad
 
-Does a proliferation of a large number of low-caliber problems make
-monitoring these lists more trouble than it's worth? Does it cause
-high-impact problems to be lost amongst low-impact ones?
+Is there another mailing list for discussions of Linux security? Or forum?
 
-On Thu, Oct 19, 2017, 15:46 Seth Arnold <seth.arnold@...onical.com> wrote:
+I have been thinking of sharing a few patches for the last couple months.
+I don't think this is the right place after the kind of insults I saw this week.
 
-> On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
-> > Removing the ability for rsync to copy symlinks pointing to targets
-> outside
-> > the mirror tree would greatly cripple it. I need to understand how the
-> > danger is worth the loss of this functionality.
->
-> Note that the fix isn't modifying rsync, the fix is modifying the ftpsync
-> script that calls rsync:
->
-> +    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links --timeout
-> 3600 --stats --no-human-readable"}
->
->
-> https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=d1ca2ab2210990b6dfb664cd6776a41b71c48016
->
-> Of course for people who run this mirroring tool as a specific user
-> account and set file permissions appropriately this is more or less a
-> no-op. But this is a useful hardening for people who run the ftpsync
-> command as a user with too many privileges. (I wouldn't have bothered
-> filing for a CVE for this change; I see it as a simple hardening change.)
->
-> This option shouldn't cripple ftpsync as a well-run repository is highly
-> unlikely to have symlinks pointing out of the tree. A repository with
-> symlinks pointing out of the tree is already not a suitable rsync source.
->
-> Thanks
->
--- 
-
-Robert "DocSalvager" Watson
-... trust in truth keeps hope alive
-www.DocSalvage.info
-
+Apologies if off topic.
