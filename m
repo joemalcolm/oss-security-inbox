@@ -1,4 +1,9 @@
-Received: (qmail 25654 invoked by uid 550); 28 Jul 2024 18:50:06 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["471" "Monday" "26" "June" "2017" "23:31:44" "+0200" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-EJzHLMaKCHSnqzGeNMY_t8w9V=OwMF-a9QNcrAVqVo9wg@mail.gmail.com>" "11" "[oss-security] OpenVPN fuzzers released" "^Date:" nil nil "6" "2017062621:31:44" "[oss-security] OpenVPN fuzzers released" (number mark "        guidovranken Jun 26   11/471   " thread-indent "\"[oss-security] OpenVPN fuzzers released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23880 invoked by uid 550); 26 Jun 2017 22:51:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,57 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 23856 invoked from network); 26 Jun 2017 21:31:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=b2TaauW4wK7wxoSYcaQAQtKZ4DORq1yUmqg9c81rQw4=;
+        b=GSgmxfbqqX/eNokx1h264y5+dA4ZtlnGoHFv2iKpGB3finRd3NVymgXrQwpB8C7XYY
+         pAHqZEh2OhSWIiWWXlVbslYSFhCAQssGYIlJ5P/7BRrrKQMfeJrCJgF9ey3K1dDTmZC9
+         ayX4iFcgl7IntEYtHrdC5xhXWVMKYObNZ6dPjDGtZy66MVFKCmxEgsZAaeBt+BVeqYQi
+         JOdrsJ42GiaAabnZZvAD/I1gOm0laxLx6stZn3mJI5hFJ4g37MEGP2+wsOFENdOkzfFz
+         dexQTlBwv1sN7TyNtoWs59ePsZyAnCue65qN7x6Q56aKfaTU47vAXuhfXdxP/kjmTlEe
+         6vbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=b2TaauW4wK7wxoSYcaQAQtKZ4DORq1yUmqg9c81rQw4=;
+        b=GW1i1z8W3DdHGr50OWFnAZe2W2ydvvcMdDPmwoYupw5vesgExA92XEiiHoNj7H+slX
+         O3nOO/ciwX2SAlveFN6oTti/hzjgeGeXevdRGoKPfwBm94r9VgTnbt3BvtKihR/aRs/G
+         /VX7peBnHK48FTrIPRG0jll1JdQqEf9LLqdjKSL4jFffsEDp8bPgy7bRbJVLDjgWP/6V
+         DNIWk/fLCQ9a/407cC4BS6k+wrEiyz7M3Hgh83wFAh/tFkO5JbjZzKe++k5XQcAHvJ3P
+         /BbLnOoME33UUk4zK/cPi4WsZ7oIYzFNtOWS8C2VVHaUswwe63Ok7S1mb1ge+NOC1vD2
+         eWhA==
+X-Gm-Message-State: AKS2vOwp0/duAukhy2cRXayxPO9MOAuQjTgyEhizU+6quTQD3xb5AiLr
+	vCoyM7qtMU7PCxwgf+gUEL62H5i1c4VA
+X-Received: by 10.159.32.133 with SMTP id 5mr1123642uaa.123.1498512704830;
+ Mon, 26 Jun 2017 14:31:44 -0700 (PDT)
+MIME-Version: 1.0
+Message-ID: <CAO5O-EJzHLMaKCHSnqzGeNMY_t8w9V=OwMF-a9QNcrAVqVo9wg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Date: Mon, 26 Jun 2017 23:31:44 +0200
+From: Guido Vranken <guidovranken@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19583 invoked from network); 28 Jul 2024 18:22:33 -0000
-Date: Sun, 28 Jul 2024 20:22:25 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: [oss-security] OpenVPN fuzzers released
 To: oss-security@lists.openwall.com
-Message-ID: <20240728182225.GA19232@openwall.com>
-References: <20240701083838.GA12787@localhost.localdomain> <20240703112525.GA8740@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240703112525.GA8740@localhost.localdomain>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2024-6387: RCE in OpenSSH's server, on glibc-based Linux systems
 
-On Wed, Jul 03, 2024 at 11:26:54AM +0000, Qualys Security Advisory wrote:
-> Many people have asked us about an alleged proof of concept named
-> "7etsuo-regreSSHion.c": it is not a proof of concept, it is essentially
-> empty code (it might even be dangerous to compile and execute, we have
-> not checked). It is not just the shellcode that is missing, everything
-> else is missing too: the key-exchange code does nothing, the public-key
-> code does nothing useful, etc etc.
-> 
-> It looks great but it does nothing. A working proof of concept for this
-> vulnerability will be much longer and complex, and will take much more
-> time to write than this.
+I've published the fuzzers that I used to find the recent set of
+vulnerabilities in OpenVPN:
+https://github.com/guidovranken/openvpn/tree/fuzzing
 
-It's been almost a month, but apparently there still isn't a public
-exploit.  7etsuo's unfinished code was forked to lots of GitHub repos -
-some acknowledge it's a fork, most don't, a few claim it's their own.
-Most made no changes at all, a few added non-English comments, a few
-added Python wrappers (it's quite ridiculous to have wrappers for
-non-working code), none brought it significantly closer to completion.
+Not all of OpenVPN's code is covered by this set of fuzzers. It is
+entirely conceivable that more vulnerabilities exist, but more fuzzers
+have to be written in order to find them. The helper functions and IO
+abstractions I've written should simplify this effort. So here is your
+opportunity to find more juicy stuff.
 
-Perhaps most interestingly, someone tried to lure people into
-downloading and perhaps running Linux malware apparently (if I
-understood and recall some tweet threads right) by scanning the Internet
-for SSH servers from an IP address that also had a web server running.
-The web server had a directory listing with a variation of 7etsuo's
-code to make this look real, along with malware binaries.  Targeted
-advertising, right?  Here's a lengthy blog post on this incident:
-
-The Wild West of Proof of Concept Exploit Code (PoC)
-By Vlad O & Daniel C
-
-https://santandersecurityresearch.github.io/blog/sshing_the_masses.html
-
-> On closer examination it quickly became evident that the source code of
-> the exploit itself was a decoy designed as a lure to infect the machine
-> on which it was executed. This attack chain primary component was
-> identified as a heavily modified version of a relatively obscure Golang,
-> multi-platform Command and Control (C2) framework The Remote Access
-> Trojan (RAT) called Chaos (https://github.com/tiagorlampert/CHAOS).
-
-Alexander
+Guido
