@@ -1,34 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/22/2
-Message-ID: <87tvyrmnrk.fsf@fastmail.com>
-Date: Sun, 22 Oct 2017 13:21:19 +0200
-From: Marius Bakke <mbakke@...tmail.com>
-To: Noam Rathaus <noamr@...ondsecurity.com>, oss-security@...ts.openwall.com
-Subject: Re: Netlink XFRM socket subsystem NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/2
+Message-ID: <5951818E.21842.8B6A4375@pageexec.freemail.hu>
+Date: Mon, 26 Jun 2017 23:50:06 +0200
+From: "PaX Team" <pageexec@...email.hu>
+To: oss-security <oss-security@...ts.openwall.com>, Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth
 Content-Type: text/plain; charset=utf-8
 
-Noam Rathaus <noamr@...ondsecurity.com> writes:
+On 26 Jun 2017 at 13:47, Kurt Seifried wrote:
 
-> Hi,
->
-> I was forwarded by:
-> Dan Carpenter <dan.carpenter@...cle.com>
->
-> To you regarding obtaining a CVE for the mentioned (in the title)
-> vulnerability
->
-> I know a patch is being created and placed into mainstream code of the
-> Kernel
->
-> I would like also to get a CVE for it, so that we can put that in the
-> advisory we will release
+> I think we can agree as a community of professionals that insults and name
+> calling are unnecessary and also not very effective.
 
-Unfortunately CVE IDs are not assigned through this list anymore.
-Please use <https://cveform.mitre.org/> to request a CVE.
+I completely agree with you but then I can't explain why you chose to insult
+our projects last week and still have not remedied it (both the CVE and your
+insulting tweet are still up). I find it curious how you can preach about
+professionalism after being the very instigator of the recent splat (heck,
+instead of answering, you called it a conspiracy theory when I asked you in
+private why you issued the CVE to begin with which then forced us to take
+the issue public).
 
-> Do we need to give you the full technical writeup of the vulnerability?
+cheers,
+ PaX Team
 
-It's by no means required, but it would be appreciated if you could get
-back to this list with the advisory and CVE identifier when ready.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (488 bytes)
