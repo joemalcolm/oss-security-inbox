@@ -1,64 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/03/1
-Message-ID: <87lgrhx6lp.fsf@redhat.com>
-Date: Mon, 03 Apr 2017 10:01:22 +0200
-From: Martin Prpic <mprpic@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/8
+Message-ID: <CY1PR09MB08286A7F2D8571137E7BC7FEB5DF0@CY1PR09MB0828.namprd09.prod.outlook.com>
+Date: Mon, 26 Jun 2017 20:49:43 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Pax Team <pageexec@...email.hu>
+Subject: RE: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer writes:
+Even if it turns into an awkward conversation, I'm sure that Solar would be polite, pointed, and respectful.  We could all learn from his style of moderation.
 
-> To Red Hat folks:
->
-> On Fri, Mar 31, 2017 at 07:20:20PM +0200, Andrey Konovalov wrote:
->> On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@...gle.com> wrote:
->> > CVE-2017-7308 [1] was assigned to the following issue:
->> >
->> > The packet_set_ring function in net/packet/af_packet.c in the Linux
->> > kernel through 4.10.6 does not properly validate certain block-size
->> > data, which allows local users to cause a denial of service (overflow)
->> > or possibly have unspecified other impact via crafted system calls.
->> >
->> > The fix is sent upstream [2].
->> 
->> Update: the fix actually consists of 3 patches:
->> 
->> https://patchwork.ozlabs.org/patch/744811/
->> https://patchwork.ozlabs.org/patch/744813/
->> https://patchwork.ozlabs.org/patch/744812/
->> 
->> > [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
->> >
->> > [2] https://patchwork.ozlabs.org/patch/744811/
->
-> Red Hat currently says all RHEL starting with RHEL5 are affected:
->
-> https://access.redhat.com/security/cve/cve-2017-7308
->
-> However, the corresponding Bugzilla entry has no mention of that:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1437404
->
-> So is it just a better-safe-than-sorry default to list products as
-> affected until known otherwise?  If so, maybe Unknown would be better?
->
-> RHEL5 doesn't yet include TPACKET_V3.  I did not check RHEL6.
->
-> https://github.com/torvalds/linux/commit/f6fb8f100b807378fda19e83e5ac6828b638603a
->
-> Alexander
+- Steve
 
-Hey Alexander,
 
-Thanks for the note. The issue in question has not yet been fully
-analyzed and I only did a quick check whether the affected code was
-present in RHEL 5 when filing it and must have misread my search results
-since the affected code is definitely not in RHEL 5. Sorry about that.
-
-We do have an "Under investigation" state for the affectedness table on
-the CVE pages, which is used when no triage has been done on a filed
-issue.
-
--- 
-Martin Prpič / Red Hat Product Security
+> -----Original Message-----
+> From: Kurt Seifried [mailto:kseifried@...hat.com]
+> Sent: Monday, June 26, 2017 3:47 PM
+> To: oss-security <oss-security@...ts.openwall.com>
+> Cc: Pax Team <pageexec@...email.hu>
+> Subject: Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities,
+> refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
+> 
+> I think we can agree as a community of professionals that insults and name
+> calling are unnecessary and also not very effective. And before I get
+> accused of censorship I would point out I'm not wanting to stop anyone from
+> talking, I'm only wanting to stop people from talking in a way that is so
+> rude and insulting that it poisons the community and scares people away. I
+> assume Solar also supports this (if not... ergh. that's gonna be an awkward
+> conversation).
+> 
+> On Mon, Jun 26, 2017 at 1:16 PM, Mansour Moufid
+> <mansourmoufid@...il.com>
+> wrote:
+> 
+> > Hello.
+> >
+> > On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@...ecurity.net>
+> > wrote:
+> >
+> > > How could they know that calling people clowns and their work garbage
+> > wasn't
+> > > payment enough?
+> > >
+> > > With no technical content coming from your end, there's no need to
+> > discuss
+> > > anything further -- don't waste your time because I won't reply.
+> > >
+> > > Good luck to you and anyone else stupid enough to do any work at all for
+> > > you and your multi-billion dollar sponsors for free.
+> > >
+> > > -Brad
+> >
+> > Is there another mailing list for discussions of Linux security? Or forum?
+> >
+> > I have been thinking of sharing a few patches for the last couple months.
+> > I don't think this is the right place after the kind of insults I saw this
+> > week.
+> >
+> > Apologies if off topic.
+> >
+> 
+> 
+> 
+> --
+> 
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@...hat.com
