@@ -1,27 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/18
-Message-ID: <20170530172511.2b795fcb@pc1>
-Date: Tue, 30 May 2017 17:25:11 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/4
+Message-ID: <CALJHwhQkb-2yLFMTuF51QSiUWx=6Wv9DV_e7_s+vgopjhXKyxA@mail.gmail.com>
+Date: Mon, 26 Jun 2017 18:07:59 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
+Subject: CVE-2017-7482 Linux kernel: krb5 ticket decode len check.
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 30 May 2017 08:16:29 -0700
-Qualys Security Advisory <qsa@...lys.com> wrote:
+Gday,
 
-> Qualys Security Advisory
-> 
-> CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
+David Howells has written a great description, so rather than reword what
+he's written here is a quote directly from the git commit.
 
-Did Mitre really just add multiple new digits to CVEs or is this a typo?
+>From the patch notes:
 
-AFAIR they introduced 5-digit-CVEs relatively recently, going to
-7-digit without any public announcement seems unlikely.
+---
+    When a kerberos 5 ticket is being decoded so that it can be loaded into
+an
+    rxrpc-type key, there are several places in which the length of a
+    variable-length field is checked to make sure that it's not going to
+    overrun the available data - but the data is padded to the nearest
+    four-byte boundary and the code doesn't check for this extra.  This
+could
+    lead to the size-remaining variable wrapping and the data pointer going
+    over the end of the buffer.
+
+    Fix this by making the various variable-length data checks use the
+padded
+    length.
+---
+
+>From what I can see, this could leak 3 bytes of memory to userspace or
+possibly corrupt 3 bytes of memory,
+
+Upstream fix
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5f2f97656ada8d811d3c1bef503ced266fcd53a0
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2017-7482
 
 -- 
-Hanno Böck
-https://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Wade Mealing
+
+Product Security - Kernel, RHCE
+
+Red Hat
+
+<https://www.redhat.com>
+
+wmealing@...hat.com
+<https://red.ht/sig>
+TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
+
