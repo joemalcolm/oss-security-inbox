@@ -1,4 +1,9 @@
-Received: (qmail 16315 invoked by uid 550); 30 Mar 2024 16:07:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1352" "Monday" "26" "June" "2017" "18:07:59" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhQkb-2yLFMTuF51QSiUWx=6Wv9DV_e7_s+vgopjhXKyxA@mail.gmail.com>" "50" "[oss-security] CVE-2017-7482 Linux kernel: krb5 ticket decode len check." "^Date:" nil nil "6" "2017062608:07:59" "[oss-security] CVE-2017-7482 Linux kernel: krb5 ticket decode len check." (number mark "        wmealing@red Jun 26   50/1352  " thread-indent "\"[oss-security] CVE-2017-7482 Linux kernel: krb5 ticket decode len check.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7462 invoked by uid 550); 26 Jun 2017 08:08:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,52 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16288 invoked from network); 30 Mar 2024 16:07:24 -0000
-From: Russ Allbery <eagle@eyrie.org>
-To: Pierre-Elliott =?utf-8?Q?B=C3=A9cue?= <peb@debian.org>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <87cyrbzw2z.fsf@daath.pimeys.fr> ("Pierre-Elliott =?utf-8?Q?B?=
- =?utf-8?Q?=C3=A9cue=22's?=
-	message of "Sat, 30 Mar 2024 14:29:06 +0100")
-Organization: The Eyrie
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
-	<uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
-	<uu7da3$87n$1@ciao.gmane.io>
-	<20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
-	<uu7g5q$8hl$1@ciao.gmane.io>
-	<01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
-	<6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com>
-	<uu7k2m$61a$1@ciao.gmane.io>
-	<CAOp4FwT+kqoG1JRawFu6tkz0LUMgkT9RCVfh7vyaN3bbFkYx3Q@mail.gmail.com>
-	<72a9dfe5-a88d-4711-bc90-cd9269124f08@schafweide.org>
-	<87cyrbzw2z.fsf@daath.pimeys.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Sat, 30 Mar 2024 09:07:14 -0700
-Message-ID: <87ttknzost.fsf@hope.eyrie.org>
+Received: (qmail 7444 invoked from network); 26 Jun 2017 08:08:11 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=057a3LMt8xuD0Kqgr6/mb1HqpXhcfeIkIPE9OfPBiRc=;
+        b=VDAw0mrwDnHHiiAONEykYplJ7Wq/2c9eAuapn5vegCe05HPFQhL+eSuyefibIxB9Pi
+         Ti6CLq4bSuJ3tJmQ4sglZzbr8cxrn31KLiREoLx+R16e5wurTpPqv7XaqZgAdSLHbeQs
+         TsSn3InmrlufHnJaE9Q/NdwtKwDJVSS0DwuRDHjwI6dnoovI0M973ffWpr3RAkwmA3jl
+         knznrUNW5hfkf9bWvlvwWvKrOwNQlmpwDxAQKWGn5OwSvkO07+bpIqLIbiRxS2KiP9jf
+         w+viebIAYc+/kJxZZLFQ+L8YAgmJ9nGSYwPATWhS4bb8B2XeMldT+1A/NWynWr1XP85h
+         HEhg==
+X-Gm-Message-State: AKS2vOy3+ObbGc0gLBqC0F89JbF1rGivyG0RDAJlVoyuc/krAxweZJIJ
+	XxdzjULViqo9ATco53JNrHE/Tp8eBy5DoFjJ/A==
+X-Received: by 10.237.57.5 with SMTP id l5mr24439668qte.121.1498464480044;
+ Mon, 26 Jun 2017 01:08:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to
- ssh server compromise
+Message-ID: <CALJHwhQkb-2yLFMTuF51QSiUWx=6Wv9DV_e7_s+vgopjhXKyxA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="001a1140dbbc0ac0d40552d873b9"
+Date: Mon, 26 Jun 2017 18:07:59 +1000
+From: Wade Mealing <wmealing@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-7482 Linux kernel: krb5 ticket decode len check.
+To: oss-security@lists.openwall.com
 
-Pierre-Elliott B=C3=A9cue <peb@debian.org> writes:
+--001a1140dbbc0ac0d40552d873b9
+Content-Type: text/plain; charset="UTF-8"
 
-> I honestly would like to extend my sympathy to Lasse.
+Gday,
 
-> This situation must clearly be a hell for him.
+David Howells has written a great description, so rather than reword what
+he's written here is a quote directly from the git commit.
 
-> Someone asked what would become of xz as a project. I do hope in light
-> of this event, some people step in to help.
+>From the patch notes:
 
-Also if there's anything the community can do for Lasse personally, please
-pass that along.  Anyone can be the victim of social engineering.  The
-critical moments always look obvious in retrospect, but it's impossible
-for humans to be sufficiently paranoid to catch the signs 100% of the time
-and still function in society.
+---
+    When a kerberos 5 ticket is being decoded so that it can be loaded into
+an
+    rxrpc-type key, there are several places in which the length of a
+    variable-length field is checked to make sure that it's not going to
+    overrun the available data - but the data is padded to the nearest
+    four-byte boundary and the code doesn't check for this extra.  This
+could
+    lead to the size-remaining variable wrapping and the data pointer going
+    over the end of the buffer.
 
-I suspect many of us here have had nightmares about being in Lasse's
-position, and probably will have more of them in the future.
+    Fix this by making the various variable-length data checks use the
+padded
+    length.
+---
 
---=20
-Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
+>From what I can see, this could leak 3 bytes of memory to userspace or
+possibly corrupt 3 bytes of memory,
+
+Upstream fix
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5f2f97656ada8d811d3c1bef503ced266fcd53a0
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2017-7482
+
+-- 
+
+Wade Mealing
+
+Product Security - Kernel, RHCE
+
+Red Hat
+
+<https://www.redhat.com>
+
+wmealing@redhat.com
+<https://red.ht/sig>
+TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
+
+--001a1140dbbc0ac0d40552d873b9--
