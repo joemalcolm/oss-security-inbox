@@ -1,79 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/17
-Message-ID: <20170117183420.pmc5la5zsljyzh5s@eldamar.local>
-Date: Tue, 17 Jan 2017 19:34:20 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: php-gettext: Arbitrary code execution in select_string, ngettext and npgettext count parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/10
+Message-Id: <6AE321DE-812B-4EA1-807F-3C36B6E077D0@redhat.com>
+Date: Mon, 26 Jun 2017 15:26:46 -0600
+From: Kurt Seifried <kseifrie@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+To be clear solar has always been a sane and polite person, but I don't know what the list policy is, in part because I don't think this has really come up before(that I can remember).
 
-Could you please assign a CVE to the followign php-gettext[0] issue:
 
->From [1]:
-> A code injection vulnerability was found in php-gettext. Evaluating
-> the plural form formula in ngettext family of calls can execute
-> arbitrary code if number is passed unsanitized from the untrusted
-> user.
+-Kurt
 
-Which in Fedora was addressed by updating to 1.0.12, cf [2]. Original
-report is found in [3]:
-> CERT ID - VU#520504 (pending since 2015)
-> Product - php-gettext
-> Company - Danilo Segan
-> Name - php-gettext php code execution
-> Versions - <1.0.12
-> Patched - 11/11/2015
-> Ref: https://launchpad.net/php-gettext/trunk/1.0.12
-> 
-> Vulnerability - "code injection into the ngettext family of calls:
-> evaluating the plural form formula can execute arbitrary code if
-> number is passed unsanitized from the untrusted user."
-> 
-> Description -
-> In 1.0.11 and lower the select_string function appears as the
-> following:
-> 
->   /**
->    * Detects which plural form to take
->    *
->    * @access private
->    * @param n count
->    * @return int array index of the right plural form
->    */
->   function select_string($n) {
->     $string = $this->get_plural_forms();
->     $string = str_replace('nplurals',"\$total",$string);
->     $string = str_replace("n",$n,$string);
->     $string = str_replace('plural',"\$plural",$string);
->     $total = 0;
->     $plural = 0;
->     eval("$string");
->     if ($plural >= $total) $plural = $total - 1;
->     return $plural;
->   }
-> 
-> The vulnerability here lies in the fact that $string is evaluated as
-> PHP code. If the plural form contains an 'n', and the $n parameter
-> is exposed to a malicious user, PHP code can be added to the value
-> of $string before it is evaluated. For websites, this means that a
-> vulnerable application could allow an attacker to run PHP code on
-> your site and potentially gain control of it.
-> 
-> 
-> The $n parameter in select_string can also be exposed through
-> ngettext and npgettext as the $number parameter.
-> 
-> 
-> The new release 1.0.12 was made available shortly after notification
-> in 2015 and resolves the issue by raising an exception during
-> non-numeric input to these parameters.
 
- [0] https://launchpad.net/php-gettext/
- [1] https://bugzilla.redhat.com/show_bug.cgi?id=1367462
- [2] https://lwn.net/Alerts/708838/
- [3] http://seclists.org/fulldisclosure/2016/Aug/76
 
- Regards,
- Salvatore
+
+
+> On Jun 26, 2017, at 14:50, Solar Designer <solar@...nwall.com> wrote:
+> 
+> Hi all,
+> 
+> Yes, I too would like the discussions in here to stay civilized.
+> 
+> Brad wrote to Linus:
+> 
+>> On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@...ecurity.net> wrote:
+>> With no technical content coming from your end, there's no need to discuss
+>> anything further -- don't waste your time because I won't reply.
+> 
+> and I hope that Linus won't reply (as far as I can see, he did not so
+> far) and this does in fact end that thread.
+> 
+>> On Mon, Jun 26, 2017 at 03:16:06PM -0400, Mansour Moufid wrote:
+>> Is there another mailing list for discussions of Linux security? Or forum?
+> 
+> At Openwall, we also host the kernel-hardening mailing list, but we
+> currently moderate it similarly - that is, we're not preventing
+> occasional/infrequent threads like this right away, letting a sensible
+> number of messages to pass through, even if with insults and such.
+> Usually those threads end on their own.  In fact, I only recall one very
+> recent thread in there where I intervened and technically shut it down.
+> If the pro-grsecurity and/or anti-grsecurity folks try much harder,
+> we'll probably have to start moderating the lists much stricter.
+> 
+> There are probably other suitable mailing lists and forums as well.
+> Maybe someone else would share some.
+> 
+>> I have been thinking of sharing a few patches for the last couple months.
+>> I don't think this is the right place after the kind of insults I saw this week.
+> 
+> This sounds weird to me: you've been sitting on those patches for "the
+> last couple months" and now a thread "this week" finally made you decide
+> not to post them in here.  Anyhow, if those patches would be on-topic in
+> here or on kernel-hardening, please feel free to reconsider.
+> 
+> Off-list, someone else also explained to me that the recent dirt in here
+> discouraged them from posting certain reasonable content.  So this is
+> probably happening, and that's a pity.  I ask that anyone who thinks
+> they have higher quality content than what we see in this thread does
+> post that.  Let this be your response.
+> 
+> Alexander
