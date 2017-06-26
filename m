@@ -1,47 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/17
-Message-ID: <20171103183803.GB12742@256bit.org>
-Date: Fri, 3 Nov 2017 19:38:03 +0100
-From: Christian Brabandt <cb@...bit.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/9
+Message-ID: <20170626205012.GA17038@openwall.com>
+Date: Mon, 26 Jun 2017 22:50:12 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)
 Content-Type: text/plain; charset=utf-8
 
+Hi all,
 
-On Fr, 03 Nov 2017, Jakub Wilk wrote:
+Yes, I too would like the discussions in here to stay civilized.
 
-> * Christian Brabandt <cb@...bit.org>, 2017-11-02, 22:29:
-> >Vim copies the permission from the file being edited. Although the swap
-> >file is readable by others this does not leak any information here, since
-> >the file being edited is already readable by others.
-> 
-> In general, what vim does (copying mode bits) in not enough to ensure that
-> the swapfile is readable only by the users who had access to the original
-> file. It would have to copy also group ownership and ACLs.
+Brad wrote to Linus:
 
-Yes, I am not saying there is no room for improvement here.
+On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@...ecurity.net> wrote:
+> With no technical content coming from your end, there's no need to discuss
+> anything further -- don't waste your time because I won't reply.
 
-> Also, keep in mind how this thread started. Somebody edited wp-config.php,
-> which was readable by the web server, of course; then vim created
-> .wp-config.php.swp with the same-ish permissions, which made the file
-> readable to the whole (external) world. Oops.
+and I hope that Linus won't reply (as far as I can see, he did not so
+far) and this does in fact end that thread.
 
-I don't buy that argument. There are at least 2 problems here. Someone 
-misconfiguring his webserver so it does serve dotfiles and secondly 
-making some last minute changes on a live production server (and 
-thirdly, the Vim session must have crashed). That sounds more like an 
-user error. Also the other example about deleting the file that is 
-currently being edited is not very convincing.
+On Mon, Jun 26, 2017 at 03:16:06PM -0400, Mansour Moufid wrote:
+> Is there another mailing list for discussions of Linux security? Or forum?
 
-But please, if you really want to change how the swap files are created 
-please comment here:
-https://groups.google.com/d/msg/vim_dev/sRT9BtjLWMk/2oSF_b4MCAAJ
-or anywhere else in that thread starting here:
-https://groups.google.com/d/msg/vim_dev/sRT9BtjLWMk/Xn_Y3PHlBgAJ
+At Openwall, we also host the kernel-hardening mailing list, but we
+currently moderate it similarly - that is, we're not preventing
+occasional/infrequent threads like this right away, letting a sensible
+number of messages to pass through, even if with insults and such.
+Usually those threads end on their own.  In fact, I only recall one very
+recent thread in there where I intervened and technically shut it down.
+If the pro-grsecurity and/or anti-grsecurity folks try much harder,
+we'll probably have to start moderating the lists much stricter.
 
-Note, first message needs approval.
+There are probably other suitable mailing lists and forums as well.
+Maybe someone else would share some.
 
-Christian
--- 
-Aus der Tatsache, daß der Plural von Atlas Atlanten ist, kann man
-nicht schließen, daß der Plural von Kompass Kompanten sein muß.
+> I have been thinking of sharing a few patches for the last couple months.
+> I don't think this is the right place after the kind of insults I saw this week.
+
+This sounds weird to me: you've been sitting on those patches for "the
+last couple months" and now a thread "this week" finally made you decide
+not to post them in here.  Anyhow, if those patches would be on-topic in
+here or on kernel-hardening, please feel free to reconsider.
+
+Off-list, someone else also explained to me that the recent dirt in here
+discouraged them from posting certain reasonable content.  So this is
+probably happening, and that's a pity.  I ask that anyone who thinks
+they have higher quality content than what we see in this thread does
+post that.  Let this be your response.
+
+Alexander
