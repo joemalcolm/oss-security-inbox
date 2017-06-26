@@ -1,42 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/1
-Message-ID: <CAKoP-y-MQeQp4kKOAxRG2DdzkF2_eWy3C9Rqb+O8WmgY7uz-Fg@mail.gmail.com>
-Date: Mon, 29 May 2017 20:40:50 -0500
-From: Josh Bressers <josh@...ss.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: independent volunteers on distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/7
+Message-ID: <CANO=Ty1f8yEyvBy_ZR9xU3MxSjjxKUk5q1S_VRsmJAHy7z2KhQ@mail.gmail.com>
+Date: Mon, 26 Jun 2017 13:47:16 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Pax Team <pageexec@...email.hu>
+Subject: Re: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 25, 2017 at 2:37 PM, Solar Designer <solar@...nwall.com> wrote:
+I think we can agree as a community of professionals that insults and name
+calling are unnecessary and also not very effective. And before I get
+accused of censorship I would point out I'm not wanting to stop anyone from
+talking, I'm only wanting to stop people from talking in a way that is so
+rude and insulting that it poisons the community and scares people away. I
+assume Solar also supports this (if not... ergh. that's gonna be an awkward
+conversation).
 
->
-> Specifically, at this time I am going to subscribe Tavis Ormandy, who
-> happens to have been on vendor-sec.  I've already discussed this with
-> him, and he agreed.
->
-> I first brought this to distros list itself yesterday (after some
-> private discussions with some individual distros, both recently and way
-> earlier), and received no objections.  Some of the subscribed distros'
-> representatives spoke in favor of this change (some on the list, some
-> privately to me) and some also made comments (in particular, that we
-> should emphasize that "the volunteer subscriptions will be of them as
-> individuals, unrelated to their employment ...", which I did above).
->
-> I'd appreciate any further comments that the broader community might
-> have, but for now it's a decision made and I'll proceed.
->
->
-I've had views on about every side of this topic in the past and I've not
-been involved with distros for quite some time.
+On Mon, Jun 26, 2017 at 1:16 PM, Mansour Moufid <mansourmoufid@...il.com>
+wrote:
 
-However ...
+> Hello.
+>
+> On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@...ecurity.net>
+> wrote:
+>
+> > How could they know that calling people clowns and their work garbage
+> wasn't
+> > payment enough?
+> >
+> > With no technical content coming from your end, there's no need to
+> discuss
+> > anything further -- don't waste your time because I won't reply.
+> >
+> > Good luck to you and anyone else stupid enough to do any work at all for
+> > you and your multi-billion dollar sponsors for free.
+> >
+> > -Brad
+>
+> Is there another mailing list for discussions of Linux security? Or forum?
+>
+> I have been thinking of sharing a few patches for the last couple months.
+> I don't think this is the right place after the kind of insults I saw this
+> week.
+>
+> Apologies if off topic.
+>
 
-This strikes me as a wise decision. The work Tavis has been doing lately is
-quite good, and I have no doubt his wisdom and knowledge would go a long
-way on the distros list.
 
-Good luck to both of you ;)
 
 -- 
-    JB
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
