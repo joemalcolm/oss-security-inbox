@@ -1,79 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/07/5
-Message-ID: <CANO=Ty0eb=oUz+F5o3jxt=RxXD4WSiDJeGm_m3MmUw0sfdzg_g@mail.gmail.com>
-Date: Tue, 7 Mar 2017 10:45:35 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Craig Small <csmall@....com.au>
-Subject: Re: CVE Request: Wordpress: 6 security issues in Wordpress 4.7 2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/2
+Message-ID: <CALCETrWGp4wARvxNopt7ZFUfDMssAw9oS8fuwROv76EdQe_OQA@mail.gmail.com>
+Date: Sun, 25 Jun 2017 20:49:43 -0700
+From: Andy Lutomirski <luto@...nel.org>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Can someone explain all the CONFIG_VMAP_STACK CVEs lately?
 Content-Type: text/plain; charset=utf-8
 
-So this CVE request raises a good example:
+As the author of the CONFIG_VMAP_STACK patches, I'm a bit confused
+here.  There have been quite a few bugs in which some code passes a
+stack buffer to either sg_set_buf(), etc. or to the usb core.  The
+former seem to all be crypto users.
 
-Wordpress needs CVEs for its security flaws. This is a simple fact.
+As I understand it, the supposed vulnerability is that, if you can
+force the buffer to span a page boundary, the kernel or device will
+instead hit the physical page following the the first page of the
+buffer, which is likely to be the wrong page.  This causes corruption
+and maybe code execution.
 
-Now ideally the Wordpress team would become a CVE Numbering Authority (CNA)
-and cover it themselves, if they would like to do this then they need to
-reach out to me as the DWF guy and I can make that happen.
+Naively, this failure mode occurs because __pa (or virt_to_phys() or
+virt_to_page() or whatever interface gets used) will return the PA of
+the *beginning* of the buffer, but the next virtual page may not be
+the next physical page.  But this makes no sense -- __pa and friends
+don't have that effect when called on addresses in vmap space.
 
-If that doesn't happen then the good news is we have another option now.
-Someone can become a CVEMentor and CNA and take over the Wordpress
-assignments (well until Wordpress becomes a CNA). So if someone wants to
-step up and do this, please contact me as the DWF guy and I can make that
-happen.
+So I tried to refresh my memory of what actually happened.  (I looked
+into this when I wrote CONFIG_VMAP_STACK.)  __pa() and friends return
+garbage when called on a vmap address.  (I think it's likely to be a
+totally bogus PA that won't even correspond to a real physical page of
+memory.)  The tricky but is that it's *invertable* garbage.  When
+these buffers are passed to synchronous crypto APIs, the crypto core
+calls sg_virt(), which inverts the transformation and returns a valid
+virtual address of the page.  But this is the original VA and points
+to the vmap space where the buffer is genuinely contiguous.
 
-This is also true for other projects/open source products. We need better
-CVE coverage. Ideally these projects/products step up and become CNA's, but
-if they cannot (lack of resources/time/etc) that's ok, because now people
-with an interest can come forwards and do it.
+IOW, for most synchronous crypto, using sg_set_buf() on a stack
+address is utterly bogus, but it works correctly.  Ick.
 
-On Tue, Mar 7, 2017 at 4:16 AM, Emilio Pozuelo Monfort <pochu27@...il.com>
-wrote:
+I haven't checked what USB does, but I suspect it's a wildly
+out-of-bounds DMA transfer that's more likely to result in a
+straight-up abort than easily exploitable corruption.
 
-> On 07/03/17 11:44, Craig Small wrote:
-> > Hello again,
-> >  Wordpress 4.7.3 fixes 6 security issues.  Summer of Pwnage has reported
-> 2
-> > here yesterday but here is the list from the wordpress site.
-> >
-> > Cross-site scripting (XSS) via media file metadata. Reported by Chris
-> Andrè
-> > Dale, Yorick Koster, and Simon P. Briggs.
-> >
-> > Control characters can trick redirect URL validation. Reported by Daniel
-> > Chatfield.
-> >
-> > Unintended files can be deleted by administrators using the plugin
-> deletion
-> > functionality. Reported by xuliang.
-> >
-> > Cross-site scripting (XSS) via video URL in YouTube embeds. Reported by
-> > Marc Montpas.
-> >
-> > Cross-site scripting (XSS) via taxonomy term names. Reported by Delta.
-> >
-> > Cross-site request forgery (CSRF) in Press This leading to excessive use
-> of
-> > server resources. Reported by Sipke Mellema.
-> >
-> >
-> > Reference:
-> > https://wordpress.org/news/2017/03/wordpress-4-7-3-
-> security-and-maintenance-release/
->
-> Please report these through http://cveform.mitre.org/ to get CVEs
-> assigned, and
-> follow up here with the CVE identifiers after that's done.
->
-> Thanks,
-> Emilio
->
+So could someone all these CVEs, please?
 
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+--Andy
