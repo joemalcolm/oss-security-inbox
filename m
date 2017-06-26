@@ -1,28 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/17/6
-Message-ID: <20170217202319.o47gjtnty37vvubb@eldamar.local>
-Date: Fri, 17 Feb 2017 21:23:19 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: OpenID Connect authentication module for Apache: CVE-2017-6059 CVE-2017-6062
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/4
+Message-ID: <MWHPR04MB1086792B34233BB68DEE393184DF0@MWHPR04MB1086.namprd04.prod.outlook.com>
+Date: Mon, 26 Jun 2017 22:31:14 +0000
+From: Kyle R <Kyle.R@...ticalInformatics.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)
 Content-Type: text/plain; charset=utf-8
 
-Hi
++1 for Solar always having a level-head when moderating this list.
 
-MITRE has assigned two CVEs for the OpenID Connect authentication
-module for Apache (https://github.com/pingidentity/mod_auth_openidc):
+________________________________
+From: Kurt Seifried <kseifrie@...hat.com>
+Sent: Monday, June 26, 2017 2:26:46 PM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)
 
-CVE-2017-6059:
+To be clear solar has always been a sane and polite person, but I don't know what the list policy is, in part because I don't think this has really come up before(that I can remember).
 
-https://github.com/pingidentity/mod_auth_openidc/issues/212
 
-mod_auth_openidc showss user-supplied content on error pages.
+-Kurt
 
-CVE-2017-6062:
 
-https://github.com/pingidentity/mod_auth_openidc/issues/222
 
-OIDCUnAuthAction pass does not scrub request headers
 
-Regards,
-Salvatore
+
+> On Jun 26, 2017, at 14:50, Solar Designer <solar@...nwall.com> wrote:
+>
+> Hi all,
+>
+> Yes, I too would like the discussions in here to stay civilized.
+>
+> Brad wrote to Linus:
+>
+>> On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@...ecurity.net> wrote:
+>> With no technical content coming from your end, there's no need to discuss
+>> anything further -- don't waste your time because I won't reply.
+>
+> and I hope that Linus won't reply (as far as I can see, he did not so
+> far) and this does in fact end that thread.
+>
+>> On Mon, Jun 26, 2017 at 03:16:06PM -0400, Mansour Moufid wrote:
+>> Is there another mailing list for discussions of Linux security? Or forum?
+>
+> At Openwall, we also host the kernel-hardening mailing list, but we
+> currently moderate it similarly - that is, we're not preventing
+> occasional/infrequent threads like this right away, letting a sensible
+> number of messages to pass through, even if with insults and such.
+> Usually those threads end on their own.  In fact, I only recall one very
+> recent thread in there where I intervened and technically shut it down.
+> If the pro-grsecurity and/or anti-grsecurity folks try much harder,
+> we'll probably have to start moderating the lists much stricter.
+>
+> There are probably other suitable mailing lists and forums as well.
+> Maybe someone else would share some.
+>
+>> I have been thinking of sharing a few patches for the last couple months.
+>> I don't think this is the right place after the kind of insults I saw this week.
+>
+> This sounds weird to me: you've been sitting on those patches for "the
+> last couple months" and now a thread "this week" finally made you decide
+> not to post them in here.  Anyhow, if those patches would be on-topic in
+> here or on kernel-hardening, please feel free to reconsider.
+>
+> Off-list, someone else also explained to me that the recent dirt in here
+> discouraged them from posting certain reasonable content.  So this is
+> probably happening, and that's a pity.  I ask that anyone who thinks
+> they have higher quality content than what we see in this thread does
+> post that.  Let this be your response.
+>
+> Alexander
+
