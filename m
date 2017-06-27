@@ -1,35 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/14/1
-Message-Id: <201704141237.50508@pali>
-Date: Fri, 14 Apr 2017 12:37:50 +0200
-From: Pali Rohár <pali.rohar@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-3305 - The Riddle vulnerability in MySQL client (public disclosure)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/6
+Message-ID: <DM5PR11MB16439A3C3D41C0A38E019859AADC0@DM5PR11MB1643.namprd11.prod.outlook.com>
+Date: Tue, 27 Jun 2017 02:52:16 +0000
+From: Mikhail Utin <mikhailutin@...mail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: malicious hypervisor threat was ignored but it is real
 Content-Type: text/plain; charset=utf-8
 
-On Friday 17 March 2017 11:54:35 Pali Rohár wrote:
-> Hi!
-> 
-> There is a new vulnerability in MySQL client versions 5.5 and 5.6
-> which is related to SSL/TLS encryption and to older BACKRONYM
-> vulnerability.
-> 
-> As it is common, new vulnerability should have a name, logo and
-> website. So enjoy the *Riddle* at http://riddle.link/
-> 
-> Affected are only Oracle's MySQL clients in all versions 5.5 and 5.6
-> when SSL/TLS encryption is used. Verification of encryption
-> parameters and existence of SSL/TLS layer by MySQL client is done
-> *after* client successfully finish authentication.
-> 
-> For more details including mitigation, look at Technical section on
-> vulnerability website: http://riddle.link/
+In 2006, Michigan University (MU) team with the participation of Microsoft research team published an article describing the development of the most advanced malware - "SubVirt: Implementing malware with virtual machines".
 
-Just to note that also last version 6.0.2 of MySQL Connector/C 6.0 
-series (which is still supported) is affected by this vulnerability.
+The research has been supported by US government and Intel Corporation.  The research is the proof of concept – virtualization technology can be used to develop a malware (Malicious Hypervisor – MH) which can access any part of operating system and user applications, and thus user data. This is computer stealth technology by the definition – such hypervisor cannot be identified by currently available security tools.
 
--- 
-Pali Rohár
-pali.rohar@...il.com
+Around 2007 – 2008 a hypervisor has been found in Intel Corporation motherboards which have been shipped to Russia for the development of a special computer system. Russian scientist published the article describing how he found the malware in BMC BIOS flash memory. The article is available in English now.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+The scientist observed that the hypervisor was gradually improving from one shipment to the next one and eventually became completely invisible and working with his (now nested) hypervisor.
+
+In 2013, yet another MU research proved that millions of servers worldwide can be hacked via network management interface and malware loaded onto them. This malware could include the MH we are discussing. That represents a threat of an enormous magnitude, because the MH will be working from BMC memory and on Ring -2 level, thus having ultimate control of the computer system.
+
+The situation now is that the most advanced threat had been successfully ignored during more than 10 years and even now we do not have MH identification software available on market.
+
+We believe that there are at least three instances have been existing in the wild since 2010.
+
+Considering MH ability to access to any computer data and do whatever the MH owner wants, we can claim that none of computer systems since 2006 can be compliant to any data protection regulation as there is no tools for at least the identification of MH. Such regulations include, but are not limited to US HIPAA, US NIST SP-800, ISO 27000, DSS, and newcomer – EU General Data Protection Regulation.
+
+Complete information is posted on www.rubos.com<http://www.rubos.com> site.  Please, join the discussion here or, if you need to, please use email addresses from Rubos, Inc. site to communicate your questions.
+
+We need to fix the situation until cyber terrorists develop or reverse engineer a hypervisor and use it to control millions computers around the globe.
+
+
+
+Mikhail Utin
+
