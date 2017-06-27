@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/26
-Message-ID: <20170714235003.507f2dbf@pc1>
-Date: Fri, 14 Jul 2017 23:50:03 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/1
+Message-Id: <49E4F353-A157-4F25-B5D3-CFF0A89339A6@apache.org>
+Date: Tue, 27 Jun 2017 16:58:30 -0700
+From: Denis Magda <dmagda@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-1000083: evince: Command injection vulnerability in CBT handler
+Subject: [CVE-2017-7686] Apache Ignite Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: Important
 
-When I saw this and the proposed fix (the backport fix, not the one in
-git head), which was to remove tar support, but leave the command line
-calling of all the other tools looked suspicious to me.
+Vendor: The Apache Software Foundation
 
-I played around a while, I haven't been able to find any more command
-injections. However I discussed this with Tobias Müller and he found
-out that another evince backend - the dvi one - also calls a shell
-command with insufficient escaping:
-https://bugzilla.gnome.org/show_bug.cgi?id=784947
+Versions Affected:
 
-While I didn't find any more command injections, I figured out that
-with a password protected zip file as a cbz one can cause evince to
-hang:
-https://bugzilla.gnome.org/show_bug.cgi?id=784963
+* Apache Ignite 1.0.0-RC3 to 2.0
 
--- 
-Hanno Böck
-https://hboeck.de/
+Impact:
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Apache Ignite Might Transfer Sensitive Information to 3rd Party Domain
 
-Content of type "application/pgp-signature" skipped
+Description:
+
+Apache Ignite uses an update notifier component to update the users about new project releases that include additional functionality, bug fixes and performance improvements. To do that the component communicates to an external PHP server (http://ignite.run) where it needs to send some system properties like Apache Ignite or Java version. Some of the properties might contain user sensitive information.
+
+Mitigation:
+
+* The domain (http://ignite.run) was moved to ASF and the server was brought down. No data transfer longer happens by default. No extra actions are needed on the end user side.
+
+Credit:
+
+The vulnerability was discovered by: 
+
+* Makoto Yui of Treasure Data, Inc.
+
+References:
+
+* http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7686
