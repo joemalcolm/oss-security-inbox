@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/17/1
-Message-ID: <20170717043456.lcoueajxmgvg7dxj@lorien.valinor.li>
-Date: Mon, 17 Jul 2017 06:34:56 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: ImageMagick: CVE-2017-11352: Improper EOF handling in coders/rle.c can trigger crash (Incomplete fix for CVE-2017-9144)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/5
+Message-ID: <6D896033-5E5F-4F8B-A05E-771F0408BA66@synopsys.com>
+Date: Tue, 27 Jun 2017 11:33:20 +0000
+From: Ari Kauppi <Ari.Kauppi@...opsys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2017-8797 Linux kernel: nfsd: remote DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-In ImageMagick before 7.0.5-10, a crafted RLE image can trigger a
-crash because of incorrect EOF handling in coders/rle.c. This is
-caused by an incomplete fix of CVE-2017-9144.
+Linux kernel NFSv4 server is vulnerable to a remote DoS attack.
 
-Upstream reference:
-https://github.com/ImageMagick/ImageMagick/issues/502
+The NFSv4 server in the Linux kernel does not properly validate layout type
+when processing NFSv4 pNFS LAYOUTGET operand. The provided input
+value is not properly validated and is used for array dereferencing. OOPS
+is triggered which leads to DoS of knfsd and eventually to soft-lockup of
+whole system.
 
-Upstream fix (ImageMagick-7):
-https://github.com/ImageMagick/ImageMagick/commit/86cb33143c5b21912187403860a7c26761a3cd23
+In addition, on normal processing path there is a C undefined behavior
+weakness that can lead to out of bounds array dereferencing.
 
-Upstream fix (ImageMagick-6):
+The attack vector requires that the attack host is within host mask of exported
+NFSv4 mount or source address spoofing is not properly mitigated in the network.
+The attack payload fits to single one-way UDP packet. The kernel must be
+compiled with CONFIG_NFSD_PNFS enabled, which seems to be the case
+with many vendor kernels.
 
-https://github.com/ImageMagick/ImageMagick/commit/7f1f01b695e869c410ee10e2176f8fd764f09373
+The issue has been verified to be reproducible at least with unpatched v4.4, v4.8
+and v4.11 baselines.
 
-MITRE has assigned CVE-2017-11352 for this issue.
+Upstream patches in mainline: (available in stable releases, too)
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/fs/nfsd?h=v4.12-rc7&id=b550a32e60a4941994b437a8d662432a486235a5
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/fs/nfsd?h=v4.12-rc7&id=f961e3f2acae94b727380c0b74e2d3954d0edf79
 
-Regards,
-Salvatore
+The issue was found by Jani Tuovila from Synopsys Ltd with Synopsys Defensics fuzzer.
+
+Thanks,
+
+--
+Ari Kauppi / Synopsys Ltd.
