@@ -1,44 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/2
-Message-ID: <8bd5339f-080c-310d-9a68-3f91f725b3f7@gmail.com>
-Date: Fri, 27 Jan 2017 22:59:47 +0100
-From: KARBOWSKI Piotr <piotr.karbowski@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: security-audit@...too.org
-Subject: Gentoo: order of installed packages may result in vary directories permissions, leading to crontab not requiring cron group membership as example.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/10
+Message-ID: <CANO=Ty1Py6iabbmct=ic55=sNRaRdUxDnucZjftb=B==56NzCw@mail.gmail.com>
+Date: Tue, 27 Jun 2017 16:13:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CoreOS membership to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+My main question would be what expertise do you have in helping with
+security issues, e.g. kernel/glibc/other engineering talent? Or do you
+simply need this as a consumer of such data (e.g. so you can get containers
+ready to respin for embargoed issues, and to be clear, I'm not opposed to
+this type of consumption if it's in the public interest, you won't break
+embargoes, etc.).
 
-The packages in Gentoo often utilizes Portage's functions like keepdir 
-to create a directories, with specified permissions. One of the examples 
-is 'cronbase', which the only purpose is to setup 
-/etc/cron.{hourly,daily,weekly,monthly} and /var/spool/cron.
+On Tue, Jun 27, 2017 at 2:59 PM, Euan Kemp <euan.kemp@...eos.com> wrote:
 
-The /var/spool/cron is meant to have root:cron 750, which makes the 
-crontab usable only for the users that are members of cron group.
+> Hello.
+>
+> We, the Container Linux team at CoreOS[0], would like to request
+> membership to the linux-distros list.
+>
+> We've requested membership once before[1], but at the time new members
+> weren't being added iirc.
+>
+> Based on Solar's comments in the Stack Clash thread, this seems like a
+> good time to renew this discussion.
+>
+>
+> To preempt some possible questions:
+>
+> Q: What’s Container Linux?
+> Container Linux (formerly called CoreOS) is a linux distribution for
+> servers which automatically updates by default; it’s generally available
+> and has a fairly large install base.
+>
+> Q: Can you handle embargoed builds?
+> We have the infrastructure and experience to make embargoed
+> builds/releases. These have been exercised by e.g. docker CVEs in the past.
+>
+> Q: Do you have an advisory page?
+> We don't have a more comprehensive advisory page than our release notes
+> (which list CVEs fixed in each version) and in some cases blog posts.
+> We intend to have an advisory page at some indeterminate point in the
+> future.
+>
+>
+> - Euan
+>
+> [0]: https://coreos.com/why/
+> [1]: http://seclists.org/oss-sec/2016/q4/205
+>
+>
+>
 
-As for the /etc/cron.{hourly,daily,weekly,monthly} they're meant to be 
-root:root 750.
 
-If, for instance, a mlocate package will be installed before cronbase, 
-due to installing /etc/cron.daily/mlocate, the /etc/cron.daily will end 
-up with 755 permissions. After than when crontab package is installed, 
-due to usage of portage's keepdir function, the directory in temporary 
-directory will be installed as root:cron 750, but during the merge 
-process to rootfs no directory permissions will be merged, leaving the 
-/etc/cron.daily as 755.
+-- 
 
-On one system after installing set of packages, the /var/spool/cron 
-ended up being cron:root 755, which results in possibility for any local 
-user to actually create the crontabs (including system users like nginx, 
-mysql, and so on).
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-The way a (directory) ownership and permissions are handled in Gentoo 
-seems to be flawed, it's not clear to me whatever Portage should 
-provided a soluton to that, or the ebuilds authors should make sure to 
-always depends, in case of touching cronbase directories, on the 
-cronbase package, to ensure that it's installed prior to installing 
-them. Nonetheless I do believe this issue is worth CVE.
-
--- Piotr.
