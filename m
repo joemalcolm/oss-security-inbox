@@ -1,85 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/1
-Message-ID: <CA+-XxSFqmLn3Phb4S6rpFBKU2sxcsWAP56yzFw=FuDZR+1nGDQ@mail.gmail.com>
-Date: Sun, 24 Sep 2017 19:35:35 -0700
-From: Igor Seletskiy <i@...udlinux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/9
+Message-ID: <e2ec939c-1fa5-8619-7771-d68ee2bff13c@coreos.com>
+Date: Tue, 27 Jun 2017 13:59:48 -0700
+From: Euan Kemp <euan.kemp@...eos.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+Subject: CoreOS membership to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-This pre-disclosure was very useful to CloudLinux. Most of our
-customers are shared hosting companies and are affected by this bug.
-The early notification gave us time to thoroughly test the fix, and
-analyze if it can potentially have any side effects.
-It also let us deliver the fix to beta channel right after the
-announcement, and to the main channel a day later.
+Hello.
 
-Regards,
-Igor Seletskiy |  CEO
-CloudLinux OS   |   KernelCare   |   Imunify360
+We, the Container Linux team at CoreOS[0], would like to request
+membership to the linux-distros list.
 
-Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
-Follow us on twitter for technical updates: @CloudLinuxOS
+We've requested membership once before[1], but at the time new members
+weren't being added iirc.
+
+Based on Solar's comments in the Stack Clash thread, this seems like a
+good time to renew this discussion.
 
 
-On Sat, Sep 23, 2017 at 4:44 AM, Hanno Böck <hanno@...eck.de> wrote:
-> Hi,
->
-> A few days have passed since the optionsbleed disclosure. Some
-> interesting things have surfaced, e.g. the fact that it was apparently
-> discovered already in 2014, but nobody noticed it was a security bug.
->
->
-> But I'd like to discuss something else:
-> I had informed the distros mailing list one week earlier about the
-> upcoming disclosure with a bug description and links to the already
-> available patch.
-> My understanding is that the purpose of the distros list is that
-> updates can be prepared so after a disclosure the time between "vuln is
-> known" and "patch is available" is short.
-> However from all I can see this largely didn't happen.
->
-> Debian+Ubuntu took more than a day after disclosure to fix. According
-> to the Debian bug tracker the bug got only opened after the public
-> disclosure[2]. I see no sign that any work on a fix began before the
-> disclosure.
->
-> If I can trust Red Hat's CVE tracker [3] there still are no fixed
-> packages available. Also I haven't found any info about updated
-> opensuse packages.
->
-> The only distro I'm aware of that prepared packages and pushed them
-> right after disclosure is Gentoo.
->
-> All of this makes me wonder if the distros list serves its purpose.
->
-> I'd be curious to hear:
->
-> a) if any people felt that pre-disclosure of optionsbleed was helpful
-> to them and in which way (after all - even if it only helps minor
-> distros and major distros ignore it it may still be a good thing).
->
-> b) if people think that they'd usually prepare a fixed package, however
-> they didn't consider optionsbleed important enough. (Naturally I
-> probably have a bias seeing my findings as more important as other
-> people, but I could live with that.)
->
-> c) other things?
->
->
->
-> [1] https://arxiv.org/pdf/1405.2330.pdf
-> https://blog.fuzzing-project.org/61-How-Optionsbleed-wasnt-found-in-2014.html
-> [2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=876109
-> [3] https://access.redhat.com/security/cve/cve-2017-9798
->
-> --
-> Hanno Böck
-> https://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
->
->
->
->
+To preempt some possible questions:
+
+Q: What’s Container Linux?
+Container Linux (formerly called CoreOS) is a linux distribution for
+servers which automatically updates by default; it’s generally available
+and has a fairly large install base.
+
+Q: Can you handle embargoed builds?
+We have the infrastructure and experience to make embargoed
+builds/releases. These have been exercised by e.g. docker CVEs in the past.
+
+Q: Do you have an advisory page?
+We don't have a more comprehensive advisory page than our release notes
+(which list CVEs fixed in each version) and in some cases blog posts.
+We intend to have an advisory page at some indeterminate point in the
+future.
+
+
+- Euan
+
+[0]: https://coreos.com/why/
+[1]: http://seclists.org/oss-sec/2016/q4/205
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (852 bytes)
