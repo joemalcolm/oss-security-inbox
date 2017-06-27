@@ -1,86 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/29/1
-Message-ID: <alpine.LRH.2.02.1705291635300.17002@argo.troja.mff.cuni.cz>
-Date: Mon, 29 May 2017 16:40:49 +0200 (CEST)
-From: Pavel Kankovsky <peak@...o.troja.mff.cuni.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/11
+Message-ID: <13697db2-497e-e64a-5a6f-e66100e2dc22@coreos.com>
+Date: Tue, 27 Jun 2017 15:52:49 -0700
+From: Euan Kemp <euan.kemp@...eos.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-9148 FreeRADIUS TLS resumption authentication bypass
+Subject: Re: CoreOS membership to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-Vendor: The FreeRADIUS Project
+On 06/27/2017 03:13 PM, Kurt Seifried wrote:
+> My main question would be what expertise do you have in helping with
+> security issues, e.g. kernel/glibc/other engineering talent? Or do you
+> simply need this as a consumer of such data (e.g. so you can get containers
+> ready to respin for embargoed issues, and to be clear, I'm not opposed to
+> this type of consumption if it's in the public interest, you won't break
+> embargoes, etc.).
 
-Product: FreeRADIUS server
+To clarify your example, we're primarily concerned with preparing
+updates for our distribution's kernel and userland, not for containers.
 
+We'd be happy to help when we're able to, but our intent is mainly
+consumption for the security of our users.
+We'll, of course, respect embargoes.
 
-Affected Versions:
-
-2.2.x (EOL but still found in some Linux distros): All versions.
-
-3.0.x (stable): All versions before 3.0.14.
-
-3.1.x and 4.0.x (development): All versions before 2017-02-04.
-
-
-Description:
-
-The implementation of TTLS and PEAP in FreeRADIUS skips inner
-authentication when it handles a resumed TLS connection. This is a feature
-but there is a critical catch: the server must never allow resumption of a
-TLS session until its initial connection gets to the point where inner
-authentication has been finished successfully.
-
-Unfortunately, affected versions of FreeRADIUS fail to reliably prevent
-resumption of unauthenticated sessions unless the TLS session cache is
-disabled completely and allow an attacker (e.g. a malicious supplicant) 
-to elicit EAP Success without sending any valid credentials.
+- Euan
 
 
-Mitigation:
 
-(a) Disable TLS session caching. Set enabled = no in the cache subsection 
-of eap module settings (raddb/mods-enabled/eap in the standard 
-v3.0.x-style layout).
-
-(b) Upgrade to version 3.0.14.
-
-
-Credits:
-
-Stefan Winter of the RESTENA Foundation (initial discovery)
-
-Luboš Pavlíček of the University of Economics, Prague (independent 
-rediscovery)
-
-
-Timeline:
-
-"a few months" ago: Vulnerability discovered and reported by Stefan Winter.
-
-2017-02-03: The first (and mostly ineffective) attempt to fix the
-vulnerability in v3.0.x branch (commits 5aabc3b1 and 6b909d0c).
-
-2017-02-04 Vulnerability fixed in v3.1.x and v4.0.x branches (commits
-813a93a7 and c703ad96, respectively).
-
-2017-03-06 Version 3.0.13 released without any explicit indication that it
-was supposed to fix a serious vulnerability (but it was probably better
-that way because the vulnerability was not really fixed).
-
-2017-04-24 Vulnerability rediscovered by Luboš Pavlíček.
-
-2017-04-25 PoC exploit developed and used to confirm 3.0.13 is still
-vulnerable. Vulnerability reported... again.
-
-2017-05-08 The second (and hopefuly final) attempt to fix the vulnerability
-in v3.0.x (commits af030bd4 and 8f53382c).
-
-2017-05-26 Version 3.0.14 released.
-
-
-References:
-
-[1] <http://freeradius.org/security.html>
-[2] <http://freeradius.org/press/index.html#3.0.14>
-
--- 
-Pavel Kankovsky aka Peak                      "Que sçay-je?"
+Download attachment "signature.asc" of type "application/pgp-signature" (852 bytes)
