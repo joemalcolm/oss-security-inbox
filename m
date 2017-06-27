@@ -1,11 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/9
-Message-ID: <CAJEJqRwCHzOFRt0BHkW5-=bo7iNo8dj2EfGua2ky0B5qB5Uf2A@riseup.net>
-Date: Wed, 15 Feb 2017 17:20:31 -0500
-From: David Manouchehri <david.manouchehri@...eup.net>
-To: oss-security@...ts.openwall.com
-Cc: eva.wu@...winnertech.com
-Subject: Re: CVE request: sunxi-debug (root privilege escalation in Allwinner kernel)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/7
+Message-ID: <20170627134404.GA19110@openwall.com>
+Date: Tue, 27 Jun 2017 15:44:04 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Mikhail Utin <mikhailutin@...mail.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: malicious hypervisor threat was ignored but it is real
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-10225 has been assigned.
+Hi Mikhail,
+
+The concern is legitimate and there are relevant PoC's (perhaps starting
+with Joanna Rutkowska's Blue Pill), but as a moderator for oss-security
+I find your message inappropriate for this list: no focus on Open Source
+(relevance yes, focus no), effectively no substance (only references to
+others' work and general reasoning about how the attacks are possible),
+promotion of your company and resource, a couple of instances of "patent
+pending" on your recent slides, and a cross-post (you also brought this
+at least to full-disclosure, where it is in fact more on topic).
+
+On Tue, Jun 27, 2017 at 02:52:16AM +0000, Mikhail Utin wrote:
+> Around 2007 ? 2008 a hypervisor has been found in Intel Corporation motherboards which have been shipped to Russia for the development of a special computer system. Russian scientist published the article describing how he found the malware in BMC BIOS flash memory. The article is available in English now.
+
+It's been a long while, but if you're referring to the same thing I read
+in Russian back then (and it looks so), I can say that IMO it lacked
+substance too.  From the text, I couldn't discern whether the author
+wrote a fine piece of science fiction (with sufficiently good knowledge
+of the underlying "science") or a documentary, but either way there were
+no specifics that would enable anyone else to reproduce the findings.
+
+Unless anyone has anything on-topic (focus on Open Source) and specific
+(ideally, reproducible) to add, let's end this oss-security thread here.
+
+Alexander
