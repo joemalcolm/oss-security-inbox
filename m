@@ -1,56 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/11/5
-Message-ID: <83ad8e1c-c317-49f1-8bbb-b613b48263f9@redhat.com>
-Date: Mon, 11 Sep 2017 14:22:12 -0600
-From: "kseifried@...hat.com" <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Michael Orlitzky <michael@...itzky.com>
-Cc: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/8
+Message-ID: <03ffaee7-2345-db4b-b16c-b859ed5637cd@canonical.com>
+Date: Tue, 27 Jun 2017 18:58:29 +0100
+From: Chris Coulson <chris.coulson@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-9445: Out-of-bounds write in systemd-resolved with crafted TCP payload
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+I recently discovered an out-of-bounds write in systemd-resolved in
+Ubuntu, which is possible to trigger with a specially crafted TCP payload.
 
-On 2017-09-11 01:58 PM, Michael Orlitzky wrote:
-> On 09/07/2017 12:22 PM, Daniel Kahn Gillmor wrote:
-> It's just me as far as I know. I stumbled onto this by accident while
-> cleaning up an OpenRC init script that was shipped as part of an
-> upstream package. I updated it, and then noticed that my init script was
-> vulnerable to the PID file trick. Then I realized that everybody else
-> has the same problem.
-> 
-> You probably need a human to make the final decision on whether or not
-> an init script is vulnerable, but my lame heuristic so far has been
-> hilariously accurate: does the init script mess with file/directory
-> ownership? If so, it's probably vulnerable to *something*.
+Details from the Ubuntu bug follow:
+https://launchpad.net/bugs/1695546
 
-Another note on init scripts and related, rpm and dpkg
-postinstall/preinstall/etc, as a rule if it does anything with:
+----
+Certain sizes passed to dns_packet_new can cause it to allocate a buffer
+that's too small. A page-aligned number - sizeof(DnsPacket) +
+sizeof(iphdr) + sizeof(udphdr) will do this - so, on x86 this will be a
+page-aligned number - 80. Eg, calling dns_packet_new with a size of 4016
+on x86 will result in an allocation of 4096 bytes, but 108 bytes of this
+are for the DnsPacket struct.
 
-chmod
-chown
-chgrp
-touch
-head
-tail
-cat
-"/etc/pki/"
-"/tmp/"
-"/dev/random"
-"/dev/urandom"
-cert commands from openssl, gnutls or nss
-a pile of other things (you start to get the idea)
+A malicious DNS server can exploit this by responding with a specially
+crafted TCP payload to trick systemd-resolved in to allocating a buffer
+that's too small, and subsequently write arbitrary data beyond the end
+of it.
 
-There is a semi good chance either something is going wrong security
-wise, or it should be part of first run (e.g. things that generate a
-certificate or a key, if you do that in the install/postinstall scripts
-all your containers have the same secret, if you do it on first run
-(typically as part of the app itself, or part of the init scripts) then
-it's unique per instance. Some examples:
+I believe this was introduced by
+https://github.com/systemd/systemd/commit/a0166609f782da91710dea9183d1bf138538db37
+(v223) and affects all subsequent versions up to and including v233.
+----
 
-CVE-2016-4980 CVE-2016-4982 CVE-2016-4983 CVE-2016-4984
+A patch to resolve this has been provided by Zbigniew
+Jędrzejewski-Szmek, along with an additional patch to implement a test.
+Both of these are attached.
 
--- 
+Many thanks,
+Chris
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+View attachment "0001-test-resolved-packet-add-a-simple-test-for-our-alloc.patch" of type "text/x-patch" (3748 bytes)
+
+View attachment "0002-resolved-simplify-alloc-size-calculation.patch" of type "text/x-patch" (1828 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
