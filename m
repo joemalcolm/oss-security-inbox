@@ -1,38 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/10
-Message-Id: <AB0C651A-408B-4BCB-A377-075EEE265AC2@surevine.com>
-Date: Tue, 31 Oct 2017 14:46:59 +0000
-From: "Simon Waters (Surevine)" <simon.waters@...evine.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/9
+Message-ID: <128119.2550409-sendEmail@localhost>
+Date: Wed, 28 Jun 2017 12:08:20 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: lame: stack-based buffer overflow in III_dequantize_sample (layer3.c)
 Content-Type: text/plain; charset=utf-8
 
+Description:
+lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+
+Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
+bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
+downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
+dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
+
+The complete ASan output of the issue:
+
+# lame -f -V 9 $FILE out.wav
+==30801==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffe82a515a0 at pc 0x7f56d24c9df7 bp 0x7ffe82a4ffb0 sp 0x7ffe82a4ffa8
+WRITE of size 4 at 0x7ffe82a515a0 thread T0
+    #0 0x7f56d24c9df6 in III_dequantize_sample /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c
+    #1 0x7f56d24a664f in decode_layer3_frame /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1738:17
+    #2 0x7f56d24733ca in decodeMP3_clipchoice /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:615:13
+    #3 0x7f56d2470c13 in decodeMP3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:696:12
+    #4 0x7f56d2431092 in decode1_headersB_clipchoice 
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:149:11
+    #5 0x7f56d243694a in hip_decode1_headersB 
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:436:16
+    #6 0x7f56d243694a in hip_decode1_headers /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:379
+    #7 0x51e984 in lame_decode_fromfile /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:2089:11
+    #8 0x51e984 in read_samples_mp3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:877
+    #9 0x51e984 in get_audio_common /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:785
+    #10 0x51e4fa in get_audio /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:688:16
+    #11 0x50f776 in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:456:17
+    #12 0x50f776 in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
+    #13 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
+    #14 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
+    #15 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
+    #16 0x7f56d1029680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #17 0x41c998 in _init (/usr/bin/lame+0x41c998)
+
+Address 0x7ffe82a515a0 is located in stack of thread T0 at offset 5024 in frame
+    #0 0x7f56d24a548f in decode_layer3_frame /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1659
+
+  This frame has 4 object(s):
+    [32, 344) 'scalefacs'
+    [416, 5024) 'hybridIn' 0x1000505422b0: 00 00 00 00[f2]f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2
+  0x1000505422c0: f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2
+  0x1000505422d0: f2 f2 f2 f2 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000505422e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000505422f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100050542300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==30801==ABORTING
+
+Affected version:
+3.99.5
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-9872
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00294-lame-stackoverflow-III_dequantize_sample
+
+Timeline:
+2017-06-01: bug discovered
+2017-06-17: blog post about the issue
+2017-06-25: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/06/17/lame-stack-based-buffer-overflow-in-iii_dequantize_sample-layer3-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-> On 31 Oct 2017, at 12:23, Hanno Böck <hanno@...eck.de> wrote:
-> 
-> I was wondering how to best avoid this on my own servers and I first
-> thought about saving the swap files to tmp ( with "set directory”).
-
-The specific website issue, the web server config can exclude dot files.
-
-Apache ships with
-
-<Files ~ "^\.ht">
-    Order allow,deny
-    Deny from all
-</Files>
-
-The obvious generalisations of this work. Although some sources also recommend blocking in “Location” to prevent requests with “*/.*stuff”  which are parsed by templating libraries or other directives.
-
-To rub salt in most distros ship Apache with
-
-IndexIgnore .??* *~ *# RCS CVS *,v *,t
-
-Which means that if you use the Apache directory indexing approach these files will be hidden but not blocked.
-
-I now realise the Alexa top 1 million will now be searched for remaining uses of RCS and CVS ;)
-
-In a previous role the roll out scripts cleaned this sort of junk and told you if any new files had been added to the web application, this approach has much to recommend it if you have the time to perfect your applications, and your roll out procedures.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (874 bytes)
