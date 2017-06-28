@@ -1,32 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/21
-Message-ID: <alpine.LFD.2.20.1702012244320.601@wniryva>
-Date: Wed, 1 Feb 2017 22:46:16 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: display: virtio-gpu-3d: host memory leakage in virgl_cmd_resource_unref
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/15
+Message-ID: <20170628203343.0e36d391@pc1>
+Date: Wed, 28 Jun 2017 20:33:43 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
+Subject: Re: lame: multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Wed, 28 Jun 2017 15:43:35 +0200
+"Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de> wrote:
 
-Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
-vulnerable to a host memory leakage issue. It could occur while processing 
-'VIRTIO_GPU_CMD_RESOURCE_UNREF' command.
+> A number of these occur inside the mpglib part, which is an old fork
+> of the mpg123 decoder (extended with some LAME specifics). Can you
+> check if they also occur in current mpg123 / libmpg123
+> (https://mpg123.org)?
 
-A guest user/process could use this flaw to leak host memory resulting in DoS.
+None of Agostinos samples trigger anything in an asan build of mpg123
+1.25.0 here. However I was quickly able to get afl to find another bug,
+I reported into your bugtracker [1].
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg04615.html
+It's an out of bounds heap read, the base64 encoded, minimized input
+file:
+SUQzAzAwAAABAjAwMDAAAAAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
+MDAwMDAwMDAwMDAwMDAwAAAABTAwMDAwMDAwMDAwAAAABTAwMDAwMDAwMDAwAAAABTAwMDAwMDAw
+MDAwAAAABTAwMDAwMDBUMDAwAAAABDAAADA=
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1418382
+Address Sanitizer stack trace:
+==15557==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60d000000333 at pc 0x0000005610b3 bp 0x7ffebe8287f0 sp 0x7ffebe8287e8
+READ of size 1 at 0x60d000000333 thread T0
+    #0 0x5610b2 in convert_latin1 /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:980:5
+    #1 0x5576b8 in INT123_id3_to_utf8 /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:309:2
+    #2 0x55abed in store_id3_text /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:274:2
+    #3 0x55abed in process_text /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:368
+    #4 0x55abed in INT123_parse_new_id3 /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:917
+    #5 0x53e74f in handle_id3v2 /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:1071:8
+    #6 0x53e74f in skip_junk /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:1152
+    #7 0x53e74f in INT123_read_frame /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:525
+    #8 0x574001 in get_next_frame /mnt/ram/mpg123-1.25.0/src/libmpg123/libmpg123.c:625:7
+    #9 0x574984 in mpg123_decode_frame /mnt/ram/mpg123-1.25.0/src/libmpg123/libmpg123.c:861:12
+    #10 0x524ff2 in play_frame /mnt/ram/mpg123-1.25.0/src/mpg123.c:739:7
+    #11 0x528f97 in main /mnt/ram/mpg123-1.25.0/src/mpg123.c:1363:8
+    #12 0x7f9d2db941e0 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.24-r3/work/glibc-2.24/csu/../csu/libc-start.c:289
+    #13 0x41af59 in _start (/mnt/ram/mpg123+0x41af59)
 
-This issue was reported by Mr Li Qiang of 360.cn Inc.
+0x60d000000333 is located 0 bytes to the right of 131-byte region [0x60d0000002b0,0x60d000000333)
+allocated by thread T0 here:
+    #0 0x4d19a8 in malloc (/mnt/ram/mpg123+0x4d19a8)
+    #1 0x55806d in INT123_parse_new_id3 /mnt/ram/mpg123-1.25.0/src/libmpg123/id3.c:744:34
+    #2 0x53e74f in handle_id3v2 /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:1071:8
+    #3 0x53e74f in skip_junk /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:1152
+    #4 0x53e74f in INT123_read_frame /mnt/ram/mpg123-1.25.0/src/libmpg123/parse.c:525
+    #5 0x574001 in get_next_frame /mnt/ram/mpg123-1.25.0/src/libmpg123/libmpg123.c:625:7
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+
+[1] https://sourceforge.net/p/mpg123/bugs/252
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
