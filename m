@@ -1,47 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/6
-Message-ID: <7e6f78b11fd1464ab075e4b7d8b959e3@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 00:56:33 -0500
-From: <cve-assign@...re.org>
-To: <pierre.kim.sec@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE requests: OpenBSD httpd - 2 DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/10
+Message-ID: <231037.144406827-sendEmail@localhost>
+Date: Wed, 28 Jun 2017 12:08:58 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: lame: multiple left shift
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
 
-> DoS: Memory exhaustion by sending crafted HTTP requests with Bytes-range.
-> http://marc.info/?l=openbsd-cvs&m=148587359420912&w=2
-> https://github.com/openbsd/src/commit/142cfc82b932bc211218fbd7bdda8c7ce83f19df
+Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
+bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
+downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
+dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
 
-Use CVE-2017-5850.
+The complete ASan output of the issue:
+
+# lame -f -V 9 $FILE out.wav
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:263:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:265:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:266:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:267:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:268:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:269:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:271:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:272:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:273:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:274:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:276:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:277:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:278:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:279:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:280:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:845:48: runtime error: left shift of negative value -18
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:848:52: runtime error: left shift of negative value -10
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00295-lame-leftshift1
+CVE:
+N/A
+
+#######################################
+
+# lame -f -V 9 $FILE out.wav
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:848:52: runtime error: left shift of negative value -29398
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/bitstream.c:181:50: runtime error: left shift of 45389699 by 6 places 
+cannot be represented in type 'int'
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00296-lame-leftshift2
+CVE:
+N/A
+
+#######################################
+
+# lame -f -V 9 $FILE out.wav
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:1195:52: runtime error: left shift of 255 by 24 places 
+cannot be represented in type 'int'
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00297-lame-leftshift3
+CVE:
+N/A
+
+#######################################
+
+Affected version:
+3.99.5
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2017-06-01: bug discovered
+2017-06-17: blog post about the issue
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/06/17/lame-multiple-left-shift/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-> DoS: CPU exhaustion with SSL client-initiated renegotiation,
-
-Is this a public vulnerability? It does not have any obvious match with the
-latest https://github.com/openbsd/src/commits/master/usr.sbin/httpd commits.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYksb8AAoJEHb/MwWLVhi2SNEQAJJI0g5obeSlVRVpbEFOv9N9
-6DONiCVXnQrM+yvLCS5lxbM3i8Sipzi4IMgm9nWP4rRZ2KyrxnxQChxgc3Ogc7wE
-NvvDadF5OkRv/VFooEroINkx9pO9PelvsC4k+57b/q/mxCi1CT9N6PWbt/K9WmKJ
-KJap6hYzbCpcCsiLl7oqyYC/xzlYWBLkt/41Amsg5SjM2CfZlm8dPJElMuO++LF9
-XYm0+GxbpvoQtApOwvqcTGI57Ip/oi4LFjpzq8tcJI88HTx6cmij232D3zPPNeFg
-R1MsrsiFvjwoh6ltz/VNhEMj1Mtd9ZKcRZjmr2fEsJiX8H659qkI/bwvEdQiLyOB
-xtF2Vlzhpfp7h2ubySdh7JMGQ80xy35s08Rn5NPCLqPVy3n7QcV3yISkL7LJBI+W
-ya1nR4w7y8tZk2q2QCEXYuTL8g1uXy7sPEPYIwKCkDG6MwV4NM993m0UH2cBD9em
-ghWSD9JciaJfmxvPD5WPnVSId62q7DeOQKeci9rR+3J7COitx1qR6RX8v2fM7goz
-NAN1F7eTxk37hmfQnVhmxc4L6x1xFP4UQzBu9AdlWHf0fWECzJwI9wANHn80Xmkz
-iPu9UUwyrp6bkElEmF4Ap0u4uw1Ib7Q/4PsvhMMz2vQi4+7ZsNKiaThuF8Z9na8Q
-ETptVJ36GBgs7OP35yG3
-=WYRf
------END PGP SIGNATURE-----
