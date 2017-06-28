@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1427" "Thursday" "6" "October" "2016" "11:46:27" "+1030" "Doran Moppert" "dmoppert@redhat.com" "<20161006011626.GC5763@sin.redhat.com>" "42" "[oss-security] Re: CVE request: openjpeg: incorrect fix for CVE-2013-6045 (was Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045)" nil nil nil "10" "2016100601:16:27" "[oss-security] Re: CVE request: openjpeg: incorrect fix for CVE-2013-6045 (was Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045)" (number mark "U       dmoppert@red Oct  6   42/1427  " thread-indent "\"[oss-security] Re: CVE request: openjpeg: incorrect fix for CVE-2013-6045 (was Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045)\"\n") "<20161006011255.GB5763@sin.redhat.com>" ("<20160927012359.GA30247@sin.redhat.com>" "<CAA7hUgHwN_AymJRzV8SRiAB0F6hyxxwx+O3X8j7+LKWOvypJiQ@mail.gmail.com>" "<20161006011255.GB5763@sin.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4530" "Wednesday" "28" "June" "2017" "12:08:58" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<231037.144406827-sendEmail@localhost>" "90" "[oss-security] lame: multiple left shift" nil nil nil "6" "2017062812:08:58" "[oss-security] lame: multiple left shift" (number mark "U       ago@gentoo.o Jun 28   90/4530  " thread-indent "\"[oss-security] lame: multiple left shift\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 2037 invoked by uid 550); 6 Oct 2016 01:45:14 -0000
+Received: (qmail 20050 invoked by uid 550); 28 Jun 2017 12:09:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +12,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9865 invoked from network); 6 Oct 2016 01:16:43 -0000
-Date: Thu, 6 Oct 2016 11:46:27 +1030
-From: Doran Moppert <dmoppert@redhat.com>
-To: Open Source Security <oss-security@lists.openwall.com>
-Message-ID: <20161006011626.GC5763@sin.redhat.com>
-References: <20160927012359.GA30247@sin.redhat.com>
- <CAA7hUgHwN_AymJRzV8SRiAB0F6hyxxwx+O3X8j7+LKWOvypJiQ@mail.gmail.com>
- <20161006011255.GB5763@sin.redhat.com>
+Received: (qmail 19784 invoked from network); 28 Jun 2017 12:09:13 -0000
+Message-ID: <231037.144406827-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Wed, 28 Jun 2017 12:08:58 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ftEhullJWpWg/VHq"
-Content-Disposition: inline
-In-Reply-To: <20161006011255.GB5763@sin.redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Thu, 06 Oct 2016 01:16:32 +0000 (UTC)
-Subject: [oss-security] Re: CVE request: openjpeg: incorrect fix for CVE-2013-6045 (was Re:
- openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045)
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-748219.398389669"
+Subject: [oss-security] lame: multiple left shift
 
---ftEhullJWpWg/VHq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+------MIME delimiter for sendEmail-748219.398389669
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-> > Do you specifically know of a distribution that still has that patch?
->=20
-> Red Hat Enterprise Linux and Ubuntu LTS seem to be still carrying the
-> original patch.  Possibly others, but these are the only ones I've
-> identified.
+Description:
+lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
 
-I should have included this reference:
+Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
+bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
+downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
+dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=3D1382202
+The complete ASan output of the issue:
+
+# lame -f -V 9 $FILE out.wav
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:263:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:265:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:266:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:267:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:268:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:269:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:271:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:272:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:273:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:274:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:276:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:277:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:278:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:279:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:280:5: runtime error: left shift of negative value -1
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:845:48: runtime error: left shift of negative value -18
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:848:52: runtime error: left shift of negative value -10
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00295-lame-leftshift1
+CVE:
+N/A
+
+#######################################
+
+# lame -f -V 9 $FILE out.wav
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:848:52: runtime error: left shift of negative value -29398
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/bitstream.c:181:50: runtime error: left shift of 45389699 by 6 places 
+cannot be represented in type 'int'
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00296-lame-leftshift2
+CVE:
+N/A
+
+#######################################
+
+# lame -f -V 9 $FILE out.wav
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:1195:52: runtime error: left shift of 255 by 24 places 
+cannot be represented in type 'int'
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00297-lame-leftshift3
+CVE:
+N/A
+
+#######################################
+
+Affected version:
+3.99.5
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2017-06-01: bug discovered
+2017-06-17: blog post about the issue
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/06/17/lame-multiple-left-shift/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
---=20
-Doran Moppert
-Red Hat Product Security
+------MIME delimiter for sendEmail-748219.398389669--
 
---ftEhullJWpWg/VHq
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBCgAGBQJX9aXqAAoJEGohqWcZR7qpyZ4P/RJYWCpsOPa9//HJYAk05ESt
-wWM+D/yKIEL+EkeN/TyKRwzKnPWKmpreKJzM3MP6PRSp2IYos/Ur4VYNNq5go6T2
-+cJgu3jG+Gx6Q04KratRZl/IiVmntIfhCRFWl45KXej7SMQrpojMjQmapHjKRrRP
-y5IwSen58bYorviJBGonk49eB1sRHAw7AVrWdht880WMrh57PM5LInvL9gToGrR0
-6ou6SGl+/iVlUa5e/NK8tWZzJZLdNNrxDJ01qGHYJBNeLl9WDNTgaQN7uVcFE3iU
-cj4G7IDzIVB/wCBE5HPv3+UZ+EY2+ymLjmUOrQqzmsIgTZMx0NB4XBmqWgI8q7bK
-7XPq0wZa2mXmsQ2pfmt7ocT6b1zquB8ec/sa308oiEwBMMpLmAY7r+s9qSlzODWf
-B5WWgxygjqhoXrzsxAHFZSGfZBd1I9o+L9FZbpgPWj6aWdM0e8pTfUjoX2UWVCck
-BZ7OU217qIoDWfft6xdnZlHs8d/GortA/aVB09YL2QdqQLZpZ3v6W7Man1eSuV60
-yZBK5M7uS1tJoRUnO1QZ3v/KMrJjRj43oYqS1eMOKbW9gExCEikzkQWfmKH5ctkD
-o7Qs5YCtL40HGh/oCvC7gUQ8/FZqpl4Ys6b+7RPE+azVPdJWjNVz3jfyhchHGJtA
-0+dYlrV8PaKEFP+5ZvuU
-=PWjD
------END PGP SIGNATURE-----
-
---ftEhullJWpWg/VHq--
