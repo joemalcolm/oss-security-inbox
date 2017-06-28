@@ -1,26 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/5
-Message-ID: <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
-Date: Tue, 30 May 2017 12:41:38 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/4
+Message-ID: <17034856.l0NmUXmGEd@wanheda>
+Date: Wed, 28 Jun 2017 14:03:16 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Roee Hay <roeehay@...il.com>
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+Subject: lame: multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 30 May 2017 at 08:17:54 +0400, Ilya Matveychikov wrote:
-> When using get_options() it's possible to specify a range of numbers,
-> like 1-100500. The problem is that it doesn't track array size while
-> calling internally to get_range() which iterates over the range and
-> fills the memory with numbers.
+Hello all.
 
-Is there a realistic way in which an attacker can provide Linux kernel
-command-line arguments, without being able to achieve arbitrary code
-execution via those command-line arguments?
+I discovered some crashes (which will follow one-by-one) in lame.
 
-In other words, is this a security vulnerability, or just a bug?
+Lame was fuzzed in the past by someone else so I take the opportunity 
+during the CVE request to insert also some past bugs.
 
-(If the attacker can already achieve arbitrary code execution then
-this bug does not give them any capability they do not already have.)
+1) Invalid read - CVE-2015-9099
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775959
 
-    S
+2) Null pointer dereference - CVE-2015-9100
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777160
+
+3) Invalid read - CVE-2015-9100
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777161
+
+However, mitre decided that the bug N°3, CVE-2015-9100, can share the 
+same CVE ID of https://blogs.gentoo.org/ago/2017/06/17/lame-heap-based-buffer-overflow-in-fill_buffer_resample-util-c/
+
+At this point, I'd like to mention that mitre won't assign anymore CVE IDs 
+for issues related to the Undefined Behavior Sanitizer, unless there are 
+informations about the exploitability.
+http://common-vulnerabilities-and-exposures-cve-board.1128451.n5.nabble.com/Current-standards-criteria-for-Undefined-Behavior-td730.html#a768
+
+The CVE IDs assigned in the past for the undefined behavior issues remain 
+valid. I will share anyway my findings about the undefined behavior issues. 
+They include, for completeness, some bugs that regard the frontend. You 
+can ignore them.
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
+
