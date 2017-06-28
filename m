@@ -1,69 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/2
-Message-ID: <20170704123127.GA27528@openwall.com>
-Date: Tue, 4 Jul 2017 14:31:27 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CloudLinux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/2
+Message-ID: <CY4PR11MB1592EFB766E40EEBE5D9F749DADD0@CY4PR11MB1592.namprd11.prod.outlook.com>
+Date: Wed, 28 Jun 2017 02:27:58 +0000
+From: Sven Dowideit <sven@...cher.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CoreOS membership to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-I've just added CloudLinux to linux-distros.  Some comments below:
+I'm also curious to know where the lines are.
 
-On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
-> We typically have to patch local privilege escalations in kernel asap as
-> our customers are easily rooted using this type of vulnerabilities (anyone
-> can buy website or hack old wordpress instance & run any code).
 
-This may be a reason for you to harden your distro's userland against
-local privilege escalations as well, such as by adopting the
-owl-alt-sanitize-env glibc hardening patch maintained by ALT Linux:
+I'm responsible for RancherOS, and think that both I, and my users would prefer that I had access to the embargoed information earlier, so preparing a response would have been less of a rush.
 
-http://git.altlinux.org/gears/g/..git?p=glibc.git;a=commitdiff;h=496059f2
 
-and getting rid of most or all world-accessible SUID programs, which is
-do-able like we have demonstrated with Owl.  This shouldn't be
-unreasonably hard to implement and maintain in a fork of RHEL, although
-obviously you'll end up with more packages (including some core ones)
-that would no longer be mere rebuilds of RHEL's.
+One of the things that would have made my last week less worrying, is to have some access to exploit code - so as to verify the changes actually had a useful effect.
 
-This is by no means a condition for your linux-distros list membership -
-I just happen to mention it here in response to your explanation of your
-distro's threat model.  If you do go this route, it will re-enforce your
-reasoning for being a linux-distros member, though.
 
-> Some records:
-> The stack clash (Jun 21, 2016):
-> https://www.cloudlinux.com/cloudlinux-os-blog/entry/cve-2017-1000364-fixed-for-cloudlinux-7
-> Dirty Cow (Oct 21rd, 2016):
-> https://www.cloudlinux.com/cloudlinux-os-blog/entry/cloudlinux-6-kernel-updated-dirty-cow-issue-fixed
-> Ghost (Jan 27, 2015):
-> https://www.cloudlinux.com/cloudlinux-os-blog/entry/glibc-ghost-remote-vulnerability-cve-2015-0235
+RancherOS is a container oriented micro-linux distro with uptake in hybrid and on-premis clouds
 
-You got impressive timing on these!
+We have the beginnings of an advisory page at http://rancher.com/docs/os/security/
 
-> Please, find PGP related info
-> 
-> Leonid Kanter <lkanter@...udlinux.com>
-> 
-> GPG Key: 0x400296079AE5954F (download
-> <https://cryptup.org/pub/lkanter@cloudlinux.com>)
-> GPG Fingerprint: A07D AA47 48B2 C445 6A44  9B38 4002 9607 9AE5 954F
-> 
-> Igor Seletskiy <i@...udlinux.com>
-> 
-> GPG Key: 0xCD7BB36D66B77E0D (download
-> <https://cryptup.org/pub/i@cloudlinux.com>)
-> 
-> GPG Fingerprint: 7FE3 681A DCBC C509 A2FF 77A4 CD7B B36D 66B7 7E0D
-> 
-> Konstantin Olshanov <kolshanov@...udlinux.com>
-> GPG Key: 0x891E1FDBF34ED0FD (download
-> <https://cryptup.org/pub/kolshanov@cloudlinux.com>)
-> GPG Fingerprint: B502 0D7C BB2C 674C 6387  FBDC 891E 1FDB F34E D0FD
+And are happy to comply with embargos.
 
-I subscribed only Leonid and Igor so far, since Konstantin's key doesn't
-appear to be available at that URL (I am getting "No Public Key found
-for kolshanov@...udlinux.com").  As a minor annoyance, these URLs appear
-to require JavaScript.
+Also - keep up the awesome work - its impressive!
 
-Alexander
+
+________________________________
+From: Euan Kemp <euan.kemp@...eos.com>
+Sent: 27 June 2017 15:52:49
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] CoreOS membership to linux-distros
+
+On 06/27/2017 03:13 PM, Kurt Seifried wrote:
+> My main question would be what expertise do you have in helping with
+> security issues, e.g. kernel/glibc/other engineering talent? Or do you
+> simply need this as a consumer of such data (e.g. so you can get containers
+> ready to respin for embargoed issues, and to be clear, I'm not opposed to
+> this type of consumption if it's in the public interest, you won't break
+> embargoes, etc.).
+
+To clarify your example, we're primarily concerned with preparing
+updates for our distribution's kernel and userland, not for containers.
+
+We'd be happy to help when we're able to, but our intent is mainly
+consumption for the security of our users.
+We'll, of course, respect embargoes.
+
+- Euan
+
+
