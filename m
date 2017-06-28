@@ -1,52 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/5
-Message-ID: <189251.155450137-sendEmail@localhost>
-Date: Mon, 1 May 2017 11:29:58 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/6
+Message-ID: <886435.587515251-sendEmail@localhost>
+Date: Wed, 28 Jun 2017 12:05:32 +0000
 From: "Agostino Sarubbo" <ago@...too.org>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libsndfile: global buffer overflow in i2les_array (pcm.c)
+Subject: lame: global-buffer-overflow in III_i_stereo (layer3.c)
 Content-Type: text/plain; charset=utf-8
 
 Description:
-libsndfile is a C library for reading and writing files containing sampled sound.
+lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+
+Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
+bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
+downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
+dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
 
 The complete ASan output of the issue:
 
-# sndfile-convert $FILE out.wav
-==27948==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000013cd13c at pc 0x7f59caaaaace bp 0x7ffcab360cf0 sp 0x7ffcab360ce8 
-READ of size 4 at 0x0000013cd13c thread T0   
-    #0 0x7f59caaaaacd in i2les_array /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/pcm.c:670:15  
-    #1 0x7f59caaaaacd in pcm_write_i2les /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/pcm.c:1696
-    #2 0x7f59ca7bf831 in sf_writef_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:2342:10
-    #3 0x514b70 in sfe_copy_data_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:88:3 
-    #4 0x5138d1 in main /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/sndfile-convert.c:340:3    
-    #5 0x7f59c974178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
-    #6 0x419e18 in _init (/usr/bin/sndfile-convert+0x419e18)
+# lame -f -V 9 $FILE out.wav
+==28403==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7fecc4b7eb6c at pc 0x7fecc489accc bp 0x7fff525972d0 sp 0x7fff525972c8
+READ of size 4 at 0x7fecc4b7eb6c thread T0
+    #0 0x7fecc489accb in III_i_stereo /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1149:26
+    #1 0x7fecc489accb in decode_layer3_frame /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1753
+    #2 0x7fecc48543ca in decodeMP3_clipchoice /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:615:13
+    #3 0x7fecc4851c13 in decodeMP3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:696:12
+    #4 0x7fecc4812092 in decode1_headersB_clipchoice 
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:149:11
+    #5 0x7fecc481794a in hip_decode1_headersB 
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:436:16
+    #6 0x7fecc481794a in hip_decode1_headers /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:379
+    #7 0x51e984 in lame_decode_fromfile /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:2089:11
+    #8 0x51e984 in read_samples_mp3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:877
+    #9 0x51e984 in get_audio_common /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:785
+    #10 0x51e4fa in get_audio /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:688:16
+    #11 0x50f776 in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:456:17
+    #12 0x50f776 in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
+    #13 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
+    #14 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
+    #15 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
+    #16 0x7fecc340a680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #17 0x41c998 in _init (/usr/bin/lame+0x41c998)
 
-0x0000013cd13c is located 4092 bytes to the right of global variable 'data' defined in '/tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:80:14' 
-(0x13c8140) of size 16384  
-SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/pcm.c:670:15 in i2les_array    
-Shadow bytes around the buggy address:  
-  0x0000802719d0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x0000802719e0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x0000802719f0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271a00: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271a10: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-=>0x000080271a20: f9 f9 f9 f9 f9 f9 f9[f9]00 00 00 00 00 00 00 00
-  0x000080271a30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271a40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271a50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271a60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271a70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):  
-  Addressable: 00   
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa 
-  Freed heap region:       fd 
-  Stack left redzone:      f1 
-  Stack mid redzone:       f2 
-  Stack right redzone:     f3 
-  Stack after return:      f5 
+0x7fecc4b7eb6c is located 20 bytes to the left of global variable 'pow2_1' defined in 
+'/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:128:28' (0x7fecc4b7eb80) of size 128
+0x7fecc4b7eb6c is located 12 bytes to the right of global variable 'pow1_1' defined in 
+'/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:128:13' (0x7fecc4b7eae0) of size 128
+SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1149:26 in 
+III_i_stereo
+Shadow bytes around the buggy address:
+  0x0ffe18967d10: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
+  0x0ffe18967d20: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
+  0x0ffe18967d30: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+  0x0ffe18967d40: f9 f9 f9 f9 00 00 00 00 00 00 00 00 f9 f9 f9 f9
+  0x0ffe18967d50: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
+=>0x0ffe18967d60: 00 00 00 00 00 00 00 00 00 00 00 00 f9[f9]f9 f9
+  0x0ffe18967d70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffe18967d80: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffe18967d90: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+  0x0ffe18967da0: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
+  0x0ffe18967db0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
   Stack use after scope:   f8
   Global redzone:          f9
   Global init order:       f6
@@ -57,37 +78,36 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   ASan internal:           fe
   Left alloca redzone:     ca
   Right alloca redzone:    cb
-==27948==ABORTING
+==28403==ABORTING
 
 Affected version:
-1.0.28
+3.99.5
 
 Fixed version:
 N/A
 
 Commit fix:
-https://github.com/erikd/libsndfile/commit/fd0484aba8e51d16af1e3a880f9b8b857b385eb3
+N/A
 
 Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-CVE-2017-8365
+CVE-2017-9870
 
 Reproducer:
-https://github.com/asarubbo/poc/blob/master/00263-libsndfile-globaloverflow-i2les_array
+https://github.com/asarubbo/poc/blob/master/00291-lame-globaloverflow-III_i_stereo
 
 Timeline:
-2017-04-11: bug discovered and reported to upstream
-2017-04-12: upstream released a patch
-2017-04-29: blog post about the issue
-2017-04-30: CVE assigned
+2017-06-01: bug discovered
+2017-06-17: blog post about the issue
+2017-06-25: CVE assigned
 
 Note:
 This bug was found with American Fuzzy Lop.
 
 Permalink:
-https://blogs.gentoo.org/ago/2017/04/29/libsndfile-global-buffer-overflow-in-i2les_array-pcm-c/
+https://blogs.gentoo.org/ago/2017/06/17/lame-global-buffer-overflow-in-iii_i_stereo-layer3-c/
 
 --
 Agostino Sarubbo
