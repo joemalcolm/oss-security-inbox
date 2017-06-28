@@ -1,4 +1,9 @@
-Received: (qmail 1149 invoked by uid 550); 17 Oct 2023 12:00:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6610" "Wednesday" "28" "June" "2017" "12:06:32" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<761406.147244514-sendEmail@localhost>" "120" "[oss-security] lame: heap-based buffer overflow in fill_buffer_resample (util.c)" nil nil nil "6" "2017062812:06:32" "[oss-security] lame: heap-based buffer overflow in fill_buffer_resample (util.c)" (number mark "U       ago@gentoo.o Jun 28  120/6610  " thread-indent "\"[oss-security] lame: heap-based buffer overflow in fill_buffer_resample (util.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1548 invoked by uid 550); 28 Jun 2017 12:06:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,121 +12,132 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3340 invoked from network); 17 Oct 2023 06:00:55 -0000
-Date: Tue, 17 Oct 2023 08:00:36 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
-	s=dkim-rsa; t=1697522443;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GGJxKuP79uoe6Wpy3z5WsdtvpmJAzD+595VjSRAHZXw=;
-	b=tRC1vBz1ZmiE7/08VD+28jNzL2Wx2gXhStuKnG91fdRV+Pk3945/7uFK7tdAzWQra7l2B1
-	aLeeX3uB3tmiltoSNQpWxP0q3eIRDXmE8iimtL5p6SZdXkuen6UQ3ckN2zFKN6adpeqABX
-	WpWFBReYrduT+KdJhGQ+r+AM7pgmK6CX8bNRJFnnTJCeIKWK1Lc4ji2W7wnOcBGpvvKyKt
-	cKc8X3fHXQgW8iXu1v1B9bxKkTQcDyQ9TJIGnMSY04gFUlKujiAWkH+nV+zlZJl/ngjORE
-	KdGwQMTksw9tU4bpW+pYttowsMKvCpekhJKZJudgIP01ClGUI5YIOg7VZTB49YoJv7C63a
-	vykh5bJ/tKZt/Za/OH8w9k8cU0pkV4Fq2GFTQRJ+Ym9LThJT0kQ9vfUqYbvK6IU7Whg69J
-	Tvz9A7eNg/v/bAuaLVkMEJFWjurjK9YLWN/tt0eSlgvkIRE/G7QZrvmn4zUHbVGJaAlxon
-	/AzTiBKB5E/YXF63BsVWTy0coHFcmCJVMB3Q/77a31tIk3k71SMvEmS9FWniG5frx2yJSi
-	8Kw3LMjHrcn8b1FLWAjyXF23/GS6fAanU9vOU3IUu0IKHu0YYsDG4SxhQPaZlr4wnUzEeh
-	cBeAvGqbpqVbgXshYvJIGTQjRUdORdDIirNZmgle3HW2gs9X5r058=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
-	s=dkim-ed25519; t=1697522443;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GGJxKuP79uoe6Wpy3z5WsdtvpmJAzD+595VjSRAHZXw=;
-	b=zmyFpNtuq1++p4VbGRflD+xpTOLyXgTrlrl3q1eTLCotiZpj9jeJQvc4Jh5mFDQrJOlG2y
-	oaFNl3gSDPeetHDw==
-Authentication-Results: mail.archlinux.org;
-	auth=pass smtp.auth=foxboron smtp.mailfrom=foxboron@archlinux.org
-From: Morten Linderud <foxboron@archlinux.org>
-To: oss-security@lists.openwall.com
-Message-ID: <gmqx5z67cuzsknj5rp4qxtkaqfhpsnxzzr36dzmwk2b5r6hqoz@wtbvfm5sj2qg>
-References: <652920e5.c80a0220.3bcf7.2251@mx.google.com>
- <956475122.7707678.1697228495449.JavaMail.zimbra@hlrs.de>
- <CAEg-Je-uxMbiYDADX=+eyTQF+xnjAYA0u1HoygqDa+G=Y=4f-Q@mail.gmail.com>
+Received: (qmail 1436 invoked from network); 28 Jun 2017 12:06:47 -0000
+Message-ID: <761406.147244514-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Wed, 28 Jun 2017 12:06:32 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="c5pdzbtl6gxjb2hq"
-Content-Disposition: inline
-In-Reply-To: <CAEg-Je-uxMbiYDADX=+eyTQF+xnjAYA0u1HoygqDa+G=Y=4f-Q@mail.gmail.com>
-Subject: Re: [oss-security] linux-distros list membership application - CIQ
- Rocky Linux Security Team
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-561660.040243627"
+Subject: [oss-security] lame: heap-based buffer overflow in fill_buffer_resample (util.c)
 
---c5pdzbtl6gxjb2hq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+------MIME delimiter for sendEmail-561660.040243627
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 13, 2023 at 11:19:18PM -0400, Neal Gompa wrote:
-> On Fri, Oct 13, 2023 at 8:07=E2=80=AFPM Martin Hecht <martin.hecht@hlrs.d=
-e> wrote:
->
-> > Well, assuming there was a security team in these projects able to obey
-> > the embargo regulations, wouldn't they have tried to join?
-> > But, nevertheless, what is the relation of the organizational structure
-> > of these projects with the current application of CIQ/Rocky, after all?
-> >
->=20
-> The point I'm making is that SIGs do not count because they cannot
-> obey embargo regulations. No open project or community project can do
-> that without having some mechanism for private controls, which is
-> antithetical to the community process. They fundamentally are
-> ineligible to join because they cannot keep anything secret.
+Description:
+lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
 
-This just seems like a personal opinion projected onto the relevant projects
-though. There is nothing preventing you from getting access to patches and
-distributing them to relevant package maintainers for preperation under an
-embargo.
+Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
+bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
+downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
+dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
 
-Evidently there are three atleast 3 community distros already participating=
- on
-the linux-distros list, namely Debian, Arch and Gentoo. So while Fedora mig=
-ht
-not have any way to distribute patches, please don't infer that this applie=
-s to
-all community distros.
+The complete ASan output of the issue:
 
-We do this in Arch Linux, and I've personally handeled several embargos as a
-community project.
+# lame -f -V 9 $FILE out.wav
+==29263==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60c00000003c at pc 0x7f60ef5a8c12 bp 0x7ffe7420b940 sp 0x7ffe7420b938
+READ of size 4 at 0x60c00000003c thread T0
+    #0 0x7f60ef5a8c11 in fill_buffer_resample /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/util.c
+    #1 0x7f60ef5a8c11 in fill_buffer /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/util.c:677
+    #2 0x7f60ef47866b in lame_encode_buffer_sample_t /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1736:9
+    #3 0x7f60ef47866b in lame_encode_buffer_template /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1891
+    #4 0x7f60ef47e83a in lame_encode_buffer /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1902:12
+    #5 0x7f60ef47e83a in lame_encode_flush /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:2134
+    #6 0x50fa2c in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:487:16
+    #7 0x50fa2c in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
+    #8 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
+    #9 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
+    #10 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
+    #11 0x7f60ee1c7680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #12 0x41c998 in _init (/usr/bin/lame+0x41c998)
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros
+0x60c00000003c is located 4 bytes to the left of 128-byte region [0x60c000000040,0x60c0000000c0)
+allocated by thread T0 here:
+    #0 0x4d2540 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
+    #1 0x7f60ef5a3575 in fill_buffer_resample /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/util.c:558:29
+    #2 0x7f60ef5a3575 in fill_buffer /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/util.c:677
+    #3 0x7f60ef47866b in lame_encode_buffer_sample_t /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1736:9
+    #4 0x7f60ef47866b in lame_encode_buffer_template /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1891
+    #5 0x7f60ef47e83a in lame_encode_buffer /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:1902:12
+    #6 0x7f60ef47e83a in lame_encode_flush /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/lame.c:2134
+    #7 0x50fa2c in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:487:16
+    #8 0x50fa2c in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
+    #9 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
+    #10 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
+    #11 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
+    #12 0x7f60ee1c7680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-A relevant piece of information is also the well-written Gentoo Pre-Release
-Disclosure Agreement they have with their package maintainers.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/util.c in 
+fill_buffer_resample
+Shadow bytes around the buggy address:
+  0x0c187fff7fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c187fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c187fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c187fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c187fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c187fff8000: fa fa fa fa fa fa fa[fa]00 00 00 00 00 00 00 00
+  0x0c187fff8010: 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
+  0x0c187fff8020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c187fff8030: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c187fff8040: 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
+  0x0c187fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==29263==ABORTING
 
-https://wiki.gentoo.org/wiki/Project:Security/Pre-Release-Disclosure
+Affected version:
+3.99.5
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2015-9101
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00292-lame-heapoverflow-fill_buffer_resample
+
+Timeline:
+2017-06-01: bug discovered
+2017-06-17: blog post about the issue
+2017-06-25: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+Mitre decided that this bug can share the same CVE id of https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777161
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/06/17/lame-heap-based-buffer-overflow-in-fill_buffer_resample-util-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Personally my impression of Fedora after trying to pay attention to their
-security meetings and general security planning, all of this seems to be
-handeled by Red Hat. So Fedora might not have any need to join the Linux di=
-stros
-list themselves.
+------MIME delimiter for sendEmail-561660.040243627--
 
---=20
-Morten Linderud
-PGP: 9C02FF419FECBE16
-
---c5pdzbtl6gxjb2hq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEwQA0ZnZjToDJQPuenAL/QZ/svhYFAmUuIwEACgkQnAL/QZ/s
-vhY7Pw/7BjEADg6zj+U6GIL8xJ2i4DlAFHLVkYwIXRcu895caBBz4V3Bqh6sO3yp
-jabgkqrIY36dDAu2ry/hUnQgSzm4+9O9x9hrXLWERZ8DBiSpX6vya4fJmJniVBw1
-84yXPXZZFArDputCBs0ZaAXDduguHl9xvtL72SiN205iSXVUaITdn5SlmIw3Ed2y
-zGjhfkwqhRNaSnFmglUaJL6OgTyGK7P1VDSIjI0eoe7r45HKrbEacTQcgAgcPiZV
-F87HQYOnsHFHbN/aVEfdPjYJ26HSgjMF30RoKOJzUJIBtsFtkqtfm/d58eDwWAMm
-Ve9BCdiq47GwSlLq+/ACLBs6jtFG8QTJ52DO7DU+kCV2caWmD8fe2e1nnqh8Xcy8
-7h2W7dE32fDKOGu/wjot7rQ9cvV3zrqshHNRvEzu5FTCQSEHym4MPLFnwguwHhm9
-6Ot4tMlm1meLMRZrpVTAAxMcadAiNM6WHbCzROH01wK+kWJJO/q71hSN0YZ60kHY
-mcEP62UfFS6SLf9cmwdQQ4OSD/9UmyxBfHFNbXOtwU+2F4rSUxEDniwGv1g8FL+K
-/lrHx69HHToVliuzkEgANdDzEC/QwQr22M7Pnmix8e5J8tnRnDIh8UfqnuzB7VmX
-R0zm8TJBOTv0ZaS1Qdy7XgNQ8F2wk8fXsTUEak0ULVewHrTqJbc=
-=9PNS
------END PGP SIGNATURE-----
-
---c5pdzbtl6gxjb2hq--
