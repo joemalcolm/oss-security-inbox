@@ -1,59 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/7
-Message-ID: <5b4758f0-5e66-0851-5e25-6d3b946e05bc@gentoo.org>
-Date: Mon, 13 Nov 2017 20:13:05 +0100
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: (linux-)distros list use statistics
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/3
+Message-ID: <20170628065826.GA4865@nautica>
+Date: Wed, 28 Jun 2017 08:58:26 +0200
+From: Dominique Martinet <asmadeus@...ewreck.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CoreOS membership to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-On 11/13/2017 04:10 PM, Solar Designer wrote:
-> Hi,
-> 
-> I think it's time for Gentoo and/or Amazon to share with all of us
-> the statistics they should have collected so far as per:
-> 
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
->  "13. Keep track of per-report and per-issue handling and disclosure 
-> timelines (at least times of notification of the private list and of 
-> actual public disclosure), at regular intervals produce and share 
-> statistics (most notably, the average embargo duration) as well as
-> the raw data (except on issues that are still under embargo) by
-> posting to oss-security - primary: Gentoo, backup: Amazon"
-> 
-> Please do.
+Sven Dowideit wrote on Wed, Jun 28, 2017:
+> I'm responsible for RancherOS, and think that both I, and my users
+> would prefer that I had access to the embargoed information earlier,
+> so preparing a response would have been less of a rush.
 
-Hi,
+I can relate to the rush feeling, even with few users/"private" distro
+here, having a custom kernel makes this kind of fixes annoying...
+But given the delayed exploit release I'd say it does not really matter
+if you take a few days for this, especially in this case with the low
+success rate on 64bit linux. As soon as reasonably possible does not
+necessarily mean rush.
 
-As far as I'm aware I haven't gotten access to edit the wiki page for
-publishing it. But the stats Gentoo has recorded are as follows (graph
-attached);
+As a rhel/centos spin-off though we would have liked the bug brought up
+here ( https://bugzilla.redhat.com/show_bug.cgi?id=1463241 ) to have its
+fix published faster though, it's apparently been ready for a week but
+not been published... I don't mind bugs, but if it's fixed it's annoying
+to keep it behind closed doors.
 
-Date                                    All
-Number of reports                       24
-Average embargo time (first public)     10.44
-Average embargo time (oss-security)     10.63
 
-This is based on the following monthly data:
-2017-06	2017-07	2017-08	2017-09	2017-10
-1	3	6	9	5
-10.84	34.16	6.39	5.83	9.30
-14.16	34.50	6.39	5.84	9.31
+> One of the things that would have made my last week less worrying, is
+> to have some access to exploit code - so as to verify the changes
+> actually had a useful effect.
 
-The wikified stats based on the generated DocuWiki output is available
-in very basic style at the testing instance:
+You don't need an actual exploit to test this. You're not the first
+person who have told me this so I actually took some time this morning
+to whip up a "tester" -- it's probably far from perfect but will run
+successfully on older debian/rhel and crash with a patched kernel as
+expected, and is as inoffensive as it can get.
 
-https://wiki.sumptuouscapital.com/doku.php?id=distros_stats
+I'm sure there are other better testers online, I didn't try looking as
+I don't get much chance to play with this kind of stuff :)
 
-but this deserves a more fitting home (e.g the width isn't a problem on
-the wider template) :)
+
+Qualys gave a lot of details in their report (kudos to well written
+advisories like that!), I agree having everything on a golden plate is
+better but it really isn't much work left for smaller distros if you
+trust the big ones or even just upstream, once bugs got steamed out.
 
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+Asmadeus | Dominique Martinet
 
-Download attachment "distros-stats.png" of type "image/png" (31425 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+View attachment "teststackclash.c" of type "text/x-csrc" (1551 bytes)
