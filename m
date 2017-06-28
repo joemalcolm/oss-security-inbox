@@ -1,21 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/27/2
-Message-ID: <87r2x2uy3q.fsf@mid.deneb.enyo.de>
-Date: Thu, 27 Jul 2017 09:40:09 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/14
+Message-ID: <20170628174537.GB16895@localhost.localdomain>
+Date: Wed, 28 Jun 2017 10:45:37 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-11671: GCC generates incorrect code for RDRAND/RDSEED intrinsics
+Subject: Re: Qualys Security Advisory - The Stack Clash
 Content-Type: text/plain; charset=utf-8
 
-Earlier this year, a GCC bug was fixed which could lead to intrinsics
-for RDRAND and (more likely) RDSEED to produce non-random results.
-These instructions use the carry flag to report success or failure,
-and GCC used to generate instruction sequences which clobbered the
-flag before applications had a change to read it:
+Hi all,
 
-  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80180
-  https://gcc.gnu.org/ml/gcc-patches/2017-03/msg01349.html
+On Mon, Jun 26, 2017 at 02:35:57AM +0200, Solar Designer wrote:
+> The decision to wait for fixes in major distros that almost certainly do
+> intend to release fixes makes sense to me.
 
-Practical impact is hopefully limited because the intrinsics are
-difficult to use due to an unrelated GCC usability issue, and inline
-assembly is not impacted by this issue.
+Thank you.  Since Fedora and Slackware published their updates, and
+FreeBSD and NetBSD published their patches (and our *BSD POCs are not
+full-fledged exploits anyway), we attached our Stack Clash exploits and
+POCs to this mail (alternatively, they are also available at
+https://www.qualys.com/research/security-advisories/).
+
+A few notes on the Linux ld.so exploits:
+
+- Linux_ldso_dynamic's probability of success varies significantly from
+  one SUID binary to another, because it depends on the size of the
+  .dynamic, .data, and .bss sections of the SUID binary.
+
+- Linux_ldso_hwcap's probability of success depends on the length of the
+  path to the SUID binary -- as a rule of thumb, the longer the path,
+  the higher the probability of success.
+
+- On Fedora and CentOS, Linux_ldso_hwcap_64 may not work against
+  "short-path" SUID binaries, but it works against the "long-path" SUIDs
+  that are installed by default (for example,
+  /usr/lib/polkit-1/polkit-agent-helper-1).
+
+  Moreover, we wrote a quick-and-dirty version of this exploit that does
+  work against the SUIDs in /usr/bin (it does not hardcode the 96KB/32KB
+  sizes of argv[] pointers/free stack space, but instead optimizes these
+  sizes).  However, we wanted to keep the main loop of this exploit as
+  simple as possible, and this improvement is therefore left as an
+  exercise for the interested reader.
+
+We are at your disposal for questions, comments, and further
+discussions.  Thank you very much!
+
+With best regards,
+
+-- 
+the Qualys Security Advisory team
+
+    Give 'Em Enough ROP
+            --The Clash, second studio album
+
+
+View attachment "FreeBSD_CVE-2017-1085.c" of type "text/plain" (1947 bytes)
+
+View attachment "FreeBSD_CVE-2017-FGPE.c" of type "text/plain" (2098 bytes)
+
+View attachment "FreeBSD_CVE-2017-FGPU.c" of type "text/plain" (1852 bytes)
+
+View attachment "Linux_ldso_dynamic.c" of type "text/plain" (18948 bytes)
+
+View attachment "Linux_ldso_hwcap_64.c" of type "text/plain" (31921 bytes)
+
+View attachment "Linux_ldso_hwcap.c" of type "text/plain" (33273 bytes)
+
+View attachment "Linux_offset2lib.c" of type "text/plain" (5394 bytes)
+
+View attachment "NetBSD_CVE-2017-1000375.c" of type "text/plain" (1529 bytes)
+
+View attachment "OpenBSD_at.c" of type "text/plain" (18062 bytes)
+
+View attachment "Solaris_rsh.c" of type "text/plain" (10686 bytes)
