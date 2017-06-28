@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["727" "Monday" "24" "August" "2015" "10:53:17" "-0500" "Mark Felder" "feld@feld.me" "<1440431597.899479.364570361.7BC0E0E6@webmail.messagingengine.com>" "23" "Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" nil nil nil "8" "2015082415:53:17" "[oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" (number mark "        feld@feld.me Aug 24   23/727   " thread-indent "\"Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)\"\n") "<20150821145841.GA4492@zoho.com>" ("<CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>" "<20150821145841.GA4492@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8161" "Wednesday" "28" "June" "2017" "15:43:35" "+0200" "Dr. Thomas Orgis" "thomas.orgis@uni-hamburg.de" "<20170628154335.4f06da8b@cortex.rrz.uni-hamburg.de>" "154" "Re: [oss-security] lame: multiple vulnerabilities" nil nil nil "6" "2017062813:43:35" "[oss-security] lame: multiple vulnerabilities" (number mark "U       thomas.orgis Jun 28  154/8161  " thread-indent "\"Re: [oss-security] lame: multiple vulnerabilities\"\n") "<17034856.l0NmUXmGEd@wanheda>" ("<17034856.l0NmUXmGEd@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22035 invoked by uid 550); 24 Aug 2015 15:53:30 -0000
+Received: (qmail 17638 invoked by uid 550); 28 Jun 2017 14:01:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,175 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22004 invoked from network); 24 Aug 2015 15:53:29 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=uvPLRBvRkvDz1SNTDzlk4S+usCY=; b=o9MhUZ
-	UMe5yR/zJw6B7Gurz9GyoTRA3ZfGEe3iIjMqboUnT79U5KmC4t20XdOGGfBo4WMv
-	iMGP3/r8wyhiDr3h8EhqSgvXTWHg/BvEpUFkH6hEM9ON19E4o7hgbuUB7BRDE6wQ
-	iVx83tLvQOLvnUwUR3+Z7S61qIyFgHsMpGwJQ=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=uvPLRBvRkvDz1SN
-	TDzlk4S+usCY=; b=X1Uby/74+Tfdj5Y8Xf1bsjXwd3ZxIFGzkr2Y2BKiVDS/LhD
-	PLraiSX6jFrm1VUZV7Ytu4FvjrQ2As9YEfA4bPEEYke3H04+0hGVZJM3TTNCzg+T
-	XCQBiKs6C5gv+yHXmDFtkp9OAbKp0rYwVbqn39DX93ui9FFFirz60/YU3IGs=
-Message-Id: <1440431597.899479.364570361.7BC0E0E6@webmail.messagingengine.com>
-X-Sasl-Enc: 6JLrpKNoWADIRxVq72Sk47K6IgKFewbkVzNqRvGNV6Jm 1440431597
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-a8c50604
-In-Reply-To: <20150821145841.GA4492@zoho.com>
-References: <CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>
- <20150821145841.GA4492@zoho.com>
-Date: Mon, 24 Aug 2015 10:53:17 -0500
-From: Mark Felder <feld@feld.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Double free corruption in JasPer JPEG-2000
- implementation (CVE-2015-5203)
+Received: (qmail 28430 invoked from network); 28 Jun 2017 13:43:56 -0000
+X-Virus-Scanned: by University of Hamburg ( RRZ / mgw03.rrz.uni-hamburg.de )
+X-Virus-Scanned: by University of Hamburg ( RRZ / mh03.rrz.uni-hamburg.de )
+Date: Wed, 28 Jun 2017 15:43:35 +0200
+From: "Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20170628154335.4f06da8b@cortex.rrz.uni-hamburg.de>
+In-Reply-To: <17034856.l0NmUXmGEd@wanheda>
+References: <17034856.l0NmUXmGEd@wanheda>
+Organization: =?UTF-8?B?VW5pdmVyc2l0w6R0?= Hamburg
+X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=SHA256;
+ boundary="Sig_/c0m2wfhmwJjsVSa=l7x+H/5";
+ protocol="application/pkcs7-signature"
+Subject: Re: [oss-security] lame: multiple vulnerabilities
+
+--Sig_/c0m2wfhmwJjsVSa=l7x+H/5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Am Wed, 28 Jun 2017 14:03:16 +0200
+schrieb Agostino Sarubbo <ago@gentoo.org>:
+
+> I discovered some crashes (which will follow one-by-one) in lame.
+
+A number of these occur inside the mpglib part, which is an old fork of
+the mpg123 decoder (extended with some LAME specifics). Can you check
+if they also occur in current mpg123 / libmpg123 (https://mpg123.org)?
+
+As mpg123 upstream, I've got that long-term plan without much actual
+real-world time to spend on it to finally replace those old forks of
+the precursor to libmpg123. A number of vulnerabilities in lame's
+mpglib might be a good trigger to finally consolidate this.
+
+In any case, knowing if these crashes apply to mpg123/libmpg123 would
+be very valuable for me.=20
+
+Oh, and lame upstream is not exactly dead, just very silent. Apart from
+these vulnerabilities, the program is quite complete in its
+functionality. There is still a the lame-dev@lists.sourceforge.net
+mailing list with a post from time to time. At least developers are
+subscribed.
 
 
+Alrighty then,
 
-On Fri, Aug 21, 2015, at 09:58, mancha wrote:
-> On Sun, Aug 16, 2015 at 05:22:50PM +0200, Gustavo Grieco wrote:
-> > A new double free affecting JasPer JPEG-2000 (libjasper 1.900) has
-> > been found triggered by function jasper_image_stop_load.  Despite this
-> > library is used by many programs (
-> > http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one
-> > providing support, so there is no fix so far.
-> > 
-> > This vulnerability was found by QuickFuzz.
-> > 
-> > Regards, Gustavo.
-> 
-> Hi all.
-> 
-> This is the CVE-2015-5203 fix I shared with Gustavo:
-> 
-> http://sf.net/projects/mancha/files/sec/jasper-1.900.1_CVE-2015-5203.diff
-> 
+Thomas (mpg123 maintainer)
 
-Thanks for posting this. Is there a patch coming for CVE-2015-5221 as
-well?
+--=20
+Dr. Thomas Orgis
+Universit=C3=A4t Hamburg
+
+--Sig_/c0m2wfhmwJjsVSa=l7x+H/5
+Content-Type: application/pkcs7-signature; name=smime.p7s
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=smime.p7s
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG
+9w0BBwEAAKCCEKIwggTVMIIDvaADAgECAghQTsb1PRG0ZDANBgkqhkiG9w0B
+AQsFADBxMQswCQYDVQQGEwJERTEcMBoGA1UEChMTRGV1dHNjaGUgVGVsZWtv
+bSBBRzEfMB0GA1UECxMWVC1UZWxlU2VjIFRydXN0IENlbnRlcjEjMCEGA1UE
+AxMaRGV1dHNjaGUgVGVsZWtvbSBSb290IENBIDIwHhcNMTQwNzIyMTIwODI2
+WhcNMTkwNzA5MjM1OTAwWjBaMQswCQYDVQQGEwJERTETMBEGA1UEChMKREZO
+LVZlcmVpbjEQMA4GA1UECxMHREZOLVBLSTEkMCIGA1UEAxMbREZOLVZlcmVp
+biBQQ0EgR2xvYmFsIC0gRzAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
+CgKCAQEA6ZvDZ4X5Da71jVTDllA1PWLpbkztlNcAW5UidNQg6zSP1uzAMQQL
+mYHiphTSUqAoI4SLdIkEXlvg4njBeMsWyyg1OXstkEXQ7aAAeny/Sg4bAMOG
+6VwrMRF7DPOCJEOMHDiLamgAmu7cT3ir0sYTm3at7t4m6O8Br3QPwQmi9mvO
+vdPNFDBP9eXjpMhim4IaAycwDQJlYE3t0QkjKpY1WCfTdsZxtpAdxO3/NYZ9
+bzOz2w/FEcKKg6GUXUFr2NIQ9Uz9ylGs2b3vkoO72uuLFlZWQ8/h1RM9ph8n
+MM1JVNvJEzSacXXFbOqnC5j5IZ0nrz6jOTlIaoytyZn7wxLyvQIDAQABo4IB
+hjCCAYIwDgYDVR0PAQH/BAQDAgEGMB0GA1UdDgQWBBRJt8bP6D0ff+pEexMp
+9/EKcD7eZDAfBgNVHSMEGDAWgBQxw3kbuvVT1xfgiXotF2wKsyudMzASBgNV
+HRMBAf8ECDAGAQH/AgECMGIGA1UdIARbMFkwEQYPKwYBBAGBrSGCLAEBBAIC
+MBEGDysGAQQBga0hgiwBAQQDADARBg8rBgEEAYGtIYIsAQEEAwEwDwYNKwYB
+BAGBrSGCLAEBBDANBgsrBgEEAYGtIYIsHjA+BgNVHR8ENzA1MDOgMaAvhi1o
+dHRwOi8vcGtpMDMzNi50ZWxlc2VjLmRlL3JsL0RUX1JPT1RfQ0FfMi5jcmww
+eAYIKwYBBQUHAQEEbDBqMCwGCCsGAQUFBzABhiBodHRwOi8vb2NzcDAzMzYu
+dGVsZXNlYy5kZS9vY3NwcjA6BggrBgEFBQcwAoYuaHR0cDovL3BraTAzMzYu
+dGVsZXNlYy5kZS9jcnQvRFRfUk9PVF9DQV8yLmNlcjANBgkqhkiG9w0BAQsF
+AAOCAQEAYyAo/ZwhhnK+OUZZOTIlvKkBmw3Myn1BnIZtCm4ssxNZdbEzkhth
+Jxb/w7LVNYL7hCoBSb1mu2YvssIGXW4/buMBWlvKQ2NclbbhMacf1QdfTeZl
+gk4y+cN8ekvNTVx07iHydQLsUj7SyWrTkCNuSWc1vn9NVqTszC/Pt6GXqHI+
+ybxA1lqkCD3WvILDt7cyjrEsjmpttzUCGc/1OURYY6ckABCwu/xOr24vOLul
+V0k/2G5QbyyXltwdRpplic+uzPLl2Z9Tsz6hL5Kp2AvGhB8Exuse6J99tXul
+AvEkxSRjETTMWpMgKnmIOiVCkKllO3yG0xIVIyn8LNrMOVtUFzCCBZAwggR4
+oAMCAQICBxekJIxy3jAwDQYJKoZIhvcNAQELBQAwWjELMAkGA1UEBhMCREUx
+EzARBgNVBAoTCkRGTi1WZXJlaW4xEDAOBgNVBAsTB0RGTi1QS0kxJDAiBgNV
+BAMTG0RGTi1WZXJlaW4gUENBIEdsb2JhbCAtIEcwMTAeFw0xNDA1MjcxNDUz
+NDhaFw0xOTA3MDkyMzU5MDBaMIGwMQswCQYDVQQGEwJERTEQMA4GA1UECBMH
+SGFtYnVyZzEQMA4GA1UEBxMHSGFtYnVyZzEdMBsGA1UEChMUVW5pdmVyc2l0
+YWV0IEhhbWJ1cmcxITAfBgNVBAsTGFJlZ2lvbmFsZXMgUmVjaGVuemVudHJ1
+bTEVMBMGA1UEAxMMVUhIIENBIC0gRzAyMSQwIgYJKoZIhvcNAQkBFhV1aGgt
+Y2FAdW5pLWhhbWJ1cmcuZGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+AoIBAQC9cJqgL8A8Sogf7u7EjbM2qEdN3S4JE7cHe7LuBbWE4c0/rBxjxChY
+BKUNlSzmlx4MulrkTtIjqmPY+tX4I/2vJGhxP4EksW+rMmjm/8xz1NanCk4Q
+7EhD9btiGHgsEZc0SQ4iWWCsV/zRhptvlNvas67IDz7fdyU3lp1nZmMgO1y5
+liQxMMhBtZ3PxLQBapWvOZ5t6cOagvjfAmiVAC4ViWTQPwy5n7BvwtqrZ5NE
+iX+BbRC+akn2DepSWE2DxaZNQtX1/J2yAOhqZGM83KazqlE3ycL0o5AKhJjO
+t7R5/5bgggHVVxjI6qGx7Y6NJ/MNJJaO8r/H3OqlLRVLHNLvAgMBAAGjggIC
+MIIB/jASBgNVHRMBAf8ECDAGAQH/AgEBMA4GA1UdDwEB/wQEAwIBBjARBgNV
+HSAECjAIMAYGBFUdIAAwHQYDVR0OBBYEFCagagGo//wS6/cUiePFMDbRLjmy
+MB8GA1UdIwQYMBaAFEm3xs/oPR9/6kR7Eyn38QpwPt5kMCAGA1UdEQQZMBeB
+FXVoaC1jYUB1bmktaGFtYnVyZy5kZTCBiAYDVR0fBIGAMH4wPaA7oDmGN2h0
+dHA6Ly9jZHAxLnBjYS5kZm4uZGUvZ2xvYmFsLXJvb3QtY2EvcHViL2NybC9j
+YWNybC5jcmwwPaA7oDmGN2h0dHA6Ly9jZHAyLnBjYS5kZm4uZGUvZ2xvYmFs
+LXJvb3QtY2EvcHViL2NybC9jYWNybC5jcmwwgdcGCCsGAQUFBwEBBIHKMIHH
+MDMGCCsGAQUFBzABhidodHRwOi8vb2NzcC5wY2EuZGZuLmRlL09DU1AtU2Vy
+dmVyL09DU1AwRwYIKwYBBQUHMAKGO2h0dHA6Ly9jZHAxLnBjYS5kZm4uZGUv
+Z2xvYmFsLXJvb3QtY2EvcHViL2NhY2VydC9jYWNlcnQuY3J0MEcGCCsGAQUF
+BzAChjtodHRwOi8vY2RwMi5wY2EuZGZuLmRlL2dsb2JhbC1yb290LWNhL3B1
+Yi9jYWNlcnQvY2FjZXJ0LmNydDANBgkqhkiG9w0BAQsFAAOCAQEARPA9tuuX
+u5+gT949FznUDC4d8oX7nyyjkvZP9iHuRKRZkzBU7z3ZMMXpePIJSMDtNtFI
+2kNTAsWOTZFu/K5olU2TEh+cBWyw6y1kU4b8z1jTcAK0rZplpMdBQkBkeKK1
+QxiN6GqvUyVPHgM/EJwaLolpqkaPfSo3an0t9b9rAUBy/ne1MSQ/6O/bMo7W
+Nvt2jAWjKRyTdlvB0NZUTr8ExYBoHx68BNmI7t1WhJHYeUx0gV0QxlQPbGyW
+L2IQoK4x7LDg670k564pFllzfq1ICZvq/UAyoanfwIbeR5mEuCVQwGEBPW7g
+9A9FnKT7kW8bCaiArO6lZpAdL+O/LGFhAzCCBjEwggUZoAMCAQICDB1WHVLR
+OkxuhjOFDDANBgkqhkiG9w0BAQsFADCBsDELMAkGA1UEBhMCREUxEDAOBgNV
+BAgTB0hhbWJ1cmcxEDAOBgNVBAcTB0hhbWJ1cmcxHTAbBgNVBAoTFFVuaXZl
+cnNpdGFldCBIYW1idXJnMSEwHwYDVQQLExhSZWdpb25hbGVzIFJlY2hlbnpl
+bnRydW0xFTATBgNVBAMTDFVISCBDQSAtIEcwMjEkMCIGCSqGSIb3DQEJARYV
+dWhoLWNhQHVuaS1oYW1idXJnLmRlMB4XDTE3MDYwNjEyMjc0NloXDTE5MDcw
+OTIzNTkwMFowgaExCzAJBgNVBAYTAkRFMRAwDgYDVQQIDAdIYW1idXJnMRAw
+DgYDVQQHDAdIYW1idXJnMR0wGwYDVQQKDBRVbml2ZXJzaXRhZXQgSGFtYnVy
+ZzEMMAoGA1UECwwDUlJaMRwwGgYDVQQLDBNCYXNpcy1JbmZyYXN0cnVrdHVy
+MQwwCgYDVQQLDANIUEMxFTATBgNVBAMMDFRob21hcyBPcmdpczCCASIwDQYJ
+KoZIhvcNAQEBBQADggEPADCCAQoCggEBAKQnfgQgOhlZfyvrNA4fKZM6t1xV
+oQbQUx8X+pfeciVUJeTmwZoR6brif1lLZtvXQ19A8Wg1wBXkdQZuPA3Uxmdv
+VzLNl8EMmAFYNCNz5sL74x7pkR4rHrJ/ViVRLtmYbihT9vNA5Tiz5/UkTh2M
+x7SDtpJek6VxVvSxjcQ79mvYTdy7C7t/71dlzRwLjuBsvZasACiRVfsfp5Dq
+ntg5KNq/nYkmEkTmJfnQM1tQS2VqEG/RsynnwawUDuKsgLm/ogsh4Ns4LTuX
+Fd1LYV+jOTnqTdEQLHg0WuBqm2mDvP8pEqWZbJwJQGTMO3glhLa4bMGLAjkE
+vKaFTalRoJTHNxUCAwEAAaOCAlYwggJSMEAGA1UdIAQ5MDcwEQYPKwYBBAGB
+rSGCLAEBBAMFMBEGDysGAQQBga0hgiwCAQQDATAPBg0rBgEEAYGtIYIsAQEE
+MAkGA1UdEwQCMAAwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUF
+BwMCBggrBgEFBQcDBDAdBgNVHQ4EFgQUXJhoNy4ieewHKNzkwGvfl9F5LWAw
+HwYDVR0jBBgwFoAUJqBqAaj//BLr9xSJ48UwNtEuObIwJgYDVR0RBB8wHYEb
+dGhvbWFzLm9yZ2lzQHVuaS1oYW1idXJnLmRlMIGNBgNVHR8EgYUwgYIwP6A9
+oDuGOWh0dHA6Ly9jZHAxLnBjYS5kZm4uZGUvdW5pLWhhbWJ1cmctY2EvcHVi
+L2NybC9nX2NhY3JsLmNybDA/oD2gO4Y5aHR0cDovL2NkcDIucGNhLmRmbi5k
+ZS91bmktaGFtYnVyZy1jYS9wdWIvY3JsL2dfY2FjcmwuY3JsMIHbBggrBgEF
+BQcBAQSBzjCByzAzBggrBgEFBQcwAYYnaHR0cDovL29jc3AucGNhLmRmbi5k
+ZS9PQ1NQLVNlcnZlci9PQ1NQMEkGCCsGAQUFBzAChj1odHRwOi8vY2RwMS5w
+Y2EuZGZuLmRlL3VuaS1oYW1idXJnLWNhL3B1Yi9jYWNlcnQvZ19jYWNlcnQu
+Y3J0MEkGCCsGAQUFBzAChj1odHRwOi8vY2RwMi5wY2EuZGZuLmRlL3VuaS1o
+YW1idXJnLWNhL3B1Yi9jYWNlcnQvZ19jYWNlcnQuY3J0MA0GCSqGSIb3DQEB
+CwUAA4IBAQAS9y/+XLoyhNctyBnko4YgKDMyWlPSOfKEFygLt7oQa9MQm9UJ
+aebOzeGZuFPl11pjB/vj2kBc7oSuuuKIjoNDL13T1b0FK5RFoWg8YPrrEzr6
+h0JrUfQM2r18sYMARpsOKxVRM6mlT2+hMkaN6swMIYbMLeZK7PQXqtKWg3oK
+Cg1vGxF3bFZlhYhorJ/lSDcAbmNut45j4PqXVkrrD+zxIzswhdroZOvE8eR4
+KqsqjOClsVzNOz8oPrUL5R3jBJ3E6j6XuC7JEsCLFbk3gcmbMS3eS+ue7+Qx
+D10U8t05Xx0YXojEFiK8/GECYLgkpo1Gb1ROJCIGsLAFq5KXrFCNMYICgzCC
+An8CAQEwgcEwgbAxCzAJBgNVBAYTAkRFMRAwDgYDVQQIEwdIYW1idXJnMRAw
+DgYDVQQHEwdIYW1idXJnMR0wGwYDVQQKExRVbml2ZXJzaXRhZXQgSGFtYnVy
+ZzEhMB8GA1UECxMYUmVnaW9uYWxlcyBSZWNoZW56ZW50cnVtMRUwEwYDVQQD
+EwxVSEggQ0EgLSBHMDIxJDAiBgkqhkiG9w0BCQEWFXVoaC1jYUB1bmktaGFt
+YnVyZy5kZQIMHVYdUtE6TG6GM4UMMA0GCWCGSAFlAwQCAQUAoIGTMBgGCSqG
+SIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE3MDYyODEz
+NDMzNVowKAYJKoZIhvcNAQkPMRswGTALBglghkgBZQMEAQIwCgYIKoZIhvcN
+AwcwLwYJKoZIhvcNAQkEMSIEIMjaKPg6tMa6CGltldMONmty2buyUwcQYQeu
+AgHOfYGWMA0GCSqGSIb3DQEBAQUABIIBAGwc3uyqaer9nF69jjOzlhOWdka3
+iK3iGzJdawLK4AIOlkdoZ6zQ7B2T2lvf1aSLcCiyJ0usdx+nql24pKwpIdzT
+HQOLdbBQkY0eGeOfFMXDPa9LSjHDwGDZtJKgDv2e1dkEjl+S7G4agcomCUjs
+TsEpviVLttZVi0cU0Q6E7l6a5MxAgMFO+ACGiIxPd89B2z6hVNTYligs7J+B
+fSFYEYZmIhlczF7aBTAhrh6Dr70iEM2pFm+MjWG/ym42nPCu3WpkLCH9PdM0
+wfMrJXJBvh9krvNTZtfrnbOfTDKCCG9n7UsZ/EvzelOG30jZiXSGBV9F/0+A
+/Zt8bG+l4h7o6ToAAAAAAAA=
+
+--Sig_/c0m2wfhmwJjsVSa=l7x+H/5--
