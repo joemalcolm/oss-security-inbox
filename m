@@ -1,44 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/4
-Message-ID: <49733f26-1060-6e15-5595-204269483f97@gentoo.org>
-Date: Mon, 3 Jul 2017 14:35:55 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Anthony Liguori <anthony@...emonkey.ws>
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/11
+Message-ID: <429934.345043392-sendEmail@localhost>
+Date: Wed, 28 Jun 2017 12:09:34 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: lame: two UBSAN crashes
 Content-Type: text/plain; charset=utf-8
 
-On 07/02/2017 10:58 PM, Anthony Liguori wrote:
-> On Jul 2, 2017 1:38 PM, "Kristian Fiskerstrand"<k_f@...too.org> wrote:
->> The immediate thought that springs to mind is the [lack of OpenPGP
->> support in bugzilla] which makes it difficult to ensure confidentiality
->> unless disabling all email warnings.
-> 
-> I would just assume all email is disabled.  I don't know of a tool that
-> does this right so for security sensitive things, I think disabling email
-> notification is a best practice.
+Description:
+lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
 
-It wouldn't take much to have a tool that does, mainly what I outline in
-the previous post to ensure OpenPGP keyblock management for the
-individual users, and as an extension of the scope for that perhaps a
-[MemoryHole] implementation to ensure confidentiality / integrity
-verification of the RFC822 headers such as Subject. Enigmail users
-should already have such support read-only[Note:A]
+Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
+bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
+downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
+dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
 
-References:
-[MemoryHole]
-http://modernpgp.org/memoryhole/
-https://wiki.gnupg.org/OpenPGPEmailSummit201607/MemoryHole
+The complete ASan output of the issue:
 
-Notes:
-[Note:A] to toggle it on encrypted subjects on sending you'd use
-extensions.enigmail.protectHeaders
+# lame -f -V 9 $FILE out.wav
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/brhist.c:204:60: runtime error: signed integer overflow: 953447384 + 
+1908859798 cannot be represented in type 'int'
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00298-lame-signintoverflow-brhist.c
+CVE:
+N/A
+
+#######################
+
+# lame -f -V 9 $FILE out.wav
+/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:1234:21: runtime error: value -nan is outside the range of 
+representable values of type 'int'
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00299-lame-outside-int-get_audio.c
+CVE:
+N/A
+
+#######################
+
+Affected version:
+3.99.5
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2017-06-01: bug discovered
+2017-06-17: blog post about the issue
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/06/17/lame-two-ubsan-crashes/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
