@@ -1,14 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/7
-Message-ID: <1759481.8m7aJoA1PW@arcadia>
-Date: Sat, 29 Apr 2017 15:48:40 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/13
+Message-ID: <20170628154335.4f06da8b@cortex.rrz.uni-hamburg.de>
+Date: Wed, 28 Jun 2017 15:43:35 +0200
+From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: libming: listswf: NULL pointer dereference in dumpBuffer (read.c)
+Subject: Re: lame: multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-This is fixed in the 0.4.8 release.
+Am Wed, 28 Jun 2017 14:03:16 +0200
+schrieb Agostino Sarubbo <ago@...too.org>:
+
+> I discovered some crashes (which will follow one-by-one) in lame.
+
+A number of these occur inside the mpglib part, which is an old fork of
+the mpg123 decoder (extended with some LAME specifics). Can you check
+if they also occur in current mpg123 / libmpg123 (https://mpg123.org)?
+
+As mpg123 upstream, I've got that long-term plan without much actual
+real-world time to spend on it to finally replace those old forks of
+the precursor to libmpg123. A number of vulnerabilities in lame's
+mpglib might be a good trigger to finally consolidate this.
+
+In any case, knowing if these crashes apply to mpg123/libmpg123 would
+be very valuable for me. 
+
+Oh, and lame upstream is not exactly dead, just very silent. Apart from
+these vulnerabilities, the program is quite complete in its
+functionality. There is still a the lame-dev@...ts.sourceforge.net
+mailing list with a post from time to time. At least developers are
+subscribed.
+
+
+Alrighty then,
+
+Thomas (mpg123 maintainer)
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Dr. Thomas Orgis
+Universität Hamburg
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4967 bytes)
