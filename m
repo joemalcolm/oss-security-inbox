@@ -1,76 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/5
-Message-ID: <1672685.X2bF2OodFF@blackgate>
-Date: Mon, 16 Jan 2017 12:00:26 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: jasper: invalid memory read in jas_matrix_asl (jas_seq.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/12
+Message-ID: <CY4PR11MB15923C857FBA8F9B884AF2A2DADD0@CY4PR11MB1592.namprd11.prod.outlook.com>
+Date: Wed, 28 Jun 2017 13:22:42 +0000
+From: Sven Dowideit <sven@...cher.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CoreOS membership to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+TBH, the biggest worry I have is the fact that until there are actual exploits available, we're just hoping that the tests we write are reasonable - its a game of chinese whispers, where we think we grok the information correctly, and completely - but we we're playing with a very partial deck.
 
-Another round of fuzzing shows that a crafted image causes an invalid memory 
-read.
 
-The complete ASan output:
+I did already find a few test tools - and thanks - yours also suggests that with the RancherOS release I made a few days ago, that we've done what we can (ok, so I actually delayed and didn't release the patched version I gleaned was the set - I was able to use 4.9.34 - as we're trying hard to be pure upstream whenever possible)
 
-# imginfo -f $FILE
-==26941==ERROR: AddressSanitizer: SEGV on unknown address 0x62c80000a400 (pc 
-0x7f28c74e48ee bp 0x7ffcececdb70 sp 0x7ffcececdaf0 T0)
-==26941==The signal is caused by a READ memory access.
-    #0 0x7f28c74e48ed in jas_matrix_asl /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_seq.c:376:11
-    #1 0x7f28c7545f0e in jpc_dec_tiledecode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1107:6
-    #2 0x7f28c7536cdf in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:658:7
-    #3 0x7f28c75406b3 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:425:10
-    #4 0x7f28c75406b3 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:262
-    #5 0x7f28c74a2b84 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_image.c:444:16
-    #6 0x509eed in main /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/appl/imginfo.c:219:16
-    #7 0x7f28c65aa61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #8 0x419978 in _init (/usr/bin/imginfo+0x419978)
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_seq.c:376:11 
-in jas_matrix_asl
-==26941==ABORTING
+IDK - I wouldn't call it "on a golden platter" - I'm trying to suggest that the bigger players have a tonne more knowledge and experience than we newer and smaller players do - but perhaps we can work out how the smaller distros can also get some early information and guidance - and perhaps that'll help mentor us up into doing more.
 
-Affected version:
-1.900.27
 
-Fixed version:
-N/A
+Sven
 
-Commit fix:
-N/A
+________________________________
+From: Dominique Martinet <asmadeus@...ewreck.org>
+Sent: 27 June 2017 23:58:26
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] CoreOS membership to linux-distros
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Sven Dowideit wrote on Wed, Jun 28, 2017:
+> I'm responsible for RancherOS, and think that both I, and my users
+> would prefer that I had access to the embargoed information earlier,
+> so preparing a response would have been less of a rush.
 
-CVE:
-N/A
+I can relate to the rush feeling, even with few users/"private" distro
+here, having a custom kernel makes this kind of fixes annoying...
+But given the delayed exploit release I'd say it does not really matter
+if you take a few days for this, especially in this case with the low
+success rate on 64bit linux. As soon as reasonably possible does not
+necessarily mean rush.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00053-jasper-invalidread-jas_matrix_asl
+As a rhel/centos spin-off though we would have liked the bug brought up
+here ( https://bugzilla.redhat.com/show_bug.cgi?id=1463241 ) to have its
+fix published faster though, it's apparently been ready for a week but
+not been published... I don't mind bugs, but if it's fixed it's annoying
+to keep it behind closed doors.
 
-Timeline:
-2016-11-20: bug discovered and reported upstream
-2017-01-16: blog post about the issue
 
-Note:
-This bug was found with American Fuzzy Lop.
+> One of the things that would have made my last week less worrying, is
+> to have some access to exploit code - so as to verify the changes
+> actually had a useful effect.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jas_matrix_asl-jas_seq-c
+You don't need an actual exploit to test this. You're not the first
+person who have told me this so I actually took some time this morning
+to whip up a "tester" -- it's probably far from perfect but will run
+successfully on older debian/rhel and crash with a patched kernel as
+expected, and is as inoffensive as it can get.
+
+I'm sure there are other better testers online, I didn't try looking as
+I don't get much chance to play with this kind of stuff :)
+
+
+Qualys gave a lot of details in their report (kudos to well written
+advisories like that!), I agree having everything on a golden plate is
+better but it really isn't much work left for smaller distros if you
+trust the big ones or even just upstream, once bugs got steamed out.
 
 --
-Agostino
+Asmadeus | Dominique Martinet
+
