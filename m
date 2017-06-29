@@ -1,45 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/16
-Message-ID: <1498063472.27465.6.camel@gmail.com>
-Date: Wed, 21 Jun 2017 12:44:32 -0400
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/7
+Message-Id: <20170629155406.E063617FDA8@rebar.astron.com>
+Date: Thu, 29 Jun 2017 11:54:06 -0400
+From: christos@...las.com (Christos Zoulas)
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+Subject: Re: TIOCSTI not going away
 Content-Type: text/plain; charset=utf-8
 
-> Ditto for the "move mmap_area and PIE binaries away from the stack"
-> patch series posted to LKML and CC'ed to kernel-hardening on June 2:
-> 
-> http://www.openwall.com/lists/kernel-hardening/2017/06/02/
+On Jun 29,  4:23pm, solar@...nwall.com (Solar Designer) wrote:
+-- Subject: Re: [oss-security] TIOCSTI not going away
 
-That's tied to this, and talking to Riel about it on IRC, since he's
-interested in upstreaming these kinds of changes:
+| Maybe Christos could comment on tcsh?
 
-https://gist.github.com/thestinger/b43b460cfccfade51b5a2220a0550c35
+TL;DR: tcsh will not lose functionality if TIOCSTI is gone.
 
-He submitted an initial set of the changes moving towards being able to
-tie the stack mapping entropy to the mmap_rnd_bits sysctl upstream, and
-likely increasing the default value to match the current stack entropy
-on 32-bit. It wasn't motivated by stack exhaustion bugs. The stack
-rlimit calculation bug and ASLR range overlap issue are something that
-has been publicly discussed not tied to this context.
+tcsh uses TIOCSTI in the editor e_stuff_char() function which is unbound
+by default; not many people know about this or use it. There is also the
+old FILEC code from csh (that used TIOCSTI to do file completion with
+<ESC>), but that is not compiled in. I should remove it but it is kept
+there merely for nostalgia :-)
 
-RAND_THREADSTACK wasn't in the scope of that effort because CopperheadOS
-does ASLR for secondary stacks in userspace where it can randomize lower
-bits along with splitting a region for libraries (incl. dlopen) from the
-rest of the mmap usage.
+One can be much stricter though about who is allowed to use TIOCSTI
+like I've done for NetBSD (require exact credentials match on the
+tty). For example the typical example of root running an unprivileged
+installer on NetBSD fails:
 
-I didn't get early disclosure access or a leak of this round of issues.
-I wouldn't have done anything in response to it. I already went through
-the userspace Android Open Source Project alloca / VLA uses last year
-due to the unavailability of -fstack-check in Clang and only found CVE-
-2016-3922 (unbounded VLA at a local privilege boundary), a few bugs that
-I considered security bugs but that Google did not and a bunch of bugs
-that I ruled out as possible security issues. Some of those are now gone
-due to rewrites from C and C style C++ to higher level C++ or Java.
+# cat installer
+#!/bin/sh
+whoami
+/usr/sbin/sti /dev/tty whoami\\n
 
-It looks like https://reviews.llvm.org/D34386 is finally going to land
-for Rust and then it's straightforward to have Clang stop implementing
--fstack-check as a no-op for architectures where that gets ported. It'll
-be nice not needing to carry an out-of-tree patch derived from a failed
-past attempt to land it.
+# su unprivileged -c ./installer
+unprivileged
+sti: Cannot simulate terminal input: Operation not permitted
+# whoami
+root
+
+christos
