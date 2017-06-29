@@ -1,106 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/3
-Message-ID: <tencent_00731D3252EC3A604F70E769@qq.com>
-Date: Tue, 11 Jul 2017 10:03:01 +0800
-From: "ben" <qbenjin@...com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Cc: "huangyonggang" <huangyonggang@...60.cn>
-Subject: Re:  [scr358145] pcre-8.41 - 8.41
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/3
+Message-ID: <07546f89-f5f8-7ff0-a370-138cc43393ca@gentoo.org>
+Date: Thu, 29 Jun 2017 11:43:13 +0200
+From: Thomas Deutschmann <whissi@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: sthttpd remote heap buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-> [Suggested description]
-> In PCRE 8.41, the OP_KETRMAX feature in the match function in pcre_exec.c
-> allows stack exhaustion (uncontrolled recursion) when processing a crafted regular expression.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> This vulns like CVE-2017-9729.
-> it is about line 2061 (from the https://vcs.pcre.org/pcre/code/trunk/pcre_exec.c?revision=1683&view=markup page) of pcre_exec.c:
-> 
-> RMATCH(eptr, prev, offset_top, md, eptrb, RM13);
-> 
-> this recursive calls case Segmentation fault ,because of stack exhaustion.
-> 
-> 
->  The poc code like: 
-> 
->  if(regcomp (&regtmp,"\x28\x61\x2A\x5C\x56\x2A\x5C\x43\x2B\x29\x2A\x6F\xE5\xA2\x80", REG_UTF8 )==0)
->   {  
->    regmatch_t pmatch[1];
->    regexec(&regtmp, "\x6C\x6F\xE5\xA2\x80\x2D ",1, pmatch, 0);
->    regfree(&regtmp);
->  }
-> with configure --enable-utf
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> stack exhaustion
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> http://www.pcre.org/
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> pcre-8.41 - 8.41
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> pcre_exec.c
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Remote
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> many methods!   many program use pcre,  like: php and nginx ,please see: https://en.wikipedia.org/wiki/Comparison_of_regular_expression_engines
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://en.wikipedia.org/wiki/Comparison_of_regular_expression_engines
-> http://www.pcre.org/
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Benjin Liu, codesafe of qihoo 360 ,http://codesafe.cn
+Hi,
 
-Use CVE-2017-11164.
+I requested a CVE from MITRE and got CVE-2017-10671 for this
+vulnerability:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+>> [Vulnerability Type]
+>> Heap-based Buffer Overflow in the de_dotdot function in libhttpd.c in sthttpd before 2.27.1
+>> allows remote attackers to cause a denial of service (daemon crash) or possibly have unspecified other impact via a crafted filename.
+>> 
+>> ------------------------------------------
+>> 
+>> [Vulnerability Type]
+>> Buffer Overflow
+>> 
+>> ------------------------------------------
+>> 
+>> [Affected Product Code Base]
+>> sthttpd - <2.27.1
+>> 
+>> ------------------------------------------
+>> 
+>> [Affected Component]
+>> de_dotdot function
+>> 
+>> ------------------------------------------
+>> 
+>> [Attack Type]
+>> Remote
+>> 
+>> ------------------------------------------
+>> 
+>> [CVE Impact Other]
+>> I have no information about the impact. Would be nice if you could check on your own.
+>> 
+>> ------------------------------------------
+>> 
+>> [Attack Vectors]
+>> A remote attacker could trigger the flaw in sthttpd's request parsing code via a specially crafted request.
+>> 
+>> ------------------------------------------
+>> 
+>> [Reference]
+>> http://www.openwall.com/lists/oss-security/2017/06/15/9
+>> https://github.com/blueness/sthttpd/releases/tag/v2.27.1
+>> https://github.com/blueness/sthttpd/commit/c0dc63a49d8605649f1d8e4a96c9b468b0bff660
+>> 
+>> ------------------------------------------
+>> 
+>> [Has vendor confirmed or acknowledged the vulnerability?]
+>> true
+>> 
+>> ------------------------------------------
+>> 
+>> [Discoverer]
+>> Alexandre Rebert from ForAllSecure
+> 
+> Use CVE-2017-10671.
+> 
+> 
+> - -- 
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+> 
+> iQIcBAEBCAAGBQJZVGIGAAoJEHb/MwWLVhi2PPAP/RRQ9jGYVCEvLryJtICH/vvj
+> ZjS17vckkYVbSOMoTNQR9WihtsQCzkQZ+LL2Qnio45+NORCGn6nLMAi24SotXlrs
+> HI16p2h3+fZ3H/JCgT46fUDUHetq30Fy6NhwSKxCwtYEKiNvw4yT0QIPK9bmzf/p
+> nTKHDQCMqYp82tFBgReZPRivQcd/+Zbi6CWsS0oNzIsADjZZx1RdaHBJoOZIFcKv
+> bBopi0KDIPNgn3VsZwANz0Ex/ju3TfJVb8A9jpNyKlYaKwsou/TAw1g2l90KZxzW
+> Som1pG8s/I+MynJhHDNpJm59S6nFWAzZh++lySiEWIepiEsWhEzBpJBBkSAp3wum
+> TPhQNJ9BJdiS54rNqKMTGx7WxEvEcklsGQG87bfmUdyNRHYl/lElRYPNelciTnyU
+> 38B7E1FwcF793Z5JJfwge1ayo7ShaCaUGx082nU9XVuSFfpG0vrcelOhFAZ0cxyW
+> 9+DbSW/01FWWL35pEN0LJ5m5GeOpNa+hjn9VS/qbOiHk9n/PszbL00lS+Q+LKqTj
+> J3rOoTkM69d1stlcO8/ehwyr/xo6n6u8v8BmV6So1VWgefk/cI98aoOQvEIDpwQt
+> iALKi/+UinhQhG0vCtkKHXsFYXIOv7zk03EfKT37Bh13DuBBJDgIt9nMesVxpsRE
+> SmLuxFujGHPobnwbNGqJ
+> =CKLn
+> -----END PGP SIGNATURE-----
 
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Regards,
+Thomas Deutschmann / Gentoo Security Team
+C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
 
-iQIcBAEBCAAGBQJZY7EfAAoJEHb/MwWLVhi2wBIP/jIMwxZB892scrm393PA4zM3
-adhV1TQ2tkpG4ALp4zC0MhHFfVr11LuWlSxsgu/OGHBTPLYldbK+hhVOtaV7EqSB
-+vrvAKEepOJKLB71AR4XpixzedQnP0+SOAgYvnpVI3LW/Yb2j2yZhhTbzh6H+5Zy
-Z75mpeDH7HibIkTgFMlAJ6d/3VsN7Xmadc9YzZ7m+NvdU/r3pg+/dxQHd1zwrMPl
-3V/IBVpAq0XiHUy470mruV7EUWAdB8rWIoN1AAxN61aiCrp0xZ/MIEXOqQPyswhd
-bO7jrJgeCUbovhi/PZMINX67zgTVt+yOfnpgwr5wLFoTXjzES1N1sdNWruGSN/VY
-SrGimn286l/bYaDCr5nY4o6W+RALuIMw/gJL6VBuJFcQ9aNpG9GH3JdT154TZwDt
-HM3LHX8tGPULeVLRFn77rdmaoaWUaEYvvBb6UvwQyTn81lx6TNCu3nVULCxNnkpp
-EVypMZo4SJ8nxJjfA+Ccvy1ZJimMAkb5mZvu+dVT95sN827HvYAVyvxQx1a7aeku
-euBjypn84Jx+tj9q4Hgkto8qwmJGar1dWab8/qh8YH1KLpfXgIoNMlUcSWjvdB53
-QPv2btH48/aHnZ5Gp+0D7CxWxUtP2FoSzghlINjakJ1/zXGhGgqJoRnF9BjZ/uTG
-yuPbKM/5rrPKj9Q9Gc/t
-=rH9J
------END PGP SIGNATURE-----
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
