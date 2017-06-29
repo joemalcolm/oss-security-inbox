@@ -1,46 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/7
-Message-ID: <CAO5O-ELxoCUOr-7afEc6fsNLF5KAzLMtavws48RhKCGoE4vSsw@mail.gmail.com>
-Date: Wed, 21 Jun 2017 13:19:30 +0200
-From: Guido Vranken <guidovranken@...il.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: 4 remote vulnerabilities in OpenVPN
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/2
+Message-ID: <20170629093354.GA4211@sisay.ephaone.org>
+Date: Thu, 29 Jun 2017 11:33:54 +0200
+From: Michael Scherer <misc@...b.org>
+To: oss-security@...ts.openwall.com
+Subject: rkhunter: [CVE-2017-7480] Potential RCE after MiTM due to clear text download without signature
 Content-Type: text/plain; charset=utf-8
 
-Thank you! I will take this into account next time.
+Hi,
 
-Guido
+while evaluating various security solutions, I looked at
+rkhunter, and found that it do download by default various
+files over http and parse them with bash:
 
-On Wed, Jun 21, 2017 at 1:17 PM, Solar Designer <solar@...nwall.com> wrote:
-> On Wed, Jun 21, 2017 at 12:40:57PM +0200, Guido Vranken wrote:
->> An extensive effort to find security vulnerabilities in OpenVPN has
->> resulted in 4 vulnerabilities of such severity that they have been
->> kept under embargo until today.
->> Interestingly, this comes shortly after the results of two source code
->> audits were released, which both failed to detect these problems.
->> The worst vulnerability of the 4 allows a client the drain the
->> server's memory, which, due to a particular technical circumstance,
->> may be exploited to achieve remote code execution.
->>
->> An extensive write-up can be found here:
->> https://guidovranken.wordpress.com/2017/06/21/the-openvpn-post-audit-bug-bonanza/
->> . A technical explanation for every vulnerability is provided, and I
->> ponder the efficacy of source code audits.
->
-> That's very cool, but we have a policy here to include actual
-> vulnerability detail in the list postings.  Your blog might be gone in
-> some years, but hopefully some oss-security archives will stay around.
->
-> http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
->
-> "At least the most essential part of your message (e.g., vulnerability
-> detail and/or exploit) should be directly included in the message itself
-> (and in plain text), rather than only included by reference to an
-> external resource.  Posting links to relevant external resources as well
-> is acceptable, but posting only links is not.  Your message should remain
-> valuable even with all of the external resources gone."
->
-> I've attached a text/plain export of your blog post to this message.
->
-> Alexander
+
+For example, it download mirrors.dat over http, using no signature and
+just a version verification that can be faked:
+
+# cat /var/lib/rkhunter/db/mirrors.dat
+Version:2007060601
+mirror=http://rkhunter.sourceforge.net
+mirror=http://rkhunter.sourceforge.net
+
+So I will assume that a attacker can inject a file with MITM without
+much problem.
+
+And it turn out that since rkhunter is in bash, it parse the file as
+bash.
+
+So adding something like:
+
+mirror=$(sleep 455)
+
+in the file result into "rkhunter --update" doing this:
+
+\_ /bin/sh /usr/bin/rkhunter --update
+\_ /bin/sh /usr/bin/rkhunter --update
+\_ sleep 455
+
+It also :nd on a few packages (if not all), rkhunter --update is run by cron,
+as root, so without much limitation.
+
+Upstream have been warned 2 months ago, and I also did warned
+RH product security, who assigned CVE-2017-7480  to it.
+
+Unfortunaly, half of the upstream developpers seems to have disappeared and the
+software is in maintenance mode, so no fix is avaliable yet, except "turn off
+mirror update". Upstream told me to publish it, but I didn't found time earlier.
+
+
+-- 
+Michael Scherer
