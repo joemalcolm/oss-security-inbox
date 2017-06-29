@@ -1,4 +1,9 @@
-Received: (qmail 1637 invoked by uid 550); 7 Apr 2026 17:43:24 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["969" "Thursday" "29" "June" "2017" "11:54:06" "-0400" "Christos Zoulas" "christos@zoulas.com" "<20170629155406.E063617FDA8@rebar.astron.com>" "30" "Re: [oss-security] TIOCSTI not going away" "^Date:" nil nil "6" "2017062915:54:06" "[oss-security] TIOCSTI not going away" (number mark "        christos@zou Jun 29   30/969   " thread-indent "\"Re: [oss-security] TIOCSTI not going away\"\n") "<20170629142346.GA30874@openwall.com>" ("<20170629142346.GA30874@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13605 invoked by uid 550); 29 Jun 2017 15:54:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,116 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13578 invoked from network); 29 Jun 2017 15:54:18 -0000
+In-Reply-To: <20170629142346.GA30874@openwall.com>
+       from Solar Designer (Jun 29,  4:23pm)
+Organization: Astron Software
+X-Mailer: Mail User's Shell (7.2.6 beta(4.pl1)+dynamic 20000103)
+Message-Id: <20170629155406.E063617FDA8@rebar.astron.com>
+Date: Thu, 29 Jun 2017 11:54:06 -0400
+From: christos@zoulas.com (Christos Zoulas)
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1604 invoked from network); 7 Apr 2026 17:43:24 -0000
-Date: Tue, 7 Apr 2026 17:43:13 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
+Subject: Re: [oss-security] TIOCSTI not going away
 To: oss-security@lists.openwall.com
-Message-ID: <adVCMfyYzsn4r8BF@yuggoth.org>
-Mail-Followup-To: oss-security@lists.openwall.com
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rDqkOVx0nGTtiZc9"
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: 66.70.103.60
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: [oss-security] [OSSA-2026-005] Keystone: Restricted application credentials can
- create EC2 credentials (CVE-2026-33551)
 
---rDqkOVx0nGTtiZc9
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Jun 29,  4:23pm, solar@openwall.com (Solar Designer) wrote:
+-- Subject: Re: [oss-security] TIOCSTI not going away
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-OSSA-2026-005: Restricted application credentials can create EC2 credentials
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
+| Maybe Christos could comment on tcsh?
 
-:Date: April 07, 2026
-:CVE: CVE-2026-33551
+TL;DR: tcsh will not lose functionality if TIOCSTI is gone.
 
+tcsh uses TIOCSTI in the editor e_stuff_char() function which is unbound
+by default; not many people know about this or use it. There is also the
+old FILEC code from csh (that used TIOCSTI to do file completion with
+<ESC>), but that is not compiled in. I should remove it but it is kept
+there merely for nostalgia :-)
 
-Affects
-~~~~~~~
-- Keystone: >=3D14.0.0 <26.1.1, =3D=3D27.0.0, =3D=3D28.0.0, =3D=3D29.0.0
+One can be much stricter though about who is allowed to use TIOCSTI
+like I've done for NetBSD (require exact credentials match on the
+tty). For example the typical example of root running an unprivileged
+installer on NetBSD fails:
 
+# cat installer
+#!/bin/sh
+whoami
+/usr/sbin/sti /dev/tty whoami\\n
 
-Description
-~~~~~~~~~~~
-Maxence Bornecque from Orange Cyberdefense CERT Vulnerability=20
-Intelligence Watch Team reported a vulnerability in Keystone's EC2=20
-credential creation endpoint. By using a restricted application=20
-credential to call the EC2 credential creation API, an authenticated=20
-user with only a reader role may obtain an EC2/S3 credential that=20
-carries the full set of the parent user's S3 permissions,=20
-effectively bypassing the role restrictions imposed on the=20
-application credential. Only deployments that use restricted=20
-application credentials in combination with the EC2/S3 compatibility=20
-API (swift3 / s3api) are affected.
+# su unprivileged -c ./installer
+unprivileged
+sti: Cannot simulate terminal input: Operation not permitted
+# whoami
+root
 
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/983597 (2024.1/caracal)
-- https://review.opendev.org/983591 (2024.2/dalmatian)
-- https://review.opendev.org/983589 (2025.1/epoxy)
-- https://review.opendev.org/983588 (2025.2/flamingo)
-- https://review.opendev.org/983593 (2026.1/gazpacho)
-- https://review.opendev.org/983587 (2026.2/hibiscus)
-
-
-Credits
-~~~~~~~
-- Maxence Bornecque from Orange Cyberdefense CERT Vulnerability
-   Intelligence Watch Team (CVE-2026-33551)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2142138
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2026-33551
-
-
-Notes
-~~~~~
-- The unmaintained/2024.1 branch is unmaintained and will receive no
-   new point releases, but a patch for it is provided as a courtesy.
-
---=20
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
-
---rDqkOVx0nGTtiZc9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmnVQjFfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCm1PRAA1qocbkvBeRnRlN4ABH0TO/rQ5magfH+XuhBqogsfhJvdKpflyO9DqPCa
-TOMZTBq+E+SVU0ApbjvNDANtTxEAmenThtv2LIEjlNDjnT7XOdO0uZ7IwlVnUTb/
-1oo9UqlW54kSzGgDjdVrBUqJP2Pj54xnVrj7iUr7aEAOlZozOrB1clvXiffOhizp
-Zq9iZEhYGLtfIkqHHhr8ldLDX7X/xuh7LPIEQ6tbNbEOwafz7MMFLIRPoZmcWvqk
-9SkPsfoHlW5f2ftX+j++Ci63GfaNxhUuQmA96e1F56vbnh5vCV4izwxLyLJfmIxY
-pWKftBrt/99+DRTX8gEt2I8UY6PqS9cvNVZpLwzSN5eFE8CKqhrCjw/iBOAuhwqK
-zaaKwoVzsrLI4Lo8bSog66eiwBpqZaB8zc4gvJIVvgc2DXqnBtoH3DuX4sRfG93w
-YkNsDN+zIJS9r7W6icxD78s9HfWJNVWMyU84s8g3NSYund3syor3o5rCSbvUV1FV
-s9zzuAb/5Q0IjqRwgLtK54Ig1JUPHKobSrxhWzlsj2b+cCwVk6lkqiseRskhzzNk
-CgPwUAd8PJza4zrL97AZrMWsjwBd4TdSXOhlER/qxPHS+bNMwLzHoChRVLn6z5Vm
-olTL+TgnNds2w1hSMMTxYmZsaUqk6UWBqahK9RF4FEoxrHau9zs=
-=Inzm
------END PGP SIGNATURE-----
-
---rDqkOVx0nGTtiZc9--
+christos
