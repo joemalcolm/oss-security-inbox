@@ -1,23 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/7
-Message-ID: <CADSkJJU9JJ--uWnYD0yTMXuK3EHvpcCUC9GSxzq4X7f3Ogd0dA@mail.gmail.com>
-Date: Mon, 8 May 2017 09:10:12 -0400
-From: Russ Cox <rsc@...ch.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/6
+Message-Id: <86060bb926b8d69f@courtesan.com>
+Date: Thu, 29 Jun 2017 08:41:50 -0600
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: remote DoS via CPU exhaustion in anon FTP server glob expansion
+Subject: Re: TIOCSTI not going away
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 24, 2017 at 10:06 AM, Russ Cox <rsc@...ch.com> wrote:
-> > Due to the widespread but limited ("only" CPU exhaustion) nature of
-> the problem, I have not attempted any embargoed prenotification.
-> I will forward this note directly to product-security@...le.com and
-> bugs@...eftpd.org. I filled out the "DWF Open Source Request Form v2"
-> for a CVE number for the generic problem, and I will reply here when
-> I receive the number.
+On Thu, 29 Jun 2017 16:23:46 +0200, Solar Designer wrote:
 
-FYI, over the weekend I received notification (two weeks after applying)
-that DWF has declined to issue a CVE number for this general problem.
-Interested parties will have to obtain their own CVE numbers for specific
-products.
+> While TIOCSTI is apparently not going away on Linux, it is on OpenBSD,
+> and here's some analysis of the apparently almost non-existent impact
+> this will have on Emacs (which was one of the primary examples cited for
+> keeping TIOCSTI on Linux):
 
-Russ
+There were two cases of TIOCSTI usage in OpenBSD base: csh and
+mail/mailx.  Both have been converted to use an IO-loop where ICANON
+is disabled and a single char of input is read at a time.
+
+ - todd
