@@ -1,80 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/1
-Message-ID: <CANatu-ZvJwPtHyYKMzpPT7ovMOR=VNYo4kCHnTEtNGpuj3ELHA@mail.gmail.com>
-Date: Thu, 30 Nov 2017 02:32:37 +0200
-From: Bindecy <contact@...decy.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/4
+Message-ID: <20170629142346.GA30874@openwall.com>
+Date: Thu, 29 Jun 2017 16:23:46 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-1000405: Linux kernel - "Dirty COW" variant on transparent huge pages
+Subject: Re: TIOCSTI not going away
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Sat, Jun 03, 2017 at 06:58:13PM +0200, Solar Designer wrote:
+> On LKML, CC'ed to the kernel-hardening mailing list, Matt Brown has been
+> pushing for the upstream Linux kernel to introduce an option (likely to
+> be disabled by default) that would block the TIOCSTI ioctl.  Alan Cox
+> repeatedly NAK'ed this:
+> 
+> http://www.openwall.com/lists/kernel-hardening/2017/05/
+> 
+> Sorry there's no one specific message/thread to link to - there were
+> multiple patch revisions, and multiple NAKs with different wording.
+> 
+> Alan's reasoning is that userspace apps like this have to be allocating
+> a new pty anyway, and the kernel change wouldn't help much since TIOCSTI
+> isn't the only way to cause trouble (although per my reading of the
+> examples given, other ways/troubles are either not exactly as bad or not
+> exactly as generic).
 
-This is a brief overview of the vulnerability, more details are available
-in the post referenced in the GitHub link.
+While TIOCSTI is apparently not going away on Linux, it is on OpenBSD,
+and here's some analysis of the apparently almost non-existent impact
+this will have on Emacs (which was one of the primary examples cited for
+keeping TIOCSTI on Linux):
 
+https://marc.info/?l=openbsd-tech&m=149868123704451
 
-==== Summary ====
+Theo de Raadt wrote:
 
-In the "Dirty COW" vulnerability patch (CVE-2016-5195),
-can_follow_write_pmd() was changed to take into account the new FOLL_COW
-flag (8310d48b125d "mm/huge_memory.c: respect FOLL_FORCE/FOLL_COW for thp").
+"There are indications that a few ports use TIOCSTI.  The list is
+pretty small, and I have not reviewed whether the use of TIOCSTI
+actually occurs during runtime on OpenBSD:
 
-We noticed a problematic use of pmd_mkdirty() in the touch_pmd() function.
+    x11vnc tcsh ucblogo brltty epic4 trn libsanitizer
+    jvim2.0r+onew2.2.10-wnn4 emacs qemu ngspice
 
-touch_pmd() can be reached by get_user_pages(). In such case, the pmd will
-become dirty. This scenario breaks the new can_follow_write_pmd()'s logic -
-pmd can become dirty without going through a COW cycle - which makes
-writing on read-only transparent huge pages possible.
+I hope those programs get fixed quickly"
 
-This bug is not as severe as the original "Dirty cow" because an ext4 file
-(or any other regular file) cannot be mapped using THP. Nevertheless, it
-does allow us to overwrite read-only huge pages. For example, the zero huge
-page and sealed shmem files can be overwritten (since their mapping can be
-populated using THP). Note that after the first write page-fault to the
-zero page, it will be replaced with a new fresh (and zeroed) thp.
+Jeremie Courreges-Anglas wrote:
 
-Using this primitive, we successfully crashed several processes. A likely
-consequence of overwriting the huge zero page is having improper initial
-values inside large BSS sections. Common vulnerable pattern would be using
-the zero value as an indicator that a global variable hasn't been
-initialized yet.
+"TIOCSTI is only used once in editors/emacs.  The return value of
+ioctl(2) isn't checked.  This is in the "suspend-emacs" function, ie
+what's called when pressing ^Z, can take an optional string to be sent
+to the parent process.
 
-Potentially, privileged processes using the mentioned pattern are
-exploitable.
+I could spot only one place in emacs-25.2 where this optional string is
+used, lisp/obsolete/ledit.el, an obsolete mode for Franz Lisp"
 
+Maybe Christos could comment on tcsh?
 
-===== POC =====
+Whatever happens (or doesn't happen) for upstream Linux, there will be
+system(s) dropping TIOCSTI or at least introducing a way to disable it,
+so reducing userspace programs' dependencies on TIOCSTI makes sense.
 
-The POC overwrites the zero-page of the system.
-
-POC source on GitHub: https://github.com/bindecy/HugeDirtyCowPOC
-
-
-===== Affected Versions =====
-
-The POC was tested on Ubuntu 17.04 with kernel 4.10 and Fedora 27 with
-kernel 4.13. Every kernel version with THP support and the Dirty COW patch
-should be vulnerable (2.6.38 - 4.14).
-
-RHEL claimed by the vendor as not affected.
-
-Fixed on Nov 27, 2017:
-https://github.com/torvalds/linux/commit/a8f97366452ed491d13cf1e44241bc0b5740b1f0
-
-
-===== Timeline =====
-
-22.11.17 — Initial report to security@...nel.org and
-linux-distros@...openwall.org
-
-22.11.17 — CVE-2017–1000405 was assigned
-
-27.11.17 — Patch was committed to mainline kernel
-
-29.11.17 — Public announcement
-
-
-===== Credit =====
-
-Eylon Ben Yaakov and Daniel Shapiro from Bindecy
-
+Alexander
