@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/5
-Message-ID: <20170228162309.e22hyhgw4id7dgdn@eldamar.local>
-Date: Tue, 28 Feb 2017 17:23:09 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Linux: ip: fix IP_CHECKSUM handling (CVE-2017-6347)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/5
+Message-ID: <CAFJ0LnFGD0+stET2NvNzQ2tR47Yk3cbUcWuUOLWqfRKvyBsA4A@mail.gmail.com>
+Date: Thu, 29 Jun 2017 07:31:33 -0700
+From: Nick Kralevich <nnk@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: TIOCSTI not going away
 Content-Type: text/plain; charset=utf-8
 
-Hi
+In addition to OpenBSD, Android has chosen to drop TIOCSTI (and a
+bunch of other tty ioctls) in the Android 8.0 release. See
+https://android-review.googlesource.com/306278
 
-CVE-2017-6347 was assigned by MITRE to the following (via
-https://cveform.mitre.org/):
+-- Nick
 
-https://git.kernel.org/linus/ca4ef4574f1ee5252e2cd365f8f5d5bafd048f32
+On Thu, Jun 29, 2017 at 7:23 AM, Solar Designer <solar@...nwall.com> wrote:
+> While TIOCSTI is apparently not going away on Linux, it is on OpenBSD,
+> and here's some analysis of the apparently almost non-existent impact
+> this will have on Emacs (which was one of the primary examples cited for
+> keeping TIOCSTI on Linux):
+>
+[...]
+>
+> Whatever happens (or doesn't happen) for upstream Linux, there will be
+> system(s) dropping TIOCSTI or at least introducing a way to disable it,
+> so reducing userspace programs' dependencies on TIOCSTI makes sense.
+>
+> Alexander
 
-> ip: fix IP_CHECKSUM handling
-> 
-> The skbs processed by ip_cmsg_recv() are not guaranteed to
-> be linear e.g. when sending UDP packets over loopback with
-> MSGMORE.
-> Using csum_partial() on [potentially] the whole skb len
-> is dangerous; instead be on the safe side and use skb_checksum().
-> 
-> Thanks to syzkaller team to detect the issue and provide the
-> reproducer.
-
-The issue was introduced in 4.0 by commit ad6f939ab193. The fix as
-well backported to 4.9.13.
-
-Regards,
-Salvatore
+-- 
+Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
