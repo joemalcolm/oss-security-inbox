@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5310" "Tuesday" "12" "January" "2021" "19:01:34" "+0100" "David Disseldorp" "ddiss@suse.de" "<20210112190134.585e5a60@suse.de>" "124" "[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" nil nil nil "1" "2021011218:01:34" "[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" (number mark "U       ddiss@suse.d Jan 12  124/5310  " thread-indent "\"[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["508" "Thursday" "29" "June" "2017" "08:41:50" "-0600" "Todd C. Miller" "Todd.Miller@courtesan.com" "<86060bb926b8d69f@courtesan.com>" "12" "Re: [oss-security] TIOCSTI not going away" "^Date:" nil nil "6" "2017062914:41:50" "[oss-security] TIOCSTI not going away" (number mark "        Todd.Miller@ Jun 29   12/508   " thread-indent "\"Re: [oss-security] TIOCSTI not going away\"\n") "<20170629142346.GA30874@openwall.com>" ("<20170603165813.GA20708@openwall.com>" "<20170629142346.GA30874@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14174 invoked by uid 550); 12 Jan 2021 18:45:24 -0000
+Received: (qmail 9546 invoked by uid 550); 29 Jun 2017 14:42:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,139 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32043 invoked from network); 12 Jan 2021 18:01:47 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 12 Jan 2021 19:01:34 +0100
-From: David Disseldorp <ddiss@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20210112190134.585e5a60@suse.de>
+Received: (qmail 9524 invoked from network); 29 Jun 2017 14:42:04 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=courtesan.com; h=from:to
+	:subject:in-reply-to:references:mime-version:content-type
+	:content-id:date:message-id; s=selector1; bh=vxcfihVPXJEXb0sYpP5
+	uvwvBf1Y=; b=gtIJuCi28rBOV2od77taAfpzQT+AXR7emVpenNbZFdZeGC92001
+	S4fSZfPGEaorGfP7e+ZXhF0JZ9ViTud2hQhP1s1wCotjc68h1e5MHA/EPmZ9tRki
+	8OqnuZ1Ds2SURZpPS/mPwhVabUmGNnvmMVrgjs5hQur81v7emsaZ+YuI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=courtesan.com; h=from:to
+	:subject:in-reply-to:references:mime-version:content-type
+	:content-id:date:message-id; q=dns; s=selector1; b=ohfGdptheeNFk
+	+75S1lMyC6nPTI+5Lk2sJHwTJpTOv3ONnyy8rp2v0/d0fmXj0I4b+3ikDKumS+nf
+	VYc26CY2lZ6hdDtGDU2XqUpdF71KAaSQ3jvTnr1LFkBIZxIilEadLd62q0ACJvyI
+	yiATYA0RK+WT9LJ4jjAX6PUe3BRrFM=
+In-reply-to: Your message of "Thu, 29 Jun 2017 16:23:46 +0200."
+             <20170629142346.GA30874@openwall.com>
+References: <20170603165813.GA20708@openwall.com> <20170629142346.GA30874@openwall.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <94309.1498747310.1@xerxes.courtesan.com>
+Message-Id: <86060bb926b8d69f@courtesan.com>
+Date: Thu, 29 Jun 2017 08:41:50 -0600
+From: "Todd C. Miller" <Todd.Miller@courtesan.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] TIOCSTI not going away
+To: oss-security@lists.openwall.com
 
-===============================================================================
-== Subject:     Linux SCSI target (LIO) unrestricted copy offload
-==
-==
-== CVE ID#:     CVE-2020-28374
-==
-== Versions:    Linux: v3.12 and later
-==              tcmu-runner: v1.3.0 and later
-==
-== Summary:     An attacker with access to a LUN and knowledge of Unit Serial
-==              Number assignments can read and write to any LIO backstore,
-==              regardless of SCSI transport settings.
-===============================================================================
+On Thu, 29 Jun 2017 16:23:46 +0200, Solar Designer wrote:
 
+> While TIOCSTI is apparently not going away on Linux, it is on OpenBSD,
+> and here's some analysis of the apparently almost non-existent impact
+> this will have on Emacs (which was one of the primary examples cited for
+> keeping TIOCSTI on Linux):
 
-Description
------------
-SCSI "EXTENDED COPY" (XCOPY) requests sent to a Linux SCSI target (LIO) allow an
-attacker to read or write anywhere on any LIO backstore configured on the
-host, provided the attacker has access to one LUN and knowledge of the victim
-backstore's vpd_unit_serial (AKA "wwn"). This is possible regardless of the
-transport/HBA settings for the victim backstore.
-- with vhost-scsi this can allow VM guests to read or write to images assigned
-  to other qemu processes
-- with iSCSI this allows CHAP, ACL and network portal isolation bypass
-- backstores with no corresponding transport LUN mapping remain vulnerable
-- all other LIO transports and backstores which allow for XCOPY processing by
-  LIO's target_core_xcopy handler should be considered vulnerable
-- tcmu-runner based user backstores are also vulnerable via a similar logic bug
+There were two cases of TIOCSTI usage in OpenBSD base: csh and
+mail/mailx.  Both have been converted to use an IO-loop where ICANON
+is disabled and a single char of input is read at a time.
 
-This is due to the way that LIO behaves when processing XCOPY
-copy-source/copy-destination (CSCD) descriptors; when attempting to match
-CSCD descriptors with corresponding se_devices, target_xcopy_locate_se_dev_e4()
-iterates over LIO's global devices list, which includes all configured
-backstores, instead of only considering backstores which are exposed to the
-initiator via transport layer ACL settings.
-
-Similarly, when LIO is configured to forward SCSI requests to the user-space
-tcmu-runner daemon (via target_core_user), tcmu-runner's xcopy_locate_udev()
-iterates over all tcmu-runner devices, without considering any transport layer
-restrictions.
-
-
-Exploitation
-------------
-The attacker sends an XCOPY request with two CSCD descriptors.
-One CSCD descriptor must correspond to the NAA IEEE identifier for the LUN to
-which the attacker has access. The other (victim) CSCD descriptor must be an
-NAA IEEE identifier which matches another configured backstore within LIO's
-global device inventory.
-
-For successful exploitation of this bug an attacker must be able to provide a
-matching NAA identifier for the victim backstore.
-
-
-Affected Versions
------------------
-Linux Kernel (LIO target_core_xcopy)
-- Exploitable as of
-  f99715ac8d6f ("target: Enable global EXTENDED_COPY setup/release")
-  + mainline v3.12-rc1 and later
-
-tcmu-runner (user-space SCSI target, coupled with LIO's target_core_user)
-- Exploitable as of 9c86bd0db97a ("tcmur: Add emulate XCOPY command support")
-  + tcmu-runner v1.3.0 and later
-
-
-Relevance
----------
-Linux kernel LIO deployments are affected under the following conditions:
-- Linux kernel with f99715ac8d6f, i.e. mainline v3.12-rc1 or later
-- LIO SCSI target (target_core_mod) loaded
-- at least two configured backstores
-- one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
-  which permits access to a potential attacker
-  + the attacker backstore must allow and use in-kernel LIO XCOPY command
-    emulation
-    - all backstores except special "pscsi" passthrough and "user" types
-    - emulate_3pc=1 must be set (default)
-- one or more "victim backstores" must be configured
-  + transport settings for victim backstores are irrelevant
-  + all backstore types are vulnerable, including "iblock", "fileio", "rd_mcp",
-    "pscsi" and "user"
-  + emulate_3pc=1 must be set the victim backstore (default)
-
-tcmu-runner deployments are affected under the following conditions:
-- tcmu-runner with 9c86bd0db97a, i.e. v1.3.0 or later
-- one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
-  which permits access to a potential attacker
-- one or more "victim backstores" must be configured
-  + transport settings for victim backstores are irrelevant
-  + the victim backstore must also be managed by the same tcmu-runner instance
-    - e.g. an XCOPY request to a "user"+tcmu-runner backstore can't be used to
-      read or write to an "iblock" backstore, only to other backstores handled
-      by the same tcmu-runner instance.
-
-
-Mitigation
-----------
-Caveat: instructions below do *not* affect XCOPY requests sent to tcmu-runner
-        based backstores. They are only suitable for disabling kernel
-	(target_core_xcopy) support for XCOPY requests.
-
-Requires acb3f2600eb8 ("target: Reject EXTENDED_COPY when emulate_3pc is disabled")
-- v3.12-rc7 or later
-
-XCOPY support is enabled by default, but can be disabled via:
-  echo 0 > /sys/kernel/config/target/core/<backstore>/<name>/attrib/emulate_3pc
-or
-  targetcli /backstores/<backstore>/<name> set attribute emulate_3pc=0
-
-...where <backstore> and <name> should be filled appropriately.
-
-
-Fixes
------
-Linux kernel and tcmu-runner fixes will be provided following the coordinated
-release date: 2021-01-12 10:00 Pacific Standard Time.
-
-
-Credits
--------
-Research and patches by David Disseldorp of SUSE.
-Patch review by Mike Christie of Oracle, and Lee Duncan of SUSE.
+ - todd
