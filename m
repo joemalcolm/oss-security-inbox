@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/17/2
-Message-ID: <alpine.LFD.2.20.1702171300440.22691@wniryva>
-Date: Fri, 17 Feb 2017 13:03:11 +0530 (IST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/1
+Message-ID: <alpine.LFD.2.20.1706291419220.1726@wniryva>
+Date: Thu, 29 Jun 2017 14:21:14 +0530 (IST)
 From: P J P <ppandit@...hat.com>
 To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-6058 Qemu: net: vmxnet3: OOB NetRxPkt::ehdr_buf access when doing vlan stripping
+Subject: CVE-2017-10664 Qemu: qemu-nbd: server breaks with SIGPIPE upon client abort
 Content-Type: text/plain; charset=utf-8
 
    Hello,
 
-Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is 
-vulnerable to an out-of-bounds access issue. It could occur while stripping 
-VLAN header from 'eth_buf' buffer in receiving packets.
+Quick Emulator(Qemu) built with the Network Block Device(NBD) Server support 
+is vulnerable to a crash via SIGPIPE signal. It could occur if a client aborts 
+connection due to any failure during negotiation.
 
-A remote user/process could use this issue to crash Qemu process resulting in 
-DoS.
+A remote user/process could use this flaw to crash the qemu-nbd server 
+resulting in DoS.
 
 Upstream patch:
 ---------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-02/msg03527.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-06/msg02693.html
 
 Reference:
 ----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1423358
-
-Note:- It requires 'VLANSTRIP' feature to be enabled on the vmxnet3 device.
-
-
-'CVE-2017-6058' assigned via -> https://cveform.mitre.org/
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1466190
 
 
 Thank you.
