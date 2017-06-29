@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1019" "Wednesday" "10" "August" "2016" "15:04:50" "-0400" "Daniel J Walsh" "dwalsh@redhat.com" "<095c337c-63af-ecdd-866a-9d1918e4bfac@redhat.com>" "30" "Re: [oss-security] cve request: systemd-machined: information exposure for docker containers" "^Date:" nil nil "8" "2016081019:04:50" "[oss-security] cve request: systemd-machined: information exposure for docker containers" (number mark "        dwalsh@redha Aug 10   30/1019  " thread-indent "\"Re: [oss-security] cve request: systemd-machined: information exposure for docker containers\"\n") "<739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>" ("<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>" "<20160727200021.GB3330@motoko>" "<B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust>" "<CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>" "<4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>" "<20160728144249.GB23522@perpetual.pseudorandom.co.uk>" "<291B6ECE-2D59-435D-A986-4582022C9B21@shiz.me>" "<f6c1ae32-c8fa-96f2-a300-87fd0accd6fe@redhat.com>" "<739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2135" "Thursday" "29" "June" "2017" "16:23:46" "+0200" "Solar Designer" "solar@openwall.com" "<20170629142346.GA30874@openwall.com>" "52" "Re: [oss-security] TIOCSTI not going away" "^Date:" nil nil "6" "2017062914:23:46" "[oss-security] TIOCSTI not going away" (number mark "        solar@openwa Jun 29   52/2135  " thread-indent "\"Re: [oss-security] TIOCSTI not going away\"\n") "<20170603165813.GA20708@openwall.com>" ("<20170603165813.GA20708@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3097 invoked by uid 550); 10 Aug 2016 19:05:03 -0000
+Received: (qmail 8076 invoked by uid 550); 29 Jun 2017 14:24:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3078 invoked from network); 10 Aug 2016 19:05:03 -0000
-References: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>
- <20160727200021.GB3330@motoko>
- <B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust>
- <CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>
- <4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>
- <20160728144249.GB23522@perpetual.pseudorandom.co.uk>
- <291B6ECE-2D59-435D-A986-4582022C9B21@shiz.me>
- <f6c1ae32-c8fa-96f2-a300-87fd0accd6fe@redhat.com>
- <739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>
-Message-ID: <095c337c-63af-ecdd-866a-9d1918e4bfac@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
-MIME-Version: 1.0
-In-Reply-To: <739916702.1278914.1470855609597.JavaMail.zimbra@redhat.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Wed, 10 Aug 2016 19:04:50 +0000 (UTC)
-Date: Wed, 10 Aug 2016 15:04:50 -0400
-From: Daniel J Walsh <dwalsh@redhat.com>
+Received: (qmail 7853 invoked from network); 29 Jun 2017 14:23:56 -0000
+Message-ID: <20170629142346.GA30874@openwall.com>
+References: <20170603165813.GA20708@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170603165813.GA20708@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Thu, 29 Jun 2017 16:23:46 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] cve request: systemd-machined: information
- exposure for docker containers
+Subject: Re: [oss-security] TIOCSTI not going away
 To: oss-security@lists.openwall.com
 
+On Sat, Jun 03, 2017 at 06:58:13PM +0200, Solar Designer wrote:
+> On LKML, CC'ed to the kernel-hardening mailing list, Matt Brown has been
+> pushing for the upstream Linux kernel to introduce an option (likely to
+> be disabled by default) that would block the TIOCSTI ioctl.  Alan Cox
+> repeatedly NAK'ed this:
+> 
+> http://www.openwall.com/lists/kernel-hardening/2017/05/
+> 
+> Sorry there's no one specific message/thread to link to - there were
+> multiple patch revisions, and multiple NAKs with different wording.
+> 
+> Alan's reasoning is that userspace apps like this have to be allocating
+> a new pty anyway, and the kernel change wouldn't help much since TIOCSTI
+> isn't the only way to cause trouble (although per my reading of the
+> examples given, other ways/troubles are either not exactly as bad or not
+> exactly as generic).
 
+While TIOCSTI is apparently not going away on Linux, it is on OpenBSD,
+and here's some analysis of the apparently almost non-existent impact
+this will have on Emacs (which was one of the primary examples cited for
+keeping TIOCSTI on Linux):
 
-On 08/10/2016 03:00 PM, CAI Qian wrote:
->
-> ----- Original Message -----
->> From: "Daniel J Walsh" <dwalsh@redhat.com>
->> To: oss-security@lists.openwall.com
->> Sent: Wednesday, August 3, 2016 3:27:00 AM
->> Subject: Re: [oss-security] cve request: systemd-machined: information exposure for docker containers
->>
->>
->>
->> On 08/01/2016 12:24 PM, Shiz wrote:
->>>> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@debian.org> wrote:
->>>>
->>>> *Which* unprivileged user processes?
->>>>
->>>> If the unprivileged user processes are not in a container, they can get a
->>>> significant amount of the same information by reading the host's /proc.
->>> Except if a host is running with hidepid={1,2}, which is not entirely
->>> uncommon
->>> especially in hardened systems. In that regard it /does/ qualify as
->>> infoleak.
->>>
->>> - Shiz
->> Then simply rpm -e oci-register-machine
->>
-> Except people can't do that in OSes like atomic host.
->    CAI Qian
-But people do not tend to have non privileged users logged into atomic host.
+https://marc.info/?l=openbsd-tech&m=149868123704451
+
+Theo de Raadt wrote:
+
+"There are indications that a few ports use TIOCSTI.  The list is
+pretty small, and I have not reviewed whether the use of TIOCSTI
+actually occurs during runtime on OpenBSD:
+
+    x11vnc tcsh ucblogo brltty epic4 trn libsanitizer
+    jvim2.0r+onew2.2.10-wnn4 emacs qemu ngspice
+
+I hope those programs get fixed quickly"
+
+Jeremie Courreges-Anglas wrote:
+
+"TIOCSTI is only used once in editors/emacs.  The return value of
+ioctl(2) isn't checked.  This is in the "suspend-emacs" function, ie
+what's called when pressing ^Z, can take an optional string to be sent
+to the parent process.
+
+I could spot only one place in emacs-25.2 where this optional string is
+used, lisp/obsolete/ledit.el, an obsolete mode for Franz Lisp"
+
+Maybe Christos could comment on tcsh?
+
+Whatever happens (or doesn't happen) for upstream Linux, there will be
+system(s) dropping TIOCSTI or at least introducing a way to disable it,
+so reducing userspace programs' dependencies on TIOCSTI makes sense.
+
+Alexander
