@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1068" "Thursday" "19" "January" "2017" "15:37:00" "+0100" "Greg KH" "greg@kroah.com" "<20170119143700.GA5132@kroah.com>" "30" "Re: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read" nil nil nil "1" "2017011914:37:00" "[oss-security] CVE Request - Samsung Exynos GPU driver OOB read" (number mark "U       greg@kroah.c Jan 19   30/1068  " thread-indent "\"Re: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read\"\n") "<CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>" ("<CACCOJE3M1+PbtZgpvLXQjxMkKFirwu0=506OdZZuBUrTK5VqpA@mail.gmail.com>" "<CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4813" "Thursday" "29" "June" "2017" "11:43:13" "+0200" "Thomas Deutschmann" "whissi@gentoo.org" "<07546f89-f5f8-7ff0-a370-138cc43393ca@gentoo.org>" "142" "Re: [oss-security] CVE request: sthttpd remote heap buffer overflow" "^Date:" nil nil "6" "2017062909:43:13" "[oss-security] CVE request: sthttpd remote heap buffer overflow" (number mark "        whissi@gento Jun 29  142/4813  " thread-indent "\"Re: [oss-security] CVE request: sthttpd remote heap buffer overflow\"\n") "<06780369-357d-1413-cec6-f8befecd2566@redhat.com>" ("<CAF1AS2h9QxW2Gj67_Oo6HYgWrLR9zsv9meT2CVSaf6dqQq-VfA@mail.gmail.com>" "<06780369-357d-1413-cec6-f8befecd2566@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19836 invoked by uid 550); 19 Jan 2017 14:37:20 -0000
+Received: (qmail 5396 invoked by uid 550); 29 Jun 2017 10:10:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,162 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19808 invoked from network); 19 Jan 2017 14:37:19 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=IctL/GVFBlZyhY
-	d2pDcHoyEDC20=; b=r1cuUp51LVmotRcurz0kaj9KBixfSIMCv0zLJuisPuvEBm
-	eKtw9SDdxaHJv7s55WfsD2EUdf0w6ysj/J5qV4x5hMVaxk16UJ3SBhSowqyJH9AL
-	YH1xKr6YWO7Qz5OjrBWKc/0Ya4wbTurixSpkXdHej3aRD0iLdq9l5X7rjd8P8=
-X-ME-Sender: <xms:E8-AWFOCYimHUcYliUpkw328JZx3TLtQWjZtRZstsIeRo97tqzjiGA>
-X-Sasl-enc: 0XC3r6xRhlYJ1ITTvcCw2KiCUa3P8UyqF6mG0xx/dpgv 1484836627
-Date: Thu, 19 Jan 2017 15:37:00 +0100
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Cc: Anarcheuz Fritz <anarcheuz@gmail.com>, cve-assign@mitre.org
-Message-ID: <20170119143700.GA5132@kroah.com>
-References: <CACCOJE3M1+PbtZgpvLXQjxMkKFirwu0=506OdZZuBUrTK5VqpA@mail.gmail.com>
- <CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>
+Received: (qmail 14144 invoked from network); 29 Jun 2017 09:43:43 -0000
+References: <CAF1AS2h9QxW2Gj67_Oo6HYgWrLR9zsv9meT2CVSaf6dqQq-VfA@mail.gmail.com>
+ <06780369-357d-1413-cec6-f8befecd2566@redhat.com>
+Message-ID: <07546f89-f5f8-7ff0-a370-138cc43393ca@gentoo.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:21.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>
-User-Agent: Mutt/1.7.2 (2016-11-26)
-Subject: Re: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read
+In-Reply-To: <06780369-357d-1413-cec6-f8befecd2566@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="kjOpH3c89rxbuqgho51v7npiRSpO8NJ23"
+Date: Thu, 29 Jun 2017 11:43:13 +0200
+From: Thomas Deutschmann <whissi@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE request: sthttpd remote heap buffer overflow
+To: oss-security@lists.openwall.com
 
-On Thu, Jan 19, 2017 at 02:38:31PM +0800, Idler wrote:
-> Hello,
-> 
-> I'd like to request CVE for the following security issue:
-> 
-> Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2017
-> 
-> SVE-2016-6362: out of bound read in gpu driver
-> 
-> Severity: Low
-> Affected versions: M(6.0), N(7.0) devices with Exynos AP chipsets
-> Reported on: May 31, 2016
-> Disclosure status: Privately disclosed.
-> Vulnerability in gpu driver does not properly check the boundary of
-> buffers leading to a possible memory corruption.
-> The applied patch avoids an illegal access to memory by checking the boundary.
-> 
-> Source code:
-> Source code of the affected GPU drivers (as part of the Linux kernel
-> source) can be downloaded from Samsung Opensource Resource center:
-> http://opensource.samsung.com/
-> 
-> The particular model of phone we used to reproduce this issue is:
-> http://opensource.samsung.com/reception/receptionSub.do?method=sub&sub=F&searchValue=SM-G9200
+--kjOpH3c89rxbuqgho51v7npiRSpO8NJ23
+Content-Type: multipart/mixed; boundary="vgv6gMto60gUtV9CwgbKGxaiND4ponuvo";
+ protected-headers="v1"
+From: Thomas Deutschmann <whissi@gentoo.org>
+To: oss-security@lists.openwall.com
+Message-ID: <07546f89-f5f8-7ff0-a370-138cc43393ca@gentoo.org>
+Subject: Re: [oss-security] CVE request: sthttpd remote heap buffer overflow
+References: <CAF1AS2h9QxW2Gj67_Oo6HYgWrLR9zsv9meT2CVSaf6dqQq-VfA@mail.gmail.com>
+ <06780369-357d-1413-cec6-f8befecd2566@redhat.com>
+In-Reply-To: <06780369-357d-1413-cec6-f8befecd2566@redhat.com>
 
-Any pointer to the commit(s) that happened to resolve this issue?
+--vgv6gMto60gUtV9CwgbKGxaiND4ponuvo
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-thanks,
+Hi,
 
-greg k-h
+I requested a CVE from MITRE and got CVE-2017-10671 for this
+vulnerability:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>=20
+>> [Vulnerability Type]
+>> Heap-based Buffer Overflow in the de_dotdot function in libhttpd.c in st=
+httpd before 2.27.1
+>> allows remote attackers to cause a denial of service (daemon crash) or p=
+ossibly have unspecified other impact via a crafted filename.
+>>=20
+>> ------------------------------------------
+>>=20
+>> [Vulnerability Type]
+>> Buffer Overflow
+>>=20
+>> ------------------------------------------
+>>=20
+>> [Affected Product Code Base]
+>> sthttpd - <2.27.1
+>>=20
+>> ------------------------------------------
+>>=20
+>> [Affected Component]
+>> de_dotdot function
+>>=20
+>> ------------------------------------------
+>>=20
+>> [Attack Type]
+>> Remote
+>>=20
+>> ------------------------------------------
+>>=20
+>> [CVE Impact Other]
+>> I have no information about the impact. Would be nice if you could check=
+ on your own.
+>>=20
+>> ------------------------------------------
+>>=20
+>> [Attack Vectors]
+>> A remote attacker could trigger the flaw in sthttpd's request parsing co=
+de via a specially crafted request.
+>>=20
+>> ------------------------------------------
+>>=20
+>> [Reference]
+>> http://www.openwall.com/lists/oss-security/2017/06/15/9
+>> https://github.com/blueness/sthttpd/releases/tag/v2.27.1
+>> https://github.com/blueness/sthttpd/commit/c0dc63a49d8605649f1d8e4a96c9b=
+468b0bff660
+>>=20
+>> ------------------------------------------
+>>=20
+>> [Has vendor confirmed or acknowledged the vulnerability?]
+>> true
+>>=20
+>> ------------------------------------------
+>>=20
+>> [Discoverer]
+>> Alexandre Rebert from ForAllSecure
+>=20
+> Use CVE-2017-10671.
+>=20
+>=20
+> - --=20
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>=20
+> iQIcBAEBCAAGBQJZVGIGAAoJEHb/MwWLVhi2PPAP/RRQ9jGYVCEvLryJtICH/vvj
+> ZjS17vckkYVbSOMoTNQR9WihtsQCzkQZ+LL2Qnio45+NORCGn6nLMAi24SotXlrs
+> HI16p2h3+fZ3H/JCgT46fUDUHetq30Fy6NhwSKxCwtYEKiNvw4yT0QIPK9bmzf/p
+> nTKHDQCMqYp82tFBgReZPRivQcd/+Zbi6CWsS0oNzIsADjZZx1RdaHBJoOZIFcKv
+> bBopi0KDIPNgn3VsZwANz0Ex/ju3TfJVb8A9jpNyKlYaKwsou/TAw1g2l90KZxzW
+> Som1pG8s/I+MynJhHDNpJm59S6nFWAzZh++lySiEWIepiEsWhEzBpJBBkSAp3wum
+> TPhQNJ9BJdiS54rNqKMTGx7WxEvEcklsGQG87bfmUdyNRHYl/lElRYPNelciTnyU
+> 38B7E1FwcF793Z5JJfwge1ayo7ShaCaUGx082nU9XVuSFfpG0vrcelOhFAZ0cxyW
+> 9+DbSW/01FWWL35pEN0LJ5m5GeOpNa+hjn9VS/qbOiHk9n/PszbL00lS+Q+LKqTj
+> J3rOoTkM69d1stlcO8/ehwyr/xo6n6u8v8BmV6So1VWgefk/cI98aoOQvEIDpwQt
+> iALKi/+UinhQhG0vCtkKHXsFYXIOv7zk03EfKT37Bh13DuBBJDgIt9nMesVxpsRE
+> SmLuxFujGHPobnwbNGqJ
+> =3DCKLn
+> -----END PGP SIGNATURE-----
+
+
+--=20
+Regards,
+Thomas Deutschmann / Gentoo Security Team
+C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
+
+
+
+--vgv6gMto60gUtV9CwgbKGxaiND4ponuvo--
+
+--kjOpH3c89rxbuqgho51v7npiRSpO8NJ23
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0
+
+iQJ8BAEBCgBmBQJZVMu8XxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQzM0M1ODQ4MkM0MDIyOTJEMkUzQzVDMDY5
+NzA5RjkwQzNDOTZGRkM4AAoJEJcJ+Qw8lv/IzHcP/0X9+GgVuuG2xEBkbB78NLtB
+pp0H6729FYm5Yth2Vfqg/6kb6zhwQVAVdB5wjLfEcsnLCq3+kRKk/eVAbFWmEhux
+SQWtJnKN5zGH7eJ3WibiXt2RSVFWa8kLc8RTcW4ByphylZ82rztQR6K6XnHWWpJF
+kuuKlsfs9JbWJ4nWmS3QKwfW4PaAEtj3DZXnxapwBAj9zIVFCb2AOWc2mBVqlGEQ
+LITYYwEPtr+t44cD7yICjFyx9qRVVlAKduwHriJ/j05OtsPTuODrB8tESPz77Miv
+pTS9HLtNIERmIDF01K1vPCGTw0IqdQDUdZxmkC2Buaq00sV4yD0grVnsqTwCGMtz
+ga1jH8+PM2KN9eZfOVRc3E2G8zOsrPsI47l6XWtu98SitwBYLCq1M11eGuzFTHAD
+QtRp8rB4/djak9WBn+NxN/kBJhGJYkUJIGtMxD4TboCPQ0JTgoLkJ4o9LRl0fpUb
+83h/gBqtLkpa1R6sr1UfCEMqSMZFSsVQ3nxFNCIT0mM2sxRcy7s7kTaljgqNiCmE
+rCycjkR45hx8WwwqtBa7KlqpTNOXgTEzVGtJ89+0fjGGNa9EtR7EJStpUWB6aSmq
+VBulgT7foQZuergu9hWB7IQ82fqsNmLwBHQk0CAWLNyCRoG2ubvn5YkPkMgjjebH
+dlJCtVvCCHCIfjlmhU2D
+=Uchw
+-----END PGP SIGNATURE-----
+
+--kjOpH3c89rxbuqgho51v7npiRSpO8NJ23--
