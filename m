@@ -1,48 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/8
-Message-ID: <CANO=Ty0VtEX2Csom+EvprzU4wBS8d2=Yu1Y85+pPWqdbnhCVow@mail.gmail.com>
-Date: Fri, 3 Feb 2017 09:07:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: curiosity for CVE-2016-10000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/4
+Message-ID: <20170630105705.GA4208@openwall.com>
+Date: Fri, 30 Jun 2017 12:57:05 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: ISC Security Officer <security-officer@....org>
+Subject: Re: ISC announces two BIND vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 3, 2017 at 1:26 AM, Justin Steven <justin@...tinsteven.com>
-wrote:
+For transparency and for information of those wanting to join the
+distros list (thus, for them to have a better idea of whether
+membership would be useful to them or not): ISC brought these issues to
+the distros list on June 28 (or the night of June 29 UTC), so distros
+list members had about 1.5 days of advance notice.
 
-> As I understand, it is indeed DWF which I believe is a bona fide CNA.
->
+On Fri, Jun 30, 2017 at 12:41:33PM +0200, Yves-Alexis Perez wrote:
+> As per list policy, and since I'm following these for Debian, here's some more
+> details inline for the list.
 
-Indeed it is
+Thank you, Yves-Alexis!
 
-https://cve.mitre.org/cve/cna.html
+Adding to this, attached are text exports of the ISC advisories,
+produced by running ELinks against "Print Article" versions of the ISC
+web pages.
 
+It would be great if ISC would resume posting the actual detail in here
+themselves, in addition to the website links.
 
->
-> See
-> <https://github.com/distributedweaknessfiling/DWF-
-> Database/blob/master/DWF-Database-2016.csv>
->
-> Do these allcoations (as well as the 2015 and 2017 allocations) need to be
-> pushed upstream and synced with Mitre's dataset?
->
-> --
-> Justin
->
+> The vulnerabilities are very similar to the knot one (no CVE yet) found by the
+> same researchers (Synaktiv):
+> 
+> CVE-2017-3142: An error in TSIG authentication can permit unauthorized zone
+> transfers
+> 
+> An attacker who is able to send and receive messages to an authoritative DNS
+> server and who has knowledge of a valid TSIG key name may be able to
+> circumvent TSIG authentication of AXFR requests via a carefully constructed
+> request packet. A server that relies solely on TSIG keys for protection with
+> no other ACL protection could be manipulated into:
+> 
+> * providing an AXFR of a zone to an unauthorized recipient
+> * accepting bogus NOTIFY packets
+> 
+> CVE-2017-3043: An error in TSIG authentication can permit unauthorized dynamic
+> updates
+> 
+> An attacker who is able to send and receive messages to an authoritative DNS
+> server and who has knowledge of a valid TSIG key name for the zone and service
+> being targeted may be able to manipulate BIND into accepting an unauthorized
+> dynamic update.
 
-Yes, but we're in the process of creating a JSON data format and finalizing
-it (already on v.4, rapid iteration for the win), once that is done
-(hopefully another month or so to nail it down) the DWF will start to
-publish data in that format so MITRE can consume it and as time goes on the
-DWF will ramp up (there's a lot to do if you want to build a system that
-will assign a few hundred thousand CVEs efficiently =). We'll be making
-some announcements at RSA in 2 weeks.
+Thanks again,
 
+Alexander
 
--- 
+View attachment "CVE-2017-3142.txt" of type "text/plain" (6478 bytes)
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+View attachment "CVE-2017-3143.txt" of type "text/plain" (5981 bytes)
