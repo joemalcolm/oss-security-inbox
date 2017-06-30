@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1565" "Wednesday" "30" "September" "2015" "12:55:45" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150930105545.GC8507@kronk.local>" "45" "[oss-security] CVE Request: zendframework SQL injections" nil nil nil "9" "2015093010:55:45" "[oss-security] CVE Request: zendframework SQL injections" (number mark "        alessandro@g Sep 30   45/1565  " thread-indent "\"[oss-security] CVE Request: zendframework SQL injections\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2800" "Friday" "30" "June" "2017" "22:16:43" "+0200" "Solar Designer" "solar@openwall.com" "<20170630201642.GA9159@openwall.com>" "54" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "6" "2017063020:16:43" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        solar@openwa Jun 30   54/2800  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170630195516.GB1011@hunt>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>" "<20170630195516.GB1011@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7255 invoked by uid 550); 30 Sep 2015 10:55:58 -0000
+Received: (qmail 3336 invoked by uid 550); 30 Jun 2017 20:17:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7231 invoked from network); 30 Sep 2015 10:55:57 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:user-agent;
-        bh=tJcydO718dunXdR4pFVt2iHbcaAoSo/VSv6QiYthNP4=;
-        b=YmqESU7xdxulZjDTkvBt8xII3hACIG9DiwRjh7Z1H8UcuUGFhtP1n79cbmBCG/zxTl
-         +UkMppFSK0VSDbHjCL1l8GxBmEc+5BYk9xPlk5ZGx9/UpV75hm7Q9plawqqWrnZEudOG
-         5FT2aWRksDVlj0lgJ9XN1Hp5wWGXLRA2AUMqnr0O93EfymGjjrUNGwrTmSra3tgqn2n8
-         vjMhUzF0Du1Jk4B1cbelinUoPD52HWaYnJZzJ+XoFml6vNdqk1isg+2SFQ2wSoVzrBhg
-         iU10QVeZV4G+PYBFU2akbmj9CiIjFBkQl3osVDdTR1Gu7tAmOQ2kaTdYMgHdcnNOykI3
-         jeSQ==
-X-Received: by 10.194.79.196 with SMTP id l4mr3737645wjx.93.1443610546574;
-        Wed, 30 Sep 2015 03:55:46 -0700 (PDT)
-Message-ID: <20150930105545.GC8507@kronk.local>
-Mail-Followup-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qtZFehHsKgwS5rPz"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: cve-assign@mitre.org
-Date: Wed, 30 Sep 2015 12:55:45 +0200
-From: Alessandro Ghedini <alessandro@ghedini.me>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: zendframework SQL injections
-To: oss-security@lists.openwall.com
-
---qtZFehHsKgwS5rPz
+Received: (qmail 1990 invoked from network); 30 Jun 2017 20:16:46 -0000
+Message-ID: <20170630201642.GA9159@openwall.com>
+References: <20170628200239.GA25525@openwall.com> <20170630132209.GA4625@openwall.com> <20170630195516.GB1011@hunt>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20170630195516.GB1011@hunt>
+User-Agent: Mutt/1.4.2.3i
+Date: Fri, 30 Jun 2017 22:16:43 +0200
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: oss-security@lists.openwall.com
 
-Hello,
+On Fri, Jun 30, 2017 at 12:55:16PM -0700, Seth Arnold wrote:
+> On Fri, Jun 30, 2017 at 03:22:09PM +0200, Solar Designer wrote:
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> > 
+> > No volunteers so far?  I know some of you are actually helping with
+> > these, but I'd prefer that you explicitly take responsibility for them.
+> 
+> I didn't volunteer for the things that I've already done on occasion.
+> Since I'm on the west coast of the united states and tend to sleep in and
+> work late (and spend entirely too much time in mutt already) I'm often the
+> first to spot new postings to the list if made during a few hour window.
+> 
+> In those hours I'll let people know their post made it through the list.
+> (This is common practice on the list since the anti-spam setup just
+> drops mails that lack [vs] or [vs-plain] in the Subject: line. Frequent
+> posters who aren't subscribed know to look for confirmation mails from
+> list readers to see if their posts made it through and re-send if they
+> don't get a reply.)
+> 
+> But this window really only works a few hours each day, a few days each
+> week. If I _sign up_ for this task, the other 160 hours each week would
+> get worse.
+> 
+> Communally shared tasks have felt fine to me so far. Yes they often fall
+> to you, but not always. And if you weren't always attached to your MUA,
+> perhaps it wouldn't always fall to you either. :)
 
-the Zendframework project released the following advisory:
+We can list multiple distros per task.  Or we can list Ubuntu, and that
+wouldn't mean only you - but rather that Ubuntu's team should handle it.
+Would that work for Ubuntu?
 
-> ZF2015-08: Potential SQL injection vector using null byte for PDO (MsSql, SQLite)
-http://framework.zend.com/security/advisory/ZF2015-08
+With multiple distros listed, there will need to be some coordination
+between them - e.g., inform each other when transferring responsibility
+(such as before several people go on vacation), or separate duties by
+time of day.
 
-The patch for the MS SQL backend seems to be:
-https://github.com/zendframework/zf1/commit/2ac9c30f73ec2e6235c602bed745749a551b4fe2
+I agree that for something as simple as getting back to message senders
+this might not be worth the coordination.  So maybe one of the distros
+wanting to join now would take this task, which would also serve to show
+they care at least to read all messages promptly.  And the distros who
+have been on the list for a while take less trivial tasks.
 
-but I couldn't find the fix for the mentioned SQLite backend.
+Regarding the anti-spam setup, it's not exactly as bad as you describe.
+Messages are not dropped - rather, they're rejected during the SMTP
+session, in response to DATA command end.  I hope that with most setups
+on the other end, this results in the sender (person) getting notified.
 
-This is somewhat related to CVE-2014-8089, which was about a similar issue
-in the sqlsrv backend.
+What worries me is that for messages that are sent to us in plaintext,
+this means they might be exposed to someone watching network traffic
+even in cases when we don't yet accept and relay the message (because of
+it initially lacking this tag).  Yet getting encrypted spam (for a
+little while, before I made this setup) was no good.
 
-Can CVE(s) be assigned for these issues?
-
-Thanks
-
---qtZFehHsKgwS5rPz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJWC7+xAAoJEK+lG9bN5XPL8QYP/RxS3l223+Mm7aTDCLBEqS/0
-5YeqzERHLHievLAtiP1YdDLDqr7XnnnQpdYHmaZBfBb6SzS6rIO8+Ks4ka7yb2me
-L62Q9NpqhPzmzuc3LKUNAouxbk8QGiyqnDrRmzY/XrEuILeWlGv8aaYJGRIM6lkG
-0Jq2q0QtA2zCHmcnJ+0aSenQwN0IyG4c0LE101D4ojsKp+nkUIpqgufzTbAaELG0
-vPicZv931yP2UcRXiLOiM1w1ptu+XZ26KoaT9ZWMFhP2cI+a3dhj7NWSyyukqSeL
-ReEzIunXhV6sofy04eapMubOrD9OpTbJPHQLE95XUPylD+H8A+T3XpIl5Bi9oRGr
-JDRtvACBuPsVHv2wCvyf3sE99jYGwi8O8XDWivbDYxa4PhRp8NkhaU6A1nbPkfV+
-HpoquQLXc2iVfA9L238kKt9nnjOZzDaf+UFuqvZjtKSVyLADURfIZmB1p4xTkps+
-Yp6PbTUkj1ERL6P4fEgwdkZNJDjdnayvle9/wPjJ28jDaPHoWoxi8Ay+RqXp7btF
-IxkU27O6ES9n8zmYdIAs/Y3T/X46wTVDzzhBRKrAfYt7BydDnK9D2U0pP4eaaOYP
-HUTfUGA5NZWB54Jz6Np94/E6dutkX0A17ZcAfVv6c3Zm6bGremOmLuZDsTs9JJ/R
-7msfbHIUD1ATG0x6FZMd
-=Pi+S
------END PGP SIGNATURE-----
-
---qtZFehHsKgwS5rPz--
+Alexander
