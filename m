@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1622" "Saturday" "15" "October" "2016" "22:41:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161016024107.656D242E008@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: mupdf: use-after-free in pdf_to_num (pdf-object.c)" "^Cc:" nil nil "10" "2016101602:41:07" "[oss-security] Re: mupdf: use-after-free in pdf_to_num (pdf-object.c)" (number mark "U       cve-assign@m Oct 15   40/1622  " thread-indent "\"[oss-security] Re: mupdf: use-after-free in pdf_to_num (pdf-object.c)\"\n") "<1840743.uk7qesaqqd@willoughby>" ("<1840743.uk7qesaqqd@willoughby>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2037" "Friday" "30" "June" "2017" "12:55:16" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20170630195516.GB1011@hunt>" "50" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "6" "2017063019:55:16" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        seth.arnold@ Jun 30   50/2037  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170630132209.GA4625@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10179 invoked by uid 550); 16 Oct 2016 02:55:55 -0000
+Received: (qmail 9746 invoked by uid 550); 30 Jun 2017 19:55:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10065 invoked from network); 16 Oct 2016 02:55:53 -0000
-In-Reply-To: <1840743.uk7qesaqqd@willoughby>
-Message-Id: <20161016024107.656D242E008@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sat, 15 Oct 2016 22:41:07 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 9725 invoked from network); 30 Jun 2017 19:55:29 -0000
+Message-ID: <20170630195516.GB1011@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20170628200239.GA25525@openwall.com>
+ <20170630132209.GA4625@openwall.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ZfOjI3PrQbgiZnxM"
+Content-Disposition: inline
+In-Reply-To: <20170630132209.GA4625@openwall.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Fri, 30 Jun 2017 12:55:16 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: mupdf: use-after-free in pdf_to_num (pdf-object.c)
-To: ago@gentoo.org
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--ZfOjI3PrQbgiZnxM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> https://blogs.gentoo.org/ago/2016/09/22/mupdf-use-after-free-in-pdf_to_num-pdf-object-c
+On Fri, Jun 30, 2017 at 03:22:09PM +0200, Solar Designer wrote:
+> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-=
+back
+>=20
+> No volunteers so far?  I know some of you are actually helping with
+> these, but I'd prefer that you explicitly take responsibility for them.
 
-> fuzzing through mutool
-> 
-> AddressSanitizer: heap-use-after-free ... READ of size 1
-> 
-> 0x7fbc4c3824e4 in pdf_to_num ... mupdf-1.9a/work/mupdf-1.9a/source/pdf/pdf-object.c:375:35
+I didn't volunteer for the things that I've already done on occasion.
+Since I'm on the west coast of the united states and tend to sleep in and
+work late (and spend entirely too much time in mutt already) I'm often the
+first to spot new postings to the list if made during a few hour window.
 
-> http://git.ghostscript.com/?p=mupdf.git;h=1e03c06456d997435019fb3526fa2d4be7dbc6ec
-> http://bugs.ghostscript.com/show_bug.cgi?id=697015
-> http://bugs.ghostscript.com/show_bug.cgi?id=697019
+In those hours I'll let people know their post made it through the list.
+(This is common practice on the list since the anti-spam setup just
+drops mails that lack [vs] or [vs-plain] in the Subject: line. Frequent
+posters who aren't subscribed know to look for confirmation mails from
+list readers to see if their posts made it through and re-send if they
+don't get a reply.)
 
-Use CVE-2016-8674 for all of 1e03c06456d997435019fb3526fa2d4be7dbc6ec,
-including both 697015 and 697019.
+But this window really only works a few hours each day, a few days each
+week. If I _sign up_ for this task, the other 160 hours each week would
+get worse.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Communally shared tasks have felt fine to me so far. Yes they often fall
+to you, but not always. And if you weren't always attached to your MUA,
+perhaps it wouldn't always fall to you either. :)
+
+Thanks
+
+--ZfOjI3PrQbgiZnxM
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYAuc6AAoJEHb/MwWLVhi2Yq4P/iMeQIU5r6VsYn7jm1727NJ0
-VH49R7zD4YX5sjAqQSNMUj6zN7N1w/ExjY4ctwQwk83mB3o4w4uXVkL3r2+7jwVC
-GpiOXZLg7GoFAXnhisqBxLRhOvMh2O+t/5AOezQus+cZ+wST+pvx/rUTMMmUAecL
-ikuVsJkm5DZkTJ1vKPtZadtIzn8dz/UsbroiN8pYt4IGf+mlW7zhAV65Tkn7U/VI
-CjQZwMRW7K5MHMwjYJKyrITHRzWOPQwywYh0z6JuxaeQjdnjgiP0AIldapmcCFpZ
-poWLGG9I6o1D2pCPwYXxckKQa9qoW3fBb8qUiSQ4jhgndC/7bpYUsyubyE/bGwW2
-Cg3ygkasV97IyV6VyvjuuCiaXtuaIll3SFIpivo0JasdgKvrctVmSJPGIie01syk
-L1V4KbomGtAKf6fx5a0ur28nFcfuDZrg2iEZSHDXHdDjsaA1mjSByaqCRZW8nEOa
-C5F/UnfssQWywv0ex7A28Edw3605KKbMJwY2bqEOojGCz2VId4DwmPWwBWoxxpPQ
-Z+auozZlMCoWWTpaYYy3WxCXfjEZBcFHBbbn0XW4Ulp3V48XvWGX2Oqh1ItCqxuJ
-HzEgJoChNKX4UWZMoo0EWbjR+cDBa04sZ2Gd2KSh++1lv94YoL2F5QwWv0hlEMZ/
-KeqSQtvtdyZOjXL+cA1G
-=Zekw
+iQEcBAEBCgAGBQJZVqykAAoJEPMhclmdjS6XZf0H/jb0/TpOoJWBzWhSFfbxgsvD
+VycWyf4Qn+mRcSMVH243IeeJCSSJHwQmjEl/hOvtPXhp0EZ6E6rCvkV+wFpIespv
+jHzYpaYeHbczIS3hZJ33hGMTi2cClR3qaEaiOj+/ni7zbxY+fHJS8JxZC9VWdO22
+/lU8HY2WnuPVHAEKpXF6rBoDRPatV7eTcO21pyjWAdBoQS5ZZqD/LgZ9fPRob088
+I9azBKgEnTA/gQYZylG/bJKuUmrDu/wsHlNES/hoQYHQCD87l2Ej6n0XOxCg2zU2
+/varRXd50m3gEACJuplrLa39nXb31l0yUcndrkmbzdRBcBRM/1zoxpV8Vt4O++s=
+=R+BA
 -----END PGP SIGNATURE-----
+
+--ZfOjI3PrQbgiZnxM--
