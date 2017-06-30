@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/4
-Message-ID: <CAB8XdGAT0V8OCsKqN3FM7LkxuwznFh9r6ato8SWy5HGVwp+mTQ@mail.gmail.com>
-Date: Thu, 30 Nov 2017 11:05:45 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: "users@....apache.org" <users@....apache.org>, "dev@....apache.org" <dev@....apache.org>, announce@...che.org,  oss-security@...ts.openwall.com
-Cc: Apache Security Response Team <security@...che.org>
-Subject: Apache CXF Fediz 1.4.3 and 1.3.3 released with a new security advisory CVE-2017-12631
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/2
+Message-ID: <ffbe986b-312f-039a-e660-8d375b4426c1@isc.org>
+Date: Fri, 30 Jun 2017 01:09:21 -0800
+From: ISC Security Officer <security-officer@....org>
+To: oss-security@...ts.openwall.com
+Subject: ISC announces two BIND vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Apache CXF Fediz is a subproject of CXF. Fediz helps you to secure your web
-applications and delegates security enforcement to the underlying
-application server.
+On Thursday (29 June) Internet Systems Consortium disclosed two security
+vulnerabilities in BIND.  Details on the individual vulnerabilities
+can be found in our knowledge base:
 
-Apache CXF Fediz 1.4.3 and 1.3.3 are released along with a new security
-advisory that is fixed in these releases:
+  CVE-2017-3142:  https://kb.isc.org/article/AA-01504/74/CVE-2017-3142
+  CVE-2017-3143:  https://kb.isc.org/article/AA-01503/74/CVE-2017-3143
 
-CVE-2017-12631: CSRF vulnerabilities in the Apache CXF Fediz Spring plugins.
-
-http://cxf.apache.org/security-advisories.data/CVE-2017-12631.txt.asc
-
-Users who are using the Spring security plugins of Apache CXF Fediz should
-upgrade immediately to the latest releases.
-
-Colm.
+New software releases have been issued containing these security fixes;
+they are available from our download page at http://www.isc.org/downloads
 
 
--- 
-Colm O hEigeartaigh
-
-Talend Community Coder
-http://coders.talend.com
-
+Michael McNally
+ISC Security Officer
