@@ -1,51 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/19/2
-Message-ID: <mpro.oq7ncm06hxubw02mk.taviso@cmpxchg8b.com>
-Date: Fri, 19 May 2017 10:31:34 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/5
+Message-ID: <1498828310.18870.32.camel@debian.org>
+Date: Fri, 30 Jun 2017 15:11:50 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: terminal emulators' processing of escape sequences
+Cc: ISC Security Officer <security-officer@....org>
+Subject: Re: ISC announces two BIND vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Robert Święcki <robert@...ecki.net> wrote:
+On Fri, 2017-06-30 at 12:41 +0200, Yves-Alexis Perez wrote:
+> CVE-2017-3043: An error in TSIG authentication can permit unauthorized dynamic
+> updates
 
-> Hi again,
+Sorry, this is a typo. It should be CVE-2017-3143. My apologies to ISC and all
+for the confusion.
 > 
-> > 2017-05-17 15:56 GMT+02:00 Daniel Kahn Gillmor
-> > <dkg@...thhorseman.net>:
-> > > > Please consider the following example:
-> >>>
-> > > > $ tail -n1 /etc/hosts | xxd 00000000: 3132 372e 302e 302e 3309 1b47
-> > > > 513b 205a  127.0.0.3..GQ; Z 00000010: 5a5a 0a
-> > > > ZZ. $ ping ZZZ PING ; (127.0.0.3) 56(84) bytes of data.
-> > > > ^[G0 64 bytes from ; (127.0.0.3): icmp_seq=1 ttl=64 time=0.039 ms
-> > > > ^[G0 64 bytes from ; (127.0.0.3): icmp_seq=2 ttl=64 time=0.032 ms
-> > > > ^[G0 ^C --- ; ping statistics --- 2 packets transmitted, 2 received,
-> > > > 0% packet loss, time 1014ms rtt min/avg/max/mdev =
-> > > > 0.032/0.035/0.039/0.006 ms ^[G0 $ 0 bash: 0: command not found
-> >>
-> > > what version of ping are you using?  I was unable to replicate this
-> > > with either the debian iputils-ping package version 3:20161105-1, or
-> > > with debian inetutils-ping package version 2:1.9.4-2+b1.  neither of
-> > > them seem to do a getnameinfo() at all if it is initially supplied
-> > > with an IP address.
-> >
-
-Browsing through the commands rxvt supports, I noticed you can set arbitrary
-X11 properties. That seems like the kind of thing some wm or de might trust
-for soemthing important (like gtk modules, etc).
-
-e.g.
-
-$ printf "\e]3;%s=TEST\a" TEST_PROPERTY
-$ xprop -id $WINDOWID TEST_PROPERTY
-TEST_PROPERTY(UTF8_STRING) = "TEST"
-
-The properties Gnome looks at are listed here, maybe you could cause some
-confusion this way. Do other environments (Xfce, KDE, etc) support more
-interesting properties?
-
-https://wiki.gnome.org/Attic/ApplicationSpecification
-
-Tavis.
-
+> An attacker who is able to send and receive messages to an authoritative DNS
+> server and who has knowledge of a valid TSIG key name for the zone and service
+> being targeted may be able to manipulate BIND into accepting an unauthorized
+> dynamic update.
+-- 
+Yves-Alexis
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
