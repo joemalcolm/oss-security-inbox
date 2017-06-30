@@ -1,4 +1,9 @@
-Received: (qmail 13698 invoked by uid 550); 12 Mar 2026 16:58:09 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["506" "Friday" "30" "June" "2017" "01:09:21" "-0800" "ISC Security Officer" "security-officer@isc.org" "<ffbe986b-312f-039a-e660-8d375b4426c1@isc.org>" "13" "[oss-security] ISC announces two BIND vulnerabilities" "^Date:" nil nil "6" "2017063009:09:21" "[oss-security] ISC announces two BIND vulnerabilities" (number mark "U       security-off Jun 30   13/506   " thread-indent "\"[oss-security] ISC announces two BIND vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9457 invoked by uid 550); 30 Jun 2017 10:23:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,45 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24433 invoked from network); 12 Mar 2026 16:44:02 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: =?UTF-8?Q?Gy=C3=B6rgy_G=C3=A1l?= <ggal@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <9c967c49-30aa-ba43-d60d-59623e4b8243@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 12 Mar 2026 16:41:49 +0000
+Received: (qmail 18063 invoked from network); 30 Jun 2017 09:09:37 -0000
+Message-ID: <ffbe986b-312f-039a-e660-8d375b4426c1@isc.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:52.0)
+ Gecko/20100101 Thunderbird/52.1.1
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-66249: Apache Livy: Unauthorized directory access 
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Date: Fri, 30 Jun 2017 01:09:21 -0800
+From: ISC Security Officer <security-officer@isc.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] ISC announces two BIND vulnerabilities
+To: oss-security@lists.openwall.com
 
-Severity: important=20
+On Thursday (29 June) Internet Systems Consortium disclosed two security
+vulnerabilities in BIND.  Details on the individual vulnerabilities
+can be found in our knowledge base:
 
-Affected versions:
+  CVE-2017-3142:  https://kb.isc.org/article/AA-01504/74/CVE-2017-3142
+  CVE-2017-3143:  https://kb.isc.org/article/AA-01503/74/CVE-2017-3143
 
-- Apache Livy (org.apache.livy:livy-server) 0.3.0-incubating before 0.9.0-i=
-ncubating
+New software releases have been issued containing these security fixes;
+they are available from our download page at http://www.isc.org/downloads
 
-Description:
 
-Improper Limitation of a Pathname to a Restricted Directory ('Path Traversa=
-l') vulnerability in Apache Livy.
-
-This issue affects Apache Livy: from 0.3.0 before 0.9.0.
-
-The vulnerability can only be exploited with non-default Apache Livy Server=
- settings. If=C2=A0the configuration value "livy.file.local-dir-whitelist" =
-is set to a non-default value, the directory checking can be bypassed.
-
-Users are recommended to upgrade to version 0.9.0, which fixes the issue.
-
-Credit:
-
-Hiroki Egawa (finder)
-
-References:
-
-https://livy.incubator.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2025-66249
-
+Michael McNally
+ISC Security Officer
