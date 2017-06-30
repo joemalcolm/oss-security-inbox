@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/19/2
-Message-ID: <alpine.LFD.2.20.1707191148320.22338@wniryva>
-Date: Wed, 19 Jul 2017 11:50:56 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Reno Robert <renorobert@...il.com>
-Subject: CVE-2017-11434 Qemu: slirp: out-of-bounds read while parsing dhcp options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/7
+Message-ID: <20170630195516.GB1011@hunt>
+Date: Fri, 30 Jun 2017 12:55:16 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+On Fri, Jun 30, 2017 at 03:22:09PM +0200, Solar Designer wrote:
+> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> 
+> No volunteers so far?  I know some of you are actually helping with
+> these, but I'd prefer that you explicitly take responsibility for them.
 
-Quick emulator(Qemu) built with the BOOTP/DHCP Server support is vulnerable to 
-an OOB read issue. It could occur while parsing the DHCP options and vendor 
-extensions options sent by a client.
+I didn't volunteer for the things that I've already done on occasion.
+Since I'm on the west coast of the united states and tend to sleep in and
+work late (and spend entirely too much time in mutt already) I'm often the
+first to spot new postings to the list if made during a few hour window.
 
-A user/process could use this flaw to potentially crash the Qemu process on 
-the host resulting in DoS.
+In those hours I'll let people know their post made it through the list.
+(This is common practice on the list since the anti-spam setup just
+drops mails that lack [vs] or [vs-plain] in the Subject: line. Frequent
+posters who aren't subscribed know to look for confirmation mails from
+list readers to see if their posts made it through and re-send if they
+don't get a reply.)
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-07/msg05001.html
+But this window really only works a few hours each day, a few days each
+week. If I _sign up_ for this task, the other 160 hours each week would
+get worse.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1472611
+Communally shared tasks have felt fine to me so far. Yes they often fall
+to you, but not always. And if you weren't always attached to your MUA,
+perhaps it wouldn't always fall to you either. :)
 
-This issue was reported by Reno Robert. CVE assigned via - https://cveform.mitre.org/
+Thanks
 
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
