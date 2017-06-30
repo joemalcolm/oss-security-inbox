@@ -1,131 +1,165 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/9
-Message-ID: <20171103141849.GA2264@openwall.com>
-Date: Fri, 3 Nov 2017 15:18:49 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/6
+Message-ID: <20170630132209.GA4625@openwall.com>
+Date: Fri, 30 Jun 2017 15:22:09 +0200
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 03, 2017 at 12:57:25PM +0000, Fiedler Roman wrote:
-> I want to lessen possible legal issues
+On Wed, Jun 28, 2017 at 10:02:40PM +0200, Solar Designer wrote:
+> I came up with many current tasks/roles that a new or existing member
+> could usefully help with, thereby contributing to the team effort.
+> Currently the wiki page lists a total of 18 such items: 5 technical and
+> 13 administrative.  I'd prefer that new membership requests include
+> specifics on what the new member will contribute - this can be work on
+> some of these 18 items or/and something else.
 
-Oh.  I wouldn't have guessed.
+This is now up to 22 items: I've split one in two, and added three more.
+The full list is at:
 
-> The bug may be in the documentation/specification: in my opinion, 
-> documentation of good, security aware software should a) implement things 
-> considering security bordercases (vim.tiny reporting, that a file was replaced 
-> or symlink encountered, proceed?)
+http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
 
-Those special cases you list are just a tip of the iceberg.
+No volunteers so far?  I know some of you are actually helping with
+these, but I'd prefer that you explicitly take responsibility for them.
 
-> or b) state, they are not made for that 
-> purpose. Even when such statements are redundant for many different tools, 
-> they give users at least the chance to learn, that an operation is dangerous 
-> and may link to additional information, e.g. the link you provided below on 
-> secure root file access.
+We got to improve how we run these lists in order to counter-balance the
+possible negative effects of embargoes and of new members joining.  The
+alternative, you know, is shutting the lists down.
+
+> Right now, most of these things I listed are everyone's and thus no
+> one's responsibility (and they often fall back on me as list admin).
+> I want this to change.  Ideally, we'd list specific distros for each one
+> of these tasks/roles... and if something required is not done or goes
+> wrong per one of those roles, we'll ask them to explain why and correct
+> that for further occasions.  This will also serve to verify that they're
+> still active and paying attention, replacing my responsiveness tests.
 > 
-> Why has each plastic bag of a new consumer device printed "There is a risk 
-> that children pull them over their head and suffocate." for safety reasons, 
-
-My guess is mostly for legal reasons, although safety was also involved
-at some point.
-
-> but in software development, we assume, everybody knows and do not include 
-> such warnings at least in the footer of man pages?
-
-I don't assume everybody knows.  On the contrary, I know that most
-people don't know, nor do they want to know.  When I tell, or ask my
-fellow sysadmins to follow safer practices, they just get annoyed, in
-part because the safer practices are too complicated, too brittle, and
-sometimes also not perfectly safe.  But do we really need to include
-this in every man page?  I wish there were a better place.
-
-> > Editing of non-root files by root should be safe (or be made safe by
-> > making changes to the editors where necessary) only in the rare special
-> > case when those files are located in a trusted directory.  For example,
-> > editing as root /var/run/foo owned by user foo should be safe as long as
-> > /, /var, and /var/run are owned by root, but editing as root
-> > /home/foo/foo or /tmp/foo is unsafe and is likely to stay so.
+> Here are the current tasks/roles to choose from or/and add to:
 > 
-> I would need to check that on vim.tiny. As stat-ing, getxattr, renaming, 
-> chmod, ... are not atomic, I am not sure if vim.tiny as example would fulfil 
-> your expectations.
+> Technical (in arbitrary order):
+
+> 4. Generalize the reported issues to see if other closely related issues
+> exist (e.g., if a bug is reported against one implementation of X, see
+> if a similar bug exists in another implementation of X and inform the
+> list of either result)
+
+I split the above one in two:
+
+4. Check if related issues exist in the same piece of software (e.g.,
+same bug class common across the software, or other kinds of bugs exist
+in its problematic component), and inform the list either way
+
+5. Check if related issues exist in implementations of similar
+functionality in other software (e.g., forked code including the same
+bug, or the same error made independently), and inform the list either way
+
+This is significant amount of work, and with so many distro members (as
+we already have) I'd be OK with different (sets of) distros volunteering
+for these two sub-tasks.
+
+> Administrative (roughly in chronological order, although many of these
+> activities overlap):
+
+> 4. Evaluate relevance to other parties, such as the upstream, other
+> affected distros (not present here), and other Open Source projects, see
+> if the report mentions notifying any of these, communicate your findings
+> and possible concerns to the reporter and the list, and stay on top of
+> the resulting discussion until a decision is made on who else to
+> possibly notify (or not) and any such notifications are in fact made
+
+The above item should have partially addressed Simon's feedback: yes, we
+do intend to notify upstreams (and have been doing so), but we need a
+decision and at least the reporter's approval for this first.  I've now
+revised the wording to:
+
+4. Evaluate relevance to other parties such as the upstream, other
+affected distros (not present on the (sub-)list), and other Open Source
+projects, see if the report mentions notifying any of these, communicate
+your findings and possible concerns to the reporter and the list, and
+stay on top of the resulting discussion until a decision is made on who
+else to possibly notify (or not) and any such notifications are in fact
+made (with the reporter's approval)
+
+The change from "not present here" to "not present on the (sub-)list" is
+to address the special case of someone sending to linux-distros an issue
+that would also be relevant to the distros list (which currently includes
+two *BSD's).  If this happens, we'll need to notice, decide, get the
+reporter's approval, and finally move the discussion from linux-distros
+to distros.  This certainly sounds overly complicated and formalized to
+me, but I hope we'll be doing it quickly in practice, like I think we
+have been already - but I also hope someone in particular will take
+responsibility for this happening.
+
+And I've also added explicit "with the reporter's approval", because in
+any such cases the ultimate say is the reporter's.
+
+Having considered the special case mentioned above made me realize we
+also have this task, newly inserted into the list:
+
+5. Determine if the reported issues are Linux-specific, and if so help
+ensure that (further) private discussion goes on the linux-distros
+sub-list only (thus, not spamming and unnecessary disclosing to the
+non-Linux distros)
+
+We have been trying to do this already, but like with most of these
+tasks it was everyone's and no one's responsibility.  This got to change.
+
+I also listed this new task, reusing number 13:
+
+13. Keep track of per-report and per-issue handling and disclosure
+timelines (at least times of notification of the private list and of
+actual public disclosure), at regular intervals produce and share
+statistics (most notably, the average embargo duration) as well as the
+raw data (except on issues that are still under embargo) by posting to
+oss-security
+
+> 12. Help evaluate new (linux-)distros list membership requests per the
+> current criteria (participating in the corresponding oss-security
+> threads)
 > 
-> But before that: why do you expect the software to behave like that, when it 
-> is not stated anywhere?
+> 13. Vouch for people wanting to join in on behalf of a new distro member
+> as long as you are confident of their trustworthiness, expected proper
+> use of the list, and contributions
 
-What I said in the paragraph quoted above is that I expect very little
-("only in the rare special case"), and even that might not be true yet
-(but we should make it true for specific tools if so).
+The above are now the only two items on their own sub-list of
+"Administrative tasks not strictly requiring (linux-)distros list
+membership (thus, open for contributions by the wider community)".
 
-I focus on this special case because it's tenable.
+And there's another new sub-list, currently with just one item:
 
-What you say about non-atomicity of those syscalls is not a security
-issue when the directory and all parent directories are trusted.  It can
-still be a reliability and a safety issue e.g. if two sysadmins try to
-edit a file, but I thought that was beyond scope of our discussion.
+Administrative tasks mostly unrelated to (linux-)distros lists (but
+relevant to the wider community)
 
-> > I doubt this belongs to "SECURITY section of man pages" because this is
-> > by no means limited to just text editors.  Most tools are unsafe to use
-> > on files in untrusted directories, with very few exceptions - for
-> > example, "cp" and "mv" are generally unsafe, but "ln" is generally safe.
+1. Help ensure that each message posted to oss-security contains the
+most essential information (e.g., vulnerability detail and/or exploit)
+directly in the message itself (and in plain text) rather than only by
+reference to an external resource, and add the missing information
+(e.g., in your own words, by quoting with proper attribution, and/or by
+creating and attaching a properly attributed text/plain export of a
+previously referenced web page) and remind the original sender of this
+requirement (for further occasions) in a "reply" posting when necessary
+
+> Finally, I also came up with specific policy on handling of embargoed
+> information.  Most of this was taken for granted so far, and this worked
+> well, but there were a few gray areas.  The currently proposed policy,
+> which list members have to agree to, is as follows:
 > 
-> But also those tools seem not state, how they really behave regarding security 
-> in man-pages, declaring what security expectations they fulfil and which the 
-> will not fulfil (I searched for security/concurrent/user/owner/privileg but no 
-> relevant hits in the man page). How should a normal user know the difference?
+> Aside from your participation in discussions with the reporter and on
+> the (linux-)distros lists (including possibly continuing to CC other
+> prior recipients of the information), the information you receive
+> through the (linux-)distros lists must not be made public, shared, nor
+> even hinted at anywhere beyond the need-to-know within your distro's
+> team, until the agreed upon public disclosure date/time, the reporter's
+> explicit approval, or substantially complete publication by others.
 
-I am not saying things are good as they are; I think they are not.  Like
-I say, people neither know nor want to know this, and it means they
-continue to do things insecurely.  I don't currently have a solution.
+To hopefully address Simon's feedback, I moved "the reporter's explicit
+approval" to the beginning of list, so that it stands out.  The current
+wording is:
 
-> > It is tricky to access files in an untrusted directory safely.  Programs
-> > that knowingly do it end up using O_EXCL or O_NOFOLLOW|O_NOCTTY and
-> > such, and doing various *stat() calls, and even that is sometimes not
-> > enough.  It'd be naive to expect the same from every other program
-> > accepting an arbitrary pathname.
-> 
-> From my point of view, this mandates something like a "libSecureOpen" (trying 
-> to get that into libc as first step might be in vain), which has a solid 
-> implementation also considering different UNIX-system peculiarities and should 
-> be used by open source software doing that kind of risky operations.
+[...] except with the reporter's explicit approval, until the agreed upon
+public disclosure date/time or substantially complete publication by others.
 
-IIRC, something like this was proposed in 1990s, albeit not for that
-extensive a use.
-
-You say "risky operations", but under the threat model you imply (root
-using almost any tool on pathnames with components writable by a user)
-almost all filesystem accesses are risky.
-
-To partially achieve what you seem to want to achieve, almost all uses
-of open(2) and fopen(3), etc. would need to be replaced with "secure"
-alternatives, and that would be bad in many ways, including breaking of
-customary behavior of traditional Unix command-line programs, which
-existing scripts rely on.  We could proceed with introduction of
-isatty(3) and env var checks, but this would get messy.
-
-I say "partially" because there's no way for a program to know that the
-file it's looking at is still the file the user had looked at when they
-decided to run the program against that pathname.  Not only the file
-itself could have been replaced, but an upper directory could have been.
-I included some steps to deal with this in the example referenced in my
-previous message, and one of the steps is a double-check by the user
-themselves after having created a hard link in a trusted directory.
-
-I suppose some alternate OS could introduce a paradigm where a user's
-view of the filesystem would be frozen when they stat() a file or list a
-directory and unfrozen after they've accessed a file in there.  This is
-another can of worms.  I guess it's more realistically (or less
-unrealistically) done for one thread in a program (with each thread
-having its own filesystem view freeze) rather than for a user's shell
-running multiple programs one after another.
-
-> Other 
-> software should explicitely declare: "is not safe for operating on file of 
-> different users/NFS in untrusted environments".
-
-This is true for 99%+ of Unix software.  Exceptions are few (like some
-uses of "ln", and even then there's the issue of parent directories).
+The beginning of this paragraph and further paragraphs are unchanged.
 
 Alexander
