@@ -1,68 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/10
-Message-ID: <20170711155008.18573f85@cortex.rrz.uni-hamburg.de>
-Date: Tue, 11 Jul 2017 15:50:08 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-To: Jonas Thiem <jonas@...em.email>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/01/2
+Message-ID: <20170701140735.GA10593@openwall.com>
+Date: Sat, 1 Jul 2017 16:07:35 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-Am Tue, 11 Jul 2017 14:59:09 +0200
-schrieb Jonas Thiem <jonas@...em.email>:
+On Sat, Jul 01, 2017 at 01:57:55PM +0200, Mark Hatle wrote:
+> We (Wind River) can take a more active role in at least some of the
+> administrative tasks..
 
-> On 11.07.2017 10:02, Dr. Thomas Orgis wrote:
-> > My program accesses memory that belongs
-> > to my program … unless the compiler inserts forbidden zones in there.  
-> 
-> So why do you know for sure that no program would store private keys or
-> other sensitive data there? Or is this only static data by the mp3
-> library itself?
+Thank you!
 
-I am speaking of memory allocated for static variables inside the
-library we are talking about. This is in a source file of the lib:
+> However, I can assure you we don't have the time or
+> ability to do it ourselves.
 
-static real pow1_1[2][16],pow2_1[2][16],pow1_2[2][16],pow2_2[2][16]; 
+No "time or ability" to take care of any one (or preferably more) of the
+administrative micro-roles I listed?  This makes no sense to me.  All of
+the administrative tasks combined are far less than one full-time job.
+With good discipline and focus, they can probably be taken care of with
+1 hour of effort per day on average (of course, there will be occasional
+busy days, but also many days with no work of this type).  All of them
+at once.  I think I know this because of me being the fallback person
+for this type of work so far.  OTOH, I do recognize that I listed a few
+additional tasks now - such as producing statistics - and the extent of
+work on tasks involving monitoring external resources can vary greatly.
+So maybe it's more than 1 hour/day on average with those extra tasks and
+desired greater extent now.  But not much more.
 
-struct bandInfoStruct
-{
-        unsigned short longIdx[23];
-        unsigned char longDiff[22];
-        unsigned short shortIdx[14];
-        unsigned char shortDiff[13];
-};
+What I do understand is needing to temporarily transfer responsibility
+to another distro if your own team subscribed to the list is small and
+many of these people may simultaneously go on vacation.
 
-static const struct bandInfoStruct bandInfo[9] = {{
-{0,4,8,12,16,20,24,30,36,44,52,62,74, 90,110,134,162,196,238,288,342,418,576},
-{4,4,4,4,4,4,6,6,8, 8,10,12,16,20,24,28,34,42,50,54, 76,158},
-{0,4*3,8*3,12*3,16*3,22*3,30*3,40*3,52*3,66*3, 84*3,106*3,136*3,192*3},
-{4,4,4,4,6,8,10,12,14,18,22,30,56}
+A reason why I listed so many administrative micro-tasks/roles is that
+I'd like to allow for an even (or close to it) distribution of the
+effort across the distros, where every one of them bears a tiny portion
+of this small total effort of running the list.  This would also serve
+to ensure and demonstrate to the rest of us that every distro is still
+an active member, without us needing responsiveness tests.
 
+The technical expertise tasks could be worked on to varying extent,
+including becoming a full-time job for someone or even for several
+people.  There's no decision on the exact extent yet, but it should be
+sufficient to almost always avoid things like the recent incomplete fix
+in Sudo.
 
-The bug is that accesses to the pow arrays, at worst pow_2_2, can happen
-with 31 in the last index instead of 15. You squarely land up to 128
-bytes (for real==float) into the bandInfo array. Not sure if one could
-trigger a floating point exception with the values of bandInfo (I see
-only floating point representatiosn of zero in there with a qick test)
-… but I do not see disclosure of any secrets.
+> So the more then one 'actor' on an action would definitely be what I suggest.
 
-Anyhow, we're generating lots of noise over an issue that of course is
-fixed now with the released mpg123-1.25.2. Regardless on how serious
-you think it is, the upgrade is of course encouraged. Moving on to new
-bugs …
+That's within consideration, but we got to start by listing at least one
+distro per task.  When we eventually have more than one listed for some
+task, we or they will need to coordinate their activities, and that
+could create extra work.  Perhaps a "primary and backup" arrangement for
+two distros sharing a task will work best: will not result in "no one's
+responsibility" and will have low coordination overhead.
 
+The first administrative task of getting back to message senders is so
+trivial that I think it'd make sense to keep it reserved to the distro
+who was last to join, perhaps switching responsibility to them from the
+previous distro once the new member has confirmed they're successfully
+receiving messages through the list.  The new distro will be "primary"
+and the previous will be "backup" for that role.  Always that way,
+unless the newly joining distro opts for something less trivial right
+away.  (I know some people would be offended by being asked to
+participate in this trivial activity.  I think they'd be wrong, but we
+can accommodate their egos, no problem.)  This will quickly test each
+new distro's responsiveness and get them involved, and hopefully
+encourage them to pick up several of the less trivial tasks as well
+(they will need to, or otherwise they'd be left without a task once
+another distro joins, which would be inappropriate).
 
-Alrighty then,
+> Unfortunately I really don't have a good sense (based on the link to the tasks)
+> as to what would be appropriate to volunteer for.  I'm open to suggestions.
 
-Thomas
+It's really anything you feel like doing.  Perhaps see in which areas
+you have been helping already, and suggest that you focus on those.
 
--- 
-Dr. Thomas Orgis
-Universität Hamburg
-RRZ / Basis-Infrastruktur / HPC
-Schlüterstr. 70
-20146 Hamburg
-Tel.: 040/42838 8826
-Fax: 040/428 38 6270
+If you really want me to narrow down the list for you, let me know.
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4967 bytes)
+This may also start happening on its own, due to other distros picking
+up tasks.  Once a task is taken by one or two distros, I will want
+further distros to volunteer for other tasks.  So if you want to have
+more freedom of choice, hurry up.
+
+OTOH, with distros not volunteering for specific tasks (like we've seen
+so far), I might just assign tasks to distros myself.
+
+Alexander
