@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1169" "Monday" "20" "April" "2015" "06:24:27" "+0300" "Solar Designer" "solar@openwall.com" "<20150420032427.GA10816@openwall.com>" "23" "Re: [oss-security] CVE request" nil nil nil "4" "2015042003:24:27" "[oss-security] CVE request" (number mark "        solar@openwa Apr 20   23/1169  " thread-indent "\"Re: [oss-security] CVE request\"\n") "<93B50930-3327-4BCA-86C1-3768F27C7490@omniti.com>" ("<93B50930-3327-4BCA-86C1-3768F27C7490@omniti.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7841" "Saturday" "1" "July" "2017" "15:23:07" "-0400" "Stiepan" "stie@itk.swiss" "<JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>" "133" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017070119:23:07" "[oss-security] accepting new members to (linux-)distros lists" (number mark "U       stie@itk.swi Jul  1  133/7841  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170701140735.GA10593@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>" "<20170630195516.GB1011@hunt>" "<20170630201642.GA9159@openwall.com>" "<e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>" "<20170701140735.GA10593@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9423 invoked by uid 550); 20 Apr 2015 03:24:29 -0000
+Received: (qmail 11287 invoked by uid 550); 1 Jul 2017 21:50:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,156 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9405 invoked from network); 20 Apr 2015 03:24:29 -0000
-Message-ID: <20150420032427.GA10816@openwall.com>
-References: <93B50930-3327-4BCA-86C1-3768F27C7490@omniti.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <93B50930-3327-4BCA-86C1-3768F27C7490@omniti.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Mon, 20 Apr 2015 06:24:27 +0300
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 26581 invoked from network); 1 Jul 2017 19:23:29 -0000
+Authentication-Results: mail1.protonmail.ch; dkim=none
+Message-ID: <JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>
+In-Reply-To: <20170701140735.GA10593@openwall.com>
+References: <20170628200239.GA25525@openwall.com>
+ <20170630132209.GA4625@openwall.com>
+ <20170630195516.GB1011@hunt>
+ <20170630201642.GA9159@openwall.com>
+ <e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>
+ <20170701140735.GA10593@openwall.com>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="b1_46acd99474cbd5314cb8955e4eb890ff"
+Date: Sat, 01 Jul 2017 15:23:07 -0400
+From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Sorry for bikeshedding, but:
+--b1_46acd99474cbd5314cb8955e4eb890ff
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-On Sun, Apr 19, 2015 at 10:21:00PM -0400, Dan McDonald wrote:
-> Illumos bug #5853 (https://www.illumos.org/issues/5853), now fixed, can be exploited to escalate privilege.  It's not easy to do so, but it is enough to cause concern and ask for a CVE number.
+SSBoYXZlIGEgZ2VuZXJhbCByZW1hcmsgb24gdGhlIHJlY2VudCBkZXZlbG9w
+bWVudHMgb24gdGhpcyBsaXN0LCBpbiBwYXJ0aWN1bGFyIGluIHJlbGF0aW9u
+IHdpdGggdGhlICJkaXN0cm9zIiBsaXN0IGFuZCBlc3BlY2lhbGx5LCBmb2N1
+c2luZyBvbiBMaW51eCBrZXJuZWwgc2VjdXJpdHk6CmEgY29yZSBpc3N1ZSBh
+dCBoYW5kIHNlZW1zIHRvIGJlIHRoZSBmdW5kaW5nIG9mIHdvcmsgdGhhdCBm
+b2xsb3dzIGR1ZSBkaWxpZ2VuY2UsIHN0YW5kYXJkcyBhbmQgc28gZm9ydGgs
+IHdoaWNoIGlzIGEgdG9wIHByaW9yaXR5LCBhbmQgc2hvdWxkIGJlIGdpdmVu
+IGFwcHJvcHJpYXRlIGltcG9ydGFuY2UgYXQgdGhlIHRvcCBkZWNpc2lvbi1t
+YWtpbmcgbGV2ZWwuIEkgdGhpbmsgdGhhdCBpbiB0aGF0IGxpbmUsIGFwcGx5
+aW5nIGZvciBpbnN0aXR1dGlvbmFsIGZ1bmRpbmcgdGhyb3VnaCBjYWxscyBm
+b3IgSDIwMjAgcHVibGljLXByaXZhdGUgcGFydG5lcnNoaXBzIHN1Y2ggYXMg
+aHR0cHM6Ly9lYy5ldXJvcGEuZXUvcmVzZWFyY2gvcGFydGljaXBhbnRzL3Bv
+cnRhbC9kZXNrdG9wL2VuL29wcG9ydHVuaXRpZXMvaDIwMjAvdG9waWNzL2Rz
+LTA4LTIwMTcuaHRtbCBhbmQgc2ltaWxhciBub24tRXVyb3BlYW4gaW5pdGlh
+dGl2ZXMgLSBpZiB0aGVyZSBhcmUgYW55IC0gd291bGQgYmUgbW9yZSB0aGFu
+IGFwcHJvcHJpYXRlLCBhcyBMaW51eCBpcyBhIGNvcmUgcHJpdmFjeS1lbmhh
+bmNpbmcgdGVjaG5vbG9neSwgaW4gYWRkaXRpb24gdG8gdGhlIGZhY3QgdGhh
+dCAiT3BlbiBzb3VyY2UgYW5kIGV4dGVybmFsbHkgYXVkaXRhYmxlIHNvbHV0
+aW9ucyBhcmUgZW5jb3VyYWdlZCBpbiBvcmRlciB0byBtYXhpbWlzZSB1cHRh
+a2UgYW5kIGluY3JlYXNlIHRoZSB0cnVzdHdvcnRoaW5lc3Mgb2YgcHJvcG9z
+ZWQgc29sdXRpb25zLiIuIEJ5IHRoZSB3YXksIHRoZSBzYW1lIHdvdWxkIGFw
+cGx5IGZvciBCU0RzLCB3aGVyZSBJIGhhdmUgYSBtb3JlIGRpcmVjdCBpbnRl
+cmVzdCwgYWx0aG91Z2ggdGhleSBkbyBub3Qgc2hhcmUgTGludXgncyBFdXJv
+cGVhbiBoZXJpdGFnZSEgOykKU3RpZXBhbiBBdXLDqWxpZW4gS292YWMKTSBT
+YyBpbiBJQ1QgU2VjdXJpdHkKCklUIEtvdmFjLCBHZW5ldmEgQ0gKc3RpZSBh
+dCBpdGsgZG90IHN3aXNzCgo+IC0tLS0tLS0tIE9yaWdpbmFsIE1lc3NhZ2Ug
+LS0tLS0tLS0KPiBTdWJqZWN0OiBSZTogW29zcy1zZWN1cml0eV0gYWNjZXB0
+aW5nIG5ldyBtZW1iZXJzIHRvIChsaW51eC0pZGlzdHJvcyBsaXN0cwo+IExv
+Y2FsIFRpbWU6IEp1bHkgMSwgMjAxNyAyOjA3IFBNCj4gVVRDIFRpbWU6IEp1
+bHkgMSwgMjAxNyAyOjA3IFBNCj4gRnJvbTogc29sYXJAb3BlbndhbGwuY29t
+Cj4gVG86IG9zcy1zZWN1cml0eUBsaXN0cy5vcGVud2FsbC5jb20KPiBPbiBT
+YXQsIEp1bCAwMSwgMjAxNyBhdCAwMTo1Nzo1NVBNICswMjAwLCBNYXJrIEhh
+dGxlIHdyb3RlOgo+PiBXZSAoV2luZCBSaXZlcikgY2FuIHRha2UgYSBtb3Jl
+IGFjdGl2ZSByb2xlIGluIGF0IGxlYXN0IHNvbWUgb2YgdGhlCj4+IGFkbWlu
+aXN0cmF0aXZlIHRhc2tzLi4KPiBUaGFuayB5b3UhCj4+IEhvd2V2ZXIsIEkg
+Y2FuIGFzc3VyZSB5b3Ugd2UgZG9uInQgaGF2ZSB0aGUgdGltZSBvcgo+PiBh
+YmlsaXR5IHRvIGRvIGl0IG91cnNlbHZlcy4KPiBObyAidGltZSBvciBhYmls
+aXR5IiB0byB0YWtlIGNhcmUgb2YgYW55IG9uZSAob3IgcHJlZmVyYWJseSBt
+b3JlKSBvZiB0aGUKPiBhZG1pbmlzdHJhdGl2ZSBtaWNyby1yb2xlcyBJIGxp
+c3RlZD8gVGhpcyBtYWtlcyBubyBzZW5zZSB0byBtZS4gQWxsIG9mCj4gdGhl
+IGFkbWluaXN0cmF0aXZlIHRhc2tzIGNvbWJpbmVkIGFyZSBmYXIgbGVzcyB0
+aGFuIG9uZSBmdWxsLXRpbWUgam9iLgo+IFdpdGggZ29vZCBkaXNjaXBsaW5l
+IGFuZCBmb2N1cywgdGhleSBjYW4gcHJvYmFibHkgYmUgdGFrZW4gY2FyZSBv
+ZiB3aXRoCj4gMSBob3VyIG9mIGVmZm9ydCBwZXIgZGF5IG9uIGF2ZXJhZ2Ug
+KG9mIGNvdXJzZSwgdGhlcmUgd2lsbCBiZSBvY2Nhc2lvbmFsCj4gYnVzeSBk
+YXlzLCBidXQgYWxzbyBtYW55IGRheXMgd2l0aCBubyB3b3JrIG9mIHRoaXMg
+dHlwZSkuIEFsbCBvZiB0aGVtCj4gYXQgb25jZS4gSSB0aGluayBJIGtub3cg
+dGhpcyBiZWNhdXNlIG9mIG1lIGJlaW5nIHRoZSBmYWxsYmFjayBwZXJzb24K
+PiBmb3IgdGhpcyB0eXBlIG9mIHdvcmsgc28gZmFyLiBPVE9ILCBJIGRvIHJl
+Y29nbml6ZSB0aGF0IEkgbGlzdGVkIGEgZmV3Cj4gYWRkaXRpb25hbCB0YXNr
+cyBub3cgLSBzdWNoIGFzIHByb2R1Y2luZyBzdGF0aXN0aWNzIC0gYW5kIHRo
+ZSBleHRlbnQgb2YKPiB3b3JrIG9uIHRhc2tzIGludm9sdmluZyBtb25pdG9y
+aW5nIGV4dGVybmFsIHJlc291cmNlcyBjYW4gdmFyeSBncmVhdGx5Lgo+IFNv
+IG1heWJlIGl0InMgbW9yZSB0aGFuIDEgaG91ci9kYXkgb24gYXZlcmFnZSB3
+aXRoIHRob3NlIGV4dHJhIHRhc2tzIGFuZAo+IGRlc2lyZWQgZ3JlYXRlciBl
+eHRlbnQgbm93LiBCdXQgbm90IG11Y2ggbW9yZS4KPiBXaGF0IEkgZG8gdW5k
+ZXJzdGFuZCBpcyBuZWVkaW5nIHRvIHRlbXBvcmFyaWx5IHRyYW5zZmVyIHJl
+c3BvbnNpYmlsaXR5Cj4gdG8gYW5vdGhlciBkaXN0cm8gaWYgeW91ciBvd24g
+dGVhbSBzdWJzY3JpYmVkIHRvIHRoZSBsaXN0IGlzIHNtYWxsIGFuZAo+IG1h
+bnkgb2YgdGhlc2UgcGVvcGxlIG1heSBzaW11bHRhbmVvdXNseSBnbyBvbiB2
+YWNhdGlvbi4KPiBBIHJlYXNvbiB3aHkgSSBsaXN0ZWQgc28gbWFueSBhZG1p
+bmlzdHJhdGl2ZSBtaWNyby10YXNrcy9yb2xlcyBpcyB0aGF0Cj4gSSJkIGxp
+a2UgdG8gYWxsb3cgZm9yIGFuIGV2ZW4gKG9yIGNsb3NlIHRvIGl0KSBkaXN0
+cmlidXRpb24gb2YgdGhlCj4gZWZmb3J0IGFjcm9zcyB0aGUgZGlzdHJvcywg
+d2hlcmUgZXZlcnkgb25lIG9mIHRoZW0gYmVhcnMgYSB0aW55IHBvcnRpb24K
+PiBvZiB0aGlzIHNtYWxsIHRvdGFsIGVmZm9ydCBvZiBydW5uaW5nIHRoZSBs
+aXN0LiBUaGlzIHdvdWxkIGFsc28gc2VydmUKPiB0byBlbnN1cmUgYW5kIGRl
+bW9uc3RyYXRlIHRvIHRoZSByZXN0IG9mIHVzIHRoYXQgZXZlcnkgZGlzdHJv
+IGlzIHN0aWxsCj4gYW4gYWN0aXZlIG1lbWJlciwgd2l0aG91dCB1cyBuZWVk
+aW5nIHJlc3BvbnNpdmVuZXNzIHRlc3RzLgo+IFRoZSB0ZWNobmljYWwgZXhw
+ZXJ0aXNlIHRhc2tzIGNvdWxkIGJlIHdvcmtlZCBvbiB0byB2YXJ5aW5nIGV4
+dGVudCwKPiBpbmNsdWRpbmcgYmVjb21pbmcgYSBmdWxsLXRpbWUgam9iIGZv
+ciBzb21lb25lIG9yIGV2ZW4gZm9yIHNldmVyYWwKPiBwZW9wbGUuIFRoZXJl
+InMgbm8gZGVjaXNpb24gb24gdGhlIGV4YWN0IGV4dGVudCB5ZXQsIGJ1dCBp
+dCBzaG91bGQgYmUKPiBzdWZmaWNpZW50IHRvIGFsbW9zdCBhbHdheXMgYXZv
+aWQgdGhpbmdzIGxpa2UgdGhlIHJlY2VudCBpbmNvbXBsZXRlIGZpeAo+IGlu
+IFN1ZG8uCj4+IFNvIHRoZSBtb3JlIHRoZW4gb25lICJhY3RvciIgb24gYW4g
+YWN0aW9uIHdvdWxkIGRlZmluaXRlbHkgYmUgd2hhdCBJIHN1Z2dlc3QuCj4g
+VGhhdCJzIHdpdGhpbiBjb25zaWRlcmF0aW9uLCBidXQgd2UgZ290IHRvIHN0
+YXJ0IGJ5IGxpc3RpbmcgYXQgbGVhc3Qgb25lCj4gZGlzdHJvIHBlciB0YXNr
+LiBXaGVuIHdlIGV2ZW50dWFsbHkgaGF2ZSBtb3JlIHRoYW4gb25lIGxpc3Rl
+ZCBmb3Igc29tZQo+IHRhc2ssIHdlIG9yIHRoZXkgd2lsbCBuZWVkIHRvIGNv
+b3JkaW5hdGUgdGhlaXIgYWN0aXZpdGllcywgYW5kIHRoYXQKPiBjb3VsZCBj
+cmVhdGUgZXh0cmEgd29yay4gUGVyaGFwcyBhICJwcmltYXJ5IGFuZCBiYWNr
+dXAiIGFycmFuZ2VtZW50IGZvcgo+IHR3byBkaXN0cm9zIHNoYXJpbmcgYSB0
+YXNrIHdpbGwgd29yayBiZXN0OiB3aWxsIG5vdCByZXN1bHQgaW4gIm5vIG9u
+ZSJzCj4gcmVzcG9uc2liaWxpdHkiIGFuZCB3aWxsIGhhdmUgbG93IGNvb3Jk
+aW5hdGlvbiBvdmVyaGVhZC4KPiBUaGUgZmlyc3QgYWRtaW5pc3RyYXRpdmUg
+dGFzayBvZiBnZXR0aW5nIGJhY2sgdG8gbWVzc2FnZSBzZW5kZXJzIGlzIHNv
+Cj4gdHJpdmlhbCB0aGF0IEkgdGhpbmsgaXQiZCBtYWtlIHNlbnNlIHRvIGtl
+ZXAgaXQgcmVzZXJ2ZWQgdG8gdGhlIGRpc3Rybwo+IHdobyB3YXMgbGFzdCB0
+byBqb2luLCBwZXJoYXBzIHN3aXRjaGluZyByZXNwb25zaWJpbGl0eSB0byB0
+aGVtIGZyb20gdGhlCj4gcHJldmlvdXMgZGlzdHJvIG9uY2UgdGhlIG5ldyBt
+ZW1iZXIgaGFzIGNvbmZpcm1lZCB0aGV5InJlIHN1Y2Nlc3NmdWxseQo+IHJl
+Y2VpdmluZyBtZXNzYWdlcyB0aHJvdWdoIHRoZSBsaXN0LiBUaGUgbmV3IGRp
+c3RybyB3aWxsIGJlICJwcmltYXJ5Igo+IGFuZCB0aGUgcHJldmlvdXMgd2ls
+bCBiZSAiYmFja3VwIiBmb3IgdGhhdCByb2xlLiBBbHdheXMgdGhhdCB3YXks
+Cj4gdW5sZXNzIHRoZSBuZXdseSBqb2luaW5nIGRpc3RybyBvcHRzIGZvciBz
+b21ldGhpbmcgbGVzcyB0cml2aWFsIHJpZ2h0Cj4gYXdheS4gKEkga25vdyBz
+b21lIHBlb3BsZSB3b3VsZCBiZSBvZmZlbmRlZCBieSBiZWluZyBhc2tlZCB0
+bwo+IHBhcnRpY2lwYXRlIGluIHRoaXMgdHJpdmlhbCBhY3Rpdml0eS4gSSB0
+aGluayB0aGV5ImQgYmUgd3JvbmcsIGJ1dCB3ZQo+IGNhbiBhY2NvbW1vZGF0
+ZSB0aGVpciBlZ29zLCBubyBwcm9ibGVtLikgVGhpcyB3aWxsIHF1aWNrbHkg
+dGVzdCBlYWNoCj4gbmV3IGRpc3RybyJzIHJlc3BvbnNpdmVuZXNzIGFuZCBn
+ZXQgdGhlbSBpbnZvbHZlZCwgYW5kIGhvcGVmdWxseQo+IGVuY291cmFnZSB0
+aGVtIHRvIHBpY2sgdXAgc2V2ZXJhbCBvZiB0aGUgbGVzcyB0cml2aWFsIHRh
+c2tzIGFzIHdlbGwKPiAodGhleSB3aWxsIG5lZWQgdG8sIG9yIG90aGVyd2lz
+ZSB0aGV5ImQgYmUgbGVmdCB3aXRob3V0IGEgdGFzayBvbmNlCj4gYW5vdGhl
+ciBkaXN0cm8gam9pbnMsIHdoaWNoIHdvdWxkIGJlIGluYXBwcm9wcmlhdGUp
+Lgo+PiBVbmZvcnR1bmF0ZWx5IEkgcmVhbGx5IGRvbiJ0IGhhdmUgYSBnb29k
+IHNlbnNlIChiYXNlZCBvbiB0aGUgbGluayB0byB0aGUgdGFza3MpCj4+IGFz
+IHRvIHdoYXQgd291bGQgYmUgYXBwcm9wcmlhdGUgdG8gdm9sdW50ZWVyIGZv
+ci4gSSJtIG9wZW4gdG8gc3VnZ2VzdGlvbnMuCj4gSXQicyByZWFsbHkgYW55
+dGhpbmcgeW91IGZlZWwgbGlrZSBkb2luZy4gUGVyaGFwcyBzZWUgaW4gd2hp
+Y2ggYXJlYXMKPiB5b3UgaGF2ZSBiZWVuIGhlbHBpbmcgYWxyZWFkeSwgYW5k
+IHN1Z2dlc3QgdGhhdCB5b3UgZm9jdXMgb24gdGhvc2UuCj4gSWYgeW91IHJl
+YWxseSB3YW50IG1lIHRvIG5hcnJvdyBkb3duIHRoZSBsaXN0IGZvciB5b3Us
+IGxldCBtZSBrbm93Lgo+IFRoaXMgbWF5IGFsc28gc3RhcnQgaGFwcGVuaW5n
+IG9uIGl0cyBvd24sIGR1ZSB0byBvdGhlciBkaXN0cm9zIHBpY2tpbmcKPiB1
+cCB0YXNrcy4gT25jZSBhIHRhc2sgaXMgdGFrZW4gYnkgb25lIG9yIHR3byBk
+aXN0cm9zLCBJIHdpbGwgd2FudAo+IGZ1cnRoZXIgZGlzdHJvcyB0byB2b2x1
+bnRlZXIgZm9yIG90aGVyIHRhc2tzLiBTbyBpZiB5b3Ugd2FudCB0byBoYXZl
+Cj4gbW9yZSBmcmVlZG9tIG9mIGNob2ljZSwgaHVycnkgdXAuCj4gT1RPSCwg
+d2l0aCBkaXN0cm9zIG5vdCB2b2x1bnRlZXJpbmcgZm9yIHNwZWNpZmljIHRh
+c2tzIChsaWtlIHdlInZlIHNlZW4KPiBzbyBmYXIpLCBJIG1pZ2h0IGp1c3Qg
+YXNzaWduIHRhc2tzIHRvIGRpc3Ryb3MgbXlzZWxmLgo+IEFsZXhhbmRlcg==
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+--b1_46acd99474cbd5314cb8955e4eb890ff--
 
-"When applicable, the message Subject must include the name and
-version(s) of affected software, and vulnerability type.  For example, a
-Subject saying only "CVE request" or "CVE-2099-99999" is not appropriate,
-whereas "CVE request - Acme Placeholder 1.0 buffer overflow" or
-"CVE-2099-99999 - Acme Placeholder 1.0 buffer overflow" would be OK."
-
-> At least two distros already have this fix in place.  I'd appreciate a CVE number (and if possible a way to request these on a non-public list... sorry if I missed the FAQ).
-
-If you're OK with posting a CVE request in public, please do so - like
-you did this time (just with a better Subject).  For other cases, see:
-
-http://www.openwall.com/lists/oss-security/2015/04/13/6
-
-and the followups to that message (click "thread-next").
-
-Alexander
