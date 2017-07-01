@@ -1,97 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/3
-Message-ID: <801547.452199401-sendEmail@localhost>
-Date: Mon, 10 Jul 2017 09:13:07 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/01/3
+Message-ID: <JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>
+Date: Sat, 01 Jul 2017 15:23:07 -0400
+From: Stiepan <stie@....swiss>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: mpg123: global buffer overflow in III_i_stereo (layer3.c)
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-Description:
-mpg123 is a fast console MPEG Audio Player and decoder library.
+I have a general remark on the recent developments on this list, in particular in relation with the "distros" list and especially, focusing on Linux kernel security:
+a core issue at hand seems to be the funding of work that follows due diligence, standards and so forth, which is a top priority, and should be given appropriate importance at the top decision-making level. I think that in that line, applying for institutional funding through calls for H2020 public-private partnerships such as https://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/topics/ds-08-2017.html and similar non-European initiatives - if there are any - would be more than appropriate, as Linux is a core privacy-enhancing technology, in addition to the fact that "Open source and externally auditable solutions are encouraged in order to maximise uptake and increase the trustworthiness of proposed solutions.". By the way, the same would apply for BSDs, where I have a more direct interest, although they do not share Linux's European heritage! ;)
+Stiepan Aurélien Kovac
+M Sc in ICT Security
 
-The complete ASan output of the issue:
+IT Kovac, Geneva CH
+stie at itk dot swiss
 
-# mpg123-mpg123 -t $FILE
-==10588==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f01025c5cbc at pc 0x7f010229bfe3 bp 0x7ffc988ac5b0 sp 0x7ffc988ac5a8
-READ of size 4 at 0x7f01025c5cbc thread T0
-    #0 0x7f010229bfe2 in III_i_stereo /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:1343:10
-    #1 0x7f010229bfe2 in INT123_do_layer3 /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:2013
-    #2 0x7f01021d3708 in decode_the_frame /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/libmpg123.c:710:14
-    #3 0x7f01021dc61d in mpg123_decode_frame /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/libmpg123.c:849:4
-    #4 0x535783 in play_frame /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/mpg123.c:739:7
-    #5 0x53a3a7 in main /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/mpg123.c:1363:8
-    #6 0x7f0100f1d680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #7 0x41bec8 in mpg123_seek_frame (/usr/bin/mpg123-mpg123+0x41bec8)
-
-0x7f01025c5cbc is located 4 bytes to the left of global variable 'pow2_1' defined in '/var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:50:27' (0x7f01025c5cc0) of size 
-128
-0x7f01025c5cbc is located 28 bytes to the right of global variable 'pow1_1' defined in '/var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:50:13' (0x7f01025c5c20) of 
-size 128
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:1343:10 in III_i_stereo
-Shadow bytes around the buggy address:
-  0x0fe0a04b0b40: f9 f9 f9 f9 00 04 f9 f9 f9 f9 f9 f9 00 04 f9 f9
-  0x0fe0a04b0b50: f9 f9 f9 f9 00 00 00 00 00 00 00 00 f9 f9 f9 f9
-  0x0fe0a04b0b60: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
-  0x0fe0a04b0b70: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x0fe0a04b0b80: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0fe0a04b0b90: 00 00 00 00 f9 f9 f9[f9]00 00 00 00 00 00 00 00
-  0x0fe0a04b0ba0: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
-  0x0fe0a04b0bb0: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
-  0x0fe0a04b0bc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe0a04b0bd0: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe0a04b0be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==10588==ABORTING
-Affected version:
-1.25.0
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-11126
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00300-mpg123-globaloverflow-III_i_stereo
-
-Timeline:
-2017-06-30: bug discovered and reported to upstream
-2017-07-03: blog post about the issue
-2017-07-10: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/07/03/mpg123-global-buffer-overflow-in-iii_i_stereo-layer3-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+> -------- Original Message --------
+> Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+> Local Time: July 1, 2017 2:07 PM
+> UTC Time: July 1, 2017 2:07 PM
+> From: solar@...nwall.com
+> To: oss-security@...ts.openwall.com
+> On Sat, Jul 01, 2017 at 01:57:55PM +0200, Mark Hatle wrote:
+>> We (Wind River) can take a more active role in at least some of the
+>> administrative tasks..
+> Thank you!
+>> However, I can assure you we don"t have the time or
+>> ability to do it ourselves.
+> No "time or ability" to take care of any one (or preferably more) of the
+> administrative micro-roles I listed? This makes no sense to me. All of
+> the administrative tasks combined are far less than one full-time job.
+> With good discipline and focus, they can probably be taken care of with
+> 1 hour of effort per day on average (of course, there will be occasional
+> busy days, but also many days with no work of this type). All of them
+> at once. I think I know this because of me being the fallback person
+> for this type of work so far. OTOH, I do recognize that I listed a few
+> additional tasks now - such as producing statistics - and the extent of
+> work on tasks involving monitoring external resources can vary greatly.
+> So maybe it"s more than 1 hour/day on average with those extra tasks and
+> desired greater extent now. But not much more.
+> What I do understand is needing to temporarily transfer responsibility
+> to another distro if your own team subscribed to the list is small and
+> many of these people may simultaneously go on vacation.
+> A reason why I listed so many administrative micro-tasks/roles is that
+> I"d like to allow for an even (or close to it) distribution of the
+> effort across the distros, where every one of them bears a tiny portion
+> of this small total effort of running the list. This would also serve
+> to ensure and demonstrate to the rest of us that every distro is still
+> an active member, without us needing responsiveness tests.
+> The technical expertise tasks could be worked on to varying extent,
+> including becoming a full-time job for someone or even for several
+> people. There"s no decision on the exact extent yet, but it should be
+> sufficient to almost always avoid things like the recent incomplete fix
+> in Sudo.
+>> So the more then one "actor" on an action would definitely be what I suggest.
+> That"s within consideration, but we got to start by listing at least one
+> distro per task. When we eventually have more than one listed for some
+> task, we or they will need to coordinate their activities, and that
+> could create extra work. Perhaps a "primary and backup" arrangement for
+> two distros sharing a task will work best: will not result in "no one"s
+> responsibility" and will have low coordination overhead.
+> The first administrative task of getting back to message senders is so
+> trivial that I think it"d make sense to keep it reserved to the distro
+> who was last to join, perhaps switching responsibility to them from the
+> previous distro once the new member has confirmed they"re successfully
+> receiving messages through the list. The new distro will be "primary"
+> and the previous will be "backup" for that role. Always that way,
+> unless the newly joining distro opts for something less trivial right
+> away. (I know some people would be offended by being asked to
+> participate in this trivial activity. I think they"d be wrong, but we
+> can accommodate their egos, no problem.) This will quickly test each
+> new distro"s responsiveness and get them involved, and hopefully
+> encourage them to pick up several of the less trivial tasks as well
+> (they will need to, or otherwise they"d be left without a task once
+> another distro joins, which would be inappropriate).
+>> Unfortunately I really don"t have a good sense (based on the link to the tasks)
+>> as to what would be appropriate to volunteer for. I"m open to suggestions.
+> It"s really anything you feel like doing. Perhaps see in which areas
+> you have been helping already, and suggest that you focus on those.
+> If you really want me to narrow down the list for you, let me know.
+> This may also start happening on its own, due to other distros picking
+> up tasks. Once a task is taken by one or two distros, I will want
+> further distros to volunteer for other tasks. So if you want to have
+> more freedom of choice, hurry up.
+> OTOH, with distros not volunteering for specific tasks (like we"ve seen
+> so far), I might just assign tasks to distros myself.
+> Alexander
