@@ -1,32 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/5
-Message-ID: <15cda08f0b0.2768.595dd7c4cc70d453d3914ebcaf051657@sury.org>
-Date: Sat, 24 Jun 2017 14:17:18 +0200
-From: Ondřej Surý <ondrej@...y.org>
-To: "Yves-Alexis Perez" <corsac@...ian.org>, <daniel.salzman@....cz>
-CC: "oss-sec" <oss-security@...ts.openwall.com>, Ondřej Surý <ondrej@...ian.org>
-Subject: Re: CVE for the TSIG issue in knot?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/4
+Message-ID: <20170702180746.GA15341@openwall.com>
+Date: Sun, 2 Jul 2017 20:07:46 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros list membership application - CloudLinux
 Content-Type: text/plain; charset=utf-8
 
-Hi Yves-Alexis,
+Hi all,
 
-we have requested CVE via DWF form, but without any response yet.
+I am inclined to add CloudLinux to the linux-distros list unless there
+are well-reasoned objections.  I'd appreciate any comments.
 
-Cheers,
-Ondřej
+On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
+> I would like to apply for membership in linux-distros list for CloudLinux
+> OS. Please, see application attached.
 
+Thank you for posting this, Igor.
 
-On 24 June 2017 13:58:39 Yves-Alexis Perez <corsac@...ian.org> wrote:
+I am most concerned about your answer to:
 
-> Hi Daniel,
->
-> I noticed the recent issue in knot with TSIG bypass (https://lists.nic.cz/pipe
-> rmail/knot-dns-users/2017-June/001144.html)
->
-> Was a CVE assigned for this?
->
-> Regards,
-> --
-> Yves-Alexis
+> 4. Not be (only) downstream or a rebuild of another distro (or else we
+> need convincing additional justification of how the list membership
+> would enable you to release fixes sooner, presumably not relying on the
+> upstream distro having released their fixes first?)
 
+> Our kernel has significant amount of changes comparing to OpenVZ kernel
+> We also do slight modifications to Apache web server, ship customized
+> versions of PHP (multiple versions), python, ruby, MySQL and MariaDB that
+> are  packaged by us, and not taken from upstream.
 
+So are you saying that you'll release fixes sooner (once you're on the
+linux-distros list) only for this subset of packages that are modified
+or packaged by you?  What about the rest?
+
+> We would be happy to help with administrative tasks:
+> 
+>    1. Promptly review new issue reports for meeting the list's requirements
+>    and confirm receipt of the report and, when necessary, inform the reporter
+>    of any issues with their report (e.g., obviously not actionable by the
+>    distros) and request and/or propose any required yet missing information
+>    (most notably, a tentative public disclosure date)
+>    2. If the proposed public disclosure date is not within list policy,
+>    insist on getting this corrected and propose a suitable earlier date
+> 
+> And possibly more in the future, as we have a better understanding of the
+> amount of work needed to handle those tasks.
+> We will need some handholding at first to make sure we do things correctly.
+
+OK.  You'll likely need to choose additional/other tasks very soon since
+these trivial ones will likely transfer to another new distro joining,
+if one requests membership and meets the criteria shortly after you.
+
+> Please, find PGP related info
+
+Thanks.  Out of the people you listed, you and Konstantin appear to have
+been on oss-security for a long while, but Leonid doesn't appear to be
+subscribed - or is he?  If not, he probably needs to subscribe now.
+
+Alexander
