@@ -1,86 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/9
-Message-Id: <E1dxcZo-0000QF-6K@xenbits.xenproject.org>
-Date: Thu, 28 Sep 2017 17:26:20 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 245 - ARM: Some memory not scrubbed at boot
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/8
+Message-ID: <20170702200114.GA18695@openwall.com>
+Date: Sun, 2 Jul 2017 22:01:14 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Kristian Fiskerstrand <k_f@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sun, Jul 02, 2017 at 09:22:46PM +0200, Kristian Fiskerstrand wrote:
+> On 07/02/2017 07:27 PM, Solar Designer wrote:
+> > we could rewrite from scratch and release as Open
+> > Source the encrypted mailing list software, which is currently an awful
+> > hack.  I wouldn't oppose doing that piece of software development under
+> > a separate funded project, if capable people were available for that.
+> > However, I am worried that most teams tasked to work on something like
+> > this would produce a complex monster, which wouldn't otherwise be
+> > directly comparable (as in: is it better or worse? is it more or less
+> > secure?) to the current hack.
+> 
+> To have it mentioned as part of the discussion at least; has something
+> like http://schleuder2.nadir.org/documentation/v2.2/concept.html even
+> been considered? and if considered and found not appropriate, the
+> rationale for it is likely interesting as well.
 
-                    Xen Security Advisory XSA-245
+No, it wasn't considered yet.  I vaguely recall someone pointing me at
+something like it (could be this one) on some occasion, but I couldn't
+find that e-mail now.  Thank you for the link!
 
-                 ARM: Some memory not scrubbed at boot
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This bug was discussed publicly before it was realised that it was a
-security vulnerability.
-
-ISSUE DESCRIPTION
-=================
-
-Data can remain readable in DRAM across soft and even hard reboots.
-To ensure that sensitive data is not leaked from one domain to another
-after a reboot, Xen must "scrub" all memory on boot (write it with
-zeroes).
-
-Unfortunately, it was discovered that when memory was in disjoint blocks,
-or when the first block didn't begin at physical address 0, arithmetic
-errors meant that some memory was not scrubbed.
-
-IMPACT
-======
-
-Sensitive information from one domain before a reboot might be visible
-to another domain after a reboot.
-
-VULNERABLE SYSTEMS
-==================
-
-Only ARM systems are vulnerable.
-
-All versions of Xen since 4.5 are vulnerable.
-
-Only hardware with disjoint blocks, or physical addresses not starting at 0
-are vulnerable; this includes the majority of ARM systems.
-
-MITIGATION
-==========
-
-None.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patches resolves this issue.
-
-xsa245/*.patch         All versions of Xen
-
-$ sha256sum xsa245* xsa245*/*
-121829263b85fcb5eac8e38fb44e77d3aab1dd7ae6ef665bf84bb49e5e161d24  xsa245.meta
-526f9e1b127fbb316762ce8e8f4563bc9de0c55a1db581456a3017d570d35bdd  xsa245/0001-xen-page_alloc-Cover-memory-unreserved-after-boot-in.patch
-7164010112fcccd9cd88e72ace2eeabdb364dd6f4d05c434686267d18067f420  xsa245/0002-xen-arm-Correctly-report-the-memory-region-in-the-du.patch
-$
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZzTANAAoJEIP+FMlX6CvZHk4IAJpF4ruPkFKdCgsQ/ljjrpxO
-8CVQFVwxTLtLZGUB1ZP0nFntkT/FnhDo870EmDvjPZTq3MmQwlPwVhgPqmF+tsTC
-aMecUftEJxHm6cSRLYiIGEphGbJZR6utjTKd7l0ddni5QtnzUED8mE5WFAq4aLrS
-y8FHuyghE6nwBXEMhRiDYYZ2X0MeMeTisc/0s1Loe002zcpw0RUlmys21Uzzd1Xv
-t4n5e4RDMLUNpfpY3o4UVWcJJi55Bpxw9ke4IMExlNSbYR5qQeNigDT0CcE1bv6n
-mNwlADAUKT4t/K1fyk6XJLFIdzHt5NVmN2O9cYKt6voVMu1r1dh3TgiAffAJsxk=
-=Pi1Y
------END PGP SIGNATURE-----
-
-Download attachment "xsa245.meta" of type "application/octet-stream" (2549 bytes)
-
-Download attachment "xsa245/0001-xen-page_alloc-Cover-memory-unreserved-after-boot-in.patch" of type "application/octet-stream" (1650 bytes)
-
-Download attachment "xsa245/0002-xen-arm-Correctly-report-the-memory-region-in-the-du.patch" of type "application/octet-stream" (2600 bytes)
+Alexander
