@@ -1,52 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/4
-Message-ID: <CALJHwhQXo_Om-Fhbg6ZjH31h3OmqCmXgkmUTTEr7HyjVczFY+Q@mail.gmail.com>
-Date: Thu, 2 Nov 2017 13:09:21 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-12193 Linux kernel: Null pointer dereference due to incorrect node-splitting in assoc_array implementation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/10
+Message-ID: <647ec3a7-f2f0-b090-007a-65286b815fa0@gentoo.org>
+Date: Sun, 2 Jul 2017 22:38:29 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Anthony Liguori <anthony@...emonkey.ws>
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+On 07/02/2017 10:20 PM, Anthony Liguori wrote:
+> I've been thinking about this list of items and also some of the
+> challenges of Stack Clash.  Something that frequently came up was
+> uncertainty about what the current set of patches were and there was
+> also lack of clarity on dates.
 
-A flaw was reported to Red Hat by Wu Fan regarding a kernel panic/oops
-based on a flaw in the assoc_array implementation used heavily by the
-keyring subsystem.
+...
+> 
+> What do you think about having a public bugzilla (or similar system)
+> where tracked issues are kept as private bugs? 
 
-The flaw description explains it better than I will:
+...
 
----
-Fix a case in the assoc_array implementation in which a new leaf is
-added that needs to go into a node that happens to be full, where the
-existing leaves in that node cluster together at that level to the
-exclusion of new leaf.
+> 
+> Thoughts?
 
-What needs to happen is that the existing leaves get moved out to a
-new node, N1, at level + 1 and the existing node needs replacing with
-one, N0, that has pointers to the new leaf and to N1.
+The immediate thought that springs to mind is the [lack of OpenPGP
+support in bugzilla] which makes it difficult to ensure confidentiality
+unless disabling all email warnings.
 
-The code that tries to do this gets this wrong in two ways:
+For an organization it is possible to ensure a level of security as they
+control all email endpoints (and disable email forwarding), so
+information never leaves a secured zone, but for multiple parties
+involved it would need to be fixed or configured to only send e.g "Bug
+XXX has been updated, please log in to see details", which can make the
+workflow inconvenient.
 
- (1) The pointer that should've pointed from N0 to N1 is set to point
-     recursively to N0 instead.
+Notes:
+[lack of OpenPGP support in bugzilla] I say lack of OpenPGP support as
+the current implementation is too flawed to be used, this is elaborated
+on in http://www.openwall.com/lists/oss-security/2016/02/13/8
 
- (2) The backpointer from N0 needs to be set correctly in the case N0 is
-     either the root node or reached through a shortcut.
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
-Fix this by removing this path and using the split_node path instead,
-which achieves the same end, but in a more general way (thanks to Eric
-Biggers for spotting the redundancy).
----
 
-Thanks to: Fan Wu, Haoran Qiu, and Shixiong Zhao supervised by Dr.
-Heming Cui from the department of Computer Science, University of Hong
-Kong" for reporting this issue.
 
-Upstream patch:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ea6789980fdaa610d7eb63602c746bf6ec70cd2b
-
---
-
-Best regards,
-Wade Mealing| Red Hat, Inc. | Product Security Engineer
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
