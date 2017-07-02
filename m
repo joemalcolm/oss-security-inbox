@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["727" "Friday" "9" "February" "2018" "10:58:08" "-0500" "Alex O'Ree" "alexoree@apache.org" "<CALLT8khw=hXWCd2piwfH4NaXSnPao7Uv_CmQVb3SzKo6dVGswQ@mail.gmail.com>" "25" "[oss-security] [Security] CVE-2018-1307 XML Entity Expansion in juddi-client v3.2 through 3.3.4" nil nil nil "2" "2018020915:58:08" "[oss-security] [Security] CVE-2018-1307 XML Entity Expansion in juddi-client v3.2 through 3.3.4" (number mark "U       alexoree@apa Feb  9   25/727   " thread-indent "\"[oss-security] [Security] CVE-2018-1307 XML Entity Expansion in juddi-client v3.2 through 3.3.4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3470" "Monday" "3" "July" "2017" "00:44:21" "+0200" "Solar Designer" "solar@openwall.com" "<20170702224421.GA19376@openwall.com>" "79" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017070222:44:21" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        solar@openwa Jul  3   79/3470  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>" ("<20170628200239.GA25525@openwall.com>" "<CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9630 invoked by uid 550); 9 Feb 2018 16:39:04 -0000
+Received: (qmail 30661 invoked by uid 550); 2 Jul 2017 22:48:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24250 invoked from network); 2 Jul 2017 22:44:32 -0000
+Message-ID: <20170702224421.GA19376@openwall.com>
+References: <20170628200239.GA25525@openwall.com> <CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Mon, 3 Jul 2017 00:44:21 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30577 invoked from network); 9 Feb 2018 15:58:25 -0000
-X-Gm-Message-State: APf1xPCKH9t4LFJ6dU/JMAU/KJZ1aCVx0sd4KSnPEgfHlRqtxN887UCW
-	C7I1DZ09wN2jCX5bK16XVsOwvuUuNXk8X6PE3fo=
-X-Google-Smtp-Source: AH8x224X2mWT71jPTO7m3AwMqYw29Qu+jDQ+l8Pf/8fvhDmoyaCIki1Yea5W0RWogjDWOtv0/g5nzvsaRhUiUccx0C0=
-X-Received: by 10.157.112.135 with SMTP id l7mr2431133otj.122.1518191888790;
- Fri, 09 Feb 2018 07:58:08 -0800 (PST)
-MIME-Version: 1.0
-From: "Alex O'Ree" <alexoree@apache.org>
-Date: Fri, 9 Feb 2018 10:58:08 -0500
-X-Gmail-Original-Message-ID: <CALLT8khw=hXWCd2piwfH4NaXSnPao7Uv_CmQVb3SzKo6dVGswQ@mail.gmail.com>
-Message-ID: <CALLT8khw=hXWCd2piwfH4NaXSnPao7Uv_CmQVb3SzKo6dVGswQ@mail.gmail.com>
-To: user@juddi.apache.org, dev@juddi.apache.org, security@apache.org, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="f4f5e8095df03b9e120564c99830"
-Subject: [oss-security] [Security] CVE-2018-1307 XML Entity Expansion in juddi-client v3.2
- through 3.3.4
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: oss-security@lists.openwall.com
 
---f4f5e8095df03b9e120564c99830
-Content-Type: text/plain; charset="UTF-8"
+On Sun, Jul 02, 2017 at 01:20:43PM -0700, Anthony Liguori wrote:
+> I've been thinking about this list of items and also some of the
+> challenges of Stack Clash.  Something that frequently came up was
+> uncertainty about what the current set of patches were and there was
+> also lack of clarity on dates.
 
-CVEID  CVE-2018-1307
+This should become easier with the maximum of 14 days strictly enforced.
 
-VERSION:  3.2 through 3.3.4
+> I think a lot of the administrative tasks outlined can be better
+> handled through a system other than email.
 
-PROBLEMTYPE: XML Entity Expansion
+This makes sense.  Text files, then? ;-)
 
-REFERENCES: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4267
+On a more serious note, I am concerned that the person collecting
+statistics, etc. might end up entering the data into some online system,
+thereby incurring unnecessary risk.  We should ask the volunteering
+distros/people how they are processing the information, to discourage
+such occurrences.
 
-DISCRIPTION: If using the WADL2Java or WSDL2Java classes, which parse a
-local or remote XML document and then mediates the data structures into
-UDDI data structures, there are little protections present against entity
-expansion and DTD type of attacks. This was fixed with
-https://issues.apache.org/jira/browse/JUDDI-987
+And text files is what I would use.  Seriously.  Much more convenient
+than an online system like Bugzilla for the low volume we're handling.
 
-Severity: Moderate
+> What do you think about having a public bugzilla (or similar system)
+> where tracked issues are kept as private bugs?
 
-Mitigation:
+I dislike this idea.
 
-Update your juddi-client dependencies to 3.3.5 or newer and/or discontinue
-use of the effected classes.
+> I think this could be
+> hosted in a way that everyone felt comfortable with (ensuring enough
+> people had SSH access to for audit purposes).  It's relatively easy to
+> stick everything behind SSL.
 
---f4f5e8095df03b9e120564c99830--
+How would we know this is a dedicated machine with no IPMI and such?
+It's the case for the current distros list machine.  No way for you all
+to check and confirm that as well, though.
+
+Now, I understand that many of the distros are probably entering stuff
+into their bug trackers anyway.  Often on shared or/and centrally
+managed systems.  I hope most only do so for bugs that are actually
+relevant to them, or at least that are likely to be relevant.
+
+Maybe we should make this limitation part of list policy ("do not enter
+the newly arriving issues into bug trackers unless and until you're
+reasonably confident the issues are relevant to you")?  Or forbid use of
+bug trackers for the embargoed issues arriving through the distros list
+altogether, but I'm quite sure many of the existing distros list members
+won't accept that. :-(
+
+> In addition to helping to make sure there's clear information (like a
+> summary, current patches, etc), I think the Project Zero approach of
+> making a private bug public post-embargo helps share information and
+> provide more transparency after the event.
+
+Yes, at P0 they definitely do the transparency thing well.  Better than
+us so far.  But they're also extremely courageous to have the info in a
+public-facing web app for up to 90 days.  I wouldn't dare.  We shouldn't.
+
+To improve transparency, I'd rather see someone write a mass-decrypter
+for mbox with OpenPGP messages.
+
+> I'm not suggesting that a bug tracker eliminate the discussions on the
+> list, but really just supplement it.
+
+It's unlikely to work entirely that way.  It's more like a split.
+
+> If there's interest in this, we
+> would be very willing to set it up and deal with the hosting aspect of
+> it.
+
+Thank you, but I hope we won't go that route.
+
+BTW, your messages' text/plain parts don't always differentiate your
+added text vs. the previous message's quoted text - e.g., I had to
+correct that manually in your reply to Kristian while it was in the
+moderation queue.  I hope you don't mind; the alternative was rejecting
+the message as it was a total mess.  I had to look at the text/html
+part to figure out what came from where.
+
+Alexander
