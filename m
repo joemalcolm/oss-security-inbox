@@ -1,4 +1,9 @@
-Received: (qmail 17685 invoked by uid 550); 30 Jan 2024 22:59:15 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2381" "Sunday" "2" "July" "2017" "20:07:46" "+0200" "Solar Designer" "solar@openwall.com" "<20170702180746.GA15341@openwall.com>" "52" "Re: [oss-security] linux-distros list membership application - CloudLinux" "^Date:" nil nil "7" "2017070218:07:46" "[oss-security] linux-distros list membership application - CloudLinux" (number mark "        solar@openwa Jul  2   52/2381  " thread-indent "\"Re: [oss-security] linux-distros list membership application - CloudLinux\"\n") "<CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>" ("<CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 22192 invoked by uid 550); 2 Jul 2017 18:08:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,92 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17661 invoked from network); 30 Jan 2024 22:59:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706655686; x=1706742086; bh=XG37WM9WvS
-	+iX3MGo3eqnCDLtJOhk9jv1RoYoZg7dyQ=; b=w5YJ+lbm5iK7GAIe6/w7U1mPrN
-	tgGZhHH02rPxdq3dewJ32aOmn7h3Fb/o+39u/f2F681l+1D3vITF8ZZBpTyQnomC
-	WXQqGz2B2QeVQpqwFtX8umoqlcFW9touey3boX1mWxq76mTZrLI/MyHRlyZAGjMN
-	q3h4RGwcV1JvRWPXMxK5mahbw3MhSCEWs+J9aFHLCuGLxmy8RCfzWo4Txk8HLxlP
-	PI3VHi3WNNsa82mzNZd+HEt0+43zTzpoIL4nbS+HLCYDBP8houmYtYZY7Fhk4yuo
-	weHWJMM4bumAQ8po1AOJanUeyfBugiz1eckOQ9UaXc5dRrU8KJhVuokSr9mQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706655686; x=1706742086; bh=XG37WM9WvS+iX3MGo3eqnCDLtJOh
-	k9jv1RoYoZg7dyQ=; b=Phbe11zJlDZUk8pNO8kK2ccaJ5uI4KU+ga5mGVT6QmNY
-	qhaeUaSBMyVifKYUG92tIHD8pVgAVsV5cYe1zEtEpoT8DNglM6cKojqMv+q+UWvM
-	9YsqmbSOLe+8SUt2TUAphMtzJoGPPdDN0pPelJfGiEEXOPDMB6/D7wShlOfGtUqL
-	Zc/0p+1tx5RZtIaEt2N3B+SzZQIEvvsjcoHohDXrR4o16A2IfuGNCwFBPAh/7+iB
-	Lpa/Mq5nUcdx0UhE4Tvx+n3f5YTVKyScJgAK0yv+uT0JGp/I+zKmSxaXDCh08H83
-	IYNV9Q/tShIwW2UUC+AKtm7bwonryNk1UvoR6ULauQ==
-X-ME-Sender: <xms:xX-5ZdPOuZ1yVwuJ5YbAZ3GXzxjGfrbwwc6IKwJ5rl5f5zP9erwTPw>
-    <xme:xX-5Zf-9aAQYJgMGMAUXH_koH8cksW_5jGNaNwve8th0VByQRhzl_nLjtxN6eYdlB
-    e_IDnGoPst1Cg>
-X-ME-Received: <xmr:xX-5ZcRXwDshghNTIkBykZEohh-houhg6kI9kOrSz1LsHPC4zJAWbqx7bYFf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtkedgtdegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
-    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
-    necuggftrfgrthhtvghrnhepveeuheejgfffgfeivddukedvkedtleelleeghfeljeeiue
-    eggeevueduudekvdetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
-X-ME-Proxy: <xmx:xn-5ZZviUmUiQ6T3UTgxI32B1HE2dKFEYqUSAAI8-gW241YolwXiag>
-    <xmx:xn-5ZVeCCSk7y8qj63LPuIcGhmOPqZD5xVVDyAINPnxaDLaRsh6R_Q>
-    <xmx:xn-5ZV1FQR8wUn5-JYbmkzIMybDkMdrFm_hvPjQWofVf4v1GxlEZRQ>
-    <xmx:xn-5ZVGGK6sJfDTmS0JLqBKRQAF-86LzabiUrCJo16QIx-gFjxxuNg>
-Feedback-ID: i787e41f1:Fastmail
-Date: Tue, 30 Jan 2024 15:01:24 -0800
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <2024013003-clubhouse-mauve-222b@gregkh>
-References: <CAKLnGtR3cgHVQz0kTmGVJAaT4nKvSejAZvbMGONTe=f_e9fSYA@mail.gmail.com>
- <20240130142524.GA21216@openwall.com>
- <2024013010-jockey-kindred-c6cd@gregkh>
- <20240130214500.GA24892@openwall.com>
-MIME-Version: 1.0
+Received: (qmail 21674 invoked from network); 2 Jul 2017 18:07:52 -0000
+Message-ID: <20170702180746.GA15341@openwall.com>
+References: <CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240130214500.GA24892@openwall.com>
-Subject: Re: [oss-security] FWD: Kernel vulnerabilities CVE-2021-33630 &
- CVE-2021-33631
+In-Reply-To: <CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sun, 2 Jul 2017 20:07:46 +0200
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] linux-distros list membership application - CloudLinux
+To: oss-security@lists.openwall.com
 
-On Tue, Jan 30, 2024 at 10:45:00PM +0100, Solar Designer wrote:
-> Thank you Greg for looking into these issues.  It's great that most
-> longterm kernel trees appear already fixed.
+Hi all,
 
-I've taken the one remaining missing fix into the next round of kernel
-releases, so all should be good now.
+I am inclined to add CloudLinux to the linux-distros list unless there
+are well-reasoned objections.  I'd appreciate any comments.
 
-> For CVE-2021-33631 (the ext4 BUG), both the distro vendor's and NVD's
-> CVSS input vectors specify AV:L/AC:L/PR:L/UI:N, which means the
-> vulnerability can be triggered by a local system user at will and
-> without additional privileges.  I'd say that deliberately getting the
-> kernel to work on a corrupted filesystem requires at least one of:
-> physical access (AV:P) or privileges on the system (PR:H) or user
-> interaction (UI:R).  However, there's no way to encode this in one CVSS
-> vector.  Also, in the physical access case, at least the availability
-> impact typically does not apply (would be A:N).
+On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
+> I would like to apply for membership in linux-distros list for CloudLinux
+> OS. Please, see application attached.
 
-The "interesting" thing here is that the project in question (the
-kernel) does not consider "mounting a corrupted filesystem" as a real
-attack vector at all.  There's been long discussions about it, the most
-recent being last year on the kernel summit discuss mailing list, and at
-the kernel summit itself.
+Thank you for posting this, Igor.
 
-So while CVSS might consider this a real issue, the developers of the
-project itself do not.  The disconnect is one that drives people who use
-sysbot tools to create fancy corrupted filesystem images with the goal
-of getting a CVE for their CV, crazy on a weekly basis when the issues
-they report get constantly ignored.
+I am most concerned about your answer to:
 
-Good times :)
+> 4. Not be (only) downstream or a rebuild of another distro (or else we
+> need convincing additional justification of how the list membership
+> would enable you to release fixes sooner, presumably not relying on the
+> upstream distro having released their fixes first?)
 
-thanks,
+> Our kernel has significant amount of changes comparing to OpenVZ kernel
+> We also do slight modifications to Apache web server, ship customized
+> versions of PHP (multiple versions), python, ruby, MySQL and MariaDB that
+> are  packaged by us, and not taken from upstream.
 
-greg k-h
+So are you saying that you'll release fixes sooner (once you're on the
+linux-distros list) only for this subset of packages that are modified
+or packaged by you?  What about the rest?
+
+> We would be happy to help with administrative tasks:
+> 
+>    1. Promptly review new issue reports for meeting the list's requirements
+>    and confirm receipt of the report and, when necessary, inform the reporter
+>    of any issues with their report (e.g., obviously not actionable by the
+>    distros) and request and/or propose any required yet missing information
+>    (most notably, a tentative public disclosure date)
+>    2. If the proposed public disclosure date is not within list policy,
+>    insist on getting this corrected and propose a suitable earlier date
+> 
+> And possibly more in the future, as we have a better understanding of the
+> amount of work needed to handle those tasks.
+> We will need some handholding at first to make sure we do things correctly.
+
+OK.  You'll likely need to choose additional/other tasks very soon since
+these trivial ones will likely transfer to another new distro joining,
+if one requests membership and meets the criteria shortly after you.
+
+> Please, find PGP related info
+
+Thanks.  Out of the people you listed, you and Konstantin appear to have
+been on oss-security for a long while, but Leonid doesn't appear to be
+subscribed - or is he?  If not, he probably needs to subscribe now.
+
+Alexander
