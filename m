@@ -1,4 +1,9 @@
-Received: (qmail 9455 invoked by uid 550); 14 Mar 2023 10:46:47 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2851" "Sunday" "2" "July" "2017" "21:22:46" "+0200" "Kristian Fiskerstrand" "k_f@gentoo.org" "<10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>" "64" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017070219:22:46" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        k_f@gentoo.o Jul  2   64/2851  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170702172722.GA14846@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>" "<20170630195516.GB1011@hunt>" "<20170630201642.GA9159@openwall.com>" "<e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>" "<20170701140735.GA10593@openwall.com>" "<JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>" "<20170702172722.GA14846@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5592 invoked by uid 550); 2 Jul 2017 19:42:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,63 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9428 invoked from network); 14 Mar 2023 10:46:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=more-magic.net; s=dkim-2016-12; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Sender:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=URhHxgiuL9esfvWcKRPaE23eZcK8lW3BVcKuVojFCoY=; b=DGhmUqwM34V+Bt5VaSyhfzioL7
-	do7TalzvuDnvS5oXWDV734bDuNZzBl+Hmwl4CqLLqcy6TisyrHMmo9sWcaas7Rrsr5cHjLmFtov3u
-	YwJ+SOel5A6OsQev910rz1oFUi84xKDYS6zVXdLzrJFG8Z0JpHaO3OsPURlcJyO7X9+U=;
-Date: Tue, 14 Mar 2023 11:46:33 +0100
-From: Peter Bex <peter@more-magic.net>
-To: oss-security@lists.openwall.com
-Message-ID: <ZBBQifYr6J8OSNXP@doggett>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20230314095103.1ed76cc0.hanno@hboeck.de>
+Received: (qmail 24274 invoked from network); 2 Jul 2017 19:23:07 -0000
+References: <20170628200239.GA25525@openwall.com>
+ <20170630132209.GA4625@openwall.com> <20170630195516.GB1011@hunt>
+ <20170630201642.GA9159@openwall.com>
+ <e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>
+ <20170701140735.GA10593@openwall.com>
+ <JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>
+ <20170702172722.GA14846@openwall.com>
+Message-ID: <10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="9xZ2S21IakVeQsut"
-Content-Disposition: inline
-In-Reply-To: <20230314095103.1ed76cc0.hanno@hboeck.de>
-X-PGP-Key: https://www.more-magic.net/peter-bex.asc
-Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
+In-Reply-To: <20170702172722.GA14846@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="4hV43LPhNPc0ktF8PDr4N64GIoGxJPhKw"
+Date: Sun, 2 Jul 2017 21:22:46 +0200
+From: Kristian Fiskerstrand <k_f@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
 
---9xZ2S21IakVeQsut
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+--4hV43LPhNPc0ktF8PDr4N64GIoGxJPhKw
+Content-Type: multipart/mixed; boundary="l9vhNptWDE3CIag5Fbe9JG07bqG702vHB";
+ protected-headers="v1"
+From: Kristian Fiskerstrand <k_f@gentoo.org>
+Reply-To: k_f@gentoo.org
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+Message-ID: <10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+References: <20170628200239.GA25525@openwall.com>
+ <20170630132209.GA4625@openwall.com> <20170630195516.GB1011@hunt>
+ <20170630201642.GA9159@openwall.com>
+ <e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>
+ <20170701140735.GA10593@openwall.com>
+ <JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>
+ <20170702172722.GA14846@openwall.com>
+In-Reply-To: <20170702172722.GA14846@openwall.com>
+
+--l9vhNptWDE3CIag5Fbe9JG07bqG702vHB
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 14, 2023 at 09:51:03AM +0100, Hanno B=F6ck wrote:
-> This seems to be the only real mitigation for this issue. It appears
-> su has a parameter, and in sudo one can configure the creation of a new
-> pty in the sudoers file. I don't consider these as satisfying fixes, as
-> they are optinal, and thus rely on the expectation that users are aware
-> of this risk and manually use these mitigations. That does not seem
-> realistic to me.
+On 07/02/2017 07:27 PM, Solar Designer wrote:
+> (*) I admit there are things we probably could do better with greater
+> effort.  For example, we could rewrite from scratch and release as Open
+> Source the encrypted mailing list software, which is currently an awful
+> hack.  I wouldn't oppose doing that piece of software development under
+> a separate funded project, if capable people were available for that.
+> However, I am worried that most teams tasked to work on something like
+> this would produce a complex monster, which wouldn't otherwise be
+> directly comparable (as in: is it better or worse? is it more or less
+> secure?) to the current hack.
 
-Indeed, opendoas (the portable version of OpenBSD's "doas") has this
-exact bug as well: https://github.com/Duncaen/OpenDoas/issues/106
+To have it mentioned as part of the discussion at least; has something
+like http://schleuder2.nadir.org/documentation/v2.2/concept.html even
+been considered? and if considered and found not appropriate, the
+rationale for it is likely interesting as well.
 
-Cheers,
-Peter
+--=20
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
---9xZ2S21IakVeQsut
+
+--l9vhNptWDE3CIag5Fbe9JG07bqG702vHB--
+
+--4hV43LPhNPc0ktF8PDr4N64GIoGxJPhKw
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEE6bh5EUSYP1EE+1UTER25+ctFibAFAmQQUIUACgkQER25+ctF
-ibAUSQgAnIx7f/5bUssF8cmvZzupPr/PQfY0OsfVmpHT47tRIOdqsIxA0JOkjkLL
-Mj+miYXhrz/HIxa4KRxU0PuN223CkQJywS2ez90IsNFVOKwAT6pZ2k6bS6IMYu2u
-4+LNcIfEeQ6qHpvCUtJgVSX+pys7WkFaaFuA7vxj/BchIVIUSEtEUo8JVGpek9dE
-0C+fUNDEk5edy6/r6VxUH1d26nqbgUXlg0++MisaQdoRVLAXhok7MuTu061Y1Spc
-2t6MZAWLLzJ1Hl2rTm2vmn/RRx5bdsyauft4V9FIVVpJhJ1SMCb6VgdFd9aT/YsT
-wjMiJNQlULWafFTaavdhhEvFz4VmbQ==
-=3cby
+iQEzBAEBCgAdFiEEtOrRIMf4mkrqRycHJQt6/tY3nYUFAllZSAcACgkQJQt6/tY3
+nYXVOQgAodYTCSAbDq49cLIFx8kcTdxgTCmoMYsEJ2y461PbgP0cFVyw+JLQpN4/
+LOHjkGOW0OXJxaxMtXYCkuUfPlzu5l+NrKefZ0nvLSbTG7OJ+zJ5PpcNIViDri1o
+GajZtw8/S5xC8Eg2brOZDt4prW31LWpMzeQopBeicmTSNFBpWXNW/aX4FUIaOx6K
+rVQqil4dU4GbPCdJGQoEXjBtzATm0ig/TRGdj0tspjLrDE90gP6YcNn7zIjif9+9
+n3btUAv+jdESXL3rPjNONfGKZsmm0AJrfoqqQRTt8Y7xz2TxnRufe2aiQ1zS3eN0
+hwYqY3hc1pJkWgBpTU6+NqNbdvEolw==
+=8WRW
 -----END PGP SIGNATURE-----
 
---9xZ2S21IakVeQsut--
+--4hV43LPhNPc0ktF8PDr4N64GIoGxJPhKw--
