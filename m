@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1606" "Tuesday" "4" "October" "2016" "14:32:10" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161004183210.EA2B1B2E027@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)" "^Cc:" nil nil "10" "2016100418:32:10" "[oss-security] Re: CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)" (number mark "        cve-assign@m Oct  4   36/1606  " thread-indent "\"[oss-security] Re: CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)\"\n") "<DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>" ("<DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1119" "Sunday" "2" "July" "2017" "22:01:14" "+0200" "Solar Designer" "solar@openwall.com" "<20170702200114.GA18695@openwall.com>" "21" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Cc:" nil nil "7" "2017070220:01:14" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        solar@openwa Jul  2   21/1119  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>" "<20170630195516.GB1011@hunt>" "<20170630201642.GA9159@openwall.com>" "<e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>" "<20170701140735.GA10593@openwall.com>" "<JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>" "<20170702172722.GA14846@openwall.com>" "<10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3649 invoked by uid 550); 4 Oct 2016 18:32:23 -0000
+Received: (qmail 1984 invoked by uid 550); 2 Jul 2017 20:01:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3628 invoked from network); 4 Oct 2016 18:32:22 -0000
-In-Reply-To: <DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>
-Message-Id: <20161004183210.EA2B1B2E027@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue,  4 Oct 2016 14:32:10 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 1700 invoked from network); 2 Jul 2017 20:01:20 -0000
+Message-ID: <20170702200114.GA18695@openwall.com>
+References: <20170628200239.GA25525@openwall.com> <20170630132209.GA4625@openwall.com> <20170630195516.GB1011@hunt> <20170630201642.GA9159@openwall.com> <e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com> <20170701140735.GA10593@openwall.com> <JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss> <20170702172722.GA14846@openwall.com> <10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com
+Date: Sun, 2 Jul 2017 22:01:14 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)
-To: steve@collectiveidea.com
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: Kristian Fiskerstrand <k_f@gentoo.org>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sun, Jul 02, 2017 at 09:22:46PM +0200, Kristian Fiskerstrand wrote:
+> On 07/02/2017 07:27 PM, Solar Designer wrote:
+> > we could rewrite from scratch and release as Open
+> > Source the encrypted mailing list software, which is currently an awful
+> > hack.  I wouldn't oppose doing that piece of software development under
+> > a separate funded project, if capable people were available for that.
+> > However, I am worried that most teams tasked to work on something like
+> > this would produce a complex monster, which wouldn't otherwise be
+> > directly comparable (as in: is it better or worse? is it more or less
+> > secure?) to the current hack.
+> 
+> To have it mentioned as part of the discussion at least; has something
+> like http://schleuder2.nadir.org/documentation/v2.2/concept.html even
+> been considered? and if considered and found not appropriate, the
+> rationale for it is likely interesting as well.
 
-> I'd like to request a CVE to track a security vulnerability found in
-> Bundler (bundler.io <http://bundler.io/>). Bundler allows the user to
-> specify sources from which Ruby gems are installed. If a secondary
-> source is specified, even if scoped to a specific gem, that source is
-> silently applied to all declared gems. This allows an attacker to
-> introduce arbitrary code into an application via gem name collision on
-> the secondary source, which will unexpectedly (and without warning)
-> take priority over the primary source.
+No, it wasn't considered yet.  I vaguely recall someone pointing me at
+something like it (could be this one) on some occasion, but I couldn't
+find that e-mail now.  Thank you for the link!
 
-Use CVE-2016-7954.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX8/U7AAoJEHb/MwWLVhi2xrwP/RjNz+PRsrpnt6grFruRj6rH
-IvSdysqLU3/+gK2Q+1mXtdydmkn05PMLHrB58Os6hP+K5POjPnNjXsc+VfaoD83r
-S4wmDBs3H4l3XMrT+WHOqvZWsF74iDlTSFA35DNLFRW6Ad5IwPNuMcUBE8yqlMyK
-SQ6aU0BvwB7yygmeK6RBvDICsUthcyrTooXkmeDKe1EhRxgKXwdvFVeknKiCOneK
-hTMvNl6MyWU6BW3W0AelJG0mcndEu9Ai7DUf50mgCtuJCLay0wKLn8QrcYg7dWR8
-17xFYh8v3soNMNrWBhyKcJUxWPz/YhNKbqjvXnk4Q1BIiEaBmYL4/Mw08dj+nKmy
-2LTE+Kcx9vKHedo6lNT/Qxuug+S1czmbGESfygWACDpl2frB9YwVaU8MbFxZkfVj
-utU9+zrQBhRQXUw9ZMN83dJqqiC8956/IGWczI++rvp8cqrMETP91PueK23wE091
-SEzfASXty4n2HdD4AWwg0caECoDeUiDZP8UrQkkLDYu9Xlyeqw9C1vgiATTT3Uni
-bTFjnBhrohCXEh/uvoWJIqZZbO8DRQ0KWI6FlcDuDzubGrih0M4CM7KZ0bDRpwGC
-9VGbDtdGK0XPOzzHvPUr+GDSjwZCJ0aFTaxlxwa+ol15mLKyBWCkLHd/8NYHvM5E
-is4rHDl4O1P83Wx0+Er0
-=RpXj
------END PGP SIGNATURE-----
+Alexander
