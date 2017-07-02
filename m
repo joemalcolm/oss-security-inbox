@@ -1,128 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/06/1
-Message-Id: <E1eMXQU-0001T7-NM@xenbits.xenproject.org>
-Date: Wed, 06 Dec 2017 10:59:42 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 238 (CVE-2017-15591) - DMOP map/unmap missing argument checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/5
+Message-ID: <C882188A65B78D4489A202C0BEAD24D04B334B79@Exchange4.dnpexchange.com>
+Date: Sun, 2 Jul 2017 18:16:18 +0000
+From: Bobby Broughton <bobby@...ciselymanaged.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: linux-distros list membership application - CloudLinux
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hey all!
 
-            Xen Security Advisory CVE-2017-15591 / XSA-238
-                              version 3
+I run two businesses, one of which hosts other hosting providers, and we are heavy users of CloudLinux. They work very hard to contribute to fixing issues whether the upstream has fixed it or not, and I see tremendous value in that. I think they should be added.
 
-                DMOP map/unmap missing argument checks
+Thanks!
 
-UPDATES IN VERSION 3
-====================
+Bobby
 
-CVE assigned.
+-----Original Message-----
+From: Solar Designer [mailto:solar@...nwall.com] 
+Sent: Sunday, July 2, 2017 2:08 PM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] linux-distros list membership application - CloudLinux
 
-ISSUE DESCRIPTION
-=================
+Hi all,
 
-DMOPs (which were a subgroup of HVMOPs in older releases) allow guests
-to control and drive other guests.  The I/O request server page mapping
-interface uses range sets to represent I/O resources the emulation of
-which is provided by a given I/O request server.  The internals of the
-range set implementation require that ranges have a starting value no
-lower than the ending one.  Checks for this fact were missing.
+I am inclined to add CloudLinux to the linux-distros list unless there are well-reasoned objections.  I'd appreciate any comments.
 
-IMPACT
-======
+On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
+> I would like to apply for membership in linux-distros list for 
+> CloudLinux OS. Please, see application attached.
 
-Malicious or buggy stub domain kernels or tool stacks otherwise living
-outside of Domain0 can mount a denial of service attack which, if
-successful, can affect the whole system.
+Thank you for posting this, Igor.
 
-Only domains controlling HVM guests can exploit this vulnerability.
-(This includes domains providing hardware emulation services to HVM
-guests.)
+I am most concerned about your answer to:
 
-VULNERABLE SYSTEMS
-==================
+> 4. Not be (only) downstream or a rebuild of another distro (or else we 
+> need convincing additional justification of how the list membership 
+> would enable you to release fixes sooner, presumably not relying on 
+> the upstream distro having released their fixes first?)
 
-Xen versions 4.5 and later are vulnerable.  Xen versions 4.4 and
-earlier are not vulnerable.
+> Our kernel has significant amount of changes comparing to OpenVZ 
+> kernel We also do slight modifications to Apache web server, ship 
+> customized versions of PHP (multiple versions), python, ruby, MySQL 
+> and MariaDB that are  packaged by us, and not taken from upstream.
 
-Only x86 systems are affected.  ARM systems are not affected.
+So are you saying that you'll release fixes sooner (once you're on the linux-distros list) only for this subset of packages that are modified or packaged by you?  What about the rest?
 
-This vulnerability is only applicable to Xen systems using stub domains
-or other forms of disaggregation of control domains for HVM guests.
+> We would be happy to help with administrative tasks:
+> 
+>    1. Promptly review new issue reports for meeting the list's requirements
+>    and confirm receipt of the report and, when necessary, inform the reporter
+>    of any issues with their report (e.g., obviously not actionable by the
+>    distros) and request and/or propose any required yet missing information
+>    (most notably, a tentative public disclosure date)
+>    2. If the proposed public disclosure date is not within list policy,
+>    insist on getting this corrected and propose a suitable earlier 
+> date
+> 
+> And possibly more in the future, as we have a better understanding of 
+> the amount of work needed to handle those tasks.
+> We will need some handholding at first to make sure we do things correctly.
 
-MITIGATION
-==========
+OK.  You'll likely need to choose additional/other tasks very soon since these trivial ones will likely transfer to another new distro joining, if one requests membership and meets the criteria shortly after you.
 
-Running only PV guests will avoid this issue.
+> Please, find PGP related info
 
-(The security of a Xen system using stub domains is still better than
-with a qemu-dm running as an unrestricted dom0 process.  Therefore
-users with these configurations should not switch to an unrestricted
-dom0 qemu-dm.)
+Thanks.  Out of the people you listed, you and Konstantin appear to have been on oss-security for a long while, but Leonid doesn't appear to be subscribed - or is he?  If not, he probably needs to subscribe now.
 
-CREDITS
-=======
-
-This issue was discovered by Vitaly Kuznetsov of RedHat.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa238.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x, Xen 4.7.x
-xsa238-4.6.patch       Xen 4.6.x
-xsa238-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa238*
-93cc1da4a0ab27f857f2ad39c38f112ef101a01bc5d386807d27371f83526831  xsa238.meta
-85d3f9713bef1bc86c682857dbd7388a1d1f20089363ddfc4cb9ecbd88eaffec  xsa238.patch
-034e91c234f6831dbaa1aaf29f4f90de2e822f99301424f7f3527f9da883ff68  xsa238-4.5.patch
-29255a81729b24866e594426167de5fbef70de21ef62a95ba95de191d2a7fd54  xsa238-4.6.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJaJ82OAAoJEIP+FMlX6CvZcU0IAMkUqTbbTWIWAruO03YSxFvn
-bqmfyzgyUVHUMLzhjrukaqVxZYcxV5FbY/IMWEZY/oET9wHv8iBsMay+cVlsv45i
-GMHZaxGBM9P1xU6AS4GP/oRMb9LA4fU7rjCKcK54zaDV+mdW/2rA+Ac0IVbmn3tF
-gcnkfbHk3cF8x91rD4+2ZC7ihE6CIX70PQxdXNbgR8RpoxGdE1q9IPF8ik3gLyO/
-OtoDfqrbau+YllhTBI3XxmU+MJgpRf+VRnOgFpYjzp10dfVBM459Lmdzfa6gXhxz
-ysm+Js8Y4jpVEIGY3qXAV8/V2ZSL8nNmFiNFPOJZcNu4wkAFZKUlyWBbFlJcvvk=
-=keh/
------END PGP SIGNATURE-----
-
-Download attachment "xsa238.meta" of type "application/octet-stream" (1867 bytes)
-
-Download attachment "xsa238.patch" of type "application/octet-stream" (1545 bytes)
-
-Download attachment "xsa238-4.5.patch" of type "application/octet-stream" (1435 bytes)
-
-Download attachment "xsa238-4.6.patch" of type "application/octet-stream" (1435 bytes)
+Alexander
