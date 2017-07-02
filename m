@@ -1,35 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/10
-Message-ID: <20170210193748.t4odr3326b63snwq@perpetual.pseudorandom.co.uk>
-Date: Fri, 10 Feb 2017 19:37:48 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/12
+Message-ID: <20170702224421.GA19376@openwall.com>
+Date: Mon, 3 Jul 2017 00:44:21 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 10 Feb 2017 at 13:09:43 -0500, Stiepan wrote:
-> By the way, I have just tried the OVE ID alternative:
-> good idea, but perhaps one button is a bit too frugal.
+On Sun, Jul 02, 2017 at 01:20:43PM -0700, Anthony Liguori wrote:
+> I've been thinking about this list of items and also some of the
+> challenges of Stack Clash.  Something that frequently came up was
+> uncertainty about what the current set of patches were and there was
+> also lack of clarity on dates.
 
-The purpose of OVE IDs is literally only creating a unique identifier
-that no other maintainer or security researcher will be using to
-identify a different vulnerability. That's all they are. How you
-publish the vulnerability for which you have used the identifier
-is up to you.
+This should become easier with the maximum of 14 days strictly enforced.
 
-They're slightly more readable and memorable than using
-/proc/sys/kernel/random/uuid to allocate identifiers, and they give
-you some vague idea of how old the vulnerability report is. That's about
-the only difference.
+> I think a lot of the administrative tasks outlined can be better
+> handled through a system other than email.
 
-(Hmm, now I'm tempted to use /proc/sys/kernel/random/uuid next
-time I need a unique ID for a vulnerability that's already public...)
+This makes sense.  Text files, then? ;-)
 
-> P.S.: While we're at it, let's use the two OVEs I have just wasted,
-> OVE-20170210-0001 (forward CVE web request+ID to oss-sec)
-> OVE-20170210-0002 (add a title option field to OVE web form),
-> for the two aforementioned issues!
+On a more serious note, I am concerned that the person collecting
+statistics, etc. might end up entering the data into some online system,
+thereby incurring unnecessary risk.  We should ask the volunteering
+distros/people how they are processing the information, to discourage
+such occurrences.
 
-I'm pretty sure those aren't security vulnerabilities in any product :-P
+And text files is what I would use.  Seriously.  Much more convenient
+than an online system like Bugzilla for the low volume we're handling.
 
-    S
+> What do you think about having a public bugzilla (or similar system)
+> where tracked issues are kept as private bugs?
+
+I dislike this idea.
+
+> I think this could be
+> hosted in a way that everyone felt comfortable with (ensuring enough
+> people had SSH access to for audit purposes).  It's relatively easy to
+> stick everything behind SSL.
+
+How would we know this is a dedicated machine with no IPMI and such?
+It's the case for the current distros list machine.  No way for you all
+to check and confirm that as well, though.
+
+Now, I understand that many of the distros are probably entering stuff
+into their bug trackers anyway.  Often on shared or/and centrally
+managed systems.  I hope most only do so for bugs that are actually
+relevant to them, or at least that are likely to be relevant.
+
+Maybe we should make this limitation part of list policy ("do not enter
+the newly arriving issues into bug trackers unless and until you're
+reasonably confident the issues are relevant to you")?  Or forbid use of
+bug trackers for the embargoed issues arriving through the distros list
+altogether, but I'm quite sure many of the existing distros list members
+won't accept that. :-(
+
+> In addition to helping to make sure there's clear information (like a
+> summary, current patches, etc), I think the Project Zero approach of
+> making a private bug public post-embargo helps share information and
+> provide more transparency after the event.
+
+Yes, at P0 they definitely do the transparency thing well.  Better than
+us so far.  But they're also extremely courageous to have the info in a
+public-facing web app for up to 90 days.  I wouldn't dare.  We shouldn't.
+
+To improve transparency, I'd rather see someone write a mass-decrypter
+for mbox with OpenPGP messages.
+
+> I'm not suggesting that a bug tracker eliminate the discussions on the
+> list, but really just supplement it.
+
+It's unlikely to work entirely that way.  It's more like a split.
+
+> If there's interest in this, we
+> would be very willing to set it up and deal with the hosting aspect of
+> it.
+
+Thank you, but I hope we won't go that route.
+
+BTW, your messages' text/plain parts don't always differentiate your
+added text vs. the previous message's quoted text - e.g., I had to
+correct that manually in your reply to Kristian while it was in the
+moderation queue.  I hope you don't mind; the alternative was rejecting
+the message as it was a total mess.  I had to look at the text/html
+part to figure out what came from where.
+
+Alexander
