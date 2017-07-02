@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6103" "Monday" "9" "October" "2017" "16:02:37" "-0700" "Andy LoPresto" "alopresto@apache.org" "<13B90414-1C62-4858-BD74-051F67F1F6D4@apache.org>" "125" "[oss-security] [ANNOUNCE] Apache NiFi CVE-2017-12623" nil nil nil "10" "2017100923:02:37" "[oss-security] [ANNOUNCE] Apache NiFi CVE-2017-12623" (number mark "U       alopresto@ap Oct  9  125/6103  " thread-indent "\"[oss-security] [ANNOUNCE] Apache NiFi CVE-2017-12623\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2968" "Sunday" "2" "July" "2017" "18:16:18" "+0000" "Bobby Broughton" "bobby@preciselymanaged.com" "<C882188A65B78D4489A202C0BEAD24D04B334B79@Exchange4.dnpexchange.com>" "75" "RE: [oss-security] linux-distros list membership application - CloudLinux" "^Date:" nil nil "7" "2017070218:16:18" "[oss-security] linux-distros list membership application - CloudLinux" (number mark "        bobby@precis Jul  2   75/2968  " thread-indent "\"RE: [oss-security] linux-distros list membership application - CloudLinux\"\n") "<20170702180746.GA15341@openwall.com>" ("<CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>" "<20170702180746.GA15341@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9799 invoked by uid 550); 10 Oct 2017 00:46:15 -0000
+Received: (qmail 3235 invoked by uid 550); 2 Jul 2017 18:37:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,160 +11,121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7539 invoked from network); 2 Jul 2017 18:16:32 -0000
+Thread-Topic: [oss-security] linux-distros list membership application -
+ CloudLinux
+Thread-Index: AQHS80E10T2rcGudV0u7LT0lPVkL+qJBSw0A//+MomA=
+Message-ID: <C882188A65B78D4489A202C0BEAD24D04B334B79@Exchange4.dnpexchange.com>
+References: <CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>
+ <20170702180746.GA15341@openwall.com>
+In-Reply-To: <20170702180746.GA15341@openwall.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [208.104.24.32]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Originating-IP: 69.42.49.9
+X-SpamExperts-Domain: smtp.cologlobal.com
+X-SpamExperts-Username: 69.42.49.9
+Authentication-Results: cologlobal.com; auth=pass smtp.auth=69.42.49.9@smtp.cologlobal.com
+X-SpamExperts-Outgoing-Class: ham
+X-SpamExperts-Outgoing-Evidence: Combined (0.04)
+X-Recommended-Action: accept
+X-Filter-ID: PqwsvolAWURa0gwxuN3S5YEa3T7JuZT23fGO2rGt3ZisNS8uiqItg4GbNik+y1SzZWLLfe5+CyfR
+ bbGYyIEp7zA5I+VGZXnsdvxKY0xzjT4GkusBVG/qN3nMkd29NYA8nrIkZp2mn6Qry0vFKTHPqKd3
+ 1FAKOoQhiKfgUnnmsuDNuyjVY4HXVpeWfB46+PkfSYo8GjwHYy+Fw5PLjLxblP/ddZYtL1M9/qKu
+ fBeGCxB1ya1NxZI4oPlEBJXODbuKwljOOXKkDLezLhrzQA5J6d9fxN2oReTDHAyOynaY0CnBSxW0
+ WU3muIcvQt375QB12Vi+eo/Zhlfkd9bnRedq0BHfbWSB3uoIs93EqYMZoM7y7vp6zAYNH7JhGeVq
+ WBnN5iXdPRt1hMv4ogXDSfSIZwFKpw6uarMIchUUKBPMSwrILLpZPYwPUogHS6M56zex/wXDIul4
+ 76yvobWtzyMEfw48BjY/mymW6Cnj+d0/LhK/VUC6Lt1VcZLeTUJHoQUsDc+I6EIZOSDx6C1Amfb5
+ llvRt5EetF9IrbplyaSzqN6DqE+X/czcI5QK7VzPhB1SZqTn7udokAFNB9RS7Jh1ILLFCA3Kqp/8
+ g3jzPWWmjo4NGaJIthdCgRXEACGvkoLb++DuIQUs/5JJj4C/n4CILnaZc+8sCrZrGybA7Sls+tnW
+ TeRrbY5bMlG3H3Qq5RSNkBGprLrWcwSsgrfL0IC+b/m6n6FdGFeEDTgfjLE6d4pAXgLcPnu4c2eP
+ Bds3M8zIkxp3iNXAjCHBOkeo7SfG7W+7MpbWp3qSB6wPfh6kgM3CLVFYMCa7KqinoNU0oeMrT0og
+ Z0MN8u57s9IDrvq/YGI7iZpvWBHLkElGkzDQ+5E=
+X-Report-Abuse-To: spam@mx1.cologlobal.com
+Date: Sun, 2 Jul 2017 18:16:18 +0000
+From: Bobby Broughton <bobby@preciselymanaged.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11828 invoked from network); 9 Oct 2017 23:02:56 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:reply-to:subject:date:message-id:to
-         :mime-version;
-        bh=T+JI2M9ilhwqTjBZSuScCQw2xO9aNbZmfX3pkGvd8Po=;
-        b=cSSNTv8aP3z3/bKQSNbGAI1e4QSOL1YfHAvX3nYGnAoFZ2GtArPTHze0lWys0fgTRa
-         2e6s6DyNl74eaxufCri5TWLvuOB7DFCqhMMBj0QeSZ6ghHcJJ69dQXr6VUzN3pD/7mrP
-         zgNWl+f8c4O7Hr91TLXxT05LqzsJluUuxmZQd9EboniYywGHHyGh+9nGMa/K2qNo2wKM
-         UPq2wO8KoANM+NaMpQuT9henKnQAPcoTfWY8lmYbw4GOpitmwzM+gludJID+42iPFbR+
-         DQyuu7Qyn5MqCiqp+owCV6eCMPmrJyqAe7aLer94bPHGP1XaxBJDPXHa0SuzfHK1ANf9
-         UT/Q==
-X-Gm-Message-State: AMCzsaVrovykpzCGiBHFeVFa7XgNHMyb+WIYNVhZs5ngVpJVanWz+N14
-	pOQaZS0iM+CYPw9JSTWWOh0=
-X-Google-Smtp-Source: AOwi7QDDo/+87En6S0dYTicCcSkNKFZaDzuGzRz9yGxby3/Os/TFGUi1L6Hnxto87RGr/LKhAvcH5A==
-X-Received: by 10.98.74.155 with SMTP id c27mr11535588pfj.236.1507590164565;
-        Mon, 09 Oct 2017 16:02:44 -0700 (PDT)
-From: Andy LoPresto <alopresto@apache.org>
-Content-Type: multipart/signed; boundary="Apple-Mail=_36449B45-FB89-461C-9B54-406E03B9A5B0"; protocol="application/pgp-signature"; micalg=pgp-sha512
-Date: Mon, 9 Oct 2017 16:02:37 -0700
-Message-Id: <13B90414-1C62-4858-BD74-051F67F1F6D4@apache.org>
-To: security@nifi.apache.org,
- dev@nifi.apache.org,
- users@nifi.apache.org,
- oss-security@lists.openwall.com,
- bugtraq@securityfocus.com,
- announce@apache.org
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-Subject: [oss-security] [ANNOUNCE] Apache NiFi CVE-2017-12623
+Subject: RE: [oss-security] linux-distros list membership application -
+ CloudLinux
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---Apple-Mail=_36449B45-FB89-461C-9B54-406E03B9A5B0
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_681709A7-040E-4D6B-AB7A-591B09CCE207"
+Hey all!
 
+I run two businesses, one of which hosts other hosting providers, and we ar=
+e heavy users of CloudLinux. They work very hard to contribute to fixing is=
+sues whether the upstream has fixed it or not, and I see tremendous value i=
+n that. I think they should be added.
 
---Apple-Mail=_681709A7-040E-4D6B-AB7A-591B09CCE207
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Thanks!
 
-Apache NiFi PMC would like to announce the discovery and resolution of CVE-=
-2017-12623. This issue has been resolved and a new version of the Apache Ni=
-Fi project was released in accordance with the Apache Release Process.
+Bobby
 
-Apache NiFi is an easy to use, powerful, and reliable system to process and=
- distribute data. It supports powerful and scalable directed graphs of data=
- routing, transformation, and system mediation logic.
+-----Original Message-----
+From: Solar Designer [mailto:solar@openwall.com]=20
+Sent: Sunday, July 2, 2017 2:08 PM
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] linux-distros list membership application - Clo=
+udLinux
 
-Fixed in Apache NiFi 1.4.0 (Released: October 2, 2017)
+Hi all,
 
-CVE-2017-12623: Apache NiFi XXE issue when loading template
+I am inclined to add CloudLinux to the linux-distros list unless there are =
+well-reasoned objections.  I'd appreciate any comments.
 
-Severity: Medium
+On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
+> I would like to apply for membership in linux-distros list for=20
+> CloudLinux OS. Please, see application attached.
 
-Versions Affected:
+Thank you for posting this, Igor.
 
-Apache NiFi 1.0.0 - 1.3.0
+I am most concerned about your answer to:
 
-Description: An authorized user could upload a template which contained mal=
-icious code and accessed sensitive files via an XML External Entity (XXE) a=
-ttack.
+> 4. Not be (only) downstream or a rebuild of another distro (or else we=20
+> need convincing additional justification of how the list membership=20
+> would enable you to release fixes sooner, presumably not relying on=20
+> the upstream distro having released their fixes first?)
 
-Mitigation: The fix to properly handle XML External Entities was applied on=
- the Apache NiFi 1.4.0 release. Users running a prior 1.x release should up=
-grade to the appropriate release.
+> Our kernel has significant amount of changes comparing to OpenVZ=20
+> kernel We also do slight modifications to Apache web server, ship=20
+> customized versions of PHP (multiple versions), python, ruby, MySQL=20
+> and MariaDB that are  packaged by us, and not taken from upstream.
 
-Credit: This issue was discovered by Pawe=C5=82 Gocyla.
+So are you saying that you'll release fixes sooner (once you're on the linu=
+x-distros list) only for this subset of packages that are modified or packa=
+ged by you?  What about the rest?
 
-For more information: https://nifi.apache.org/security.html
+> We would be happy to help with administrative tasks:
+>=20
+>    1. Promptly review new issue reports for meeting the list's requiremen=
+ts
+>    and confirm receipt of the report and, when necessary, inform the repo=
+rter
+>    of any issues with their report (e.g., obviously not actionable by the
+>    distros) and request and/or propose any required yet missing informati=
+on
+>    (most notably, a tentative public disclosure date)
+>    2. If the proposed public disclosure date is not within list policy,
+>    insist on getting this corrected and propose a suitable earlier=20
+> date
+>=20
+> And possibly more in the future, as we have a better understanding of=20
+> the amount of work needed to handle those tasks.
+> We will need some handholding at first to make sure we do things correctl=
+y.
 
-Andy LoPresto
-alopresto@apache.org
-alopresto.apache@gmail.com
-PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+OK.  You'll likely need to choose additional/other tasks very soon since th=
+ese trivial ones will likely transfer to another new distro joining, if one=
+ requests membership and meets the criteria shortly after you.
 
+> Please, find PGP related info
 
---Apple-Mail=_681709A7-040E-4D6B-AB7A-591B09CCE207
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
+Thanks.  Out of the people you listed, you and Konstantin appear to have be=
+en on oss-security for a long while, but Leonid doesn't appear to be subscr=
+ibed - or is he?  If not, he probably needs to subscribe now.
 
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html charset=
-=3Dutf-8"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode: s=
-pace; -webkit-line-break: after-white-space;" class=3D""><div class=3D""><d=
-iv class=3D"">Apache NiFi PMC would like to announce the discovery and reso=
-lution of CVE-2017-12623. This issue has been resolved and a new version of=
- the Apache NiFi project was released in accordance with the Apache Release=
- Process.&nbsp;</div><div class=3D""><br class=3D""></div><div class=3D"">A=
-pache NiFi is an easy to use, powerful, and reliable system to process and =
-distribute data. It supports powerful and scalable directed graphs of data =
-routing, transformation, and system mediation logic.</div><div class=3D""><=
-br class=3D""></div><div class=3D"">Fixed in Apache NiFi 1.4.0 (Released: O=
-ctober 2, 2017)</div><div class=3D""><br class=3D""></div><div class=3D"">C=
-VE-2017-12623: Apache NiFi XXE issue when loading template</div><div class=
-=3D""><br class=3D""></div><div class=3D"">Severity: Medium</div><div class=
-=3D""><br class=3D""></div><div class=3D"">Versions Affected:</div><div cla=
-ss=3D""><br class=3D""></div><div class=3D"">Apache NiFi 1.0.0 - 1.3.0</div=
-><div class=3D""><br class=3D""></div><div class=3D"">Description: An autho=
-rized user could upload a template which contained malicious code and acces=
-sed sensitive files via an XML External Entity (XXE) attack.&nbsp;</div><di=
-v class=3D""><br class=3D""></div><div class=3D"">Mitigation: The fix to pr=
-operly handle XML External Entities was applied on the Apache NiFi 1.4.0 re=
-lease. Users running a prior 1.x release should upgrade to the appropriate =
-release.&nbsp;</div><div class=3D""><br class=3D""></div><div class=3D"">Cr=
-edit: This issue was discovered by Pawe=C5=82 Gocyla.</div><div class=3D"">=
-<br class=3D""></div><div class=3D"">For more information: <a href=3D"https=
-://nifi.apache.org/security.html" class=3D"">https://nifi.apache.org/securi=
-ty.html</a></div></div><div class=3D""><br class=3D""></div><div class=3D"">
-<div style=3D"letter-spacing: normal; orphans: auto; text-align: start; tex=
-t-indent: 0px; text-transform: none; white-space: normal; widows: auto; wor=
-d-spacing: 0px; -webkit-text-stroke-width: 0px; word-wrap: break-word; -web=
-kit-nbsp-mode: space; -webkit-line-break: after-white-space;" class=3D""><d=
-iv style=3D"letter-spacing: normal; orphans: auto; text-align: start; text-=
-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-=
-spacing: 0px; -webkit-text-stroke-width: 0px; word-wrap: break-word; -webki=
-t-nbsp-mode: space; -webkit-line-break: after-white-space;" class=3D""><div=
- style=3D"color: rgb(0, 0, 0);" class=3D"">Andy LoPresto</div><div style=3D=
-"color: rgb(0, 0, 0);" class=3D""><a href=3D"mailto:alopresto@apache.org" c=
-lass=3D"">alopresto@apache.org</a></div><div class=3D""><i class=3D""><font=
- color=3D"#c0c0c0" class=3D""><a href=3D"mailto:alopresto.apache@gmail.com"=
- class=3D"">alopresto.apache@gmail.com</a></font></i></div><div style=3D"co=
-lor: rgb(0, 0, 0);" class=3D"">PGP Fingerprint:&nbsp;70EC B3E5 98A6 5A3F D3=
-C4 &nbsp;BACE 3C6E F65B 2F7D EF69</div></div></div>
-</div>
-<br class=3D""></body></html>=
-
---Apple-Mail=_681709A7-040E-4D6B-AB7A-591B09CCE207--
-
---Apple-Mail=_36449B45-FB89-461C-9B54-406E03B9A5B0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQIcBAEBCgAGBQJZ3AAOAAoJEDxu9lsvfe9pKMIP/jwWH1jOjeuzBEBIrNio/vTT
-Pa9iVoXW/DSqSUevZPO6qT8khYYpzbrfrH1iO6rMhfL3oHU0VuEBulOFFM1e3Ug+
-blS5VyWYIlL2WTMiXdHWYopNp2AMptQqtFS6BCXlqQHzlhdwCaobCcVEelU7JnIZ
-jCjx+VTQUf/w+ILNoDYLnVpklFqDaVv+41Q2+rHdT8aQSQKtWAeNuCFanD58SiYB
-IMRGoW+IMmIcUpCTQ3pk67U+YZyoeAkk1N5ClhYC8qy/+L12mj9ruMMzuXKFgMLS
-WGOcO7l4jgUZMaycnn6207HttlbmDeruCGaJh5VUe6BXL4fOB4igXj+1vQMv6++Y
-WC4iz1QpBXfqlr4OSZ/atg90HbRe7d6MMou5hsDkGyvOd0KDYA0SDdTTdh1GJpii
-8f6GvTMNKrqwWeYYGM2bv9GAxO3g0ZH0tlVuXd0GjSL3h6UiK09KCl9eaXxurFnn
-GIuYWDdMy5cBJOZ+5UO/xVHfriWMQNhqnRfyO/SeHXaangM67xYKA8vmgV3oH/sN
-gnT3kT68wYOTB1oZfLq615WKXjBCZ2bGZsQg4BH0EEj0W5OS4LOsHGAqEHWDRP63
-F3KRcSrNYerMS0S3TZE6tnKwnum/9oAKw9q0bxHu+XrpxOtAF7tw4E6bboNiFZTv
-ueuD5GP7vcg3yRrhlf22
-=4VYx
------END PGP SIGNATURE-----
-
---Apple-Mail=_36449B45-FB89-461C-9B54-406E03B9A5B0--
+Alexander
