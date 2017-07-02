@@ -1,79 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/15
-Message-ID: <CAHmME9qMDNZ8-X_S4vNeHkUWxAacN2onuRZ4=SCo4CPqqVPmhQ@mail.gmail.com>
-Date: Mon, 1 May 2017 19:12:05 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Integer Overflow in rxvt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/6
+Message-ID: <CA+-XxSHKPnd0mEx+nk832TOs4om6BX=8w=gnSXZjrWak1zszwQ@mail.gmail.com>
+Date: Sun, 2 Jul 2017 21:29:23 +0300
+From: Igor Seletskiy <i@...udlinux.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros list membership application - CloudLinux
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Thank you Alexander,
 
-A CVE for this in the process of being assigned, and I'll follow up on this
-thread once one has been given.
+Please, see my answers bellow.
 
-There exists an integer overflow in rxvt. As the upstream project is dead,
-there is no non-vulnerable version. Thus, I'd recommend distributions use
-the attached patch. Do note that rxvt is different from rxvt-unicode (urxvt),
-which is still maintained by an upstream and is not vulnerable to this bug.
+On Sun, Jul 2, 2017 at 9:07 PM, Solar Designer <solar@...nwall.com> wrote:
 
-Using the following escape code will segfault rxvt:
+> Hi all,
+>
+> I am inclined to add CloudLinux to the linux-distros list unless there
+> are well-reasoned objections.  I'd appreciate any comments.
+>
+> On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
+> > I would like to apply for membership in linux-distros list for CloudLinux
+> > OS. Please, see application attached.
+>
+> Thank you for posting this, Igor.
+>
+> I am most concerned about your answer to:
+>
+> > 4. Not be (only) downstream or a rebuild of another distro (or else we
+> > need convincing additional justification of how the list membership
+> > would enable you to release fixes sooner, presumably not relying on the
+> > upstream distro having released their fixes first?)
+>
+> > Our kernel has significant amount of changes comparing to OpenVZ kernel
+> > We also do slight modifications to Apache web server, ship customized
+> > versions of PHP (multiple versions), python, ruby, MySQL and MariaDB that
+> > are  packaged by us, and not taken from upstream.
+>
+> So are you saying that you'll release fixes sooner (once you're on the
+> linux-distros list) only for this subset of packages that are modified
+> or packaged by you?  What about the rest?
+>
+We would be fixing any security issues that can affect our customers asap.
+We have everything setup to do that, and we did it a couple of times.
+For packages that are not used by wast majority of our customers, we might
+wait
+for upstream, and repackage it within 24 hours or so (our typical timeframe
+today).
 
-        $ printf '\033[-2147483648L'
 
-The crash occurs here in screen.c:
 
-    for (; i--; j++) {
-        r->screen.tlen[j] = 0;
-        r->screen.text[j] = r->buf_text[i];
-        r->screen.rend[j] = r->buf_rend[i];
+> > We would be happy to help with administrative tasks:
+> >
+> >    1. Promptly review new issue reports for meeting the list's
+> requirements
+> >    and confirm receipt of the report and, when necessary, inform the
+> reporter
+> >    of any issues with their report (e.g., obviously not actionable by the
+> >    distros) and request and/or propose any required yet missing
+> information
+> >    (most notably, a tentative public disclosure date)
+> >    2. If the proposed public disclosure date is not within list policy,
+> >    insist on getting this corrected and propose a suitable earlier date
+> >
+> > And possibly more in the future, as we have a better understanding of the
+> > amount of work needed to handle those tasks.
+> > We will need some handholding at first to make sure we do things
+> correctly.
+>
+> OK.  You'll likely need to choose additional/other tasks very soon since
+> these trivial ones will likely transfer to another new distro joining,
+> if one requests membership and meets the criteria shortly after you.
+>
+Of course. Happy to do any tasks, as long as we are guided on what exactly
+needs to be done.
 
-We appear to be segfaulting on the read to r->buf_text[i], where i is
-2147483647 -- 0x7fffffff. Slightly earlier in that function we have this
-block:
+>
+> > Please, find PGP related info
+>
+> Thanks.  Out of the people you listed, you and Konstantin appear to have
+> been on oss-security for a long while, but Leonid doesn't appear to be
+> subscribed - or is he?  If not, he probably needs to subscribe now.
+>
+I will double check with him, and ask him to join.
 
-    if (count < 0)
-        count = -count;
+>
+> Alexander
+>
 
-Before this block is run, count is -2147483648 -- 0x80000000. After the block
-is run, count should be 2147483648, right? Not so fast. It turns out that
-there's no complement of -2147483648 within 32-bits, because the maximum
-positive integer is 2147483647, one less. Probably if you read the C spec it
-will tell you that this operation is undefined, but what's for certain is that
-on my architecture, the integer remains negative -- -2147483648. We then
-bypass the next few blocks, since count is negative, until we get to this
-line:
-
-        j = row2 - count + 1, i = count;
-
-Thus, by the time we get to the crashing block, i has become -2147483648 - 1,
-which is our crashing value of 2147483647, and so we segfault.
-
-It comes from a call to rxvt_scroll_text from inside rxvt_scr_insdel_lines. Here
-we have the following multiplication:
-
-    rxvt_scroll_text(r, r->screen.cur.row, r->screen.bscroll, insdel * count,
-
-In this case insdel is -1, for the INSERT operation, and count is our
--2147483648. Predictably, we still don't become positive. Backtracing a step
-further reveals that this comes from a call inside of rxvt_process_csi_seq,
-where the actual escape code is converted from a string.
-
-The attached patch simply bounds the size of input values, so that they don't
-overflow on multiplication or a few small additions and then a multiplication.
-
-I've also attached a similar patch for rxvt-unicode. While it is not
-vulnerable to this particular attack, the attached patch may be
-"best practice". I've also sent this upstream and am awaiting their
-response.
-
-While this particular bug is in rxvt, I suspect that other terminal emulators,
-such as rxvt-unicode, xterm, libvte, konsole, tmux, screen, mosh, etc, may
-indeed suffer from similar types of bugs. Thus, research into this domain could
-prove useful.
-
-Jason
-
-View attachment "rxvt-integer-overflow-fix.patch" of type "text/x-patch" (364 bytes)
-
-View attachment "rxvt-unicode-integer-bounding.patch" of type "text/x-patch" (447 bytes)
