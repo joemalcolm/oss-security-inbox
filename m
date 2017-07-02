@@ -1,55 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/4
-Message-ID: <20170518023950.gkj6diatbr4bfdmh@schmorp.de>
-Date: Thu, 18 May 2017 04:39:50 +0200
-From: Marc Lehmann <schmorp@...morp.de>
-To: Solar Designer <solar@...nwall.com>
-Cc: "Jason A. Donenfeld" <Jason@...c4.com>, oss-security <oss-security@...ts.openwall.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/3
+Message-ID: <20170702172722.GA14846@openwall.com>
+Date: Sun, 2 Jul 2017 19:27:22 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 17, 2017 at 01:05:30PM +0200, Solar Designer <solar@...nwall.com> wrote:
-> You're right that we provided "little to no information" - sorry.  I'll
-> correct this now.
-> 
-> Jason's e-mail was in part prompted by my off-list message to him, where
-> I wrote about this issue (or non-issue depending on one's perspective):
+On Sat, Jul 01, 2017 at 03:23:07PM -0400, Stiepan wrote:
+> I have a general remark on the recent developments on this list, in particular in relation with the "distros" list and especially, focusing on Linux kernel security:
+> a core issue at hand seems to be the funding of work that follows due diligence, standards and so forth, which is a top priority, and should be given appropriate importance at the top decision-making level. I think that in that line, applying for institutional funding through calls for H2020 public-private partnerships such as https://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/topics/ds-08-2017.html and similar non-European initiatives - if there are any - would be more than appropriate, as Linux is a core privacy-enhancing technology, in addition to the fact that "Open source and externally auditable solutions are encouraged in order to maximise uptake and increase the trustworthiness of proposed solutions.". By the way, the same would apply for BSDs, where I have a more direct interest, although they do not share Linux's European heritage! ;)
 
-Thanks a lot, this makes a lot more sense. The confusing part was that the
-patch sent by Jason in his mail had nothing to do with this issue.
+Thank you for thinking outside the box and suggesting this, but no,
+"in relation with the "distros" list" (in your words), let's not apply
+for any funding.  Here are some reasons why not, in arbitrary order:
 
-> I think it's pretty bad, because unlike many other terminals' automated
-> responses triggered by escapes, this one includes a linefeed.
+1. The costs of hosting one old server for the distros list are small.
 
-I agree - rxvt-unicode shouldn't reply with a LF when in secure mode (this
-is a policy). The sequence in question is also not used (or even usable,
-as it queries the original rxvt graphics mode which is not implemented in
-urxvt), so the next version will have it disabled, at least in secure mode
-(the default).
+2. The effort of administering that system is also small. (*)
 
-> The risk probability is low, but this is nevertheless a valid security
-> issue to patch.
+3. The effort of handling the administrative tasks is also small - I
+shared my estimate of it in the previous message I sent to this thread.
 
-I agree, it is a reasonable defense in depth mechanism where the benefit
-clearly outweighs the disadvantages.
+4. I think this effort is best spread across the distros, and that's not
+because one entity could not bear the full "cost" (I think many could),
+but because we should prefer to have all distros visibly involved and
+responsible (if a distro isn't, maybe they shouldn't stay subscribed).
 
-> (The pasted text appears to vary between "0" and "1".)
+5. The effort that may be put into the technical expertise roles/tasks
+is ideally not small, but I think it's best that capable distros
+themselves take care of it.  This means they're paying their employees
+to do this sort of work for the distros community. (**)
 
-urxvt always replies with "\033G0\012" to indicate "graphics mode not
-supported". It's quite possible the the original rxvt replies with other
-sequences.
+6. Which entity would accept the funding?  How would it distribute the
+funds to entities/people doing the actual work?  How transparent would
+it be?  At least this adds overhead, but it also brings us to:
 
-> Thus, a sentiment expressed in past discussions in here is that terminal
-> emulators shouldn't have the riskiest escape sequences supported by
-> default.  It is fully expected that malicious escape sequences can make
+7. Let's not unnecessarily add to the controversy and thus to potential
+conspiracy theories inherently surrounding embargoes and funding.
 
-Again, I fully agree - I just couldn't make the connection between the
-patch sent and these "riskiest escape sequences".
+(*) I admit there are things we probably could do better with greater
+effort.  For example, we could rewrite from scratch and release as Open
+Source the encrypted mailing list software, which is currently an awful
+hack.  I wouldn't oppose doing that piece of software development under
+a separate funded project, if capable people were available for that.
+However, I am worried that most teams tasked to work on something like
+this would produce a complex monster, which wouldn't otherwise be
+directly comparable (as in: is it better or worse? is it more or less
+secure?) to the current hack.
 
--- 
-                The choice of a       Deliantra, the free code+content MORPG
-      -----==-     _GNU_              http://www.deliantra.net
-      ----==-- _       generation
-      ---==---(_)__  __ ____  __      Marc Lehmann
-      --==---/ / _ \/ // /\ \/ /      schmorp@...morp.de
-      -=====/_/_//_/\_,_/ /_/\_\
+(**) A month ago, we also started to accept capable and trusted
+volunteers.  I am currently undecided on whether this should change if
+some distros accept responsibility for all of the same roles.  It would
+seem unfair to use these volunteers' time when the distros are paying
+their employees to do similar work, whereas the volunteers join in their
+individual capacity independent from their employment.
+
+As to "focusing on Linux kernel security" (also in your words), we
+already see how something like this is happening with KSPP.  Various
+companies pay their employees to do portions of the work, Linux
+Foundation funds a few other people's work, and there are many
+volunteers.  All of this is met with criticism, controversy, and
+conspiracy theories.  Yet the project proceeds, even if arguably slowly
+and inefficiently.  Overall, would it benefit from or be hurt by more
+funding, or by an extra funding source?  I don't know.  Funding creates
+an incentive to work on and push academic security detached from
+real-world threats.  That said, with no formal entity behind KSPP, lucky
+people may choose whether and how they want their potential
+contributions funded.  I guess someone or a team could apply for a grant
+under H2020, then participate in KSPP.  This might or might not be a
+good thing.
+
+I think funded work generally has lower efficiency than volunteer work,
+and I also think that's fine.  Ditto for coordinated effort rather than
+independent work.  Low efficiency is part of the criticism, but I think
+this is not entirely justified - that's just how things work in funded
+and larger projects (in people count, not LOC).  I say this in relation
+to KSPP.  I think we don't need to go for this for the distros list.
+
+Alexander
