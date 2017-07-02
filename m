@@ -1,61 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/29/3
-Message-ID: <d147eecf-cbde-f20e-b526-c69a02abaef6@canonical.com>
-Date: Wed, 29 Mar 2017 16:57:49 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: "security@...ntu.com" <security@...ntu.com>
-Subject: Re: information about pwn2own Kernel problem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/7
+Message-ID: <10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>
+Date: Sun, 2 Jul 2017 21:22:46 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-This issue is no longer embargoed and I've just sent some details to
-this list:
+On 07/02/2017 07:27 PM, Solar Designer wrote:
+> (*) I admit there are things we probably could do better with greater
+> effort.  For example, we could rewrite from scratch and release as Open
+> Source the encrypted mailing list software, which is currently an awful
+> hack.  I wouldn't oppose doing that piece of software development under
+> a separate funded project, if capable people were available for that.
+> However, I am worried that most teams tasked to work on something like
+> this would produce a complex monster, which wouldn't otherwise be
+> directly comparable (as in: is it better or worse? is it more or less
+> secure?) to the current hack.
 
-  http://openwall.com/lists/oss-security/2017/03/29/2
+To have it mentioned as part of the discussion at least; has something
+like http://schleuder2.nadir.org/documentation/v2.2/concept.html even
+been considered? and if considered and found not appropriate, the
+rationale for it is likely interesting as well.
 
-The upstream kernel was affected and fixes have been committed.
-
-Tyler
-
-On 03/22/2017 05:19 PM, Dave Null wrote:
-> I was wondering this myself. I'm not sure if ZDI does any variant
-> investigation when they pick up a bug. Really hoping this doesn't jump from
-> a distro related problem to a Linux problem.
-> 
-> -noid
-> 
-> Crypto: https://keybase.io/noid
-> None are more hopelessly enslaved than those who falsely believe they are
-> free - Goethe
-> --
-> 
-> On Wed, Mar 22, 2017 at 1:54 PM, Luedtke, Nicholas (HPE Linux Security) <
-> nicholas.luedtke@....com> wrote:
-> 
->>
->> On 3/22/2017 2:21 PM, Tyler Hicks wrote:
->>> ZDI disclosed the information to the Ubuntu Security team a little less
->>> than 48 hours ago.
->>>
->>> The Ubuntu Kernel team has triaged the issue and came up with a
->>> potential fix. That fix is undergoing internal review and I'll be
->>> disseminating it via the usual channels once that is complete.
->>>
->>> Tyler
->> Is this an Ubuntu specific issue? Or does it affect the upstream kernels
->> as well?
->>
->>
->> --
->> Nicholas Luedtke
->> HPE Linux Security, Hewlett-Packard Enterprise
->>
->>
->>
->>
-> 
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
 
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
