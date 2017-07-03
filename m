@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6659" "Monday" "19" "September" "2016" "02:00:55" "+0000" "=?gb2312?B?d2luc29ubGl1KMH1v8Yp?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7@EXMBX-TJ002.tencent.com>" "112" "[oss-security] CVE Request: Multiple security issues in OpenJPEG" "^CC:" nil nil "9" "2016091902:00:55" "[oss-security] CVE Request: Multiple security issues in OpenJPEG" (number mark "        winsonliu@te Sep 19  112/6659  " thread-indent "\"[oss-security] CVE Request: Multiple security issues in OpenJPEG\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2919" "Monday" "3" "July" "2017" "14:35:55" "+0200" "Kristian Fiskerstrand" "k_f@gentoo.org" "<49733f26-1060-6e15-5595-204269483f97@gentoo.org>" "72" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017070312:35:55" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        k_f@gentoo.o Jul  3   72/2919  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<CA+aC4kuK7Cqhn3iRvAC7yoqDNBMUM2ekZEnc3gXtTcpY=vBRHg@mail.gmail.com>" ("<20170628200239.GA25525@openwall.com>" "<CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>" "<647ec3a7-f2f0-b090-007a-65286b815fa0@gentoo.org>" "<CA+aC4kuK7Cqhn3iRvAC7yoqDNBMUM2ekZEnc3gXtTcpY=vBRHg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1488 invoked by uid 550); 19 Sep 2016 02:01:27 -0000
+Received: (qmail 1929 invoked by uid 550); 3 Jul 2017 13:11:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,134 +11,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1461 invoked from network); 19 Sep 2016 02:01:24 -0000
-Thread-Topic: CVE Request: Multiple security issues in OpenJPEG
-Thread-Index: AdISGafMNg9QRYeSQwWM+BHkUv/P6Q==
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7@EXMBX-TJ002.tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.4.75.21]
-Content-Type: multipart/alternative;
-	boundary="_000_1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7EXMBXTJ002tence_"
+Received: (qmail 7169 invoked from network); 3 Jul 2017 12:36:17 -0000
+References: <20170628200239.GA25525@openwall.com>
+ <CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>
+ <647ec3a7-f2f0-b090-007a-65286b815fa0@gentoo.org>
+ <CA+aC4kuK7Cqhn3iRvAC7yoqDNBMUM2ekZEnc3gXtTcpY=vBRHg@mail.gmail.com>
+Message-ID: <49733f26-1060-6e15-5595-204269483f97@gentoo.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-CC: cve-assign <cve-assign@mitre.org>
-Date: Mon, 19 Sep 2016 02:00:55 +0000
-From: =?gb2312?B?d2luc29ubGl1KMH1v8Yp?= <winsonliu@tencent.com>
+In-Reply-To: <CA+aC4kuK7Cqhn3iRvAC7yoqDNBMUM2ekZEnc3gXtTcpY=vBRHg@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="sQ1kPWWIMdCPiH7GfSIh36nvCqSOLMJrQ"
+Date: Mon, 3 Jul 2017 14:35:55 +0200
+From: Kristian Fiskerstrand <k_f@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: Multiple security issues in OpenJPEG
-To: oss-security <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: oss-security@lists.openwall.com, Anthony Liguori <anthony@codemonkey.ws>
 
---_000_1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7EXMBXTJ002tence_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+--sQ1kPWWIMdCPiH7GfSIh36nvCqSOLMJrQ
+Content-Type: multipart/mixed; boundary="q0o1FbdEuWmF0kc4QR3UqpAC1RqNccgO7";
+ protected-headers="v1"
+From: Kristian Fiskerstrand <k_f@gentoo.org>
+Reply-To: k_f@gentoo.org
+To: oss-security@lists.openwall.com, Anthony Liguori <anthony@codemonkey.ws>
+Message-ID: <49733f26-1060-6e15-5595-204269483f97@gentoo.org>
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+References: <20170628200239.GA25525@openwall.com>
+ <CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>
+ <647ec3a7-f2f0-b090-007a-65286b815fa0@gentoo.org>
+ <CA+aC4kuK7Cqhn3iRvAC7yoqDNBMUM2ekZEnc3gXtTcpY=vBRHg@mail.gmail.com>
+In-Reply-To: <CA+aC4kuK7Cqhn3iRvAC7yoqDNBMUM2ekZEnc3gXtTcpY=vBRHg@mail.gmail.com>
 
-SGksDQoNClRoaXMgaXMgS2UgTGl1IG9mIFRlbmNlbnQncyBYdWFud3UgTEFC
-LiBJIHJlcG9ydGVkIHNvbWUgc2VjdXJpdHkgaXNzdWVzIHRvIE9wZW5KUEVH
-IHNvbWUgbW9udGhzIGFnby4gQ291bGQgeW91IHBsZWFzZSBhc3NpZ24gc29t
-ZSBDVkUgbnVtYmVycyBmb3IgdGhlbT8gVGhhbmtzLg0KDQpUaGUgbWVtb3J5
-IGlzc3VlcyBtYXkgbGVhZCB0byBjb2RlIGV4ZWN1dGlvbiwgb3RoZXIgaXNz
-dWVzIG1heSBzaW1wbHkgbGVhZCB0byBEb1MgcHJvYmxlbXMuDQoNCkJUVywg
-cHJvb2Ytb2YtY29uY2VwdCBmaWxlcyBmb3IgYWxsIGlzc3VlcyB3ZXJlIHN1
-cHBsaWVkLiBGb3IgbW9yZSBkZXRhaWxzLCBwbGVhc2UgY2xpY2sgdGhlIGlz
-c3VlIGxpbmtzIGJlbG93Lg0KDQoxLiBPdXQtb2YtQm91bmRzIFdyaXRlIGlu
-IG9wal9tcWNfYnl0ZW91dCBvZiBtcWMuYw0KDQpBbiBPdXQtb2YtQm91bmRz
-IFdyaXRlIGlzc3VlIGNhbiBiZSB0cmlnZ2VyZWQgaW4gZnVuY3Rpb24gb3Bq
-X21xY19ieXRlb3V0IG9mIG1xYy5jIGR1cmluZyBleGVjdXRpbmcgb3BqX2Nv
-bXByZXNzLiBUaGlzIGlzc3VlIHdhcyBjYXVzZWQgYnkgYSBtYWxmb3JtZWQg
-Qk1QIGZpbGUuDQoNCkFkZHJlc3NTYW5pdGl6ZXI6IGhlYXAtYnVmZmVyLW92
-ZXJmbG93LCBXUklURSBvZiBzaXplIDENClJlcG9ydCBkYXRlOiAyMDE2LzA5
-LzEyDQpTdGF0dXM6IE5vdCBmaXhlZA0KVXJsOiBodHRwczovL2dpdGh1Yi5j
-b20vdWNsb3V2YWluL29wZW5qcGVnL2lzc3Vlcy84MzUNClJvb3QgY2F1c2U6
-IG5vdCBjbGVhcg0KUGF0Y2g6IG5vIHBhdGNoIHN1cHBsaWVkDQoNCjIuIE91
-dC1vZi1Cb3VuZHMgUmVhZCBpbiBmdW5jdGlvbiBibXAyNHRvaW1hZ2Ugb2Yg
-Y29udmVydGJtcC5jDQoNCkFuIE91dC1vZi1Cb3VuZHMgUmVhZCBpc3N1ZSB3
-YXMgZm91bmQgaW4gZnVuY3Rpb24gYm1wMjR0b2ltYWdlIG9mIGNvbnZlcnRi
-bXAuYyBkdXJpbmcgZXhlY3V0aW5nIG9wal9jb21wcmVzcy4gVGhlIHJvb3Qg
-Y2F1c2Ugb2YgdGhpcyBpc3N1ZSB3YXMgYW4gSW50ZWdlciBPdmVyZmxvdyBp
-c3N1ZS4gVGhpcyBpc3N1ZSB3YXMgY2F1c2VkIGJ5IGEgbWFsZm9ybWVkIEJN
-UCBmaWxlLg0KDQpBZGRyZXNzU2FuaXRpemVyOiBoZWFwLWJ1ZmZlci1vdmVy
-ZmxvdywgUkVBRCBvZiBzaXplIDENClJlcG9ydCBkYXRlOiAyMDE2LzA5LzEy
-DQpTdGF0dXM6IE5vdCBmaXhlZA0KVXJsOiBodHRwczovL2dpdGh1Yi5jb20v
-dWNsb3V2YWluL29wZW5qcGVnL2lzc3Vlcy84MzMNClJvb3QgY2F1c2U6IGlu
-dGVnZXIgb3ZlcmZsb3cNClBhdGNoOiBodHRwczovL2dpdGh1Yi5jb20vdWNs
-b3V2YWluL29wZW5qcGVnL3B1bGwvODM0DQoNCjMuIE51bGwgUG9pbnRlciBB
-Y2Nlc3MgaW4gZnVuY3Rpb24gc3ljYzQyMl90b19yZ2Igb2YgY29sb3IuYw0K
-QSBudWxsIHBvaW50ZXIgYWNjZXNzIGlzc3VlIHdhcyBmb3VuZCBpbiBmdW5j
-dGlvbiBzeWNjNDIyX3RvX3JnYiBvZiBjb2xvci5jIGR1cmluZyBleGVjdXRp
-bmcgb3BqX2RlY29tcHJlc3MuIFRoaXMgaXNzdWUgd2FzIGNhdXNlZCBieSBh
-IG1hbGZvcm1lZCBKMksgZmlsZS4NCg0KQWRkcmVzc1Nhbml0aXplcjogU0VH
-ViBvbiB1bmtub3duIGFkZHJlc3MgMHgwMDAwMDAwMA0KUmVwb3J0IGRhdGU6
-IDIwMTYvMDYvMjgNClN0YXR1czogTm90IGZpeGVkDQpVcmw6IGh0dHBzOi8v
-Z2l0aHViLmNvbS91Y2xvdXZhaW4vb3BlbmpwZWcvaXNzdWVzLzc5Mg0KUm9v
-dCBjYXVzZTogbnVsbCBwb2ludGVyIGRlcmVmZXJlbmNlDQpQYXRjaDogZWFz
-eSB0byBmaXgsIGNoZWNrIGJlZm9yZSBhY2Nlc3NpbmcNCg0KNC4gTnVsbCBQ
-b2ludGVyIEFjY2VzcyBpbiBmdW5jdGlvbiBjb2xvcl9lc3ljY190b19yZ2Ig
-b2YgY29sb3IuYw0KQSBudWxsIHBvaW50ZXIgYWNjZXNzIGlzc3VlIHdhcyBm
-b3VuZCBpbiBmdW5jdGlvbiBjb2xvcl9lc3ljY190b19yZ2Igb2YgY29sb3Iu
-YyBkdXJpbmcgZXhlY3V0aW5nIG9wal9kZWNvbXByZXNzLiBUaGlzIGlzc3Vl
-IHdhcyBjYXVzZWQgYnkgYSBtYWxmb3JtZWQgSjJLIGZpbGUuDQoNCkFkZHJl
-c3NTYW5pdGl6ZXI6IFNFR1Ygb24gdW5rbm93biBhZGRyZXNzIDB4MDAwMDAw
-MDANClJlcG9ydCBkYXRlOiAyMDE2LzA1LzI1DQpTdGF0dXM6IE5vdCBmaXhl
-ZA0KVXJsOiBodHRwczovL2dpdGh1Yi5jb20vdWNsb3V2YWluL29wZW5qcGVn
-L2lzc3Vlcy83ODUNClJvb3QgY2F1c2U6IG51bGwgcG9pbnRlciBkZXJlZmVy
-ZW5jZQ0KUGF0Y2g6IGVhc3kgdG8gZml4LCBjaGVjayBiZWZvcmUgYWNjZXNz
-aW5nDQoNCjUuIE51bGwgUG9pbnRlciBBY2Nlc3MgaW4gZnVuY3Rpb24gc3lj
-YzQ0NF90b19yZ2Igb2YgY29sb3IuYw0KQSBudWxsIHBvaW50ZXIgYWNjZXNz
-IGlzc3VlIHdhcyBmb3VuZCBpbiBmdW5jdGlvbiBzeWNjNDQ0X3RvX3JnYiBv
-ZiBjb2xvci5jIGR1cmluZyBleGVjdXRpbmcgb3BqX2RlY29tcHJlc3MuIFRo
-aXMgaXNzdWUgd2FzIGNhdXNlZCBieSBhIG1hbGZvcm1lZCBKMksgZmlsZS4N
-Cg0KQWRkcmVzc1Nhbml0aXplcjogU0VHViBvbiB1bmtub3duIGFkZHJlc3Mg
-MHgwMDAwMDAwMA0KUmVwb3J0IGRhdGU6IDIwMTYvMDUvMjUNClN0YXR1czog
-Tm90IGZpeGVkDQpVcmw6IGh0dHBzOi8vZ2l0aHViLmNvbS91Y2xvdXZhaW4v
-b3BlbmpwZWcvaXNzdWVzLzc4NA0KUm9vdCBjYXVzZTogbnVsbCBwb2ludGVy
-IGRlcmVmZXJlbmNlDQpQYXRjaDogZWFzeSB0byBmaXgsIGNoZWNrIGJlZm9y
-ZSBhY2Nlc3NpbmcNCg0KNi4gTnVsbCBQb2ludGVyIEFjY2VzcyBpbiBmdW5j
-dGlvbiBpbWFnZXRvcG5tIG9mIGNvbnZlcnQuYw0KQSBudWxsIHBvaW50ZXIg
-YWNjZXNzIGlzc3VlIHdhcyBmb3VuZCBpbiBmdW5jdGlvbiBpbWFnZXRvcG5t
-IG9mIGNvbnZlcnQuYyBkdXJpbmcgZXhlY3V0aW5nIG9wal9kZWNvbXByZXNz
-LiBUaGlzIGlzc3VlIHdhcyBjYXVzZWQgYnkgYSBtYWxmb3JtZWQgSjJLIGZp
-bGUuDQoNCkFkZHJlc3NTYW5pdGl6ZXI6IFNFR1Ygb24gdW5rbm93biBhZGRy
-ZXNzIDB4MDAwMDAwMDANClJlcG9ydCBkYXRlOiAyMDE2LzA1LzA2DQpTdGF0
-dXM6IE5vdCBmaXhlZA0KVXJsOiBodHRwczovL2dpdGh1Yi5jb20vdWNsb3V2
-YWluL29wZW5qcGVnL2lzc3Vlcy83NzYNClJvb3QgY2F1c2U6IG51bGwgcG9p
-bnRlciBkZXJlZmVyZW5jZQ0KUGF0Y2g6IGVhc3kgdG8gZml4LCBjaGVjayBi
-ZWZvcmUgYWNjZXNzaW5nDQoNCjcuIE11bHRpcGxlIGRpdmlzaW9uLWJ5LXpl
-cm8gaXNzdWVzIGluIGZ1bmN0aW9uIG9wal9waV9uZXh0X3JwY2wgb2YgcGku
-Yw0KTXVsdGlwbGUgZGl2aXNpb24tYnktemVybyBpc3N1ZXMgd2VyZSBmb3Vu
-ZCBpbiBmdW5jdGlvbiBvcGpfcGlfbmV4dF9ycGNsIG9mIHBpLmMgZHVyaW5n
-IGV4ZWN1dGluZyBvcGpfZGVjb21wcmVzcy4gVGhlIGlzc3VlcyB3ZXJlIGNh
-dXNlZCBieSBtYWxmb3JtZWQgSjJLIGZpbGVzLg0KDQpBZGRyZXNzU2FuaXRp
-emVyOiBTSUdGUEUsIEFyaXRobWV0aWMgZXhjZXB0aW9uDQpSZXBvcnQgZGF0
-ZTogMjAxNi8wNS8wNg0KU3RhdHVzOiBOb3QgZml4ZWQNClVybDE6IGh0dHBz
-Oi8vZ2l0aHViLmNvbS91Y2xvdXZhaW4vb3BlbmpwZWcvaXNzdWVzLzc4MA0K
-VXJsMjogaHR0cHM6Ly9naXRodWIuY29tL3VjbG91dmFpbi9vcGVuanBlZy9p
-c3N1ZXMvNzc5DQpSb290IGNhdXNlOiBkaXZpc2lvbi1ieS16ZXJvDQpQYXRj
-aDogZWFzeSB0byBmaXgsIGNoZWNrIGJlZm9yZSBkaXZpZGluZw0KDQo4LiBN
-dWx0aXBsZSBkaXZpc2lvbi1ieS16ZXJvIGlzc3VlcyBpbiBmdW5jdGlvbiBv
-cGpfcGlfbmV4dF9wY3JsIG9mIHBpLmMNCk11bHRpcGxlIGRpdmlzaW9uLWJ5
-LXplcm8gaXNzdWVzIHdlcmUgZm91bmQgaW4gZnVuY3Rpb24gb3BqX3BpX25l
-eHRfcGNybCBvZiBwaS5jIGR1cmluZyBleGVjdXRpbmcgb3BqX2RlY29tcHJl
-c3MuIFRoZSBpc3N1ZXMgd2VyZSBjYXVzZWQgYnkgbWFsZm9ybWVkIEoySyBm
-aWxlcy4NCg0KQWRkcmVzc1Nhbml0aXplcjogU0lHRlBFLCBBcml0aG1ldGlj
-IGV4Y2VwdGlvbg0KUmVwb3J0IGRhdGU6IDIwMTYvMDUvMDYNClN0YXR1czog
-Tm90IGZpeGVkDQpVcmwxOiBodHRwczovL2dpdGh1Yi5jb20vdWNsb3V2YWlu
-L29wZW5qcGVnL2lzc3Vlcy83NzcNClVybDI6IGh0dHBzOi8vZ2l0aHViLmNv
-bS91Y2xvdXZhaW4vb3BlbmpwZWcvaXNzdWVzLzc3OA0KUm9vdCBjYXVzZTog
-ZGl2aXNpb24tYnktemVybw0KUGF0Y2g6IGVhc3kgdG8gZml4LCBjaGVjayBi
-ZWZvcmUgZGl2aWRpbmcNCg0KOS4gTXVsdGlwbGUgZGl2aXNpb24tYnktemVy
-byBpc3N1ZXMgaW4gZnVuY3Rpb24gb3BqX3BpX25leHRfY3BybCBvZiBwaS5j
-DQpNdWx0aXBsZSBkaXZpc2lvbi1ieS16ZXJvIGlzc3VlcyB3ZXJlIGZvdW5k
-IGluIGZ1bmN0aW9uIG9wal9waV9uZXh0X2Nwcmwgb2YgcGkuYyBkdXJpbmcg
-ZXhlY3V0aW5nIG9wal9kZWNvbXByZXNzLiBUaGUgaXNzdWVzIHdlcmUgY2F1
-c2VkIGJ5IG1hbGZvcm1lZCBKMksgZmlsZXMuDQoNCkFkZHJlc3NTYW5pdGl6
-ZXI6IFNJR0ZQRSwgQXJpdGhtZXRpYyBleGNlcHRpb24NClJlcG9ydCBkYXRl
-OiAyMDE2LzAzLzI4DQpTdGF0dXM6IE5vdCBmaXhlZA0KVXJsMTogaHR0cHM6
-Ly9naXRodWIuY29tL3VjbG91dmFpbi9vcGVuanBlZy9pc3N1ZXMvNzMxDQpV
-cmwyOiBodHRwczovL2dpdGh1Yi5jb20vdWNsb3V2YWluL29wZW5qcGVnL2lz
-c3Vlcy83MzINClJvb3QgY2F1c2U6IGRpdmlzaW9uLWJ5LXplcm8NClBhdGNo
-OiBlYXN5IHRvIGZpeCwgY2hlY2sgYmVmb3JlIGRpdmlkaW5nDQoNClJlZ2Fy
-ZHMsDQpLZQ0KVGVuY2VudCdzIFh1YW53dSBMQUINCg==
+--q0o1FbdEuWmF0kc4QR3UqpAC1RqNccgO7
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
---_000_1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7EXMBXTJ002tence_--
+On 07/02/2017 10:58 PM, Anthony Liguori wrote:
+> On Jul 2, 2017 1:38 PM, "Kristian Fiskerstrand"<k_f@gentoo.org> wrote:
+>> The immediate thought that springs to mind is the [lack of OpenPGP
+>> support in bugzilla] which makes it difficult to ensure confidentiality
+>> unless disabling all email warnings.
+>=20
+> I would just assume all email is disabled.  I don't know of a tool that
+> does this right so for security sensitive things, I think disabling email
+> notification is a best practice.
+
+It wouldn't take much to have a tool that does, mainly what I outline in
+the previous post to ensure OpenPGP keyblock management for the
+individual users, and as an extension of the scope for that perhaps a
+[MemoryHole] implementation to ensure confidentiality / integrity
+verification of the RFC822 headers such as Subject. Enigmail users
+should already have such support read-only[Note:A]
+
+References:
+[MemoryHole]
+http://modernpgp.org/memoryhole/
+https://wiki.gnupg.org/OpenPGPEmailSummit201607/MemoryHole
+
+Notes:
+[Note:A] to toggle it on encrypted subjects on sending you'd use
+extensions.enigmail.protectHeaders
+
+
+--=20
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+
+
+--q0o1FbdEuWmF0kc4QR3UqpAC1RqNccgO7--
+
+--sQ1kPWWIMdCPiH7GfSIh36nvCqSOLMJrQ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEtOrRIMf4mkrqRycHJQt6/tY3nYUFAllaOisACgkQJQt6/tY3
+nYUQKgf7BQvdIUdHTaJEiBX0Pr7hUxv1ANSiXYEFWUciBk9Ccw07nwG9kJtFM1qF
+7m9n1mxqL/OMW7047qKzGfb+FW07106pgE/CHBzunvDErOpHBwGwiKlR8Jfv4v50
+UhLD7kjAywA9PUjpc8+OZXM8zGd9khohB/eUV1r1SgxOSqqylEcOQiWfe5FsI24w
+fmW+PpolMswJJvbOvU+0DoyA1W9cbF0sc7brdkrHAjdxrPIEarLtWlBfwiQ85f5e
+hSGqg03EAnws2+ZHhsixKJNxRlEC8KoK09/3JfL36dt5GbpVQ3g+8ofLa1XXUK60
+OeL/A6XF+tYDZIDcxztufDZZ0JCZZw==
+=T9ok
+-----END PGP SIGNATURE-----
+
+--sQ1kPWWIMdCPiH7GfSIh36nvCqSOLMJrQ--
