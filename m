@@ -1,21 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/3
-Message-ID: <20c62ff4-6650-b0f0-0343-fe5c0c7ce85b@slackware.com>
-Date: Wed, 5 Jul 2017 17:26:47 -0500
-From: "Patrick J. Volkerding" <security@...ckware.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/5
+Message-ID: <713762f9-3ee0-724c-e56e-6103a2aa2b6c@gentoo.org>
+Date: Mon, 3 Jul 2017 15:37:38 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Anthony Liguori <anthony@...emonkey.ws>
+Subject: Bugzilla implementation of OpenPGP and Memory Hole (Was: Re: accepting new members to (linux-)distros lists)
 Content-Type: text/plain; charset=utf-8
 
-On 07/05/2017 04:14 PM, Robert Scheck wrote:
-> +1 for both, the CVE and that this is a problem. The service should not be
-> started with more (!) permissions simply if parsing username fails.
+[Changing subject as it has likely gone too off target with the previous
+one]
 
-One would think that without any User= line specified, defaulting to
-nobody:nogroup would be more sane than defaulting to root. Since the
-User= mechanism exists, if you want something to run as root, you should
-need to ask for it.
+On 07/03/2017 02:35 PM, Kristian Fiskerstrand wrote:
+> On 07/02/2017 10:58 PM, Anthony Liguori wrote:
+>> On Jul 2, 2017 1:38 PM, "Kristian Fiskerstrand"<k_f@...too.org> wrote:
+>>> The immediate thought that springs to mind is the [lack of OpenPGP
+>>> support in bugzilla] which makes it difficult to ensure confidentiality
+>>> unless disabling all email warnings.
+>>
+>> I would just assume all email is disabled.  I don't know of a tool that
+>> does this right so for security sensitive things, I think disabling email
+>> notification is a best practice.
+> 
+> It wouldn't take much to have a tool that does, mainly what I outline in
+> the previous post to ensure OpenPGP keyblock management for the
+> individual users, and as an extension of the scope for that perhaps a
+> [MemoryHole] implementation to ensure confidentiality / integrity
+> verification of the RFC822 headers such as Subject. Enigmail users
+> should already have such support read-only[Note:A]
+
+Just to add that when I say read only here it goes to the encrypted
+subject aspect of things (as, perhaps, inferred from the note). Enigmail
+should already, by default, use MemoryHole for signed messages in
+OpenPGP/MIME mode, which should be visible as a separate first MIME part
+e.g of this email.
+
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
