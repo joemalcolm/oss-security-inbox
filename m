@@ -1,16 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/1
-Message-ID: <q9GnziJFIgpS6F561_2bPEQXnRjUmAK7A5jNWRzfrN-eWZA531SMyZwbld9orzTcGJdxW5dZyoQntvNWC2hxkHqIVVuXVswje5AAQALTfNY=@protonmail.com>
-Date: Thu, 15 Jun 2017 20:02:53 -0400
-From: Qhdwns123 <qhdwns123@...tonmail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Do I have to inform someone about CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/6
+Message-ID: <7b91f9d5-153b-d265-3bb0-ecc11437c469@oracle.com>
+Date: Mon, 3 Jul 2017 14:51:27 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+Solar,
 
-I received a CVE.
+I think (linux-)distros is working quite well but part of that is
+regularly looking at the processes etc to refine them.
 
-Do I have to inform someone about CVE?
+On 02/07/17 23:44, Solar Designer wrote:
+> Now, I understand that many of the distros are probably entering stuff
+> into their bug trackers anyway.  Often on shared or/and centrally
+> managed systems.  I hope most only do so for bugs that are actually
+> relevant to them, or at least that are likely to be relevant.
 
-Thanks.
+In our case we do put relevant issues into our bug tracking behemoth...
+
+> 
+> Maybe we should make this limitation part of list policy ("do not enter
+> the newly arriving issues into bug trackers unless and until you're
+> reasonably confident the issues are relevant to you")?  Or forbid use of
+> bug trackers for the embargoed issues arriving through the distros list
+> altogether, but I'm quite sure many of the existing distros list members
+> won't accept that. :-(
+
+... and I agree that only tracking issues that are relevant is highly
+desirable.  Sometimes, of course, it only becomes apparent that it's not
+relevant after some work has been done.
+
+What I would say though is that embargoed issues that go on a bug
+tracker should be not be visible to anyone that doesn't have an actual
+need to know.  If an internal bug tracker is generally open to anyone
+internal then for the purposes of embargo it might as well be public.
+
+It _should_ be self-evident that "need to know" includes making sure
+entries in internal bug trackers need to be similarly restricted but I
+do wonder if it's worth calling that out explicitly?
+
+jch
+
+
+PS For contributing back I have given myself a "must try harder" mark.
