@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/08/1
-Message-ID: <20170708124016.ypmkkzwrl3lxiwot@eldamar.local>
-Date: Sat, 8 Jul 2017 14:40:16 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/1
+Message-ID: <20170703231023.GA16022@altlinux.org>
+Date: Tue, 4 Jul 2017 02:10:24 +0300
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-Cc: daniel.salzman@....cz, ondrej@...ian.org
-Subject: Re: CVE for the TSIG issue in knot?
+Subject: Re: linux-distros list membership application - CloudLinux
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
+[...]
+> 9. Have someone already on the private list, or at least someone else
+> who has been active on oss-security for years but is not affiliated with
+> your distro nor your organization, vouch for at least one of the people
+> requesting membership on behalf of your distro (then that one
+> vouched-for person will be able to vouch for others on your team, in
+> case you'd like multiple people subscribed)
+> Dmitry V. Levin <ldv@...linux.org>, Chief Architect, ALT Linux can vouch
+> for Leonid Kanter.
 
-On Sat, Jun 24, 2017 at 02:28:20PM +0200, Solar Designer wrote:
-> On Sat, Jun 24, 2017 at 01:58:23PM +0200, Yves-Alexis Perez wrote:
-> > I noticed the recent issue in knot with TSIG bypass
-> > (https://lists.nic.cz/pipermail/knot-dns-users/2017-June/001144.html)
-> 
-> Is is inappropriate to post only a link in here.  In cases like this,
-> please also quote at least the most essential portion of the content
-> you're referring to, which is:
-> 
-> "CZ.NIC has released Knot DNS 2.5.2 and Knot DNS 2.4.5. Beside
-> several fixes and improvements, these versions fix a flaw within the
-> TSIG protocol implementation that would allow an attacker with a
-> valid key name and algorithm to bypass the TSIG authentication if no
-> additional ACL restrictions is set. This vulnerability was
-> discovered by security experts from Synacktiv.  Special thanks to
-> them!"
+I acknowledge this.  I have no doubts that Leonid can handle
+embargoed information according to the list's policy.
 
-FTR, this issue has been assigned CVE-2017-11104.
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-11104
+-- 
+ldv
 
-Regards,
-Salvatore
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
