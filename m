@@ -1,20 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/22/4
-Message-ID: <20170222190849.qdh65xvhpsu5pao7@eldamar.local>
-Date: Wed, 22 Feb 2017 20:08:49 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: munin: CVE-2017-6188: Local file write vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/3
+Message-ID: <20170703080007.GD2102@pali>
+Date: Mon, 3 Jul 2017 10:00:07 +0200
+From: Pali Rohár <pali.rohar@...il.com>
+To: Adam Maris <amaris@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: CVE-2017-10788 for DBD::mysql (Re: Re: MySQL - use-after-free after mysql_stmt_close())
 Content-Type: text/plain; charset=utf-8
 
-Munin, at least up to 2.0.30 is prone to a local file write
-vulnerability, when CGI graphs are enabled. Setting mutliple
-'upper_limit' GET parameters allow overwriting any file (accessible by
-the user running the cgi-process).
+On Thursday 15 June 2017 15:50:42 Adam Maris wrote:
+> On Mon, 2017-06-12 at 23:47 +0200, Pali Rohár wrote:
+> > Hello!
+> > 
+> > Any idea how to handle this particular problem?
+> > 
+> > 
+> 
+> Hi!
+> 
+> Given that Oracle (silently) updated the vulnerable example in their
+> documentation, this likely indicates the way to handle this -
+> applications that copied the vulnerable example needs to be fixed and
+> CVEs will be assigned per application.
+> 
+> Best Regards,
+> 
 
-Upstream bug: https://github.com/munin-monitoring/munin/issues/721
+Hi! Just to note that Mitre now assigned CVE-2017-10788 for DBD::mysql:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10788
 
-MITRE has assigned CVE-2017-6188 for this issue.
-
-Regards,
-Salvatore
+-- 
+Pali Rohár
+pali.rohar@...il.com
