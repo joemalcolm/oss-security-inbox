@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6656" "Saturday" "8" "October" "2016" "22:06:26" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<11716477.MTzBsLzZIC@arcadia>" "101" "[oss-security] imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)" nil nil nil "10" "2016100820:06:26" "[oss-security] imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)" (number mark "U       ago@gentoo.o Oct  8  101/6656  " thread-indent "\"[oss-security] imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1650" "Monday" "3" "July" "2017" "14:51:27" "+0100" "John Haxby" "john.haxby@oracle.com" "<7b91f9d5-153b-d265-3bb0-ecc11437c469@oracle.com>" "38" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017070313:51:27" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        john.haxby@o Jul  3   38/1650  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170702224421.GA19376@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>" "<20170702224421.GA19376@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5919 invoked by uid 550); 8 Oct 2016 20:06:19 -0000
+Received: (qmail 23717 invoked by uid 550); 3 Jul 2017 13:51:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,116 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5766 invoked from network); 8 Oct 2016 20:06:16 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Sat, 08 Oct 2016 22:06:26 +0200
-Message-ID: <11716477.MTzBsLzZIC@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
+Received: (qmail 23691 invoked from network); 3 Jul 2017 13:51:45 -0000
+References: <20170628200239.GA25525@openwall.com>
+ <CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>
+ <20170702224421.GA19376@openwall.com>
+Message-ID: <7b91f9d5-153b-d265-3bb0-ecc11437c469@oracle.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)
+In-Reply-To: <20170702224421.GA19376@openwall.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-Source-IP: userv0022.oracle.com [156.151.31.74]
+Date: Mon, 3 Jul 2017 14:51:27 +0100
+From: John Haxby <john.haxby@oracle.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: oss-security@lists.openwall.com
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+Solar,
 
-A fuzzing with the upstream security policy enabled revealed a memory allocate 
-failure.
+I think (linux-)distros is working quite well but part of that is
+regularly looking at the processes etc to refine them.
 
-The complete ASan output:
+On 02/07/17 23:44, Solar Designer wrote:
+> Now, I understand that many of the distros are probably entering stuff
+> into their bug trackers anyway.  Often on shared or/and centrally
+> managed systems.  I hope most only do so for bugs that are actually
+> relevant to them, or at least that are likely to be relevant.
 
-# identify $FILE
-==25084==WARNING: AddressSanitizer failed to allocate 0x46bf39483ac bytes                                                                                                                                                                                                      
-==25084==AddressSanitizer's allocator is terminating the process instead of 
-returning 0                                                                                                                                                                                        
-==25084==If you don't like this behavior set allocator_may_return_null=1                                                                                                                                                                                                       
-==25084==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_allocator.cc:147 "((0)) != (0)" (0x0, 0x0)                                                                            
-    #0 0x4c9f9d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67                                                                                                                                   
-    #1 0x4d0ad3 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159                              
-    #2 0x4ce826 in __sanitizer::ReportAllocatorCannotReturnNull() 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_allocator.cc:147                                                                            
-    #3 0x421bfc in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator >::ReturnNullOrDie() /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1317                                                                                                                                                                                                   
-    #4 0x421bfc in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:359                       
-    #5 0x421bfc in __asan::asan_malloc(unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718                                                                       
-    #6 0x4c0661 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53                                                                                                                                   
-    #7 0x7f76c7533ff4 in AcquireQuantumPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:175:47                                                                                                                                  
-    #8 0x7f76c7533ff4 in SetQuantumDepth /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:693                                                                                                                                          
-    #9 0x7f76c7532676 in AcquireQuantumInfo /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:125:10                                                                                                                                    
-    #10 0x7f76baf3607e in ReadTIFFImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/coders/tiff.c:1431:18                                                                                                                                              
-    #11 0x7f76c7067b12 in ReadImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:496:13
-    #12 0x7f76c77ff406 in ReadStream /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/stream.c:1012:9
-    #13 0x7f76c70665ca in PingImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:226:9
-    #14 0x7f76c7066e25 in PingImages /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:326:10
-    #15 0x7f76c68ec4c3 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:319:18
-    #16 0x7f76c698226a in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
-    #17 0x4f1fb5 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
-    #18 0x4f1fb5 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
-    #19 0x7f76c582661f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #20 0x419138 in _init (/usr/bin/magick+0x419138)
+In our case we do put relevant issues into our bug tracking behemoth...
 
-Affected version:
-7.0.3.0
+> 
+> Maybe we should make this limitation part of list policy ("do not enter
+> the newly arriving issues into bug trackers unless and until you're
+> reasonably confident the issues are relevant to you")?  Or forbid use of
+> bug trackers for the embargoed issues arriving through the distros list
+> altogether, but I'm quite sure many of the existing distros list members
+> won't accept that. :-(
 
-Fixed version:
-7.0.3.1
+... and I agree that only tracking issues that are relevant is highly
+desirable.  Sometimes, of course, it only becomes apparent that it's not
+relevant after some work has been done.
 
-Commit fix:
-https://github.com/ImageMagick/ImageMagick/commit/6e48aa92ff4e6e95424300ecd52a9ea453c19c60
+What I would say though is that embargoed issues that go on a bug
+tracker should be not be visible to anyone that doesn't have an actual
+need to know.  If an internal bug tracker is generally open to anyone
+internal then for the purposes of embargo it might as well be public.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+It _should_ be self-evident that "need to know" includes making sure
+entries in internal bug trackers need to be similarly restricted but I
+do wonder if it's worth calling that out explicitly?
 
-CVE:
-N/A
+jch
 
-Timeline:
-2016-09-14: bug discovered
-2016-09-14: bug reported to upstream
-2016-09-16: upstream released a patch
-2016-09-21: upstream released 7.0.3.1
-2016-10-07: blog post about the issue
 
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/07/imagemagick-memory-allocate-failure-in-acquirequantumpixels-quantum-c/
-
+PS For contributing back I have given myself a "must try harder" mark.
