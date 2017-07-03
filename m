@@ -1,41 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/8
-Message-id: <FBF3AE41-DB79-43A7-A4FB-806C3702EC7E@me.com>
-Date: Tue, 03 Oct 2017 11:34:09 -0400
-From: Joel Esler <joel.esler@...com>
-To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: Re: clamav: Out of bounds read and segfault in xar parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/4
+Message-ID: <49733f26-1060-6e15-5595-204269483f97@gentoo.org>
+Date: Mon, 3 Jul 2017 14:35:55 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Anthony Liguori <anthony@...emonkey.ws>
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-Hello — My name is Joel Esler, I’m the Open Source lead here for ClamAV at Cisco.  A few comments here on list inline below:
-
-
-
-> On Oct 1, 2017, at 3:37 AM, Eddie Chapman <eddie@...k.net> wrote:
+On 07/02/2017 10:58 PM, Anthony Liguori wrote:
+> On Jul 2, 2017 1:38 PM, "Kristian Fiskerstrand"<k_f@...too.org> wrote:
+>> The immediate thought that springs to mind is the [lack of OpenPGP
+>> support in bugzilla] which makes it difficult to ensure confidentiality
+>> unless disabling all email warnings.
 > 
-> On 29/09/17 14:09, Hanno Böck wrote:
->> Meta-level comment:
->> It seems to me clamav development has mostly stalled. Detection rates
->> are very low and I'm considering to stop using it for mail filtering.
->> (also there's of course the whole AV debate, however I never saw
->> clamav as a security tool, more as something like a spam filter that
->> prevents crap in my inbox. Still of course it needs to have secure
->> parsers.)
-> 
-> I agree with much of this, and I think you're right that the effectiveness of Clamav in mail filtering contexts can be debated, though maybe more in terms of the AV debate, as you say.  As a user myself with it deployed filtering multi-user domains, I agree that detection rates are low.
+> I would just assume all email is disabled.  I don't know of a tool that
+> does this right so for security sensitive things, I think disabling email
+> notification is a best practice.
 
-Something we were working on.  To be honest, shipping detection in the method that we currently ship detection is not going to scale.  We are thinking about ways to change this.
+It wouldn't take much to have a tool that does, mainly what I outline in
+the previous post to ensure OpenPGP keyblock management for the
+individual users, and as an extension of the scope for that perhaps a
+[MemoryHole] implementation to ensure confidentiality / integrity
+verification of the RFC822 headers such as Subject. Enigmail users
+should already have such support read-only[Note:A]
 
-> 
-> However, checking just now on Github I do not get the impression at all that development has stalled. Judging purely by number of commits, every month there are consistently a very healthy number. But what has stalled is stable releases; the last one being 0.99.2 on 22nd April 2016, so something is not quite right. But I've seen many open source/free software projects stalled over the years and definitely Clamav does not, IMO, fit that description (at least not yet).
+References:
+[MemoryHole]
+http://modernpgp.org/memoryhole/
+https://wiki.gnupg.org/OpenPGPEmailSummit201607/MemoryHole
+
+Notes:
+[Note:A] to toggle it on encrypted subjects on sending you'd use
+extensions.enigmail.protectHeaders
+
+
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
 
 
-It’s not dead.  At all.  99.2 as a stable release was released in 2016, yes.  We have been working on 99.3 since, and are planning 99.4 and 99.5 now.  99.3 has been in beta for a couple months now, and the fix for this issue has been in git since the date mentioned earlier in the thread.  It’s also obviously in 99.3.
-
---
-Joel Esler
-Manager
-Talos Group
-http://www.talosintelligence.com
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
