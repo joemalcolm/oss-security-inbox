@@ -1,67 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/15
-Message-ID: <20170120145135.GA14893@kroah.com>
-Date: Fri, 20 Jan 2017 15:51:35 +0100
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/7
+Message-ID: <20170703181857.GA24978@openwall.com>
+Date: Mon, 3 Jul 2017 20:18:57 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Jesse Hertz <Jesse.Hertz@...group.trust>, Wade Mealing <wmealing@...hat.com>
-Subject: Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 20, 2017 at 09:01:17AM -0500, Brad Spengler wrote:
-> Hi Greg,
-> 
-> Much like you feel it's not your job to inform your own users of 
-> vulnerabilities you've silently fixed, it's not the job of distros (who 
-> are actually informing their own users) to do your job of determining 
-> what kernels a particular fix affects, particularly when you just use it 
-> as a way of getting your advertisement out there that people should be 
-> running the latest Linux kernels.
+On Mon, Jul 03, 2017 at 02:51:27PM +0100, John Haxby wrote:
+> What I would say though is that embargoed issues that go on a bug
+> tracker should be not be visible to anyone that doesn't have an actual
+> need to know.  If an internal bug tracker is generally open to anyone
+> internal then for the purposes of embargo it might as well be public.
 
-I've never claimed that it was their job, I was just asking to try to
-get an idea of where the issue was and when it was fixed to ensure that
-the users of the LTS kernels were ok.  How is that a bad thing?
+I think "might as well be public" is an exaggeration, but this would in
+fact be against distros list policy.
 
-> Of course, what you're missing is that when it's the distros
-> themselves requesting the CVEs, this skews the discussion of
-> vulnerabilities to older kernels, not the much higher number present
-> in the latest upstream "stable".
+> It _should_ be self-evident that "need to know" includes making sure
+> entries in internal bug trackers need to be similarly restricted but I
+> do wonder if it's worth calling that out explicitly?
 
-That's fine with me, I have no objection to that, never have.
+You're right.  I'm not sure.  This isn't the only thing we could call
+out explicitly.  If we start listing examples of what's allowed and
+what's not, then another one or two would be about testing/QA of fixes,
+which Gentoo's internal "Pre-Release Disclosure of Vulnerability
+Information" policy mentions explicitly:
 
-> While we're here, how about a CVE for a recent kernel, for a vulnerability
-> not fixed in any stable kernel yet, and introduced for a pointless mitigation
-> no less:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c4e490cf148e85ead0d1b1c2caaba833f1d5b29f
-> This affects upstream >= 4.8 when CONFIG_SLAB_FREELIST_RANDOM is enabled
-> ("for those following along at home")
-> 
-> Or, since VMAP_STACK was introduced haphazardly in 4.9 without doing any 
-> static analysis beyond a simple grep or smatch it seems, there are probably a 
-> dozen or so DoSes when CONFIG_DEBUG_SG or CONFIG_DEBUG_VIRTUAL is 
-> enabled, or potential silent or not so silent memory corruption when 
-> it's not, as a scatterlist crossing a virtual page boundary will then 
-> end up accessing a totally unrelated adjacent physical page if a stack 
-> address was passed into the scatterlist, and these vulnerabilities will 
-> continue to pop up until something comprehensive is done to prevent 
-> them.  Emese's written an IPA GCC plugin to find all the ones you've missed,
-> so we know there still are many that haven't been fixed.
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6d104af38b570d37aa32a5803b04c354f8ed513d 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a45f795c65b479b4ba107b6ccde29b896d51ee98
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=06deeec77a5a689cc94b21a8a91a76e42176685d
-> 0day alert, not fixed in 4.9 yet:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=05a974efa4bdf6e2a150e3f27dc6fcf0a9ad5655
-> Not to mention the bugs introduced via fixes for VMAP_STACK:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=146cc8a17a3b4996f6805ee5c080e7101277c410
-> 
-> Or how about a CVE for this huge heap infoleak (and while I'm at it, congrats to
-> Al for not covering it up for once, maybe he's learning!):
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b9dc6f65bc5e232d1c05fe34b5daadc7e8bbf1fb
-> Or this (sgid bit not cleared on tmpfs):
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=497de07d89c1410d76a15bec2bb41f24a2a89f31
+https://wiki.gentoo.org/wiki/Project:Security/Pre-Release-Disclosure
 
-Many thanks for the list, I've queued up the few that I had missed in
-previous stable kernel updates, or were not already in my queue for
-future releases, it is much appreciated.
+I added a link to it to the distros list wiki page yesterday, referring
+to it as an example.
 
-greg k-h
+If we include such examples directly in the list policy specification,
+it'd become lengthy and redundant, and I don't want it to be.  Maybe
+this should be a set of examples clarifying yet separate from the list
+policy specification.
+
+> PS For contributing back I have given myself a "must try harder" mark.
+
+Thanks.  Please let us know at which specific tasks you'll try harder.
+
+Alexander
