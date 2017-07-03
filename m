@@ -1,4 +1,9 @@
-Received: (qmail 17852 invoked by uid 550); 3 Oct 2023 20:59:17 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["642" "Monday" "3" "July" "2017" "10:00:07" "+0200" "Pali =?utf-8?B?Um9ow6Fy?=" "pali.rohar@gmail.com" "<20170703080007.GD2102@pali>" "24" "[oss-security] CVE-2017-10788 for DBD::mysql (Re: [oss-security] Re: MySQL - use-after-free after mysql_stmt_close())" "^Cc:" nil nil "7" "2017070308:00:07" "[oss-security] CVE-2017-10788 for DBD::mysql (Re: [oss-security] Re: MySQL - use-after-free after mysql_stmt_close())" (number mark "        pali.rohar@g Jul  3   24/642   " thread-indent "\"[oss-security] CVE-2017-10788 for DBD::mysql (Re: [oss-security] Re: MySQL - use-after-free after mysql_stmt_close())\"\n") "<1497534642.3053.3.camel@redhat.com>" ("<201706082349.03355@pali>" "<201706122347.54536@pali>" "<1497534642.3053.3.camel@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13804 invoked by uid 550); 3 Jul 2017 11:27:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,92 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17429 invoked from network); 3 Oct 2023 20:58:32 -0000
-Date: Tue, 3 Oct 2023 22:58:25 +0200
-From: Solar Designer <solar@openwall.com>
-To: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: oss-security@lists.openwall.com,
-	"Xen. org security team" <security-team-members@xen.org>
-Message-ID: <20231003205825.GA24992@openwall.com>
-References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <20230925163652.GA6750@openwall.com> <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com> <20230925182834.GA8247@openwall.com> <3241bf87-b01b-4b65-e972-f0cede9e1855@citrix.com> <20230926160943.GA12790@openwall.com> <3df9034c-6fab-141c-ad69-ce00df0b81f9@citrix.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 26083 invoked from network); 3 Jul 2017 08:00:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=RQhqbtH7s7eEUrohuljlYROlTiMaE3u1ZQ2a8OQ1zVw=;
+        b=EDxD+k2lx0sio0ubwd9WY/lUDi0dsZtqzGC/1+df72WCMUaL9wmL/CfjR0qssuMxpU
+         yddHGeLXVI81ClUBUmEhc4ML0iqHXKMgCeoeboxfR+HCP/v0y4EHVjpMERqT+/WpasFu
+         /txwsG9C4l/GV5c6uaH8OCeNd3KRYDDGa5FsvLbGWqt7ydG2pji7aXT5ewsZ8OCiMRIs
+         KYpwtu3bBFPQYSyQ30wI7wPdHcwC2tyVCk+QS8IuyJ5GpSWs9wPsSYnNd5gKpTKtP6s7
+         WqIwEGKgBHgJwgZNbtcznDMxEa9R4OVHtzLllfAnjZNvQPzlF8OpbfgwtdOywg4eA0f1
+         OipA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=RQhqbtH7s7eEUrohuljlYROlTiMaE3u1ZQ2a8OQ1zVw=;
+        b=hq6SeNoEG4CrWfLpGNKgC+maim5P1wmV7mnlDqxaUTFMzmcfGbltemFwOB7Z/Hgbix
+         mmgtfiiUtc/J1oKgeuocYXKNeCKL9i46r/htKbJabhfCMw9PWOFK0N0faTU0UHfpBv3f
+         LG3iXxJdNJCsSozRo04lNWMQ8RO80ARBD39zh9nTMOZ7oLnLkT7/psXdCeMukyBfXA9A
+         JxNcP/rM8IEtA+FWbyFk+H3m2lg9FpxdDCG6rvs35I93NmfyyBaDjEzI1ggBoDndZPmJ
+         ER+/AvFkK3hQctceqZmSQHlkvbjIfMXOqHKS1ODeQMz7Iwkcinw7UefvPB2k9nuG8wp5
+         nlpw==
+X-Gm-Message-State: AKS2vOwtUdaTE7s5c8Pov4KKbzKkgLH2g1q9SuaRUFFvrIwNVeLamePX
+	T2y+2LTBX0YTDQ==
+X-Received: by 10.28.109.18 with SMTP id i18mr13072599wmc.97.1499068809422;
+        Mon, 03 Jul 2017 01:00:09 -0700 (PDT)
+Message-ID: <20170703080007.GD2102@pali>
+References: <201706082349.03355@pali>
+ <201706122347.54536@pali>
+ <1497534642.3053.3.camel@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3df9034c-6fab-141c-ad69-ce00df0b81f9@citrix.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1497534642.3053.3.camel@redhat.com>
+User-Agent: Mutt/1.5.23.1 (2014-03-12)
+Cc: oss-security@lists.openwall.com
+Date: Mon, 3 Jul 2017 10:00:07 +0200
+From: Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-10788 for DBD::mysql (Re: [oss-security] Re: MySQL -
+ use-after-free after mysql_stmt_close())
+To: Adam Maris <amaris@redhat.com>
 
-On Tue, Sep 26, 2023 at 06:16:22PM +0100, Andrew Cooper wrote:
-> On 26/09/2023 5:09 pm, Solar Designer wrote:
-> > Is the original paper public?
+On Thursday 15 June 2017 15:50:42 Adam Maris wrote:
+> On Mon, 2017-06-12 at 23:47 +0200, Pali Rohár wrote:
+> > Hello!
+> > 
+> > Any idea how to handle this particular problem?
+> > 
+> > 
 > 
-> https://www.usenix.org/system/files/usenixsecurity23-hofmann.pdf
+> Hi!
 > 
-> Section 8.2.1 for the results specific to divides.
-
-Thank you!
-
-> > Meanwhile, I observe a difference between Linux and Xen fixes - Linux
-> > uses native-sized DIV and you use byte-sized, as a clever way not to
-> > clobber RDX and maybe achieve lower latency.  Speaking of which:
-> >
-> > $ git clone https://github.com/InstLatx64/InstLatx64
-> > $ grep -r ': DIV .* 0/' InstLatx64/AuthenticAMD/*_Zen_*.txt
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  409 X86   : DIV r8  0/ 8b                 L: [no true dep.]   T:   4.14ns= 13.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  413 X86   : DIV r8  0/ 4b                 L: [no true dep.]   T:   4.13ns= 13.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  422 X86   : DIV r16  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  426 X86   : DIV r16  0/ 8b                L: [no true dep.]   T:   4.45ns= 14.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  435 X86   : DIV r32  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  439 X86   : DIV r32  0/16b                L: [no true dep.]   T:   4.45ns= 14.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  449 AMD64 : DIV r64  0/64b                L: [no true dep.]   T:   4.45ns= 14.00c
-> > InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  453 AMD64 : DIV r64  0/32b                L: [no true dep.]   T:   4.45ns= 14.00c
-> >
-> > Looks like maybe not that much difference, after all, if this data applies.
+> Given that Oracle (silently) updated the vulnerable example in their
+> documentation, this likely indicates the way to handle this -
+> applications that copied the vulnerable example needs to be fixed and
+> CVEs will be assigned per application.
 > 
-> Agner Fogh's manuals have a little more information, and importantly
-> give the upper bound which tops out at 47 cycles.
+> Best Regards,
+> 
 
-Of course, the worst case is much worse like that.  If I'm reading this
-right, the timings I found above are for dividing 0 by something, so
-should apply to Linux's 0/1.  Xen does 1/1 instead:
+Hi! Just to note that Mitre now assigned CVE-2017-10788 for DBD::mysql:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10788
 
-https://github.com/xen-project/xen/commit/d7b78041dc819efde0350f27754a61cb01a93496
-
-Luckily, the timings for 1/1 look just as good:
-
-$ grep -r ': DIV .* 1/1' InstLatx64/AuthenticAMD/*_Zen_*.txt
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  415 X86   : DIV r8 1/1                    L:   4.14ns= 13.0c  T:   4.14ns= 13.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  416 X86   : DIV r8 1/1 ax upd             L:   4.14ns= 13.0c  T:   4.14ns= 13.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  427 X86   : DIV r16 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  428 X86   : DIV r16 1/1 ax upd            L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  429 X86   : DIV r16 1/1 ax/dx upd         L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  441 X86   : DIV r32 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  442 X86   : DIV r32 1/1 eax upd           L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  443 X86   : DIV r32 1/1 eax/edx upd       L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  455 AMD64 : DIV r64 1/1                   L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  456 AMD64 : DIV r64 1/1 rax upd           L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-InstLatx64/AuthenticAMD/AuthenticAMD0800F00_K17_Zen_InstLatX64.txt:Inst  457 AMD64 : DIV r64 1/1 rax/rdx upd       L:   4.45ns= 14.0c  T:   4.45ns= 14.00c
-
-> There is at least a 1 cycle change in latency between the byte and
-> non-byte forms, which I suspect is down to the non-byte forms needing to
-> consume an extra input register before starting.
-
-Makes sense.
-
-> But the main reason for choosing the byte form is indeed fewer moving
-> parts to worry about in the critical sections, where one wrong
-> instruction can render all protections moot.
-
-Right.  Great not to clobber RDX.
-
-However, this may be another reason to actually look into whether the
-remainder also leaked, and whether the byte-sized form prevents that
-leak despite of it not touching the architectural register where the
-remainder would be stored by a preceding larger DIV.  I expect that
-we're fine here - it's the divider unit's internal register and not the
-architectural register that should matter - but worth making sure.  It
-could also theoretically be e.g. some buffer registers in the middle,
-where the byte-sized form wouldn't overwrite the full contents.
-
-Alexander
+-- 
+Pali Rohár
+pali.rohar@gmail.com
