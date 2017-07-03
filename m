@@ -1,32 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/21/1
-Message-ID: <alpine.LFD.2.20.1702211647360.13950@wniryva>
-Date: Tue, 21 Feb 2017 17:30:02 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Stefano Stabellini <sstabellini@...nel.org>, Gerd Hoffmann <ghoffman@...hat.com>
-Subject: CVE-2017-2620 Qemu: display: cirrus: out-of-bounds access issue while in cirrus_bitblt_cputovideo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/9
+Message-Id: <9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>
+Date: Mon, 3 Jul 2017 19:55:06 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
-vulnerable to an out-of-bounds access issue. It could occur while copying VGA 
-data in cirrus_bitblt_cputovideo.
+> On 3 Jul 2017, at 19:18, Solar Designer <solar@...nwall.com> wrote:
+> 
+>> PS For contributing back I have given myself a "must try harder" mark.
+> 
+> Thanks.  Please let us know at which specific tasks you'll try harder.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS OR potentially execute arbitrary code on the host with 
-privileges of Qemu process on the host.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1420460
+Will do.   I’m in the middle of a house move at the moment so everything is a little chaotic so I’ll get back to you next week when, hopefully, the dust has settled somewhat.
 
-* 'CVE-2017-2620' has been assigned to this issue by Red Hat Inc.
-* Attached herein is a proposed patch to fix this issue.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-View attachment "cirrus-add-blit-is-unsafe-to-cirrus-bitblt-cputovideo.patch" of type "text/plain" (1936 bytes)
+jch
