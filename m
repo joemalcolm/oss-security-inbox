@@ -1,57 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/1
-Message-ID: <d1d789fa6c75489784f8f39aa33558b3@imshyb02.MITRE.ORG>
-Date: Thu, 12 Jan 2017 21:42:49 -0500
-From: <cve-assign@...re.org>
-To: <dileep.chinu@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: MUJS null pointer dereference and Heap buffer overflow write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/5
+Message-ID: <20170704134606.GA29002@openwall.com>
+Date: Tue, 4 Jul 2017 15:46:06 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros list membership application - CloudLinux
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Jul 04, 2017 at 04:24:40PM +0300, Leonid Kanter wrote:
+> Yes, I vouch for my colleagues Igor Seletskiy and Konstantin Olshanov.
+> Konstantin's key is already available on
+> https://cryptup.org/pub/kolshanov@cloudlinux.com
 
-> 1. Null pointer dereference in regexp.c
-> 
->     The return value from malloc is not properly checked before
-> dereferencing it which can result in a crash.
-> 
-> https://bugs.ghostscript.com/show_bug.cgi?id=697381
-> http://git.ghostscript.com/?p=mujs.git;h=fd003eceda531e13fbdd1aeb6e9c73156496e569
+Thanks.  I've just added Konstantin as well.
 
-Use CVE-2016-10132 for all of
-fd003eceda531e13fbdd1aeb6e9c73156496e569.
+All - going forward, I think we don't need to discuss the individual
+people's subscriptions to (linux-)distros on oss-security, including for
+newly joining distros - I can handle that off-list, including making
+sure there's a "vouching chain".  That's how it has been for changes in
+who's subscribed for the already accepted distros anyway.  The need for
+a discussion on oss-security is only about the joining distros, not
+about their team members, as long as at least one person is vouched for.
 
-
-> 2. Heap buffer overflow write in jsrun.c: js_stackoverflow()
-> 
->     There was a logical error in the code which can be used to trigger a
-> heap overflow write.
-> 
-> https://bugs.ghostscript.com/show_bug.cgi?id=697401
-> http://git.ghostscript.com/?p=mujs.git;a=commit;h=77ab465f1c394bb77f00966cd950650f3f53cb24
-
-Use CVE-2016-10133.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYeD4KAAoJEHb/MwWLVhi2tNQP+gO/jAYeCK8O03qGyZW4HR9K
-LeI+GjI0nU1ZD6VY5ynAl+4bXTGSNjpL7sh6nPdI3RKtEFpCpiQBlfiUfAB93Cae
-YlINFDpjEH24fFSlmVrIGoisR3SodhuUjOqwTkhtw9SnxbnkpXtJzyJnwLgjic6f
-c0BsAAirhQ0WiEMG0XJPgbdhNixH8xj5JP8iEbB3nGAiIkQb5CjCW74iuXNsZjOW
-ZcYM67PyEGs1CoXYlaWMYSLZSHu5U6eAqQ7oE8HYZQgBMEpCKgkhH54ex0otWk9Y
-Xt/8RIzY3WR10kQa7aisGydnfz0eAcRR91KOsSr3wcZ23Tihvg+O+kuMA+VjChG1
-UnB2mroYPlFEEghSY8kqECWQ0nvGnKDZ4RvsEZzaMBms4K/4thDtnfBo3TVVJvAl
-otYqNIeIMelKOi8Fev4bipAJmGn3JNbaTgOeBSp+TgetI+wCZmBsUZoVn9nxD/Dt
-A3XgmZBguPRTrMUl1TYys0Vl8iIHZdn/NJiplKy3utFmGuTeL5vwVg5tN4b6zqvY
-5Em05T0+o+vL8H0/qV9oGLKeEUvrj2sGVZe6UcWvc8Q3BLmeKcXLt+9f+0wUIxf3
-35d5soiyf1OCaxBx5C3vXFabVMeK1vA4xQ/mDaAVoDd8TgXz1vZx69xIVqPTg/g0
-Df8IDTbCR7C260PXUsv6
-=g88C
------END PGP SIGNATURE-----
+Alexander
