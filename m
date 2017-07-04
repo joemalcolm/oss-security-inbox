@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/5
-Message-ID: <1498828310.18870.32.camel@debian.org>
-Date: Fri, 30 Jun 2017 15:11:50 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: ISC Security Officer <security-officer@....org>
-Subject: Re: ISC announces two BIND vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/6
+Message-ID: <20170704150338.7oj7i5iah3hciy6g@eldamar.local>
+Date: Tue, 4 Jul 2017 17:03:38 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: jabberd2: CVE-2017-10807: Allows to authenticate using SASL ANONYMOUS even if disabled
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2017-06-30 at 12:41 +0200, Yves-Alexis Perez wrote:
-> CVE-2017-3043: An error in TSIG authentication can permit unauthorized dynamic
-> updates
+Hi
 
-Sorry, this is a typo. It should be CVE-2017-3143. My apologies to ISC and all
-for the confusion.
-> 
-> An attacker who is able to send and receive messages to an authoritative DNS
-> server and who has knowledge of a valid TSIG key name for the zone and service
-> being targeted may be able to manipulate BIND into accepting an unauthorized
-> dynamic update.
--- 
-Yves-Alexis
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+The Jabberd, before 2.6.1 allowed anyone to authenticate SASL
+ANONYMOUS, even when sasl.anonymous c2s.xml option is not enabled.
+The bug allows nauthorized usage of jabberd server installations and
+could possibly lead to a DoS.
+
+References:
+
+https://github.com/jabberd2/jabberd2/releases/tag/jabberd-2.6.1
+
+Upstream fix:
+
+https://github.com/jabberd2/jabberd2/commit/8416ae54ecefa670534f27a31db71d048b9c7f16
+
+As mentioned in the subject, MITRE has assigned CVE-2017-10807 for
+this issue.
+
+Regards,
+Salvatore
