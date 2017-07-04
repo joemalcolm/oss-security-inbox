@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2171" "Friday" "17" "July" "2015" "13:20:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150717172019.4BBA26C0013@smtpvmsrv1.mitre.org>" "49" "[oss-security] Re: Squid HTTP proxy CVE request" nil nil nil "7" "2015071717:20:19" "[oss-security] Re: Squid HTTP proxy CVE request" (number mark "        cve-assign@m Jul 17   49/2171  " thread-indent "\"[oss-security] Re: Squid HTTP proxy CVE request\"\n") "<559A65F3.80103@treenet.co.nz>" ("<559A65F3.80103@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2574" "Tuesday" "4" "July" "2017" "14:31:27" "+0200" "Solar Designer" "solar@openwall.com" "<20170704123127.GA27528@openwall.com>" "60" "Re: [oss-security] linux-distros list membership application - CloudLinux" "^Date:" nil nil "7" "2017070412:31:27" "[oss-security] linux-distros list membership application - CloudLinux" (number mark "        solar@openwa Jul  4   60/2574  " thread-indent "\"Re: [oss-security] linux-distros list membership application - CloudLinux\"\n") "<CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>" ("<CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3752 invoked by uid 550); 17 Jul 2015 17:20:31 -0000
+Received: (qmail 30670 invoked by uid 550); 4 Jul 2017 12:33:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3729 invoked from network); 17 Jul 2015 17:20:30 -0000
-In-Reply-To: <559A65F3.80103@treenet.co.nz>
-Message-Id: <20150717172019.4BBA26C0013@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 17 Jul 2015 13:20:19 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 30099 invoked from network); 4 Jul 2017 12:31:45 -0000
+Message-ID: <20170704123127.GA27528@openwall.com>
+References: <CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Tue, 4 Jul 2017 14:31:27 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Squid HTTP proxy CVE request
-To: squid3@treenet.co.nz
+Subject: Re: [oss-security] linux-distros list membership application - CloudLinux
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I've just added CloudLinux to linux-distros.  Some comments below:
 
->  - the "must" in "must be denied". "should" would be closer. It has been
-> a public issue for a long time and to our knowledge no actual DoS has
-> occured.
+On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
+> We typically have to patch local privilege escalations in kernel asap as
+> our customers are easily rooted using this type of vulnerabilities (anyone
+> can buy website or hack old wordpress instance & run any code).
 
->  - other products had issues with client certificate authentication.
-> None so far for us. If that is complained about we will likely re-enable
-> it for that specific use case.
+This may be a reason for you to harden your distro's userland against
+local privilege escalations as well, such as by adopting the
+owl-alt-sanitize-env glibc hardening patch maintained by ALT Linux:
 
+http://git.altlinux.org/gears/g/..git?p=glibc.git;a=commitdiff;h=496059f2
 
-> When the OpenSSL library provides that flag definition, we set it
+and getting rid of most or all world-accessible SUID programs, which is
+do-able like we have demonstrated with Owl.  This shouldn't be
+unreasonably hard to implement and maintain in a fork of RHEL, although
+obviously you'll end up with more packages (including some core ones)
+that would no longer be mere rebuilds of RHEL's.
 
-The case is somewhat unusual, but we feel that this seems "too
-optional" to have a CVE ID.
-http://wiki.squid-cache.org/SquidFaq/CompilingSquid doesn't tell the
-user that the OpenSSL library (when an old version is used) must be
-configured in a certain way to address a Squid vulnerability.
-Admittedly, a user might have already -- for an unrelated reason --
-configured OpenSSL to disable client-initiated renegotiation, and
-might have an expectation that there would be (in effect) propagation
-of this choice into a Squid build. We feel that this isn't an obvious
-expectation, especially because that type of propagation isn't
-automatic: it requires that an OpenSSL-based product have
-application-specific code to support the propagation.
+This is by no means a condition for your linux-distros list membership -
+I just happen to mention it here in response to your explanation of your
+distro's threat model.  If you do go this route, it will re-enforce your
+reasoning for being a linux-distros member, though.
 
-There's no CVE ID for now. If there's a future case where either the
-official Squid distribution, or a repackager, decides to
-unconditionally force "defined(SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS)" to
-be true as a vulnerability fix for an OpenSSL 0.9.8l-1.0.2
-environment, then a CVE ID should then be available.
+> Some records:
+> The stack clash (Jun 21, 2016):
+> https://www.cloudlinux.com/cloudlinux-os-blog/entry/cve-2017-1000364-fixed-for-cloudlinux-7
+> Dirty Cow (Oct 21rd, 2016):
+> https://www.cloudlinux.com/cloudlinux-os-blog/entry/cloudlinux-6-kernel-updated-dirty-cow-issue-fixed
+> Ghost (Jan 27, 2015):
+> https://www.cloudlinux.com/cloudlinux-os-blog/entry/glibc-ghost-remote-vulnerability-cve-2015-0235
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+You got impressive timing on these!
 
-iQEcBAEBAgAGBQJVqTjaAAoJEKllVAevmvmsB2QH/irNR+AYV7bea/MTN3GdJymn
-NqP9rlZXtfIDUuDnjJ24bg4+CYcglhbt4kK5rbGl4TBAFY6dd1YCZHwYR29iPPEE
-lhTeuPXmlwWIDCyxN/tsdptvbatjrax8P0vc/7UAO0YgSSHTWPATrdCqZ1v03oYO
-IPeB/Yd4Axk406h8HoKYIwnawr6ifjILlRDDL8io5fh6PXU3nJdwPeLjwPLbtXH6
-tpDAPFhysF5YhZ4tNJxTOeIULS3D79M/wMn/+KpP3PQOFf+8RJY5Obg+KFKQ6XCk
-/zDsppAMtcjQIduWiLxZHTU0bzaWidWpEM7ODSe6TEnBk8DATfMc06rapZNdoqo=
-=L1eB
------END PGP SIGNATURE-----
+> Please, find PGP related info
+> 
+> Leonid Kanter <lkanter@cloudlinux.com>
+> 
+> GPG Key: 0x400296079AE5954F (download
+> <https://cryptup.org/pub/lkanter@cloudlinux.com>)
+> GPG Fingerprint: A07D AA47 48B2 C445 6A44  9B38 4002 9607 9AE5 954F
+> 
+> Igor Seletskiy <i@cloudlinux.com>
+> 
+> GPG Key: 0xCD7BB36D66B77E0D (download
+> <https://cryptup.org/pub/i@cloudlinux.com>)
+> 
+> GPG Fingerprint: 7FE3 681A DCBC C509 A2FF 77A4 CD7B B36D 66B7 7E0D
+> 
+> Konstantin Olshanov <kolshanov@cloudlinux.com>
+> GPG Key: 0x891E1FDBF34ED0FD (download
+> <https://cryptup.org/pub/kolshanov@cloudlinux.com>)
+> GPG Fingerprint: B502 0D7C BB2C 674C 6387  FBDC 891E 1FDB F34E D0FD
+
+I subscribed only Leonid and Igor so far, since Konstantin's key doesn't
+appear to be available at that URL (I am getting "No Public Key found
+for kolshanov@cloudlinux.com").  As a minor annoyance, these URLs appear
+to require JavaScript.
+
+Alexander
