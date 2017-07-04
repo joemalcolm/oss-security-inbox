@@ -1,113 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/9
-Message-Id: <E1e2cPa-00077n-Fi@xenbits.xenproject.org>
-Date: Thu, 12 Oct 2017 12:16:26 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 239 - hypervisor stack leak in x86 I/O intercept code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/3
+Message-ID: <20170704123718.GA28787@openwall.com>
+Date: Tue, 4 Jul 2017 14:37:18 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Leonid Kanter <lkanter@...udlinux.com>
+Subject: Re: linux-distros list membership application - CloudLinux
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Jul 04, 2017 at 02:10:24AM +0300, Dmitry V. Levin wrote:
+> On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
+> [...]
+> > 9. Have someone already on the private list, or at least someone else
+> > who has been active on oss-security for years but is not affiliated with
+> > your distro nor your organization, vouch for at least one of the people
+> > requesting membership on behalf of your distro (then that one
+> > vouched-for person will be able to vouch for others on your team, in
+> > case you'd like multiple people subscribed)
+> > Dmitry V. Levin <ldv@...linux.org>, Chief Architect, ALT Linux can vouch
+> > for Leonid Kanter.
+> 
+> I acknowledge this.  I have no doubts that Leonid can handle
+> embargoed information according to the list's policy.
 
-                    Xen Security Advisory XSA-239
-                              version 2
+Thank you, Dmitry!
 
-            hypervisor stack leak in x86 I/O intercept code
+Leonid, am I correct to assume that you vouch for the rest of CloudLinux
+team joining linux-distros - namely, Igor Seletskiy (now) and Konstantin
+Olshanov (once I have his public key)?  Please confirm.  Thanks!
 
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Intercepted I/O operations may deal with less than a full machine
-word's worth of data.  While read paths had been the subject of earlier
-XSAs (and hence have been fixed), at least one write path was found
-where the data stored into an internal structure could contain bits
-from an uninitialized hypervisor stack slot.  A subsequent emulated
-read would then be able to retrieve these bits.
-
-IMPACT
-======
-
-A malicious unprivileged x86 HVM guest may be able to obtain sensitive
-information from the host or other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are vulnerable.
-
-Only x86 systems are affected.  ARM systems are not affected.
-
-Only HVM guests can leverage this vulnerability.  PV guests cannot
-leverage this vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Roger Pau Monné of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa239.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
-xsa239-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa239*
-eb7971be89199eb3ff510f4f5650fd5a8ec588b9fcb8f89230216fac4214ef21  xsa239.meta
-087a8b3cf7ecbdbde593033c127cbcf6c37f532bf33d90f72c19e493970a799c  xsa239.patch
-b91a68fe67240f2a5bb9460c5b650e9595364afa180f8702aef783815e3d7dcd  xsa239-4.5.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZ31v8AAoJEIP+FMlX6CvZ1AQIAMmN4FghnJvlec7xsPQBgPBs
-nlOItkaXMYZnIajohG2/U5zfFU02oj0GmCz4CDODaKiaZem2p69LzVeVOkqAqQ4p
-osYMy918GROxrvfHo+36gCBDfwlB7TWr6dQzM50nHh+6O1l1+QlpCw3k+gb5CnNT
-Rkn/V1ZZGVy7ycwGiMK1mP0C9hsGyuC5xxwCR9XxK01X0x+NTEXZWAS+GbPHBJAS
-HyopB9W+PkQ0qL/j7VjfGdUWTGquBPffnDGQFBN7CqQ+Pt6Mpv4RvkHiS3NTP5qd
-8rp5M0xjVBnpCC/JAQXL9oLK+LZf99oIal1zbQ1FrECYFXIIyf/hUMxguBbsON4=
-=8UQF
------END PGP SIGNATURE-----
-
-Download attachment "xsa239.meta" of type "application/octet-stream" (1965 bytes)
-
-Download attachment "xsa239.patch" of type "application/octet-stream" (1784 bytes)
-
-Download attachment "xsa239-4.5.patch" of type "application/octet-stream" (2101 bytes)
+Alexander
