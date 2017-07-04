@@ -1,48 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/19/8
-Message-ID: <1c012c33-5b6e-0b1d-f12e-1efdeb2bab4a@suse.com>
-Date: Wed, 19 Jul 2017 23:43:59 +0200
-From: Andreas Stieger <astieger@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/7
+Message-ID: <CA+-XxSHAUfG=z0AU9LoT_N1mB-aOAtFvEz6NgL8b8iyY5vYEhQ@mail.gmail.com>
+Date: Tue, 4 Jul 2017 18:07:13 +0300
+From: Igor Seletskiy <i@...udlinux.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Devil's Ivy (CVE-2017-9765) in gSOAP 2.7 up to 2.8.47
+Subject: Re: linux-distros list membership application - CloudLinux
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-On 07/19/2017 10:44 PM, Alan Coopersmith wrote:
-> I noticed some press coverage of this but haven't seen mail here yet:
 >
-> http://blog.senr.io/blog/devils-ivy-flaw-in-widely-used-third-party-code-impacts-millions
 >
-> https://www.genivia.com/advisory.html#Security_advisory:_CVE-2017-9765_bug_in_certain_versions_of_gSOAP_2.7_up_to_2.8.47_(June_21,_2017)
 >
-> https://www.genivia.com/changelog.html#Version_2.8.48_upd_(06/21/2017)
+> On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
+> > We typically have to patch local privilege escalations in kernel asap as
+> > our customers are easily rooted using this type of vulnerabilities
+> (anyone
+> > can buy website or hack old wordpress instance & run any code).
 >
-> "a potential vulnerability to a large and specific XML message over
-> 2GB in size
->  (greater than 2147483711 bytes to trigger the software bug). A buffer
-> overflow
->  can cause an open unsecured server to crash or malfunction after 2GB is
->  received."
+> This may be a reason for you to harden your distro's userland against
+> local privilege escalations as well, such as by adopting the
+> owl-alt-sanitize-env glibc hardening patch maintained by ALT Linux:
 >
-> Unfortunately, the subversion repo on sourceforge for gSOAP only has
-> full releases, not individual changes, in each commit, so the fix
-> appears to be somewhere mixed in [r119] on
-> https://sourceforge.net/p/gsoap2/code/commit_browser
-> making it a challenge for distros who want to patch instead of upgrade.
+> http://git.altlinux.org/gears/g/..git?p=glibc.git;a=commitdiff;h=496059f2
+
+Thank you, we will analyze it / test how well it works with 3rd party
+software.
+
 >
+>
+> and getting rid of most or all world-accessible SUID programs, which is
+> do-able like we have demonstrated with Owl.  This shouldn't be
+> unreasonably hard to implement and maintain in a fork of RHEL, although
+> obviously you'll end up with more packages (including some core ones)
+> that would no longer be mere rebuilds of RHEL's.
+>
+All the web applications, end users ssh sessions and cron jobs are executed
+in
+namespaced / chrooted environment with no SUID files accessible already.
+We cannot completely get rid of SUID scripts as they are used by 3rd party
+software (like cPanel/Plesk) that is used on most of customer's servers.
+It is not perfect, but the best we were able to do so far.
 
-Or just ask them, see https://bugzilla.suse.com/show_bug.cgi?id=1049348
 
-Andreas
+Thank you for the advise,
+Igor.
 
--- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
