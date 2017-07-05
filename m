@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2053" "Wednesday" "15" "June" "2016" "02:31:43" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BB625E@EX02.corp.qihoo.net>" "37" "[oss-security] CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read access violation" nil nil nil "6" "2016061502:31:43" "[oss-security] CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read access violation" (number mark "U       zhangkaixian Jun 15   37/2053  " thread-indent "\"[oss-security] CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read access violation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["818" "Wednesday" "5" "July" "2017" "22:09:40" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20170705220939.GC2409@yuggoth.org>" "20" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070522:09:40" "[oss-security] systemd fails to parse user that should run service" (number mark "        fungi@yuggot Jul  5   20/818   " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>" ("<20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>" "<9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9963 invoked by uid 550); 15 Jun 2016 02:33:22 -0000
+Received: (qmail 22486 invoked by uid 550); 5 Jul 2017 22:09:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6124 invoked from network); 15 Jun 2016 02:31:55 -0000
-From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read
- access violation
-Thread-Index: AdHGreLw6FLFfI3xSlyJadh0+OgKBw==
-Date: Wed, 15 Jun 2016 02:31:43 +0000
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB625E@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.62]
-Content-Type: multipart/alternative;
-	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BB625EEX02corpqihoonet_"
+Received: (qmail 22462 invoked from network); 5 Jul 2017 22:09:54 -0000
+Message-ID: <20170705220939.GC2409@yuggoth.org>
+References: <20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>
+ <9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2016-5315: libtiff 4.0.6 tif_dir.c: setByteArray() Read access
- violation
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Date: Wed, 5 Jul 2017 22:09:40 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
+To: oss-security@lists.openwall.com
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BB625EEX02corpqihoonet_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+On 2017-07-06 00:02:58 +0200 (+0200), Kristian Fiskerstrand wrote:
+> On 07/05/2017 11:58 PM, Simon McVittie wrote:
+> > systemd does have a (public, and publically-archived) mailing
+> > list, which has a current thread on the subject of this issue.
+> > 
+> > In particular the mail in that thread from Felipe Sateler, and
+> > some of the discussion on the upstream bug, touches on reasons
+> > why neither "if anything is not as expected, reject the whole
+> > unit" nor the current behaviour is right. I suspect the
+> > resolution is likely to be something in between.
+> 
+> It would be useful with a reference to the thread in question so
+> this can be further looked into.
 
-RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
-ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogaWxs
-ZWdlbCByZWFkDQpWZW5kb3IgVVJMOiBodHRwOi8vd3d3LnJlbW90ZXNlbnNp
-bmcub3JnL2xpYnRpZmYvDQpDVkUgSUQ6IENWRS0yMDE2LTUzMTUNCkNyZWRp
-dDogS2FpeGlhbmcgWmhhbmcgb2YgdGhlIENsb3VkIFNlY3VyaXR5IFRlYW0s
-IFFpaG9vIDM2MA0KDQpJbnRyb2R1Y3Rpb24NCj09PT09PT0NCg0KUmVhZCBh
-Y2Nlc3MgdmlvbGF0aW9uIG9jY3VycmVkIGluIGZ1bmN0aW9uIHNldEJ5dGVB
-cnJheSBpbiB0aWZfZGlyLmMsIHdoaWNoIGFsbG93cyBhdHRhY2tlcnMgdG8g
-cmVzdWx0IGluIERvUyB2aWEgYSBjcmFmdGVkIFRJRkYgaW1hZ2UuDQoNCg0K
-SGVyZSBpcyB0aGUgc3RhY2sgaW5mbzoNCmdkYiAtLWFyZ3MgJHRvb2wvcmdi
-MnljYmNyIGlkMzEudGlmIHRtcG91dC50aWYNCi0tLSAtLS0NCihnZGIpIGJ0
-DQojMCAgX2ludF9tYWxsb2MgKGF2PWF2QGVudHJ5PTB4YjdkOTE3ODAgPG1h
-aW5fYXJlbmE+LCBieXRlcz1ieXRlc0BlbnRyeT0yOSkgYXQgbWFsbG9jLmM6
-MzcyOA0KIzEgIDB4YjdjM2Y0NGYgaW4gX19HSV9fX2xpYmNfbWFsbG9jIChi
-eXRlcz0yOSkgYXQgbWFsbG9jLmM6MjkxNA0KIzIgIDB4YjdmYWE4NzUgaW4g
-X1RJRkZtYWxsb2MgKHM9MjkpIGF0IHRpZl91bml4LmM6MzE2DQojMyAgMHhi
-N2U4OGQyZCBpbiBzZXRCeXRlQXJyYXkgKGVsZW1fc2l6ZT0xLCBubWVtYj08
-b3B0aW1pemVkIG91dD4sIHZwPTB4YmZmZmVhYjAsIHZwcD08b3B0aW1pemVk
-IG91dD4pIGF0IHRpZl9kaXIuYzo1MQ0KIzQgIF9USUZGVlNldEZpZWxkICh0
-aWY9MHg4MDRlMDA4LCB0YWc9MjcwLCBhcD08b3B0aW1pemVkIG91dD4pIGF0
-IHRpZl9kaXIuYzo1MzkNCiM1ICAweGI3ZTg5ZmFiIGluIFRJRkZWU2V0Rmll
-bGQgKHRpZj0weDgwNGUwMDgsIHRhZz0yNzAsIGFwPTB4YmZmZmVhNDggIlwy
-NjBcMzUyXDM3N1wyNzdcMzcwXDM2M1wwMDRcYiIpIGF0IHRpZl9kaXIuYzo4
-MjANCiM2ICAweGI3ZThhMDk0IGluIFRJRkZTZXRGaWVsZCAodGlmPTB4ODA0
-ZTAwOCwgdGFnPTI3MCkgYXQgdGlmX2Rpci5jOjc2NA0KIzcgIDB4MDgwNGFh
-MDQgaW4gdGlmZmN2dCAoaW49aW5AZW50cnk9MHg4MDRmMTQ4LCBvdXQ9b3V0
-QGVudHJ5PTB4ODA0ZTAwOCkgYXQgcmdiMnljYmNyLmM6MzM5DQooZ2RiKSBp
-IHIgJGVieA0KZWJ4ICAgICAgICAgICAgMHg4Njg2ODY4NiAgICAgICAgLTIw
-MzgwMDQwOTANCg0KDQoNClJlZmVyZW5jZXM6DQpbMV0gaHR0cDovL3d3dy5y
-ZW1vdGVzZW5zaW5nLm9yZy9saWJ0aWZmLw0KDQpUaGFuayB5b3UhDQpCZXN0
-IFJlZ2FyZHMsDQo=
+Please see the thread starting with this message:
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BB625EEX02corpqihoonet_--
+https://lists.freedesktop.org/archives/systemd-devel/2017-July/039154.html
+
+-- 
+Jeremy Stanley
