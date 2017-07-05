@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6006" "Thursday" "18" "February" "2016" "16:46:48" "+0100" "=?UTF-8?B?Um9iZXJ0IMWad2nEmWNraQ==?=" "robert@swiecki.net" "<CAP145phfThRsRxGh22n=W=xinBn7ark09EBME-s+YdJNDwTS9A@mail.gmail.com>" "152" "Re: [oss-security] Address Sanitizer local root" nil nil nil "2" "2016021815:46:48" "[oss-security] Address Sanitizer local root" (number mark "U       robert@swiec Feb 18  152/6006  " thread-indent "\"Re: [oss-security] Address Sanitizer local root\"\n") "<CAAnPYQ51o02n9uDUCCRi6JgP7a=h_Tqnm1dmD+_4DOZhP5-Gqw@mail.gmail.com>" ("<20160217221921.GB24130@port70.net>" "<CAAnPYQ51o02n9uDUCCRi6JgP7a=h_Tqnm1dmD+_4DOZhP5-Gqw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["513" "Wednesday" "5" "July" "2017" "14:02:23" "+0200" "Casper.Dik@oracle.com" "Casper.Dik@oracle.com" "<201707051202.v65C2NDB005864@room101.nl.oracle.com>" "17" "Re: [oss-security] systemd fails to parse user that should run service " "^cc:" nil nil "7" "2017070512:02:23" "[oss-security] systemd fails to parse user that should run service" (number mark "        Casper.Dik@o Jul  5   17/513   " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service \"\n") "<20170705085034.GA2638@pali>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32415 invoked by uid 550); 18 Feb 2016 15:47:01 -0000
+Received: (qmail 20423 invoked by uid 550); 5 Jul 2017 12:37:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,191 +11,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 22088 invoked from network); 5 Jul 2017 12:12:12 -0000
+Message-Id: <201707051202.v65C2NDB005864@room101.nl.oracle.com>
+In-Reply-To: <20170705085034.GA2638@pali> 
+References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com> <20170705085034.GA2638@pali> 
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-Source-IP: userv0022.oracle.com [156.151.31.74]
+cc: Daniel =?utf-8?Q?Skowro=C5=84ski?= <daniel@dsinf.net>
+Date: Wed, 05 Jul 2017 14:02:23 +0200
+From: Casper.Dik@oracle.com
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32390 invoked from network); 18 Feb 2016 15:47:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=swiecki.net; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=bHUxQbmXucwPynIy4rBrXyGsaH5KaXhDEXT/JRqbhOU=;
-        b=E8Bg/9AhLO7w0EQHI2nB2/5onCKj0FyaqAjHqLxMadv6WWoa6vgEpXJBoG5amfZna8
-         jzLvwW9iVby+qOop4oMrkcZP1LVKX7Z4FbkQQTHCpxzDkFWwCqJOSepngChNOtqbcCTX
-         dsxJakvZ19dswcGfcp+O2OlqV2TqV3cudobD8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=bHUxQbmXucwPynIy4rBrXyGsaH5KaXhDEXT/JRqbhOU=;
-        b=Nvdwu+JPwDcjaCGTSzzKAHThjzcA7FBGUSZisPrzWpMhElPZ4u7fqY6d2dIe1fzuf7
-         mg8SbTOSDyCw3WF4CnhpmbhoSCjPhg9bgWTn/nVroopo3NyTCHrYXdCEX/q11rKlTJXG
-         +0PkXmUx3aWG9n9sligkXciysg9GiaujAEzerPUNIGAriaSKmTC7gXz8mxKKJo3CHtQ0
-         YuvG43eNIhBUdjrM4b0tAK2O/yr1LJtKUZPZVeT/6Zc8M21ClLEtIHfSYKs8dRcsvCJB
-         oKl4HnJaziS7eLo4htxadp0LeJvTN2EI4Jx0wyTWLD6RN0TfGIbOd7aBggqA02DwoTfX
-         4PXQ==
-X-Gm-Message-State: AG10YOS2JBOr5zyrs4D13klAZ+l/veQX6Nd03IY5OfhAKOxN6TmcfXnQKo3uEwLP1WjNWknvSXo60CvDSKyT/Q==
-MIME-Version: 1.0
-X-Received: by 10.31.58.83 with SMTP id h80mr6752960vka.149.1455810408349;
- Thu, 18 Feb 2016 07:46:48 -0800 (PST)
-In-Reply-To: <CAAnPYQ51o02n9uDUCCRi6JgP7a=h_Tqnm1dmD+_4DOZhP5-Gqw@mail.gmail.com>
-References: <20160217221921.GB24130@port70.net>
-	<CAAnPYQ51o02n9uDUCCRi6JgP7a=h_Tqnm1dmD+_4DOZhP5-Gqw@mail.gmail.com>
-Date: Thu, 18 Feb 2016 16:46:48 +0100
-Message-ID: <CAP145phfThRsRxGh22n=W=xinBn7ark09EBME-s+YdJNDwTS9A@mail.gmail.com>
-From: =?UTF-8?B?Um9iZXJ0IMWad2nEmWNraQ==?= <robert@swiecki.net>
+Subject: Re: [oss-security] systemd fails to parse user that should run service 
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Address Sanitizer local root
 
-2016-02-18 11:37 GMT+01:00 Gynvael Coldwind <gynvael@coldwind.pl>:
-> Just a random fun addition to the topic - there were exploitation
-> challenges on CTFs with ASANafied binaries in the past, and they in fact
-> were exploitable.
-> One example:
-> http://int3pids.blogspot.ch/2015/04/confidence-2015-teaser-quarantine-wri=
-te.html
 
-Also, a more general observation on the example (a set-uid bin)
-mentioned in the original post.
 
-Writing an always-correctly-behaving suid binary is a truly
-non-trivial task (a true mine trap), and I would go even to such
-claim, that the task should not be attempted (at least in cases, where
-such binary could be potentially widely distributed as a part of a
-popular OS distro) by anybody who is not a seasoned system developer
-with good understanding of the OS kernel and user-land libraries. Or,
-at least, if there's no chance that such developer (or even a few) can
-security-review the code.
-
-Potential attacker controls a lot when running set-uid apps
-
-- signals
-- resource limits
-- file-descriptors
-- certain timers
-- environment variables
-- system-specific features (bpf filters, dumpability flags and many more...)
-
-And each and every of those cases (not sure about system-specific
-features) has been successfully used to attack set-uid binaries in the
-past.
-
-Linking-in any kind of library beyond the standard libc (incl. ASAN)
-with a set-uid should generally trigger a complete security review of
-such library for any kind of misbehavior that can be exploited by a
-potential attacker. Just because such attacker would have almost
-unrestricted power over an execution environment of set-uid binaries.
-
-> On Wed, Feb 17, 2016 at 11:23 PM Szabolcs Nagy <nsz@port70.net> wrote:
+>2) If user name specified in systemd unit file is syntactically correct
+>(according to systemd check) but user name does not exist then systemd
+>refuse to start that unit.
 >
->> There is an alarming trend that Address Sanitizer and related
->> compiler instrumentations from compiler-rt are used as a hardening
->> solution and run in production.
->>
->> Even though these are debugging and testing tools, there is
->> no clear warning against production use in their documentation:
->> http://clang.llvm.org/docs/
->> And it's obvious how a tool that catches UB can be misunderstood
->> as a hardening tool:
->>
->> This analysis concluded that ASan can be used for protection
->> to stop certain attacks:
->> http://scarybeastsecurity.blogspot.dk/2014/09/using-asan-as-protection.h=
-tml
->> The Tor project distributes ASan "hardened" binaries:
->> https://blog.torproject.org/blog/tor-browser-55a4-hardened-released
->> And there are various projects for full Linux distro instrumentation:
->>
->> http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-p=
-otential-debian-port-with-pie-asan-ubsan-and-more/
->>
->> https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-w=
-ith-Address-Sanitizer.html
->> (the later was presented at FOSDEM 2016:
->> https://fosdem.org/2016/schedule/event/csafecode/ )
->>
->> While these are interesting projects, ASan should not be
->> used for hardening in production systems in its current form,
->> so at least the language ("hardening", "protection", "safe")
->> should be fixed.
->>
->> My simple local root exploit is that ASan uses a lot
->> of environment variables without checking for secure
->> execution of setuid binaries:
->>
->> ASAN_OPTIONS=3D'verbosity=3D2 log_path=3Dfoo' ./suid.exe
->>
->> will write to foo.$PID using escalated priviledge, so a
->> normal user may be able to clobber arbitrary root owned files
->> (by creating foo.{1,2,3,..} symlinks to it) which can lead
->> to local root on an "ASan hardened" Linux distribution:
->>
->> ASAN_OPTIONS=3D'suppressions=3D"/foo
->> root:passwdhash:12345:0:::::
->> bar" log_path=3Dfoo' ./suid.exe
->>
->> can easily clobber /etc/shadow with
->>
->> AddressSanitizer: failed to read suppressions file '/foo
->> root:passwdhash:12345:0:::::
->> bar'
->>
->> if there is any setuid root executable built with ASan.
->>
->> (This is not a problem for testing where the env var based
->> configuration is convenient and I haven't checked if any
->> of the current ASan distro efforts have setuid executables
->> with instrumentation, but I still find it a security bug
->> given the improper advertisment of the sanitizer tools:
->> this can lead to problems if the documentation is not fixed.)
->>
->> Beyond this trivial issue there are plenty reliability
->> problems in the sanitizer runtimes that i think deserve
->> at least a warning. It can crash conforming applications
->> because
->>
->> - the shadow map overlaps with something
->> - ulimit -v
->> - overcommit is turned off
->> - it allocates memory but aborts on failure
->> - it interposes __tls_get_addr with non-as-safe code.
->> - it uses initial-exec TLS.
->> - it handles "deadly" signals like SIGBUS
->>   (often used by applications using mmaped files).
->> - the c runtime is updated and incompatible
->>   (with the various interposition hacks)
->> - does not handle c11 thread creation
->>
->> some of the features reduce security:
->>
->> - heuristic introspective unwind
->> - nice diagnositc messages at undefined behaviour
->> - interpositions in general (UB according to POSIX)
->>
->> other limitations:
->>
->> - static linking is not supported
->>
->> (This is for ASan only, I briefly looked at thread
->> sanitizer, which seemed even worse for reliability
->> and safe stack that is in fact advertised for hardening
->> but it has plenty reliability problems, needs further
->> analysis.)
->>
->> I believe some of the problems can be fixed by
->> implementing the runtimes in the libc instead of
->> second guessing libc behaviour with fragile
->> heuristics from a compiler runtime.   This would solve
->> most of the runtime aborts.  I can see an easy way to do
->> this with musl libc (because a non-host musl is easy to
->> distribute and link against), but non-trivial with glibc.
->> In either case I don't see a solution to the shadow map
->> commit charge unless the kernel is modified.  So I cannot
->> recommend even a careful reimplementation in libc for
->> production use for reliable systems.
->>
+
+Should systemd really valid usernames?  I would think that you would 
+either use getpwnam(username) and if that fails you may then parse it as a 
+numeric value.  If "0day" isn't a valid username according to getpwnam(), 
+when converting it to a numeric uid should *also* fail because "0day" 
+isn't a properly numeric value.
+
+Casper
 
 
 
---=20
-Robert =C5=9Awi=C4=99cki
