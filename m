@@ -1,49 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/23/3
-Message-ID: <6637563.hSMPS8suxu@arcadia>
-Date: Sun, 23 Apr 2017 12:52:16 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/9
+Message-ID: <20170705133341.GA31268@openwall.com>
+Date: Wed, 5 Jul 2017 15:33:41 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: imageworsener: multiple vulnerabilities
+Subject: Re: CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)
 Content-Type: text/plain; charset=utf-8
 
-There are some other vulnerabilities discovered by 'bestshow' and fixed in 
-imageworsener:
+On Wed, Jul 05, 2017 at 03:50:58PM +0300, Lior Kaplan wrote:
+> AFAIK, when the issue is already public the list is just fine.
+> 
+> From the cve-assign auto reply:
+> 
+> "In the special case of communications involving a publicly known
+> vulnerability on the oss-security mailing list, please do not use
+> the https://cveform.mitre.org web site at this time, and instead
+> send new or followup messages directly to that mailing list."
 
-CVE-2017-7452
-NULL pointer dereference in iwbmp_read_info_header
-https://github.com/jsummers/imageworsener/issues/8
+I think the above is about additional "communications involving" a
+vulnerability that already has a CVE ID, not about the CVE request.
 
+FWIW, on the distros list wiki page, we currently ask to avoid using the
+private lists if one's "sole purpose of their use is to obtain a CVE ID",
+and in a footnote we give this alternative procedure:
 
-CVE-2017-7453
-NULL pointer dereference in iwgif_record_pixel
-https://github.com/jsummers/imageworsener/issues/9
+"In those "CVE only" cases, please start by posting about the (to be
+made) public issue to oss-security (without a CVE ID), request a CVE ID
+from MITRE directly, and finally "reply" to your own posting when you
+also have the CVE ID to add.  With the described approach you would only
+approach MITRE after the issue is already public, but if you choose to
+do things differently and contact MITRE about an issue that is not yet
+public, then please do not disclose to them more than the absolute
+minimum needed for them to assign a CVE ID."
 
+"from MITRE directly" is a link to https://cveform.mitre.org and "the
+absolute minimum" is a link to
+http://www.openwall.com/lists/oss-security/2015/04/14/3
 
-CVE-2017-7454
-heap-buffer-overflow in iwgif_record_pixel
-https://github.com/jsummers/imageworsener/issues/11
+I hope this procedure is consistent with everyone's expectations.
+Salvatore reply quoted below is consistent with it.  Thank you for
+helping run this list, Salvatore!
 
+I think that ideally we add to such boilerplate replies (the need for
+which will hopefully become infrequent) that we appreciate being
+notified of the vulnerabilities first (before the CVE IDs are requested
+from MITRE) and want it to stay this way going forward (just not in the
+form of CVE requests, but rather in the form of vulnerability
+notifications also stating that CVE IDs are being requested separately
+and will be posted in here later).
 
-CVE-2017-7623
-heap-buffer-overflow in iwmiffr_convert_row32
-https://github.com/jsummers/imageworsener/issues/12
+I don't care about CVEs much, but we need to know where to redirect
+those requests to, and we also need to make it likely that we'll receive
+the actual vulnerability detail on oss-security (the sooner, the better).
 
+> On Wed, Jul 5, 2017 at 3:34 PM, Salvatore Bonaccorso <carnil@...ian.org> wrote:
+> > CVE assignement requests are not handled anymore directly via the
+> > oss-security list, but need to be filled/requested at
+> > https://cveform.mitre.org/
+> >
+> > Once CVE are assigned, can you repost them here for benefit of other
+> > reader?
 
-CVE-2017-7624
-memory leak in imagew-cmd
-https://github.com/jsummers/imageworsener/issues/10
-
-
-CVE-2017-7939
-stack buffer overflow in read_next_pam_token
-https://github.com/jsummers/imageworsener/issues/13
-
-
-CVE-2017-7940
-memory leak in imagew-cmd
-https://github.com/jsummers/imageworsener/issues/18
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Alexander
