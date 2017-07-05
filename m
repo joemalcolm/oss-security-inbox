@@ -1,68 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/2
-Message-ID: <20170705085034.GA2638@pali>
-Date: Wed, 5 Jul 2017 10:50:34 +0200
-From: Pali Rohár <pali.rohar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/18
+Message-ID: <20170705164711.nbu6ltcyeyfql3ol@perpetual.pseudorandom.co.uk>
+Date: Wed, 5 Jul 2017 17:47:11 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Daniel Skowroński <daniel@...nf.net>
 Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 02 July 2017 12:02 Daniel Skowroński wrote:
-> Hi all,
-> 
-> Just wanted to bring attention to issue with systemd not doing what is
-> expected when parsing User that should run service.
-> When it fails to parse string starting with digit it fails back to root
-> causing obvious threat to security.
-> 
-> See discussion with developer on github:
-> https://github.com/systemd/systemd/issues/6237
-> 
-> Best,
-> -Daniel Skowronski
+On Wed, 05 Jul 2017 at 11:48:43 -0400, Daniel Micay wrote:
+> It seems some distributions get useradd/userdel from somewhere else.
 
-Hi!
+shadow and util-linux have a lot of overlap. Fedora has historically
+used util-linux for as much as possible; Debian has historically used
+shadow, but is gradually moving towards util-linux because in practice
+it's more actively maintained; other distributions I don't know. The
+major user-visible difference has usually been differing su behaviour.
 
-There are basically two problems:
+> Maybe you have adduser from shadow? It'd be funny if they had different
+> rules enforced even for adduser vs. useradd...
 
-1) In more Linux distributions useradd tool allow to create a new user
-which starts with digit. Also according to POSIX such user name is a
-valid. This means that valid user name (for some Linux distributions)
-from /etc/passwd specified in systemd unit file results running service
-as root user.
+In Debian and its derivatives there are certainly different rules. useradd
+is the mechanism layer, and adduser is a Debian-specific policy layer (for
+instance adduser rejects weird/inadvisable usernames unless given an option
+to force them).
 
-2) If user name specified in systemd unit file is syntactically correct
-(according to systemd check) but user name does not exist then systemd
-refuse to start that unit.
-
-Which leads to problem that syntactically invalid user name (for
-systemd) results in root user and syntactically valid non-existent user
-name cause error.
-
-Because check if user name is valid is different in systemd as specified
-in POSIX and also different as in useradd tool supplied by some Linux
-distributions, I see this as a security problem when processing invalid
-input from configuration unit file.
-
-Correct behaviour should be to throw error also when garbage (invalid
-user name), according to internal systemd check, was specified. And not
-start service under root user with high privileges.
-
-Because of this I would suggest to ask for CVE identifier, so Linux
-distributions can mitigate or decide how to handle this problem.
-
-Linux distributions which follow POSIX standard when creating new users
-are affected by this.
-
-Please note that above bug tracker on github is locked for future
-discussion, which means it is not possible to ask for more details or
-continue discussion in upstream.
-
-Which is really *bad* for security related problems.
-
-What do you think, how should be this problem handled?
-
--- 
-Pali Rohár
-pali.rohar@...il.com
+    S
