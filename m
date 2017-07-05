@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/4
-Message-ID: <c5658eb7-b673-0543-8104-47e35f5a18a0@lighttpd.net>
-Date: Tue, 31 Oct 2017 13:50:36 +0100
-From: Stefan Bühler <stbuehler@...httpd.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/20
+Message-ID: <a8a90fab-58af-da5e-2697-e17ef034e906@oracle.com>
+Date: Wed, 5 Jul 2017 13:27:17 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Pali Rohár <pali.rohar@...il.com>
+Cc: Ben Tasker <ben@...tasker.co.uk>
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-On 10/31/2017 01:37 PM, Solar Designer wrote:
-> On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno B??ck wrote:
->> I think vim should change the behavior of swap files:
->> 1. they should be stored in /tmp by default
->> 2. they should have secure permissions (tmp file security is
->> a tricky thing and needs careful consideration to avoid symlink attacks
->> and the like, but there are dedicated functions for this like mkstemp).
->> 3. Ideally they also shouldn't leak currently edited filenames (e.g.
->> they shouldn't be called /tmp/.test.txt.swp, but more something
->> like /tmp/.vim_swap.123782173)
+On 07/ 5/17 01:03 PM, Pali Rohár wrote:
+> On Wed, Jul 5, 2017 at 12:28, Ben Tasker wrote:
+>> Honestly, I think upstream have done an *awful *job of handling it so far
+>> (and it's far from the only example of Poettering taking the not-a-bug
+>> approach questionably). Their issues do have a habit of attracting trolls,
+>> but I think sometimes their definition of troll expands to include anyone
+>> who doesn't agree with them.
 > 
-> Out of these, I think only 2 should be done: the files should be mode
-> 0600 or 0400 even if the original file's permissions and/or the umask
-> are more relaxed.
-> 
-> 1 and 3 go against intended use for these files - recovery of an edit in
-> progress if the editor or the entire system crashes (and comes back up
-> e.g. after a power-cycle).  /tmp contents might not survive a reboot,
-> and randomized filenames would prevent vim itself from detecting the
-> problem and offering recovery, which it does now.
+> The worst is that fact that discussion about this problem was locked in
+> upstream bugtracker. 
 
-You could keep the .test.txt.swp file, but make it a symlink and encode
-information where to find the real swap file (/var/tmp/, /tmp, ...) in
-the symlink.
+Honestly, given the level of flaming and trolling that happens on issues
+like this, locking the report is the only sane option I can see once
+everyone started piling on.   Forcing FOSS maintainers to accept infinite
+amounts of shitposting is a horrible way to reduce security by burning
+out all FOSS maintainers quickly and leaving software abandoned.
 
-It shouldn't link directly to the swap file, but perhaps look like
-"swap:///var/tmp/.vim_swap.random_id".
-
-Instead of a symlink you could of course just create a normal text file
-with the real swap filename in it, but then it might be easier for an
-attacker to find the real filename and read that file.
-
-cheers,
-Stefan
+-- 
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
