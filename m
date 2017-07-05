@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1691" "Monday" "1" "August" "2016" "20:07:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160802000720.DF2953AE011@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0" nil nil nil "8" "2016080200:07:20" "[oss-security] Re: CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0" (number mark "U       cve-assign@m Aug  1   41/1691  " thread-indent "\"[oss-security] Re: CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0\"\n") "<579F7AF1.2090108@gmail.com>" ("<579F7AF1.2090108@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1102" "Wednesday" "5" "July" "2017" "23:14:51" "+0200" "Robert Scheck" "robert@fedoraproject.org" "<20170705211451.GA16241@hurricane.linuxnetz.de>" "38" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070521:14:51" "[oss-security] systemd fails to parse user that should run service" (number mark "        robert@fedor Jul  5   38/1102  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<20170705170556.146ce33d@jabberwock.cb.piermont.com>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>" "<20170705170556.146ce33d@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25654 invoked by uid 550); 2 Aug 2016 00:07:35 -0000
+Received: (qmail 21909 invoked by uid 550); 5 Jul 2017 21:26:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11901 invoked from network); 5 Jul 2017 21:15:06 -0000
+Message-ID: <20170705211451.GA16241@hurricane.linuxnetz.de>
+References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
+ <20170705085034.GA2638@pali>
+ <CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
+ <20170705170556.146ce33d@jabberwock.cb.piermont.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="fdj2RfSjLxBAspz7"
+Content-Disposition: inline
+In-Reply-To: <20170705170556.146ce33d@jabberwock.cb.piermont.com>
+X-GnuPG-Key: 0xCE3E1F56, available at http://pgp.uni-mainz.de/
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.0.1
+Date: Wed, 5 Jul 2017 23:14:51 +0200
+From: Robert Scheck <robert@fedoraproject.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25626 invoked from network); 2 Aug 2016 00:07:32 -0000
-From: cve-assign@mitre.org
-To: petrella.pietro@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <579F7AF1.2090108@gmail.com>
-Message-Id: <20160802000720.DF2953AE011@smtpvbsrv1.mitre.org>
-Date: Mon,  1 Aug 2016 20:07:20 -0400 (EDT)
-Subject: [oss-security] Re: CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--fdj2RfSjLxBAspz7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I discovered a directory traversal issue on minifierBundleDir
-> barebone.jsp variable on a website with Liferay 5.1.0.
-> 
-> However, i report the following vulnerable URL of example:
-> 
-> /html/js/barebone.jsp?minifierBundleDir=/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E%2Fetc%2Fhosts%00.html
-> 
-> It's important to note that the url requested is built in the following 
-> manner:
-> - only .. "encoded characters" are permitted when you insert the 
-> traversal request
-> - At the end of the file is necessary insert %00 and .html otherwise
-> the request is not accepted
+On Wed, 05 Jul 2017, Perry E. Metzger wrote:
+> On Wed, 5 Jul 2017 13:28:43 +0100 Ben Tasker <ben@bentasker.co.uk>
+> wrote:
+> > FWIW, I'd be inclined to agree that it needs a CVE so that
+> > downstream distro's can at least refer to it, and decide how (and
+> > if) they want to address it.
+>=20
+> +1
+>=20
+> I don't care much if the developers deny that this is a problem. It is
+> a problem.
 
-Use CVE-2016-6517.
++1 for both, the CVE and that this is a problem. The service should not be
+started with more (!) permissions simply if parsing username fails. As a
+security sensitive guy I do not want to see a random software started with
+root permissions, because the random username fails to be parsed by some
+systemd code.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+
+Regards,
+  Robert
+
+--fdj2RfSjLxBAspz7
+Content-Type: application/pgp-signature
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXn95qAAoJEHb/MwWLVhi2EagP+wbDTXE/Nu6kzML6gHfT1YL/
-ASt1JVhMFSk/1HLg3/ZLC1+lj7UVjj8Dhe/6xR+VZjbhT+lfZT0mkMJMlXjkpW56
-Xr4QbP1rsgoZD3gIn3vZt714Kg2Slk+FgtYxnxXr14IkfjndbLRGteCTMp1oof2u
-ZLwyHQkX8aa+QWF/NmfGaGqVmXmpD3tEkhwPujqNPfvdeY+qnsTflJnckHFPrNrm
-XLwGnPE5oCYaTWR4Mik7fElYtm+KitiwLN1SNi8mtjhvftlpojNtpeTUyq0oZrkh
-pmMIWLJW6sEhniWJ1AEnKngbZjDYA6JmP5sLkhP/vvGKTAUqb+5/XMDW1BgDr9Z5
-+bmfGN1y+6hzbN/O1Eau6Xt0eFLyVTokc3bAszxB6+Oq3Mu3EXyRgF1wwwo2cT5i
-XJ6Ait8TD6alYs4Apz6SVk81FkmmF42/sMdXMqpkrAekaLwX2iCtDimaCthZLJGJ
-2rwT3ajPb+YMoeTXAGwipYxcHXh08A5YRZEgW1xzevJDng8qTNycPqb9QF2QmSHo
-5LGU29Ct1om7rMzSeYoF/ZqYVlq8yOTK0NdkdNsxr52yKS4KNY1ebM7X9IrYfdcT
-7ZRJGcIc0xS1ZfrW8WcfUWYnS6ke31nmXFLb6e73EmgM4+SX4lO1mIeBqGjekZYv
-P1MEHsLUulw40je0Ag1O
-=jL50
+iEYEARECAAYFAlldVssACgkQUwMgnc4+H1bJuACdFK3Alfb3s33t0KG6uDuAzbdw
+0uAAoKradq1iLZ2vf2hlNwyeEBi2ZyQq
+=lT1h
 -----END PGP SIGNATURE-----
+
+--fdj2RfSjLxBAspz7--
