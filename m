@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/12/2
-Message-ID: <2543295.QOKDAkRO2f@blackgate>
-Date: Wed, 12 Apr 2017 14:03:28 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/11
+Message-ID: <20170705140031.GA31519@openwall.com>
+Date: Wed, 5 Jul 2017 16:00:31 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-7592: libtiff: left shift
+Subject: LKML thread "mm: larger stack guard gap, between vmas" partially CC'ed to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-On Monday 10 April 2017 08:29:31 Simon McVittie wrote:
-> This is a bug, but how is it a security vulnerability? Can an attacker
-> exploit it for DoS or code execution or something with a malformed TIFF
-> image?
+Hi,
 
-Hello Simon,
+In the Stack Clash disclosure aftermath, there's a thread "[PATCH] mm:
+larger stack guard gap, between vmas" still going on LKML, which is
+attempted to be CC'ed to linux-distros (as linux-distros was among the
+recipients on similar threads with security@k.o involved prior to the
+public disclosure).  Some of these messages get through (those that
+include [vs-plain] in the Subject), the rest don't.  (It might as well
+be several threads now.)
 
-the supposition is that a library stays there to receive multiple inputs, while there is 
-an undefined behavior you don't know what will happen, so basically it is a 
-pontential Denial of Service.
+This makes little sense to me, and it also creates the situation that if
+any new security issues are disclosed in that thread (which might or
+might not be the case with LibreOffice and Java trying and failing to
+install their own stack guard pages after the kernel has been patched,
+if I read this right) then per linux-distros list policy we'd need to
+bring them specifically to oss-security (but it's tough to do when the
+thread doesn't make the issue reports explicit - rather, people are just
+discussing things).
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+On one hand, this is our continuing reminder of just how very wrong we
+were with the embargo.  (Of course, some of us will continue to disagree
+with this assessment.)  On the other hand, perhaps we should forcibly
+kill those CC's now - ask people to stop, or just filter on the server.
+I am going to start by asking.  Once again, that content is public on
+LKML anyway.
 
+Alexander
