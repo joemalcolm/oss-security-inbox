@@ -1,4 +1,9 @@
-Received: (qmail 24539 invoked by uid 550); 29 Sep 2025 14:20:26 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3306" "Wednesday" "5" "July" "2017" "11:06:14" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1499267174.28229.1.camel@gmail.com>" "77" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070515:06:14" "[oss-security] systemd fails to parse user that should run service" (number mark "        danielmicay@ Jul  5   77/3306  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<201707051202.v65C2NDB005864@room101.nl.oracle.com>" "<20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>" "<1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32528 invoked by uid 550); 5 Jul 2017 15:06:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,93 +11,126 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32504 invoked from network); 5 Jul 2017 15:06:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=rBs2dmnqYOwLDAMnUK60XRrMbqha6rbXKQ/BC9CFYRE=;
+        b=UIStYs/ilsFo365Q9LJr+o/F67X9HqhhtYlpB6u6MoC+a07f3wZEB0/E/FS4acGdTl
+         Nn4TP3MG+y0ukQgcs7MRMTGY1+GfAMpdKC9gkzyaHPDGk/pXATvFd2j0b4Pwi5PRz6GA
+         uQCSFa9BNLn3auQe1Yjp3cyBz9QNcADuUKKweZmvzT2uAfT+qtvbVC1u+cvbF9Z0JqW6
+         VO14ILU9/d8HH56B1AvYZ3MRZwbXW7DDq9Yuj4aWAIKKdepu9R2PlilcZySV5kVfoNym
+         qf67YbQTKJQF5DyVTVYBlbMmCHwaRM/+1VaCrA4vDHL8fQxVBK+hCT890ZgpgFl00dzr
+         f8ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=rBs2dmnqYOwLDAMnUK60XRrMbqha6rbXKQ/BC9CFYRE=;
+        b=K0G0sSn5emMd/gsiUwOjBQj4m+UeZxTbbpxF2MI64vRO9pU57+0RdDN6xXAI7aNdkQ
+         jjvpOFnlf3XJQhsH76+nGbCuIzmJq/wi/jzLCzp3lyoW6RYaTX8jMA96ZXkep8HpcRtr
+         a3gA3ov92GxCc1cAqM+bVzCw700w5SMYrp2GtGI2xRwIWG56VeW1wB/5PoDg5+3dKhZn
+         oILbm4s8Si6OwG14wFuUCYoR8fezr4k9w0Pq1n2Il9S8ZY5tpQq/btejUW3SwyHkPIjh
+         6nzHZaNWBnTQmgwgvIEZl1iyrTx4oivnpWzfnlU1sovLJl5YDqbXfbpVx7VXBIfFMQjr
+         T54g==
+X-Gm-Message-State: AKS2vOxkdIvifwifR3/xzTVdtAf94hCKXtV7X+hGGWj/Uiz37mzcWcvX
+	TuzNA6ojfNFM9/yxXK0=
+X-Received: by 10.107.136.90 with SMTP id k87mr49731581iod.154.1499267176973;
+        Wed, 05 Jul 2017 08:06:16 -0700 (PDT)
+Message-ID: <1499267174.28229.1.camel@gmail.com>
+In-Reply-To: <1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>
+References: 
+	<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
+	 <20170705085034.GA2638@pali>
+	 <201707051202.v65C2NDB005864@room101.nl.oracle.com>
+	 <20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>
+	 <1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.24.3 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Date: Wed, 05 Jul 2017 11:06:14 -0400
+From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32258 invoked from network); 29 Sep 2025 03:50:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=selector1; bh=7ucJOG6tLl
-	VYg6Cs55cyjwevlMNmCdC7xf5LXaYMG6g=; h=date:references:in-reply-to:
-	subject:cc:to:from; d=openbsd.org; b=Gg3h3KMWNra55aurf4xw3TQwbkqXANXZz
-	xtKzmGnL3x0KrJ4X9U/6e9Esm9sOE0cUM2dywwf7syg9OV/zA4CeAX1xNUDfB2h9WtIsCC
-	XVgqNJ74XU4D+5DF7SybpG/WDnJhuMEqeNfVgmt5isQbjCJ31una5wZqzPk+EeKeGD1p+E
-	ydV6CtOC4X2ZNgWQse191NwD50y76Z1maGnGO++TurT2FWTUgQpl9wRZ/87Iz8qkAxv0D4
-	fClEBlqIbclAw2w5AUHRWxQeuF0+h/GhqlyKcDf+QgNNBOXhWNj6lWK67hkt6UQDVKsHI5
-	rmUbGEU5j7nQUz1sQmVOsZU4ZA+ZA==
-From: "Theo de Raadt" <deraadt@openbsd.org>
-To: Damien Miller <djm@mindrot.org>
-cc: "Adiletta, Andrew" <ajadiletta@wpi.edu>,
-    Solar Designer <solar@openwall.com>,
-    "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-    "openssh@openssh.com" <openssh@openssh.com>,
-    "Tol,
-    Caner" <mtol@wpi.edu>, "Sunar, Berk" <sunar@wpi.edu>,
-    "Doroz,
-    Yarkin" <ydoroz@wpi.edu>,
-    "Todd C. Miller" <Todd.Miller@courtesan.com>,
-    "pgut001@cs.auckland.ac.nz" <pgut001@cs.auckland.ac.nz>
-In-reply-to: <9c5ab4b0-4ddb-ca3d-85e2-d47f058f7f73@mindrot.org>
-References: <92a89d5d-e0de-c713-e7d2-83f971574eff@mindrot.org> <20250923032113.GA14348@openwall.com> < BL1PR01MB772308134BF946DF07159A05C11CA%BL1PR01MB7723.prod.exchangelabs.com@mailhub.eait.uq.edu.au> <c5d66517-f422-1fe7-03a0-d79cf4af1fbf@mindrot.org> <76091.1759068746@cvs.openbsd.org> < BL1PR01MB772375CA93AF5608280A224FC118A%BL1PR01MB7723.prod.exchangelabs.com@mailhub.eait.uq.edu.au> <9c5ab4b0-4ddb-ca3d-85e2-d47f058f7f73@mindrot.org>
-Comments: In-reply-to Damien Miller <djm@mindrot.org>
-   message dated "Mon, 29 Sep 2025 12:44:33 +1000."
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 28 Sep 2025 21:50:13 -0600
-Message-ID: <56111.1759117813@cvs.openbsd.org>
-Subject: [oss-security] Re: [EXT] Re: [oss-security] CVE-2023-51767: a bogus CVE in OpenSSH
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
+To: oss-security@lists.openwall.com
 
-Damien Miller <djm@mindrot.org> wrote:
+On Wed, 2017-07-05 at 15:50 +0100, John Haxby wrote:
+> On 05/07/17 14:53, Simon McVittie wrote:
+> > On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@oracle.com wrote:
+> > > > 2) If user name specified in systemd unit file is syntactically
+> > > > correct
+> > > > (according to systemd check) but user name does not exist then
+> > > > systemd
+> > > > refuse to start that unit.
+> > > 
+> > > Should systemd really valid usernames?  I would think that you
+> > > would 
+> > > either use getpwnam(username) and if that fails you may then parse
+> > > it as a 
+> > > numeric value.  If "0day" isn't a valid username according to
+> > > getpwnam(), 
+> > > when converting it to a numeric uid should *also* fail because
+> > > "0day" 
+> > > isn't a properly numeric value.
+> > 
+> > It *does* fail. The problem is in the handling of that failure.
+> > systemd
+> > interprets that failure as "this line is nonsense, so behave as
+> > though the
+> > line didn't exist" rather than "this line can be positively
+> > identified as
+> > an attempt to name a nonexistent or unacceptable user, so fail to
+> > load
+> > the unit". So User=7up does the same thing as User=0day - it doesn't
+> > run as uid 7, which is 'lp' on my Debian system.
+> 
+> 
+> And therein lies the problem.  "0day" and "7up" are valid user names
+> according to Posix[1], they may or may not exist, but they are valid.
+> You may think Posix is wrong to allow an initial digit, but that isn't
+> the issue.  The problem is that systemd treats an "invalid" username
+> as
+> either an integer or not specified and in either case this results in
+> a
+> program running as the wrong user, probably as root.
+> 
+> Having systemd balk at what Posix considers to be a valid username is
+> a
+> bug that systemd is free to say "this is stupid, we're not allowing
+> that".   If, as appears to be the case, systemd says "that username is
+> stupid, we're going to interpret it differently" then that's when we
+> need a CVE because, to my mind on this hot and sunny say, that's
+> systemd
+> apparently doing something for security that it is not.
+> 
+> jch
+> 
+> 
+> [1]
+> http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.htm
+> l#tag_03_431
 
-> On Sun, 28 Sep 2025, Adiletta, Andrew wrote:
->=20
-> > Theo,
-> >
-> > Even after two years we stand behind our paper and the contributions
-> > as outlined. There is nothing more natural for any vulnerability
-> > researcher to evaluate the most widely used products.=C2=A0If we had do=
-ubts
-> > about the claim or any of the POCs, we would have simply not included
-> > them in the paper.=C2=A0
->=20
-> Again, the POCs were not against OpenSSH but your modified version and
-> you did not demonstrate any of the techniques that you suppose could
-> have been used to make the attack viable against the unmodified product.
-> Your abstract therefore clearly overstates the extent of your work.
->=20
-> The fact that someone filed this CVE based on your paper demonstrates
-> that it is misleading.
+https://github.com/shadow-maint/shadow/blob/master/libmisc/chkname.c#L49
 
-I don't think the CVE was filed because of the misleading abstract.
+POSIX also says "." is a portable character, which isn't allowed by
+shadow either. What are distributions using to provide useradd if not
+shadow?
 
-Rather, it was due to the misleading contents saying that OpenSSH is
-vulnerable, with a large amount of effort shown, and text explaining it.
-Many readers will finish reading without understand how extremely
-artificial the demonstration is.
+systemd's On Error Resume Next error handling seems like the main issue.
+If a unit has invalid values, it should reject it. It shouldn't ever be
+ignoring a User field because it considers it invalid. It's unfortunate
+that it enables invalid field names like Usre=validusername too, but it
+probably does that so they can introduce new fields that can be adopted
+by projects for their units without breaking compatibility with older
+versions of systemd.
 
-So to refresh -- OpenSSH is not vulnerable, but the paper says it is.
-
-Downstream OpenSSH in Redhat, Debian, Cisco routers, etc etc are also
-not vulnerable to the artificial demonstrator.
-
-The claims about other methods lack proof.  Demonstrate those methods
-working, or retract the claims.
-
-
-OpenSSH was probably not chosen as an example because it is widely used,
-but because of the strong academic reputation to be collected from
-publishing a viable attack against OpenSSH..... except such an attack
-is not actually demonstrated.
-
-Many of us understand the zeal to explain single-bit flips against
-in-memory variables with value 0/1 versus the benefit of variables with
-greater bit-spread, but the bogus OpenSSH side-study is a distraction
-which should not have landed in this paper.
-
-
-Andrew, I think your proposal to change the abstract is not sufficient.
-
-I think the paper needs a retraction of all the claims against OpenSSH;
-alternatively you could complete a demonstration of those described
-theoretical methods working against a real, unmodified OpenSSH, exploit it
-and become rightously famous.  At the moment, you are becoming famous
-for doing this wrong.
-
+I don't think it makes much sense for programs that are only consuming
+the password database to enforce their own checks, but they're free to
+do silly things like that if they feel like it and it doesn't make it a
+vulnerability. If it rejected the unit as a whole when it considers the
+username invalid, it would only be an annoyance for people that actually
+want to have a shadow / systemd incompatible username, not a potential
+security gotcha.
