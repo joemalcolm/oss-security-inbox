@@ -1,34 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/05/1
-Message-ID: <alpine.LFD.2.20.1706051454450.26243@wniryva>
-Date: Mon, 5 Jun 2017 15:05:01 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-9373 Qemu: ide: ahci host memory leakage during hotunplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/10
+Message-ID: <20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>
+Date: Wed, 5 Jul 2017 14:53:20 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Daniel Skowroński <daniel@...nf.net>
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@...cle.com wrote:
+> >2) If user name specified in systemd unit file is syntactically correct
+> >(according to systemd check) but user name does not exist then systemd
+> >refuse to start that unit.
+> 
+> Should systemd really valid usernames?  I would think that you would 
+> either use getpwnam(username) and if that fails you may then parse it as a 
+> numeric value.  If "0day" isn't a valid username according to getpwnam(), 
+> when converting it to a numeric uid should *also* fail because "0day" 
+> isn't a properly numeric value.
 
-Quick emulator built with the IDE AHCI Emulation support is vulnerable to a 
-host memory leakage issue. It could occur while hot-unplugging the AHCI 
-device.
+It *does* fail. The problem is in the handling of that failure. systemd
+interprets that failure as "this line is nonsense, so behave as though the
+line didn't exist" rather than "this line can be positively identified as
+an attempt to name a nonexistent or unacceptable user, so fail to load
+the unit". So User=7up does the same thing as User=0day - it doesn't
+run as uid 7, which is 'lp' on my Debian system.
 
-A privileged user inside guest could use this flaw to leak host memory 
-resulting in DoS.
+    % cat /etc/systemd/system/demo.service
+    [Unit]
+    Description=Demonstration
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=d68f0f778e7f4fbd674627274267f269e40f0b04
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/bin/id
+    User=7up
+    % sudo systemctl daemon-reload
+    % sudo systemctl start demo.service
+    % sudo systemctl status demo.service
+    ...
+    Jul 05 14:47:11 host systemd[1]: /etc/systemd/system/demo.service:7:
+    Invalid user/group name or numeric ID, ignoring: 7up
+    Jul 05 14:47:11 host systemd[1]: Starting Demonstration...
+    Jul 05 14:47:11 host id[27282]: uid=0(root) gid=0(root) groups=0(root)
+    Jul 05 14:47:11 host systemd[1]: Started Demonstration.
+    Jul 05 14:47:11 host systemd[1]: /etc/systemd/system/demo.service:7:
+    Invalid user/group name or numeric ID, ignoring: 7up
+    Jul 05 14:47:17 host systemd[1]: /etc/systemd/system/demo.service:7:
+    Invalid user/group name or numeric ID, ignoring: 7up
+    Jul 05 14:48:25 host systemd[1]: /etc/systemd/system/demo.service:7:
+    Invalid user/group name or numeric ID, ignoring: 7up
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1458270
+(The error message in the Journal is presumably repeated because systemd
+re-parses User when looking for ExecStartPre, ExecStart, ExecStop and
+ExecStopPost commands, even though in this case there is only ExecStart.)
 
-This issue was reported by Li Qiang of Qihoo 360 Gear Team.
+The default user to run system units, if no user is specified, is root,
+because for system services that's the right thing more often than not,
+analogous to how LSB init scripts always run as root and can drop
+privileges themselves if they want to.
 
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+    S
