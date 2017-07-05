@@ -1,79 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/10
-Message-ID: <20171207225332.GA9059@openwall.com>
-Date: Thu, 7 Dec 2017 23:53:32 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/14
+Message-ID: <1499267174.28229.1.camel@gmail.com>
+Date: Wed, 05 Jul 2017 11:06:14 -0400
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 07, 2017 at 10:01:34PM +0100, Solar Designer wrote:
-> On Thu, Dec 07, 2017 at 06:32:11AM +0000, halfdog wrote:
-> > Thus the Debian switch from gpg1 to gpg2 just introduced efforts
-> > fiddling with functionality I do not need and cannot disable,
-> > provides a keymanagement that cannot be configured easily to
-> > protect against the threats it should mitigate (theft of key material)
-> > and creating additional attack surface without any recognizable
-> > benefit.
+On Wed, 2017-07-05 at 15:50 +0100, John Haxby wrote:
+> On 05/07/17 14:53, Simon McVittie wrote:
+> > On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@...cle.com wrote:
+> > > > 2) If user name specified in systemd unit file is syntactically
+> > > > correct
+> > > > (according to systemd check) but user name does not exist then
+> > > > systemd
+> > > > refuse to start that unit.
+> > > 
+> > > Should systemd really valid usernames?  I would think that you
+> > > would 
+> > > either use getpwnam(username) and if that fails you may then parse
+> > > it as a 
+> > > numeric value.  If "0day" isn't a valid username according to
+> > > getpwnam(), 
+> > > when converting it to a numeric uid should *also* fail because
+> > > "0day" 
+> > > isn't a properly numeric value.
+> > 
+> > It *does* fail. The problem is in the handling of that failure.
+> > systemd
+> > interprets that failure as "this line is nonsense, so behave as
+> > though the
+> > line didn't exist" rather than "this line can be positively
+> > identified as
+> > an attempt to name a nonexistent or unacceptable user, so fail to
+> > load
+> > the unit". So User=7up does the same thing as User=0day - it doesn't
+> > run as uid 7, which is 'lp' on my Debian system.
 > 
-> I think the benefit is being on a version upstream intends to maintain
-> to a greater extent and for a longer time.  For example, when yet
-> another side-channel leak was reported against GnuPG 1 & 2 recently,
-> upstream officially patched it for GnuPG 2 only and said that GnuPG 1
-> probably contains many other side-channel leaks anyway:
 > 
-> http://openwall.com/lists/oss-security/2017/07/06/8
-
-Turns out upstream shortly released GnuPG 1.4.22 fixing this.  It's good
-news, which I had missed.
-
-Noteworthy changes in version 1.4.22 (2017-07-19)
--------------------------------------------------
-
- * Mitigate a flush+reload side-channel attack on RSA secret keys
-   dubbed "Sliding right into disaster".  For details see
-   <https://eprint.iacr.org/2017/627>.  [CVE-2017-7526]
-
- * Fix some minor bugs.
-
-> Are you saying "--s2k-count" option to "gpg2" is ignored, and moreover
-> that this is documented?  gnupg-2.1.23/doc/gpg.texi says (formatted):
+> And therein lies the problem.  "0day" and "7up" are valid user names
+> according to Posix[1], they may or may not exist, but they are valid.
+> You may think Posix is wrong to allow an initial digit, but that isn't
+> the issue.  The problem is that systemd treats an "invalid" username
+> as
+> either an integer or not specified and in either case this results in
+> a
+> program running as the wrong user, probably as root.
 > 
-> `--s2k-count `n''
->      Specify how many times the passphrase mangling is repeated.  This
->      value may range between 1024 and 65011712 inclusive.  The default
->      is inquired from gpg-agent.  Note that not all values in the
->      1024-65011712 range are legal and if an illegal value is selected,
->      GnuPG will round up to the nearest legal value.  This option is
->      only meaningful if `--s2k-mode' is 3.
+> Having systemd balk at what Posix considers to be a valid username is
+> a
+> bug that systemd is free to say "this is stupid, we're not allowing
+> that".   If, as appears to be the case, systemd says "that username is
+> stupid, we're going to interpret it differently" then that's when we
+> need a CVE because, to my mind on this hot and sunny say, that's
+> systemd
+> apparently doing something for security that it is not.
+> 
+> jch
+> 
+> 
+> [1]
+> http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.htm
+> l#tag_03_431
 
-I should have looked at GnuPG 2.2.3, but its description of the above
-option is the same, and it describes the corresponding option to
-gpg-agent as follows:
+https://github.com/shadow-maint/shadow/blob/master/libmisc/chkname.c#L49
 
-'--s2k-count N'
-     Specify the iteration count used to protect the passphrase.  This
-     option can be used to override the auto-calibration done by
-     default.  The auto-calibration computes a count which requires
-     100ms to mangle a given passphrase.
+POSIX also says "." is a portable character, which isn't allowed by
+shadow either. What are distributions using to provide useradd if not
+shadow?
 
-     To view the actually used iteration count and the milliseconds
-     required for an S2K operation use:
+systemd's On Error Resume Next error handling seems like the main issue.
+If a unit has invalid values, it should reject it. It shouldn't ever be
+ignoring a User field because it considers it invalid. It's unfortunate
+that it enables invalid field names like Usre=validusername too, but it
+probably does that so they can introduce new fields that can be adopted
+by projects for their units without breaking compatibility with older
+versions of systemd.
 
-          gpg-connect-agent 'GETINFO s2k_count' /bye
-          gpg-connect-agent 'GETINFO s2k_time' /bye
-
-     To view the auto-calibrated count use:
-
-          gpg-connect-agent 'GETINFO s2k_count_cal' /bye
-
-Looks sane to me, and this might also answer your question:
-
-> > PS: I do not know, how much the gpg-agent calibration under
-> > increased system load reduced the KDF complexity, as I failed
-> > to extract the KDF rounds value from the gpg data structures,
-> > but the value seems to be at least below 70ms due to total time
-> > measurements for gpg-agent (math, interprocess communication,
-> > filesystem) to unlock a key on an idle system.
-
-Alexander
+I don't think it makes much sense for programs that are only consuming
+the password database to enforce their own checks, but they're free to
+do silly things like that if they feel like it and it doesn't make it a
+vulnerability. If it rejected the unit as a whole when it considers the
+username invalid, it would only be an annoyance for people that actually
+want to have a shadow / systemd incompatible username, not a potential
+security gotcha.
