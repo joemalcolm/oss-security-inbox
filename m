@@ -1,56 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/2
-Message-ID: <CAP145pioFwiNj8TGKE8dz__9HdcXeV3srat+OwcozeOzi5g3Ww@mail.gmail.com>
-Date: Thu, 18 May 2017 02:05:24 +0200
-From: Robert Święcki <robert@...ecki.net>
-To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Cc: oss-security@...ts.openwall.com, "Jason A. Donenfeld" <Jason@...c4.com>,  rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/16
+Message-ID: <efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>
+Date: Wed, 5 Jul 2017 16:37:04 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Hi again,
-
-> 2017-05-17 15:56 GMT+02:00 Daniel Kahn Gillmor <dkg@...thhorseman.net>:
->>> Please consider the following example:
+On 05/07/17 16:06, Daniel Micay wrote:
+> On Wed, 2017-07-05 at 15:50 +0100, John Haxby wrote:
+>> On 05/07/17 14:53, Simon McVittie wrote:
+>>> On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@...cle.com wrote:
+>>>>> 2) If user name specified in systemd unit file is syntactically
+>>>>> correct
+>>>>> (according to systemd check) but user name does not exist then
+>>>>> systemd
+>>>>> refuse to start that unit.
+>>>>
+>>>> Should systemd really valid usernames?  I would think that you
+>>>> would 
+>>>> either use getpwnam(username) and if that fails you may then parse
+>>>> it as a 
+>>>> numeric value.  If "0day" isn't a valid username according to
+>>>> getpwnam(), 
+>>>> when converting it to a numeric uid should *also* fail because
+>>>> "0day" 
+>>>> isn't a properly numeric value.
 >>>
->>> $ tail -n1 /etc/hosts | xxd
->>> 00000000: 3132 372e 302e 302e 3309 1b47 513b 205a  127.0.0.3..GQ; Z
->>> 00000010: 5a5a 0a                                  ZZ.
->>> $ ping ZZZ
->>> PING ; (127.0.0.3) 56(84) bytes of data.
->>> ^[G0
->>> 64 bytes from ; (127.0.0.3): icmp_seq=1 ttl=64 time=0.039 ms
->>> ^[G0
->>> 64 bytes from ; (127.0.0.3): icmp_seq=2 ttl=64 time=0.032 ms
->>> ^[G0
->>> ^C
->>> --- ; ping statistics ---
->>> 2 packets transmitted, 2 received, 0% packet loss, time 1014ms
->>> rtt min/avg/max/mdev = 0.032/0.035/0.039/0.006 ms
->>> ^[G0
->>> $ 0
->>> bash: 0: command not found
+>>> It *does* fail. The problem is in the handling of that failure.
+>>> systemd
+>>> interprets that failure as "this line is nonsense, so behave as
+>>> though the
+>>> line didn't exist" rather than "this line can be positively
+>>> identified as
+>>> an attempt to name a nonexistent or unacceptable user, so fail to
+>>> load
+>>> the unit". So User=7up does the same thing as User=0day - it doesn't
+>>> run as uid 7, which is 'lp' on my Debian system.
 >>
->> what version of ping are you using?  I was unable to replicate this with
->> either the debian iputils-ping package version 3:20161105-1, or with
->> debian inetutils-ping package version 2:1.9.4-2+b1.  neither of them seem to
->> do a getnameinfo() at all if it is initially supplied with an IP
->> address.
->
-> Works for me with the following:
->
-> Ubuntu 17.04's iputils-ping 3:20161105-1ubuntu2
-> Fedora 25's iputils-20161105-1.fc25.x86_64
+>>
+>> And therein lies the problem.  "0day" and "7up" are valid user names
+>> according to Posix[1], they may or may not exist, but they are valid.
+>> You may think Posix is wrong to allow an initial digit, but that isn't
+>> the issue.  The problem is that systemd treats an "invalid" username
+>> as
+>> either an integer or not specified and in either case this results in
+>> a
+>> program running as the wrong user, probably as root.
+>>
+>> Having systemd balk at what Posix considers to be a valid username is
+>> a
+>> bug that systemd is free to say "this is stupid, we're not allowing
+>> that".   If, as appears to be the case, systemd says "that username is
+>> stupid, we're going to interpret it differently" then that's when we
+>> need a CVE because, to my mind on this hot and sunny say, that's
+>> systemd
+>> apparently doing something for security that it is not.
+>>
+>> jch
+>>
+>>
+>> [1]
+>> http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.htm
+>> l#tag_03_431
+> 
+> https://github.com/shadow-maint/shadow/blob/master/libmisc/chkname.c#L49
+> 
+> POSIX also says "." is a portable character, which isn't allowed by
+> shadow either. What are distributions using to provide useradd if not
+> shadow?
 
-I believe you should try with
+Interesting.  "useradd a.b" works on Fedora so I wonder what's different
+there?
 
-$ ping ZZZ
+> 
+> systemd's On Error Resume Next error handling seems like the main issue.
+> If a unit has invalid values, it should reject it. It shouldn't ever be
+> ignoring a User field because it considers it invalid. It's unfortunate
+> that it enables invalid field names like Usre=validusername too, but it
+> probably does that so they can introduce new fields that can be adopted
+> by projects for their units without breaking compatibility with older
+> versions of systemd.
+> 
+> I don't think it makes much sense for programs that are only consuming
+> the password database to enforce their own checks, but they're free to
+> do silly things like that if they feel like it and it doesn't make it a
+> vulnerability. If it rejected the unit as a whole when it considers the
+> username invalid, it would only be an annoyance for people that actually
+> want to have a shadow / systemd incompatible username, not a potential
+> security gotcha.
+> 
 
-With
+I agree completely.
 
-$ ping 127.0.0.3
-
-it doesn't do reverse lookups at all (as you'd pointed out).
-
--- 
-Robert Święcki
+jch
