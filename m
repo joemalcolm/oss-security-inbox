@@ -1,74 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/4
-Message-ID: <21545601.TvTXDKVynH@blackgate>
-Date: Wed, 01 Feb 2017 10:18:08 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: pax-utils: scanelf: out of bounds read in scanelf_file_textrel (scanelf.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/4
+Message-ID: <CAEsznC6vAOzM9wmtcZwiLX1-k3uevMEEuxkksXCUMR8=hsq+Kg@mail.gmail.com>
+Date: Wed, 5 Jul 2017 14:37:00 +0300
+From: Lior Kaplan <kaplanlior@...il.com>
+To: cve-assign@...re.org
+Cc: "security@....net" <security@....net>, oss-security@...ts.openwall.com
+Subject: CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-pax-utils is a set of tools that check files for security relevant properties.
+Hi,
 
-A fuzz on scanelf exposed an out-of bound read. It was reported to vapier 
-which fixed the issue immediately.
-Unfortunately I can’t get a symbolized ASan stacktrace, so I will show only 
-the useful part of both asan and gdb.
+The following issues have been reported and fixed in PHP. At the moment
+they are part of PHP 7.0.21 release. The fixes are also included in the 5.6
+branch and will be part of 5.6.31 when it will be released.
 
-# scanelf -s '*' -axetrnibSDIYZB $FILE
-==1853==ERROR: AddressSanitizer: unknown-crash on address 0x7f4099d25008 at pc 
-0x00000053586e bp 0x7fff335cb8b0 sp 0x7fff335cb8a8
-READ of size 8 at 0x7f4099d25008 thread T0
-    #0 0x53586d  (/usr/bin/scanelf+0x53586d)
-    #1 0x51f526  (/usr/bin/scanelf+0x51f526)
-    #2 0x51b97e  (/usr/bin/scanelf+0x51b97e)
-    #3 0x51ad43  (/usr/bin/scanelf+0x51ad43)
-    #4 0x51922e  (/usr/bin/scanelf+0x51922e)
-    #5 0x7f4098afd61f  (/lib64/libc.so.6+0x2061f)
-    #6 0x41a008  (/usr/bin/scanelf+0x41a008) 
+#73807 Performance problem with processing post request over 2000000 chars
+https://bugs.php.net/bug.php?id=73807
+http://git.php.net/?p=php-src.git;a=commitdiff;h=0f8cf3b8497dc45c010c44ed9e96518e11e19fc3
 
-(gdb) bt
-#8  0x000000000053586e in scanelf_file_textrel (elf=, found_textrel=) at 
-scanelf.c:560
-#9  0x000000000051f527 in scanelf_elfobj (elf=) at scanelf.c:1536
-#10 0x000000000051b97f in scanelf_elf (filename=0x7fffffffe50e 
-"/tmp/afl/scanelf/report/crashes/2.crashes", fd=, len=) at scanelf.c:1612
-#11 scanelf_fileat (dir_fd=, filename=, st_cache=) at scanelf.c:1679
-#12 0x000000000051ad44 in scanelf_dirat (dir_fd=, path=) at scanelf.c:1713
-#13 0x000000000051922f in scanelf_dir (path=) at scanelf.c:1763
-#14 parseargs (argc=5, argv=0x7fffffffe258) at scanelf.c:2273
-#15 main (argc=5, argv=) at scanelf.c:2361
+#74145 wddx parsing empty boolean tag leads to SIGSEGV
+https://bugs.php.net/bug.php?id=74145
+http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
+http://git.php.net/?p=php-src.git;a=commitdiff;h=f269cdcd4f76accbecd03884f327cffb9a7f1ca9
 
-Affected version:
-1.2
+#74651 negative-size-param (-1) in memcpy in zif_openssl_seal()
+https://bugs.php.net/bug.php?id=74651
+http://git.php.net/?p=php-src.git;a=commitdiff;h=89637c6b41b510c20d262c17483f582f115c66d6
 
-Fixed version:
-1.2.1
+#74819 wddx_deserialize() heap out-of-bound read via php_parse_date()
+https://bugs.php.net/bug.php?id=74819
+PHP 5.6 -
+http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
+PHP 7.0  -
+http://git.php.net/?p=php-src.git;a=commitdiff;h=6b18d956de38ecd8913c3d82ce96eb0368a1f9e5
 
-Commit fix:
-https://github.com/gentoo/pax-utils/commit/95e5489534ac9e9324c5096286899b688e19ae00
+Also, requests from past releases:
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+PHP 5.6.28 + 7.0.13
+#73192 parse_url return wrong hostname
+https://bugs.php.net/bug.php?id=73192
+http://git.php.net/?p=php-src.git;a=commitdiff;h=b061fa909de77085d3822a89ab901b934d0362c4
 
-CVE:
-N/A
+5.6.30 + 7.0.15
+#73773 Seg fault when loading hostile phar
+https://bugs.php.net/bug.php?id=73773
+http://git.php.net/?p=php-src.git;a=commitdiff;h=e5246580a85f031e1a3b8064edbaa55c1643a451
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00132-pax-utils-scanelf-oobread-scanelf_file_textrel
+Thanks,
+Lior Kaplan
+PHP security team
 
-Timeline:
-2017-01-23: bug discovered and reported to upstream
-2017-01-24: upstream realeased a patch and 1.2.1
-2017-02-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-I’d suggest to go to 1.2.2 because of a functionality bug(s) in 1.2.1
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/01/pax-utils-scanelf-out-of-bounds-read-in-scanelf_file_textrel-scanelf-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
