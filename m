@@ -1,57 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/1
-Message-ID: <CAP145pjG+OFBZ9x+4vbnPJo3ScC66xLO-OpvrvQPGViGAuAMTw@mail.gmail.com>
-Date: Thu, 18 May 2017 02:03:04 +0200
-From: Robert Święcki <robert@...ecki.net>
-To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Cc: oss-security@...ts.openwall.com, "Jason A. Donenfeld" <Jason@...c4.com>,  rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/3
+Message-ID: <20c62ff4-6650-b0f0-0343-fe5c0c7ce85b@slackware.com>
+Date: Wed, 5 Jul 2017 17:26:47 -0500
+From: "Patrick J. Volkerding" <security@...ckware.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Hi Daniel,
+On 07/05/2017 04:14 PM, Robert Scheck wrote:
+> +1 for both, the CVE and that this is a problem. The service should not be
+> started with more (!) permissions simply if parsing username fails.
 
-2017-05-17 15:56 GMT+02:00 Daniel Kahn Gillmor <dkg@...thhorseman.net>:
->> Please consider the following example:
->>
->> $ tail -n1 /etc/hosts | xxd
->> 00000000: 3132 372e 302e 302e 3309 1b47 513b 205a  127.0.0.3..GQ; Z
->> 00000010: 5a5a 0a                                  ZZ.
->> $ ping ZZZ
->> PING ; (127.0.0.3) 56(84) bytes of data.
->> ^[G0
->> 64 bytes from ; (127.0.0.3): icmp_seq=1 ttl=64 time=0.039 ms
->> ^[G0
->> 64 bytes from ; (127.0.0.3): icmp_seq=2 ttl=64 time=0.032 ms
->> ^[G0
->> ^C
->> --- ; ping statistics ---
->> 2 packets transmitted, 2 received, 0% packet loss, time 1014ms
->> rtt min/avg/max/mdev = 0.032/0.035/0.039/0.006 ms
->> ^[G0
->> $ 0
->> bash: 0: command not found
->
-> what version of ping are you using?  I was unable to replicate this with
-> either the debian iputils-ping package version 3:20161105-1, or with
-> debian inetutils-ping package version 2:1.9.4-2+b1.  neither of them seem to
-> do a getnameinfo() at all if it is initially supplied with an IP
-> address.
-
-Works for me with the following:
-
-Ubuntu 17.04's iputils-ping 3:20161105-1ubuntu2
-Fedora 25's iputils-20161105-1.fc25.x86_64
-
-> That said, with the same last line of /etc/hosts, getent is willing
-> to pass along the garbage chars:
->
-> 0 test@...t:~$ getent hosts 127.0.0.3
-> 127.0.0.3       ; ZZZ
-> ^[G0
-> 0 test@...t:~$ 0
-> bash: 0: command not found
-> 127 test@...t:~$
+One would think that without any User= line specified, defaulting to
+nobody:nogroup would be more sane than defaulting to root. Since the
+User= mechanism exists, if you want something to run as root, you should
+need to ask for it.
 
 
--- 
-Robert Święcki
+
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
