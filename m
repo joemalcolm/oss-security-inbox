@@ -1,114 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/07/4
-Message-ID: <CADSYzstpKUwZ89poth5XNbROcBnakBJ9+rnJ9zJrvfSdKe_q6Q@mail.gmail.com>
-Date: Sun, 7 May 2017 17:32:38 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/23
+Message-ID: <20170705211451.GA16241@hurricane.linuxnetz.de>
+Date: Wed, 5 Jul 2017 23:14:51 +0200
+From: Robert Scheck <robert@...oraproject.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Hi Kash,
+On Wed, 05 Jul 2017, Perry E. Metzger wrote:
+> On Wed, 5 Jul 2017 13:28:43 +0100 Ben Tasker <ben@...tasker.co.uk>
+> wrote:
+> > FWIW, I'd be inclined to agree that it needs a CVE so that
+> > downstream distro's can at least refer to it, and decide how (and
+> > if) they want to address it.
+> 
+> +1
+> 
+> I don't care much if the developers deny that this is a problem. It is
+> a problem.
 
-On Sun, May 7, 2017 at 1:12 PM, Kash Pande <kash@...pleback.net> wrote:
->
-> On 03/05/17 04:32 PM, Dawid Golunski wrote:
->>
->> Here's a paper I wrote back in December.  It was originally meant to go
->> into Phrack but the team wanted a more general article on parameter
->> injection
->> as mail() was supposedly an outdated technique.
->> Meanwhile, the RCE-chain continues :) So I decided to post it as it is
->> without
->> changing it as mail() injection deserves a separate article imho.
->>
->> https://exploitbox.io/paper/Pwning-PHP-Mail-Function-For-Fun-And-RCE.html
->
->
-> This article purposely uses a litany of poor programming practices to expose
-> an alleged exploit in PHP mail().. I'd like to see the same exploit, without
-> assuming the developer on the software had no idea what they're doing
-> (passing non-sanitized variables to functions).
-
-In my article some of the early examples are simplified to demonstrate
-the general concept in an easy way.
-Try digging a bit deeper and maybe do some research too...
-Note the paragraph:
-"It presents several new exploitation vectors and bypass techniques
-on the PHP mail() function that were discovered and recently released by the
-author of this white-paper in the course of finding multiple critical
-vulnerabilities in major PHP e-mail sending libraries (PHPMailer, Zend
-Framework / Zend-mail, SwiftMailer) that are used by millions of web
-applications/projects (e.g Wordpress, Drupal, Joomla etc.)  and PHP
-programming frameworks (Zend, Yii2, Symphony, Laravel etc.)"
-
-These are all real-world examples of vulns that I discovered and that
-you can read-up on here:
-
-https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
-https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10045-Vuln-Patch-Bypass.html
-https://legalhackers.com/advisories/SwiftMailer-Exploit-Remote-Code-Exec-CVE-2016-10074-Vuln.html
-https://legalhackers.com/advisories/ZendFramework-Exploit-ZendMail-Remote-Code-Exec-CVE-2016-10034-Vuln.html
-https://legalhackers.com/advisories/SquirrelMail-Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
-
-These are pretty good examples I think. If creators of major email
-sending libraries / email client software have made the mistakes that
-have stayed hidden for years,  there is a chance others have made
-it/will make it too.
-
-Contrary to what you seem to assume here, mail() function parameters
-are quite tricky to use properly.
-Note my CVE-2016-10045 exploit which was a bypass of the
-CVE-2016-10033 patch applied to phpmailer library.
-
-There is also a whole write-up on the subject/problem by a developer
-that emerged after the phpmailer vulnerability I disclosed:
-
-https://gist.github.com/Zenexer/40d02da5e07f151adeaeeaa11af9ab36
-
-
-> As well, you noted in your
-> own article that this 'discovery' was first published in 2011 by someone
-> else.
-
-Yes, as explained, with only 2 Sendmail techniques (file write with -X
-parameter / and file read -C parameter) known back then which are not
-really applicable these days as Sendmail is pretty much extinct/not
-shipped with any distro by default, and -X required a writable upload
-directory / known path etc.
-
-http://www.securityspace.com/s_survey/data/man.201703/mxsurvey.html
-
-
->>
->> I reveal some exim code-execution vectors in there that should change
->> the whole game slightly :)
->
->
-> Not really, because it still relies on unfiltered input.
->
-
-Yes, you have to have a vulnerability to exploit it ;)
-It's like saying 'ret2libc is useless technique because it still
-relies on a buffer overflow, format string, X... vulnerability' :)
-
-The exim vector I presented in the article will help a lot in the
-exploitation of these kind of vulns as exim is widely used, and the
-vector doesn't require you to know file paths, plus it is good for
-bypassing filters.
-
-A good example of the exim vector is my recently disclosed Wordpress
-RCE expoit (which would likely not be possible if it wasn't for the
-exim vector):
-
-https://exploitbox.io/vuln/WordPress-Exploit-4-6-RCE-CODE-EXEC-CVE-2016-10033.html
-
-
-Hope this helps / explains some things better and happy hacking.
-
++1 for both, the CVE and that this is a problem. The service should not be
+started with more (!) permissions simply if parsing username fails. As a
+security sensitive guy I do not want to see a random software started with
+root permissions, because the random username fails to be parsed by some
+systemd code.
 
 
 Regards,
-Dawid Golunski
-https://legalhackers.com
-https://ExploitBox.io
-t: @dawid_golunski
+  Robert
+
+Content of type "application/pgp-signature" skipped
