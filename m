@@ -1,66 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/2
-Message-ID: <313929.373256059-sendEmail@localhost>
-Date: Thu, 2 Mar 2017 16:33:47 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/24
+Message-ID: <20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>
+Date: Wed, 5 Jul 2017 22:58:14 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+On Wed, 05 Jul 2017 at 22:03:45 +0200, Pali Rohár wrote:
+> The worst is that fact that discussion about this problem was locked in
+> upstream bugtracker. Therefore there is no other option as continue
+> discussion about this, which I think security issue, here at
+> oss-security list.
 
-A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+systemd does have a (public, and publically-archived) mailing list, which
+has a current thread on the subject of this issue.
 
-The complete ASan output:
+In particular the mail in that thread from Felipe Sateler, and some of
+the discussion on the upstream bug, touches on reasons why neither
+"if anything is not as expected, reject the whole unit" nor the current
+behaviour is right. I suspect the resolution is likely to be something
+in between.
 
-# podofocolor dummy $FILE foo
-==7677==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000054b701 bp 0x7ffe64ec7cb0 sp 0x7ffe64ec7c80 T0)
-==7677==The signal is caused by a READ memory access.
-==7677==Hint: address points to the zero page.
-    #0 0x54b700 in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/graphicsstack.h:29:11
-    #1 0x55b772 in std::deque<GraphicsStack::TGraphicsStackElement, std::allocator >::pop_back() /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/stl_deque.h:1459:4
-    #2 0x52c84d in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:190:35
-    #3 0x526921 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:120:15
-    #4 0x523b8d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/podofocolor.cpp:116:12
-    #5 0x7fc9a444f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x4300e8 in _start (/usr/bin/podofocolor+0x4300e8)
+I agree that it's a bug that a "syntactically invalid" User is handled
+the way it is, because the result does not follow the principle
+of least astonishment, and it would be easy for it to have bad
+consequences. (Please don't try to convince me that the current behaviour
+is a bug. I already think that, and I have no more influence over
+systemd's behaviour than you do.)
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/graphicsstack.h:29:11 in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement()
-==7677==ABORTING
+However, (the relevant part of) systemd is pid 1, executing commands
+defined by system-wide-installed files, with the highest possible
+privileges. It makes no claim to be designed to process untrusted units
+safely, and it would be foolish for a component in its position to make
+that claim. In a sense it's a specialized interpreter, for a language
+that happens to be partly declarative rather than entirely imperative. If
+someone you don't trust gives you a systemd system unit, it needs to be
+checked just as carefully as a traditional (e.g. LSB) init script, because
+it can do all the same powerful and dangerous operations that the init
+script can (dangerous is just another word for powerful, and vice versa).
 
-Affected version:
-0.9.5
+Not every bug is a security vulnerability (not even the really bad
+ones). At the moment, there is a strong correlation between security
+vulnerabilities with CVE IDs, and issues for which there is consensus
+among relevant upstream and downstream developers that the issue is in
+fact a vulnerability for which a prompt security update is necessary. I'm
+becoming concerned that if the working definition of a vulnerability
+gets stretched too far towards things that are "just a bug", it will
+reduce the perceived importance of fixing CVEs promptly, harming the
+overall level of security in software.
 
-Fixed version:
-N/A
+On Wed, 05 Jul 2017 at 13:27:17 -0700, Alan Coopersmith wrote:
+> Honestly, given the level of flaming and trolling that happens on issues
+> like this, locking the report is the only sane option I can see once
+> everyone started piling on.   Forcing FOSS maintainers to accept infinite
+> amounts of shitposting is a horrible way to reduce security by burning
+> out all FOSS maintainers quickly and leaving software abandoned.
 
-Commit fix:
-N/A
+I have little to add to this, but I couldn't resist a "me too" here,
+because I think Alan's point is very important. Maintainers can't be
+expected to behave in a professional and effective way if their working
+environment is consistently hostile.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Using something with as large a user-base as Github for bug tracking
+makes it very easy for people to contribute their comments to bugs,
+which is great as long as those comments are helpful (remembering that a
+bug tracker is there to make the tracked software better, not to make its
+users feel better). When the comments become unconstructive, maintainers
+need to have the tools to manage them, and locking bug reports is one
+of those tools.
 
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00216-podofo-nullptr-graphicsstack-h
-
-Timeline:
-2017-03-01: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-graphicsstacktgraphicsstackelementtgraphicsstackelement-graphicsstack-h
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+    S
