@@ -1,53 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/14
-Message-ID: <20170706210741.GA9171@openwall.com>
-Date: Thu, 6 Jul 2017 23:07:41 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/2
+Message-ID: <20170705085034.GA2638@pali>
+Date: Wed, 5 Jul 2017 10:50:34 +0200
+From: Pali Rohár <pali.rohar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Cc: Daniel Skowroński <daniel@...nf.net>
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 06, 2017 at 10:09:08PM +0200, Kristian Fiskerstrand wrote:
-> On 06/30/2017 03:22 PM, Solar Designer wrote:
-> > This is now up to 22 items: I've split one in two, and added three more.
-> > The full list is at:
-> > 
-> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> > 
-> > No volunteers so far?  I know some of you are actually helping with
-> > these, but I'd prefer that you explicitly take responsibility for them.
+On Sunday 02 July 2017 12:02 Daniel Skowroński wrote:
+> Hi all,
 > 
-> Gentoo is offering to take all, or a subset of, [9, 11 - 13] as primary
-> distribution:
-
-> 9. Stay on top of issues to ensure progress is being made, remind others
-> when there's no apparent progress, as well as when the public disclosure
-> date for an issue is approaching and when it's finally reached (unless
-> the reporter beats you to it by making their mandatory posting to
-> oss-security first)
+> Just wanted to bring attention to issue with systemd not doing what is
+> expected when parsing User that should run service.
+> When it fails to parse string starting with digit it fails back to root
+> causing obvious threat to security.
 > 
-> 11. Make sure the mandatory oss-security posting is made promptly and is
-> sufficiently detailed, and remind the reporter if not
+> See discussion with developer on github:
+> https://github.com/systemd/systemd/issues/6237
 > 
-> 12. If exploit(s) were shared on the list, make sure that either they're
-> included in the oss-security posting along with the issue detail or the
-> posting includes an announcement of planned later posting of the
-> exploits (with the delay being within list policy), and in the latter
-> case also make sure that the later posting is in fact made as planned,
-> and remind the reporter if not
-> 
-> 13. Keep track of per-report and per-issue handling and disclosure
-> timelines (at least times of notification of the private list and of
-> actual public disclosure), at regular intervals produce and share
-> statistics (most notably, the average embargo duration) as well as the
-> raw data (except on issues that are still under embargo) by posting to
-> oss-security
+> Best,
+> -Daniel Skowronski
 
-OK, accepted.  Thank you very much!
+Hi!
 
-So far CloudLinux and Gentoo volunteered for specific tasks.  I'll mark
-this on the wiki shortly.
+There are basically two problems:
 
-Other distros are yet to volunteer (please do!)
+1) In more Linux distributions useradd tool allow to create a new user
+which starts with digit. Also according to POSIX such user name is a
+valid. This means that valid user name (for some Linux distributions)
+from /etc/passwd specified in systemd unit file results running service
+as root user.
 
-Alexander
+2) If user name specified in systemd unit file is syntactically correct
+(according to systemd check) but user name does not exist then systemd
+refuse to start that unit.
+
+Which leads to problem that syntactically invalid user name (for
+systemd) results in root user and syntactically valid non-existent user
+name cause error.
+
+Because check if user name is valid is different in systemd as specified
+in POSIX and also different as in useradd tool supplied by some Linux
+distributions, I see this as a security problem when processing invalid
+input from configuration unit file.
+
+Correct behaviour should be to throw error also when garbage (invalid
+user name), according to internal systemd check, was specified. And not
+start service under root user with high privileges.
+
+Because of this I would suggest to ask for CVE identifier, so Linux
+distributions can mitigate or decide how to handle this problem.
+
+Linux distributions which follow POSIX standard when creating new users
+are affected by this.
+
+Please note that above bug tracker on github is locked for future
+discussion, which means it is not possible to ask for more details or
+continue discussion in upstream.
+
+Which is really *bad* for security related problems.
+
+What do you think, how should be this problem handled?
+
+-- 
+Pali Rohár
+pali.rohar@...il.com
