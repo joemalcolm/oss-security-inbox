@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1646" "Tuesday" "26" "May" "2015" "14:59:46" "+0100" "Stephane Chazelas" "stephane.chazelas@gmail.com" "<20150526135946.GE4203@chaz.gmail.com>" "44" "[oss-security] Re: hwclock(8) SUID privilege escalation" nil nil nil "5" "2015052613:59:46" "[oss-security] Re: hwclock(8) SUID privilege escalation" (number mark "        stephane.cha May 26   44/1646  " thread-indent "\"[oss-security] Re: hwclock(8) SUID privilege escalation\"\n") "<20150526124747.16414nohrczpwps0@webmail.alunos.dcc.fc.up.pt>" ("<20150526124747.16414nohrczpwps0@webmail.alunos.dcc.fc.up.pt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3517" "Wednesday" "5" "July" "2017" "22:58:14" "+0100" "Simon McVittie" "smcv@debian.org" "<20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>" "64" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070521:58:14" "[oss-security] systemd fails to parse user that should run service" (number mark "        smcv@debian. Jul  5   64/3517  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<a8a90fab-58af-da5e-2697-e17ef034e906@oracle.com>" ("<a8a90fab-58af-da5e-2697-e17ef034e906@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31839 invoked by uid 550); 26 May 2015 14:00:37 -0000
+Received: (qmail 24325 invoked by uid 550); 5 Jul 2017 21:58:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31747 invoked from network); 26 May 2015 14:00:23 -0000
-X-Injected-Via-Gmane: http://gmane.org/
-Message-ID: <20150526135946.GE4203@chaz.gmail.com>
-References: <20150526124747.16414nohrczpwps0@webmail.alunos.dcc.fc.up.pt>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 05448b1b.skybroadband.com
+Received: (qmail 24304 invoked from network); 5 Jul 2017 21:58:48 -0000
+Message-ID: <20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20150526124747.16414nohrczpwps0@webmail.alunos.dcc.fc.up.pt>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Tue, 26 May 2015 14:59:46 +0100
-From: Stephane Chazelas <stephane.chazelas@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a8a90fab-58af-da5e-2697-e17ef034e906@oracle.com>
+ <20170705200345.GA1671@pali>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Date: Wed, 5 Jul 2017 22:58:14 +0100
+From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: hwclock(8) SUID privilege escalation
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
 To: oss-security@lists.openwall.com
 
-2015-05-26 12:47:47 +0200, up201407890@alunos.dcc.fc.up.pt:
-[...]
-> Please note that this is possible on Debian-derived (and therefore Ubuntu),
-> because /bin/sh is provided by dash which does NOT make use
-> of privmode (does not drop privileges if ruid != euid, unlike bash),
-> which is a very stupid idea.
-> 
-> privmode is surprisingly effective at mitigating some common vulnerability
-> classes and misconfigurations, and it has been around since mid 90's.
-> Indeed, Chet Ramey (bash author and maintainer) explains that the
-> purpose of this is to prevent "bogus system(3)/popen(3) calls in
-> setuid executables"
-[...]
+On Wed, 05 Jul 2017 at 22:03:45 +0200, Pali Rohár wrote:
+> The worst is that fact that discussion about this problem was locked in
+> upstream bugtracker. Therefore there is no other option as continue
+> discussion about this, which I think security issue, here at
+> oss-security list.
 
-No, bash does NOT drop privileges if ruid != euid when called as
-sh either . If it were, it would break those commands that use
-system()/popen() from suid/sgid executables (which arguably they
-shouldn't be doing) and expect the euid/egid to be preserved.
+systemd does have a (public, and publically-archived) mailing list, which
+has a current thread on the subject of this issue.
 
-$ ls -ln env sh
--rwsr-x--- 1    0 1000 27232 Nov 27 12:00 env*
-lrwxrwxrwx 1 1000 1000     9 May 26 14:51 sh -> /bin/bash*
-$ ./env bash -c 'id -u'
-1000
-$ ./env ./sh -c 'id -u'
-0
+In particular the mail in that thread from Felipe Sateler, and some of
+the discussion on the upstream bug, touches on reasons why neither
+"if anything is not as expected, reject the whole unit" nor the current
+behaviour is right. I suspect the resolution is likely to be something
+in between.
 
-It does however a mode in which the environment is not trusted
-as much (for instance exported functions, PS4... are ignored).
-PATH is still trusted and it's the responsibility of the caller
-to sanitise it.
+I agree that it's a bug that a "syntactically invalid" User is handled
+the way it is, because the result does not follow the principle
+of least astonishment, and it would be easy for it to have bad
+consequences. (Please don't try to convince me that the current behaviour
+is a bug. I already think that, and I have no more influence over
+systemd's behaviour than you do.)
 
-That's what the "privmode" is: when bash is priviledged, it's
-more careful. That's not specific to bash, that's in most
-shells.
+However, (the relevant part of) systemd is pid 1, executing commands
+defined by system-wide-installed files, with the highest possible
+privileges. It makes no claim to be designed to process untrusted units
+safely, and it would be foolish for a component in its position to make
+that claim. In a sense it's a specialized interpreter, for a language
+that happens to be partly declarative rather than entirely imperative. If
+someone you don't trust gives you a systemd system unit, it needs to be
+checked just as carefully as a traditional (e.g. LSB) init script, because
+it can do all the same powerful and dangerous operations that the init
+script can (dangerous is just another word for powerful, and vice versa).
 
-The difference with bash is that when not called as sh, you have
-to call bash with -p for that priviledged mode to be enabled
-(otherwise, bash drops privileges (and the privileged mode is
-not enabled since you're no longer privileged)).
+Not every bug is a security vulnerability (not even the really bad
+ones). At the moment, there is a strong correlation between security
+vulnerabilities with CVE IDs, and issues for which there is consensus
+among relevant upstream and downstream developers that the issue is in
+fact a vulnerability for which a prompt security update is necessary. I'm
+becoming concerned that if the working definition of a vulnerability
+gets stretched too far towards things that are "just a bug", it will
+reduce the perceived importance of fixing CVEs promptly, harming the
+overall level of security in software.
 
--- 
-Stephane
+On Wed, 05 Jul 2017 at 13:27:17 -0700, Alan Coopersmith wrote:
+> Honestly, given the level of flaming and trolling that happens on issues
+> like this, locking the report is the only sane option I can see once
+> everyone started piling on.   Forcing FOSS maintainers to accept infinite
+> amounts of shitposting is a horrible way to reduce security by burning
+> out all FOSS maintainers quickly and leaving software abandoned.
 
+I have little to add to this, but I couldn't resist a "me too" here,
+because I think Alan's point is very important. Maintainers can't be
+expected to behave in a professional and effective way if their working
+environment is consistently hostile.
+
+Using something with as large a user-base as Github for bug tracking
+makes it very easy for people to contribute their comments to bugs,
+which is great as long as those comments are helpful (remembering that a
+bug tracker is there to make the tracked software better, not to make its
+users feel better). When the comments become unconstructive, maintainers
+need to have the tools to manage them, and locking bug reports is one
+of those tools.
+
+    S
