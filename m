@@ -1,43 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/9
-Message-ID: <b206e24d-0025-33a3-deb8-b0d9c7641d19@oracle.com>
-Date: Fri, 14 Jul 2017 07:58:37 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Steven Miano <mianosm@...il.com>
-Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/5
+Message-ID: <20170705123427.mky43jbckj4quua2@lorien.valinor.li>
+Date: Wed, 5 Jul 2017 14:34:28 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, "security@....net" <security@....net>
+Subject: Re: CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)
 Content-Type: text/plain; charset=utf-8
 
-On 07/14/17 02:45 AM, Steven Miano wrote:
-> Something like this?
+Hi
+
+On Wed, Jul 05, 2017 at 02:37:00PM +0300, Lior Kaplan wrote:
+> Hi,
 > 
-> https://www.cvedetails.com/vendor/51/Ubuntu.html
-> https://www.cvedetails.com/vendor/7838/Red-Hat.html
-> https://www.cvedetails.com/vendor/26/Microsoft.html
+> The following issues have been reported and fixed in PHP. At the moment
+> they are part of PHP 7.0.21 release. The fixes are also included in the 5.6
+> branch and will be part of 5.6.31 when it will be released.
+> 
+> #73807 Performance problem with processing post request over 2000000 chars
+> https://bugs.php.net/bug.php?id=73807
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=0f8cf3b8497dc45c010c44ed9e96518e11e19fc3
+> 
+> #74145 wddx parsing empty boolean tag leads to SIGSEGV
+> https://bugs.php.net/bug.php?id=74145
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=f269cdcd4f76accbecd03884f327cffb9a7f1ca9
+> 
+> #74651 negative-size-param (-1) in memcpy in zif_openssl_seal()
+> https://bugs.php.net/bug.php?id=74651
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=89637c6b41b510c20d262c17483f582f115c66d6
+> 
+> #74819 wddx_deserialize() heap out-of-bound read via php_parse_date()
+> https://bugs.php.net/bug.php?id=74819
+> PHP 5.6 -
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
+> PHP 7.0  -
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=6b18d956de38ecd8913c3d82ce96eb0368a1f9e5
+> 
+> Also, requests from past releases:
+> 
+> PHP 5.6.28 + 7.0.13
+> #73192 parse_url return wrong hostname
+> https://bugs.php.net/bug.php?id=73192
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=b061fa909de77085d3822a89ab901b934d0362c4
+> 
+> 5.6.30 + 7.0.15
+> #73773 Seg fault when loading hostile phar
+> https://bugs.php.net/bug.php?id=73773
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=e5246580a85f031e1a3b8064edbaa55c1643a451
 
-Those are known vulnerabilities, with varying degrees of exploitability,
-and varying exploit conditions and sometimes differing views on where to
-draw the line on what is one issue or multiple issues.
+CVE assignement requests are not handled anymore directly via the
+oss-security list, but need to be filled/requested at
+https://cveform.mitre.org/
 
-Some of them can be remotely exploited, some require a local user to take
-action.  Some give access to those who had none, some give higher privs to
-those who had some, and some don't change your access levels at all.
+Once CVE are assigned, can you repost them here for benefit of other
+reader?
 
-Of course, they don't count all the ones that haven't been publicly
-disclosed - either because they are unknown or only known to certain people.
-
-And when you start comparing numbers with Linux distros things get even
-messier - if you include the count of every issue in every package in
-their package repositories then you are including a far larger set of
-software than if you just count what's in others OS - but that doesn't
-mean they are more or less secure, just that they have more or less
-software available for easy installation.
-
-For a far more complete answer of why vulnerability counting is messy,
-hard, and just plain sucks, you can turn to the experts:
-
-https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-WP.pdf
-https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
-
--- 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+Regards,
+Salvatore
