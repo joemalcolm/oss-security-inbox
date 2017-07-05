@@ -1,4 +1,9 @@
-Received: (qmail 25730 invoked by uid 550); 3 Jun 2026 07:30:39 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3150" "Wednesday" "5" "July" "2017" "11:48:43" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1499269723.28229.2.camel@gmail.com>" "90" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070515:48:43" "[oss-security] systemd fails to parse user that should run service" (number mark "        danielmicay@ Jul  5   90/3150  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<201707051202.v65C2NDB005864@room101.nl.oracle.com>" "<20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>" "<1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>" "<1499267174.28229.1.camel@gmail.com>" "<efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3395 invoked by uid 550); 5 Jul 2017 15:49:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,68 +11,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25692 invoked from network); 3 Jun 2026 07:30:39 -0000
+Received: (qmail 3371 invoked from network); 5 Jul 2017 15:49:02 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780471829; x=1781076629; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7cm/Otql7Y98lCGXxihrU1j3Zb9H31nWA6PoAB1rf0M=;
-        b=RPqputy+MKH6tLLSu1JiGdKKQhwW2xNLehN/VckBtyqsjxPgg+Ns91X+3Gqk5/JwwX
-         sgW1PWv5XzSvQb2A8O13rIB2q7Jv/oed996NNVQ/ujZhmrb13bkp9x6MhR9/bTrPKuyg
-         IcGrWa5Hub9BbhhXCSDRmH20kIawQZbg9dBJ10YaRmPqS1Zr5MH3droI59Je4uiK4Mb8
-         VuFVCXVkL+ofnIaqqFSXkzcq6yMouWgUoQdsNnYuWiJSe/OMLKP8rEWL59W5+U1lXIz/
-         ghljhQxlMA+fLlg6N9XfrDqQGWsVUDzKHfjKuUY1e2lTbQ69zryoLltI+sb3S16bTB45
-         6RDQ==
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=BNIwbxCbWqFxlzDcVfDsQuXJBfvTOSvMKzZlx2s/WEQ=;
+        b=Np2q1mNrQPlcMh5udjGr0CdB8rfme2uP016OSoV1aElTtDg5TO1v/XuPYKjn4U8V7J
+         ZybAAb0Tan8wU0UnKqFvy/iPPsayY0RxC3pBrjg7E4OQB0HgxUI/8JYpmcGJImQH9zqg
+         IGwQaQfOWISNT/lNZ7gaSLsDQCnwxq7rijT/fbCQfb6txDw4vM6UgWedR5isuqDuOUco
+         TYKB3XWRj5Oa/Wt2tTTwRaHioCYLQJdJu5lVmKT9Tt9+e02A2KGT5rYUHwtGDg3KJQ8K
+         maXgLFylELBTm0hbWT3MmiwpSNO7cE20B2sffpSQMcISyJbS9sq1dVMPg1QndI0FYQ8q
+         0wCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780471829; x=1781076629;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7cm/Otql7Y98lCGXxihrU1j3Zb9H31nWA6PoAB1rf0M=;
-        b=dGv3Glkhy8Egy3LKXBowAeqjJeMWOIVPHuxWXGi6g2HLML12KkWt99bmtrroKkKk8Z
-         awb/Vr7iEwHmSopJRoRUojiW2r7jUVkEm79BK6cPiAVLNVAtMxziBrRRYztjbKtMmNOj
-         JtxdJ0qTesMnY+uqdkiizUyeg40dwFISpYNP5Jn2lShmEc7iwnxqSjtUxTOqR1D9rfoz
-         t4tFoCtGNBWzFLwPoNJZ2kqECuVQjHGJUxWkk7rylq+r2Ztpd4s8LU0u4zrTJb72Aegk
-         qzFb6e9lgXsJjBANla8EZdv6kORcEvszHEo51bIfVOjqsFUSay/CS9Sv0OlrKl4lf7TU
-         v3lg==
-X-Gm-Message-State: AOJu0YyIrJ9FSNYUCSUuQvnQHCqn/VoWejVbNDH14sd+nlDYWTozOP6d
-	5VFYztCI0nqGo5KXUUvf8i58l6B+/Syb3ENJZSTAQYghr/lvVGKzXT/3Gc2lEjEq
-X-Gm-Gg: Acq92OGsZc0dW+CL8UyjMaCPI3siuMhxdRRPqWvIkBIjUsoxv4IulMXgiZONKBbOt7h
-	p4IkLqzo1FBqfR5JVSoofEO7bS7JTKcyyD2XcLMz4TfZxoZ8lme/uL1GH63o/FH4e8y0+Vd6Xcc
-	wHC6GDs+WZ3K+TptgWuikohjFHz5I9mKm6M+5B0sgeyf105CagOSAwBCJHm7pcORzRq5DNUbID+
-	yuGEnoK8wS+I3AQtvcN/w6vZ5JjETq4OawWoR3cchEel6YIYZHn0FKrhTUiqW+VWIUqZSTBMeXl
-	B+SDkQhBWjcWrLgSadaAmIZnmX/ZGxSUIcRxysX2Bn32GNj9WMrY417Pdur/Y9kudwHgW+a9Ic9
-	flRsd36C573x7HHjuMvBD2fjkguwhc7uPqRfvskQwCY9z7A+/AKmlfjbXXJKpIe1pAmsIUXvqIw
-	MkCFzzfal+gcleCsgz/d/im/4MMTSWxyobLnx48NEalbXOEz7Am+Facg3haUGDY8rTHcdxIQ==
-X-Received: by 2002:a05:600c:a09:b0:490:958f:2a5c with SMTP id 5b1f17b1804b1-490b5ed6375mr33522535e9.17.1780471818005;
-        Wed, 03 Jun 2026 00:30:18 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Wed, 3 Jun 2026 09:30:16 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=BNIwbxCbWqFxlzDcVfDsQuXJBfvTOSvMKzZlx2s/WEQ=;
+        b=REIFu+/Puq7ZqOiwAaA07QQ4eBEA35c38MyW5kjQal85Y2IjOWkqcwceRC921m315u
+         056UifeFGNZRGTV4oCmk5XCGLZpeWAlm4wisxuYwv6omt8rvRYFhXdTivptMilSna5GB
+         l57FJqj64OUJLBsmisUI2aThYqQSZxxJ8ZQrnFNB3/jWXIBXW7vNuSuaV9fkR2jh2nP2
+         BwTXVOST/DKgMYY3U+s+1aMEAYxSX8fmqOASyOwp4KtDUvjri1kYT8MSTuoqs2CoYltn
+         yUHjTcY7Vm5s3tsRfXWyw0oRWe8n4dK7woR0nGjr4yvtB8bYnukZ9Hastl6t2mgvSZBf
+         /D3w==
+X-Gm-Message-State: AKS2vOyZQXkCFZ0cpGMabFZ+1lhhhtu8j4/pi94kurvvlUV8ytRrLwyO
+	HXPX3a4GvfdZhztTbkM=
+X-Received: by 10.107.182.130 with SMTP id g124mr42107263iof.120.1499269730176;
+        Wed, 05 Jul 2017 08:48:50 -0700 (PDT)
+Message-ID: <1499269723.28229.2.camel@gmail.com>
+In-Reply-To: <efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>
+References: 
+	<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
+	 <20170705085034.GA2638@pali>
+	 <201707051202.v65C2NDB005864@room101.nl.oracle.com>
+	 <20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>
+	 <1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>
+	 <1499267174.28229.1.camel@gmail.com>
+	 <efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.24.3 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Date: Wed, 05 Jul 2017 11:48:43 -0400
+From: Daniel Micay <danielmicay@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
 To: oss-security@lists.openwall.com
-Message-ID: <ah_YCI0plp3Mx10w@eldamar.lan>
-References: <BY3PR09MB8833EF36AACF81744D6571F9D6122@BY3PR09MB8833.namprd09.prod.outlook.com>
- <225905f1-c362-4ff9-9143-63b97fa9e3c7@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <225905f1-c362-4ff9-9143-63b97fa9e3c7@oracle.com>
-Subject: Re: [oss-security] Fwd: FreeIPMI 1.6.18 Released with security fixes
 
-Hi,
-
-On Tue, Jun 02, 2026 at 05:52:56PM -0700, Alan Coopersmith wrote:
-> The below notes the new release fixes "exploitable buffer overflows in [...]
-> ipmi-oem commands".
+On Wed, 2017-07-05 at 16:37 +0100, John Haxby wrote:
+> On 05/07/17 16:06, Daniel Micay wrote:
+> > On Wed, 2017-07-05 at 15:50 +0100, John Haxby wrote:
+> > > On 05/07/17 14:53, Simon McVittie wrote:
+> > > > On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@oracle.com
+> > > > wrote:
+> > > > > > 2) If user name specified in systemd unit file is
+> > > > > > syntactically
+> > > > > > correct
+> > > > > > (according to systemd check) but user name does not exist
+> > > > > > then
+> > > > > > systemd
+> > > > > > refuse to start that unit.
+> > > > > 
+> > > > > Should systemd really valid usernames?  I would think that you
+> > > > > would 
+> > > > > either use getpwnam(username) and if that fails you may then
+> > > > > parse
+> > > > > it as a 
+> > > > > numeric value.  If "0day" isn't a valid username according to
+> > > > > getpwnam(), 
+> > > > > when converting it to a numeric uid should *also* fail because
+> > > > > "0day" 
+> > > > > isn't a properly numeric value.
+> > > > 
+> > > > It *does* fail. The problem is in the handling of that failure.
+> > > > systemd
+> > > > interprets that failure as "this line is nonsense, so behave as
+> > > > though the
+> > > > line didn't exist" rather than "this line can be positively
+> > > > identified as
+> > > > an attempt to name a nonexistent or unacceptable user, so fail
+> > > > to
+> > > > load
+> > > > the unit". So User=7up does the same thing as User=0day - it
+> > > > doesn't
+> > > > run as uid 7, which is 'lp' on my Debian system.
+> > > 
+> > > 
+> > > And therein lies the problem.  "0day" and "7up" are valid user
+> > > names
+> > > according to Posix[1], they may or may not exist, but they are
+> > > valid.
+> > > You may think Posix is wrong to allow an initial digit, but that
+> > > isn't
+> > > the issue.  The problem is that systemd treats an "invalid"
+> > > username
+> > > as
+> > > either an integer or not specified and in either case this results
+> > > in
+> > > a
+> > > program running as the wrong user, probably as root.
+> > > 
+> > > Having systemd balk at what Posix considers to be a valid username
+> > > is
+> > > a
+> > > bug that systemd is free to say "this is stupid, we're not
+> > > allowing
+> > > that".   If, as appears to be the case, systemd says "that
+> > > username is
+> > > stupid, we're going to interpret it differently" then that's when
+> > > we
+> > > need a CVE because, to my mind on this hot and sunny say, that's
+> > > systemd
+> > > apparently doing something for security that it is not.
+> > > 
+> > > jch
+> > > 
+> > > 
+> > > [1]
+> > > http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03
+> > > .htm
+> > > l#tag_03_431
+> > 
+> > https://github.com/shadow-maint/shadow/blob/master/libmisc/chkname.c
+> > #L49
+> > 
+> > POSIX also says "." is a portable character, which isn't allowed by
+> > shadow either. What are distributions using to provide useradd if
+> > not
+> > shadow?
 > 
-> I don't see a CVE issued for it yet, as CVE-2026-33554 covered a different
-> set of subcommands fixed in the previous 1.6.17 release.
+> Interesting.  "useradd a.b" works on Fedora so I wonder what's
+> different
+> there?
 
-As a followup: CVE-2026-50031 was assigned for the issue fixed in
-1.6.18.
+It seems some distributions get useradd/userdel from somewhere else.
 
-Regards,
-Salvatore
+Maybe you have adduser from shadow? It'd be funny if they had different
+rules enforced even for adduser vs. useradd...
