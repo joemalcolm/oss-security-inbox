@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/04/2
-Message-ID: <20170904124107.GB6792@suse.de>
-Date: Mon, 4 Sep 2017 14:41:07 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-1000083: evince: Command injection vulnerability in CBT handler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/22
+Message-ID: <20170705171128.2dab8a48@jabberwock.cb.piermont.com>
+Date: Wed, 5 Jul 2017 17:11:28 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Pali Rohár <pali.rohar@...il.com>
+Cc: oss-security@...ts.openwall.com, Ben Tasker <ben@...tasker.co.uk>
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-> > This can be exploited by creating a tar archive with an embedded file
-> > named something
-> > like this: "--checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg"
-> > 
-> > (Make sure evince is not sandboxed by apparmor before trying to reproduce
-> > the attached POC)
-> 
-> Not sure if the list ate the attachment, but I don’t see it available. Perhaps a link to it somewhere else would be of use?
+On Wed, 5 Jul 2017 22:03:45 +0200 Pali Rohár <pali.rohar@...il.com>
+wrote:
+> Is somebody going to ask Mitre for CVE? Or should it be done by Red
+> Hat? Because upstream bug is locked, it is not possible to ask in
+> upstream...
 
-Sebastian Krahmer of SUSE recreated one that starts xeyes.
+It really doesn't matter who does it, but someone should request a
+CVE. This is an actual issue, and it requires an identifier.
 
-https://bugzilla.suse.com/show_bug.cgi?id=1046856
-
-	( attachment link https://bugzilla.suse.com/attachment.cgi?id=739314 ) 
-
-Ciao, Marcus
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
