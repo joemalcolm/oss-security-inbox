@@ -1,24 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/18/3
-Message-ID: <CAEWfVJmX8X8qNOJyRRi=HVzhNAUC3eFvVP2jJTZEyYw=9S70GA@mail.gmail.com>
-Date: Tue, 18 Jul 2017 12:23:32 +0200
-From: Bertrand Delacretaz <bdelacretaz@...che.org>
-To: dev <dev@...ng.apache.org>, users <users@...ng.apache.org>,  "security@...ng.apache.org" <security@...ng.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2016-5394 : Apache Sling XSS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/7
+Message-ID: <CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
+Date: Wed, 5 Jul 2017 13:28:43 +0100
+From: Ben Tasker <ben@...tasker.co.uk>
+To: oss-security@...ts.openwall.com
+Cc: Daniel Skowroński <daniel@...nf.net>
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+On Wed, Jul 5, 2017 at 9:50 AM, Pali Rohár <pali.rohar@...il.com> wrote:
 
-Vendor: The Apache Software Foundation
+>
+> Hi!
+>
+> There are basically two problems:
+>
+> 1) In more Linux distributions useradd tool allow to create a new user
+> which starts with digit. Also according to POSIX such user name is a
+> valid. This means that valid user name (for some Linux distributions)
+> from /etc/passwd specified in systemd unit file results running service
+> as root user.
+>
+> 2) If user name specified in systemd unit file is syntactically correct
+> (according to systemd check) but user name does not exist then systemd
+> refuse to start that unit.
+>
+> Which leads to problem that syntactically invalid user name (for
+> systemd) results in root user and syntactically valid non-existent user
+> name cause error.
 
-Versions Affected:
-Sling XSS Protection API 1.0.8
 
-Description:
-The encoding done by the XSSAPI.encodeForJSString() method is not
-restrictive enough and for some input patterns allows script tags to
-pass through unencoded, leading to potential XSS vulnerabilities.
+> Because check if user name is valid is different in systemd as specified
+> in POSIX and also different as in useradd tool supplied by some Linux
+> distributions, I see this as a security problem when processing invalid
+> input from configuration unit file.
+>
+>
+You'd really hope it'd be consistent. If they want to enforce a policy that
+user names cannot start with a digit (which as Poettering notes, many
+distro's do) that's fine, but the resulting behaviour should be safe, well
+defined and expected. I wouldn't say running the service as root falls
+under that definition, personally.
 
-Mitigation:
-Users should upgrade to version 1.0.12 or later of the XSS Protection
-API module.
+I think it'd be possible to take a different view on it if the usecase of a
+non-existing user presented different behaviour. If it too fell back to
+root, that wouldn't be great, but would at least be consistent. Personally,
+I think the better behaviour would be to refuse to start the unit in either
+case.
+
+As others have noted, this is something that could quite easily happen as
+the result of installing a package.
+
+It'd be all too easy for a reviewer to look at the unit file, note it runs
+as '0day', double check that the package creates a user called '0day' and
+be happy that it's going to work. Hopefully someone *would* notice but that
+might not happen until after a vulnerability in that particular package has
+been remotely exploited (giving root access, oh dear), which is a situation
+that's in no-one's interest.
+
+I wouldn't expect to see it happen to a package in the main distro's
+repo's, but could quite easily see it happening via a PPA or through
+provision of rebuilt packages elsewhere.
+
+
+
+
+> Correct behaviour should be to throw error also when garbage (invalid
+> user name), according to internal systemd check, was specified. And not
+> start service under root user with high privileges.
+>
+> Because of this I would suggest to ask for CVE identifier, so Linux
+> distributions can mitigate or decide how to handle this problem.
+>
+> Linux distributions which follow POSIX standard when creating new users
+> are affected by this.
+>
+> Please note that above bug tracker on github is locked for future
+> discussion, which means it is not possible to ask for more details or
+> continue discussion in upstream.
+>
+> Which is really *bad* for security related problems.
+>
+> What do you think, how should be this problem handled?
+>
+>
+Honestly, I think upstream have done an *awful *job of handling it so far
+(and it's far from the only example of Poettering taking the not-a-bug
+approach questionably). Their issues do have a habit of attracting trolls,
+but I think sometimes their definition of troll expands to include anyone
+who doesn't agree with them.
+
+FWIW, I'd be inclined to agree that it needs a CVE so that downstream
+distro's can at least refer to it, and decide how (and if) they want to
+address it. Even if they decide to stick with upstream's approach, having
+the CVE at least gives them something to make sure package reviewers refer
+to.
+
+I think the approach SUSE has taken is pretty good, and it's basically the
+kind of fix I'd have liked to see upstream put in place (though in their
+case, the suggestion of a config var to define whether it's acceptable is
+also a very good suggestion).
+
+
+
+
+
+> --
+> Pali Rohár
+> pali.rohar@...il.com
+>
+
+
+
+-- 
+Ben Tasker
+https://www.bentasker.co.uk
+
