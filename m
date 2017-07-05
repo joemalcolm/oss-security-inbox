@@ -1,50 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/1
-Message-ID: <4b31462747644c479fb2e956ccbc3a73@imshyb01.MITRE.ORG>
-Date: Thu, 19 Jan 2017 20:16:01 -0500
-From: <cve-assign@...re.org>
-To: <jelle@...aa.nl>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request Weblate: information disclosure in password reset form
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/26
+Message-ID: <20170705220939.GC2409@yuggoth.org>
+Date: Wed, 5 Jul 2017 22:09:40 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Weblate contains an information disclosure issue in its password reset
-> form. When entering an arbitrary email address in the password reset
-> form Weblate will report back "User with this email address was not
-> found." this makes it possible to figure out which user accounts exist
-> on the weblate instance.
+On 2017-07-06 00:02:58 +0200 (+0200), Kristian Fiskerstrand wrote:
+> On 07/05/2017 11:58 PM, Simon McVittie wrote:
+> > systemd does have a (public, and publically-archived) mailing
+> > list, which has a current thread on the subject of this issue.
+> > 
+> > In particular the mail in that thread from Felipe Sateler, and
+> > some of the discussion on the upstream bug, touches on reasons
+> > why neither "if anything is not as expected, reject the whole
+> > unit" nor the current behaviour is right. I suspect the
+> > resolution is likely to be something in between.
 > 
-> https://github.com/WeblateOrg/weblate/commit/abe0d2a29a1d8e896bfe829c8461bf8b391f1079
-> https://github.com/WeblateOrg/weblate/issues/1317
+> It would be useful with a reference to the thread in question so
+> this can be further looked into.
 
-Use CVE-2017-5537.
+Please see the thread starting with this message:
 
-The scope of this CVE does not include the issues/1317 comment of "The
-login form also does not seem to implement any rate-limiting which
-makes it easy to bruteforce."
+https://lists.freedesktop.org/archives/systemd-devel/2017-July/039154.html
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYgWSEAAoJEHb/MwWLVhi2ST0P+wQSbBTkZPtExrWkqyGADC+F
-H0yp97rEg4imgEbLmHbzIpVG5xEd2htr6k1iaeE1WP8zUHNYmb6+mFM/wfDFl/nQ
-lwMCYcMTN+fhSpoX88NBsiO1T4o6wZSZAPqxIYTS/R6QqI6jPnpaeJDH67ch7wyG
-+jYFDDV2x44VcckepPoKiPBUiNGaVtdoXx4b68h1+1QK2sGMM1wERsDp4TyplTmT
-UYwuQb4ZSDUhFokkzzuaKgvqijbe7TuMKMAKDtYdzeVXvmovkUXYK24ajObCyrmd
-R1VC49uCsnXjgD8DqQSV3J4RlAv4JOKRBRQloZieU7BzL2pA5uGyWVJ4v4X60RN6
-0Rl9P61hySg/BALNU8DgEPtesa0wlTOob/6h11rfelL6Ay14Vo4AyHcN1cKQgYft
-Xwu65ycWMNY5qzX51UaGMXobUJEZ3RmzKe/jhbKy79+p5QSGNycEABBts29c9M9a
-DJncB5xzagzAUdYSJWYnAL/iXdV8IbAbdlpFO0MiMcmHQINPGryqED78jWA0ldBp
-PxGuKVuCIATsAI4/CYmGzCoNwgKH5+6cAy78cjHrv1UlSBIdkyts4X7aYbg0o49F
-r6QiKeI780UTn8pATRGbFri5O0jd1fWLAYZ4XYFg4evJ4XGMbgN2lJpFUnJX0Fm2
-IM1vExStvObk1QdRbg8R
-=fAJo
------END PGP SIGNATURE-----
+-- 
+Jeremy Stanley
