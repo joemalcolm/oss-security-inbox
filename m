@@ -1,133 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/9
-Message-ID: <bac88113395e44908ac254e6bcf773ec@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 01:00:44 -0500
-From: <cve-assign@...re.org>
-To: <hanno@...eck.de>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: Multiple memory access issues in gstreamer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/19
+Message-ID: <20170705200345.GA1671@pali>
+Date: Wed, 5 Jul 2017 22:03:45 +0200
+From: Pali Rohár <pali.rohar@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Ben Tasker <ben@...tasker.co.uk>
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Jul 5, 2017 at 12:28, Ben Tasker wrote:
+> Honestly, I think upstream have done an *awful *job of handling it so far
+> (and it's far from the only example of Poettering taking the not-a-bug
+> approach questionably). Their issues do have a habit of attracting trolls,
+> but I think sometimes their definition of troll expands to include anyone
+> who doesn't agree with them.
 
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=775450
-> gst-plugins-good/aacparse: invalid memory read in
-> gst_aac_parse_sink_setcaps
+The worst is that fact that discussion about this problem was locked in
+upstream bugtracker. Therefore there is no other option as continue
+discussion about this, which I think security issue, here at
+oss-security list. But problem is that upstream do not have to monitor
+this list and therefore they would ignore any results.
 
-Use CVE-2016-10198.
+> FWIW, I'd be inclined to agree that it needs a CVE so that downstream
+> distro's can at least refer to it, and decide how (and if) they want to
+> address it. Even if they decide to stick with upstream's approach, having
+> the CVE at least gives them something to make sure package reviewers refer
+> to.
 
+>From the whole discussion (and not only there) it looks like that
+assigning CVE should be really done as more downstream distributions
+do not follow systemd's "allowed" characters in username and needs to
+handle this problem somehow. Either patching systemd or change
+validation for adding new user names into system...
 
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=775451
-> gst-plugins-good/qtdemux: out of bounds read in qtdemux_tag_add_str_full
+Is somebody going to ask Mitre for CVE? Or should it be done by Red Hat?
+Because upstream bug is locked, it is not possible to ask in upstream...
 
-Use CVE-2016-10199.
+> I think the approach SUSE has taken is pretty good, and it's basically the
+> kind of fix I'd have liked to see upstream put in place (though in their
+> case, the suggestion of a config var to define whether it's acceptable is
+> also a very good suggestion).
 
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777262
-> gst-plugins-base/riff-media: floating point exception in
-> gst_riff_create_audio_caps
-
-Use CVE-2017-5837.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777263
-> gstreamer core/datetime: out of bounds read in
-> gst_date_time_new_from_iso8601_string()
-
-Use CVE-2017-5838.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777265
-> gst-plugins-base/riff: stack overflow in gst_riff_create_audio_caps
-
-Use CVE-2017-5839.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777469
-> gst-plugins-good/qtdemux: out of bounds heap read in
-> qtdemux_parse_samples
-
-Use CVE-2017-5840.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777500
-> gst-plugins-good/avidemux: gst_avi_demux_parse_ncdt heap out of bounds
-> read
-
-Use CVE-2017-5841.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777502
-> gst-plugins-base/samiparse: heap oob in html_context_handle_element
-
-Use CVE-2017-5842.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777503
-> gst-plugins-bad/mxfdemux: use after free in gst_mini_object_unref /
-> gst_tag_list_unref / gst_mxf_demux_update_essence_tracks
-
-Use CVE-2017-5843.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777525
-> gst-plugins-base: floating point exception in gst_riff_create_audio_caps
-> (different than #777262)
-
-Use CVE-2017-5844.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777532
-> gst-plugins-good/avidemux: invalid memory read in
-> gst_avi_demux_parse_ncdt
-
-Use CVE-2017-5845.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777937
-> gst-plugins-ugly/asfdemux: invalid memory read in
-> gst_asf_demux_process_ext_stream_props()
-
-Use CVE-2017-5846.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777955
-> gst-plugins-ugly/asfdemux: out of bounds read in
-> gst_asf_demux_process_ext_content_desc
-
-Use CVE-2017-5847 for what is fixed by the entire
-https://bugzilla.gnome.org/show_bug.cgi?id=777955#c3 change, which is
-in the
-https://github.com/GStreamer/gst-plugins-ugly/commit/d21017b52a585f145e8d62781bcc1c5fefc7ee37
-commit.
-
-
-> [] https://bugzilla.gnome.org/show_bug.cgi?id=777957
-> gst-plugins-bad/mpegdemux: Invalid memory read in gst_ps_demux_parse_psm
-
-Use CVE-2017-5848 for what is fixed by the entire
-https://bugzilla.gnome.org/show_bug.cgi?id=777957#c3 change.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYkscPAAoJEHb/MwWLVhi2tzkP/jI2Ui/LE7gj+Oavyvd4t/5f
-hYs4xbPajwkTqf+y4IAuVGYKweGeU6VaegzQ/MugkzRTw74EoVYRYY7bXYU0HeRI
-U7hynEHV+W6lKMjRdoCatWl/zCittE3AWImA1/k+W3RF4FCjANmGMMBY438YSNeU
-Qch6Ls2VwjUPkG1/fh4Z9oiYEN/wZYBOhp0oGflqzqWsWpWXTcI5Nz9WlzUcM7Dd
-JoTJnkzHEDhA+Z4FjadD8ynidKMG28mG0y0ycLg7UQj1JOqCihvqrIjHPeb/FNbU
-3GdmrIHcb3g8A3K+WY9bEmNHo7kMg4RDm7TtoyY3lh9rBeiTCzHz6HFA5kduuLvw
-FD4++M65t9VDTU+fhVNK8+4R3+lCu/0E0c6oZ0oQA2yMrmRzut8KTbpYWCnP7oI5
-jRpN0lFaJe7N+3cgeqrkyU+Dx9F9WVPEJBYejipa27gM+MwCzZKEDerEUuLAzBOl
-7jdqGOk5O+oV3z38KBzLC6wNFAiI/fnKU4UmAexowOfADnGuP2jTN+h3SPIg7FDn
-Gs9Hf3S+64H9pl479JELBv/Yj9IE0OyGhT2BW3ENpC6gxgfK8ofdgryxvehOKKLE
-ASxB8jAw6LUL+4pXRgNP7YeWTeXAwyYGW1Wkk+DwG4nwIUrnxgjNV7NNf9Q7/XuB
-TBBjRhvJ93HkdYfGCsN4
-=6wqV
------END PGP SIGNATURE-----
+-- 
+Pali Rohár
+pali.rohar@...il.com
