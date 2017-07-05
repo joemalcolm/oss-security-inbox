@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1072" "Saturday" "24" "June" "2017" "09:46:12" "-0700" "Linus Torvalds" "torvalds@linux-foundation.org" "<CA+55aFyZpWutYKccn1eZBV5Lj_bF7gEZqy=LgjDOBqHk4poeTA@mail.gmail.com>" "31" "[oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method" "^Cc:" nil nil "6" "2017062416:46:12" "[oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method" (number mark "        torvalds@lin Jun 24   31/1072  " thread-indent "\"[oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method\"\n") "<20170624151504.GA25902@grsecurity.net>" ("<20170624005003.GB27479@grsecurity.net>" "<CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>" "<20170624151504.GA25902@grsecurity.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2029" "Wednesday" "5" "July" "2017" "17:05:56" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20170705170556.146ce33d@jabberwock.cb.piermont.com>" "49" "Re: [oss-security] systemd fails to parse user that should run service" "^Cc:" nil nil "7" "2017070521:05:56" "[oss-security] systemd fails to parse user that should run service" (number mark "        perry@piermo Jul  5   49/2029  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1422 invoked by uid 550); 24 Jun 2017 16:53:48 -0000
+Received: (qmail 16089 invoked by uid 550); 5 Jul 2017 21:06:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27658 invoked from network); 24 Jun 2017 16:46:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=+KwJIBPV26aZLp4z4Rn4YNj3ek09+Uk/kZeXLyF3BSE=;
-        b=FrilTfVqhlIzRydWAVsWerli7s6NDDBTPyK937U8is5UwcdYar0dr6/BLfzE9FwrRh
-         FUS7t9kqMhOQH7ao3kZ0GScI7FXXvYc0OmZtosAd/SvNyMRER0vizj9mj1vzS2HuilGM
-         JnsH8vDbMc8nM1i2bI3uDUxjVqPw5vFRnJI7IxJBJhqFz8Z9FY4Pp9DHYP4YfZbQe/1A
-         OkjuK0FUqYemOYbzlJJhkCd0DqO3wPmC/tx8qLptSrRrO4aZuV29RCWO5Yneep/vZo56
-         X5W61kVyJo4qkjNq0rweqV1aEFRpOMINy8dsblVrlC56p0svz7XQouHEBWCi1GM8IN8e
-         YBfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=+KwJIBPV26aZLp4z4Rn4YNj3ek09+Uk/kZeXLyF3BSE=;
-        b=r7y3wM6n1p8ywrR8jHR2r4rdqrwB/ZYLUj1jIRuOLIpLAFa9lz1C+HYqojdO0Akba+
-         KLtGNRj8g+7P2aZiewTVC/JsdO6gkweyVqv6uGt9AHmxX4RJE2SyJEWW9tcgnS87tIta
-         eC7wa8RbLYXfMlQNjA7z1KunDBtxfNdoypIXCBQu7qPBW3L9LZnDXOpNBwFkVAKKHTWw
-         PzatbGKLXiA1+aCWs+Rvw+LyOQZls3rGjgr8gA4iS1IJPTNQUp2AEai8g3CsaV/i8Ci+
-         m4EnN83HfZoJPHmGl035cWagkjKZmyf/AiGpGmqQ4iVySbWrE0/cut4Zr3mjXdQnlzKi
-         IT7Q==
-X-Gm-Message-State: AKS2vOzQJYOYLIu5TL4g19x/B/z2DYTGWcLMYiAvC0U63KJmIWWPBm8J
-	d1eIJQ/qkoX2qpOZWH/S39l25wBfvw==
-X-Received: by 10.107.38.211 with SMTP id m202mr14029850iom.66.1498322772891;
- Sat, 24 Jun 2017 09:46:12 -0700 (PDT)
+Received: (qmail 16061 invoked from network); 5 Jul 2017 21:06:08 -0000
+Message-ID: <20170705170556.146ce33d@jabberwock.cb.piermont.com>
+In-Reply-To: <CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
+References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
+	<20170705085034.GA2638@pali>
+	<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20170624151504.GA25902@grsecurity.net>
-References: <20170624005003.GB27479@grsecurity.net> <CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>
- <20170624151504.GA25902@grsecurity.net>
-X-Google-Sender-Auth: 7O1-PWbCoaDDqZHVrMmYBFlXlmc
-Message-ID: <CA+55aFyZpWutYKccn1eZBV5Lj_bF7gEZqy=LgjDOBqHk4poeTA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: oss-security@lists.openwall.com, Pax Team <pageexec@freemail.hu>
-Date: Sat, 24 Jun 2017 09:46:12 -0700
-From: Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: oss-security@lists.openwall.com, Daniel =?UTF-8?Q?Skowro=C5=84ski?=
+ <daniel@dsinf.net>
+Date: Wed, 5 Jul 2017 17:05:56 -0400
+From: "Perry E. Metzger" <perry@piermont.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: linus971@gmail.com
-Subject: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an
- ignored Secure Boot bypass / rootkit method
-To: Brad Spengler <spender@grsecurity.net>
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
+To: Ben Tasker <ben@bentasker.co.uk>
 
-On Sat, Jun 24, 2017 at 8:15 AM, Brad Spengler <spender@grsecurity.net> wrote:
->
-> So Linus, you called the patches garbage when someone asked how we fixed the heap
-> stack gap issue 7 years ago when you failed to.  Can you provide any technical details
-> demonstrating why that fix is garbage,
+On Wed, 5 Jul 2017 13:28:43 +0100 Ben Tasker <ben@bentasker.co.uk>
+wrote:
+> You'd really hope it'd be consistent. If they want to enforce a
+> policy that user names cannot start with a digit (which as
+> Poettering notes, many distro's do) that's fine, but the resulting
+> behaviour should be safe, well defined and expected. I wouldn't say
+> running the service as root falls under that definition, personally.
 
-I didn't call "that fix" garbage.
+1) However, not all distributions enforce such a rule, and a has been
+noted, such a rule doesn't exist in POSIX. Indeed, a quick check on a
+PDP-11 simulator demonstrates that Unix at least back to v7 handled
+such names without trouble.
 
-I called the grsecurity patches garbage.
+2) The lack of fail safety is disturbing. It is probably important for
+systems code like this to always fail safely, rather than unsafely.
 
-Why?
+> Honestly, I think upstream have done an *awful *job of handling it
+> so far (and it's far from the only example of Poettering taking the
+> not-a-bug approach questionably).
 
-They aren't split up, there has never been any effort by you to make
-them palatable to upstream, and when somebody else *dioes* try to make
-them palatable to upstream, you start crying about how people are
-taking advantage of your work (hah), and try to make them private
-instead.
+I've long since come to the conclusion that systemd is not safe to run
+on a security critical machine. The developers are simply too lax
+about safety.
 
-So tell me, why shouldn't I consider them garbage?  They are.
+If you're going to write a piece of systems code that has to run on
+essentially every Linux box on earth and which runs much of the time
+as root, extreme care has to be taken. You need to program defensively.
 
-It's literally less work for people to re-implement things than look
-at your mixed-up patches, and YOU SEEM TO BE DOING THAT ON PURPOSE.
+Instead, what we seem to have is a set of highly interdependent
+shotgun parsers written without much regard to the rules people have
+developed (of necessity) for writing code that must run with high
+privileges. In other words, the code is _not_ written defensively.
 
-Now, prove *me* wrong. Start trying to integrate your work upstream,
-and send individual patches with commit logs that can be integrated.
+(For those not familiar with the term "shotgun parser", which the
+LangSec community introduced, do learn about it. It's a useful
+concept.)
 
-> Put up or shut up, for once.
+> FWIW, I'd be inclined to agree that it needs a CVE so that
+> downstream distro's can at least refer to it, and decide how (and
+> if) they want to address it.
 
-Indeed, Brad.
++1
 
-                  Linus
+I don't care much if the developers deny that this is a problem. It is
+a problem.
+
+Perry
+-- 
+Perry E. Metzger		perry@piermont.com
