@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/2
-Message-ID: <20171021100336.2q44qr4hl76lmj2c@shell.thinkmo.de>
-Date: Sat, 21 Oct 2017 12:03:37 +0200
-From: Bastian Blank <waldi@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/29
+Message-ID: <20170705222806.u44tcrhruczgpkb7@perpetual.pseudorandom.co.uk>
+Date: Wed, 5 Jul 2017 23:28:06 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Hi Seth
+On Thu, 06 Jul 2017 at 00:02:58 +0200, Kristian Fiskerstrand wrote:
+> On 07/05/2017 11:58 PM, Simon McVittie wrote:
+> > systemd does have a (public, and publically-archived) mailing list, which
+> > has a current thread on the subject of this issue.
+> > 
+> > In particular the mail in that thread from Felipe Sateler, and some of
+> > the discussion on the upstream bug, touches on reasons why neither
+> > "if anything is not as expected, reject the whole unit" nor the current
+> > behaviour is right. I suspect the resolution is likely to be something
+> > in between.
+> 
+> It would be useful with a reference to the thread in question so this
+> can be further looked into.
 
-On Fri, Oct 20, 2017 at 03:37:58PM -0700, Seth Arnold wrote:
-> I'm not sure what 'script' vs 'not-script' has to do with anything.
-> 'Script' really just means "interpreted programming language" and says
-> nothing about the threat model in use.
+The systemd mailing list is indexed by major search engines. I
+deliberately didn't provide a link, in the hope that a small barrier to
+entry will lead to fewer responses reiterating what has already been said,
+and a correspondingly greater chance of a response not getting lost in
+the noise from someone who has read the context and will propose a
+patch that achieves the desired result without breaking intended
+functionality (in particular "graceful degradation" when units released
+in upstream projects are interpreted by an older systemd, so that
+upstreams can opt-in to new security hardening flags without making their
+software inoperable in currently-deployed systemd versions).
 
-Almost none of the so called script languages are interpreted.  They
-include a compiler, usually compile the input to some form of byte-code
-and executed it within a VM.  But that's just definition.
+Of course, if I was an exemplary open source developer I would have been
+spending my free time on writing that patch instead of getting drawn into
+conversations on oss-security, so perhaps this is partially my fault now.
 
-> Probably other programs use rsync without --safe-links when they should.
-> I didn't know the option existed until this thread was started (seriously,
-> rsync(1) is a HUGE manpage) so I'm grateful to the original reporter
-> for sending it along.
-
-Raising awareness was one reason why I asked for a CVE id instead of
-just fixing it.  rsync, even if the protocol is really bad, is widly
-used to mirror all sorts of software.  It is also a generic tool, so the
-defaults are there to replicate the input as much as possible, not to be
-safe from problematic things.
-
-Regards,
-Bastian
-
--- 
-Humans do claim a great deal for that particular emotion (love).
-		-- Spock, "The Lights of Zetar", stardate 5725.6
+    S
