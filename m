@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/2
-Message-ID: <alpine.LFD.2.20.1707071448440.951@wniryva>
-Date: Fri, 7 Jul 2017 14:50:25 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-10810 Kernel: virtio-gpu: memory leakage while creating gpu object
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/6
+Message-Id: <201707051202.v65C2NDB005864@room101.nl.oracle.com>
+Date: Wed, 05 Jul 2017 14:02:23 +0200
+From: Casper.Dik@...cle.com
+To: oss-security@...ts.openwall.com
+cc: Daniel Skowroński <daniel@...nf.net>
+Subject: Re: systemd fails to parse user that should run service 
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-Linux kernel built with the VirtIO GPU driver(CONFIG_DRM_VIRTIO_GPU) support 
-is vulnerable to a memory leakage issue. It could occur while creating a 
-virtio gpu object in virtio_gpu_object_create().
 
-A user/process could use this flaw to leak host kernel memory potentially 
-resulting in DoS.
+>2) If user name specified in systemd unit file is syntactically correct
+>(according to systemd check) but user name does not exist then systemd
+>refuse to start that unit.
+>
 
-Upstream patch:
----------------
-   -> https://git.kernel.org/linus/385aee965b4e4c36551c362a334378d2985b722a
+Should systemd really valid usernames?  I would think that you would 
+either use getpwnam(username) and if that fails you may then parse it as a 
+numeric value.  If "0day" isn't a valid username according to getpwnam(), 
+when converting it to a numeric uid should *also* fail because "0day" 
+isn't a properly numeric value.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1468023
+Casper
 
-This issue was reported by Li Qiang of Qihoo 360 Gear Team.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
