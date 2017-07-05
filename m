@@ -1,4 +1,9 @@
-Received: (qmail 7530 invoked by uid 550); 2 Feb 2023 19:52:23 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["855" "Wednesday" "5" "July" "2017" "17:47:11" "+0100" "Simon McVittie" "smcv@debian.org" "<20170705164711.nbu6ltcyeyfql3ol@perpetual.pseudorandom.co.uk>" "18" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070516:47:11" "[oss-security] systemd fails to parse user that should run service" (number mark "        smcv@debian. Jul  5   18/855   " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<1499269723.28229.2.camel@gmail.com>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<201707051202.v65C2NDB005864@room101.nl.oracle.com>" "<20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>" "<1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>" "<1499267174.28229.1.camel@gmail.com>" "<efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>" "<1499269723.28229.2.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30141 invoked by uid 550); 5 Jul 2017 16:47:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,47 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6095 invoked from network); 2 Feb 2023 19:06:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=61E2vJN1wPCx5qeBgvNon6AsESP4cuBp/6gsipfaKq4=;
-        b=nqH2ESTgshPBLziDsv7c2p9afgaMgpxGGbERRcgDP4NKatTxHhVzoaeEMGZSsk2Lx3
-         Mj9jq5lvjga3uUf9FmajJz20W8M+4ZQnZwDkPiir6Ivz29rB5C6Jhlg9KfbtG4vObHzb
-         r6l0y00DKD38nq4UcqimuJBYw+CvMbAk/f+g4cvMjoIzI6wGkruO3BowBcEp8QVJBsae
-         w3GO/m5XgvZO9f844Uh4XaOCF6Ef8T7ZqR3CAbdLvPpRHiA1tloADb8ZRV+QXQUpeTw5
-         +ajdFdfV4usllnn4xWJmYS4+gh1zTJmgY0tgHRqsD9MRdVJKJBjcH7oEIt0Kdy20y+OC
-         yhIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=61E2vJN1wPCx5qeBgvNon6AsESP4cuBp/6gsipfaKq4=;
-        b=28m6XFbSCrPh8Pcr8ktGPwXdt8JOZy2/QbabK4P9r3GpLCMDL6vELhRmOiw1AYZVGW
-         dSO34zoQPrd+K2MnGC9wtcva8IelZiInpRq/pJSCsxlfXBWZfy2MnUYQarXI5nF6rPpn
-         ZYyaF2uzHOej0FiU8iX2HbF5O6Ei7kQzpp9vGUnDfo2tZJIU8xu9FH2MZ0I6wsGmqBPb
-         /ainTZJ/TsRTqQs31COp6Lv5/d45UAEPZiAofeUR+pmT2QqkAw6gAqNr8+HPFcs5HnmV
-         8VoTNAmLMCna4n8qeYO90cwJATdA/PHLwifYapBqupHjCI+U+rJbIag+aH/vuOfUSdrk
-         1nZQ==
-X-Gm-Message-State: AO0yUKWdeFggJJ1yslge7sQxOt0cOwydQ7HYKuEOpGRUsyVXbWkmw6nQ
-	1a+RdI0Dsqjk6AJO36sklORGrMCJ2EqSOzAc0so+i8rdo411og==
-X-Google-Smtp-Source: AK7set/xtMYqQlSF/TGoFaw4o2oI33rex3sVQ9S7ey8C8ZPQuurTT193FXcO4EUoBc243KiqUn2S+eblWhqDKFXQp5E=
-X-Received: by 2002:a17:90a:2dca:b0:230:d3b:1b5 with SMTP id
- q10-20020a17090a2dca00b002300d3b01b5mr585191pjm.37.1675364798411; Thu, 02 Feb
- 2023 11:06:38 -0800 (PST)
+Received: (qmail 30117 invoked from network); 5 Jul 2017 16:47:29 -0000
+Message-ID: <20170705164711.nbu6ltcyeyfql3ol@perpetual.pseudorandom.co.uk>
+References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
+ <20170705085034.GA2638@pali>
+ <201707051202.v65C2NDB005864@room101.nl.oracle.com>
+ <20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>
+ <1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>
+ <1499267174.28229.1.camel@gmail.com>
+ <efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>
+ <1499269723.28229.2.camel@gmail.com>
 MIME-Version: 1.0
-References: <20230202130212.GA15689@localhost.localdomain>
-In-Reply-To: <20230202130212.GA15689@localhost.localdomain>
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Thu, 2 Feb 2023 21:06:19 +0200
-Message-ID: <CAGUWgD92EyHBNQLt3eGoEq2mBkaoWS2AGLN1dFE2JFw+6kMv8w@mail.gmail.com>
-To: oss-security@lists.openwall.com, Qualys Security Advisory <qsa@qualys.com>
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] double-free vulnerability in OpenSSH server 9.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1499269723.28229.2.camel@gmail.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Date: Wed, 5 Jul 2017 17:47:11 +0100
+From: Simon McVittie <smcv@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
+To: oss-security@lists.openwall.com
 
-Nice find :)
-This is very complicated codepath, did a human found it "manually"
-or some analysis program found it?
-The warez are so large, they are hard for me manually.
+On Wed, 05 Jul 2017 at 11:48:43 -0400, Daniel Micay wrote:
+> It seems some distributions get useradd/userdel from somewhere else.
+
+shadow and util-linux have a lot of overlap. Fedora has historically
+used util-linux for as much as possible; Debian has historically used
+shadow, but is gradually moving towards util-linux because in practice
+it's more actively maintained; other distributions I don't know. The
+major user-visible difference has usually been differing su behaviour.
+
+> Maybe you have adduser from shadow? It'd be funny if they had different
+> rules enforced even for adduser vs. useradd...
+
+In Debian and its derivatives there are certainly different rules. useradd
+is the mechanism layer, and adduser is a Debian-specific policy layer (for
+instance adduser rejects weird/inadvisable usernames unless given an option
+to force them).
+
+    S
