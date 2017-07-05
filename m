@@ -1,32 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/3
-Message-ID: <CACsi251dwE_HzgX-eK9ALpTRNVF+M8ztZ3YyUm2y5yxeeWOrRQ@mail.gmail.com>
-Date: Thu, 13 Jul 2017 07:58:01 -0500
-From: William A Rowe Jr <wrowe@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-9789: Apache httpd 2.4 Read after free in mod_http2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/21
+Message-ID: <20170705170556.146ce33d@jabberwock.cb.piermont.com>
+Date: Wed, 5 Jul 2017 17:05:56 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Ben Tasker <ben@...tasker.co.uk>
+Cc: oss-security@...ts.openwall.com, Daniel Skowroński <daniel@...nf.net>
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-9789: Read after free in mod_http2.c
+On Wed, 5 Jul 2017 13:28:43 +0100 Ben Tasker <ben@...tasker.co.uk>
+wrote:
+> You'd really hope it'd be consistent. If they want to enforce a
+> policy that user names cannot start with a digit (which as
+> Poettering notes, many distro's do) that's fine, but the resulting
+> behaviour should be safe, well defined and expected. I wouldn't say
+> running the service as root falls under that definition, personally.
 
-Severity: Important
+1) However, not all distributions enforce such a rule, and a has been
+noted, such a rule doesn't exist in POSIX. Indeed, a quick check on a
+PDP-11 simulator demonstrates that Unix at least back to v7 handled
+such names without trouble.
 
-Vendor: The Apache Software Foundation
+2) The lack of fail safety is disturbing. It is probably important for
+systems code like this to always fail safely, rather than unsafely.
 
-Versions Affected:
-httpd 2.4.26
+> Honestly, I think upstream have done an *awful *job of handling it
+> so far (and it's far from the only example of Poettering taking the
+> not-a-bug approach questionably).
 
-Description:
-When under stress, closing many connections, the HTTP/2
-handling code would sometimes access memory after it has
-been freed, resulting in potentially erratic behaviour.
+I've long since come to the conclusion that systemd is not safe to run
+on a security critical machine. The developers are simply too lax
+about safety.
 
-Mitigation:
-2.4.26 users of mod_http2 should upgrade to 2.4.27.
+If you're going to write a piece of systems code that has to run on
+essentially every Linux box on earth and which runs much of the time
+as root, extreme care has to be taken. You need to program defensively.
 
-Credit:
-The Apache HTTP Server security team would like to thank Robert Święcki
-for reporting this issue.
+Instead, what we seem to have is a set of highly interdependent
+shotgun parsers written without much regard to the rules people have
+developed (of necessity) for writing code that must run with high
+privileges. In other words, the code is _not_ written defensively.
 
-References:
-https://httpd.apache.org/security_report.html
+(For those not familiar with the term "shotgun parser", which the
+LangSec community introduced, do learn about it. It's a useful
+concept.)
+
+> FWIW, I'd be inclined to agree that it needs a CVE so that
+> downstream distro's can at least refer to it, and decide how (and
+> if) they want to address it.
+
++1
+
+I don't care much if the developers deny that this is a problem. It is
+a problem.
+
+Perry
+-- 
+Perry E. Metzger		perry@...rmont.com
