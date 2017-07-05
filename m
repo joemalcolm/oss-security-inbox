@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3630" "Friday" "6" "May" "2016" "10:46:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160506144641.EE41F72E00D@smtpvbsrv1.mitre.org>" "97" "[oss-security] Re: CVE Request: Squid HTTP caching proxy" "^Cc:" nil nil "5" "2016050614:46:41" "[oss-security] Re: CVE Request: Squid HTTP caching proxy" (number mark "U       cve-assign@m May  6   97/3630  " thread-indent "\"[oss-security] Re: CVE Request: Squid HTTP caching proxy\"\n") "<583f664a-dc8b-93cb-4b88-2b778d705ee0@treenet.co.nz>" ("<583f664a-dc8b-93cb-4b88-2b778d705ee0@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2468" "Wednesday" "5" "July" "2017" "14:53:20" "+0100" "Simon McVittie" "smcv@debian.org" "<20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>" "52" "Re: [oss-security] systemd fails to parse user that should run service" "^Cc:" nil nil "7" "2017070513:53:20" "[oss-security] systemd fails to parse user that should run service" (number mark "        smcv@debian. Jul  5   52/2468  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<201707051202.v65C2NDB005864@room101.nl.oracle.com>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<201707051202.v65C2NDB005864@room101.nl.oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28613 invoked by uid 550); 6 May 2016 14:46:54 -0000
+Received: (qmail 30505 invoked by uid 550); 5 Jul 2017 13:54:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28586 invoked from network); 6 May 2016 14:46:53 -0000
-In-Reply-To: <583f664a-dc8b-93cb-4b88-2b778d705ee0@treenet.co.nz>
-Message-Id: <20160506144641.EE41F72E00D@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri,  6 May 2016 10:46:41 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 30487 invoked from network); 5 Jul 2017 13:54:02 -0000
+Message-ID: <20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>
+References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
+ <20170705085034.GA2638@pali>
+ <201707051202.v65C2NDB005864@room101.nl.oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <201707051202.v65C2NDB005864@room101.nl.oracle.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Cc: Daniel =?utf-8?Q?Skowro=C5=84ski?= <daniel@dsinf.net>
+Date: Wed, 5 Jul 2017 14:53:20 +0100
+From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Squid HTTP caching proxy
-To: squid3@treenet.co.nz
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> 1) Cache Poisoning issue in HTTP Request handling
-> Advisory at http://www.squid-cache.org/Advisories/SQUID-2016_7.txt
-> Patch at
-> http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14039.patch
+On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@oracle.com wrote:
+> >2) If user name specified in systemd unit file is syntactically correct
+> >(according to systemd check) but user name does not exist then systemd
+> >refuse to start that unit.
 > 
->   When absolute-URI is provided Host header should be ignored. However some
->   code still uses Host directly so normalize it using the URL authority
->   value before doing any further request processing.
->   
->   For now preserve the case where Host is completely absent.
+> Should systemd really valid usernames?  I would think that you would 
+> either use getpwnam(username) and if that fails you may then parse it as a 
+> numeric value.  If "0day" isn't a valid username according to getpwnam(), 
+> when converting it to a numeric uid should *also* fail because "0day" 
+> isn't a properly numeric value.
 
-Use CVE-2016-4553.
+It *does* fail. The problem is in the handling of that failure. systemd
+interprets that failure as "this line is nonsense, so behave as though the
+line didn't exist" rather than "this line can be positively identified as
+an attempt to name a nonexistent or unacceptable user, so fail to load
+the unit". So User=7up does the same thing as User=0day - it doesn't
+run as uid 7, which is 'lp' on my Debian system.
 
+    % cat /etc/systemd/system/demo.service
+    [Unit]
+    Description=Demonstration
 
-> 2) Header Smuggling issue in HTTP Request processing
-> Advisory at http://www.squid-cache.org/Advisories/SQUID-2016_8.txt
-> 
-> Patches at:
->  http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10496.patch
->  ...
->  http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14038.patch
-> 
-> Require exact match in Host header name lookup
-> 
-> - while (xisspace(*p))
-> -     ++p;
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/bin/id
+    User=7up
+    % sudo systemctl daemon-reload
+    % sudo systemctl start demo.service
+    % sudo systemctl status demo.service
+    ...
+    Jul 05 14:47:11 host systemd[1]: /etc/systemd/system/demo.service:7:
+    Invalid user/group name or numeric ID, ignoring: 7up
+    Jul 05 14:47:11 host systemd[1]: Starting Demonstration...
+    Jul 05 14:47:11 host id[27282]: uid=0(root) gid=0(root) groups=0(root)
+    Jul 05 14:47:11 host systemd[1]: Started Demonstration.
+    Jul 05 14:47:11 host systemd[1]: /etc/systemd/system/demo.service:7:
+    Invalid user/group name or numeric ID, ignoring: 7up
+    Jul 05 14:47:17 host systemd[1]: /etc/systemd/system/demo.service:7:
+    Invalid user/group name or numeric ID, ignoring: 7up
+    Jul 05 14:48:25 host systemd[1]: /etc/systemd/system/demo.service:7:
+    Invalid user/group name or numeric ID, ignoring: 7up
 
-Use CVE-2016-4554.
+(The error message in the Journal is presumably repeated because systemd
+re-parses User when looking for ExecStartPre, ExecStart, ExecStop and
+ExecStopPost commands, even though in this case there is only ExecStart.)
 
+The default user to run system units, if no user is specified, is root,
+because for system services that's the right thing more often than not,
+analogous to how LSB init scripts always run as root and can drop
+privileges themselves if they want to.
 
-> 3) Multiple Denial of Service issues in ESI Response processing.
-> Advisory at http://www.squid-cache.org/Advisories/SQUID-2016_9.txt
-> 
-> Patches at:
->  http://www.squid-cache.org/Versions/v3/3.4/changesets/SQUID-2016_9.patch
->  http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_9.patch
-
-> Due to incorrect pointer handling and reference counting Squid is
-> vulnerable to a denial of service attack when processing ESI
-> responses.
-> 
-> These problems allow a remote server delivering certain ESI
-> response syntax to trigger a denial of service for all clients
-> accessing the Squid service.
-
-Use CVE-2016-4555 for the vulnerability in client_side_request.cc -
-here, "if (aConn)" was added.
-
-Use CVE-2016-4556 for the vulnerability in Esi.cc - it is
-described as "was being unlocked without having been locked."
-
-
-> Due to unrelated changes Squid-3.5 has become vulnerable to some
-> regular ESI server responses also triggering one or more of these
-> issues.
-> 
-> This bug is fixed by Squid version 3.5.18 and 4.0.10.
-
-As far as we can tell, this does not really mean that there is an
-additional vulnerability in 3.5.17 that did not exist in 4.0.9.
-Instead, it means that the vulnerabilities are the same, but in 3.5.x
-people might notice the vulnerabilities being exploited accidentally.
-
-
-> (URLs below are now all public, but some of our mirrors may take a few
-> more hours to pick up the changes).
-
-This means, for example, that the URLs work if one manually locates
-all instances of www.squid-cache.org and inserts www1.jp.squid-cache.org
-instead. See http://www.squid-cache.org/Download/http-mirrors.html
-for other options.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXLK2sAAoJEHb/MwWLVhi2dv4P/307N7HayVoijH0rHVfU6E1b
-Ncy7dciziT5ErGQNLvF8vdSbGoMtWy8hIPyqcU6J/ajfeQ5eYxTl6ZAChoa0AUPK
-xwhgk29TjA33NeqL+/YzRqTdkCMdeydU/sIGPXbUHuumHRVlLkOf49LgaONZaO3o
-c0RdQGs5Ncy5yTGeh7mZjSKLTw/N2QShJNWt7NRPfwdWADuz5FFEBywL9MNQtQen
-GLso1f9fTezKsfV7Ph+KECCAWOJq9kekG1awfhn6mGX/urp5VtgZW6Ro9/5TCATc
-lbiN0s3Cj7toRfbs/0w2xpjFMttn50bWG/ohIcb52rReTMJSPY5MQLUpcBtPrsHq
-ICWo9gcIilkPeol+kzAPRWM8zqbeZBwHomLjWcKhBXZyDaZpSKxp9Dimypt22pUV
-g7OXwrn/L2VaIrH4pm8RikCSes7cSi1Ef7TgwpkOL1xfCmqO7BupWHB/168A0bL9
-eiqcDyWGz/TJr5I7yAJcBQECAu7H3n+hclSBoqrOHhS3u13FNdAxdUWn2Gsp8Rw1
-A06zfz4Q2bF+6UTmjQztPgUrKIW77hDJwOP2/gmv2ruegig2QwAqEH1/LeTLbjSq
-qSdkKWKLD5xzCXnc0p4rqBusfU2KR9bpLPZ46VF6TcEr97LgtSd4G8d/2+kUkVVp
-OHALUwfR5fbWjM1IW5Bx
-=Zucs
------END PGP SIGNATURE-----
+    S
