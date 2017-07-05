@@ -1,37 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/17/7
-Message-ID: <e499fcaf-3255-5db3-7b3e-43261bbf8a9d@pipping.org>
-Date: Sun, 18 Jun 2017 01:20:31 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
-To: oss-security@...ts.openwall.com
-Subject: Expat 2.2.1 security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/8
+Message-ID: <CAEsznC4xw6b9TOBJk0q1WFMpnd5EoYeSbka+hqYTaZbuz9k9FA@mail.gmail.com>
+Date: Wed, 5 Jul 2017 15:50:58 +0300
+From: Lior Kaplan <kaplanlior@...il.com>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+Cc: oss-security@...ts.openwall.com, "security@....net" <security@....net>
+Subject: Re: CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+AFAIK, when the issue is already public the list is just fine.
 
+>From the cve-assign auto reply:
 
-Expat 2.2.1 has been released.  The change log has more details [2] than
-this mail, including commit SHA1s.
-For a quick overview of the security fixes and CVEs, we have:
+"In the special case of communications involving a publicly known
+vulnerability on the oss-security mailing list, please do not use
+the https://cveform.mitre.org web site at this time, and instead
+send new or followup messages directly to that mailing list."
 
-   CVE-2017-9233  External entity infinite loop DoS [1]
-  (CVE-2016-9063) Integer overflow (re-fix)
-             n/a  More integer overflow fixes
-  (CVE-2016-0718) Fix regression bugs from 2.2.0's fix to CVE-2016-0718
-  (CVE-2016-5300) Use os-specific entropy sources like getrandom
-             n/a  No longer leak parser pointer information
-             n/a  Prevent use of uninitialised variables
-             n/a  Add missing API parameter validation (NULL, len<0)
-  (CVE-2012-0876) Counter hash flooding with SipHash
+Kaplan
 
-If you control copies of Expat somewhere, please get them updated.
+On Wed, Jul 5, 2017 at 3:34 PM, Salvatore Bonaccorso <carnil@...ian.org>
+wrote:
 
-Best
+> Hi
+>
+> On Wed, Jul 05, 2017 at 02:37:00PM +0300, Lior Kaplan wrote:
+> > Hi,
+> >
+> > The following issues have been reported and fixed in PHP. At the moment
+> > they are part of PHP 7.0.21 release. The fixes are also included in the
+> 5.6
+> > branch and will be part of 5.6.31 when it will be released.
+> >
+> > #73807 Performance problem with processing post request over 2000000
+> chars
+> > https://bugs.php.net/bug.php?id=73807
+> > http://git.php.net/?p=php-src.git;a=commitdiff;h=
+> 0f8cf3b8497dc45c010c44ed9e96518e11e19fc3
+> >
+> > #74145 wddx parsing empty boolean tag leads to SIGSEGV
+> > https://bugs.php.net/bug.php?id=74145
+> > http://git.php.net/?p=php-src.git;a=commitdiff;h=
+> 2aae60461c2ff7b7fbcdd194c789ac841d0747d7
+> > http://git.php.net/?p=php-src.git;a=commitdiff;h=
+> f269cdcd4f76accbecd03884f327cffb9a7f1ca9
+> >
+> > #74651 negative-size-param (-1) in memcpy in zif_openssl_seal()
+> > https://bugs.php.net/bug.php?id=74651
+> > http://git.php.net/?p=php-src.git;a=commitdiff;h=
+> 89637c6b41b510c20d262c17483f582f115c66d6
+> >
+> > #74819 wddx_deserialize() heap out-of-bound read via php_parse_date()
+> > https://bugs.php.net/bug.php?id=74819
+> > PHP 5.6 -
+> > http://git.php.net/?p=php-src.git;a=commitdiff;h=
+> 2aae60461c2ff7b7fbcdd194c789ac841d0747d7
+> > PHP 7.0  -
+> > http://git.php.net/?p=php-src.git;a=commitdiff;h=
+> 6b18d956de38ecd8913c3d82ce96eb0368a1f9e5
+> >
+> > Also, requests from past releases:
+> >
+> > PHP 5.6.28 + 7.0.13
+> > #73192 parse_url return wrong hostname
+> > https://bugs.php.net/bug.php?id=73192
+> > http://git.php.net/?p=php-src.git;a=commitdiff;h=
+> b061fa909de77085d3822a89ab901b934d0362c4
+> >
+> > 5.6.30 + 7.0.15
+> > #73773 Seg fault when loading hostile phar
+> > https://bugs.php.net/bug.php?id=73773
+> > http://git.php.net/?p=php-src.git;a=commitdiff;h=
+> e5246580a85f031e1a3b8064edbaa55c1643a451
+>
+> CVE assignement requests are not handled anymore directly via the
+> oss-security list, but need to be filled/requested at
+> https://cveform.mitre.org/
+>
+> Once CVE are assigned, can you repost them here for benefit of other
+> reader?
+>
+> Regards,
+> Salvatore
+>
 
-
-
-Sebastian
-
-
-[1] https://libexpat.github.io/doc/cve-2017-9233/
-[2] https://github.com/libexpat/libexpat/blob/master/expat/Changes
