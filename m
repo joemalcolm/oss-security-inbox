@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/4
-Message-ID: <PVUnAZzWQ8f0rd5-Ie-aBolsYcjjhMDobF4RyKS65EgbkEN4afROZfrtOtSQplyixFRdLfVEPwxxWxRmTZkKllcyWGqaEaydd5DNv8BgdyA=@protonmail.com>
-Date: Fri, 02 Jun 2017 12:22:27 -0400
-From: Qhdwns123 <qhdwns123@...tonmail.com>
-To: Leo Famulari <leo@...ulari.name>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: What happens in order to get CVE numbers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/12
+Message-ID: <3ac016b6-74ce-5aad-927c-e9c014cdd52c@redhat.com>
+Date: Wed, 5 Jul 2017 09:37:32 -0500
+From: Eric Blake <eblake@...hat.com>
+To: oss-security@...ts.openwall.com, Pali Rohár <pali.rohar@...il.com>
+Cc: Daniel Skowroński <daniel@...nf.net>
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-The developer has not yet patched it.
+On 07/05/2017 03:50 AM, Pali Rohár wrote:
+> There are basically two problems:
+> 
+> 1) In more Linux distributions useradd tool allow to create a new user
+> which starts with digit. Also according to POSIX such user name is a
+> valid. This means that valid user name (for some Linux distributions)
+> from /etc/passwd specified in systemd unit file results running service
+> as root user.
 
-Can I request CVE before committing?
+In fact, it is possible to create a username of '0' which is a non-root
+user.  GNU Coreutils has several tools that support a lookup of '+0' to
+force a numeric uid interpretation (get information related to uid 0,
+regardless of whether there is also a username "0"), while omitting the
+leading + does a username lookup first then falls back to a uid, since
+leading + is not a valid POSIX username start character.
 
--------- Original Message --------
-Subject: Re: [oss-security] What happens in order to get CVE numbers
-Local Time: June 3, 2017 12:41 AM
-UTC Time: June 2, 2017 3:41 PM
-From: leo@...ulari.name
-To: Qhdwns123 <qhdwns123@...tonmail.com>
-oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.           +1-919-301-3266
+Virtualization:  qemu.org | libvirt.org
 
-On Fri, Jun 02, 2017 at 09:09:09AM -0400, Qhdwns123 wrote:
-> Hi
->
-> What happens in order to get CVE numbers
 
-In order to get a CVE assignment, you can fill out the CVE request form:
 
-https://cveform.mitre.org/
+Download attachment "signature.asc" of type "application/pgp-signature" (605 bytes)
