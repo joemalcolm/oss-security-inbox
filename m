@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1650" "Monday" "22" "June" "2015" "17:25:21" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150622212521.220A172E023@smtpvbsrv1.mitre.org>" "47" "[oss-security] Re: CVE request: IPython XSS in JSON error responses" nil nil nil "6" "2015062221:25:21" "[oss-security] Re: CVE request: IPython XSS in JSON error responses" (number mark "U       cve-assign@m Jun 22   47/1650  " thread-indent "\"[oss-security] Re: CVE request: IPython XSS in JSON error responses\"\n") "<CA+tbMaXPPLNRLW8MeN3c9nvupz6z0E2EZRgg55psyvEB-1fb3g@mail.gmail.com>" ("<CA+tbMaXPPLNRLW8MeN3c9nvupz6z0E2EZRgg55psyvEB-1fb3g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2396" "Wednesday" "5" "July" "2017" "13:27:21" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170705112721.GB28379@suse.de>" "62" "Re: [oss-security] systemd fails to parse user that should run service" "^Cc:" nil nil "7" "2017070511:27:21" "[oss-security] systemd fails to parse user that should run service" (number mark "        meissner@sus Jul  5   62/2396  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<20170705085034.GA2638@pali>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12262 invoked by uid 550); 22 Jun 2015 21:25:33 -0000
+Received: (qmail 3246 invoked by uid 550); 5 Jul 2017 11:27:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3224 invoked from network); 5 Jul 2017 11:27:33 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20170705112721.GB28379@suse.de>
+References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
+ <20170705085034.GA2638@pali>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170705085034.GA2638@pali>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: Daniel =?utf-8?Q?Skowro=C5=84ski?= <daniel@dsinf.net>
+Date: Wed, 5 Jul 2017 13:27:21 +0200
+From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12244 invoked from network); 22 Jun 2015 21:25:33 -0000
-From: cve-assign@mitre.org
-To: rgbkrk@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@ipython.org
-In-Reply-To: <CA+tbMaXPPLNRLW8MeN3c9nvupz6z0E2EZRgg55psyvEB-1fb3g@mail.gmail.com>
-Message-Id: <20150622212521.220A172E023@smtpvbsrv1.mitre.org>
-Date: Mon, 22 Jun 2015 17:25:21 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: IPython XSS in JSON error responses
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Jul 05, 2017 at 10:50:34AM +0200, Pali Rohár wrote:
+> On Sunday 02 July 2017 12:02 Daniel Skowroński wrote:
+> > Hi all,
+> > 
+> > Just wanted to bring attention to issue with systemd not doing what is
+> > expected when parsing User that should run service.
+> > When it fails to parse string starting with digit it fails back to root
+> > causing obvious threat to security.
+> > 
+> > See discussion with developer on github:
+> > https://github.com/systemd/systemd/issues/6237
+> > 
+> > Best,
+> > -Daniel Skowronski
+> 
+> Hi!
+> 
+> There are basically two problems:
+> 
+> 1) In more Linux distributions useradd tool allow to create a new user
+> which starts with digit. Also according to POSIX such user name is a
+> valid. This means that valid user name (for some Linux distributions)
+> from /etc/passwd specified in systemd unit file results running service
+> as root user.
+> 
+> 2) If user name specified in systemd unit file is syntactically correct
+> (according to systemd check) but user name does not exist then systemd
+> refuse to start that unit.
+> 
+> Which leads to problem that syntactically invalid user name (for
+> systemd) results in root user and syntactically valid non-existent user
+> name cause error.
+> 
+> Because check if user name is valid is different in systemd as specified
+> in POSIX and also different as in useradd tool supplied by some Linux
+> distributions, I see this as a security problem when processing invalid
+> input from configuration unit file.
+> 
+> Correct behaviour should be to throw error also when garbage (invalid
+> user name), according to internal systemd check, was specified. And not
+> start service under root user with high privileges.
+> 
+> Because of this I would suggest to ask for CVE identifier, so Linux
+> distributions can mitigate or decide how to handle this problem.
+> 
+> Linux distributions which follow POSIX standard when creating new users
+> are affected by this.
+> 
+> Please note that above bug tracker on github is locked for future
+> discussion, which means it is not possible to ask for more details or
+> continue discussion in upstream.
+> 
+> Which is really *bad* for security related problems.
+> 
+> What do you think, how should be this problem handled?
 
-> https://github.com/ipython/ipython/commit/7222bd53ad089a65fd610fab4626f9d0ab47dfce
-> https://github.com/ipython/ipython/commit/c2078a53543ed502efd968649fee1125e0eb549c
+One of SUSEs systemd developer is developing a patch, that fails the unit
+when parsing the username fails.
 
-> JSON error responses from the IPython notebook REST API contained
-> URL parameters and were incorrectly reported as text/html instead of
-> application/json. The error messages included some of these URL params,
-> resulting in a cross site scripting attack.
+https://bugzilla.suse.com/show_bug.cgi?id=1047023
 
-(We wanted to have two CVE IDs because of the following difference in
-how 2.x and 3.x are affected. We realize that this is perhaps a
-marginal case for that, because the 3.x code is essentially just:
-
-  self.log.warn("/api/notebooks is deprecated, use /api/contents")
-  self.redirect(url_path_join(
-      self.base_url,
-      'api/contents',
-
-)
-
-> /api/contents (3.0-3.1)
-
-Use CVE-2015-4706 for the /api/contents path.
-
-
-> /api/notebooks (2.0-2.4, 3.0-3.1)
-
-Use CVE-2015-4707 for the /api/notebooks path.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJViHxpAAoJEKllVAevmvmsKHMH/1/6j3dATboZR89XjRTsMhob
-mQa5sqbEjCAHUxvfZlCPqDc/JQ+P+76cvOqjkyS/xDlvl9hLj2EBF46apVOLexcw
-UdiR3FmVsBNUq/QPupSobZGPrMywaypla34MfIbSod/rDZN/A8sGDvt7J6sGOoAU
-on4ZddKjCg85YUQr47AgVmU1FLnGpkPyA22KazhJnSyfdNv5/OptG4QwMnH5o774
-SospTf0okgh180Fj54BnNwiPARA71syjOyYBoveQDKbbdkKTtaWB9cWVeAvePkrd
-mc1Yvvxwzws/wednn2qFLTWPPCvUvUEswHSuB5p9JDpizdQDO8t8xeBWmZkWXu0=
-=sYFZ
------END PGP SIGNATURE-----
+Ciao, Marcus
