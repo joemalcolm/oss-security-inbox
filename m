@@ -1,51 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/8
-Message-ID: <ec789926-c94c-cbd8-375d-34f34118e74e@virtuozzo.com>
-Date: Fri, 1 Sep 2017 19:20:54 +0300
-From: Vasily Averin <vvs@...tuozzo.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/17
+Message-ID: <1499269723.28229.2.camel@gmail.com>
+Date: Wed, 05 Jul 2017 11:48:43 -0400
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Andrey Konovalov <andreyknvl@...gle.com>
-Subject: CVE-2017-14106 kernel: net/ipv4: divide by 0 in __tcp_select_window()
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-[Suggested description]
-The tcp_disconnect function in net/ipv4/tcp.c in the Linux kernel before 4.12 allows
-local users to cause a denial of service (__tcp_select_window divide-by-zero error and system crash) 
-by triggering a disconnect within a certain tcp_recvmsg code path.
+On Wed, 2017-07-05 at 16:37 +0100, John Haxby wrote:
+> On 05/07/17 16:06, Daniel Micay wrote:
+> > On Wed, 2017-07-05 at 15:50 +0100, John Haxby wrote:
+> > > On 05/07/17 14:53, Simon McVittie wrote:
+> > > > On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@...cle.com
+> > > > wrote:
+> > > > > > 2) If user name specified in systemd unit file is
+> > > > > > syntactically
+> > > > > > correct
+> > > > > > (according to systemd check) but user name does not exist
+> > > > > > then
+> > > > > > systemd
+> > > > > > refuse to start that unit.
+> > > > > 
+> > > > > Should systemd really valid usernames?  I would think that you
+> > > > > would 
+> > > > > either use getpwnam(username) and if that fails you may then
+> > > > > parse
+> > > > > it as a 
+> > > > > numeric value.  If "0day" isn't a valid username according to
+> > > > > getpwnam(), 
+> > > > > when converting it to a numeric uid should *also* fail because
+> > > > > "0day" 
+> > > > > isn't a properly numeric value.
+> > > > 
+> > > > It *does* fail. The problem is in the handling of that failure.
+> > > > systemd
+> > > > interprets that failure as "this line is nonsense, so behave as
+> > > > though the
+> > > > line didn't exist" rather than "this line can be positively
+> > > > identified as
+> > > > an attempt to name a nonexistent or unacceptable user, so fail
+> > > > to
+> > > > load
+> > > > the unit". So User=7up does the same thing as User=0day - it
+> > > > doesn't
+> > > > run as uid 7, which is 'lp' on my Debian system.
+> > > 
+> > > 
+> > > And therein lies the problem.  "0day" and "7up" are valid user
+> > > names
+> > > according to Posix[1], they may or may not exist, but they are
+> > > valid.
+> > > You may think Posix is wrong to allow an initial digit, but that
+> > > isn't
+> > > the issue.  The problem is that systemd treats an "invalid"
+> > > username
+> > > as
+> > > either an integer or not specified and in either case this results
+> > > in
+> > > a
+> > > program running as the wrong user, probably as root.
+> > > 
+> > > Having systemd balk at what Posix considers to be a valid username
+> > > is
+> > > a
+> > > bug that systemd is free to say "this is stupid, we're not
+> > > allowing
+> > > that".   If, as appears to be the case, systemd says "that
+> > > username is
+> > > stupid, we're going to interpret it differently" then that's when
+> > > we
+> > > need a CVE because, to my mind on this hot and sunny say, that's
+> > > systemd
+> > > apparently doing something for security that it is not.
+> > > 
+> > > jch
+> > > 
+> > > 
+> > > [1]
+> > > http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03
+> > > .htm
+> > > l#tag_03_431
+> > 
+> > https://github.com/shadow-maint/shadow/blob/master/libmisc/chkname.c
+> > #L49
+> > 
+> > POSIX also says "." is a portable character, which isn't allowed by
+> > shadow either. What are distributions using to provide useradd if
+> > not
+> > shadow?
+> 
+> Interesting.  "useradd a.b" works on Fedora so I wonder what's
+> different
+> there?
 
-[VulnerabilityType Other]
-CWE-369: Divide By Zero
+It seems some distributions get useradd/userdel from somewhere else.
 
-[Reference]
-https://groups.google.com/forum/#!topic/syzkaller/e4SrsEBEziQ
-https://www.mail-archive.com/netdev@vger.kernel.org/msg186255.html
-https://github.com/torvalds/linux/commit/499350a5a6e7512d9ed369ed63a4244b6536f4f8
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=499350a5a6e7512d9ed369ed63a4244b6536f4f8
-
-
-[Discoverer]
-Andrey Konovalov  <andreyknvl@...gle.com>
-
-It was fixed in linux mainline 4.12-rc3
-
-commit 499350a5a6e7512d9ed369ed63a4244b6536f4f8
-Author: Wei Wang <weiwan@...gle.com>
-Date:   Thu May 18 11:22:33 2017 -0700
-
-    tcp: initialize rcv_mss to TCP_MIN_MSS instead of 0
-    
-    When tcp_disconnect() is called, inet_csk_delack_init() sets
-    icsk->icsk_ack.rcv_mss to 0.
-    This could potentially cause tcp_recvmsg() => tcp_cleanup_rbuf() =>
-    __tcp_select_window() call path to have division by 0 issue.
-    So this patch initializes rcv_mss to TCP_MIN_MSS instead of 0.
-    
-    Reported-by: Andrey Konovalov  <andreyknvl@...gle.com>
-    Signed-off-by: Wei Wang <weiwan@...gle.com>
-    Signed-off-by: Eric Dumazet <edumazet@...gle.com>
-    Signed-off-by: Neal Cardwell <ncardwell@...gle.com>
-    Signed-off-by: Yuchung Cheng <ycheng@...gle.com>
-    Signed-off-by: David S. Miller <davem@...emloft.net>
-
-Thank you,
-	Vasily Averin
+Maybe you have adduser from shadow? It'd be funny if they had different
+rules enforced even for adduser vs. useradd...
