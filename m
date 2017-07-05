@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/1
-Message-ID: <2429368.YF0b0QFtOe@tux.boltz.de.vu>
-Date: Thu, 09 Feb 2017 00:47:08 +0100
-From: Christian Boltz <oss-security@...ltz.de>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: PostfixAdmin allows to delete protected aliases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/25
+Message-ID: <9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>
+Date: Thu, 6 Jul 2017 00:02:58 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-Am Dienstag, 7. Februar 2017, 20:12:24 CET schrieb cve-assign@...re.org:
-> > https://github.com/postfixadmin/postfixadmin/pull/23
-> > 
-> > Thanks to a missing permission check, domain admins can delete
-> > aliases they are not allowed to delete (for example abuse@, which
-> > the server admin might have setup so that he gets all abuse mails).
-> > 
-> >> Fix security hole in AliasHandler
+On 07/05/2017 11:58 PM, Simon McVittie wrote:
+> systemd does have a (public, and publically-archived) mailing list, which
+> has a current thread on the subject of this issue.
 > 
-> Use CVE-2017-5930.
+> In particular the mail in that thread from Felipe Sateler, and some of
+> the discussion on the upstream bug, touches on reasons why neither
+> "if anything is not as expected, reject the whole unit" nor the current
+> behaviour is right. I suspect the resolution is likely to be something
+> in between.
 
-Thanks!
+It would be useful with a reference to the thread in question so this
+can be further looked into.
 
-I released PostfixAdmin 3.0.2 which includes the fix for this bug (and 
-some non-security bugs).
-
-I also submitted updated packages to openSUSE Tumbleweed, Leap 42.2 and 
-42.1. (Tracking bug: https://bugzilla.opensuse.org/1024211 )
-
-
-Regards,
-
-Christian Boltz
 -- 
-In most cases, XSLT is good enough. But I agree, for some parts
-you need Aspirin. ;-)        [Thomas Schraitle in opensuse-doc]
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
