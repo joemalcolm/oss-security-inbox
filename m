@@ -1,102 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/6
-Message-Id: <6D989FE0-69C8-4AE0-B897-B440B8F92C69@recoil.org>
-Date: Fri, 23 Jun 2017 16:28:28 +0100
-From: Anil Madhavapeddy <anil@...oil.org>
-To: oss-security@...ts.openwall.com
-Cc: Damien Doligez <damien.doligez@...ia.fr>
-Subject: CVE-2017-9772: OCaml release 4.04.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/28
+Message-ID: <65f3c8fc-60f9-a678-1ed4-6461fa7a31f5@gentoo.org>
+Date: Thu, 6 Jul 2017 00:12:37 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Anyone packaging OCaml 4.04.0 or OCaml 4.04.1 and installing setuid binaries
-with it should be aware of this CVE, and upgrade their distribution packaging
-accordingly.  Please get in touch with me if you are having any issues with
-upgrading to the latest OCaml 4.04.2.
+On 07/06/2017 12:02 AM, Kristian Fiskerstrand wrote:
+> On 07/05/2017 11:58 PM, Simon McVittie wrote:
+>> systemd does have a (public, and publically-archived) mailing list, which
+>> has a current thread on the subject of this issue.
+>>
+>> In particular the mail in that thread from Felipe Sateler, and some of
+>> the discussion on the upstream bug, touches on reasons why neither
+>> "if anything is not as expected, reject the whole unit" nor the current
+>> behaviour is right. I suspect the resolution is likely to be something
+>> in between.
+> 
+> It would be useful with a reference to the thread in question so this
+> can be further looked into.
+> 
 
-Anil
+I expect this is the post in question:
+https://lists.freedesktop.org/archives/systemd-devel/2017-July/039168.html
+,
 
-> Begin forwarded message:
-> 
-> From: Damien Doligez <Damien.Doligez@...ia.fr>
-> Subject: [Caml-list] OCaml release 4.04.2
-> Date: 23 June 2017 at 16:18:44 BST
-> To: caml announce <caml-announce@...ia.fr>, caml users <caml-list@...ia.fr>
-> Reply-To: Damien Doligez <Damien.Doligez@...ia.fr>
-> 
-> 
-> Dear OCaml users,
-> 
-> We have the pleasure of celebrating the birthday of Alan Turing by
-> announcing the release of OCaml version 4.04.2.
-> 
-> This minor release fixes the security issue described in
-> CVE-2017-9772 (included below).
-> 
-> All users should eventually upgrade to 4.04.2 from 4.04.0 and 4.04.1.
-> Any user who produces setuid programs with OCaml should read the CVE
-> and upgrade immediately.
-> 
-> It is available as an OPAM switch, or as a source download here:
->  https://caml.inria.fr/pub/distrib/ocaml-4.04/
->  https://github.com/ocaml/ocaml/archive/4.04.2.tar.gz
-> 
-> Happy hacking,
-> 
-> -- Damien Doligez for the OCaml team.
-> 
-> 
-> OCaml 4.04.2 (23 Jun 2017):
-> ---------------------------
-> 
-> ### Security fix:
-> 
-> - PR#7557: Local privilege escalation issue with ocaml binaries.
->  (Damien Doligez, report by Eric Milliken, review by Xavier Leroy)
-> 
-> --------------------------------------------------------------------
-> 
-> CVE-2017-9772: Privilege escalation in OCaml runtime for SUID executables
-> 
-> The environment variables CAML_CPLUGINS, CAML_NATIVE_CPLUGINS, and
-> CAML_BYTE_CPLUGINS can be used to auto-load code into any ocamlopt-compiled
-> executable or any ocamlc-compiled executable in ‘custom runtime mode’.
-> This can lead to privilege escalation if the executable is marked setuid.
-> 
-> Vulnerable versions: OCaml 4.04.0 and 4.04.1
-> 
-> Workarounds:
->   - Upgrade to OCaml 4.04.2 or higher.
-> or - Compile the OCaml distribution with the "-no-cplugins" configure option.
-> or - OPAM users can "opam update && opam switch recompile 4.04.1", as
->     the repository has had backported patches applied.
-> 
-> Impact: This only affects binaries that have been installed on Unix-like
-> operating systems (including Linux and macOS) with the setuid bit set.
-> However, in that situation, any user who execute the program gains all
-> the privileges of the owner of the executable (meaning that root-owned
-> setuid executables provide root access).
-> 
-> Fix: OCaml 4.04.2 mitigates this by modifying Sys.getenv and Unix.getenv
-> to raise an exception if the process has ever had elevated privileges.
-> The OCaml runtime has also been modified to use this function for
-> retrieving all of the runtime environment variables which could potentially
-> cause files to be accessed or modified.  The older behaviour is available
-> in Sys.unsafe_getenv for applications that require strict compatibility.
-> 
-> Credits: This was originally reported by Eric Milliken on the OCaml Mantis
-> bug tracker. https://caml.inria.fr/mantis/view.php?id=7557
-> 
-> References: see CVE-2017-9779 for a lesser vulnerability in older versions.
-> 
-> CVSS v2 Vector:
-> AV:L/AC:L/Au:S/C:C/I:C/A:N/E:F/RL:OF/RC:C/CDP:H/TD:L/CR:H/IR:H/AR:L
-> CWE ID: 114
-> 
-> 
-> -- 
-> Caml-list mailing list.  Subscription management and archives:
-> https://sympa.inria.fr/sympa/arc/caml-list
-> Beginner's list: http://groups.yahoo.com/group/ocaml_beginners
-> Bug reports: http://caml.inria.fr/bin/caml-bugs
+The post seems to be arguing, without much ambiguity, for a fatal error
+on username not existing or not considered valid (which seems like
+sensible behavior to me)
+
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
