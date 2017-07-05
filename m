@@ -1,51 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/3
-Message-ID: <1498819293.18870.28.camel@debian.org>
-Date: Fri, 30 Jun 2017 12:41:33 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/1
+Message-ID: <20170705081148.GH2102@pali>
+Date: Wed, 5 Jul 2017 10:11:48 +0200
+From: Pali Rohár <pali.rohar@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: ISC Security Officer <security-officer@....org>
-Subject: Re: ISC announces two BIND vulnerabilities
+Subject: CVE-2017-10789: DBD::mysql - mysql_ssl=1 does not enforce encryption
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2017-06-30 at 01:09 -0800, ISC Security Officer wrote:
-> On Thursday (29 June) Internet Systems Consortium disclosed two security
-> vulnerabilities in BIND.  Details on the individual vulnerabilities
-> can be found in our knowledge base:
-> 
->   CVE-2017-3142:  https://kb.isc.org/article/AA-01504/74/CVE-2017-3142
->   CVE-2017-3143:  https://kb.isc.org/article/AA-01503/74/CVE-2017-3143
-> 
-> New software releases have been issued containing these security fixes;
-> they are available from our download page at http://www.isc.org/downloads
-> 
-As per list policy, and since I'm following these for Debian, here's some more
-details inline for the list.
+Hi! I would like to announce another problem in DBD::mysql which affects
+only encryption between client and server. If you have fully trusted
+connection then you should not be affected.
 
-The vulnerabilities are very similar to the knot one (no CVE yet) found by the
-same researchers (Synaktiv):
+Perl DBD::mysql driver does not enforce SSL/TLS encryption when option
+mysql_ssl=1 is enabled. Enabling encryption depends on announcement from
+MySQL server what it supports which can man-in-the-middle attack spoof.
+DBD::mysql does not enforce SSL/TSL encryption even when certificate is
+specified via connection parameter mysql_ssl_ca_file.
 
-CVE-2017-3142: An error in TSIG authentication can permit unauthorized zone
-transfers
+Therefore usage of SSL/TLS encryption in DBD::mysql is insecure.
 
-An attacker who is able to send and receive messages to an authoritative DNS
-server and who has knowledge of a valid TSIG key name may be able to
-circumvent TSIG authentication of AXFR requests via a carefully constructed
-request packet. A server that relies solely on TSIG keys for protection with
-no other ACL protection could be manipulated into:
+Similar problem had also libmysqlclient.so library, see CVE-2015-3152.
 
-* providing an AXFR of a zone to an unauthorized recipient
-* accepting bogus NOTIFY packets
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-10789
 
-CVE-2017-3043: An error in TSIG authentication can permit unauthorized dynamic
-updates
-
-An attacker who is able to send and receive messages to an authoritative DNS
-server and who has knowledge of a valid TSIG key name for the zone and service
-being targeted may be able to manipulate BIND into accepting an unauthorized
-dynamic update.
-
-Regards,
 -- 
-Yves-Alexis
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Pali Rohár
+pali.rohar@...il.com
