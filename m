@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1393" "Friday" "2" "September" "2016" "11:42:31" "+0300" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>" "61" "[oss-security] CVE assignment for PHP 5.6.25 and 7.0.10" nil nil nil "9" "2016090208:42:31" "[oss-security] CVE assignment for PHP 5.6.25 and 7.0.10" (number mark "U       kaplanlior@g Sep  2   61/1393  " thread-indent "\"[oss-security] CVE assignment for PHP 5.6.25 and 7.0.10\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["921" "Thursday" "6" "July" "2017" "13:27:53" "-0600" "Leonid Isaev" "leonid.isaev@jila.colorado.edu" "<20170706192753.GA9945@takahe.colorado.edu>" "22" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070619:27:53" "[oss-security] systemd fails to parse user that should run service" (number mark "        leonid.isaev Jul  6   22/921   " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<20170706140207.ywcfdtsmmrh2dxmm@perpetual.pseudorandom.co.uk>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>" "<20170705170556.146ce33d@jabberwock.cb.piermont.com>" "<20170705211451.GA16241@hurricane.linuxnetz.de>" "<20c62ff4-6650-b0f0-0343-fe5c0c7ce85b@slackware.com>" "<20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>" "<20170706132816.GA3056@takahe.colorado.edu>" "<20170706140207.ywcfdtsmmrh2dxmm@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19572 invoked by uid 550); 2 Sep 2016 08:42:46 -0000
+Received: (qmail 20003 invoked by uid 550); 6 Jul 2017 19:29:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19545 invoked from network); 2 Sep 2016 08:42:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=KmBTpAlktiSCbmK7KJ7x4dipah/v0he0CC+lc5vghpc=;
-        b=Z/D14pdF4yiF5NbjaV8fQyxIpwuXI+fxuwrCxgNhkNajNeV4jjTJsp4hmOKKgsR7A3
-         pCjx1Gr8v6XF27oT6hgMa0TKoOganNB/jiVc/yMi52ogg+w6XayeF7qAYE7/DMu1eZv9
-         tLyHToZiqC+YgTfQucwIvPsPEWk+jVV+hRq0Oml/stwi3eR8tELIy93lBbmaAZ5uLmE0
-         8vxp9eOp2/fKlTVyf1tS8yer5aPqBRUYr/mtt6XyrEfECfvorw6KdwZPjZ0m+dDP3Zr4
-         LLu3FLRDYf1E8JqW0BeB9lpzdzfna8tRycMuDuMhAmyvrEzKAA+tTjQMIlASCmXWhsUE
-         LNGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=KmBTpAlktiSCbmK7KJ7x4dipah/v0he0CC+lc5vghpc=;
-        b=m8BKOF33CQgJz++Q6GVS53H5dJoyIufMh9ZPNKUpJ/nK9sK1ThsFHh4snyksC2SQpd
-         bauPsWcNf9vKWiF5f/lgVZ+7Hw1ZPkgfGApu3vCXfQtvWjj+FNQEyp/mWvzLwJfJXJuX
-         wmkns5e4XLX3DOtV//m2ggtuQVw7wuNxUyt92nNKt00KCXuxMWKPM5+Wu/zBh4BzNKb3
-         yK3SOnqv23nF3MzA2eAhFyXItzoQ6va6vOoHLmbJkA134rJCMFlSD5SRdYKhUtMDlWOJ
-         DVI6MUod/CS8RWb+mtz27Bq+pslUOTx4+Vk9dSWo9furLlnafZzwisnTlP17oESTasxu
-         xY4w==
-X-Gm-Message-State: AE9vXwP7kEK6PguE5pmKapKTSmA+eUB3lUK0DHpuidF6CPmi0S8y+50+7tmQVkUH8rMrad7n6G+np0Y9Afr1Kw==
-X-Received: by 10.31.102.6 with SMTP id a6mr12302663vkc.85.1472805752450; Fri,
- 02 Sep 2016 01:42:32 -0700 (PDT)
+Received: (qmail 17725 invoked from network); 6 Jul 2017 19:28:11 -0000
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.99.2 at jilau1.colorado.edu
+Message-ID: <20170706192753.GA9945@takahe.colorado.edu>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
+ <20170705085034.GA2638@pali>
+ <CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
+ <20170705170556.146ce33d@jabberwock.cb.piermont.com>
+ <20170705211451.GA16241@hurricane.linuxnetz.de>
+ <20c62ff4-6650-b0f0-0343-fe5c0c7ce85b@slackware.com>
+ <20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>
+ <20170706132816.GA3056@takahe.colorado.edu>
+ <20170706140207.ywcfdtsmmrh2dxmm@perpetual.pseudorandom.co.uk>
 MIME-Version: 1.0
-From: Lior Kaplan <kaplanlior@gmail.com>
-Date: Fri, 2 Sep 2016 11:42:31 +0300
-Message-ID: <CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com, "security@php.net" <security@php.net>
-Content-Type: multipart/alternative; boundary=94eb2c092d68b2b308053b824f32
-Subject: [oss-security] CVE assignment for PHP 5.6.25 and 7.0.10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170706140207.ywcfdtsmmrh2dxmm@perpetual.pseudorandom.co.uk>
+User-Agent: Mutt/1.8.2 (2017-04-18)
+Date: Thu, 6 Jul 2017 13:27:53 -0600
+From: Leonid Isaev <leonid.isaev@jila.colorado.edu>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
+To: oss-security@lists.openwall.com
 
---94eb2c092d68b2b308053b824f32
-Content-Type: text/plain; charset=UTF-8
+On Thu, Jul 06, 2017 at 03:02:07PM +0100, Simon McVittie wrote:
+> > The problem is that my new and shiny
+> > script won't work as intended on old systemD versions which silently ignore
+> > User= directive.
+> 
+> I am not aware of any such version existing. The 2010 commit
+> "first attempt at proper service/socket logic", which was 6 months before
+> the release of systemd version 1 and was the first commit to introduce
+> ExecStart, also introduced User.
 
-Hello Mitre team,
+OK, but then there is no excuse to silently ignore any kind of error in
+User=. If systemd can not start unit as a specified user, it must fail it, just
+like ExecStart: if the command specified there is not found, it doesn't start
+a random shell or a web server, right?.
 
-Please consider CVE assignment for the following issues in PHP.
+I thought the current behavior of ignoring some syntax "mistakes" was put in
+place by design because units have to be backwards copatible with older systemd
+versions.
 
-Shared between PHP 5.6.25 and 7.0.10:
-
-Core:
-
-Bug #72663 <https://bugs.php.net/bug.php?id=72663> Create an Unexpected
-Object and Don't Invoke __wakeup() in Deserialization
-Bug #72681 <https://bugs.php.net/bug.php?id=72681> PHP Session Data
-Injection Vulnerability
-
-GD:
-
-Bug #72697 <https://bugs.php.net/bug.php?id=72697> select_colors write
-out-of-bounds
-Bug #72730 <https://bugs.php.net/bug.php?id=72730> imagegammacorrect allows
-arbitrary write access
-
-
-EXIF:
-
-Bug #72627 <https://bugs.php.net/bug.php?id=72627> Memory Leakage In
-exif_process_IFD_in_TIFF
-
-
-
-WDDX:
-
-Bug #72749 <https://bugs.php.net/bug.php?id=72749> wddx_deserialize allows
-illegal memory access
-Bug #72750 <https://bugs.php.net/bug.php?id=72750> wddx_deserialize null
-dereference
-Bug #72790 <https://bugs.php.net/bug.php?id=72790> wddx_deserialize null
-dereference with invalid xml
-Bug #72799 <https://bugs.php.net/bug.php?id=72799> wddx_deserialize null
-dereference in php_wddx_pop_element
-
-
-PHP 7.0.10 only:
-
-Core:
-
-Bug #72742 <https://bugs.php.net/bug.php?id=72742> memory allocator fails
-to realloc small block to large one
-
-
-cURL:
-
-Bug #72674 <https://bugs.php.net/bug.php?id=72674> Heap overflow in
-curl_escape
-
-Thanks,
-
-Kaplan
-
---94eb2c092d68b2b308053b824f32--
+Cheers,
+-- 
+Leonid Isaev
