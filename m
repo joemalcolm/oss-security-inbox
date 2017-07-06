@@ -1,4 +1,9 @@
-Received: (qmail 14005 invoked by uid 550); 5 Nov 2023 17:41:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1057" "Thursday" "6" "July" "2017" "13:33:36" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170706113336.GI5923@suse.de>" "28" "[oss-security] X.Org X Server stack overflow and information leak" nil nil nil "7" "2017070611:33:36" "[oss-security] X.Org X Server stack overflow and information leak" (number mark "U       meissner@sus Jul  6   28/1057  " thread-indent "\"[oss-security] X.Org X Server stack overflow and information leak\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25934 invoked by uid 550); 6 Jul 2017 11:33:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10045 invoked from network); 5 Nov 2023 17:38:17 -0000
-Date: Sun, 5 Nov 2023 18:36:52 +0100
-From: Solar Designer <solar@openwall.com>
-To: Pietro Borrello <borrello@diag.uniroma1.it>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20231105173652.GA23224@openwall.com>
-References: <CAEih1qXOiRzcGgLeyFtQ5C04_gi5FSFHq6qJ37Tqtg=EUS8bAw@mail.gmail.com>
-Mime-Version: 1.0
+Received: (qmail 25909 invoked from network); 6 Jul 2017 11:33:48 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Thu, 6 Jul 2017 13:33:36 +0200
+From: Marcus Meissner <meissner@suse.de>
+To: OSS Security List <oss-security@lists.openwall.com>
+Message-ID: <20170706113336.GI5923@suse.de>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAEih1qXOiRzcGgLeyFtQ5C04_gi5FSFHq6qJ37Tqtg=EUS8bAw@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux Kernel: hid: type confusions on hid report_list entry
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] X.Org X Server stack overflow and information leak
 
-On Tue, Jan 17, 2023 at 06:05:30PM +0100, Pietro Borrello wrote:
-> We found potential misuses of list_entry() on lists in hid driver
-> code that are not checked, specifically hid_validate_values() in
-> drivers/hid/hid-core.c and bigben_probe() in drivers/hid/hid-bigbenff.c.
-> Issuing a list_entry() on an empty list causes a type confusion making
-> the list_entry point to the list_head itself.
-> The most impactful seems the missing check for an empty list in
-> hid_validate_values() which is supposed to check the validity of the
-> reports themselves, potentially affecting all the drivers that rely on it.
-> 
-> The problem is caused by the driver's assumption that the device must
-> have a valid report_list. While this will be true for all normal HID
-> devices, a suitably malicious device can violate the assumption.
-> 
-> At a first glance, it may seem that the patches have security implications.
-> However, when plugging a device which provides a descriptor with no output
-> report, the type confusions will create a fake struct hid_report*
-> which points to ((struct hid_device *)hid).report_enum[type].report_list.
-> This, by chance, makes the type confused structure to span
-> the `struct hid_report* report_id_hash[256]` array in the
-> ((struct hid_device *)hid).report_enum[type] field.
-> 
-> Then, due to their semantics hid_validate_values() will check
-> (report->maxfield > field_index) on the type-confused report,
-> and the maxfield field happens to overlap on the
-> report_id_hash[] array in the report_enum[type] field
-> which are all NULL since we provided no reports.
-> Similarly, for bigben_probe(), the confused report entry is
-> used in the bigben_worker() function which checks
-> (report->field[0] != NULL) that, again, overlaps with a NULL
-> pointer.
-> It seems there is a commit (918aa1ef104d: "HID: bigbenff: prevent
-> null pointer dereference") which added the check for report_field
-> being NULL to bigben_worker() to prevent crashing, but without
-> checking the actual root cause.
-> 
-> Thus, while being type confusions bugs, they are not exploitable.
-> The list checks should be added also to prevent future exploitability
-> if the shape of the structure changes (e.g., structure layout
-> randomization), and they do not overlap anymore with NULL pointers.
-> In this case, it is not exploitable just by the pure chance of struct
-> member ordering.
-> 
-> This post has been written in accordance with linux-distros rules to
-> which we disclosed the initial findings of the potential vulnerabilities.
-> as even if the bugs seem not exploitable, the wider community on
-> oss-security might see how the issue does have security relevance.
-> 
-> We submitted patches to fix the issue by checking that the lists
-> are non-empty before allowing them to be used:
-> https://lore.kernel.org/all/20230114-hid-fix-emmpty-report-list-v1-0-e4d02fad3ba5@diag.uniroma1.it/T/
+Hi,
 
-This was assigned CVE-2023-1073, which also covers a bug mentioned in
-another oss-security posting below:
+This issue got lost under the Qualys noise :(
 
-CVE-2023-1073 - Type Confusion in hid_validate_values()
-patch:
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=b12fece4c64857e5fab4290bf01b2e0317a88456
-oss-security: https://www.openwall.com/lists/oss-security/2023/01/17/3
+https://bugzilla.suse.com/show_bug.cgi?id=1035283
 
-CVE-2023-1073 - Type Confusion in bigben_probe()
-patch:
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=c7bf714f875531f227f2ef1fdcc8f4d44e7c7d9d
-oss-security: https://www.openwall.com/lists/oss-security/2023/01/17/3
+CVE-2017-10971:
+	The endianess handling for X Events assumed a fixed size of X Event structures and
+	had a specific 32 byte stack buffer for that. 
 
-CVE-2023-1073 - NULL Ptr Deref in betopff_init()
-patch:
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=3782c0d6edf658b71354a64d60aa7a296188fc90
-oss-security: https://www.openwall.com/lists/oss-security/2023/01/18/3
+	However "GenericEvents" can have any size, so if the events were sent in the wrong
+	endianess, this stack buffer could be overflowed easily.
 
-Alexander
+	So authenticated X users could overflow the stack in the X Server and with the X 
+	server usually running as root gaining root prileveges.
+
+	https://cgit.freedesktop.org/xorg/xserver/commit/?id=ba336b24052122b136486961c82deac76bbde455
+	https://cgit.freedesktop.org/xorg/xserver/commit/?id=8caed4df36b1f802b4992edcfd282cbeeec35d9d
+	https://cgit.freedesktop.org/xorg/xserver/commit/?id=215f894965df5fb0bb45b107d84524e700d2073c
+
+
+CVE-2017-10972:
+	https://cgit.freedesktop.org/xorg/xserver/commit/?id=05442de962d3dc624f79fc1a00eca3ffc5489ced
+
+	An information leak out of the X server due to an uninitialized stack area when swapping
+	event endianess.
+
+Ciao, Marcus
