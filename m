@@ -1,134 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/1
-Message-ID: <CAOfWR+Ga88eCNj-cQiBBXzM=S+xBfE5fsbgBWXMWSnN=8_4rFw@mail.gmail.com>
-Date: Fri, 20 Oct 2017 23:08:14 +0000
-From: Robert Watson <robertcwatson1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/8
+Message-ID: <20170706124603.GA4970@openwall.com>
+Date: Thu, 6 Jul 2017 14:46:03 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+Subject: Libgcrypt 1.7.8 fixes "Sliding right into disaster" RSA side-channel attack (CVE-2017-7526)
 Content-Type: text/plain; charset=utf-8
 
-Thank You for taking the time to explain the scripting issue.
+Hi,
 
-Okay, so a script adds a symlink to /etc/shadow or something else
-confidential. Unless they're root, what good does it do them? They can't
-read it.
+Last week, Libgcrypt 1.7.8 was announced as follows:
 
-On Fri, Oct 20, 2017, 14:35 Ben Tasker <ben@...tasker.co.uk> wrote:
+https://lists.gnupg.org/pipermail/gnupg-announce/2017q2/000408.html
 
-> On Thu, Oct 19, 2017 at 9:32 PM, Robert Watson <robertcwatson1@...il.com>
-> wrote:
->
-> > Scripts depend on the underlying functionality of the various utilities
-> > like rsync that they call. I'm having trouble understanding how a script
-> > could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
-> >
->
-> Whether you think it applies to the current example is obviously a
-> different debate, but the simple principle is that the script is (arguably)
-> using the underlying tool unsafely. The tool (rsync in this case) provides
-> an argument to prevent the "risky" behaviour, but the calling script isn't
-> using it, potentially opening a vector for misuse.
->
-> So if there should be a CVE, it shouldn't be against rsync (as it provides
-> the means to avoid, and in other cases you may even find the calling script
-> is overriding the "safe" behaviour) but against the calling script.
->
-> To give a fairly limited example, both of these scripts rely on the same
-> functionality, but one is riskier (albeit not from a security perspective)
-> - in neither case is the tool at risk
->
-> fname=$1
-> rm -rf "/$1"
->
-> ...
->
-> fname=$1
-> rm -rf --no-preserve-root "/$1"
->
->
-> Obviously it's quite easy for there to be more severe connotations to other
-> scripts (for example, think about some of the things you might pass
-> adduser) which may well be worthy of a CVE by nature of them effectively
-> misusing a tool.
->
-> Back on topic, I can see potential for abuse, though I'm also not convinced
-> whether it's CVE worthy.
->
->
->
-> >
-> > We are overwhelmed with more vulnerabilities than can be fixed quickly
-> > already.
-> >
-> > Are "just to be safer" type things really a wise use of our resources?
-> >
-> >
-> The problem there is setting the threshold. It's not unheard of for a "just
-> in case" fix to later have proved to have mitigated a more severe (and at
-> the time, unknown) issue. But gain, whether it needs a CVE is something
-> else.
->
->
->
->
-> > Does a proliferation of a large number of low-caliber problems make
-> > monitoring these lists more trouble than it's worth? Does it cause
-> > high-impact problems to be lost amongst low-impact ones?
->
->
-> > On Thu, Oct 19, 2017, 15:46 Seth Arnold <seth.arnold@...onical.com>
-> wrote:
-> >
-> > > On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
-> > > > Removing the ability for rsync to copy symlinks pointing to targets
-> > > outside
-> > > > the mirror tree would greatly cripple it. I need to understand how
-> the
-> > > > danger is worth the loss of this functionality.
-> > >
-> > > Note that the fix isn't modifying rsync, the fix is modifying the
-> ftpsync
-> > > script that calls rsync:
-> > >
-> > > +    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links
-> > --timeout
-> > > 3600 --stats --no-human-readable"}
-> > >
-> > >
-> > > https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=
-> > d1ca2ab2210990b6dfb664cd6776a41b71c48016
-> > >
-> > > Of course for people who run this mirroring tool as a specific user
-> > > account and set file permissions appropriately this is more or less a
-> > > no-op. But this is a useful hardening for people who run the ftpsync
-> > > command as a user with too many privileges. (I wouldn't have bothered
-> > > filing for a CVE for this change; I see it as a simple hardening
-> change.)
-> > >
-> > > This option shouldn't cripple ftpsync as a well-run repository is
-> highly
-> > > unlikely to have symlinks pointing out of the tree. A repository with
-> > > symlinks pointing out of the tree is already not a suitable rsync
-> source.
-> > >
-> > > Thanks
-> > >
-> > --
-> >
-> > Robert "DocSalvager" Watson
-> > ... trust in truth keeps hope alive
-> > www.DocSalvage.info
-> >
->
->
->
-> --
-> Ben Tasker
-> https://www.bentasker.co.uk
->
--- 
+| Noteworthy changes in version 1.7.8 (2017-06-29)  [C21/A1/R8]
+| ===================================
+| 
+|  * Bug fixes:
+| 
+|    - Mitigate a flush+reload side-channel attack on RSA secret keys
+|      dubbed "Sliding right into disaster".  For details see
+|      <https://eprint.iacr.org/2017/627>.  [CVE-2017-7526]
+| 
+| 
+| Note that this side-channel attack requires that the attacker can run
+| arbitrary software on the hardware where the private RSA key is used.
 
-Robert "DocSalvager" Watson
-... trust in truth keeps hope alive
-www.DocSalvage.info
+This affects versions of GnuPG 2 that bundle or otherwise use versions
+of Libgcrypt older than 1.7.8.
 
+In a discussion on gnupg-users, Werner Koch answered that GnuPG 1.4
+(which does not yet use the separate Libgcrypt library) is "Maybe"
+vulnerable to this attack as well, "And probably also to a lot of other
+local side channel attacks":
+
+https://lists.gnupg.org/pipermail/gnupg-users/2017-July/058598.html
+
+As referenced further in that thread, Marcus Brinkmann came up with a
+backport of the fix from Libgcrypt 1.7.8:
+
+https://dev.gnupg.org/rC8725c99ffa41778f382ca97233183bcd687bb0ce
+
+to GnuPG 1.4:
+
+https://dev.gnupg.org/D438
+
+but it's unclear whether Werner would want to merge it and release an
+update of GnuPG 1.4 or not (there's a discussion in the comments at the
+URL above).
+
+To keep the context recorded in here (in case any of the above URLs are
+gone later), here's the Libgcrypt commit, where the commit message
+helpfully quotes the paper's abstract:
+
+| Authored by gniibe on Thu, Jun 29, 4:11 AM.
+| 
+| Description
+| 
+| rsa: Add exponent blinding.
+| 
+| * cipher/rsa.c (secret_core_crt): Blind secret D with randomized
+| nonce R for mpi_powm computation.
+| 
+| The paper describing attack: https://eprint.iacr.org/2017/627
+| 
+| Sliding right into disaster: Left-to-right sliding windows leak
+| by Daniel J. Bernstein and Joachim Breitner and Daniel Genkin and
+| Leon Groot Bruinderink and Nadia Heninger and Tanja Lange and
+| Christine van Vredendaal and Yuval Yarom
+| 
+| It is well known that constant-time implementations of modular
+| exponentiation cannot use sliding windows. However, software
+| libraries such as Libgcrypt, used by GnuPG, continue to use sliding
+| windows. It is widely believed that, even if the complete pattern of
+| squarings and multiplications is observed through a side-channel
+| attack, the number of exponent bits leaked is not sufficient to
+| carry out a full key-recovery attack against RSA. Specifically,
+| 4-bit sliding windows leak only 40% of the bits, and 5-bit sliding
+| windows leak only 33% of the bits.
+| 
+| In this paper we demonstrate a complete break of RSA-1024 as
+| implemented in Libgcrypt. Our attack makes essential use of the fact
+| that Libgcrypt uses the left-to-right method for computing the
+| sliding-window expansion. We show for the first time that the
+| direction of the encoding matters: the pattern of squarings and
+| multiplications in left-to-right sliding windows leaks significantly
+| more information about exponent bits than for right-to-left. We show
+| how to incorporate this additional information into the
+| Heninger-Shacham algorithm for partial key reconstruction, and use
+| it to obtain very efficient full key recovery for RSA-1024. We also
+| provide strong evidence that the same attack works for RSA-2048 with
+| only moderately more computation.
+| 
+| Exponent blinding is a kind of workaround to add noise. Signal (leak)
+| is still there for non-constant-time implementation.
+| 
+|     Co-authored-by: Werner Koch <wk@...pg.org>
+|     Signed-off-by: NIIBE Yutaka <gniibe@...j.org>
+
+I've attached Marcus' patch for GnuPG 1.4 from D438 referenced above.
+
+Alexander
+
+View attachment "gnupg-1.4-D438.diff" of type "text/plain" (1606 bytes)
