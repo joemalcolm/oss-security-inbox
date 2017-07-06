@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["556" "Monday" "13" "July" "2015" "07:01:49" "-0700" "Xi Wang" "xi.wang@gmail.com" "<CAKU6vyZ7dDpDdT0CFk5fZYAJCVH58VYegm4oaQC1A1+Bqv-=0g@mail.gmail.com>" "15" "Re: [oss-security] How serious is undefined behavior?" nil nil nil "7" "2015071314:01:49" "[oss-security] How serious is undefined behavior?" (number mark "        xi.wang@gmai Jul 13   15/556   " thread-indent "\"Re: [oss-security] How serious is undefined behavior?\"\n") "<20150706181734.2b0288ca@pc1>" ("<20150706181734.2b0288ca@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1334" "Thursday" "6" "July" "2017" "07:28:16" "-0600" "Leonid Isaev" "leonid.isaev@jila.colorado.edu" "<20170706132816.GA3056@takahe.colorado.edu>" "25" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070613:28:16" "[oss-security] systemd fails to parse user that should run service" (number mark "        leonid.isaev Jul  6   25/1334  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>" "<20170705170556.146ce33d@jabberwock.cb.piermont.com>" "<20170705211451.GA16241@hurricane.linuxnetz.de>" "<20c62ff4-6650-b0f0-0343-fe5c0c7ce85b@slackware.com>" "<20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21728 invoked by uid 550); 13 Jul 2015 14:02:41 -0000
+Received: (qmail 7471 invoked by uid 550); 6 Jul 2017 13:34:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21707 invoked from network); 13 Jul 2015 14:02:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        bh=8kUb/IqIfVeTqLNkpIdo2m27/NzscBVt8VN6xoeb8gY=;
-        b=QMV+wTbA5hasdIxCJUW6RFSGucs4kIt3i7I+6Hgg1makt1CnNIOavdAJT69858awIA
-         6LPUOsbKofWdA6gRiPvoWY4K739MWkkgOnouoFvRVf9MadWYqjiERA4pkfSqCxShtuor
-         QS+2r1+ZTufxrYJMdEzItaPF3/2pfVpt+TKqo2SLaaoCej3meclWP0yVL23XGZYJA1UF
-         u9UTZ0wD4bhTe8gZfFLhiOO0wfMzO4WMFLjXF86Ty2Z2SyB/AL37IJQ3l37ymOxVGwW5
-         Hvvza1P0mhUlvm1uAWWDd8eF8AtPLsdv6n0FDKPwCoBi3dOxD2cVBQPAt/D9seCMVplY
-         hfMQ==
-X-Received: by 10.140.98.207 with SMTP id o73mr20792986qge.12.1436796148973;
- Mon, 13 Jul 2015 07:02:28 -0700 (PDT)
+Received: (qmail 3289 invoked from network); 6 Jul 2017 13:28:32 -0000
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.99.2 at jilau1.colorado.edu
+Message-ID: <20170706132816.GA3056@takahe.colorado.edu>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
+ <20170705085034.GA2638@pali>
+ <CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
+ <20170705170556.146ce33d@jabberwock.cb.piermont.com>
+ <20170705211451.GA16241@hurricane.linuxnetz.de>
+ <20c62ff4-6650-b0f0-0343-fe5c0c7ce85b@slackware.com>
+ <20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>
 MIME-Version: 1.0
-In-Reply-To: <20150706181734.2b0288ca@pc1>
-References: <20150706181734.2b0288ca@pc1>
-Message-ID: <CAKU6vyZ7dDpDdT0CFk5fZYAJCVH58VYegm4oaQC1A1+Bqv-=0g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 13 Jul 2015 07:01:49 -0700
-From: Xi Wang <xi.wang@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>
+User-Agent: Mutt/1.8.2 (2017-04-18)
+Date: Thu, 6 Jul 2017 07:28:16 -0600
+From: Leonid Isaev <leonid.isaev@jila.colorado.edu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How serious is undefined behavior?
+Subject: Re: [oss-security] systemd fails to parse user that should run
+ service
 To: oss-security@lists.openwall.com
 
-On Mon, Jul 6, 2015 at 9:17 AM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
-> However I wonder how practically relevant these issues are and also
-> how much focus should be given to them. Do people have good examples
-> where e.g. an invalid shift operation caused a real, severe security
-> issue?
+On Thu, Jul 06, 2017 at 01:17:55PM +0100, Simon McVittie wrote:
+> systemd units are analogous to LSB init scripts,
+> which all start as root, and drop privileges internally if they want to.
 
-One interesting case with shift (not necessarily a security issue) was:
+Hmm, no, no and once again no. SystemdD units are sold as something simple and
+transparent, and hence *associated with a software they launch*, not a given
+systemD/OS version. In contrast, init scripts are specific to a distibution
+(would you just run init scripts from Debian on a CentOS or ArchLinux?)
 
-http://blog.regehr.org/archives/767
+For example, if I maintain a backup script that drops privileges via su(1), I
+can use the wonderful systemD unit syntax, specify User=xxx and have my package
+manager install that user in post_install. The problem is that my new and shiny
+script won't work as intended on old systemD versions which silently ignore
+User= directive. This situation is far worse than a simple failure to properly
+parse User= config string that seems to so much excite ppl, as it obsoletes
+the User= directive and perhaps others too. I'm far from sysadmin culture, but
+is this called "sh*t hitting the fan"?
 
-You may also find more examples in the two papers:
+So, the lesson for all developers would be to rely on systemD features as
+LITTLE as possible and do all important privilege stuff inside their software.
+SystemD units should therefore only contain Exec{Start,Stop,Restart}=.
 
-http://pdos.csail.mit.edu/papers/ub:apsys12.pdf
-
-http://pdos.csail.mit.edu/papers/stack:sosp13.pdf
+Cheers,
+-- 
+Leonid Isaev
