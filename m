@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/08/2
-Message-ID: <20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>
-Date: Sat, 8 Jul 2017 16:11:25 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/4
+Message-ID: <1526811.hv86JBTSL3@merkaba>
+Date: Thu, 06 Jul 2017 09:03:11 +0200
+From: Martin Steigerwald <martin@...htvoll.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Hi
-
-On Wed, Jun 28, 2017 at 10:02:40PM +0200, Solar Designer wrote:
-> 6. If CVE IDs are requested, the report is valid, and you're a CNA,
-> assign those (requesting any required information from the reporter
-> first)
+Jeffrey Walton - 05.07.17, 22:12:
+> > systemd is not the one coming up with the restrictions on user names,
+> > and while some distributions are less restrictive, many do enforce the
+> > same restrictions as we do. In order to make systemd unit files
+> > portable between systems we'll hence enforce something that
+> > resembles more the universally accepted set, rather than accept the
+> > most liberal set possible.
 > 
-> 7. If the report does not mention CVE IDs (neither requests nor provides
-> them, and doesn't mention the reporter having requested them elsewhere),
-> yet the report is valid and it looks like distros will need CVE IDs, and
-> you're a CNA, ask the reporter whether they have already requested CVE
-> IDs elsewhere, then assign those if they haven't been requested
-> elsewhere
+> systemd is effectively setting policy where it has no business doing so.
 
-Speaking for Debian: Debian beeing a CNA can *help* monitoring those
-explicitly and assign where needed CVEs from the assigned pool.
+I have seen this… and the "not-a-bug" approach with Systemd upstream 
+developers quite often meanwhile. I think this arrogant "we know better than 
+you" attitude is poisonous to security… and to collaboration in the free 
+software world in general.
 
-We are already as well contributing to other tasks, and will continue
-to do so as time permits.
-
-Regards,
-Salvatore
+-- 
+Martin
