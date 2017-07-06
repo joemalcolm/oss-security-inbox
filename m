@@ -1,76 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/16
-Message-ID: <CACn5sdTLxn6uRQdZfpkrWzY4Tc+2_mLGdjG6-O_7hoUSoHNa7Q@mail.gmail.com>
-Date: Fri, 20 Jan 2017 11:55:01 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/15
+Message-ID: <20170706211024.GB9171@openwall.com>
+Date: Thu, 6 Jul 2017 23:10:24 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9584: heap use-after-free on libical
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-2017-01-20 8:26 GMT-03:00 Raphael Hertzog <hertzog@...ian.org>:
-> Hello,
+On Thu, Jul 06, 2017 at 02:52:58PM -0600, kseifried@...hat.com wrote:
+> Ah sorry I didn't realize Red Hat should probably reply to this, we
+> already do a lot of this work, we're happy to keep doing it.
 
-Hello Raphael,
+Yes, please - and let's make this more specific and more explicit - in
+other words, I'd like you to volunteer for specific tasks.
 
-I'm working with Agustín to report this issues (he is our student in
-fact), but he
-is on holidays now, so I will answer your questions.
+> I'm not
+> clear on some of the things though (e.g. the tracking progress, if there
+> isn't any then what? sometimes these things take time or new
+> complications are found).
 
->
-> On Thu, 15 Dec 2016, Agustin Mista wrote:
->> We found a heap use-after-free in a recent revision of libical (
->> f3688b444f820cecf51b1539b0856a392c0fdb0f),
->> using a specially crafted ics file. This bugs looks particularly dangerous
->> since it allows to read a big chunk of the heap memory.
->
-> I see you reported multiple bugs on github's libical issues page:
-> https://github.com/libical/libical/issues/251
-> https://github.com/libical/libical/issues/252
-> https://github.com/libical/libical/issues/253
->
-> Looking at the backtrace, it seems that #253 is the same as this one.
-> Do you confirm?
+If you're supposed to track progress and there's no visible progress for
+a while for no apparent reason, please bring this up and ask why not.
 
-Yes, it is.
+Thanks,
 
->
-> Any reason why you did not request a CVE for #251?
-
-Yes. It was already reported here:
-
-https://bugzilla.mozilla.org/show_bug.cgi?id=1275400 (CVE-2016-5824)
-
-but it was never officially reported upstream (and therefore, never fixed).
-
->
->> It is worth to mention there is a very similar bug found (CVE-2016-5824) on
->> the libical version used by
->> Thunderbird but we think is *not* the same as this one. In fact, we've
->> tested it on Thunderbird and it does *not* crash.
->>
->> The reproducer is available upon request.
->
-> #253 has a reproducer here:
-> https://github.com/libical/libical/files/627392/heap-use-after-free.ical.txt
->
-> Is this the same file?
-
-It is not the same file in fact. We found a variation of the original
-input that trigger this
-read out-of-bounds to read more than 60 bytes. This looks more serious
-than usual (maybe you can read as much as you want) .
-We had some complains in the past for making public test cases ..
-
->
-> If it's a different file, then I'd like to have access to the file but I
-> would prefer if it was just available publicly and not to me only.
-
-Feel free to make the file public if you want.
-
->
-> Cheers,
-> --
-> Raphaël Hertzog ◈ Debian Developer
->
-> Support Debian LTS: http://www.freexian.com/services/debian-lts.html
-> Learn to master Debian: http://debian-handbook.info/get/
+Alexander
