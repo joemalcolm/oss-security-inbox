@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/7
-Message-ID: <20170711064726.GA28388@suse.de>
-Date: Tue, 11 Jul 2017 08:47:26 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/1
+Message-ID: <CAH8yC8nDE3RG1yeWg3WbH1eZSJqTi9kdHfFL6Hfq_7cGZPEnDg@mail.gmail.com>
+Date: Wed, 5 Jul 2017 22:12:11 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: security@....net, kaplanlior@...il.com
-Subject: Re: Re: PHP CVE assignments: [cve-request@...re.org: Re: [scr358150] 7 PHP CVEs]
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 10, 2017 at 02:03:22PM -0700, Stanislav Malyshev wrote:
-> Hi!
-> 
-> 
-> > Raw form of PHP CVE assignments.
-> > 
-> > If I made a mistake feel free to update via webform or mail me so I can do.
-> 
-> Looks like CVE-2017-11145 and CVE-2017-11146 are actually exactly the
-> same bug.
+On Sun, Jul 2, 2017 at 5:08 AM, Daniel Skowroński <daniel@...nf.net> wrote:
+> Just wanted to bring attention to issue with systemd not doing what is expected when parsing User that should run service.
+> When it fails to parse string starting with digit it fails back to root causing obvious threat to security.
+>
+> See discussion with developer on github: https://github.com/systemd/systemd/issues/6237
 
-I filed a duplicate merge request with Mitre. I am not sure how this could have happened, 
-I filed it only once.
+Point 1 from https://github.com/systemd/systemd/issues/6237#issuecomment-312479534
+seems to be a problem:
 
-Ciao, Marcus
+> systemd is not the one coming up with the restrictions on user names,
+> and while some distributions are less restrictive, many do enforce the
+> same restrictions as we do. In order to make systemd unit files
+> portable between systems we'll hence enforce something that
+> resembles more the universally accepted set, rather than accept the
+> most liberal set possible.
+
+systemd is effectively setting policy where it has no business doing so.
+
+Jeff
