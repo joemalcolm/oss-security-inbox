@@ -1,29 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/3
-Message-ID: <CAB8XdGBgipTU4-ajO0j8Khi67kziTcTqwCQbCcpRicGLd81dNA@mail.gmail.com>
-Date: Tue, 14 Nov 2017 13:32:50 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: "users@....apache.org" <users@....apache.org>, "dev@....apache.org" <dev@....apache.org>,  Apache Security Response Team <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com
-Cc: "Wang, Kevin X. (NSB - CN/Hangzhou)" <kevin.x.wang@...ia-sbell.com>
-Subject: New security advisory CVE-2017-12624 released for Apache CXF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/5
+Message-ID: <CABMkiz61DeoXuSYd5yRBYRXmVbAenFduHNJAWC0ATijPHQ=xQg@mail.gmail.com>
+Date: Thu, 6 Jul 2017 09:57:25 +0100
+From: Ben Tasker <ben@...tasker.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache CXF, that is fixed in
-the recent 3.2.1 and 3.1.14 releases:
+On Wed, Jul 5, 2017 at 10:58 PM, Simon McVittie <smcv@...ian.org> wrote:
+>
+> Not every bug is a security vulnerability (not even the really bad
+> ones). At the moment, there is a strong correlation between security
+> vulnerabilities with CVE IDs, and issues for which there is consensus
+> among relevant upstream and downstream developers that the issue is in
+> fact a vulnerability for which a prompt security update is necessary. I'm
+> becoming concerned that if the working definition of a vulnerability
+> gets stretched too far towards things that are "just a bug", it will
+> reduce the perceived importance of fixing CVEs promptly, harming the
+> overall level of security in software.
+>
+>
+Whilst I agree with you in the general sense on this, I'm not sure it's
+applicable to this particular issue.
 
-CVE-2017-12624: Apache CXF web services that process attachments are
-vulnerable to Denial of Service (DoS) attacks
+If this issue is triggered, then a process will run with substantially
+elevated privileges compared to those that would be expected based on a
+review of the unit file (or indeed, the installing package).
 
-The full text of the advisory is available here:
+For some distro's, it might stand out immediately as a mistake (as they
+also prohibit usernames beginning with a digit), but for others (EL7 is
+referenced in the Github issue) it won't, because the username is
+considered valid.
 
-http://cxf.apache.org/security-advisories.data/CVE-2017-12624.txt.asc
+So, as a result, you've potentially got a daemon listening for connections
+from the outside world, whilst running as root (despite the fact you're
+expecting it to run as an unprivileged user). If someone can convince that
+daemon to run arbitrary code, it does so with superuser privileges.
 
-Colm.
+IMHO the discussion on how that unit file makes it onto the system in the
+first place is an irrelevant distraction.
+
+Mistakes happen, whether that's a package reviewer missing the connotations
+of the *valid* username in the unit file, or some eejit leaving a unit file
+world writeable (I've seen kernel modules with 0777 on public facing
+production systems in the past). There is, of course, all kinds of other
+nastiness you could do in the case of the latter, but the issue in SystemD
+contributes a nice subtle means to gain root privileges without changing
+anything too much (reducing the risk of subsequent detection).
+
+It may depend on additional prior mistakes, but there's a lot you could
+potentially do with this, and unless you know to look for it, it's not
+going to be particularly easy to detect. Assuming it's safe (for a given
+measure of) because it needs other mistakes to happen, is, at best, unwise.
+
+So personally, I'd argue that this is more than "just a bug" as there *are*
+real-world security connotations to it, and issuing CVE's for issues that
+require something else to be exploited first isn't a new concept.
+
+
+
+> On Wed, 05 Jul 2017 at 13:27:17 -0700, Alan Coopersmith wrote:
+> > Honestly, given the level of flaming and trolling that happens on issues
+> > like this, locking the report is the only sane option I can see once
+> > everyone started piling on.   Forcing FOSS maintainers to accept infinite
+> > amounts of shitposting is a horrible way to reduce security by burning
+> > out all FOSS maintainers quickly and leaving software abandoned.
+>
+> I have little to add to this, but I couldn't resist a "me too" here,
+> because I think Alan's point is very important. Maintainers can't be
+> expected to behave in a professional and effective way if their working
+> environment is consistently hostile.
+>
+>
++1
+
+And in their defence, I would add that SystemD, for various reasons, does
+attract a lot of vitriol. I'm sure a good chunk of it is perceived as
+well-deserved by those directing it, but the knock on effect is that other
+issues wind up getting locked far earlier than they perhaps should (IMO).
+
 
 
 -- 
-Colm O hEigeartaigh
-
-Talend Community Coder
-http://coders.talend.com
+Ben Tasker
+https://www.bentasker.co.uk
 
