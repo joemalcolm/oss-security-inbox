@@ -1,50 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/6
-Message-ID: <ea48caae501a4f49b5c764f51989aecd@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 03:46:44 -0500
-From: <cve-assign@...re.org>
-To: <alan.coopersmith@...cle.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: [tigervnc-announce] TigerVNC 1.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/11
+Message-ID: <20170706192753.GA9945@takahe.colorado.edu>
+Date: Thu, 6 Jul 2017 13:27:53 -0600
+From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
+To: oss-security@...ts.openwall.com
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Jul 06, 2017 at 03:02:07PM +0100, Simon McVittie wrote:
+> > The problem is that my new and shiny
+> > script won't work as intended on old systemD versions which silently ignore
+> > User= directive.
+> 
+> I am not aware of any such version existing. The 2010 commit
+> "first attempt at proper service/socket logic", which was 6 months before
+> the release of systemd version 1 and was the first commit to introduce
+> ExecStart, also introduced User.
 
-> https://github.com/TigerVNC/tigervnc/commit/18c020124ff1b2441f714da2017f63dba50720ba
-> https://github.com/TigerVNC/tigervnc/pull/399
-> https://github.com/TigerVNC/tigervnc/releases/tag/v1.7.1
+OK, but then there is no excuse to silently ignore any kind of error in
+User=. If systemd can not start unit as a specified user, it must fail it, just
+like ExecStart: if the command specified there is not found, it doesn't start
+a random shell or a web server, right?.
 
-> a memory overflow issue
-> via the RRE decoder. A malicious server could possibly use this issue to take
-> control of the TigerVNC viewer.
+I thought the current behavior of ignoring some syntax "mistakes" was put in
+place by design because units have to be backwards copatible with older systemd
+versions.
 
->> Fix buffer overflow in ModifiablePixelBuffer::fillRect.
-
->> It can be triggered by RRE message with subrectangle out of framebuffer
->> boundaries.
-
-Use CVE-2017-5581.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYiGPRAAoJEHb/MwWLVhi274EP/0qCORqMxPgDJAXIuqgpAj0L
-G6e5HtbqrxbWITMMCKtA4SVuoRO+vVBd4wLB9DvnTHIwkrXzZQVSWqiEfGpgEoIX
-m5Chyh+uBcrsmk5tRy9DCaKTJFHWev4NRQA115DfufdHNaHUAuaJbODQwf4LRv1C
-oNQWbzR/eyPix+lX9pRlu8uUmm7gZqPZJYxS7kCfmRk07N1LENDCOz5U+MexyY52
-BktCV0CZ4zquvzHJTDd13OH3mpPHOrdTeyS1g7OfVe+Plk0ot4UooRCpSgGK53Ur
-+/p3Ms0lSf8fGJ8efghjxEZchmRdP/6ao1v6TawKuYKRfYedxB6dnfQQfdy9XIfX
-t5enoEkl0+FHx7FjjQoJFKEq/mW7tkr/5Rl1vdcNpSch3GlwR68hCISrd5EEYFCH
-NC2q3ICrfeYDw9Hx1EEwioA99Rh3mVfa4E8p5r6evzhn3ZLQDg9fbRooX4p7GZEi
-uEMGRSciVcYwq6L2rnKVukC1JKTxT7ZnYRbYKqz4zwjOA46MKK7VYkoyLfZq6LWS
-8JxHyajn7J5nDSa/USAYLEtgK3Ijo42MYfpErogxmEcEZNWyNv4NIbzMRCn2gk7l
-y5EMlp/ITscPeoptLGzIXmtvGKFl/+VU1tpMzRnVofEkLU0Jf8Nw/gsjL5qz5Z/G
-469D7HNsmKu/RHofEa6p
-=7pz8
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Leonid Isaev
