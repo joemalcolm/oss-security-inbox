@@ -1,37 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/22
-Message-ID: <20170202131156.GB3585@f195.suse.de>
-Date: Thu, 2 Feb 2017 14:11:56 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/7
+Message-ID: <20170706121755.nhem2vlrtsvzr22g@perpetual.pseudorandom.co.uk>
+Date: Thu, 6 Jul 2017 13:17:55 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request tigervnc: vnc server can crash when TLS handshake terminates early
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Wed, 05 Jul 2017 at 17:26:47 -0500, Patrick J. Volkerding wrote:
+> On 07/05/2017 04:14 PM, Robert Scheck wrote:
+> > +1 for both, the CVE and that this is a problem. The service should not be
+> > started with more (!) permissions simply if parsing username fails.
+> 
+> One would think that without any User= line specified, defaulting to
+> nobody:nogroup would be more sane than defaulting to root. Since the
+> User= mechanism exists, if you want something to run as root, you should
+> need to ask for it.
 
-the Xvnc server from tigervnc can crash when a client terminates a TLS
-connection early. This is due to invalid initialization/deinitialization
-order of the GnuTLS library.
+System services running as root are the common case: it's extremely
+common for a system service to either run as root all the time (e.g.
+BlueZ, ConnMan, NetworkManager), or start as root, do some privileged
+setup and drop privileges (e.g. dbus-daemon --system boosts its own file
+descriptor rlimit to mitigate denial of service attacks, before dropping
+privileges to a non-root user with no capabilities except possibly
+CAP_AUDIT_WRITE). systemd units are analogous to LSB init scripts,
+which all start as root, and drop privileges internally if they want to.
 
-Upstream commit:
+Forcing User= to be explicitly given in every unit is certainly a design
+that the systemd developers could have chosen (dbus-daemon --system
+does make specifying a User compulsory in activatable system services'
+.service files, and will refuse to start the service without it). However,
+they didn't, and if they went back on that decision now, it would be a
+major compatibility break. You could call that a denial of service if
+you want to put it in more security-ish terms? :-)
 
-https://github.com/TigerVNC/tigervnc/commit/8aa4bc53206c2430bbf0c8f4b642f59a379ee649
+Technically, I think the default is "don't change uid" rather than
+"change to root", although the practical effect is the same for pid
+1. systemd is also used as a per-user service manager, where User= would
+be inappropriate (and not work), and every service runs as the same uid
+as the `systemd --user` instance itself.
 
-Reference:
+Dropping privileges to nobody:nogroup is inappropriate, because services
+running as nobody are not protected from other services running as nobody.
+If a service does not need special privileges, then it should run as a
+system user that is only used by that service.
 
-https://bugzilla.suse.com/show_bug.cgi?id=1023012
-
-This issue was reported/found by Ruediger Meier, Michal Srb (SUSE
-Linux).
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-
-SUSE Linux GmbH 
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+    S
