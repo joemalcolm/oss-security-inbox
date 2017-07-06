@@ -1,39 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/17/4
-Message-ID: <1327005831.21431439.1508276673309.JavaMail.zimbra@redhat.com>
-Date: Tue, 17 Oct 2017 17:44:33 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/18
+Message-ID: <4674075.e61U45ziGm@merkaba>
+Date: Fri, 07 Jul 2017 00:34:01 +0200
+From: Martin Steigerwald <martin@...htvoll.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Hello, oss-security@,
+Simon McVittie - 06.07.17, 22:12:
+> In general the same is true for the *values* of directives: systemd needs
+> to choose something to do about known directives with values that it
+> cannot understand, and in general they are ignored with a warning on
+> the assumption that the new value is something that might have been
+> understood by a newer version of systemd. That isn't appropriate for
+> all directives, hence <https://github.com/systemd/systemd/pull/6300>.
 
-If somebody could help me a bit with this CVE? Could you please run a reproducer
-from (it does only a number of disk reads and allocates a memory):
+Finally. Thanks.
 
-https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1495887.html
+Now: Instead of closing the original issue as *not a bug*, it would have been 
+an approbiate reaction to fix the issue and then close the bug. This is what 
+upsets me most: Upstream developer behavior regarding the original github 
+issue was inapprobiate.
 
-and check if the issue reproduces on your system? The system should have a scsi
-disk, so for a virtual machine a virtio disk (/dev/vda) won't work, but a virtual
-scsi disk (/dev/sda) should.
+Taking the issue seriously from the beginning would additionally have avoided 
+all of the discussion here and elsewhere. What triggered the discussion was 
+that upstream developers basically explained "this is not a bug, go away" and 
+this… in my perception in an arrogant "we know better than you tone".
 
-Please, check a value of 'Active(anon)' in /proc/meminfo before and after running
-a reproducer, it should jump up for 40Mb and should not decrease, like this:
+My hope is that some day the upstream developers of Systemd who handled the 
+original github issue the way they did, wake up… and reconsider whether their 
+behavior is approbiate and if not… change it. Cause from what I saw in the 
+last years, there is a pattern to handle bugs by quickly closing them as not a 
+bug. A pattern that even Linus himself criticized… rightfully so… in clear 
+words.
 
-(as root)# grep anon /proc/meminfo ; ./sgio-leak /dev/sda ; grep anon /proc/meminfo
-Active(anon):      39156 kB
-Inactive(anon):     8368 kB
-Active(anon):      79268 kB
-Inactive(anon):     8368 kB
-(as root)# grep anon /proc/meminfo ; ./sgio-leak /dev/sda ; grep anon /proc/meminfo
-Active(anon):      79268 kB
-Inactive(anon):     8368 kB
-Active(anon):     119156 kB
-Inactive(anon):     8368 kB
+There is a social, a behavorial issue here… which IMHO is even more important 
+than the technical one.
 
-If the issue in not reproduced, 'Active(anon)' should jump up shortly but return to
-the previous before-the-run value on an idle system.
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Thank you.
+-- 
+Martin
