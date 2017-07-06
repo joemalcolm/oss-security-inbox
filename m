@@ -1,20 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/6
-Message-ID: <20170215174746.867@usenet.piggo.com>
-Date: Wed, 15 Feb 2017 16:48:01 +0000 (UTC)
-From: Sébastien Delafond <seb@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XXE in Openpyxl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/6
+Message-ID: <20170706113336.GI5923@suse.de>
+Date: Thu, 6 Jul 2017 13:33:36 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: X.Org X Server stack overflow and information leak
 Content-Type: text/plain; charset=utf-8
 
-On 2017-02-14, Sébastien Delafond <seb@...ian.org> wrote:
-> @MITRE, can you assign one directly, since this request pre-dates the
-> requirement of going through the web form, or should I resubmit there
-> anyway ?
+Hi,
 
-This was assigned CVE-2017-5992.
+This issue got lost under the Qualys noise :(
 
-Cheers,
+https://bugzilla.suse.com/show_bug.cgi?id=1035283
 
---Seb
+CVE-2017-10971:
+	The endianess handling for X Events assumed a fixed size of X Event structures and
+	had a specific 32 byte stack buffer for that. 
 
+	However "GenericEvents" can have any size, so if the events were sent in the wrong
+	endianess, this stack buffer could be overflowed easily.
+
+	So authenticated X users could overflow the stack in the X Server and with the X 
+	server usually running as root gaining root prileveges.
+
+	https://cgit.freedesktop.org/xorg/xserver/commit/?id=ba336b24052122b136486961c82deac76bbde455
+	https://cgit.freedesktop.org/xorg/xserver/commit/?id=8caed4df36b1f802b4992edcfd282cbeeec35d9d
+	https://cgit.freedesktop.org/xorg/xserver/commit/?id=215f894965df5fb0bb45b107d84524e700d2073c
+
+
+CVE-2017-10972:
+	https://cgit.freedesktop.org/xorg/xserver/commit/?id=05442de962d3dc624f79fc1a00eca3ffc5489ced
+
+	An information leak out of the X server due to an uninitialized stack area when swapping
+	event endianess.
+
+Ciao, Marcus
