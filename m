@@ -1,45 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/16/5
-Message-ID: <KL1PR0201MB211979C0EF10B9A12D9B7D6BB7820@KL1PR0201MB2119.apcprd02.prod.outlook.com>
-Date: Wed, 16 Aug 2017 13:43:59 +0000
-From: Wen Bin Kong <kongwenbin@...e.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2017-12882, CVE-2017-12881: Stored XSS and CSRF on Spring Batch Admin before 1.3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/16
+Message-ID: <20170706211258.gkd5rhnsononht6f@perpetual.pseudorandom.co.uk>
+Date: Thu, 6 Jul 2017 22:12:58 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, 06 Jul 2017 at 13:27:53 -0600, Leonid Isaev wrote:
+> On Thu, Jul 06, 2017 at 03:02:07PM +0100, Simon McVittie wrote:
+> > > The problem is that my new and shiny
+> > > script won't work as intended on old systemD versions which silently ignore
+> > > User= directive.
+> > 
+> > I am not aware of any such version existing. The 2010 commit
+> > "first attempt at proper service/socket logic", which was 6 months before
+> > the release of systemd version 1 and was the first commit to introduce
+> > ExecStart, also introduced User.
+> 
+> OK, but then there is no excuse to silently ignore any kind of error in
+> User=. If systemd can not start unit as a specified user, it must fail it, just
+> like ExecStart: if the command specified there is not found
 
-I found the following vulnerabilities on Spring Batch Admin, below are the CVE ID for reference:
+I agree, and this was already done for usernames that were parsed as
+syntactically valid (User=whatever on a system where there is no 'whatever'
+user). The issue here was a combination of two things:
 
-* CVE-2017-12881 - Cross-site request forgery (CSRF) vulnerability in the Spring Batch Admin before 1.3.0 allows remote attackers to hijack the authentication of unspecified victims and submit arbitrary requests, such as exploiting the file upload vulnerability
+* Usernames that were considered to be syntactically invalid went
+  through the error-handling code path for unknown configuration items
+  (ignored on the assumption that they are some future extension point,
+  rather than causing failure). https://github.com/systemd/systemd/pull/6300
+  has now been proposed to change this, for User and a few other key
+  directives.  This is basically Felipe's suggestion from the systemd-devel
+  thread.
 
-* CVE-2017-12882 - Stored Cross-site scripting (XSS) vulnerability in Spring Batch Admin before 1.3.0 allows remote authenticated users to inject arbitrary JavaScript or HTML via the file upload functionality
+* What can be in a valid username is Unix folklore rather than a standard
+  (POSIX defines a subset of usernames that are portable, but does not
+  forbid systems from additionally accepting non-portable usernames, and
+  in practice they do), and systemd's idea of what is a syntactically
+  valid username accepts considerably fewer usernames than common
+  useradd implementations (indeed it doesn't accept all POSIX portable
+  user names either).
 
---------------------------------
-Application Description
---------------------------------
-Spring Batch Admin provides a web-based user interface that features an admin console for Spring Batch applications and systems. It is an open-source project from Spring. 
+User="syntax error!" or User=0day (which are treated as equivalently
+invalid, and go through the same code paths) were never "silently
+ignored": they were ignored rather noisily, with multiple log messages
+every time the unit in question was started.
 
---------------------------------
-Vulnerable Payload
---------------------------------
-/files?path=<script>alert(42)</script>
+> I thought the current behavior of ignoring some syntax "mistakes" was put in
+> place by design because units have to be backwards copatible with older systemd
+> versions.
 
---------------------------------
-Mitigation / Recommendation
---------------------------------
-Understand that no patches will be published as product is going to EOL soon. The recommendation given by the vendor is to move off Spring Batch Admin onto Spring Cloud Data Flow going forward. I (discoverer) seconded the recommendation as it will no longer be supported, but if your organisation still require to use this application internally for some reason and does not want to deploy another product to replace it, you can consider entirely removing the file.php page if your team does not require to use it to upload new configurations often. Or implement a fix to sanitise the user controlled 'path' parameter value on the file.php page. 
+Yes, it is: if some future systemd version adds a new directive,
+perhaps AnonymizeMachineID or StackSizeMax or something,
+it is a deliberate design choice that current systemd versions will
+log a warning and ignore it. This lets upstreams be more aggressive
+about enabling new features (many of which are non-critical but
+good-to-have security hardening for services), without necessarily
+having to wait for the systemd version that introduced those features to
+become available in the oldest, most stable or most "enterprise"
+distribution that they target.
 
---------------------------------
-Discovery Timeline (key events)
---------------------------------
-March 2017 - initial report submitted to Spring team
-May 2017 - Spring team shared that the stored xss issue might be fixed indirectly when fixing another issue on directory traversal, thus pending a full audit to confirm this. The CSRF issue is confirmed but it is low risk so they are still determining if they are going to fix it. 
-June 2017 - Spring team shared that the open source support policy for Spring Batch Admin states that Spring supports minor versions for 12 months and major version for 3 years. The last minor release of Spring Batch Admin (1.3.0) was in 2014 with one patch release since. As a result, the team is reluctant to commit to something as intensive as a full audit for this application.
-July 2017 - Spring team shared that they do not plan to verify or fix the reported issues because they were planning to announce End-Of-Life (EOL) for this project soon. Also, they shared that "It is our recommendation to move off of Spring Batch Admin onto Spring Cloud Data Flow going forward".
+This is a trade-off, and both possibilities (reject unknown directives,
+or warn and ignore) are plausible design choices: which one is better is
+a matter of opinion. The systemd developers chose to treat the advantages
+of the warn-and-ignore approach as larger than its disadvantages.
 
-Thank you.
+In general the same is true for the *values* of directives: systemd needs
+to choose something to do about known directives with values that it
+cannot understand, and in general they are ignored with a warning on
+the assumption that the new value is something that might have been
+understood by a newer version of systemd. That isn't appropriate for
+all directives, hence <https://github.com/systemd/systemd/pull/6300>.
 
-Best regards,
-Wen Bin
-
+    S
