@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2192" "Thursday" "15" "June" "2017" "08:21:29" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0mQugCFyHqxzSVyc+2NUQcL5f42xXu9w=NQ5XvJHU75w@mail.gmail.com>" "64" "Re: [oss-security] Re: MySQL - use-after-free after mysql_stmt_close()" "^Cc:" nil nil "6" "2017061514:21:29" "[oss-security] Re: MySQL - use-after-free after mysql_stmt_close()" (number mark "        kseifried@re Jun 15   64/2192  " thread-indent "\"Re: [oss-security] Re: MySQL - use-after-free after mysql_stmt_close()\"\n") "<1497534642.3053.3.camel@redhat.com>" ("<201706082349.03355@pali>" "<201706122347.54536@pali>" "<1497534642.3053.3.camel@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5590" "Thursday" "6" "July" "2017" "14:46:03" "+0200" "Solar Designer" "solar@openwall.com" "<20170706124603.GA4970@openwall.com>" "160" "[oss-security] Libgcrypt 1.7.8 fixes \"Sliding right into disaster\" RSA side-channel attack (CVE-2017-7526)" nil nil nil "7" "2017070612:46:03" "[oss-security] Libgcrypt 1.7.8 fixes \"Sliding right into disaster\" RSA side-channel attack (CVE-2017-7526)" (number mark "U       solar@openwa Jul  6  160/5590  " thread-indent "\"[oss-security] Libgcrypt 1.7.8 fixes \"Sliding right into disaster\" RSA side-channel attack (CVE-2017-7526)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5479 invoked by uid 550); 15 Jun 2017 14:21:43 -0000
+Received: (qmail 20302 invoked by uid 550); 6 Jul 2017 12:49:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +11,175 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5458 invoked from network); 15 Jun 2017 14:21:42 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DWfQ1GTXBXpCi/L8ZOSCm7U66j54Ez9NVr1Gixwuexk=;
-        b=SMIqCbvzWrRDyhYWEGFnioP7LRmJwJ36HB1MesEpmq2ZQ5/IbG1OLOGu4XsuxJihh1
-         FXZ3Es6Sz+rFlE7E94m9OPpuTr9XTtiX9IkbXxnSdEJfIDtA7vFPeOnJvqI9Lh8Qq2/p
-         aRlofvb4Ujjezdq+Drr4hjpsBTw7+TbWH7V/2lfCGLl1F5PokGaX95j+vrAO98Io2Lmx
-         BmETBNh8BCdsHr+Bpk7AQZzmoc3wsEVwWQNJwxyCWcu0xg4/7fnL21Y+OzwK6RRYb4Qm
-         qOr6iEL+9lKZmDIRGweD8JwOO13IezDSaEMnYaasR8j1PCHtbAG8VZF1yDPvEADlDi3s
-         AZHw==
-X-Gm-Message-State: AKS2vOxAOksuFKU43NSWGH4G6TF0xMfjMvF0YMejsm2gP2GY+QI2eK+d
-	7EDAK/aNJSoQfeLVRFcVdIeasIE0A3rqldg=
-X-Received: by 10.157.28.134 with SMTP id l6mr3082031ota.87.1497536490147;
- Thu, 15 Jun 2017 07:21:30 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <1497534642.3053.3.camel@redhat.com>
-References: <201706082349.03355@pali> <201706122347.54536@pali> <1497534642.3053.3.camel@redhat.com>
-Message-ID: <CANO=Ty0mQugCFyHqxzSVyc+2NUQcL5f42xXu9w=NQ5XvJHU75w@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="f4030435c9b08910e00552006297"
-Cc: pali.rohar@gmail.com
-Date: Thu, 15 Jun 2017 08:21:29 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: MySQL - use-after-free after mysql_stmt_close()
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 18126 invoked from network); 6 Jul 2017 12:46:21 -0000
+Date: Thu, 6 Jul 2017 14:46:03 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20170706124603.GA4970@openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="fUYQa+Pmc3FrFX/N"
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Libgcrypt 1.7.8 fixes "Sliding right into disaster" RSA side-channel attack (CVE-2017-7526)
 
---f4030435c9b08910e00552006297
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--fUYQa+Pmc3FrFX/N
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-This does bring up an old question:
+Hi,
 
-Should we assign CVEs for code examples/documentation? E.g. We assign CVEs
-for code shipped to people in digital form. Why not assign CVEs for code in
-documentation or commonly used examples? We can go with the rational that
-CVEs get assigned to the affected code bases (e.g. when someone implements
-that documentation/code), but it might also be good to educate the
-community about bad examples/documentation/etc.
+Last week, Libgcrypt 1.7.8 was announced as follows:
 
-My thinking is:
+https://lists.gnupg.org/pipermail/gnupg-announce/2017q2/000408.html
 
-1) Official documentation that says "do this [insecure thing]" should
-probably get a CVE (e.g. "turn off all the encryption to make it work more
-easily"). This should probably get a CVE, especially as it results in
-operational changes which won't get a CVE (since it's not in code that
-"ships", it's just on the end of whoever is using it).
+| Noteworthy changes in version 1.7.8 (2017-06-29)  [C21/A1/R8]
+| ===================================
+| 
+|  * Bug fixes:
+| 
+|    - Mitigate a flush+reload side-channel attack on RSA secret keys
+|      dubbed "Sliding right into disaster".  For details see
+|      <https://eprint.iacr.org/2017/627>.  [CVE-2017-7526]
+| 
+| 
+| Note that this side-channel attack requires that the attacker can run
+| arbitrary software on the hardware where the private RSA key is used.
 
-2) Official code examples, as above, actual implementations get CVEs, it
-might be useful to raise awareness that the example is bad.
+This affects versions of GnuPG 2 that bundle or otherwise use versions
+of Libgcrypt older than 1.7.8.
 
-3) Unofficial but commonly used documentation and code examples, I guess
-the best example here is stackoverflow and friends?
+In a discussion on gnupg-users, Werner Koch answered that GnuPG 1.4
+(which does not yet use the separate Libgcrypt library) is "Maybe"
+vulnerable to this attack as well, "And probably also to a lot of other
+local side channel attacks":
 
-Thoughts/comments (feel free to reply privately if you don't want to be
-public)? I'd like to collect what people think and then present it to the
-CVE board later (this has been on my long term todo list).
+https://lists.gnupg.org/pipermail/gnupg-users/2017-July/058598.html
+
+As referenced further in that thread, Marcus Brinkmann came up with a
+backport of the fix from Libgcrypt 1.7.8:
+
+https://dev.gnupg.org/rC8725c99ffa41778f382ca97233183bcd687bb0ce
+
+to GnuPG 1.4:
+
+https://dev.gnupg.org/D438
+
+but it's unclear whether Werner would want to merge it and release an
+update of GnuPG 1.4 or not (there's a discussion in the comments at the
+URL above).
+
+To keep the context recorded in here (in case any of the above URLs are
+gone later), here's the Libgcrypt commit, where the commit message
+helpfully quotes the paper's abstract:
+
+| Authored by gniibe on Thu, Jun 29, 4:11 AM.
+| 
+| Description
+| 
+| rsa: Add exponent blinding.
+| 
+| * cipher/rsa.c (secret_core_crt): Blind secret D with randomized
+| nonce R for mpi_powm computation.
+| 
+| The paper describing attack: https://eprint.iacr.org/2017/627
+| 
+| Sliding right into disaster: Left-to-right sliding windows leak
+| by Daniel J. Bernstein and Joachim Breitner and Daniel Genkin and
+| Leon Groot Bruinderink and Nadia Heninger and Tanja Lange and
+| Christine van Vredendaal and Yuval Yarom
+| 
+| It is well known that constant-time implementations of modular
+| exponentiation cannot use sliding windows. However, software
+| libraries such as Libgcrypt, used by GnuPG, continue to use sliding
+| windows. It is widely believed that, even if the complete pattern of
+| squarings and multiplications is observed through a side-channel
+| attack, the number of exponent bits leaked is not sufficient to
+| carry out a full key-recovery attack against RSA. Specifically,
+| 4-bit sliding windows leak only 40% of the bits, and 5-bit sliding
+| windows leak only 33% of the bits.
+| 
+| In this paper we demonstrate a complete break of RSA-1024 as
+| implemented in Libgcrypt. Our attack makes essential use of the fact
+| that Libgcrypt uses the left-to-right method for computing the
+| sliding-window expansion. We show for the first time that the
+| direction of the encoding matters: the pattern of squarings and
+| multiplications in left-to-right sliding windows leaks significantly
+| more information about exponent bits than for right-to-left. We show
+| how to incorporate this additional information into the
+| Heninger-Shacham algorithm for partial key reconstruction, and use
+| it to obtain very efficient full key recovery for RSA-1024. We also
+| provide strong evidence that the same attack works for RSA-2048 with
+| only moderately more computation.
+| 
+| Exponent blinding is a kind of workaround to add noise. Signal (leak)
+| is still there for non-constant-time implementation.
+| 
+|     Co-authored-by: Werner Koch <wk@gnupg.org>
+|     Signed-off-by: NIIBE Yutaka <gniibe@fsij.org>
+
+I've attached Marcus' patch for GnuPG 1.4 from D438 referenced above.
+
+Alexander
+
+--fUYQa+Pmc3FrFX/N
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="gnupg-1.4-D438.diff"
+
+diff --git a/cipher/rsa.c b/cipher/rsa.c
+--- a/cipher/rsa.c
++++ b/cipher/rsa.c
+@@ -29,6 +29,7 @@
+ #include <string.h>
+ #include "util.h"
+ #include "mpi.h"
++#include "../mpi/mpi-internal.h"
+ #include "cipher.h"
+ #include "rsa.h"
+ 
+@@ -325,14 +326,38 @@
+ # endif /* USE_BLINDING */
+ 
+     /* RSA secret operation:  */
+-    /* m1 = c ^ (d mod (p-1)) mod p */
++    MPI D_blind = mpi_alloc_secure (nlimbs);
++    MPI rr;
++    unsigned int rr_nbits;
++
++    rr_nbits = mpi_get_nbits (skey->p) / 4;
++    if (rr_nbits < 96)
++      rr_nbits = 96;
++    rr = mpi_alloc_secure ( (rr_nbits + BITS_PER_MPI_LIMB-1)/BITS_PER_MPI_LIMB );
++
++    /* d_blind = (d mod (p-1)) + (p-1) * r            */
++    /* m1 = c ^ d_blind mod p */
++    randomize_mpi (rr, rr_nbits, 0);
++    mpi_set_highbit (rr, rr_nbits - 1);
+     mpi_sub_ui( h, skey->p, 1  );
++    mpi_mul ( D_blind, h, rr );
+     mpi_fdiv_r( h, skey->d, h );
+-    mpi_powm( m1, input, h, skey->p );
+-    /* m2 = c ^ (d mod (q-1)) mod q */
++    mpi_add ( D_blind, D_blind, h );
++    mpi_powm ( m1, input, D_blind, skey->p );
++
++    /* d_blind = (d mod (q-1)) + (q-1) * r            */
++    /* m2 = c ^ d_blind mod q */
++    randomize_mpi (rr, rr_nbits, 0);
++    mpi_set_highbit (rr, rr_nbits - 1);
+     mpi_sub_ui( h, skey->q, 1  );
++    mpi_mul ( D_blind, h, rr );
+     mpi_fdiv_r( h, skey->d, h );
+-    mpi_powm( m2, input, h, skey->q );
++    mpi_add ( D_blind, D_blind, h );
++    mpi_powm ( m2, input, D_blind, skey->q );
++
++    mpi_free ( rr );
++    mpi_free ( D_blind );
++
+     /* h = u * ( m2 - m1 ) mod q */
+     mpi_sub( h, m2, m1 );
+     if ( mpi_is_neg( h ) )
 
 
-On Thu, Jun 15, 2017 at 7:50 AM, Adam Maris <amaris@redhat.com> wrote:
-
-> On Mon, 2017-06-12 at 23:47 +0200, Pali Roh=C3=A1r wrote:
-> > Hello!
-> >
-> > Any idea how to handle this particular problem?
-> >
-> >
->
-> Hi!
->
-> Given that Oracle (silently) updated the vulnerable example in their
-> documentation, this likely indicates the way to handle this -
-> applications that copied the vulnerable example needs to be fixed and
-> CVEs will be assigned per application.
->
-> Best Regards,
->
-> --
-> Adam Mari=C5=A1, Red Hat Product Security
-> 1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
->
-
-
-
---=20
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---f4030435c9b08910e00552006297--
+--fUYQa+Pmc3FrFX/N--
