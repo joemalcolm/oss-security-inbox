@@ -1,52 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/20
-Message-ID: <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
-Date: Tue, 30 May 2017 09:36:22 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/17
+Message-ID: <CANO=Ty1yT4APP6kfiNA5=_bPu0LR7r-Vn624vCAK-3jjh1K27Q@mail.gmail.com>
+Date: Thu, 6 Jul 2017 15:49:39 -0600
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Designer, Solar" <solar@...nwall.com>
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+To: oss-security <oss-security@...ts.openwall.com>, daniel@...nf.net,  lennart@...ttering.net
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 30, 2017 at 9:20 AM, Daniel Micay <danielmicay@...il.com> wrote:
+On Sun, Jul 2, 2017 at 3:08 AM, Daniel Skowroński <daniel@...nf.net> wrote:
 
-> That's not what secure/verified boot means to everyone else, and
-> there's nothing in mainline with those properties. To everyone else,
-> it's not an arbitrary bureaucratic/marketing feature. It's
-> verification of the whole base OS... i.e. Android, Android Things
-> (Brillo), ChromeOS, iOS and sane embedded Linux systems. Likely
-> Windows on mobile devices too, and I really doubt that Microsoft
-> doesn't plan on verifying the userspace OS if they don't already.
+> Hi all,
+>
+> Just wanted to bring attention to issue with systemd not doing what is
+> expected when parsing User that should run service.
+> When it fails to parse string starting with digit it fails back to root
+> causing obvious threat to security.
+>
+> See discussion with developer on github: https://github.com/systemd/
+> systemd/issues/6237
+>
+> Best,
+> -Daniel Skowronski
 >
 
-Red Hat is only associated with this in so far as I happen to work for Red
-Hat and I typically do the CVE assignments on the distros@ list (where this
-issue was initially reported).
+I've assigned CVE-2017-1000082 for this issue. Lennart is CC'ed.
 
 
->
-> Anyway, good luck with meaningless Red Hat security theatre. These
-> "vulnerabilities" are just reinforcing the view that security people
-> are foolish. There isn't disagreement that it's a meaningless feature
-> with this level of incompleteness and yet a CVE is assigned for it?
-> Okay then...
->
-
-I suggest you take this issue up with MITRE/CVE Board (disclaimer: I'm also
-on the CVE Board), they control CVE and the definitions of what is CVE
-worthy, and in this case it largely falls under the "advertised/implied
-security feature doesn't work as such". This is unlikely to change as it's
-well established and has been used for over a decade.
-
-
->
-> Sorry for thinking that this should be about something more than
-> padding CVs and marketing materials.
->
-
-I suggest then you take this up with the original researcher if you're
-worried about people padding their CVs. This discussion isn't
-productive/helpful and I suggest you take it off list.
+{"data_version":"4.0","references":{"reference_data":[{"url":"
+https://github.com/systemd/systemd/issues/6237"},{"url":"
+http://www.openwall.com/lists/oss-security/2017/07/02/1"}]},"description":{"description_data":[{"lang":"eng","value":"systemd
+v233 and earlier fails to safely parse usernames starting with a numeric
+digit (e.g. \"0day\"), running the service in quesiton with root privileges
+rather than the user
+intended"}]},"data_type":"CVE","affects":{"vendor":{"vendor_data":[{"product":{"product_data":[{"version":{"version_data":[{"version_value":"v223
+and
+earlier"}]},"product_name":"systemd"}]},"vendor_name":"systemd"}]}},"CVE_data_meta":{"DATE_ASSIGNED":"2017-70-06","STATE":"PUBLIC","ID":"CVE-2017-1000082","ASSIGNER":"
+kurt@...fried.org","REQUESTER":"kseifried@...hat.com
+"},"data_format":"MITRE","problemtype":{"problemtype_data":[{"description":[{"lang":"eng","value":"CWE-20"}]}]}}
 
 
 -- 
