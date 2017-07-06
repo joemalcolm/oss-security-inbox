@@ -1,68 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/3
-Message-ID: <2fefe468-7d41-11e7-aea1-9312c6089150@apache.org>
-Date: Thu, 10 Aug 2017 18:04:26 +0000
-From: Daniel Shahaf <danielsh@...che.org>
-To: announce@...version.apache.org, users@...version.apache.org, dev@...version.apache.org, announce@...che.org
-Cc: security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [SECURITY][ANNOUNCE] Apache Subversion 1.9.7 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/10
+Message-ID: <20170706140207.ywcfdtsmmrh2dxmm@perpetual.pseudorandom.co.uk>
+Date: Thu, 6 Jul 2017 15:02:07 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-I'm happy to announce the release of Apache Subversion 1.9.7.
-Please choose the mirror closest to you by visiting:
+On Thu, 06 Jul 2017 at 07:28:16 -0600, Leonid Isaev wrote:
+> On Thu, Jul 06, 2017 at 01:17:55PM +0100, Simon McVittie wrote:
+> > systemd units are analogous to LSB init scripts,
+> > which all start as root, and drop privileges internally if they want to.
+> 
+> Hmm, no, no and once again no. SystemdD units are sold as something simple and
+> transparent, and hence *associated with a software they launch*, not a given
+> systemD/OS version.
 
-    http://subversion.apache.org/download.cgi?update=201708081800#recommended-release
+It is entirely possible that systemd units as distributed by upstream
+projects might assume features of systemd (>= some version), just like
+upstream projects might assume features of glibc (>= some version) or
+coreutils (>= some version) or bash (>= some version). systemd does not
+magically cause dependency relationships to go away.
 
-This is a stable security release of the Apache Subversion open source
-version control system.  It fixes one security issue:
+Some upstreams are very conservative in what dependencies they will
+accept, while others are quick to add dependencies on new things if they
+see an advantage. That doesn't mean the conservative projects have no
+dependencies at all.
 
-    CVE-2017-9800:
-    Arbitrary code execution on clients through malicious svn+ssh URLs in
-    svn:externals and svn:sync-from-url
-    http://subversion.apache.org/security/CVE-2017-9800-advisory.txt
+> The problem is that my new and shiny
+> script won't work as intended on old systemD versions which silently ignore
+> User= directive.
 
-The SHA1 checksums are:
+I am not aware of any such version existing. The 2010 commit
+"first attempt at proper service/socket logic", which was 6 months before
+the release of systemd version 1 and was the first commit to introduce
+ExecStart, also introduced User.
 
-    874b81749cdc3e88152d103243c3623ac6338388 subversion-1.9.7.tar.bz2
-    1a5f48acf9d0faa60e8c7aea96a9b29ab1d4dcac subversion-1.9.7.tar.gz
-    741727b62596bf27f75838c46d1bb6938c83fbd7 subversion-1.9.7.zip
-
-SHA-512 checksums are available at:
-
-    https://www.apache.org/dist/subversion/subversion-1.9.7.tar.bz2.sha512
-    https://www.apache.org/dist/subversion/subversion-1.9.7.tar.gz.sha512
-    https://www.apache.org/dist/subversion/subversion-1.9.7.zip.sha512
-
-PGP Signatures are available at:
-
-    http://www.apache.org/dist/subversion/subversion-1.9.7.tar.bz2.asc
-    http://www.apache.org/dist/subversion/subversion-1.9.7.tar.gz.asc
-    http://www.apache.org/dist/subversion/subversion-1.9.7.zip.asc
-
-For this release, the following people have provided PGP signatures:
-
-   Johan Corveleyn [4096R/B59CE6D6010C8AAD] with fingerprint:
-    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
-   Stefan Sperling [2048R/4F7DBAA99A59B973] with fingerprint:
-    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
-   Evgeny Kotkov [4096R/B64FFF1209F9FA74] with fingerprint:
-    E7B2 A7F4 EC28 BE9F F8B3  8BA4 B64F FF12 09F9 FA74
-   Stefan Hett (CODE SIGNING KEY) [4096R/376A3CFD110B1C95] with fingerprint:
-    7B8C A7F6 451A D89C 8ADC  077B 376A 3CFD 110B 1C95
-   Daniel Shahaf [3072R/A5FEEE3AC7937444] with fingerprint:
-    E966 46BE 08C0 AF0A A0F9  0788 A5FE EE3A C793 7444
-   Philip Martin [2048R/76D788E1ED1A599C] with fingerprint:
-    A844 790F B574 3606 EE95  9207 76D7 88E1 ED1A 599C
-
-Release notes for the 1.9.x release series may be found at:
-
-    http://subversion.apache.org/docs/release-notes/1.9.html
-
-You can find the list of changes between 1.9.7 and earlier versions at:
-
-    http://svn.apache.org/repos/asf/subversion/tags/1.9.7/CHANGES
-
-Questions, comments, and bug reports to users@...version.apache.org.
-
-Thanks,
-- The Subversion Team
+    S
