@@ -1,63 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/10
-Message-ID: <10347.2849327488-sendEmail@localhost>
-Date: Sun, 26 Feb 2017 11:53:42 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: audiofile: divide-by-zero in BlockCodec::runPull (BlockCodec.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/2
+Message-ID: <alpine.LFD.2.20.1707071448440.951@wniryva>
+Date: Fri, 7 Jul 2017 14:50:25 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-10810 Kernel: virtio-gpu: memory leakage while creating gpu object
 Content-Type: text/plain; charset=utf-8
 
-Description:
-audiofile is a C-based library for reading and writing audio files in many common formats.
+   Hello,
 
-A fuzz on it discovered a division by zero.
+Linux kernel built with the VirtIO GPU driver(CONFIG_DRM_VIRTIO_GPU) support 
+is vulnerable to a memory leakage issue. It could occur while creating a 
+virtio gpu object in virtio_gpu_object_create().
 
-The complete ASan output:
+A user/process could use this flaw to leak host kernel memory potentially 
+resulting in DoS.
 
-# sfconvert @@ out.mp3 format aiff
-==2529==ERROR: AddressSanitizer: FPE on unknown address 0x7ff06b121920 (pc 0x7ff06b121920 bp 0x7ffd0ddf2d90 sp 0x7ffd0ddf2d00 T0)                                                                                                                                              
-    #0 0x7ff06b12191f in BlockCodec::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:50:46                                                                                                                       
-    #1 0x7ff06b15ac20 in RebufferModule::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/RebufferModule.cpp:122:3                                                                                                               
-    #2 0x7ff06b10b05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14                                                                                                                                             
-    #3 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29                                                                                                                                                 
-    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
-    #5 0x7ff06a1e078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
-    #6 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                                                               
-AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
-SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:50:46 in BlockCodec::runPull()                                                                                                              
-==2529==ABORTING
+Upstream patch:
+---------------
+   -> https://git.kernel.org/linus/385aee965b4e4c36551c362a334378d2985b722a
 
-Affected version:
-0.3.6
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1468023
 
-Fixed version:
-N/A
+This issue was reported by Li Qiang of Qihoo 360 Gear Team.
 
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00187-audiofile-fpe-BlockCodec-runPull
-
-Timeline:
-2017-02-20: bug discovered and reported to upstream
-2017-02-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/20/audiofile-divide-by-zero-in-blockcodecrunpull-blockcodec-cpp
-
+Thank you.
 --
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
