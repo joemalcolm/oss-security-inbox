@@ -1,4 +1,9 @@
-Received: (qmail 26531 invoked by uid 550); 20 May 2026 09:17:52 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8059" "Friday" "7" "July" "2017" "13:54:05" "+0000" "Xen.org security team" "security@xen.org" "<E1dTTht-0001as-0r@xenbits.xenproject.org>" "193" "[oss-security] Xen Security Advisory 217 (CVE-2017-10912) - page transfer may allow PV guest to elevate privilege" nil nil nil "7" "2017070713:54:05" "[oss-security] Xen Security Advisory 217 (CVE-2017-10912) - page transfer may allow PV guest to elevate privilege" (number mark "U       security@xen Jul  7  193/8059  " thread-indent "\"[oss-security] Xen Security Advisory 217 (CVE-2017-10912) - page transfer may allow PV guest to elevate privilege\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17697 invoked by uid 550); 7 Jul 2017 13:54:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,188 +12,210 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5372 invoked from network); 20 May 2026 09:12:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nlnetlabs.nl;
-	s=MBO0001; t=1779268343;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	to:to:cc:mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
-	bh=WCVtTvZETl3UT9cJpprFOkSBhEkFGozkfpItQFPCUho=;
-	b=I3Job8slUsZXESXhvSI5oEkiAmdBTHi3eYce3Rn3l6F6UVUjvELaHEPnRIIyfnY2SZcTrx
-	FxVn32INe7Ors9hy1UKlq3Wg/LK7AgPY9k9Hff36GMDIz6P5kyMdFvcPbpKng3ivc+VC3r
-	H2eAWgDyz2k80C5ZUpFI//1vEj2RwmMbuBgf3bpappTqFA387pfhBJhRIWFBWuzVULC7iv
-	eS9sf0kwXRboaeSfq5OPlL/cANteQu84cpVx7DnrYqrZ0qwnjibcEVd2ejfDs29tRMIm02
-	QV4FJfSiG4JeS2msulRitf6LlekNLqPG9uhoTTVTf3IYHOovQhixPRFxUO4x/g==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of yorgos@nlnetlabs.nl designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=yorgos@nlnetlabs.nl
-Message-ID: <8f54757e-7899-4f71-bd93-358b9ef1b24e@nlnetlabs.nl>
-Date: Wed, 20 May 2026 11:12:16 +0200
+Received: (qmail 17679 invoked from network); 7 Jul 2017 13:54:23 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Language: en-GB
-From: Yorgos Thessalonikefs <yorgos@nlnetlabs.nl>
-Autocrypt: addr=yorgos@nlnetlabs.nl; keydata=
- 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
- S/sVF2vr7MhLmA==
-To: oss-security@lists.openwall.com
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------lAKZMD5ipXWDzSO0SNNFbAEg"
-Subject: [oss-security] Unbound: 1.25.1 addresses multiple CVE items
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1dTTht-0001as-0r@xenbits.xenproject.org>
+Date: Fri, 07 Jul 2017 13:54:05 +0000
+Subject: [oss-security] Xen Security Advisory 217 (CVE-2017-10912) - page transfer may
+ allow PV guest to elevate privilege
 
---------------lAKZMD5ipXWDzSO0SNNFbAEg
-Content-Type: multipart/mixed; boundary="------------ECXtw2uGEZ0L2nxBmAcBvyQs";
- protected-headers="v1"
-Message-ID: <8f54757e-7899-4f71-bd93-358b9ef1b24e@nlnetlabs.nl>
-Date: Wed, 20 May 2026 11:12:16 +0200
-MIME-Version: 1.0
-Content-Language: en-GB
-From: Yorgos Thessalonikefs <yorgos@nlnetlabs.nl>
-Subject: Unbound: 1.25.1 addresses multiple CVE items
-Autocrypt: addr=yorgos@nlnetlabs.nl; keydata=
- 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
- S/sVF2vr7MhLmA==
-To: oss-security@lists.openwall.com
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
---------------ECXtw2uGEZ0L2nxBmAcBvyQs
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-SGkgdGhlcmUsDQoNCihUaGUgb2ZmaWNpYWwgYW5ub3VuY2VtZW50IGNhbiBiZSBmb3VuZCBhdDoN
-Cmh0dHBzOi8vbmxuZXRsYWJzLm5sL25ld3MvMjAyNi9NYXkvMjAvdW5ib3VuZC0xLjI1LjEtcmVs
-ZWFzZWQvKQ0KDQpTZXZlcmFsIHZ1bG5lcmFiaWxpdGllcyB3ZXJlIGZvdW5kIGluIFVuYm91bmQu
-DQoNCldlIGFyZSByZWxlYXNpbmcgMS4yNS4xIGFzIGEgc2VjdXJpdHkgcmVsZWFzZSBvbiBNYXkg
-MjAgaW5jbHVkaW5nIHRoZSANCnJlbGV2YW50IGZpeGVzLg0KDQpUaGUgb3ZlcnZpZXcgb2YgdGhl
-IHZ1bG5lcmFiaWxpdGllcyB3aXRoIGEgYnJpZWYgZGVzY3JpcHRpb24gaXM6DQoNCkNWRS0yMDI2
-LTMzMjc4IC0gc2V2ZXJpdHk6IENSSVRJQ0FMDQpQb3NzaWJsZSByZW1vdGUgY29kZSBleGVjdXRp
-b24gZHVyaW5nIEROU1NFQyB2YWxpZGF0aW9uDQoNCkNWRS0yMDI2LTQyOTQ0IC0gc2V2ZXJpdHk6
-IEhJR0gNCkhlYXAgb3ZlcmZsb3cgYW5kIGNyYXNoIHdpdGggbXVsdGlwbGUgbnNpZCwgY29va2ll
-LCBwYWRkaW5nIEVETlMgb3B0aW9ucw0KDQpDVkUtMjAyNi00Mjk1OSAtIHNldmVyaXR5OiBISUdI
-DQpDcmFzaCBkdXJpbmcgRE5TU0VDIHZhbGlkYXRpb24gb2YgbWFsaWNpb3VzIGNvbnRlbnQNCg0K
-Q1ZFLTIwMjYtMzI3OTIgLSBzZXZlcml0eTogTUVESVVNDQpQYWNrZXQgb2YgZGVhdGggd2l0aCBE
-TlNDcnlwdCAoZmVhc2liaWxpdHkgdmVyeSBsb3cpDQoNCkNWRS0yMDI2LTQwNjIyIC0gc2V2ZXJp
-dHk6IE1FRElVTQ0KIkdob3N0IGRvbWFpbiBuYW1lIiB2YXJpYW50DQoNCkNWRS0yMDI2LTQxMjky
-IC0gc2V2ZXJpdHk6IE1FRElVTQ0KUGFyc2luZyBhIGxvbmcgbGlzdCBvZiBpbmNvbWluZyBFRE5T
-IG9wdGlvbnMgZGVncmFkZXMgcGVyZm9ybWFuY2UNCg0KQ1ZFLTIwMjYtNDI1MzQgLSBzZXZlcml0
-eTogTUVESVVNDQpKb3N0bGUgbG9naWMgYnlwYXNzIGRlZ3JhZGVzIHJlc29sdXRpb24gcGVyZm9y
-bWFuY2UNCg0KQ1ZFLTIwMjYtNDI5MjMgLSBzZXZlcml0eTogTUVESVVNDQpEZWdyYWRhdGlvbiBv
-ZiBzZXJ2aWNlIHdpdGggdW5ib3VuZGVkIE5TRUMzIGhhc2ggY2FsY3VsYXRpb25zDQoNCkNWRS0y
-MDI2LTQyOTYwIC0gc2V2ZXJpdHk6IE1FRElVTQ0KUG9zc2libGUgY2FjaGUgcG9pc29uaW5nIGF0
-dGFjayB3aGlsZSBmb2xsb3dpbmcgZGVsZWdhdGlvbg0KDQpDVkUtMjAyNi00NDM5MCAtIHNldmVy
-aXR5OiBNRURJVU0NClVuYm91bmRlZCBuYW1lIGNvbXByZXNzaW9uIGluIGNlcnRhaW4gY2FzZXMg
-Y2F1c2VzIGRlZ3JhZGF0aW9uIG9mIHNlcnZpY2UNCg0KQ1ZFLTIwMjYtNDQ2MDggLSBzZXZlcml0
-eTogTUVESVVNDQpVc2UgYWZ0ZXIgZnJlZSBhbmQgY3Jhc2ggaW4gUlBaIGNvZGUgKHNwZWNpYWwg
-cmVxdWlyZW1lbnRzIGFwcGx5KQ0KDQoNCk1vcmUgaW5mb3JtYXRpb24gYWJvdXQgdGhlIHZ1bG5l
-cmFiaWxpdGllcyBjYW4gYmUgZm91bmQgYXQ6DQpodHRwczovL25sbmV0bGFicy5ubC9wcm9qZWN0
-cy91bmJvdW5kL3NlY3VyaXR5LWFkdmlzb3JpZXMvDQoNCg0KQmVzdCByZWdhcmRzLA0KLS0gWW9y
-Z29zLCBvbiBiZWhhbGYgb2YgdGhlIFVuYm91bmQgdGVhbS4NCg0KDQoqKiBUaGlzIGVtYWlsIGlz
-IHNpZ25lZC4gS2V5cyBvZiB0aGUgTkxuZXQgTGFicyBwZW9wbGUgYXJlIHB1Ymxpc2hlZCBvbg0K
-aHR0cHM6Ly93d3cubmxuZXRsYWJzLm5sL3Blb3BsZS8gKioNCg==
+            Xen Security Advisory CVE-2017-10912 / XSA-217
+                              version 3
 
---------------ECXtw2uGEZ0L2nxBmAcBvyQs--
+         page transfer may allow PV guest to elevate privilege
 
---------------lAKZMD5ipXWDzSO0SNNFbAEg
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+UPDATES IN VERSION 3
+====================
 
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+Domains controlling other domains are permitted to map pages owned by
+the domain being controlled.  If the controlling domain unmaps such a
+page without flushing the TLB, and if soon after the domain being
+controlled transfers this page to another PV domain (via
+GNTTABOP_transfer or, indirectly, XENMEM_exchange), and that third
+domain uses the page as a page table, the controlling domain will have
+write access to a live page table until the applicable TLB entry is
+flushed or evicted.  Note that the domain being controlled is
+necessarily HVM, while the controlling domain is PV.
+
+IMPACT
+======
+
+A malicious pair of guests may be able to access all of system memory,
+allowing for all of privilege escalation, host crashes, and
+information leaks.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+Only x86 systems are affected.  ARM systems are not vulnerable.
+
+Only systems where an attacker can control both a PV and an HVM guest
+are vulnerable.  This must be presumed to include systems containing
+HVM domains with service domains such as stub domain device models.
+
+Systems containing only PV guests are not vulnerable.
+
+Systems containing only HVM domains serviced by dom0 device model
+processes are not vulnerable.  Note that with libxl, xl, and libvirt,
+HVM domains use dom0 device model processes by default.
+
+MITIGATION
+==========
+
+There is no mitigation for this vulnerability.
+
+Switching from stub device models to dom0 process device models is not
+recommended as a mitigation, as in practice the vulnerability is
+likely to be hard to exploit through this route; whereas dom0 process
+device models may have unknown vulnerabilities.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa217.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
+xsa217-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa217*
+3e896412389d8e59e417ea7bb3d5b47a20de27b8eae0420c98071ce4b17d219c  xsa217.patch
+4e555cf47faf5e8d2bba4ff8a31fbe72fb11a6c0e3b286f23b26e684a1809705  xsa217-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEElI60IyLF0At5NA9dz/M0TZCHpJAFAmoNevAACgkQz/M0TZCH
-pJAZ3RAAnD61roTzu3qb6VzTyCPFLSp4NQmqgqfUFNy+4gqYXojYv9/Ctke1UikS
-Ao3fOJciooGst5gumRQGQ8vt7/xhG6qFQ76WhnQxNdQY6jKcj2sjPJcRJ+JQNiVa
-J9uxauEk9tuqT91dyqCVW92MiqmzPtWdKZynS1Hc6HzW/SJjaqAyMAgXvTnKmjvo
-OpfdTK2C8gzKLYPBEfpqyKEtnLRzaT31VMJjztE5NBDdvaqGChW4mk9GQ3Edq+Qd
-yaEFwy9buZLSpS26I9ylEl4RZaWglzrRiViyBMJY6Cejj737ABmHrQhJCNmrJBWG
-yqZR7aeBOMA2Zad7H9OGwrAHH/4xYgqLErE0FvEuvwp/O8dxbOwG8TWMstQVFPbq
-ebb1I58fQLvlOc6L/ZKa50fL2qXm1gy6US90XPZtuD1Eu+AB4gi302A+tH5pMnIk
-6L1noDxWFfwCJk6Tyv/W+3Z7zQHBnYCXf+z2EhzEgW62SOwHlnn3vGuMGtUw7at9
-qnggiNTAWDY6fqCuxxtHiApMToZHz69zefIOhm3Z/BWUnm/Uy64mLfopbY8Gy/W/
-eSIkNzsPvIOC7HcRkbumrqd+Xvi00zRCIJzv0YO68EoyaNIz3NpRDbUibM5f+Euq
-v8fL/UuwVf/MMrx6ryMSvM6g8pzU9VANFluI8VIyn48Oh1QLtqI=
-=rqLt
+iQEcBAEBCAAGBQJZX5IlAAoJEIP+FMlX6CvZCC8IAJ8VgkRigZpOyxl1CHP+pSGu
+TZzWOS0xCMsuIkbPaGgfbgykNh7/7byWWPBZwoUSKh1gnWXIohFtRr3JvPKlsb8X
+5nthArzR1biR4c9kXL7TYiLhxoInHYT3tE7tnAj6c68qxWLrkQuTW3C3kJnlVf+p
+XXIju4ccV33X0hT1nqOr5P9FqhmDKgml4qeaUnEabFjXgM16/JaHM8f2k2U/FYJP
+mfrh+5EeAMg3i1OdtLklMyEUXlA1IE2m7BsfnA3eMQ9xc50mjEQ/NZYhe3knv7IX
+KfvRMMZgjTvEO/6GU7Qt5qlBRLj1e/jpxaviHsdZaLPoHz4Cq4WncdfyqfAJ1Dk=
+=WueX
 -----END PGP SIGNATURE-----
 
---------------lAKZMD5ipXWDzSO0SNNFbAEg--
+--=separator
+Content-Type: application/octet-stream; name="xsa217.patch"
+Content-Disposition: attachment; filename="xsa217.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODYvbW06IGRpc2FsbG93IHBhZ2Ugc3RlYWxpbmcgZnJvbSBIVk0gZG9t
+YWlucwoKVGhlIG9wZXJhdGlvbidzIHN1Y2Nlc3MgY2FuJ3QgYmUgY29udHJv
+bGxlZCBieSB0aGUgZ3Vlc3QsIGFzIHRoZSBkZXZpY2UKbW9kZWwgbWF5IGhh
+dmUgYW4gYWN0aXZlIG1hcHBpbmcgb2YgdGhlIHBhZ2UuIElmIHdlIG5ldmVy
+dGhlbGVzcwpwZXJtaXR0ZWQgdGhpcyBvcGVyYXRpb24sIHdlJ2QgaGF2ZSB0
+byBhZGQgZnVydGhlciBUTEIgZmx1c2hpbmcgdG8KcHJldmVudCBzY2VuYXJp
+b3MgbGlrZQoKIkRvbWFpbnMgQSAoSFZNKSwgQiAoUFYpLCBDIChQVik7IEIt
+PnRhcmdldD09QQogU3RlcHM6CiAxLiBCIG1hcHMgcGFnZSBYIGZyb20gQSBh
+cyB3cml0YWJsZQogMi4gQiB1bm1hcHMgcGFnZSBYIHdpdGhvdXQgYSBUTEIg
+Zmx1c2gKIDMuIEEgc2VuZHMgcGFnZSBYIHRvIEMgdmlhIEdOVFRBQk9QX3Ry
+YW5zZmVyCiA0LiBDIG1hcHMgcGFnZSBYIGFzIHBhZ2V0YWJsZSAocG90ZW50
+aWFsbHkgY2F1c2luZyBhIFRMQiBmbHVzaCBpbiBDLAogYnV0IG5vdCBpbiBC
+KQoKIEF0IHRoaXMgcG9pbnQsIFggd291bGQgYmUgbWFwcGVkIGFzIGEgcGFn
+ZXRhYmxlIGluIEMgd2hpbGUgYmVpbmcKIHdyaXRhYmxlIHRocm91Z2ggYSBz
+dGFsZSBUTEIgZW50cnkgaW4gQi4iCgpBIHNpbWlsYXIgc2NlbmFyaW8gY291
+bGQgYmUgY29uc3RydWN0ZWQgZm9yIEEgdXNpbmcgWEVOTUVNX2V4Y2hhbmdl
+IGFuZApzb21lIGFyYml0cmFyeSBQViBkb21haW4gQyB0aGVuIGhhdmluZyB0
+aGlzIHBhZ2UgYWxsb2NhdGVkLgoKVGhpcyBpcyBYU0EtMjE3LgoKUmVwb3J0
+ZWQtYnk6IEphbm4gSG9ybiA8amFubmhAZ29vZ2xlLmNvbT4KU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpBY2tlZC1i
+eTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29tPgpS
+ZXZpZXdlZC1ieTogS29ucmFkIFJ6ZXN6dXRlayBXaWxrIDxrb25yYWQud2ls
+a0BvcmFjbGUuY29tPgoKLS0tIGEveGVuL2FyY2gveDg2L21tLmMKKysrIGIv
+eGVuL2FyY2gveDg2L21tLmMKQEAgLTQ0NDksNiArNDQ0OSw5IEBAIGludCBz
+dGVhbF9wYWdlKAogICAgIGJvb2xfdCBkcm9wX2RvbV9yZWYgPSAwOwogICAg
+IGNvbnN0IHN0cnVjdCBkb21haW4gKm93bmVyID0gZG9tX3hlbjsKIAorICAg
+IGlmICggcGFnaW5nX21vZGVfZXh0ZXJuYWwoZCkgKQorICAgICAgICByZXR1
+cm4gLTE7CisKICAgICBzcGluX2xvY2soJmQtPnBhZ2VfYWxsb2NfbG9jayk7
+CiAKICAgICBpZiAoIGlzX3hlbl9oZWFwX3BhZ2UocGFnZSkgfHwgKChvd25l
+ciA9IHBhZ2VfZ2V0X293bmVyKHBhZ2UpKSAhPSBkKSApCg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa217-4.5.patch"
+Content-Disposition: attachment; filename="xsa217-4.5.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODYvbW06IGRpc2FsbG93IHBhZ2Ugc3RlYWxpbmcgZnJvbSBIVk0gZG9t
+YWlucwoKVGhlIG9wZXJhdGlvbidzIHN1Y2Nlc3MgY2FuJ3QgYmUgY29udHJv
+bGxlZCBieSB0aGUgZ3Vlc3QsIGFzIHRoZSBkZXZpY2UKbW9kZWwgbWF5IGhh
+dmUgYW4gYWN0aXZlIG1hcHBpbmcgb2YgdGhlIHBhZ2UuIElmIHdlIG5ldmVy
+dGhlbGVzcwpwZXJtaXR0ZWQgdGhpcyBvcGVyYXRpb24sIHdlJ2QgaGF2ZSB0
+byBhZGQgZnVydGhlciBUTEIgZmx1c2hpbmcgdG8KcHJldmVudCBzY2VuYXJp
+b3MgbGlrZQoKIkRvbWFpbnMgQSAoSFZNKSwgQiAoUFYpLCBDIChQVik7IEIt
+PnRhcmdldD09QQogU3RlcHM6CiAxLiBCIG1hcHMgcGFnZSBYIGZyb20gQSBh
+cyB3cml0YWJsZQogMi4gQiB1bm1hcHMgcGFnZSBYIHdpdGhvdXQgYSBUTEIg
+Zmx1c2gKIDMuIEEgc2VuZHMgcGFnZSBYIHRvIEMgdmlhIEdOVFRBQk9QX3Ry
+YW5zZmVyCiA0LiBDIG1hcHMgcGFnZSBYIGFzIHBhZ2V0YWJsZSAocG90ZW50
+aWFsbHkgY2F1c2luZyBhIFRMQiBmbHVzaCBpbiBDLAogYnV0IG5vdCBpbiBC
+KQoKIEF0IHRoaXMgcG9pbnQsIFggd291bGQgYmUgbWFwcGVkIGFzIGEgcGFn
+ZXRhYmxlIGluIEMgd2hpbGUgYmVpbmcKIHdyaXRhYmxlIHRocm91Z2ggYSBz
+dGFsZSBUTEIgZW50cnkgaW4gQi4iCgpBIHNpbWlsYXIgc2NlbmFyaW8gY291
+bGQgYmUgY29uc3RydWN0ZWQgZm9yIEEgdXNpbmcgWEVOTUVNX2V4Y2hhbmdl
+IGFuZApzb21lIGFyYml0cmFyeSBQViBkb21haW4gQyB0aGVuIGhhdmluZyB0
+aGlzIHBhZ2UgYWxsb2NhdGVkLgoKVGhpcyBpcyBYU0EtMjE3LgoKUmVwb3J0
+ZWQtYnk6IEphbm4gSG9ybiA8amFubmhAZ29vZ2xlLmNvbT4KU2lnbmVkLW9m
+Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpBY2tlZC1i
+eTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29tPgpS
+ZXZpZXdlZC1ieTogS29ucmFkIFJ6ZXN6dXRlayBXaWxrIDxrb25yYWQud2ls
+a0BvcmFjbGUuY29tPgoKLS0tIGEveGVuL2FyY2gveDg2L21tLmMKKysrIGIv
+eGVuL2FyY2gveDg2L21tLmMKQEAgLTQyMTcsNiArNDIxNyw5IEBAIGludCBz
+dGVhbF9wYWdlKAogICAgIHVuc2lnbmVkIGxvbmcgeCwgeTsKICAgICBib29s
+X3QgZHJvcF9kb21fcmVmID0gMDsKIAorICAgIGlmICggcGFnaW5nX21vZGVf
+ZXh0ZXJuYWwoZCkgKQorICAgICAgICByZXR1cm4gLTE7CisKICAgICBzcGlu
+X2xvY2soJmQtPnBhZ2VfYWxsb2NfbG9jayk7CiAKICAgICBpZiAoIGlzX3hl
+bl9oZWFwX3BhZ2UocGFnZSkgfHwgKHBhZ2VfZ2V0X293bmVyKHBhZ2UpICE9
+IGQpICkK
+
+--=separator--
