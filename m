@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/22/3
-Message-ID: <CAHHvYcojhqfj_naXXv=qiQhXLMGFP2+EOostc9ff0yhbt4ZgWA@mail.gmail.com>
-Date: Sat, 22 Apr 2017 20:03:32 +0800
-From: Xiaobo Xiang <xiangxb2112@...il.com>
-To: Agostino Sarubbo <ago@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/16
+Message-ID: <20170707183314.GA23728@hunt>
+Date: Fri, 7 Jul 2017 11:33:14 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: [cve-request@...re.org: Re: [scr357564] sqlite3 - fix in progress]
 Content-Type: text/plain; charset=utf-8
 
-Hello ago,
+Hello; some buffer over-reads were recently discovered in sqlite3 via
+Google's clusterfuzz of GDAL. Thanks to Even Rouault for coordinating and
+D. Richard Hipp for the fast and friendly fix.
 
-They are two different issues, we could judge them by just checking the
-call stacks. I have the infinite recursion crash in the pdfpage too but I
-found your blog post so I ignored it. This is a different issue.
+Here's the description and references I supplied to MITRE, and their
+(trimmed) reply:
 
-Best Regards,
-Xiang Xiaobo
-
-2017-04-22 19:46 GMT+08:00 Agostino Sarubbo <ago@...too.org>:
-
-> On Saturday 22 April 2017 11:02:21 Xiaobo Xiang wrote:
-> > There is a infinite recursion in
-> > PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
-> > In the ReadDocumentStructure function
+----- Forwarded message from cve-request@...re.org -----
+> [Suggested description]
+> Undersize RTree blobs in a maliciously-constructed SQLite3 database file
+> may allow buffer-overreads, un-initialized data use, or possibly other
+> unspecified behaviour.
 >
-> I found it too time ago, but since upstream was unresponsive about....I
-> didn't
-> investigate, and then I didn't know if it has the same root cause of:
-> https://blogs.gentoo.org/ago/2017/02/01/podofo-infinite-loop-in-
-> podofopdfpagegetinheritedkeyfromobject-pdfpage-cpp/
+> [Reference]
+> https://sqlite.org/src/vpatch?from=0db20efe201736b3&to=66de6f4a9504ec26
+> https://sqlite.org/src/info/66de6f4a
+> https://bugs.launchpad.net/ubuntu/+source/sqlite3/+bug/1700937
+> https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=2405
+> http://marc.info/?l=sqlite-users&m=149933696214713&w=2
 >
-> --
-> Agostino Sarubbo
-> Gentoo Linux Developer
->
+> [Discoverer]
+> Google's project clusterfuzz
 
+Use CVE-2017-10989.
+
+----- End forwarded message -----
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
