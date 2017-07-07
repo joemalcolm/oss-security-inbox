@@ -1,216 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/18
-Message-ID: <0addb39a-c336-e38c-e2e7-0215fa888222@igalia.com>
-Date: Tue, 17 Jan 2017 20:08:30 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2017-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/8
+Message-Id: <E1dTTi3-000258-LG@xenbits.xenproject.org>
+Date: Fri, 07 Jul 2017 13:54:15 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 221 (CVE-2017-10917) - NULL pointer deref in event channel poll
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2017-0001
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Date reported      : January 17, 2017
-Advisory ID        : WSA-2017-0001
-Advisory URL       : https://webkitgtk.org/security/WSA-2017-0001.html
-CVE identifiers    : CVE-2016-4692, CVE-2016-4743, CVE-2016-7586,
-                     CVE-2016-7587, CVE-2016-7589, CVE-2016-7592,
-                     CVE-2016-7598, CVE-2016-7599, CVE-2016-7610,
-                     CVE-2016-7611, CVE-2016-7623, CVE-2016-7632,
-                     CVE-2016-7635, CVE-2016-7639, CVE-2016-7640,
-                     CVE-2016-7641, CVE-2016-7642, CVE-2016-7645,
-                     CVE-2016-7646, CVE-2016-7648, CVE-2016-7649,
-                     CVE-2016-7652, CVE-2016-7654, CVE-2016-7656.
+            Xen Security Advisory CVE-2017-10917 / XSA-221
+                              version 3
 
-Several vulnerabilities were discovered in WebKitGTK+.
+               NULL pointer deref in event channel poll
 
-CVE-2016-4692
-    Versions affected: WebKitGTK+ before 2.14.1.
-    Credit to Apple.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved memory handling.
+UPDATES IN VERSION 3
+====================
 
-CVE-2016-4743
-    Versions affected: WebKitGTK+ before 2.14.0.
-    Credit to Alan Cutter.
-    Impact: Processing maliciously crafted web content may result in the
-    disclosure of process memory. Description: A memory corruption issue
-    was addressed through improved input validation.
+CVE assigned.
 
-CVE-2016-7586
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Boris Zbarsky.
-    Impact: Processing maliciously crafted web content may result in the
-    disclosure of user information. Description: A validation issue was
-    addressed through improved state management.
+ISSUE DESCRIPTION
+=================
 
-CVE-2016-7587
-    Versions affected: WebKitGTK+ before 2.14.0.
-    Credit to Adam Klein.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+When polling event channels, in general arbitrary port numbers can be
+specified.  Specifically, there is no requirement that a polled event
+channel ports has ever been created.  When the code was generalised
+from an earlier implementation, introducing some intermediate
+pointers, a check should have been made that these intermediate
+pointers are non-NULL.  However, that check was omitted.
 
-CVE-2016-7589
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Apple.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed through improved state management.
+IMPACT
+======
 
-CVE-2016-7592
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to xisigr of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Processing maliciously crafted web content may compromise
-    user information. Description: An issue existed in handling of
-    JavaScript prompts. This was addressed through improved state
-    management.
+A malicious or buggy guest may cause the hypervisor to access
+addresses it doesn't control, usually leading to a host crash (Denial
+of Service).  Information leaks cannot be excluded.
 
-CVE-2016-7598
-    Versions affected: WebKitGTK+ before 2.14.0.
-    Credit to Samuel Groß.
-    Impact: Processing maliciously crafted web content may result in the
-    disclosure of process memory. Description: An uninitialized memory
-    access issue was addressed through improved memory initialization.
+VULNERABLE SYSTEMS
+==================
 
-CVE-2016-7599
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Muneaki Nishimura (nishimunea) of Recruit Technologies
-    Co., Ltd.
-    Impact: Processing maliciously crafted web content may result in the
-    disclosure of user information. Description: An issue existed in the
-    handling of HTTP redirects. This issue was addressed through
-    improved cross origin validation.
+Xen versions 4.4 and newer are vulnerable.  Xen versions 4.3 and
+earlier are not affected.
 
-CVE-2016-7610
-    Versions affected: WebKitGTK+ before 2.14.1.
-    Credit to Zheng Huang of the Baidu Security Lab working with Trend
-    Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+Both x86 and ARM systems are vulnerable.
 
-CVE-2016-7611
-    Versions affected: WebKitGTK+ before 2.14.2.
-    Credit to an anonymous researcher working with Trend Micro's Zero
-    Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+While all guest kinds can cause a Denial of Service, only x86 PV guests
+may be able to leverage the possible information leaks.
 
-CVE-2016-7623
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to xisigr of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Visiting a maliciously crafted website may compromise user
-    information. Description: An issue existed in the handling of blob
-    URLs. This issue was addressed through improved URL handling.
+MITIGATION
+==========
 
-CVE-2016-7632
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Jeonghoon Shin.
-    Impact: Visiting a maliciously crafted webpage may lead to an
-    unexpected application termination or arbitrary code execution.
-    Description: A memory corruption issue was addressed through
-    improved state management.
+There is no known mitigation.
 
-CVE-2016-7635
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Apple.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved memory handling.
+CREDITS
+=======
 
-CVE-2016-7639
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Tongbo Luo of Palo Alto Networks.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+This issue was discovered by Ankur Arora of Oracle.
 
-CVE-2016-7640
-    Versions affected: WebKitGTK+ before 2.14.2.
-    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+RESOLUTION
+==========
 
-CVE-2016-7641
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+Applying the appropriate attached patch resolves this issue.
 
-CVE-2016-7642
-    Versions affected: WebKitGTK+ before 2.14.2.
-    Credit to Tongbo Luo of Palo Alto Networks.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+xsa221.patch           Xen 4.4.x and later, including xen-unstable
 
-CVE-2016-7645
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+$ sha256sum xsa221*
+2425396a713466808b0f75f91337be4dd20a4dee7733972b04489773c6e97655  xsa221.patch
+$
 
-CVE-2016-7646
-    Versions affected: WebKitGTK+ before 2.14.2.
-    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+DEPLOYMENT DURING EMBARGO
+=========================
 
-CVE-2016-7648
-    Versions affected: WebKitGTK+ before 2.14.2.
-    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
-CVE-2016-7649
-    Versions affected: WebKitGTK+ before 2.14.2.
-    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-CVE-2016-7652
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Apple.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved memory handling.
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
-CVE-2016-7654
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Keen Lab working with Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved state management.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-CVE-2016-7656
-    Versions affected: WebKitGTK+ before 2.14.3.
-    Credit to Keen Lab working with Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed through improved state management.
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQEcBAEBCAAGBQJZX5IrAAoJEIP+FMlX6CvZvrQH/iiAi2rNN1mXhC9wRArVRhN4
+CHQLswKxeCfL38sAkOCD1oshNsf5Cskv5WI0/row0SzUPuwsdglPBvpXjUdC+4c/
+TNm119wRA3XigJl/eW+OlenA/QdXIjp7D3/IqVu5fEZ+bGntOgo7q4GhgsRRl2SR
+mKMgoN7/PCaLd5KtoCr76FygqBcTHYQDswa97alNXdwALC5PPb1R8lO+GDq4FPNj
+VYCsynBjVhScnbayEWmbPLXvkaz+6u2VccpfWDIS7i+dyTnAVTNkqS+Mzjsk07za
+FRisjlyc3rZTF/7nJ9Vtk4bCPC3+zmKsCTfzbOqdDYu9VJryK7gZl8yksfqw37s=
+=HElV
+-----END PGP SIGNATURE-----
 
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-January 17, 2017
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+Download attachment "xsa221.patch" of type "application/octet-stream" (7411 bytes)
