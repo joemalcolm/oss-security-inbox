@@ -1,109 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/18/5
-Message-ID: <968080.896509008-sendEmail@localhost>
-Date: Fri, 18 Aug 2017 13:55:24 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: graphicsmagick: heap-based buffer overflow in ReadSUNImage (sun.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/17
+Message-ID: <CABjXaGvqoh2z3jimtq5QzT1bO=+nQU99ak13XrV9Vr+4Yd42jQ@mail.gmail.com>
+Date: Fri, 7 Jul 2017 14:58:27 -0600
+From: Jeff Elsloo <elsloo@...che.org>
+To: users@...fficcontrol.incubator.apache.org,  dev@...fficcontrol.incubator.apache.org,  security@...fficcontrol.incubator.apache.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [ANNOUNCE] Apache Traffic Control Traffic Router Slowloris Denial of Service Vulnerability - CVE-2017-7670
 Content-Type: text/plain; charset=utf-8
 
+CVE-2017-7670: Apache Traffic Control Traffic Router Slowloris Denial
+of Service Vulnerability
+
+Severity: High
+
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Traffic Control 1.8.0
+Traffic Control 2.0.0 RC0
+The unsupported Traffic Control 1.5.x, 1.6.x, and 1.7.x versions may
+be also affected
+
 Description:
-graphicsmagick is a collection of tools and libraries for many image formats.
+The Traffic Router component of the incubating Apache Traffic Control
+project is vulnerable to a Slowloris style Denial of Service attack.
+TCP connections made on the configured DNS port will remain in the
+ESTABLISHED state until the client explicitly closes the connection or
+Traffic Router is restarted. If connections remain in the ESTABLISHED
+state indefinitely and accumulate in number to match the size of the
+thread pool dedicated to processing DNS requests, the thread pool
+becomes exhausted. Once the thread pool is exhausted, Traffic Router
+is unable to service any DNS request, regardless of transport
+protocol.
 
-The complete ASan output of the issue:
+Mitigation:
+1.8.x users should upgrade to 1.8.1
+2.0.x users should upgrade to 2.0.0
+Pre 1.8.x users can apply this patch:
+https://github.com/apache/incubator-trafficcontrol/commit/738c10fa1b5861e4cc3944dc7c3065d16f4a708c
 
-# gm convert -clip -negate $FILE out
-==18510==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000015f4 at pc 0x7f6e936c556b bp 0x7fff17c33ab0 sp 0x7fff17c33aa8
-READ of size 4 at 0x6020000015f4 thread T0
-    #0 0x7f6e936c556a in ReadSUNImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/sun.c:581:26
-    #1 0x7f6e98fa8e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #2 0x7f6e98e3bf18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #3 0x7f6e98e780c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #4 0x7f6e98f2385b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #5 0x7f6e98f20991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #6 0x7f6e9778b680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #7 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
-
-0x6020000015f4 is located 0 bytes to the right of 4-byte region [0x6020000015f0,0x6020000015f4)
-allocated by thread T0 here:
-    #0 0x4cf688 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
-    #1 0x7f6e9938a4d6 in MagickMalloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:156:10
-    #2 0x7f6e98db2590 in AllocateImageColormap /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/colormap.c:76:21
-    #3 0x7f6e936b0f87 in ReadSUNImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/sun.c:428:14
-    #4 0x7f6e98fa8e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #5 0x7f6e98e3bf18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #6 0x7f6e98e780c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #7 0x7f6e98f2385b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #8 0x7f6e98f20991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #9 0x7f6e9778b680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/sun.c:581:26 in ReadSUNImage
-Shadow bytes around the buggy address:
-  0x0c047fff8260: fa fa 04 fa fa fa 00 00 fa fa 00 00 fa fa fd fd
-  0x0c047fff8270: fa fa fd fd fa fa 07 fa fa fa fd fd fa fa 00 01
-  0x0c047fff8280: fa fa 00 00 fa fa fd fa fa fa fd fa fa fa 02 fa
-  0x0c047fff8290: fa fa 02 fa fa fa 00 fa fa fa 06 fa fa fa 00 fa
-  0x0c047fff82a0: fa fa 00 07 fa fa 04 fa fa fa 04 fa fa fa fd fa
-=>0x0c047fff82b0: fa fa 00 00 fa fa 00 00 fa fa 04 fa fa fa[04]fa
-  0x0c047fff82c0: fa fa fd fa fa fa 00 00 fa fa fa fa fa fa fa fa
-  0x0c047fff82d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff82e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff82f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==18510==ABORTING
-
-Affected version:
-1.3.26
-
-Fixed version:
-N/A
-
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/95d00d55e978
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-12937
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00304-graphicsmagick-heapoverflow-ReadSUNImage
-
-Timeline:
-2017-07-17: bug discovered and reported to upstream
-2017-07-31: upstream released a fix
-2017-08-05: blog post about the issue
-2017-08-18: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/05/graphicsmagick-heap-based-buffer-overflow-in-readsunimage-sun-c/
-
+References:
+http://trafficcontrol.apache.org/security/index.html
 --
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Thanks,
+Jeff
