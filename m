@@ -1,26 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/9
-Message-ID: <8fa0ac92-c2b4-a981-d828-b0ea189ab4f0@chbi.eu>
-Date: Mon, 9 Oct 2017 19:51:02 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: Re: Stored XSS vulnerability in BlogoText <= 3.7.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/4
+Message-ID: <CAOOKt53EgrybaD+iSn-nBbvFdse-szhg=hMoDZuvUvyMme-Z=g@mail.gmail.com>
+Date: Fri, 7 Jul 2017 19:14:02 +0530
+From: Shalin Shekhar Mangar <shalin@...che.org>
+To: Lucene mailing list <general@...ene.apache.org>,  "dev@...ene.apache.org" <dev@...ene.apache.org>, java-user@...ene.apache.org,  solr-user@...ene.apache.org, announce@...che.org,  security <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Cc: Noble Paul നോബിള് नोब्ळ् <noble.paul@...il.com>
+Subject: [ANNOUNCE] [SECURITY] CVE-2017-7660: Security Vulnerability in secure inter-node communication in Apache Solr
 Content-Type: text/plain; charset=utf-8
 
-FYI
+CVE-2017-7660: Security Vulnerability in secure inter-node
+communication in Apache Solr
 
-After further investigation, I've discovered that with this XSS
-vulnerability it is also possible, for an unauthenticated user, to
-upload a simple php web shell to execute code on the server.
+Severity: Important
 
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Solr 5.3 to 5.5.4
+Solr 6.0 to 6.5.1
+
+Description:
+
+Solr uses a PKI based mechanism to secure inter-node communication
+when security is enabled. It is possible to create a specially crafted
+node name that does not exist as part of the cluster and point it to a
+malicious node. This can trick the nodes in cluster to believe that
+the malicious node is a member of the cluster. So, if Solr users have
+enabled BasicAuth authentication mechanism using the BasicAuthPlugin
+or if the user has implemented a custom Authentication plugin, which
+does not implement either "HttpClientInterceptorPlugin" or
+"HttpClientBuilderPlugin", his/her servers are vulnerable to this
+attack. Users who only use SSL without basic authentication or those
+who use Kerberos are not affected.
+
+Mitigation:
+6.x users should upgrade to 6.6
+5.x users should obtain the latest source from git and apply this patch:
+http://git-wip-us.apache.org/repos/asf/lucene-solr/commit/2f5ecbcf
+
+Credit:
+This issue was discovered by Noble Paul of Lucidworks Inc.
+
+References:
+https://issues.apache.org/jira/browse/SOLR-10624
+https://wiki.apache.org/solr/SolrSecurity
 
 -- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+The Lucene PMC
