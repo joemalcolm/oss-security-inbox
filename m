@@ -1,183 +1,169 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/10/3
-Message-ID: <20170510100504.GA17705@suse.de>
-Date: Wed, 10 May 2017 12:05:04 +0200
-From: Sebastian Krahmer <krahmer@...e.com>
-To: oss-security@...ts.openwall.com
-Subject: generic kde LPE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/9
+Message-Id: <E1dTTi1-00023o-Nq@xenbits.xenproject.org>
+Date: Fri, 07 Jul 2017 13:54:13 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 220 (CVE-2017-10916) - x86: PKRU and BND* leakage between vCPU-s
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-As per distros list policy, I forward the info here. The document
-has slightly been modified (spelling and newlines, no new content).
+            Xen Security Advisory CVE-2017-10916 / XSA-220
+                              version 3
 
-CVE-2017-8422 (KAuth) and CVE-2017-8849 (smb4k) have meanwhile been
-assigned by the kde project.
-Also see https://cgit.kde.org/kauth.git/commit/?id=df875f725293af53399f5146362eb158b4f9216a
+               x86: PKRU and BND* leakage between vCPU-s
 
-Updates are on their way, and once available I will also share
-the PoC.
+UPDATES IN VERSION 3
+====================
 
-Just to show you that theres notable research outside of P0 :)
+CVE assigned.
 
+ISSUE DESCRIPTION
+=================
 
+Memory Protection Extensions (MPX) and Protection Key (PKU) are features in
+newer processors, whose state is intended to be per-thread and context
+switched along with all other XSAVE state.
 
------8<----- snip ------
+Xen's vCPU context switch code would save and restore the state only
+if the guest had set the relevant XSTATE enable bits.  However,
+surprisingly, the use of these features is not dependent (PKU) or may
+not be dependent (MPX) on having the relevant XSTATE bits enabled.
 
+VMs which use MPX or PKU, and context switch the state manually rather
+than via XSAVE, will have the state leak between vCPUs (possibly,
+between vCPUs in different guests).  This in turn corrupts state in
+the destination vCPU, and hence may lead to weakened protections
 
+Experimentally, MPX appears not to make any interaction with BND*
+state if BNDCFGS.EN is set but XCR0.BND{CSR,REGS} are clear.  However,
+the SDM is not clear in this case; therefore MPX is included in this
+advisory as a precaution.
 
-This document describes a generic root exploit against kde.
+IMPACT
+======
 
-The exploit is achieved by abusing a logic flaw within
-the KAuth framework which is present in kde4 (org.kde.auth) and kde5
-(org.kde.kf5auth). It is possible to spoof what KAuth calls
-callerID's which are indeed DBUS unique names of the sender of a DBUS
-message.
-Exploitation requires a helper which is doing some privileged work
-as root. Kde ships quite some of them, but for this writeup I chose the
-smb4k helper because it contains another vulnerability that makes
-exploitation a lot easier; but in general any KAuth privileged helper code
-can be triggered by users with arbitrary arguments which leads to
-LPE on default kde installations.
+There is an information leak, of control information mentioning
+pointers into guest address space; this may weaken address space
+randomisation and make other attacks easier.
 
-I will describe the overall problem by walking through the smb4k code and
-explain which DBUS functions are called and how a particular smb4k bug maps
-into the bigger picture of the KAuth flaw.
+When an innocent guest acquires leaked state, it will run with
+incorrect protection state.  This could weaken the protection intended
+by the MPX or PKU features, making other attacks easier which would
+otherwise be excluded; and the incorrect state could also cause a
+denial of service by preventing legitimate accesses.
 
-Theres a problem with smb4k using the KAuth framework
-and trusting all the arguments passed to the helper:
+VULNERABLE SYSTEMS
+==================
 
-ActionReply Smb4KMountHelper::mount(const QVariantMap &args)
-{
+Xen 4.4 and earlier are not vulnerable, as they do not use or expose
+MPX or PKU to guests.  Xen 4.5 and later expose MPX to guests.  Xen
+4.7 and later expose PKU to guests.  Therefore, Xen 4.5 and later are
+vulnerable.
 
-...
+Only x86 hardware implementing the MPX or PKU features is vulnerable.
+At the time of writing, these are Intel Skylake (and later) processors
+for MPX, and Intel Skylake Server (and later) processors for PKU.
 
-command << args["mh_command"].toString();
-command << args["mh_unc"].toString();
-command << args["mh_mountpoint"].toString();
-command << args["mh_options"].toStringList();
+ARM hardware is not vulnerable.
 
-...
+The vulnerability is only exposed to HVM guests.  PV guests cannot
+exploit the vulnerability.
 
-proc.setProgram(command);
-// Run the mount process.
-proc.start();
-...
-}
+Vulnerable guest operating systems
+- ----------------------------------
 
-This code is running as root, triggered via DBUS activation by smb4k GUI
-code running as user, and the "args" supplied by the user, via:
+Guests which use XSAVE for context switching PKU and MPX state are not
+vulnerable to inbound corruption caused by another malicious domain.
 
-void Smb4KMountJob::slotStartMount()
-{
-...
+With respect to PKU, the remaining outbound information leak is of no
+conceivable consequence.  And, experimentally, MPX does not appear to
+have a real vulnerability, even though the CPU documentation is not
+clear.
 
- Action::executeActions(actions, NULL, "net.sourceforge.smb4k.mounthelper");
-...
-}
+Therefore we think that these guests (those which use XSAVE) are not
+vulnerable.
 
-after filling "actions" (theres only one) with the proper Name
-(net.sourceforge.smb4k.mounthelper.mount) and HelperID
-(net.sourceforge.smb4k.mounthelper) in order to trigger DBUS activation as
-well as the argument dictionary which contains the "mh_command" etc.
-key/value pairs. Its calling the list-version of Action::executeAction()
-[note the trailing 's'] with a one-element list, but that doesn't matter.
-The important thing here is that the arguments are created by code
-running as user - potentially containing evil input - and are evaluated
-by the helper program running as root.
+Linux uses XSAVE, so is therefore not vulnerable.
 
-The above call ends at DBusHelperProxy::executeAction(), still at callers
-side. This function translates it into a DBUS method call which is
-finally running privileged and has the following interface:
+MITIGATION
+==========
 
-<interface name="org.kde.kf5auth">
-...
-    <method name="performAction" >
-        <arg name="action" type="s" direction="in" />
-        <arg name="callerID" type="ay" direction="in" />
-        <arg name="arguments" type="ay" direction="in" />
-        <arg name="r" type="ay" direction="out" />
-    </method>
-...
-</interface>
+Passing "pku=0" on the hypervisor command line will avoid the PKU
+vulnerability (by not advertising the feature to guests).
 
-Unlike the root helpers DBUS interfaces itself, which are not
-accessible as user, the KAuth DBUS interface org.kde.kf5auth is:
+There is no corresponding option for the probably-theoretical MPX
+vulnerability.
 
-<busconfig>
-  <policy context="default">
-    <allow send_interface="org.kde.kf5auth"/>
-    <allow receive_sender="org.kde.kf5auth"/>
-    <allow receive_interface="org.kde.kf5auth"/>
-  </policy>
-</busconfig>
+CREDITS
+=======
 
-The code for actually doing the call from user to root is this:
+This issue was discovered by Andrew Cooper of Citrix.
 
-void DBusHelperProxy::executeAction(const QString &action,
-     const QString &helperID, const QVariantMap &arguments)
-{
-...
+RESOLUTION
+==========
 
-QDBusMessage::createMethodCall(helperID, QLatin1String("/"),
-   QLatin1String("org.kde.kf5auth"), QLatin1String("performAction"));
+Applying the appropriate attached patch resolves this issue.
 
-QList<QVariant> args;
-args << action << BackendsManager::authBackend()->callerID() << blob;
-message.setArguments(args);
+xsa220.patch           xen-unstable
+xsa220-4.8.patch       Xen 4.8
+xsa220-4.7.patch       Xen 4.7
+xsa220-4.6.patch       Xen 4.6
+xsa220-4.5.patch       Xen 4.5
 
-m_actionsInProgress.push_back(action);
+$ sha256sum xsa220*
+8b86d9a284c0b14717467e672e63aebfc2bce201658493a54c64fb7c1863ce49  xsa220.patch
+4b53ad5748313fb92c68eac1160b00d1bf7310019657028122a455855334252b  xsa220-4.5.patch
+befe5ca5321d903428fc496abeee3a3b5eb0cee27a382e20d3caf8cc7bdfced2  xsa220-4.6.patch
+555fa741348909943393aaf73571bc7817b30eafcff73dbfcd73911113db5d7f  xsa220-4.7.patch
+7a41ad9c6f9d46536abae051c517456bdfa3564278e98f80222a904df749fb0c  xsa220-4.8.patch
+$
 
-QDBusPendingCall pendingCall = m_busConnection.asyncCall(message);
+DEPLOYMENT DURING EMBARGO
+=========================
 
-...
-}
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
-This code is invoking the performAction() DBUS method, passing along the
-user supplied arguments dictionary, in our smb4k case containing the
-handcrafted evil "mh_command" key, amongst others key/value pairs.
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-There are two problems:
-
-The KAuth frameworks performAction() method is passed the callerID by the
-user and the method is invokable by the user. This allows to mask as any
-caller, bypassing any polkit checks that may happen later in the KAuth
-polkit backend via calls into
-
-PolicyKitBackend::isCallerAuthorized(const QString &action,
-                                     QByteArray callerID)
-
-The second problem is smb4k trusting the arguments that are passed from the
-user and which are forwarded by the KAuth DBUS service running as root to
-the mount helper DBUS service which is also running as root but not allowed
-to be contacted by users.
-Thats a logical flaw. It was probably not intented that users invoke
-performAction() themself, using it as a proxy into DBUS services and
-faking caller IDs en-passant. The callerID usually looks like ":1.123"
-and is a DBUS unique name that maps to the sender of the message.
-You can think of it like the source address of an IP packet.
-This ID should be obtained via a DBUS function while the message is
-arriving, so it can actually be trusted and used as a subject for polit
-authorizations when using systembus-name subjects. Allowing callers to
-arbitrarily choosing values for this ID is taking down the whole idea
-of authentication and authorization.
-
-I made an exploit for smb4k that works on openSUSE Leap 42.2 thats using
-the org.kde.auth interface (rather than org.kde.kf5auth) but both
-interfaces share the same problems. The exploit also works on the latest
-Fedora26 Alpha kde spin with SELinux in enforcing mode. In order to test
-the callerID spoofing, I "protected" the smb4k helper code via "auth_admin"
-polkit settings and tried mounting SMB shares via smb4k GUI. This asked for
-the root password, as its expected. The exploit however still works, as its
-spoofing the callerID to be DBUs itself and the request is taken as legit,
-requiring no root password.
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
--- 
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
+iQEcBAEBCAAGBQJZX5IqAAoJEIP+FMlX6CvZFiQH/2iqblUF6Qb0sGpYgJxsw6IN
+uS8grqZsLyMR5ftpHA1F+NQufs5kQkhK88cJdSmHu7FwpFkUnH0BM6ufVoe7dRSH
+Nobe0epkhV0tLwX1Hz5zJUE4ufaWF0VHHZIG/BzFgUk1lUUjEyG7SHh8GhTdEBG+
+MGL2GSBYXpYIyXHwRUIs7+p9Vf92m7J9JXCQWOK7tRKE+j8lahJ21eQITgFRZWW8
+44zdXFk5/I6kiJZJPfLkVuVgWQLgozr/R+qO3lkCc/+47a+LwPxgap4t/rDJrkEl
+U/YyPMdLg4KZMr8aCgciREOO7TwxR6ndJFD3bj8Iwjt981uhbVNL18TqaUdC68c=
+=Ybk9
+-----END PGP SIGNATURE-----
 
+Download attachment "xsa220.patch" of type "application/octet-stream" (3131 bytes)
+
+Download attachment "xsa220-4.5.patch" of type "application/octet-stream" (3223 bytes)
+
+Download attachment "xsa220-4.6.patch" of type "application/octet-stream" (3203 bytes)
+
+Download attachment "xsa220-4.7.patch" of type "application/octet-stream" (4442 bytes)
+
+Download attachment "xsa220-4.8.patch" of type "application/octet-stream" (3119 bytes)
