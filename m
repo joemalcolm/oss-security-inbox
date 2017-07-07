@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/4
-Message-ID: <nycvar.YSQ.7.76.1712191700510.32077@wniryva>
-Date: Tue, 19 Dec 2017 17:03:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Daniel Berrange <berrange@...hat.com>
-Subject: CVE-2017-15124 Qemu: memory exhaustion through framebuffer update request message in VNC server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/15
+Message-ID: <CAMopvkPHCrVRX7TuyyzdHp2wv6Pc8-f4=sqmSxPiE04md7SMug@mail.gmail.com>
+Date: Fri, 7 Jul 2017 18:47:13 +0200
+From: Lukasz Lenart <lukaszlenart@...che.org>
+To: Struts Users Mailing List <user@...uts.apache.org>
+Cc: "announcements@...uts.apache.org" <announcements@...uts.apache.org>,  Struts Developers List <dev@...uts.apache.org>, announce@...che.org, icez <ic3z@...com>,  "security@...uts.apache.org" <security@...uts.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [ANN] Apache Struts 2: possible RCE in the Struts Showcase app in the Struts 1 plugin example in the Struts 2.3.x series
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+A potential security vulnerability was reported in the Struts 1 plugin
+used in the Struts 2.3.x series. It is possible to perform a Remote
+Code Execution attack if given construction exists in the vulnerable
+application. Please read the security bulletin for more details and
+inspect your application.
 
-VNC server implementation in Quick Emulator(QEMU) was found to be vulnerable 
-to an unbounded memory allocation issue, as it did not throttle the 
-framebuffer updates sent to its client. If the client did not consume these 
-updates, VNC server allocates growing memory to hold onto this data.
+- S2-048 Possible RCE in the Struts Showcase app in the Struts 1
+plugin example in Struts 2.3.x series
 
-A malicious VNC client could use this flaw to cause DoS on the remote server 
-host.
+http://struts.apache.org/docs/s2-048.html
+http://struts.apache.org/announce.html#a20170707
 
-Upstream fix(es):
------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-12/msg03715.html
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-12/msg03713.html
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-12/msg03711.html
+NOTE: Please notice that this vulnerability does not affect
+applications using Struts 2.5.x series or applications that do not use
+the Struts 1 plugin. Even if the plugin is available but certain code
+construction is not present, your application is safe.
 
-Thread:
--------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-12/msg03705.html
 
-'CVE-2017-15124' is assigned to this issue by Red Hat Inc.
+On behalf of the Apache Struts project
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Kind regards
+-- 
+Łukasz
++ 48 606 323 122 http://www.lenart.org.pl/
