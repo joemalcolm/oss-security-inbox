@@ -1,47 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/19
-Message-ID: <20170914172140.gncnsqipfsnaa2yi@eldamar.local>
-Date: Thu, 14 Sep 2017 19:21:40 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: GNU Emacs 25.2 enriched text remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/5
+Message-Id: <E1dTTht-0001as-0r@xenbits.xenproject.org>
+Date: Fri, 07 Jul 2017 13:54:05 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 217 (CVE-2017-10912) - page transfer may allow PV guest to elevate privilege
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, Sep 12, 2017 at 07:22:51AM +0200, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> On Mon, Sep 11, 2017 at 08:58:57PM +0200, Salvatore Bonaccorso wrote:
-> > Hi Paul,
-> > 
-> > On Sun, Sep 10, 2017 at 11:56:20PM -0700, Paul Eggert wrote:
-> > > GNU Emacs is an extensible, customizable, free/libre text editor and
-> > > software environment.  When Emacs renders MIME text/enriched data (Internet
-> > > RFC 1896), it is vulnerable to arbitrary code execution. Since Emacs-based
-> > > mail clients decode "Content-Type: text/enriched", this code is exploitable
-> > > remotely. This bug affects GNU Emacs versions 19.29 through 25.2.
-> > > 
-> > > Although we know no efforts to exploit this in the wild, exploitation is easy.
-> > [...]
-> > > == Timeline ==
-> > > 
-> > > 2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
-> > > 
-> > > 2017-09-07. POC for remote code execution sent to the maintainers of Emacs
-> > > and Gnus (Reiner Steib <Reiner.Steib@....de>, private mail).
-> > > 
-> > > 2017-09-08. Patch (by Lars Ingebrigtsen <larsi@...s.org>) to disable the
-> > > problematic code and mitigation (private mail).
-> > > 
-> > > 2017-09-09. Patch committed in main development repository.
-> > 
-> > Have you requested a CVE for this issue?
-> 
-> FTR, it seems this was submitted to DWF already as per:
-> https://debbugs.gnu.org/cgi/bugreport.cgi?bug=28350#63
+            Xen Security Advisory CVE-2017-10912 / XSA-217
+                              version 3
 
-CVE-2017-14482 was assigned for this issue.
+         page transfer may allow PV guest to elevate privilege
 
-Regards,
-Salvatore
+UPDATES IN VERSION 3
+====================
+
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+Domains controlling other domains are permitted to map pages owned by
+the domain being controlled.  If the controlling domain unmaps such a
+page without flushing the TLB, and if soon after the domain being
+controlled transfers this page to another PV domain (via
+GNTTABOP_transfer or, indirectly, XENMEM_exchange), and that third
+domain uses the page as a page table, the controlling domain will have
+write access to a live page table until the applicable TLB entry is
+flushed or evicted.  Note that the domain being controlled is
+necessarily HVM, while the controlling domain is PV.
+
+IMPACT
+======
+
+A malicious pair of guests may be able to access all of system memory,
+allowing for all of privilege escalation, host crashes, and
+information leaks.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+Only x86 systems are affected.  ARM systems are not vulnerable.
+
+Only systems where an attacker can control both a PV and an HVM guest
+are vulnerable.  This must be presumed to include systems containing
+HVM domains with service domains such as stub domain device models.
+
+Systems containing only PV guests are not vulnerable.
+
+Systems containing only HVM domains serviced by dom0 device model
+processes are not vulnerable.  Note that with libxl, xl, and libvirt,
+HVM domains use dom0 device model processes by default.
+
+MITIGATION
+==========
+
+There is no mitigation for this vulnerability.
+
+Switching from stub device models to dom0 process device models is not
+recommended as a mitigation, as in practice the vulnerability is
+likely to be hard to exploit through this route; whereas dom0 process
+device models may have unknown vulnerabilities.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa217.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
+xsa217-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa217*
+3e896412389d8e59e417ea7bb3d5b47a20de27b8eae0420c98071ce4b17d219c  xsa217.patch
+4e555cf47faf5e8d2bba4ff8a31fbe72fb11a6c0e3b286f23b26e684a1809705  xsa217-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZX5IlAAoJEIP+FMlX6CvZCC8IAJ8VgkRigZpOyxl1CHP+pSGu
+TZzWOS0xCMsuIkbPaGgfbgykNh7/7byWWPBZwoUSKh1gnWXIohFtRr3JvPKlsb8X
+5nthArzR1biR4c9kXL7TYiLhxoInHYT3tE7tnAj6c68qxWLrkQuTW3C3kJnlVf+p
+XXIju4ccV33X0hT1nqOr5P9FqhmDKgml4qeaUnEabFjXgM16/JaHM8f2k2U/FYJP
+mfrh+5EeAMg3i1OdtLklMyEUXlA1IE2m7BsfnA3eMQ9xc50mjEQ/NZYhe3knv7IX
+KfvRMMZgjTvEO/6GU7Qt5qlBRLj1e/jpxaviHsdZaLPoHz4Cq4WncdfyqfAJ1Dk=
+=WueX
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa217.patch" of type "application/octet-stream" (1384 bytes)
+
+Download attachment "xsa217-4.5.patch" of type "application/octet-stream" (1356 bytes)
