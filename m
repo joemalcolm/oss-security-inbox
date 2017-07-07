@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["747" "Tuesday" "28" "August" "2018" "15:39:43" "-0700" "Bryan Call" "bcall@apache.org" "<8A23CEFE-CFC4-4A8A-B9C0-997DCEA27A8A@apache.org>" "31" "[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with multi-range requests - CVE-2018-8005 " nil nil nil "8" "2018082822:39:43" "[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with multi-range requests - CVE-2018-8005" (number mark "U       bcall@apache Aug 28   31/747   " thread-indent "\"[oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with multi-range requests - CVE-2018-8005 \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["670" "Friday" "7" "July" "2017" "14:50:25" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1707071448440.951@wniryva>" "23" "[oss-security] CVE-2017-10810 Kernel: virtio-gpu: memory leakage while creating gpu object" nil nil nil "7" "2017070709:20:25" "[oss-security] CVE-2017-10810 Kernel: virtio-gpu: memory leakage while creating gpu object" (number mark "U       ppandit@redh Jul  7   23/670   " thread-indent "\"[oss-security] CVE-2017-10810 Kernel: virtio-gpu: memory leakage while creating gpu object\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21905 invoked by uid 550); 29 Aug 2018 07:53:46 -0000
+Received: (qmail 15933 invoked by uid 550); 7 Jul 2017 09:20:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23875 invoked from network); 28 Aug 2018 22:40:02 -0000
-From: Bryan Call <bcall@apache.org>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Message-Id: <8A23CEFE-CFC4-4A8A-B9C0-997DCEA27A8A@apache.org>
-Date: Tue, 28 Aug 2018 15:39:43 -0700
-To: announce@trafficserver.apache.org,
- dev <dev@trafficserver.apache.org>,
- users <users@trafficserver.apache.org>,
- security@trafficserver.apache.org,
- oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.9.1)
-Subject: [oss-security] [ANNOUNCE] Apache Traffic Server vulnerability with multi-range
- requests - CVE-2018-8005 
+Received: (qmail 15915 invoked from network); 7 Jul 2017 09:20:41 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com EA5D5C060208
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com EA5D5C060208
+Date: Fri, 7 Jul 2017 14:50:25 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1707071448440.951@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Fri, 07 Jul 2017 09:20:30 +0000 (UTC)
+Subject: [oss-security] CVE-2017-10810 Kernel: virtio-gpu: memory leakage while creating
+ gpu object
 
-CVE-2018-8005: Apache Traffic Server vulnerability with multi-range requests
+   Hello,
 
-Vendor:
-The Apache Software Foundation
+Linux kernel built with the VirtIO GPU driver(CONFIG_DRM_VIRTIO_GPU) support 
+is vulnerable to a memory leakage issue. It could occur while creating a 
+virtio gpu object in virtio_gpu_object_create().
 
-Version Affected:
-ATS 6.0.0 to 6.2.2
-ATS 7.0.0 to 7.1.3
+A user/process could use this flaw to leak host kernel memory potentially 
+resulting in DoS.
 
-Description:
-When the there are multiple ranges in a range request ATS will read the ent=
-ire object from cache.  This can cause performance problems with large obje=
-cts in cache.
+Upstream patch:
+---------------
+   -> https://git.kernel.org/linus/385aee965b4e4c36551c362a334378d2985b722a
 
-Mitigation:
-6.x users should upgrade to 6.2.3 or later versions
-7.x users should upgrade to 7.1.4 or later versions
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1468023
 
-References:
-	Downloads:
-		https://trafficserver.apache.org/downloads
-	Github Pull Request:
-		https://github.com/apache/trafficserver/pull/3106
-		https://github.com/apache/trafficserver/pull/3124
-	CVE:
-		https://cve.mitre.org/cgi-bin/cvename.cgi?name=3D2018-8005
+This issue was reported by Li Qiang of Qihoo 360 Gear Team.
 
--Bryan
-
-
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
