@@ -1,46 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/04/2
-Message-ID: <2e47f3de-a154-ff6d-a596-6c7766a96e34@pizzey.me>
-Date: Wed, 3 May 2017 16:42:25 -0500
-From: Sam Pizzey <sam@...zey.me>
-To: oss-security@...ts.openwall.com
-Subject: Re: [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/10
+Message-Id: <E1dTTi7-000285-LU@xenbits.xenproject.org>
+Date: Fri, 07 Jul 2017 13:54:19 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 223 (CVE-2017-10919) - ARM guest disabling interrupt may crash Xen
 Content-Type: text/plain; charset=utf-8
 
-Looks good! Especially the Exim RCE technique which I now need to go 
-play with.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-However:
+            Xen Security Advisory CVE-2017-10919 / XSA-223
+                              version 3
 
-'Also note that the output log file contains a lot of debug information
-added by Sendmail MTA. This might'
+              ARM guest disabling interrupt may crash Xen
 
-Might ..?
+UPDATES IN VERSION 3
+====================
 
-On 03/05/2017 15:32, Dawid Golunski wrote:
-> Here's a paper I wrote back in December.  It was originally meant to go
-> into Phrack but the team wanted a more general article on parameter injection
-> as mail() was supposedly an outdated technique.
-> Meanwhile, the RCE-chain continues :) So I decided to post it as it is without
-> changing it as mail() injection deserves a separate article imho.
->
-> https://exploitbox.io/paper/Pwning-PHP-Mail-Function-For-Fun-And-RCE.html
->
-> I reveal some exim code-execution vectors in there that should change
-> the whole game slightly :)
->
-> See my exploit for WordPress Core that is based on it:
-> https://exploitbox.io/vuln/WordPress-Exploit-4-6-RCE-CODE-EXEC-CVE-2016-10033.html
->
->
-> I'll attach copies of the white-paper here in the next revision as I
-> haven't slept for 3 nights and need to double check on everything
-> before it goes into the archive forever :)
->
->
-> Regards,
-> Dawid Golunski
-> https://legalhackers.com
-> https://ExploitBox.io
-> t: @dawid_golunski
+CVE assigned.
 
+ISSUE DESCRIPTION
+=================
+
+Virtual interrupt injection could be triggered by a guest when sending
+an SGI (e.g IPI) to any vCPU or by configuring timers. When the virtual
+interrupt is masked, a missing check in the injection path may result in
+reading invalid hardware register or crashing the host.
+
+IMPACT
+======
+
+A guest may cause a hypervisor crash, resulting in a Denial of Service
+(DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions which support ARM are affected.
+
+x86 systems are not affected.
+
+MITIGATION
+==========
+
+On systems where the guest kernel is controlled by the host rather than
+guest administrator, running only kernels which do not disable SGI and
+PPI (i.e IRQ < 32) will prevent untrusted guest users from exploiting
+this issue. However untrusted guest administrators can still trigger it
+unless further steps are taken to prevent them from loading code into
+the kernel (e.g by disabling loadable modules etc) or from using other
+mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of ARM.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa223.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
+
+$ sha256sum xsa223*
+b5c8d8e8dac027069bec7dd812cff3f6f99e5949dd4a8ee729255c38274958b1  xsa223.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZX5I2AAoJEIP+FMlX6CvZuooH/0bkL0vO55m0gAFI/5Ipsopj
+tsvHObMSeeXRbn9IlhHgqG1HMtiMxMrT5ucQk66jW9oaEX4wxSbeZfDj7F0YlS7q
+krtRpQsxd0cwL5vN5aGSTs7e8O3G2pXUcVszp/lifZs/17QzjWZTPafQcthcAcRk
+ohX46fW8GROCXltHXI5epV7vxfD6JiKcejGNa/DUk65qPawjL/kcO2hrcGT8SS6f
+wlMNnR3ECwcMf0KYxvXrMyyLkfjKhQJDX3Ue6gRretBZ/llSRa75SWNWdGo3lQN1
+7y2OuNbr4b2LISZE4f+F0xwMpuBTSnBnrVbyYSyGbBLULsGQF9Di7ok4bqPsuGA=
+=TPUB
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa223.patch" of type "application/octet-stream" (1999 bytes)
