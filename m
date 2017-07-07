@@ -1,86 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/3
-Message-ID: <20171219014854.GA17687@takahe.colorado.edu>
-Date: Mon, 18 Dec 2017 18:48:54 -0700
-From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
-To: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/1
+Message-ID: <alpine.LFD.2.20.1707071443340.951@wniryva>
+Date: Fri, 7 Jul 2017 14:48:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-10806 Qemu: usb-redirect: stack buffer overflow in debug logging
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 19, 2017 at 12:14:21AM +0000, halfdog wrote:
-> So maybe SSH cares for you to have sane pty with all the features
-> needed to make gnupg run smoothly? Perhaps you may want to respond,
-> that it is not gnupg at fault, if e.g. an embedded boot image
-> does not use openvt and /dev/tty[1-6] during early boot in correct
-> ways, thus causing problems. But the way gnupg reacts in that
-> situation (not working and not giving meaningful error messages
-> either) does not really help the user and gave me the impression,
-> that those usecases are out of scope - and hence also of scope
-> for testing.
+   Hello,
 
-Hmm, I don't know about ssh, but you are supposed to export GPG_TTY in .bashrc.
+Quick emulator(Qemu) built with the USB redirector support is vulnerable to a 
+stack buffer overflow flaw. It could occur while logging debug messages when 
+the debug mode is enabled in the device.
 
-> You may want to read [0] to see how another user on "gnupg-users"
-> describes in more detail the "user experience" when trying
-> to get TTYs, pinentry, gpg-agent ... up and running. The post
-> quite reflects also my user experience, the difference is just
-> that he writes lengthy mails to get things running, I write them
-> to see if there are alternatives.
+A user/process could use this flaw to crash the Qemu process on the host 
+resulting in DoS.
 
-I read that mail, and the guy doesn't make too much sense to me... Also, he
-never showed any gpg-agent.conf file, or any debug output of gpg-agent. He only
-claims is that it used to work on an Ubuntu system. So, how am I supposed to
-help him? I never used anything Debian-related. 
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-05/msg03087.html
 
-Another issue, is that doing that sudo magic may not play well with
-systemd-logind. Latest gnupg ships gpg-agent which is socket-activated by
-systemd --user (FTR, I don't support this choice).
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1468496
 
-OTOH, this email is written in mutt running inside an ssh session, and the
-passwd for the smtp server is stored in a symmetrically gpg-encrypted file...
+This issue was reported by Li Qiang of Qihoo 360 Gear Team.
 
-> Well, on a server running multiple concurring tasks, I feel somehow
-> uncomfortable killing a process just by UID and process name.
-> How to make sure, that not a parallel task is still using the
-> agent?
-
-What user runs gpg-agent?
-
-> Signals are just fine for control: when a parent knows exactly
-> its children and signals them. For processes starting automagically
-> I just do not want to care about how their daemonizing works
-> and if there might be races during that procedure, how to craft
-> pkill regex to reduce the risk of killing the wrong agent under
-> some circumstances, ...
-
-The HUP signal is a standard means of making daemons reload their configs and
-flush caches. gpg-agent is not unique here. For example, logrotate does the
-same with syslog.
-
-> Please give realistic answers. And if you try, you may notice,
-> that things are not just as simple as "send a signal to any process
-> with a given name". Your backup system vendor and your colleagues
-> will love you, when killing the sign/encryption process that way,
-> yielding spurious errors from time to time. Could be quite some
-> beer to spend when they completed their root cause analysis.
-
-For encrypting you don't need agent at all. For example, on my systems, root
-ssh key is set randomly on each boot and stored in an encrypted form. The
-encryption is performed with my packager key as a --recipient. All from a
-systemd service. Works since 2013 on Arch Linux testing.
-
-For signing, I don't know what you mean because I don't understand how you
-unlock secret key in a non-interactive manner...
-
-> Maybe your pkill would not cause those side effects, but I just
-> do not want to care about them. I am quite sure, that they are
-> ignorable on desktop environments or for e-mail reading, in a
-> production environment they might just be a risk and an annoyance.
-> Hence my argument about desktop and server.
-
-Please, don't spread this corporate nonsense about production environments etc
-because it is just a politically correct excuse for ignorance of IT ppl.
-
-Cheers,
--- 
-Leonid Isaev
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
