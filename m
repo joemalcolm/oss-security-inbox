@@ -1,136 +1,166 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/1
-Message-ID: <20170630103434.7d6093c9@pc1>
-Date: Fri, 30 Jun 2017 10:34:34 +0200
-From: Hanno Böck <hanno@...eck.de>
-To:  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: exiv2: multiple memory safety issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/6
+Message-Id: <E1dTThz-00022I-2Y@xenbits.xenproject.org>
+Date: Fri, 07 Jul 2017 13:54:11 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 219 (CVE-2017-10915) - x86: insufficient reference counts during shadow emulation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I'm reporting three issues here in exiv2, a parser libary for image
-metadata. These are only examples, exiv2 is full of memory safety bugs
-that can trivially be found by running afl with asan for a few hours.
+            Xen Security Advisory CVE-2017-10915 / XSA-219
+                              version 3
 
-Minified sample files for all three example bugs attached.
+        x86: insufficient reference counts during shadow emulation
 
-I have not reported thoses issues upstream. When I previously tried to
-report bugs in exiv2 found via fuzzing the upstream author made it
-clear to me that he has little interest in fixing those issues and
-doesn't consider his software suitable to parse defect files (which
-basically means it's unsuitable for untrusted input). The discussion
-can be read here [1]. (the page is sometimes not available, searching
-for it in the google cache usually works though)
+UPDATES IN VERSION 3
+====================
 
-exiv2 is to my knowledge used by the major Linux Desktops GNOME and
-KDE. I'll also inform their security teams. I leave it up to Linux
-distros how to handle this, but it certainly is problematic that a
-crucial parser used by major desktop applications is not interested in
-fixing potential security issues.
+CVE assigned.
 
-[1] http://dev.exiv2.org/issues/1248
+ISSUE DESCRIPTION
+=================
+
+When using shadow paging, writes to guest pagetables must be trapped and
+emulated, so the shadows can be suitably adjusted as well.
+
+When emulating the write, Xen maps the guests pagetable(s) to make the final
+adjustment and leave the guest's view of its state consistent.
+
+However, when mapping the frame, Xen drops the page reference before
+performing the write.  This is a race window where the underlying frame can
+change ownership.
+
+One possible attack scenario is for the frame to change ownership and to be
+inserted into a PV guest's pagetables.  At that point, the emulated write will
+be an unaudited modification to the PV pagetables whose value is under guest
+control.
+
+IMPACT
+======
+
+A malicious pair of guests may be able to elevate their privilege to that of
+Xen.
+
+We have not ruled out the possibility that a single malicious HVM
+guest may be able to elevate their privilege to that of Xen.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only x86 systems are affected.  ARM systems are not vulnerable.
+
+HVM guests using shadow mode paging can exploit this vulnerability.  HVM guests
+using Hardware Assisted Paging (HAP) cannot exploit this vulnerability.
+
+To discover whether your HVM guests are using HAP, or shadow page
+tables: request debug key `q' (from the Xen console, or with
+`xl debug-keys q').  This will print (to the console, and visible in
+`xl dmesg'), debug information for every domain, containing something
+like this:
+
+  (XEN) General information for domain 2:
+  (XEN)     refcnt=1 dying=2 pause_count=2
+  (XEN)     nr_pages=2 xenheap_pages=0 shared_pages=0 paged_pages=0 dirty_cpus={} max_pages=262400
+  (XEN)     handle=ef58ef1a-784d-4e59-8079-42bdee87f219 vm_assist=00000000
+  (XEN)     paging assistance: hap refcounts translate external
+                               ^^^
+The presence of `hap' here indicates that the host is not
+vulnerable to this domain.  For an HVM domain the presence of `shadow'
+indicates that the domain can exploit the vulnerability.
+
+Xen 4.6 and later have the option to compile-out shadow paging support.  (The
+default is to compile with shadow paging support).  If Xen is built without
+shadow support, it is not vulnerable.
+
+Exploiting this race condition requires coordination between an x86 HVM guest
+using shadow paging, and a PV guest.
+
+Running only HVM guests avoids the vulnerability, unless stub device
+models are in use (since stub device models are PV domains, each
+controlled by the corresponding guest).
+
+Running only PV guests avoids the vulnerability.
+
+MITIGATION
+==========
+
+Where the HVM guest is explicitly configured to use shadow paging (eg
+via the `hap=0' xl domain configuration file parameter), changing to
+HAP (eg by setting `hap=1') will avoid exposing the vulnerability to
+those guests.  HAP is the default (in upstream Xen), where the
+hardware supports it; so this mitigation is only applicable if HAP has
+been disabled by configuration.
+
+(This mitigation is not applicable to PV guests.)
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa219.patch           xen-unstable
+xsa219-4.8.patch       Xen 4.8, 4.7
+xsa219-4.6.patch       Xen 4.6
+xsa219-4.5.patch       Xen 4.5, 4.4
+
+$ sha256sum xsa219*
+d06759d11dad3b128e65ade9e6afc1c728b65457cc32c34f46690f959c48644f  xsa219.patch
+0dd27ad66f964ba163dbc72e3a074d171b0e1edf9b322d811feb7f5c1deb4437  xsa219-4.5.patch
+d5fdd9d75dbad4a2315f48f8aec5dd3a10b92307320b5c141e2c1e69e422510c  xsa219-4.6.patch
+a2023599abbc3b8f46cd430bec154401ef166493fcb5787f2f6fb9802b12f9b4  xsa219-4.8.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-----------------
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-Heap overflow (write) in tiff parser
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-A malformed tiff file can cause a one byte heap overflow in exiv2.
+iQEcBAEBCAAGBQJZX5IoAAoJEIP+FMlX6CvZouAH+gOw7icYZ2FwKnf210qsvt5D
+3FR9CzAcHQjvNDu4W4bnsmrYX2cmIReu2dpVFkD3vZkn+fs8F1teZ+pryrPhI7JL
+27i08ljph8iQnBtHbsYkn2U1jr08mm6qalX97DpcXzzgbZKYTP2jHaG18eyT8Q9A
+ZPPmqaer1/i7cTnK45/S5rp+KDVrMQEqevU9nhi/dzoMcAXG9Lbu3MEoxclmuvzi
+GwAJLlDEsy7n3wy1JSpoEt0x3Aanl+P5nWwQE8Y5W+DH5h3j6n4FTlUzmWQ2bwTm
+Y7xGRy11zvWBl5t5DerkVpu5Nai5YUMy9hjx3sCRk36/JWedZ9naO9Q+cWlYYd8=
+=aqWN
+-----END PGP SIGNATURE-----
 
-Stack trace:
+Download attachment "xsa219.patch" of type "application/octet-stream" (5826 bytes)
 
-==22873==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000df1 at pc 0x000000842091 bp 0x7fff51b3ee70 sp 0x7fff51b3ee68
-WRITE of size 1 at 0x602000000df1 thread T0
-    #0 0x842090 in Exiv2::ul2Data(unsigned char*, unsigned int, Exiv2::ByteOrder) /f/exiv2-trunk/src/types.cpp:362:20
-    #1 0x68beac in long Exiv2::toData<unsigned int>(unsigned char*, unsigned int, Exiv2::ByteOrder) /f/exiv2-trunk/src/../include/exiv2/value.hpp:1459:16
-    #2 0x68beac in Exiv2::ValueType<unsigned int>::copy(unsigned char*, Exiv2::ByteOrder) const /f/exiv2-trunk/src/../include/exiv2/value.hpp:1612
-    #3 0x6742b2 in Exiv2::Exifdatum::copy(unsigned char*, Exiv2::ByteOrder) const /f/exiv2-trunk/src/exif.cpp:362:48
-    #4 0x7f794d in Exiv2::TiffImage::readMetadata() /f/exiv2-trunk/src/tiffimage.cpp:204:18
-    #5 0x59786a in Action::Print::printSummary() /f/exiv2-trunk/src/actions.cpp:289:16
-    #6 0x596ef8 in Action::Print::run(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /f/exiv2-trunk/src/actions.cpp:244:44
-    #7 0x55fb3f in main /f/exiv2-trunk/src/exiv2.cpp:170:25
-    #8 0x7f91c1e571d0 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.24-r2/work/glibc-2.24/csu/../csu/libc-start.c:289
-    #9 0x468979 in _start (/r/exiv2/exiv2+0x468979)
+Download attachment "xsa219-4.5.patch" of type "application/octet-stream" (5996 bytes)
 
-0x602000000df1 is located 0 bytes to the right of 1-byte region [0x602000000df0,0x602000000df1)
-allocated by thread T0 here:
-    #0 0x55af00 in operator new[](unsigned long) (/r/exiv2/exiv2+0x55af00)
-    #1 0x83fadf in Exiv2::DataBuf::alloc(long) /f/exiv2-trunk/src/types.cpp:158:22
+Download attachment "xsa219-4.6.patch" of type "application/octet-stream" (5960 bytes)
 
-----------------
-
-Heap out of bounds read in jp2 / JPEG2000 parser
-
-A malformed jpeg2000 file causes a (large) out of bounds read.
-
-Stack trace:
-
-==32038==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7f5e099e6838 at pc 0x00000050f22c bp 0x7ffdf7f3dcd0 sp 0x7ffdf7f3d480
-READ of size 808464432 at 0x7f5e099e6838 thread T0
-    #0 0x50f22b in __asan_memcpy (/r/exiv2/exiv2+0x50f22b)
-    #1 0x6e82bc in Exiv2::Jp2Image::readMetadata() /f/exiv2-trunk/src/jp2image.cpp:277:29
-    #2 0x59786a in Action::Print::printSummary() /f/exiv2-trunk/src/actions.cpp:289:16
-    #3 0x596ef8 in Action::Print::run(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /f/exiv2-trunk/src/actions.cpp:244:44
-    #4 0x55fb3f in main /f/exiv2-trunk/src/exiv2.cpp:170:25
-    #5 0x7f5e130a71d0 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.24-r2/work/glibc-2.24/csu/../csu/libc-start.c:289
-    #6 0x468979 in _start (/r/exiv2/exiv2+0x468979)
-
-0x7f5e099e6838 is located 0 bytes to the right of 808452152-byte region [0x7f5dd96e6800,0x7f5e099e6838)
-allocated by thread T0 here:
-    #0 0x55af00 in operator new[](unsigned long) (/r/exiv2/exiv2+0x55af00)
-    #1 0x6e8176 in Exiv2::DataBuf::DataBuf(long) /f/exiv2-trunk/src/../include/exiv2/types.hpp:204:46
-    #2 0x6e8176 in Exiv2::Jp2Image::readMetadata() /f/exiv2-trunk/src/jp2image.cpp:273
-    #3 0x59786a in Action::Print::printSummary() /f/exiv2-trunk/src/actions.cpp:289:16
-    #4 0x596ef8 in Action::Print::run(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /f/exiv2-trunk/src/actions.cpp:244:44
-    #5 0x7f5e130a71d0 in
-    __libc_start_main /var/tmp/portage/sys-libs/glibc-2.24-r2/work/glibc-2.24/csu/../csu/libc-start.c:289
-
-----------------
-
-Stack out of bounds read in webp parser
-
-A malformed webp file causes a six bytes stack out of bounds read.
-
-Stack trace:
-
-==598==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffcc12aa054 at pc 0x0000004fe311 bp 0x7ffcc12a9f90 sp 0x7ffcc12a9740
-READ of size 6 at 0x7ffcc12aa054 thread T0
-    #0 0x4fe310 in __interceptor_memcmp.part.76 (/r/exiv2/exiv2+0x4fe310)
-    #1 0x8889d0 in Exiv2::WebPImage::getHeaderOffset(unsigned char*, long, unsigned char*, long) /f/exiv2-trunk/src/webpimage.cpp:798:17
-    #2 0x8889d0 in Exiv2::WebPImage::decodeChunks(unsigned long) /f/exiv2-trunk/src/webpimage.cpp:601
-    #3 0x884ff2 in Exiv2::WebPImage::readMetadata() /f/exiv2-trunk/src/webpimage.cpp:496:20
-    #4 0x59786a in Action::Print::printSummary() /f/exiv2-trunk/src/actions.cpp:289:16
-    #5 0x596ef8 in Action::Print::run(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /f/exiv2-trunk/src/actions.cpp:244:44
-    #6 0x55fb3f in main /f/exiv2-trunk/src/exiv2.cpp:170:25
-    #7 0x7f7f9cc9f1d0 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.24-r2/work/glibc-2.24/csu/../csu/libc-start.c:289
-    #8 0x468979 in _start (/r/exiv2/exiv2+0x468979)
-
-Address 0x7ffcc12aa054 is located in stack of thread T0 at offset 180 in frame
-    #0 0x885a0f in Exiv2::WebPImage::decodeChunks(unsigned long) /f/exiv2-trunk/src/webpimage.cpp:501
-
-  This frame has 13 object(s):
-    [32, 36) 'size_buff' (line 503)
-    [48, 64) 'payload' (line 516)
-    [80, 84) 'size_buf' (line 520)
-    [96, 100) 'size_buf48' (line 536)
-    [112, 114) 'size_buf_w' (line 551)
-    [128, 131) 'size_buf_h' (line 552)
-    [144, 148) 'size_buf112' (line 568)
-    [160, 162) 'size_buff152' (line 587)
-    [176, 180) 'exifLongHeader295' (line 588) <== Memory access at offset 180 overflows this variable
-    [192, 196) 'exifTiffBEHeader297' (line 591)
-    [208, 272) 'xmpData' (line 650)
-    [304, 688) 'temp.lvalue'
-    [752, 1136) 'temp.lvalue232'
-HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
-      (longjmp and C++ exceptions *are* supported)
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-Download attachment "exiv2-poc.tar.gz" of type "application/gzip" (425 bytes)
+Download attachment "xsa219-4.8.patch" of type "application/octet-stream" (5879 bytes)
