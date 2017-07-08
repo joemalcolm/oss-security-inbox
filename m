@@ -1,60 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/4
-Message-ID: <20170516172124.GA6798@openwall.com>
-Date: Tue, 16 May 2017 19:21:24 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Alistair Crooks <agc@...src.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: NetBSD/pkgsrc membership on distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/08/3
+Message-ID: <CAH468dpjOzniBY67QPv16qTXCFvmGaYy1uvvBVdt7Tnafoj6Eg@mail.gmail.com>
+Date: Sat, 8 Jul 2017 12:27:32 -0400
+From: Anthony Sasadeusz <sasadeu1@...c.edu>
+To: oss-security@...ts.openwall.com
+Subject: CVE ID for JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi Alistair,
+Use CVE-2017-1000050
 
-Thank you for the prompt response.
+-Anthony
 
-On Tue, May 16, 2017 at 10:04:12AM -0700, Alistair Crooks wrote:
-> Yeah, we're here, we are the same as previously, still trying to go
-> about our business with maximum effect and minimal fuss, and we're
-> listening.
-> 
-> We haven't contributed anything (much) recently, but we don't really
-> go in for massive "me too"s, and had kinda hoped that the "no drama"
-> approach would work here. It seems my assumptions were wrong. I will
-> attempt to do a better job at posting - sorry about that, mea culpa.
-
-It wasn't just that, and in fact mere "me too"s are discouraged.
-
-Over the last few days, there have been repeated requests to get a
-response specifically from NetBSD in a thread on the distros list.
-There was no response.  Additionally, the reporter of a vulnerability
-mentioned getting no response to their direct e-mail to your
-security-officer address.
-
-At least the distros' list messages were being accepted by the NetBSD
-mail server.  (I checked our logs.)
-
-I think you're one of the people subscribed to distros for NetBSD (until
-I suspended the subscription for reasons mentioned above half an hour
-ago).  Right?  Did you receive those messages?  If not, let's
-troubleshoot that now.  If you did, then why the lack of response?
-
-Are you also on oss-security?  I can't find you among the subscribers.
-
-> What are we doing these days? We're looking into the pre-announcement
-> that everyone else is looking at for NetBSD, and pkgsrc is even more
-> vibrant than ever, runs on a huge number of platforms, and is still
-> reporting CVEs in the usual way - we were told some minor Linux
-> distributions use the pkgsrc notification mechanism, so, for their
-> sakes, I'd ask that you continue to keep us in the loop, please.
-
-Sounds reasonable, but let's figure out what went wrong above first.
-
-I'm sorry for maybe creating drama, but this was already first brought
-up on the distros list itself (and elicited no response from any NetBSD
-person), and besides stuff on the distros list isn't meant to stay
-private forever anyway (even though this normally applies to
-vulnerabilities rather than to administrivia).
-
-Thanks,
-
-Alexander
