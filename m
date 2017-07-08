@@ -1,61 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/1
-Message-ID: <CANO=Ty37M4dTtMHiRAJ1nbp6sz33SuCDZedY3dysg6SKOh7i5g@mail.gmail.com>
-Date: Fri, 2 Jun 2017 18:17:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Leo Famulari <leo@...ulari.name>
-Subject: Re: What happens in order to get CVE numbers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/08/2
+Message-ID: <20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>
+Date: Sat, 8 Jul 2017 16:11:25 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-You can request a CVE Identifier as soon as you can answer the following
-questions:
+Hi
 
-1) What software is affected? Product name? Product version?
-2) What is the problem type? (in some cases we accept "unknown" but you
-better have a reproducer that does something nasty like crash the system or
-execute code)
-3) A description of the issue (which includes affected software. problem
-type and ideally the impact)
-4) A reference URL, and I know the DWF will accept URL's that don't exist
-yet as long as you are trustworthy (e.g. "we will post the advisory at URL
-X"), typically for open source something like a link to the issue or the
-affected code is more than sufficient.
+On Wed, Jun 28, 2017 at 10:02:40PM +0200, Solar Designer wrote:
+> 6. If CVE IDs are requested, the report is valid, and you're a CNA,
+> assign those (requesting any required information from the reporter
+> first)
+> 
+> 7. If the report does not mention CVE IDs (neither requests nor provides
+> them, and doesn't mention the reporter having requested them elsewhere),
+> yet the report is valid and it looks like distros will need CVE IDs, and
+> you're a CNA, ask the reporter whether they have already requested CVE
+> IDs elsewhere, then assign those if they haven't been requested
+> elsewhere
 
-So yes, you can ask for a CVE well before you commit a fix (and in some
-cases before you even fully understand the issue).
+Speaking for Debian: Debian beeing a CNA can *help* monitoring those
+explicitly and assign where needed CVEs from the assigned pool.
 
+We are already as well contributing to other tasks, and will continue
+to do so as time permits.
 
-
-On Fri, Jun 2, 2017 at 10:22 AM, Qhdwns123 <qhdwns123@...tonmail.com> wrote:
-
-> The developer has not yet patched it.
->
-> Can I request CVE before committing?
->
-> -------- Original Message --------
-> Subject: Re: [oss-security] What happens in order to get CVE numbers
-> Local Time: June 3, 2017 12:41 AM
-> UTC Time: June 2, 2017 3:41 PM
-> From: leo@...ulari.name
-> To: Qhdwns123 <qhdwns123@...tonmail.com>
-> oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
->
-> On Fri, Jun 02, 2017 at 09:09:09AM -0400, Qhdwns123 wrote:
-> > Hi
-> >
-> > What happens in order to get CVE numbers
->
-> In order to get a CVE assignment, you can fill out the CVE request form:
->
-> https://cveform.mitre.org/
->
-
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Regards,
+Salvatore
