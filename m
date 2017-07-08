@@ -1,43 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/9
-Message-ID: <20170830005418.4E30.93016A1C@nri-secure.co.jp>
-Date: Wed, 30 Aug 2017 00:54:23 +0900
-From: "Daisuke Noguchi[NRIセキュア　野口]" <noguchi@...-secure.co.jp>
-To: <oss-security@...ts.openwall.com>
-CC: noguchi@...-secure.co.jp
-Subject: ConnMan #ConnManDo Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/08/1
+Message-ID: <20170708124016.ypmkkzwrl3lxiwot@eldamar.local>
+Date: Sat, 8 Jul 2017 14:40:16 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: daniel.salzman@....cz, ondrej@...ian.org
+Subject: Re: CVE for the TSIG issue in knot?
 Content-Type: text/plain; charset=utf-8
 
-Hi ALL
+Hi
 
-We have published the web page which describes about detail of CVE-2017-12865, ConnMan vulnerability.
-http://connmando.nri-secure.co.jp/index.html
+On Sat, Jun 24, 2017 at 02:28:20PM +0200, Solar Designer wrote:
+> On Sat, Jun 24, 2017 at 01:58:23PM +0200, Yves-Alexis Perez wrote:
+> > I noticed the recent issue in knot with TSIG bypass
+> > (https://lists.nic.cz/pipermail/knot-dns-users/2017-June/001144.html)
+> 
+> Is is inappropriate to post only a link in here.  In cases like this,
+> please also quote at least the most essential portion of the content
+> you're referring to, which is:
+> 
+> "CZ.NIC has released Knot DNS 2.5.2 and Knot DNS 2.4.5. Beside
+> several fixes and improvements, these versions fix a flaw within the
+> TSIG protocol implementation that would allow an attacker with a
+> valid key name and algorithm to bypass the TSIG authentication if no
+> additional ACL restrictions is set. This vulnerability was
+> discovered by security experts from Synacktiv.  Special thanks to
+> them!"
 
-This patch has been merged to master branch of debian and yocto Linux distribution.
-And now we are trying to communicate with other Linux distribution security teams.
-- [debian][DSA 3956-1] connman security update
-  https://www.debian.org/security/2017/dsa-3956
-- [yocto]connman: Fix for CVE-2017-12865
-  http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=9086b525dd00f482ea68a384540cd30778413c9e
+FTR, this issue has been assigned CVE-2017-11104.
 
-If it would be worth posting, could you please deal with it.
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-11104
 
-Best regards,
-
-------------------------------------------------------------
-Daisuke Noguchi
-Seinor Security Consultant
-NRI Secure Technologies, Ltd. Cyber Security Technical Development Department
-Tokyo Office   TEL +81-3-6831-8514 Fax +81-3-6706-0599
-
-
-
-----------------------------------------------------------------
-このメールは、本来の宛先の方のみに限定された機密情報が含まれてい
-る場合がございます。お心あたりのない場合は、送信者にご連絡のうえ、
-このメールを削除いただきますようお願い申し上げます。
-
-PLEASE READ :This e-mail is confidential and intended for the
-named recipient only. If you are not an intended recipient,
-please notify the sender and delete this e-mail.
-----------------------------------------------------------------
+Regards,
+Salvatore
