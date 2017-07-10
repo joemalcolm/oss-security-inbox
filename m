@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1549" "Tuesday" "8" "June" "2021" "11:02:12" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "61" "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil "6" nil nil (number mark "U       butterflyhua Jun  8   61/1549  " thread-indent "\"Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2129" "Monday" "10" "July" "2017" "09:12:19" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<458110.442009882-sendEmail@localhost>" "62" "[oss-security] xar: NULL pointer dereference in xar_get_path (util.c)" nil nil nil "7" "2017071009:12:19" "[oss-security] xar: NULL pointer dereference in xar_get_path (util.c)" (number mark "U       ago@gentoo.o Jul 10   62/2129  " thread-indent "\"[oss-security] xar: NULL pointer dereference in xar_get_path (util.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19864 invoked by uid 550); 8 Jun 2021 11:10:42 -0000
+Received: (qmail 15822 invoked by uid 550); 10 Jul 2017 09:12:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,102 +12,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13583 invoked from network); 8 Jun 2021 03:02:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=wYhKYDgEUtnXXpSoUgP6q/zoNwhfWgCxIsc2YCaf15s=;
-        b=bKQrxpM1CiuqIyFqEB0r7sZlvk1wqAz0Z+Q25n2AkmRyvPfxbqXhsh0vcK5aPdLTTN
-         QgiC4XCh715pFM7hpGKpeuYvdXRHdzfQXE0XYbGL30vrideJyebR2dE1W0FgSCj5jpNj
-         7TTmeDRrrqtO3PjgzUhQ6TEiNreXNuLmsQHt5NG+/78B1LgmTnXucmQuebZ6WFUwrQXx
-         10hMACn9MgTafgWFZ/gUworS5sHkQlf7Ucgixx3yJCrdYmmBpkf4tOIaK7hi7p+n4XLq
-         wWQbyzgoxsyJ6QCyE+WS3WWo+2EhFTlyySlJp2xOpcj9q8UOMTLEREMZxOT6oiNYly6W
-         ah1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=wYhKYDgEUtnXXpSoUgP6q/zoNwhfWgCxIsc2YCaf15s=;
-        b=HygTMeDrFi7lbf+GORCSVKJKDif1S4x3LhGBSMKBV8SDjNLBSQt1p5U87Hub7ItKjz
-         zD1hpfczjeYu50RzIewzDcYQK9r+GzcifBwLC03mwi4hfCm7TH/Ru75LgzNl251+0G5D
-         PWKW+j0ZoeDZ1+8kH2Uf7wOP1h+r9g7m5ekY0t9RQFZZckPMnS7OoNjAZLQFeP0i4ZWz
-         Pf/uR7TU/vX7nXA18x5C3yT1se6kLIqySa+d+WTFSHOn6AgyTTP4SRfG7f3Jn2LGnl4q
-         UMNlpT3C737QLgHMiyzMPRanKPsXbKWLGUUNEu6CiqgBFCZJHpqDf1JUDQ6kD0he+5X6
-         vzJQ==
-X-Gm-Message-State: AOAM532LMOCsHXorp9B53fzJwWSiCE0InJMZawasyT1mmm1hcZuighgT
-	NkZHvNH78z4o6q8fuLRT9cynY4mR885R7jETADyL0F5OIsqGUA==
-X-Google-Smtp-Source: ABdhPJxkR1WJZ6dXiiQqR/cS97bpT+5mvpm4zPmBc/Lg+r5TywKOkxAk19Ei+k4U1SoqTv8zHfdTTR/8c0I0rRoqthc=
-X-Received: by 2002:a25:e741:: with SMTP id e62mr29495996ybh.484.1623121343534;
- Mon, 07 Jun 2021 20:02:23 -0700 (PDT)
+Received: (qmail 14150 invoked from network); 10 Jul 2017 09:12:35 -0000
+Message-ID: <458110.442009882-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 10 Jul 2017 09:12:19 +0000
 MIME-Version: 1.0
-References: <CAFcO6XOFPEGiO_HwajTB3zA9d3jyhUwDX742huVhaNtQy0=TfQ@mail.gmail.com>
- <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com>
-In-Reply-To: <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com>
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Tue, 8 Jun 2021 11:02:12 +0800
-Message-ID: <CAFcO6XOoDp3LDitRWWg0O7uXtL0c7+zosg3_+qwXeB=PYaezxQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-36786.1626009507"
+Subject: [oss-security] xar: NULL pointer dereference in xar_get_path (util.c)
 
-Hi, RedHat has assigned CVE-2021-3587 to this issue.
+------MIME delimiter for sendEmail-36786.1626009507
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
+Description:
+xar is an easily extensible archive format.
 
-Regards,
- butt3rflyh4ck.
+The complete ASan output of the issue:
 
+# xar -t -f $FILE
+==5525==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f075cfb35f6 bp 0x7fff705167b0 sp 0x7fff70515f38 T0)
+==5525==The signal is caused by a READ memory access.
+==5525==Hint: address points to the zero page.
+    #0 0x7f075cfb35f5 in strlen /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76
+    #1 0x45f5ef in __strdup /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_interceptors.cc:562
+    #2 0x7f075decebc8 in xar_get_path /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/util.c:95:8
+    #3 0x523f93 in print_file /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:214:16
+    #4 0x513f07 in list /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:1524:4
+    #5 0x513f07 in main /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:2666
+    #6 0x7f075cf55680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x41af38 in _init (/usr/bin/xar+0x41af38)
 
-On Sun, Jun 6, 2021 at 11:40 PM butt3rflyh4ck
-<butterflyhuangxx@gmail.com> wrote:
->
-> Hi, the patch for this issue in upstream:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4ac06a1e013cf5fdd963317ffd3b968560f33bba
->
-> Regards,
->  butt3rflyh4ck.
->
->
-> On Tue, Jun 1, 2021 at 3:37 PM butt3rflyh4ck <butterflyhuangxx@gmail.com> wrote:
-> >
-> >  Hi, there was a null pointer dereference in llcp_sock_getname in
-> > net/nfc/llcp_sock.c and reproduced it in linux-5.13.0-rc2. An
-> > unprivileged user can trigger this bug and cause denial of service.
-> >
-> > #Root Cause
-> > After creating an nfc socket, bind the address by calling bind(), if
-> > LLCP_SAP_MAX was used as SAP, it cause the bind() failed and there
-> > would set llcp_sock->service_name  as NULL.
-> >
-> > Although bind() returns an error here, it does not affect calling
-> > other socket functions. sock_getname() would invoke
-> > llcp_sock_getname(), llcp_sock_getname copied service  name from
-> > llcp_sock->service_name by memcpy but llcp_sock->service_name is NULL.
-> >
-> > #Fix
-> > the patch for this issue:
-> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=4ac06a1e013c
-> >
-> > #CVE
-> > CVE not assigned.
-> >
-> > #Credits
-> > Active Defense Lab of Venustech.
-> >
-> >
-> >
-> > Regards,
-> >    butt3rflyh4ck.
-> >
-> > --
-> > Active Defense Lab of Venustech
->
->
->
-> --
-> Active Defense Lab of Venustech
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76 in strlen
+==5525==ABORTING
+Affected version:
+1.6.1
 
+Fixed version:
+N/A
 
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-11125
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00287-xar-nullptr-xar_get_path
+
+Timeline:
+2017-06-17: bug discovered and reported to upstream
+2017-06-28: blog post about the issue
+2017-07-10: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/06/28/xar-null-pointer-dereference-in-xar_get_path-util-c/
 
 --
-Active Defense Lab of Venustech
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-36786.1626009507--
+
