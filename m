@@ -1,80 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/18/1
-Message-ID: <3712113.HmbQZlNGGF@arcadia>
-Date: Sat, 18 Feb 2017 12:38:45 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/1
+Message-ID: <329641.122228594-sendEmail@localhost>
+Date: Mon, 10 Jul 2017 09:11:48 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: xar: NULL pointer dereference in xar_unserialize (archive.c)
 Content-Type: text/plain; charset=utf-8
 
 Description:
-Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
+xar is an easily extensible archive format.
 
-A crafted image posted early for another issue, causes a stack overflow.
+The complete ASan output of the issue:
 
-The complete ASan output:
+# xar -t -f $FILE
+==7615==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 0x7f71a859ebd6 bp 0x7fffd8ace150 sp 0x7fffd8acde80 T0)
+==7615==The signal is caused by a WRITE memory access.
+==7615==Hint: address points to the zero page.
+    #0 0x7f71a859ebd5 in xar_unserialize /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:1767:27
+    #1 0x7f71a859ebd5 in xar_open /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:340
+    #2 0x5139ee in list /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:1492:6
+    #3 0x5139ee in main /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:2666
+    #4 0x7f71a76a2680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #5 0x41af38 in _init (/usr/bin/xar+0x41af38)
 
-# mujstest $FILE
-==32127==ERROR: AddressSanitizer: stack-buffer-overflow on address 
-0x7fff29560b00 at pc 0x00000047cbf3 bp 0x7fff29560630 sp 0x7fff2955fde0
-WRITE of size 1453 at 0x7fff29560b00 thread T0
-    #0 0x47cbf2 in __interceptor_strcpy /tmp/portage/sys-devel/llvm-3.9.1-
-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:548
-    #1 0x50e903 in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
-source/platform/x11/jstest_main.c:358:7
-    #2 0x7f68df3c578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #3 0x41bc18 in _init (/usr/bin/mujstest+0x41bc18)
-
-Address 0x7fff29560b00 is located in stack of thread T0 at offset 1056 in 
-frame
-    #0 0x50c45f in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
-source/platform/x11/jstest_main.c:293
-
-  This frame has 7 object(s):
-    [32, 1056) 'path'
-    [1184, 2208) 'text' <== Memory access at offset 1056 partially underflows 
-this variable
-    [2336, 2340) 'w' <== Memory access at offset 1056 partially underflows 
-this variable
-    [2352, 2356) 'h' <== Memory access at offset 1056 partially underflows 
-this variable
-    [2368, 2372) 'x' <== Memory access at offset 1056 partially underflows 
-this variable
-    [2384, 2388) 'y' <== Memory access at offset 1056 partially underflows 
-this variable
-    [2400, 2404) 'b' 0x1000652a4160:[f2]f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 
-f2 f2
-  0x1000652a4170: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x1000652a4180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x1000652a4190: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x1000652a41a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x1000652a41b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==32127==ABORTING
-
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:1767:27 in xar_unserialize
+==7615==ABORTING
 Affected version:
-1.10a
+1.6.1
 
 Fixed version:
 N/A
@@ -86,22 +39,24 @@ Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-CVE-2017-6060
+CVE-2017-11124
 
 Reproducer:
-https://github.com/asarubbo/poc/blob/master/00147-mupdf-mujstest-stackoverflow-main
+https://github.com/asarubbo/poc/blob/master/00288-xar-nullptr-xar_unserialize
 
 Timeline:
-2017-02-05: bug discovered and reported to upstream
-2017-02-17: blog post about the issue
-2017-02-17: CVE assigned via cveform.mitre.org
+2017-06-17: bug discovered and reported to upstream
+2017-06-28: blog post about the issue
+2017-07-10: CVE assigned
 
 Note:
-This bug was found with Address Sanitizer.
+This bug was found with American Fuzzy Lop.
 
 Permalink:
-https://blogs.gentoo.org/ago/2017/02/17/mupdf-mujstest-stack-based-buffer-overflow-in-main-jstest_main-c
+https://blogs.gentoo.org/ago/2017/06/28/xar-null-pointer-dereference-in-xar_unserialize-archive-c/
 
--- 
+--
 Agostino Sarubbo
 Gentoo Linux Developer
+
+
