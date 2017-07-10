@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8275" "Thursday" "25" "February" "2016" "14:18:07" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdT9ezjtWQdgO0Lv=QRVEyiZ5Ot8wf+4Ch+-8KrgoJqp+w@mail.gmail.com>" "161" "[oss-security] CVE request: reads out-of-bounds with cpio 2.11" nil nil nil "2" "2016022517:18:07" "[oss-security] CVE request: reads out-of-bounds with cpio 2.11" (number mark "U       gustavo.grie Feb 25  161/8275  " thread-indent "\"[oss-security] CVE request: reads out-of-bounds with cpio 2.11\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["15803" "Monday" "10" "July" "2017" "15:40:01" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170710134001.GF24936@suse.de>" "552" "[oss-security] PHP CVE assignments: [cve-request@mitre.org: Re: [scr358150] 7 PHP CVEs]" "^Date:" nil nil "7" "2017071013:40:01" "[oss-security] PHP CVE assignments: [cve-request@mitre.org: Re: [scr358150] 7 PHP CVEs]" (number mark "U       meissner@sus Jul 10  552/15803 " thread-indent "\"[oss-security] PHP CVE assignments: [cve-request@mitre.org: Re: [scr358150] 7 PHP CVEs]\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24340 invoked by uid 550); 25 Feb 2016 17:18:20 -0000
+Received: (qmail 24176 invoked by uid 550); 10 Jul 2017 13:40:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,198 +11,573 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24312 invoked from network); 25 Feb 2016 17:18:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=IUwl8iW1wKIO6u1Fxp7ZZfpjCwIH/Jg+NED/sERqo+Q=;
-        b=ue+sbBWYatW202dnaAaRwTdLICjcheL89oJ5JUDh1GtAyEu3V0j4BktEiZr6uPbtjS
-         6EF7zfAaD3LiQVtfMRqjNY1Fqf3qdJBlrzvR9sFRiabVocJYbKwo8BtMmJ7X+69PXkkT
-         Q7U2JH2CpSKTswBlSPifABKWsjoRp8/tzKQupZV9W9vwdvQOLFItadG7/gbvzO+CYQgW
-         74z3hVTs6fxKRdibiDx94dp9l+3nPA2ZfJ1I75j8448V5PCQpTS36ivk4HoeVYxQs/AG
-         apjm1k4m5ariOTTb83aTJdAa6/TQVqKrcUjmagx56C9Dr5BFbgzhpb9apYjW0rcwHvXl
-         aXhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=IUwl8iW1wKIO6u1Fxp7ZZfpjCwIH/Jg+NED/sERqo+Q=;
-        b=AwZLKlwG46P/PJDd5FaYTZHfBEV9XYxp/6xdjJHsLZOSmeFaopwP8v9TCA+jLJmdww
-         UvrLt5F+5xPRt7i8pYrUahEK8CYdwl866flnJ6e1ifj8VvywOahyJW/C0RgCSIXU37jI
-         2mekCqR+N023TS18+j5zNfa6vA6IxjJKdX7UpcuVIDKZ+5UZLJueirLotJlV/Qe11CkD
-         zNSLnNxRVh4tyy5LwHHQezHSm5MpStfsDeAJY6RxsMSHnYulPaRS2xFRt1BhxwGc4U/3
-         ofVXm8NvRp9HWNqTCC03PmKRofulvPTAQ8IDhRg5vqFlLuMAtSG8eJyvHCmeInsngNKV
-         e6ww==
-X-Gm-Message-State: AG10YORIAz3rSTfRajAvYPtV7e2YesUNGIxDFsw9WcHNaKsi8JLgcUISmSUqAYZX/oYPnT+/t8V6uddNzrR7hA==
+Received: (qmail 24144 invoked from network); 10 Jul 2017 13:40:14 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20170710134001.GF24936@suse.de>
 MIME-Version: 1.0
-X-Received: by 10.25.212.197 with SMTP id l188mr17189210lfg.118.1456420688304;
- Thu, 25 Feb 2016 09:18:08 -0800 (PST)
-Date: Thu, 25 Feb 2016 14:18:07 -0300
-Message-ID: <CACn5sdT9ezjtWQdgO0Lv=QRVEyiZ5Ot8wf+4Ch+-8KrgoJqp+w@mail.gmail.com>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/mixed; boundary=001a11419040c5d955052c9b5db0
-Subject: [oss-security] CVE request: reads out-of-bounds with cpio 2.11
+Content-Type: multipart/mixed; boundary="r5Pyd7+fXNt84Ff3"
+Content-Disposition: inline
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Mon, 10 Jul 2017 15:40:01 +0200
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] PHP CVE assignments: [cve-request@mitre.org: Re: [scr358150] 7 PHP
+ CVEs]
+To: OSS Security List <oss-security@lists.openwall.com>, security@php.net,
+	kaplanlior@gmail.com
 
---001a11419040c5d955052c9b5db0
-Content-Type: multipart/alternative; boundary=001a11419040c5d950052c9b5dae
+--r5Pyd7+fXNt84Ff3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
---001a11419040c5d950052c9b5dae
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-Hello,
+Raw form of PHP CVE assignments.
 
-Two reads out-of-bounds in cpio 2.11 were found in the parsing of cpio
-files (other version are probably affected).  Find attached a test case to
-reproduce them. The ASAN report of the first one is here:
+If I made a mistake feel free to update via webform or mail me so I can do.
 
-$ ./cpio -i < overflow.cpio
+Ciao, Marcus
 
-./cpio: warning: skipped 8 bytes of junk
-=================================================================
-==31838==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x60200000edb2 at pc 0x7fb81910ba28 bp 0x7fffa1c286d0 sp 0x7fffa1c27e80
-READ of size 2 at 0x60200000edb2 thread T0
-    #0 0x7fb81910ba27 in strchr
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x6ea27)
-    #1 0x407174 in path_contains_symlink
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:718
-    #2 0x40bce0 in process_copy_in
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1524
-    #3 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
-    #4 0x7fb818cf9ec4 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
-    #5 0x403408  (/home/vagrant/repos/cpio-2.11+dfsg/src/cpio+0x403408)
+--r5Pyd7+fXNt84Ff3
+Content-Type: message/rfc822
+Content-Disposition: inline
 
-0x60200000edb2 is located 0 bytes to the right of 2-byte region
-[0x60200000edb0,0x60200000edb2)
-allocated by thread T0 here:
-    #0 0x7fb81913176a in realloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x9476a)
-    #1 0x43da22 in xrealloc
-/home/vagrant/repos/cpio-2.11+dfsg/gnu/xmalloc.c:59
-    #2 0x40b5ab in process_copy_in
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1437
-    #3 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
-    #4 0x7fb818cf9ec4 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
+Return-Path: <meissner@suse.de>
+Delivered-To: meissner@imap.suse.de
+Received: from imap.suse.de
+	by imap3-int with LMTP id eLPlOa2BY1m2TQAALh3uQQ
+	for <meissner@imap.suse.de>; Mon, 10 Jul 2017 13:31:25 +0000
+Received: from relay1.suse.de (gate-dmz1.suse.de [195.135.220.254])
+	by imap.suse.de (Postfix) with ESMTP id E803211B6F
+	for <meissner@imap-int.suse.de>; Mon, 10 Jul 2017 13:31:25 +0000 (UTC)
+Received: from wotan.suse.de (wotan.suse.de [10.160.0.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by relay1.suse.de (Postfix) with ESMTPS id DFBA825CB4
+	for <meissner@imap-int.suse.de>; Mon, 10 Jul 2017 13:31:24 +0000 (UTC)
+Received: by wotan.suse.de (Postfix, from userid 10574)
+	id DAAA3622A; Mon, 10 Jul 2017 15:31:24 +0200 (CEST)
+X-Original-To: meissner@wotan.suse.de
+Received: from relay1.suse.de (relay1.suse.de [149.44.160.133])
+	by wotan.suse.de (Postfix) with ESMTP id D1A10609C
+	for <meissner@wotan.suse.de>; Mon, 10 Jul 2017 15:31:24 +0200 (CEST)
+Received: by relay1.suse.de (Postfix)
+	id C1A3126017; Mon, 10 Jul 2017 13:31:24 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+	by relay1.suse.de (Postfix) with ESMTP id BF15A26016
+	for <meissner@suse.de>; Mon, 10 Jul 2017 13:31:24 +0000 (UTC)
+X-Virus-Scanned: by amavisd-new at localhost
+X-Spam-Flag: NO
+X-Spam-Score: -1.51
+X-Spam-Level:
+X-Spam-Status: No, score=-1.51 tagged_above=-9999 required=5
+	tests=[BAYES_50=0.8, RCVD_IN_DNSWL_MED=-2.3, T_RP_MATCHES_RCVD=-0.01]
+	autolearn=disabled
+Received: from relay1.suse.de ([127.0.0.1])
+	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id H8JTgdZVR9MU for <meissner@suse.de>;
+	Mon, 10 Jul 2017 13:31:23 +0000 (UTC)
+Received: from mx1.suse.de (mx1.suse.de [195.135.220.2])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by relay1.suse.de (Postfix) with ESMTPS id B526D25CB4
+	for <meissner@suse.de>; Mon, 10 Jul 2017 13:31:23 +0000 (UTC)
+Received: from smtpvmsrv1.mitre.org (smtpvmsrv1.mitre.org [192.52.194.136])
+	by mx1.suse.de (Postfix) with ESMTP id 6220FAA6E
+	for <meissner@suse.de>; Mon, 10 Jul 2017 13:31:23 +0000 (UTC)
+Received: from smtpvmsrv1.mitre.org (localhost.localdomain [127.0.0.1])
+	by localhost (Postfix) with SMTP id 5E6536C00A3;
+	Mon, 10 Jul 2017 09:31:22 -0400 (EDT)
+Received: from imshyb01.MITRE.ORG (imshyb01.mitre.org [129.83.29.2])
+	by smtpvmsrv1.mitre.org (Postfix) with ESMTP id 50A7F6C00AF;
+	Mon, 10 Jul 2017 09:31:22 -0400 (EDT)
+Received: from imshyb02.MITRE.ORG (129.83.29.3) by imshyb01.MITRE.ORG
+ (129.83.29.2) with Microsoft SMTP Server (TLS) id 15.0.1263.5; Mon, 10 Jul
+ 2017 09:31:21 -0400
+Received: from rcf-smtp.mitre.org (10.140.19.249) by imshyb02.MITRE.ORG
+ (129.83.29.3) with Microsoft SMTP Server id 15.0.1263.5 via Frontend
+ Transport; Mon, 10 Jul 2017 09:31:22 -0400
+Received: from cvecmssrv1.mitre.org (cvecmssrv1.mitre.org [129.83.19.107])
+	by rcf-smtp.mitre.org (Postfix) with SMTP id C5E0C18002E;
+	Mon, 10 Jul 2017 09:30:57 -0400 (EDT)
+From: <cve-request@mitre.org>
+To: <meissner@suse.de>
+CC: <cve-request@mitre.org>
+Subject: Re: [scr358150] 7 PHP CVEs
+Message-ID: <682966c1d3d34f709abfc33f5e12a040@imshyb02.MITRE.ORG>
+Date: Mon, 10 Jul 2017 09:31:22 -0400
+MIME-Version: 1.0
+Old-Content-Type: text/plain
+Content-Type: application/pgp; format=text; x-action=sign
 
-and the second one is here:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-$ ./cpio -t < overflow.cpio
+> [Suggested description]
+> In PHP before 5.6.31, 7.x before 7.0.17, and 7.1.x before 7.1.3,
+> remote attackers could cause a CPU consumption denial of service attack by injecting long form variables,
+> related to main/php_variables.c.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-407
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> PHP
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> php - 5.6 before 5.6.31
+> php - 7.0 before 7.0.17
+> php - 7.1 before 7.1.3
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> processing of FORM variables
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> remote
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://bugs.php.net/bug.php?id=73807
+> https://github.com/php/php-src/commit/a15bffd105ac28fd0dd9b596632dbf035238fda3
+> https://github.com/php/php-src/commit/0f8cf3b8497dc45c010c44ed9e96518e11e19fc3
+> http://php.net/ChangeLog-7.php
+> http://php.net/ChangeLog-5.php
+> http://openwall.com/lists/oss-security/2017/07/10/6
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> pparadowski at media4u dot pl
 
-./cpio: warning: skipped 8 bytes of junk
-=================================================================
-==3962==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x60200000edb2 at pc 0x7f705ab831b1 bp 0x7ffc620c3f70 sp 0x7ffc620c3720
-READ of size 3 at 0x60200000edb2 thread T0
-    #0 0x7f705ab831b0  (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e1b0)
-    #1 0x7f705ab837b7 in __interceptor_vprintf
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e7b7)
-    #2 0x7f705ab838a9 in __interceptor_printf
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e8a9)
-    #3 0x403d55 in list_file
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:180
-    #4 0x40b958 in process_copy_in
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1478
-    #5 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
-    #6 0x7f705a781ec4 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
-    #7 0x403408  (/home/vagrant/repos/cpio-2.11+dfsg/src/cpio+0x403408)
+Use CVE-2017-11142.
 
-0x60200000edb2 is located 0 bytes to the right of 2-byte region
-[0x60200000edb0,0x60200000edb2)
-allocated by thread T0 here:
-    #0 0x7f705abb976a in realloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x9476a)
-    #1 0x43da22 in xrealloc
-/home/vagrant/repos/cpio-2.11+dfsg/gnu/xmalloc.c:59
-    #2 0x40b5ab in process_copy_in
-/home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1437
-    #3 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746
-    #4 0x7f705a781ec4 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)
 
-These issues were found using QuickFuzz.
+> [Suggested description]
+> In PHP before 5.6.31,
+> an invalid free in the WDDX deserialization of boolean parameters could be used by attackers able to inject XML for deserialization to crash the PHP interpreter,
+> related to an invalid free for an empty boolean element in ext/wddx/wddx.c.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-763
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> PHP
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> PHP - 5.6 before 5.6.31
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> WDDX extension of PHP
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> injecting bad XML into the WDDX deserializer
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://bugs.php.net/bug.php?id=74145
+> https://git.php.net/?p=php-src.git;a=commit;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
+> http://php.net/ChangeLog-5.php
+> http://openwall.com/lists/oss-security/2017/07/10/6
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> varsleak at gmail dot com
 
-Regards,
-Gustavo.
+Use CVE-2017-11143.
 
---001a11419040c5d950052c9b5dae
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div><div><div><div>Hello,<br><br>Two reads out-of-bounds =
-in cpio 2.11 were found in the parsing of cpio files (other version are pro=
-bably affected).=C2=A0 Find attached a test case to reproduce them. The ASA=
-N report of the first one is here:<br><br>$ ./cpio -i &lt; overflow.cpio<br=
-><br>./cpio: warning: skipped 8 bytes of junk<br>=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D<br>=3D=3D31838=3D=3DERROR: AddressSanitizer: heap-buf=
-fer-overflow on address 0x60200000edb2 at pc 0x7fb81910ba28 bp 0x7fffa1c286=
-d0 sp 0x7fffa1c27e80<br>READ of size 2 at 0x60200000edb2 thread T0<br>=C2=
-=A0 =C2=A0 #0 0x7fb81910ba27 in strchr (/usr/lib/x86_64-linux-gnu/libasan.s=
-o.2+0x6ea27)<br>=C2=A0 =C2=A0 #1 0x407174 in path_contains_symlink /home/va=
-grant/repos/cpio-2.11+dfsg/src/copyin.c:718<br>=C2=A0 =C2=A0 #2 0x40bce0 in=
- process_copy_in /home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1524<br>=
-=C2=A0 =C2=A0 #3 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/ma=
-in.c:746<br>=C2=A0 =C2=A0 #4 0x7fb818cf9ec4 in __libc_start_main (/lib/x86_=
-64-linux-gnu/libc.so.6+0x21ec4)<br>=C2=A0 =C2=A0 #5 0x403408 =C2=A0(/home/v=
-agrant/repos/cpio-2.11+dfsg/src/cpio+0x403408)<br><br>0x60200000edb2 is loc=
-ated 0 bytes to the right of 2-byte region [0x60200000edb0,0x60200000edb2)<=
-br>allocated by thread T0 here:<br>=C2=A0 =C2=A0 #0 0x7fb81913176a in reall=
-oc (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x9476a)<br>=C2=A0 =C2=A0 #1 0x4=
-3da22 in xrealloc /home/vagrant/repos/cpio-2.11+dfsg/gnu/xmalloc.c:59<br>=
-=C2=A0 =C2=A0 #2 0x40b5ab in process_copy_in /home/vagrant/repos/cpio-2.11+=
-dfsg/src/copyin.c:1437<br>=C2=A0 =C2=A0 #3 0x4165c6 in main /home/vagrant/r=
-epos/cpio-2.11+dfsg/src/main.c:746<br>=C2=A0 =C2=A0 #4 0x7fb818cf9ec4 in __=
-libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21ec4)<br><br></div>and =
-the second one is here:<br><br>$ ./cpio -t &lt; overflow.cpio <br><br>./cpi=
-o: warning: skipped 8 bytes of junk<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D<br>=3D=3D3962=3D=3DERROR: AddressSanitizer: heap-buffer-overflow =
-on address 0x60200000edb2 at pc 0x7f705ab831b1 bp 0x7ffc620c3f70 sp 0x7ffc6=
-20c3720<br>READ of size 3 at 0x60200000edb2 thread T0<br>=C2=A0=C2=A0=C2=A0=
- #0 0x7f705ab831b0=C2=A0 (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e1b0)<b=
-r>=C2=A0=C2=A0=C2=A0 #1 0x7f705ab837b7 in __interceptor_vprintf (/usr/lib/x=
-86_64-linux-gnu/libasan.so.2+0x5e7b7)<br>=C2=A0=C2=A0=C2=A0 #2 0x7f705ab838=
-a9 in __interceptor_printf (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x5e8a9)=
-<br>=C2=A0=C2=A0=C2=A0 #3 0x403d55 in list_file /home/vagrant/repos/cpio-2.=
-11+dfsg/src/copyin.c:180<br>=C2=A0=C2=A0=C2=A0 #4 0x40b958 in process_copy_=
-in /home/vagrant/repos/cpio-2.11+dfsg/src/copyin.c:1478<br>=C2=A0=C2=A0=C2=
-=A0 #5 0x4165c6 in main /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746<b=
-r>=C2=A0=C2=A0=C2=A0 #6 0x7f705a781ec4 in __libc_start_main (/lib/x86_64-li=
-nux-gnu/libc.so.6+0x21ec4)<br>=C2=A0=C2=A0=C2=A0 #7 0x403408=C2=A0 (/home/v=
-agrant/repos/cpio-2.11+dfsg/src/cpio+0x403408)<br><br>0x60200000edb2 is loc=
-ated 0 bytes to the right of 2-byte region [0x60200000edb0,0x60200000edb2)<=
-br>allocated by thread T0 here:<br>=C2=A0=C2=A0=C2=A0 #0 0x7f705abb976a in =
-realloc (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x9476a)<br>=C2=A0=C2=A0=C2=
-=A0 #1 0x43da22 in xrealloc /home/vagrant/repos/cpio-2.11+dfsg/gnu/xmalloc.=
-c:59<br>=C2=A0=C2=A0=C2=A0 #2 0x40b5ab in process_copy_in /home/vagrant/rep=
-os/cpio-2.11+dfsg/src/copyin.c:1437<br>=C2=A0=C2=A0=C2=A0 #3 0x4165c6 in ma=
-in /home/vagrant/repos/cpio-2.11+dfsg/src/main.c:746<br>=C2=A0=C2=A0=C2=A0 =
-#4 0x7f705a781ec4 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2=
-1ec4)<br><br></div>These issues were found using QuickFuzz.<br><br></div>Re=
-gards,<br></div>Gustavo.<br><div><div><div><div><br></div></div></div></div=
-></div>
+> [Suggested description]
+> In PHP before 5.6.31, 7.x before 7.0.21, and 7.1.x before 7.1.7,
+> the openssl extension PEM sealing code did not check the return value of the OpenSSL sealing function, which could lead to a crash of the PHP interpreter,
+> related to an interpretation conflict for a negative number in ext/openssl/openssl.c, and an OpenSSL documentation omission.
+> 
+> ------------------------------------------
+> 
+> [Vulnerability Type]
+> Buffer Overflow
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> PHP
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> php - 5.6 before 5.6.31
+> php - 7.1.7, 7.0.21
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> php openssl extension
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Code execution]
+> true
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> decoding a supplied PEM file
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://bugs.php.net/bug.php?id=74651
+> http://git.php.net/?p=php-src.git;a=commit;h=73cabfedf519298e1a11192699f44d53c529315e
+> http://git.php.net/?p=php-src.git;a=commit;h=89637c6b41b510c20d262c17483f582f115c66d6
+> http://git.php.net/?p=php-src.git;a=commit;h=91826a311dd37f4c4e5d605fa7af331e80ddd4c3
+> http://php.net/ChangeLog-7.php
+> http://php.net/ChangeLog-5.php
+> http://openwall.com/lists/oss-security/2017/07/10/6
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Sebastian Li, Wei Lei, Xie Xiaofei and Liu Yang of Nanyang Technological University
 
---001a11419040c5d950052c9b5dae--
+Use CVE-2017-11144.
 
---001a11419040c5d955052c9b5db0
-Content-Type: application/x-cpio; name="overflow.cpio"
-Content-Disposition: attachment; filename="overflow.cpio"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_il2jg4rh0
 
-AAAAAAAAAAYwNzA3MDIAAAAAAAAACDAwMDAwMDAwAAAAAAAAAAgwMDAwMDAw
-MAAAAAAAAAAIMDAwMDAwMDAAAAAAAAAACDAwMDAwMDAwAAAAAAAAAAgwMDAw
-MDAwMAAAAAAAAAAIMDAwMDAwMDAAAAAAAAAACDAwMDAwMDAwAAAAAAAAAAgw
-MDAwMDAwMAAAAAAAAAAIMDAwMDAwMDAAAAAAAAAACNwwMDAwMDAwAAAAAAAA
-AAgwMDAwMDAwMAAAAAAAAAAIMDAwMDAwMGIAAAAAAAAACDAwMDAwMDAwAAAA
-AAAAAApUUkFJTEVSISEhAAAAAAAAAAEAAAAAAAAAAAMAAAAAAAAAAAAAAH1I
-97oBfBsOxfB/osmk
+> [Suggested description]
+> In PHP before 5.6.31, 7.x before 7.0.21, and 7.1.x before 7.1.7,
+> lack of a bounds check in the date extension's timelib_meridian parsing code could be used by attackers able to supply date
+> strings to leak information from the interpreter, related to an ext/date/lib/parse_date.c out-of-bounds read affecting the
+> php_parse_date function.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-126
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> php
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> php - all versions 5.6.31 7.0.21 7.1.7
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> PHP date parsing library
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Information Disclosure]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> Parsing invalid dates with timelib_meridian function
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://gist.github.com/anonymous/bd77ac90d3bdf31ce2a5251ad92e9e75
+> https://bugs.php.net/bug.php?id=74819
+> http://php.net/ChangeLog-7.php
+> http://php.net/ChangeLog-5.php
+> http://openwall.com/lists/oss-security/2017/07/10/6
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> l dot wei at ntu dot edu dot sg
 
---001a11419040c5d955052c9b5db0--
+Use CVE-2017-11145.
+
+
+> [Suggested description]
+> In PHP through 5.6.31, 7.x through 7.0.21, and 7.1.x through 7.1.7,
+> lack of bounds checks in the date extension's timelib_meridian parsing code could be used by attackers able to supply date
+> strings to leak information from the interpreter, related to ext/date/lib/parse_date.c out-of-bounds reads affecting the
+> php_parse_date function. NOTE: this vulnerability exists because of an incomplete fix for CVE-2017-11145.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-126
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> php
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> php - all versions 5.6.31 7.0.21 7.1.7
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> PHP date parsing library
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Information Disclosure]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> Parsing invalid dates with timelib_meridian function
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://gist.github.com/anonymous/bd77ac90d3bdf31ce2a5251ad92e9e75
+> https://bugs.php.net/bug.php?id=74819
+> http://openwall.com/lists/oss-security/2017/07/10/6
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> l dot wei at ntu dot edu dot sg
+
+Use CVE-2017-11146.
+
+
+> [Suggested description]
+> In PHP before 5.6.30 and 7.x before 7.0.15,
+> the PHAR archive handler could be used by attackers supplying malicious archive files to crash the PHP interpreter or
+> potentially disclose information due to a buffer over-read in the phar_parse_pharfile function in ext/phar/phar.c.
+> 
+> ------------------------------------------
+> 
+> [Vulnerability Type]
+> Buffer Overflow
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> php
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> php - 5.6 before 5.6.30
+> php - 7.0 before 7.0.15
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> PHP Phar parser
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Impact Information Disclosure]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> supplying a malicious PHAR archive
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://bugs.php.net/bug.php?id=73773
+> http://git.php.net/?p=php-src.git;a=commit;h=e5246580a85f031e1a3b8064edbaa55c1643a451
+> http://php.net/ChangeLog-7.php
+> http://php.net/ChangeLog-5.php
+> http://openwall.com/lists/oss-security/2017/07/10/6
+
+Use CVE-2017-11147.
+
+
+> [Suggested description]
+> In PHP before 5.6.28 and 7.x before 7.0.13,
+> incorrect handling of various URI components in the URL parser could be used by attackers to bypass hostname-specific URL checks,
+> as demonstrated by 
+> evil.example.com:80#@good.example.com/
+> and
+> evil.example.com:80?@good.example.com/ inputs to the parse_url function (implemented in the
+> php_url_parse_ex function in ext/standard/url.c).
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> CWE-74
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> PHP
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> php - 5.6 before 5.6.28
+> php - 7.0 before 7.0.13
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> hostname parsing in the URL parser
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Context-dependent
+> 
+> ------------------------------------------
+> 
+> [CVE Impact Other]
+> hostname parsing bypasses
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> attackers able to supply URL for parsing
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://bugs.php.net/bug.php?id=73192
+> http://git.php.net/?p=php-src.git;a=commit;h=b061fa909de77085d3822a89ab901b934d0362c4
+> http://php.net/ChangeLog-7.php
+> http://php.net/ChangeLog-5.php
+> http://openwall.com/lists/oss-security/2017/07/10/6
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> mala at ma dot la
+
+Use CVE-2016-10397.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJZY4FZAAoJEHb/MwWLVhi2R8YP/13GFykAcj7/k2SimsmMk30P
+9iIqY/J0xpkKJCU5NrlSlmY82a3PN+oWpObtYoI3zB7fH7ReLP1BKsU3V8JIgp04
+6mXKDZVZ38QqZsKMh0Qz3kbMJC7ZtRsu1Rvwim0BMq8+PD/cCz6w4fOWgqQAivst
+nLxYrd1HRF8OBqQE99ZKqXNenfaKqpsa6o2tugWX3D2uQJ5yLJWMNgyIpjWDI8Hq
+DJTAD2LSct20Pd41G8Lh+c93UKZ4YK0H90kH48xB2Hk0OlfGWR5rzGvSTkrPx8bc
+paQKU559JjMCsapJAT+ojPQY5Wxp8kh+K6E5PC54PMRd8TDwTKu7qQw8vUZRm6j4
+LfU2hfD8VN85OiX7ARFBwDzM8RfvEfMzbP4tlHpNMOFjLTxL/JOjAEYrnO6ITDTA
+K98F3LMrV4H2sJyAvTg/6Gm8a8ak7sS0j2dkjbn0CgRxUwlBtFbEJtv47WO9Vj//
+/woZtn/ayDzFdqTbI/UJn+aUe8WD7j4M+N6qJZTyeu+lIE9y0dmW2BqUSRRZc1OL
+1nW85DjIssN4wcr3IzUhTgfVYQruPEnyKmondfHBR0qwPE94xvMe0V2xXTwCR6s0
+Jgj/fRox6L32iqTiXG9+OCcWOZmI7FV+ckNP4FD8BNwpD0FE8o2iznJ6U6f0vrPm
+Xe0eZzR/AwJsJRH/wx83
+=uxf6
+-----END PGP SIGNATURE-----
+
+
+--r5Pyd7+fXNt84Ff3--
