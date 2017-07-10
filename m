@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/13/3
-Message-ID: <54a4f144-6765-b444-fe00-c2779bd86c3d@mvista.com>
-Date: Wed, 13 Sep 2017 12:24:06 -0700
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com, Jerry Lundström <jerry@...-oarc.net>, Peter Korsgaard <peter@...sgaard.com>
-Subject: Re: Tcpdump 4.9.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/11
+Message-ID: <CANO=Ty0vV1M86uXiYW8X+i2N3dHB4855s=Lk7Ejmqwp=8vzJYA@mail.gmail.com>
+Date: Mon, 10 Jul 2017 15:15:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Marcus Meissner <meissner@...e.de>, security@....net, kaplanlior@...il.com
+Subject: Re: Re: PHP CVE assignments: [cve-request@...re.org: Re: [scr358150] 7 PHP CVEs]
 Content-Type: text/plain; charset=utf-8
 
+A note, for issues like this please contact MITRE via the cve form at:
+https://cveform.mitre.org/ and pick the update option.
 
+On Mon, Jul 10, 2017 at 3:03 PM, Stanislav Malyshev <smalyshev@...il.com>
+wrote:
 
-On 09/08/2017 03:44 AM, Jerry Lundström wrote:
-> On 09/08/17 11:27, Peter Korsgaard wrote:
->> Can we please have this tarball officially released on tcpdump.org /
->> 4.9.2 tagged in git then?
-> There is a tarball, just no tag yet.
-
-It appears the external github has updated the commits with CVE info 
-included.
-
-https://github.com/the-tcpdump-group/tcpdump
-
-- armin
+> Hi!
 >
-> Version: 4.9.2
-> Release Date: September 3, 2017
 >
-> - http://www.tcpdump.org/release/tcpdump-4.9.2.tar.gz
-> - http://www.tcpdump.org/release/tcpdump-4.9.2.tar.gz.sig
-> - http://www.tcpdump.org/tcpdump-changes.txt
+> > Raw form of PHP CVE assignments.
+> >
+> > If I made a mistake feel free to update via webform or mail me so I can
+> do.
 >
-> /Jerry
+> Looks like CVE-2017-11145 and CVE-2017-11146 are actually exactly the
+> same bug.
+>
+> --
+> Stas Malyshev
+> smalyshev@...il.com
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
