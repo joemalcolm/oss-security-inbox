@@ -1,41 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/13
-Message-ID: <8619e46d084d47baba68c51d666c5ec3@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 01:10:01 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: podofo: NULL pointer dereference in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/6
+Message-ID: <20170710113353.GD24936@suse.de>
+Date: Mon, 10 Jul 2017 13:33:53 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, "security@....net" <security@....net>
+Subject: Re: CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Jul 05, 2017 at 02:37:00PM +0300, Lior Kaplan wrote:
+> Hi,
+> 
+> The following issues have been reported and fixed in PHP. At the moment
+> they are part of PHP 7.0.21 release. The fixes are also included in the 5.6
+> branch and will be part of 5.6.31 when it will be released.
+> 
+> #73807 Performance problem with processing post request over 2000000 chars
+> https://bugs.php.net/bug.php?id=73807
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=0f8cf3b8497dc45c010c44ed9e96518e11e19fc3
 
-> https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-podofopdfparserreadxrefsubsection-pdfparser-cpp
-> AddressSanitizer: SEGV on unknown address 0x0000000000d8
-> podofo-0.9.4/src/base/PdfParser.cpp:772
+Requested CVE (5.6, 7.0 and 7.1 apparently affected).
 
-Use CVE-2017-5855.
+> #74145 wddx parsing empty boolean tag leads to SIGSEGV
+> https://bugs.php.net/bug.php?id=74145
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=f269cdcd4f76accbecd03884f327cffb9a7f1ca9
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Requested CVE. (5.6 only affected apparently)
+ 
+> #74651 negative-size-param (-1) in memcpy in zif_openssl_seal()
+> https://bugs.php.net/bug.php?id=74651
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=89637c6b41b510c20d262c17483f582f115c66d6
 
-iQIcBAEBCAAGBQJYkscsAAoJEHb/MwWLVhi20V4P/RspGoWe2F1kbNHTP1GrHFq1
-EqHsL9aI3gBcVb2fpkdDspdOeoBFOdIv7E1ua5AMRb6uhBc1SFNiMHt/cHRKYPHu
-GQz/Ju9UkhTplmU2jZCAA+p5hV68fI0q6quF5vW7nMCPGJNVihZRfu4E9vr3AEoi
-vxT1vRDPoHxVAKLdxTBlCSkWAbTTzL4OnaMR7c7GQY3X//EqwGKINLYrsThs17pN
-lmYqsTgDM/P61dngmmkjo9NUtd36QqxXlLQbdKTerXugnnY7QreNbxENtGjo+jN0
-Ia98dTVQ1+vBTzhN26wgxx+rufNxX9t47e8u1c8zG+aY4skrnpb3Lb3rGFosWpCO
-s//lch5e0rk9pCuH/qm21HaAICt56XTv9Iuw4jjMaXSKsceyigR6ZUnWnd8lD/UQ
-7Y9XW8ZS2FaP1y4SPT0a5tusf4t48+9MfZq1Xc/b+mwhE2Og4Jn/J9f9qBogMZDN
-eK9vqWxchU7nv1ZwA+dML3VhSMOqoeHMWUA3AwuoowFZLco4HlKvigSo/+/QrE+A
-iuCnbuz/uZAdsV3GuqR5CRr8lIxZ06vbQ8eUqCZg0CuhFrHsbvu4+NCoP9hs4yRg
-k810ls3MQabMNbX+aF+fqfsWo4/i3wSOjrjm6lvipXEjvXtgGvRnyz9L0S3AHptK
-wgLZyQc7yKFA5c0BeYn3
-=4jw5
------END PGP SIGNATURE-----
+Requested CVE. (5.6 and 7.1)
+
+> #74819 wddx_deserialize() heap out-of-bound read via php_parse_date()
+> https://bugs.php.net/bug.php?id=74819
+> PHP 5.6 -
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
+
+This commit id is incorrect, same as for bug 74145..
+
+> PHP 7.0  -
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=6b18d956de38ecd8913c3d82ce96eb0368a1f9e5
+
+Same, seems commit is also related to bug 74145.
+
+The fix for the bug 74819 seems not be in PHP GIT yet and the proposed security fix is incomplete.
+
+I requested a CVE for the bug, without GIT references.
+
+
+> Also, requests from past releases:
+> 
+> PHP 5.6.28 + 7.0.13
+> #73192 parse_url return wrong hostname
+> https://bugs.php.net/bug.php?id=73192
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=b061fa909de77085d3822a89ab901b934d0362c4
+
+CVE Requested.
+
+> 5.6.30 + 7.0.15
+> #73773 Seg fault when loading hostile phar
+> https://bugs.php.net/bug.php?id=73773
+> http://git.php.net/?p=php-src.git;a=commitdiff;h=e5246580a85f031e1a3b8064edbaa55c1643a451
+
+CVE Requested.
+
+Ciao, Marcus
