@@ -1,65 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/9
-Message-ID: <34774b80-6941-d562-fb5f-710c8f9b9cb8@redhat.com>
-Date: Mon, 8 May 2017 20:32:21 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: rpcbomb: remote rpcbind denial-of-service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/5
+Message-ID: <5247425.MMXgAd8cuH@wanheda>
+Date: Mon, 10 Jul 2017 12:34:36 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
+Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
 Content-Type: text/plain; charset=utf-8
 
-On 05/07/2017 08:47 PM, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> On Fri, May 05, 2017 at 11:52:49AM +0200, Florian Weimer wrote:
->> On 05/05/2017 11:22 AM, Marcus Meissner wrote:
->>> On Wed, May 03, 2017 at 05:55:20PM -0700, Seth Arnold wrote:
->>>> On Wed, May 03, 2017 at 08:55:23PM +0200, Guido Vranken wrote:
->>>>> This vulnerability allows an attacker to allocate any amount of bytes
->>>>> (up to 4 gigabytes per attack) on a remote rpcbind host, and the
->>>>> memory is never freed unless the process crashes or the administrator
->>>>> halts or restarts the rpcbind service.
->>>>> [...]
->>>>> An extensive write-up can be found here:
->>>>> https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
->>>>>
->>>>> Exploit + patches: https://github.com/guidovranken/rpcbomb/
->>>>
->>>> Hello Guido, nice find. Have CVE numbers been requested for this issue
->>>> yet? Have you investigated if ntirpc is affected too? Much of the code
->>>> looks similar:
->>>>
->>>> http://sources.debian.net/src/ntirpc/1.4.3-3/src/rpc_generic.c/#L728
->>>
->>> We also saw glibc affected.
->>>
->>> https://bugzilla.suse.com/show_bug.cgi?id=1037559#c7
->>>
->>> That said, your reproducer allocates virtual memory, and on systems with overcommit
->>> there is only neglible impact on overall memory pressure.
->>>
->>> The rpc service will however likely crash at some point though when there is no virtual
->>> address space left for it.
->>
->> Thanks, I filed it upstream as well:
->>
->> https://sourceware.org/bugzilla/show_bug.cgi?id=21461
->>
->> Looks like both xdr_bytes and xdr_string have a similar bug.
->>
->> I'd appreciate some guidance on reusing or not reusing CVE IDs here.
-> 
-> A separate CVE should be used for this issue as clarified with MITRE.
-> 
-> It was assigned CVE-2017-8804.
-> 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=21461
-> 
-> Patch posted at
-> https://sourceware.org/ml/libc-alpha/2017-05/msg00105.html by Florian
-> Weimer.
+All the info were updated.
 
-Note that we have a bit of a dispute here whether whether this is 
-actually a vulnerability in the XDR code, or whether the caller is to blame.
 
-Thanks,
-Florian
+On Monday 10 July 2017 11:42:53 Dr. Thomas Orgis wrote:
+> Is this really worth a CVE, though? So far I was only able to see a
+> crash triggered by the AddressSanitizer.
+
+Often, when there is an out-of-bound condition there is no crash, and the 
+application works as expected. It is only visible with debuggers or in case of 
+stack overflow with fortify_source enabled, so I think it's an expected 
+behaviour.
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
