@@ -1,4 +1,9 @@
-Received: (qmail 28008 invoked by uid 550); 3 Apr 2024 13:03:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4027" "Monday" "10" "July" "2017" "09:13:07" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<801547.452199401-sendEmail@localhost>" "95" "[oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)" nil nil nil "7" "2017071009:13:07" "[oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)" (number mark "U       ago@gentoo.o Jul 10   95/4027  " thread-indent "\"[oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20173 invoked by uid 550); 10 Jul 2017 09:13:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,111 +12,107 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19471 invoked from network); 3 Apr 2024 07:33:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=notk.org; s=2;
-	t=1712129596; bh=4z2BtmNwob6Zb1fCjfmpw6GwmvEEnd7tyH3M/qiMxqw=;
-	h=Date:From:To:Subject:From;
-	b=AQ/wAxes+AEKR1METiEh/8mqrfdv21hcl0fwTfa3nBR0J1QwqvpShyawUmCTIqdVu
-	 TmNoMDhWvlAR7CQEeDLGk7/HjZ5Q0xAonOnG45ekBrZzz+erlIgLiP4CQPB4gDFYoA
-	 OYa9f5WnNuy0x9VdPfGu5mKCyQZPEtAIm6CtWNa5kZmbz+cISV8g8fGRbZ8NpKJDij
-	 APPkpkcwbImhri7CNPi44WzUDOuu+pt9Dfiv5ClzwnjqZq5V6amLTzKfmjk7Ai8dwO
-	 h980waePDmfzaO+QUY84ruIFO42muU7EZy2eDLxwIWelKnsM6MCjvS2ZpsslZTbX4M
-	 TjFRey5wfRejQ==
-Date: Wed, 3 Apr 2024 09:33:16 +0200
-From: Adrien Nader <adrien@notk.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20240403073316.akk3tx57c4idv7k4@notk.org>
+Received: (qmail 20069 invoked from network); 10 Jul 2017 09:13:23 -0000
+Message-ID: <801547.452199401-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 10 Jul 2017 09:13:07 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Subject: [oss-security] Detecting code injections in packages through debug infos
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-358478.399067284"
+Subject: [oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)
 
-Hi,
+------MIME delimiter for sendEmail-358478.399067284
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Following the xz-utils backdoor, I realized that such backdoors have
-goals which are at odds with distributions: the code will be foreign,
-probably obfuscated, maybe compiled with a different toolchain or
-different settings, ...
+Description:
+mpg123 is a fast console MPEG Audio Player and decoder library.
 
-Can we take advantage of that for detection? Or at least for making it
-more difficult for attackers to go un-noticed? I believe "Jia Tan"
-actually had troubles carrying this out: managed to do it but it wasn't
-a walk in the park either. Additional small hindrances may prove useful
-to help others stumble and be noticed.
+The complete ASan output of the issue:
 
-Below is a short example. I've simply pulled packages of debug symbols
-from Debian or Ubuntu for this[1][2]. Below I will be using the files
-from [2].
+# mpg123-mpg123 -t $FILE
+==10588==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f01025c5cbc at pc 0x7f010229bfe3 bp 0x7ffc988ac5b0 sp 0x7ffc988ac5a8
+READ of size 4 at 0x7f01025c5cbc thread T0
+    #0 0x7f010229bfe2 in III_i_stereo /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:1343:10
+    #1 0x7f010229bfe2 in INT123_do_layer3 /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:2013
+    #2 0x7f01021d3708 in decode_the_frame /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/libmpg123.c:710:14
+    #3 0x7f01021dc61d in mpg123_decode_frame /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/libmpg123.c:849:4
+    #4 0x535783 in play_frame /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/mpg123.c:739:7
+    #5 0x53a3a7 in main /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/mpg123.c:1363:8
+    #6 0x7f0100f1d680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x41bec8 in mpg123_seek_frame (/usr/bin/mpg123-mpg123+0x41bec8)
 
-Start by downloading and extracting the deb and ddeb for a relevant:
-  mkdir d
-  cd
-  wget/curl ...
-  dpkg -x foo.deb .
+0x7f01025c5cbc is located 4 bytes to the left of global variable 'pow2_1' defined in '/var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:50:27' (0x7f01025c5cc0) of size 
+128
+0x7f01025c5cbc is located 28 bytes to the right of global variable 'pow1_1' defined in '/var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:50:13' (0x7f01025c5c20) of 
+size 128
+SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:1343:10 in III_i_stereo
+Shadow bytes around the buggy address:
+  0x0fe0a04b0b40: f9 f9 f9 f9 00 04 f9 f9 f9 f9 f9 f9 00 04 f9 f9
+  0x0fe0a04b0b50: f9 f9 f9 f9 00 00 00 00 00 00 00 00 f9 f9 f9 f9
+  0x0fe0a04b0b60: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
+  0x0fe0a04b0b70: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+  0x0fe0a04b0b80: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0fe0a04b0b90: 00 00 00 00 f9 f9 f9[f9]00 00 00 00 00 00 00 00
+  0x0fe0a04b0ba0: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
+  0x0fe0a04b0bb0: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
+  0x0fe0a04b0bc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe0a04b0bd0: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe0a04b0be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==10588==ABORTING
+Affected version:
+1.25.0
 
-(Note that debuginfo servers could provide symbols but I think that not
-long ago, I think that I couldn't find an easy way to download the files
-outside of gdb or others)
+Fixed version:
+N/A
 
-Then, run "eu-unstrip" as in
+Commit fix:
+N/A
 
-  eu-unstrip -o d.zo d/usr/lib/x86_64-linux-gnu/liblzma.so.5 d/usr/lib/debug/.build-id/f6/f3a4b96c06ffaa26772f42297cfcc4f1cb4a32.debug
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-After that, use "nm -lU" to print symbols defined by the library and
-source file and line numbers:
+CVE:
+CVE-2017-11126
 
-  nm -lU z.so
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00300-mpg123-globaloverflow-III_i_stereo
 
-Now, since I've already explored this, filter than with "grep -C 1
-stdin" (and prettify the output by hand):
+Timeline:
+2017-06-30: bug discovered and reported to upstream
+2017-07-03: blog post about the issue
+2017-07-10: CVE assigned
 
-  t lzma_cputhreads_522 [SNIP]/../../../../src/liblzma/common/hardware_cputhreads.c:30
-  i lzma_crc32          [SNIP]/<stdin>:145
-  r lzma_crc32_table    [SNIP]/../../../../src/liblzma/check/crc32_table_le.h:5
-  i lzma_crc64          [SNIP]/<stdin>:108
-  r lzma_crc64_table    [SNIP]/../../../../src/liblzma/check/crc64_table_le.h:5
+Note:
+This bug was found with American Fuzzy Lop.
 
-Addresses have been removed and [SNIP] is
-"/usr/src/xz-utils-5.6.0-0.2/debian/normal-build/src/liblzma".
+Permalink:
+https://blogs.gentoo.org/ago/2017/07/03/mpg123-global-buffer-overflow-in-iii_i_stereo-layer3-c/
 
-As you can see, filename is not really available for the two problematic
-symbols. Moreover, the directory path is different compared to other
-symbols.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-Of course, this could be tampered but a) here it wasn't, b) there are
-many other potential checks (not all using debug infos actually), for
-instance:
-- toolchain and compilation options used,
-- availability of debug symbols,
-- a checksum of the object code if that exists,
-- symbolic matching of object code and debug infos,
-- historical data (5.5.2beta as provided by Jia Tan was basically
-  identical to 5.6, but had no backdoor),
-- cross-distro (anti-)correlation maybe,
-- expected variability with compiler changes (object code shall differ
-  between LLVM, GCC and across their various versions)
-- and I'm sure many others
 
-Has that path already been explored? I can easily come up with ways
-around the ideas above but it's all about raising the bar with stuff
-that is cheap to implement (besides symbolic matching ;p ).
-
-By the way, I started with llvm-dwarfdump and switched to dwarfdump but
-their output is unfortunately really a dump rather than some convenient
-serialization format like JSON. I think there are some libraries to go
-through dwarf infos but I wanted to stick to command-line tools in order
-not to spend most of my time deciding which library to use. A
-production-ready implementation will probably need to do proper walking
-of the various infos so Input about this is definitely welcome.
-
-PS: I work at Canonical, as part of the Ubuntu Foundations team, but the
-above was revenge-driven hobby work and I doubt it would be considered
-on of my work duties or topics.
-
-[1] https://launchpad.net/ubuntu/+source/xz-utils/5.6.0-0.2/+build/27848538
-[2] https://snapshot.debian.org/package/xz-utils/5.6.1-1/
-
--- 
-Adrien Nader
-Conned by Jia Tan in 2024
+------MIME delimiter for sendEmail-358478.399067284--
 
