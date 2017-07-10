@@ -1,77 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/1
-Message-ID: <alpine.DEB.2.20.1706200808380.17390@tvnag.unkk.fr>
-Date: Tue, 20 Jun 2017 08:09:39 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: c-ares development <c-ares@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] c-ares NAPTR parser out of bounds access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/3
+Message-ID: <801547.452199401-sendEmail@localhost>
+Date: Mon, 10 Jul 2017 09:13:07 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: mpg123: global buffer overflow in III_i_stereo (layer3.c)
 Content-Type: text/plain; charset=utf-8
 
-c-ares NAPTR parser out of bounds access
-========================================
+Description:
+mpg123 is a fast console MPEG Audio Player and decoder library.
 
-Project c-ares Security Advisory, June 20, 2017 -
-[Permalink](https://c-ares.haxx.se/adv_20170620.html)
+The complete ASan output of the issue:
 
-VULNERABILITY
--------------
+# mpg123-mpg123 -t $FILE
+==10588==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f01025c5cbc at pc 0x7f010229bfe3 bp 0x7ffc988ac5b0 sp 0x7ffc988ac5a8
+READ of size 4 at 0x7f01025c5cbc thread T0
+    #0 0x7f010229bfe2 in III_i_stereo /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:1343:10
+    #1 0x7f010229bfe2 in INT123_do_layer3 /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:2013
+    #2 0x7f01021d3708 in decode_the_frame /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/libmpg123.c:710:14
+    #3 0x7f01021dc61d in mpg123_decode_frame /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/libmpg123.c:849:4
+    #4 0x535783 in play_frame /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/mpg123.c:739:7
+    #5 0x53a3a7 in main /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/mpg123.c:1363:8
+    #6 0x7f0100f1d680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x41bec8 in mpg123_seek_frame (/usr/bin/mpg123-mpg123+0x41bec8)
 
-The c-ares function `ares_parse_naptr_reply()`, which is used for parsing
-NAPTR responses, could be triggered to read memory outside of the given input
-buffer if the passed in DNS response packet was crafted in a particular way.
+0x7f01025c5cbc is located 4 bytes to the left of global variable 'pow2_1' defined in '/var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:50:27' (0x7f01025c5cc0) of size 
+128
+0x7f01025c5cbc is located 28 bytes to the right of global variable 'pow1_1' defined in '/var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:50:13' (0x7f01025c5c20) of 
+size 128
+SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/mpg123-1.25.0/work/mpg123-1.25.0/src/libmpg123/layer3.c:1343:10 in III_i_stereo
+Shadow bytes around the buggy address:
+  0x0fe0a04b0b40: f9 f9 f9 f9 00 04 f9 f9 f9 f9 f9 f9 00 04 f9 f9
+  0x0fe0a04b0b50: f9 f9 f9 f9 00 00 00 00 00 00 00 00 f9 f9 f9 f9
+  0x0fe0a04b0b60: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
+  0x0fe0a04b0b70: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+  0x0fe0a04b0b80: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0fe0a04b0b90: 00 00 00 00 f9 f9 f9[f9]00 00 00 00 00 00 00 00
+  0x0fe0a04b0ba0: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
+  0x0fe0a04b0bb0: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
+  0x0fe0a04b0bc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe0a04b0bd0: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe0a04b0be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==10588==ABORTING
+Affected version:
+1.25.0
 
-We are not aware of any exploits of this flaw.
+Fixed version:
+N/A
 
-INFO
-----
+Commit fix:
+N/A
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-1000381 to this issue.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-AFFECTED VERSIONS
------------------
+CVE:
+CVE-2017-11126
 
-This flaw exists in the following c-ares versions.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00300-mpg123-globaloverflow-III_i_stereo
 
-- Affected versions: c-ares 1.8.0 to and including 1.12.0
-- Not affected versions: c-ares >= 1.13.0
+Timeline:
+2017-06-30: bug discovered and reported to upstream
+2017-07-03: blog post about the issue
+2017-07-10: CVE assigned
 
-THE SOLUTION
-------------
+Note:
+This bug was found with American Fuzzy Lop.
 
-In version 1.13.0, the `RR_len` value gets checked properly and the function
-is also added to the fuzz testing. It was previously accidentally left out
-from that.
+Permalink:
+https://blogs.gentoo.org/ago/2017/07/03/mpg123-global-buffer-overflow-in-iii_i_stereo-layer3-c/
 
-A [patch for CVE-2017-1000381](https://c-ares.haxx.se/CVE-2017-1000381.patch)
-is available.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-RECOMMENDATIONS
----------------
 
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade c-ares to version 1.13.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use `ares_parse_naptr_reply()`.
-
-TIME LINE
----------
-
-It was reported to the c-ares project on May 20. We contacted distros@...nall
-on June 16.
-
-c-ares 1.13.0 was released on June 20 2017, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Thanks to LCatro for the report and to David Drysdale for the fix.
-
--- 
-
-  / daniel.haxx.se
