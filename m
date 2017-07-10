@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/7
-Message-ID: <20170624141442.GA29443@openwall.com>
-Date: Sat, 24 Jun 2017 16:14:42 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/10
+Message-ID: <909d8d81-b9fb-6f28-60b7-325406baecd2@gmail.com>
+Date: Mon, 10 Jul 2017 14:03:22 -0700
+From: Stanislav Malyshev <smalyshev@...il.com>
+To: Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>, security@....net, kaplanlior@...il.com
+Subject: Re: PHP CVE assignments: [cve-request@...re.org: Re: [scr358150] 7 PHP CVEs]
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 23, 2017 at 08:02:36AM -0600, Kurt Seifried wrote:
-> OpenBSD made changes to the then known qsort() issue, and implemented
-> what was then thought to be the solution to the stack guard issue, the 1
-> megabyte guard pages. Subsequent discussion (without OpenBSD present,
-> due to them breaking the embargo) took place and as you know we ended up
-> with some pretty significant changes to glibc (I don't know if OpenBSD
-> has picked this group of fixes up or not).
+Hi!
 
-I think Kurt's words "without OpenBSD present, due to them breaking the
-embargo" are Kurt's (and maybe others') impression only (and maybe these
-people's personal decision(s) not to inform OpenBSD going forward, as
-Kurt mentioned he did help ping OpenBSD this time when Qualys wasn't
-getting a response from them in early May).  No decision on the distros
-list at large was made to either inform or not inform OpenBSD of further
-issues.  As it happened, we did CC the discussion around Cron to Todd
-(although like I said in my posting about Cron in here, there was no
-point in having that minor issue embargoed in the first place).  The
-glibc issues and fixes are most likely irrelevant to *BSD libc's - in
-fact, we should have been more careful not to spam the full distros list
-with them (I think some sub-threads correctly went to linux-distros
-only, but some did not).
 
-Alexander
+> Raw form of PHP CVE assignments.
+> 
+> If I made a mistake feel free to update via webform or mail me so I can do.
+
+Looks like CVE-2017-11145 and CVE-2017-11146 are actually exactly the
+same bug.
+
+-- 
+Stas Malyshev
+smalyshev@...il.com
