@@ -1,4 +1,9 @@
-Received: (qmail 3919 invoked by uid 550); 15 Mar 2026 14:26:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1888" "Monday" "10" "July" "2017" "09:11:48" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<329641.122228594-sendEmail@localhost>" "60" "[oss-security] xar: NULL pointer dereference in xar_unserialize (archive.c)" nil nil nil "7" "2017071009:11:48" "[oss-security] xar: NULL pointer dereference in xar_unserialize (archive.c)" (number mark "U       ago@gentoo.o Jul 10   60/1888  " thread-indent "\"[oss-security] xar: NULL pointer dereference in xar_unserialize (archive.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12108 invoked by uid 550); 10 Jul 2017 09:12:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,80 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20430 invoked from network); 15 Mar 2026 14:06:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=michaeldaumconsulting.com; s=default; t=1773583585;
-	bh=gQtDIaHkCJ/N5gkWSreI1zLJVjXL66J8ogNE+S4oMvg=;
-	h=From:To:Subject:Date:From;
-	b=zaDQ+bdzp1iM5wHu7yIL6/T2P6rFuQMN4ft20IK7fYZmyM+xYrUhpx/GUoPaXY4BG
-	 kXp5n2ubNg/gcxVaNNtiZZprMXbJvvKQJHfXblvpCMn8kIfCJ5dLuJVWJsaYXwpj6m
-	 lfV9uxuC9mMVBdtKzXCrgBYYNjRLidB5t/P66RdBBF8+34BAnNmJ+aCLJwcqjIddPH
-	 JYzqbxpk4Lh3VfSo9XSW1jaD33aNv+i4AJi0wPAYPYAyGjXzyp8wG7x6wmCgdYJ1cZ
-	 1aE1X5tOnloX1d3iiV9o9GqOFh7omVTvbCyecLt2IPvJx39RmjtoTb7BTC+TTjOmDI
-	 909B3coSobkBA==
-From: Michael Daum <foswiki@michaeldaumconsulting.com>
-To: oss-security@lists.openwall.com
-Date: Sun, 15 Mar 2026 15:06:24 +0100
-Message-ID: <1952112.tdWV9SEqCh@intra>
-Organization: Foswiki Association e.V.
+Received: (qmail 12058 invoked from network); 10 Jul 2017 09:12:13 -0000
+Message-ID: <329641.122228594-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 10 Jul 2017 09:11:48 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart2258859.irdbgypaU6";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-Subject: [oss-security]
- =?UTF-8?B?Rm9zd2nCrWtpIDIuMS4xMSBpcyByZcKtbGVhc2VkLA==?= fixes CVE-2026-2861
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-34071.3342457128"
+Subject: [oss-security] xar: NULL pointer dereference in xar_unserialize (archive.c)
 
---nextPart2258859.irdbgypaU6
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Michael Daum <foswiki@michaeldaumconsulting.com>
-To: oss-security@lists.openwall.com
-Date: Sun, 15 Mar 2026 15:06:24 +0100
-Message-ID: <1952112.tdWV9SEqCh@intra>
-Organization: Foswiki Association e.V.
-MIME-Version: 1.0
+------MIME delimiter for sendEmail-34071.3342457128
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Dear all,
+Description:
+xar is an easily extensible archive format.
 
-Foswi=C2=ADki 2.1.11 is avail=C2=ADable to down=C2=ADloaded now. This re=C2=
-=ADlease came ear=C2=ADli=C2=ADer than ex=C2=ADpect=C2=ADed due to the se=
-=C2=ADvere se=C2=ADcu=C2=ADri=C2=ADty is=C2=ADsues found in pre=C2=ADvi=C2=
-=ADous ver=C2=ADsions, as de=C2=ADtailed in CVE-2026-2861.
-Read more at https://foswiki.org/Blog/Foswiki2111IsReleased and https://fos=
-wiki.org/System/ReleaseNotes02x01#Foswiki_Release_2.1.11_Details
+The complete ASan output of the issue:
 
-Donwload from https://foswiki.org/Download/FoswikiRelease02x01x11
+# xar -t -f $FILE
+==7615==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 0x7f71a859ebd6 bp 0x7fffd8ace150 sp 0x7fffd8acde80 T0)
+==7615==The signal is caused by a WRITE memory access.
+==7615==Hint: address points to the zero page.
+    #0 0x7f71a859ebd5 in xar_unserialize /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:1767:27
+    #1 0x7f71a859ebd5 in xar_open /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:340
+    #2 0x5139ee in list /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:1492:6
+    #3 0x5139ee in main /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:2666
+    #4 0x7f71a76a2680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #5 0x41af38 in _init (/usr/bin/xar+0x41af38)
 
-Regards,
-Michael.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:1767:27 in xar_unserialize
+==7615==ABORTING
+Affected version:
+1.6.1
 
---=20
--- Board Member Foswiki Association e.V.
--- https://foswiki.org/Main/MichaelDaum=
+Fixed version:
+N/A
 
---nextPart2258859.irdbgypaU6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
+Commit fix:
+N/A
 
------BEGIN PGP SIGNATURE-----
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-iQIzBAABCgAdFiEEjYRAvABp44mJBpbU8S8OKsbC7M8FAmm2vOAACgkQ8S8OKsbC
-7M8X1hAAvrn9ju8y+PpJO71f8ed7pynGaSUYdwNWZIJ99ZLb07rFIO2hpk8rmEuL
-v6oz5lMT6pCwgqVRdLZXQiXWC+jlZhsx4F2Dt1ljvRg7ZHhvXj6Zrtq9NLQP8oSE
-u6lyQuIvsorGG5xqzIeWuztg1bmUf7zPDJ67CRSmJkrllCogR6GKPVBvBuQhdmJJ
-CCc6eSLLPx0qYWa5bEgLGBSbQczPmwgASDyzfXsCFH490yiH4TwOzRO06Pq5Jv+A
-mSAvSx0zeTma58BfmZ8dvTF0noZzsnv7iPrSOmzgmMcYt51oXOcMVyipJbbXq9qD
-x+2u9pn1fx2dkVBzB/FYRyabKIjWicTNpfP1MRl/dvT8nvJFELKLZfQcgj34wT5F
-n4gJh9Qrb6Zb4RdX4QwWiltVeOdrKoeh1pdqopRk2PVQi0KTHLKhWJkFT7/GmhWC
-d/9mZ9wG87UK3wDsL+iw+wI5JjCsaD37j/Yn4Po1cddJSOVZ/dyN+t7iCtkckimv
-Jhr3p7dOA8jbcotqZ1tDfsIowVY5BPDvUmvU8+Y3HsmrYDTdcTNYdJDhN8SPk4eH
-cDid96LNVYjIQodW+kRPAWHNryUuIuz1W5m/YMJjQrD555zdFgV1nnNjhGKlQyJ9
-LH6OJwmvepUaTuDmDoI89fjmOpOdflpoJPYHS00VbUorWuNm4bc=
-=KOx2
------END PGP SIGNATURE-----
+CVE:
+CVE-2017-11124
 
---nextPart2258859.irdbgypaU6--
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00288-xar-nullptr-xar_unserialize
+
+Timeline:
+2017-06-17: bug discovered and reported to upstream
+2017-06-28: blog post about the issue
+2017-07-10: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/06/28/xar-null-pointer-dereference-in-xar_unserialize-archive-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
+------MIME delimiter for sendEmail-34071.3342457128--
 
