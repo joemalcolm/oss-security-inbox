@@ -1,64 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/6
-Message-ID: <f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>
-Date: Tue, 10 Jan 2017 22:41:20 -0500
-From: <cve-assign@...re.org>
-To: <astieger@...e.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <cmn@...m.me>
-Subject: Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/8
+Message-ID: <CA+LM4MvaXPq4yO0iS0RSMcZorjWwPtexj0L4ozJ7jPRZqxC4ug@mail.gmail.com>
+Date: Mon, 10 Jul 2017 10:27:37 -0700
+From: Sailesh Mukil <sailesh@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: [SECURITY] CVE-2017-5652 Apache Impala (incubating) Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://github.com/libgit2/libgit2/commit/66e3774d279672ee51c3b54545a79d20d1ada834
-
-Use CVE-2016-10128.
+CVE-2017-5652 Apache Impala (incubating) Information Disclosure
 
 
-> https://github.com/libgit2/libgit2/commit/2fdef641fd0dd2828bd948234ae86de75221a11a
-
-Use CVE-2016-10129.
+Severity: High
 
 
-> https://github.com/libgit2/libgit2/commit/9a64e62f0f20c9cf9b2e1609f037060eb2d8eb22
+Versions Affected:
 
-Use CVE-2016-10130.
-
-
-> https://github.com/libgit2/libgit2/commit/98d66240ecb7765e191da19b535c75c92ccc90fe
-
-Use CVE-2017-5338.
+Apache Impala (incubating) 2.7.0 to 2.8.0
 
 
-> https://github.com/libgit2/libgit2/commit/3829ba2e710553893faf6336cc6b2f3fc17a293e
+Description:
 
-Use CVE-2017-5339.
+During a routine security analysis, it was found that one of the ports sent
+data in plaintext even when the cluster was configured to use TLS. The port
+in question was used by the StatestoreSubscriber class which did not use
+the appropriate secure Thrift transport when TLS was turned on. It was
+therefore possible for an adversary, with access to the network, to
+eavesdrop on the packets going to and coming from that port and view the
+data in plaintext.
 
 
-> https://github.com/libgit2/libgit2/commit/2ac57aa89bde788173b54bd153430369deec64c0
+Mitigation:
 
-This has no CVE ID; it does not seem to be a vulnerability fix.
+Users of the affected versions should apply the following mitigation:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+ - Upgrade to Apache Impala (incubating) 2.9.0
 
-iQIcBAEBCAAGBQJYdacwAAoJEHb/MwWLVhi2/EEP/jH+BS08ezRAbMvZW5v27rQp
-L3cbsZDrrydTfV65nR7CoKtT+IVNt6ZBgK7S2npMwv+LFcWwe/1U3kOEb3bwduRD
-LSZCIX0b3437Q+wS83Ohz3U88R3LUECzaU9YP+sW+hRGxi9Lu1hfGkaOThxMKznE
-5wxqr7/85G42J+yWQRQx46mHyvS0h5Ogj7FqkeDenpp7qucfW/CqfWggtzQw2/Sm
-SDLVVF0l3/rKDGicyO0+451wbhoWKL3CFE3q11FHgU6Isn2HQ9qu3litcSAtCXN1
-q37xCAyMuPrVYLVvEgBgT43icxAg0rDwNh521XN0aHIy+NVdhaknOSLLWkntCG42
-yRExjFOYSReYIiFnAGDsn+ujPlUe1a/GbZ/WlOOZw0abY1T9OTiuqDBywEVk5WxJ
-26fKFUHPoBhN21En9V4/0d5tIdpUV8jYscritWJhxcoMNMBpnVfuTANPy9GNXaGU
-w+FjXC2S+OYNxirBlRQlw3aECAsvkLk6PKLZZnoMkM8x+HIBimk8/1+HvNOrTiwX
-GtYGJroUYspNmFLfDixpfZlSO5RO9MqQZKKCDYkfqmVGeLCcGilOd084CwlrLXvG
-jYkjJvyw6E0kzLTM3x1Q3Fp3rkBkSl8pyR3Xmts/0seY9EMnDy00aqEIug/xczz1
-okCatyYGVFaf+kJltyv3
-=tboo
------END PGP SIGNATURE-----
+
+Credit:
+This issue was identified and reported responsibly by the Cloudera security
+team.
+
+
+References:
+[1] https://issues.apache.org/jira/browse/IMPALA-5253
+
