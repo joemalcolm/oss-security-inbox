@@ -1,36 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/11/2
-Message-ID: <20170911185857.hfti4mrponqoddin@eldamar.local>
-Date: Mon, 11 Sep 2017 20:58:57 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: GNU Emacs 25.2 enriched text remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/3
+Message-ID: <tencent_00731D3252EC3A604F70E769@qq.com>
+Date: Tue, 11 Jul 2017 10:03:01 +0800
+From: "ben" <qbenjin@...com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Cc: "huangyonggang" <huangyonggang@...60.cn>
+Subject: Re:  [scr358145] pcre-8.41 - 8.41
 Content-Type: text/plain; charset=utf-8
 
-Hi Paul,
+> [Suggested description]
+> In PCRE 8.41, the OP_KETRMAX feature in the match function in pcre_exec.c
+> allows stack exhaustion (uncontrolled recursion) when processing a crafted regular expression.
+> 
+> ------------------------------------------
+> 
+> [Additional Information]
+> This vulns like CVE-2017-9729.
+> it is about line 2061 (from the https://vcs.pcre.org/pcre/code/trunk/pcre_exec.c?revision=1683&view=markup page) of pcre_exec.c:
+> 
+> RMATCH(eptr, prev, offset_top, md, eptrb, RM13);
+> 
+> this recursive calls case Segmentation fault ,because of stack exhaustion.
+> 
+> 
+>  The poc code like: 
+> 
+>  if(regcomp (&regtmp,"\x28\x61\x2A\x5C\x56\x2A\x5C\x43\x2B\x29\x2A\x6F\xE5\xA2\x80", REG_UTF8 )==0)
+>   {  
+>    regmatch_t pmatch[1];
+>    regexec(&regtmp, "\x6C\x6F\xE5\xA2\x80\x2D ",1, pmatch, 0);
+>    regfree(&regtmp);
+>  }
+> with configure --enable-utf
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> stack exhaustion
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> http://www.pcre.org/
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> pcre-8.41 - 8.41
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> pcre_exec.c
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> many methods!   many program use pcre,  like: php and nginx ,please see: https://en.wikipedia.org/wiki/Comparison_of_regular_expression_engines
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://en.wikipedia.org/wiki/Comparison_of_regular_expression_engines
+> http://www.pcre.org/
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Benjin Liu, codesafe of qihoo 360 ,http://codesafe.cn
 
-On Sun, Sep 10, 2017 at 11:56:20PM -0700, Paul Eggert wrote:
-> GNU Emacs is an extensible, customizable, free/libre text editor and
-> software environment.  When Emacs renders MIME text/enriched data (Internet
-> RFC 1896), it is vulnerable to arbitrary code execution. Since Emacs-based
-> mail clients decode "Content-Type: text/enriched", this code is exploitable
-> remotely. This bug affects GNU Emacs versions 19.29 through 25.2.
-> 
-> Although we know no efforts to exploit this in the wild, exploitation is easy.
-[...]
-> == Timeline ==
-> 
-> 2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
-> 
-> 2017-09-07. POC for remote code execution sent to the maintainers of Emacs
-> and Gnus (Reiner Steib <Reiner.Steib@....de>, private mail).
-> 
-> 2017-09-08. Patch (by Lars Ingebrigtsen <larsi@...s.org>) to disable the
-> problematic code and mitigation (private mail).
-> 
-> 2017-09-09. Patch committed in main development repository.
+Use CVE-2017-11164.
 
-Have you requested a CVE for this issue?
 
-Regards,
-Salvatore
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJZY7EfAAoJEHb/MwWLVhi2wBIP/jIMwxZB892scrm393PA4zM3
+adhV1TQ2tkpG4ALp4zC0MhHFfVr11LuWlSxsgu/OGHBTPLYldbK+hhVOtaV7EqSB
++vrvAKEepOJKLB71AR4XpixzedQnP0+SOAgYvnpVI3LW/Yb2j2yZhhTbzh6H+5Zy
+Z75mpeDH7HibIkTgFMlAJ6d/3VsN7Xmadc9YzZ7m+NvdU/r3pg+/dxQHd1zwrMPl
+3V/IBVpAq0XiHUy470mruV7EUWAdB8rWIoN1AAxN61aiCrp0xZ/MIEXOqQPyswhd
+bO7jrJgeCUbovhi/PZMINX67zgTVt+yOfnpgwr5wLFoTXjzES1N1sdNWruGSN/VY
+SrGimn286l/bYaDCr5nY4o6W+RALuIMw/gJL6VBuJFcQ9aNpG9GH3JdT154TZwDt
+HM3LHX8tGPULeVLRFn77rdmaoaWUaEYvvBb6UvwQyTn81lx6TNCu3nVULCxNnkpp
+EVypMZo4SJ8nxJjfA+Ccvy1ZJimMAkb5mZvu+dVT95sN827HvYAVyvxQx1a7aeku
+euBjypn84Jx+tj9q4Hgkto8qwmJGar1dWab8/qh8YH1KLpfXgIoNMlUcSWjvdB53
+QPv2btH48/aHnZ5Gp+0D7CxWxUtP2FoSzghlINjakJ1/zXGhGgqJoRnF9BjZ/uTG
+yuPbKM/5rrPKj9Q9Gc/t
+=rH9J
+-----END PGP SIGNATURE-----
