@@ -1,47 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/13
-Message-ID: <e1f1ca85-d911-724b-e9b5-ef5e8132c074@chbi.eu>
-Date: Fri, 29 Sep 2017 19:29:07 +0200
-From: chbi@...i.eu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/8
+Message-ID: <20170711100202.27a42e9b@sturbolzen>
+Date: Tue, 11 Jul 2017 10:02:02 +0200
+From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Stored XSS vulnerability in Tine 2.0 Community Edition <= 2017.08.3
+Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
 Content-Type: text/plain; charset=utf-8
 
+Thanks to all for the clarifications.
 
-> Stored XSS vulnerability via IMG tag at "History" of Profile, Calendar,
-> Tasks and CRM allows an authenticated user to inject JavaScript which is
-> triggered by the application administrator and other users.
+Am Mon, 10 Jul 2017 20:24:01 -0600
+schrieb Kurt Seifried <kseifried@...hat.com>: 
 
-CVE-2017-14922 has been assigned.
+> On 2017-07-10 8:04 PM, Michal Zalewski wrote:
+> >> It's hard to see a security issue here  
+> > I'm not sure this applies here, but the use of uninitialized memory
+> > can be an issue when, say, a website calls your code to convert
+> > user-controlled audio (e.g., to optimize it for streaming).
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14922
+Yeah, in this case it is read access spilling over to adjacent static
+variables in the code. They are either contstant at compile-time or
+initialised to the same values on each run.
+
+> Heartbleed was "only" 64k (that's actually a pretty huge amount for
+> sensitive data).
+
+Here, it's 128 bytes of an adjacent table instead of the intended one
+(planned for a 4-bit index, got a 5-bit one). It's bad audio being
+produced, but from input that very likely was bad to begin with (still
+no valid input data at hand that triggers this).
+
+I would like the CVE description to mention that this is only Denial of
+Service with something like the AddressSanitizer, as it is guaranteed
+to be memory belonging to the respective process, just up to 128 bytes
+off the mark. Not even heap buffers involved. Of course this was not
+clear when reporting, but it's really just those 128 bytes inside
+static variables in the code. My program accesses memory that belongs
+to my program … unless the compiler inserts forbidden zones in there.
+
+I am not bothered enough to dispute the CVE. In the end it's a bug and
+it had to be fixed. But I won't mention the CVE in the commit message
+as it's already done and you don't change history with subversion. You
+will have to make do with the entry in the NEWS file on release;-)
 
 
-> Stored XSS vulnerability via IMG tag at "Leadname" of CRM allows an
-> authenticated user to inject JavaScript which is triggered by the
-> application administrator and other users.
+Alrighty then,
 
-CVE-2017-14923 has been assigned.
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14923
-
-
-> Stored XSS vulnerability via IMG tag at "Filename" of Filemanager allows
-> an authenticated user to inject JavaScript which is triggered by the
-> application administrator and other users.
-
-CVE-2017-14921 has been assigned.
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14921
-
+Thomas
 
 -- 
-chbi
-https://chbi.eu
+Dr. Thomas Orgis
+Universität Hamburg
+RRZ / Basisinfrastruktur / HPC
+Schlüterstr. 70
+20146 Hamburg
+Tel.: 040/42838 8826
+Fax: 040/428 38 6270
 
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (5898 bytes)
