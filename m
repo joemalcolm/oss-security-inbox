@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["399" "Saturday" "16" "May" "2015" "02:11:04" "+0000" "Nitin Venkatesh" "venkatesh.nitin@gmail.com" "<CAARZ5vq4ZZggrPR8XK-HyFdCwaiyUa5nEk07fJ9iGN_3+ikKEg@mail.gmail.com>" "18" "[oss-security] CVE Request - CSRF and XSS in Encrypted Contact Form Wordpress Plugin v1.0.4" nil nil nil "5" "2015051602:11:04" "[oss-security] CVE Request - CSRF and XSS in Encrypted Contact Form Wordpress Plugin v1.0.4" (number mark "        venkatesh.ni May 16   18/399   " thread-indent "\"[oss-security] CVE Request - CSRF and XSS in Encrypted Contact Form Wordpress Plugin v1.0.4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["772" "Tuesday" "11" "July" "2017" "08:43:18" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<7045724.kf4b9Odheo@wanheda>" "26" "Re: [oss-security] Re:  [scr358145] pcre-8.41 - 8.41" nil nil nil "7" "2017071106:43:18" "[oss-security] Re: [scr358145] pcre-8.41 - 8.41" (number mark "U       ago@gentoo.o Jul 11   26/772   " thread-indent "\"Re: [oss-security] Re:  [scr358145] pcre-8.41 - 8.41\"\n") "<tencent_00731D3252EC3A604F70E769@qq.com>" ("<d3ab92e96cef466aa94adc94c058718d@imshyb02.MITRE.ORG>" "<tencent_00731D3252EC3A604F70E769@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1810 invoked by uid 550); 16 May 2015 02:11:56 -0000
+Received: (qmail 10004 invoked by uid 550); 11 Jul 2017 06:43:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1662 invoked from network); 16 May 2015 02:11:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=5brwyF3FI/xGtSVXiDaytc0K1teFIy7w1xGQsdOEyLo=;
-        b=GT140qzXmAPjU2kov3KfzWzhRwxuDqMxGTGt2I1zHYAJZ6Zo+9zUg2RO2EaY1xMedC
-         FUNpxYKXsb6ZHuHMR+kXW0uXidvrWVRE7YqUnYE2hYe1bGicNpA6MOb8Xtn2LacDClMR
-         ko1Ppzm9yU8M9zNV/RxMFVgicBOLaJSCRAFFBkqFZt50ue8ucm+Kji4sRj28PKbImf3Y
-         FvEDxcBIPVuyE1gou08tLGRk7wnhCPGhF8A72afFDkgXXv6S3sjUjh8iLMlyONiCsYJJ
-         Yvi0qYpf70knsF+K5siTXgVgOVubzxIxpXtbsKPN2fawdCltlhBkYvZTQtROCLInQoRq
-         ga0w==
-X-Received: by 10.50.221.98 with SMTP id qd2mr1823043igc.37.1431742265201;
- Fri, 15 May 2015 19:11:05 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAARZ5vq4ZZggrPR8XK-HyFdCwaiyUa5nEk07fJ9iGN_3+ikKEg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11347f20209bcb0516297989
-Date: Sat, 16 May 2015 02:11:04 +0000
-From: Nitin Venkatesh <venkatesh.nitin@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request - CSRF and XSS in Encrypted Contact Form Wordpress Plugin v1.0.4
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 9974 invoked from network); 11 Jul 2017 06:43:35 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: ben <qbenjin@qq.com>, huangyonggang <huangyonggang@b.360.cn>
+Date: Tue, 11 Jul 2017 08:43:18 +0200
+Message-ID: <7045724.kf4b9Odheo@wanheda>
+User-Agent: KMail/4.14.10 (Linux/4.9.34-gentoo; KDE/4.14.32; x86_64; ; )
+In-Reply-To: <tencent_00731D3252EC3A604F70E769@qq.com>
+References: <d3ab92e96cef466aa94adc94c058718d@imshyb02.MITRE.ORG> <tencent_00731D3252EC3A604F70E769@qq.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: Re: [oss-security] Re:  [scr358145] pcre-8.41 - 8.41
 
---001a11347f20209bcb0516297989
-Content-Type: text/plain; charset=UTF-8
+On Tuesday 11 July 2017 10:03:01 ben wrote:
+> > In PCRE 8.41, the OP_KETRMAX feature in the match function in pcre_exec.c
+> > allows stack exhaustion (uncontrolled recursion) when processing a crafted
+> > regular expression.>
+> > 
+> >
+> > ------------------------------------------
+> >
+> > 
+> >
+> > [Additional Information]
+> > This vulns like CVE-2017-9729.
+> > it is about line 2061 (from the
+> > https://vcs.pcre.org/pcre/code/trunk/pcre_exec.c?revision=1683&view=marku
+> > p page) of pcre_exec.c:
 
-Hi,
+Hi, is there an upstream bug report for that?
 
-I discovered CSRF and XSS vulnerabilities in the Encrypted Contact Form
-Wordpress Plugin v1.0.4 which was responsibly disclosed and patched by the
-vendor in v1.1.
+I'm asking because time ago I reported something like that, which was 
+considered expected:
+https://bugs.exim.org/show_bug.cgi?id=2047
+https://bugs.exim.org/show_bug.cgi?id=2048
 
-I request a CVE for the same.
-
-Reference:
-http://seclists.org/fulldisclosure/2015/May/63
-
-Thanks & regards,
-Nitin Venkatesh
-
---001a11347f20209bcb0516297989--
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
