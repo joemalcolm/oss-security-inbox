@@ -1,44 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/12
-Message-ID: <20170914115142.1d481ea0@cortex.rrz.uni-hamburg.de>
-Date: Thu, 14 Sep 2017 11:51:42 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/2
+Message-ID: <CALx_OUDSOWt=z01KSv81tqsyUO1hNas0NF_aAzXRzqMKM9u89A@mail.gmail.com>
+Date: Mon, 10 Jul 2017 19:04:37 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
 Content-Type: text/plain; charset=utf-8
 
-Am Thu, 14 Sep 2017 09:51:36 +0200
-schrieb Agostino Sarubbo <ago@...too.org>:
+> It's hard to see a security issue here
 
-> Anwyay I agree with you that is time to drop the packages.
+I'm not sure this applies here, but the use of uninitialized memory
+can be an issue when, say, a website calls your code to convert
+user-controlled audio (e.g., to optimize it for streaming). For
+libraries, this could leak some information about the audio converted
+for other users, possibly revealing it to the attacker. For one-shot
+conversions with a command-line tool, this is unlikely, but the
+uninitialized memory could still end up leaking some system-specific
+secrets (e.g., ASLR memory layout, credentials, etc).
 
-I disagree. I am considering cleaning up mp3gain and omitting nearly
-all of the vulnerabilities by removing the decoder fork. Reason: rgain
-does not do what mp3gain did. Mp3gain can directly modify the MPEG
-frames so that the gain is changed also for decoders that do not
-support the added metadata (it additionally stores metadata to be able
-to revert the changes).
+Not that this is necessarily a risk here; depends on how much memory
+is accessed, what happens with it later on, whether anyone is even
+using the library / tool this way, whether doing so is sane in the
+first place, etc.
 
-While I am not regularily using this myself, I do think that it's a
-nifty hack that should not disappear. Maybe it can re-enter distros if
-it does not rely on an outdated internal decoder … 
-
-This is becoming a bit off-topic … but I just wanted to note that the
-bug reports do serve a purpose in alerting me to that other copy of
-mpg123 code in the wild.
-
-
-Alrighty then,
-
-Thomas
-
--- 
-Dr. Thomas Orgis
-Universität Hamburg
-RRZ / Basis-Infrastruktur / HPC
-Schlüterstr. 70
-20146 Hamburg
-Tel.: 040/42838 8826
-Fax: 040/428 38 6270
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4967 bytes)
+/mz
