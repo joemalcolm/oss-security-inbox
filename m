@@ -1,43 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/7
-Message-ID: <CAF=yD-K+abq_ZK18map1SCAd2x0BnFNAKB5t0+RrdxYROxSd1g@mail.gmail.com>
-Date: Thu, 10 Aug 2017 15:25:20 -0700
-From: Willem de Bruijn <willemdebruijn.kernel@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/4
+Message-ID: <33a37df8-c4db-0e1c-862a-2ee2d42afb17@redhat.com>
+Date: Mon, 10 Jul 2017 20:21:03 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Andrey Konovalov <andreyknvl@...il.com>
-Subject: Linux kernel: CVE-2017-1000111: heap out-of-bounds in AF_PACKET sockets
+Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2017-07-10 7:28 PM, Seth Arnold wrote:
+> On Mon, Jul 10, 2017 at 11:42:53AM +0200, Dr. Thomas Orgis wrote:
+>> Is this really worth a CVE, though? So far I was only able to see a
+>> crash triggered by the AddressSanitizer. Never from a normal build. So
+> It is common to assign CVEs for issues discovered via fuzzers and
+> sanitizers even if the consequences aren't visible without them: perhaps
+> the consequences aren't visible to users only by accident.
+To expand on this: some fuzzing results are largely "who cares", e.g. a
+locally executed file converter for office files that crashes, no code
+execution largely devolves to "well don't open that file again", but a
+web browser/email client, or libraries they depend upon that cause a
+crash, yeah, that's a problem (I really hate waiting for all my tabs to
+reload, and hopefully I didn't lose any data/progress).
+> Some people only accept a vulnerability report if there's an exploit that
+> goes along with it but developing even a proof of concept is difficult
+> and error-prone. Lack of an exploit doesn't prove that an issue can safely
+> be ignored. (There's always someone more dedicated to writing an exploit.)
 
-Syzkaller found a race condition in PF_PACKET sockets with setting
-socket option PACKET_RESERVE. The bug is analogous to a previous one
-with PACKET_VERSION reported as CVE-2016-8655. The same analysis
-applies.
+The beauty is that CVE is now a claims based system, obviously the
+stronger the claim (e.g. working exploit code, or a professional
+reputation helps) the better the case for a CVE, and conversely there is
+also a DISPUTE process, again the stronger the claim, the closer you'll
+get to REJECT =). Of course proving a negative can be tricky. On the
+flip side we do have historical data (e.g. Null pointer deref in Linux
+kernel, that's usually a CVE!).
+>
+> Assigning a CVE number makes downstream consumers aware of the issue and
+> each can prioritize a fix as they see fit based on their own threat models.
+It also simply creates an entry in the taxonomy so we can discuss it.
+The result of that can be "we need to fix this" or "we need to stop
+using this" (e.g. some pieces of software have over 1000 CVE's and are
+well known to be vectors for infection in web drive by attacks). It lets
+us move away from qualitative data to quantitative data (facts yo!) or
+any numbr of other responses ("the risk is acceptable").
+>> every build of mpg123 in the wild, except for extremely hardened
+>> distros that build everything with GCC's sanitizers enabled for daily
+>> use, is not affected. Are people running binaries in production with
+>> the sanitizers on?
+> I believe the general consensus is that only the UBSAN sanitizer is safe
+> for 'daily use'; the others aren't themselves security hardened and in
+> fact have lead to exploits. This thread has more discussion:
+> http://www.openwall.com/lists/oss-security/2016/02/18/1
+>
+> Thanks
 
-The bug requires CAP_NET_RAW to open a packet socket. This is a
-privileged operation, unless unprivileged user namespaces are enabled.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-The fix has been submitted to netdev as
 
-  packet: fix tp_reserve race in packet_set_ring
 
-  Updates to tp_reserve can race with reads of the field in
-  packet_set_ring. Avoid this by holding the socket lock during
-  updates in setsockopt PACKET_RESERVE.
 
-  This bug was discovered by syzkaller.
-
-  Fixes: 8913336a7e8d ("packet: add PACKET_RESERVE sockopt")
-  Reported-by: Andrey Konovalov <andreyknvl@...gle.com>
-  Signed-off-by: Willem de Bruijn <willemb@...gle.com>
-
-  c27927e372f0785f3303e8fad94b85945e2c97b7
-  http://patchwork.ozlabs.org/patch/800274/
-
-Timeline:
-
-2017.08.03 - Bug reported to security@...nel.org
-2017.08.04 - Bug reported to linux-distros@
-2017.08.10 - Patch submitted to netdev
-2017.08.10 - Announcement on oss-security@
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
