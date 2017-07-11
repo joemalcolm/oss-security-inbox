@@ -1,61 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/12
-Message-Id: <201702111846.47434@pali>
-Date: Sat, 11 Feb 2017 18:46:43 +0100
-From: pali@...n.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/1
+Message-ID: <20170711012837.GE2012@hunt>
+Date: Mon, 10 Jul 2017 18:28:37 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Simon McVittie <smcv@...ian.org>
-Subject: Re: Re: Use after free in libmysqlclient.so
+Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
 Content-Type: text/plain; charset=utf-8
 
-On Friday 10 February 2017 17:39:45 Solar Designer wrote:
-> As far as I can tell, pali@...n.org is not subscribed.
+On Mon, Jul 10, 2017 at 11:42:53AM +0200, Dr. Thomas Orgis wrote:
+> Is this really worth a CVE, though? So far I was only able to see a
+> crash triggered by the AddressSanitizer. Never from a normal build. So
 
-No, I'm not. I hope it is not a requirement.
+It is common to assign CVEs for issues discovered via fuzzers and
+sanitizers even if the consequences aren't visible without them: perhaps
+the consequences aren't visible to users only by accident.
 
-> ----- Forwarded message from Simon McVittie <smcv@...ian.org> -----
-> 
-> Mailing-List: contact oss-security-help@...ts.openwall.com; run by
-> ezmlm Reply-To: oss-security@...ts.openwall.com
-> Date: Fri, 10 Feb 2017 16:20:58 +0000
-> From: Simon McVittie <smcv@...ian.org>
-> To: oss-security@...ts.openwall.com
-> Subject: Re: [oss-security] Re: Use after free in libmysqlclient.so
-> 
-> On Fri, 10 Feb 2017 at 11:59:59 +0100, pali@...n.org wrote:
-> > On Friday 27 January 2017 23:53:29 pali@...n.org wrote:
-> > > C client library for MySQL (libmysqlclient.so) has use-after-free
-> > > defect which can cause crash of applications using that MySQL
-> > > client.
-> 
-> Is this a security vulnerability, or just a bug?
+Some people only accept a vulnerability report if there's an exploit that
+goes along with it but developing even a proof of concept is difficult
+and error-prone. Lack of an exploit doesn't prove that an issue can safely
+be ignored. (There's always someone more dedicated to writing an exploit.)
 
-It is bug for sure and I think it is security vulnerability.
+Assigning a CVE number makes downstream consumers aware of the issue and
+each can prioritize a fix as they see fit based on their own threat models.
 
-> How would an attacker cause this to happen in the application
-> that they wish to target?
+> every build of mpg123 in the wild, except for extremely hardened
+> distros that build everything with GCC's sanitizers enabled for daily
+> use, is not affected. Are people running binaries in production with
+> the sanitizers on?
 
-First, it needs that target application does not manually free 
-structures for prepared statement and let this for mysql_close() (also 
-applicable for languages where is order of executing destructors not 
-defined or could not be predicable). Triggering this bug is possible if 
-there stay allocated structure for at least one statement which is 
-initialized, but not prepared on server yet. MySQL server has upper 
-limit for prepared statements. So if attacker can hit this limit (e.g. 
-when target application can be triggered to prepare lot of statements on 
-server) and target application start closing connection to MySQL server 
-then use-after-free happen in target application and it can crash. If 
-attacker is able to repeat this procedure then target application is 
-under denial-of-service attack. Or triggering this bug is also possible 
-when connection with MySQL server is lost after preparing statement. If 
-attacker is able to let target application to prepare some statement and 
-after that execute another which will cause lost connection (e.g. some 
-large/slow computation) then target application try to reconnect (close 
-+ open) and bug is triggered.
+I believe the general consensus is that only the UBSAN sanitizer is safe
+for 'daily use'; the others aren't themselves security hardened and in
+fact have lead to exploits. This thread has more discussion:
+http://www.openwall.com/lists/oss-security/2016/02/18/1
 
-Probably easier for attacker would be to combine this defect with 
-another application specific.
+Thanks
 
->     S
-> 
-> ----- End forwarded message -----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
