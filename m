@@ -1,4 +1,9 @@
-Received: (qmail 20062 invoked by uid 550); 24 Feb 2025 17:14:13 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1240" "Monday" "10" "July" "2017" "20:24:01" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<308352c2-f020-aa8b-0ea7-f4cc7b14ada2@redhat.com>" "29" "Re: [oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)" "^Date:" nil nil "7" "2017071102:24:01" "[oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)" (number mark "        kseifried@re Jul 10   29/1240  " thread-indent "\"Re: [oss-security] mpg123: global buffer overflow in III_i_stereo (layer3.c)\"\n") "<CALx_OUDSOWt=z01KSv81tqsyUO1hNas0NF_aAzXRzqMKM9u89A@mail.gmail.com>" ("<801547.452199401-sendEmail@localhost>" "<20170710114253.44fc7ac0@cortex.rrz.uni-hamburg.de>" "<CALx_OUDSOWt=z01KSv81tqsyUO1hNas0NF_aAzXRzqMKM9u89A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26180 invoked by uid 550); 11 Jul 2017 02:24:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26156 invoked from network); 11 Jul 2017 02:24:14 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=dl+ge6kDApLQVn0cpE6ATXkfuy2UnwNLElTxVEd5GNE=;
+        b=R1G4MZHMgRFEz1kLa9YLQU8Ooj20D7A0OJtibaXR502M6Fin2i5DVyak4W+L7yTJWa
+         QQ3d6qP0Z+c+iD5vdiDAh7ReNbq78LIwr6vrFn5UR3dgW5m1IYlXb3pl1RLTstFXId6B
+         bTE1AGG70rYC0QUyz6PIT490NvV5HTJXRRrofknfiNwM9G8jq2pjbs2M2QrXXgdLT4w0
+         CzvE+9v+NaEN9ekn29NB6cSNzTgYRvYalGg7f2FBwV5fJfmV0aETiXntjhhZQTC4L1uq
+         fxZl37JxKZd4Xr5IhJslncUUk9efeg20VV1Lp71eGr4GnSpDXqmfX0O8Az/gxNWJ+tCY
+         xQQA==
+X-Gm-Message-State: AIVw111XVHpngvLU+K8SW/1fdeSK8DDLuUnBUARhjitUeM8gJS/SP+1H
+	05yizNibEEV/D4ts
+X-Received: by 10.36.39.148 with SMTP id g142mr1307338ita.91.1499739843093;
+        Mon, 10 Jul 2017 19:24:03 -0700 (PDT)
+References: <801547.452199401-sendEmail@localhost>
+ <20170710114253.44fc7ac0@cortex.rrz.uni-hamburg.de>
+ <CALx_OUDSOWt=z01KSv81tqsyUO1hNas0NF_aAzXRzqMKM9u89A@mail.gmail.com>
+Message-ID: <308352c2-f020-aa8b-0ea7-f4cc7b14ada2@redhat.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
+ Gecko/20100101 Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <CALx_OUDSOWt=z01KSv81tqsyUO1hNas0NF_aAzXRzqMKM9u89A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+Date: Mon, 10 Jul 2017 20:24:01 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17821 invoked from network); 24 Feb 2025 17:13:40 -0000
-Date: Mon, 24 Feb 2025 18:13:32 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Qualys Security Advisory <qsa@qualys.com>,
-	Jordy Zomer <jordy@pwning.systems>, Damien Miller <djm@mindrot.org>,
-	Dmitry Belyavskiy <dbelyavs@redhat.com>
-Message-ID: <20250224171331.GA8720@openwall.com>
-References: <20250218091414.GA26981@localhost.localdomain> <20250222032521.GA30890@openwall.com> <CAOcQRVX639qNrgqbKjPFpZL0_SHEdpGrcLmbLySH15fE5p5Pwg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOcQRVX639qNrgqbKjPFpZL0_SHEdpGrcLmbLySH15fE5p5Pwg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] MitM attack against OpenSSH's VerifyHostKeyDNS-enabled client
+Subject: Re: [oss-security] mpg123: global buffer overflow in III_i_stereo
+ (layer3.c)
+To: oss-security@lists.openwall.com, Michal Zalewski <lcamtuf@coredump.cx>
 
-Hi Dmitry,
 
-Thank you for taking a look at this.
 
-On Mon, Feb 24, 2025 at 05:57:13PM +0100, Dmitry Belyavskiy wrote:
-> On Sat, Feb 22, 2025 at 4:27???AM Solar Designer <solar@openwall.com> wrote:
-> > +++ openssh-8.7p1-43.el9-tree.krb5-ssh_asprintf_append/auth-krb5.c
-> > 2025-02-21 03:37:13.106465704 +0000
-> > @@ -309,13 +309,14 @@ ssh_asprintf_append(char **dsc, const ch
-> >         i = vasprintf(&src, fmt, ap);
-> >         va_end(ap);
-> >
-> > -       if (i == -1 || src == NULL)
-> > +       if (i == -1)
-> >                 return -1;
-> >
-> >         old = *dsc;
-> >
-> >         i = asprintf(dsc, "%s%s", *dsc, src);
-> > -       if (i == -1 || src == NULL) {
-> > +       if (i == -1) {
-> > +               *dsc = old;
-> >                 free(src);
-> >                 return -1;
-> >         }
-> >
-> > This is in RH-added Kerberos support code.  The issue was that if the
-> > second asprintf() call failed, it'd leave *dsc undefined, yet the caller
-> > of this function would free() memory via that pointer.  In practice,
-> > glibc would either leave the pointer unchanged or reset it to NULL
-> > (varying by glibc version and specific error condition), both of which
-> > are safe to free().  Yet resetting "*dsc = old;" should be safer, and
-> > should avoid the memory leak that happens if *dsc got reset to NULL.
-> > That memory leak shouldn't have mattered anyway because it'd only occur
-> > when the process already has trouble allocating more memory here.
-> >
-> > The "src == NULL" checks are dropped because the first one shouldn't
-> > matter if asprintf() behaves correctly and wouldn't help if it does not
-> > (as src isn't initialized to NULL before the call), the second one
-> > is wrong (was probably meant to check *dsc, not src), and further code
-> > in this same source file relies on asprintf() return value anyway.
-> 
-> I'm not sure that the check for the  src == NULL should be removed at least
-> for the 1st branch.
+On 2017-07-10 8:04 PM, Michal Zalewski wrote:
+>> It's hard to see a security issue here
+> I'm not sure this applies here, but the use of uninitialized memory
+> can be an issue when, say, a website calls your code to convert
+> user-controlled audio (e.g., to optimize it for streaming). For
+> libraries, this could leak some information about the audio converted
+> for other users, possibly revealing it to the attacker. For one-shot
+> conversions with a command-line tool, this is unlikely, but the
+> uninitialized memory could still end up leaking some system-specific
+> secrets (e.g., ASLR memory layout, credentials, etc).
+Just a reminder to all, a worst case scenario to the above:
 
-It's OK to keep it.  This really shouldn't matter.
+https://twitter.com/taviso/status/832744397800214528?lang=en
+> Not that this is necessarily a risk here; depends on how much memory
+> is accessed, what happens with it later on, whether anyone is even
+> using the library / tool this way, whether doing so is sane in the
+> first place, etc.
+>
+> /mz
+Heartbleed was "only" 64k (that's actually a pretty huge amount for
+sensitive data).
 
-> Unfortunately I came across implementations that caused segfault on passing
-> NULL pointers to sprintf-like functions.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-Of course, we shouldn't pass NULL pointers to sprintf-like functions.
-But if the first asprintf() call returns other than -1, the pointer is
-supposed to be non-NULL.  And if we somehow don't trust asprintf()
-return value (even though it's standardized, unlike what happens to the
-pointer on error), then the check for NULL is insufficient because the
-pointer may as well remain uninitialized (formally it's undefined), so
-you'd need to start by "src = NULL;" before the first asprintf() call
-for this defensive programming to make sense.  And the second "src ==
-NULL" check is redundant with the first (not reached if src is NULL).
-
-Alexander
