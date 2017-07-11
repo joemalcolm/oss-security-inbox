@@ -1,79 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/28/5
-Message-ID: <506975.984989793-sendEmail@localhost>
-Date: Mon, 28 Aug 2017 15:00:20 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/6
+Message-ID: <7045724.kf4b9Odheo@wanheda>
+Date: Tue, 11 Jul 2017 08:43:18 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: ben <qbenjin@...com>, huangyonggang <huangyonggang@...60.cn>
+Subject: Re: Re:  [scr358145] pcre-8.41 - 8.41
 Content-Type: text/plain; charset=utf-8
 
-Description:
-graphicsmagick is a collection of tools and libraries for many image formats.
+On Tuesday 11 July 2017 10:03:01 ben wrote:
+> > In PCRE 8.41, the OP_KETRMAX feature in the match function in pcre_exec.c
+> > allows stack exhaustion (uncontrolled recursion) when processing a crafted
+> > regular expression.>
+> > 
+> >
+> > ------------------------------------------
+> >
+> > 
+> >
+> > [Additional Information]
+> > This vulns like CVE-2017-9729.
+> > it is about line 2061 (from the
+> > https://vcs.pcre.org/pcre/code/trunk/pcre_exec.c?revision=1683&view=marku
+> > p page) of pcre_exec.c:
 
-The relevant ASan output of the issue:
+Hi, is there an upstream bug report for that?
 
-# gm convert -clip -negate $FILE out
-==15168==End of process memory map.
-==15168==AddressSanitizer CHECK failed: /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" 
-(0x0, 0x0)
-    #0 0x4d966f in AsanCheckFailed /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_rtl.cc:69
-    #1 0x4f43d5 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_termination.cc:79
-    #2 0x4e3a02 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120
-    #3 0x4ed305 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_posix.cc:132
-    #4 0x420a02 in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
-    #5 0x420a02 in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
-    #6 0x420a02 in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:407
-    #7 0x420a02 in __asan::asan_malloc(unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:782
-    #8 0x4cf664 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:67
-    #9 0x7fe7563f4171 in MagickRealloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:471:18
-    #10 0x7fe7564ca47c in OpenCache /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3155:7
-    #11 0x7fe7564c62c7 in ModifyCache /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:2955:18
-    #12 0x7fe7564dfb44 in SetCacheNexus /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3886:7
-    #13 0x7fe7564df028 in SetCacheViewPixels /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3965:10
-    #14 0x7fe74fbbe2fe in ReadPNMImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/pnm.c:628:19
-    #15 0x7fe756011e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #16 0x7fe755ea4f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #17 0x7fe755ee10c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #18 0x7fe755f8c85b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #19 0x7fe755f89991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #20 0x7fe7547f4680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #21 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+I'm asking because time ago I reported something like that, which was 
+considered expected:
+https://bugs.exim.org/show_bug.cgi?id=2047
+https://bugs.exim.org/show_bug.cgi?id=2048
 
-/usr/bin/gm convert: abort due to signal 6 (SIGABRT) "Abort"...
-
-Affected version:
-1.3.26
-
-Fixed version:
-N/A
-
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/3bbf7a13643d
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-Waiting for a CVE assignment
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00331-graphicsmagick-memallocfailure-MagickRealloc
-
-Timeline:
-2017-07-12: bug discovered and reported to upstream privately
-2017-08-16: bug reported to the public upstream bugtracker
-2017-08-20: upstream released a fix
-2017-08-28: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/28/graphicsmagick-memory-allocation-failure-in-magickrealloc-memory-c-2/
-
---
+-- 
 Agostino Sarubbo
 Gentoo Linux Developer
-
-
