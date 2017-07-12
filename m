@@ -1,39 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/8
-Message-ID: <20171113193304.GA27179@openwall.com>
-Date: Mon, 13 Nov 2017 20:33:04 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/12/1
+Message-ID: <20170712084350.GA15676@f195.suse.de>
+Date: Wed, 12 Jul 2017 10:43:50 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: (linux-)distros list use statistics
+Subject: CVE-2017-11171: gnome-session: Bad reference counting in the context of accept_ice_connection() in gsm-xsmp-server.c
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 13, 2017 at 08:13:05PM +0100, Kristian Fiskerstrand wrote:
-> As far as I'm aware I haven't gotten access to edit the wiki page for
-> publishing it.
+Affected package: gnome-session
+Affected versions: < 2.29.92
 
-Please feel free to create a page like:
+Bad reference counting in the context of accept_ice_connection() in
+gsm-xsmp-server.c in old versions of gnome-session up until version
+2.29.92 allows a local attacker to establish ICE connections to
+gnome-session with invalid authentication data (an invalid magic
+cookie). Each failed authentication attempt will leak a file descriptor
+in gnome-session.
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+When the maximum number of file descriptors is exhausted in the
+gnome-session process, it will enter an infinite loop trying to
+communicate without success, consuming 100% of the CPU. The graphical
+session associated with the gnome-session process will stop working
+correctly, because communication with gnome-session is no longer
+possible.
 
-You don't need any special access for that.
+This was fixed with the following commit:
 
-> The wikified stats based on the generated DocuWiki output is available
-> in very basic style at the testing instance:
-> 
-> https://wiki.sumptuouscapital.com/doku.php?id=distros_stats
+https://github.com/GNOME/gnome-session/commit/b0dc999e0b45355314616321dbb6cb71e729fc9d
 
-Thank you, Kristian!
+The problem seems to be that upon connection establishment
+gms_store_add() is called, but not gsm_store_remove(), even if the
+authentication of the ICE connection fails.
 
-This lists two very long embargo periods for two Linux kernel issues: 96
-days for CVE-2017-7533 and 28 days for CVE-2017-1000255.  While this is
-useful info, it does not reflect (linux-)distros' lists performance as
-it includes embargo periods from prior to disclosure to those lists.
-Also, we can't reliably know of such prior embargo periods, so our data
-would be inconsistent, which is especially bad for calculating averages.
+You can find a proof of concept program attached.
 
-I think for our statistics collection, we should primarily use embargo
-periods since disclosure to (linux-)distros' lists, and secondarily
-since the possibly earlier embargo start dates when known (like you did
-now).  Can you add such data?
+References:
 
-Alexander
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-11171
+https://bugzilla.suse.com/show_bug.cgi?id=1048274
+
+Regards
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
+
+SUSE Linux GmbH 
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
+
+View attachment "ice_dos.c" of type "text/x-c" (3493 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
