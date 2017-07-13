@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/7
-Message-ID: <20170714122641.616d32ec@pc1>
-Date: Fri, 14 Jul 2017 12:26:41 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/3
+Message-ID: <CACsi251dwE_HzgX-eK9ALpTRNVF+M8ztZ3YyUm2y5yxeeWOrRQ@mail.gmail.com>
+Date: Thu, 13 Jul 2017 07:58:01 -0500
+From: William A Rowe Jr <wrowe@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
+Subject: CVE-2017-9789: Apache httpd 2.4 Read after free in mod_http2
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 14 Jul 2017 12:34:01 +0300
-Georgi Guninski <guninski@...inski.com> wrote:
+CVE-2017-9789: Read after free in mod_http2.c
 
-> What is an estimate for the total number of exploitable bugs in large
-> linux distro?
-> 
-> Also, does the total number decrease, increase or change in other way
-> over time?
+Severity: Important
 
-There's nothing anywhere close to being a reliable data collection to
-answer questions like these.
+Vendor: The Apache Software Foundation
 
-People tend to base these things on CVE counts, which is the Infosec
-equivalent of astrology or homeopathy. Yet that doesn't stop
-universities and other "respectably looking" institutions to fall for
-this trap on a regular basis.
+Versions Affected:
+httpd 2.4.26
 
--- 
-Hanno Böck
-https://hboeck.de/
+Description:
+When under stress, closing many connections, the HTTP/2
+handling code would sometimes access memory after it has
+been freed, resulting in potentially erratic behaviour.
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Mitigation:
+2.4.26 users of mod_http2 should upgrade to 2.4.27.
+
+Credit:
+The Apache HTTP Server security team would like to thank Robert Święcki
+for reporting this issue.
+
+References:
+https://httpd.apache.org/security_report.html
