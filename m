@@ -1,48 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/13
-Message-ID: <b26a514f-eb48-32dd-d504-64288b7f1087@chbi.eu>
-Date: Thu, 28 Sep 2017 20:31:57 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: CSRF vulnerability in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11 LTS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/6
+Message-ID: <CAJmbs8hXVqrKdGi92K=m08wJ0iaZunMan5cZ=XYuhuLErx0j9Q@mail.gmail.com>
+Date: Thu, 13 Jul 2017 23:21:51 +0700
+From: Maxim Solodovnik <solomax@...che.org>
+To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2017-7663 - Apache OpenMeetings - XSS in chat
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: High
 
-there are two security issues in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11
-LTS (https://tiki.org)
+Vendor: The Apache Software Foundation
 
+Versions Affected: Apache OpenMeetings 3.2.0
 
-Cross-Site Request Forgery (CSRF) vulnerability via IMG tag allows an
-authenticated user to gain administrator privileges if an administrator
-opens a wiki page with the IMG tag.
+Description: Both global and Room chat are vulnerable to XSS attack
+CVE-2017-7663
 
-Fix:
-https://sourceforge.net/p/tikiwiki/code/63829
+The issue was fixed in 3.3.0
+All users are recommended to upgrade to Apache OpenMeetings 3.3.0
 
-
-Cross-Site Request Forgery (CSRF) vulnerability via IMG tag allows an
-authenticated user to edit global permissions if an administrator opens
-a wiki page with the IMG tag. For example, an attacker could assign
-administrator privileges to every unauthenticated user of the site.
-
-Fix:
-https://sourceforge.net/p/tikiwiki/code/63872
-
-
-Both issues are fixed in Tiki 17.1, Tiki 16.3, Tiki 15.5 LTS and Tiki
-12.12 LTS.
-
-https://tiki.org/article449-Security-and-bug-fix-updates-Tiki-17-1-Tiki-16-3-15-5-and-Tiki-12-12-released
-
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Credit: This issue was identified by Security Innovation
