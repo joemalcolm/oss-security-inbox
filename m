@@ -1,104 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/6
-Message-ID: <278043.289060832-sendEmail@localhost>
-Date: Sun, 26 Feb 2017 11:49:46 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: audiofile: global buffer overflow in decodeSample (IMA.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/5
+Message-ID: <20170713154344.GG21662@suse.com>
+Date: Thu, 13 Jul 2017 17:43:44 +0200
+From: Johannes Segitz <jsegitz@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-1000083: evince: Command injection vulnerability in CBT handler
 Content-Type: text/plain; charset=utf-8
 
-Description:
-audiofile is a C-based library for reading and writing audio files in many common formats.
+Hello,
 
-A fuzz on it discovered a global overflow.
+we were asked to bring this to distros and per list policy it is now made
+public on this list.
 
-The complete ASan output:
+From: Felix Wilhelm
+=========================
+The comic book backend in evince 3.24.0 is vulnerable to a command
+injection bug that can be used to execute arbitrary commands when a cbt
+file is opened:
 
-# sfconvert @@ out.mp3 format aiff                                                                                                                                                                                                                                               
-==1779==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f0add7e6a7a at pc 0x7f0add77c221 bp 0x7ffe13caabf0 sp 0x7ffe13caabe8
-READ of size 2 at 0x7f0add7e6a7a thread T0
-    #0 0x7f0add77c220 in decodeSample(adpcmState&, unsigned char) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:144:13
-    #1 0x7f0add77c220 in IMA::decodeBlockWAVE(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:186
-    #2 0x7f0add77b671 in IMA::decodeBlock(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:110:10
-    #3 0x7f0add777ac9 in BlockCodec::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:55:3
-    #4 0x7f0add7b0c20 in RebufferModule::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/RebufferModule.cpp:122:3
-    #5 0x7f0add76105a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14
-    #6 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29
-    #7 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
-    #8 0x7f0adc83678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #9 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)
+cbt files are simple tar archives containing images. When a cbt file is
+processed, evince calls
+"tar -xOf $archive $filename" for every image file in the archive:
 
-0x7f0add7e6a7a is located 6 bytes to the left of global variable 'indexTable' defined in 
-'/tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:116:21' (0x7f0add7e6a80) of size 16
-0x7f0add7e6a7a is located 40 bytes to the right of global variable 'stepTable' defined in 
-'/tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:122:22' (0x7f0add7e69a0) of size 178
-SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:144:13 in decodeSample(adpcmState&, 
-unsigned char)
-Shadow bytes around the buggy address:
-  0x0fe1dbaf4cf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe1dbaf4d00: 00 00 00 00 00 00 00 00 00 00 00 00 00 07 f9 f9
-  0x0fe1dbaf4d10: f9 f9 f9 f9 00 00 00 00 00 00 00 04 f9 f9 f9 f9
-  0x0fe1dbaf4d20: 00 00 00 00 00 00 01 f9 f9 f9 f9 f9 00 00 01 f9
-  0x0fe1dbaf4d30: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0fe1dbaf4d40: 00 00 00 00 00 00 00 00 00 00 02 f9 f9 f9 f9[f9]
-  0x0fe1dbaf4d50: 00 00 f9 f9 f9 f9 f9 f9 00 00 03 f9 f9 f9 f9 f9
-  0x0fe1dbaf4d60: 00 00 05 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x0fe1dbaf4d70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe1dbaf4d80: 00 00 00 00 01 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
-  0x0fe1dbaf4d90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==1779==ABORTING
+// backend/comics/comics-document.c: 914
+        command_line = g_strdup_printf ("%s %s %s",
+                                        comics_document->extract_command,
+                                        quoted_archive,
+                                        quoted_filename);
 
-Affected version:
-0.3.6
+While both the archive name and the filename are quoted to not be
+interpreted by the shell,
+the filename is completely attacker controlled an can start with "--"
+which leads to tar interpreting it
+as a command line flag.
 
-Fixed version:
-N/A
+This can be exploited by creating a tar archive with an embedded file
+named something
+like this: "--checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg"
 
-Commit fix:
-N/A
+(Make sure evince is not sandboxed by apparmor before trying to reproduce
+the attached POC)
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+fwilhelm@box $ tar -tf poc.cbt
+--checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg
+fwilhelm@box $ ls -la ~/covfefe.evince
+ls: cannot access covfefe.evince: No such file or directory
+fwilhelm@box $ evince poc.cbt
+fwilhelm@box $ ls -la ~/covfefe.evince
+-rw-r----- 1 fwilhelm eng 0 Jun 28 11:05 /home/fwilhelm/covfefe.evince
 
-CVE:
-N/A
+An easy way to fix this would be to change the  ComicBookDecompressCommand
+entry for tar to
+{"%s -xOf --"          , "%s -tf -- %s"      , NULL             , FALSE,
+NO_OFFSET}
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00183-audiofile-globaloverflow-decodeSample
+Please credit Felix Wilhelm from the Google Security Team in all releases,
+patches and advisories related to this issue.
+=========================
 
-Timeline:
-2017-02-20: bug discovered and reported to upstream
-2017-02-20: blog post about the issue
+Additional information by Michael Catanzaro:
+=========================
+It looks like the affected code was deleted right after the Evince 3.24.0
+release, so master is not vulnerable. But current releases are. I'll ask
+around to see how we want to handle this.
+=========================
 
-Note:
-This bug was found with American Fuzzy Lop.
+and
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/20/audiofile-global-buffer-overflow-in-decodesample-ima-cpp
+=========================
+Since it looks like this can probably be used to take over a user account
+with no user interaction beyond visiting a malicious webpage (via drive-by
+web browser download -> nautilus thumbnailer) I guess we should probably do
+a coordinated disclosure instead of just dropping new releases with no
+warning.
+=========================
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+This is tracked as CVE-2017-1000083, further information can be found at
+https://bugzilla.gnome.org/show_bug.cgi?id=784630
 
+Johannes
+-- 
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
 
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
