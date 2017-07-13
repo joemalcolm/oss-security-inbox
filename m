@@ -1,47 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/3
-Message-ID: <20170120014512.GC20029@sin.redhat.com>
-Date: Fri, 20 Jan 2017 12:15:14 +1030
-From: Doran Moppert <dmoppert@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: two flaws in hesiod permitting privilege elevation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/9
+Message-ID: <CAJmbs8irN98436UDsFDeqpj-FMKC5pRi476Xgaq9LGyMQmLGUA@mail.gmail.com>
+Date: Thu, 13 Jul 2017 23:24:59 +0700
+From: Maxim Solodovnik <solomax@...che.org>
+To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2017-7680 - Apache OpenMeetings - Insecure crossdomain.xml policy
 Content-Type: text/plain; charset=utf-8
 
-Two flaws in Hesiod reported May 2016 - neither has made it into an
-upstream release yet, but one is fixed in trunk and patches are
-available for both.
+Severity: Low
 
-Note that glibc is not affected by either of these issues.
+Vendor: The Apache Software Foundation
 
-Originally reported by Florian Weimer.
+Versions Affected: Apache OpenMeetings 1.0.0
 
+Description: Apache OpenMeetings has an overly permissive
+crossdomain.xml file. This allows for flash content to be loaded from
+untrusted domains.
+CVE-2017-7680
 
-# Weak SUID check allowing privilege elevation
+The issue was fixed in 3.3.0
+All users are recommended to upgrade to Apache OpenMeetings 3.3.0
 
-Hesiod unsafely checks EUID vs UID in a few places, consulting
-environment variables for configuration if they match.  This could be
-used for privilege elevation under some circumstances.  The fix uses
-secure_getenv() in place of getenv().
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1332508
-https://github.com/achernya/hesiod/pull/9
-
-
-# Use of hard-coded DNS domain if configuration file cannot be read
-
-If opening the configuration file fails, hesiod falls back on a default
-domain ".athena.mit.edu" to retrieve managed information.  A local
-attacker with the opportunity to poison DNS cache could potentially
-elevate their privileges to root by causing fopen() to fail.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1332493
-https://github.com/achernya/hesiod/pull/10
-
-
-Thanks,
-
--- 
-Doran Moppert
-Red Hat Product Security
-
-Content of type "application/pgp-signature" skipped
+Credit: This issue was identified by Security Innovation
