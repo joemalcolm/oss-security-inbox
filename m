@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1934" "Thursday" "22" "April" "2021" "10:47:06" "-0600" "Ariadne Conill" "ariadne@dereferenced.org" nil "45" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       ariadne@dere Apr 22   45/1934  " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["440" "Thursday" "13" "July" "2017" "23:27:43" "+0700" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8jKczMSw5RZ2NkSx3z-9+cTRg50w-VO9nneRyhMOFLSKQ@mail.gmail.com>" "15" "[oss-security] CVE-2017-7684 - Apache OpenMeetings - Insecure File Upload" nil nil nil "7" "2017071316:27:43" "[oss-security] CVE-2017-7684 - Apache OpenMeetings - Insecure File Upload" (number mark "U       solomax@apac Jul 13   15/440   " thread-indent "\"[oss-security] CVE-2017-7684 - Apache OpenMeetings - Insecure File Upload\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1185 invoked by uid 550); 22 Apr 2021 17:20:56 -0000
+Received: (qmail 3328 invoked by uid 550); 13 Jul 2017 16:28:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,70 +12,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15855 invoked from network); 22 Apr 2021 16:47:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dereferenced.org;
-	s=mailbun; t=1619110027;
-	bh=ECAWGeRXr5vzqNYnNwBfzGrN0cqoCetHohzNmorZqI0=;
-	h=Date:From:To:Subject:In-Reply-To:References;
-	b=kyK3fPqZWDdEailpqEp/JAX1Bdni7RzhnWaBwi49fek8jo4hUEwaj5xMwGczIKSTg
-	 Fm7LX8SGgItoHxWgMFkn9CsiEZ+pBINZw0GefRMhihLqFOJ+d1WJ1hzXUbuHVbGbsS
-	 I8BZc2Vxj9dJJArexhW48OVgHjwC1omwgLPQIhOMpLXoN7vUfieOWBbQ94zTzy4cKx
-	 5LrZx7DpJOYJAYOLaFCkUdOMLLIQB9dSFzUN32tl9Ls3/wgcPVBVe6A7iR1zAntn3U
-	 oe1psmPOAnpH/sF6MJ0FiSqaqDgrP6Q3ECTTwux257liMwojF43vxJocPm+MZUDuuz
-	 mRHhLbIsYUC2w==
-Date: Thu, 22 Apr 2021 10:47:06 -0600 (MDT)
-From: Ariadne Conill <ariadne@dereferenced.org>
-To: Open Source Security <oss-security@lists.openwall.com>
-In-Reply-To: <20210422065959.GI13079@scully.more-magic.net>
-Message-ID: <ae30ef63-77c-cc1b-ef7b-5ed387f7fc95@dereferenced.org>
-References: <20210422065959.GI13079@scully.more-magic.net>
+Received: (qmail 3263 invoked from network); 13 Jul 2017 16:28:01 -0000
+X-Gm-Message-State: AIVw1132RV4w+oRix7q3OkBR216xEWQaXKbLK++l3so07zwbksnsQknr
+	r/ktqnkR6s4Cq+SuSq5wPUuY7bRn5w==
+X-Received: by 10.98.102.214 with SMTP id s83mr391744pfj.239.1499963264041;
+ Thu, 13 Jul 2017 09:27:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
- university study
+From: Maxim Solodovnik <solomax@apache.org>
+Date: Thu, 13 Jul 2017 23:27:43 +0700
+X-Gmail-Original-Message-ID: <CAJmbs8jKczMSw5RZ2NkSx3z-9+cTRg50w-VO9nneRyhMOFLSKQ@mail.gmail.com>
+Message-ID: <CAJmbs8jKczMSw5RZ2NkSx3z-9+cTRg50w-VO9nneRyhMOFLSKQ@mail.gmail.com>
+To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
+	security@openmeetings.apache.org, 
+	Joe Basirico <jbasirico@securityinnovation.com>, 
+	Sharath Unni <sunni@securityinnovation.com>, 
+	Dinesh Shetty <dshetty@securityinnovation.com>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2017-7684 - Apache OpenMeetings - Insecure File Upload
 
-Hello,
+Severity: Low
 
-On Thu, 22 Apr 2021, Peter Bex wrote:
+Vendor: The Apache Software Foundation
 
-> Hi all,
->
-> Probably a lot of you know this already but I consider it serious enough
-> to point out to the OSS security community at large.
->
-> The university of Minnesota has been banned from making any commits to
-> the Linux kernel after it was found out they'd been submitting bogus
-> patches to the LKML to knowingly introduce security issues:
-> https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+Versions Affected: Apache OpenMeetings 1.0.0
 
-While it's disappointing that they chose to go about this experiment in a 
-way that violated research ethics, it does raise a point that has been 
-discussed in the community but frequently shrugged off: the possibility 
-that a bad actor might submit legitimate patches until such time that 
-they can sneak insecure code through review.
+Description: Apache OpenMeetings doesn't check contents of files being
+uploaded. An attacker can cause a denial of service by uploading
+multiple large files to the server
+CVE-2017-7684
 
-Hopefully a positive of this research is that people will be more likely 
-to think about the possibilities of insecure code being walked through the 
-front door.
+The issue was fixed in 3.3.0
+All users are recommended to upgrade to Apache OpenMeetings 3.3.0
 
-With that said, I think UMN should fire Kangjie Lu.  The approach they 
-used in their experiment is literally a textbook example of how *not* to 
-do this kind of research.  At least, that's not what *I* remember from 
-university.  I suspect they will likely fire Kangjie Lu as a result of 
-their investigation.
-
->
-> They also published a paper:
-> https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
->
-> I don't know the scope of this research, but it could involve other OSS
-> projects, now or in the future, as well.  Hence this e-mail.  If you feel
-> it's spam or needless drama, feel free to ignore.
-
-It seems likely.  However, we may not ever know for sure, because the 
-paper says they submitted the patches using a random Gmail account instead 
-of their UMN email accounts.  I assume any other attempts they made to 
-troll other FOSS projects would have come from random Gmail throwaway 
-accounts as well.
-
-Ariadne
+Credit: This issue was identified by Security Innovation
