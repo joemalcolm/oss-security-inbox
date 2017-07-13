@@ -1,4 +1,9 @@
-Received: (qmail 1270 invoked by uid 550); 6 Apr 2022 14:13:29 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4251" "Thursday" "13" "July" "2017" "09:50:48" "+0200" "Lukasz Lenart" "lukaszlenart@apache.org" "<CAMopvkPOZeL2xF=-Xoq-06CZirag9KoSpx9urSKbNvEMSCOMbw@mail.gmail.com>" "95" "[oss-security] [ANN] Apache Struts 2.5.12 GA with Security Fixes Release" nil nil nil "7" "2017071307:50:48" "[oss-security] [ANN] Apache Struts 2.5.12 GA with Security Fixes Release" (number mark "U       lukaszlenart Jul 13   95/4251  " thread-indent "\"[oss-security] [ANN] Apache Struts 2.5.12 GA with Security Fixes Release\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29777 invoked by uid 550); 13 Jul 2017 09:32:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,211 +12,118 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12105 invoked from network); 6 Apr 2022 12:22:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1649247725; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=Cuvt3+A1paDe/4/CW653mOK8TXgfU1xjy7xlGcnYGmw=;
-	b=QXmI3aZ4zqeZhNYt9s+ED4fA8J3yEW8RbmhqbL2KU1USvwnLI1Rbxzx7FFmDoSo1iocbT+
-	ZJJftMhNh3hx+PvjJioZaA/0kmu90SgQlOnETRC0AAZzb/1u56ntr+mjwEU281goBBoc20
-	sTfLykUDDd4xQ53aTdXhnuzbKVDZZYc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1649247725;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=Cuvt3+A1paDe/4/CW653mOK8TXgfU1xjy7xlGcnYGmw=;
-	b=SG254QEX8c9j7dAYl4zxYscVJSz+ekOZycWtJp668zmo61eL/eQt5LcVu1h7wvNBuyq4K8
-	tAFRZnXHF67f0wAA==
-Message-ID: <5ed3ee01-c7cb-e7da-12b5-fd61072de699@suse.de>
-Date: Wed, 6 Apr 2022 14:22:04 +0200
+Received: (qmail 29971 invoked from network); 13 Jul 2017 07:51:24 -0000
+X-Gm-Message-State: AIVw110tkXHZIhg522LwHvSO6BqoIrvk7mw/lSCR/D6owk/VMO7Pof5L
+	1chhmabNevkLCQpl2eQEQ6ynPN428Q==
+X-Received: by 10.202.253.195 with SMTP id b186mr1962783oii.54.1499932269465;
+ Thu, 13 Jul 2017 00:51:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Content-Language: en-US
-From: Gianluca Gabrielli <ggabrielli@suse.de>
-Organization: SUSE LINUX s.r.o.
-Cc: =?UTF-8?B?6LW15a2Q6L2p?= <beraphin@gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------GRhjUgDi4oQg2jolq4hpz5Ih"
-Subject: [oss-security] CVE-2022-28356: Linux kernel: refcount leak in llc_ui_bind and
- llc_ui_autobind
+From: Lukasz Lenart <lukaszlenart@apache.org>
+Date: Thu, 13 Jul 2017 09:50:48 +0200
+X-Gmail-Original-Message-ID: <CAMopvkPOZeL2xF=-Xoq-06CZirag9KoSpx9urSKbNvEMSCOMbw@mail.gmail.com>
+Message-ID: <CAMopvkPOZeL2xF=-Xoq-06CZirag9KoSpx9urSKbNvEMSCOMbw@mail.gmail.com>
+To: Struts Users Mailing List <user@struts.apache.org>
+Cc: "announcements@struts.apache.org" <announcements@struts.apache.org>, 
+	Struts Developers List <dev@struts.apache.org>, announce@apache.org, 
+	"security@struts.apache.org" <security@struts.apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com, Jonathan Bullock <jonbullock@gmail.com>, 
+	Yasser Zamani <yasser.zamani@live.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [ANN] Apache Struts 2.5.12 GA with Security Fixes Release
 
---------------GRhjUgDi4oQg2jolq4hpz5Ih
-Content-Type: multipart/mixed; boundary="------------SwCApuU71gYuQO0MUUHgyJut";
- protected-headers="v1"
-From: Gianluca Gabrielli <ggabrielli@suse.de>
-To: oss-security@lists.openwall.com
-Cc: =?UTF-8?B?6LW15a2Q6L2p?= <beraphin@gmail.com>
-Message-ID: <5ed3ee01-c7cb-e7da-12b5-fd61072de699@suse.de>
-Subject: CVE-2022-28356 kernel: refcount leak in llc_ui_bind and
- llc_ui_autobind
+The Apache Struts group is pleased to announce that Struts 2.5.12 is
+available as a =E2=80=9CGeneral Availability=E2=80=9D release. The GA desig=
+nation is
+our highest quality grade.
 
---------------SwCApuU71gYuQO0MUUHgyJut
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Apache Struts 2 is an elegant, extensible framework for creating
+enterprise-ready Java web applications. The framework is designed to
+streamline the full development cycle, from building, to deploying, to
+maintaining applications over time.
 
-SGkgbGlzdCwNCg0KQmVsb3cgeW91IGNhbiBmaW5kIHRoZSBzZWN1cml0eS1i
-dWcgcmVwb3J0IEJlcmFwaGluIHNoYXJlZCB3aXRoIHVzIGEgZmV3IA0KZGF5
-cyBhZ28uIEl0J3MgYmVlbiBhZGRyZXNzZWQgaW4gbWFpbmxpbmUgYXQgNzY0
-ZjRlYiBbMF0uDQpNaXRyZSBhc3NpZ25lZCBDVkUtMjAyMi0yODM1Ni4NCg0K
-WzBdIA0KaHR0cHM6Ly9naXQua2VybmVsLm9yZy9wdWIvc2NtL2xpbnV4L2tl
-cm5lbC9naXQvdG9ydmFsZHMvbGludXguZ2l0L2NvbW1pdC8/aWQ9NzY0ZjRl
-YjY4NDZmNTQ3NWYxMjQ0NzY3ZDI0ZDI1ZGQ4NjUyOGE0YQ0KDQpCZXJhcGhp
-biB3cm90ZToNCj4gDQo+IEkgZm91bmQgYSByZWZjb3VudCBsZWFrIGJ1ZyBp
-biBsbGNfdWlfYmluZCgpIGZyb20gL25ldC9sbGMvYWZfbGxjLmMuIEluIHRo
-aXMgZnVuY3Rpb24sIGlmIGl0IGZpbmRzIGFuIEFSUEhSRF9FVEhFUiB0eXBl
-IG5ldCBkZXZpY2UsIGl0IHdpbGwgaG9sZCB0aGUgZGV2aWNlJ3MgcmVmY291
-bnQ6DQo+IA0KPiAnJycNCj4gaWYgKHNrLT5za19ib3VuZF9kZXZfaWYpIHsN
-Cj4gbGxjLT5kZXYgPSBkZXZfZ2V0X2J5X2luZGV4X3JjdSgmaW5pdF9uZXQs
-IHNrLT5za19ib3VuZF9kZXZfaWYpOw0KPiBpZiAobGxjLT5kZXYpIHsNCj4g
-aWYgKGlzX3plcm9fZXRoZXJfYWRkcihhZGRyLT5zbGxjX21hYykpDQo+IG1l
-bWNweShhZGRyLT5zbGxjX21hYywgbGxjLT5kZXYtPmRldl9hZGRyLA0KPiAg
-ICAgICBJRkhXQUREUkxFTik7DQo+IGlmIChhZGRyLT5zbGxjX2FycGhyZCAh
-PSBsbGMtPmRldi0+dHlwZSB8fA0KPiAgICAhZXRoZXJfYWRkcl9lcXVhbChh
-ZGRyLT5zbGxjX21hYywNCj4gICAgICBsbGMtPmRldi0+ZGV2X2FkZHIpKSB7
-DQo+IHJjID0gLUVJTlZBTDsNCj4gbGxjLT5kZXYgPSBOVUxMOw0KPiB9DQo+
-IH0NCj4gfSBlbHNlDQo+IGxsYy0+ZGV2ID0gZGV2X2dldGJ5aHdhZGRyX3Jj
-dSgmaW5pdF9uZXQsIGFkZHItPnNsbGNfYXJwaHJkLA0KPiAgIGFkZHItPnNs
-bGNfbWFjKTsNCj4gZGV2X2hvbGRfdHJhY2sobGxjLT5kZXYsICZsbGMtPmRl
-dl90cmFja2VyLCBHRlBfQVRPTUlDKTsNCj4gJycnDQo+IA0KPiBidXQgZG9l
-c24ndCByZWxlYXNlIHRoZSBkZXZpY2UgaWYgaXQgZmFpbHMgdG8gZmluZCBh
-IHVzYWJsZSBzYXAgbGF0ZXI6DQo+IA0KPiAnJycNCj4gc2FwID0gbGxjX3Nh
-cF9maW5kKGFkZHItPnNsbGNfc2FwKTsNCj4gaWYgKCFzYXApIHsNCj4gc2Fw
-ID0gbGxjX3NhcF9vcGVuKGFkZHItPnNsbGNfc2FwLCBOVUxMKTsNCj4gcmMg
-PSAtRUJVU1k7IC8qIHNvbWUgb3RoZXIgbmV0d29yayBsYXllciBpcyB1c2lu
-ZyB0aGUgc2FwICovDQo+IGlmICghc2FwKQ0KPiBnb3RvIG91dDsNCj4gfSBl
-bHNlIHsNCj4gICAgICAgICAuLi4NCj4gb3V0X3B1dDoNCj4gbGxjX3NhcF9w
-dXQoc2FwKTsNCj4gb3V0Og0KPiByZWxlYXNlX3NvY2soc2spOw0KPiAnJycN
-Cj4gDQo+IElmIHdlIGNhbGwgbGxjX3VpX2JpbmQoKSBvbiBhIHNvY2tldCBt
-dWx0aXBsZSB0aW1lcyBhbmQgcHJvdmlkZSBpdCBhIHVzZWQgc2xsY19zYXAg
-ZWFjaCB0aW1lLCB0aGUgZGV2aWNlJ3MgcmVmY291bnQgd2lsbCBiZSBpbmNy
-ZWFzZWQgdW5leHBlY3RlZGx5LCBhbmQgdGhlIGRldmljZSBjYW5ub3QgYmUg
-cmVtb3ZlZCB0aGVuLg0KPiBBIHNpbXBsZSBQb0MgY29kZSBpcyBhcyBiZWxv
-dzoNCj4gDQo+ICcnJw0KPiAjZGVmaW5lIF9HTlVfU09VUkNFDQo+ICNpbmNs
-dWRlIDxzdGRpby5oPg0KPiAjaW5jbHVkZSA8c3RkbGliLmg+DQo+ICNpbmNs
-dWRlIDxlcnJuby5oPg0KPiAjaW5jbHVkZSA8c3lzL3NvY2tldC5oPg0KPiAj
-aW5jbHVkZSA8bGludXgvbGxjLmg+DQo+ICNpbmNsdWRlIDx0aW1lLmg+DQo+
-IA0KPiAjZGVmaW5lIFJFVklTRV9OVU0gMjANCj4gI2RlZmluZSBBUlBIUkRf
-RVRIRVIgMQ0KPiANCj4gaW50IG1haW4odm9pZCkNCj4gew0KPiAgICAgaW50
-IHMxLCBzMiwgcmV0LCBpOw0KPiAgICAgY2hhciBldGgwW10gPSB7MCwgMCwg
-MCwgMCwgMCwgMH07IC8vIGNoYW5nZSBpdA0KPiAgICAgaW50IHRyeTsNCj4g
-ICAgIHN0cnVjdCBzb2NrYWRkcl9sbGMgYWRkcjsNCj4gDQo+ICAgICBtZW1z
-ZXQoJmFkZHIsIDAsIHNpemVvZihzdHJ1Y3Qgc29ja2FkZHJfbGxjKSk7DQo+
-ICAgICBhZGRyLnNsbGNfZmFtaWx5ID0gQUZfTExDOw0KPiAgICAgYWRkci5z
-bGxjX2FycGhyZCA9IEFSUEhSRF9FVEhFUjsNCj4gICAgIG1lbWNweShhZGRy
-LnNsbGNfbWFjLCBldGgwLCA2KTsNCj4gICAgIGFkZHIuc2xsY19zYXAgPSAy
-MDsNCj4gDQo+ICAgICBzMSA9IHNvY2tldChQRl9MTEMsIFNPQ0tfU1RSRUFN
-LCAwKTsNCj4gICAgIHMyID0gc29ja2V0KFBGX0xMQywgU09DS19TVFJFQU0s
-IDApOw0KPiANCj4gICAgIHByaW50ZigiczEgPSAlZCwgczIgPSAlZFxuIiwg
-czEsIHMyKTsNCj4gDQo+IA0KPiAgICAgcmV0ID0gYmluZChzMSwgKHN0cnVj
-dCBzb2NrYWRkciAqKSZhZGRyLCBzaXplb2Yoc3RydWN0IHNvY2thZGRyX2xs
-YykpOw0KPiAgICAgcHJpbnRmKCJiaW5kMSByZXR1cm4gJWRcbiIsIHJldCk7
-DQo+ICAgICByZXQgPSBiaW5kKHMyLCAoc3RydWN0IHNvY2thZGRyICopJmFk
-ZHIsIHNpemVvZihzdHJ1Y3Qgc29ja2FkZHJfbGxjKSk7DQo+ICAgICBwcmlu
-dGYoImJpbmQyIHJldHVybiAlZFxuIiwgcmV0KTsNCj4gICAgIHJldCA9IGJp
-bmQoczIsIChzdHJ1Y3Qgc29ja2FkZHIgKikmYWRkciwgc2l6ZW9mKHN0cnVj
-dCBzb2NrYWRkcl9sbGMpKTsNCj4gICAgIHByaW50ZigiYmluZDMgcmV0dXJu
-ICVkXG4iLCByZXQpOw0KPiAgICAgcmV0ID0gYmluZChzMiwgKHN0cnVjdCBz
-b2NrYWRkciAqKSZhZGRyLCBzaXplb2Yoc3RydWN0IHNvY2thZGRyX2xsYykp
-Ow0KPiAgICAgcHJpbnRmKCJiaW5kNCByZXR1cm4gJWRcbiIsIHJldCk7DQo+
-IA0KPiAgICAgY2xvc2UoczEpOw0KPiAgICAgY2xvc2UoczIpOw0KPiANCj4g
-ICAgIHJldHVybiAwOw0KPiB9DQo+ICcnJw0KPiANCj4gQWZ0ZXIgZXhlY3V0
-aW5nIHRoZSBwb2MgYWJvdmUsIHdlIGNhbiBuZWl0aGVyIHJlbW92ZSB0aGUg
-Ym91bmRlZCBuZXRfZGV2aWNlIG5vciByZWJvb3QgdGhlIE9TLiBUaGUgUG9D
-IGlzIHRlc3RlZCBvbiBMaW51eC01LjE3LXJjNToNCj4gDQo+ICcnJw0KPiAv
-ICMgL2hvbWUvcHduL2V4cA0KPiBzMSA9IDMsIHMyID0gNA0KPiBiaW5kMSBy
-ZXR1cm4gMA0KPiBiaW5kMiByZXR1cm4gLTENCj4gYmluZDMgcmV0dXJuIC0x
-DQo+IGJpbmQ0IHJldHVybiAtMQ0KPiAvICMNCj4gLyAjIHJlYm9vdA0KPiAv
-ICMNCj4gLyAjIHJtbW9kIGUxMDAwDQo+IFsgIDE4NS45NzYyMzVdIHVucmVn
-aXN0ZXJfbmV0ZGV2aWNlOiB3YWl0aW5nIGZvciBldGgwIHRvIGJlY29tZSBm
-cmVlLiBVc2FnZSBjb3VudCA9IDMNCj4gWyAgMTk2LjA1NjM5OV0gdW5yZWdp
-c3Rlcl9uZXRkZXZpY2U6IHdhaXRpbmcgZm9yIGV0aDAgdG8gYmVjb21lIGZy
-ZWUuIFVzYWdlIGNvdW50ID0gMw0KPiAnJycNCj4gDQo+IEFuIGF0dGFja2Vy
-IGNhbiBsZXZlcmFnZSB0aGlzIGZsYXcgdG8gdHJpZ2dlciBhbiBpbnRlZ2Vy
-IG92ZXJmbG93IG9uIHRoZSBkZXZpY2UncyByZWZjb3VudCBhbmQgZXZlbnR1
-YWxseSBsZWFkIHRvIGEgdXNlLWFmdGVyLWZyZWUgYnVnOg0KPiANCj4gJycn
-DQo+IFsgICA5Ny44NTA2NDddID09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KPiBb
-ICAgOTcuODUwNjQ3XSBCVUc6IEtBU0FOOiB1c2UtYWZ0ZXItZnJlZSBpbiBs
-bGNfYWxsb2NfZnJhbWUrMHgyYWEvMHgzMjAgW2xsYzJdDQo+IFsgICA5Ny44
-NTA2NDddIFJlYWQgb2Ygc2l6ZSAyIGF0IGFkZHIgZmZmZjg4ODAzZTliMjEy
-OCBieSB0YXNrIHN3YXBwZXIvMi8wDQo+IFsgICA5Ny44NTA2NDddDQo+IFsg
-ICA5Ny44NTA2NDddIENQVTogMiBQSUQ6IDAgQ29tbTogc3dhcHBlci8yIFRh
-aW50ZWQ6IEcgICAgICAgICAgICBFICAgICA1LjE3LjAtcmM1ICMyDQo+IFsg
-ICA5Ny44NTA2NDddIEhhcmR3YXJlIG5hbWU6IFFFTVUgU3RhbmRhcmQgUEMg
-KGk0NDBGWCArIFBJSVgsIDE5OTYpLCBCSU9TIDEuMTAuMi0xdWJ1bnR1MSAw
-NC8wMS8yMDE0DQo+IFsgICA5Ny44NTA2NDddIENhbGwgVHJhY2U6DQo+IFsg
-ICA5Ny44NTA2NDddICA8SVJRPg0KPiBbICAgOTcuODUwNjQ3XSAgZHVtcF9z
-dGFja19sdmwrMHg4OS8weGI1DQo+IFsgICA5Ny44NTA2NDddICBwcmludF9h
-ZGRyZXNzX2Rlc2NyaXB0aW9uLmNvbnN0cHJvcC4wKzB4MjQvMHgxNTANCj4g
-WyAgIDk3Ljg1MDY0N10gID8gbGxjX2FsbG9jX2ZyYW1lKzB4MmFhLzB4MzIw
-IFtsbGMyXQ0KPiBbICAgOTcuODUwNjQ3XSAga2FzYW5fcmVwb3J0LmNvbGQr
-MHg4Mi8weGRiDQo+IFsgICA5Ny44NTA2NDddICA/IGxsY19hbGxvY19mcmFt
-ZSsweDJhYS8weDMyMCBbbGxjMl0NCj4gWyAgIDk3Ljg1MDY0N10gIF9fYXNh
-bl9yZXBvcnRfbG9hZDJfbm9hYm9ydCsweDE0LzB4MjANCj4gWyAgIDk3Ljg1
-MDY0N10gIGxsY19hbGxvY19mcmFtZSsweDJhYS8weDMyMCBbbGxjMl0NCj4g
-WyAgIDk3Ljg1MDY0N10gID8gbGxjX2Nvbm5fc2V0X3BfZmxhZysweGYwLzB4
-ZjAgW2xsYzJdDQo+IFsgICA5Ny44NTA2NDddICBsbGNfY29ubl9hY19zZW5k
-X3NhYm1lX2NtZF9wX3NldF94KzB4NTYvMHg0NzAgW2xsYzJdDQo+IFsgICA5
-Ny44NTA2NDddICA/IF9fc2FuaXRpemVyX2Nvdl90cmFjZV9zd2l0Y2grMHg1
-NC8weDkwDQo+IFsgICA5Ny44NTA2NDddICA/IGxsY19jb25uX3NldF9wX2Zs
-YWcrMHhmMC8weGYwIFtsbGMyXQ0KPiBbICAgOTcuODUwNjQ3XSAgbGxjX2Nv
-bm5fc3RhdGVfcHJvY2VzcysweDNmYS8weDEzZjAgW2xsYzJdDQo+IFsgICA5
-Ny44NTA2NDddICBsbGNfY29ubl90bXJfY29tbW9uX2NiKzB4MmMwLzB4NmQw
-IFtsbGMyXQ0KPiBbICAgOTcuODUwNjQ3XSAgPyBsbGNfY29ubl9idXN5X3Rt
-cl9jYisweDMwLzB4MzAgW2xsYzJdDQo+IFsgICA5Ny44NTA2NDddICBsbGNf
-Y29ubl9hY2tfdG1yX2NiKzB4MjMvMHgzMCBbbGxjMl0NCj4gWyAgIDk3Ljg1
-MDY0N10gIGNhbGxfdGltZXJfZm4rMHg0Ni8weDI5MA0KPiBbICAgOTcuODUw
-NjQ3XSAgPyBsbGNfY29ubl9idXN5X3Rtcl9jYisweDMwLzB4MzAgW2xsYzJd
-DQo+IFsgICA5Ny44NTA2NDddICBfX3J1bl90aW1lcnMucGFydC4wKzB4NmIw
-LzB4OWIwDQo+IFsgICA5Ny44NTA2NDddICA/IGNhbGxfdGltZXJfZm4rMHgy
-OTAvMHgyOTANCj4gWyAgIDk3Ljg1MDY0N10gID8gX19zYW5pdGl6ZXJfY292
-X3RyYWNlX2NtcDQrMHgxNi8weDIwDQo+IFsgICA5Ny44NTA2NDddICA/IGt0
-aW1lX2dldCsweGZmLzB4MTUwDQo+IFsgICA5Ny44NTA2NDddICA/IGxhcGlj
-X25leHRfZXZlbnQrMHg1Yi8weDkwDQo+IFsgICA5Ny44NTA2NDddICA/IF9f
-c2FuaXRpemVyX2Nvdl90cmFjZV9jb25zdF9jbXA0KzB4MTYvMHgyMA0KPiBb
-ICAgOTcuODUwNjQ3XSAgPyBjbG9ja2V2ZW50c19wcm9ncmFtX2V2ZW50KzB4
-MTRhLzB4MzkwDQo+IFsgICA5Ny44NTA2NDddICBydW5fdGltZXJfc29mdGly
-cSsweGI4LzB4MWIwDQo+IFsgICA5Ny44NTA2NDddICBfX2RvX3NvZnRpcnEr
-MHgxYWMvMHg1YWYNCj4gWyAgIDk3Ljg1MDY0N10gIF9faXJxX2V4aXRfcmN1
-KzB4ZDkvMHgxOTANCj4gWyAgIDk3Ljg1MDY0N10gIGlycV9leGl0X3JjdSsw
-eGUvMHgxMA0KPiBbICAgOTcuODUwNjQ3XSAgc3lzdmVjX2FwaWNfdGltZXJf
-aW50ZXJydXB0KzB4OTgvMHhiMA0KPiBbICAgOTcuODUwNjQ3XSAgPC9JUlE+
-DQo+IFsgICA5Ny44NTA2NDddICA8VEFTSz4NCj4gWyAgIDk3Ljg1MDY0N10g
-IGFzbV9zeXN2ZWNfYXBpY190aW1lcl9pbnRlcnJ1cHQrMHgxMi8weDIwDQo+
-IFsgICA5Ny44NTA2NDddIFJJUDogMDAxMDpuYXRpdmVfc2FmZV9oYWx0KzB4
-Yi8weDEwDQo+ICcnJw0KPiANCj4gVGhlIGZ1bmN0aW9uIGxsY191aV9hdXRv
-YmluZCgpIGhhcyB0aGUgc2FtZSBpc3N1ZS4NCg0KQmVzdCBSZWdhcmRzLA0K
-R2lhbmx1Y2ENCg0KLS0gDQouIG8gLiAgR2lhbmx1Y2EgR2FicmllbGxpICAg
-ICAgICAgICAgICAgICAgICAgIGdpYW5sdS5jYQ0KLiAuIG8gIFNvZnR3YXJl
-IHNlY3VyaXR5IGVuZ2luZWVyICAgICAgICAgICAgICAgc3VzZS5jb20NCm8g
-byBvICBENzhEIDNGREMgMjU5MSA3RUJBIEI1MkYgMjM2MiA2RTE3IDM4Qjgg
-MkI2MCBCMzFEDQotRGFuY2UgbGlrZSBubyBvbmUncyB3YXRjaGluZywgZW5j
-cnlwdCBsaWtlIGV2ZXJ5b25lIGlzLQ0K
+This release contains fixes for the following potential security
+vulnerabilities:
 
---------------SwCApuU71gYuQO0MUUHgyJut--
+- S2-047 Possible DoS attack when using URLValidator
+  http://struts.apache.org/docs/s2-047.html
+- S2-049 A DoS attack is available for Spring secured actions
+  http://struts.apache.org/docs/s2-049.html
 
---------------GRhjUgDi4oQg2jolq4hpz5Ih
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+Except the above this release also contains several improvements just
+to mention few of them:
 
------BEGIN PGP SIGNATURE-----
+- `double` and `Double` are not validated with the same decimal separator
+- `ognl.MethodFailedException` when you do not enter a value for a
+field mapped to an int
+- `Double` Value Conversion with requestLocale=3Dde
+- The `TextProvider` injection in `ActionSupport` isn't quite
+integrated into the framework's core DI
+- Struts2 raise `java.lang.ClassCastException` when Result type is `chain`
+- `@InputConfig` annotation is not working when integrating with spring aop
+- Validators do not work for multiple values
+- `BigDecimal` are not converted according context locale
+- `NullPointerException` when displaying a form without action attribute
+- Http Sessions forcefully created for all requests using
+I18nInterceptor with default Storage value.
+- `cssErrorClass` attribute has no effect on `label` tag
+- Why `JSONValidationInterceptor` return Status Code `400 BAD_REQUEST`
+instead of `200 SUCCESS`
+- @autowired does not work since Struts 2.3.28.1
+- Mixed content https to http when upgraded to 2.3.32 or 2.5.10.1
+- Upgrade from struts2-tiles3-plugin to struts2-tiles-plugin gives a
+NoSuchDefinitionException
+- Aspects are not executed when chaining AOPed actions
+- Duplicate hidden input field checkboxListHandler
+- The value of checkbox getted in server-side is "false" when no any
+checkbox been selected.
+- refactor file upload framework
+- `creditCard` validator available in Struts 1 missing in Struts 2
+- No easy way to have an empty interceptor stack if have default stack
+- `@TypeConversion` converter attribute to class
+- Convert `LocalizedTextUtil` into a bean with default implementation
+- NPE in `StrutsTilesContainerFactory` when resource isn't found
+- Buffer/Flush behaviour in `FreemarkerResult`
+- Struts2 should know and consider config time class of user's Actions
+- getters of exclude-sets in OgnlUtil should return immutable collections
+- Mark `site-graph` plugin as deprecated
+- Use `TextProviderFactory` instead of `TextProvider` as bean's dependency
+- Create `LocaleProviderFactory` and uses instead of `LocaleProvider`
+- Improve error logging in `DefaultDispatcherErrorHandler`
+- Make `jakarta-stream` multipart parser more extensible
+- Make Multipart parsers more extensible
+- Add proper validation if request is a multipart request
+- Make `SecurityMethodAccess` excluded classes & packages definitions immut=
+able
+- Upgrade to Log4j2 2.8.2
+- Allow disable file upload support via an configurable option
+- Stop using `DefaultLocalizedTextProvider#localeFromString` static util me=
+thod
+- Don't add `JBossFileManager` as a possible FileManager when not on JBoss
+- There is no `@LongRangeFieldValidator` annotation to support
+`LongRangeFieldValidator`
+- Upgrade to commons-lang 3.6
+- Update commons-fileupload
 
-wsF5BAABCAAjFiEE/Gtkry+LfDI9iHEuQPoqj4mlKX4FAmJNhewFAwAAAAAACgkQQPoqj4mlKX5V
-cg//YzIrlQrWfj96dfeZYKjgjyALnVNJy1n7bkg93tlYATffjtHrteKNNc2thPorQOPrtfkHc3Aw
-dZe6TYLwNfsVDb5ekevzntDkV14jAVx//1qStNb95LFOHPa05Qm1F99ctIv5RajTAGfgKhTyvO6f
-BoVJ6sCk59reFk68ValaTfA47DYCd7pIu0SYDqUy/UudDZcGtKO7QBYrwGSB+UDUIkgKpjB6s95n
-lG8oikoqLOxNC226SPgKCVOjR+CbXwEX0JAszlgq9cXfy2gkbzN1hpFOLpGBlPwzN5I/oN7KryHe
-Y059gKRKOZB60WvOxjZBahIChG0+ycwg8JQ2076IIKBhZys7uwkVvFeDMRqreZqGhJcX3TF+dpqj
-c4HOf7QhzXGQPnVItuFCl7gu60rtwgq5xTnX/QDPTHrRqlbb/FKPrttS9lKWcCB30MfZJWQud/3i
-ugldHJy5xw5/574oxkF1OslpNGC4uTtrlLrv2MZh5juWnocKp3IZSs5J7ecp03KrGQy0GD1W/4rA
-xaq/RepKRbJj7ovSKho3eKbEmyYlxeVHzS8zRsU/FdnhUv36Ywgq3oLh6qqDcvc63a+q0QaZCzzF
-gNfGCJxZfNDa+fSU3wh3Fl2jRcTWA/v/8RywCyJ5fjtNL+ZdtiCcDCJnAhozvDgP5MD9B6+5bBhb
-NCo=
-=gSFG
------END PGP SIGNATURE-----
+Please read the Version Notes to find more details about performed bug
+fixes and improvements.
+http://struts.apache.org/docs/version-notes-2512.html
 
---------------GRhjUgDi4oQg2jolq4hpz5Ih--
+All developers are strongly advised to perform this action.
+
+The 2.5.x series of the Apache Struts framework has a minimum
+requirement of the following specification versions: Servlet API 2.4,
+JSP API 2.0, and Java 7.
+
+Should any issues arise with your use of any version of the Struts
+framework, please post your comments to the user list, and, if
+appropriate, file a tracking ticket.
+
+You can download this version from our download page.
+http://struts.apache.org/download.cgi#struts-ga
+
+
+Regards
+--=20
+=C5=81ukasz
++ 48 606 323 122 http://www.lenart.org.pl/
