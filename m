@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/5
-Message-ID: <6D896033-5E5F-4F8B-A05E-771F0408BA66@synopsys.com>
-Date: Tue, 27 Jun 2017 11:33:20 +0000
-From: Ari Kauppi <Ari.Kauppi@...opsys.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2017-8797 Linux kernel: nfsd: remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/10
+Message-ID: <CAJmbs8hbW+BOp8T3rXLRsgi0Lh8izoYwp-sM7AX60hm9gZqQLA@mail.gmail.com>
+Date: Thu, 13 Jul 2017 23:25:39 +0700
+From: Maxim Solodovnik <solomax@...che.org>
+To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2017-7681 - Apache OpenMeetings - SQL injection in web services
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: High
 
-Linux kernel NFSv4 server is vulnerable to a remote DoS attack.
+Vendor: The Apache Software Foundation
 
-The NFSv4 server in the Linux kernel does not properly validate layout type
-when processing NFSv4 pNFS LAYOUTGET operand. The provided input
-value is not properly validated and is used for array dereferencing. OOPS
-is triggered which leads to DoS of knfsd and eventually to soft-lockup of
-whole system.
+Versions Affected: Apache OpenMeetings 1.0.0
 
-In addition, on normal processing path there is a C undefined behavior
-weakness that can lead to out of bounds array dereferencing.
+Description: Apache OpenMeetings is vulnerable to SQL injection This
+allows authenticated users to modify the structure of the existing
+query and leak the structure of other queries being made by the
+application in the back-end
+CVE-2017-7681
 
-The attack vector requires that the attack host is within host mask of exported
-NFSv4 mount or source address spoofing is not properly mitigated in the network.
-The attack payload fits to single one-way UDP packet. The kernel must be
-compiled with CONFIG_NFSD_PNFS enabled, which seems to be the case
-with many vendor kernels.
+The issue was fixed in 3.3.0
+All users are recommended to upgrade to Apache OpenMeetings 3.3.0
 
-The issue has been verified to be reproducible at least with unpatched v4.4, v4.8
-and v4.11 baselines.
-
-Upstream patches in mainline: (available in stable releases, too)
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/fs/nfsd?h=v4.12-rc7&id=b550a32e60a4941994b437a8d662432a486235a5
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/fs/nfsd?h=v4.12-rc7&id=f961e3f2acae94b727380c0b74e2d3954d0edf79
-
-The issue was found by Jani Tuovila from Synopsys Ltd with Synopsys Defensics fuzzer.
-
-Thanks,
-
---
-Ari Kauppi / Synopsys Ltd.
+Credit: This issue was identified by Security Innovation
