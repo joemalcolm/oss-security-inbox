@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/2
-Message-ID: <20170424124605.GG22557@suse.de>
-Date: Mon, 24 Apr 2017 14:46:05 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: libcroco: heap overflow and undefined behavior
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/17
+Message-ID: <CAJmbs8jRHuRRiZFh1r0ygbVKdiZMd_gHbxp7X8Gq-Op-D-_aaw@mail.gmail.com>
+Date: Thu, 13 Jul 2017 23:22:36 +0700
+From: Maxim Solodovnik <solomax666@...il.com>
+To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2017-7664 - Apache OpenMeetings - Missing XML Validation
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 23, 2017 at 12:42:04PM +0200, Agostino Sarubbo wrote:
-> Description:
-> libcroco is a Generic Cascading Style Sheet (CSS) parsing and manipulation 
-> toolkit.
+Severity: High
 
-...
+Vendor: The Apache Software Foundation
 
-> # csslint-0.6 $FILE
-> /tmp/portage/dev-libs/libcroco-0.6.12/work/libcroco-0.6.12/src/cr-
-> tknzr.c:1283:15: runtime error: value 9.11111e+19 is outside the range of 
-> representable values of type 'long'
-> Commit fix:
-> https://git.gnome.org/browse/libcroco/commit/?id=9ad72875e9f08e4c519ef63d44cdbd94aa9504f7
-> Reproducer:
-> https://github.com/asarubbo/poc/blob/master/00268-libcroco-outside-long
-> CVE:
-> CVE-2017-7961
-> 
-> Affected version:
-> 0.6.11 and 0.6.12
-> 
-> Fixed version:
-> 0.6.13 (not released atm)
+Versions Affected: Apache OpenMeetings 3.1.0
 
-This is not a security issue in my view. The conversion surely is
-truncating the double into a long value, but there is no impact as the
-value is one of the RGB components.
+Description: Uploaded XML documents were not correctly validated
+CVE-2017-7664
 
-Ciao, Marcus
+The issue was fixed in 3.3.0
+All users are recommended to upgrade to Apache OpenMeetings 3.3.0
+
+Credit: This issue was identified by Security Innovation
+
+
+-- 
+WBR
+Maxim aka solomax
