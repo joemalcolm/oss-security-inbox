@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/4
-Message-ID: <20170801170637.GA15254@openwall.com>
-Date: Tue, 1 Aug 2017 19:06:37 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Александр Носарев <nosarev-ay@...bler.ru>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Syslog forwarding with IP spoofing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/15
+Message-ID: <CAJmbs8hhzLtsvQHWM0yufpDDgHosVUwQYV=kgYjZqwywL+AfXA@mail.gmail.com>
+Date: Thu, 13 Jul 2017 23:29:11 +0700
+From: Maxim Solodovnik <solomax@...che.org>
+To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2017-7688 - Apache OpenMeetings - Insecure Password Update
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Severity: Low
 
-On Tue, Aug 01, 2017 at 05:27:26PM +0300, Александр Носарев wrote:
-> I need to recive syslog messages, filter them and send them forward to the 
-> SIEM.
-> 
-> Also HOST field is not represented in syslog, so i need to spoof IP of 
-> forwarding
-> packets to bind messages recived by SIEM to it's original source IP.
-> 
-> If i will try to add some marks to syslog message, I will need to override
-> parsers for each syslog source type, so it seems like abad idea.
-> 
-> Is there any open source tool for that task?
+Vendor: The Apache Software Foundation
 
-Somehow we almost didn't have this sort of messages - someone seeking an
-open source security tool - sent in here so far.  Do we want them in
-here going forward?  The current list content guidelines do not address
-this possibility, as it certainly wasn't the purpose of the oss-security
-list so far.  Is there another mailing list where the above message
-would have been more appropriate?
+Versions Affected: Apache OpenMeetings 1.0.0
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+Description: Apache OpenMeetings updates user password in insecure manner.
+CVE-2017-7688
 
-Meanwhile, please feel free to address the actual question about the
-tool.  (I don't know of such a tool.)
+The issue was fixed in 3.3.0
+All users are recommended to upgrade to Apache OpenMeetings 3.3.0
 
-Alexander
+Credit: This issue was identified by Security Innovation
