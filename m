@@ -1,39 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/20
-Message-ID: <1509747072.787.15.camel@gmail.com>
-Date: Fri, 03 Nov 2017 18:11:12 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: nvi crash recovery (was Re: Re: Security risk of server side text editing in general and vim.tiny specifically)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/2
+Message-ID: <CAMopvkPOZeL2xF=-Xoq-06CZirag9KoSpx9urSKbNvEMSCOMbw@mail.gmail.com>
+Date: Thu, 13 Jul 2017 09:50:48 +0200
+From: Lukasz Lenart <lukaszlenart@...che.org>
+To: Struts Users Mailing List <user@...uts.apache.org>
+Cc: "announcements@...uts.apache.org" <announcements@...uts.apache.org>,  Struts Developers List <dev@...uts.apache.org>, announce@...che.org,  "security@...uts.apache.org" <security@...uts.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com, Jonathan Bullock <jonbullock@...il.com>,  Yasser Zamani <yasser.zamani@...e.com>
+Subject: [ANN] Apache Struts 2.5.12 GA with Security Fixes Release
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2017-11-03 at 21:26 +0100, Hanno Böck wrote:
-> On Fri, 3 Nov 2017 11:12:43 -0700
-> Ian Zimmerman <itz@...y.loosely.org> wrote:
-> 
-> > How much of this (and the parallel thread of course) applies to nvi?
-> 
-> This is actually interesting:
-> nvi saves recovery files to /var/tmp/vi.recover and creates them with
-> 600 permissions.
-> So all the problems discussed don't really apply here.
-> However the dir itself gets created by the first user using nvi. Not
-> sure if that causes any other problems (permissions are rwx for all
-> and
-> sticky bit).
+The Apache Struts group is pleased to announce that Struts 2.5.12 is
+available as a “General Availability” release. The GA designation is
+our highest quality grade.
 
-It's strange it's using /var/tmp instead of ~/.cache but at least it can
-be protected with PAM's per-user isolated directory support rather than
-relying on it being done securely.
+Apache Struts 2 is an elegant, extensible framework for creating
+enterprise-ready Java web applications. The framework is designed to
+streamline the full development cycle, from building, to deploying, to
+maintaining applications over time.
 
-In /etc/security/namespace.conf, for per-user isolated /tmp and /var/tmp:
+This release contains fixes for the following potential security
+vulnerabilities:
 
-    /tmp     /tmp-inst/     level
-    /var/tmp /var/tmp-inst/ level
+- S2-047 Possible DoS attack when using URLValidator
+  http://struts.apache.org/docs/s2-047.html
+- S2-049 A DoS attack is available for Spring secured actions
+  http://struts.apache.org/docs/s2-049.html
 
-In /etc/pam.d/system-auth:
+Except the above this release also contains several improvements just
+to mention few of them:
 
-    session   required  pam_namespace.so
+- `double` and `Double` are not validated with the same decimal separator
+- `ognl.MethodFailedException` when you do not enter a value for a
+field mapped to an int
+- `Double` Value Conversion with requestLocale=de
+- The `TextProvider` injection in `ActionSupport` isn't quite
+integrated into the framework's core DI
+- Struts2 raise `java.lang.ClassCastException` when Result type is `chain`
+- `@...utConfig` annotation is not working when integrating with spring aop
+- Validators do not work for multiple values
+- `BigDecimal` are not converted according context locale
+- `NullPointerException` when displaying a form without action attribute
+- Http Sessions forcefully created for all requests using
+I18nInterceptor with default Storage value.
+- `cssErrorClass` attribute has no effect on `label` tag
+- Why `JSONValidationInterceptor` return Status Code `400 BAD_REQUEST`
+instead of `200 SUCCESS`
+- @autowired does not work since Struts 2.3.28.1
+- Mixed content https to http when upgraded to 2.3.32 or 2.5.10.1
+- Upgrade from struts2-tiles3-plugin to struts2-tiles-plugin gives a
+NoSuchDefinitionException
+- Aspects are not executed when chaining AOPed actions
+- Duplicate hidden input field checkboxListHandler
+- The value of checkbox getted in server-side is "false" when no any
+checkbox been selected.
+- refactor file upload framework
+- `creditCard` validator available in Struts 1 missing in Struts 2
+- No easy way to have an empty interceptor stack if have default stack
+- `@...eConversion` converter attribute to class
+- Convert `LocalizedTextUtil` into a bean with default implementation
+- NPE in `StrutsTilesContainerFactory` when resource isn't found
+- Buffer/Flush behaviour in `FreemarkerResult`
+- Struts2 should know and consider config time class of user's Actions
+- getters of exclude-sets in OgnlUtil should return immutable collections
+- Mark `site-graph` plugin as deprecated
+- Use `TextProviderFactory` instead of `TextProvider` as bean's dependency
+- Create `LocaleProviderFactory` and uses instead of `LocaleProvider`
+- Improve error logging in `DefaultDispatcherErrorHandler`
+- Make `jakarta-stream` multipart parser more extensible
+- Make Multipart parsers more extensible
+- Add proper validation if request is a multipart request
+- Make `SecurityMethodAccess` excluded classes & packages definitions immutable
+- Upgrade to Log4j2 2.8.2
+- Allow disable file upload support via an configurable option
+- Stop using `DefaultLocalizedTextProvider#localeFromString` static util method
+- Don't add `JBossFileManager` as a possible FileManager when not on JBoss
+- There is no `@...gRangeFieldValidator` annotation to support
+`LongRangeFieldValidator`
+- Upgrade to commons-lang 3.6
+- Update commons-fileupload
 
-Likely also want to mount /tmp-inst as tmpfs (mode=000) if /tmp was
-tmpfs rather than just using the root directory pam will create.
+Please read the Version Notes to find more details about performed bug
+fixes and improvements.
+http://struts.apache.org/docs/version-notes-2512.html
+
+All developers are strongly advised to perform this action.
+
+The 2.5.x series of the Apache Struts framework has a minimum
+requirement of the following specification versions: Servlet API 2.4,
+JSP API 2.0, and Java 7.
+
+Should any issues arise with your use of any version of the Struts
+framework, please post your comments to the user list, and, if
+appropriate, file a tracking ticket.
+
+You can download this version from our download page.
+http://struts.apache.org/download.cgi#struts-ga
+
+
+Regards
+-- 
+Łukasz
++ 48 606 323 122 http://www.lenart.org.pl/
