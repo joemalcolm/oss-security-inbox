@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["747" "Monday" "27" "December" "2021" "22:25:04" "+0800" "JunXu Chen" "chenjunxu@apache.org" nil "27" "[oss-security] CVE-2021-45232: Apache APISIX Dashboard: security vulnerability on unauthorized access" nil nil nil "12" nil nil (number mark "U       chenjunxu@ap Dec 27   27/747   " thread-indent "\"[oss-security] CVE-2021-45232: Apache APISIX Dashboard: security vulnerability on unauthorized access\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-45232: Apache APISIX Dashboard: security vulnerability on unauthorized access" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["457" "Thursday" "13" "July" "2017" "23:24:17" "+0700" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8j7_Smbsv8bkm31xzixJADOt+-iQoxCdmux8orm8DcwOw@mail.gmail.com>" "15" "[oss-security] CVE-2017-7673 - Apache OpenMeetings Insufficient check in dialogs with passwords" nil nil nil "7" "2017071316:24:17" "[oss-security] CVE-2017-7673 - Apache OpenMeetings Insufficient check in dialogs with passwords" (number mark "U       solomax@apac Jul 13   15/457   " thread-indent "\"[oss-security] CVE-2017-7673 - Apache OpenMeetings Insufficient check in dialogs with passwords\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18101 invoked by uid 550); 27 Dec 2021 15:06:28 -0000
+Received: (qmail 9572 invoked by uid 550); 13 Jul 2017 16:24:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3098 invoked from network); 27 Dec 2021 14:25:29 -0000
-X-Gm-Message-State: AOAM531EHW5fRVjDesAjVICu28PaptNsKmm7aGo/ERXH/NBs9fGHMGcL
-	PKXH1NaoZDCXshVBeDOLvxjymAbZgVnDSzjfBUA=
-X-Google-Smtp-Source: ABdhPJzXS2f4F0hYS5qRezidNfBCUBcU5ZJrcXkb9Xc/yqIBrpawnBLWTk2y57y+WBdhkjUJAFJRcpmD8wZGL1Bz7rA=
-X-Received: by 2002:aa7:c641:: with SMTP id z1mr16739077edr.84.1640615115046;
- Mon, 27 Dec 2021 06:25:15 -0800 (PST)
+Received: (qmail 9477 invoked from network); 13 Jul 2017 16:24:30 -0000
+X-Gm-Message-State: AIVw111CvXozhSZUlNS7B2KvqzOKIIUmddXt1AWxvaxKS8agt1ZcHXGK
+	nTvM7ZD4Qihnn5p4BPM7c2VGEqUbZQ==
+X-Received: by 10.98.106.6 with SMTP id f6mr408665pfc.53.1499963058020; Thu,
+ 13 Jul 2017 09:24:18 -0700 (PDT)
 MIME-Version: 1.0
-From: JunXu Chen <chenjunxu@apache.org>
-Date: Mon, 27 Dec 2021 22:25:04 +0800
-X-Gmail-Original-Message-ID: <CAMikTu7OC1+SN_nOMEcSdFoE7EVmVKYt56WctqQe+nDYqMkAVA@mail.gmail.com>
-Message-ID: <CAMikTu7OC1+SN_nOMEcSdFoE7EVmVKYt56WctqQe+nDYqMkAVA@mail.gmail.com>
-To: announce@apache.org, dev@apisix.apache.org, 
-	oss-security@lists.openwall.com, =?UTF-8?B?5pyx56a55oiQ?= <zhuyucheng@yuanbaotech.cn>
-Content-Type: multipart/alternative; boundary="0000000000002545ac05d421797a"
-Subject: [oss-security] CVE-2021-45232: Apache APISIX Dashboard: security vulnerability on
- unauthorized access
-
---0000000000002545ac05d421797a
+From: Maxim Solodovnik <solomax@apache.org>
+Date: Thu, 13 Jul 2017 23:24:17 +0700
+X-Gmail-Original-Message-ID: <CAJmbs8j7_Smbsv8bkm31xzixJADOt+-iQoxCdmux8orm8DcwOw@mail.gmail.com>
+Message-ID: <CAJmbs8j7_Smbsv8bkm31xzixJADOt+-iQoxCdmux8orm8DcwOw@mail.gmail.com>
+To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
+	security@openmeetings.apache.org, 
+	Joe Basirico <jbasirico@securityinnovation.com>, 
+	Sharath Unni <sunni@securityinnovation.com>, 
+	Dinesh Shetty <dshetty@securityinnovation.com>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
 Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2017-7673 - Apache OpenMeetings Insufficient check in dialogs
+ with passwords
 
-Severity: high
+Severity: High
 
-Description:
+Vendor: The Apache Software Foundation
 
-In Apache APISIX Dashboard before 2.10.1, the Manager API uses two
-frameworks and introduces framework `droplet` on the basis of
-framework `gin`, all APIs and authentication middleware are developed
-based on framework `droplet`, but some API directly use the interface
-of framework `gin` thus bypassing the authentication.
+Versions Affected: Apache OpenMeetings 1.0.0
 
-Mitigation:
+Description: Apache OpenMeetings uses not very strong cryptographic
+storage, captcha is not used in registration and forget password
+dialogs and auth forms missing brute force protection
+CVE-2017-7673
 
-Implement one of the following mitigation techniques:
+The issue was fixed in 3.3.0
+All users are recommended to upgrade to Apache OpenMeetings 3.3.0
 
-1. Upgrade to release 2.10.1
-
-2. Change the default username and password, restrict the source IP to
-access the Apache APISIX Dashboard
-
-Credit:
-
-Independently discovered by ZHU Yucheng of YuanbaoTeach Security Team.
-
---0000000000002545ac05d421797a--
+Credit: This issue was identified by Security Innovation
