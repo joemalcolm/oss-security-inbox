@@ -1,55 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/09/1
-Message-ID: <1512778733.15005.59.camel@gmail.com>
-Date: Fri, 08 Dec 2017 19:18:53 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com, Greg KH <greg@...ah.com>
-Cc: at zhou <zhouat2017@...il.com>, security@...nel.org, secalert@...hat.com,  security@...e.com, tglx@...utronix.de, linux-distros@...openwall.org
-Subject: Re: Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/8
+Message-ID: <CAJmbs8j7_Smbsv8bkm31xzixJADOt+-iQoxCdmux8orm8DcwOw@mail.gmail.com>
+Date: Thu, 13 Jul 2017 23:24:17 +0700
+From: Maxim Solodovnik <solomax@...che.org>
+To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2017-7673 - Apache OpenMeetings Insufficient check in dialogs with passwords
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2017-12-08 at 12:09 +0300, Dan Carpenter wrote:
-> On Thu, Dec 07, 2017 at 12:17:18PM +0100, Greg KH wrote:
-> > On Thu, Dec 07, 2017 at 06:01:43PM +0800, at zhou wrote:
-> > > Hi all,
-> > > 
-> > > credit   to   L5@...vulcan team
-> > > 
-> > > I fuzzed the linux kernel and find signed integer overflow on
-> > > linux
-> > > 4.15.0-rc1+.
-> > > the crash log can see below, the .config and the poc file ,please
-> > > see the
-> > > attachments.
-> > 
-> > Odd, doesn't seem to affect a 4.9 or 4.15-rc2 kernel here on my
-> > machines, is there something specific in the .config that might be
-> > triggering this?
-> > 
-> 
-> Greg, you're running with UBSAN?
-> 
-> I've always wondered how UBSAN was going to work because there are
-> *so*
-> many harmless integer overflows in the kernel.  That's my main
-> challenge
-> with trying to use static analysis for integer overflows.
-> 
-> regards,
-> dan carpenter
+Severity: High
 
-There are options for marking intended overflows to start moving towards
-it being more useful. There's no_sanitize for marking intended overflow,
-etc. at a function scope. The overflow intrinsics bypass the checks so
-they can be used to mark specific operations as having intended overflow
-for more clarity and better coverage.
+Vendor: The Apache Software Foundation
 
-Of course, people would need to agree that it has enough value to be
-worth putting in this effort. It can improve code readability despite
-the extra verbosity in these cases too, especially with good taste when
-choosing no_sanitize vs. marking specific operations.
+Versions Affected: Apache OpenMeetings 1.0.0
 
-Android uses both signed + unsigned overflow checks in production for
-their media stack via the trapping mode (debugging mode used more
-broadly) so it can be quite successful and can go beyond just using it
-for debugging.
+Description: Apache OpenMeetings uses not very strong cryptographic
+storage, captcha is not used in registration and forget password
+dialogs and auth forms missing brute force protection
+CVE-2017-7673
+
+The issue was fixed in 3.3.0
+All users are recommended to upgrade to Apache OpenMeetings 3.3.0
+
+Credit: This issue was identified by Security Innovation
