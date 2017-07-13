@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/02/1
-Message-ID: <20170802101120.GH8668@suse.com>
-Date: Wed, 2 Aug 2017 12:11:20 +0200
-From: Johannes Segitz <jsegitz@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: security@...e.de
-Subject: Re: CoreOS membership to linux-distros (updated)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/11
+Message-ID: <CAJmbs8hsosH_RNHXdxQ6=HKWdZwwKxkzyGBGt98U+40ChhMQLQ@mail.gmail.com>
+Date: Thu, 13 Jul 2017 23:26:13 +0700
+From: Maxim Solodovnik <solomax@...che.org>
+To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2017-7682 - Apache OpenMeetings - Business Logic Bypass
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 01, 2017 at 10:54:14PM +0200, Solar Designer wrote:
-> Yes.  I keep the wiki page up to date:
-> 
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+Severity: Medium
 
-SUSE has been active in the past in various activities listed in the
-document and will continue to do so. Officially we would like to commit to
-task 5 and 10.
+Vendor: The Apache Software Foundation
 
-Johannes
--- 
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nürnberg)
+Versions Affected: Apache OpenMeetings 3.2.0
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Description: Apache OpenMeetings is vulnerable to parameter
+manipulation attacks, as a result attacker has access to restricted
+areas.
+CVE-2017-7682
+
+The issue was fixed in 3.3.0
+All users are recommended to upgrade to Apache OpenMeetings 3.3.0
+
+Credit: This issue was identified by Security Innovation
