@@ -1,59 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/9
-Message-ID: <CAM1AYQCj1EOvyXJ9xH9tMqNn_V0p9G2A1MZD0bu92Q3506q8Rw@mail.gmail.com>
-Date: Tue, 9 May 2017 14:49:56 +0100
-From: Simon MacDonald <macdonst@...che.org>
-To: "dev@...dova.apache.org" <dev@...dova.apache.org>,  "private@...dova.apache.org" <private@...dova.apache.org>, security <security@...che.org>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  Mark Ward <mark.ward@...d-click.com>
-Subject: CVE-2016-6799: Internal system information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/10
+Message-ID: <20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>
+Date: Fri, 14 Jul 2017 11:05:39 -0400
+From: Santiago Torres <torresariass@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-6799: Internal system information leak
+On Fri, Jul 14, 2017 at 12:34:01PM +0300, Georgi Guninski wrote:
+> What is an estimate for the total number of exploitable bugs in large
+> linux distro?
+> 
 
-Severity: High
+You may want to look at[1] for the case of ArchLinux. Do consider the
+caveat brought up by other people on the list: CVE numbers are not a 1:1
+mapping to bugs (or even exploitable bugs). For example, there are
+vendors that group all bugs discovered in a period (or with a conceputal
+similarity) under one CVE number, whereas others take mutliple
+variations of a bug and request an individual CVE for each. Needless to
+say, some bugs never get a CVE ;).
 
-Vendor: The Apache Software Foundation
+> Also, does the total number decrease, increase or change in other way
+> over time?
 
-Versions Affected: Cordova Android (5.2.2 and below)
+You could use the json api[2] on [1] to get a rolling count if you'd like
+to measure this (also pasted on [3]]):
 
-Description: The application calls methods of the Log class. Messages
-passed to these methods (Log.v(), Log.d(), Log.i(), Log.w(), and
-Log.e()) are stored in a series of circular buffers on the device. By
-default, a maximum of four 16 KB rotated logs are kept in addition to
-the current log. The logged data can be read using Logcat on the
-device. When using platforms prior to Android 4.1 (Jelly Bean), the
-log data is not sandboxed per application; any application installed
-on the device has the capability to read data logged by other
-applications.
+>>> import json, requests
+>>> response = requests.get("https://security.archlinux.org/vulnerable/json")
+>>> data = json.loads(response.content)
+>>> len(data)
+34
 
-Upgrade path: Developers who are concerned about this issue should
-upgrade to 6.0.0 or later and install cordova plugins whose versions
-are equal to or greater than:
+Cheers!
+-Santiago.
 
-cordova-plugin-battery-status: 1.2.0
-cordova-plugin-camera: 2.3.0
-cordova-plugin-console: 1.0.4
-cordova-plugin-contacts: 2.2.0
-cordova-plugin-device: 1.1.3
-cordova-plugin-device-motion: 1.2.2
-cordova-plugin-device-orientation: 1.0.4
-cordova-plugin-dialogs: 1.3.0
-cordova-plugin-file: 4.3.0
-cordova-plugin-file-transfer: 1.6.0
-cordova-plugin-geolocation: 2.3.0
-cordova-plugin-globalization: 1.0.4
-cordova-plugin-inappbrowser: 1.5.0
-cordova-plugin-media: 2.4.0
-cordova-plugin-media-capture: 1.4.0
-cordova-plugin-network-information: 1.3.0
-cordova-plugin-splashscreen: 4.0.0
-cordova-plugin-statusbar: 2.2.0
-cordova-plugin-test-framework: 1.1.3
-cordova-plugin-vibration: 2.1.2
-cordova-plugin-whitelist: 1.3.0
-cordova-plugin-wkwebview-engine: 1.1.0
+[1] https://security.archlinux.org/vulnerable
+[2] https://security.archlinux.org/vulnerable/json
+[3] https://bpaste.net/show/faa58aab9b1e 
 
-Mitigation Steps: If developers are unable to install the latest versions,
-this vulnerability can easily be mitigated by not putting sensitive
-information in the log statements.
-
-Credit: Mark Ward
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
