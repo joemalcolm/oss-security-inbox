@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/17
-Message-ID: <alpine.LFD.2.20.1701202351250.18165@wniryva>
-Date: Fri, 20 Jan 2017 23:52:42 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: display: virtio-gpu-3d: memory leakage in virgl_resource_attach_backing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/22
+Message-ID: <20170714205741.GB21266@openwall.com>
+Date: Fri, 14 Jul 2017 22:57:41 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Fri, Jul 14, 2017 at 01:52:37PM -0600, Kurt Seifried wrote:
+> Ah I misunderstood the backup, I thought it meant people within a distro, not actual distros, I'm fine with a backup distro. As for the tasks I meant 1 and 2 technical,
 
-Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
-vulnerable to a memory leakage issue. It could occur while processing 
-'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
+Great.  I've just listed Red Hat for those.
 
-A guest user/process could use this flaw to leak host memory resulting in DoS.
+> we generally do this work anyways.
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg00154.html
+I didn't collect statistics, but my impression is that Red Hat generally
+works on fixes for issues that Red Hat itself brings to distros, which
+is a great contribution (doubly so).  Red Hat also worked on glibc fixes
+for Stack Clash.  Other than that, for issues brought to distros by
+third-parties I think Red Hat's contributions of fixes do not stand out
+compared to some other distros'.  Maybe that will now improve. :-)
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1415281
+And I am not complaining.  Maybe this means those other distros are
+doing their part too, which is great.
 
-This issue was reported by Mr Li Qiang of 360.cn Inc.
+> On Jul 14, 2017, at 12:54, Solar Designer <solar@...nwall.com> wrote:
+> > Technical are:
+> > 
+> > 1. Propose (other) ways to fix, work around, or mitigate the reported issues
+> > 
+> > 2. Develop and share fixes, workarounds, or mitigations
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Alexander
