@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/11
-Message-ID: <5703568.KIEfz9fMEU@blackgate>
-Date: Wed, 01 Feb 2017 16:08:01 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: podofo: multiple crashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/9
+Message-ID: <b206e24d-0025-33a3-deb8-b0d9c7641d19@oracle.com>
+Date: Fri, 14 Jul 2017 07:58:37 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Steven Miano <mianosm@...il.com>
+Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+On 07/14/17 02:45 AM, Steven Miano wrote:
+> Something like this?
+> 
+> https://www.cvedetails.com/vendor/51/Ubuntu.html
+> https://www.cvedetails.com/vendor/7838/Red-Hat.html
+> https://www.cvedetails.com/vendor/26/Microsoft.html
 
-I discovered multiple crashes on podofo which is a library that works with the 
-PDF file format.
+Those are known vulnerabilities, with varying degrees of exploitability,
+and varying exploit conditions and sometimes differing views on where to
+draw the line on what is one issue or multiple issues.
 
-Unfortunately, I'm unable to open tickets on their sourceforge space because 
-of admin's restriction.
+Some of them can be remotely exploited, some require a local user to take
+action.  Some give access to those who had none, some give higher privs to
+those who had some, and some don't change your access levels at all.
 
-Upstream was poked privately but never answered, so if you have a way to 
-report the bugs I will share here, would be great.
+Of course, they don't count all the ones that haven't been publicly
+disclosed - either because they are unknown or only known to certain people.
 
-For completeness, since I add the git commit and the fixed version, if you 
-know that something has been fixed, please let me know.
-Thanks in advance
+And when you start comparing numbers with Linux distros things get even
+messier - if you include the count of every issue in every package in
+their package repositories then you are including a far larger set of
+software than if you just count what's in others OS - but that doesn't
+mean they are more or less secure, just that they have more or less
+software available for easy installation.
+
+For a far more complete answer of why vulnerability counting is messy,
+hard, and just plain sucks, you can turn to the experts:
+
+https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-WP.pdf
+https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
