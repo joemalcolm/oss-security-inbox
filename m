@@ -1,4 +1,9 @@
-Received: (qmail 19634 invoked by uid 550); 11 Jul 2023 15:36:29 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["710" "Friday" "14" "July" "2017" "12:26:41" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170714122641.616d32ec@pc1>" "23" "Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?" "^Date:" nil nil "7" "2017071410:26:41" "[oss-security] Estimate for the total number of exploitable bugs in large linux distro?" (number mark "        hanno@hboeck Jul 14   23/710   " thread-indent "\"Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?\"\n") "<20170714093401.GB865@sivokote.iziade.m$>" ("<20170714093401.GB865@sivokote.iziade.m$>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15402 invoked by uid 550); 14 Jul 2017 10:26:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,46 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15384 invoked from network); 14 Jul 2017 10:26:55 -0000
+Message-ID: <20170714122641.616d32ec@pc1>
+In-Reply-To: <20170714093401.GB865@sivokote.iziade.m$>
+References: <20170714093401.GB865@sivokote.iziade.m$>
+X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 14 Jul 2017 12:26:41 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16318 invoked from network); 11 Jul 2023 15:36:10 -0000
-Date: Tue, 11 Jul 2023 17:36:03 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] Estimate for the total number of exploitable
+ bugs in large linux distro?
 To: oss-security@lists.openwall.com
-Cc: Brandon Perry <bperry.volatile@gmail.com>,
-	Brahma Reddy Battula <brahma@apache.org>, Jecki Go <jecgo@visa.com>
-Message-ID: <20230711153603.GA12449@openwall.com>
-References: <f61029a1-f4dc-8fb3-a9c8-444901495532@apache.org> <CAOJKFBBeRpoYjwUsJNH=c5aAQ+H=rmGPiTUQ+qB7rZ0J1Qt+rQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOJKFBBeRpoYjwUsJNH=c5aAQ+H=rmGPiTUQ+qB7rZ0J1Qt+rQ@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2022-42009: Apache Ambari: A malicious authenticated user can remotely execute arbitrary code in the context of the application.
 
-On Mon, Jul 10, 2023 at 10:08:22AM -0500, Brandon Perry wrote:
-> Do you have an example proof of concept or a bug link for this?
+On Fri, 14 Jul 2017 12:34:01 +0300
+Georgi Guninski <guninski@guninski.com> wrote:
 
-Added CC's.
-Brahma or Jecki, can you address Brandon's question above, please?
+> What is an estimate for the total number of exploitable bugs in large
+> linux distro?
+>=20
+> Also, does the total number decrease, increase or change in other way
+> over time?
 
-Alexander
+There's nothing anywhere close to being a reliable data collection to
+answer questions like these.
 
-> On Mon, Jul 10, 2023 at 10:06???AM Brahma Reddy Battula <brahma@apache.org> wrote:
-> > Affected versions:
-> >
-> > - Apache Ambari 2.7.0 through 2.7.6
-> >
-> > Description:
-> >
-> > SpringEL injection in the server agent in Apache Ambari version 2.7.0 to
-> > 2.7.6 allows a malicious authenticated user to execute arbitrary code
-> > remotely. Users are recommended to upgrade to 2.7.7.
-> >
-> > Credit:
-> >
-> > Jecki Go (jecgo@visa.com) (finder)
-> >
-> > References:
-> >
-> > https://ambari.apache.org/
-> > https://www.cve.org/CVERecord?id=CVE-2022-42009
+People tend to base these things on CVE counts, which is the Infosec
+equivalent of astrology or homeopathy. Yet that doesn't stop
+universities and other "respectably looking" institutions to fall for
+this trap on a regular basis.
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
