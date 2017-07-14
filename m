@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4085" "Wednesday" "3" "August" "2016" "09:05:30" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1608030902300.2418@tvnag.unkk.fr>" "127" "[oss-security] [SECURITY VULNERABILITY] curl: use of connection struct after free" nil nil nil "8" "2016080307:05:30" "[oss-security] [SECURITY VULNERABILITY] curl: use of connection struct after free" (number mark "U       daniel@haxx. Aug  3  127/4085  " thread-indent "\"[oss-security] [SECURITY VULNERABILITY] curl: use of connection struct after free\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1787" "Friday" "14" "July" "2017" "12:04:20" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0kA2sgHgZj+w1Xg6Z2G9WGSexa_i59Hi2eo2PQeW=YPQ@mail.gmail.com>" "43" "Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?" "^Date:" nil nil "7" "2017071418:04:20" "[oss-security] Estimate for the total number of exploitable bugs in large linux distro?" (number mark "        kseifried@re Jul 14   43/1787  " thread-indent "\"Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?\"\n") "<20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>" ("<20170714093401.GB865@sivokote.iziade.m$>" "<20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7571 invoked by uid 550); 3 Aug 2016 07:05:43 -0000
+Received: (qmail 32548 invoked by uid 550); 14 Jul 2017 18:04:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,148 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7493 invoked from network); 3 Aug 2016 07:05:43 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 3 Aug 2016 09:05:30 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1608030902300.2418@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 32524 invoked from network); 14 Jul 2017 18:04:32 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=tCjD86Ng0x82l+uKzMh7Gw/lykgRpKPETlOQFkflUtg=;
+        b=UlYHW9yiJ+vSVR0g26vezA42J20IYoBHFe3JgnmBfdNKd4fBMRBgzfFMC18MTIz/gV
+         OQN3GRaeQ18J96NXC3W8N4ZfI2Ff+XH9lirpnnA52rd3HQw8+NDqX89AhyLUOJlbdQIs
+         RfB9C0pFNlfAddeQfdWphMz+z+AODGvtDF5/Ou79cDbIsTL2Krc/lLNmRpG6vO0U1qTc
+         xxv4jsTTW9LwKP2FTbRKODyK2/gHzT5N5yn4ziVtn6spdyt9UvJfiWPT/0ogsWlwiBDb
+         tJXPcBKpwZzAUTe8GGioC0ZKKv1FdJKlSf+QDVMBvWADsBVKCqzcGntYHDcdhlm1bf+L
+         Mbwg==
+X-Gm-Message-State: AIVw112zhYPdJrnbAVwOdJ1DhnjyP/6lieV8C50HzitCTr7jPhMwHmiN
+	T2qE+lqW0wki24QGeiwY9t2JzXx1YsMQqttPAw==
+X-Received: by 10.55.162.213 with SMTP id l204mr11983265qke.65.1500055460647;
+ Fri, 14 Jul 2017 11:04:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="1129329158-699417187-1470207782=:2418"
-Content-ID: <alpine.DEB.2.20.1608030905290.2418@tvnag.unkk.fr>
-Subject: [oss-security] [SECURITY VULNERABILITY] curl: use of connection struct after free
+In-Reply-To: <20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>
+References: <20170714093401.GB865@sivokote.iziade.m$> <20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>
+Message-ID: <CANO=Ty0kA2sgHgZj+w1Xg6Z2G9WGSexa_i59Hi2eo2PQeW=YPQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="001a114d8a66e031ae05544ae0ec"
+Date: Fri, 14 Jul 2017 12:04:20 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Estimate for the total number of exploitable bugs
+ in large linux distro?
+To: oss-security <oss-security@lists.openwall.com>
 
---1129329158-699417187-1470207782=:2418
-Content-Type: text/plain; FORMAT=flowed; CHARSET=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
-Content-ID: <alpine.DEB.2.20.1608030905291.2418@tvnag.unkk.fr>
+--001a114d8a66e031ae05544ae0ec
+Content-Type: text/plain; charset="UTF-8"
 
-use of connection struct after free
-===================================
+> On Fri, Jul 14, 2017 at 12:34:01PM +0300, Georgi Guninski wrote:
+> > What is an estimate for the total number of exploitable bugs in large
+> > linux distro?
+>
 
-Project cURL Security Advisory, August 3rd 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20160803C.html)
+First you need to define "distribution". Do we go with "all" the packages
+shipped? Ok... what about things like firefox?
+https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox 1500 CVEs... does
+that count to the distribtion count?  What about non-free in Debian? Anyone
+that ships Flash is also going to see their stats bumped way up.
 
-VULNERABILITY
--------------
+Now we need to define "exploitable bugs", for example an exploit chain, is
+that multiple bugs or do we count that as a single one for this discussion?
+There's a lot of /tmp flaws that are "exploitable" but I can pretty much
+guarantee nobody will ever bother.
 
-libcurl is vulnerable to a use-after-free flaw.
+I would then point out the only source of data anyone is mentioning is CVE.
+And CVE has counting rules. For example if you find 100 XSS flaws in a php
+app (because they forgot to use htmlspecialchars on output) in the same
+version we'll assign a single CVE, not 100. So how many bugs do you count
+this as?
 
-libcurl works with easy handles using the type 'CURL *' that are objects the
-application creates using curl_easy_init(). They are the handles that are all
-each associated with a single transfer at a time. libcurl also has an internal
-struct that represents and holds most state that is related to a single
-connection. An easy handle can hold references to one or many such connection
-structs depending on the requested operations.
+CVE is also incomplete. There's lots and lots of vulns with no CVE
+(something I'm trying to remediate with the DWF).
 
-When using libcurl's multi interface, an application performs transfers by
-adding one or more easy handles to the multi handle and then it can drive all
-those transfers in parallel.
+I would suggest before anyone continue this thread they go read:
 
-Due to a flaw, libcurl could leave a pointer to a freed connection struct
-dangling in an easy handle that was previously added to a multi handle when
-curl_multi_cleanup() is called with an easy handle still added to it. This
-does not seem to cause any notable harm if the handle is then closed properly.
+https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
 
-However, if the easy handle would instead get used again with the easy
-interface and curl_easy_perform() to do another transfer, it would blindly use
-the connection struct pointer now pointing to freed memory.
+it's largely a pointless discussion because the question isn't well
+defined, and we know for a fact we don't have good data to answer it
+(yet...).
 
-An application could be made to allocate its own fake version of the connect
-struct, fill in some data and then have the curl_easy_perform() call do
-something that clearly was not intended by the original code.
-
-For example, this could be an application using a component or library that
-uses libcurl to do something against fixed URLs or fixed host names or with a
-set of fixed options, but using this flaw the application can then make the
-component to do something completely different and unintended.
-
-Pseudo code for a bad application
-
-     easy = curl_easy_init();
-     curl_easy_setopt(easy, CURLOPT_URL, "http://example.com/");
-
-     // --- start of code to confuse libcurl ---
-     multi = curl_multi_init();
-     curl_multi_add_handle(multi, easy);
-     curl_multi_perform(multi, &still_running);
-     curl_multi_cleanup(multi);
-
-     // --- attack code
-     allocate_fake_connection_struct()
-     fill_in_fake_connection_struct()
-
-     // ---- end of confusion code
-
-     // now this is called, it will not use example.com at all even if the
-     // option above asks for it...
-
-     curl_easy_perform(easy);
-
-This flaw can also be exploited using libcurl bindings in other languages.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw does not affect the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-5421 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.32.0 to and including 7.50.0
-- Not affected versions: libcurl >= 7.50.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.50.1, curl clears the memory pointer immediately after free thus
-removing this vulnerability.
-
-A [patch for CVE-2016-5421](https://curl.haxx.se/CVE-2016-5421.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.50.1
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not expose easy handles from your libcurl using components
-
-TIME LINE
----------
-
-Reported on July 3, 2016. We contacted distros@openwall on July 31.
-
-libcurl 7.50.1 was released on August 3 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Found and explained to us by Marcelo Echeverria and Fernando Muñoz.
-
-Thanks a lot!
 
 -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-  / daniel.haxx.se
---1129329158-699417187-1470207782=:2418--
+--001a114d8a66e031ae05544ae0ec--
