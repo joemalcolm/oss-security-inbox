@@ -1,23 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/14
-Message-ID: <CAJmbs8jn7_27k=uH17L8_a8fHHtYLs-K-TVhrah2ym7Z33O_LA@mail.gmail.com>
-Date: Thu, 13 Jul 2017 23:28:25 +0700
-From: Maxim Solodovnik <solomax@...che.org>
-To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2017-7685 - Apache OpenMeetings - Insecure HTTP Methods
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/21
+Message-Id: <EE692F78-EBE2-4DE6-A66D-B8597EF933EA@redhat.com>
+Date: Fri, 14 Jul 2017 13:52:37 -0600
+From: Kurt Seifried <kseifrie@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-Severity: Lowest
+Ah I misunderstood the backup, I thought it meant people within a distro, not actual distros, I'm fine with a backup distro. As for the tasks I meant 1 and 2 technical, we generally do this work anyways.
 
-Vendor: The Apache Software Foundation
 
-Versions Affected: Apache OpenMeetings 1.0.0
+-Kurt
 
-Description: Apache OpenMeetingsrespond to the following insecure HTTP
-Methods: PUT, DELETE, HEAD, and PATCH.
-CVE-2017-7685
 
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
 
-Credit: This issue was identified by Security Innovation
+
+
+> On Jul 14, 2017, at 12:54, Solar Designer <solar@...nwall.com> wrote:
+> 
+>> On Fri, Jul 14, 2017 at 12:40:18PM -0600, kseifried@...hat.com wrote:
+>> Sorry I thought I'd replied earlier to this thread
+> 
+> IIRC, you did, but you were not specific.
+> 
+>> (phone email clients,
+>> how do they work?) Red Hat will continue to help (let's pick #1 and #2
+>> explicitly),
+> 
+> What's #1 and #2 - do you mean the technical or the administrative tasks?
+> 
+> Technical are:
+> 
+> 1. Propose (other) ways to fix, work around, or mitigate the reported issues
+> 
+> 2. Develop and share fixes, workarounds, or mitigations
+> 
+> and currently these are vacant.
+> 
+> Administrative are:
+> 
+> 1. Promptly review new issue reports for meeting the list's requirements
+> and confirm receipt of the report and, when necessary, inform the
+> reporter of any issues with their report (e.g., obviously not actionable
+> by the distros) and request and/or propose any required yet missing
+> information (most notably, a tentative public disclosure date) -
+> primary: CloudLinux, backup: vacant
+> 
+> 2. If the proposed public disclosure date is not within list policy,
+> insist on getting this corrected and propose a suitable earlier date -
+> primary: CloudLinux, backup: vacant
+> 
+> As you can see, the primary distro for them is currently CloudLinux, and
+> as discussed in here I'd like each new distro joining to take at least
+> task 1, unless they strongly prefer something else.  There's currently
+> no backup, so I will gladly list Red Hat as backup here if you confirm.
+> 
+>> I know we already have more than 2 people on the list so I
+>> don't think we need to nominate a backup?
+> 
+> If you're confident you'll fully handle a task without needing a backup
+> distro, then we may list that as such.  Right now, you do have Debian
+> listed as backup for the CVE tasks, though.
+> 
+> Alexander
