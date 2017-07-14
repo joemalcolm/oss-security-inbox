@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["979" "Thursday" "30" "November" "2017" "17:15:43" "+0000" "Keith Wall" "kwall@apache.org" "<CAFEMS4vr8tXkkmRj+y6g0p3y3r9SqDL8Gf9+ouhbKjPAsbJ04w@mail.gmail.com>" "32" "[oss-security] [SECURITY] [CVE-2017-15701] Apache Qpid Broker-J Denial of Service Vulnerability" nil nil nil "11" "2017113017:15:43" "[oss-security] [SECURITY] [CVE-2017-15701] Apache Qpid Broker-J Denial of Service Vulnerability" (number mark "U       kwall@apache Nov 30   32/979   " thread-indent "\"[oss-security] [SECURITY] [CVE-2017-15701] Apache Qpid Broker-J Denial of Service Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["734" "Friday" "14" "July" "2017" "05:45:50" "-0400" "Steven Miano" "mianosm@gmail.com" "<CACkP6k=7cgf+n8eeS0JFiVzK3caCTg_1piBLWxJLH=1P9YbNAg@mail.gmail.com>" "30" "Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?" "^Date:" nil nil "7" "2017071409:45:50" "[oss-security] Estimate for the total number of exploitable bugs in large linux distro?" (number mark "U       mianosm@gmai Jul 14   30/734   " thread-indent "\"Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?\"\n") "<20170714093401.GB865@sivokote.iziade.m$>" ("<20170714093401.GB865@sivokote.iziade.m$>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27792 invoked by uid 550); 30 Nov 2017 17:17:17 -0000
+Received: (qmail 31979 invoked by uid 550); 14 Jul 2017 10:19:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26381 invoked from network); 30 Nov 2017 17:15:59 -0000
-X-Gm-Message-State: AJaThX5E4fc3TeSICjI9+wXKoB/S1NMQbfAXjzvusV/SgvCC93L7Vx1f
-	pzlryCyBxA/vuzGKwP5rS9gUSMzte1wc0JHhnU4=
-X-Google-Smtp-Source: AGs4zMYqpyY0HXC2oz7qW6cQt3M765jUDhWOXalnS0j5g8jZa0+icsg9T76VNgDDEiPb2ecH67eRGveNjYv2ZtOG3xg=
-X-Received: by 10.223.180.69 with SMTP id v5mr2491610wrd.193.1512062144582;
- Thu, 30 Nov 2017 09:15:44 -0800 (PST)
+Received: (qmail 13642 invoked from network); 14 Jul 2017 09:46:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=KbkbCicfcjcXoIa99mcqklu1REG/GxxjFWc8nxeT9Es=;
+        b=ejmVRETKMN7OvZ1yW+qhMh1z2MgycT4oPHvPL1wLb26Pdt5FwFYURHcpZKcp9AnOBb
+         rzXC6IM/G1ZQQrV5Orv0rVfWwPie9dfb+H+oAQcN3DRZ7wP70Rcuoit28TrNd48pDZX/
+         ET6N8uLLJEquA98dJ5PPrxKYzbCIUpA3HD+vVJ8blP34zyKTdtSL+erpqd0tKGIwsdpi
+         BwRdEEfsT2supXA+FGkoFY2YE39pRNY6DS/rIdgbzb/hm9GNj+uEmyrU+2Unz9O9S9zY
+         JbQuG157ZQ2TcNPEbjdB7dVRMMuFdPxbihsKldTIIMDycuOCkLbkbsYQG/1W5Q9/Xopz
+         2yGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=KbkbCicfcjcXoIa99mcqklu1REG/GxxjFWc8nxeT9Es=;
+        b=s9g24VU5Dam/JlB8pHmET/wjZn2VY0/YAqeHlqu6GkTjfIwvLBckPeKKjOAy5JdWLf
+         /35LysXD0+DxjS3HgzGIMB3sy51RlPcpvlTM+Dj8L/NzBeVcZQlWbclZBWuzpHbcai9W
+         1Mp+2oUVHonGcCv9xEj8/bpzYboRuuMUBRG4gOg3O4Xi49Jg3fuFqZqPBzbiulbys/QG
+         CtfPXMCxiJjy9c2km0m9x1Dfols4wq17LeQEOYbQRxfJgC5bmmZL5z53/SglX/sWTnRh
+         3NppCOvRmM2jn6RrztO4hxc2B/QsfIt+2puGHcTuZDt+5x4xw/Ta43e9cCcvokEY/m+f
+         Poyw==
+X-Gm-Message-State: AIVw110B22fSo2rOQHu3ZvxIy8GX9/ETinHQDry5gEJON1Lzoy5DJVhU
+	SXtnrgqzUPzqms2cNeCusfAtGYqO2uM5ii8=
+X-Received: by 10.176.27.81 with SMTP id n17mr5173968uai.58.1500025591328;
+ Fri, 14 Jul 2017 02:46:31 -0700 (PDT)
 MIME-Version: 1.0
-From: Keith Wall <kwall@apache.org>
-Date: Thu, 30 Nov 2017 17:15:43 +0000
-X-Gmail-Original-Message-ID: <CAFEMS4vr8tXkkmRj+y6g0p3y3r9SqDL8Gf9+ouhbKjPAsbJ04w@mail.gmail.com>
-Message-ID: <CAFEMS4vr8tXkkmRj+y6g0p3y3r9SqDL8Gf9+ouhbKjPAsbJ04w@mail.gmail.com>
-To: "users@qpid.apache.org" <users@qpid.apache.org>, "dev@qpid.apache.org" <dev@qpid.apache.org>, security@apache.org, 
-	oss-security@lists.openwall.com, announce@apache.org
+In-Reply-To: <20170714093401.GB865@sivokote.iziade.m$>
+References: <20170714093401.GB865@sivokote.iziade.m$>
+Message-ID: <CACkP6k=7cgf+n8eeS0JFiVzK3caCTg_1piBLWxJLH=1P9YbNAg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="f403043651a6867368055443ec45"
+Date: Fri, 14 Jul 2017 05:45:50 -0400
+From: Steven Miano <mianosm@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Estimate for the total number of exploitable bugs
+ in large linux distro?
+To: oss-security@lists.openwall.com
+
+--f403043651a6867368055443ec45
 Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [SECURITY] [CVE-2017-15701] Apache Qpid Broker-J Denial of Service Vulnerability
 
-CVE-2017-15701: Apache Qpid Broker-J denial of service vulnerability
+Something like this?
 
-Severity: Important
+https://www.cvedetails.com/vendor/51/Ubuntu.html
+https://www.cvedetails.com/vendor/7838/Red-Hat.html
+https://www.cvedetails.com/vendor/26/Microsoft.html
 
-Vendor: The Apache Software Foundation
+The churn is pretty constant with new vulnerabilities being exposed daily,
+and fixes being committed at varying rates compared to being found.
 
-Versions Affected: 6.1.0, 6.1.1, 6.1.2, 6.1.3, and 6.1.4
 
-Description:
+On Fri, Jul 14, 2017 at 5:34 AM, Georgi Guninski <guninski@guninski.com>
+wrote:
 
-The broker does not properly enforce a maximum frame size in AMQP 1.0
-frames.  A remote unauthenticated attacker could exploit this to cause
-the broker to exhaust all available memory and eventually terminate.
-Older AMQP protocols are not affected.
+> What is an estimate for the total number of exploitable bugs in large
+> linux distro?
+>
+> Also, does the total number decrease, increase or change in other way
+> over time?
+>
 
-Resolution:
 
-Users who have AMQP 1.0 support enabled (default) should upgrade their
-Qpid Broker-J to version 6.1.5 or later.
 
-Mitigation:
+-- 
+Miano, Steven M.
+http://stevenmiano.com
 
-If upgrading the broker is not possible, users can choose to disable
-AMQP 1.0 by either setting the system property
-"qpid.plugin.disabled:protocolenginecreator.AMQP_1_0" to "true",
-excluding "AMQP_1_0" from the supported protocol list on all AMQP
-ports, or by removing the AMQP 1.0 related jar files from the Java
-classpath.
-
-References:
-
-https://issues.apache.org/jira/browse/QPID-7947
+--f403043651a6867368055443ec45--
