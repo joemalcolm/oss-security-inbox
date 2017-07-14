@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/12
-Message-ID: <20170608224258.11820.2FC34D65@matica.foolinux.mooo.com>
-Date: Thu, 8 Jun 2017 15:44:41 -0700
-From: Ian Zimmerman <itz@...mate.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/16
+Message-ID: <20170714182358.GA20536@openwall.com>
+Date: Fri, 14 Jul 2017 20:23:58 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vixie/ISC Cron group crontab to root escalation
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-On 2017-06-08 20:05, Solar Designer wrote:
-
-> Gentoo has a wiki page describing their Vixie Cron here:
+On Fri, Jul 14, 2017 at 11:09:39AM -0700, Anthony Liguori wrote:
+> We (Amazon Linux) are very happy to fill in whatever gaps are needed.
 > 
-> https://wiki.gentoo.org/wiki/Cron#vixie-cron
+> Most of the places where that can be done most effectively already
+> have a primary.  I hate to just sign up to be backup but if we did
+> that, we would track independently to ensure nothing got missed.
 > 
-> Per their description, it's based on 4.1 and has some Linux specifics
-> added (SELinux, PAM, etc.)  I don't know whether they use group
-> crontab.
+> So maybe backup for administrative tasks 9-13 and then we can be
+> primary for technical task 3?  We already test all of these fixes so
+> responding with a report of the testing we've done is straight forward
+> enough.
 
-Yes:
+This works.  I've just listed Amazon for those tasks as you suggested.
+Thank you!
 
-~$ ls -l /usr/bin/crontab
--rwxr-sr-x 1 root crontab 44336 Oct 12  2016 /usr/bin/crontab
+This leaves administrative task 10 with no primary yet, though:
 
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign:
-http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
+10. Monitor relevant public channels (mailing lists, code repositories,
+etc.) and inform the reporter and the list in case an issue is made
+public prematurely (that is, leaks or is independently rediscovered) -
+primary: vacant, backup: Amazon
+
+Does this mean Amazon will be taking care of it until we find a primary?
+Or only in cases when no other distro (visibly) does?
+
+Ideally, a distro should volunteer to be primary for that task now, so
+that Amazon wouldn't have to volunteer for more than they offered.
+
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+
+Alexander
