@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9467" "Friday" "22" "September" "2017" "07:48:55" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<317939.544885547-sendEmail@localhost>" "104" "[oss-security] bento4: NULL pointer dereference in AP4_Atom::SetType (Ap4Atom.h)" nil nil nil "9" "2017092207:48:55" "[oss-security] bento4: NULL pointer dereference in AP4_Atom::SetType (Ap4Atom.h)" (number mark "U       ago@gentoo.o Sep 22  104/9467  " thread-indent "\"[oss-security] bento4: NULL pointer dereference in AP4_Atom::SetType (Ap4Atom.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2075" "Friday" "14" "July" "2017" "15:04:19" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2hVv4AFK01wwMiKGNP6g5YrjucWqMp_G+FcTn9c-aauQ@mail.gmail.com>" "56" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017071421:04:19" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        kseifried@re Jul 14   56/2075  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170714205741.GB21266@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>" "<20170714175607.GA19141@openwall.com>" "<CA+aC4ktnyUy1KExK-zi8ptYFa-P1CQrWBRsQutue0vODuwCqVA@mail.gmail.com>" "<20170714182358.GA20536@openwall.com>" "<b8e50542-153b-27c0-b75a-b46f119cfaf9@redhat.com>" "<20170714185402.GA20840@openwall.com>" "<EE692F78-EBE2-4DE6-A66D-B8597EF933EA@redhat.com>" "<20170714205741.GB21266@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19869 invoked by uid 550); 22 Sep 2017 07:49:13 -0000
+Received: (qmail 28460 invoked by uid 550); 14 Jul 2017 21:04:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19764 invoked from network); 22 Sep 2017 07:49:12 -0000
-Message-ID: <317939.544885547-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Fri, 22 Sep 2017 07:48:55 +0000
+Received: (qmail 28321 invoked from network); 14 Jul 2017 21:04:32 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=CPtA3k6VdieTqZRc4sUdgayaJG/rj2UkzpJ8j14zW0w=;
+        b=JH3bfJ1ULRjGxtA5XW3y/FocOAz4Cekn9a8SKlp+BSGrWjxikQ9abHZ7mHjQoI40W4
+         2td72aMcmrZIgUXVySDBl0DZNdRzGonIOsDdUxnCR3CsgAaQC6PC/wDEXl4EcRxXArtA
+         mLtod55R0JTK6GX7uU2qhdAZOHFqwmywU9zLdRObK46htZXJWsC+VE4JQsEnE0MevsRB
+         hvUPKfPKovDnPOEKUxKhOkgpijbPWD9+nT7wmD02qBxa1PzU05ekClIR/pGknqxHh1+q
+         7FKQjx+GyVTZRlCj9XOa2Gzz3hyi3QROeP2vgJ6m2dvNUKtppagG/IkrQYGHb8frAlsG
+         Mtzg==
+X-Gm-Message-State: AIVw110/SYusZPk+38GuwNsxLAnzU1p/bZLjG9wNluPiJQeVNCUDoOzB
+	euABXoPEag7hyXjhrPp4ueuA138dfmgd99w=
+X-Received: by 10.200.49.88 with SMTP id h24mr635650qtb.152.1500066260216;
+ Fri, 14 Jul 2017 14:04:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-350595.78305027"
-Subject: [oss-security] bento4: NULL pointer dereference in AP4_Atom::SetType (Ap4Atom.h)
+In-Reply-To: <20170714205741.GB21266@openwall.com>
+References: <20170628200239.GA25525@openwall.com> <20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>
+ <20170714175607.GA19141@openwall.com> <CA+aC4ktnyUy1KExK-zi8ptYFa-P1CQrWBRsQutue0vODuwCqVA@mail.gmail.com>
+ <20170714182358.GA20536@openwall.com> <b8e50542-153b-27c0-b75a-b46f119cfaf9@redhat.com>
+ <20170714185402.GA20840@openwall.com> <EE692F78-EBE2-4DE6-A66D-B8597EF933EA@redhat.com>
+ <20170714205741.GB21266@openwall.com>
+Message-ID: <CANO=Ty2hVv4AFK01wwMiKGNP6g5YrjucWqMp_G+FcTn9c-aauQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="001a1135c1389482bf05544d6450"
+Date: Fri, 14 Jul 2017 15:04:19 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: oss-security <oss-security@lists.openwall.com>
 
-------MIME delimiter for sendEmail-350595.78305027
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--001a1135c1389482bf05544d6450
+Content-Type: text/plain; charset="UTF-8"
 
-Description:
-bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
+On Fri, Jul 14, 2017 at 2:57 PM, Solar Designer <solar@openwall.com> wrote:
 
-The complete ASan output of the issue:
+> On Fri, Jul 14, 2017 at 01:52:37PM -0600, Kurt Seifried wrote:
+> > Ah I misunderstood the backup, I thought it meant people within a
+> distro, not actual distros, I'm fine with a backup distro. As for the tasks
+> I meant 1 and 2 technical,
+>
+> Great.  I've just listed Red Hat for those.
+>
+> > we generally do this work anyways.
+>
+> I didn't collect statistics, but my impression is that Red Hat generally
+> works on fixes for issues that Red Hat itself brings to distros, which
+> is a great contribution (doubly so).  Red Hat also worked on glibc fixes
+> for Stack Clash.  Other than that, for issues brought to distros by
+> third-parties I think Red Hat's contributions of fixes do not stand out
+> compared to some other distros'.  Maybe that will now improve. :-)
+>
 
-# mp42aac $FILE out.aac
-ASAN:DEADLYSIGNAL
-=================================================================
-==23307==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 0x0000005c9865 bp 0x7fffd01b90d0 sp 0x7fffd01b9020 T0)
-==23307==The signal is caused by a WRITE memory access.
-==23307==Hint: address points to the zero page.
-    #0 0x5c9864 in AP4_Atom::SetType(unsigned int) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.h:247:52
-    #1 0x5c9864 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:499
-    #2 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
-    #3 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
-    #4 0x575855 in AP4_SampleEntry::Read(AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:115:9
-    #5 0x57d624 in AP4_VisualSampleEntry::AP4_VisualSampleEntry(unsigned int, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:742:5
-    #6 0x57d624 in AP4_AvcSampleEntry::AP4_AvcSampleEntry(unsigned int, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:994
-    #7 0x5cbf58 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:305:24
-    #8 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
-    #9 0x586a2c in AP4_StsdAtom::AP4_StsdAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StsdAtom.cpp:100:13
-    #10 0x58566f in AP4_StsdAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StsdAtom.cpp:56:16
-    #11 0x5ca71c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:422:20
-    #12 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
-    #13 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
-    #14 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
-    #15 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
-    #16 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
-    #17 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
-    #18 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
-    #19 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
-    #20 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
-    #21 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
-    #22 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
-    #23 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
-    #24 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
-    #25 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
-    #26 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
-    #27 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
-    #28 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
-    #29 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
-    #30 0x58e6ed in AP4_TrakAtom::AP4_TrakAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.cpp:165:5
-    #31 0x5c8e3b in AP4_TrakAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.h:58:20
-    #32 0x5c8e3b in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:377
-    #33 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
-    #34 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
-    #35 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
-    #36 0x5521b0 in AP4_MoovAtom::AP4_MoovAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.cpp:79:5
-    #37 0x5cad1d in AP4_MoovAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:56:20
-    #38 0x5cad1d in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:357
-    #39 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
-    #40 0x5c75c0 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:150:12
-    #41 0x54ea2c in AP4_File::ParseStream(AP4_ByteStream&, AP4_AtomFactory&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:104:12
-    #42 0x54f0fa in AP4_File::AP4_File(AP4_ByteStream&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:78:5
-    #43 0x542552 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:242:32
-    #44 0x7f048a8bf680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #45 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.h:247:52 in AP4_Atom::SetType(unsigned int)
-==23307==ABORTING
-
-Affected version:
-1.5.0-617
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/axiomatic-systems/Bento4/commit/be7185faf7f52674028977dcf501c6039ff03aa5
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14638
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00336-bento4-NULLptr-AP4_Atom_SetType
-
-Timeline:
-2017-09-08: bug discovered and reported to upstream
-2017-09-14: blog post about the issue
-2017-09-21: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/14/bento4-null-pointer-dereference-in-ap4_atomsettype-ap4atom-h/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+To be clear we won't be working on random third party stuff that has
+minimal value and we have no expertise in. It's the things like StackGuard
+or OpenSSL issues that matter and where a major amount of work is needed
+that we tend to work on (we're not going to work on random php apps, we're
+going to work on the stuff that matters, not all security issues are
+equal).  I would argue if people can't be bothered to care about committing
+resources to fixing  a security issue than that security issue doesn't
+really matter (in other words, the market has spoken).
 
 
-------MIME delimiter for sendEmail-350595.78305027--
 
+> And I am not complaining.  Maybe this means those other distros are
+> doing their part too, which is great.
+>
+> > On Jul 14, 2017, at 12:54, Solar Designer <solar@openwall.com> wrote:
+> > > Technical are:
+> > >
+> > > 1. Propose (other) ways to fix, work around, or mitigate the reported
+> issues
+> > >
+> > > 2. Develop and share fixes, workarounds, or mitigations
+>
+> Alexander
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a1135c1389482bf05544d6450--
