@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1542" "Thursday" "14" "July" "2016" "12:15:02" "-0400" "CAI Qian" "caiqian@redhat.com" "<1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>" "45" "Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" nil nil nil "7" "2016071416:15:02" "[oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" (number mark "U       caiqian@redh Jul 14   45/1542  " thread-indent "\"Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount\"\n") "<20160713224500.GD12156@kroah.com>" ("<1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>" "<20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>" "<20160713224500.GD12156@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2386" "Friday" "14" "July" "2017" "19:56:07" "+0200" "Solar Designer" "solar@openwall.com" "<20170714175607.GA19141@openwall.com>" "56" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017071417:56:07" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        solar@openwa Jul 14   56/2386  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>" ("<20170628200239.GA25525@openwall.com>" "<20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 25708 invoked by uid 550); 14 Jul 2016 16:15:19 -0000
+Received: (qmail 18213 invoked by uid 550); 14 Jul 2017 17:57:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16020 invoked from network); 14 Jul 2017 17:56:15 -0000
+Message-ID: <20170714175607.GA19141@openwall.com>
+References: <20170628200239.GA25525@openwall.com> <20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>
+User-Agent: Mutt/1.4.2.3i
+Date: Fri, 14 Jul 2017 19:56:07 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25688 invoked from network); 14 Jul 2016 16:15:18 -0000
-Date: Thu, 14 Jul 2016 12:15:02 -0400 (EDT)
-From: CAI Qian <caiqian@redhat.com>
-To: Greg KH <greg@kroah.com>
-Cc: oss-security@lists.openwall.com, cve-assign@mitre.org
-Message-ID: <1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>
-In-Reply-To: <20160713224500.GD12156@kroah.com>
-References: <1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com> <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org> <20160713224500.GD12156@kroah.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.18.41.13]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC45 (Linux)/8.0.6_GA_5922)
-Thread-Topic: cve request: local DoS by overflowing kernel mount table using shared bind mount
-Thread-Index: hOdD4aS2ea/HStlguRP7NCDxcKj4rA==
-Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel
- mount table using shared bind mount
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: oss-security@lists.openwall.com
 
-Maybe this is a better reproducer using docker. It is exploitable even with
-user namespace enabled.
-
-# docker run -it -v /mnt/:/mnt/:shared --cap-add=SYS_ADMIN rhel7 /bin/bash
-
-# cat /proc/self/uid_map 
-         0        995      65536
-
-# cat /proc/self/gid_map 
-         0        992      65536
-
-(insider container) # for i in `seq 1 20`; mount -o bind /mnt/1 /mnt/2; done
-   CAI Qian
-
------ Original Message -----
-> From: "Greg KH" <greg@kroah.com>
-> To: oss-security@lists.openwall.com
-> Cc: caiqian@redhat.com, cve-assign@mitre.org
-> Sent: Wednesday, July 13, 2016 6:45:00 PM
-> Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
-> 
-> On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@mitre.org wrote:
-> > > It was reported that the mount table expands by a power-of-two
-> > > with each bind mount command.
+On Sat, Jul 08, 2017 at 04:11:25PM +0200, Salvatore Bonaccorso wrote:
+> On Wed, Jun 28, 2017 at 10:02:40PM +0200, Solar Designer wrote:
+> > 6. If CVE IDs are requested, the report is valid, and you're a CNA,
+> > assign those (requesting any required information from the reporter
+> > first)
 > > 
-> > > If the system is configured in the way that a non-root user
-> > > allows bind mount even if with limit number of bind mount
-> > > allowed, a non-root user could cause a local DoS by quickly
-> > > overflow the mount table.
-> > 
-> > > it will cause a deadlock for the whole system,
-> > 
-> > >> form of unlimited memory consumption that is causing the problem
-> > 
-> > Use CVE-2016-6213.
+> > 7. If the report does not mention CVE IDs (neither requests nor provides
+> > them, and doesn't mention the reporter having requested them elsewhere),
+> > yet the report is valid and it looks like distros will need CVE IDs, and
+> > you're a CNA, ask the reporter whether they have already requested CVE
+> > IDs elsewhere, then assign those if they haven't been requested
+> > elsewhere
 > 
-> A CVE for an "improperly configured system"?  Huh?  What distro has such
-> a configuration set by default?  This isn't a kernel bug, so what is
-> this CVE classified as being "against"?  It better not be against the
-> Linux kernel...
-> 
-> confused,
-> 
-> greg k-h
-> 
+> Speaking for Debian: Debian beeing a CNA can *help* monitoring those
+> explicitly and assign where needed CVEs from the assigned pool.
+
+I've listed Debian as backup for the two CVE tasks above.  I've also
+listed Red Hat as primary for these two tasks, based on Red Hat's
+contributions so far.  And I've listed Cloud Linux and Gentoo beside
+the tasks they kindly volunteered for in postings in here.
+
+I see that Gentoo is already active at their tasks, including reminding
+reporters to post to oss-security and taking care of the SPICE posting
+(when the reporter wasn't available to make it on time):
+
+http://www.openwall.com/lists/oss-security/2017/07/14/1
+
+as well as collecting statistics.  Thanks!
+
+> We are already as well contributing to other tasks, and will continue
+> to do so as time permits.
+
+Thank you!
+
+However, many tasks remain vacant, with no distro responsible for them.
+This doesn't mean they're not getting done - just that no particular
+distro is responsible - yet that's something I'd like to see change.
+
+Specifically, all 6 of the technical tasks and 5 of 13 administrative
+tasks are now fully vacant.  Additionally, 11 of the administrative
+tasks have no backup.
+
+These distros have no task assigned: ALT Linux, Amazon Linux AMI, Arch
+Linux, Chrome OS, Openwall, Oracle, Slackware, SUSE, Ubuntu, Wind River,
+FreeBSD, NetBSD/pkgsrc.
+
+Openwall might be exempt for now for us running the lists and being the
+last resort fallback for most tasks. ;-)  The rest should volunteer for
+some tasks now!
+
+Red Hat almost made this list, except that I listed them for the two CVE
+tasks on my own.
+
+http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+
+Alexander
