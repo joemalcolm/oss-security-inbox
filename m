@@ -1,19 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/22/2
-Message-ID: <12344565.ez7IU7Tgeu@blackgate>
-Date: Wed, 22 Mar 2017 11:16:35 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: elfutils: memory allocation failure in allocate_elf (common.h)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/13
+Message-ID: <CANO=Ty0kA2sgHgZj+w1Xg6Z2G9WGSexa_i59Hi2eo2PQeW=YPQ@mail.gmail.com>
+Date: Fri, 14 Jul 2017 12:04:20 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 09 November 2016 15:39:17 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2016/11/04/elfutils-memory-allocation-failure-i
-> n-allocate_elf-common-h
+> On Fri, Jul 14, 2017 at 12:34:01PM +0300, Georgi Guninski wrote:
+> > What is an estimate for the total number of exploitable bugs in large
+> > linux distro?
+>
 
-This is CVE-2016-10254
+First you need to define "distribution". Do we go with "all" the packages
+shipped? Ok... what about things like firefox?
+https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox 1500 CVEs... does
+that count to the distribtion count?  What about non-free in Debian? Anyone
+that ships Flash is also going to see their stats bumped way up.
+
+Now we need to define "exploitable bugs", for example an exploit chain, is
+that multiple bugs or do we count that as a single one for this discussion?
+There's a lot of /tmp flaws that are "exploitable" but I can pretty much
+guarantee nobody will ever bother.
+
+I would then point out the only source of data anyone is mentioning is CVE.
+And CVE has counting rules. For example if you find 100 XSS flaws in a php
+app (because they forgot to use htmlspecialchars on output) in the same
+version we'll assign a single CVE, not 100. So how many bugs do you count
+this as?
+
+CVE is also incomplete. There's lots and lots of vulns with no CVE
+(something I'm trying to remediate with the DWF).
+
+I would suggest before anyone continue this thread they go read:
+
+https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
+
+it's largely a pointless discussion because the question isn't well
+defined, and we know for a fact we don't have good data to answer it
+(yet...).
+
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
