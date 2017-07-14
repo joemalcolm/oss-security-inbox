@@ -1,23 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/27/1
-Message-ID: <20170727051744.3zhfqpibx3v6262d@eldamar.local>
-Date: Thu, 27 Jul 2017 07:17:44 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Cacti: CVE-2017-11691: Cross-site scripting vulnerability in user profile management page (auth_profile.php)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/12
+Message-ID: <20170714175607.GA19141@openwall.com>
+Date: Fri, 14 Jul 2017 19:56:07 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Sat, Jul 08, 2017 at 04:11:25PM +0200, Salvatore Bonaccorso wrote:
+> On Wed, Jun 28, 2017 at 10:02:40PM +0200, Solar Designer wrote:
+> > 6. If CVE IDs are requested, the report is valid, and you're a CNA,
+> > assign those (requesting any required information from the reporter
+> > first)
+> > 
+> > 7. If the report does not mention CVE IDs (neither requests nor provides
+> > them, and doesn't mention the reporter having requested them elsewhere),
+> > yet the report is valid and it looks like distros will need CVE IDs, and
+> > you're a CNA, ask the reporter whether they have already requested CVE
+> > IDs elsewhere, then assign those if they haven't been requested
+> > elsewhere
+> 
+> Speaking for Debian: Debian beeing a CNA can *help* monitoring those
+> explicitly and assign where needed CVEs from the assigned pool.
 
-A Cross-site scripting vulnerability exists in cacti before [1] in the
-user profile managment page (auth_profile.php), allowing inject
-arbitrary web script or HTML via specially crafted HTTP Referer
-headers.
+I've listed Debian as backup for the two CVE tasks above.  I've also
+listed Red Hat as primary for these two tasks, based on Red Hat's
+contributions so far.  And I've listed Cloud Linux and Gentoo beside
+the tasks they kindly volunteered for in postings in here.
 
-Upstream report: https://github.com/Cacti/cacti/issues/867
-Upstream fix: https://github.com/Cacti/cacti/commit/104090aeead4aa433bf1f18cd6d52dcfeb71236c
+I see that Gentoo is already active at their tasks, including reminding
+reporters to post to oss-security and taking care of the SPICE posting
+(when the reporter wasn't available to make it on time):
 
-MITRE has assigned CVE-2017-11691 for this issue.
+http://www.openwall.com/lists/oss-security/2017/07/14/1
 
-Regards,
-Salvatore
+as well as collecting statistics.  Thanks!
+
+> We are already as well contributing to other tasks, and will continue
+> to do so as time permits.
+
+Thank you!
+
+However, many tasks remain vacant, with no distro responsible for them.
+This doesn't mean they're not getting done - just that no particular
+distro is responsible - yet that's something I'd like to see change.
+
+Specifically, all 6 of the technical tasks and 5 of 13 administrative
+tasks are now fully vacant.  Additionally, 11 of the administrative
+tasks have no backup.
+
+These distros have no task assigned: ALT Linux, Amazon Linux AMI, Arch
+Linux, Chrome OS, Openwall, Oracle, Slackware, SUSE, Ubuntu, Wind River,
+FreeBSD, NetBSD/pkgsrc.
+
+Openwall might be exempt for now for us running the lists and being the
+last resort fallback for most tasks. ;-)  The rest should volunteer for
+some tasks now!
+
+Red Hat almost made this list, except that I listed them for the two CVE
+tasks on my own.
+
+http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+
+Alexander
