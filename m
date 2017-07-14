@@ -1,19 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/6
-Message-ID: <1605678.LEK1Z9kDq5@blackgate>
-Date: Mon, 13 Mar 2017 10:38:01 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: audiofile: heap-based buffer overflow in ulaw2linear_buf (G711.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/24
+Message-ID: <CANO=Ty2hVv4AFK01wwMiKGNP6g5YrjucWqMp_G+FcTn9c-aauQ@mail.gmail.com>
+Date: Fri, 14 Jul 2017 15:04:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 26 February 2017 11:54:14 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow
-> -in-ulaw2linear_buf-g711-cpp
+On Fri, Jul 14, 2017 at 2:57 PM, Solar Designer <solar@...nwall.com> wrote:
 
-This is CVE-2017-6834
+> On Fri, Jul 14, 2017 at 01:52:37PM -0600, Kurt Seifried wrote:
+> > Ah I misunderstood the backup, I thought it meant people within a
+> distro, not actual distros, I'm fine with a backup distro. As for the tasks
+> I meant 1 and 2 technical,
+>
+> Great.  I've just listed Red Hat for those.
+>
+> > we generally do this work anyways.
+>
+> I didn't collect statistics, but my impression is that Red Hat generally
+> works on fixes for issues that Red Hat itself brings to distros, which
+> is a great contribution (doubly so).  Red Hat also worked on glibc fixes
+> for Stack Clash.  Other than that, for issues brought to distros by
+> third-parties I think Red Hat's contributions of fixes do not stand out
+> compared to some other distros'.  Maybe that will now improve. :-)
+>
+
+To be clear we won't be working on random third party stuff that has
+minimal value and we have no expertise in. It's the things like StackGuard
+or OpenSSL issues that matter and where a major amount of work is needed
+that we tend to work on (we're not going to work on random php apps, we're
+going to work on the stuff that matters, not all security issues are
+equal).  I would argue if people can't be bothered to care about committing
+resources to fixing  a security issue than that security issue doesn't
+really matter (in other words, the market has spoken).
+
+
+
+> And I am not complaining.  Maybe this means those other distros are
+> doing their part too, which is great.
+>
+> > On Jul 14, 2017, at 12:54, Solar Designer <solar@...nwall.com> wrote:
+> > > Technical are:
+> > >
+> > > 1. Propose (other) ways to fix, work around, or mitigate the reported
+> issues
+> > >
+> > > 2. Develop and share fixes, workarounds, or mitigations
+>
+> Alexander
+>
+
+
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
