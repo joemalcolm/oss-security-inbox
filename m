@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/8
-Message-ID: <20170624145714.GA30830@openwall.com>
-Date: Sat, 24 Jun 2017 16:57:14 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/7
+Message-ID: <20170714122641.616d32ec@pc1>
+Date: Fri, 14 Jul 2017 12:26:41 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 21, 2017 at 08:26:05PM -0400, Mike O'Connor wrote:
-> In the past, I've proposed that the embargo mailing list archives
-> themselves have an "embargo", after which they become public.  That
-> way, there's after-the-fact transparency, and it gives the folks who
-> care a good idea of what happened.  Is there anything sensitive at
-> this point in, say, the March 2017 linux-distros archives??
+On Fri, 14 Jul 2017 12:34:01 +0300
+Georgi Guninski <guninski@...inski.com> wrote:
 
-There shouldn't be anything sensitive in old archives, such as in your
-example.  Technically, we can easily extract and make public the message
-Subjects.  For full messages, we need a way to mass-decrypt an mbox
-containing PGP/MIME messages.  Maybe I should list implementing a
-program that would do that(*) as one of the options that a new distros
-list member could choose as their contribution back to the community.
+> What is an estimate for the total number of exploitable bugs in large
+> linux distro?
+> 
+> Also, does the total number decrease, increase or change in other way
+> over time?
 
-(*) Mutt hack maybe?  Mutt processes those messages great, so having it
-output them in decrypted form into another mbox and automatically loop
-over all messages in the input mbox might do the trick.
+There's nothing anywhere close to being a reliable data collection to
+answer questions like these.
 
-Alexander
+People tend to base these things on CVE counts, which is the Infosec
+equivalent of astrology or homeopathy. Yet that doesn't stop
+universities and other "respectably looking" institutions to fall for
+this trap on a regular basis.
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
