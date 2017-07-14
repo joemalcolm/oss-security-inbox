@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/18/8
-Message-ID: <20171218220414.GA10960@takahe.colorado.edu>
-Date: Mon, 18 Dec 2017 15:04:14 -0700
-From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/25
+Message-ID: <20170714210857.GA22539@openwall.com>
+Date: Fri, 14 Jul 2017 23:08:57 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 18, 2017 at 08:21:56PM +0000, halfdog wrote:
-> The point in starting this thread was, that GnuPG does NOT conveniently
-> cover usecases for headless or scripting operation. Thus it seems
-> that the time has come to look for replacement, as GnuPG is moving
-> more in the "desktop" direction, as also your comments indicate.
+On Fri, Jul 14, 2017 at 09:50:55PM +0200, Kristian Fiskerstrand wrote:
+> On 07/14/2017 08:54 PM, Solar Designer wrote:
+> > What's #1 and #2 - do you mean the technical or the administrative tasks?
+> 
+> To avoid confusion while discussing, would it make sense to designate
+> letters to the various sections, so it can be referred to as e.g A1, B3?
 
-You are talking about policies here, not technical issues. Gnupg is perfectly
-scriptable, see pacman-key(1) tool in Arch Linux. Moreover, gpg-agent is easily
-usable on a headless machine. At least, I mostly use it this way when checking
-email... You will lose nothing if you just pkill(1) gpg-agent though. So I
-don't understand why you claim that gpg is moving towards desktop.
+We could, but DokuWiki's auto-numbering won't do that and the numbers
+aren't meant to be long-term stable anyway.  So to avoid confusion we
+should avoid referring to these tasks only by number.
 
-> That's really a strange argument. You fear PTRACING for key extraction
-> of a short-lived, per-key instance of gpg1 process and solve that
-> by putting all the key material into a single long-lived gpg-agent
-> process, not even providing convenient commands to flush the keys
-> from there?
-
-pkill -hup gpg-agent. Please read the manpages.
-
-Cheers,
--- 
-Leonid Isaev
+Alexander
