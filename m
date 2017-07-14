@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3339" "Thursday" "30" "July" "2015" "12:25:12" "+1000" "Dave Chinner" "david@fromorbit.com" "<20150730022512.GM16638@dastard>" "76" "[oss-security] Re: CVE-2012-2150 xfsprogs: xfs_metadump information disclosure flaw" nil nil nil "7" "2015073002:25:12" "[oss-security] Re: CVE-2012-2150 xfsprogs: xfs_metadump information disclosure flaw" (number mark "U       david@fromor Jul 30   76/3339  " thread-indent "\"[oss-security] Re: CVE-2012-2150 xfsprogs: xfs_metadump information disclosure flaw\"\n") "<55B0FD01.1080602@redhat.com>" ("<55B0FD01.1080602@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["475" "Friday" "14" "July" "2017" "08:28:56" "-0400" "Steve Grubb" "sgrubb@redhat.com" "<6334883.xSAWTLvUd5@x2>" "16" "Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?" "^Cc:" nil nil "7" "2017071412:28:56" "[oss-security] Estimate for the total number of exploitable bugs in large linux distro?" (number mark "U       sgrubb@redha Jul 14   16/475   " thread-indent "\"Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?\"\n") "<20170714093401.GB865@sivokote.iziade.m$>" ("<20170714093401.GB865@sivokote.iziade.m$>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11714 invoked by uid 550); 30 Jul 2015 02:39:15 -0000
+Received: (qmail 18017 invoked by uid 550); 14 Jul 2017 12:39:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21658 invoked from network); 30 Jul 2015 02:25:28 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2A6CgBTirlVPG0mLHlbgxpUaYJViiOcBAEBAQEBB5ULhXMEAgKBWE0BAQEBAQEHAQEBAUE/hCQBAQRWIxAIAw4KCSUPBSUDBxoTiC0OzxQBAQEBAQUBAQEBHhmGBoUvgT2BL4IbB4QsBZRyhHpmhmKBR4QgiFeKdIEKgSoND4FlLDEBgksBAQE
-Date: Thu, 30 Jul 2015 12:25:12 +1000
-From: Dave Chinner <david@fromorbit.com>
-To: Kurt Seifried <kseifried@redhat.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20150730022512.GM16638@dastard>
-References: <55B0FD01.1080602@redhat.com>
+Received: (qmail 12217 invoked from network); 14 Jul 2017 12:29:09 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 636FB7CE10
+Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=sgrubb@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 636FB7CE10
+Message-ID: <6334883.xSAWTLvUd5@x2>
+Organization: Red Hat
+In-Reply-To: <20170714093401.GB865@sivokote.iziade.m$>
+References: <20170714093401.GB865@sivokote.iziade.m$>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Clx92ZfkiYIKRjnr"
-Content-Disposition: inline
-In-Reply-To: <55B0FD01.1080602@redhat.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] Re: CVE-2012-2150 xfsprogs: xfs_metadump information disclosure flaw
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Fri, 14 Jul 2017 12:28:57 +0000 (UTC)
+Cc: Georgi Guninski <guninski@guninski.com>
+Date: Fri, 14 Jul 2017 08:28:56 -0400
+From: Steve Grubb <sgrubb@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?
+To: oss-security@lists.openwall.com
 
---Clx92ZfkiYIKRjnr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Friday, July 14, 2017 5:34:01 AM EDT Georgi Guninski wrote:
+> What is an estimate for the total number of exploitable bugs in large
+> linux distro?
 
-On Thu, Jul 23, 2015 at 08:41:05AM -0600, Kurt Seifried wrote:
-> https://bugzilla.redhat.com/show_bug.cgi?id=3D817696
->=20
-> Gabriel Vlasiu reported that xfs_metadump, part of the xfsprogs suite of
-> tools for the XFS filesystem, did not properly obfuscate data.
-> xfs_metadump properly obfuscates active metadata, but the rest of the
-> space within that fs block comes through in the clear.  This could lead
-> to exposure of stale disk data via the produced metadump image.
->=20
-> The expectation of xfs_metadump is to obfuscate all but the shortest
-> names in the metadata, as noted in the manpage:
->=20
-> By  default,  xfs_metadump  obfuscates  most  file (regular file,
-> directory and symbolic link) names and extended  attribute  names to
-> allow  the  dumps  to be sent without revealing confidential
-> information. Extended attribute values are zeroed and no data  is
-> copied.  The only exceptions are file or attribute names that are 4 or
-> less characters in length. Also file names that span extents (this can
-> only occur with the mkfs.xfs(8) options where -n size > -b size) are not
-> obfuscated.  Names between 5 and 8 characters  in length
-> inclusively are partially obfuscated.
->=20
-> While the xfs_metadump tool can be run by unprivileged users, it
-> requires appropriate permissions to access block devices (such as root)
-> where the sensitive data might be dumped.  An unprivileged user, without
-> access to the block device, could not use this flaw to obtain sensitive
-> data they would not otherwise have permission to access.
->=20
-> Upstream patches will be available at
-> https://git.kernel.org/cgit/fs/xfs/xfsprogs-dev.git/
+A few years back, Dan Geer wrote an interesting article about using biological 
+models to estimate how many bugs exist. Biologists have the same issue, how 
+many fish are in a lake?
 
-I have just released xfsprogs v3.2.4 to address these issues. Please
-see the release announcement here for details on where to find it:
+http://geer.tinho.net/fgm/fgm.geer.1504.pdf
 
-http://oss.sgi.com/pipermail/xfs/2015-July/042726.html
+-Steve
 
--Dave.
+> Also, does the total number decrease, increase or change in other way
+> over time?
 
-PS: A comment on the CVE disclosure process: please ensure that the
-upstream maintainer is informed of the CVE and the public disclosure
-plan *before* disclosure occurs.  Apart from preventing co-ordinated
-release of the fixes, failing to inform the maintainer of the
-problem before public disclosure is impolite and disrespectful.
 
---=20
-Dave Chinner
-david@fromorbit.com
-
---Clx92ZfkiYIKRjnr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJVuYsHAAoJEK3oKUf0dfodEdIQAMNaXPFRSLWoip67QWADmy9H
-tYBbQyTnQSutHchb3s4Zmqqe7kF1tBIWVOi/OoMg6NFiD0C9Hi5jHojLsvaEPzGc
-Hf3lzEbdc9+a6/prf9jTcD2szQ6u9/bgji0WcfWGcOPYF57hsfEdEnQzJ1hXcyN1
-X97VMvk3TNrqXyTB1hPsNSzysvIDnNnbjLIeUdYjhQqe64E8HDhdYhJLJa9gID4o
-izV+5xx878R2IrwX9H9tnxilPT0w4NCLN6aj/JlHbPSDdiEsc9kNW2aO0FYpSktz
-wI7p6kEDXN0j5X8jJ3h9zceLZuXoC8K31Bi3NM/5s+PPbGITV0Cx9hJhZzQqArqH
-2OAQHXbot/nT1zz/KlB+hEYOaXkcptneRujJbWMTi5C0zxTtw+5hZvg/E8KBdT4E
-VR76mJA+NFC3U0BhytFiFGLLB8g9RYm/0eqy2FXu0tJ29OhPaHuzYGSN68ZYDIRP
-eoX+KZDK68Zw2PqXKkzqxHTjI8m8v24ge5UmDfeSq1Byp9rjVhaoRyBlwpv2Udyt
-DzyCOv/vUDXbPu1jMWz/w5hgSaNnDHTl57zclHGhYNOd83J577I9iDfShLnVYnOH
-hnVVPb+9GjgcXvKDie5/apz1f8loEcoV/qV1UAHQ1Q3nNqIsPcMrNR7qBkMyntzB
-JOdTxc5AkaiMbgTmm1+m
-=UEuc
------END PGP SIGNATURE-----
-
---Clx92ZfkiYIKRjnr--
