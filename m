@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/11
-Message-ID: <20170705140031.GA31519@openwall.com>
-Date: Wed, 5 Jul 2017 16:00:31 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: LKML thread "mm: larger stack guard gap, between vmas" partially CC'ed to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/14
+Message-ID: <170783ca-312c-1211-2f2c-08c91e288cae@gentoo.org>
+Date: Fri, 14 Jul 2017 20:07:42 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
+To: oss-security@...ts.openwall.com, Javantea <jvoss@...sci.com>
+Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 07/14/2017 07:52 PM, Javantea wrote:
+> This shows that GLSAs are neither increasing nor decreasing within the margin of error over the past 10 years.
 
-In the Stack Clash disclosure aftermath, there's a thread "[PATCH] mm:
-larger stack guard gap, between vmas" still going on LKML, which is
-attempted to be CC'ed to linux-distros (as linux-distros was among the
-recipients on similar threads with security@k.o involved prior to the
-public disclosure).  Some of these messages get through (those that
-include [vs-plain] in the Subject), the rest don't.  (It might as well
-be several threads now.)
+As a metric it likely doesn't provide much though; a high number of
+tracked issues are fixed without GLSA, depending on severity and
+expected install base of the package, and multiple fixes are combined
+into single GLSAs if related to same package etc, so as a metric it is
+probably quite bad and number depending on factors such as available
+manpower from year to year.
 
-This makes little sense to me, and it also creates the situation that if
-any new security issues are disclosed in that thread (which might or
-might not be the case with LibreOffice and Java trying and failing to
-install their own stack guard pages after the kernel has been patched,
-if I read this right) then per linux-distros list policy we'd need to
-bring them specifically to oss-security (but it's tough to do when the
-thread doesn't make the issue reports explicit - rather, people are just
-discussing things).
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
 
-On one hand, this is our continuing reminder of just how very wrong we
-were with the embargo.  (Of course, some of us will continue to disagree
-with this assessment.)  On the other hand, perhaps we should forcibly
-kill those CC's now - ask people to stop, or just filter on the server.
-I am going to start by asking.  Once again, that content is public on
-LKML anyway.
 
-Alexander
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
