@@ -1,32 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/14
-Message-ID: <20171106201851.arkdgqnjzx3rafv5@eldamar.local>
-Date: Mon, 6 Nov 2017 21:18:51 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/1
+Message-ID: <453db277-7542-4381-6cbd-8ed99e2af0e3@gentoo.org>
+Date: Fri, 14 Jul 2017 09:36:21 +0200
+From: Kristian Fiskerstrand <k_f@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: 连一汉 <lianyihan@....cn>
-Subject: Re: [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder
+Subject: CVE-2017-7506 spice: Possible buffer overflow via invalid monitor configurations
 Content-Type: text/plain; charset=utf-8
 
-Hi
+The following issue was brought to the distros list during the embargo
+period. As per list policy this is the mandatory oss-security posting.
 
-On Fri, Oct 20, 2017 at 02:52:21PM +0200, Ludovic Courtès wrote:
-> Hi,
-> 
-> 连一汉 <lianyihan@....cn> skribis:
-> 
-> > FFmpeg trigger double-free when it parsing an craft AVI file to MKV file using ffvhuff decoder.
-> 
-> [...]
-> 
-> > This was fixed with the following commit:
-> > https://www.ffmpeg.org/download.html#releases
-> 
-> Looks like this is not the URL you intended to share, is it?
+###
 
-The fix for this issue appears to be:
+> CVE-2017-7506 spice: Possible buffer overflow via invalid monitor
+configurations
 
-https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/df62b70de8aaa285168e72fe8f6e740843ca91fa
+CVSSv3:  9.1/CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:H
 
-Regards,
-Salvatore
+The vulnerability is exposed to authenticated clients.  Malicious SPICE
+protocol messages can cause memory exhaustion, leak host memory to the
+guest or cause OOB writes.  The writes seem difficult to control, but a
+sufficiently crafty attacker could potentially use these to compromise
+the host.
+
+This was reported by SPICE maintainers Frediano Ziglio and Christophe
+Fergeau, who also provided the attached patchset against the current
+stable branch (0.12).
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1452606
+
+-- 
+Kristian Fiskerstrand
+OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+
+View attachment "spice-CVE-2017-7506.patch" of type "text/x-patch" (5891 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
