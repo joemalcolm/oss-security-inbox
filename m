@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1476" "Wednesday" "15" "July" "2015" "06:26:24" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150715102624.679156C04E2@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE Request: SQLite array overrun in the skip-scan optimization" nil nil nil "7" "2015071510:26:24" "[oss-security] Re: CVE Request: SQLite array overrun in the skip-scan optimization" (number mark "        cve-assign@m Jul 15   43/1476  " thread-indent "\"[oss-security] Re: CVE Request: SQLite array overrun in the skip-scan optimization\"\n") "<55A52483.2000507@canonical.com>" ("<55A52483.2000507@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["426" "Friday" "14" "July" "2017" "12:40:18" "-0600" "kseifried@redhat.com" "kseifried@redhat.com" "<b8e50542-153b-27c0-b75a-b46f119cfaf9@redhat.com>" "10" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017071418:40:18" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        kseifried@re Jul 14   10/426   " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170714182358.GA20536@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>" "<20170714175607.GA19141@openwall.com>" "<CA+aC4ktnyUy1KExK-zi8ptYFa-P1CQrWBRsQutue0vODuwCqVA@mail.gmail.com>" "<20170714182358.GA20536@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20162 invoked by uid 550); 15 Jul 2015 10:26:38 -0000
+Received: (qmail 30069 invoked by uid 550); 14 Jul 2017 18:40:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20141 invoked from network); 15 Jul 2015 10:26:37 -0000
-In-Reply-To: <55A52483.2000507@canonical.com>
-Message-Id: <20150715102624.679156C04E2@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@ubuntu.com
-Date: Wed, 15 Jul 2015 06:26:24 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 30051 invoked from network); 14 Jul 2017 18:40:26 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SGtysQ2GngRw0uNG+5YSUHYJ6fw7J7Ps1eavnmJi3p4=;
+        b=OSzE67muMbegVoedT741FLiBpjXueGfdNWMh7bpthBRH0FJ0NaJh9Qb7YkXvYCOK/4
+         tGILWSM7eq2XmmPFbIn9oyrZFBqD95H6PPpID8mOfPtImXaxZoz7uw9W47Jh/1XCToLS
+         i6t5ywtU2CtjjqpNV86qu44q5ostdKkOBHyNsmmV4f1XBvBXph3RPR5iAE4NHeEDH9oh
+         AnjhsCmQ17ZSJKzD+K9aZXG7+VwItu6taEAPzGjffVTSvcul9atIPkiKy4HE8jb0/x3R
+         oTp3uZxj8D1CwGG7v5V72jBUvmMgCWZXUiNkL1DqFfiDaLyur88s/4/RAxxSehdLxavH
+         UGuw==
+X-Gm-Message-State: AIVw112ByQajuUuNtaJlq2E3xu9TiPsnt7cQ/QRJzYor07qaCKaZNV/B
+	AB6e0+lRlUVYCO2xx3AFOQ==
+X-Received: by 10.36.190.7 with SMTP id i7mr4944187itf.15.1500057614856;
+        Fri, 14 Jul 2017 11:40:14 -0700 (PDT)
+References: <20170628200239.GA25525@openwall.com>
+ <20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>
+ <20170714175607.GA19141@openwall.com>
+ <CA+aC4ktnyUy1KExK-zi8ptYFa-P1CQrWBRsQutue0vODuwCqVA@mail.gmail.com>
+ <20170714182358.GA20536@openwall.com>
+Message-ID: <b8e50542-153b-27c0-b75a-b46f119cfaf9@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
+MIME-Version: 1.0
+In-Reply-To: <20170714182358.GA20536@openwall.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Date: Fri, 14 Jul 2017 12:40:18 -0600
+From: "kseifried@redhat.com" <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: SQLite array overrun in the skip-scan optimization
-To: marc.deslauriers@canonical.com
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Sorry I thought I'd replied earlier to this thread (phone email clients,
+how do they work?) Red Hat will continue to help (let's pick #1 and #2
+explicitly), I know we already have more than 2 people on the list so I
+don't think we need to nominate a backup?
 
-> SQLite 3.8.2 contained an array overrun in the skip-scan optimization leading to
-> memory corruption. Fixed in 3.8.3.
-> 
-> https://www.sqlite.org/src/info/520070ec7fbaac73eda0e0123596b7bb3e9a6897
+-- 
 
-> CREATE INDEX t1all ON t1(a,b,c,d,e,f,g,h);
-> INSERT INTO t1 VALUES(1,2,3,4,5,6,7,8,9);
-> ...
-> VALUES('t1','t1all','655360 163840 40960 10240 2560 640 160 40 10');
-
-> https://bugs.launchpad.net/ubuntu/+source/sqlite3/+bug/1448758
-> 
-> Invalid write of size 8
-
-> Fixed by the following commit:
-> https://www.sqlite.org/src/info/ac5852d6403c9c9628ca0aa7be135c702f000698
-> 
-> Make sure the WhereLoop.aLTerm[] array is large enough when processing
-> the skip-scan optimization
-> 
-> && (rc = whereLoopResize(db, pNew, pNew->nLTerm+1))==SQLITE_OK
-
-Use CVE-2013-7443.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVpjRwAAoJEKllVAevmvmsrFAH/i+O6Kna/WIWqVAbclu7HY6p
-03e50ub9f7aRED0IrlaunzDdU/BmtYbCb4ojvMyGUZybTQWMiCG+r+raRa7pcnn0
-KBoLwKpEmbzz2mm5Q7y0a0AWkD7tfmKKQUrGp5kJIWBv/6hrXEmegHGHwJu/wJTi
-EIPkoUFXvD6NwvW46yu8mXZchvFZnYs9N1kqG7sX+POfTeKCBRHCh+FcDMoM7aGZ
-f92PqyKKgUsxzlw/6nhf8HXtKvRUV73meYkopTZgBoBarZZcFgZIEMieJvfYJGOI
-zRekvE9QXks2HTXkzqUBS3OGqNhgTTAmuGl64Kx5DaQKZ6ykgpGj0hNLrZ1EKgM=
-=cfKg
------END PGP SIGNATURE-----
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
