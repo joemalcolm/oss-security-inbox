@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/11
-Message-ID: <13697db2-497e-e64a-5a6f-e66100e2dc22@coreos.com>
-Date: Tue, 27 Jun 2017 15:52:49 -0700
-From: Euan Kemp <euan.kemp@...eos.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/26
+Message-ID: <20170714235003.507f2dbf@pc1>
+Date: Fri, 14 Jul 2017 23:50:03 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CoreOS membership to linux-distros
+Subject: Re: CVE-2017-1000083: evince: Command injection vulnerability in CBT handler
 Content-Type: text/plain; charset=utf-8
 
-On 06/27/2017 03:13 PM, Kurt Seifried wrote:
-> My main question would be what expertise do you have in helping with
-> security issues, e.g. kernel/glibc/other engineering talent? Or do you
-> simply need this as a consumer of such data (e.g. so you can get containers
-> ready to respin for embargoed issues, and to be clear, I'm not opposed to
-> this type of consumption if it's in the public interest, you won't break
-> embargoes, etc.).
+Hi,
 
-To clarify your example, we're primarily concerned with preparing
-updates for our distribution's kernel and userland, not for containers.
+When I saw this and the proposed fix (the backport fix, not the one in
+git head), which was to remove tar support, but leave the command line
+calling of all the other tools looked suspicious to me.
 
-We'd be happy to help when we're able to, but our intent is mainly
-consumption for the security of our users.
-We'll, of course, respect embargoes.
+I played around a while, I haven't been able to find any more command
+injections. However I discussed this with Tobias Müller and he found
+out that another evince backend - the dvi one - also calls a shell
+command with insufficient escaping:
+https://bugzilla.gnome.org/show_bug.cgi?id=784947
 
-- Euan
+While I didn't find any more command injections, I figured out that
+with a password protected zip file as a cbz one can cause evince to
+hang:
+https://bugzilla.gnome.org/show_bug.cgi?id=784963
 
+-- 
+Hanno Böck
+https://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (852 bytes)
+Content of type "application/pgp-signature" skipped
