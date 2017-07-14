@@ -1,52 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/7
-Message-ID: <662503.639093728-sendEmail@localhost>
-Date: Mon, 10 Apr 2017 07:22:46 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: imagemagick: undefined behavior in coders/rle.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/18
+Message-ID: <20170714185402.GA20840@openwall.com>
+Date: Fri, 14 Jul 2017 20:54:02 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap images.
+On Fri, Jul 14, 2017 at 12:40:18PM -0600, kseifried@...hat.com wrote:
+> Sorry I thought I'd replied earlier to this thread
 
-A fuzz with the upstream security policy enabled, a quantum of 32 and the undefined behavior sanitizer discovered this bug.
+IIRC, you did, but you were not specific.
 
-# identify $FILE
-coders/rle.c:274:18: runtime error: value 1.72801e+09 is outside the range of representable values of type 'unsigned char'                                                                     
+> (phone email clients,
+> how do they work?) Red Hat will continue to help (let's pick #1 and #2
+> explicitly),
 
-Affected version:
-7.0.5.4
+What's #1 and #2 - do you mean the technical or the administrative tasks?
 
-Fixed version:
-7.0.5.5 (not released atm)
+Technical are:
 
-Commit fix:
-https://github.com/ImageMagick/ImageMagick/commit/b218117cad34d39b9ffb587b45c71c5a49b12bde
+1. Propose (other) ways to fix, work around, or mitigate the reported issues
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+2. Develop and share fixes, workarounds, or mitigations
 
-CVE:
-CVE-2017-7606
+and currently these are vacant.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00253-imagemagick-outside-unsigned-char
+Administrative are:
 
-Timeline:
-2017-03-31: bug discovered and reported to upstream
-2017-03-31: upstream released a patch
-2017-04-02: blog post about the issue
-2017-04-09: CVE assigned
+1. Promptly review new issue reports for meeting the list's requirements
+and confirm receipt of the report and, when necessary, inform the
+reporter of any issues with their report (e.g., obviously not actionable
+by the distros) and request and/or propose any required yet missing
+information (most notably, a tentative public disclosure date) -
+primary: CloudLinux, backup: vacant
 
-Note:
-This bug was found with American Fuzzy Lop.
+2. If the proposed public disclosure date is not within list policy,
+insist on getting this corrected and propose a suitable earlier date -
+primary: CloudLinux, backup: vacant
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/02/imagemagick-undefined-behavior-in-codersrle-c
+As you can see, the primary distro for them is currently CloudLinux, and
+as discussed in here I'd like each new distro joining to take at least
+task 1, unless they strongly prefer something else.  There's currently
+no backup, so I will gladly list Red Hat as backup here if you confirm.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+> I know we already have more than 2 people on the list so I
+> don't think we need to nominate a backup?
 
+If you're confident you'll fully handle a task without needing a backup
+distro, then we may list that as such.  Right now, you do have Debian
+listed as backup for the CVE tasks, though.
 
+Alexander
