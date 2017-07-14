@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2876" "Tuesday" "20" "October" "2015" "03:36:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151020073619.CE49C6C0018@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: CVE request for sqlalchemy-utils" nil nil nil "10" "2015102007:36:19" "[oss-security] Re: CVE request for sqlalchemy-utils" (number mark "U       cve-assign@m Oct 20   62/2876  " thread-indent "\"[oss-security] Re: CVE request for sqlalchemy-utils\"\n") "<1445196119.3560107.413423481.7C9B0859@webmail.messagingengine.com>" ("<1445196119.3560107.413423481.7C9B0859@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1667" "Friday" "14" "July" "2017" "07:58:37" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<b206e24d-0025-33a3-deb8-b0d9c7641d19@oracle.com>" "34" "Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?" "^Date:" nil nil "7" "2017071414:58:37" "[oss-security] Estimate for the total number of exploitable bugs in large linux distro?" (number mark "        alan.coopers Jul 14   34/1667  " thread-indent "\"Re: [oss-security] Estimate for the total number of exploitable bugs in large linux distro?\"\n") "<CACkP6k=7cgf+n8eeS0JFiVzK3caCTg_1piBLWxJLH=1P9YbNAg@mail.gmail.com>" ("<20170714093401.GB865@sivokote.iziade.m$>" "<CACkP6k=7cgf+n8eeS0JFiVzK3caCTg_1piBLWxJLH=1P9YbNAg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15721 invoked by uid 550); 20 Oct 2015 07:36:32 -0000
+Received: (qmail 1654 invoked by uid 550); 14 Jul 2017 14:58:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 1636 invoked from network); 14 Jul 2017 14:58:52 -0000
+References: <20170714093401.GB865@sivokote.iziade.m$>
+ <CACkP6k=7cgf+n8eeS0JFiVzK3caCTg_1piBLWxJLH=1P9YbNAg@mail.gmail.com>
+Message-ID: <b206e24d-0025-33a3-deb8-b0d9c7641d19@oracle.com>
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
+MIME-Version: 1.0
+In-Reply-To: <CACkP6k=7cgf+n8eeS0JFiVzK3caCTg_1piBLWxJLH=1P9YbNAg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Source-IP: userv0022.oracle.com [156.151.31.74]
+Date: Fri, 14 Jul 2017 07:58:37 -0700
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15695 invoked from network); 20 Oct 2015 07:36:31 -0000
-From: cve-assign@mitre.org
-To: robert@robert.io
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1445196119.3560107.413423481.7C9B0859@webmail.messagingengine.com>
-Message-Id: <20151020073619.CE49C6C0018@smtpvmsrv1.mitre.org>
-Date: Tue, 20 Oct 2015 03:36:19 -0400 (EDT)
-Subject: [oss-security] Re: CVE request for sqlalchemy-utils
+Subject: Re: [oss-security] Estimate for the total number of exploitable bugs
+ in large linux distro?
+To: oss-security@lists.openwall.com, Steven Miano <mianosm@gmail.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 07/14/17 02:45 AM, Steven Miano wrote:
+> Something like this?
+> 
+> https://www.cvedetails.com/vendor/51/Ubuntu.html
+> https://www.cvedetails.com/vendor/7838/Red-Hat.html
+> https://www.cvedetails.com/vendor/26/Microsoft.html
 
-> https://github.com/Netflix/lemur/issues/117
-> https://github.com/kvesteri/sqlalchemy-utils/issues/166
+Those are known vulnerabilities, with varying degrees of exploitability,
+and varying exploit conditions and sometimes differing views on where to
+draw the line on what is one issue or multiple issues.
 
-> does not use a random IV when encrypting with AES in CBC mode
+Some of them can be remotely exploited, some require a local user to take
+action.  Some give access to those who had none, some give higher privs to
+those who had some, and some don't change your access levels at all.
 
-> I noticed the issue when reviewing the code for Netflix's Lemur tool
-> and they were not previously aware of the issue
+Of course, they don't count all the ones that haven't been publicly
+disclosed - either because they are unknown or only known to certain people.
 
-We think that, of the plausible alternatives here, the best choice is
-to assign a CVE ID to Lemur 0.1.4 because of this "were not previously
-aware of the issue" (in other words, they wanted to have the usual
-random-IV behavior and had selected a library that didn't offer that
-behavior). Use CVE-2015-7764.
+And when you start comparing numbers with Linux distros things get even
+messier - if you include the count of every issue in every package in
+their package repositories then you are including a far larger set of
+software than if you just count what's in others OS - but that doesn't
+mean they are more or less secure, just that they have more or less
+software available for easy installation.
 
-https://github.com/kvesteri/sqlalchemy-utils/issues/166#issuecomment-146252997
-indicates that the without-random-IV behavior was intentional within
-sqlalchemy-utils itself. Also, the sqlalchemy-utils documentation
-apparently doesn't advertise any specific security properties for its
-encryption. For example:
+For a far more complete answer of why vulnerability counting is messy,
+hard, and just plain sucks, you can turn to the experts:
 
-  http://sqlalchemy-utils.readthedocs.org/en/latest/data_types.html#module-sqlalchemy_utils.types.encrypted
+https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-WP.pdf
+https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
 
-just says "provides a way to encrypt and decrypt values." If it had
-stated "encrypt and decrypt values with AES," then there might have
-been a reasonable argument that random-IV behavior is required, i.e.,
-otherwise, a user's expectations about standard practices wouldn't be
-satisfied. In other words, the sqlalchemy-utils documentation omits
-potentially useful facts but isn't directly misleading. CVE IDs
-typically aren't assigned in that situation.
-
-(We do realize that the OSS release of Lemur is very new, and that
-sqlalchemy-utils has much greater usage, e.g., it has a Debian
-package. We don't have any information about whether Lemur or any
-other Netflix OSS package is already in widespread use outside of
-Netflix, e.g., because it is included in a major Linux distribution or
-for another reason.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWJe5MAAoJEL54rhJi8gl5Q5QP/2GJdxeDYRAQeFExqnTOhe3I
-C66gTYDLwrubh5xRVlLAol9b+tGpvqJGpA8V1xONgQfocypVdTaLdOwi7YLeMqAI
-JD7kqSp2b4oZgat6g7WHN6UW04q0yg5jREqhxRRvdnWRYqzSdiQY0BRXvOqIHe2Y
-H4nqS5jeCwgyXFt9JtU2rZzJl4cmm1qhfRNki+iqCXE/1xDrCsoW62Fhg+kY6orn
-UOYig8vFHp9uIFkf5qn4p1A/Pc0YKwbD/DtXdQoC7LOM4RZMuw51KF6M4lqAvo6x
-LJ4T8xlFcCiJYnGU+WHSY91GWjuoebRb49UbMv3z8TxnNTTupWkFd/55I7U9VH5G
-Jr1xNUsKUCA2CCBP7t1jvivmYsbX9DfFY8Th0ZamWcQlqfWcspCYMtc1gBATk+3P
-UHFwSyWYL74mH/LHW8Cwi9tLq4DScdymoCTjvLwpN8KIJGVCDzm7klh+P1SvC24w
-ZPiXUhkUdqxdPVGLYW0eZsL6XQqtH/eb/BesyuaW5Myv7aHho3oLhvGx37MrL9vn
-dRLUmAMYqRWioaTAvf3vkPQGz0C9ePaqu/RiT7jIFx5Cb+5fhrv/rNvF8C8qbqAw
-vw+NsWZ9zExtKgeP+A+3fzWOtMjTHKKLsbHUHea3gy4s+hklvH37T+jErmgFYyZ9
-dbmggO105ZSb7lGbOlLM
-=IBJp
------END PGP SIGNATURE-----
+-- 
+	-Alan Coopersmith-               alan.coopersmith@oracle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
