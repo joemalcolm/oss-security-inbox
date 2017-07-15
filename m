@@ -1,39 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/5
-Message-ID: <CAHmME9ra5WDz77HHzY3mQwRUoxeOUh5yVLxw1VD-SbeqOHafNg@mail.gmail.com>
-Date: Thu, 18 May 2017 11:31:13 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: Marc Lehmann <schmorp@...morp.de>
-Cc: oss-security <oss-security@...ts.openwall.com>, rxvt-unicode@...morp.de,  "jer@...too.org" <jer@...too.org>
-Subject: Re: Defense in depth patch for rxvt-unicode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/15/2
+Message-ID: <20170715011453.GB14774@hunt>
+Date: Fri, 14 Jul 2017 18:14:53 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-1000083: evince: Command injection vulnerability in CBT handler
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 18, 2017 at 4:24 AM, Marc Lehmann <schmorp@...morp.de> wrote:
-> This sounds big, but I don't quite see the patch achieving that, as input is
-> processed at many places, yet the patch only changes one place.
+On Fri, Jul 14, 2017 at 07:27:53PM -0500, Brandon Perry wrote:
+> > On Jul 13, 2017, at 10:43 AM, Johannes Segitz <jsegitz@...e.de> wrote:
+> > This can be exploited by creating a tar archive with an embedded file
+> > named something
+> > like this: "--checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg"
+> > 
+> > (Make sure evince is not sandboxed by apparmor before trying to reproduce
+> > the attached POC)
+> 
+> Not sure if the list ate the attachment, but I don’t see it available.
+> Perhaps a link to it somewhere else would be of use?
 
-The intent was to limit the bounds on the number at the very beginning
-of the call chain. I believe this patch does that, but if I've missed
-additional entry points, please let me know, and I'll roll another
-revision of the same technique.
+The attachment didn't make it through to the distros list either. When I
+was testing just the tar portion of this, I skipped the / character in the
+filename and added a 10MB zeroed file (truncate -s 10MB huge) to make sure
+the checkpoint program gets run.
 
-> I can't see why this patch somehow "unsupports" the most dangerous uses of
-> escape sequences.
+Thanks
 
-It prevents potential integer overflows during subsequent additions or
-multiplications. The range in the patch was chosen to be especially
-forgiving in that regard.
-
-> The parameter range is severely limited. This makes the patch rather
-> disadvantageous, without any demonstrated benefit.
-
-Could you list a valid use for a range larger than that?
-
-
-> Valid uses outweigh "potential security mitigations" simply because
-> "potential security mitigations" is pretty weightless in itself.
->
-> If you are aware of an actual security problem, that would be something to
-> attack.
-
-That's not quite how "defense in depth" works.
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
