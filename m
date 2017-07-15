@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["867" "Tuesday" "7" "February" "2017" "13:52:23" "+0100" "Christian Boltz" "oss-security@cboltz.de" "<6796510.KACISFJ7AR@tux.boltz.de.vu>" "33" "[oss-security] CVE request: PostfixAdmin allows to delete protected aliases" nil nil nil "2" "2017020712:52:23" "[oss-security] CVE request: PostfixAdmin allows to delete protected aliases" (number mark "U       oss-security Feb  7   33/867   " thread-indent "\"[oss-security] CVE request: PostfixAdmin allows to delete protected aliases\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1545" "Friday" "14" "July" "2017" "18:14:53" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20170715011453.GB14774@hunt>" "43" "Re: [oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler" "^Date:" nil nil "7" "2017071501:14:53" "[oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler" (number mark "        seth.arnold@ Jul 14   43/1545  " thread-indent "\"Re: [oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler\"\n") "<C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>" ("<20170713154344.GG21662@suse.com>" "<C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5583 invoked by uid 550); 7 Feb 2017 13:18:18 -0000
+Received: (qmail 30423 invoked by uid 550); 15 Jul 2017 01:15:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31923 invoked from network); 7 Feb 2017 12:52:36 -0000
-X-sprachakt.com-SMTP-Auth: no
-X-Virus-Scanned: amavisd-new at cboltz.de
-From: Christian Boltz <oss-security@cboltz.de>
-To: oss-security@lists.openwall.com
-Date: Tue, 07 Feb 2017 13:52:23 +0100
-Message-ID: <6796510.KACISFJ7AR@tux.boltz.de.vu>
+Received: (qmail 30402 invoked from network); 15 Jul 2017 01:15:07 -0000
+Message-ID: <20170715011453.GB14774@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20170713154344.GG21662@suse.com>
+ <C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Face: #?nL0}JpqNtLQy@q#bRm?B?pGS8[mx6r.6[91zp@*2DZ?18)haWs5wgvi,,wF/JWMTUh+6x,b7_`pW3)m~0606sDW0&'EKA}_-W+)Bz~d]k>4E9TyU}k@b&1=%yk\
-Subject: [oss-security] CVE request: PostfixAdmin allows to delete protected aliases
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="GRPZ8SYKNexpdSJ7"
+Content-Disposition: inline
+In-Reply-To: <C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Fri, 14 Jul 2017 18:14:53 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2017-1000083: evince: Command injection
+ vulnerability in CBT handler
+To: oss-security@lists.openwall.com
 
-Hello,
+--GRPZ8SYKNexpdSJ7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[I'm not subscribed, so please CC me in your replies.]
+On Fri, Jul 14, 2017 at 07:27:53PM -0500, Brandon Perry wrote:
+> > On Jul 13, 2017, at 10:43 AM, Johannes Segitz <jsegitz@suse.de> wrote:
+> > This can be exploited by creating a tar archive with an embedded file
+> > named something
+> > like this: "--checkpoint-action=3Dexec=3Dbash -c 'touch ~/covfefe.evinc=
+e;'.jpg"
+> >=20
+> > (Make sure evince is not sandboxed by apparmor before trying to reprodu=
+ce
+> > the attached POC)
+>=20
+> Not sure if the list ate the attachment, but I don=E2=80=99t see it avail=
+able.
+> Perhaps a link to it somewhere else would be of use?
 
-I'd like to request a CVE ID for Postfixadmin.
+The attachment didn't make it through to the distros list either. When I
+was testing just the tar portion of this, I skipped the / character in the
+filename and added a 10MB zeroed file (truncate -s 10MB huge) to make sure
+the checkpoint program gets run.
 
-Thanks to a missing permission check, domain admins can delete aliases 
-they are not allowed to delete (for example abuse@, which the server 
-admin might have setup so that he gets all abuse mails).
+Thanks
 
-This can only be exploited by authentificated domain admins.
+--GRPZ8SYKNexpdSJ7
+Content-Type: application/pgp-signature; name="signature.asc"
 
-See https://github.com/postfixadmin/postfixadmin/pull/23 for a detailed 
-description.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Affected versions:
-- PostfixAdmin 3.0 and 3.0.1
-- PostfixAdmin 2.91, 2.92 and 2.93 (which actually are 3.0 beta releases)
+iQEcBAEBCgAGBQJZaWyNAAoJEPMhclmdjS6X8WgH/1aW4QJyUE1SV+tNQ/edUHt4
++VnjvD2MNKxIK1De2PTZ75arDvuAfQALBNtOQ64F0SKEW5ODFLphclo47JQdsk9y
+Xwp502FQHjW2wdA4QXTt40m/FXIm/sKNL+oDpV2jRFhRt0lIGJwPJz/b896fkxOW
+/7njhILkjEuJ8zKlhBYX02htUqCuRMDkMq6eEXWUk8KeGwR7ob2T4kydxRN1ov44
+4n1W9gQZSY3GA9eoi7wFIXP0mQ6W7RZGM8KMbuuv0TbZi9m+zttO7+3Sm/qFyQj0
+e70NK4j4ixUWPo0I8uBS26GS1D9zyiaRFq1kwvV3LwliWcGd83l6z6FSkLRSXqA=
+=D7zI
+-----END PGP SIGNATURE-----
 
-Older PostfixAdmin releases (2.3.x and older) are not affected.
-
-PostfixAdmin 3.0.2 will fix this issue - I'll release it in the next days.
-
-
-Regards,
-
-Christian Boltz
--- 
-Immerwieder der gleiche Anfaengerfehler:
-/dev/null ist fuer Backup,
-/dev/zero ist fuer Restore.
-[J. P. Meier]
-
+--GRPZ8SYKNexpdSJ7--
