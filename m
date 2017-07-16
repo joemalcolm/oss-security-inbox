@@ -1,44 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/12
-Message-Id: <835F27A3-C4DD-4E9F-B6ED-8D271C083B42@seclab.cs.msu.su>
-Date: Wed, 1 Feb 2017 00:40:54 +0900
-From: Paul Cher <paulcher@...lab.cs.msu.su>
-To: oss-security@...ts.openwall.com
-Cc: Эмиль Лернер <neex.emil@...il.com>
-Subject: CVE Request: ffmpeg remote exploitaion results code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/16/1
+Message-ID: <20170716120139.ivmlgyaqwxrp2mhl@tunkki>
+Date: Sun, 16 Jul 2017 15:01:39 +0300
+From: Henri Salo <henri@...v.fi>
+To: kurt@...fried.org
+Cc: oss-security@...ts.openwall.com, mattd@...fuzz.com
+Subject: ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004
 Content-Type: text/plain; charset=utf-8
 
-This letter is a result of research made by Emil Lerner <neex.emil@...il.com <mailto:neex.emil@...il.com>> and Pavel Cheremushkin <paulcher@...lab.cs.msu.su <mailto:paulcher@...lab.cs.msu.su>> and it is supposed to disclosed multiple issues we managed to find and exploit in FFmpeg software. Despite that all vulnerabilities have been successfully patched by FFmpeg developers this letter is supposed to clarify all these issues and show that they are exploitable.
+Hello Kurt,
 
---[ 1 - libavformat/http.c  ]
+You have assigned CVE-2017-1000002, CVE-2017-1000003 and CVE-2017-1000004 (URLs
+below) for ATutor vulnerabilities. Why doesn't the CVE data have information of
+the fixed in version even it's clearly available in the reference data, which
+refers to URL showing that the vulnerabilities are fixed in 2.2.2 version? Isn't
+it supposed to be available in CVE database? I'm just trying to understand how
+DWF works, because it's not very clear to me.
 
-After executing of http_read_stream we read each http header, where we pass "Transfer-Encoding: chunked” header, and we come into http_buf_read function [1]. Due to incorrect use of strtoll function and integer sizes (chunk_size in int64_t)[2], it was possible to pass negative chunk_size in chunk encoding, so after computing final size using FFMIN function later on it would be passed as argument to avio_read function. This results a heap-overflow which we found out to be exploitable, because overflowed buffer is allocated right next to the AVIOContext structure[3]. Overflowing function pointer in this structure immediately results rip control and then code execution.
+How long it usually takes that DWF assigned CVEs end up being added to MITRE
+and NVD databases?
 
-* [1] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1166 <https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1166>
-* [2] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1259 <https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1259>
-* [3] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/aviobuf.c#L899 <https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/aviobuf.c#L899>
+I can't actually see contents of upstream bug report even I registered
+user-account: http://www.atutor.ca/atutor/mantis/view.php?id=5681
 
-This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/2a05c8f813de6f2278827734bf8102291e7484aa <https://github.com/FFmpeg/FFmpeg/commit/2a05c8f813de6f2278827734bf8102291e7484aa>
+Is this assigment somehow related to this oss-security post?
+http://www.openwall.com/lists/oss-security/2016/07/01/3
 
---[ 2 - libavformat/rtmppkt.c ]
+This has also been pending for over a year. Is this related to these new
+assigments or does this still need new CVE?
+https://www.htbridge.com/advisory/HTB23297
 
-Issue is connected with buffer overflow on the heap in RTMP protocol. After a bit of reverse engineering of RTMP protocol you can notice that it uses chunk (of max 0x80 bytes) to _transfer_ data, but chunks of more size could be used to _store_ the data. Because size of packet is not check that it is the same as it was in the same transmission you can first send packet with smaller size and then bigger size, and this results heap-overflow[1]. If you can align chunks right you can achieve white-what-where condition and that results and RCE.
+Also I noticed following text in the DWF-CVE-Database README.md: "Please note
+that some of the data from 2015 and 2016 needs to be brought up to date to the
+current JSON v.4 format, if you'd like to do this please do so and submit a pull
+request." isn't this something that should be done by DWF maintainers and maybe
+the CVE mentors and not wait pull requests?
 
-* [1] - https://github.com/FFmpeg/FFmpeg/blob/d903b4e3ad4a81b3dd79f12c2f3b9cb16e511173/libavformat/rtmppkt.c#L268 <https://github.com/FFmpeg/FFmpeg/blob/d903b4e3ad4a81b3dd79f12c2f3b9cb16e511173/libavformat/rtmppkt.c#L268>
+https://raw.githubusercontent.com/distributedweaknessfiling/DWF-CVE-Database/master/2017/1000xxx/CVE-2017-1000002.json
+https://raw.githubusercontent.com/distributedweaknessfiling/DWF-CVE-Database/master/2017/1000xxx/CVE-2017-1000003.json
+https://raw.githubusercontent.com/distributedweaknessfiling/DWF-CVE-Database/master/2017/1000xxx/CVE-2017-1000004.json
 
-The issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/7d57ca4d9a75562fa32e40766211de150f8b3ee7 <https://github.com/FFmpeg/FFmpeg/commit/7d57ca4d9a75562fa32e40766211de150f8b3ee7>
-
---[ 3 - ffserver.c ]
-
-This issue is completely like the first one and it results heap overflow.
-
-This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/a5d25faa3f4b18dac737fdb35d0dd68eb0dc2156 <https://github.com/FFmpeg/FFmpeg/commit/a5d25faa3f4b18dac737fdb35d0dd68eb0dc2156>
-
---[ Conclusion ]
-
-We are currently continue our research on FFmpeg security and hope to contribute more later on. These issues where fixed quite long ago, so I find it acceptable to attach links to exploits:
-* https://gist.github.com/PaulCher/324690b88db8c4cf844e056289d4a1d6 <https://gist.github.com/PaulCher/324690b88db8c4cf844e056289d4a1d6>
-* https://gist.github.com/PaulCher/9acf4dc47c95a8b40b456ba03b05a913 <https://gist.github.com/PaulCher/9acf4dc47c95a8b40b456ba03b05a913>
-
-Thanks in advance,
-Paul
+-- 
+Henri Salo
