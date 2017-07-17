@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/4
-Message-ID: <20170615172804.GA21944@wopr>
-Date: Thu, 15 Jun 2017 10:28:04 -0700
-From: Kurt H Maier <khm@...ops.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/17/1
+Message-ID: <20170717043456.lcoueajxmgvg7dxj@lorien.valinor.li>
+Date: Mon, 17 Jul 2017 06:34:56 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: ImageMagick: CVE-2017-11352: Improper EOF handling in coders/rle.c can trigger crash (Incomplete fix for CVE-2017-9144)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 15, 2017 at 08:21:29AM -0600, Kurt Seifried wrote:
-> 1) Official documentation that says "do this [insecure thing]" should
-> probably get a CVE (e.g. "turn off all the encryption to make it work more
-> easily"). This should probably get a CVE, especially as it results in
-> operational changes which won't get a CVE (since it's not in code that
-> "ships", it's just on the end of whoever is using it).
+Hi
 
-I really like this idea.  What would be the approach to software whose
-documentation starts out with "turn off selinux," out of curiosity?
-Obviously this lessens the security stance of the system, but presumably
-the system is designed to be operable without selinux.  Would CVEs get
-assigned for all bad ideas, or just those that expose actual attack
-vectors?
+In ImageMagick before 7.0.5-10, a crafted RLE image can trigger a
+crash because of incorrect EOF handling in coders/rle.c. This is
+caused by an incomplete fix of CVE-2017-9144.
 
-> 3) Unofficial but commonly used documentation and code examples, I guess
-> the best example here is stackoverflow and friends?
+Upstream reference:
+https://github.com/ImageMagick/ImageMagick/issues/502
 
-This is going to cause you to hit INT_MAX relatively quickly.
+Upstream fix (ImageMagick-7):
+https://github.com/ImageMagick/ImageMagick/commit/86cb33143c5b21912187403860a7c26761a3cd23
 
+Upstream fix (ImageMagick-6):
 
-khm
+https://github.com/ImageMagick/ImageMagick/commit/7f1f01b695e869c410ee10e2176f8fd764f09373
+
+MITRE has assigned CVE-2017-11352 for this issue.
+
+Regards,
+Salvatore
