@@ -1,4 +1,9 @@
-Received: (qmail 28017 invoked by uid 550); 2 May 2026 23:21:39 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1790" "Monday" "17" "July" "2017" "15:09:53" "+0200" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-E+EWmdjwLEkwnD4moZdZxh2ikj8dkynwq7WJSGKbCXz6A@mail.gmail.com>" "40" "[oss-security] 11 remote vulnerabilities (inc. 2x RCE) in FreeRADIUS packet parsers" nil nil nil "7" "2017071713:09:53" "[oss-security] 11 remote vulnerabilities (inc. 2x RCE) in FreeRADIUS packet parsers" (number mark "U       guidovranken Jul 17   40/1790  " thread-indent "\"[oss-security] 11 remote vulnerabilities (inc. 2x RCE) in FreeRADIUS packet parsers\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16338 invoked by uid 550); 17 Jul 2017 13:28:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,86 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26608 invoked from network); 2 May 2026 22:39:08 -0000
+Received: (qmail 5151 invoked from network); 17 Jul 2017 13:10:06 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777761539; x=1778366339; darn=lists.openwall.com;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tk7bV6QvOTLNgH3RD32+yKPb/e+XNvUgrzpzI/gAj/8=;
-        b=opKIP8OD5gebvMq0e8ShtuAoV5WKOaudRT0Hsen9Nlf2IgtA3Whuv71eC/NPXKRDTp
-         i1yOqfYH5cJcYtr4iT2rIlXExIHm7zdF52PgaQUoq1LDMJt5X0ij1NzrMyO2MixrIayj
-         nyuZaGAcQVYOvV15emy/2wV4LKMQ2j1CFODwomUtzLr1n1Sl/kSsgzYjaQLZ886oyoMx
-         eLg5UrBMFNIl1y9RGqTqFKums2zdDoPLvV6AoUi/jY51SFn+C2mrAwQBXKOAUOmlvaR7
-         FDhmhPepuQfJhUncpQDPvISYgniLIDI8xS/lQ/l/tjk9tjgpXJRdYqghs7eos6qe90TF
-         eDgQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Nt8on4PZajNBu0MxYd9obbuw9V96SDgbR87F0JVMq5M=;
+        b=qOB/vkuTfnMiqWLpMglSrkX9cJHtLBMOj6p0+qLduVBdtu7EXn/yu4kRGJDokHfZQh
+         e0sQPGfu8zsiUzgE+4TxcDK3lSuIppEg46t/+Z0CjcMEC9QIUiVd/1fC5q36mD22Rdpe
+         vUF6JVv2sj0qA2yOZcqdsYgSocLG9QvC9Uxsgwiis6dxBnKGtLNVDrR++VcKhBsWhNxH
+         himm6JF4Zzpyn2zP7Ia43xvNQVWplWNp3Yu2Y1GDUGhgwhu/YEYfcSqLrGhDD+Q5gf9x
+         mCeKTdU8N0MLSMQL0UunSo3NuIapLLb0yMEHrJRfyKMY4KZLNc2rubYQ9tVvyWuZdaUQ
+         MXwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777761539; x=1778366339;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Tk7bV6QvOTLNgH3RD32+yKPb/e+XNvUgrzpzI/gAj/8=;
-        b=JhI7qQSehfH5scAviigUBN99qnUikWtvR2SqnI/rIMjwTUlnUcO+Lg9hQbDOZEAY/t
-         aAJMF/bV8WtpHvQUuPb9fWjdEIaDymxTtuyfK7HbMdDIrxZh6o+HOF+HInuaXjkE86UJ
-         Ql3PvCyN3FCyLsCvzIxoZXnyMSkx1wmL3nt2GuhGtk37EPqAQkIYp9F7+Nc7dF8OtZbR
-         QBDEbtu5B7iz79ZAOj9cMJnfyvGhXGZFdd531WRcbDO8XLRaSttKL2iAgqa2uqJZrPRt
-         a1Y9t9TSR5ASzTLDChsKWNZznN5t7jS2iPkZkYddP5IkvPqg7oWgeAlRduHOvJllB7Dr
-         RPiA==
-X-Gm-Message-State: AOJu0YzS/LCxEEIWH4Gqx6QPGWvbnwJnFxrNgKqaCrVv1rXag+O+Gmo+
-	jG2tXJ4/fh1Osbmtn/K2e7IGv3/v3A/66DakxyuDBj/NHtCRa6TbqI/idwGMzg==
-X-Gm-Gg: AeBDietN8YR9yyqBRJ3dt6FywmL2K5m+D/rfx2WNRHN8N4Szebdc7x+yLJ+QYRr8cFA
-	IzXzVrWgGHrEX27+E15srOU5vZMJeMQQIM6D1Dle4/p7BKHdE1aTA6lwUhLphF3IdVFNWs3PHW5
-	nVBkt/q+G+J+AWI68oTQ5HtS2DqvG9H9WNLJaB6Qp97Pjf9IDwpeen73HMI07oE34wGhUH1PtU6
-	puqF6sCZKdjxx6DCMsUUcWFdIuEetXaH5To3agd7gt1ysHUlhmtBC7CXGn7+VlQdHuX+hAUeuwM
-	p3jQWHe94G1viSLkTllMnvrSqaH8J36R6Q2RFZtuw9a3F3ffQ05sHoVpsqGcZu2RDxiLFfUodK1
-	Io8Z74G+NwijnkSdBhjc1SW8HFLFfvSo5YMe9g1w/hHMPodWFW1EdUOPFqVVf+alX1WiW5+mVvO
-	Mxh7s5mWKn4o8sczY=
-X-Received: by 2002:a05:7022:ec88:b0:12d:de3f:d84c with SMTP id a92af1059eb24-12dfd82bb23mr1860700c88.37.1777761538667;
-        Sat, 02 May 2026 15:38:58 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: oss-security@lists.openwall.com
-In-Reply-To: <afZmueWiq1XOBvF2@gxis.de>
-References: <87se8dgicq.fsf@gentoo.org> <afL-QhLfEKqHZqka@eldamar.lan>
-	<2026043026-treat-devotion-23d7@gregkh>
-	<CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com>
-	<12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com>
-	<315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net>
-	<20260501165221.27420-1-justin.swartz@risingedge.co.za>
-	<56cd1494d297ad327a8c2a4cc77308559fbee7f8.camel@thirddimension.net>
-	<20260502185608.24115-1-justin.swartz@risingedge.co.za>
-	<20260502200500.GB229884@google.com> <afZmueWiq1XOBvF2@gxis.de>
-Date: Sat, 02 May 2026 15:38:57 -0700
-Message-ID: <87zf2he8se.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Nt8on4PZajNBu0MxYd9obbuw9V96SDgbR87F0JVMq5M=;
+        b=AfP4sCFH/RBW9Hh1vupvfVR59hf1k+wqEGsAczgIE9p0+nAaru8nC5HqITD/rZ0Vys
+         JmrnxzNfL2dCd87YQ7sP/DwC1vWaGHtPBThtBwQr+w8qf+EG4/dvtUJfHM7OXE3SAMxC
+         1MiW3MK+pqfP1bqLXM1M8M+UnZJ4Zk88QQ/6RTdn+6qL5j8gXOFlryDldoEr97/hfOA0
+         eE8YvFT4JlJTqUaD594kQzU0CWEyYx5gf+mUFCxVp9HzTVpe+aIsQNlJQbbZOHXQQ8sL
+         G/pdYPZbIGZN9yKHyup5vLEBu1lSbxifeFGTsEU1zUj8f5kz1yhcCwNFwEKVo1z1XrBG
+         FvhQ==
+X-Gm-Message-State: AIVw110dowaNHJclvEI4Hg1iZHbnfCjvqSI0+uroJJYbPMqmcYiw2z70
+	eoss15JMpgNSTgiryZDx08hI5Fmjr/8E
+X-Received: by 10.31.47.148 with SMTP id v142mr1906519vkv.87.1500296994316;
+ Mon, 17 Jul 2017 06:09:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Re: Re: CVE-2026-31431: CopyFail: linux local
- privilege scalation
+From: Guido Vranken <guidovranken@gmail.com>
+Date: Mon, 17 Jul 2017 15:09:53 +0200
+Message-ID: <CAO5O-E+EWmdjwLEkwnD4moZdZxh2ikj8dkynwq7WJSGKbCXz6A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] 11 remote vulnerabilities (inc. 2x RCE) in FreeRADIUS packet parsers
 
-Alexander Bochmann <ab@lists.gxis.de> writes:
+"FreeRADIUS is the most widely deployed RADIUS server in the world. It
+is the basis for multiple commercial offerings. It supplies the AAA
+needs of many Fortune-500 companies and Tier 1 ISPs. "
+(http://freeradius.org)
 
-> ...on 2026-05-02 20:05:00, Eric Biggers wrote:
->
->  > What it does break are a small set of userspace programs that made the
->  > shortsighted decision to use AF_ALG, instead of simply following the
->  > standard practice of using a userspace crypto library.
->
-> For some added fun - I noticed that Debian 13, for example, 
-> ships an openssl build with an AF_ALG engine, so uh, yeah, 
-> depending on how you use your userspace crypto library... 
->
-> No idea if that has any actual consumers anywhere out there 
-> today.
->
-> $ openssl version
-> OpenSSL 3.5.5 27 Jan 2026 (Library: OpenSSL 3.5.5 27 Jan 2026)
-> $ openssl engine afalg -c
-> (afalg) AFALG engine support
->  [AES-128-CBC, AES-192-CBC, AES-256-CBC]
+FreeRADIUS asked me to fuzz their DHCP and RADIUS packet parsers in
+version 3.0.x (stable branch) and version 2.2.x (EOL, but receives
+security updates). 11 distinct issues that can be triggered remotely
+were found.
 
-You can build GNU coreutils with './configure --with-linux-crypto' if
-you want. It is disabled by default since OpenSSL was faster when it was
-tested (and I assume that is still the case). AFAIK, no distributions
-use it though.
+The following is excerpted from
+freeradius.org/security/fuzzer-2017.html which I advise you to consult
+for more detailed descriptions of the issues at hand.
 
-Collin
+"There are about as many issues disclosed in this page as in the
+previous ten years combined."
+
+v2, v3: CVE-2017-10978. No remote code execution is possible. A denial
+of service is possible.
+v2: CVE-2017-10979. Remote code execution is possible. A denial of
+service is possible.
+v2: CVE-2017-10980. No remote code execution is possible. A denial of
+service is possible.
+v2: CVE-2017-10981. No remote code execution is possible. A denial of
+service is possible.
+v2: CVE-2017-10982. No remote code execution is possible. A denial of
+service is possible.
+v2, v3: CVE-2017-10983. No remote code execution is possible. A denial
+of service is possible.
+v3: CVE-2017-10984. Remote code execution is possible. A denial of
+service is possible.
+v3: CVE-2017-10985. No remote code execution is possible. A denial of
+service is possible.
+v3: CVE-2017-10986. No remote code execution is possible. A denial of
+service is possible.
+v3: CVE-2017-10987. No remote code execution is possible. A denial of
+service is possible.
+v3: CVE-2017-10988. No remote code execution is possible. No denial of
+service is possible. Exploitation does not cross a privilege boundary
+in a correct and realistic product deployment.
