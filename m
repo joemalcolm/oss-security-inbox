@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/9
-Message-ID: <CAONXncapSQ4ZT2ffu3jOwefoeyRTO9p_xpUrhrXjOXNaAc1gYg@mail.gmail.com>
-Date: Tue, 31 Oct 2017 10:41:48 -0400
-From: Adam Shannon <adamkshannon@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/17/3
+Message-ID: <20170717065129.snmhfal5wdsny4yy@scully.more-magic.net>
+Date: Mon, 17 Jul 2017 08:51:29 +0200
+From: Peter Bex <peter@...e-magic.net>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE-2017-11343 CHICKEN Scheme: algorithmic complexity attack in hash tables
 Content-Type: text/plain; charset=utf-8
 
-metasploit has had such a check available for a while now.
+Hi all,
 
-https://github.com/rapid7/metasploit-framework/blob/master/modules/auxiliary/scanner/http/backup_file.rb
+I just received the CVE-2017-11343 assignment for an issue in
+CHICKEN Scheme.  An attacker is able to cause O(n) lookup for
+hash tables by predicting the buckets in which interned symbols
+will end up, due to a partially incorrect fix for CVE-2012-6125
+where the randomization factor was determined before initializing
+the PRNG with a seed state.
 
-On Tue, Oct 31, 2017 at 9:50 AM, Solar Designer <solar@...nwall.com> wrote:
+This issue affects only the Scheme symbol table, not user-created
+hash tables.  All CHICKEN releases up to and including 4.12.0 are
+affected.
 
-> On Tue, Oct 31, 2017 at 02:35:59PM +0100, Jakub Wilk wrote:
-> > There's another problem with vim swapfiles.
-> >
-> > If you edit a file directly in /tmp, vim will happily read a swapfile
-> > that were planted there by somebody else. Local users could exploit this
-> > for denial of service (or maybe worse if there are any swapfile parsing
-> > bugs...).
-> >
-> > Is that a bug in vim? Or is it a user error to edit file directly in
-> > /tmp?
->
-> Almost all manual uses of /tmp are user errors, yet we could want to
-> harden programs to make such misuses less risky.
->
-> > In the latter case, we should fix at least vipe(1) and vidir(1) from
-> > moreutils; and run-mailcap(1).
->
-> Alexander
->
+More info:
+http://lists.nongnu.org/archive/html/chicken-announce/2017-07/msg00000.html
 
+Cheers,
+Peter Bex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
