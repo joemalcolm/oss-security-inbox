@@ -1,24 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/3
-Message-ID: <CAE=eJscBcsPYzh61Cz8Pp-b9T_wiDbHykG=NCUvD8sQ8+vdFrA@mail.gmail.com>
-Date: Sun, 5 Nov 2017 17:01:41 +0200
-From: Tomer Brisker <tbrisker@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/17/6
+Message-ID: <CAO5O-E+EWmdjwLEkwnD4moZdZxh2ikj8dkynwq7WJSGKbCXz6A@mail.gmail.com>
+Date: Mon, 17 Jul 2017 15:09:53 +0200
+From: Guido Vranken <guidovranken@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: Foreman 1.2+ stored XSS in fact charts
+Subject: 11 remote vulnerabilities (inc. 2x RCE) in FreeRADIUS packet parsers
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-15100: Facts reported by hosts to Foreman containing HTML are
-not properly escaped on fact charts in the facts page, statistics
-page, and trends page when hovering over the chart with the mouse.
+"FreeRADIUS is the most widely deployed RADIUS server in the world. It
+is the basis for multiple commercial offerings. It supplies the AAA
+needs of many Fortune-500 companies and Tier 1 ISPs. "
+(http://freeradius.org)
 
-Affects Foreman 1.2 and higher.
+FreeRADIUS asked me to fuzz their DHCP and RADIUS packet parsers in
+version 3.0.x (stable branch) and version 2.2.x (EOL, but receives
+security updates). 11 distinct issues that can be triggered remotely
+were found.
 
-Patch available at https://github.com/theforeman/foreman/pull/4967
-Fix will be release in Foreman 1.16.0 (to be released).
-For more information see: http://projects.theforeman.org/issues/21519
+The following is excerpted from
+freeradius.org/security/fuzzer-2017.html which I advise you to consult
+for more detailed descriptions of the issues at hand.
 
--- 
-Have a nice day,
-Tomer Brisker
-Red Hat Engineering
+"There are about as many issues disclosed in this page as in the
+previous ten years combined."
+
+v2, v3: CVE-2017-10978. No remote code execution is possible. A denial
+of service is possible.
+v2: CVE-2017-10979. Remote code execution is possible. A denial of
+service is possible.
+v2: CVE-2017-10980. No remote code execution is possible. A denial of
+service is possible.
+v2: CVE-2017-10981. No remote code execution is possible. A denial of
+service is possible.
+v2: CVE-2017-10982. No remote code execution is possible. A denial of
+service is possible.
+v2, v3: CVE-2017-10983. No remote code execution is possible. A denial
+of service is possible.
+v3: CVE-2017-10984. Remote code execution is possible. A denial of
+service is possible.
+v3: CVE-2017-10985. No remote code execution is possible. A denial of
+service is possible.
+v3: CVE-2017-10986. No remote code execution is possible. A denial of
+service is possible.
+v3: CVE-2017-10987. No remote code execution is possible. A denial of
+service is possible.
+v3: CVE-2017-10988. No remote code execution is possible. No denial of
+service is possible. Exploitation does not cross a privilege boundary
+in a correct and realistic product deployment.
