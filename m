@@ -1,4 +1,9 @@
-Received: (qmail 9299 invoked by uid 550); 10 Jul 2025 13:59:56 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["719" "Tuesday" "18" "July" "2017" "14:59:57" "-0700" "Kees Cook" "keescook@google.com" "<CAGXu5jK_Qvy8ToLh3pbNcrHvQBV6mgS_pAG6yuAs__DZL2sxfA@mail.gmail.com>" "18" "[oss-security] Re: CoreOS membership to linux-distros (updated)" "^Cc:" nil nil "7" "2017071821:59:57" "[oss-security] Re: CoreOS membership to linux-distros (updated)" (number mark "        keescook@goo Jul 18   18/719   " thread-indent "\"[oss-security] Re: CoreOS membership to linux-distros (updated)\"\n") "<9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>" ("<9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30085 invoked by uid 550); 18 Jul 2017 22:17:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,73 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32252 invoked from network); 10 Jul 2025 06:11:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tleilax.io; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1752127900; x=1752214300; bh=Qbsvu9AIJF
-	2BXQjJMfwvoUY2Uh2fHqRH8WTP5PIPmGo=; b=fm6oip9lML/KxnIUfZJzHnPHub
-	fXPQjsvAW4PAYjSxbKnbPShK/3ld6fE0qxD2M3XyAQcJpl7fxJTPhDqH8VoFBQe0
-	BaDsNpwliwRBBmWn2IYlMO/zSz2DHz3ngiaTJ5AKlXgaITjzH6mQQOHnP+CJVFNh
-	XcPwlYZ2qirNWgXiIIM3TnEYXc5LmTn+HzXKbaEGvQrJ2+PfsNLRsWWFhSix1crt
-	mqTWaaRMyJKR0s3eEfmoW9uUbl6k680JXB+qgEOE6HHqb9pTQJt0mkPYZy5N0Cij
-	eL9l9IHAgujU3H8/PawkT2RfgDUb6chVqHLa5OYHO+7sGL8sRnnGRt252ugw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752127900; x=1752214300; bh=Qbsvu9AIJF2BXQjJMfwvoUY2Uh2fHqRH8WT
-	P5PIPmGo=; b=j/DxyAU4xpYQz8NJHtwhE6ggP0+GtPZMB4Ryq356WDgUUj3mKUY
-	DKICK9/lQMGUFnUuFnEgg/qylcPCgpmj63Cz8w0ie4M651LISzdVFLfMEJ67eGVt
-	VVwN5HImNf7StxiwdSTIrpBewUQ9EKldt2m/IQuD9augMBnkqt3YzHTL8nkMkrH0
-	BVic53B/6mPc28qTJ3kumJaKdI1QyxPeOmFh5hUxY0hwxGC5l66HuaeREEksc52b
-	71+VwQRxgW46/J0eu3buxoYsO1KIWR/BeSifp1pncTZLoPRxFYJdB+VqDZI9BjjP
-	aBHzn+qiN/b9raLZsGnLlZ4T1GAnJQVxS6g==
-X-ME-Sender: <xms:m1lvaFv2NvdUbFEK3y-mP2uQpR2uvFtDXp7FdhLt_cAq3RCeMPfsaA>
-    <xme:m1lvaOfClvHVWtnuln1wLxTpvx87lQziEVMxgy-5vq2ipUbeWkNZnXeidi0At5eW8
-    qMSKYhCBNddTF1MVA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefleeilecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkufgtgfesthejredtredttd
-    enucfhrhhomhepfdggihhntggvnhhtuceuvghrghdfuceoghhvsgesthhlvghilhgrgidr
-    ihhoqeenucggtffrrghtthgvrhhnpefgieejiefflefhhfehgffhffeuheetkefhtdefje
-    ejvdejlefhledtieektdfhvdenucffohhmrghinheprghnvhhilhhsvggtuhhrvgdrtgho
-    mhdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepghhvsgesthhlvghilhgrgidrihhopdhnsggprhgtphhtthhopedu
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslh
-    hishhtshdrohhpvghnfigrlhhlrdgtohhm
-X-ME-Proxy: <xmx:m1lvaCHBfkuFkD7GS22vQiHpAJ70Vwbr4yG1U2tHuM5GJ2_H8TqELA>
-    <xmx:m1lvaHnWDFDcNeILN6FYnSe2DyIcUepY-Fff30gwhW1Gz-PWHKBu4g>
-    <xmx:m1lvaHL0XgWTVjjl7OAVHSENLmBcX0In8y9brpZT6IFWaYN3s9ZJrA>
-    <xmx:m1lvaAaKI92DjYJ0e8hmq1OAJpf4i8KtJkT-G9QgFpABXz12IrVoHA>
-    <xmx:nFlvaJW_r1aaoUPetz3jNNTGvP8_gnyjv8bKNzecaGHhvk4enmHuOe1c>
-Feedback-ID: i39064883:Fastmail
-X-Mailer: MessagingEngine.com Webmail Interface
+Received: (qmail 21980 invoked from network); 18 Jul 2017 22:00:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nmP/VUvM2c55QRmt8k/qdqZtlFT2qU/Ko3FpQc908u8=;
+        b=lEA+PZpf3nUDZe9fLIH1dX0zCxM1hOJfsOj+HF3+PWTvkoIQ05UATaq/DwHE31KaXa
+         FxJJR1bXCmJJhvhltiJP31s2RabzfiMGpTGWFZsztrT5Rx4t5jiG48Mq1PHti7PfskUx
+         xrX4GXlfKlf4Tn5hxSP7r2qoCql7hVNfbxZcBM29KXBkoDnCmk5qjzf0v25a/EC0JfWe
+         qo3xLsh+O8oMQL3tehSIunG5lSzp9OCJeb8ZY/CBQsHa/a3BV8RWqhUWGsFZ4loHtssT
+         Rn2eUYmAI+GsN5VTcDfMIVj2jeaWnD65YfOf/1bFTBznetos3dcID3EgXXJ0q4ojTKnm
+         bh/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nmP/VUvM2c55QRmt8k/qdqZtlFT2qU/Ko3FpQc908u8=;
+        b=EV/s2ffG/+dTGiXhVC8N1xxannqlWXFEybcYvcL+fApTbC1eucYRTGYf1LI5sVjWAA
+         w6KR7LWYS2cL3Vu4liNflnWRd8cpRY/oBurPGc5vKLjA/khosqkBOxV/oGEZjfRfHDTm
+         CYHBtSFEWggnzewgmQ72zF/PY/ptENZ+O4OJdQHtVkouMxgVWCqY0Rw5Wt/s86ok3q7H
+         vcVeAGEI9TdSPyTZL7qteRBXL9K4OuEh0/tVHMDVpslv/CQ1L3xp/7aB668zBc0nVa07
+         wANnUpNmOhul1SofMwYKooqZvgCXjnggDINfiwdTh1IXrD5jti0XiZqgKUZCcUoOT7OX
+         vqSg==
+X-Gm-Message-State: AIVw113NUYc2FYJ6KrvqZtDLXGoo6IXSuQ5Ly3Q3HzRJfayB374rXkQW
+	ULHZWhf6OgeDYlggnj+9xZ5Qyu32/R4n
+X-Received: by 10.107.31.20 with SMTP id f20mr3773981iof.116.1500415198455;
+ Tue, 18 Jul 2017 14:59:58 -0700 (PDT)
 MIME-Version: 1.0
-X-ThreadId: Tf378896132e1f8bb
-Date: Thu, 10 Jul 2025 08:11:19 +0200
-From: "Vincent Berg" <gvb@tleilax.io>
-To: oss-security@lists.openwall.com
-Message-Id: <fa0c0468-0215-484e-865c-a1aef6701edf@app.fastmail.com>
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Release of pqcscan
+In-Reply-To: <9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>
+References: <9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>
+Message-ID: <CAGXu5jK_Qvy8ToLh3pbNcrHvQBV6mgS_pAG6yuAs__DZL2sxfA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: oss-security@lists.openwall.com, 
+	Brandon Philips <brandon.philips@coreos.com>, Alex Crawford <alex.crawford@coreos.com>
+Date: Tue, 18 Jul 2017 14:59:57 -0700
+From: Kees Cook <keescook@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CoreOS membership to linux-distros (updated)
+To: Euan Kemp <euan.kemp@coreos.com>
 
-After reading oss-security for years I finally felt I may have something to contribute. I want share the public release of pqcscan.
+On Tue, Jul 18, 2017 at 2:56 PM, Euan Kemp <euan.kemp@coreos.com> wrote:
+>> 9. Have someone already on the private list, or at least someone else
+> who has been active on oss-security for years but is not affiliated with
+> your distro nor your organization, vouch for at least one of the people
+> requesting membership on behalf of your distro (then that one
+> vouched-for person will be able to vouch for others on your team, in
+> case you'd like multiple people subscribed)
+> Kees Cook can vouch for Brandon Philips (both on cc).
 
-What is it? It is a dedicated scanner to test SSH and TLS services for their support of Post-Quantum Cryptographic algorithms. It's released under 2-clause BSD license so it seems it would fit here just fine.
+To confirm, I am happy to vouch for Brandon. I've known him for a
+while, and think he's got the skills and character to join the
+linux-distros list.
 
-Why? Given the push of big players in the industry (Cloudflare, Google etc) on PQC support, as well as upcoming regulatory requirements (see [2]), it seemed to me a good idea to try and improve tooling on this.
+-Kees
 
-I'm sure there's tons of space for other options as well (specific filter options to tlsscan, nmap nse scripts etc), but wanted to throw my hat in the ring and hopefully get some useful feedback, feature requests or bugs of people.
-
-A bit more context on it and some scan results of the top 10k domains can be found at [1].  The code and binary releases can be found at [2].
-
-Thanks for your attention to this matter,
-Vincent
-
-[1] https://www.anvilsecure.com/blog/scanning-for-post-quantum-cryptographic-support.html
-[2] https://github.com/anvilsecure/pqcscan
+-- 
+Kees Cook
+Pixel Security
