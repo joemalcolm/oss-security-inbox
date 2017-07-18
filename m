@@ -1,4 +1,9 @@
-Received: (qmail 15923 invoked by uid 550); 18 Mar 2026 21:51:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6964" "Tuesday" "18" "July" "2017" "08:06:34" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<82514.6065066917-sendEmail@localhost>" "120" "[oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c)" nil nil nil "7" "2017071808:06:34" "[oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c)" (number mark "U       ago@gentoo.o Jul 18  120/6964  " thread-indent "\"[oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9445 invoked by uid 550); 18 Jul 2017 08:06:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,106 +12,132 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 12218 invoked from network); 18 Mar 2026 21:09:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sanger.ac.uk; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	sendkey1; bh=SpvRAHx9TgACLYkYxSm74+AQRwh1bifHgnjZSMER/PY=; b=EBq
-	os+zKdtxdkoG/F3k4z9XGLi9tIQcK+OeMR7KZaPBHsIV3SxfmLE5erwvk5Ui9lZN
-	4+z9ePTp30ov+r1DPof5Qm7YgrCwI6axb8dg757upHcSuypyQZCwwx/17hSX7k0H
-	5tDJKUSGiMjutZ2DxYXztt4xqfBLImMpLFBHaCMXeK3znTgocVMf7i6oCgrh6CjA
-	8uDJ5WyPjC84L0EU/p1LpA2JGul/CitQjgHegn9wilqU7o6OjFyYYu/m0LadcBmy
-	zl6gmzkIxJjCOmYAW+9XSmN60IyAXLJrGdJno15rMCoVSktuFnoyDWV2jMZqYMPP
-	NYX9xF/hPUDFdgIDYjQ==
-Date: Wed, 18 Mar 2026 21:08:58 +0000 (GMT)
-From: Robert Davies <rmd@sanger.ac.uk>
-To: oss-security@lists.openwall.com
-cc: samtools@sanger.ac.uk
-Message-ID: <alpine.DEB.2.21.2603182050030.16613@seq4-head1.internal.sanger.ac.uk>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+Received: (qmail 9407 invoked from network); 18 Jul 2017 08:06:52 -0000
+Message-ID: <82514.6065066917-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Tue, 18 Jul 2017 08:06:34 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Authority-Analysis: v=2.4 cv=N/Ik1m9B c=1 sm=1 tr=0 ts=69bb146a cx=c_pps
- a=GB2mOsVFTDkI4gmwoe4Z0A==:117 a=GB2mOsVFTDkI4gmwoe4Z0A==:17
- a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=x7bEGLp0ZPQA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=-A0x2dZHY_x99t24LF_B:22 a=_MkW9hIkd_p2jkqWG7xA:22
- a=NEAV23lmAAAA:8 a=8r2qhXULAAAA:8 a=aSR_xum1AAAA:8 a=lwDGWbeVAAAA:8
- a=6u3R76RUKJKq-6pqiYwA:9 a=CjuIK1q_8ugA:10 a=8gvLZcY7Nlvl4CGD_6nf:22
- a=dYLx_L0FrD5e4YvVJn9e:22
-X-Proofpoint-GUID: gzq0cywQ27OApUqIiE6Nd7-R2b2DjWwT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE4MDE4MiBTYWx0ZWRfX9boCjcuMADR5
- GHR1M0rEDubuL3s9R6mTUwpc6IaMOtps+H11eRv679x1e54IElni15zhYFnA8IlPD9Pyl2x3d/W
- mqnR2vaShHwIj3+H7IS+/WNDWnl3TcvvlwdHi3qP4exYeeikTbJETAZJ+t1rsDcb6vizgULSeLX
- SfKSHd1qon7zeUSTa+t2QG0ew5PZILmcSKz9OLnZFV2LcvhKXO0KJ0sl0uiLAcoU7ei+3JCjnYV
- 98kC0DsY7fzDAAzzKuzxKoeKxZiUaDOXKXaqJnayhDZai2nylDihJyaRACGpeUVkPodGc48fOyt
- /IFBiie19Vz+TtD7cJvwVI3sBm9ML/iey3ZIEtHq1ogJ7JXeNe98dNqDCtSPzwodWxkNSCvt7G4
- 28ENDc49Dp1w6CBvoC/UxX2xB/zANHTfcyCrnjwThtSBnVKrEAKdTGY/TwrESb+0LwrKfMvul+L
- I2BauPT1/0P7aS+XiwQ==
-X-Proofpoint-ORIG-GUID: gzq0cywQ27OApUqIiE6Nd7-R2b2DjWwT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-18_01,2026-03-17_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 priorityscore=1501 adultscore=0 clxscore=1034
- lowpriorityscore=0 malwarescore=0 spamscore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603180182
-Subject: [oss-security] CVE-2026-31970: HTSlib <= 1.23 heap buffer overflow in the BGZF
- index file reader
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-377016.356055723"
+Subject: [oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c)
+
+------MIME delimiter for sendEmail-377016.356055723
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+Description:
+graphicsmagick is a collection of tools and libraries for many image formats.
+
+The complete ASan outputof the issue:
+
+# gm identify $FILE
+==20404==ERROR: AddressSanitizer: heap-use-after-free on address 0x6230000053c0 at pc 0x7fc01a253357 bp 0x7fffcd2d2630 sp 0x7fffcd2d2628
+READ of size 8 at 0x6230000053c0 thread T0
+    #0 0x7fc01a253356 in CloseBlob /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/blob.c:859:3
+    #1 0x7fc013fbed77 in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5144:11
+    #2 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #3 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #4 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #5 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #6 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #7 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #8 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+
+0x6230000053c0 is located 6848 bytes inside of 6856-byte region [0x623000003900,0x6230000053c8)
+freed by thread T0 here:
+    #0 0x4cf4d0 in __interceptor_cfree /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:55
+    #1 0x7fc01a8f13d2 in MagickFree /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:509:5
+    #2 0x7fc01a7dc750 in DestroyImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:1277:3
+    #3 0x7fc01a8a7cda in DestroyImageList /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/list.c:239:5
+    #4 0x7fc013fbed6f in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5143:11
+    #5 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #6 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #7 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #8 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #9 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #10 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+previously allocated by thread T0 here:
+    #0 0x4cf688 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7fc01a8f04d6 in MagickMalloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:156:10
+    #2 0x7fc01a7a6fa3 in AllocateImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:336:18
+    #3 0x7fc013f7819a in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:3872:9
+    #4 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #5 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #6 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #7 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #8 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #9 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-use-after-free /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/blob.c:859:3 in CloseBlob
+Shadow bytes around the buggy address:
+  0x0c467fff8a20: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a30: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a40: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a50: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a60: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+=>0x0c467fff8a70: fd fd fd fd fd fd fd fd[fd]fa fa fa fa fa fa fa
+  0x0c467fff8a80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8a90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8aa0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8ab0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8ac0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==20404==ABORTING
+
+Affected version:
+1.3.26
+
+Fixed version:
+N/A
+
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/d0a76868ca37
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-11403
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00301-graphicsmagick-UAF-CloseBlob
+
+Timeline:
+2017-07-10: bug discovered and reported to upstream
+2017-07-10: upstream released a fix
+2017-07-12: blog post about the issue
+2017-07-18: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/07/12/graphicsmagick-use-after-free-in-closeblob-blob-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Description
------------
+------MIME delimiter for sendEmail-377016.356055723--
 
-HTSlib is a library for reading and writing bioinformatics file formats.
-GZI files are used to index block-compressed GZIP (BGZF) files. In the GZI
-loading function, bgzf_index_load_hfile(), it was possible to trigger an
-integer overflow, leading to an under- or zero-sized buffer being allocated
-to store the index. Sixteen zero bytes would then be written to this buffer,
-and, depending on the result of the overflow the rest of the file may also
-be loaded into the buffer as well. If the function did attempt to load the
-data, it would eventually fail due to not reading the expected number of
-records, and then try to free the overflowed heap buffer.
-
-Impact
-------
-
-Exploiting this bug causes a heap buffer overflow. If a user opens a file
-crafted to exploit this issue, it could lead to the program crashing, or
-overwriting of data and heap structures in ways not expected by the program.
-It may be possible to use this to obtain arbitrary code execution.
-
-Severity
---------
-
-High CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N
-
-Patches
--------
-
-Versions 1.23.1, 1.22.2 and 1.21.1 include fixes for this issue.
-
-Workarounds
------------
-
-The easiest work-around is to discard any .gzi index files from untrusted
-sources, and use the bgzip -r option to recreate them.
-
-Credits
--------
-
-Thanks to Harrison Green for reporting this issue.
-
-References
-----------
-
-https://github.com/samtools/htslib/security/advisories/GHSA-p345-84hx-fq6q
-https://www.cve.org/CVERecord?id=CVE-2026-31970
-
--- 
-
-The SAMtools team   https://www.htslib.org/  https://www.sanger.ac.uk/
-
-
-----------------------------------------------------------------------
-The Wellcome Sanger Institute is operated by Genome Research Limited, a charity registered in England with number 1021457 and a company registered in England with number 2742969, whose registered office is Wellcome Sanger Institute, Wellcome Genome Campus, Hinxton, CB10 1SA.
