@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/19
-Message-ID: <20170705200345.GA1671@pali>
-Date: Wed, 5 Jul 2017 22:03:45 +0200
-From: Pali Rohár <pali.rohar@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Ben Tasker <ben@...tasker.co.uk>
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/18/3
+Message-ID: <CAEWfVJmX8X8qNOJyRRi=HVzhNAUC3eFvVP2jJTZEyYw=9S70GA@mail.gmail.com>
+Date: Tue, 18 Jul 2017 12:23:32 +0200
+From: Bertrand Delacretaz <bdelacretaz@...che.org>
+To: dev <dev@...ng.apache.org>, users <users@...ng.apache.org>,  "security@...ng.apache.org" <security@...ng.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2016-5394 : Apache Sling XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 5, 2017 at 12:28, Ben Tasker wrote:
-> Honestly, I think upstream have done an *awful *job of handling it so far
-> (and it's far from the only example of Poettering taking the not-a-bug
-> approach questionably). Their issues do have a habit of attracting trolls,
-> but I think sometimes their definition of troll expands to include anyone
-> who doesn't agree with them.
+Severity: Important
 
-The worst is that fact that discussion about this problem was locked in
-upstream bugtracker. Therefore there is no other option as continue
-discussion about this, which I think security issue, here at
-oss-security list. But problem is that upstream do not have to monitor
-this list and therefore they would ignore any results.
+Vendor: The Apache Software Foundation
 
-> FWIW, I'd be inclined to agree that it needs a CVE so that downstream
-> distro's can at least refer to it, and decide how (and if) they want to
-> address it. Even if they decide to stick with upstream's approach, having
-> the CVE at least gives them something to make sure package reviewers refer
-> to.
+Versions Affected:
+Sling XSS Protection API 1.0.8
 
->From the whole discussion (and not only there) it looks like that
-assigning CVE should be really done as more downstream distributions
-do not follow systemd's "allowed" characters in username and needs to
-handle this problem somehow. Either patching systemd or change
-validation for adding new user names into system...
+Description:
+The encoding done by the XSSAPI.encodeForJSString() method is not
+restrictive enough and for some input patterns allows script tags to
+pass through unencoded, leading to potential XSS vulnerabilities.
 
-Is somebody going to ask Mitre for CVE? Or should it be done by Red Hat?
-Because upstream bug is locked, it is not possible to ask in upstream...
-
-> I think the approach SUSE has taken is pretty good, and it's basically the
-> kind of fix I'd have liked to see upstream put in place (though in their
-> case, the suggestion of a config var to define whether it's acceptable is
-> also a very good suggestion).
-
--- 
-Pali Rohár
-pali.rohar@...il.com
+Mitigation:
+Users should upgrade to version 1.0.12 or later of the XSS Protection
+API module.
