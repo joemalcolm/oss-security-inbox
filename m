@@ -1,36 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/03/2
-Message-ID: <20170303141719.4608fbb0@redhat.com>
-Date: Fri, 3 Mar 2017 14:17:19 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: Dawid Golunski <dawid@...alhackers.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/18/1
+Message-ID: <82514.6065066917-sendEmail@localhost>
+Date: Tue, 18 Jul 2017 08:06:34 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: graphicsmagick: use-after-free in CloseBlob (blob.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi Dawid!
+Description:
+graphicsmagick is a collection of tools and libraries for many image formats.
 
-On Fri, 17 Feb 2017 12:03:44 -0200 Dawid Golunski wrote:
+The complete ASan outputof the issue:
 
-> Yes, I have reported the insufficient fixes to Oracle and related vendors.
-> 
-> I wanted to allow some more time for patching before making these public.
-> I will make my advisories and exploits public soon.
+# gm identify $FILE
+==20404==ERROR: AddressSanitizer: heap-use-after-free on address 0x6230000053c0 at pc 0x7fc01a253357 bp 0x7fffcd2d2630 sp 0x7fffcd2d2628
+READ of size 8 at 0x6230000053c0 thread T0
+    #0 0x7fc01a253356 in CloseBlob /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/blob.c:859:3
+    #1 0x7fc013fbed77 in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5144:11
+    #2 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #3 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #4 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #5 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #6 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #7 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #8 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
 
-Can you clarify if the "soon" above is supposed to mean days, weeks, or
-months?  Two weeks have passed since the above, and I've not seen any
-update from you.
+0x6230000053c0 is located 6848 bytes inside of 6856-byte region [0x623000003900,0x6230000053c8)
+freed by thread T0 here:
+    #0 0x4cf4d0 in __interceptor_cfree /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:55
+    #1 0x7fc01a8f13d2 in MagickFree /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:509:5
+    #2 0x7fc01a7dc750 in DestroyImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:1277:3
+    #3 0x7fc01a8a7cda in DestroyImageList /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/list.c:239:5
+    #4 0x7fc013fbed6f in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5143:11
+    #5 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #6 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #7 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #8 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #9 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #10 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Note that I'm only asking for CVE mappings for issues that were
-publicly fixed and mentioned in release notes mid-Dec, listed in Oracle
-CPU mid-Jan, and had enough technical details noted in this thread or
-other public bug reports.  Only giving CVE names to known issues does
-not hurt anyone, and it actually helps downstreams and users already
-hurt by upstream's proprietary attitude towards this open-source
-project.  Of course, it's up to your discretion if and when to release
-working exploits, videos, etc.
+previously allocated by thread T0 here:
+    #0 0x4cf688 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7fc01a8f04d6 in MagickMalloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:156:10
+    #2 0x7fc01a7a6fa3 in AllocateImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:336:18
+    #3 0x7fc013f7819a in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:3872:9
+    #4 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #5 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #6 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #7 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #8 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #9 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Thank you!
+SUMMARY: AddressSanitizer: heap-use-after-free /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/blob.c:859:3 in CloseBlob
+Shadow bytes around the buggy address:
+  0x0c467fff8a20: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a30: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a40: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a50: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a60: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+=>0x0c467fff8a70: fd fd fd fd fd fd fd fd[fd]fa fa fa fa fa fa fa
+  0x0c467fff8a80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8a90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8aa0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8ab0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8ac0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==20404==ABORTING
 
--- 
-Tomas Hoger / Red Hat Product Security
+Affected version:
+1.3.26
+
+Fixed version:
+N/A
+
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/d0a76868ca37
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-11403
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00301-graphicsmagick-UAF-CloseBlob
+
+Timeline:
+2017-07-10: bug discovered and reported to upstream
+2017-07-10: upstream released a fix
+2017-07-12: blog post about the issue
+2017-07-18: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/07/12/graphicsmagick-use-after-free-in-closeblob-blob-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
