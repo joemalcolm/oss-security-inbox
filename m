@@ -1,68 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/05/1
-Message-ID: <CAP8jf_A2x6qceLjfJa6fHyDLQU4n9cdVm-Wc_V4awKy_zBQ66g@mail.gmail.com>
-Date: Tue, 5 Dec 2017 00:11:41 +0000
-From: Mohamed Ghannam <simo.ghannam@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-8824 linux: use-after-free in DCCP code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/18/2
+Message-ID: <CAEWfVJkLfoDJ-VjddTo_Vb70q4M+tN2GvpabRDR_iPdCAFtY1Q@mail.gmail.com>
+Date: Tue, 18 Jul 2017 12:22:03 +0200
+From: Bertrand Delacretaz <bdelacretaz@...che.org>
+To: dev <dev@...ng.apache.org>, users <users@...ng.apache.org>,  "security@...ng.apache.org" <security@...ng.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2016-6798 : Apache Sling XXE vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: Important
 
+Vendor: The Apache Software Foundation
 
-This is an announcement for CVE-2017-8824 which is a use-after-free
-vulnerability
+Versions Affected:
+Sling XSS Protection API 1.0.0
 
-I found in Linux DCCP socket. It can be used to gain kernel code execution
-from unprivileged processes.
+Description:
+The method XSS.getValidXML() uses an insecure SAX parser to validate
+the input string, which allows for XXE [0] attacks in all scripts
+which use this method to validate user input, potentially allowing an
+attacker to read sensitive data on the filesystem, perform
+same-site-request-forgery (SSRF), port-scanning behind the firewall or
+DoS the application.
 
+[0] https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
 
-
-You’ll find in attachment the proof of concept code and the kernel panic
-log.
-
-
-
-#######   BUG DETAILS  ############
-
-
-
-When a socket sock object is in DCCP_LISTEN  state and connect() system
-call is being called with AF_UNSPEC,
-
-the dccp_disconnect() puts sock state into DCCP_CLOSED, and forgets to free
-dccps_hc_rx_ccid/dccps_hc_tx_ccid and assigns NULL to them,
-
-then when we call connect() again with AF_INET6 sockaddr family, the sock
-object gets cloned via dccp_create_openreq_child() and returns a new sock
-object,
-
-which holds references of dccps_hc_rx_ccid and dccps_hc_tx_ccid of the old
-sock object, and this leads to both the old and new sock objects can use
-the same memory.
-
-
-
-#######   LINKS  ############
-
-
-
-http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-8824
-
-http://lists.openwall.net/netdev/2017/12/04/224
-
-
-
-#######   CREDITS  ############
-
-
-
-Mohamed Ghannam
-
-Content of type "text/html" skipped
-
-Download attachment "kasan_report.log" of type "application/octet-stream" (8589 bytes)
-
-View attachment "poc.c" of type "text/x-csrc" (2459 bytes)
-
-Download attachment "rip.log" of type "application/octet-stream" (2861 bytes)
+Mitigation:
+Users should upgrade to version 1.0.12 or later of the XSS Protection
+API module.
