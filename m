@@ -1,46 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/3
-Message-ID: <6a704936-df55-212b-4b2e-594fa1da01a2@securify.nl>
-Date: Wed, 1 Mar 2017 07:16:47 +0100
-From: Summer of Pwnage <lists@...urify.nl>
-To: oss-security@...ts.openwall.com
-Subject: Multiple Cross-Site Scripting vulnerabilities affecting various WordPress Plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/19/6
+Message-ID: <20170719125900.igfqq3i2bt3qwqep@tunkki>
+Date: Wed, 19 Jul 2017 15:59:00 +0300
+From: Henri Salo <henri@...v.fi>
+To: Matthew Daley <mattd@...fuzz.com>
+Cc: Kurt Seifried <kurt@...fried.org>, oss-security@...ts.openwall.com
+Subject: Re: ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+On Wed, Jul 19, 2017 at 11:37:28PM +1200, Matthew Daley wrote:
+> On 17 July 2017 at 00:01, Henri Salo <henri@...v.fi> wrote:
+> > Is this assigment somehow related to this oss-security post?
+> > http://www.openwall.com/lists/oss-security/2016/07/01/3
+> 
+> Yes.
 
+Thanks for your reply and clearing this up. One of the points in my email was
+that this is not documented in the DWF item well enough. There is
+description_data with value, but no referer to oss-security, which should also
+use those issue numbers. Should the assigner or requester post this information
+to oss-security aswell or is the point that DWF is followed via GitHub with
+custom scripts? If someone makes a pull request to the item is the information
+populated to MITRE and NVD databases and how often?
 
-View attachment "admin_custom_login_wordpress_plugin_affected_by_persistent_cross_site_scripting_via_logo_url_field.txt" of type "text/plain" (3492 bytes)
-
-View attachment "admin_custom_login_wordpress_plugin_custom_login_page_affected_by_persistent_cross_site_scripting.txt" of type "text/plain" (4485 bytes)
-
-View attachment "cross_site_request_forgery___cross_site_scripting_in_contact_form_manager_wordpress_plugin.txt" of type "text/plain" (4529 bytes)
-
-View attachment "cross_site_scripting_in_alpine_phototile_for_instagram_wordpress_plugin.txt" of type "text/plain" (4272 bytes)
-
-View attachment "cross_site_scripting_in_atahualpa_wordpress_theme.txt" of type "text/plain" (6410 bytes)
-
-View attachment "cross_site_scripting_in_google_analytics_dashboard_wordpress_plugin.txt" of type "text/plain" (3948 bytes)
-
-View attachment "cross_site_scripting_in_magic_fields_1_wordpress_plugin.txt" of type "text/plain" (4844 bytes)
-
-View attachment "cross_site_scripting_vulnerability_in_gwolle_guestbook_wordpress_plugin.txt" of type "text/plain" (4636 bytes)
-
-View attachment "cross_site_scripting_vulnerability_in_tribulant_slideshow_galleries_wordpress_plugin.txt" of type "text/plain" (3753 bytes)
-
-View attachment "cross_site_scripting_vulnerability_in_trust_form_wordpress_plugin.txt" of type "text/plain" (6307 bytes)
-
-View attachment "cross_site_scripting_vulnerability_in_wp_filebase_download_manager_wordpress_plugin.txt" of type "text/plain" (3866 bytes)
-
-View attachment "cross_site_scripting_vulnerability_in_wp_spamfree_anti_spam_wordpress_plugin.txt" of type "text/plain" (4119 bytes)
-
-View attachment "persistent_cross_site_scripting_in_the_wordpress_newstatpress_plugin.txt" of type "text/plain" (5015 bytes)
-
-View attachment "reflected_cross_site_scripting_in_formbuilder_wordpress_plugin.txt" of type "text/plain" (3441 bytes)
-
-View attachment "stored_cross_site_scripting_vulnerability_in_contact_form_wordpress_plugin.txt" of type "text/plain" (4881 bytes)
-
-View attachment "stored_cross_site_scripting_vulnerability_in_user_login_log_wordpress_plugin.txt" of type "text/plain" (9024 bytes)
+-- 
+Henri Salo
