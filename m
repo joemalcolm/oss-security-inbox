@@ -1,22 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/7
-Message-ID: <a7e0e324-5126-4410-724e-af5576432d67@orlitzky.com>
-Date: Mon, 6 Nov 2017 07:32:46 -0500
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/19/8
+Message-ID: <1c012c33-5b6e-0b1d-f12e-1efdeb2bab4a@suse.com>
+Date: Wed, 19 Jul 2017 23:43:59 +0200
+From: Andreas Stieger <astieger@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: Re: Devil's Ivy (CVE-2017-9765) in gSOAP 2.7 up to 2.8.47
 Content-Type: text/plain; charset=utf-8
 
-On 11/06/2017 02:08 AM, Christian Brabandt wrote:
-> 
-> On So, 05 Nov 2017, Jakub Wilk wrote:
-> 
->> Couldn't vim create swapfiles with mode 0600 and be done with it?
-> 
-> Because then users of the group could not recover the file anymore, 
-> although they are able to read the original file.
-> 
+Hello,
 
-It also breaks (default) ACLs, but maybe if we do that in enough
-important applications, the next generation of ACLs won't try to use the
-group bits as a permissions mask.
+On 07/19/2017 10:44 PM, Alan Coopersmith wrote:
+> I noticed some press coverage of this but haven't seen mail here yet:
+>
+> http://blog.senr.io/blog/devils-ivy-flaw-in-widely-used-third-party-code-impacts-millions
+>
+> https://www.genivia.com/advisory.html#Security_advisory:_CVE-2017-9765_bug_in_certain_versions_of_gSOAP_2.7_up_to_2.8.47_(June_21,_2017)
+>
+> https://www.genivia.com/changelog.html#Version_2.8.48_upd_(06/21/2017)
+>
+> "a potential vulnerability to a large and specific XML message over
+> 2GB in size
+>  (greater than 2147483711 bytes to trigger the software bug). A buffer
+> overflow
+>  can cause an open unsecured server to crash or malfunction after 2GB is
+>  received."
+>
+> Unfortunately, the subversion repo on sourceforge for gSOAP only has
+> full releases, not individual changes, in each commit, so the fix
+> appears to be somewhere mixed in [r119] on
+> https://sourceforge.net/p/gsoap2/code/commit_browser
+> making it a challenge for distros who want to patch instead of upgrade.
+>
+
+Or just ask them, see https://bugzilla.suse.com/show_bug.cgi?id=1049348
+
+Andreas
+
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
