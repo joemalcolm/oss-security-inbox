@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1521" "Friday" "24" "August" "2018" "20:29:42" "+0200" "Solar Designer" "solar@openwall.com" "<20180824182942.GA932@openwall.com>" "34" "[oss-security] Re: About OpenSSH \"user enumeration\" / CVE-2018-15473" "^Cc:" nil nil "8" "2018082418:29:42" "[oss-security] Re: About OpenSSH \"user enumeration\" / CVE-2018-15473" (number mark "        solar@openwa Aug 24   34/1521  " thread-indent "\"[oss-security] Re: About OpenSSH \"user enumeration\" / CVE-2018-15473\"\n") "<alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>" ("<alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["700" "Wednesday" "19" "July" "2017" "11:50:56" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1707191148320.22338@wniryva>" "24" "[oss-security] CVE-2017-11434 Qemu: slirp: out-of-bounds read while parsing dhcp options" nil nil nil "7" "2017071906:20:56" "[oss-security] CVE-2017-11434 Qemu: slirp: out-of-bounds read while parsing dhcp options" (number mark "U       ppandit@redh Jul 19   24/700   " thread-indent "\"[oss-security] CVE-2017-11434 Qemu: slirp: out-of-bounds read while parsing dhcp options\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14128 invoked by uid 550); 24 Aug 2018 18:30:38 -0000
+Received: (qmail 13419 invoked by uid 550); 19 Jul 2017 06:21:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13410 invoked from network); 24 Aug 2018 18:29:48 -0000
-Message-ID: <20180824182942.GA932@openwall.com>
-References: <alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.BSO.2.21.1808241046220.67512@haru.mindrot.org>
-User-Agent: Mutt/1.4.2.3i
-Cc: openssh-unix-dev@mindrot.org
-Date: Fri, 24 Aug 2018 20:29:42 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: About OpenSSH "user enumeration" / CVE-2018-15473
-To: oss-security@lists.openwall.com
+Received: (qmail 13395 invoked from network); 19 Jul 2017 06:21:13 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 4B11B7A176
+Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx04.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 4B11B7A176
+Date: Wed, 19 Jul 2017 11:50:56 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Reno Robert <renorobert@gmail.com>
+Message-ID: <alpine.LFD.2.20.1707191148320.22338@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Wed, 19 Jul 2017 06:21:01 +0000 (UTC)
+Subject: [oss-security] CVE-2017-11434 Qemu: slirp: out-of-bounds read while parsing dhcp
+ options
 
-Hi Damien,
+    Hello,
 
-Thank you for sharing these thoughts with the community.
+Quick emulator(Qemu) built with the BOOTP/DHCP Server support is vulnerable to 
+an OOB read issue. It could occur while parsing the DHCP options and vendor 
+extensions options sent by a client.
 
-On Fri, Aug 24, 2018 at 10:58:20AM +1000, Damien Miller wrote:
-> Finally, and perhaps most importantly: there's a fundamental tradeoff
-> between attack surface and fixing this class of bug. As a concrete
-> example, fixing this one added about 150 lines of code to our
-> pre-authentication attack surface. In this case, we were willing to do
-> this because we had confidence in the additional parsing, mostly because
-> it's been reviewed several times and we've conducted a decent amount of
-> fuzzing on it. But, given the choice between leaving a known account
-> validity oracle or exposing something we don't trust, we'll choose the
-> former every time.
+A user/process could use this flaw to potentially crash the Qemu process on 
+the host resulting in DoS.
 
-Can you summarize for us all (on these mailing lists) the commits
-leading to OpenSSH 7.8 that deal with this issue and add "about 150
-lines of code", please?  The commit originally referenced by Qualys
-doesn't.  I guess this has to do with you fixing not only the yes/no
-kind of oracle, but also mitigating some timing oracle(s), as per the
-change log:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-07/msg05001.html
 
- * sshd(8): add some countermeasures against timing attacks used for
-   account validation/enumeration. sshd will enforce a minimum time
-   or each failed authentication attempt consisting of a global 5ms
-   minimum plus an additional per-user 0-4ms delay derived from a
-   host secret.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1472611
 
- * sshd(8): avoid observable differences in request parsing that could
-   be used to determine whether a target user is valid.
+This issue was reported by Reno Robert. CVE assigned via - https://cveform.mitre.org/
 
-Thanks again,
 
-Alexander
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
