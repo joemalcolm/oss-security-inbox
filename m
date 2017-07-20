@@ -1,30 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/9
-Message-ID: <CABdJj54TM1tCzA1-YL51d=TSOtDQ2L0B87+xbqe3Wur-7Du+Vg@mail.gmail.com>
-Date: Mon, 20 Mar 2017 21:15:47 +0100
-From: Dominik Stadler <centic@...che.org>
-To: private@....apache.org, security <security@...che.org>,  "zhuxiaolong (C)" <zhuxiaolong1@...wei.com>, "Chenhuijun (Sniper)" <chenhuijun@...wei.com>, announce@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: CVE-2017-5644 - Possible DOS (Denial of Service) in Apache POI versions prior to 3.15
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/20/5
+Message-ID: <20170720104242.GA21676@kroah.com>
+Date: Thu, 20 Jul 2017 12:42:42 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CoreOS membership to linux-distros (updated)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Jul 20, 2017 at 07:13:03AM +0300, gremlin@...mlin.ru wrote:
+> On 2017-07-18 14:56:23 -0700, Euan Kemp wrote:
+> 
+>  > I???ve listed each criterion and why I think we, the Container
+>  > Linux team at CoreOS, qualify.
+>  >
+>  >
+>  >> 1. Be an actively maintained Unix-like operating system distro
+>  >> with substantial use of Open Source components
+>  > All components of the distro are open source, as are all the
+>  > tools used to build it.
+> 
+> Prior to any decision to be made, I'd ask you to show the kernel
+> patch which you use to avoid escaping from the container to host
+> system (Docker allows such escape, OpenVZ does not). Could you,
+> please, show it?
 
-Vendor: The Apache Software Foundation
+All of CoreOS's kernel patches are public, here's their latest branch:
+	https://github.com/coreos/linux/tree/v4.12.2-coreos
 
-Versions affected: all versions prior to version 3.15
-Apache POI in versions prior to release 3.15 allows remote attackers to
-cause a denial of service (CPU consumption)
-via a specially crafted OOXML file, aka an XML Entity Expansion (XEE)
-attack.
+But what does a specific kernel patch have to do with linux-distro's
+membership requirements?
 
-Users with applications which accept content from external or untrusted
-sources are advised to upgrade to
-Apache POI 3.15 or newer.
+confused,
 
-Thanks to Xiaolong Zhu and Huijun Chen from Huawei Technologies Co., Ltd.
-for reporting the vulnerability.
-
-
-Dominik Stadler
-on behalf of the Apache POI PMC
-
+greg k-h
