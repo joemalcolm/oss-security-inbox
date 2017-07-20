@@ -1,109 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/01/1
-Message-ID: <960903.260248841-sendEmail@localhost>
-Date: Sat, 1 Apr 2017 14:16:28 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: podofo: heap-based buffer overflow in PoDoFo::PdfPainter::ExpandTabs (PdfPainter.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/20/6
+Message-id: <1ED75849-154D-47B3-8D07-6E0797B1D277@apple.com>
+Date: Thu, 20 Jul 2017 15:04:30 -0400
+From: Jesse Hertz <jesse_hertz@...le.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CoreOS membership to linux-distros (updated)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+Additionally, Docker doesn't maintain a kernel distribution, whereas OpenVZ does, making this request strange to say the least.
 
-A fuzz on it through the podofotxt2pdf command line tool reavealed an heap overflow. This post will be forwarded on the upstream mailing list.
-
-The complete ASan output:
-
-# podofotxt2pdf $FILE out.pdf
-==12524==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x607000001178 at pc 0x7f44ebaa5c89 bp 0x7ffce55aac90 sp 0x7ffce55aac88
-READ of size 2 at 0x607000001178 thread T0
-    #0 0x7f44ebaa5c88 in PoDoFo::PdfPainter::ExpandTabs(PoDoFo::PdfString const&, long) const /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:1945:26
-    #1 0x7f44eba95942 in PoDoFo::PdfPainter::DrawText(double, double, PoDoFo::PdfString const&, long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:755:31
-    #2 0x519755 in draw(char*, PoDoFo::PdfDocument*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:94:25
-    #3 0x51aa52 in init(char const*, char const*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:165:5
-    #4 0x51c253 in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:212:7
-    #5 0x7f44e9a3878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x41ccb8 in _start (/usr/bin/podofotxt2pdf+0x41ccb8)
-
-0x607000001178 is located 0 bytes to the right of 72-byte region [0x607000001130,0x607000001178)
-allocated by thread T0 here:
-    #0 0x514870 in operator new(unsigned long) /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_new_delete.cc:82
-    #1 0x7f44eb460304 in PoDoFo::PdfRefCountedBuffer::ReallyResize(unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfRefCountedBuffer.cpp:161:21
-    #2 0x7f44eb21212d in PoDoFo::PdfRefCountedBuffer::Resize(unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfRefCountedBuffer.h:307:9
-    #3 0x7f44eb47a466 in PoDoFo::PdfRefCountedBuffer::PdfRefCountedBuffer(unsigned long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfRefCountedBuffer.h:227:11
-    #4 0x7f44eb47a466 in PoDoFo::PdfString::Init(char const*, long) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfString.cpp:570
-    #5 0x7f44eb47c24c in PoDoFo::PdfString::PdfString(char const*, PoDoFo::PdfEncoding const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/base/PdfString.cpp:109:9
-    #6 0x519718 in draw(char*, PoDoFo::PdfDocument*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:94:43
-    #7 0x51aa52 in init(char const*, char const*, bool, char const*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:165:5
-    #8 0x51c253 in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofotxt2pdf/podofotxt2pdf.cpp:212:7
-    #9 0x7f44e9a3878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfPainter.cpp:1945:26 in PoDoFo::PdfPainter::ExpandTabs(PoDoFo::PdfString 
-const&, long) const
-Shadow bytes around the buggy address:
-  0x0c0e7fff81d0: fa fa 00 00 00 00 00 00 00 00 00 00 fa fa fa fa
-  0x0c0e7fff81e0: 00 00 00 00 00 00 00 00 00 fa fa fa fa fa fd fd
-  0x0c0e7fff81f0: fd fd fd fd fd fd fd fa fa fa fa fa 00 00 00 00
-  0x0c0e7fff8200: 00 00 00 00 00 fa fa fa fa fa 00 00 00 00 00 00
-  0x0c0e7fff8210: 00 00 00 fa fa fa fa fa fd fd fd fd fd fd fd fd
-=>0x0c0e7fff8220: fd fa fa fa fa fa 00 00 00 00 00 00 00 00 00[fa]
-  0x0c0e7fff8230: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0e7fff8240: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0e7fff8250: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0e7fff8260: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c0e7fff8270: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==12524==ABORTING
-
-Affected version:
-0.9.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7378
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00248-podofo-heapoverflow-PdfPainter_cpp
-
-Timeline:
-2017-03-31: bug discovered and reported to upstream
-2017-03-31: blog post about the issue
-2017-03-31: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/31/podofo-heap-based-buffer-overflow-in-podofopdfpainterexpandtabs-pdfpainter-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+I also think its disingenuous to imply there's "one patch" that divides a secure containerization system from another. Container/Kernel security is... quite complicated to say the least.
+> On Jul 20, 2017, at 6:42 AM, Greg KH <greg@...ah.com> wrote:
+> 
+> On Thu, Jul 20, 2017 at 07:13:03AM +0300, gremlin@...mlin.ru wrote:
+>> On 2017-07-18 14:56:23 -0700, Euan Kemp wrote:
+>> 
+>>> I???ve listed each criterion and why I think we, the Container
+>>> Linux team at CoreOS, qualify.
+>>> 
+>>> 
+>>>> 1. Be an actively maintained Unix-like operating system distro
+>>>> with substantial use of Open Source components
+>>> All components of the distro are open source, as are all the
+>>> tools used to build it.
+>> 
+>> Prior to any decision to be made, I'd ask you to show the kernel
+>> patch which you use to avoid escaping from the container to host
+>> system (Docker allows such escape, OpenVZ does not). Could you,
+>> please, show it?
+> 
+> All of CoreOS's kernel patches are public, here's their latest branch:
+> 	https://github.com/coreos/linux/tree/v4.12.2-coreos
+> 
+> But what does a specific kernel patch have to do with linux-distro's
+> membership requirements?
+> 
+> confused,
+> 
+> greg k-h
 
 
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
