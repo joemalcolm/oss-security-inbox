@@ -1,103 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/23/4
-Message-Id: <E1dkXQ4-0005BZ-U9@xenbits.xenproject.org>
-Date: Wed, 23 Aug 2017 15:18:12 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 235 - add-to-physmap error paths fail to release lock on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/20/2
+Message-ID: <CANO=Ty049uuDeiUBxUpjvuGwotmHe80W5Qh+fU9drN3w5fat7A@mail.gmail.com>
+Date: Wed, 19 Jul 2017 20:37:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Matthew Daley <mattd@...fuzz.com>, Kurt Seifried <kurt@...fried.org>
+Subject: Re: Re: ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Feel free to modify it and submit a pull request!
 
-                    Xen Security Advisory XSA-235
+https://github.com/distributedweaknessfiling/DWF-CVE-Database/tree/master/2017/1000xxx
 
-        add-to-physmap error paths fail to release lock on ARM
+also I submit the dwf data to mitre but we're having some teething problems.
 
-ISSUE DESCRIPTION
-=================
+On Wed, Jul 19, 2017 at 6:59 AM, Henri Salo <henri@...v.fi> wrote:
 
-When dealing with the grant map space of add-to-physmap operations,
-ARM specific code recognizes a number of error conditions, but fails
-to release a lock being held on the respective exit paths.
+> On Wed, Jul 19, 2017 at 11:37:28PM +1200, Matthew Daley wrote:
+> > On 17 July 2017 at 00:01, Henri Salo <henri@...v.fi> wrote:
+> > > Is this assigment somehow related to this oss-security post?
+> > > http://www.openwall.com/lists/oss-security/2016/07/01/3
+> >
+> > Yes.
+>
+> Thanks for your reply and clearing this up. One of the points in my email
+> was
+> that this is not documented in the DWF item well enough. There is
+> description_data with value, but no referer to oss-security, which should
+> also
+> use those issue numbers. Should the assigner or requester post this
+> information
+> to oss-security aswell or is the point that DWF is followed via GitHub with
+> custom scripts? If someone makes a pull request to the item is the
+> information
+> populated to MITRE and NVD databases and how often?
+>
+> --
+> Henri Salo
+>
 
-IMPACT
-======
 
-A malicious guest administrator can cause a denial of service.
-Specifically, prevent use of a physical CPU for an indefinite period
-of time.
 
-VULNERABLE SYSTEMS
-==================
+-- 
 
-Xen versions 4.4 and later are vulnerable.  Xen versions 4.3 and
-earlier are not vulnerable.
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-Only ARM systems are affected.  X86 systems are not affected.
-
-MITIGATION
-==========
-
-On systems where the guest kernel is controlled by the host rather than
-guest administrator, running only kernels which only issue sane
-hypercalls will prevent untrusted guest users from exploiting this
-issue.  However untrusted guest administrators can still trigger it
-unless further steps are taken to prevent them from loading code into
-the kernel (e.g by disabling loadable modules etc) or from using other
-mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Wei Liu of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa235.patch           xen-unstable
-xsa235-4.9.patch       Xen 4.9.x, Xen 4.8.x
-xsa235-4.7.patch       Xen 4.7.x
-xsa235-4.6.patch       Xen 4.6.x
-xsa235-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa235*
-6ec8bf9462de65fee3896246f52c00941b2d83c759b3f7b28a440eb977fcbc37  xsa235.meta
-c81f534e96fe38b9f77794bb143d104d66ce2d7177bda43f872642616e23df65  xsa235.patch
-3c21cb1a53f5979b069568c6cd6df3aad00c19e0e459e37625d6a3c0f4f360cc  xsa235-4.5.patch
-47cda4f32b65f3543af368c324a2e5b308b698a1c7d8bc84fc274eb2cdb45c0e  xsa235-4.6.patch
-f30848eee71e66687b421b87be1d8e3f454c0eb395422546c62a689153d1e31c  xsa235-4.7.patch
-d8f012734fbf6019c1ff864744e308c41dfb9c7804ca3be2771c2c972cdf4bd5  xsa235-4.9.patch
-$
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-The issue was discussed publicly before being recognized as a security
-issue.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZnZxeAAoJEIP+FMlX6CvZTj4IALE9/7IoG1Ak/TZuHE4xRxZx
-Zd2APyf+lCNj3wwdFRGC/969ilQ9OjLlJ408RyY6bVpwfmsjJTZWnAcWuS/fIdhY
-niillD1sdP7Eg65JG8bxL2jCaISH7AJKSePoLuc8G55I7uuJYEnipyvDZuz6W+qy
-k03+Bbz+TwNezA4YoNFsSpRdX48iIevFy9AIhZmggLUqdgmTR1rygjW/bxanBX8z
-2dSch8LMcsVArTmwE3NnxVSJC1/g3Tc07wll7LnB6npecbCmiMqk+rhPUFdHZXl7
-pYZy+Qp7w5rqcd91cOuKQKml4O3lO9ajblfpqKmbH3+hnuDqEnVlHSvVNVGWyag=
-=mGPq
------END PGP SIGNATURE-----
-
-Download attachment "xsa235.meta" of type "application/octet-stream" (1585 bytes)
-
-Download attachment "xsa235.patch" of type "application/octet-stream" (1508 bytes)
-
-Download attachment "xsa235-4.5.patch" of type "application/octet-stream" (1526 bytes)
-
-Download attachment "xsa235-4.6.patch" of type "application/octet-stream" (1527 bytes)
-
-Download attachment "xsa235-4.7.patch" of type "application/octet-stream" (1526 bytes)
-
-Download attachment "xsa235-4.9.patch" of type "application/octet-stream" (1542 bytes)
