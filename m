@@ -1,147 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/13
-Message-Id: <E1dNHpG-0005zH-0I@xenbits.xenproject.org>
-Date: Tue, 20 Jun 2017 12:00:06 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 216 - blkif responses leak backend stack data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/21/6
+Message-ID: <20170721132647.GA4223@openwall.com>
+Date: Fri, 21 Jul 2017 15:26:47 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Euan Kemp <euan.kemp@...eos.com>
+Cc: oss-security@...ts.openwall.com, keescook@...gle.com, Brandon Philips <brandon.philips@...eos.com>, Alex Crawford <alex.crawford@...eos.com>
+Subject: Re: CoreOS membership to linux-distros (updated)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Jul 18, 2017 at 02:56:23PM -0700, Euan Kemp wrote:
+> I???ve listed each criterion and why I think we, the Container Linux team
+> at CoreOS, qualify.
 
-                    Xen Security Advisory XSA-216
-                              version 3
+I intend to add CoreOS to linux-distros in early August unless there are
+any well-reasoned objections by then.
 
-                blkif responses leak backend stack data
+> Based on your previous messages, it sounds like it???s expected for us to
+> inherit 'primary' for the administrative tasks of:
+> > 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date) - primary: CloudLinux, backup: vacant
+> > 2. If the proposed public disclosure date is not within list policy, insist on getting this corrected and propose a suitable earlier date - primary: CloudLinux, backup: vacant
 
-UPDATES IN VERSION 3
-====================
+Right.  CloudLinux - please get ready to pick up some other task(s).
 
-Public release.
+> I???ll also volunteer us for the administrative task of:
+> > 6. If multiple issues are reported at once, see if any of them can reasonably be made public sooner than the rest, and if so help untangle them and stay on top of their disclosure process
+> 
+> We???ll be happy to be on the lookout for possible conflation of issues
+> and kick off discussion if we think something can be broken up.
 
-Fix a typo ("our" for "or" in Vulnerable Systems).
+This works.  Thanks.
 
-ISSUE DESCRIPTION
-=================
+> We???ll provide relevant GPG keys separately if our membership is accepted.
 
-The block interface response structure has some discontiguous fields.
-Certain backends populate the structure fields of an otherwise
-uninitialized instance of this structure on their stacks, leaking
-data through the (internal or trailing) padding field.
+> Kees Cook can vouch for Brandon Philips (both on cc).
 
-IMPACT
-======
+Please feel free to provide the GPG keys to me off-list.  Also, Brandon
+should vouch for the rest of your team (again, off-list to me is OK).
 
-A malicious unprivileged guest may be able to obtain sensitive
-information from the host or other guests.
-
-VULNERABLE SYSTEMS
-==================
-
-All Linux versions supporting the xen-blkback, blkback, or blktap
-drivers are vulnerable.
-
-FreeBSD, NetBSD and Windows (with or without PV drivers) are not
-vulnerable (either because they do not have backends at all, or
-because they use a different implementation technique which does not
-suffer from this problem).
-
-All qemu versions supporting the Xen block backend are vulnerable.  The
-qemu-xen-traditional code base does not include such code, so is not
-vulnerable.  Note that an instance of qemu will be spawned to provide
-the backend for most non-raw-format disks; so you may need to apply the
-patch to qemu even if you use only PV guests.
-
-MITIGATION
-==========
-
-There's no mitigation available for x86 PV and ARM guests.
-
-For x86 HVM guests it may be possible to change the guest
-configuaration such that a fully virtualized disk is being made
-available instead.  However, this would normally entail changes inside
-the guest itself.
-
-CREDITS
-=======
-
-This issue was discovered by Anthony Perard of Citrix.
-
-For patch:
-Reported by: Anthony Perard <anthony.perard@...rix.com>
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa216-linux-4.11.patch           Linux 4.5 ... 4.11
-xsa216-linux-4.4.patch            Linux 3.3 ... 4.4
-xsa216-qemuu.patch                qemu-upstream master, 4.8
-xsa216-qemuu-4.7.patch            qemu-upstream 4.7, 4.6
-xsa216-qemuu-4.5.patch            qemu-upstream 4.5
-xsa216-linux-2.6.18-xen.patch     linux-2.6.18-xen.hg
-
-$ sha256sum xsa216*
-28beb3d876fa0eee77f4377ef2708d764a5d9a2003dd4f1a4ecb9b8bf60658a4  xsa216-linux-2.6.18-xen.patch
-6f6138c0a00df4ed7307ae4e5ee30dbe8594ff05bc1e8fdc7cfd785077d72ddc  xsa216-linux-4.4.patch
-e04da27961cd867f7bbba31677f61e3e425c0e7cc7352a7a2d22b5a35eaf8585  xsa216-linux-4.11.patch
-850b0143cfe3c69c62abdad71be9813014d46c380109fc650689a10c90ff39f4  xsa216-qemuu.patch
-072270274d2554b71579a529c908d16479f8eba6646d8aed2e3d129495b27716  xsa216-qemuu-4.5.patch
-5a64e2c5bb78f1c8fae97354be10fcc63ea39d333d6490e3a422ff30460cdef1  xsa216-qemuu-4.7.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-However, deployment of the mitigation is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.  This is because this produces a guest-visible
-change which will indicate which component contains the vulnerability.
-
-Additionally, distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZSQ3JAAoJEIP+FMlX6CvZWkQIAMXD8Lc1PunNw5x9WsLb2y9U
-KA0QrsNve4Ugc/xvCiuqUoV+ljZIRiy57A//ZnNtTR8JiRqpjEC47he3oYNleytN
-RfOw2ZzsXdD4F8sqT3YvR0vcPL1Pf7fHzg8Ax19RxdcXRWTrN/b/poxuCu4F5PWn
-cFi4tQDYLuEb2e9Sj8ue8RbtcVOEyuSG/dP1E29K7sKdc6GB13nWsa93KJsSRLY6
-cwKnOmBy+2H66FcfmWomU+OueKI7y5DsYxYV+VVUBGnBTSn0b3dwpHNKUBCuF1nQ
-RqOjo2rHOMBeiGaAlGg8toef7IkRH20p/LjiQxAneMndmta3t9enx8rYYxgFd5k=
-=3n1c
------END PGP SIGNATURE-----
-
-Download attachment "xsa216-linux-2.6.18-xen.patch" of type "application/octet-stream" (5642 bytes)
-
-Download attachment "xsa216-linux-4.4.patch" of type "application/octet-stream" (3643 bytes)
-
-Download attachment "xsa216-linux-4.11.patch" of type "application/octet-stream" (3708 bytes)
-
-Download attachment "xsa216-qemuu.patch" of type "application/octet-stream" (4399 bytes)
-
-Download attachment "xsa216-qemuu-4.5.patch" of type "application/octet-stream" (4375 bytes)
-
-Download attachment "xsa216-qemuu-4.7.patch" of type "application/octet-stream" (4375 bytes)
+Alexander
