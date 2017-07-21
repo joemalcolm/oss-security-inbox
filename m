@@ -1,216 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/11
-Message-ID: <2ECE9D9EEF1F524185270138AE23265955B0BBFC@S0MSMAIL112.arc.local>
-Date: Fri, 3 Nov 2017 15:53:02 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
-Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/21/2
+Message-ID: <NT2ewSquUVWSMuwQD9mS66GINerAtE1IodPQcjwuABcw6_-xHNatY9qmcPa6ICmd3OB1Exrmg2gm3npm-JsFkvY3dylH7vsHdOdBUOwOCZw=@itk.swiss>
+Date: Fri, 21 Jul 2017 05:45:25 -0400
+From: Stiepan <stie@....swiss>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: Martin Decky <decky@....mff.cuni.cz>
+Subject: Re: CoreOS membership to linux-distros (updated)
 Content-Type: text/plain; charset=utf-8
 
-> From: Solar Designer [mailto:solar@...nwall.com]
-> ...
-> > The bug may be in the documentation/specification: in my opinion,
-> > documentation of good, security aware software should a) implement things
-> > considering security bordercases (vim.tiny reporting, that a file was
-> replaced
-> > or symlink encountered, proceed?)
->
-> Those special cases you list are just a tip of the iceberg.
->
-> > or b) state, they are not made for that
-> > purpose. Even when such statements are redundant for many different
-> tools,
-> > they give users at least the chance to learn, that an operation is 
-> > dangerous
-> > and may link to additional information, e.g. the link you provided below 
-> > on
-> > secure root file access.
-> >
-> > Why has each plastic bag of a new consumer device printed "There is a risk
-> > that children pull them over their head and suffocate." for safety 
-> > reasons,
->
-> My guess is mostly for legal reasons, although safety was also involved
-> at some point.
+Back to CoreOS, I think that the practical answer is https://coreos.com/os/docs/latest/selinux.html .
+Now is it good / acceptable to rely on it (over classical Unix privileges, or another MAC) is actually an interesting, relatively unexplored research subject...
+What makes no doubt is that it is in line with the use made by Google of Linux, including in Android and therefore, very probably makes sense for Google.
+We lack some literature to back this choice for general-purpose use by the public at large, however.
+http://www.cse.psu.edu/~trj1/cse544-s13/slides/cse544-selinux.pdf and https://www.ibm.com/developerworks/library/l-selinux/ * provide good starting points for such research; (public) research seems to have stopped since then (= more or less in 2009 apparently)†.
+*With pointers to some alternatives in Linux and other operating systems, likewise many references
+†The first presentation cites www.isoc.org/isoc/conferences/ndss/09/pdf/16.pdf, which provides an analysis of MAC mechanisms' (remote) attack surface.
+A more recent, Android-centered presentation (http://kernsec.org/files/lss2015/vanderstoep.pdf) cites Wikipedia, stating that "[...] the security of an SELinux system depends primarily on the correctness of the kernel and its security-policy configuration", further highlighting the lack of in-depth research.
+(the emphasis / bold typeface on the second part of the sentence was left as in the original quote)
+I guess the question now is - do we trust Wikipedia articles on such matters? - and if we do, was the correctness in question attained in CoreOS's case?
+Likewise, could we somehow measure / quantify a level of this correctness using a formal method? (and if so, what about generalizing it to other OS + xAC pairs so as to evaluate their suitability for specific use cases, target demographics, likewise threat models?)
+Stiepan
+P.S.: Full disclosure - I have an interest in finding a secure, yet broadly compatible enough OS. CC-ing Martin Decky, who was 1st to propose a formal approach to it.
 
-It's safety also for the producer, so that he cannot be sued.
+> -------- Original Message --------
+> Subject: Re: [oss-security] CoreOS membership to linux-distros (updated)
+> Local Time: July 20, 2017 7:04 PM
+> UTC Time: July 20, 2017 7:04 PM
+> From: jesse_hertz@...le.com
+> To: oss-security@...ts.openwall.com
+> Additionally, Docker doesn"t maintain a kernel distribution, whereas OpenVZ does, making this request strange to say the least.
+> I also think its disingenuous to imply there"s "one patch" that divides a secure containerization system from another. Container/Kernel security is... quite complicated to say the least.
+>> On Jul 20, 2017, at 6:42 AM, Greg KH <greg@...ah.com> wrote:
+>>
+>> On Thu, Jul 20, 2017 at 07:13:03AM +0300, gremlin@...mlin.ru wrote:
+>>> On 2017-07-18 14:56:23 -0700, Euan Kemp wrote:
+>>>
+>>>> I???ve listed each criterion and why I think we, the Container
+>>>> Linux team at CoreOS, qualify.
+>>>>
+>>>>
+>>>>> 1. Be an actively maintained Unix-like operating system distro
+>>>>> with substantial use of Open Source components
+>>>> All components of the distro are open source, as are all the
+>>>> tools used to build it.
+>>>
+>>> Prior to any decision to be made, I"d ask you to show the kernel
+>>> patch which you use to avoid escaping from the container to host
+>>> system (Docker allows such escape, OpenVZ does not). Could you,
+>>> please, show it?
+>>
+>> All of CoreOS"s kernel patches are public, here"s their latest branch:
+>> https://github.com/coreos/linux/tree/v4.12.2-coreos
+>>
+>> But what does a specific kernel patch have to do with linux-distro"s
+>> membership requirements?
+>>
+>> confused,
+>>
+>> greg k-h
 
-But in an IT-perspective: safety and security are often conflicting, but 
-sometimes - like in that case with vim, they are two sides of the same coin:
+Stiepan Aurélien Kovac
 
-If a tool is not concurrency/thread-safe, any concurrent interaction might be 
-a security risk - exactly as shown here with the arbitrary file overwrite POC.
-
-> > but in software development, we assume, everybody knows and do not
-> include
-> > such warnings at least in the footer of man pages?
->
-> I don't assume everybody knows.  On the contrary, I know that most
-> people don't know, nor do they want to know.  When I tell, or ask my
-> fellow sysadmins to follow safer practices, they just get annoyed, in
-> part because the safer practices are too complicated, too brittle, and
-> sometimes also not perfectly safe.  But do we really need to include
-> this in every man page?  I wish there were a better place.
-
-I'm not sure on that: safety and security has a lot to do with awareness and 
-awareness is raised, when admins are reminded frequently, e.g. when reading 
-manuals. Perhaps they will not do it in all their daily work (who really 
-washes his hands ALWAYS before touching food?), but the might think about it 
-in the right moment (when eating in a very dirty place or preparing food for 
-the whole company on an important server machine).
-
-> > > Editing of non-root files by root should be safe (or be made safe by
-> > > making changes to the editors where necessary) only in the rare special
-> > > case when those files are located in a trusted directory.  For example,
-> > > editing as root /var/run/foo owned by user foo should be safe as long as
-> > > /, /var, and /var/run are owned by root, but editing as root
-> > > /home/foo/foo or /tmp/foo is unsafe and is likely to stay so.
-> >
-> > I would need to check that on vim.tiny. As stat-ing, getxattr, renaming,
-> > chmod, ... are not atomic, I am not sure if vim.tiny as example would 
-> > fulfil
-> > your expectations.
-> >
-> > But before that: why do you expect the software to behave like that, when 
-> > it
-> > is not stated anywhere?
->
-> What I said in the paragraph quoted above is that I expect very little
-> ("only in the rare special case"), and even that might not be true yet
-> (but we should make it true for specific tools if so).
->
-> I focus on this special case because it's tenable.
->
-> What you say about non-atomicity of those syscalls is not a security
-> issue when the directory and all parent directories are trusted.
-
-They still can be: check those two syscalls (seems the vim tests the "fchown" 
-call on unrelated file in same directory beforehand):
-
-open("4913", O_WRONLY|O_CREAT|O_EXCL|O_NOFOLLOW, 0107777) = 3
-fchown(3, 1000, 100)                    = 0
-
-While the file edited was a 07777 (4 times seven!) user owned file, vim 
-creates an intermediate world writabe root-owned suid-binary. This is not 
-nice, but would be hard to exploit on modern systems: a resource depletion 
-augmented race against a running root-binary from lower-priv user is hard, we 
-would need to OOM-kill vim (perhaps easier to trigger than thought if the 
-edited, user controlled file is very large, thus vim has very bad score 
-compared to fork bomb launching thousands of ping/mount commands) - otherwise 
-while file is open, I think the exec syscall would not exec the file. And of 
-course we would need to write to it without dropping the SUID-bit doing so, 
-requiring some other SUID binary to do that for us (see exploitDB for 
-examples).
-
-Summarizing, we got an ugly intermediate state in a trusted directory due to 
-non-atomic operation where exploitation might only be limited by the 
-creativity of the attacker, but for us very hard to rule out. Also put it 
-mathematically: there exist file system states, that a user can create with n 
-operations, but another user (root) needs m operations with always m>n to 
-create the same state in a secure manner. With all the race complexity, it 
-might be fun to analyse, if there exist user controlled states that cannot be 
-reached in secure manner by root, no matter how large m is.
-
-> It can still be a reliability and a safety issue e.g. if two sysadmins try 
-> to
-> edit a file, but I thought that was beyond scope of our discussion.
-
-Yes, this is "process failure" on human side, should be left out.
-
-> ..
-> > > It is tricky to access files in an untrusted directory safely.  Programs
-> > > that knowingly do it end up using O_EXCL or O_NOFOLLOW|O_NOCTTY
-> and
-> > > such, and doing various *stat() calls, and even that is sometimes not
-> > > enough.  It'd be naive to expect the same from every other program
-> > > accepting an arbitrary pathname.
-> >
-> > From my point of view, this mandates something like a "libSecureOpen"
-> (trying
-> > to get that into libc as first step might be in vain), which has a solid
-> > implementation also considering different UNIX-system peculiarities and
-> should
-> > be used by open source software doing that kind of risky operations.
->
-> IIRC, something like this was proposed in 1990s, albeit not for that
-> extensive a use.
-
-A missed chance for software development/awareness ...
-
-> You say "risky operations", but under the threat model you imply (root
-> using almost any tool on pathnames with components writable by a user)
-> almost all filesystem accesses are risky.
-
-With "that kind of risky operations" I aimed to refer to file system 
-operations on untrusted input. Still such a library could make the inherent 
-service contracts more clear by selecting the appropriate method, e.g. open a 
-file, do not care if it is in same directory or symlinked but make sure, that 
-the user starting the link chain would also have permissions to read the final 
-target, wherever it is. Or another procedure "reliable, crash-safe replacement 
-of file within a directory" (exactly the vim usecase).
-
-> To partially achieve what you seem to want to achieve, almost all uses
-> of open(2) and fopen(3), etc. would need to be replaced with "secure"
-> alternatives, ...
-
-or better with a more high-level API, using kernel features ..at() and 
-O_BENEATH where available on a given platform ...
-
-> .. and that would be bad in many ways, including breaking of
-> customary behavior of traditional Unix command-line programs, which
-> existing scripts rely on.
-
-Why would scripts break? Insecure command invocation is not caught by "secure 
-alternatives" for file system operation anyway. And for program execution: as 
-long as there is no adversary (no races), both worlds (secure and insecure 
-file operations) would come to the same result.
-
->  We could proceed with introduction of
-> isatty(3) and env var checks, but this would get messy.
-
-isatty yes, env vars seem different topic to me.
-
-> I say "partially" because there's no way for a program to know that the
-> file it's looking at is still the file the user had looked at when they
-> decided to run the program against that pathname.  Not only the file
-> itself could have been replaced, but an upper directory could have been.
-> I included some steps to deal with this in the example referenced in my
-> previous message, and one of the steps is a double-check by the user
-> themselves after having created a hard link in a trusted directory.
-
-Yes, so true. But as soon as tools would have the capability to even detect 
-such manipulations, they could start providing simple command line options for 
-users aware of the problem. Think of "vim.tiny -s [path]" where "-s" is for 
-"--secure": in that mode vim.tiny would warn, if any path component up to the 
-file to be edited is not owned by the user invoking vim or root. So 
-"vim.tiny -s /run/xxx" and "vim.tiny -s /var/run/xxx" would be OK on Ubuntu 
-(all symlinks/dirs root owned) while "vim.tiny -s 
-/var/www/uploads/somedir/x.html" would fail for root if upload dir is not 
-owned by root. The caring user then could still do a "cd 
-/var/www/uploads/somedir", "pwd" and then decide if he wants to edit.
-
-> I suppose some alternate OS could introduce a paradigm where a user's
-> view of the filesystem would be frozen when they stat() a file or list a
-> directory and unfrozen after they've accessed a file in there.  This is
-> another can of worms.  I guess it's more realistically (or less
-> unrealistically) done for one thread in a program (with each thread
-> having its own filesystem view freeze) rather than for a user's shell
-> running multiple programs one after another.
-
-Very nice idea, but unless the big 5 come up with it, quite unrealistic, I 
-assume.
-
-> > Other
-> > software should explicitely declare: "is not safe for operating on file of
-> > different users/NFS in untrusted environments".
->
-> This is true for 99%+ of Unix software.  Exceptions are few (like some
-> uses of "ln", and even then there's the issue of parent directories).
-
-True - but why not declare it? "ln is not safe creating links within 
-directories or to files not owned by yourself or the root user". To stay with 
-the example of the plastic bags: as long as no one declared it, nobody seemed 
-to care about avoiding it or replacing it with less risky alternatives. 
-Changes start in mind first, not in RAM or disk bits.
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
+IT Kovac + itk AVtobvS Sàrl
+Geneva + Jussy, Geneva CH
