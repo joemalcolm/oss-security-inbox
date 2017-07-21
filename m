@@ -1,12 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/17
-Message-ID: <6A9A46EC-195A-4940-A22F-85BD01CDB6E2@lanl.gov>
-Date: Tue, 26 Sep 2017 16:55:24 +0000
-From: "Priedhorsky, Reid" <reidpr@...l.gov>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/21/3
+Message-ID: <1c828b01-0878-015c-8510-e3f2bfc411ff@redhat.com>
+Date: Fri, 21 Jul 2017 10:50:26 +0100
+From: Luke Hinds <lhinds@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: [OSSN-0078] Ceph credentials included in logs using older versions of libvirt/qemu
 Content-Type: text/plain; charset=utf-8
 
-Thanks everyone. This thread answers my questions and provides a number of good resources to follow up on.
 
-Reid
+Ceph credentials included in logs using older versions of libvirt/qemu
+----------------------------------------------------------------------
+
+### Summary ###
+Older versions of libvirt included network storage authentication
+information on the qemu command line. If libvirt raises an exception
+which logs the qemu command line it used, for example an error starting
+a domain, this authentication information will available in the logs.
+
+### Affected Services / Software ###
+Versions 2.5 and earlier of QEMU and libvirt versions of 2.1 or earlier.
+
+The issue has been resolved in all QEMU versions 2.6 and above and
+libvirt 2.2 and above.
+
+No patches or specific releases of Nova or Ceph are required, the
+issue is completely resolved in QEMU and libvirt.
+
+### Discussion ###
+If a deployment is using ceph, a libvirt error starting a domain would
+log the cephx secret key and the monitor addresses on the qemu command
+line.
+
+A local attacker could then use this flaw to gain access of the cephx
+secret key and perform certain privileged operations within the cluster.
+
+An existing CVE is already present for this issue.
+
+### Recommended Actions ###
+The issue has been resolved upstream. Users running qemu version 2.6 or
+later, and libvirt version 2.2 or later, are not vulnerable.
+
+No change is required in Nova or Ceph to resolve this issue.
+
+### Contacts / References ###
+Author: Luke Hinds, Red Hat
+https://access.redhat.com/security/cve/CVE-2015-5160
+This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0079
+Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1686743
+OpenStack Security Project : https://launchpad.net/~openstack-ossg
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (513 bytes)
