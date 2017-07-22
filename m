@@ -1,19 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/12/1
-Message-ID: <9803a7bd-3938-c25a-f4ef-d6dff8b1fed8@gmail.com>
-Date: Sun, 12 Mar 2017 10:45:03 +0100
-From: Emilio Pozuelo Monfort <pochu27@...il.com>
-To: oss-security@...ts.openwall.com, Ailin Nemui <ailin.nemui@...il.com>
-Subject: Re: CVE Request: Irssi use after free in netjoin condition (2017/03)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/22/2
+Message-ID: <CAJmMGNt9RgxmdygDZ2Y08pCHkuC9penaowe1=JjfOmE+sWduVA@mail.gmail.com>
+Date: Sat, 22 Jul 2017 19:04:35 +0200
+From: Patrick Uiterwijk <puiterwijk@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: pagure: private repositories accessible through ssh
 Content-Type: text/plain; charset=utf-8
 
-On 11/03/17 22:25, Ailin Nemui wrote:
-> Dear CVE Assignment Team,
-> 
-> please provide CVE for the following issue:
+On Sat, Jul 22, 2017 at 2:20 PM, Stefan Bühler <stbuehler@...httpd.net> wrote:
+> Hi,
+>
+> pagure [1], a git-centered forge, supports private repositories [2]:
+>
+>> PRIVATE_PROJECTS
+>> ~~~~~~~~~~~~~~~~
+>>
+>> This configuration key allows you to host private repositories. These
+>> repositories are visible only to the creator of the repository and to
+>> the users who are given access to the repository.  No information is
+>> leaked about the private repository which means redis doesn't have the
+>> access to the repository and even fedmsg doesn't get any
+>> notifications.
+>>
+>> Defaults to: ``False``
+>
+> But the gitolite config, which is used to configure SSH-access, allows
+> "@all" users to access all repositories - private or not.
+>
+> I proposed the attached patch upstream in [3].
 
-Please report these through http://cveform.mitre.org/ to get CVEs assigned, and
-follow up here with the CVE identifiers after that's done.
+This issue has been assigned CVE-2017-1002151.
 
-Thanks,
-Emilio
+>
+> After patching you should ensure gitolite.conf gets regenerated from
+> scratch.
+>
+> cheers,
+> Stefan
+>
+> [1]: https://pagure.io/pagure
+> [2]: https://pagure.io/pagure/blob/master/f/doc/configuration.rst
+> [3]: https://pagure.io/pagure/pull-request/2426
+
+Patrick
