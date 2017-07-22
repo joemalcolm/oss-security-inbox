@@ -1,49 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/11
-Message-ID: <oXx80JgYC6BjD_znKZs7JW2ithWRy0sZNy5FQelve1UwJsLmZWxJvIRVdS8HyQJee3Z59PxupDs022828NIklgHpmOyUTayvrNtaykmB_ww=@itk.swiss>
-Date: Mon, 09 Oct 2017 16:17:40 -0400
-From: Stiepan <stie@....swiss>
-To: fk@...iankeil.de, oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/22/1
+Message-ID: <8fc3c73f-ae17-a490-b682-31d25da25011@lighttpd.net>
+Date: Sat, 22 Jul 2017 14:20:20 +0200
+From: Stefan Bühler <stbuehler@...httpd.net>
+To: oss-security@...ts.openwall.com
+Cc: Pierre-Yves Chibon <pingou@...goured.fr>
+Subject: pagure: private repositories accessible through ssh
 Content-Type: text/plain; charset=utf-8
 
-+1; let's use other identifiers! And why not, a blockchain (based on at least SHA3) for public security issues? That would be great. And as trustable, as transparent as it needs to be.
+Hi,
 
-Amen
+pagure [1], a git-centered forge, supports private repositories [2]:
 
--------- Original Message --------
-On 9 Oct 2017, 13:11, Fabian Keil wrote:
+> PRIVATE_PROJECTS
+> ~~~~~~~~~~~~~~~~
+>
+> This configuration key allows you to host private repositories. These
+> repositories are visible only to the creator of the repository and to
+> the users who are given access to the repository.  No information is
+> leaked about the private repository which means redis doesn't have the
+> access to the repository and even fedmsg doesn't get any
+> notifications.
+>
+> Defaults to: ``False``
 
-> Kurt Seifried  wrote:
->
->> If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
->> CVE FORM (yes, I am shouting).
->>
->> https://cveform.mitre.org
->
-> As you seem to be "shouting" a lot lately, I just like to point out
-> that using the MITRE(!) form requires the execution of non-free and
-> unsigned software from various sources.
->
-> Some people don't consider this a problem, others do.
->
->> Choose "Request an update to an existing CVE entry" and then for "Type of
->> update requested" choose "Update References" and then eneter the CVE #,
->> the ifo and URL and hit "Submit Request"
->
-> ... trust your browser's "sandbox" to work as advertised for a change
-> and ignore the fact that you're running proprietary software that may
-> or may not be customised just for your system and can't be easily
-> audited in advance.
->
->> TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
->> (the CVE community) didn't make it easy to contribute. Well now we have
->> made it easy to contribute, so please do.
->
-> TL;DR: Not everyone wants to allow remote code execution just to
-> request a CVE. Some people are sufficiently satisfied when security
-> issues are found and fixed in time. While CVE number are sometimes
-> nice to have, other identifiers work just as well (for some).
->
-> Fabian @redhat.com>
+But the gitolite config, which is used to configure SSH-access, allows
+"@all" users to access all repositories - private or not.
+
+I proposed the attached patch upstream in [3].
+
+After patching you should ensure gitolite.conf gets regenerated from
+scratch.
+
+cheers,
+Stefan
+
+[1]: https://pagure.io/pagure
+[2]: https://pagure.io/pagure/blob/master/f/doc/configuration.rst
+[3]: https://pagure.io/pagure/pull-request/2426
+
+View attachment "2426-hide-private-repos-in-ssh.patch" of type "text/x-patch" (879 bytes)
