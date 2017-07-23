@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1533" "Monday" "28" "December" "2015" "18:22:37" "+0100" "Florian Weimer" "fweimer@redhat.com" "<56816FDD.1050101@redhat.com>" "35" "Re: [oss-security] Being vulnerable to POODLE" nil nil nil "12" "2015122817:22:37" "[oss-security] Being vulnerable to POODLE" (number mark "U       fweimer@redh Dec 28   35/1533  " thread-indent "\"Re: [oss-security] Being vulnerable to POODLE\"\n") "<56815B56.5060602@geeklan.co.uk>" ("<567E41B4.2010606@geeklan.co.uk>" "<56814808.4000306@redhat.com>" "<56815B56.5060602@geeklan.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1345" "Sunday" "23" "July" "2017" "15:49:04" "+0300" "Henri Salo" "henri@nerv.fi" "<20170723124904.jqjpxabvazcaepxl@tunkki>" "36" "Re: [oss-security] ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004" "^Date:" nil nil "7" "2017072312:49:04" "[oss-security] ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004" (number mark "        henri@nerv.f Jul 23   36/1345  " thread-indent "\"Re: [oss-security] ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004\"\n") "<20170716120139.ivmlgyaqwxrp2mhl@tunkki>" ("<20170716120139.ivmlgyaqwxrp2mhl@tunkki>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20092 invoked by uid 550); 28 Dec 2015 17:22:52 -0000
+Received: (qmail 17638 invoked by uid 550); 23 Jul 2017 12:49:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20074 invoked from network); 28 Dec 2015 17:22:51 -0000
-To: oss-security@lists.openwall.com
-References: <567E41B4.2010606@geeklan.co.uk> <56814808.4000306@redhat.com>
- <56815B56.5060602@geeklan.co.uk>
-From: Florian Weimer <fweimer@redhat.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <56816FDD.1050101@redhat.com>
-Date: Mon, 28 Dec 2015 18:22:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+Received: (qmail 17611 invoked from network); 23 Jul 2017 12:49:43 -0000
+X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
+Message-ID: <20170723124904.jqjpxabvazcaepxl@tunkki>
+References: <20170716120139.ivmlgyaqwxrp2mhl@tunkki>
 MIME-Version: 1.0
-In-Reply-To: <56815B56.5060602@geeklan.co.uk>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Subject: Re: [oss-security] Being vulnerable to POODLE
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="sjfc2kvwzymypdqi"
+Content-Disposition: inline
+In-Reply-To: <20170716120139.ivmlgyaqwxrp2mhl@tunkki>
+User-Agent: NeoMutt/20170113 (1.7.2)
+Date: Sun, 23 Jul 2017 15:49:04 +0300
+From: Henri Salo <henri@nerv.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] ATutor CVE-2017-1000002, CVE-2017-1000003,
+ CVE-2017-1000004
+To: oss-security@lists.openwall.com,
+	High-Tech Bridge Security Research <advisory@htbridge.ch>
 
-On 12/28/2015 04:55 PM, Sevan Janiyan wrote:
-> Hi,
-> 
-> On 28/12/2015 14:32, Florian Weimer wrote:
->> How so?
->>
->> With some OpenSSL versions, it disables the 0/n split to mitigate a
->> *different* CBC vulnerability in TLS 1.0, and the client code explicitly
->> prevents OpenSSL from using TLS 1.1 and later.
-> 
-> SSLv23_server_method() is called to setup a server without any
-> restrictions & SSL_CTX_set_options() sets SSL_OP_ALL on the context.
-> The change I'm proposing explicitly disables the use of SSLv2/v3 so that
-> we're not reliant on the SSL library (which may be out of date?) to
-> impose restriction.
+--sjfc2kvwzymypdqi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Having SSL 3.0 support enabled does not mean that a MITM attacker can
-force a downgrade to SSL 3.0.  The vulnerability response to POODLE was
-somewhat botched and initially did not fix the actual vulnerability
-(insecure protocol downgrade in web browsers).  I think as far as FLOSS
-is concerned, this has since been corrected, so offering SSL 3.0 support
-does not longer result in connections which are vulnerable to POODLE.
+On Sun, Jul 16, 2017 at 03:01:39PM +0300, Henri Salo wrote:
+> This has also been pending for over a year. Is this related to these new
+> assigments or does this still need new CVE?
+> https://www.htbridge.com/advisory/HTB23297
 
-Clients which offered SSL 3.0 support but did not perform an
-out-of-protocol downgrade (like web browsers did) were not vulnerable,
-either.
+Please use CVE-2016-10400.
 
-> Looking up the documentation before I reply, it seems that by using the
-> SSL_OP_ALL setting, the mitigation you mention is actually disabled. See
-> SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS & SSL_OP_ALL on[1]
+--=20
+Henri Salo
 
-Yes, this is what my meant, the documented SSL_OP_ALL setting is not
-really safe.  But this is a different vulnerability from POODLE.
+--sjfc2kvwzymypdqi
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Florian
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAll0mz4ACgkQJ633pE6q
+dXRdsw//YnnB+FTrGYc/jQzOZ6WsciRgK/2pPvCfbSp7HccZNLbrryc0qNzZBWBx
+MhjrVPU2ck5JjzxrAkbrec0P9YdXQx1KQswO7pFt/bTLf2ojnpnL6woSIPl2W9G+
+qtl/BiTCL8ki33+j5T5dI3N92CsV/Y3DlCyLKC3B1Ok9udTO4dtB6jh+J+8qo8sf
+65DudooXNOxeUIiLBJfcve64N1ZT2q1rAG6DV4P8VQZUi55wzq2tfPxh+zWYqwRs
+rUmRvNo/EdWXp9vZyoKoFDa1mp3Owxa1wJOVN4AXSOIikq/kTYYGyWiosE8qvNjs
+EOWVfR08Vvi8TPs6yAFmTPquWewgR+ugt+ZOFMbDY/9A6e2CVCu614e2Kr/NAsBf
+2XRyaYRDZs2u2KKo3fQJJB6O7AfMaYVhRkoycuUFuUhW2ea+2F3iccTUcaSIJqib
+h2ttdH2h/Z3cwped/KKedIg6hphkjC+zcROO+tzMGs2k2Fau+L39wpqrlcaQQBi/
+5E4kUvwbukzBLI1BbeBqzfNFi/urGKoZsTfjOIVKuj7/AG+p8awtG3DlBlvuI3Gl
+n13s/Fn7hFOsUhPlusnB1AkYyentsnE6KB/yW+GRlD534prF2ekwhEvm3GX8wRed
+6/2fjbudWB7aYHGfgutZCTtSX5bHBOMdko8oO89SR/Ff55or4i4=
+=1mQl
+-----END PGP SIGNATURE-----
+
+--sjfc2kvwzymypdqi--
