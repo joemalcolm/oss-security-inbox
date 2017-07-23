@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/9
-Message-ID: <nycvar.YSQ.7.76.1711282327100.6216@wniryva>
-Date: Tue, 28 Nov 2017 23:32:37 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Eric Blake <eblake@...hat.com>
-Subject: CVE-2017-15119 Qemu: DoS via large option request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/23/1
+Message-ID: <20170723124904.jqjpxabvazcaepxl@tunkki>
+Date: Sun, 23 Jul 2017 15:49:04 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, High-Tech Bridge Security Research <advisory@...ridge.ch>
+Subject: Re: ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Sun, Jul 16, 2017 at 03:01:39PM +0300, Henri Salo wrote:
+> This has also been pending for over a year. Is this related to these new
+> assigments or does this still need new CVE?
+> https://www.htbridge.com/advisory/HTB23297
 
-Quick Emulator(Qemu) built with the Network Block Device(NBD) server support 
-is vulnerable to a denial-of-service issue. It could occur if a client sent 
-large option requests, making server waste CPU time on reading up to 4G bytes.
+Please use CVE-2016-10400.
 
-A client could use this flaw to keep the NBD server from serving other 
-requests, resulting in DoS.
+-- 
+Henri Salo
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg05044.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1516925
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
