@@ -1,46 +1,190 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/20/1
-Message-ID: <20170420080100.3pwt7tgz46xya4ym@nora.maurer-it.com>
-Date: Thu, 20 Apr 2017 10:01:00 +0200
-From: Fabian Grünbichler <f.gruenbichler@...xmox.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/24/1
+Message-ID: <20170724101204.GA22772@f195.suse.de>
+Date: Mon, 24 Jul 2017 12:12:04 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Wolfgang Bumiller <w.bumiller@...xmox.com>
-Subject: CVE-2017-7979: Linux kernel: local DoS via packet action API
+Subject: tcmu-runner: multiple vulnerabilities in tcmu-runner daemon allowing local DoS, information leak and a memory leak
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-7979 [1] was assigned to the following issue:
+A security audit of tcmu-runner's D-Bus service implementation showed a
+number of security issues.
 
-The cookie feature in the packet action API implementation in
-net/sched/act_api.c in the Linux kernel 4.11.x through 4.11-rc7
-mishandles the tb nlattr array, which allows local users to cause a
-denial of service (uninitialized memory access and refcount underflow,
-and system hang or crash) or possibly have unspecified other impact via
-"tc filter add" commands in certain contexts.
+I've requested CVEs for these issues, request is still pending. I will
+update once I've got them.
 
-The fix has been sent upstream [2], whether all related issues are fixed by
-the two proposed patches (see whole thread at [3]) is still under
-discussion.
+It seems upstream will remove the D-Bus interface completely from the
+tcmu-runner daemon in the future.
 
-Not affected:
-- Upstream: stable kernels from kernel.org, such as 4.10.x
+Package: https://github.com/open-iscsi/tcmu-runner
 
-Affected:
-- Upstream: all current 4.11 RCs (rc1-rc7) are affected.
-- Ubuntu 17.04: commit 1045ba77a ("net sched actions: Add support for
-  user cookies") which introduced the problematic code was backported to
-  Ubuntu 17.04's "Ubuntu-4.10.0-15.17" kernel, which is affected[4].
-- Proxmox VE 5.0 Beta: the Proxmox VE kernel 4.10.5-1 which was based on
-  Ubuntu-4.10.0-15.17 was affected[5], the subsequently released PVE
-  kernel 4.10.8-1 contains the fix from [2]. The current PVE stable
-  release 4.4 is not affected.
+------------------------------------------------------------------------
+glfs handler allows local DoS via crafted CheckConfig strings
+------------------------------------------------------------------------
 
-Thanks to Wolfang Bumiller for analysis and proposed fixes.
-Thanks to "Ivensiya" <ivensiya@...il.com> for the initial bug report[5]
-that lead to the discovery.
+Description:
 
-1: https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7979
-2: https://marc.info/?l=linux-netdev&m=149200746116365
-3: https://marc.info/?l=linux-netdev&m=149251041420195
-4: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1682368
-5: https://bugzilla.proxmox.com/show_bug.cgi?id=1351
+A local non-root user with access to the D-Bus system bus can call the
+CheckConfig method implemented in the tcmu-runner daemon via
+handler_glfs.so and cause various kinds of segmentation faults,
+depending on the string passed to the method.
 
+For example the "hosts" variable in glfs_check_config() is not zero
+initialized, but always freed on error, causing invalid free and/or
+invalid memory accesses.
+
+References:
+
+- The check_config callback implementation was recently removed upstream
+  in this commit:
+
+  https://github.com/open-iscsi/tcmu-runner/commit/61bd03e600d2abf309173e9186f4d465bb1b7157
+
+- SUSE bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1049485
+
+Reproducer:
+
+# start the tcmu-runner service as root
+systemctl restart tcmu-runner.service
+# run this dbus command as a regular user
+dbus-send --system --print-reply --dest=org.kernel.TCMUService1 /org/kernel/TCMUService1/glfs org.kernel.TCMUService1.CheckConfig string:something
+# -> tcmu-runner daemon will have crashed with segmentation fault
+
+------------------------------------------------------------------------
+UnregisterHandler dbus method in tcmu-runner daemon for non-existing
+handler causes DoS
+------------------------------------------------------------------------
+
+Description:
+
+A local non-root user with access to the D-Bus system bus can call the
+UnregisterHandler method implemented in the tcmu-runner daemon with the
+name of an unknown tcmu runner handler as parameter and cause a NULL
+pointer dereference.
+
+References:
+
+- upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/e2d953050766ac538615a811c64b34358614edce
+- SUSE bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1049488
+
+Reproducer:
+
+# start the tcmu-runner service as root
+systemctl restart tcmu-runner.service
+# run this dbus command as a regular user
+dbus-send --system --print-reply --dest=org.kernel.TCMUService1 /org/kernel/TCMUService1/HandlerManager1 org.kernel.TCMUService1.HandlerManager1.UnregisterHandler string:fake_handler
+# -> tcmu-runner daemon will have crashed with segmentation fault
+
+
+
+------------------------------------------------------------------------
+UnregisterHandler D-Bus method in tcmu-runner daemon for internal
+handler causes DoS
+------------------------------------------------------------------------
+
+Description:
+
+A local non-root user with access to the D-Bus system bus can call the
+UnregisterHandler method implemented in the tcmu-runner daemon with the
+name of a handler loaded internally in tcmu-runner via dlopen() and
+cause a NULL pointer dereference resulting in DoS.
+
+References:
+
+- upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/bb80e9c7a798f035768260ebdadffb6eb0786178
+- SUSE bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1049489
+
+Reproducer:
+
+# start the tcmu-runner service as root
+systemctl restart tcmu-runner.service
+# run this dbus command as a regular user, it will attempt to unregister the
+# locally loaded qcow handler
+dbus-send --system --print-reply --dest=org.kernel.TCMUService1 /org/kernel/TCMUService1/HandlerManager1 org.kernel.TCMUService1.HandlerManager1.UnregisterHandler string:qcow
+# -> tcmu-runner daemon will have crashed with segmentation fault
+
+
+------------------------------------------------------------------------
+Memory leaks can be triggered in tcmu-runner daemon by calling D-Bus
+method for (Un)RegisterHandler
+------------------------------------------------------------------------
+
+Description:
+
+A local non-root user with access to the D-Bus system bus can call the
+RegisterHandler or UnregisterHandler methods implemented in the
+tcmu-runner daemon to trigger memory leaks. Done so repeatedly would
+cause a root daemon to hog memory, possibly resulting in DoS for the
+daemon itself or other system components that fail to acquire memory as
+a result.
+
+References:
+
+- upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/7a78eda52d973d3edc06fea84ad874678d6055f0
+- SUSE bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1049490
+
+Reproducer:
+
+# *stop* the tcmu-runner service as root
+systemctl restart tcmu-runner.service
+# run the tcmu-runner service as root in valgrind
+valgrind --max-stackframe=2097208 --leak-check=full /usr/bin/tcmu-runner
+# run this dbus command multiple times as a regular user (this will trigger
+# the leak in RegisterHandler)
+dbus-send --system --print-reply --dest=org.kernel.TCMUService1 /org/kernel/TCMUService1/HandlerManager1 org.kernel.TCMUService1.HandlerManager1.RegisterHandler string:0memory string:stuff
+# ctrl-c the valgrind process and you'll see an amount of "definitely lost"
+# bytes. when doing the same without the dbus-send calls this sould be zero
+# "definitely lost" bytes
+
+
+
+------------------------------------------------------------------------
+qcow handler opens up an information leak via the CheckConfig D-Bus
+method
+------------------------------------------------------------------------
+
+Description:
+
+A local non-root user with access to the D-Bus system bus can call the
+CheckConfig method implemented in the tcmu-runner daemon via
+handler_qcow.so and exploit an information leak by passing in arbitrary
+filenames to check.
+
+This allows a local user to check for the existence of root owned files,
+which might enable more serious security issues in combination with
+other security flaws in a system.
+
+References:
+
+- upstream fix:
+
+  This one is difficult to fix, upstream asked me to remove all
+  check_config callbacks instead:
+
+  https://github.com/open-iscsi/tcmu-runner/commit/8cf8208775022301adaa59c240bb7f93742d1329
+
+- SUSE bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1049491
+
+Reproducer:
+
+# start the tcmu-runner service as root
+systemctl restart tcmu-runner.service
+# run this dbus command as a regular user
+dbus-send --system --print-reply --dest=org.kernel.TCMUService1 /org/kernel/TCMUService1/qcow org.kernel.TCMUService1.CheckConfig string://root/.bash_history
+# this will return True if /root/.bash_history exists, False otherwise
+
+Regards
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
+
+SUSE Linux GmbH 
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
