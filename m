@@ -1,4 +1,9 @@
-Received: (qmail 24062 invoked by uid 550); 12 May 2025 16:30:16 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1635" "Monday" "24" "July" "2017" "09:53:39" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<2085299843.33841899.1500904419181.JavaMail.zimbra@redhat.com>" "38" "[oss-security] CVE-2017-7541: Linux kernel: Memory corruption due to a buffer overflow in brcmf_cfg80211_mgmt_tx()" "^Date:" nil nil "7" "2017072413:53:39" "[oss-security] CVE-2017-7541: Linux kernel: Memory corruption due to a buffer overflow in brcmf_cfg80211_mgmt_tx()" (number mark "        vdronov@redh Jul 24   38/1635  " thread-indent "\"[oss-security] CVE-2017-7541: Linux kernel: Memory corruption due to a buffer overflow in brcmf_cfg80211_mgmt_tx()\"\n") "<536644882.33835500.1500903254025.JavaMail.zimbra@redhat.com>" ("<536644882.33835500.1500903254025.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7557 invoked by uid 550); 24 Jul 2017 13:53:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,107 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25723 invoked from network); 12 May 2025 13:28:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1747056478; x=1747661278; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fJq9MMxCNCySUwInTtE73ViqBVVtm86wJ9No6MLAYk0=;
-        b=Q7xLSfJlFX8enPUqTQ7bRDNm079QfDdY8idXa35HT8aoLGNiuHX1pP3NbryE/KZaYh
-         2aTa3baSnKatUArCtuAJsq/W+6ZWXraSHxQASSVpnzE4EKrSSwTkW1dO4TcxAVzowkP2
-         N1UqND1JNg3l6w2NkPF7SC5RtPpWvPq1ILCNA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747056478; x=1747661278;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fJq9MMxCNCySUwInTtE73ViqBVVtm86wJ9No6MLAYk0=;
-        b=J5q/U1pi6gz+pK5+ghcAODXxdzejNCuFWS/tauE6GV27YLoKZxnl/2JE9fwe4PL0YS
-         MLE8lWNvIVGngrcGu0240eTrWYFWJafweFu88ATA78J2/IzqBbAEIGw/fgYonmZOYb03
-         FLpDokd29Ccmza8nPr6dKE+zPsvug2fo5ifT+A+Dc7Rw+uRUxNH+b3KbSR9872l9E1L/
-         2hrfVqajl3AqUps3dUlsllBMNQHPnTZ3smLufhcFJyk5bm+Kbu2x6eTT27lXf5VTBfVB
-         RoV0KSjBf5EJVlsyEh1OU+nxHB8RJn2DvPdIxmBjw39U3fYouOUiPWEUANb815CZmMZj
-         Pmyw==
-X-Gm-Message-State: AOJu0Ywfr+ahcYxmUvUqgxtAF3rSJLqghbRwXwJvHwGKxzd+4rxJDyLG
-	zUOum+kj43SGPqJR2xHERm78QedXEqRVOjsTTpX40qbUGW3iFxd7gn2/rH3cajTIv17Be1N7Sm4
-	Vxf4vg3BPp549De7F1dfy1BLo/EOfstFH2vGc966QbItInIOOwPUclTL+ZGGb1uxXqL2HGOAmKK
-	WrGkkQ5ZckkesAZuxRLy5ykNuO96INhJp6BfC06vCXLLoeNQ==
-X-Gm-Gg: ASbGnct0k/Xo5Z2KydMHCXfwb6GdP9vyLthoD53ovXkRtb6oqTIQ6JTEJ3Dth37uAW4
-	h6XQheF+22Xk6L5EWy2BYlY++P46fO4aCg00ALYYjR3VrH6HWEvN3VqXcAj36LaqdyKrMTkRAfW
-	GyMzBR3ZaTDkxJZ23/tbylfZVnDnC7mAF+jiVQCdeaRkeW/FYuuBmwz2nA5U/LIXJZ3w==
-X-Google-Smtp-Source: AGHT+IEa9+s+2VpuPefYNTSuF0FF2kMI/icldhr7m0EHdJ0mOTWCDfS8LRIrOPGknW1PqLo4cpHWUgX30XKLQ5mUcJs=
-X-Received: by 2002:a17:906:e097:b0:ad2:25a3:2ccd with SMTP id
- a640c23a62f3a-ad225a32d67mr657256266b.37.1747056477791; Mon, 12 May 2025
- 06:27:57 -0700 (PDT)
+Received: (qmail 7533 invoked from network); 24 Jul 2017 13:53:51 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com A858DC056828
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=vdronov@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com A858DC056828
+Message-ID: <2085299843.33841899.1500904419181.JavaMail.zimbra@redhat.com>
+In-Reply-To: <536644882.33835500.1500903254025.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-From: VMware PSIRT <vmware.psirt@broadcom.com>
-Date: Mon, 12 May 2025 18:57:46 +0530
-X-Gm-Features: AX0GCFsoF-w631kHsUHQODQBLn_NEPF1QlAU2CPoEvjM8tRBH1plMcYe7DUUGTs
-Message-ID: <CADOAh9cRx64wR8a7X7918ma_nkYDXzQ8uK6Jsp0q4oe-ECr3Eg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.4.197, 10.4.195.6]
+Thread-Topic: CVE-2017-7541: Linux kernel: Memory corruption due to a buffer overflow in brcmf_cfg80211_mgmt_tx()
+Thread-Index: KP+iQlmdar1ck8rFvOQ+oONg+FkOXQ==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Mon, 24 Jul 2017 13:53:39 +0000 (UTC)
+Date: Mon, 24 Jul 2017 09:53:39 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-7541: Linux kernel: Memory corruption due to a buffer
+ overflow in brcmf_cfg80211_mgmt_tx()
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000c315fa0634f04800"
-Subject: [oss-security] CVE-2025-22247 - Insecure file handling vulnerability in open-vm-tools
 
---000000000000c315fa0634f04800
-Content-Type: text/plain; charset="UTF-8"
+Hello,
 
-Description
+Kernel memory corruption due to a buffer overflow was found in brcmf_cfg80211_mgmt_tx()
+function in Linux kernels from v3.9-rc1 to v4.13-rc1. It can be triggered by sending
+crafted NL80211_CMD_FRAME packet via netlink.
 
-==============================================================
+There was a research if this flaw could be triggered remotely, by sending packets on
+the air, the result follows:
 
-CVE-2025-22247: open-vm-tools contains an insecure file handling
-vulnerability. VMware has evaluated the severity of this issue to be in the
-Moderate severity range with a maximum CVSSv3 base score of 6.1 -
-CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:N.
+RX notification is regarding event send to a userspace program, which is
+usually the "wpa_supplicant" or "hostapd". The userspace can register
+in kernel via NL80211_CMD_REGISTER_FRAME to pass management frames to it.
+This flaw would be remote exploitable if a userspace program registers to
+receive some management frames and then pass it back to a kernel without
+a modification. I'm not sure if any user space program do that, I think
+"hostapd" or "wpa_supplicant" don't, but to be sure, it will require to
+fully analyze theirs source code.
+(Stanislaw Gruszka <sgruszka@redhat.com>)
 
+So, this flaw is unlikely to be triggered remotely, as certain userspace code is needed
+for this. An unprivileged local user could use this flaw to induce kernel memory corruption
+on the system, leading to a crash. Due to the nature of the flaw, privilege escalation
+cannot be fully ruled out, although we believe it is unlikely.
 
-Known Attack Vectors
+cvss3=6.8/CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H
+cwe=CWE-120
 
-==============================================================
+References:
 
-A malicious actor with non-administrative privileges on a guest VM may
-tamper the local files to trigger insecure file operations within that VM.
+https://bugzilla.redhat.com/show_bug.cgi?id=1473198
 
+https://bugzilla.novell.com/show_bug.cgi?id=1049645
 
+https://www.spinics.net/lists/stable/msg180994.html
 
-Remediation
+Upstream patch:
 
-==============================================================
-
-The following patches are provided for released versions of open-vm-tools:
-
-https://github.com/vmware/open-vm-tools/tree/CVE-2025-22247.patch
-
-
-The patches have been tested against the above open-vm-tools releases. Each
-applies cleanly with:
-
-
-    git am         for a git repository.
-
-    patch -p2     in the top directory of an open-vm-tools source tree.
-
-==============================================================
-
-
-------
-Thanks,
-Praveen Singh
-Broadcom PSIRT - VCF Division
-vmware.psirt@broadcom.com
-
--- 
-This electronic communication and the information and any files transmitted 
-with it, or attached to it, are confidential and are intended solely for 
-the use of the individual or entity to whom it is addressed and may contain 
-information that is confidential, legally privileged, protected by privacy 
-laws, or otherwise restricted from disclosure to anyone else. If you are 
-not the intended recipient or the person responsible for delivering the 
-e-mail to the intended recipient, you are hereby notified that any use, 
-copying, distributing, dissemination, forwarding, printing, or copying of 
-this e-mail is strictly prohibited. If you received this e-mail in error, 
-please return the e-mail to the sender, delete it from your computer, and 
-destroy any printed copy of it.
-
---000000000000c315fa0634f04800--
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8f44c9a41386729fea410e688959ddaa9d51be7c
