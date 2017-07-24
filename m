@@ -1,68 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/7
-Message-ID: <CAA7hUgFm+YU3XT7xaOEohZTqn-e16N_LQUtfkggMkXdbuezi+w@mail.gmail.com>
-Date: Sun, 17 Dec 2017 21:03:38 +0100
-From: Raphael Geissert <atomo64@...il.com>
-To: Stefano Brivio <sbrivio@...hat.com>
-Cc: Open Source Security <oss-security@...ts.openwall.com>, security@...atype.com
-Subject: Re: Sonatype Nexus Repository Manager 2.x weak password encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/24/3
+Message-ID: <A047823A-119C-4C8E-A41E-313270E085BA@vmware.com>
+Date: Mon, 24 Jul 2017 20:20:40 +0000
+From: VMware Security Response Center <security@...are.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [CVE-2015-5191] local privilege escalation in Open VMware Tools
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Open VMware Tools (CVE-2015-5191) contains multiple file system races in libDeployPkg, related to the use of hard-coded paths under /tmp.
+Successful exploitation may result in a local privilege escalation. The impact of this vulnerability is low for distributions which have enabled PrivateTmp for the affected service.
+Fixes/References
+--------------
+9.10.x – https://github.com/vmware/open-vm-tools/commit/c1304ce8bfd9c0c33999e496bf7049d5c3d45821
+10.0.x - https://github.com/vmware/open-vm-tools/commit/b3068b04880eda4ca3e13f2d34fb8ce336ad1a4f
+10.1.x - https://github.com/vmware/open-vm-tools/commit/22e58289f71232310d30cf162b83b5151a937bac
+We would like to thank Florian Weimer and Kurt Seifried of Red Hat Product Security for reporting this issue to us.
 
-On Sunday, 17 December 2017 15:17:45 CET Stefano Brivio wrote:
-> On Sun, 17 Dec 2017 13:53:47 +0100
->
-> Raphael Geissert <atomo64@...il.com> wrote:
-> > Hi,
-> >
-> > The Nexus Repository Manager in at least version 2.14.5 [0] (latest of
-> > the 2.x series), stores the LDAP bind password in an on-disk file
-> > using PBE (bouncy castle's implementation of PBEWithSHAAnd128BitRC4).
-> >
-> > This is all great except for:
-> > - it using only 23 iterations[1]
-> > - it using a hard-coded and weak password[2]
-> >
-> > Therefore offering as much protection as a rot13 would.
-> >
-> > Given that the same PasswordHelper containing the weak password is
-> > present elsewhere in the code, it is very likely that this weak crypto
-> > issue affects other passwords stored by Nexus:
-> >
-> > -
-> >
-components/nexus-core/src/main/java/org/sonatype/nexus/configuration/Pass
-> > wordHelper.java[3] -
-> >
-components/nexus-security/src/main/java/org/sonatype/security/configurati
-> > on/source/PasswordHelper.java[4]
-> >
-> > It appears that this code is no longer used by the 3.x series.
-> >
-> > FWIW, the on-file password is:
-> >
-> > base64(SALT_SIZE || SALT || PBE_OUTPUT )
-> >
-> > SALT_SIZE always being 8 (hard-coded).
-> >
-> > N.b. I'll be filing a CVE request in a moment.
-
-This is now CVE-2017-17717.
-
-> > N.b. I have not contacted sonatype. I couldn't find an email address.
->
-> The page at https://www.sonatype.com/contactus says:
->
-> 1. Send urgent or sensitive reports to security@...atype.com.
-> 2. Use our public key to keep your message safe.
-> 3. Provide us with a secure way to respond.
-> 4. We’ll get back to you as soon as we can. Usually within 24 hours.
-
-Oh, I somehow missed it. Thanks for the pointer and for copying it to
-sonatype.
-
-Cheers,
--- 
-Raphael Geissert
-
+--------------
+Edward Hawkins
+Senior Program Manager, Security Response
+security@...are.com
