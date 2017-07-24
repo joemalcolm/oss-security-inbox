@@ -1,42 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/11/2
-Message-ID: <20171011044549.4p5ochtrxok2nmem@lorien.valinor.li>
-Date: Wed, 11 Oct 2017 06:45:49 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Leon Zhao <leon.zhao.7@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Two DoS vulneribilities in libextractor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/24/2
+Message-ID: <2085299843.33841899.1500904419181.JavaMail.zimbra@redhat.com>
+Date: Mon, 24 Jul 2017 09:53:39 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-7541: Linux kernel: Memory corruption due to a buffer overflow in brcmf_cfg80211_mgmt_tx()
 Content-Type: text/plain; charset=utf-8
 
-Hi Leon,
+Hello,
 
-On Wed, Oct 11, 2017 at 11:40:33AM +0800, Leon Zhao wrote:
-> Hello oss security,
-> 
-> I found two DoS vulneribilities in libextractor,
-> 
-> Affected version
-> 1.4
-> 
-> 1. Divide-By-Zero
-> https://bugzilla.redhat.com/show_bug.cgi?id=1499599
-> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00002.html
-> Fixed
-> 
-> 2. Null Pointer Dereference
-> https://bugzilla.redhat.com/show_bug.cgi?id=1499600
-> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00003.html
-> Fixed
+Kernel memory corruption due to a buffer overflow was found in brcmf_cfg80211_mgmt_tx()
+function in Linux kernels from v3.9-rc1 to v4.13-rc1. It can be triggered by sending
+crafted NL80211_CMD_FRAME packet via netlink.
 
-As this states explicitly a 'CVE request' on the subject. Please note
-that CVEs cannot be requested anymore via the oss-security list,
-instead please fill the form at https://cveform.mitre.org/ 
+There was a research if this flaw could be triggered remotely, by sending packets on
+the air, the result follows:
 
-Once you got CVEs assigned, can you please post those assignment
-following up here on your original post to have the other members of
-this list informed on the assignment.
+RX notification is regarding event send to a userspace program, which is
+usually the "wpa_supplicant" or "hostapd". The userspace can register
+in kernel via NL80211_CMD_REGISTER_FRAME to pass management frames to it.
+This flaw would be remote exploitable if a userspace program registers to
+receive some management frames and then pass it back to a kernel without
+a modification. I'm not sure if any user space program do that, I think
+"hostapd" or "wpa_supplicant" don't, but to be sure, it will require to
+fully analyze theirs source code.
+(Stanislaw Gruszka <sgruszka@...hat.com>)
 
-Thanks for your contribution!
+So, this flaw is unlikely to be triggered remotely, as certain userspace code is needed
+for this. An unprivileged local user could use this flaw to induce kernel memory corruption
+on the system, leading to a crash. Due to the nature of the flaw, privilege escalation
+cannot be fully ruled out, although we believe it is unlikely.
 
-Regards,
-Salvatore
+cvss3=6.8/CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H
+cwe=CWE-120
+
+References:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1473198
+
+https://bugzilla.novell.com/show_bug.cgi?id=1049645
+
+https://www.spinics.net/lists/stable/msg180994.html
+
+Upstream patch:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8f44c9a41386729fea410e688959ddaa9d51be7c
