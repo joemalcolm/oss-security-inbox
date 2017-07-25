@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["392" "Thursday" "18" "October" "2018" "17:10:38" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20181018151038.yocny6uyklflclka@jwilk.net>" "10" "Re: [oss-security] Travis CI MITM RCE" "^Date:" nil nil "10" "2018101815:10:38" "[oss-security] Travis CI MITM RCE" (number mark "        jwilk@jwilk. Oct 18   10/392   " thread-indent "\"Re: [oss-security] Travis CI MITM RCE\"\n") "<a52da3a0-e371-66ca-acc6-72b4fc922381@johannes-bauer.com>" ("<20180825214923.ppes3ivrw73mbmrm@jwilk.net>" "<20180826005658.GA5795@osmium.pennocktech.home.arpa>" "<87sh2y5tnf.fsf@fifthhorseman.net>" "<3e3fad60-244f-e11d-f3c9-4757be6e6f93@johannes-bauer.com>" "<20180831121802.4mq7cag23e4fkzoz@raspberrypi>" "<a52da3a0-e371-66ca-acc6-72b4fc922381@johannes-bauer.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["923" "Tuesday" "25" "July" "2017" "16:46:19" "+0100" "John Haxby" "john.haxby@oracle.com" "<430b7126-01a4-0b15-cee2-4bd1a34945de@oracle.com>" "20" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017072515:46:19" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        john.haxby@o Jul 25   20/923   " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>" ("<20170628200239.GA25525@openwall.com>" "<CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>" "<20170702224421.GA19376@openwall.com>" "<7b91f9d5-153b-d265-3bb0-ecc11437c469@oracle.com>" "<20170703181857.GA24978@openwall.com>" "<9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17797 invoked by uid 550); 18 Oct 2018 15:10:52 -0000
+Received: (qmail 21649 invoked by uid 550); 25 Jul 2017 15:46:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17776 invoked from network); 18 Oct 2018 15:10:52 -0000
-Message-ID: <20181018151038.yocny6uyklflclka@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20180825214923.ppes3ivrw73mbmrm@jwilk.net>
- <20180826005658.GA5795@osmium.pennocktech.home.arpa>
- <87sh2y5tnf.fsf@fifthhorseman.net>
- <3e3fad60-244f-e11d-f3c9-4757be6e6f93@johannes-bauer.com>
- <20180831121802.4mq7cag23e4fkzoz@raspberrypi>
- <a52da3a0-e371-66ca-acc6-72b4fc922381@johannes-bauer.com>
+Received: (qmail 21629 invoked from network); 25 Jul 2017 15:46:36 -0000
+References: <20170628200239.GA25525@openwall.com>
+ <CA+aC4kuUKG4CndFjbT=+LSctTXL=Xfrfze6ZE3ZCp7XCHM5OQg@mail.gmail.com>
+ <20170702224421.GA19376@openwall.com>
+ <7b91f9d5-153b-d265-3bb0-ecc11437c469@oracle.com>
+ <20170703181857.GA24978@openwall.com>
+ <9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>
+Message-ID: <430b7126-01a4-0b15-cee2-4bd1a34945de@oracle.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
+In-Reply-To: <9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a52da3a0-e371-66ca-acc6-72b4fc922381@johannes-bauer.com>
-User-Agent: NeoMutt/20180716
-X-Ovh-Tracer-Id: 11704855433277200294
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtkedrfeeggdekhecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecu
-Date: Thu, 18 Oct 2018 17:10:38 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
+X-Source-IP: aserv0021.oracle.com [141.146.126.233]
+Date: Tue, 25 Jul 2017 16:46:19 +0100
+From: John Haxby <john.haxby@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Travis CI MITM RCE
+Subject: Re: [oss-security] accepting new members to (linux-)distros lists
 To: oss-security@lists.openwall.com
 
-* zugtprgfwprz@spornkuller.de, 2018-08-31, 22:25:
->I.e., my point was that for a given key that's uploaded with a fixed 
->fingerprint, we're not talking about 2^(b/2) collision complexity, but 
->2^(b-1) second preimage complexity.
+On 03/07/17 19:55, John Haxby wrote:
+>> On 3 Jul 2017, at 19:18, Solar Designer <solar@openwall.com> wrote:
+>>
+>>> PS For contributing back I have given myself a "must try harder" mark.
+>> Thanks.  Please let us know at which specific tasks you'll try harder.
+> 
+> Will do.   I’m in the middle of a house move at the moment so everything is a little chaotic so I’ll get back to you next week when, hopefully, the dust has settled somewhat.
 
-Nitpicking, but for an ideal n-bit hash function, on avergage you need 
-2ⁿ (not 2ⁿ⁻¹) evalutations of the function to find the preimage.
+Still in the middle of the house move and it's all generally chaos and
+sorry for not getting back sooner.
 
--- 
-Jakub Wilk
+However, put me down as backup for "1. Promptly review new issue reports
+for meeting the list's requirements and confirm receipt..."
+
+I do expect that we (I) will become more active on linux-distros as
+well.   Speaking of which, has it been unusually quiet or do I need to
+beat up the mail admin people again?   I haven't seen anything since
+Bastille Day (14 July).
+
+jch
