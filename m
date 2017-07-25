@@ -1,14 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/4
-Message-ID: <8698906.Jpa684UyaA@wanheda>
-Date: Fri, 01 Sep 2017 14:01:07 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/25/3
+Message-ID: <20170725160054.jlfe6wdr2jzzd57p@tunkki>
+Date: Tue, 25 Jul 2017 19:00:54 +0300
+From: Henri Salo <henri@...v.fi>
+To: John Haxby <john.haxby@...cle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-This is CVE-2017-14041
+On Tue, Jul 25, 2017 at 04:46:19PM +0100, John Haxby wrote:
+> I do expect that we (I) will become more active on linux-distros as
+> well.   Speaking of which, has it been unusually quiet or do I need to
+> beat up the mail admin people again?   I haven't seen anything since
+> Bastille Day (14 July).
+
+Some admins are currently travelling and enjoying vacation time. Everything
+should be back to normal after this week. Please no beating up, my leg hurts
+already..
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Henri Salo
