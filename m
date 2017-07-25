@@ -1,54 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/1
-Message-ID: <6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com>
-Date: Sun, 17 Sep 2017 12:27:41 +0100
-From: Luke Hinds <lhinds@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: [OSSN-0081] sha512_crypt is insufficient for password hashing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/25/2
+Message-ID: <430b7126-01a4-0b15-cee2-4bd1a34945de@oracle.com>
+Date: Tue, 25 Jul 2017 16:46:19 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
-sha512_crypt is insufficient for password hashing
--------------------------------------------------
+On 03/07/17 19:55, John Haxby wrote:
+>> On 3 Jul 2017, at 19:18, Solar Designer <solar@...nwall.com> wrote:
+>>
+>>> PS For contributing back I have given myself a "must try harder" mark.
+>> Thanks.  Please let us know at which specific tasks you'll try harder.
+> 
+> Will do.   I’m in the middle of a house move at the moment so everything is a little chaotic so I’ll get back to you next week when, hopefully, the dust has settled somewhat.
 
-### Summary ###
+Still in the middle of the house move and it's all generally chaos and
+sorry for not getting back sooner.
 
-Use of sha512_crypt for password hashing in versions of Keystone prior
-to Pike, is insufficient and provides limited protection against
-brute-forcing of password hashes.
+However, put me down as backup for "1. Promptly review new issue reports
+for meeting the list's requirements and confirm receipt..."
 
-### Affected Services / Software ###
-OpenStack Identity Service (Keystone). OpenStack Releases Ocata, Newton.
+I do expect that we (I) will become more active on linux-distros as
+well.   Speaking of which, has it been unusually quiet or do I need to
+beat up the mail admin people again?   I haven't seen anything since
+Bastille Day (14 July).
 
-### Discussion ###
-
-Keystone uses sha512_crypt for password hashing. This provides
-insufficient and limited protection, since sha512_crypt algorithm has a
-low computational cost factor, therefore making it easier to crack
-passwords offline in a short period of time.
-
-The correct mechanism is to use the more secure hashing algorithms with
-a higher computational cost factor such as bcrypt, scrypt, or
-pbkdf2_sha512 instead of sha512_crypt.
-
-### Recommended Actions ###
-
-It is recommended that operators upgrade to the Pike release where all
-future passwords would be bcrypt hashed.
-
-Operators should also force password changes on all users [1], which
-will result in the users newly generated passwords being bcrypt hashed.
-
-### Contacts / References ###
-Author: Luke Hinds <lhinds@...hat.com>
-[1]:
-https://docs.openstack.org/keystone/latest/admin/identity-security-compliance.html#force-users-to-change-password-upon-first-use
-[2] http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf
-This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0081
-Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1668503
-Mailing List : [Security] tag on openstack-dev@...ts.openstack.org
-OpenStack Security Project : https://launchpad.net/~openstack-ossg
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+jch
