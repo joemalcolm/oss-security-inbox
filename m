@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/22/6
-Message-ID: <d17047aa-260c-2467-9426-2e128cd7a787@hpe.com>
-Date: Wed, 22 Mar 2017 14:54:30 -0600
-From: "Luedtke, Nicholas (HPE Linux Security)" <nicholas.luedtke@....com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: information about pwn2own Kernel problem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/25/6
+Message-ID: <7c8bc649-317c-cf85-4bc8-0759919c6960@oracle.com>
+Date: Tue, 25 Jul 2017 22:16:41 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
+On 25/07/17 19:04, Solar Designer wrote:
+> On Tue, Jul 25, 2017 at 04:46:19PM +0100, John Haxby wrote:
+>> However, put me down as backup for "1. Promptly review new issue reports
+>> for meeting the list's requirements and confirm receipt..."
+> 
+> OK, although I'd rather have the old-timers choose trickier tasks.
+> 
 
-On 3/22/2017 2:21 PM, Tyler Hicks wrote:
-> ZDI disclosed the information to the Ubuntu Security team a little less
-> than 48 hours ago.
->
-> The Ubuntu Kernel team has triaged the issue and came up with a
-> potential fix. That fix is undergoing internal review and I'll be
-> disseminating it via the usual channels once that is complete.
->
-> Tyler
-Is this an Ubuntu specific issue? Or does it affect the upstream kernels
-as well?
+Sorry.  I'll pick up things where I can and when I have time.
 
 
--- 
-Nicholas Luedtke
-HPE Linux Security, Hewlett-Packard Enterprise
+>> I do expect that we (I) will become more active on linux-distros as
+>> well.   Speaking of which, has it been unusually quiet or do I need to
+>> beat up the mail admin people again?   I haven't seen anything since
+>> Bastille Day (14 July).
+> 
+> It has been unusually quiet.  (And this is totally unrelated to the
+> travel and vacations that Henri mentioned.  If anything is sent to the
+> (linux-)distros list, it should get through without a delay anyway.)
 
+Thanks for confirming.
 
+jch
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
