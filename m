@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/6
-Message-ID: <874lr4fttg.fsf@grahamc.com>
-Date: Thu, 12 Oct 2017 08:12:59 -0400
-From: Graham Christensen <graham@...hamc.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/25/5
+Message-ID: <20170725180432.GA4946@openwall.com>
+Date: Tue, 25 Jul 2017 20:04:33 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Privilege escalation with kill(-1, SIGKILL) in XNU kernel of macOS High Sierra
+Subject: Re: accepting new members to (linux-)distros lists
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Jul 25, 2017 at 04:46:19PM +0100, John Haxby wrote:
+> However, put me down as backup for "1. Promptly review new issue reports
+> for meeting the list's requirements and confirm receipt..."
 
-One follow-up for the discussion on if this is a DoS or privilege
-escalation, in the logs we saw:
+OK, although I'd rather have the old-timers choose trickier tasks.
 
-    Service exited due to signal: Killed: 9 sent by nix-daemon[54108]
+> I do expect that we (I) will become more active on linux-distros as
+> well.   Speaking of which, has it been unusually quiet or do I need to
+> beat up the mail admin people again?   I haven't seen anything since
+> Bastille Day (14 July).
 
-and were able to (inconsistently) reproduce this with other unprivileged
-users.
+It has been unusually quiet.  (And this is totally unrelated to the
+travel and vacations that Henri mentioned.  If anything is sent to the
+(linux-)distros list, it should get through without a delay anyway.)
 
-This indicated to us that we hadn’t tripped just a crashing bug, but
-actually escalated beyond the normal access control protections of kill.
-
-Graham
+Alexander
