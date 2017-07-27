@@ -1,23 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/2
-Message-ID: <CAKSZ2QtFnvxxRAKSBiCB60T7LX641-+hVeeUddPmAYH426Zxdw@mail.gmail.com>
-Date: Thu, 7 Dec 2017 16:53:44 +0800
-From: feer james <pnigos70@...il.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: CVE Request -- Arbitrary command execution in mercurial repo with a git submodule
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/27/1
+Message-ID: <20170727051744.3zhfqpibx3v6262d@eldamar.local>
+Date: Thu, 27 Jul 2017 07:17:44 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Cacti: CVE-2017-11691: Cross-site scripting vulnerability in user profile management page (auth_profile.php)
 Content-Type: text/plain; charset=utf-8
 
-Hello mitre,
+Hi
 
-I'd like to request a cve id for this vulnerability.
+A Cross-site scripting vulnerability exists in cacti before [1] in the
+user profile managment page (auth_profile.php), allowing inject
+arbitrary web script or HTML via specially crafted HTTP Referer
+headers.
 
-*Vulnerability Details:*
-https://bz.mercurial-scm.org/show_bug.cgi?id=5730
+Upstream report: https://github.com/Cacti/cacti/issues/867
+Upstream fix: https://github.com/Cacti/cacti/commit/104090aeead4aa433bf1f18cd6d52dcfeb71236c
 
-*Offical fix release:*
-https://www.mercurial-scm.org/wiki/WhatsNew#Mercurial_4.4.1_.282017-11-07.29
+MITRE has assigned CVE-2017-11691 for this issue.
 
-
-Terry,
-Thanks!
-
+Regards,
+Salvatore
