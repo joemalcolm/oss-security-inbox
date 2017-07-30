@@ -1,34 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/9
-Message-ID: <20170706132816.GA3056@takahe.colorado.edu>
-Date: Thu, 6 Jul 2017 07:28:16 -0600
-From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/30/1
+Message-ID: <49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>
+Date: Sun, 30 Jul 2017 12:47:35 +0800 (CST)
+From: sohu0106 <sohu0106@....com>
 To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+Subject: Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 06, 2017 at 01:17:55PM +0100, Simon McVittie wrote:
-> systemd units are analogous to LSB init scripts,
-> which all start as root, and drop privileges internally if they want to.
+net/irda/af_irda.c
 
-Hmm, no, no and once again no. SystemdD units are sold as something simple and
-transparent, and hence *associated with a software they launch*, not a given
-systemD/OS version. In contrast, init scripts are specific to a distibution
-(would you just run init scripts from Debian on a CentOS or ArchLinux?)
+Sometimes irda_getsockopt() doesn't initialize all members of list field of irda_device_list struct.  This structure is then copied to
+userland.  It leads to leaking of contents of kernel stack memory.  We have to initialize them to zero , or it will allows local users to obtain potentially sensitive information from kernel stack memory by reading a copy of this structure
 
-For example, if I maintain a backup script that drops privileges via su(1), I
-can use the wonderful systemD unit syntax, specify User=xxx and have my package
-manager install that user in post_install. The problem is that my new and shiny
-script won't work as intended on old systemD versions which silently ignore
-User= directive. This situation is far worse than a simple failure to properly
-parse User= config string that seems to so much excite ppl, as it obsoletes
-the User= directive and perhaps others too. I'm far from sysadmin culture, but
-is this called "sh*t hitting the fan"?
-
-So, the lesson for all developers would be to rely on systemD features as
-LITTLE as possible and do all important privilege stuff inside their software.
-SystemD units should therefore only contain Exec{Start,Stop,Restart}=.
-
-Cheers,
--- 
-Leonid Isaev
+https://github.com/torvalds/linux/pull/440
