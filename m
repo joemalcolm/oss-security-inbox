@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["623" "Tuesday" "28" "February" "2017" "17:25:24" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170228162524.47jesr3zopycriir@eldamar.local>" "23" "[oss-security] Linux: packet: fix races in fanout_add() (CVE-2017-6346)" nil nil nil "2" "2017022816:25:24" "[oss-security] Linux: packet: fix races in fanout_add() (CVE-2017-6346)" (number mark "U       carnil@debia Feb 28   23/623   " thread-indent "\"[oss-security] Linux: packet: fix races in fanout_add() (CVE-2017-6346)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["757" "Sunday" "30" "July" "2017" "12:47:35" "+0800" "sohu0106" "sohu0106@126.com" "<49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>" "17" "[oss-security] Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak" "^Date:" nil nil "7" "2017073004:47:35" "[oss-security] Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak" (number mark "        sohu0106@126 Jul 30   17/757   " thread-indent "\"[oss-security] Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10002 invoked by uid 550); 28 Feb 2017 16:25:38 -0000
+Received: (qmail 16095 invoked by uid 550); 30 Jul 2017 07:50:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9984 invoked from network); 28 Feb 2017 16:25:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=byNyKYMgGNRpSghBJRd48Z4l6ImQCO11PFcFt+3r+8s=;
-        b=hoXjfdXp4nOSLVs6EnWzLkl0ScjPlJudmEQdrgmZVFp2BpikOlQD/AZlEB4GmFaWYT
-         3KoV2F1MAHqBAar85CjK9k4vTb6/2mJsDwXMCHfjyd9tm4M6+CL36Hsi10a8sD/JhE6g
-         Ce3yp3q0gq6GgAS7elkd9UMROmMlX8YGYEsfttQCJ9uFaOFLtqmstF3ObR+wHW7a3sgT
-         RoFAN1C9gKy4ANp8FsDGGfW/J9ZNnFIu2OnG7wMH7dLZVxFV8eZlTA55+A+oy2Q8s38/
-         DOc2Hvr+ppA63HTW3Qs6LAC/SzXpYbsgXBDIufi1bfHL/uO1C1Gpbtg9EKxucYjMw2ei
-         D4Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=byNyKYMgGNRpSghBJRd48Z4l6ImQCO11PFcFt+3r+8s=;
-        b=XROMpbiNAiHG7maWg7Kr9P22RQswQ4ZFH0NSM55xAqXRNXTeN4To9+eiTo89PBhC3h
-         /1si9y84/S6jRJUoPhwNzVo/f1sYhR0+n3exwRdHHmg1WByE0MI0ekhoIrp5M39DjQD8
-         dclZZOEiVdk6AOrWNdftWlkBB06peZfFLVIwQuL2wujqV+jjUIve+53CDiyoolTdeYOT
-         3fp7Yo5lE+jDhbquZc8AOezF7T5vv3P8bN1ZF556pLHtJgNukSfVLv6XqtvWEEwFuKMN
-         JcMww3Z/Y62lC0MPNQML2ElZK3b3R45N5J7hvxwowuzwRpkziRywtV3ycrnaLfeSghov
-         qAHQ==
-X-Gm-Message-State: AMke39kiR5eTFosoUqhqshYNu3WM4t9B1Mi8GkPsStUTERQmxdFR4TQEHOjDvHDyHj7mzQ==
-X-Received: by 10.223.164.9 with SMTP id d9mr3169421wra.146.1488299126426;
-        Tue, 28 Feb 2017 08:25:26 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 28 Feb 2017 17:25:24 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20170228162524.47jesr3zopycriir@eldamar.local>
+Received: (qmail 22186 invoked from network); 30 Jul 2017 04:47:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=UgFBJ
+	4oVZygwDx6XBPC3f8J95p4j6gRJkPGeVY1mkfI=; b=Gf4QhG5sb7lxDPj3ejxZC
+	WE70TLxZViJC/SAnGqYyLMZUVkG2AHT9vA3CgNdmls2xK4Ug5fWZDsHDcBizpaiu
+	Q4fLTle4bgM+XXrwRZKQ3tB11duc6QNpZNqm5veh5HzjVGZ7ZA967CSPP9LnM9J/
+	XlHLxE7igQKEJTBOIJvGs8=
+X-Originating-IP: [153.3.28.15]
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20160729(86883.8884) Copyright (c) 2002-2017 www.mailtech.cn 126com
+X-CM-CTRLDATA: d1E/+WZvb3Rlcl9odG09Njg1OjU2
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_16384_665912389.1501390055869"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: [oss-security] Linux: packet: fix races in fanout_add() (CVE-2017-6346)
+Message-ID: <49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:MsqowACn377oZH1ZdjFjAQ--.5124W
+X-CM-SenderInfo: pvrk3iqrqwqiyswou0bp/1tbi3AwlHlag3iewXwABsK
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Date: Sun, 30 Jul 2017 12:47:35 +0800 (CST)
+From: sohu0106 <sohu0106@126.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak
+To: oss-security@lists.openwall.com
 
-Hi
+------=_Part_16384_665912389.1501390055869
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-CVE-2017-6346 was assigned by MITRE to the following (via
-https://cveform.mitre.org/):
+bmV0L2lyZGEvYWZfaXJkYS5jCgpTb21ldGltZXMgaXJkYV9nZXRzb2Nrb3B0
+KCkgZG9lc24ndCBpbml0aWFsaXplIGFsbCBtZW1iZXJzIG9mIGxpc3QgZmll
+bGQgb2YgaXJkYV9kZXZpY2VfbGlzdCBzdHJ1Y3QuICBUaGlzIHN0cnVjdHVy
+ZSBpcyB0aGVuIGNvcGllZCB0bwp1c2VybGFuZC4gIEl0IGxlYWRzIHRvIGxl
+YWtpbmcgb2YgY29udGVudHMgb2Yga2VybmVsIHN0YWNrIG1lbW9yeS4gIFdl
+IGhhdmUgdG8gaW5pdGlhbGl6ZSB0aGVtIHRvIHplcm8gLCBvciBpdCB3aWxs
+IGFsbG93cyBsb2NhbCB1c2VycyB0byBvYnRhaW4gcG90ZW50aWFsbHkgc2Vu
+c2l0aXZlIGluZm9ybWF0aW9uIGZyb20ga2VybmVsIHN0YWNrIG1lbW9yeSBi
+eSByZWFkaW5nIGEgY29weSBvZiB0aGlzIHN0cnVjdHVyZQoKaHR0cHM6Ly9n
+aXRodWIuY29tL3RvcnZhbGRzL2xpbnV4L3B1bGwvNDQw
 
-https://git.kernel.org/linus/d199fab63c11998a602205f7ee7ff7c05c97164b
+------=_Part_16384_665912389.1501390055869--
 
-> packet: fix races in fanout_add()
-> 
-> Multiple threads can call fanout_add() at the same time.
-> 
-> We need to grab fanout_mutex earlier to avoid races that could
-> lead to one thread freeing po->rollover that was set by another thread.
-> 
-> Do the same in fanout_release(), for peace of mind, and to help us
-> finding lockdep issues earlier.
-
-Since 4.2 the races can lead to a use-after-free.
-
-The fix was backported to 4.9.13 as well.
-
-Regards,
-Salvatore
