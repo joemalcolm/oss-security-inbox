@@ -1,45 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/26/2
-Message-ID: <20170126100724.99313jlcg64zbaec@webmail.alunos.dcc.fc.up.pt>
-Date: Thu, 26 Jan 2017 10:07:24 +0100
-From: up201407890@...nos.dcc.fc.up.pt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/31/4
+Message-ID: <20170731205316.GA12811@openwall.com>
+Date: Mon, 31 Jul 2017 22:53:16 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local  privesc on Linux
+Subject: Re: CoreOS membership to linux-distros (updated)
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+On Fri, Jul 21, 2017 at 03:26:47PM +0200, Solar Designer wrote:
+> I intend to add CoreOS to linux-distros in early August unless there are
+> any well-reasoned objections by then.
 
-I know I'm late to the party, but I was bored, so I decided to write  
-an exploit for CVE-2015-6565 which affects OpenSSH 6.8-6.9
-It is mostly considered to be a "DoS", even though Jann Horn publicly  
-told how it could be exploited for local privilege escalation, but I  
-guess its either PoC||GTFO for users to update.
+I've just added CoreOS to linux-distros.
 
- From https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6565
+On Tue, Jul 18, 2017 at 02:56:23PM -0700, Euan Kemp wrote:
+> Based on your previous messages, it sounds like it???s expected for us to
+> inherit 'primary' for the administrative tasks of:
+> > 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date) - primary: CloudLinux, backup: vacant
+> > 2. If the proposed public disclosure date is not within list policy, insist on getting this corrected and propose a suitable earlier date - primary: CloudLinux, backup: vacant
 
-"sshd in OpenSSH 6.8 and 6.9 uses world-writable permissions for TTY  
-devices, which allows local users to cause a denial of service  
-(terminal disruption) or possibly have unspecified other impact by  
-writing to a device, as demonstrated by writing an escape sequence."
+Off-list, CloudLinux kindly offered this:
 
-I think the description should be updated.
+On Sun, Jul 23, 2017 at 06:15:23AM -0700, Igor Seletskiy wrote:
+> We can pickup #3 & #6 as #1 & #2 are picked up by CoreOS.
 
-$ gcc not_an_sshnuke.c -o not_an_sshnuke
-$ ./not_an_sshnuke /dev/pts/3
-[*] Waiting for slave device /dev/pts/3
-[+] Got PTY slave /dev/pts/3
-[+] Making PTY slave the controlling terminal
-[+] SUID shell at /tmp/sh
-$ /tmp/sh --norc --noprofile -p
-# id
-euid=0(root) groups=0(root)
+On Tue, Jul 18, 2017 at 02:56:23PM -0700, Euan Kemp wrote:
+> I???ll also volunteer us for the administrative task of:
+> > 6. If multiple issues are reported at once, see if any of them can reasonably be made public sooner than the rest, and if so help untangle them and stay on top of their disclosure process
+> 
+> We???ll be happy to be on the lookout for possible conflation of issues
+> and kick off discussion if we think something can be broken up.
 
-Thanks,
-Federico Bento.
+Maybe Igor had overlooked the clash on #6, but anyway this combination
+resulted in:
 
+1. Promptly review new issue reports for meeting the list's requirements
+and confirm receipt of the report and, when necessary, inform the
+reporter of any issues with their report (e.g., obviously not actionable
+by the distros) and request and/or propose any required yet missing
+information (most notably, a tentative public disclosure date)
+- primary: CoreOS, backup: Oracle
 
+2. If the proposed public disclosure date is not within list policy,
+insist on getting this corrected and propose a suitable earlier date
+- primary: CoreOS, backup: CloudLinux
 
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
+3. Evaluate if the issue (or one of the issues) is effectively already
+public (e.g., a fix is committed upstream with a descriptive message)
+or/and is low severity and thus the report (or its portion pertaining to
+the issue) should be made public right away for one or both of these
+reasons, get a few other list members to confirm this understanding, and
+if there are no objections then communicate this strong preference to
+the reporter
+- primary: CloudLinux, backup: vacant
 
-View attachment "not_an_sshnuke.c" of type "text/x-csrc" (2039 bytes)
+6. If multiple issues are reported at once, see if any of them can
+reasonably be made public sooner than the rest, and if so help untangle
+them and stay on top of their disclosure process
+- primary: CoreOS, backup: CloudLinux
+
+This looks fine to me.
+
+However, many distros still haven't picked up a task, and many tasks are
+not picked up by any distro.  That should change.
+
+Alexander
