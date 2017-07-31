@@ -1,81 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/27/2
-Message-ID: <537176772.7443853.1490630809109.JavaMail.zimbra@redhat.com>
-Date: Mon, 27 Mar 2017 12:06:49 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/31/2
+Message-ID: <20170731152410.GA8881@openwall.com>
+Date: Mon, 31 Jul 2017 17:24:10 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE: kernel: drm/vmwgfx: check that number of mip levels is above zero in in vmw_surface_define_ioctl()
+Cc: sohu0106 <sohu0106@....com>
+Subject: Re: Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak
 Content-Type: text/plain; charset=utf-8
 
-hello,
+On Mon, Jul 31, 2017 at 04:03:57PM +0100, John Haxby wrote:
+> On 30/07/17 05:47, sohu0106 wrote:
+> > net/irda/af_irda.c
+> > 
+> > Sometimes irda_getsockopt() doesn't initialize all members of list field of irda_device_list struct.  This structure is then copied to
+> > userland.  It leads to leaking of contents of kernel stack memory.  We have to initialize them to zero , or it will allows local users to obtain potentially sensitive information from kernel stack memory by reading a copy of this structure
+> > 
+> > https://github.com/torvalds/linux/pull/440
+> 
+> Have you requested a CVE for this?
 
-CVE-2017-7261 was assigned for the following flaw in [vmwgfx] driver.
+Both messages sohu0106 posted initially had the Subject of "CVE request:
+kernel stack infoleaks", which I changed to the two more specific
+Subjects before approving the messages.  (I do that to especially
+non-descriptive Subjects from time to time, as long as the messages were
+not CC'ed to elsewhere.  I leave message bodies entirely intact.)
 
-> [Suggested description]
-> The vmw_surface_define_ioctl function in drivers/gpu/drm/vmwgfx/vmwgfx_surface.c in the Linux kernel through 4.10.5
-> does not check for a zero value of certain levels data, which
-> allows local users to cause a denial of service (ZERO_SIZE_PTR dereference, and
-> GPF and possibly panic) via a crafted ioctl call for
-> a /dev/dri/renderD* device.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> In was found that in the Linux kernel in vmw_surface_define_ioctl()
-> function in 'drivers/gpu/drm/vmwgfx/vmwgfx_surface.c' file, a
-> 'num_sizes' parameter is assigned a user-controlled value which is not
-> checked if it is zero. This is used in a call to kmalloc() and later
-> leads to dereferencing ZERO_SIZE_PTR, which in turn leads to a GPF and
-> possibly to a kernel panic.
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> CWE-839
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> kernel.org: Linux kernel
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> Linux kernel - all upto 4.11-rc3
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> vmw_surface_define_ioctl() function, drivers/gpu/drm/vmwgfx/vmwgfx_surface.c file
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Local
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> to exploit vulnerability a local user have to run a binary which makes certain ioctl() call
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://bugzilla.redhat.com/show_bug.cgi?id=1435719
-> https://lists.freedesktop.org/archives/dri-devel/2017-March/136814.html
-> http://marc.info/?t=149037004200005&r=1&w=2
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> Use CVE-2017-7261.
+Thus, sohu0106 wanted to request the CVEs from this list, and apparently
+didn't request them elsewhere.  sohu0106, this list is no longer a place
+to request CVEs from, but we appreciate the vulnerability notifications.
+You may request the CVEs from https://cveform.mitre.org and then post
+them in here, "replying" to your own messages on the list.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+sohu0106, have you also reported these issues upstream?  For the
+net/irda/af_irda.c issue, from the MAINTAINERS file:
+
+IRDA SUBSYSTEM
+M:      Samuel Ortiz <samuel@...tiz.org>
+L:      irda-users@...ts.sourceforge.net (subscribers-only)
+L:      netdev@...r.kernel.org
+W:      http://irda.sourceforge.net/
+S:      Maintained
+T:      git git://git.kernel.org/pub/scm/linux/kernel/git/sameo/irda-2.6.git
+F:      Documentation/networking/irda.txt
+F:      drivers/net/irda/
+F:      include/net/irda/
+F:      net/irda/
+
+For the driver/video/fbdev/aty/atyfb_base.c issue I guess it's
+linux-fbdev@...r.kernel.org, although there's no perfect match for that
+filename.  In both cases, CC the messages to LKML.
+
+Alexander
