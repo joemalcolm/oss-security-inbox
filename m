@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1571" "Tuesday" "11" "January" "2022" "02:55:57" "+0000" "Sam James" "sam@gentoo.org" nil "48" "Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles" nil nil nil "1" nil nil (number mark "U       sam@gentoo.o Jan 11   48/1571  " thread-indent "\"Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["530" "Monday" "31" "July" "2017" "16:03:57" "+0100" "John Haxby" "john.haxby@oracle.com" "<5ba8733a-44fc-fe49-1f17-3dde40ad0e60@oracle.com>" "12" "Re: [oss-security] Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak" "^Date:" nil nil "7" "2017073115:03:57" "[oss-security] Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak" (number mark "        john.haxby@o Jul 31   12/530   " thread-indent "\"Re: [oss-security] Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak\"\n") "<49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>" ("<49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21972 invoked by uid 550); 11 Jan 2022 13:02:11 -0000
+Received: (qmail 7910 invoked by uid 550); 31 Jul 2017 15:04:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,33 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7816 invoked from network); 31 Jul 2017 15:04:13 -0000
+References: <49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>
+Message-ID: <5ba8733a-44fc-fe49-1f17-3dde40ad0e60@oracle.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>
+Content-Type: text/plain; charset=gbk
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Source-IP: aserv0022.oracle.com [141.146.126.234]
+Date: Mon, 31 Jul 2017 16:03:57 +0100
+From: John Haxby <john.haxby@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24223 invoked from network); 11 Jan 2022 02:56:19 -0000
-From: Sam James <sam@gentoo.org>
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_098A102F-800D-4D4A-BFBC-CA3B828D1C97";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha512
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Date: Tue, 11 Jan 2022 02:55:57 +0000
-References: <20220110180746.GA3527@localhost.localdomain>
+Subject: Re: [oss-security] Linux kernel: net/irda/af_irda.c:
+ irda_getsockopt() stack infoleak
 To: oss-security@lists.openwall.com
-In-Reply-To: <20220110180746.GA3527@localhost.localdomain>
-Message-Id: <C899DB14-0747-4285-B1CC-113489A2796D@gentoo.org>
-X-Mailer: Apple Mail (2.3693.40.0.1.81)
-Subject: Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's
- systemd-tmpfiles
 
---Apple-Mail=_098A102F-800D-4D4A-BFBC-CA3B828D1C97
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain;
-	charset=us-ascii
-
-
-
-> On 10 Jan 2022, at 18:08, Qualys Security Advisory <qsa@qualys.com> wrote:
+On 30/07/17 05:47, sohu0106 wrote:
+> net/irda/af_irda.c
 > 
-> Hi all,
+> Sometimes irda_getsockopt() doesn't initialize all members of list field of irda_device_list struct.  This structure is then copied to
+> userland.  It leads to leaking of contents of kernel stack memory.  We have to initialize them to zero , or it will allows local users to obtain potentially sensitive information from kernel stack memory by reading a copy of this structure
 > 
-> We discovered a minor denial of service (an uncontrolled recursion) in
-> systemd-tmpfiles, CVE-2021-3997; the Coordinated Release Date is today
-> (January 10, 2022), and a patch is now available at (many thanks to
-> Zbigniew Jedrzejewski-Szmek for working on this):
-> [snip]
+> https://github.com/torvalds/linux/pull/440
+> 
 
-For the benefit of distros:
+Have you requested a CVE for this?
 
-Note that it's been backported in 250.x as 250.2 but there isn't
-a stable/backport release for 249.x yet.
-
-Best,
-sam
-
---Apple-Mail=_098A102F-800D-4D4A-BFBC-CA3B828D1C97
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQGTBAEBCgB9FiEEYOpPv/uDUzOcqtTy9JIoEO6gSDsFAmHc8b1fFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDYw
-RUE0RkJGRkI4MzUzMzM5Q0FBRDRGMkY0OTIyODEwRUVBMDQ4M0IACgkQ9JIoEO6g
-SDuPJAf9G5eJLAsUiBgfpxQ4TYdj8Nfj2ThC2c4EjI82O3VmkFBFcY0oeHN74pmv
-wV15rJyDoyWcl9BaN8VZjh8sdXQY5+dEB7cxoyCYMljYuB0iiBR6kEMo6a1Ld6uQ
-posCZQqTVXQT4S8ohL3KD7ptcNseSqamQNdbrDBOrOv6+nbLGqP1wxJ6a+pzFVFA
-+gwr6Va16sspIr1qbtNKph5zkSCyva5kuPFOf3wgZAtrXCAhEB/0WGcfjFO9MGCy
-lmCN4HoNEyseC+L+YE8hcafbXj0in/rarT80zSb8RDYvG+A610PhVXhiu7WY5Cxq
-z9f42N7cH0d7HLzAohjRGq0jID7bsA==
-=vR7y
------END PGP SIGNATURE-----
-
---Apple-Mail=_098A102F-800D-4D4A-BFBC-CA3B828D1C97--
+jch
