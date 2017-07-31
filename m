@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1967" "Thursday" "6" "July" "2017" "23:07:41" "+0200" "Solar Designer" "solar@openwall.com" "<20170706210741.GA9171@openwall.com>" "44" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017070621:07:41" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        solar@openwa Jul  6   44/1967  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<362f16f9-ae35-ecc0-71b7-d5f72ffd9403@gentoo.org>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>" "<362f16f9-ae35-ecc0-71b7-d5f72ffd9403@gentoo.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10492" "Monday" "31" "July" "2017" "21:19:55" "+0530" "Dhiru Kholia" "dhiru.kholia@gmail.com" "<20170731154955.GA19657@lonestar>" "308" "[oss-security] Potential security bugs in \"eapmd5pass\" software (3 CVE IDs)" "^Date:" nil nil "7" "2017073115:49:55" "[oss-security] Potential security bugs in \"eapmd5pass\" software (3 CVE IDs)" (number mark "U       dhiru.kholia Jul 31  308/10492 " thread-indent "\"[oss-security] Potential security bugs in \"eapmd5pass\" software (3 CVE IDs)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7432 invoked by uid 550); 6 Jul 2017 21:10:46 -0000
+Received: (qmail 21575 invoked by uid 550); 31 Jul 2017 15:51:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,349 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3456 invoked from network); 6 Jul 2017 21:07:47 -0000
-Message-ID: <20170706210741.GA9171@openwall.com>
-References: <20170628200239.GA25525@openwall.com> <20170630132209.GA4625@openwall.com> <362f16f9-ae35-ecc0-71b7-d5f72ffd9403@gentoo.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 20137 invoked from network); 31 Jul 2017 15:50:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=SYDLs/+5DoleueaXdWgdNavcArjnXpccMWO3u8I2EvE=;
+        b=ZWDcQx/i3pjlnhcrr//fksggfE++agWMn+DlFLp11vQT4DEvh9F8S5O4YgLqc6HN3z
+         O4OhYvpNAfBObJO+MoZSsSbcSV+tg4iAh0dMlRyoel8d4goe1qczvXbZks/ki0J0eVrL
+         /4GoNQbzHjkXhR9DfOnSm+yen2IDeVM/zzhwGroQkLMFvod2b1B9odFV0kxtt0VeLiWN
+         Fa2aSKYzIXkb9W43bmrI/g9tpzPL1H7RFlVJpPlgMXIqA2M2JRGzqdQDvmUv3Iap8TBd
+         RngvdOAxNui+WRePe6SxusgjrW50RxWPSmkfvQ5ayM65QFP664h+269VoJEcWh93agZY
+         lY7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=SYDLs/+5DoleueaXdWgdNavcArjnXpccMWO3u8I2EvE=;
+        b=ZuMm+ihj2bWbpx25tn1+CuDsAaMrVsbP0iZ0XrlwB7Bx1dA7/e84VlOMTQRxe+CKiv
+         FW1QLJSMSbR8dO0ssKP9MpBAbODbJ9pRK4c4Dtft+qrLFMtrPk9s77kG7cG+TgTZpF9a
+         z3V2wkMRTp06l8FieLqOQJEigMLlIhetbAlNEtPpe9b82LblrFC9QE46vhqMv17/zLRk
+         Rk73M2FFDieDmslqAmaTs0af9kZklTDJSBdi7cWk9PMdiS33IjgipJoO6Sepov9/YpQY
+         0DSeVbeTA+7YLQFszYAx6e5LN4keXqK8qor1ECHb0GNgyckPjDHPd2FipopHc7BHsvtt
+         7KRw==
+X-Gm-Message-State: AIVw112mdEic9lE3JOZFR/3dJHrXZyDGHLgnC0+XOW33GewWAlA5ipP0
+	CTyc7TkfZmW/ksW5Ks8=
+X-Received: by 10.98.100.20 with SMTP id y20mr15714516pfb.11.1501516201082;
+        Mon, 31 Jul 2017 08:50:01 -0700 (PDT)
+Message-ID: <20170731154955.GA19657@lonestar>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="82I3+IH0IqGh5yIs"
 Content-Disposition: inline
-In-Reply-To: <362f16f9-ae35-ecc0-71b7-d5f72ffd9403@gentoo.org>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 6 Jul 2017 23:07:41 +0200
-From: Solar Designer <solar@openwall.com>
+User-Agent: Mutt/1.8.3 (2017-05-23)
+Date: Mon, 31 Jul 2017 21:19:55 +0530
+From: Dhiru Kholia <dhiru.kholia@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+Subject: [oss-security] Potential security bugs in "eapmd5pass" software (3 CVE IDs)
 To: oss-security@lists.openwall.com
 
-On Thu, Jul 06, 2017 at 10:09:08PM +0200, Kristian Fiskerstrand wrote:
-> On 06/30/2017 03:22 PM, Solar Designer wrote:
-> > This is now up to 22 items: I've split one in two, and added three more.
-> > The full list is at:
-> > 
-> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> > 
-> > No volunteers so far?  I know some of you are actually helping with
-> > these, but I'd prefer that you explicitly take responsibility for them.
-> 
-> Gentoo is offering to take all, or a subset of, [9, 11 - 13] as primary
-> distribution:
+--82I3+IH0IqGh5yIs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> 9. Stay on top of issues to ensure progress is being made, remind others
-> when there's no apparent progress, as well as when the public disclosure
-> date for an issue is approaching and when it's finally reached (unless
-> the reporter beats you to it by making their mandatory posting to
-> oss-security first)
-> 
-> 11. Make sure the mandatory oss-security posting is made promptly and is
-> sufficiently detailed, and remind the reporter if not
-> 
-> 12. If exploit(s) were shared on the list, make sure that either they're
-> included in the oss-security posting along with the issue detail or the
-> posting includes an announcement of planned later posting of the
-> exploits (with the delay being within list policy), and in the latter
-> case also make sure that the later posting is in fact made as planned,
-> and remind the reporter if not
-> 
-> 13. Keep track of per-report and per-issue handling and disclosure
-> timelines (at least times of notification of the private list and of
-> actual public disclosure), at regular intervals produce and share
-> statistics (most notably, the average embargo duration) as well as the
-> raw data (except on issues that are still under embargo) by posting to
-> oss-security
+Summary
+-------
 
-OK, accepted.  Thank you very much!
+This report describes 4 bugs in the eapmd5pass software package as shipped with
+Kali Linux. Bug 1 is a regular functionality related bug. The other 3 bugs are
+memory safety bugs that can be triggered remotely.
 
-So far CloudLinux and Gentoo volunteered for specific tasks.  I'll mark
-this on the wiki shortly.
+I found these bugs with the help of libFuzzer.
 
-Other distros are yet to volunteer (please do!)
+The worst case security impact of these three memory safety bugs seems to be
+limited to a remote denial of service (eapmd5pass crash and loss of intended
+functionality) under certain circumstances.
 
-Alexander
+Reproducers are available at https://github.com/kholia/reproducers URL.
+
+
+Steps to reproduce
+------------------
+
+http://www.willhackforsushi.com/?page_id=67
+
+https://tools.kali.org/wireless-attacks/eapmd5pass
+
+Add "-fsanitize=address" to Makefile and build eapmd5pass.
+
+After building eapmd5pass with "make", ensure that ASan is enabled.
+
+$ ldd ./eapmd5pass | grep asan
+	libasan.so.3 => /lib64/libasan.so.3 (0x00007fc7e85a5000)
+
+
+Bug 1
+-----
+
+$ ./eapmd5pass -r brad.eaptest.cap -w wordlist
+eapmd5pass - Dictionary attack against EAP-MD5
+Error placing pcap interface in non-blocking mode.
+pcap_setnonblock: No such file or directory
+
+It seems eapmd5pass has a non-security bug which causes it to fail to process
+.pcap files. Here is a patch to fix this problem,
+
+diff --git a/eapmd5pass.c b/eapmd5pass.c
+index 10b2a48..7ee51bb 100644
+--- a/eapmd5pass.c
++++ b/eapmd5pass.c
+@@ -684,7 +684,7 @@ int main(int argc, char *argv[])
+        }
+
+        /* Set non-blocking */
+-       if (pcap_setnonblock(p, PCAP_DONOTBLOCK, errbuf) != 0) {
++       if (!strlen(pcapfile) > 0 && pcap_setnonblock(p, PCAP_DONOTBLOCK, errbuf) != 0) {
+                fprintf(stderr, "Error placing pcap interface in non-blocking "
+                        "mode.\n");
+                perror("pcap_setnonblock");
+
+
+After applying this patch,
+
+$ ./eapmd5pass -r brad.eaptest.cap -w wordlist
+eapmd5pass - Dictionary attack against EAP-MD5
+Collected all data necessary to attack password for "brad-foundstone", starting attack.
+User password is "bradtest".
+1 passwords in 0.00 seconds: 4424.78 passwords/second.
+
+
+Bug 2
+-----
+
+$ ./eapmd5pass -r crash-4c384505c65c675a6a821f2a2f25ea967ec2a8c0 -w wordlist
+
+==22182==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6310000147ff at pc 0x000000403a7c bp 0x7ffe04164960 sp 0x7ffe04164950
+READ of size 1 at 0x6310000147ff thread T0
+    #0 0x403a7b in assess_packet /fuzzing/eapmd5pass-orig/eapmd5pass.c:134
+    #1 0x7f13f28ec87c in pcap_offline_read (/lib64/libpcap.so.1+0x2187c)
+    #2 0x401c4b in main /fuzzing/eapmd5pass-orig/eapmd5pass.c:734
+    #3 0x7f13f20c8730 in __libc_start_main (/lib64/libc.so.6+0x20730)
+    #4 0x402018 in _start (/fuzzing/eapmd5pass-orig/eapmd5pass+0x402018)
+
+The "offset" variable is -2 and "if (dot11->u1.fc.from_ds == 1 && dot11->u1.fc.to_ds == 1)" line is dereferencing out-of-bounds memory.
+
+Here is a fix for ignoring invalid "offset" values,
+
+diff --git a/eapmd5pass.c b/eapmd5pass.c
+index 10b2a48..7a7d900 100644
+--- a/eapmd5pass.c
++++ b/eapmd5pass.c
+@@ -115,6 +115,9 @@ void assess_packet(char *user, struct pcap_pkthdr *h, u_int8_t *pkt)
+
+        dot11buf = (pkt + offset);
+
++       if (offset < 0)
++               return;
++
+        pcount++; /* Global packet counter */
+        if (__verbosity > 2) {
+                printf("Checking Frame: %ld....\n",pcount);
+
+
+Affected Component: Function "assess_packet" in eapmd5pass.c
+
+Affected Product Code Base: eapmd5pass - 1.4
+
+Attack Type: Remote
+
+Impact Denial of Service: true
+
+Attack Vectors: Network: processing crafted network traffic, Local: opening a crafted .pcap file.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the ID
+CVE-2017-11668 to this issue.
+
+Summary: An out-of-bounds read flaw related to eapmd5pass.c:134 was found in
+the way eapmd5pass handled processing of network packets. A remote attacker
+could potentially use this flaw to crash the eapmd5pass process under certain
+circumstances by generating specially crafted network traffic.
+
+
+Bug 3
+-----
+
+$ ./eapmd5pass -r crash-9a3774d38a5959db160a2564c1487c57f2b336b9 -w wordlist
+=================================================================
+==22237==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efe8 at pc 0x000000403e45 bp 0x7ffd6b32b6c0 sp 0x7ffd6b32b6b0
+READ of size 1 at 0x60200000efe8 thread T0
+    #0 0x403e44 in assess_packet /fuzzing/eapmd5pass-orig/eapmd5pass.c:211
+    #1 0x7f9d6c67b87c in pcap_offline_read (/lib64/libpcap.so.1+0x2187c)
+    #2 0x401c4b in main /fuzzing/eapmd5pass-orig/eapmd5pass.c:737
+    #3 0x7f9d6be57730 in __libc_start_main (/lib64/libc.so.6+0x20730)
+    #4 0x402018 in _start (/fuzzing/eapmd5pass-orig/eapmd5pass+0x402018)
+
+
+This invalid read occurs on "if (dot2hdr->dsap != IEEE8022_SNAP ||
+dot2hdr->ssap != IEEE8022_SNAP)" line. The packet length is too small, and it
+isn't validated before the packet is consumed.
+
+Here is a patch to fix this problem,
+
+index 10b2a48..b125e53 100644
+--- a/eapmd5pass.c
++++ b/eapmd5pass.c
+@@ -115,6 +115,13 @@ void assess_packet(char *user, struct pcap_pkthdr *h, u_int8_t *pkt)
+
+        dot11buf = (pkt + offset);
+
++       /* Check minimum packet length */
++       if (offset + sizeof(struct dot11hdr) > h->caplen)
++               return;
++
+        pcount++; /* Global packet counter */
+        if (__verbosity > 2) {
+                printf("Checking Frame: %ld....\n",pcount);
+
+Affected Component: Function "assess_packet" in eapmd5pass.c
+
+Note: Similar validation checks should be added at other places in this function.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the ID
+CVE-2017-11669 to this issue. This issue is different from CVE-2017-11668 (Bug
+2).
+
+Summary: An out-of-bounds read flaw related to eapmd5pass.c:211 was found in
+the way eapmd5pass handled processing of network packets. A remote attacker
+could potentially use this flaw to crash the eapmd5pass process under certain
+circumstances by generating specially crafted network traffic.
+
+
+Bug 4
+-----
+
+$ ./eapmd5pass -r crash-1717d491a7b9beba422fe919d524ab973fbe7266 -w wordlist
+==23135==ERROR: AddressSanitizer: negative-size-param: (size=-1)
+    #0 0x7f9185d1b31b  (/lib64/libasan.so.3+0x5f31b)
+    #1 0x402a4f in extract_eapusername /fuzzing/eapmd5pass-orig/eapmd5pass.c:459
+    #2 0x403f25 in extract_eapusername /fuzzing/eapmd5pass-orig/eapmd5pass.c:441
+    #3 0x403f25 in assess_packet /fuzzing/eapmd5pass-orig/eapmd5pass.c:284
+    #4 0x7f9185a9987c in pcap_offline_read (/lib64/libpcap.so.1+0x2187c)
+    #5 0x401c4b in main /fuzzing/eapmd5pass-orig/eapmd5pass.c:744
+    #6 0x7f9185275730 in __libc_start_main (/lib64/libc.so.6+0x20730)
+    #7 0x402018 in _start (/fuzzing/eapmd5pass-orig/eapmd5pass+0x402018)
+
+
+This crash occurs in "memcpy(em->username, (eap+5), usernamelen)" line.
+"usernamelen" is negative at this point in the execution flow.  This bug can be
+reliably used to crash eapmd5pass (non-ASan and ASan builds) remotely.
+
+Here is a patch to fix this problem,
+
+diff --git a/eapmd5pass.c b/eapmd5pass.c
+index 10b2a48..b643d9b 100644
+--- a/eapmd5pass.c
+@@ -444,6 +454,9 @@ int extract_eapusername(uint8_t *eap, int len, struct eapmd5pass_data *em)
+        /* 5 bytes for EAP header information without identity information */
+        usernamelen = (eaplen - 5);
+
++       if (usernamelen < 0)
++               return 1;
++
+        usernamelen = (eaplen > sizeof(em->username))
+                        ? sizeof(em->username) : usernamelen;
+        memcpy(em->username, (eap+5), usernamelen);
+
+
+Affected Component: Function "extract_eapusername" in eapmd5pass.c
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the ID
+CVE-2017-11670 to this issue.
+
+Summary: An out-of-bounds read and write flaw was found in the way eapmd5pass
+handled network traffic. A remote attacker could potentially use this flaw to
+crash the eapmd5pass process by generating specially crafted network traffic.
+
+-- 
+Dhiru
+
+--82I3+IH0IqGh5yIs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="combined-fixes.diff"
+
+diff --git a/eapmd5pass.c b/eapmd5pass.c
+index 10b2a48..d959a9c 100644
+--- a/eapmd5pass.c
++++ b/eapmd5pass.c
+@@ -115,6 +115,13 @@ void assess_packet(char *user, struct pcap_pkthdr *h, u_int8_t *pkt)
+ 
+ 	dot11buf = (pkt + offset);
+ 
++	if (offset < 0)
++		return;
++
++	/* Check minimum packet length */
++	if (offset + sizeof(struct dot11hdr) > h->caplen)
++		return;
++
+ 	pcount++; /* Global packet counter */
+ 	if (__verbosity > 2) {
+ 		printf("Checking Frame: %ld....\n",pcount);
+@@ -197,6 +204,9 @@ void assess_packet(char *user, struct pcap_pkthdr *h, u_int8_t *pkt)
+ 	poffset += DOT2HDR_LEN;
+ 	plen -= DOT2HDR_LEN;
+ 
++	if (poffset + sizeof(struct ieee8022) > h->caplen)
++		return;
++
+ 	if (plen <= 0) {
+ 		if (__verbosity > 2) {
+ 			printf("\tDiscarding frame with partial 802.2 header.\n");
+@@ -444,6 +454,9 @@ int extract_eapusername(uint8_t *eap, int len, struct eapmd5pass_data *em)
+ 	/* 5 bytes for EAP header information without identity information */
+ 	usernamelen = (eaplen - 5);
+ 
++	if (usernamelen < 0)
++		return 1;
++
+ 	usernamelen = (eaplen > sizeof(em->username)) 
+ 			? sizeof(em->username) : usernamelen;
+ 	memcpy(em->username, (eap+5), usernamelen);
+@@ -684,7 +697,7 @@ int main(int argc, char *argv[])
+ 	}
+ 
+ 	/* Set non-blocking */
+-	if (pcap_setnonblock(p, PCAP_DONOTBLOCK, errbuf) != 0) {
++	if (!strlen(pcapfile) > 0 && pcap_setnonblock(p, PCAP_DONOTBLOCK, errbuf) != 0) {
+ 		fprintf(stderr, "Error placing pcap interface in non-blocking "
+ 			"mode.\n");
+ 		perror("pcap_setnonblock");
+@@ -702,7 +715,7 @@ int main(int argc, char *argv[])
+ 			fprintf(stderr, "Unable to determine offset from "
+ 				"radiotap header (%d).\n", offset);
+ 			usage();
+-			return(-1);
++			goto bailout;
+ 		}
+ 		break;
+ 
+@@ -721,7 +734,7 @@ int main(int argc, char *argv[])
+ 		default:
+ 		fprintf(stderr, "Unrecognized datalink type %d.\n", datalink);
+ 		usage();
+-		return(-1);
++		goto bailout;
+ 	}
+ 
+ 	/* Loop for each packet received */
+@@ -736,7 +749,7 @@ int main(int argc, char *argv[])
+ 		if (ret != 0) {
+ 			/* Error reading from packet capture file */
+ 			fprintf(stderr, "pcap_dispatch: %s\n", pcap_geterr(p));
+-			return -1;
++			goto bailout;
+ 		}
+ 
+ 	} else { /* live packet capture */
+@@ -767,6 +780,8 @@ int main(int argc, char *argv[])
+ 		printf("Total packets observed: %ld\n", pcount);
+ 	}
+ 
++bailout:
++
+ 	pcap_close(p);
+ 
+ 	if (em.recovered_pass > 0) {
+
+--82I3+IH0IqGh5yIs--
