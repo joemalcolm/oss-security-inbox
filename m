@@ -1,43 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/08/4
-Message-ID: <20170108152351.GA25328@grsecurity.net>
-Date: Sun, 8 Jan 2017 10:23:51 -0500
-From: Brad Spengler <spender@...ecurity.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Firejail local root exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/7
+Message-ID: <87lgn3nnr2.fsf@v45346.1blu.de>
+Date: Tue, 01 Aug 2017 20:31:29 +0200
+From: Stefan Bodewig <bodewig@...che.org>
+To: dev@...mons.apache.org, user@...mons.apache.org, announce@...che.org, A.Williams.9@...wick.ac.uk, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: CVE-2017-9801: Apache Commons Email SMTP header injection vulnerabilty
 Content-Type: text/plain; charset=utf-8
 
-> $ ./foo 
-> exit code 2
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-You're missing an important part here: checking to see whether your binary is running
-with privilege in the first place.  If you had done that, you would see that it's
-not running suid at all, but rather with your own privilege.  This is enforced at the
-kernel level with the following code in kernel/seccomp.c present since the introduction
-of seccomp-bpf in 2012:
+CVE-2017-9801: Apache Commons Email SMTP header injection vulnerabilty
 
-        /*
-         * Installing a seccomp filter requires that the task has
-         * CAP_SYS_ADMIN in its namespace or be running with no_new_privs.
-         * This avoids scenarios where unprivileged tasks can affect the
-         * behavior of privileged children.
-         */
-        if (!task_no_new_privs(current) &&
-            security_capable_noaudit(current_cred(), current_user_ns(),
-                                     CAP_SYS_ADMIN) != 0)
-                return ERR_PTR(-EACCES);
+Severity: low
 
+Vendor:
+The Apache Software Foundation
 
-libseccomp by default enables NNP when creating a filter, as otherwise the code allows
-you to skip syscalls while still setting the return value to 0, which no suid binary
-would be able to protect iself against.
+Versions Affected:
+Apache Commons Email 1.0 to 1.4.
 
-Prior discussion of this can be found here:
-https://sourceforge.net/p/libseccomp/mailman/message/29127662/
-https://sourceforge.net/p/libseccomp/mailman/message/29136181/
+Description:
+When a call-site passes a subject for an email that contains
+line-breaks, the caller can add arbitrary SMTP headers.
 
-Nothing to see here, but thanks for scaring everyone on a Sunday morning.
+Mitigation:
+Users should upgrade to Commons Email 1.5.
+You can mitigate this vulnerability for older versions of Commons
+Email by stripping line-breaks from the subject before passing it to
+the setSubject(String) method.
 
--Brad
+Credit:
+This issue was discovered by ﻿Adam Williams.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+References:
+http://commons.apache.org/proper/commons-email/security-reports.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAlmAyP8ACgkQohFa4V9ri3K7XQCgj69yH9nkBGRVJBG9+0DS1jc8
+GJUAnRZrLznaNRzokj08JGBMy5wwHNTt
+=oSDx
+-----END PGP SIGNATURE-----
