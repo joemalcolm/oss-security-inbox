@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/2
-Message-ID: <2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>
-Date: Mon, 19 Jun 2017 09:40:28 -0600
-From: "kseifried@...hat.com" <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/4
+Message-ID: <20170801170637.GA15254@openwall.com>
+Date: Tue, 1 Aug 2017 19:06:37 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Александр Носарев <nosarev-ay@...bler.ru>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Syslog forwarding with IP spoofing
 Content-Type: text/plain; charset=utf-8
 
-On 06/19/2017 09:28 AM, Qualys Security Advisory wrote:
-> 
-> Qualys Security Advisory
-> 
-> The Stack Clash
+Hi all,
 
-I just want to publicly thank Qualys for working with the Open Source
-community so we (Linux and *BSD) could all get this fixed properly.
-There was a lot of work from everyone involved and it all went pretty
-smoothly.
+On Tue, Aug 01, 2017 at 05:27:26PM +0300, Александр Носарев wrote:
+> I need to recive syslog messages, filter them and send them forward to the 
+> SIEM.
+> 
+> Also HOST field is not represented in syslog, so i need to spoof IP of 
+> forwarding
+> packets to bind messages recived by SIEM to it's original source IP.
+> 
+> If i will try to add some marks to syslog message, I will need to override
+> parsers for each syslog source type, so it seems like abad idea.
+> 
+> Is there any open source tool for that task?
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Somehow we almost didn't have this sort of messages - someone seeking an
+open source security tool - sent in here so far.  Do we want them in
+here going forward?  The current list content guidelines do not address
+this possibility, as it certainly wasn't the purpose of the oss-security
+list so far.  Is there another mailing list where the above message
+would have been more appropriate?
+
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+
+Meanwhile, please feel free to address the actual question about the
+tool.  (I don't know of such a tool.)
+
+Alexander
