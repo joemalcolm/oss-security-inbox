@@ -1,4 +1,9 @@
-Received: (qmail 9444 invoked by uid 550); 29 Sep 2025 16:14:04 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1135" "Tuesday" "1" "August" "2017" "13:40:45" "-0700" "Sean Cassidy" "sean@defensestorm.com" "<CABOeKPFALNQqQvDOdAuCc6HNC7eEoshjneyiu-0euhThiuv-8g@mail.gmail.com>" "30" "Re: [oss-security] Syslog forwarding with IP spoofing" nil nil nil "8" "2017080120:40:45" "[oss-security] Syslog forwarding with IP spoofing" (number mark "U       sean@defense Aug  1   30/1135  " thread-indent "\"Re: [oss-security] Syslog forwarding with IP spoofing\"\n") "<1501597646.744346.23695.25373@mail.rambler.ru>" ("<1501597640.407871.9894.30815@mail.rambler.ru>" "<1501597646.744346.23695.25373@mail.rambler.ru>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28154 invoked by uid 550); 1 Aug 2017 20:55:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15786 invoked from network); 29 Sep 2025 15:48:10 -0000
+Received: (qmail 13474 invoked from network); 1 Aug 2017 20:41:27 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759160881; x=1759765681; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Hv1e8EBiUI4n6aYykRYYzSwviCrLwWF+hfgYlyu/TMA=;
-        b=FjwVGnrjpVnFjF77ORdcNNq5VrQlLiLl0hv8MqU2XVohuRIIFXO98LMfx3d4yn99r1
-         NTgQoxlUKnj8AGoUSjBVGUDBUaFLYklkx8FLMnnSEDFs/zXj2smnXO9TydVsr2jaxdNs
-         dyY9QWBO94F8cRvCom7Qc/qh7qmnsM/XmxL50/ST8Wf49K8/aJhFEieWpAZqy3TZ61pF
-         Mv1ikfZYXYDAm7/sqibGUvSGiMtGmkbkX3s+ofSqUrUzuYFvh3zF0hPDsAWpr+fent7A
-         uEtNVIQtI72r0HbrIdmC/IACJqIxHzwEuiUtEbEvYEu/a59O3JLy8mnGVm0LAzkKV0ll
-         QLWw==
+        d=defensestorm-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=d8/ShoLISIY6VGzIDSGN7EJhO259QH+eS8fVHkI61ec=;
+        b=M1z8SHsCEf0ecqp8zcx91zhXfh3ZpJkLvncpsapK6r/8r5J919vtBPb2QhVUA7UA2e
+         SY36BiHYMFjUCbEOgeWvsE0ZjmcPTW5biUr7KkZTnK7Dq/jD/sGs26DTIYNWf6Xk0MO/
+         CGII6veDjOjCwzA9IWOPqefuoOykswuqUsanVLk4NL9C48P6EkWopZ9qWt6QhpYpvo3N
+         FwTA0eVe2TnHL7rP9JLLvJ5KciLVPZbegVsYP1lIfpkzqrRa4689KR9LeYdqVn+GzcpE
+         x/CPW34L3qkwjCTDPOrxegxjxY/SVJyQU4xPV7fOZ94eEGGgjH3lH1j8VDFOOJisfABD
+         8KBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759160881; x=1759765681;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hv1e8EBiUI4n6aYykRYYzSwviCrLwWF+hfgYlyu/TMA=;
-        b=d6Y10MofloSsuFIjYDyZwA07JHWdYamfEZy3G3iyUTfoluOPJcbuWFiJX1txCbuRjC
-         QLGE2VVXDDCgOyxMLhd9WnebVsClxwoC49DLK8pc+ruWACCr450PQZC2L3a/hGPZ66FD
-         4foXaDTesLj9/n6Bt/FWeQ5HIziOQlHfqP84FQDErgh5IwhQJQSQZJ9ATq4Xoyx7SteW
-         mfz8fURXiz3Jn6zJIQVxmwXVjn3XEQ2K3mEUZGAatOOHpFdSTdcp/jKC4HEanPjc3Zyq
-         X9IIGXAwuyOeBp2axPK7cB6eNXSZJ1Th+m7VPANTWJesAKfi8NN9GAqBYuZLUl5+u5wv
-         044w==
-X-Gm-Message-State: AOJu0YzWzAAPhfqg/fzkgfXCbaCAJkrwcK6mLK2VHHK7T2dviJ2pxTcv
-	DqYYHYHKdd+afkw5nGJvk+BvkXMKSlzdpGwSRav+m+ymnMahoAjrzM+cDyTVcCics1zNGg/22rT
-	SmOMZ/4774MeDyp/sDF+/PHrmNprA6xinzV/v2Cw=
-X-Gm-Gg: ASbGncv3Mz0t9rkaQi+GoLtfGTNqLbmzorwOi8inNUVA8AgCfdkS5kCw69tECMND+fK
-	b3x3s8tb9niUJrOMQfluaKT9STuJ2junrZtAaqo2fI+i7ejtrQhUwVvyaXUZEKJJHlxWJZIOwX1
-	sbhrqmSBNYASNvn9IhJB//HIKjwwG3noBjzcUhtpFbNB+KkaO+k8z0INMNpgr5VV7o1s1B0x0HX
-	Q9gld/3mzqit9o7iVtKuKBjXHySDO9EAK6MFxPdXm4GCguSF3t/
-X-Google-Smtp-Source: AGHT+IF4j3MKhNVtX/GudF6seRGSs+DPRs5YEww/yep/erUB6CHJKjZBLebUB1n+4ommK8q7waDXAkU1mNZFeERu8vM=
-X-Received: by 2002:a53:da42:0:b0:636:cc3:af35 with SMTP id
- 956f58d0204a3-63b59ad8eecmr1030916d50.22.1759160880665; Mon, 29 Sep 2025
- 08:48:00 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=d8/ShoLISIY6VGzIDSGN7EJhO259QH+eS8fVHkI61ec=;
+        b=ZOLMajRJbeLqJWG1TkqXJFTwfLhfrfrnEIKFhvuMQ1B6eC/cCtjmMzOgNnkzKKAJGJ
+         sxbnoNlsM7HNjW1gn9mY+ktmivfAX0zfC47PBScHyCQLCNlZLjhZUihHaB9UL+EXsC5e
+         R0TKCF+IPxd27mjw01TDih8MZ2sDLtsFxdUxdkb8UjSRJOOw2dtU8nqunVzZvCkBidDP
+         oMS95u4va7nbBJp0mO9tdGesiUI4zFR8heqYzkIfQt7g94e77O3W0V11mwA4ogEsHcm7
+         8AMkGirwDn2hgO9hY/JVsQ4nvzXe/EBz+l0iwhMkojdOswSbFWCBsiwXeDQMmz5S2bf1
+         Q19Q==
+X-Gm-Message-State: AIVw113yZuDy+VMJSOa3xxAVNk4FvVRZ1A94iwjYU+XvY1p0KRfa7jqR
+	nWKVMtm9eOmy60aGhwGthYMSPWAqdiLaQu3p8A==
+X-Received: by 10.25.99.145 with SMTP id v17mr6990426lfi.209.1501620075822;
+ Tue, 01 Aug 2017 13:41:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
- <20250927214013.GA9163@openwall.com> <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
- <CAH8yC8mQBVE5TZ_N8Cc1FkVGrqgV9rhNeAxoMi2wit5C26weFg@mail.gmail.com>
- <CAFf+5zhE2d_4TfbXH25PCLeRLTQPH832c9TwkH9FaS6E0t0qKQ@mail.gmail.com> <aNqeyW7Yp2m62m6q@yuggoth.org>
-In-Reply-To: <aNqeyW7Yp2m62m6q@yuggoth.org>
-From: Amit <amitchoudhary0523@gmail.com>
-Date: Mon, 29 Sep 2025 21:17:49 +0530
-X-Gm-Features: AS18NWC1k5JIgFEkGW9_mE38ZnPw9FhDj7UcI6dhZMyvTeO6JMj8mP5GRnVboRU
-Message-ID: <CAFf+5zj-Z2G-12j_8pPCZXzGXb4srDE7tc2gCRWdaM6X0ogzUQ@mail.gmail.com>
+In-Reply-To: <1501597646.744346.23695.25373@mail.rambler.ru>
+References: <1501597640.407871.9894.30815@mail.rambler.ru> <1501597646.744346.23695.25373@mail.rambler.ru>
+From: Sean Cassidy <sean@defensestorm.com>
+Date: Tue, 1 Aug 2017 13:40:45 -0700
+Message-ID: <CABOeKPFALNQqQvDOdAuCc6HNC7eEoshjneyiu-0euhThiuv-8g@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000006517b9063ff28f13"
-Subject: Re: [oss-security] How to do secure coding and create secure software
-
---0000000000006517b9063ff28f13
 Content-Type: text/plain; charset="UTF-8"
-
-On Mon, 29 Sept 2025 at 20:55, Jeremy Stanley <fungi@yuggoth.org> wrote:
-
-> On 2025-09-29 09:01:26 +0530 (+0530), Amit wrote:
-> [...]
-> > The function body should also be secure.
->
-> This generalizes to a tautology: The software is secure if the
-> software is secure. It's true, of course, as are all tautologies,
-> while also being a useless assertion.
->
->
-
-So, this means that you agree that if all functions are secure then the
-software is secure.
-
-
----------
-
---0000000000006517b9063ff28f13
-Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Syslog forwarding with IP spoofing
 
-<div dir=3D"ltr"><div dir=3D"ltr">On Mon, 29 Sept 2025 at 20:55, Jeremy Sta=
-nley &lt;<a href=3D"mailto:fungi@yuggoth.org">fungi@yuggoth.org</a>&gt; wro=
-te:</div><div class=3D"gmail_quote gmail_quote_container"><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">On 2025-09-29 09:01:26 +0530 (+0530), Amit=
- wrote:<br>
-[...]<br>
-&gt; The function body should also be secure.<br>
-<br>
-This generalizes to a tautology: The software is secure if the <br>
-software is secure. It&#39;s true, of course, as are all tautologies, <br>
-while also being a useless assertion.<br>
-<br></blockquote><div><br></div><div><br></div><div>So, this means that you=
- agree that if all functions are secure then the software is secure.</div><=
-div><br></div><div><br></div><div>---------</div><div><br></div></div></div>
+On Tue, Aug 1, 2017 at 7:27 AM, =D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B0=D0=BD=
+=D0=B4=D1=80 =D0=9D=D0=BE=D1=81=D0=B0=D1=80=D0=B5=D0=B2 <nosarev-ay@rambler=
+.ru> wrote:
+>
+> Good day!
+>
+>
+> I need to recive syslog messages, filter them and send them forward to th=
+e SIEM.
+>
+> Also HOST field is not represented in syslog, so i need to spoof IP of fo=
+rwarding
+> packets to bind messages recived by SIEM to it's original source IP.
+>
+> If i will try to add some marks to syslog message, I will need to override
+> parsers for each syslog source type, so it seems like abad idea.
+>
+> Is there any open source tool for that task?
 
---0000000000006517b9063ff28f13--
+I would use syslog-ng for this. It can rewrite syslog messages
+(including adding/modifying the HOST field) and then do nearly
+anything with the result. You can have it call a program, put it on an
+AMQP queue, write it to disk, or whatever, really.
+
+https://www.balabit.com/documents/syslog-ng-ose-latest-guides/en/syslog-ng-=
+ose-guide-admin/html/chapter-manipulating-messages.html
+https://www.balabit.com/documents/syslog-ng-ose-latest-guides/en/syslog-ng-=
+ose-guide-admin/html/chapter-destinations.html
+
+Sean
