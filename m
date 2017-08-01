@@ -1,18 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/04/1
-Message-Id: <20171104014225.F3F4B17FDCE@rebar.astron.com>
-Date: Fri, 3 Nov 2017 21:42:25 -0400
-From: christos@...las.com (Christos Zoulas)
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Security risk of server side text editing in general and vim.tiny specifically
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/8
+Message-ID: <a8482eb5-f245-9a3a-0fe2-5ba206358205@mvista.com>
+Date: Tue, 1 Aug 2017 13:36:07 -0700
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: CoreOS membership to linux-distros (updated)
 Content-Type: text/plain; charset=utf-8
 
-On Nov 3, 11:12am, itz@...y.loosely.org (Ian Zimmerman) wrote:
--- Subject: [oss-security] Re: Security risk of server side text editing in g
 
-| How much of this (and the parallel thread of course) applies to nvi?
 
-Nvi stores the recovery files in /var/tmp/vi.recover/ owned by the user,
-mode 600.
+On 07/31/2017 01:53 PM, Solar Designer wrote:
+> On Fri, Jul 21, 2017 at 03:26:47PM +0200, Solar Designer wrote:
+>> I intend to add CoreOS to linux-distros in early August unless there are
+>> any well-reasoned objections by then.
+> I've just added CoreOS to linux-distros.
+>
+> On Tue, Jul 18, 2017 at 02:56:23PM -0700, Euan Kemp wrote:
+>> Based on your previous messages, it sounds like it???s expected for us to
+>> inherit 'primary' for the administrative tasks of:
+>>> 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date) - primary: CloudLinux, backup: vacant
+>>> 2. If the proposed public disclosure date is not within list policy, insist on getting this corrected and propose a suitable earlier date - primary: CloudLinux, backup: vacant
+> Off-list, CloudLinux kindly offered this:
+>
+> On Sun, Jul 23, 2017 at 06:15:23AM -0700, Igor Seletskiy wrote:
+>> We can pickup #3 & #6 as #1 & #2 are picked up by CoreOS.
+> On Tue, Jul 18, 2017 at 02:56:23PM -0700, Euan Kemp wrote:
+>> I???ll also volunteer us for the administrative task of:
+>>> 6. If multiple issues are reported at once, see if any of them can reasonably be made public sooner than the rest, and if so help untangle them and stay on top of their disclosure process
+>> We???ll be happy to be on the lookout for possible conflation of issues
+>> and kick off discussion if we think something can be broken up.
+> Maybe Igor had overlooked the clash on #6, but anyway this combination
+> resulted in:
+>
+> 1. Promptly review new issue reports for meeting the list's requirements
+> and confirm receipt of the report and, when necessary, inform the
+> reporter of any issues with their report (e.g., obviously not actionable
+> by the distros) and request and/or propose any required yet missing
+> information (most notably, a tentative public disclosure date)
+> - primary: CoreOS, backup: Oracle
+>
+> 2. If the proposed public disclosure date is not within list policy,
+> insist on getting this corrected and propose a suitable earlier date
+> - primary: CoreOS, backup: CloudLinux
+>
+> 3. Evaluate if the issue (or one of the issues) is effectively already
+> public (e.g., a fix is committed upstream with a descriptive message)
+> or/and is low severity and thus the report (or its portion pertaining to
+> the issue) should be made public right away for one or both of these
+> reasons, get a few other list members to confirm this understanding, and
+> if there are no objections then communicate this strong preference to
+> the reporter
+> - primary: CloudLinux, backup: vacant
+>
+> 6. If multiple issues are reported at once, see if any of them can
+> reasonably be made public sooner than the rest, and if so help untangle
+> them and stay on top of their disclosure process
+> - primary: CoreOS, backup: CloudLinux
+>
+> This looks fine to me.
+>
+> However, many distros still haven't picked up a task, and many tasks are
+> not picked up by any distro.  That should change.
 
-christos
+Is there a consolidated summary on where we stand on what has been 
+spoken for?
+
+regards,
+Armin
+> Alexander
+
