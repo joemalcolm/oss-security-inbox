@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/09/2
-Message-ID: <b0060772-dbc2-a4ec-c690-a182565aa0bb@spornkuller.de>
-Date: Fri, 9 Jun 2017 13:39:58 +0200
-From: Johannes Bauer <zugtprgfwprz@...rnkuller.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/10
+Message-ID: <CABOeKPFALNQqQvDOdAuCc6HNC7eEoshjneyiu-0euhThiuv-8g@mail.gmail.com>
+Date: Tue, 1 Aug 2017 13:40:45 -0700
+From: Sean Cassidy <sean@...ensestorm.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security bug report read-protected
+Subject: Re: Syslog forwarding with IP spoofing
 Content-Type: text/plain; charset=utf-8
 
-On 09.06.2017 01:49, Qhdwns123 wrote:
+On Tue, Aug 1, 2017 at 7:27 AM, Александр Носарев <nosarev-ay@...bler.ru> wrote:
+>
+> Good day!
+>
+>
+> I need to recive syslog messages, filter them and send them forward to the SIEM.
+>
+> Also HOST field is not represented in syslog, so i need to spoof IP of forwarding
+> packets to bind messages recived by SIEM to it's original source IP.
+>
+> If i will try to add some marks to syslog message, I will need to override
+> parsers for each syslog source type, so it seems like abad idea.
+>
+> Is there any open source tool for that task?
 
-> If you are reporting bugs to the bugzilla site,
+I would use syslog-ng for this. It can rewrite syslog messages
+(including adding/modifying the HOST field) and then do nearly
+anything with the result. You can have it call a program, put it on an
+AMQP queue, write it to disk, or whatever, really.
 
-There is no "bugzilla site". Bugzilla is a bug tracker. Many projects
-use it. There's litterally hundreds of "Bugzilla sites" and nobody of us
-has a clue which one you're referring to. And even if we did, probably
-only the admin of that site could help you.
+https://www.balabit.com/documents/syslog-ng-ose-latest-guides/en/syslog-ng-ose-guide-admin/html/chapter-manipulating-messages.html
+https://www.balabit.com/documents/syslog-ng-ose-latest-guides/en/syslog-ng-ose-guide-admin/html/chapter-destinations.html
 
-> When an anonymous user accesses the page, the following message is displayed and access is blocked.
-> 
-> "You are not authorized to access bug #632521. To see this bug, you must first log in to an account with the appropriate permissions"
-
-[...]
-
-> If you have a solution, let me know.
-
-Here's an idea: Try to log in to an account with the appropriate
-permissions.
-
-If your bug reports are as fuzzy and confused as your posting on this
-mailing list, it's no wonder your requests got ignored. You really could
-try to be more specific and/or precise. A real name would also increase
-chances of not being mistaken for a troll.
-
-Cheers,
-Johannes
+Sean
