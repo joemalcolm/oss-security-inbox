@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/2
-Message-ID: <20171106061544.apbxborivf4lye7m@matica.foolinux.mooo.com>
-Date: Sun, 5 Nov 2017 22:15:44 -0800
-From: Ian Zimmerman <itz@...y.loosely.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/9
+Message-ID: <20170801205414.GA17225@openwall.com>
+Date: Tue, 1 Aug 2017 22:54:14 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security risk of vim swap files
+Cc: akuster <akuster@...sta.com>
+Subject: Re: CoreOS membership to linux-distros (updated)
 Content-Type: text/plain; charset=utf-8
 
-On 2017-11-01 19:12, Solar Designer wrote:
-
-> On Wed, Nov 01, 2017 at 07:02:22PM +0100, Jakub Wilk wrote:
-
-> > Unfortunately, glibc's implementation of tmpfile(3), which is the
-> > most fool-proof interface for dealing with temporary files that the
-> > C library offers, doesn't honour TMPDIR. :(
+On Tue, Aug 01, 2017 at 01:36:07PM -0700, akuster wrote:
+> On 07/31/2017 01:53 PM, Solar Designer wrote:
+> >However, many distros still haven't picked up a task, and many tasks are
+> >not picked up by any distro.  That should change.
 > 
-> We've been carrying a patch for this for ages:
+> Is there a consolidated summary on where we stand on what has been 
+> spoken for?
 
-Do you know why this has not been changed upstream?  The code (and
-infopage) mentions "SVID compatibility".  Do you know of any programs
-that break with this change?
+Yes.  I keep the wiki page up to date:
 
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet, fetch the TXT record for the domain.
+http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+
+Alexander
