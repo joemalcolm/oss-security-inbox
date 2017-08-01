@@ -1,31 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/5
-Message-ID: <CAFJ0LnFGD0+stET2NvNzQ2tR47Yk3cbUcWuUOLWqfRKvyBsA4A@mail.gmail.com>
-Date: Thu, 29 Jun 2017 07:31:33 -0700
-From: Nick Kralevich <nnk@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/6
+Message-Id: <210A80CE-06EC-41A2-8C8A-3ABDE2BBDD9B@redhat.com>
+Date: Tue, 1 Aug 2017 12:14:33 -0600
+From: Kurt Seifried <kseifrie@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: TIOCSTI not going away
+Subject: Re: Syslog forwarding with IP spoofing
 Content-Type: text/plain; charset=utf-8
 
-In addition to OpenBSD, Android has chosen to drop TIOCSTI (and a
-bunch of other tty ioctls) in the Android 8.0 release. See
-https://android-review.googlesource.com/306278
+I think messages like this may lead to a lot of "buy product X" (which we just had now....). I'd rather the list not become a commercial free for all.
 
--- Nick
 
-On Thu, Jun 29, 2017 at 7:23 AM, Solar Designer <solar@...nwall.com> wrote:
-> While TIOCSTI is apparently not going away on Linux, it is on OpenBSD,
-> and here's some analysis of the apparently almost non-existent impact
-> this will have on Emacs (which was one of the primary examples cited for
-> keeping TIOCSTI on Linux):
->
-[...]
->
-> Whatever happens (or doesn't happen) for upstream Linux, there will be
-> system(s) dropping TIOCSTI or at least introducing a way to disable it,
-> so reducing userspace programs' dependencies on TIOCSTI makes sense.
->
+-Kurt
+
+
+
+
+
+> On Aug 1, 2017, at 11:33, Mikhail Utin <mikhailutin@...mail.com> wrote:
+> 
+> Hello,
+> 
+> Indeed, it is our of this list topic.
+> 
+> Options for The Alexander:
+> 
+>  1.  Normal SIEM will work with syslog as it is widely supported format and will know where the log comes from by data source configuration.
+>  2.  The "open source tool" is Perl, you can create any log format from any data sources and then send to SIEM.
+>  3.  Talk to SIEM tech support. Good vendor will advise. If you do not have SIEM, buy LogRhythm. That should work. Freeware OSSIM I would bet will work with syslog as well.
+>  4.  Alexander can email me mikhailutin@...mail.com for details.
+> 
+> 
+> Mikhail Utin, CISSP
+> 
+> 
+> ________________________________
+> From: Solar Designer <solar@...nwall.com>
+> Sent: Tuesday, August 1, 2017 13:06
+> To: Александр Носарев
+> Cc: oss-security@...ts.openwall.com
+> Subject: Re: [oss-security] Syslog forwarding with IP spoofing
+> 
+> Hi all,
+> 
+>> On Tue, Aug 01, 2017 at 05:27:26PM +0300, Александр Носарев wrote:
+>> I need to recive syslog messages, filter them and send them forward to the
+>> SIEM.
+>> 
+>> Also HOST field is not represented in syslog, so i need to spoof IP of
+>> forwarding
+>> packets to bind messages recived by SIEM to it's original source IP.
+>> 
+>> If i will try to add some marks to syslog message, I will need to override
+>> parsers for each syslog source type, so it seems like abad idea.
+>> 
+>> Is there any open source tool for that task?
+> 
+> Somehow we almost didn't have this sort of messages - someone seeking an
+> open source security tool - sent in here so far.  Do we want them in
+> here going forward?  The current list content guidelines do not address
+> this possibility, as it certainly wasn't the purpose of the oss-security
+> list so far.  Is there another mailing list where the above message
+> would have been more appropriate?
+> 
+> http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+> mailing-lists:oss-security [OSS-Security]<http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines>
+> oss-security.openwall.org
+> The purpose of the Open Source Security (oss-security) group is to encourage public discussion of security flaws, concepts, and practices in the Open Source community.
+> 
+> 
+> 
+> Meanwhile, please feel free to address the actual question about the
+> tool.  (I don't know of such a tool.)
+> 
 > Alexander
-
--- 
-Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
