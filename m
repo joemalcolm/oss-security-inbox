@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["861" "Tuesday" "9" "October" "2018" "17:14:45" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1810091703270.29158@scrappy.simplesystems.org>" "21" "Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" "^Date:" nil nil "10" "2018100922:14:45" "[oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" (number mark "        bfriesen@sim Oct  9   21/861   " thread-indent "\"Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)\"\n") "<CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>" ("<CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>" "<20181009153006.GF21509@takahe.colorado.edu>" "<CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["309" "Tuesday" "1" "August" "2017" "15:57:58" "+0200" "Damien Regad" "dregad@mantisbt.org" "<olq1d0$a2j$1@blaine.gmane.org>" "12" "[oss-security] Re: Advisory: XSS issues in MantisBT (CVE-2017-12061, CVE-2017-12062)" nil nil nil "8" "2017080113:57:58" "[oss-security] Re: Advisory: XSS issues in MantisBT (CVE-2017-12061, CVE-2017-12062)" (number mark "U       dregad@manti Aug  1   12/309   " thread-indent "\"[oss-security] Re: Advisory: XSS issues in MantisBT (CVE-2017-12061, CVE-2017-12062)\"\n") "<olpvai$s2$1@blaine.gmane.org>" ("<olpvai$s2$1@blaine.gmane.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19864 invoked by uid 550); 9 Oct 2018 22:14:59 -0000
+Received: (qmail 1405 invoked by uid 550); 1 Aug 2017 14:01:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,33 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19837 invoked from network); 9 Oct 2018 22:14:58 -0000
-X-X-Sender: bfriesen@scrappy.simplesystems.org
-In-Reply-To: <CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>
-Message-ID: <alpine.GSO.2.20.1810091703270.29158@scrappy.simplesystems.org>
-References: <CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com> <20181009153006.GF21509@takahe.colorado.edu> <CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 09 Oct 2018 17:14:45 -0500 (CDT)
-Date: Tue, 9 Oct 2018 17:14:45 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ghostscript: bypassing executeonly to escape
- -dSAFER sandbox (CVE-2018-17961)
+Received: (qmail 31764 invoked from network); 1 Aug 2017 13:58:18 -0000
+X-Injected-Via-Gmane: http://gmane.org/
 To: oss-security@lists.openwall.com
+From: Damien Regad <dregad@mantisbt.org>
+Date: Tue, 1 Aug 2017 15:57:58 +0200
+Message-ID: <olq1d0$a2j$1@blaine.gmane.org>
+References: <olpvai$s2$1@blaine.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+In-Reply-To: <olpvai$s2$1@blaine.gmane.org>
+Content-Language: en-US
+Subject: [oss-security] Re: Advisory: XSS issues in MantisBT (CVE-2017-12061, CVE-2017-12062)
 
-On Tue, 9 Oct 2018, Tavis Ormandy wrote:
->
-> I think we should encourage switching to other document formats that we
-> have a better handle on securing. If you do need untrusted ps, I think
-> treating it the same as shell script file you downloaded from the internet.
+On 2017-08-01 15:22, Damien Regad wrote:
+> * Releases 1.3.9, 2.1.3, 2.2.3 and 2.3.0 are scheduled for release on
+> coming week-end
 
-Due to its valuable current usages (e.g. printing and format 
-conversion) and its long legacy, Postscript is still a vital format to 
-support in open source software.
+That was a copy/paste error. The above should have read:
 
-How can software consuming Postscript be aware of its origin unless it 
-is known to be produced directly by another application?
+* Releases 1.3.12, 2.5.2 and 2.6.0 are scheduled for release in the
+coming week.
 
-Edge applications such as web browsers may be able to help by adding 
-warning dialogs when knowingly downloading Postscript content.
+Apologies for any confusion.
+Damien
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
