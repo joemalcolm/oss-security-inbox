@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/8
-Message-ID: <alpine.LFD.2.20.1702152329360.29340@wniryva>
-Date: Wed, 15 Feb 2017 23:36:13 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-5994 Virglrenderer: out-of-bounds access in vrend_create_vertex_elements_state
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/3
+Message-Id: <1501597646.744346.23695.25373@mail.rambler.ru>
+Date: Tue, 1 Aug 2017 17:27:26 +0300
+From: Александр Носарев <nosarev-ay@...bler.ru>
+To: oss-security@...ts.openwall.com
+Subject: Syslog forwarding with IP spoofing
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Good day!
 
-Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
-for the virtio GPU, is vulnerable to an OOB array access issue. It could occur 
-when creating vertex elements array in vrend_create_vertex_elements_state().
 
-A guest user/process could use this flaw to crash the Qemu process instance 
-resulting DoS.
+I need to recive syslog messages, filter them and send them forward to the SIEM.
 
-Upstream patch:
----------------
-   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=114688c526fe45f341d75ccd1d85473c3b08f7a7
+Also HOST field is not represented in syslog, so i need to spoof IP of forwarding
+packets to bind messages recived by SIEM to it's original source IP.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1422452
+If i will try to add some marks to syslog message, I will need to override
+parsers for each syslog source type, so it seems like abad idea.
 
-This issue was reported by Li Qiang of 360.cn Inc.
+Is there any open source tool for that task?
 
-'CVE-2017-5994' assigned via -> https://cveform.mitre.org/
 
-Thank you.
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+.
+
