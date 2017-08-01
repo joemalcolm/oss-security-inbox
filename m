@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["798" "Thursday" "11" "January" "2018" "21:33:59" "+0000" "halfdog" "me@halfdog.net" "<1068-1515706439.624909@uP7q.LsC9.WmNw>" "25" "[oss-security] OpenSSH sftp remote code execution in chroot mode in VERY RARE cases" "^Date:" nil nil "1" "2018011121:33:59" "[oss-security] OpenSSH sftp remote code execution in chroot mode in VERY RARE cases" (number mark "        me@halfdog.n Jan 11   25/798   " thread-indent "\"[oss-security] OpenSSH sftp remote code execution in chroot mode in VERY RARE cases\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["906" "Tuesday" "1" "August" "2017" "20:31:29" "+0200" "Stefan Bodewig" "bodewig@apache.org" "<87lgn3nnr2.fsf@v45346.1blu.de>" "35" "[oss-security] CVE-2017-9801: Apache Commons Email SMTP header injection vulnerabilty" nil nil nil "8" "2017080118:31:29" "[oss-security] CVE-2017-9801: Apache Commons Email SMTP header injection vulnerabilty" (number mark "U       bodewig@apac Aug  1   35/906   " thread-indent "\"[oss-security] CVE-2017-9801: Apache Commons Email SMTP header injection vulnerabilty\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18019 invoked by uid 550); 11 Jan 2018 21:34:32 -0000
+Received: (qmail 32556 invoked by uid 550); 1 Aug 2017 19:04:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17912 invoked from network); 11 Jan 2018 21:34:31 -0000
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Message-ID: <1068-1515706439.624909@uP7q.LsC9.WmNw>
-Date: Thu, 11 Jan 2018 21:33:59 +0000
-From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] OpenSSH sftp remote code execution in chroot mode in VERY RARE cases
-To: oss-security@lists.openwall.com
+Received: (qmail 11378 invoked from network); 1 Aug 2017 18:31:43 -0000
+From: Stefan Bodewig <bodewig@apache.org>
+To: dev@commons.apache.org, user@commons.apache.org, announce@apache.org, A.Williams.9@warwick.ac.uk, security@apache.org, oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Date: Tue, 01 Aug 2017 20:31:29 +0200
+Message-ID: <87lgn3nnr2.fsf@v45346.1blu.de>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE-2017-9801: Apache Commons Email SMTP header injection vulnerabilty
 
-Hello list,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This sounds worse, but it is not. And it is public anyway, so FYI:
+CVE-2017-9801: Apache Commons Email SMTP header injection vulnerabilty
 
-With internal-sftp and chroot, sftp still attempts to execute
-code from /etc/ssh/sshrc. See [0] for more information on testing
-the issue. It will only affect you when using a writable chroot
-(which is already documented in man-pages to be insecure) but
-also some strange configuration settings, e.g. when using
+Severity: low
 
-ChrootDirectory /home
+Vendor:
+The Apache Software Foundation
 
-as recommended in [1] and having a user named "etc" and "bin"
-created.
+Versions Affected:
+Apache Commons Email 1.0 to 1.4.
 
-When creating a user "proc" that way, another issue prohibits
-closing of inherited file descriptors, that then again may leak
-to the two other users.
+Description:
+When a call-site passes a subject for an email that contains
+line-breaks, the caller can add arbitrary SMTP headers.
 
-hd
+Mitigation:
+Users should upgrade to Commons Email 1.5.
+You can mitigate this vulnerability for older versions of Commons
+Email by stripping line-breaks from the subject before passing it to
+the setSubject(String) method.
 
-[0] https://www.halfdog.net/Security/2018/OpensshSftpChrootCodeExecution/
-[1] https://www.tecmint.com/restrict-sftp-user-home-directories-using-chroot/
+Credit:
+This issue was discovered by =EF=BB=BFAdam Williams.
 
+References:
+http://commons.apache.org/proper/commons-email/security-reports.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iEYEARECAAYFAlmAyP8ACgkQohFa4V9ri3K7XQCgj69yH9nkBGRVJBG9+0DS1jc8
+GJUAnRZrLznaNRzokj08JGBMy5wwHNTt
+=3DoSDx
+-----END PGP SIGNATURE-----
