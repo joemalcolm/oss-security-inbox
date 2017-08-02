@@ -1,55 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/07/2
-Message-ID: <20170407084159.GB9615@f195.suse.de>
-Date: Fri, 7 Apr 2017 10:41:59 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7572: backintime: usage of deprecated unix-process polkit authorization subject opens a race condition during authorization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/02/2
+Message-ID: <20170802134032.547770e7@redhat.com>
+Date: Wed, 2 Aug 2017 13:40:32 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Pali Rohár <pali.rohar@...il.com>
+Cc: oss-security@...ts.openwall.com, security@...iadb.org, secalert_us@...cle.com, security@...cona.com, Andrea Barisani <andrea@...ersepath.com>, Michiel Beijen <michiel.beijen@...il.com>, Alceu Rodrigues de Freitas Junior <glasswalk3r@...oo.com.br>, cve-assign@...re.org
+Subject: Re: MySQL - use-after-free after mysql_stmt_close()
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, 8 Jun 2017 23:49:03 +0200 Pali Rohár wrote:
 
-backintime includes a DBus service helper 'qt/serviceHelper.py'. This helper
-uses polkit to authorize some of its APIs, they should only be accessible
-through entering the root password. The helper program uses the deprecated
-"unix-process" authorization subject for this purpose, however. This polkit
-authorization method is known to be affected by a "time of check, time of use"
-race condition:
+> MySQL applications written according to Oracle's MySQL documentation & 
+> examples for mysql_stmt_close() function call are vulnerable to use-
+> after-free defect.
 
-https://www.freedesktop.org/software/polkit/docs/latest/PolkitUnixProcess.html#polkit-unix-process-new
-https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack/blob/master/2011/CVE-2011-1485/polkit-pwnage.c
+...
 
-To exploit this issue an attacker needs to be able to replace the PID of
-a process that requests an affected polkit privilege by a root owned
-process, just in time for polkitd to assume that the requesting process
-was privileged and no further password entry is required.
+> Whole example of usage is written in mysql_stmt_execute() function [3]. 
+> The relevant part for mysql_stmt_close() is at the end of example:
+> 
+> /* Close the statement */
+> if (mysql_stmt_close(stmt))
+> {
+>   fprintf(stderr, " failed while closing the statement\n");
+>   fprintf(stderr, " %s\n", mysql_stmt_error(stmt));
+>   exit(0);
+> }
+> 
+> And here is a problem, use-after-free defect. Current implementation of 
+> mysql_stmt_close() function unconditionally free passed statement 
+> structure and therefore following mysql_stmt_error() call is defective 
+> to use-after-free.
 
-In the worst case this could allow a regular user to add udev rules to the
-system that run commands in the context of the regular user, once a certain
-udev event occurs. I don't think it is easily possible to gain root privileges
-this way. This is because the serviceHelper wraps the udev commands in a sudo
-call running as the user owning the requesting process. The determination of
-this identity is done in a different, more secure way.
+...
 
-I've proposed a fix to upstream that changes the authorization mechanism to
-"system-bus-name" which is considered safe and not affected by the described
-race condition.
+> Oracle team was unwilling to tell anything, provide any information how 
+> to handle such issue or what to do, therefore with suggestion from oCERT 
+> I decided to make this report public and open public discussion for 
+> other people on oss-security list how to handle this problem.
+> 
+> As Oracle fully ignored this problem and have not stated if problem is 
+> in documentation, implementation or both, I see probably 3 different 
+> solutions:
 
-This issue was discovered by Sebastian Krahmer of the SUSE security team.
+Oracle has previously updated code examples in the documentation.  They
+apparently also assigned CVE-2017-3635 via July 2017 CPU:
 
-References:
+http://www.oracle.com/technetwork/security-advisory/cpujul2017-3236622.html#AppendixMSQL
 
-[Suggested patch] https://github.com/bit-team/backintime/commit/7f208dc547f569b689c888103e3b593a48cd1869
-[openSUSE bug] https://bugzilla.suse.com/show_bug.cgi?id=1032717
+There's the following note for the CVE:
+
+"""
+The documentation has also been updated for the correct way to use mysql_stmt_close(). Please see:
+https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-execute.html,
+https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-fetch.html,
+https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-close.html,
+https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-error.html,
+https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-errno.html, and
+https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-sqlstate.html
+"""
+
+The issue is listed as fixed in versions 5.5.57, 5.6.37, and 5.7.19.
+Their release notes also mention the change:
+
+https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-57.html
+https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-37.html
+https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-19.html
+
+"""
+If the mysql_stmt_close() C API function was called, it freed memory
+that later could be accessed if mysql_stmt_error(), mysql_stmt_errno(),
+or mysql_stmt_sqlstate() was called. To obtain error information after
+a call to mysql_stmt_close(), call mysql_error(), mysql_errno(), or
+mysql_sqlstate() instead. (Bug #25988681)
+"""
+
+There is also a code change referencing the above bug:
+
+https://github.com/mysql/mysql-server/commit/3d8134d2c9b74bc8883ffe2ef59c168361223837
+
+which does not seem to address the use-after-free problem.
+
+It seems the CVE is effectively for buggy documentation, and the
+fixed-in version numbers are not really relevant.
 
 -- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-
-SUSE Linux GmbH 
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Tomas Hoger / Red Hat Product Security
