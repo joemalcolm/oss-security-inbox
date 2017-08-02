@@ -1,21 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/3
-Message-ID: <987433.508128987-sendEmail@localhost>
-Date: Sun, 26 Feb 2017 11:43:25 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: audiofile: multiple crashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/02/4
+Message-ID: <c7133f03-d720-b208-5805-8d767dad84ec@pipping.org>
+Date: Wed, 2 Aug 2017 21:37:27 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-11742 - Expat 2.2.{1,2} LoadLibrary DLL hijacking vulnerability on Windows
 Content-Type: text/plain; charset=utf-8
 
-Hello all.
-
-I discovered multiple crashes in the audiofile library.
-The maintainer was informed privately, I didn't see reactions and all details are public on my blog.
-I posted them to the cveform too, but I didn't get response.
-I'll send update if something will change. 
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Hi!
 
 
+Just a quick note that Expat 2.2.3 [1] released today fixes
+CVE-2017-11742 [2][3], a DLL hijacking vulnerability on Windows.
+
+Best
+
+
+
+Sebastian
+
+
+[1] https://github.com/libexpat/libexpat/blob/master/expat/Changes
+[2] https://www.cvedetails.com/cve/CVE-2017-11742/
+[3] https://github.com/libexpat/libexpat/issues/82
