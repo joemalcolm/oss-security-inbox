@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/30/2
-Message-ID: <f3785fb8-b95a-522b-14b4-94e8cefb02ab@linux.com>
-Date: Thu, 30 Mar 2017 14:55:42 +0300
-From: Alexander Popov <alex.popov@...ux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/02/3
+Message-ID: <20170802120117.GA18748@openwall.com>
+Date: Wed, 2 Aug 2017 14:01:17 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: CVE-2017-2636: local privilege escalation flaw in n_hdlc
+Cc: security@...e.de
+Subject: Re: CoreOS membership to linux-distros (updated)
 Content-Type: text/plain; charset=utf-8
 
-On 07.03.2017 20:45, Alexander Popov wrote:
-> This is an announcement of CVE-2017-2636, which is a race condition in
-> the n_hdlc Linux kernel driver (drivers/tty/n_hdlc.c). It can be exploited
-> to gain a local privilege escalation.
+On Wed, Aug 02, 2017 at 12:11:20PM +0200, Johannes Segitz wrote:
+> On Tue, Aug 01, 2017 at 10:54:14PM +0200, Solar Designer wrote:
+> > I keep the wiki page up to date:
+> > 
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
 > 
-> This driver provides HDLC serial line discipline and comes as a kernel module
-> in many Linux distributions, which have CONFIG_N_HDLC=m in the kernel config.
+> SUSE has been active in the past in various activities listed in the
+> document and will continue to do so. Officially we would like to commit to
+> task 5 and 10.
 
-Hello,
+Thank you.  This results in:
 
-I've published the write-up: https://a13xp0p0v.github.io/2017/03/24/CVE-2017-2636.html
+5. Determine if the reported issues are Linux-specific, and if so help
+ensure that (further) private discussion goes on the linux-distros
+sub-list only (thus, not spamming and unnecessarily disclosing to the
+non-Linux distros)
+- primary: SUSE, backup: vacant
 
---
+10. Monitor relevant public channels (mailing lists, code repositories,
+etc.) and inform the reporter and the list in case an issue is made
+public prematurely (that is, leaks or is independently rediscovered)
+- primary: Amazon, backup: SUSE
+
+This leaves without an assigned distro only 1 of 13 administrative tasks
+requiring (linux-)distros list membership to handle:
+
+4. Evaluate relevance to other parties such as the upstream, other
+affected distros (not present on the (sub-)list), and other Open Source
+projects, see if the report mentions notifying any of these, communicate
+your findings and possible concerns to the reporter and the list, and
+stay on top of the resulting discussion until a decision is made on who
+else to possibly notify (or not) and any such notifications are in fact
+made (with the reporter's approval)
+
+This is counterpart to task "5. Determine if the reported issues are
+Linux-specific ..." above.  Handling of this task "4. Evaluate relevance
+to other parties ..." includes bringing discussions from linux-distros
+to the full distros list when relevant to the *BSD's (and/or to whatever
+other non-Linux distros are on that list at the time, if any join by
+then), and a lot more.
+
+Also still fully vacant are 3 out of 6 technical tasks.
+
 Alexander
-
