@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/15/4
-Message-ID: <63ba101d-71b7-fcb0-5f28-ed6f78ebfbbd@amazon.de>
-Date: Fri, 15 Sep 2017 18:36:59 +0200
-From: "Jan H. Schönherr" <jschoenh@...zon.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/02/1
+Message-ID: <20170802101120.GH8668@suse.com>
+Date: Wed, 2 Aug 2017 12:11:20 +0200
+From: Johannes Segitz <jsegitz@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-1000252: KVM denial of service with posted interrupts on Intel systems (since Linux 4.4)
+Cc: security@...e.de
+Subject: Re: CoreOS membership to linux-distros (updated)
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+On Tue, Aug 01, 2017 at 10:54:14PM +0200, Solar Designer wrote:
+> Yes.  I keep the wiki page up to date:
+> 
+> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
 
-We have discovered a user triggerable BUG() when using KVM with posted interrupts on Intel
-systems. This requires an unprivileged user to have access to the KVM device.
+SUSE has been active in the past in various activities listed in the
+document and will continue to do so. Officially we would like to commit to
+task 5 and 10.
 
-Certain values in a KVM_IRQFD API call can trigger a BUG_ON() at a later point in
-vmx_update_pi_irte(). KVM as a whole seems to hang after that.
+Johannes
+-- 
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
 
-The issue was introduced with Linux 4.4, patches have been posted to the KVM
-mailing list:
-- https://marc.info/?l=kvm&m=150549145711115&w=2
-- https://marc.info/?l=kvm&m=150549146311117&w=2
-
-Regards
-Jan H. Schönherr
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
