@@ -1,4 +1,9 @@
-Received: (qmail 5433 invoked by uid 550); 22 Oct 2023 16:03:46 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5908" "Thursday" "3" "August" "2017" "10:00:02" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>" "109" "[oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" "^Cc:" nil nil "8" "2017080314:00:02" "[oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" (number mark "        vdronov@redh Aug  3  109/5908  " thread-indent "\"[oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()\"\n") "<465481173.38534111.1501765671454.JavaMail.zimbra@redhat.com>" ("<465481173.38534111.1501765671454.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9829 invoked by uid 550); 3 Aug 2017 14:00:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,199 +11,134 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32291 invoked from network); 22 Oct 2023 15:54:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1697990064; x=1698076464; bh=MWwVmPufR4jJdW3Ym8DJkWUKXj5hUn33g+J
-	NU10AJ0o=; b=df9Cuf2D+TgjabPpBa9gKasg6/Gjx8lRiYeqIublMVgsjWSyLZh
-	6NfDRKShyHgWtkTs+Y5F6T4+RnjDlDdbbCRMTdkiwHhcau8mOl9/DagsXOGufkqs
-	nOL2Jya2n8wMGDHGSwbuGkyQoiIwsSmZMouRULJB28Vc40NXSKX1+FOUZBeCuoTh
-	Uec0c9QhHlWWAIed3kpIORjwqI8F5X/NlyeffGg51HUueGgelXZgPXJWX9d2TRVi
-	InoBy2kzPk6Fs/SbcKVLxIvVKxJRuci+NK+m80gLQG4ZcbU2Sct+fTL6Rv67pDHl
-	hXB06IlDDmbnETuvP3gp6WH8iYJi+k8ElcQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697990064; x=1698076464; bh=MWwVmPufR4jJd
-	W3Ym8DJkWUKXj5hUn33g+JNU10AJ0o=; b=f22Pq2HF/YMZQ+1Y5/KHjPUcfsER+
-	e8qt/aabZp3IzWTzuzpryWPpZQVKYvPI6FcLpluKrGCq4NWEN6+/f8mjjiamPUWq
-	2wpSFBu9TuoXtZ9WyaZE21H170ba4EsbNuSAj4dGeo+ruLE9TtE9lE2KXAwBuXGn
-	ksHcToYWxKoOX28/PnDtDiwNR9AfmDVvo9Wmpx0OZLWpBOAjqWo8fHMBJ3y37EDh
-	OTu/eyU2W2VI13Le0Evoj6EQvZbvUzWCaXRmFaWUYm/VqX+go5J/evRimeCqeAWS
-	Hg/ydMRdz+dchEa9lB23rTpFCHkq98wdPeAPs7VKDHLJUgqqqXkYTj90g==
-X-ME-Sender: <xms:sEU1ZRqw6Jzdix8q9ay6WpD00VfEQXMcup-MI6g0ZMl-zGNLsKxT-w>
-    <xme:sEU1ZTpzOAnDI0DA1srVc5ZpOgj9agFITFStPen34vMKzLIzEaH0Z_mncoZJmF98U
-    Sg3kt6UHJ4did8>
-X-ME-Received: <xmr:sEU1ZeODZyEeSpjPShQeRZeBILeubC9KGeW_lXLCoIAs1PLjNc5yJv1RzLLch9R08m1WwO9bGJ64Q1ACp_TCTMoy9xxiv3wOV6hVOJYaWxos4YrW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeeggddthecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttdejnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihes
-    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    ehhedtkefhgfegledtjeefjeduteduieeileeiudekvdekvdeuueehffevtedutdenucff
-    ohhmrghinheprhgvughhrghtrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepuggvmhhisehinhhvihhsihgslhgvthhhihhnghhslhgr
-    sgdrtghomh
-X-ME-Proxy: <xmx:sEU1Zc6FuO3y19OdXslx-eFbQBI-JI0MZCviAadtxq8tqUjvn6RBdA>
-    <xmx:sEU1ZQ7R8zmfTiASkG-WDqsNXk4fQhPpAkkGa1EVhbPcKES_aYwBKQ>
-    <xmx:sEU1ZUgzcRj9olCI8Yq4GlqRd2eYEhv_FCD4_faPnpRtFDRCK92uLg>
-    <xmx:sEU1ZSFEceV2g3kXdqE94M6Uer3ttqJy_5VAmAkhONKAjGiifJEcPw>
-Feedback-ID: iac594737:Fastmail
-Date: Sun, 22 Oct 2023 11:54:03 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ZTVFrvd2h+70PhaV@itl-email>
-References: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com>
- <20231022000649.GA14340@openwall.com>
- <ZTRwxHaoUqTPyf+b@itl-email>
- <alpine.GSO.2.20.2310220847390.6992@scrappy.simplesystems.org>
+Received: (qmail 9804 invoked from network); 3 Aug 2017 14:00:16 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com B0CBAC058EBE
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
+Message-ID: <754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>
+In-Reply-To: <465481173.38534111.1501765671454.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JGiqKf+NN94R0z40"
-Content-Disposition: inline
-In-Reply-To: <alpine.GSO.2.20.2310220847390.6992@scrappy.simplesystems.org>
-Subject: Re: [oss-security] sandboxing,of upstream programs by distros
-
---JGiqKf+NN94R0z40
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 22 Oct 2023 11:54:03 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.4.197, 10.4.195.15]
+Thread-Topic: kernel: inotify: a race between inotify_handle_event() and sys_rename()
+Thread-Index: iX7Gyza0ZBokhRfEuzpqP3ISP6NaIA==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Thu, 03 Aug 2017 14:00:04 +0000 (UTC)
+Cc: fulldisclosure@seclists.org, bugtraq@securityfocus.com
+Date: Thu, 3 Aug 2017 10:00:02 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [CVE-2017-7533] kernel: inotify: a race between
+ inotify_handle_event() and sys_rename()
 To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] sandboxing,of upstream programs by distros
 
-On Sun, Oct 22, 2023 at 09:19:59AM -0500, Bob Friesenhahn wrote:
-> On Sat, 21 Oct 2023, Demi Marie Obenour wrote:
-> > >=20
-> > > For Rocky Linux Security SIG, the only relevant thing mentioned so far
-> > > was possibly offering an OpenBSD pledge()-alike that other packages
-> > > could use.  However, I am skeptical any actually would, unless we also
-> > > introduce such uses ourselves and maintain own "override" packages
-> > > (replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
-> > > software.  Initially, we are going to only create "override' packages
-> > > for core or very commonly used/exposed components, and to do so only =
-for
-> > > specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
-> > > coming from EPEL and with most of its dependency libraries coming from
-> > > AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely =
-to
-> > > make the cut, at least not initially.
-> >=20
-> > Has deprecating ImageMagick and/or GraphicsMagick outright been
-> > considered?  I don=E2=80=99t just mean the downstream packages, but the=
- entire
-> > upstream projects, or at least the libraries.
->=20
-> RHEL already deprecated ImageMagick several years ago and advised users to
-> use GraphicsMagick (https://access.redhat.com/documentation/en-us/red_hat=
-_enterprise_linux/7/html/7.7_release_notes/deprecated_functionality).
-> Those users were confused given that many of the recipes they were using =
-for
-> ImageMagick did not work with GraphicsMagick. The solution for those users
-> was to find a different way to install ImageMagick.
->=20
-> > One option would be to instead make an IPC call to a persistent daemon
-> > running in the background.  That said, has wasm2c been considered?  The
-> > best fix would be something that can make C code memory-safe, even if it
-> > comes at a performance hit of 4x or more (like SoftBound+CETS did).
-> > Stuff that cares about performance should be migrating to something like
-> > libvips or ImageFlow.
-> >=20
-> > If neither of these are options, I think the entire library will need to
-> > be deprecated for eventual removal.  The command-line tools can remain,
-> > but they can be much more strongly sandboxed than a library can, because
-> > they have the entire process to themselves.
->=20
-> Any deprecations or sandboxing approaches which fail to understand and
-> address the needs of the "user" will fail.  Replacing package 'A' with
-> package 'B', where package 'B' works totally differently, or performs
-> different functions than package 'A' will fail because the users will not
-> use it.
+Hello,
 
-That is true.
+A race condition was found in Linux kernel present since v3.14-rc1 upto v4.12
+including. The race happens between threads of inotify_handle_event() and
+vfs_rename() while running the rename operation against the same file. The next
+slab data or the slab's free list pointer can be corrupted with attacker-controlled
+data as a result of the race.
 
-> Unfortunately, most Linux IPC mechanisms are not very secure since they r=
-ely
-> on historical Unix privilege models to control access.
+The researchers of this flaw are Fan Wu and Shixiong Zhao from a research group
+supervised by Dr. Heming Cui of the Department of Computer Science, The University
+of Hong Kong. Thanks to Rui Gu and Prof. Junfeng Yang from Columbia University for
+tools and suggestions.
 
-If one can bypass access control on IPC, one can easily get root by
-sending malicious commands to systemd, so I don't think this is
-something to worry about.
+References:
 
-> Common ways to assure
-> security such as TLS usually result in a considerable reduction of
-> performance. Solutions like Landlock seem useful for very restricted usage
-> applications.  Sandboxing solutions which work for any use of a program s=
-eem
-> better than requiring a client/server model.
+https://bugzilla.redhat.com/show_bug.cgi?id=1468283
 
-The advantage of a client/server model is that it avoids a library
-having to spawn child processes, which was mentioned as a concern
-earlier.  I agree that it is more effort than desirable.
+https://access.redhat.com/security/vulnerabilities/3112931
 
-> As the developer/maintainer of a complex C program (GraphicsMagick), I
-> appreciate any advice on improvements which make it more suitable for
-> sandboxing, or less likely to appear as a hazard on the security radar.
+https://patchwork.kernel.org/patch/9755753/
 
-To make a program suitable for sandboxing, several requirements must be
-met:
+https://patchwork.kernel.org/patch/9755757/
 
-1. The program must run in a separate address space.  This can either be
-   a OS process, a software fault isolation (SFI) container, or a SFI
-   container inside an OS process.  If an SFI container is used without
-   a separate OS process, additional care must be taken to prevent
-   side-channel attacks, so I do not recommend this solution without
-   significant additional research.
+An upstream patch:
 
-2. All I/O resources (such as file descriptors) must be acquired before
-   processing untrusted input.  It must not be possible to use these
-   resources to access additional resources the program should not have
-   access to.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=49d31c2f389acfe83417083e1208422b4091cd9
 
-3. Before processing untrusted input, the program must lose the ability
-   to acquire additional I/O resources.
+So as for the flaw itself.
 
-4. The address space (whether an OS process or an SFI container) must
-   not be reused once processing has completed, unless it can be
-   forcibly and verifiably reset to its initial state.
+There is quite easily reached race condition between inotify_handle_event() and
+sys_rename(). A rename thread can change the dentry name before an fsnotify
+thread is copying the dentry name but after a memory for this is allocated:
 
-5. If the inputs to the processing were untrusted, the results must also
-   be considered untrusted.
+CPU 1                          CPU 2
 
-A command-line tool can probably meet all of these requirements but the
-last one quite easily.  For a library, the difficulty of meeting these
-requirements will depend significantly on the library API.  I am not
-familiar with the GraphicsMagick API and so am not sure how difficult it
-will be for the GraphicsMagick API to support sandboxing.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+fsnotify()
+  inotify_handle_event(.., file_name)
+    strlen(file_name)  // file_name is "foobar"
+    alloc_len += len + 1;
+    event = kmalloc(alloc_len, GFP_KERNEL); // 7 bytes for the file_name
 
---JGiqKf+NN94R0z40
-Content-Type: application/pgp-signature; name="signature.asc"
+                               sys_rename()
+                                 __d_move() [in fs/dcache.c]
+                                   copy_name()
+                                   // rename to "foobar_lol_kek_u_pwned"
 
------BEGIN PGP SIGNATURE-----
+    strcpy(event->name, file_name);
+    // now file_name points to "foobar_lol_kek_u_pwned"
+    // but there is a space only for "foobar\0"
+    // the next slab or slab's *freelist is corrupted with user controlled data
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmU1Ra4ACgkQsoi1X/+c
-IsEO2xAAslHUOgTp80kCH17B32aDs8Ngs0hZd544sR+uzC1/MaQe15N/uFCxc5Ll
-bpSIHCbrgHk2kELgAfvuyd2adfAQQUjr8OD5xsWQpO/2KLqeMMWf0zd4yUlq+xyH
-znSBhHUlg+cbifGlXre3MsznGWJ7B/Hx+oSsmfxqSxKmxBZ34JlPTJNhtrQ4GAED
-B2lA+TwT3pdGrNABEEhFqnBOu3joEAfLk7vQGQV3KLfE/uBSqHQHF/Gd/jJS5DPr
-b2Vo+3zqVHOpSSTiDp3y5xyjx5wS66kv8naC9jqf8BUat0VBiE28i4CQQRqFyZGD
-Yy6vfeubFXzYiYMnhnnscShqAlS0i5q118DAFHQC8jYt4AjKBgqeKI4iVqBinBJ5
-DEJXGp2rXMMnnsCworze8tcZKV9SBYeFHJJl4mJLrJwuWl8urI1192yw6BYG48XV
-eqcHXRQ9O8DoYwzEiGeIyZzd8ae95ZtC/SJty7c0v+6DfDH5a62dXfBDKUNRIkwT
-/aoXKyAqxvj5OaWrBOSLbXuRsiDYh+dCm2qgYHDtEsXFCdx0mSWgqtmGLFw8QKdw
-SlQHkHE+KEbssHd+Ot+MAZubGQNvqsw4qn6DreH5NvOke0Z6Nhp+OQZZeI/BY2xv
-vY9GGgUxWnhGElEvHIJOuh/grtipbdAN2gzJ19wJ513GxhMn0Mc=
-=tt8F
------END PGP SIGNATURE-----
+There is a working exploit allowing privileges escalation in the wild for 32 bit
+kernels. We are unaware of such exploit for 64 bit kernels, but these are affected
+by this race too and we believe such an exploit could exist.
 
---JGiqKf+NN94R0z40--
+The result of exploiting the flaw is modified data after the slab, which can be
+the next slab data, freelist pointer or something else (if the slab is the last
+one in the cache).
+
+The slab corruption caused by the exploit or the reproducer cat be easily seen
+with "slub_debug=FZ" kernel parameter. The following log indicates a write beyond
+the allocated slab, in this case a write to the slab's red zone:
+
+[  144.109993] =============================================================================
+[  144.110011] BUG kmalloc-64 (Not tainted): Redzone overwritten
+[  144.110011] -----------------------------------------------------------------------------
+[  144.110011] Disabling lock debugging due to kernel taint
+[  144.110011] INFO: 0xffff8800bbb544f0-0xffff8800bbb544f7. First byte 0x33 instead of 0xcc
+[  144.110011] INFO: Slab 0xffffea0002eed500 objects=51 used=23 fp=0xffff8800bbb54d70 flags=0x5fffff00000081
+[  144.110011] INFO: Object 0xffff8800bbb544b0 @offset=1200 fp=0xffff8800bbb544b0
+[  144.110011]
+[  144.110011] Bytes b4 ffff8800bbb544a0: cc cc cc cc cc cc cc cc 00 00 00 00 00 00 00 00  ................
+[  144.110011] Object ffff8800bbb544b0: b0 44 b5 bb 00 88 ff ff b0 44 b5 bb 00 88 ff ff  .D.......D......
+[  144.110011] Object ffff8800bbb544c0: b8 78 62 bb 00 88 ff ff 20 00 00 08 00 00 00 00  .xb..... .......
+[  144.110011] Object ffff8800bbb544d0: 01 00 00 00 00 00 00 00 01 00 00 00 61 61 61 61  ............aaaa
+[  144.110011] Object ffff8800bbb544e0: 33 32 31 30 33 32 31 30 33 32 31 30 33 32 31 30  3210321032103210
+[  144.110011] Redzone ffff8800bbb544f0: 33 32 31 30 33 32 31 30                          32103210
+[  144.110011] Padding ffff8800bbb544f8: 00 00 00 00 00 00 00 00                          ........
+[  144.110011] CPU: 2 PID: 1016 Comm: inotify Tainted: G    B          ------------   3.10.0-514.16.1.el7.x86_64 #1
+[  144.110011] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.9.3-1.fc25 04/01/2014
+[  144.110011]  ffff88007d801d00 0000000070c5e4c2 ffff88013bad7c08 ffffffff816869c3
+[  144.110011]  ffff88013bad7c48 ffffffff811d9cad 0000000000000008 ffff880000000001
+[  144.110011]  ffff8800bbb544f8 ffff88007d801d00 00000000000000cc ffff8800bbb544b0
+[  144.110011] Call Trace:
+[  144.110011]  [<ffffffff816869c3>] dump_stack+0x19/0x1b
+[  144.110011]  [<ffffffff811d9cad>] print_trailer+0x14d/0x200
+[  144.110011]  [<ffffffff811d9e9f>] check_bytes_and_report+0xcf/0x110
+[  144.110011]  [<ffffffff811dab33>] check_object+0x193/0x250
+[  144.110011]  [<ffffffff8168380f>] free_debug_processing+0xcc/0x259
+[  144.110011]  [<ffffffff81213130>] ? poll_select_copy_remaining+0x150/0x150
+[  144.110011]  [<ffffffff81244f9e>] ? inotify_free_event+0xe/0x10
+[  144.110011]  [<ffffffff81244f9e>] ? inotify_free_event+0xe/0x10
+[  144.110011]  [<ffffffff811dca30>] __slab_free+0x250/0x2f0
+[  144.110011]  [<ffffffff81213130>] ? poll_select_copy_remaining+0x150/0x150
+[  144.110011]  [<ffffffff8168ba60>] ? __schedule+0x3b0/0x990
+[  144.110011]  [<ffffffff81244f9e>] ? inotify_free_event+0xe/0x10
+[  144.110011]  [<ffffffff811dd173>] kfree+0x103/0x140
+[  144.110011]  [<ffffffff81244f9e>] inotify_free_event+0xe/0x10
+[  144.110011]  [<ffffffff81242b30>] fsnotify_destroy_event+0x30/0x50
+[  144.110011]  [<ffffffff81245424>] inotify_read+0x224/0x3e0
+[  144.110011]  [<ffffffff810b1b20>] ? wake_up_atomic_t+0x30/0x30
+[  144.110011]  [<ffffffff811fe61e>] vfs_read+0x9e/0x170
+[  144.110011]  [<ffffffff811ff1ef>] SyS_read+0x7f/0xe0
+[  144.110011]  [<ffffffff81214954>] ? SyS_poll+0x74/0x110
+[  144.110011]  [<ffffffff81697089>] system_call_fastpath+0x16/0x1b
+[  144.110011] FIX kmalloc-64: Restoring 0xffff8800bbb544f0-0xffff8800bbb544f7=0xcc
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
