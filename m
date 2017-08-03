@@ -1,25 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/5
-Message-ID: <20170704134606.GA29002@openwall.com>
-Date: Tue, 4 Jul 2017 15:46:06 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CloudLinux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/03/1
+Message-ID: <20170803075619.GR25574@pali>
+Date: Thu, 3 Aug 2017 09:56:19 +0200
+From: Pali Rohár <pali.rohar@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, security@...iadb.org, secalert_us@...cle.com, security@...cona.com, Andrea Barisani <andrea@...ersepath.com>, Michiel Beijen <michiel.beijen@...il.com>, Alceu Rodrigues de Freitas Junior <glasswalk3r@...oo.com.br>
+Subject: Re: MySQL - use-after-free after mysql_stmt_close()
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 04, 2017 at 04:24:40PM +0300, Leonid Kanter wrote:
-> Yes, I vouch for my colleagues Igor Seletskiy and Konstantin Olshanov.
-> Konstantin's key is already available on
-> https://cryptup.org/pub/kolshanov@cloudlinux.com
+On Wednesday 02 August 2017 13:40:32 Tomas Hoger wrote:
+> On Thu, 8 Jun 2017 23:49:03 +0200 Pali Rohár wrote:
+> 
+> > MySQL applications written according to Oracle's MySQL documentation & 
+> > examples for mysql_stmt_close() function call are vulnerable to use-
+> > after-free defect.
+> 
+> ...
+> 
+> > Whole example of usage is written in mysql_stmt_execute() function [3]. 
+> > The relevant part for mysql_stmt_close() is at the end of example:
+> > 
+> > /* Close the statement */
+> > if (mysql_stmt_close(stmt))
+> > {
+> >   fprintf(stderr, " failed while closing the statement\n");
+> >   fprintf(stderr, " %s\n", mysql_stmt_error(stmt));
+> >   exit(0);
+> > }
+> > 
+> > And here is a problem, use-after-free defect. Current implementation of 
+> > mysql_stmt_close() function unconditionally free passed statement 
+> > structure and therefore following mysql_stmt_error() call is defective 
+> > to use-after-free.
+> 
+> ...
+> 
+> > Oracle team was unwilling to tell anything, provide any information how 
+> > to handle such issue or what to do, therefore with suggestion from oCERT 
+> > I decided to make this report public and open public discussion for 
+> > other people on oss-security list how to handle this problem.
+> > 
+> > As Oracle fully ignored this problem and have not stated if problem is 
+> > in documentation, implementation or both, I see probably 3 different 
+> > solutions:
+> 
+> Oracle has previously updated code examples in the documentation.  They
+> apparently also assigned CVE-2017-3635 via July 2017 CPU:
+> 
+> http://www.oracle.com/technetwork/security-advisory/cpujul2017-3236622.html#AppendixMSQL
+> 
+> There's the following note for the CVE:
+> 
+> """
+> The documentation has also been updated for the correct way to use mysql_stmt_close(). Please see:
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-execute.html,
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-fetch.html,
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-close.html,
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-error.html,
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-errno.html, and
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-sqlstate.html
+> """
+> 
+> The issue is listed as fixed in versions 5.5.57, 5.6.37, and 5.7.19.
+> Their release notes also mention the change:
+> 
+> https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-57.html
+> https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-37.html
+> https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-19.html
+> 
+> """
+> If the mysql_stmt_close() C API function was called, it freed memory
+> that later could be accessed if mysql_stmt_error(), mysql_stmt_errno(),
+> or mysql_stmt_sqlstate() was called. To obtain error information after
+> a call to mysql_stmt_close(), call mysql_error(), mysql_errno(), or
+> mysql_sqlstate() instead. (Bug #25988681)
+> """
+> 
+> There is also a code change referencing the above bug:
+> 
+> https://github.com/mysql/mysql-server/commit/3d8134d2c9b74bc8883ffe2ef59c168361223837
+> 
+> which does not seem to address the use-after-free problem.
 
-Thanks.  I've just added Konstantin as well.
+Yes, that commit do absolutely nothing.
 
-All - going forward, I think we don't need to discuss the individual
-people's subscriptions to (linux-)distros on oss-security, including for
-newly joining distros - I can handle that off-list, including making
-sure there's a "vouching chain".  That's how it has been for changes in
-who's subscribed for the already accepted distros anyway.  The need for
-a discussion on oss-security is only about the joining distros, not
-about their team members, as long as at least one person is vouched for.
+> It seems the CVE is effectively for buggy documentation, and the
+> fixed-in version numbers are not really relevant.
 
-Alexander
+So again, full silence and no information from Oracle about security
+related reports for MySQL. They did absolutely nothing for 2 months
+since public report of this issue.
+
+Even CVE does not contain any information for which was assigned. Do we
+need such CVE at all??
+
+They are uncommunicative and ignore reports which can classified as
+security. The only think what they can do is to threaten people if they
+want to start public discussion about issue. My concern about Oracle
+still remains: The worst company in handling security issue.
+
+-- 
+Pali Rohár
+pali.rohar@...il.com
