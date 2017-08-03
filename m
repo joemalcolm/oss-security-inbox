@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1576" "Saturday" "15" "June" "2019" "11:21:41" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1906151108210.1813@freddy.simplesystems.org>" "33" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019061516:21:41" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        bfriesen@sim Jun 15   33/1576  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3804" "Thursday" "3" "August" "2017" "09:56:19" "+0200" "Pali =?utf-8?B?Um9ow6Fy?=" "pali.rohar@gmail.com" "<20170803075619.GR25574@pali>" "94" "Re: [oss-security] MySQL - use-after-free after mysql_stmt_close()" nil nil nil "8" "2017080307:56:19" "[oss-security] MySQL - use-after-free after mysql_stmt_close()" (number mark "U       pali.rohar@g Aug  3   94/3804  " thread-indent "\"Re: [oss-security] MySQL - use-after-free after mysql_stmt_close()\"\n") "<20170802134032.547770e7@redhat.com>" ("<201706082349.03355@pali>" "<20170802134032.547770e7@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20447 invoked by uid 550); 15 Jun 2019 16:21:55 -0000
+Received: (qmail 21960 invoked by uid 550); 3 Aug 2017 07:56:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,146 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20427 invoked from network); 15 Jun 2019 16:21:54 -0000
-X-X-Sender: bfriesen@freddy.simplesystems.org
-In-Reply-To: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
-Message-ID: <alpine.GSO.2.20.1906151108210.1813@freddy.simplesystems.org>
-References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Sat, 15 Jun 2019 11:21:42 -0500 (CDT)
-Date: Sat, 15 Jun 2019 11:21:41 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
- OSS-Fuzz
-To: oss-security@lists.openwall.com
+Received: (qmail 21936 invoked from network); 3 Aug 2017 07:56:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=brZcouphnL6bxAS6iZPclzmK8c2Vm2pI8ekvdWo+JBA=;
+        b=Z35FdwA3wuQSaxsuAv7wdoY6TPVSKEIuwGTqecYYKcLCByP/IOM9FyDSllHxMffOCB
+         K85n5VGhMR/9xgNi7FwYkQh01ZuReNzX7Qe8TEY/dtkdSoTgyquYU3UNB3d1BZAmaeBB
+         XVsV9hpyFlIQsppP3OIhT18Ut4znZ3Br0R53L4u8/CvIUnkouzsW2DbLD8N+QmEJ8u0A
+         7Eo3CCRQ6WJu5U04s7J4nX2c3G3SblMqln0UvtuGn2ijYNxARo/j/IWro+0l6nyKneoj
+         TGl8x0pqyMkDN7Pi3Jo807cae+siYj7bkkP02AnbVVgyFDSkmw/e33ejYDmbJU3ad6Fw
+         efQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=brZcouphnL6bxAS6iZPclzmK8c2Vm2pI8ekvdWo+JBA=;
+        b=IR6EIj7TBarrZE8eUD0CDzrwSob2bO2LHV3ojU3Tu9m7TJzjB/uJ1D668MyZNfAo3i
+         ohVxFL66zuH7+M8xzZJ11Sa2FUPQgA7F4a7CJQnU+FQgEx6zx7S9eH6aBDW5ONc8Gvw0
+         KtJtoYpt2LJZUfWLCoSFD3MXCcztrfO+ApM6w4oLX9RWvQpJtUhLM7To0kmckkqo9Bkf
+         5+ZldVnRwnSt0EIeIo3PiigpQ0svFq5ePbiRhmLCLhGkQv5QGUH0W3O/sleUsSfkBdgv
+         ouGkTic6Oq93jWbFQWel5rGKD24gnaoP5YNtZ5nVZaFOFF/FbQfj2BiMz7L1ZCtRYnbq
+         7feg==
+X-Gm-Message-State: AIVw110Uw3i7bEQjD39tercHYZG6XhclkFESXWJWd2HR3jGX7GEPPbcv
+	1vmRnr8mJ9nDeA==
+X-Received: by 10.28.151.19 with SMTP id z19mr630458wmd.161.1501746981865;
+        Thu, 03 Aug 2017 00:56:21 -0700 (PDT)
+Date: Thu, 3 Aug 2017 09:56:19 +0200
+From: Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
+To: Tomas Hoger <thoger@redhat.com>
+Cc: oss-security@lists.openwall.com, security@mariadb.org,
+	secalert_us@oracle.com, security@percona.com,
+	Andrea Barisani <andrea@inversepath.com>,
+	Michiel Beijen <michiel.beijen@gmail.com>,
+	Alceu Rodrigues de Freitas Junior <glasswalk3r@yahoo.com.br>
+Message-ID: <20170803075619.GR25574@pali>
+References: <201706082349.03355@pali>
+ <20170802134032.547770e7@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170802134032.547770e7@redhat.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: Re: [oss-security] MySQL - use-after-free after mysql_stmt_close()
 
-On Sat, 15 Jun 2019, Alex Gaynor wrote:
->
-> Today I'd like to highlight what I see as a tremendous issue: very few of
-> these security bugs ever has a CVE issued for it. This is probably due to a
-> few factors, a) the relative difficulty of obtaining a CVE, b) the lack of
-> a human reporter who is interested in obtaining one for "credit" purposes,
-> c) the sheer number of bugs that we're talking about.
+On Wednesday 02 August 2017 13:40:32 Tomas Hoger wrote:
+> On Thu, 8 Jun 2017 23:49:03 +0200 Pali Rohár wrote:
+> 
+> > MySQL applications written according to Oracle's MySQL documentation & 
+> > examples for mysql_stmt_close() function call are vulnerable to use-
+> > after-free defect.
+> 
+> ...
+> 
+> > Whole example of usage is written in mysql_stmt_execute() function [3]. 
+> > The relevant part for mysql_stmt_close() is at the end of example:
+> > 
+> > /* Close the statement */
+> > if (mysql_stmt_close(stmt))
+> > {
+> >   fprintf(stderr, " failed while closing the statement\n");
+> >   fprintf(stderr, " %s\n", mysql_stmt_error(stmt));
+> >   exit(0);
+> > }
+> > 
+> > And here is a problem, use-after-free defect. Current implementation of 
+> > mysql_stmt_close() function unconditionally free passed statement 
+> > structure and therefore following mysql_stmt_error() call is defective 
+> > to use-after-free.
+> 
+> ...
+> 
+> > Oracle team was unwilling to tell anything, provide any information how 
+> > to handle such issue or what to do, therefore with suggestion from oCERT 
+> > I decided to make this report public and open public discussion for 
+> > other people on oss-security list how to handle this problem.
+> > 
+> > As Oracle fully ignored this problem and have not stated if problem is 
+> > in documentation, implementation or both, I see probably 3 different 
+> > solutions:
+> 
+> Oracle has previously updated code examples in the documentation.  They
+> apparently also assigned CVE-2017-3635 via July 2017 CPU:
+> 
+> http://www.oracle.com/technetwork/security-advisory/cpujul2017-3236622.html#AppendixMSQL
+> 
+> There's the following note for the CVE:
+> 
+> """
+> The documentation has also been updated for the correct way to use mysql_stmt_close(). Please see:
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-execute.html,
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-fetch.html,
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-close.html,
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-error.html,
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-errno.html, and
+> https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-sqlstate.html
+> """
+> 
+> The issue is listed as fixed in versions 5.5.57, 5.6.37, and 5.7.19.
+> Their release notes also mention the change:
+> 
+> https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-57.html
+> https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-37.html
+> https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-19.html
+> 
+> """
+> If the mysql_stmt_close() C API function was called, it freed memory
+> that later could be accessed if mysql_stmt_error(), mysql_stmt_errno(),
+> or mysql_stmt_sqlstate() was called. To obtain error information after
+> a call to mysql_stmt_close(), call mysql_error(), mysql_errno(), or
+> mysql_sqlstate() instead. (Bug #25988681)
+> """
+> 
+> There is also a code change referencing the above bug:
+> 
+> https://github.com/mysql/mysql-server/commit/3d8134d2c9b74bc8883ffe2ef59c168361223837
+> 
+> which does not seem to address the use-after-free problem.
 
-Many oss-fuzz "security" issues are not CVE-worthy although they are 
-bugs worthy to spend time fixing.
+Yes, that commit do absolutely nothing.
 
-At least as pertains to the Debian project, I do feel that someone is 
-looking at each security issue I fix and creating CVEs for serious 
-issues.  A CVE summary page for GraphicsMagick is maintained at 
-https://security-tracker.debian.org/tracker/source-package/graphicsmagick.
+> It seems the CVE is effectively for buggy documentation, and the
+> fixed-in version numbers are not really relevant.
 
-> This is in addition to the >100 security bugs OSS-Fuzz found and publicly
-> disclosed due to hitting their disclosure deadline, and which still have
-> not been fixed [3].
+So again, full silence and no information from Oracle about security
+related reports for MySQL. They did absolutely nothing for 2 months
+since public report of this issue.
 
-Security bugs are often very hard to diagnose and fix.  The community 
-has become much better at producing bug reports than with helping to 
-solve the problems found.  Help with actually fixing issues is 
-appreciated.  I think that the objective should be open source 
-software which lacks bugs and still provides a useful purpose. 
-Finding bugs is just part of the effort.
+Even CVE does not contain any information for which was assigned. Do we
+need such CVE at all??
 
-Bob
+They are uncommunicative and ignore reports which can classified as
+security. The only think what they can do is to threaten people if they
+want to start public discussion about issue. My concern about Oracle
+still remains: The worst company in handling security issue.
+
 -- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+Pali Rohár
+pali.rohar@gmail.com
