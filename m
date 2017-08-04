@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/6
-Message-Id: <201707051202.v65C2NDB005864@room101.nl.oracle.com>
-Date: Wed, 05 Jul 2017 14:02:23 +0200
-From: Casper.Dik@...cle.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/04/5
+Message-ID: <20170804180037.GB18494@kroah.com>
+Date: Fri, 4 Aug 2017 11:00:37 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-cc: Daniel Skowroński <daniel@...nf.net>
-Subject: Re: systemd fails to parse user that should run service 
+Cc: Andrey Konovalov <andreyknvl@...il.com>, willemdebruijn.kernel@...il.com, Dmitry Vyukov <dvyukov@...gle.com>, Kostya Serebryany <kcc@...gle.com>
+Subject: Re: Reporting and disclosing Linux kernel vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Aug 04, 2017 at 07:36:58PM +0200, Solar Designer wrote:
+> I hear that for netdev bugs, security@k.o is likely to ask you to post
+> such bugs to the public netdev list right away, without any embargo.
+> You could want to see whether this is in fact the case, and adjust your
+> instructions if so.
 
+Yes, that is the case, and has happened in the past, but now
+security@k.o has a few network developers on it to help out before it
+hits the public list, if necessary.
 
->2) If user name specified in systemd unit file is syntactically correct
->(according to systemd check) but user name does not exist then systemd
->refuse to start that unit.
->
+thanks,
 
-Should systemd really valid usernames?  I would think that you would 
-either use getpwnam(username) and if that fails you may then parse it as a 
-numeric value.  If "0day" isn't a valid username according to getpwnam(), 
-when converting it to a numeric uid should *also* fail because "0day" 
-isn't a properly numeric value.
-
-Casper
-
-
-
+greg k-h
