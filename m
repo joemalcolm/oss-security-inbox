@@ -1,55 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/5
-Message-ID: <85839596-be62-7c0f-dc7a-49d0cad4f0f9@redhat.com>
-Date: Fri, 2 Jun 2017 10:52:08 -0600
-From: "kseifried@...hat.com" <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Qhdwns123 <qhdwns123@...tonmail.com>
-Subject: Re: What happens in order to get CVE numbers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/04/2
+Message-ID: <CANO=Ty1OptwCFzf8+pHAWB9Ofw75ee5s-kPFPx-k9+J1ATqnJQ@mail.gmail.com>
+Date: Fri, 4 Aug 2017 11:07:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: willemdebruijn.kernel@...il.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
+Subject: Re: Reporting and disclosing Linux kernel vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-When to ask for a CVE Identifier
+On Fri, Aug 4, 2017 at 10:59 AM, Andrey Konovalov <andreyknvl@...il.com>
+wrote:
 
-CVE Identifiers (also called “CVE names,” “CVE numbers,” “CVE-IDs,” and
-“CVEs”) are unique, common identifiers for publicly known information
-security vulnerabilities.
+> Hi!
+>
+> It's not completely clear to me how to properly report and disclose
+> Linux kernel security issues. There are a few different parties [1, 2,
+> 3] that need to be informed and coordinated. I couldn't find a
+> publicly available actionable list of steps, so I've outlined it as I
+> see it here:
+>
+> https://github.com/google/syzkaller/blob/master/docs/
+> linux_kernel_reporting_bugs.md#reporting-security-bugs
+>
+> Thoughts? Comments?
+>
 
-In other words a CVE is an identifier for something that we know is a
-vulnerability (in other words we have to be sure that it is a
-vulnerability and not just a hardening issue), and the issue will become
-public at some point.
+I would strongly suggest that people notify distros@ (keeping in mind it
+has a 2 week embargo limit, so if you need more than that, don't notify
+distros@ until you are ready) and notify the Kernel (we want this fixed
+upstream too,obviously, but also keeping in mind that they have a 1 week
+embargo limit, so if you need more than that, don't notify the Kernel until
+you are ready). Another option it to notify a vendor such as Red Hat (
+secalert@...hat.com) or SUSE (security@...e.com) as we can handle things in
+house (we have kernel devs/etc) and we know whom to notify at other vendors
+as needed (e.g. Debian, Ubuntu, etc.) and can hold embargoes as needed
+(although typically we don't like long embargoes either, I would say 4-5
+weeks absolute max ideally).
 
-In other words as soon as you know something is a security issue, and
-you can be reasonably certain that the issue will be made public (which
-may or may not include fixing it) you can get a CVE. In fact it’s much
-better to get a CVE as early as possible in the process, then the CVE
-can be used in things like commits that fix the issue, it can be applied
-to bug entries/issues, and ideally used in Change Logs or release notes
-when the fix is released.
+Another benefit of notifying the vendors/distros is we can help with the
+coordination and notification, CVEs, etc. Kernel upstream basically just
+fixes it and moves on (which is legitimate, it's not their job to make sure
+every possible downstream gets notified*)
 
-As for who exactly asks for the CVE there are a few simple rules:
+[*] although it would be nice if this stuff gets a CVE and the CVE gets
+used, then people know to pay attention to those commits/etc.
 
-1) If the software belongs to an entity that is a CNA (CVE Numbering
-Authority, e.g. Red Hat, Apache, Microsoft) then you MUST ask the CNA to
-assign the CVE first, if this does not work you can go to the CNA’s
-parent (e.g. MITRE) and then ask them.
 
-2) If the software belongs to an entity that is NOT a CNA (e.g. most
-projects) then for Open Source you can either ask the DWF, or MITRE, and
-for closed source you can ask MITRE. Either the researcher or the
-project can ask for the CVE, but we do ask that you coordinate so that
-multiple requests are not sent in.
+>
+> Thanks!
+>
+> [1] https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
+>
+> [2] http://oss-security.openwall.org/wiki/mailing-lists/distros
+>
+> [3] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+>
 
-TL;DR: Anyone can ask for the CVE, we only ask that the request be
-reasonably certain that it is an actual vulnerability and that they
-ideally coordinate with the project responsible for the software. We
-also suggest that the CVE be requested as early on as possible to make
-coordination and identification easier.
 
-DWF: https://iwantacve.org/
-MITRE: https://cveform.mitre.org/
 
 -- 
 
 Kurt Seifried -- Red Hat -- Product Security -- Cloud
 PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 Red Hat Product Security contact: secalert@...hat.com
+
