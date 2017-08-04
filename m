@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["669" "Thursday" "13" "August" "2015" "21:09:46" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150813190946.GA31347@eldamar.local>" "20" "[oss-security] CVE Request: Request Tracker: cross-site scripting in cryptography interface" nil nil nil "8" "2015081319:09:46" "[oss-security] CVE Request: Request Tracker: cross-site scripting in cryptography interface" (number mark "        carnil@debia Aug 13   20/669   " thread-indent "\"[oss-security] CVE Request: Request Tracker: cross-site scripting in cryptography interface\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4504" "Friday" "4" "August" "2017" "19:36:58" "+0200" "Solar Designer" "solar@openwall.com" "<20170804173658.GA31208@openwall.com>" "90" "Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities" "^Cc:" nil nil "8" "2017080417:36:58" "[oss-security] Reporting and disclosing Linux kernel vulnerabilities" (number mark "        solar@openwa Aug  4   90/4504  " thread-indent "\"Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities\"\n") "<CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>" ("<CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15554 invoked by uid 550); 13 Aug 2015 19:10:00 -0000
+Received: (qmail 17516 invoked by uid 550); 4 Aug 2017 17:40:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15536 invoked from network); 13 Aug 2015 19:09:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=jTpqNFqpJdHsBPi6aqY8XS63SO4tGWt552R25zkgaBQ=;
-        b=eJu54tAnj5t6azGEncVkfDwmYbHiL5Zubtg9xE9ZSf9+H1w5S6Z7HiTiGFHPhcS5Tw
-         mtWnwVlfG1/xvD7MbHaqDGuafPoxcdTfDmKxPoFueJQC3Onfl/wRZWU1xCGwK3LegJ8v
-         5+Unc5qSa92dddbvvL0MS0HKUCL1Qou5yI5MJOPyFaoM11JEIJHimRQfVEKeOD4RAAsc
-         ZfDFTWNLfDNmDAhsyynsZUsr2y2cMlEtzIjuLNQ6tO5JfpdKgoz7t/0hq6aPFLg5vs8D
-         O7Nyylk9llLALq4hXc1wkzNPG/yra3G7EAAKU7x+/5vosFZwQ3e5cHReuwJOsg+hmOSa
-         E2ow==
-X-Received: by 10.180.182.112 with SMTP id ed16mr60161139wic.19.1439492988488;
-        Thu, 13 Aug 2015 12:09:48 -0700 (PDT)
-Message-ID: <20150813190946.GA31347@eldamar.local>
-MIME-Version: 1.0
+Received: (qmail 16328 invoked from network); 4 Aug 2017 17:39:57 -0000
+Message-ID: <20170804173658.GA31208@openwall.com>
+References: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: Dominic Hargreaves <dom@earth.li>,
-	Shawn Moore <shawn@bestpractical.com>,
-	CVE Assignments MITRE <cve-assign@mitre.org>
-Date: Thu, 13 Aug 2015 21:09:46 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+In-Reply-To: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com, willemdebruijn.kernel@gmail.com,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Kostya Serebryany <kcc@google.com>
+Date: Fri, 4 Aug 2017 19:36:58 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] CVE Request: Request Tracker: cross-site scripting in cryptography
- interface
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities
+To: Andrey Konovalov <andreyknvl@gmail.com>
 
-Hi
+On Fri, Aug 04, 2017 at 06:59:15PM +0200, Andrey Konovalov wrote:
+> It's not completely clear to me how to properly report and disclose
+> Linux kernel security issues. There are a few different parties [1, 2,
+> 3] that need to be informed and coordinated. I couldn't find a
+> publicly available actionable list of steps, so I've outlined it as I
+> see it here:
+> 
+> https://github.com/google/syzkaller/blob/master/docs/linux_kernel_reporting_bugs.md#reporting-security-bugs
 
-Could you please assign a CVE for the second cross-site scripting
-issue mentioned in
-http://blog.bestpractical.com/2015/08/security-vulnerabilities-in-rt.html
+Thank you!  I'm afraid the reality is that preferences vary, including
+even between different upstream developers.  That said, we should in
+fact probably try to come up with guidelines similar to what you made a
+start at.
 
-> RT 4.2.0 and above are vulnerable to a cross-site scripting (XSS)
-> attack via the cryptography interface.  This vulnerability could
-> allow an attacker with a carefully-crafted key to inject JavaScript
-> into RT's user interface. Installations which use neither GnuPG nor
-> S/MIME are unaffected.
+Here are some assorted comments from me:
 
-Fixed by:
-https://github.com/bestpractical/rt/commit/36a461947b00b105336adb4997d1c7767d8484c4
+Please inform oss-security as soon as the issue is made public,
+anywhere.  There's no need to wait for a CVE, patch, nor anything to do
+that.  If the issue is public, it must be on oss-security right away.
+You should add CVE, patch, etc. by "replying" to your own message later.
+This especially makes a difference in your "Reporting minor security
+bugs", where making the issue public is currently listed as step 1, and
+posting it to oss-security as step 3, with a potentially time-consuming
+step 2 inbetween (waiting for a CVE).  Both must be part of step 1, or
+for clarity they may be steps 1 and 2 if there's expected to be no delay
+between them.
 
-According to Shawn M. Moore (Cc'ed) for this second issue there was
-not requested a CVE.
+In "Reporting major security bugs", you could make it clearer that
+there's no or little delay between notification to security@k.o and to
+linux-distros.  As currently written, it is unclear whether you
+recommend to wait for security@k.o to come up with a patch before
+informing linux-distros.
 
-Regards,
-Salvatore
+I hear that for netdev bugs, security@k.o is likely to ask you to post
+such bugs to the public netdev list right away, without any embargo.
+You could want to see whether this is in fact the case, and adjust your
+instructions if so.
+
+I don't know whether the CNAs on linux-distros have control to "make the
+CVE description public" as you suggest as one of the steps.  This is a
+question to them - can they?  I assume this means the description isn't
+available to MITRE nor anyone outside of linux-distros (and the distros'
+people with need-to-know) before that step.
+
+Just like in "Reporting minor security bugs", there should be almost no
+delays between the different public disclosure steps - CVE description,
+distros' updates, upstream commit, notification to oss-security.  All of
+these should be on the same day, at worst.  Perhaps clarify this.
+
+When you refer to linux-distros, please ask people to carefully read the
+distros list wiki page before sending anything to the list.  They must
+be aware of list policy, and they must learn of the magic string to
+include in the Subject from there (do not list this magic string in your
+own instructions, though - just like you correctly don't do it now).
+
+The "good example" of oss-security posting that you refer to does in
+fact demonstrate a good oss-security posting, but it also demonstrates
+problematic handling of the issue before that point.  Here's the
+timeline found in that message:
+
+2016-11-28: Bug reported to security () kernel org
+2016-11-30: Patch submitted to netdev, notification sent to linux-distros
+2016-12-02: Patch committed to mainline kernel
+2016-12-06: Public announcement
+
+"2016-11-30: Patch submitted to netdev" essentially means making the
+issue public.  (I guess this is an instance of what I had meant above
+regarding netdev issues being forced to the public from security@k.o.)
+After that time, there was no point in "notification sent to
+linux-distros" (which is for private issues only), and instead
+"2016-12-06: Public announcement" should have occurred on oss-security
+right away on 2016-11-30 (all linux-distros members are supposed to
+monitor oss-security).  Keeping the issue "semi-"public like that is
+generally wrong.
+
+(I don't recall the details of why we let it happen the way it did for
+that one issue last year.  My comments above are in general.)
+
+That's it for now.  I'm sorry for not having a set of clear and simple
+edits to your current proposal, but I do hope this thread will result in
+a better "publicly available actionable list of steps", as you suggest.
+Thank you for working on it!
+
+> [1] https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
+> 
+> [2] http://oss-security.openwall.org/wiki/mailing-lists/distros
+> 
+> [3] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+
+Alexander
