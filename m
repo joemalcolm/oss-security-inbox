@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/19/2
-Message-ID: <alpine.LFD.2.20.1701191634580.5307@wniryva>
-Date: Thu, 19 Jan 2017 16:42:09 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Xiaohan Zhang <zhangxiaohan1@...wei.com>
-Subject: CVE-2017-2583 Kernel: Kvm: vmx/svm potential privilege escalation inside guest
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/04/1
+Message-ID: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
+Date: Fri, 4 Aug 2017 18:59:15 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: willemdebruijn.kernel@...il.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
+Subject: Reporting and disclosing Linux kernel vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi!
 
-Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
-is vulnerable an incorrect segment selector(SS) value error. It could occur 
-loading values into SS register in long mode.
+It's not completely clear to me how to properly report and disclose
+Linux kernel security issues. There are a few different parties [1, 2,
+3] that need to be informed and coordinated. I couldn't find a
+publicly available actionable list of steps, so I've outlined it as I
+see it here:
 
-A user/process inside guest could use this flaw to crash the guest resulting 
-in DoS or potentially escalate their privileges inside guest.
+https://github.com/google/syzkaller/blob/master/docs/linux_kernel_reporting_bugs.md#reporting-security-bugs
 
-Upstream patch:
----------------
-   -> https://git.kernel.org/linus/33ab91103b3415e12457e3104f0e4517ce12d0f3
+Thoughts? Comments?
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1414735
+Thanks!
 
-Note: On Intel CPUs it'd corrupt the guest state resulting in DoS; Whereas on
-       AMD CPUs it could potentially escalate privileges inside guest.
+[1] https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
 
-This issue was discovered by Xiaohan Zhang of Huawei Inc.
+[2] http://oss-security.openwall.org/wiki/mailing-lists/distros
 
-'CVE-2017-2583' was assigned to this issue by Red Hat Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+[3] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
