@@ -1,4 +1,9 @@
-Received: (qmail 24313 invoked by uid 550); 20 Dec 2022 21:49:15 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1469" "Friday" "4" "August" "2017" "10:51:51" "-0700" "Greg KH" "greg@kroah.com" "<20170804175151.GA13252@kroah.com>" "42" "Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities" "^Cc:" nil nil "8" "2017080417:51:51" "[oss-security] Reporting and disclosing Linux kernel vulnerabilities" (number mark "        greg@kroah.c Aug  4   42/1469  " thread-indent "\"Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities\"\n") "<CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>" ("<CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7383 invoked by uid 550); 4 Aug 2017 17:52:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,118 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22225 invoked from network); 20 Dec 2022 21:46:44 -0000
-Date: Tue, 20 Dec 2022 15:46:28 -0600
-From: John Helmert III <ajak@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: ovs-discuss <ovs-discuss@openvswitch.org>, i.maximets@ovn.org,
-	Aaron Conole <aconole@redhat.com>,
-	Qian Chen <cq674350529@gmail.com>
-Message-ID: <Y6ItNDy/+sfibmNL@gentoo.org>
-References: <0894155b-6a17-c117-d826-04e4a6b8ecfa@ovn.org>
+Received: (qmail 7362 invoked from network); 4 Aug 2017 17:52:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=eph6ewepCpCYNyK1hL
+	rAsqPgPGf6Je6sDg7V+u/MwFg=; b=QfA9ufRm1Bdw17OXVQyopLUdqMzNiNXH7h
+	2G9TDjSKqJxaps1UTYHWnj7zc3Wk72GTWEKH7JE6/7VNqXX5i/JKAHhHzYfvtfLL
+	ahwJ9nGzJ8Bvg97XccjrrreZIBuPPIdMVb82NN2Jiue9WCNgfgfjqnJg3MQIMGgG
+	BYhYhEW0MMq8/F4haFPB+r6s+f5276vSqDRUZSE3rb3D59MkYKWme+HqYnEfSG2Z
+	X5zuJmlklejVrmVc1+o3NvnfVCEu1C5mp+9WIZNXD3FOId/j4XH/tGGjHU8lGbt6
+	FAzXi7Ioechdb6m8nPd7DBocPfdHxmCd7UlL038fGPlyvxsZhSrQ==
+X-ME-Sender: <xms:ObSEWfMK1ZC_hCQuCX6lt-M1oWOpmBAiVJEyacLUEsJCjZBwq5mUCA>
+X-Sasl-enc: IW++lD4sVKae9Hnd1R8aHWjsh5ZdJtBoiAafHJW8EUHV 1501869113
+Message-ID: <20170804175151.GA13252@kroah.com>
+References: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oCSUAhiTEZXAEG66"
-Content-Disposition: inline
-In-Reply-To: <0894155b-6a17-c117-d826-04e4a6b8ecfa@ovn.org>
-Subject: Re: [oss-security] [ADVISORY] LLDP underflow while parsing malformed
- Auto Attach TLV (Open vSwitch)
-
---oCSUAhiTEZXAEG66
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
+User-Agent: Mutt/1.8.3 (2017-05-23)
+Cc: willemdebruijn.kernel@gmail.com, Dmitry Vyukov <dvyukov@google.com>,
+	Kostya Serebryany <kcc@google.com>
+Date: Fri, 4 Aug 2017 10:51:51 -0700
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Reporting and disclosing Linux kernel
+ vulnerabilities
+To: oss-security@lists.openwall.com
 
-On Tue, Dec 20, 2022 at 10:39:23PM +0100, Ilya Maximets wrote:
-> Description
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> Multiple versions of Open vSwitch are vulnerable to crafted LLDP
-> packets causing denial of service, and data underflow attacks.
-> Triggering the vulnerabilities requires LLDP processing to be enabled
-> for a specific port.  Open vSwitch versions prior to 2.4.0 are not
-> vulnerable.
->=20
-> The Common Vulnerabilities and Exposures project (cve.mitre.org)
-> did not assign the identifier to this issue yet.  The identifier will
-> be communicated separately.
+On Fri, Aug 04, 2017 at 06:59:15PM +0200, Andrey Konovalov wrote:
+> Hi!
+> 
+> It's not completely clear to me how to properly report and disclose
+> Linux kernel security issues.
 
-Has a CVE been requested?
+As your document shows, it all depends on what type of issue it is, and
+what _you_ want to get out of it. [1]
 
-> This issue does not affect the `lldpd' project, although they share
-> a code base.  The issue is related to parsing the Auto Attach TLVs,
-> which is specific to the Open vSwitch implementation.
->=20
->=20
-> Mitigation
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> For any version of Open vSwitch, preventing LLDP packets from reaching
-> Open vSwitch mitigates the vulnerability.  We do not recommend
-> attempting to mitigate the vulnerability this way because of the
-> following difficulties:
->=20
->     - Open vSwitch obtains packets before the iptables host firewall,
->       so ebtables on the Open vSwitch host cannot ordinarily block the
->       vulnerability.
->=20
->     - If Open vSwitch is configured to receive and transmit LLDP
->       messages, the required functionality will need to be disabled
->       potentially disrupting the network.
->=20
-> We have found that Open vSwitch is subject to a denial of service, and
-> possibly a remote code execution exploit when LLDP processing is enabled
-> on an interface.  By default, interfaces are not configured to process
-> LLDP messages.
->=20
->=20
-> Fix
-> =3D=3D=3D
->=20
-> Patches to fix these vulnerabilities in Open vSwitch 2.13.x and newer are
-> applied to the appropriate branches, and the original patch is located
-> at:
->=20
->    https://mail.openvswitch.org/pipermail/ovs-dev/2022-December/400596.ht=
-ml
->=20
-> Recommendation
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> We recommend that users of Open vSwitch apply the respective patch, or
-> upgrade to a known patched version of Open vSwitch.  These include:
->=20
-> * 3.0.3
-> * 2.17.5
-> * 2.16.6
-> * 2.15.7
-> * 2.14.8
-> * 2.13.10
->=20
->=20
-> Acknowledgments
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> The Open vSwitch team wishes to thank the reporter:
->=20
->   Qian Chen <cq674350529@gmail.com>
->=20
+> There are a few different parties [1, 2, 3] that need to be informed
+> and coordinated.
 
+Again, it depends on what you want to do :)
 
+> I couldn't find a publicly available actionable list of steps, so I've
+> outlined it as I see it here:
+> 
+> https://github.com/google/syzkaller/blob/master/docs/linux_kernel_reporting_bugs.md#reporting-security-bugs
+> 
+> Thoughts? Comments?
 
+That looks like a good start, nice job.
 
+thanks,
 
+greg k-h
 
---oCSUAhiTEZXAEG66
-Content-Type: application/pgp-signature; name="signature.asc"
+[1] This matters a lot.  Here's my feeling on the matter:
 
------BEGIN PGP SIGNATURE-----
+    If you just want the bug fixed so you can get on with whatever else
+    you were doing, just notify security@kernel.org, the bug will get
+    fixed and pushed out to all kernel.org trees as soon as possible.
 
-iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCY6ItNAAKCRCgXq2+aa/J
-tbiMAP4h/re5PROhzGWkQstyYZn8ExingE+ufLYHnJ7ug6pURAD/Qy/Rxh5WiL1Q
-gdFgJfy1ZhH4yT5TESfOVBL7WAa6BwI=
-=TW+u
------END PGP SIGNATURE-----
+    If you think it affects users of the "traditional" Linux distros,
+    then contact distros and hope someone contacts security@k.o later to
+    get the issue resolved for everyone else.
 
---oCSUAhiTEZXAEG66--
+    If it affects only an odd one-off or embedded device that will never
+    get updated, again, security@k.o and oss-security to get some public
+    leverage to try to get the vendor to fix the issue.
+
+    If you don't really care what happens to anyone, oss-security works :)
