@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1055" "Wednesday" "10" "June" "2015" "10:34:33" "-0700" "Justin Burke" "jburke@tanium.com" "<CAAJTn3-JmLhNpdW8WtBu6rq3-o7AmwWfB8CiPgNaCXugLEsPug@mail.gmail.com>" "33" "[oss-security] Re: CVE=2015-1234 disambiguation" nil nil nil "6" "2015061017:34:33" "[oss-security] Re: CVE=2015-1234 disambiguation" (number mark "        jburke@taniu Jun 10   33/1055  " thread-indent "\"[oss-security] Re: CVE=2015-1234 disambiguation\"\n") "<20150610150749.GB18203@mail.corp.redhat.com>" ("<20150610150749.GB18203@mail.corp.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2201" "Friday" "4" "August" "2017" "11:07:40" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1OptwCFzf8+pHAWB9Ofw75ee5s-kPFPx-k9+J1ATqnJQ@mail.gmail.com>" "60" "Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities" "^Cc:" nil nil "8" "2017080417:07:40" "[oss-security] Reporting and disclosing Linux kernel vulnerabilities" (number mark "        kseifried@re Aug  4   60/2201  " thread-indent "\"Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities\"\n") "<CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>" ("<CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17463 invoked by uid 550); 10 Jun 2015 21:32:52 -0000
+Received: (qmail 11516 invoked by uid 550); 4 Aug 2017 17:07:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32756 invoked from network); 10 Jun 2015 17:34:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tanium.com; s=google;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=PEZa/gXC7ZHVDFeWFbo2U2ScHxAEita/FfQvne9W9ss=;
-        b=pPPRSpuCbwNe6yxeET2m0Lv8Tq8F/B0br9f0oXJMWGQ78y1BJ/R5uCimj0yQ79cR9A
-         EIYNWdwSQw5wtytR+kqlm2bNSMrcKpXIb5nvWHB5FISLbTs33/mT03D2UcshUg0JNu5B
-         e3tIIbf/8XyCa6qhoZsXr27cz3kPB4JujMWd4=
+Received: (qmail 11498 invoked from network); 4 Aug 2017 17:07:53 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=PEZa/gXC7ZHVDFeWFbo2U2ScHxAEita/FfQvne9W9ss=;
-        b=l4A8H4wP5VCvdn7t+cO/mbpP7m8BkLVLUj9qcaVUyifD8qvlG7ld05io44oAXeDURJ
-         7h0gZl+90kXlGhGvMBoBrz970lnX2HUi4gCDT90TcbbQ+IQiP1cJLmFYiruatMpwUroh
-         peSjolhlefWe3kK9lK03X3rP8VEeYLO7CTtnTeYgHzmzRmGPZF914W/Ztyn7erUVjkyU
-         GVhrjZNcaQ2M0vIQZ01SlyGgB4l86z/Kpd3nIEmKChHgKhE4odieE0DcG/SvKGMwwtH2
-         icMgCCwTjjPz6cuvJ1SbtOiP0KHINGFos1OtuiUmHM1hlVvdHTFfbbZiLoyLPPzZHBpf
-         MaJw==
-X-Gm-Message-State: ALoCoQlWUFoqceK5JzL7FfPYu4M6mLq94UWmld1S3RIUVUX7odNCH4WR/rmG13JHxpRPCGNFnRXO
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KuBBpTG/a36xQVZ6z9qJ9gwjN4NBXHoTOUr+IRQemI4=;
+        b=VnJ/6Q1dA8pi2e/vCLRrssDHBUKv5y45ahArqrdmEAKodHfEYkBOfmWHzI6HTRLw7F
+         Fyzdwy5hjLpgDs0ksvVU99RLrQyJgtiWgMNJqg5kHcAOolSgscHu0D8xZbh4zhZ1qh7N
+         rOwjUAtsO2dp+qy3EvF+4ML/ax006SM7GY4x64tn8NZ616JQO2ihOxJBqerMUtDupF9K
+         ZNXV0k+Uuc+b8jo42fgUGDHuC3dDr8klpFykvYkRlOvD3OnnN1MLqNAyOJsCZpK+NCLB
+         /h2yHtueZDVow00BsBrp1QyM0HBlp25XE3567L5+P3qldW7iKK1zNbRphvRv9rBJ6TOq
+         V1xg==
+X-Gm-Message-State: AHYfb5ggs1mSW0DDGBP+effiRzH4RAa4RcEVkGz97bzOip9KrSeqBwqm
+	Y5E5ya0OKIZU+ebF93H3TCCOHwEfuyU8LzSkpw==
+X-Received: by 10.55.21.28 with SMTP id f28mr3667619qkh.220.1501866461364;
+ Fri, 04 Aug 2017 10:07:41 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.170.121.137 with SMTP id n131mr5638750ykb.64.1433957673533;
- Wed, 10 Jun 2015 10:34:33 -0700 (PDT)
-In-Reply-To: <20150610150749.GB18203@mail.corp.redhat.com>
-References: <20150610150749.GB18203@mail.corp.redhat.com>
-Message-ID: <CAAJTn3-JmLhNpdW8WtBu6rq3-o7AmwWfB8CiPgNaCXugLEsPug@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1137b250c11fcf05182d49af
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 10 Jun 2015 10:34:33 -0700
-From: Justin Burke <jburke@tanium.com>
+In-Reply-To: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
+References: <CA+fCnZe3QtwBGRTsL=p9ju-NUkXeQp_1osz0mmZtKFaKUBvY_A@mail.gmail.com>
+Message-ID: <CANO=Ty1OptwCFzf8+pHAWB9Ofw75ee5s-kPFPx-k9+J1ATqnJQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="001a1147eb72ee35260555f0886c"
+Cc: willemdebruijn.kernel@gmail.com, Dmitry Vyukov <dvyukov@google.com>, 
+	Kostya Serebryany <kcc@google.com>
+Date: Fri, 4 Aug 2017 11:07:40 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE=2015-1234 disambiguation
-To: Vasyl Kaigorodov <vkaigoro@redhat.com>
+Subject: Re: [oss-security] Reporting and disclosing Linux kernel vulnerabilities
+To: oss-security <oss-security@lists.openwall.com>
 
---001a1137b250c11fcf05182d49af
-Content-Type: text/plain; charset=UTF-8
+--001a1147eb72ee35260555f0886c
+Content-Type: text/plain; charset="UTF-8"
 
-Vasyl, I suspect the original reporter self-generated the CVE number.
+On Fri, Aug 4, 2017 at 10:59 AM, Andrey Konovalov <andreyknvl@gmail.com>
+wrote:
 
-Justin
-On Jun 10, 2015 7:54 AM, "Vasyl Kaigorodov" <vkaigoro@redhat.com> wrote:
-
-> Hello,
+> Hi!
 >
-> I've spotted this on fulldisclosure mailing list today:
-> http://seclists.org/fulldisclosure/2015/Jun/17
+> It's not completely clear to me how to properly report and disclose
+> Linux kernel security issues. There are a few different parties [1, 2,
+> 3] that need to be informed and coordinated. I couldn't find a
+> publicly available actionable list of steps, so I've outlined it as I
+> see it here:
 >
-> It says CVE-2015-1234 was assigned to that issue, which I think is
-> wrong, because this same CVE was mentioned by Google in their Chrome
-> update in April 2015 [1]
-> http://googlechromereleases.blogspot.cz/2015/04/stable-channel-update.html
+> https://github.com/google/syzkaller/blob/master/docs/
+> linux_kernel_reporting_bugs.md#reporting-security-bugs
 >
-> Can someone sched some light here?
-> Explicitely added cve-assign, and Justin Burke (fuldisclosure post
-> author).
->
-> Thanks.
-> --
-> Vasyl Kaigorodov | Red Hat Product Security
-> PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-> Free/Busy status: https://url.corp.redhat.com/vk-free-busy-status
->
-> Come talk to Red Hat Product Security at the Summit!
-> Red Hat Summit 2015 - https://www.redhat.com/summit/
+> Thoughts? Comments?
 >
 
---001a1137b250c11fcf05182d49af--
+I would strongly suggest that people notify distros@ (keeping in mind it
+has a 2 week embargo limit, so if you need more than that, don't notify
+distros@ until you are ready) and notify the Kernel (we want this fixed
+upstream too,obviously, but also keeping in mind that they have a 1 week
+embargo limit, so if you need more than that, don't notify the Kernel until
+you are ready). Another option it to notify a vendor such as Red Hat (
+secalert@redhat.com) or SUSE (security@suse.com) as we can handle things in
+house (we have kernel devs/etc) and we know whom to notify at other vendors
+as needed (e.g. Debian, Ubuntu, etc.) and can hold embargoes as needed
+(although typically we don't like long embargoes either, I would say 4-5
+weeks absolute max ideally).
+
+Another benefit of notifying the vendors/distros is we can help with the
+coordination and notification, CVEs, etc. Kernel upstream basically just
+fixes it and moves on (which is legitimate, it's not their job to make sure
+every possible downstream gets notified*)
+
+[*] although it would be nice if this stuff gets a CVE and the CVE gets
+used, then people know to pay attention to those commits/etc.
+
+
+>
+> Thanks!
+>
+> [1] https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
+>
+> [2] http://oss-security.openwall.org/wiki/mailing-lists/distros
+>
+> [3] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a1147eb72ee35260555f0886c--
