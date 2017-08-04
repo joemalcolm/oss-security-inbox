@@ -1,43 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/05/1
-Message-ID: <59d5f345e210c_118b4443c08122012047.email-sidekiq-4@outbound-email.freshdesk.com>
-Date: Thu, 05 Oct 2017 08:54:30 +0000 (UTC)
-From: Andrey Bazhenov <support@...dgain.freshdesk.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/04/4
+Message-ID: <20170804175151.GA13252@kroah.com>
+Date: Fri, 4 Aug 2017 10:51:51 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2017-14614] GridGain Visor GUI Console - File System Path Traversal
+Cc: willemdebruijn.kernel@...il.com, Dmitry Vyukov <dvyukov@...gle.com>, Kostya Serebryany <kcc@...gle.com>
+Subject: Re: Reporting and disclosing Linux kernel vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important 
-   
- Vendor: GridGain Systems 
-   
- Versions Affected: 
-   
- * GridGain 8.1.4 and earlier 
- * GridGain 1.9.6 and earlier 
- * GridGain 1.8.11 and earlier 
- * GridGain 1.7.15 and earlier 
-   
- Impact: 
-   The vulnerability impacts GridGain Visor GUI Management Console users. Visor allows open log files of remote cluster nodes and observe them locally. To get the logs a user needs to provide a path to the files. Visor does not sanitize the path provided that might result in an unauthorized access to sensitive files. 
-   
- Description: 
-   Visor GUI Console uses a user-supplied input to construct a pathname to a remote directory with log files. The application does not sanitize this path and malicious application users can get an access to restricted or sensitive files stored on a server’s file system. 
-   
- Mitigation: 
-   
- Start cluster nodes under a system user that has restricted access to the file system. 
- In addition, to make the cluster more secure consider using GridGain’s Security module setting up basic authentication and authorization parameters.  
-   
- Upgrade to the versions below to enable the path sanitization by default: 
- * GridGain 8.1.5 or later 
- * GridGain 1.9.7 or later 
- * GridGain 1.8.12 or later 
- * GridGain 1.7.16 or later 
-   
- References: 
-   
- * http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14614
+On Fri, Aug 04, 2017 at 06:59:15PM +0200, Andrey Konovalov wrote:
+> Hi!
+> 
+> It's not completely clear to me how to properly report and disclose
+> Linux kernel security issues.
 
+As your document shows, it all depends on what type of issue it is, and
+what _you_ want to get out of it. [1]
 
+> There are a few different parties [1, 2, 3] that need to be informed
+> and coordinated.
 
+Again, it depends on what you want to do :)
+
+> I couldn't find a publicly available actionable list of steps, so I've
+> outlined it as I see it here:
+> 
+> https://github.com/google/syzkaller/blob/master/docs/linux_kernel_reporting_bugs.md#reporting-security-bugs
+> 
+> Thoughts? Comments?
+
+That looks like a good start, nice job.
+
+thanks,
+
+greg k-h
+
+[1] This matters a lot.  Here's my feeling on the matter:
+
+    If you just want the bug fixed so you can get on with whatever else
+    you were doing, just notify security@...nel.org, the bug will get
+    fixed and pushed out to all kernel.org trees as soon as possible.
+
+    If you think it affects users of the "traditional" Linux distros,
+    then contact distros and hope someone contacts security@k.o later to
+    get the issue resolved for everyone else.
+
+    If it affects only an odd one-off or embedded device that will never
+    get updated, again, security@k.o and oss-security to get some public
+    leverage to try to get the vendor to fix the issue.
+
+    If you don't really care what happens to anyone, oss-security works :)
