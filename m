@@ -1,43 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/7
-Message-ID: <56fb00f92d6f4f429556c5b5424c6388@imshyb01.MITRE.ORG>
-Date: Tue, 31 Jan 2017 10:16:06 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/9
+Message-ID: <514529694.39760564.1502113890222.JavaMail.zimbra@redhat.com>
+Date: Mon, 7 Aug 2017 09:51:30 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://blogs.gentoo.org/ago/2017/01/29/mp3splt-null-pointer-dereference-in-splt_cue_export_to_file-cue-c
-> 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
-> 
-> splt_cue_export_to_file libmp3splt-0.9.2/src/cue.c:725
+1) We would like to make an additional announcement that an important part of this flaw
+research was conducted by Leilei Lin <leilei.lin@...baba-inc.com> of Alibaba Group, who
+developed the initial patches:
 
-Use CVE-2017-5665.
+https://patchwork.kernel.org/patch/9755753/
+https://patchwork.kernel.org/patch/9755757/
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+2) Unfortunately, the wording "in the wild" in this announcement is probably incorrect.
+The mentioned exploit was developed by the flaw researchers and we are not aware of it
+being available publicly or used by a wider audience. We are sorry for this misinformation.
 
-iQIcBAEBCAAGBQJYkKj0AAoJEHb/MwWLVhi2chAP/2AbNCqqgNqb+SVg15pzegAy
-4kFc436rib1t18uFrm6gxIXHlQA0BLVgex8DISdUEXRr503uOzwsTjDDgwFHwbHl
-E7PmvzcfyhnZ1sujcfbd87pm6qf9Jv8eAlNr1DZTYu0VkFH0HkAIO3dzACNlTDDE
-9tXV2kMBEfyZfdXY8Fha4KZdG7NUCKUQqns1rdm2JGa583VLC984YiEvGPIv1xFf
-zmxURxRDRkgNPmhPmfRun3rPJbx0dqRDJqlxOsRxL1W+Axb+ogSxAu79WpEn4jvN
-2doXQnZujQudiusVkqK4QXfzmcQMncQIN0fOygsJIySI38iJYHh3wBzWwPNDhI3x
-H9r/nakhrBRiE/29r+4fzQvyOU3iARvh04iJlikXLEFz8GrER4kg+8rUI4wIDpn/
-Vum4k7o+N0nni1FcAUEaL2JtRRuj55ikWzG+BwqhBzmSW3TG4UinyRu35Yu16aTI
-YHPjJQKPziVFtn2Q8TH/nPlnIcshc4zcqRD8m4B/7usRsFMJuSOStx1gA2SBanLG
-2bPFXCXhZX/Hv4hHl8Yzw7HKI8W3dxWcNBtBXcsvx6XRuTHXUhTEc6m0fHRyLU+i
-O7jzRx+7qaqP4UnYwOAH0J2HA9Pp9XY2UGW7K9BbSw4Z/6vzNC10QWU4lf0Cg7FC
-myDnoBgiEOuCOOfErLrK
-=Ip7W
------END PGP SIGNATURE-----
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
