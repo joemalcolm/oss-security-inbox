@@ -1,30 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/25
-Message-ID: <9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>
-Date: Thu, 6 Jul 2017 00:02:58 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/14
+Message-id: <A1AB11FC-E9D5-421B-BB66-C90AC49C3401@apple.com>
+Date: Mon, 07 Aug 2017 13:22:46 -0400
+From: Jesse Hertz <jesse_hertz@...le.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Cve issue discussion
 Content-Type: text/plain; charset=utf-8
 
-On 07/05/2017 11:58 PM, Simon McVittie wrote:
-> systemd does have a (public, and publically-archived) mailing list, which
-> has a current thread on the subject of this issue.
+fwiw, double check and make sure the issue occurs in libpng without ASAN. Sometimes ASAN can cause "heisenbugs" which only happen if ASAN is used.
+
+> On Aug 7, 2017, at 9:57 AM, Glenn Randers-Pehrson <glennrp@...il.com> wrote:
 > 
-> In particular the mail in that thread from Felipe Sateler, and some of
-> the discussion on the upstream bug, touches on reasons why neither
-> "if anything is not as expected, reject the whole unit" nor the current
-> behaviour is right. I suspect the resolution is likely to be something
-> in between.
+> OK I'll request a CVE for this libpng issue.
+> 
+> Glenn
+> 
+> On Mon, Aug 7, 2017 at 9:05 AM, John Haxby <john.haxby@...cle.com> wrote:
+>> On 07/08/17 13:47, Glenn Randers-Pehrson wrote:
+>>> It's not causing a crash, just a delay.  You'll safely get either an OOM
+>>> message or an EOF message.and no memory leak.
+>>> 
+>> 
+>> That's scant comfort when your browser is the one hit by the OOM killer
+>> and then again when you restart it.  And also while you're wondering
+>> what's going on because your laptop is basically completely
+>> non-responsive ...
+>> 
+>> So yes, it's a remote DoS and definitely worth a CVE.  We have had other
+>> similar CVEs in the past with image handling libraries not being
+>> sufficiently paranoid.
+>> 
+>> jch
+>> 
+>>> Glenn
+>>> 
+>>> On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@...e.de> wrote:
+>>>> Hi,
+>>>> 
+>>>> if it could crash the image reader I would consider it "remote denial of service"
+>>>> classed and CVE worthy.
+>> 
 
-It would be useful with a reference to the thread in question so this
-can be further looked into.
 
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
