@@ -1,42 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/6
-Message-ID: <6796510.KACISFJ7AR@tux.boltz.de.vu>
-Date: Tue, 07 Feb 2017 13:52:23 +0100
-From: Christian Boltz <oss-security@...ltz.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/15
+Message-ID: <CA+PdXcvmTRrks_ZnXB_EyMHdm6ahap9yNHmf4hV5gLwVBoz_Vw@mail.gmail.com>
+Date: Mon, 7 Aug 2017 15:32:13 -0400
+From: Glenn Randers-Pehrson <glennrp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: PostfixAdmin allows to delete protected aliases
+Subject: Re: Cve issue discussion
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+It doesn't occur on my own Ubuntu platform without ASAN.  But anyone
+running with
+a malloc that initializes the memory (trusted systems, etc) would be affected
 
-[I'm not subscribed, so please CC me in your replies.]
-
-I'd like to request a CVE ID for Postfixadmin.
-
-Thanks to a missing permission check, domain admins can delete aliases 
-they are not allowed to delete (for example abuse@, which the server 
-admin might have setup so that he gets all abuse mails).
-
-This can only be exploited by authentificated domain admins.
-
-See https://github.com/postfixadmin/postfixadmin/pull/23 for a detailed 
-description.
-
-Affected versions:
-- PostfixAdmin 3.0 and 3.0.1
-- PostfixAdmin 2.91, 2.92 and 2.93 (which actually are 3.0 beta releases)
-
-Older PostfixAdmin releases (2.3.x and older) are not affected.
-
-PostfixAdmin 3.0.2 will fix this issue - I'll release it in the next days.
-
-
-Regards,
-
-Christian Boltz
--- 
-Immerwieder der gleiche Anfaengerfehler:
-/dev/null ist fuer Backup,
-/dev/zero ist fuer Restore.
-[J. P. Meier]
-
+On Mon, Aug 7, 2017 at 1:22 PM, Jesse Hertz <jesse_hertz@...le.com> wrote:
+> fwiw, double check and make sure the issue occurs in libpng without ASAN. Sometimes ASAN can cause "heisenbugs" which only happen if ASAN is used.
+>
+>> On Aug 7, 2017, at 9:57 AM, Glenn Randers-Pehrson <glennrp@...il.com> wrote:
+>>
+>> OK I'll request a CVE for this libpng issue.
+>>
+>> Glenn
+>>
+>> On Mon, Aug 7, 2017 at 9:05 AM, John Haxby <john.haxby@...cle.com> wrote:
+>>> On 07/08/17 13:47, Glenn Randers-Pehrson wrote:
+>>>> It's not causing a crash, just a delay.  You'll safely get either an OOM
+>>>> message or an EOF message.and no memory leak.
+>>>>
+>>>
+>>> That's scant comfort when your browser is the one hit by the OOM killer
+>>> and then again when you restart it.  And also while you're wondering
+>>> what's going on because your laptop is basically completely
+>>> non-responsive ...
+>>>
+>>> So yes, it's a remote DoS and definitely worth a CVE.  We have had other
+>>> similar CVEs in the past with image handling libraries not being
+>>> sufficiently paranoid.
+>>>
+>>> jch
+>>>
+>>>> Glenn
+>>>>
+>>>> On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@...e.de> wrote:
+>>>>> Hi,
+>>>>>
+>>>>> if it could crash the image reader I would consider it "remote denial of service"
+>>>>> classed and CVE worthy.
+>>>
+>
