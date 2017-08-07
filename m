@@ -1,45 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/08/1
-Message-ID: <3e64c619103643dbb1b3ea622b3fa4c6@imshyb02.MITRE.ORG>
-Date: Tue, 7 Feb 2017 20:12:24 -0500
-From: <cve-assign@...re.org>
-To: <oss-security@...ltz.de>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: PostfixAdmin allows to delete protected aliases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/12
+Message-ID: <CA+PdXcuw7YLfhHO8wydX-4yhgmnGxN7fb=b+z+DQsSgV+73Tjg@mail.gmail.com>
+Date: Mon, 7 Aug 2017 09:57:04 -0400
+From: Glenn Randers-Pehrson <glennrp@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Cve issue discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+OK I'll request a CVE for this libpng issue.
 
-> https://github.com/postfixadmin/postfixadmin/pull/23
-> 
-> Thanks to a missing permission check, domain admins can delete aliases
-> they are not allowed to delete (for example abuse@, which the server
-> admin might have setup so that he gets all abuse mails).
+Glenn
 
->> Fix security hole in AliasHandler
-
-Use CVE-2017-5930.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYmm+uAAoJEHb/MwWLVhi2PnsQALB+ZtPjFD1KdFcnEe/hPD8f
-FaB3+gIRWODdVVbr3Z2EPX8QSI0ZxfG0IN1oVqv6WTp4ikJZ0uzHqguA8ldBYaJH
-ThkW2H9ay+72KaWXG3tc/JM51q6ybxlNSNehaXcBoLbYxFbo4A6FxCXO7q1nt+Ou
-0mPpZXxWnrNcpMyk0xRMyHvZZ6vuor9o/qLFKWaKOdptXqzRjBCU21qtntLVByoQ
-/VJeLbZj27ixHKjmqsZjChYb49JpV4y2Q7banoSEUJbatDWSv1pvXkYwBjsyxj5a
-3xIoIEGCxRk4k05egyn1gaPEUb7ZRroxYbnAq29vVAPx3XyKLRR6NJVV90HlrN2W
-Qw1ueNlVgdkBM17dZM5ODc9a8J0kjN95aCwWnKqQcU7rOhCM0zjpdjueHLVI3aJu
-vEFut6s/6GKT2oH+AdXODr7AeoUHhA0MYfJ+7g9TEFSwar09Tu9eV1mSYbN6eyUb
-oS3fWGEA2CthacUg5arw/egSrQik3wLH+vkbepqQpgIkceYQQp9GYNaPUEdohFhN
-/tDGfNwnY0JtpCJE4tHvAQEbD2z2M9bK8U/m+rtaWJfoH+7e2qSUOV+aoAmzYQRw
-8dPdrIQWI302HNJma8L8yJevyJ/6lIvG3tNNVwnJogKNjn7QMVMy39ZfU8o7q7eK
-BVNqH7trlLm8k6yp2nHY
-=zNk8
------END PGP SIGNATURE-----
+On Mon, Aug 7, 2017 at 9:05 AM, John Haxby <john.haxby@...cle.com> wrote:
+> On 07/08/17 13:47, Glenn Randers-Pehrson wrote:
+>> It's not causing a crash, just a delay.  You'll safely get either an OOM
+>> message or an EOF message.and no memory leak.
+>>
+>
+> That's scant comfort when your browser is the one hit by the OOM killer
+> and then again when you restart it.  And also while you're wondering
+> what's going on because your laptop is basically completely
+> non-responsive ...
+>
+> So yes, it's a remote DoS and definitely worth a CVE.  We have had other
+> similar CVEs in the past with image handling libraries not being
+> sufficiently paranoid.
+>
+> jch
+>
+>> Glenn
+>>
+>> On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@...e.de> wrote:
+>>> Hi,
+>>>
+>>> if it could crash the image reader I would consider it "remote denial of service"
+>>> classed and CVE worthy.
+>
