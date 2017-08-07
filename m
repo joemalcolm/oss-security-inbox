@@ -1,4 +1,9 @@
-Received: (qmail 8177 invoked by uid 550); 4 Nov 2022 16:21:23 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1055" "Monday" "7" "August" "2017" "01:03:53" "+0000" "ne xo" "nexo123@outlook.kr" "<SG2PR0401MB1834CC0A72F7B7E547C0F42888B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>" "20" "[oss-security] Cve issue discussion" nil nil nil "8" "2017080701:03:53" "[oss-security] Cve issue discussion" (number mark "U       nexo123@outl Aug  7   20/1055  " thread-indent "\"[oss-security] Cve issue discussion\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27674 invoked by uid 550); 7 Aug 2017 01:41:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,184 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6022 invoked from network); 4 Nov 2022 16:19:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1667578786; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=Xit60oYCKI5+Jrc4e3S/De1MG6WglrWuN0TC3a7SIYg=;
-	b=Rcg3a3v4COtPIIWeVlKzOct4brfPv3eVF50f5asX12iNJmQ0XEfhntejOUexH+OjupWG7b
-	cyjoDC2Jhzv39stWsWCrKmuFSQB8ElVqHI0/8785GO+CEKOmlfCOBWcST7eAIZJVaqu+D/
-	UmuoHhaN5L15kKjSpufZhwyf+LUYxVk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1667578786;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=Xit60oYCKI5+Jrc4e3S/De1MG6WglrWuN0TC3a7SIYg=;
-	b=Gx+Pe4UfsiKhGznI09me5pTZbAXOCVtAnGZ4/+w6pqq7X9Sx5O/fKZVMTXKTElYz//lH+M
-	VEQ02Rm3xgEqx6Dw==
-Date: Fri, 4 Nov 2022 17:19:45 +0100
-From: Paolo Perego <pperego@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20221104161945.5thjnd6axcdo5fme@zion>
-X-Responsible-Disclosure: https://en.opensuse.org/openSUSE:Security_disclosure_policy
+Received: (qmail 26125 invoked from network); 7 Aug 2017 01:04:07 -0000
+From: ne xo <nexo123@outlook.kr>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: Cve issue discussion
+Thread-Index: AQHTDxkJNoqkn7gGQkqPN4sKpSgu9g==
+Date: Mon, 7 Aug 2017 01:03:53 +0000
+Message-ID: <SG2PR0401MB1834CC0A72F7B7E547C0F42888B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>
+Accept-Language: ko-KR, en-US
+Content-Language: ko-KR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: lists.openwall.com; dkim=none (message not signed)
+ header.d=none;lists.openwall.com; dmarc=none action=none
+ header.from=outlook.kr;
+x-incomingtopheadermarker: OriginalChecksum:1CA52FAA2F421E94B2703D278D0610798B0F3F2295F9FF968D4A02FBE1BE591C;UpperCasedChecksum:9694338F451FAB0699FA1EA5CAB126C41095AF5B52D75F6CC711462244E72642;SizeAsReceived:9093;Count:42
+x-tmn: [bU+mPgHnC6gROm+2yXc5vdcNpAFvqt3g]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;SG2APC01HT157;7:tGpKfMeDvwzkvee93DxA2a5kNjpLQd3I4gzaW24gkd2jL0XOgEiGWhXNpS50BOZgByJExm1jACfDKl/d4OOgSAF7VIqIwx+BzOrYREQbXmGJc6hj7eKmAWJ8m3Geanwo5TLOPSS/A8AtrDUk3ewJ7qyif8zu2HBfAJNQr7fX4Xb3CPK+wvGDs/Zu2COiqYu3yvsy6bY20b2vhO6yxZbA4HhgMpzij5q5W3cG6hbKhOxv+EkWzCtEKUV97ThCNM+ZWmqFtMzpypAjRYw24Dgkz+LKTVrrzCW9OCZSuF4gkekVHiKk1biDWWj6pvbz52hSd/J/x2FY98YY91ujjJJcKkpYTU0Yde9zFiLOUfJ66GeZ06nlnI0PNJ4NhzRj9mrDhznpKlD/Eur5CI8nUOIQgNNFg2oBVq1GtZx/35jPoSVXf9lH7M03JSdNOervTTKx3F06DjcbpD9WJOK+jQBmp3TJv/AKZcgCi7id6+e/KDEQZdB1VYRQuTqQ5dfzyc6xizh3cmxUAggUaexbbjkkiTM4ODOfQmYM1dC431ANtsIFu0xaBt1BUxQ+2hbi30AReJV0fh8MPLRE8KUHrUrbmJOClpxMjYXASAwMLnanWdgI1AzBih5fUsgH3138RC9LPWJvuoi69R1480CMsur7Qscb2eBEABpYXYhaqsNAFBPPk/txdik8wSwHFRC9H0TdckEnKa5jx2fv8u/mnmjsNXySMwhQsbGyBtsqn+QdKS0ft/+ov42ziTWUVuRyDq1pHrJZYuQneE5qXEdtAj/gaQ==
+x-incomingheadercount: 42
+x-eopattributedmessage: 0
+x-forefront-antispam-report: EFV:NLI;SFV:NSPM;SFS:(7070007)(98901004);DIR:OUT;SFP:1901;SCL:1;SRVR:SG2APC01HT157;H:SG2PR0401MB1834.apcprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;
+x-ms-office365-filtering-correlation-id: a81f6a0f-1ee9-40dc-345a-08d4dd302c9e
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(300000500095)(300135000095)(300000501095)(300135300095)(22001)(300000502095)(300135100095)(300000503095)(300135400095)(201702061074)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031324274)(2017031323274)(2017031322377)(1603101448)(1601125374)(1701031045)(300000504095)(300135200095)(300000505095)(300135600095)(300000506095)(300135500095);SRVR:SG2APC01HT157;
+x-ms-traffictypediagnostic: SG2APC01HT157:
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(444000031);SRVR:SG2APC01HT157;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:SG2APC01HT157;
+x-forefront-prvs: 0392679D18
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: multipart/alternative;
+	boundary="_000_SG2PR0401MB1834CC0A72F7B7E547C0F42888B50SG2PR0401MB1834_"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="qr5rqps7rx4cydj7"
-Content-Disposition: inline
-Subject: [oss-security] Multiple vulnerabilities affecting UYUNI/SUSE Manager
+X-OriginatorOrg: outlook.kr
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Aug 2017 01:03:53.4691
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2APC01HT157
+Subject: [oss-security] Cve issue discussion
 
---qr5rqps7rx4cydj7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--_000_SG2PR0401MB1834CC0A72F7B7E547C0F42888B50SG2PR0401MB1834_
+Content-Type: text/plain; charset="ks_c_5601-1987"
+Content-Transfer-Encoding: base64
 
-Hello list, during a scheduled audit for the UYUNI / SUSE Manager project, =
-three
-security issues were found and tracked with a CVE identifier.
+SGVsbG8sDQoNCg0KSSBhbSBjdXJpb3VzIGFib3V0IGlzc3VpbmcgQ1ZFcy4N
+Cg0KSSBjYW4gc2VlIHRoYXQgYSAiTlVMTCBwb2ludGVyIGRlcmVmZXJlbmNl
+IiBvciBhIGJ1ZyB3aGVyZSB0aGUgZXhwbG9pdCBoYXMgbm90IGJlZW4gdmVy
+aWZpZWQgYWxzbyBnZXQgYSBDVkUuDQoNCg0KaGVhcC1vdmVyZmxvd3MgbWF5
+IG9yIG1heSBub3QgYmUgZXhwbG9pdGFibGUuDQoNCg0KSXQgdGFrZXMgYSBs
+b3Qgb2YgdGltZSB0byBhbmFseXplIHRoZSBleHBsb2l0IGFuZCBjcmVhdGUg
+dGhlIGV4cGxvaXQgY29kZS4NCg0KDQpJcyBpdCByaWdodCB0byBiZSBhc3Np
+Z25lZCBhIENWRSBvbmx5IGlmIGl0IGlzIGV4cGxvaXRhYmxlPw0KDQoNCk9y
+IGRvIHlvdSB0aGluayBhbGwgYnVncyBuZWVkIHRvIGdldCBhIENWRT8NCg0K
+DQpUaGFua3MuDQoNCi0tLQ0KDQpyZWYNCg0KLS0tDQoNClsxXWh0dHA6Ly93
+d3cub3BlbndhbGwuY29tL2xpc3RzL29zcy1zZWN1cml0eS8yMDE3LzA0LzEw
+LzE3IC0gTlVMTCBwb2ludGVyIGRlcmVmZXJlbmNlDQpbMl1odHRwOi8vd3d3
+Lm9wZW53YWxsLmNvbS9saXN0cy9vc3Mtc2VjdXJpdHkvMjAxNy8wNC8xMC8x
+NSAtIG1lbW9yeSBhbGxvY2F0aW9uIGZhaWx1cmUNCg==
 
-1. Issues
-
-1.1 CVE-2022-31255: directory path traversal vulnerability in
-    CobblerSnipperViewAction
-
-When viewing cobbler autoinstallation snippet, it is possible to evade
-from /var/lib/cobbler/snippet path using the "path" request parameter
-and accessing files outside the webserver root directory.
-
-On a default installation, tomcat is running as a non-privileged user
-process, so the impact on the file system confidentiality is for files
-viewable by tomcat user, for groups www, susemanager and tomcat and for
-files viewable by anyone.
-
-To exploit this vulnerability there is no need for a particular script
-but an authenticated SUMA session is needed.
-
-CVSS is 5.0: https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/P=
-R:L/UI:N/S:C/C:L/I:N/A:N/E:H
-
-To exploit this vulnerability you have just to pass the desired file
-using the path parameter:
-
-https://<SERVER>/rhn/kickstart/cobbler/CobblerSnippetView.do?path=3D%2Fvar%=
-2Flib%2Fcobbler%2Fsnippets%2F../../../../etc/rhn/rhn.conf
-
-1.2 CVE-2022-43753: arbitrary file disclosure vulnerability in
-    ScapResultDownload
-
-When downloading the openscap result for a given system, it is possible
-to evade from the location where the report is created and access
-arbitrary files.
-
-On a default installation, tomcat is running as a non-privileged user
-process, so the impact on the file system confidentiality is for files
-viewable by tomcat user, for groups www, susemanager and tomcat and for
-files viewable by anyone.
-
-To exploit this vulnerability there is no need for a particular script
-but an authenticated UYUNI/SUMA session is needed.
-
-CVSS is 5.0: https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/P=
-R:L/UI:N/S:C/C:L/I:N/A:N/E:H
-
-PoC
-https://server_ip/rhn/systems/details/audit/ScapResultDownload.do?sid=3D100=
-0010000&xid=3D1&name=3D../../../../../../../etc/passwd
-
-1.3 CVE-2022-43754: reflected cross site scripting in
-    /rhn/audit/scap/Search.do
-
-In the "Search XCCDF Rules For:" text field, the attacker can inject
-malicious javascript code by using "/> as prefix and then the arbitrary
-js (e.g. "/><script>alert(1)</script>.
-
-The injected code is copied in the HTML without sanitization, in the
-alert and messages portion of the page. The "/> sequence is needed to
-trigger the error and then having the js code to be copied in the output
-page.
-
-Here it is the evil payload in the result page:
-
- <!-- Alerts and messages -->
-    <div class=3D"alert alert-warning">
-      <ul>
-        <li>Could not parse query '"/><script>alert(1)</script>'.</li>
-      </ul>
-    </div>
-
-Please note that this attack is possible only on a successful POST
-request on an authenticated session. This limits the severity of the
-issue itself.
-
-CVSS is 3.0: https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/P=
-R:L/UI:R/S:C/C:L/I:N/A:N
-
-I marked confidentiality low because pxt-session-cookie and JSESSIONID
-cookies are HttpOnly and secure. So even the exposure is limited.
-
-2. Affected releases
-
-The three vulnerabilities are present in the following releases:
-* all SUSE Manager 4.2 versions before 4.2.10
-* all SUSE Manager 4.3 versions before 4.3.2
-* all UYUNI versions before Uyuni-2022.10
-
-3. Timeline
-
-3.1 CVE-2022-31255
-2022-10-20: vulnerability was reported to upstream authors [1]
-2022-10-20: upstream authors acknowledge it
-2022-10-21: offered an embargo until 2022-11-04
-2022-10-24: assigned a CVE
-2022-11-04: fixes were released and embargo was lifted
-
-3.2 CVE-2022-43753
-2022-10-25: vulnerability was reported to upstream authors [2]
-2022-10-26: upstream authors acknowledge it and a CVE is assigned
-2022-10-26: offered an embargo until 2022-11-04
-2022-11-04: fixes were released and embargo was lifted
-
-3.3 CVE-2022-43754
-2022-10-26: vulnerability was reported to upstream authors [3]
-2022-10-26: upstream authors acknowledge it and a CVE is assigned
-2022-10-26: offered an embargo until 2022-11-04
-2022-11-04: fixes were released and embargo was lifted
-
-4. Links
-4.1 https://bugzilla.suse.com/show_bug.cgi?id=3D1204543
-4.2 https://bugzilla.suse.com/show_bug.cgi?id=3D1204716
-4.3 https://bugzilla.suse.com/show_bug.cgi?id=3D1204741
-4.4 uyuni upstream merge commit: https://github.com/uyuni-project/uyuni/com=
-mit/d8fe770ebbad161de0b628f663de4e5bd1b8c204
-4.5 https://www.suse.com/security/cve/CVE-2022-31255.html
-4.6 https://www.suse.com/security/cve/CVE-2022-43754.html
-4.7 https://www.suse.com/security/cve/CVE-2022-43753.html
-
-Regards,
-Paolo
-
---
-(*_  Paolo Perego                           @thesp0nge
-//\  Software security engineer               suse.com
-V_/_ 0A1A 2003 9AE0 B09C 51A4 7ACD FC0D CEA6 0806 294B
-
---qr5rqps7rx4cydj7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEChogA5rgsJxRpHrN/A3OpggGKUsFAmNlO6EACgkQ/A3OpggG
-KUsHTxAAnNpsDeT08avABam4uGsDhp5C8UiWi4XMrFuIvkoXWqnbl/Gr/5sEwkbW
-InE+HjAsyGSDWc5ot4rbQBALTXSlqa6B7S74usXh+EI4HzI3jKOCzjhwOclpBIKn
-urle5MO8h7fxl3BOXPSI2R6ZYyClYE+wxWT98kuBRQuOIaVF2oPBNn6QfbCtT7XQ
-Kz0FEw4UXcujAjkKb16fB3FfqJYI9rUMYEgILETXTAFqbe3kb+1LJwX7A7tGFBx2
-HigsvmyMogoEQAU5bZZxiZnwYTcmYMBWo7eZlNNkSVP37eA+qY49eSPLvMm2tCHC
-+gPif4aYIE7aHSr9kOTGmIQnOqzpwB8b0M5IuJrnatAd/hrzOcydSRWC6tShW+PN
-n8o6jSIEi6ADkhOf8F51ujAxvfVPnb5ZMk/bBv2grT42jx3jc21YlQy8sRkg3MYF
-rQStqqGhn6xyj2Dsxqh4AULU19V0YTAA+N3VvUv7mypmpGxOZjHtnmrLFjE80vsM
-g8LAvnIxq6TOw1MNufG/WuZILsQCxdL1qpLsnCbEsvIuoI83pauKEH3A3z+DzH6Q
-gp7Wsp+caxRmeNtQZpP9a5pH90z1LCIdzH0P14mRyat5Ds/O68f3ViBxm89/Sobt
-Fz2tBhk5AjtEHysA07w7Lru+n4HLnwkBhjjDTVpKY/rr1FzNfQ4=
-=NZZ0
------END PGP SIGNATURE-----
-
---qr5rqps7rx4cydj7--
+--_000_SG2PR0401MB1834CC0A72F7B7E547C0F42888B50SG2PR0401MB1834_--
