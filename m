@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/4
-Message-ID: <63175610-a850-72d6-b3b1-928908d4d608@securify.nl>
-Date: Wed, 1 Mar 2017 07:17:14 +0100
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/8
+Message-ID: <c3f3c2ec-aee4-75db-562c-7183fa0e3a29@oracle.com>
+Date: Mon, 7 Aug 2017 14:05:08 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple Cross-Site Request Forgery vulnerabilities affecting various WordPress Plugins
+Subject: Re: Cve issue discussion
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+On 07/08/17 13:47, Glenn Randers-Pehrson wrote:
+> It's not causing a crash, just a delay.  You'll safely get either an OOM
+> message or an EOF message.and no memory leak.
+> 
 
+That's scant comfort when your browser is the one hit by the OOM killer
+and then again when you restart it.  And also while you're wondering
+what's going on because your laptop is basically completely
+non-responsive ...
 
+So yes, it's a remote DoS and definitely worth a CVE.  We have had other
+similar CVEs in the past with image handling libraries not being
+sufficiently paranoid.
 
-View attachment "cross_site_request_forgery_in_atahualpa_wordpress_theme.txt" of type "text/plain" (4875 bytes)
+jch
 
-View attachment "cross_site_request_forgery_in_file_manager_wordpress_plugin.txt" of type "text/plain" (3812 bytes)
+> Glenn
+> 
+> On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@...e.de> wrote:
+>> Hi,
+>>
+>> if it could crash the image reader I would consider it "remote denial of service"
+>> classed and CVE worthy.
 
-View attachment "cross_site_request_forgery_in_global_content_blocks_wordpress_plugin.txt" of type "text/plain" (4080 bytes)
-
-View attachment "cross_site_request_forgery_in_wordpress_download_manager_plugin.txt" of type "text/plain" (4933 bytes)
-
-View attachment "gwolle_guestbook_mass_action_vulnerable_for_cross_site_request_forgery.txt" of type "text/plain" (4195 bytes)
-
-View attachment "popup_by_supsystic_wordpress_plugin_vulnerable_to_cross_site_request_forgery.txt" of type "text/plain" (14673 bytes)
