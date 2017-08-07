@@ -1,4 +1,9 @@
-Received: (qmail 1349 invoked by uid 550); 6 Jun 2026 02:57:21 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["319" "Monday" "7" "August" "2017" "08:47:35" "-0400" "Glenn Randers-Pehrson" "glennrp@gmail.com" "<CA+PdXctggn-AoYVKJQZS=+jbnEga4P2AkJa6OJaAS_GUgw0b_g@mail.gmail.com>" "10" "Re: [oss-security] Cve issue discussion" nil nil nil "8" "2017080712:47:35" "[oss-security] Cve issue discussion" (number mark "U       glennrp@gmai Aug  7   10/319   " thread-indent "\"Re: [oss-security] Cve issue discussion\"\n") "<20170807123756.GA27766@suse.de>" ("<SG2PR0401MB1834CC0A72F7B7E547C0F42888B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>" "<6651351.AxBd7pCpa9@wanheda>" "<SG2PR0401MB18341DCF23068229492F4B2A88B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>" "<CA+PdXcspyUe_0yO1bypEWmsZNd9xng-4avjExXFnbb0pGi_X=w@mail.gmail.com>" "<20170807123756.GA27766@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16017 invoked by uid 550); 7 Aug 2017 12:48:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5657 invoked from network); 5 Jun 2026 14:34:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1780670043;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=KSaCMVVvpvWo8zNeg5gFYbuKi+4cgqHypLYGGQI6aZg=;
-	b=hyM4YJiglT5t2sgLb+4XmmTHpEP8ob0heHO915vHuh4etUXnbYdQD1mzQJ9A2CUpQcL0uG
-	sEyXED6l9LlBNFG6EQC7O1qww9nN7BVSuy/k94OcgVM2jQzTgVusEt1IOMYhCXYf+BaTGH
-	F2v/4s2dwpEcV+6kbEezD/Tq31nJrbmw3VtY5fjsuqRcvqu/MWd0B0+ow/E5K8z/SCZK0p
-	L03FpI6qPueYsaDLs8FcW0RzHXdqEV+uft3UwqQFQtCzoY4h17+A4Exlyo/TgeHUS9cUoT
-	oD+5FU/PqJnREQ14D2Xw7F1hFsTRpGVVj+N0odkRY7BQMZ5T1WQTKnxzioNunw==
-Message-ID: <d6e2f20d-5a3e-416b-b625-90ebf5904fe1@cpansec.org>
-Date: Fri, 5 Jun 2026 15:34:02 +0100
+Received: (qmail 15999 invoked from network); 7 Aug 2017 12:48:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=z8j4/+I7JgP4xtGA6lpAyLWa4Xlls7BFuxoIk8sFYQ8=;
+        b=Fusto0xR5QXN87987gfskLY0yyK3iav1rsh33WIVntF5dws6LWpONUnzmcP+5/3NBl
+         hjkHQO4oydtvOIUMRfB+lrlA90mKr4PPI53MSV9JcJwGprQyhyHnwbzzNexWghyTNhJc
+         7DnLrH5tEJwUfUeDC+nzdFmGQYRMfbPyeU/ZwuDcVGbMxEvKe3tMQMssTcjQihvTWfyj
+         jZl7MfEyAoDGYHypPHHIAh5d5F7j4s2RuDh4+p1SljBTR3AMA9bWP5Z+794D1QzxeT7V
+         pTwD1x+8cYT8Ow2xGOtabGbgZkz0qlTJyjbboATvyc+goCYaSyHSODdQKF61aWPAAhV4
+         am7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=z8j4/+I7JgP4xtGA6lpAyLWa4Xlls7BFuxoIk8sFYQ8=;
+        b=c/mmNxPzrD+HRiP/214j2EXAQcleTW2pQgmJ/Q9eYyoalrEhZ9l/QWULyVCo5ueCPN
+         b3nN2wRqDInol+n97h/Vd/lGV0mFZBOhJ1kKM6ViTPcbEcmpo3hp/aPiEvDK7IcpgWIX
+         OsZCecZZM+iIoIqGOR5gcEbMj6yjhVQiKFnSfmugq0audA9yrAWNpSCIhs+NAV1V0M9f
+         qfdzEdqbj+kPR5Ij2B++3X+1WOUN3Wp1PW32t/BTTwCwuboIuXUZ8HkUZn99yknNmWKd
+         W3hv3o+Zi+CiPSQ/ub/op7hg1ug+8iwSIAvr9iguJ3Drc5O5c/nUcIfIZzVJ12Dprf4R
+         oOeg==
+X-Gm-Message-State: AHYfb5iznpN1vNgsnbZpF80wRypf+3D/AjZNV+EIeMhIM+/fTezLtW6m
+	6k8YGlk7FL1ZcDm1aDbpUGqYlb2GOw==
+X-Received: by 10.36.181.23 with SMTP id v23mr673773ite.163.1502110095710;
+ Mon, 07 Aug 2017 05:48:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTG1F2+RLke85L5b53ENwDDAd3shMtJgdh1KnVWIwNru2DU4HCu1z5huhd0E05NsOt9TYKkPjLFKkGkjQ7UItP0lqr+Cpk7+PCTMailK9RacFuKZ8XmH6u5bL2pVsLorORTqXDW9caqSgFqH1yqFgNwLW1mWjR3GZn9hZC0ATqRRS14RFT+yllJ0ReuPl17V8o7O2wrDju5HSiGbwGkj69WZiah0Kxplnli6w1ez/YbB2TiO47xlgHyR/rcI89iB/uimpVgfREF/L4SlrREx9Y+A4EnPMTjkn4AwNVA+kqvRHv+erN7HqsOzTHm6K+QcLcXymAjZd/JucNiIlgab8r32bVZ/gKjk6A7FzLN6mELr0Ja42tel8jXtpKLrXqyQcr3mZ7qAa+VuHE2TdyxqRAtgFXkgJ+yyTqgP5SsR+iqmZApKr2ZaW1VKbKCsT30MrIgm4zZwIqe7LoUofHMp1157QdH8J/IIuSlGbeY0CVI0TAXInFC6o8SaZOVVZozlEM87vOhfTAn5TdkrOH+hYyst7gFktjkQz50rgXVDYjpgHu7SCsSlDuMK9uBqnbTC2sm2FyxbuKpXgEZxo81K5PzvpDXo/mOjozNvX3euK6+B7DyQFJPKitEpHi/gJa9N/zlx4ePJHoAhFiMGotZ1IWhR/a4ubm3M9SqofELXRrwPXA
-Subject: [oss-security] CVE-2026-10879: DBI versions before 1.648 for Perl have a heap
- overflow when preparsing SQL statements with more than 9 binders
+In-Reply-To: <20170807123756.GA27766@suse.de>
+References: <SG2PR0401MB1834CC0A72F7B7E547C0F42888B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>
+ <6651351.AxBd7pCpa9@wanheda> <SG2PR0401MB18341DCF23068229492F4B2A88B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>
+ <CA+PdXcspyUe_0yO1bypEWmsZNd9xng-4avjExXFnbb0pGi_X=w@mail.gmail.com> <20170807123756.GA27766@suse.de>
+From: Glenn Randers-Pehrson <glennrp@gmail.com>
+Date: Mon, 7 Aug 2017 08:47:35 -0400
+Message-ID: <CA+PdXctggn-AoYVKJQZS=+jbnEga4P2AkJa6OJaAS_GUgw0b_g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] Cve issue discussion
 
-========================================================================
-CVE-2026-10879                                       CPAN Security Group
-========================================================================
+It's not causing a crash, just a delay.  You'll safely get either an OOM
+message or an EOF message.and no memory leak.
 
-         CVE ID:  CVE-2026-10879
-   Distribution:  DBI
-       Versions:  before 1.648
+Glenn
 
-       MetaCPAN:  https://metacpan.org/dist/DBI
-       VCS Repo:  https://github.com/perl5-dbi/dbi
-
-
-DBI versions before 1.648 for Perl have a heap overflow when preparsing
-SQL statements with more than 9 binders
-
-Description
------------
-DBI versions before 1.648 for Perl have a heap overflow when preparsing
-SQL statements with more than 9 binders.
-
-The preparse method expands SQL placeholder characters to numbered
-binders of the form :pN, but only allocates three characters per binder
-in the buffer.    Placeholders 10-99 require four characters, 100-999
-require five characters, et cetera.
-
-Problem types
--------------
-- CWE-787 (Out-of-bounds Write)
-
-Solutions
----------
-Upgrade to DBI 1.648 or later.
-
-
-References
-----------
-https://metacpan.org/release/HMBRAND/DBI-1.648/changes
-https://github.com/perl5-dbi/dbi/commit/af79036c07aa9a457971c0f4136e37c85dc20978.patch
-
-Timeline
---------
-- 2026-04-25: Issue reported to CPANSec.
-- 2026-05-28: Commit fixed the issue in DBI.
-- 2026-06-04: DBI 1.648 released.
-
-
-
+On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@suse.de> wrote:
+> Hi,
+>
+> if it could crash the image reader I would consider it "remote denial of service"
+> classed and CVE worthy.
