@@ -1,44 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/2
-Message-ID: <20170517012314.vyjnu3k7pgh5ey6s@schmorp.de>
-Date: Wed, 17 May 2017 03:23:14 +0200
-From: Marc Lehmann <schmorp@...morp.de>
-To: "Jason A. Donenfeld" <Jason@...c4.com>
-Cc: oss-security <oss-security@...ts.openwall.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/10
+Message-ID: <613154429.39760878.1502113969550.JavaMail.zimbra@redhat.com>
+Date: Mon, 7 Aug 2017 09:52:49 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 17, 2017 at 12:15:55AM +0200, "Jason A. Donenfeld" <Jason@...c4.com> wrote:
-> On Wed, May 17, 2017 at 12:03 AM, Solar Designer <solar@...nwall.com> wrote:
-> > Jason, Robert -
-> >
-> > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
-> >> A harmless example from rxvt - pushing back the new-line character:
-> >>
-> >> $ echo -ne "\eGQ;"
-> >> ;$ 0
-> >> bash: 0: command not found
-> >
-> > Does this also affect rxvt-unicode?
-> 
-> It does, actually. I've CCd rxvt-unicode upstream on this in order to
-> hear their assessment.
+Hello, John,
 
-There can't be an assessment without knowledge of what to assess - there
-is little to no information in your mail. I can only guess that somebody
-for the hundredth time found out that terminals are more than dumb
-display devices and got excited that, somehow, this might be a security
-issue. Without knowing details, I can't say for sure, but most likely,
-this is a security issue the same way blindly feeding unknown commands to
-your shell is, i.e., it's a problem somewhere else - the protocol between
-terminals and programs is not a (strong) security barrier.
+> > https://access.redhat.com/security/vulnerabilities/3112931
+>
+> I suspect there's nothing in this that's not repeated elsewhere, but
+> that page says "Access Denied".
 
-(your echo command is bash-specific, btw.)
+Indeed, this article is not published yet and we are (I am) working on it, it should be ready soon.
+I've included the link to the article in the announce for the reference of future readers. You are
+correct, the article mostly duplicates the announce and the only additional information is related
+to the Red Hat's products, like advisories with the fix.
 
--- 
-                The choice of a       Deliantra, the free code+content MORPG
-      -----==-     _GNU_              http://www.deliantra.net
-      ----==-- _       generation
-      ---==---(_)__  __ ____  __      Marc Lehmann
-      --==---/ / _ \/ // /\ \/ /      schmorp@...morp.de
-      -=====/_/_//_/\_,_/ /_/\_\
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
