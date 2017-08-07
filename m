@@ -1,24 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/15
-Message-ID: <cbf49fff-2cd8-cb8c-59b8-07c2b7c37b0f@redhat.com>
-Date: Wed, 21 Jun 2017 10:22:20 -0600
-From: Jeff Law <law@...hat.com>
-To: oss-security@...ts.openwall.com, Agostino Sarubbo <ago@...too.org>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/4
+Message-ID: <CA+PdXcspyUe_0yO1bypEWmsZNd9xng-4avjExXFnbb0pGi_X=w@mail.gmail.com>
+Date: Mon, 7 Aug 2017 08:15:14 -0400
+From: Glenn Randers-Pehrson <glennrp@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Cve issue discussion
 Content-Type: text/plain; charset=utf-8
 
-On 06/21/2017 04:46 AM, Agostino Sarubbo wrote:
-> On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
->> III. Solutions
->> - Recompile all userland code (ld.so, libraries, binaries) with GCC's
->>   "-fstack-check" option, which prevents the stack-pointer from moving
->>   into another memory region without accessing the stack guard-page (it
->>   writes one word to every 4KB page allocated on the stack).
-> 
-> For the record, Gentoo Hardened enables by default -fstack-check=specific
-And if you were to look at the generated code, you'll see that it
-happily skips 2-3 pages of probes in prologues as well as within alloca
-spaces.  It's a false sense of security.
+Do memory-exhaustion bugs get a CVE?  Suppose an application is fooled
+into requesting 2Gb of memory but then never uses it other than
+attempting to read it, immediately hitting EOF, and cleaning up.
 
-jeff
+I'm addressing such a bug in libpng right now, in which the user
+is sent a PNG file containing a tEXt chunk that claims to have a 2GB
+length (but none of the 2GB data is included in the PNG).  On my
+platform libpng deals with that almost instantaneously, but I think
+some platforms (ASAN builds?) would actually allocate the memory
+before proceeding to read the data.
 
+Glenn
+
+
+On Mon, Aug 7, 2017 at 5:47 AM, ne xo <nexo123@...look.kr> wrote:
+> Hello,
+>
+> thank you for the reply!
+>
+> I chose the report at random.
+>
+> I'm sorry if I was offended to mention the report.
+>
+> Thanks.
+> <http://aka.ms/weboutlook>
+> ________________________________
+> 보낸 사람: Agostino Sarubbo <ago@...too.org>
+> 보낸 날짜: 2017년 8월 7일 월요일 오후 4:42:05
+> 받는 사람: oss-security@...ts.openwall.com
+> 제목: Re: [oss-security] Cve issue discussion
+>
+> On Monday 07 August 2017 01:03:53 ne xo wrote:
+>> Hello,
+>>
+>>
+>> I am curious about issuing CVEs.
+>>
+>> I can see that a "NULL pointer dereference" or a bug where the exploit has
+>> not been verified also get a CVE.
+>
+>>
+>> heap-overflows may or may not be exploitable.
+>>
+>>
+>> It takes a lot of time to analyze the exploit and create the exploit code.
+>>
+>>
+>> Is it right to be assigned a CVE only if it is exploitable?
+>>
+>>
+>> Or do you think all bugs need to get a CVE?
+>>
+>>
+>> Thanks.
+>>
+>> ---
+>>
+>> ref
+>>
+>> ---
+>>
+>> [1]http://www.openwall.com/lists/oss-security/2017/04/10/17 - NULL pointer
+>> dereference
+>> [2]http://www.openwall.com/lists/oss-security/2017/04/10/15 -
+>> memory allocation failure
+>
+> Hi.
+>
+> Since you mentioned some issues reported by me, let me answer directly.
+> For the first, it is an undefined behavior, so actually you don't see the
+> crash.
+> Nowadays, the undefined behavior issues do not get anymore a CVE.
+>
+>
+> For the second, ASAN reports that the program want to use more that 64GB of
+> ram to execute the process so ASAN hangs the process. In this case is up to
+> the maintainer check whether there is a problem in the code or not, or it is
+> expected. The better double-check would be verify what happens without ASAN.
+>
+> I'd like also to mention that MITRE assigns CVE after they analyze the
+> reported issue, so if an issue does not deserve a CVE, MITRE probably won't
+> assign accompanied by an explanation.
+>
+> --
+> Agostino Sarubbo
+> Gentoo Linux Developer
