@@ -1,115 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/8
-Message-ID: <374565.691777633-sendEmail@localhost>
-Date: Mon, 10 Apr 2017 07:25:59 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: elfutils: heap-based buffer overflow in handle_gnu_hash (readelf.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/11
+Message-ID: <486401008.39761758.1502114136819.JavaMail.zimbra@redhat.com>
+Date: Mon, 7 Aug 2017 09:55:36 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com, Brad Spengler <spender@...ecurity.net>
+Subject: Re: [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()
 Content-Type: text/plain; charset=utf-8
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+Hello, Brad,
 
-A fuzz on eu-readelf showed an heap overflow.
+Indeed, the wording "in the wild" is probably incorrect. The mentioned exploit was developed by the
+flaw researchers and we are not aware of it being available to or used by anyone else. We are sorry
+for this misinformation.
 
-The complete ASan output:
+As for the timeline as we understand it, we were notified about the flaw, we've discovered the flaw
+being actually already fixed in the upstream, we've notified linux-distros@ and in a week we've made
+this public announce.
 
-# eu-readelf -a $FILE
-==1855==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x611000009ffc at pc 0x000000421a8c bp 0x7ffef67082e0 sp 0x7ffef67082d8
-READ of size 4 at 0x611000009ffc thread T0
-    #0 0x421a8b in handle_gnu_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3268
-    #1 0x421a8b in handle_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3346
-    #2 0x4680f7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:898
-    #3 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
-    #4 0x7f4bae746094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
-    #5 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
-    #6 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
-    #7 0x7f4bacd6478f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #8 0x406cd8 in _start (/usr/bin/eu-readelf+0x406cd8)
-
-0x611000009ffc is located 0 bytes to the right of 252-byte region [0x611000009f00,0x611000009ffc)
-allocated by thread T0 here:
-    #0 0x7f4baecaa288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
-    #1 0x7f4bae120f48 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
-    #2 0x7f4bae120f48 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
-    #3 0x7f4bae1229ba in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
-    #4 0x7f4bae122cae in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
-    #5 0x41f100 in handle_gnu_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3206
-    #6 0x41f100 in handle_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3346
-    #7 0x4680f7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:898
-    #8 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
-    #9 0x7f4bae746094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
-    #10 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
-    #11 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
-    #12 0x7f4bacd6478f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3268 in handle_gnu_hash
-Shadow bytes around the buggy address:
-  0x0c227fff93a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c227fff93f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00[04]
-  0x0c227fff9400: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9420: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==1855==ABORTING
-
-Affected version:
-0.168
-
-Fixed version:
-0.169 (not released atm)
-
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00109.html
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7607
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00225-elfutils-heapoverflow-handle_gnu_hash
-
-Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-handle_gnu_hash-readelf-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
