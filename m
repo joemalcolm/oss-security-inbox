@@ -1,24 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/02/1
-Message-ID: <20171202072838.GA9031@eldamar.local>
-Date: Sat, 2 Dec 2017 08:28:38 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/2
+Message-ID: <6651351.AxBd7pCpa9@wanheda>
+Date: Mon, 07 Aug 2017 09:42:05 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: libtiff: Heap-based buffer overflow bug in pal2rgb(pal2rgb.c)
+Subject: Re: Cve issue discussion
 Content-Type: text/plain; charset=utf-8
 
-hi,
-
-On Thu, Nov 30, 2017 at 07:41:03PM +0900, 백정운 wrote:
-> Hi all,
+On Monday 07 August 2017 01:03:53 ne xo wrote:
+> Hello,
 > 
-> A heap-based buffer overflow flaw was found in pal2rgb. A malicious
-> user can manipulate the heap memory of a process using COLORMAP,
-> Image Width, and Image Length value of a TIFF document.
 > 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2750
+> I am curious about issuing CVEs.
+> 
+> I can see that a "NULL pointer dereference" or a bug where the exploit has
+> not been verified also get a CVE.
+ 
+> 
+> heap-overflows may or may not be exploitable.
+> 
+> 
+> It takes a lot of time to analyze the exploit and create the exploit code.
+> 
+> 
+> Is it right to be assigned a CVE only if it is exploitable?
+> 
+> 
+> Or do you think all bugs need to get a CVE?
+> 
+> 
+> Thanks.
+> 
+> ---
+> 
+> ref
+> 
+> ---
+> 
+> [1]http://www.openwall.com/lists/oss-security/2017/04/10/17 - NULL pointer
+> dereference
+> [2]http://www.openwall.com/lists/oss-security/2017/04/10/15 -
+> memory allocation failure
 
-MITRE has assigned CVE-2017-17095 for this issue.
+Hi.
 
-Regards,
-Salvatore
+Since you mentioned some issues reported by me, let me answer directly.
+For the first, it is an undefined behavior, so actually you don't see the 
+crash.
+Nowadays, the undefined behavior issues do not get anymore a CVE.
+
+
+For the second, ASAN reports that the program want to use more that 64GB of 
+ram to execute the process so ASAN hangs the process. In this case is up to 
+the maintainer check whether there is a problem in the code or not, or it is 
+expected. The better double-check would be verify what happens without ASAN.
+
+I'd like also to mention that MITRE assigns CVE after they analyze the 
+reported issue, so if an issue does not deserve a CVE, MITRE probably won't 
+assign accompanied by an explanation.
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
