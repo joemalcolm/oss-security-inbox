@@ -1,4 +1,9 @@
-Received: (qmail 24127 invoked by uid 550); 7 Jul 2023 11:56:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["645" "Monday" "7" "August" "2017" "09:51:30" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<514529694.39760564.1502113890222.JavaMail.zimbra@redhat.com>" "15" "Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" nil nil nil "8" "2017080713:51:30" "[oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" (number mark "U       vdronov@redh Aug  7   15/645   " thread-indent "\"Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()\"\n") "<754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>" ("<754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7367 invoked by uid 550); 7 Aug 2017 13:51:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,27 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12069 invoked from network); 7 Jul 2023 04:45:05 -0000
-X-Injected-Via-Gmane: http://gmane.org/
+Received: (qmail 7347 invoked from network); 7 Aug 2017 13:51:42 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com AA68B6148C
+Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
+Date: Mon, 7 Aug 2017 09:51:30 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
 To: oss-security@lists.openwall.com
-From: Tavis Ormandy <taviso@gmail.com>
-Date: Fri, 7 Jul 2023 04:44:46 -0000 (UTC)
-Message-ID: <u8857u$14pa$1@ciao.gmane.io>
-User-Agent: slrn/pre1.0.4-5 (Linux)
-Subject: [oss-security] manjaro pamac vulnerability
+Message-ID: <514529694.39760564.1502113890222.JavaMail.zimbra@redhat.com>
+In-Reply-To: <754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>
+References: <754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.4.119, 10.4.195.12]
+Thread-Topic: kernel: inotify: a race between inotify_handle_event() and sys_rename()
+Thread-Index: iX7Gyza0ZBokhRfEuzpqP3ISP6NaIO9HtdvP
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Mon, 07 Aug 2017 13:51:30 +0000 (UTC)
+Subject: Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between
+ inotify_handle_event() and sys_rename()
 
-FYI, I noticed a blog post about this:
+Hello,
 
-https://github.com/c-skills/vala-vala-hey/blob/master/vala-vala-hey
+1) We would like to make an additional announcement that an important part of this flaw
+research was conducted by Leilei Lin <leilei.lin@alibaba-inc.com> of Alibaba Group, who
+developed the initial patches:
 
-I didn't test it, but if you can't trust stealth who can you trust? :)
+https://patchwork.kernel.org/patch/9755753/
+https://patchwork.kernel.org/patch/9755757/
 
-I'm not familiar with manjaro, I dunno if it's the polkit config for their dbus service.
+2) Unfortunately, the wording "in the wild" in this announcement is probably incorrect.
+The mentioned exploit was developed by the flaw researchers and we are not aware of it
+being available publicly or used by a wider audience. We are sorry for this misinformation.
 
-Tavis.
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@sdf.org
-_\_V _( ) _( )  @taviso
-
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
