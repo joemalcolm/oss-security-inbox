@@ -1,4 +1,9 @@
-Received: (qmail 13840 invoked by uid 550); 2 Mar 2026 20:19:21 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6254" "Monday" "7" "August" "2017" "18:36:54" "+0200" "Daniel Beck" "ml@beckweb.net" "<5CB7448C-A519-4C51-B7D1-00BC21CFC0B3@beckweb.net>" "138" "[oss-security] Jenkins plugins -- multiple vulnerabilities" nil nil nil "8" "2017080716:36:54" "[oss-security] Jenkins plugins -- multiple vulnerabilities" (number mark "U       ml@beckweb.n Aug  7  138/6254  " thread-indent "\"[oss-security] Jenkins plugins -- multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9675 invoked by uid 550); 7 Aug 2017 16:37:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,38 +12,154 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13819 invoked from network); 2 Mar 2026 20:19:21 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Velmurugan Periasamy <vel@apache.org>
+Received: (qmail 9655 invoked from network); 7 Aug 2017 16:37:06 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <5CB7448C-A519-4C51-B7D1-00BC21CFC0B3@beckweb.net>
+Date: Mon, 7 Aug 2017 18:36:54 +0200
 To: oss-security@lists.openwall.com
-Message-ID: <cbedff95-f1bc-6d0a-73fc-5fe938ed329b@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 02 Mar 2026 20:19:09 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-59060: Apache Ranger: Hostname verification bypass in
- NiFiRegistryClient and NifiClient 
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1502123826;9c022cde;
+X-HE-SMSGID: 1del1T-0001xQ-0l
+Subject: [oss-security] Jenkins plugins -- multiple vulnerabilities
 
-Severity: low=20
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+plugin releases contain fixes for security vulnerabilities:
 
-Affected versions:
+* Blue Ocean 1.1.6
+* Config File Provider Plugin 2.16.2
+* Datadog Plugin 0.5.7
+* Deploy to container Plugin 1.13
+* DRY Plugin 2.49
+* OWASP Dependency-Check Plugin 2.0.1.2
+* Pipeline: Groovy Plugin 2.39
+* Pipeline: Input Step Plugin 2.8
+* Script Security Plugin 1.31
+* Static Analysis Utilities Plugin 1.92
 
-- Apache Ranger through 2.7.0
+Users of these plugins should upgrade them to the indicated versions.
 
-Description:
+Descriptions of the vulnerabilities are below. Some more details, 
+severity, and attribution can be found here:
+https://jenkins.io/security/advisory/2017-08-07/
 
-Hostname verification bypass issue in Apache Ranger NiFiRegistryClient/NiFi=
-Client is reported in Apache Ranger versions <=3D 2.7.0.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Users are recommended to upgrade to version 2.8.0, which fixes this issue.
+If you find security vulnerabilities in Jenkins, please report them as 
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-Credit:
+---
 
-Nikita Markevich <markevich.nikita1@gmail.com> (finder)
 
-References:
+SECURITY-467 / CVE-2017-1000102
+The Details view of some Static Analysis Utilities based plugins, was 
+vulnerable to a persisted cross-site scripting vulnerability: Malicious 
+users able to influence the input to these plugins, for example the console 
+output which is parsed to extract build warnings (Warnings Plugin), could 
+insert arbitrary HTML into this view.
 
-https://ranger.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-59060
+
+SECURITY-467 / CVE-2017-1000103
+The custom Details view of the Static Analysis Utilities based DRY Plugin, 
+was vulnerable to a persisted cross-site scripting vulnerability: Malicious 
+users able to influence the input to this plugin could insert arbitrary HTML 
+into this view.
+
+
+SECURITY-513 / CVE-2017-1000104
+The Config File Provider Plugin is used to centrally manage configuration 
+files that often include secrets, such as passwords. Users with only 
+Overall/Read access to Jenkins were able to access URLs directly that 
+allowed viewing these files. Access to view these files now requires 
+sufficient permissions to configure the provided files, view the 
+configuration of the folder in which the configuration files are defined, or 
+have Job/Configure permissions to a job able to use these files.
+
+
+SECURITY-564 / CVE-2017-1000105
+The optional Run/Artifacts permission can be enabled by setting a Java 
+system property. Blue Ocean did not check this permission before providing 
+access to archived artifacts, Item/Read permission was sufficient.
+
+
+SECURITY-565 / CVE-2017-1000106
+Blue Ocean allows the creation of GitHub organization folders that are set 
+up to scan a GitHub organization for repositories and branches containing a 
+Jenkinsfile, and create corresponding pipelines in Jenkins. Its SCM content 
+REST API supports the pipeline creation and editing feature in Blue Ocean. 
+
+The SCM content REST API did not check the current user's authentication or 
+credentials. If the GitHub organization folder was created via Blue Ocean, 
+it retained a reference to its creator's GitHub credentials.
+
+This allowed users with read access to the GitHub organization folder to 
+create arbitrary commits in the repositories inside the GitHub organization 
+corresponding to the GitHub organization folder with the GitHub credentials 
+of the creator of the organization folder.
+
+Additionally, users with read access to the GitHub organization folder could 
+read arbitrary file contents from the repositories inside the GitHub 
+organization corresponding to the GitHub organization folder if the branch 
+contained a Jenkinsfile (which could be created using the other part of this 
+vulnerability), and they could provide the organization folder name, 
+repository name, branch name, and file name.
+
+
+SECURITY-566, SECURITY-567, SECURITY-580, SECURITY-582 / CVE-2017-1000107
+Script Security Plugin did not apply sandboxing restrictions to constructor 
+invocations via positional arguments list, super constructor invocations, 
+method references, and type coercion expressions. This could be used to 
+invoke arbitrary constructors and methods, bypassing sandbox protection.
+
+
+SECURITY-576 / CVE-2017-1000108
+The Pipeline: Input Step Plugin by default allowed users with Item/Read 
+access to a pipeline to interact with the step to provide input. This has 
+been changed, and now requires users to have the Item/Build permission 
+instead.
+
+
+SECURITY-577 / CVE-2017-1000109
+The custom Details view of the Static Analysis Utilities based OWASP 
+Dependency-Check Plugin, was vulnerable to a persisted cross-site scripting 
+vulnerability: Malicious users able to influence the input to this plugin 
+could insert arbitrary HTML into this view.
+
+
+SECURITY-587 / CVE-2017-1000110
+Blue Ocean allows the creation of GitHub organization folders that are set 
+up to scan a GitHub organization for repositories and branches containing a 
+Jenkinsfile, and create corresponding pipelines in Jenkins.
+
+It did not properly check the current user's authentication and 
+authorization when configuring existing GitHub organization folders. This 
+allowed users with read access to the GitHub organization folder to 
+reconfigure it, including changing the GitHub API endpoint for the 
+organization folder to an attacker-controlled server to obtain the GitHub 
+access token, if the organization folder was initially created using Blue 
+Ocean.
+
+
+SECURITY-559 / CVE-2017-1000113
+The Deploy to container Plugin stored passwords unencrypted as part of its 
+configuration. This allowed users with Jenkins master local file system 
+access, or users with Extended Read access to the jobs it is used in, to 
+retrieve those passwords. The Deploy to container Plugin now integrates with 
+Credentials Plugin to store passwords securely, and automatically migrates 
+existing passwords.
+
+
+SECURITY-579 / CVE-2017-1000114
+The Datadog Plugin stores an API key to access the Datadog service in the 
+global Jenkins configuration. While the API key is stored encrypted on disk, 
+it was transmitted in plain text as part of the configuration form. This 
+could result in exposure of the API key for example through browser 
+extensions or cross-site scripting vulnerabilities. The Datadog Plugin now 
+encrypts the API key transmitted to administrators viewing the global 
+configuration form.
 
