@@ -1,93 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/14/2
-Message-ID: <87lgr3kney.fsf@mid.deneb.enyo.de>
-Date: Fri, 14 Apr 2017 17:40:37 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: "Jason A. Donenfeld" <Jason@...c4.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: alloca in inline functions can be dangerous
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/3
+Message-ID: <SG2PR0401MB18341DCF23068229492F4B2A88B50@SG2PR0401MB1834.apcprd04.prod.outlook.com>
+Date: Mon, 7 Aug 2017 09:47:20 +0000
+From: ne xo <nexo123@...look.kr>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Cve issue discussion
 Content-Type: text/plain; charset=utf-8
 
-* Jason A. Donenfeld:
+Hello,
 
-> Hey folks,
+thank you for the reply!
+
+I chose the report at random.
+
+I'm sorry if I was offended to mention the report.
+
+Thanks.
+<http://aka.ms/weboutlook>
+________________________________
+���� ���: Agostino Sarubbo <ago@...too.org>
+���� ��¥: 2017�� 8�� 7�� ���� ���� 4:42:05
+�޴� ���: oss-security@...ts.openwall.com
+���: Re: [oss-security] Cve issue discussion
+
+On Monday 07 August 2017 01:03:53 ne xo wrote:
+> Hello,
 >
-> I'm not sure this is the right mailing list to discuss this matter, but
-> hopefully it finds an audience here. I was debugging some code recently,
-> when I found a very nasty interaction between alloca and inline functions.
-> Observe the following block:
 >
-> static inline void process_widget(struct widget *widget,
-> 				  unsigned int  fcount)
-> {
-> 	struct fragment fragments[fcount];
-> 	widgets_to_fragments(fragments, widget);
-> 	process_fragments(fragments);
-> }
+> I am curious about issuing CVEs.
 >
-> static void iterate_widgets(struct widgetlist *widgetlist)
-> {
-> 	struct widget *widget;
-> 	unsigned int fcount;
+> I can see that a "NULL pointer dereference" or a bug where the exploit has
+> not been verified also get a CVE.
+
 >
-> 	for (widget = widgetlist->first; widget; widget = widget->next) {
-> 		fcount = widget_get_frags_required(widget);
-> 		if (fcount > 256)
-> 			continue;
-> 		process_widget(widget, fcount);
-> 	}
-> }
+> heap-overflows may or may not be exploitable.
 >
-> This seems pretty benign. However, let's look at two transformations that
-> gcc makes. First the VLA is changed to use alloca:
+>
+> It takes a lot of time to analyze the exploit and create the exploit code.
+>
+>
+> Is it right to be assigned a CVE only if it is exploitable?
+>
+>
+> Or do you think all bugs need to get a CVE?
+>
+>
+> Thanks.
+>
+> ---
+>
+> ref
+>
+> ---
+>
+> [1]http://www.openwall.com/lists/oss-security/2017/04/10/17 - NULL pointer
+> dereference
+> [2]http://www.openwall.com/lists/oss-security/2017/04/10/15 -
+> memory allocation failure
 
-Which GCC version do you use?
+Hi.
 
-I turned your example into something that actually compiles:
+Since you mentioned some issues reported by me, let me answer directly.
+For the first, it is an undefined behavior, so actually you don't see the
+crash.
+Nowadays, the undefined behavior issues do not get anymore a CVE.
 
-struct widget
-{
-  struct widget *next;
-};
 
-unsigned widget_get_frags_required(struct widget *);
+For the second, ASAN reports that the program want to use more that 64GB of
+ram to execute the process so ASAN hangs the process. In this case is up to
+the maintainer check whether there is a problem in the code or not, or it is
+expected. The better double-check would be verify what happens without ASAN.
 
-struct fragment { int dummy; };
-void widgets_to_fragments(struct fragment *, struct widget *);
-void process_fragments(struct fragment *);
+I'd like also to mention that MITRE assigns CVE after they analyze the
+reported issue, so if an issue does not deserve a CVE, MITRE probably won't
+assign accompanied by an explanation.
 
-struct widgetlist
-{
-  struct widget *first;
-};
-
-static inline void
-process_widget(struct widget *widget, unsigned int  fcount)
-{
-  struct fragment fragments[fcount];
-  widgets_to_fragments(fragments, widget);
-  process_fragments(fragments);
-}
-
-void
-iterate_widgets(struct widgetlist *widgetlist)
-{
-  struct widget *widget;
-  unsigned int fcount;
-
-  for (widget = widgetlist->first; widget; widget = widget->next) {
-    fcount = widget_get_frags_required(widget);
-    if (fcount > 256)
-      continue;
-    process_widget(widget, fcount);
-  }
-}
-
-I don't see the behavior your outline.  The stack pointer is restored
-for each iteration of the loop.
-
-In my experience, GCC is pretty good at actually deallocating VLAs
-when a scope is exited.
-
-In any case, this is a GCC bug.  I can help you to turn this into a
-proper bug report if it still exists in current versions.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
