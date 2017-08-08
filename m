@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["201" "Friday" "10" "July" "2015" "19:45:08" "-0500" "=?UTF-8?B?RmVybmFuZG8gTXXDsW96?=" "fernando@null-life.com" "<CAEr-gPECMXMc6S79EEHOfSKfGCkSLrNDd1FJcC8DxWu_ipWxeQ@mail.gmail.com>" "7" "[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" nil nil nil "7" "2015071100:45:08" "[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" (number mark "        fernando@nul Jul 10    7/201   " thread-indent "\"[oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow\"\n") "<CAEr-gPHWcYrk2+JCLYGQsDbTTh5OH94tMBQejjt3sbP_f9p2Xw@mail.gmail.com>" ("<CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>" "<CAEr-gPHWcYrk2+JCLYGQsDbTTh5OH94tMBQejjt3sbP_f9p2Xw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1091" "Tuesday" "8" "August" "2017" "16:50:44" "+0200" "Daniel Beck" "ml@beckweb.net" "<4FAC7CFD-313D-44AF-8A91-50C41EB4D3C1@beckweb.net>" "28" "[oss-security] Jenkins SAML Plugin 1.0.2 and earlier stored secrets unencrypted" nil nil nil "8" "2017080814:50:44" "[oss-security] Jenkins SAML Plugin 1.0.2 and earlier stored secrets unencrypted" (number mark "U       ml@beckweb.n Aug  8   28/1091  " thread-indent "\"[oss-security] Jenkins SAML Plugin 1.0.2 and earlier stored secrets unencrypted\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1508 invoked by uid 550); 11 Jul 2015 00:45:21 -0000
+Received: (qmail 31912 invoked by uid 550); 8 Aug 2017 14:50:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1487 invoked from network); 11 Jul 2015 00:45:20 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=kXQJqKJ8a9LrBUI2fAqt81VlaMNXNYSoAVV1UYPM+B4=;
-        b=epeZnucwQL19PWUIltFTmFIOh71J1olBSPE9rFwNloy7FFRqUv/6KMld4kzAhnQPYi
-         mn+JbpV7P8TlC4lpxd3m6sixgWl5sQ/sltTGbkt7GSQwCyGujlQavivt91EceqmTJ2cl
-         tuH09ygboO5AzxbnG5M8KR4VbnmvH5QVcWLz4p3p/1Aba7uwUzn6iMJqQAoUzpqvi3yZ
-         reLEUZNjk6sBau0aw1mbQlC2V7TwScm4k3RngUc3B7K5ck1qIjIJKFCJDfb0YHz2yufz
-         ZnZiKsSt5lsK3rbwODhJcoU9aRVvN6X43pkgVVkVkhJOCgnWNSIdfA/ZqMdhX68nFPhn
-         7DhA==
-X-Gm-Message-State: ALoCoQnU1R8DE8O57UQwwRw/g6wsVCT4Ml/JBGvVcH6q+s3WAC4kumW7Au2CfsQxCbWC1jbJd1Df
-MIME-Version: 1.0
-X-Received: by 10.50.137.40 with SMTP id qf8mr1526519igb.52.1436575508628;
- Fri, 10 Jul 2015 17:45:08 -0700 (PDT)
-X-Originating-IP: [181.50.56.230]
-In-Reply-To: <CAEr-gPHWcYrk2+JCLYGQsDbTTh5OH94tMBQejjt3sbP_f9p2Xw@mail.gmail.com>
-References: <CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>
-	<CAEr-gPHWcYrk2+JCLYGQsDbTTh5OH94tMBQejjt3sbP_f9p2Xw@mail.gmail.com>
-Message-ID: <CAEr-gPECMXMc6S79EEHOfSKfGCkSLrNDd1FJcC8DxWu_ipWxeQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 10 Jul 2015 19:45:08 -0500
-From: =?UTF-8?Q?Fernando_Mu=C3=B1oz?= <fernando@null-life.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 31817 invoked from network); 8 Aug 2017 14:50:56 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <4FAC7CFD-313D-44AF-8A91-50C41EB4D3C1@beckweb.net>
+Date: Tue, 8 Aug 2017 16:50:44 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3273)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1502203856;a18aed28;
+X-HE-SMSGID: 1df5qH-00061U-2Z
+Subject: [oss-security] Jenkins SAML Plugin 1.0.2 and earlier stored secrets unencrypted
 
-I'm sorry, should I just give up about trying to get a CVE here?
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+plugin releases contain fixes for security vulnerabilities:
 
-I've just noticed this issue is also being tracked at Red Hat at the moment:
+* SAML Plugin 1.0.3
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1228297
+Users of these plugins should upgrade them to the indicated versions.
 
-- F
+Descriptions of the vulnerabilities are below. Some more details, 
+severity, and attribution can be found here:
+https://jenkins.io/security/advisory/2017-08-08/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you find security vulnerabilities in Jenkins, please report them as 
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+JENKINS-46007
+The SAML Plugin stored passwords unencrypted as part of its configuration. 
+This allowed users with Jenkins master local file system access and Jenkins 
+administrators to retrieve the stored password. The latter could result in 
+exposure of the passwords through browser extensions, cross-site scripting 
+vulnerabilities, etc.
+
