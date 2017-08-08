@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/7
-Message-Id: <B3EEE1F4-4EC1-4B95-94BB-5DC3533AF897@redhat.com>
-Date: Thu, 8 Jun 2017 14:22:41 -0600
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/08/1
+Message-Id: <4FAC7CFD-313D-44AF-8A91-50C41EB4D3C1@beckweb.net>
+Date: Tue, 8 Aug 2017 16:50:44 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: How long does DWF usually take to issue cve?
+Subject: Jenkins SAML Plugin 1.0.2 and earlier stored secrets unencrypted
 Content-Type: text/plain; charset=utf-8
 
-Right now it takes a week or two mostly because I get a lot of mangled requests, and I'm dealing with other piles of on fire. 
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+plugin releases contain fixes for security vulnerabilities:
 
+* SAML Plugin 1.0.3
 
--Kurt
+Users of these plugins should upgrade them to the indicated versions.
 
+Descriptions of the vulnerabilities are below. Some more details, 
+severity, and attribution can be found here:
+https://jenkins.io/security/advisory/2017-08-08/
 
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
+If you find security vulnerabilities in Jenkins, please report them as 
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
+---
 
-> On Jun 8, 2017, at 12:32, Qhdwns123 <qhdwns123@...tonmail.com> wrote:
-> 
-> Hi.
-> 
-> I sent a report a week ago, but I did not get an answer
-> 
-> How long does DWF usually take to issue cve?
-> 
-> Thanks.
+JENKINS-46007
+The SAML Plugin stored passwords unencrypted as part of its configuration. 
+This allowed users with Jenkins master local file system access and Jenkins 
+administrators to retrieve the stored password. The latter could result in 
+exposure of the passwords through browser extensions, cross-site scripting 
+vulnerabilities, etc.
+
