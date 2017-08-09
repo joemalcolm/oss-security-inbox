@@ -1,26 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/4
-Message-ID: <2033359.mTVEEEsRMu@tony>
-Date: Mon, 25 Sep 2017 13:36:48 +0200
-From: Marek Hulán <mhulan@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: Foreman 1.1+ stored XSS in organizations/locations assignment to hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/5
+Message-ID: <SG2PR0401MB18348536139981B099234273888B0@SG2PR0401MB1834.apcprd04.prod.outlook.com>
+Date: Wed, 9 Aug 2017 07:49:25 +0000
+From: ne xo <nexo123@...look.kr>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Cve issue discussion
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-7535: Attempting to assign all hosts to an organization or location 
-that contains HTML does not properly escape the html in the toast notification 
-informing of success. Exploiting this requires a user to actively assign hosts 
-to an organization that contains html in its name which is visible to the user 
-prior to taking action.
+Most bugs in ASan do not cause crash in non-ASan environments.
 
-Affects Foreman 1.1 and higher.
+You should check with the valgrind tool.
+________________________________
+���� ���: Glenn Randers-Pehrson <glennrp@...il.com>
+���� ��¥: 2017�� 8�� 8�� ȭ���� ���� 4:32:13
+�޴� ���: oss-security@...ts.openwall.com
+���: Re: [oss-security] Cve issue discussion
 
-Patch available at https://github.com/theforeman/foreman/pull/4851
-Fix will be released in Foreman 1.16.0 (to be released)
-For more information please see the Redmine issue http://
-projects.theforeman.org/issues/20963
+It doesn't occur on my own Ubuntu platform without ASAN.  But anyone
+running with
+a malloc that initializes the memory (trusted systems, etc) would be affected
 
---
-Marek
-
+On Mon, Aug 7, 2017 at 1:22 PM, Jesse Hertz <jesse_hertz@...le.com> wrote:
+> fwiw, double check and make sure the issue occurs in libpng without ASAN. Sometimes ASAN can cause "heisenbugs" which only happen if ASAN is used.
+>
+>> On Aug 7, 2017, at 9:57 AM, Glenn Randers-Pehrson <glennrp@...il.com> wrote:
+>>
+>> OK I'll request a CVE for this libpng issue.
+>>
+>> Glenn
+>>
+>> On Mon, Aug 7, 2017 at 9:05 AM, John Haxby <john.haxby@...cle.com> wrote:
+>>> On 07/08/17 13:47, Glenn Randers-Pehrson wrote:
+>>>> It's not causing a crash, just a delay.  You'll safely get either an OOM
+>>>> message or an EOF message.and no memory leak.
+>>>>
+>>>
+>>> That's scant comfort when your browser is the one hit by the OOM killer
+>>> and then again when you restart it.  And also while you're wondering
+>>> what's going on because your laptop is basically completely
+>>> non-responsive ...
+>>>
+>>> So yes, it's a remote DoS and definitely worth a CVE.  We have had other
+>>> similar CVEs in the past with image handling libraries not being
+>>> sufficiently paranoid.
+>>>
+>>> jch
+>>>
+>>>> Glenn
+>>>>
+>>>> On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@...e.de> wrote:
+>>>>> Hi,
+>>>>>
+>>>>> if it could crash the image reader I would consider it "remote denial of service"
+>>>>> classed and CVE worthy.
+>>>
+>
