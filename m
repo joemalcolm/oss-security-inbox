@@ -1,44 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/15/4
-Message-ID: <20170115234731.GA25474@openwall.com>
-Date: Mon, 16 Jan 2017 00:47:31 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/6
+Message-ID: <CA+PdXcvm1e3zS6uWy-hRs1Sg+RevsbY5kV0X16_sKwS6DxRnxQ@mail.gmail.com>
+Date: Wed, 9 Aug 2017 08:18:54 -0400
+From: Glenn Randers-Pehrson <glennrp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros subscription
+Subject: Re: Cve issue discussion
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jan 15, 2017 at 11:48:46AM -0700, Kurt Seifried wrote:
-> On Sat, Jan 14, 2017 at 7:37 PM, Solar Designer <solar@...nwall.com> wrote:
-> > I also notice you've been on oss-security for half a year.  That's good.
-> > However, I wasn't able to find any record of your past participation in
-> > this specific community.  You might want to get more involved first.
-> 
-> The problem is how do they do that? There are very few meaningful on ramps
-> to information security, especially at the distribution level. If anyone
-> has good answers for this please post here.
+On Wed, Aug 9, 2017 at 3:49 AM, ne xo <nexo123@...look.kr> wrote:
+> Most bugs in ASan do not cause crash in non-ASan environments.
+>
+> You should check with the valgrind tool.
 
-One way to do it could be through doing occasional security reviews of
-upstream software that is also of relevance to other distros, and
-sharing the findings (or even mere concerns and questions) in here (or
-actually via the (linux-)distros list, if the findings are bad enough
-and there's an expectation that a fix would be developed soon enough for
-a few days of embargo to make a difference).
+That's what I do.
 
-Arguably, the expertise that the above requires is not absolutely
-necessary for pure downstream distros that could nevertheless benefit
-their users through preparing security updates sooner (if accepted onto
-the distros list).  Another way to get somewhat involved is what Sona
-demonstrated through participation in and starting on-topic discussions
-(beyond the membership requests), e.g.:
-
-http://www.openwall.com/lists/oss-security/2016/12/14/16
-http://www.openwall.com/lists/oss-security/2016/12/14/1
-http://www.openwall.com/lists/oss-security/2016/10/10/3
-http://www.openwall.com/lists/oss-security/2016/08/17/1
-http://www.openwall.com/lists/oss-security/2016/08/14/5
-http://www.openwall.com/lists/oss-security/2014/10/16/10
-http://www.openwall.com/lists/oss-security/2014/10/05/3
-http://www.openwall.com/lists/oss-security/2014/10/03/2
-http://www.openwall.com/lists/oss-security/2014/10/02/26
-
-Alexander
+Valgrind exhibited the large memory request but did it quickly.
