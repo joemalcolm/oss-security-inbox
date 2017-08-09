@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1351" "Monday" "19" "October" "2020" "20:00:21" "+0800" "Xiaoxiang Yu" "xxyu@apache.org" "<360777c3.7d8b.17540bb5b7a.Coremail.xxyu@apache.org>" "27" "[oss-security] [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure" nil nil nil "10" "2020101912:00:21" "[oss-security] [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure" (number mark "U       xxyu@apache. Oct 19   27/1351  " thread-indent "\"[oss-security] [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1316" "Wednesday" "9" "August" "2017" "15:22:55" "-0400" "P. Taylor Goetz" "ptgoetz@apache.org" "<5C79EC72-2D96-4919-853D-27690491137C@apache.org>" "43" "[oss-security] [CVE-2017-9799] Apache Storm Possible Code Execution As A Different User " nil nil nil "8" "2017080919:22:55" "[oss-security] [CVE-2017-9799] Apache Storm Possible Code Execution As A Different User" (number mark "U       ptgoetz@apac Aug  9   43/1316  " thread-indent "\"[oss-security] [CVE-2017-9799] Apache Storm Possible Code Execution As A Different User \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26073 invoked by uid 550); 19 Oct 2020 13:14:48 -0000
+Received: (qmail 10046 invoked by uid 550); 9 Aug 2017 19:30:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30409 invoked from network); 19 Oct 2020 12:01:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=W48pP
-	5Qz6jK0qsiQtQhOq/kdAkUempafqzoR8SrbVrQ=; b=lQZZ+4TCKyi7rRJmNHbnH
-	rtax5o/4RiJGPMErNSs0nYPnxoxmcAgV/zZF4c5gDW38lSYCBvrDSW5pEGFEpf/u
-	0yZPBlEeG9hD5iUpGgtX/NFQndCSO/1LKurHuFrA4ErJI2KyT6TCs8o8HbpVtThq
-	m89LayvDm1G1dCimcx4myc=
-X-Originating-IP: [116.228.210.42]
-Date: Mon, 19 Oct 2020 20:00:21 +0800 (CST)
-From: "Xiaoxiang Yu" <xxyu@apache.org>
-To: info@starlabs.sg, user@kylin.apache.org, dev@kylin.apache.org, 
-	oss-security@lists.openwall.com, security@apache.org
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2020 www.mailtech.cn 126com
-Sender: hit_lacus@126.com
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_110748_1144993078.1603108821882"
-MIME-Version: 1.0
-Message-ID: <360777c3.7d8b.17540bb5b7a.Coremail.xxyu@apache.org>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: FcqowAAXJ_vWf41fOsryAA--.29716W
-X-CM-SenderInfo: pklwszpdfx2qqrswhudrp/1tbinwfC4lpEAK815wACsZ
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Subject: [oss-security] [SECURITY][CVE-2020-13937] Unauthenticated Configuration Disclosure
+Received: (qmail 5907 invoked from network); 9 Aug 2017 19:23:09 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:mime-version:subject:message-id:date:cc:to;
+        bh=2sf4FG0IKNwkXJdDf1l+UlvvPqoTWAjztw2SCFmoUgk=;
+        b=X3B5e+lieP3jXc7TfGzQnYKY08+68nhXqwVU4VaukW/IAFSLk7MjrtbkgbcDp8/8lX
+         mrfRg1ti/Aw7NugWFPW6y1IN+xS4lPvUoZ/gV4e1eoLPHTYDU6UV0Um4HD65BTZeGs9Z
+         WGan1i+asyCRP5GxbC1uiRx0A9ldhiELeQxJH598xtw3xgzrg0rZBJ1k3adpfkczJRs4
+         kMK+a95rn1iXmBQWrsRlBpTqa24MPWCvfKk+/cRgu8WwtcT6nNiM9rgbSw81Ovt3ALCt
+         Js2ue6omRzNQgzqqlpZuAmn+1ehbZm9aIql5oRRjUR8hQCwevAHBx/NkwAmYdstOBDsD
+         Lywg==
+X-Gm-Message-State: AHYfb5iOI9xS/5SBNov+4/vVSSX25vJe+UTb9CRtiEvs28IX8MDER2Of
+	1WLmBbPtQ0Dcwg==
+X-Received: by 10.55.175.67 with SMTP id y64mr4427632qke.130.1502306577591;
+        Wed, 09 Aug 2017 12:22:57 -0700 (PDT)
+From: "P. Taylor Goetz" <ptgoetz@apache.org>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_EF4C79C9-BF85-40C2-A039-C7C3FA3C84BC"
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Message-Id: <5C79EC72-2D96-4919-853D-27690491137C@apache.org>
+Date: Wed, 9 Aug 2017 15:22:55 -0400
+Cc: security@apache.org,
+ oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com
+To: user@storm.apache.org,
+ dev@storm.apache.org
+X-Mailer: Apple Mail (2.3273)
+Subject: [oss-security] [CVE-2017-9799] Apache Storm Possible Code Execution As A Different
+ User 
 
-------=_Part_110748_1144993078.1603108821882
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+--Apple-Mail=_EF4C79C9-BF85-40C2-A039-C7C3FA3C84BC
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-VmVyc2lvbnMgQWZmZWN0ZWQ6CgpLeWxpbiAyLjAuMCwgMi4xLjAsIDIuMi4w
-LCAyLjMuMCwgMi4zLjEsIDIuMy4yLCAyLjQuMCwgMi40LjEsIDIuNS4wLCAy
-LjUuMSwgMi41LjIsIDIuNi4wLCAyLjYuMSwgMi42LjIsIDIuNi4zLCAyLjYu
-NCwgMi42LjUsIDIuNi42LCAzLjAuMC1hbHBoYSwgMy4wLjAtYWxwaGEyLCAz
-LjAuMC1iZXRhLCAzLjAuMCwgMy4wLjEsIDMuMC4yLCAzLjEuMCwgNC4wLjAt
-YWxwaGEuCgoKCgpEZXNjcmlwdGlvbjoKCkt5bGluIGhhcyBvbmUgcmVzdGZ1
-bCBhcGkgd2hpY2ggZXhwb3NlZCBLeWxpbidzIGNvbmZpZ3VyYXRpb24gaW5m
-b3JtYXRpb24gd2l0aG91dCBhbnkgYXV0aGVudGljYXRpb24sIHNvIGl0IGlz
-IGRhbmdlcm91cyBiZWNhdXNlIHNvbWUgY29uZmlkZW50aWFsIGluZm9ybWF0
-aW9uIGVudHJpZXMgd2lsbCBiZSBkaXNjbG9zZWQgdG8gZXZlcnlvbmUuCgoK
-CgpNaXRpZ2F0aW9uOgoKVXNlcnMgY291bGQgZWRpdCAiJEtZTElOX0hPTUUv
-V0VCLUlORi9jbGFzc2VzL2t5bGluU2VjdXJpdHkueG1sIiwgYW5kIHJlbW92
-ZSB0aGlzIGxpbmUgIjxzY3I6aW50ZXJjZXB0LXVybCBwYXR0ZXJuPSIvYXBp
-L2FkbWluL2NvbmZpZyIgYWNjZXNzPSJwZXJtaXRBbGwiLz4iLiBBZnRlciB0
-aGF0LCAgcmVzdGFydCBhbGwgS3lsaW4gaW5zdGFuY2VzIHRvIG1ha2UgaXQg
-ZWZmZWN0aXZlLgoKT3RoZXJ3aXNlLCB5b3UgY2FuIHVwZ3JhZGUgS3lsaW4g
-dG8gMy4xLjEuCgoKCgpDcmVkaXQ6CgpUaGlzIGlzc3VlIHdhcyBkaXNjb3Zl
-cmVkIGJ5IE5nbyBXZWkgTGluIChAQ3JlYXN0ZXJ5KSBvZiBTVEFSIExhYnMg
-KEBzdGFybGFic19zZykuCgotLQoKQmVzdCB3aXNoZXMgdG8geW91ICEgCkZy
-b20go7pYaWFveGlhbmcgWXU=
+Severity: High
 
-------=_Part_110748_1144993078.1603108821882--
+Vendor: The Apache Software Foundation
 
+Versions Affected:
+Apache Storm 1.0.0, 1.0.1, 1.0.2, 1.0.3
+Apache Storm 1.1.0
+
+Description:
+It was found that under some situations and configurations of storm it is t=
+heoretically possible for the owner of a topology to trick the supervisor t=
+o launch a worker as a different, non-root, user. In the worst case this co=
+uld lead to secure credentials of the other user being compromised.  This v=
+ulnerability only applies to Apache Storm installations with security compo=
+nents enabled.
+
+Mitigation:
+Users of the affected versions should apply one of the following mitigation=
+s:
+
+- Upgrade to Apache Storm 1.0.4 or later
+- Upgrade to Apache Storm 1.1.1 or later
+
+Apache Storm 1.1.1 and 1.0.4 can be downloaded here:
+
+http://storm.apache.org/downloads.html
+
+Credit:
+This issue was identified by the Apche Storm PMC
+
+References:
+https://github.com/apache/storm/blob/v1.1.1/SECURITY.md <https://github.com=
+/apache/storm/blob/v1.1.1/SECURITY.md>
+https://github.com/apache/storm/blob/v1.0.4/SECURITY.md <https://github.com=
+/apache/storm/blob/v1.0.4/SECURITY.md>
+
+
+--Apple-Mail=_EF4C79C9-BF85-40C2-A039-C7C3FA3C84BC--
