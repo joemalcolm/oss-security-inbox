@@ -1,38 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/7
-Message-ID: <20170630195516.GB1011@hunt>
-Date: Fri, 30 Jun 2017 12:55:16 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/2
+Message-ID: <alpine.DEB.2.20.1708090803120.7715@tvnag.unkk.fr>
+Date: Wed, 9 Aug 2017 08:05:47 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: TFTP sends more than buffer size
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 30, 2017 at 03:22:09PM +0200, Solar Designer wrote:
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> 
-> No volunteers so far?  I know some of you are actually helping with
-> these, but I'd prefer that you explicitly take responsibility for them.
+TFTP sends more than buffer size
+================================
 
-I didn't volunteer for the things that I've already done on occasion.
-Since I'm on the west coast of the united states and tend to sleep in and
-work late (and spend entirely too much time in mutt already) I'm often the
-first to spot new postings to the list if made during a few hour window.
+Project curl Security Advisory, August 9th 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_20170809B.html)
 
-In those hours I'll let people know their post made it through the list.
-(This is common practice on the list since the anti-spam setup just
-drops mails that lack [vs] or [vs-plain] in the Subject: line. Frequent
-posters who aren't subscribed know to look for confirmation mails from
-list readers to see if their posts made it through and re-send if they
-don't get a reply.)
+VULNERABILITY
+-------------
 
-But this window really only works a few hours each day, a few days each
-week. If I _sign up_ for this task, the other 160 hours each week would
-get worse.
+When doing a TFTP transfer and curl/libcurl is given a URL that contains a
+very long file name (longer than about 515 bytes), the file name is truncated
+to fit within the buffer boundaries, but the buffer size is still wrongly
+updated to use the untruncated length. This too large value is then used in
+the `sendto()` call, making curl attempt to send more data than what is
+actually put into the buffer. The `sendto()` function will then read beyond
+the end of the heap based buffer.
 
-Communally shared tasks have felt fine to me so far. Yes they often fall
-to you, but not always. And if you weren't always attached to your MUA,
-perhaps it wouldn't always fall to you either. :)
+A malicious HTTP(S) server could redirect a vulnerable libcurl-using client to
+a crafted TFTP URL (if the client hasn't restricted which protocols it allows
+redirects to) and trick it to send private memory contents to a remote server
+over UDP. Limit curl's redirect protocols with `--proto-redir` and libcurl's
+with `CURLOPT_REDIR_PROTOCOLS`.
 
-Thanks
+We are not aware of any exploit of this flaw.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+INFO
+----
+
+This flaw also affects the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-1000100 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This bug has been present in curl since TFTP support was added, in September
+2005 (commit [56d9624b566](https://github.com/curl/curl/commit/56d9624b566)).
+
+- Affected versions: libcurl 7.15.0 to and including 7.54.1
+- Not affected versions: libcurl < 7.15.0 and >= 7.55.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+The function now returns error if attempting to send a file name that is too
+long to fit in the TFTP packet.
+
+A [patch for CVE-2017-1000100](https://curl.haxx.se/CVE-2017-1000100.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.55.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Disable TFTP or otherwise restrict TFTP transfers
+
+TIME LINE
+---------
+
+It was reported to the curl project on July 11, 2017. We contacted
+distros@...nwall on August 1.
+
+libcurl 7.55.0 was released on August 9 2017, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Even Rouault. Discovery: credit to OSS-Fuzz. Patch by Daniel
+Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
