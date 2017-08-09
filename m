@@ -1,72 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/06/4
-Message-ID: <1512580864.3139.2.camel@redhat.com>
-Date: Wed, 06 Dec 2017 18:21:04 +0100
-From: Adam Maris <amaris@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/7
+Message-id: <A94014E2-68EB-47B6-88B1-088FAD967837@apple.com>
+Date: Wed, 09 Aug 2017 09:07:04 -0400
+From: Jesse Hertz <jesse_hertz@...le.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Info Leak in the Linux Kernel via Bluetooth
+Subject: Re: Cve issue discussion
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2017-12-06 at 16:23 +0000, Armis Security wrote:
-> Hello,
+If a non-ASAN build under valgrind caused it to consume a lot of memory, then its a legitimate issue, report it to libpng.
+> On Aug 9, 2017, at 8:18 AM, Glenn Randers-Pehrson <glennrp@...il.com> wrote:
 > 
-> We are writing to disclose an information leak vulnerability in the
-> Bluetooth stack of the Linux Kernel (BlueZ).
-> This vulnerability has been disclosed to the Kernel's security team (
-> security@...nel.org), and a patch for it is in stages of review.
-> This patch is also attached here.
+> On Wed, Aug 9, 2017 at 3:49 AM, ne xo <nexo123@...look.kr> wrote:
+>> Most bugs in ASan do not cause crash in non-ASan environments.
+>> 
+>> You should check with the valgrind tool.
 > 
-> This vulnerability lies in the processing of incoming L2CAP commands
-> - ConfigRequest, and ConfigResponse messages.
-> This info leak is a result of uninitialized stack variables that may
-> be returned to an attacker in their uninitialized state.
-> By manipulating the code flows that precede the handling of these
-> configuration messages, an attacker can also gain some control over
-> which data will be held in the uninitialized stack variables.
-> This can allow him to bypass KASLR, and stack canaries protection -
-> as both pointers and stack canaries may be leaked in this manner.
+> That's what I do.
 > 
-> Combining this vulnerability (for example) with the previously
-> disclosed RCE vulnerability in L2CAP configuration parsing (CVE-2017-
-> 1000251) may allow an attacker to exploit the RCE against kernels
-> which were built with the above mitigations.
-> 
-> These are the specifics of this vulnerability:
-> In the function l2cap_parse_conf_rsp and in the function
-> l2cap_parse_conf_req the following variable is declared without
-> initialization:
-> 
-> struct l2cap_conf_efs efs;
-> 
-> In addition, when parsing input configuration parameters in both of
-> these functions, the switch case for handling EFS elements may skip
-> the memcpy call that will write to the efs variable:
-> 
-> ...
-> 		case L2CAP_CONF_EFS:
-> 			if (olen == sizeof(efs))
-> 				memcpy(&efs, (void *)val, olen);
-> ...
-> 
-> The olen in the above if is attacker controlled, and regardless of
-> that if, in both of these functions the efs variable would eventually
-> be added to the outgoing configuration request that is being built:
-> 
-> l2cap_add_conf_opt(&ptr, L2CAP_CONF_EFS, sizeof(efs), (unsigned long)
-> &efs);
-> 
-> So by sending a configuration request, or response, that contains an
-> L2CAP_CONF_EFS element, but with an element length that is not
-> sizeof(efs) - the memcpy to the uninitialized efs variable can be
-> avoided,
-> and the uninitialized variable would be returned to the attacker (16
-> bytes).
-> 
+> Valgrind exhibited the large memory request but did it quickly.
 
-For reference, this issue was assigned CVE-2017-1000410.
 
-Regards,
-
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
