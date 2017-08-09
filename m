@@ -1,101 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/11
-Message-ID: <521736ac-f512-1562-1a6a-af51a017d8c4@securify.nl>
-Date: Wed, 17 May 2017 18:18:55 +0200
-From: Summer of Pwnage <lists@...urify.nl>
-To: oss-security@...ts.openwall.com
-Subject: Re: Cross-Site Request Forgery in WordPress Connection Information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/3
+Message-ID: <alpine.DEB.2.20.1708090803380.7715@tvnag.unkk.fr>
+Date: Wed, 9 Aug 2017 08:05:51 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: FILE buffer read out of bounds
 Content-Type: text/plain; charset=utf-8
 
-This issue is resolved in WordPress version 4.7.5.
-https://wordpress.org/news/2017/05/wordpress-4-7-5/
+FILE buffer read out of bounds
+==============================
 
+Project curl Security Advisory, August 9th 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_20170809C.html)
 
-On 21-04-17 00:30, Summer of Pwnage wrote:
-> ------------------------------------------------------------------------
-> Cross-Site Request Forgery in WordPress Connection Information
-> ------------------------------------------------------------------------
-> Yorick Koster, July 2016
->
-> ------------------------------------------------------------------------
-> Abstract
-> ------------------------------------------------------------------------
-> The FTP/SSH form functionality of WordPress was found to be vulnerable
-> to Cross-Site Request Forgery. This vulnerability can be used to
-> overwrite the FTP or SSH connection settings of the affected WordPress
-> site. An attacker can use this issue to trick an Administrator into
-> logging into the attacker's FTP or SSH server, disclosing his/her login
-> credentials to the attacker. In order to exploit this vulnerability, the
-> attacker has to lure/force a logged on WordPress Administrator into
-> opening a malicious website.
->
->
-> ------------------------------------------------------------------------
-> OVE ID
-> ------------------------------------------------------------------------
-> OVE-20160717-0004
->
-> ------------------------------------------------------------------------
-> Tested versions
-> ------------------------------------------------------------------------
-> This issue was successfully tested on the WordPress [2] version 4.5.3 up
-> till and including version 4.7.4.
->
-> ------------------------------------------------------------------------
-> Fix
-> ------------------------------------------------------------------------
-> There is currently no fix available.
->
-> ------------------------------------------------------------------------
-> Introduction
-> ------------------------------------------------------------------------
-> WordPress is web software you can use to create a website, blog, or
-> app. It was found that the FTP/SSH form functionality is vulnerable to
-> Cross-Site Request Forgery. This vulnerability can be used by an
-> attacker to overwrite the FTP or SSH connection settings of the affected
-> WordPress site. It can be used to trick in an Administrator into login
-> into the attacker's FTP or SSH server, disclosing his/her login
-> credentials to the attacker.
->
-> ------------------------------------------------------------------------
-> Details
-> ------------------------------------------------------------------------
-> This issue exists in the method request_filesystem_credentials()
-> (/wp-admin/includes/file.php). It allows overwriting of the values:
->
-> - hostname
-> - username
-> - connection_type
->
-> The request_filesystem_credentials() method is called in various
-> locations in WordPress. The connection information is updated if a POST
-> request contains a password or public & private key value (in case of
-> connection type ssh). In order to trigger this issue, the WordPress
-> installation must not be able to write to the wp-content folder. Also,
-> the attacker has to lure/force a logged on WordPress Administrator into
-> opening a malicious website.
->
-> ------------------------------------------------------------------------
-> Proof of concept
-> ------------------------------------------------------------------------
-> <html>
->     <body>
->         <form action="http://<target>/wp-admin/plugins.php" 
-> method="POST">
->             <input type="hidden" name="hostname" value="sumofpwn.nl" />
->             <input type="hidden" name="connection_type" value="ftp" />
->             <input type="hidden" name="password" value="password" />
->             <input type="submit" value="Submit request" />
->         </form>
->     </body>
-> </html>
-> ------------------------------------------------------------------------
-> References
-> ------------------------------------------------------------------------
-> [1] 
-> https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_connection_information.html
-> [2] https://wordpress.org/
-> ------------------------------------------------------------------------
-> Summer of Pwnage (https://sumofpwn.nl) is a Dutch community project. Its
-> goal is to contribute to the security of popular, widely used OSS
-> projects in a fun and educational way.
+VULNERABILITY
+-------------
+
+When asking to get a file from a file:// URL, libcurl provides a feature that
+outputs meta-data about the file using HTTP-like headers.
+
+The code doing this would send the wrong buffer to the user (stdout or the
+application's provide callback), which could lead to other private data from
+the heap to get inadvertently displayed.
+
+The wrong buffer was an uninitialized memory area allocated on the heap and if
+it turned out to not contain any zero byte, it would continue and display the
+data following that buffer in memory.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw also affects the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-1000099 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This bug has been was pushed to curl in commit
+[7c312f84ea930d8](https://github.com/curl/curl/commit/7c312f84ea930d8), April
+2017.
+
+- Affected versions: libcurl 7.54.1
+- Not affected versions: libcurl < 7.54.1 and >= 7.55.0
+
+libcurl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+The function now sends the correct buffer to the application.
+
+A [patch for CVE-2017-1000099](https://curl.haxx.se/CVE-2017-1000099.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.55.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use `CURLOPT_NOBODY` *and* `CURLOPT_HEADER` with file:// URLs
+
+TIME LINE
+---------
+
+It was reported to the curl project on July 15, 2017. We contacted
+distros@...nwall on August 1.
+
+libcurl 7.55.0 was released on August 9 2017, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Even Rouault. Discovery: credit to OSS-Fuzz. Patch by Even Rouault.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
