@@ -1,41 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/08/9
-Message-ID: <dbd58642-9905-4cb8-9540-0c4817265215@isc.org>
-Date: Wed, 8 Feb 2017 17:13:08 -0600
-From: ISC Security Officer <security-officer@....org>
-To: oss-security@...ts.openwall.com
-Cc: ISC Security Officer <security-officer@....org>
-Subject: BIND9 CVE-2017-3135: Combination of DNS64 and RPZ Can Lead to Crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/1
+Message-ID: <alpine.DEB.2.20.1708090802180.7715@tvnag.unkk.fr>
+Date: Wed, 9 Aug 2017 08:05:41 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: URL globbing out of bounds read
 Content-Type: text/plain; charset=utf-8
 
-Today ISC announced CVE-2017-3135, a denial-of-service vulnerability
-that can affect resolvers using both DNS64 and RPZ to rewrite responses
-for the same view.
+URL globbing out of bounds read
+===============================
 
-This affects all BIND 9.9 releases since 9.9.3, all BIND 9.10 releases,
-and all BIND 9.11 releases, including the 9.9.10b1, 9.10.5b1, and
-9.11.1b1 releases.
+Project curl Security Advisory, August 9th 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_20170809A.html)
 
-Our full CVE text can be found at https://kb.isc.org/article/AA-01453
+VULNERABILITY
+-------------
 
-New releases of BIND, including security fixes for this vulnerability,
-are available at: www.isc.org/downloads/
+curl supports "globbing" of URLs, in which a user can pass a numerical range
+to have the tool iterate over those numbers to do a sequence of transfers.
 
-Release notes can be obtained using the following links:
+In the globbing function that parses the numerical range, there was an
+omission that made curl read a byte beyond the end of the URL if given a
+carefully crafted, or just wrongly written, URL. The URL is stored in a heap
+based buffer, so it could then be made to wrongly read something else instead
+of crashing.
 
-ftp://ftp.isc.org/isc/bind9/9.9.9-P6/
-ftp://ftp.isc.org/isc/bind9/9.10.4-P6/
-ftp://ftp.isc.org/isc/bind9/9.11.0-P3/
-ftp://ftp.isc.org/isc/bind9/9.9.10rc1/
-ftp://ftp.isc.org/isc/bind9/9.10.5rc1/
-ftp://ftp.isc.org/isc/bind9/9.11.1rc1/
+An example of a URL that triggers the flaw would be
+`http://ur%20[0-60000000000000000000`.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw only affects the curl command line tool, not the libcurl
+library. The bug was introduced in commit
+[5ca96cb84410270](https://github.com/curl/curl/commit/5ca96cb84410270), August
+2013. curl 7.34.0.
+
+For version 7.55.0, the parser properly stops at the end of the string and a
+test has been added to verify this.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-1000101 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.34.0 to and including 7.54.1
+- Not affected versions: curl < 7.34.0 and >= 7.55.1
+
+curl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+A [patch for CVE-2017-1000101](https://curl.haxx.se/CVE-2017-1000101.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.55.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was reported to the curl project on June 14, 2017.  We contacted
+distros@...nwall on August 1.
+
+curl 7.55.0 was released on August 9 2017, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+Reported by Brian Carpenter and Yongji Ouyang (independently of each
+other). Patch by Daniel Stenberg.
+
+Thanks a lot!
 
 -- 
-Brian Conry
-ISC Support
-Acting Security Officer
 
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+  / daniel.haxx.se
