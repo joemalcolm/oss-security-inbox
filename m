@@ -1,321 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/15/1
-Message-ID: <20171215013211.GA4296@darpa.mil>
-Date: Fri, 15 Dec 2017 01:32:11 +0000
-From: Hans Jerry Illikainen <hji@...topia.com>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, fulldisclosure@...lists.org
-Subject: CVE-2017-17670: vlc: type conversion vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/3
+Message-ID: <2fefe468-7d41-11e7-aea1-9312c6089150@apache.org>
+Date: Thu, 10 Aug 2017 18:04:26 +0000
+From: Daniel Shahaf <danielsh@...che.org>
+To: announce@...version.apache.org, users@...version.apache.org, dev@...version.apache.org, announce@...che.org
+Cc: security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [SECURITY][ANNOUNCE] Apache Subversion 1.9.7 released
 Content-Type: text/plain; charset=utf-8
 
-About
-=====
+I'm happy to announce the release of Apache Subversion 1.9.7.
+Please choose the mirror closest to you by visiting:
 
-A type conversion vulnerability exist in the MP4 demux module in VLC
-<=2.2.8.  This issue has been assigned CVE-2017-17670 and it could be
-used to cause an arbitrary free.
+    http://subversion.apache.org/download.cgi?update=201708081800#recommended-release
 
+This is a stable security release of the Apache Subversion open source
+version control system.  It fixes one security issue:
 
-Details
-=======
+    CVE-2017-9800:
+    Arbitrary code execution on clients through malicious svn+ssh URLs in
+    svn:externals and svn:sync-from-url
+    http://subversion.apache.org/security/CVE-2017-9800-advisory.txt
 
-MP4 is a container format for video, audio, subtitles and images.  The
-various parts of an .mp4 are organized as hierarchical boxes/atoms in
-big-endian byte ordering [1].
+The SHA1 checksums are:
 
-VLC processes these boxes by using a lookup table:
+    874b81749cdc3e88152d103243c3623ac6338388 subversion-1.9.7.tar.bz2
+    1a5f48acf9d0faa60e8c7aea96a9b29ab1d4dcac subversion-1.9.7.tar.gz
+    741727b62596bf27f75838c46d1bb6938c83fbd7 subversion-1.9.7.zip
 
-vlc-2.2.8/modules/demux/mp4/libmp4.c
-,----
-| 3297 static const struct
-| 3298 {
-| 3299     uint32_t i_type;
-| 3300     int  (*MP4_ReadBox_function )( stream_t *p_stream, MP4_Box_t *p_box );
-| 3301     void (*MP4_FreeBox_function )( MP4_Box_t *p_box );
-| 3302     uint32_t i_parent; /* set parent to restrict, duplicating if needed; 0 for any */
-| 3303 } MP4_Box_Function [] =
-| 3304 {
-| 3305     /* Containers */
-| 3306     { ATOM_moov,    MP4_ReadBoxContainer,     MP4_FreeBox_Common, 0 },
-| 3307     { ATOM_trak,    MP4_ReadBoxContainer,     MP4_FreeBox_Common, ATOM_moov },
-| ....
-| 3565     /* Last entry */
-| 3566     { 0,              MP4_ReadBox_default,      NULL, 0 }
-| 3567 };
-`----
+SHA-512 checksums are available at:
 
-vlc-2.2.8/modules/demux/mp4/libmp4.c
-,----
-| 3574 static MP4_Box_t *MP4_ReadBox( stream_t *p_stream, MP4_Box_t *p_father )
-| 3575 {
-| 3576     MP4_Box_t *p_box = calloc( 1, sizeof( MP4_Box_t ) ); /* Needed to ensure simple on error handler */
-| 3577     unsigned int i_index;
-| ....
-| 3582     if( !MP4_ReadBoxCommon( p_stream, p_box ) )
-| 3583     {
-| ....
-| 3587     }
-| ....
-| 3605     /* Now search function to call */
-| 3606     for( i_index = 0; ; i_index++ )
-| 3607     {
-| ....
-| 3613         if( ( MP4_Box_Function[i_index].i_type == p_box->i_type )||
-| 3614             ( MP4_Box_Function[i_index].i_type == 0 ) )
-| 3615         {
-| 3616             break;
-| 3617         }
-| 3618     }
-| 3619
-| 3620     if( !(MP4_Box_Function[i_index].MP4_ReadBox_function)( p_stream, p_box ) )
-| 3621     {
-| 3622         MP4_BoxFree( p_stream, p_box );
-| 3623         return NULL;
-| 3624     }
-| 3625
-| 3626     return p_box;
-| 3627 }
-`----
+    https://www.apache.org/dist/subversion/subversion-1.9.7.tar.bz2.sha512
+    https://www.apache.org/dist/subversion/subversion-1.9.7.tar.gz.sha512
+    https://www.apache.org/dist/subversion/subversion-1.9.7.zip.sha512
 
+PGP Signatures are available at:
 
-MP4_ReadBox() allocates a MP4_Box_t structure and invokes
-MP4_ReadBoxCommon() to read the properties common to all mp4 boxes;
-`i_size' and `i_type' (and optionally an extended size).  Afterwards,
-MP4_Box_Function is used to dispatch further parsing to a suitable
-function based on its `i_type'.
+    http://www.apache.org/dist/subversion/subversion-1.9.7.tar.bz2.asc
+    http://www.apache.org/dist/subversion/subversion-1.9.7.tar.gz.asc
+    http://www.apache.org/dist/subversion/subversion-1.9.7.zip.asc
 
-When VLC is done with the boxes, they are freed with MP4_BoxFree():
+For this release, the following people have provided PGP signatures:
 
-vlc-2.2.8/modules/demux/mp4/libmp4.c
-,----
-| 3633 void MP4_BoxFree( stream_t *s, MP4_Box_t *p_box )
-| 3634 {
-| 3635     unsigned int i_index;
-| ....
-| 3650     /* Now search function to call */
-| 3651     if( p_box->data.p_payload )
-| 3652     {
-| 3653         for( i_index = 0; ; i_index++ )
-| 3654         {
-| ....
-| 3660             if( ( MP4_Box_Function[i_index].i_type == p_box->i_type )||
-| 3661                 ( MP4_Box_Function[i_index].i_type == 0 ) )
-| 3662             {
-| 3663                 break;
-| 3664             }
-| 3665         }
-| 3666         if( MP4_Box_Function[i_index].MP4_FreeBox_function == NULL )
-| 3667         {
-| ....
-| 3677         }
-| 3678         else
-| 3679         {
-| 3680             MP4_Box_Function[i_index].MP4_FreeBox_function( p_box );
-| 3681         }
-| ....
-| 3685 }
-`----
+   Johan Corveleyn [4096R/B59CE6D6010C8AAD] with fingerprint:
+    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
+   Stefan Sperling [2048R/4F7DBAA99A59B973] with fingerprint:
+    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
+   Evgeny Kotkov [4096R/B64FFF1209F9FA74] with fingerprint:
+    E7B2 A7F4 EC28 BE9F F8B3  8BA4 B64F FF12 09F9 FA74
+   Stefan Hett (CODE SIGNING KEY) [4096R/376A3CFD110B1C95] with fingerprint:
+    7B8C A7F6 451A D89C 8ADC  077B 376A 3CFD 110B 1C95
+   Daniel Shahaf [3072R/A5FEEE3AC7937444] with fingerprint:
+    E966 46BE 08C0 AF0A A0F9  0788 A5FE EE3A C793 7444
+   Philip Martin [2048R/76D788E1ED1A599C] with fingerprint:
+    A844 790F B574 3606 EE95  9207 76D7 88E1 ED1A 599C
 
-Again, `i_type' is used to find a suitable free-function.
+Release notes for the 1.9.x release series may be found at:
 
-The reason this may be problematic is that `i_type' could be changed
-when VLC handles `sinf' and `frma' boxes in TrackCreateES() -- meaning
-that a box may be read as one type, and freed as another.
+    http://subversion.apache.org/docs/release-notes/1.9.html
 
-`sinf' is the "Protection Scheme Information Box" and it's used for
-protected/encrypted media.  `frma' is the "Original Format Box" and it's
-used to declare the format of the unprotected media.
+You can find the list of changes between 1.9.7 and earlier versions at:
 
-If a sinf/frma is found underneath a sample box, the `i_type' of that
-sample is replaced with the original format declared in the `frma':
+    http://svn.apache.org/repos/asf/subversion/tags/1.9.7/CHANGES
 
-vlc-2.2.8/modules/demux/mp4/mp4.c
-,----
-| 2180 static int TrackCreateES( demux_t *p_demux, mp4_track_t *p_track,
-| 2181                           unsigned int i_chunk, es_out_id_t **pp_es )
-| 2182 {
-| ....
-| 2208     p_sample = MP4_BoxGet(  p_track->p_stsd, "[%d]",
-| 2209                             i_sample_description_index - 1 );
-| ....
-| 2219     p_track->p_sample = p_sample;
-| 2220
-| 2221     if( ( p_frma = MP4_BoxGet( p_track->p_sample, "sinf/frma" ) ) && p_frma->data.p_frma )
-| 2222     {
-| 2223         msg_Warn( p_demux, "Original Format Box: %4.4s", (char *)&p_frma->data.p_frma->i_type );
-| 2224
-| 2225         p_sample->i_type = p_frma->data.p_frma->i_type;
-| 2226     }
-| ....
-`----
+Questions, comments, and bug reports to users@...version.apache.org.
 
-No sanity check is done to make sure that the MP4_FreeBox_function
-associated with the new `i_type' is compatible with the old
-MP4_ReadBox_function.
-
-
-Example
-=======
-
-One way to abuse the type change is to have a `soun' changed to a
-`vide'.  This results in a 72-byte allocation (x86-64) for the
-`p_sample_soun' member of the p_box->data union when the box is read:
-
-vlc-2.2.8/modules/demux/mp4/libmp4.c
-,----
-| 1614 static int MP4_ReadBox_sample_soun( stream_t *p_stream, MP4_Box_t *p_box )
-| 1615 {
-| 1616     p_box->i_handler = ATOM_soun;
-| 1617     MP4_READBOX_ENTER( MP4_Box_data_sample_soun_t );
-| ....
-`----
-
-vlc-2.2.8/modules/demux/mp4/libmp4.h
-,----
-| 1351 #define MP4_READBOX_ENTER( MP4_Box_data_TYPE_t ) \
-| ....
-| 1369     if( !( p_box->data.p_payload = calloc( 1, sizeof( MP4_Box_data_TYPE_t ) ) ) ) \
-| 1370     { \
-| ....
-| 1373     }
-`----
-
-where `p_box' is MP4_Box_t:
-
-vlc-2.2.8/modules/demux/mp4/libmp4.h
-,----
-| 1284 typedef struct MP4_Box_s
-| 1285 {
-| ....
-| 1296     MP4_Box_data_t   data;   /* union of pointers on extended data depending
-| 1297                                 on i_type (or i_usertype) */
-| ....
-| 1306 } MP4_Box_t;
-`----
-
-and MP4_Box_data_t:
-
-vlc-2.2.8/modules/demux/mp4/libmp4.h
-,----
-| 1200 typedef union MP4_Box_data_s
-| 1201 {
-| ....
-| 1220     MP4_Box_data_sample_vide_t *p_sample_vide;
-| 1221     MP4_Box_data_sample_soun_t *p_sample_soun;
-| ....
-| 1278     void                *p_payload; /* for unknow type */
-| 1279 } MP4_Box_data_t;
-`----
-
-,----
-| (gdb) p sizeof(MP4_Box_data_sample_soun_t)
-| $1 = 72
-`----
-
-After the box has had its type changed to `vide' and it's later freed,
-the `p_sample_vide' member of the p_box->data union is used:
-
-vlc-2.2.8/modules/demux/mp4/libmp4.c
-,----
-| 1861 void MP4_FreeBox_sample_vide( MP4_Box_t *p_box )
-| 1862 {
-| 1863     FREENULL( p_box->data.p_sample_vide->p_qt_image_description );
-| 1864 }
-`----
-
-,----
-| (gdb) p sizeof(MP4_Box_data_sample_vide_t)
-| $2 = 96
-| (gdb)
-`----
-
-vlc-2.2.8/modules/demux/mp4/libmp4.h
-,----
-| 529 typedef struct MP4_Box_data_sample_vide_s
-| 530 {
-| ...
-| 557     uint8_t *p_qt_image_description;
-| 558
-| 559 } MP4_Box_data_sample_vide_t;
-`----
-
-`p_sample_vide' is 24 bytes larger than `p_sample_soun', and
-`p_qt_image_description' is at the end of the vide struct; i.e. the
-pointer to be free()d is read out-of-bounds from potentially
-user-controlled memory.
-
-`mkmp4.py' at [2]
-
-,----
-| $ uname -imrs
-| FreeBSD 11.1-RELEASE-p4 amd64 GENERIC
-| $ ./mkmp4.py file.mp4
-| $ vlc --version
-| VLC media player 2.2.8 Weatherwax (revision 2.2.7-14-g3cc1d8cba9)
-| $ gdb -q --args vlc file.mp4
-| (gdb) set breakpoint pending on
-| (gdb) b libmp4.c:1618
-| No source file named libmp4.c.
-| Breakpoint 1 (libmp4.c:1618) pending.
-| (gdb) b libmp4.c:1863
-| No source file named libmp4.c.
-| Breakpoint 2 (libmp4.c:1863) pending.
-| (gdb) r
-| [...]
-| Breakpoint 3, MP4_ReadBox_sample_soun (p_stream=0x802ab2710, p_box=0x802a85000) at demux/mp4/libmp4.c:1618
-| 1618        p_box->data.p_sample_soun->p_qt_description = NULL;
-| (gdb) p p_box->data.p_sample_soun
-| $1 = (MP4_Box_data_sample_soun_t *) 0x802a79810
-| (gdb) c
-| Continuing.
-|
-| Breakpoint 4, MP4_FreeBox_sample_vide (p_box=0x802a85000) at demux/mp4/libmp4.c:1863
-| 1863        FREENULL( p_box->data.p_sample_vide->p_qt_image_description );
-| (gdb) p p_box->data.p_sample_vide
-| $2 = (MP4_Box_data_sample_vide_t *) 0x802a79810
-| (gdb) p p_box->data.p_sample_vide->p_qt_image_description
-| $3 = (uint8_t *) 0x1122334455667788 <Error reading address 0x1122334455667788: Bad address>
-| (gdb) b free
-| Breakpoint 5 at 0x8019d3ce4
-| (gdb) c
-| Continuing.
-|
-| Breakpoint 5, 0x00000008019d3ce4 in free () from /lib/libc.so.7
-| (gdb) p/x $rdi
-| $4 = 0x1122334455667788
-| (gdb) c
-| Continuing.
-|
-| Program received signal SIGBUS, Bus error.
-| 0x00000008019d36f3 in realloc () from /lib/libc.so.7
-| (gdb) x/i $rip
-| 0x8019d36f3 <realloc+3939>:     mov    rbx,QWORD PTR [rax+rcx*8+0x68]
-| (gdb) i r
-| rax            0x1122334455600000       1234605616436084736
-| rbx            0x1122334455667788       1234605616436508552
-| rcx            0x5a     90
-| [...]
-| (gdb) bt 4
-| #0  0x00000008019d36f3 in realloc () from /lib/libc.so.7
-| #1  0x00000008019d3d51 in free () from /lib/libc.so.7
-| #2  0x0000000806d7fafd in MP4_FreeBox_sample_vide (p_box=0x802a85000) at demux/mp4/libmp4.c:1863
-| #3  0x0000000806d7fcfd in MP4_BoxFree (s=0x802ab2710, p_box=0x802a85000) at demux/mp4/libmp4.c:3680
-`----
-
-
-Solution
-========
-
-This issue does not affect the HEAD of the VLC master branch.
-
-
-
-Footnotes
-_________
-
-[1] [http://xhelmboyx.tripod.com/formats/mp4-layout.txt]
-
-[2] [https://gist.github.com/dyntopia/194d912287656f66dd502158b0cd2e68]
-
-
--- 
-hji
+Thanks,
+- The Subversion Team
