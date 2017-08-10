@@ -1,90 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/3
-Message-ID: <alpine.DEB.2.20.1708090803380.7715@tvnag.unkk.fr>
-Date: Wed, 9 Aug 2017 08:05:51 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: FILE buffer read out of bounds
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/2
+Message-ID: <CAM-ZzmuyxA6RjBSOb9ZSonP5A84ybXjKvemWMV4tv9MYBscvUg@mail.gmail.com>
+Date: Thu, 10 Aug 2017 09:24:16 -0600
+From: Annie Cherkaev <annie.cherk@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-12762: buffer overflow in ISDN linux driver
 Content-Type: text/plain; charset=utf-8
 
-FILE buffer read out of bounds
-==============================
+Description:
+In /drivers/isdn/i4l/isdn_net.c: A user-controlled buffer is copied into a
+local buffer of constant size using strcpy without a length check which can
+cause a buffer overflow. Patched in the Linux kernel 4.9-stable tree,
+4.12-stable tree, 3.18-stable tree, and 4.4-stable tree.
 
-Project curl Security Advisory, August 9th 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_20170809C.html)
+Reference:
+https://patchwork.kernel.org/patch/9880041/
 
-VULNERABILITY
--------------
-
-When asking to get a file from a file:// URL, libcurl provides a feature that
-outputs meta-data about the file using HTTP-like headers.
-
-The code doing this would send the wrong buffer to the user (stdout or the
-application's provide callback), which could lead to other private data from
-the heap to get inadvertently displayed.
-
-The wrong buffer was an uninitialized memory area allocated on the heap and if
-it turned out to not contain any zero byte, it would continue and display the
-data following that buffer in memory.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw also affects the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-1000099 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This bug has been was pushed to curl in commit
-[7c312f84ea930d8](https://github.com/curl/curl/commit/7c312f84ea930d8), April
-2017.
-
-- Affected versions: libcurl 7.54.1
-- Not affected versions: libcurl < 7.54.1 and >= 7.55.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-The function now sends the correct buffer to the application.
-
-A [patch for CVE-2017-1000099](https://curl.haxx.se/CVE-2017-1000099.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.55.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use `CURLOPT_NOBODY` *and* `CURLOPT_HEADER` with file:// URLs
-
-TIME LINE
----------
-
-It was reported to the curl project on July 15, 2017. We contacted
-distros@...nwall on August 1.
-
-libcurl 7.55.0 was released on August 9 2017, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Even Rouault. Discovery: credit to OSS-Fuzz. Patch by Even Rouault.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
