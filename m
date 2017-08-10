@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/19/4
-Message-ID: <alpine.LFD.2.20.1704191512410.20535@wniryva>
-Date: Wed, 19 Apr 2017 15:15:24 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Jiangxin <jiangxin1@...wei.com>
-Subject: CVE-2017-7718 Qemu: display: cirrus: OOB read access issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/1
+Message-ID: <1502369616.23921.10.camel@cryptobitch.de>
+Date: Thu, 10 Aug 2017 14:53:36 +0200
+From: Tobias Mueller <tobiasmue@...me.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-2885 libsoup - stack based buffer overflow with HTTP Chunked Encoding
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi.
 
-Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
-vulnerable to an out-of-bounds access issue. It could occur while copying VGA 
-data via bitblt functions cirrus_bitblt_rop_fwd_transp_ and/or 
-cirrus_bitblt_rop_fwd_.
+PSA: Please update libsoup with the patch from
+https://bugzilla.gnome.org/show_bug.cgi?id=785774
+or take one of the new releases 2.59.90.1,  2.58.2 (gnome-3-24), or
+2.56.1 (gnome-3-22).
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+The patch fixes a severe bug which affects libsoup acting as either
+client or server when dealing with chunked encoding.
 
-Upstream patch
---------------
-   -> http://git.qemu-project.org/?p=qemu.git;a=commitdiff;h=215902d7b6fb50c6fc216fc74f770858278ed904
+All versions since 2012 are affected.
+Credits go to Aleksandar Nikolic of Cisco Talos for finding this issue.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1443441
-
-This issue was reported by Jiangxin of PSIRT Huawei Inc.
-
-'CVE-2017-7718' assigned via -> http://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Cheers,
+  Tobi
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
