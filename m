@@ -1,20 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/1
-Message-ID: <20170215082822.GA1054@tunkki>
-Date: Wed, 15 Feb 2017 10:28:22 +0200
-From: Henri Salo <henri@...v.fi>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/5
+Message-ID: <CA+fCnZfFS=iSJV9ke-XtX-S8abRZHjQRL31_Hvr6W_gHhRpMqw@mail.gmail.com>
+Date: Thu, 10 Aug 2017 22:55:29 +0200
+From: Andrey Konovalov <andreyknvl@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: willemdebruijn.kernel@...il.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
+Subject: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due to UFO to non-UFO path switch
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 13, 2017 at 04:40:29PM +0000, Priedhorsky, Reid wrote:
-> However, our understanding of CVE consumers is that they look to MITRE as a
-> source of vulnerability information after a CVE ID number exists, not before.
+Hi!
 
-Lots of users are also fetching the CVE database and try to match it with their
-installed software to get notified of new vulnerabilities affecting their infra
-and used products.
+syzkaller found an exploitable memory corruption in UFO code in the
+Linux kernel, the details are below.
 
--- 
-Henri Salo
+### Bug details
+
+When building a UFO packet with MSG_MORE __ip_append_data() calls
+ip_ufo_append_data() to append. However in between two send() calls,
+the append path can be switched from UFO to non-UFO one, which leads
+to a memory corruption.
+
+In case UFO packet lengths exceeds MTU, copy = maxfraglen - skb->len
+becomes negative on the non-UFO path and the branch to allocate new
+skb is taken. This triggers fragmentation and computation of fraggap =
+skb_prev->len - maxfraglen. Fraggap can exceed MTU, causing copy =
+datalen - transhdrlen - fraggap to become negative. Subsequently
+skb_copy_and_csum_bits() writes out-of-bounds.
+
+A similar issue is present in IPv6 code.
+
+The bug was introduced in e89e9cf539a2 ("[IPv4/IPv6]: UFO
+Scatter-gather approach") on Oct 18 2005.
+
+The fix has been submitted to netdev [1] and should be committed to
+mainline and to stable kernels soon. David has also sent an RFC series
+to remove UFO completely [2], which should be merged in 4.14.
+
+If unprivileged user namespaces are available, this bug can be
+exploited to gain root privileges. I'll share the details and the
+exploit in a few days.
+
+Thanks!
+
+### Timeline
+
+2017.08.03 - Bug reported to security@...nel.org
+2017.08.04 - Bug reported to linux-distros@
+2017.08.10 - Patch submitted to netdev
+2017.08.10 - Announcement on oss-security@
+
+### Links
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=85f1bd9a7b5a79d5baa8bf44af19658f7bf77bfa
+
+[2] https://www.spinics.net/lists/netdev/msg443815.html
