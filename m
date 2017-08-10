@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/08/1
-Message-ID: <2f565778-3ee1-e311-e378-2d7d91e2c19a@linux.com>
-Date: Thu, 9 Mar 2017 00:51:03 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: CVE-2017-2636: local privilege escalation flaw in n_hdlc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/4
+Message-ID: <CAMopvkMDajj=C-aJKXi2F9q4fB8T1Rk84p391PQvYsox0EDGwg@mail.gmail.com>
+Date: Thu, 10 Aug 2017 21:35:32 +0200
+From: Lukasz Lenart <lukaszlenart@...che.org>
+To: Struts Users Mailing List <user@...uts.apache.org>
+Cc: "announcements@...uts.apache.org" <announcements@...uts.apache.org>,  Struts Developers List <dev@...uts.apache.org>, announce@...che.org,  "security@...uts.apache.org" <security@...uts.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com, Yasser Zamani <yasser.zamani@...e.com>
+Subject: [ANN] Apache Struts: S2-049 Security Bulletin update
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+This is an update of the recently announced Security Bulletin S2-049 -
+http://struts.apache.org/docs/s2-049.html
 
-There is some additional information about CVE-2017-2636:
+The bulletin was extended with an additional information when the
+potential vulnerability can be present in your application. Please
+re-read the mentioned bulletin and apply required actions if needed.
 
-On 07.03.2017 20:45, Alexander Popov wrote:
-> This is an announcement of CVE-2017-2636, which is a race condition in
-> the n_hdlc Linux kernel driver (drivers/tty/n_hdlc.c). It can be exploited
-> to gain a local privilege escalation.
-> 
-> This driver provides HDLC serial line discipline and comes as a kernel module
-> in many Linux distributions, which have CONFIG_N_HDLC=m in the kernel config.
+Please report any problems back to the Struts Security mailing list -
+security@...uts.apache.org
 
-Exploiting the flaw in the vulnerable module n_hdlc does not require
-Microgate or SyncLink hardware. The module is automatically loaded if an
-unprivileged user opens a pseudoterminal and calls TIOCSETD ioctl for it
-setting N_HDLC line discipline.
 
-The fix is currently on the way to the mainline kernel:
-https://git.kernel.org/cgit/linux/kernel/git/gregkh/tty.git/commit/?h=tty-linus&id=82f2341c94d270421f383641b7cd670e474db56b
-
-Some Linux distributions have already provided the security update.
-
-However, you can mitigate the flaw manually by blocking n_hdlc autoloading
-by a system-wide modprobe rule in /etc/modprobe.d/ (refer to your Linux
-distribution documentation). In that case please check that n_hdlc is not
-already loaded.
-
-Best regards,
-Alexander
-
+Kind regards
+-- 
+Łukasz
++ 48 606 323 122 http://www.lenart.org.pl/
