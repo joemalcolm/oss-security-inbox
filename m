@@ -1,4 +1,9 @@
-Received: (qmail 1747 invoked by uid 550); 30 Sep 2025 15:53:21 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["490" "Thursday" "10" "August" "2017" "21:35:32" "+0200" "Lukasz Lenart" "lukaszlenart@apache.org" "<CAMopvkMDajj=C-aJKXi2F9q4fB8T1Rk84p391PQvYsox0EDGwg@mail.gmail.com>" "15" "[oss-security] [ANN] Apache Struts: S2-049 Security Bulletin update" nil nil nil "8" "2017081019:35:32" "[oss-security] [ANN] Apache Struts: S2-049 Security Bulletin update" (number mark "U       lukaszlenart Aug 10   15/490   " thread-indent "\"[oss-security] [ANN] Apache Struts: S2-049 Security Bulletin update\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28020 invoked by uid 550); 10 Aug 2017 20:20:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +12,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 12219 invoked from network); 30 Sep 2025 15:42:33 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Li Yang <liyang@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <53f97a21-a5c8-2c95-1fe9-0e788f7ab3da@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 30 Sep 2025 15:42:17 +0000
+Received: (qmail 17444 invoked from network); 10 Aug 2017 19:36:10 -0000
+X-Gm-Message-State: AHYfb5hksvBotOesvr83XEvao2jDp7/4agV4/TwgDcMsOWF/dEj5dz1r
+	zpy/7cUCFXjjqL+MdDHto+C/Qi6oDA==
+X-Received: by 10.25.18.87 with SMTP id h84mr4494836lfi.217.1502393753062;
+ Thu, 10 Aug 2017 12:35:53 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-61734: Apache Kylin: improper restriction of file read 
+From: Lukasz Lenart <lukaszlenart@apache.org>
+Date: Thu, 10 Aug 2017 21:35:32 +0200
+X-Gmail-Original-Message-ID: <CAMopvkMDajj=C-aJKXi2F9q4fB8T1Rk84p391PQvYsox0EDGwg@mail.gmail.com>
+Message-ID: <CAMopvkMDajj=C-aJKXi2F9q4fB8T1Rk84p391PQvYsox0EDGwg@mail.gmail.com>
+To: Struts Users Mailing List <user@struts.apache.org>
+Cc: "announcements@struts.apache.org" <announcements@struts.apache.org>, 
+	Struts Developers List <dev@struts.apache.org>, announce@apache.org, 
+	"security@struts.apache.org" <security@struts.apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com, Yasser Zamani <yasser.zamani@live.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [ANN] Apache Struts: S2-049 Security Bulletin update
 
-Severity: low=20
+This is an update of the recently announced Security Bulletin S2-049 -
+http://struts.apache.org/docs/s2-049.html
 
-Affected versions:
+The bulletin was extended with an additional information when the
+potential vulnerability can be present in your application. Please
+re-read the mentioned bulletin and apply required actions if needed.
 
-- Apache Kylin 4.0.0 through 5.0.2
+Please report any problems back to the Struts Security mailing list -
+security@struts.apache.org
 
-Description:
 
-Files or Directories Accessible to External Parties vulnerability in Apache=
- Kylin.
- You are fine as long as the Kylin's system and project admin access is wel=
-l protected.
-
-This issue affects Apache Kylin: from 4.0.0 through 5.0.2.
-
-Users are recommended to upgrade to version 5.0.3, which fixes the issue.
-
-This issue is being tracked as KYLIN-6082=20
-
-Credit:
-
-liuhuajin <liuhuajin1@huawei.com> (finder)
-
-References:
-
-https://kylin.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-61734
-https://issues.apache.org/jira/browse/KYLIN-6082
-
+Kind regards
+--=20
+=C5=81ukasz
++ 48 606 323 122 http://www.lenart.org.pl/
