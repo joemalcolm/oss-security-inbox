@@ -1,55 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/4
-Message-ID: <CALJHwhQkb-2yLFMTuF51QSiUWx=6Wv9DV_e7_s+vgopjhXKyxA@mail.gmail.com>
-Date: Mon, 26 Jun 2017 18:07:59 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/7
+Message-ID: <CAF=yD-K+abq_ZK18map1SCAd2x0BnFNAKB5t0+RrdxYROxSd1g@mail.gmail.com>
+Date: Thu, 10 Aug 2017 15:25:20 -0700
+From: Willem de Bruijn <willemdebruijn.kernel@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7482 Linux kernel: krb5 ticket decode len check.
+Cc: Andrey Konovalov <andreyknvl@...il.com>
+Subject: Linux kernel: CVE-2017-1000111: heap out-of-bounds in AF_PACKET sockets
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+Hi,
 
-David Howells has written a great description, so rather than reword what
-he's written here is a quote directly from the git commit.
+Syzkaller found a race condition in PF_PACKET sockets with setting
+socket option PACKET_RESERVE. The bug is analogous to a previous one
+with PACKET_VERSION reported as CVE-2016-8655. The same analysis
+applies.
 
->From the patch notes:
+The bug requires CAP_NET_RAW to open a packet socket. This is a
+privileged operation, unless unprivileged user namespaces are enabled.
 
----
-    When a kerberos 5 ticket is being decoded so that it can be loaded into
-an
-    rxrpc-type key, there are several places in which the length of a
-    variable-length field is checked to make sure that it's not going to
-    overrun the available data - but the data is padded to the nearest
-    four-byte boundary and the code doesn't check for this extra.  This
-could
-    lead to the size-remaining variable wrapping and the data pointer going
-    over the end of the buffer.
+The fix has been submitted to netdev as
 
-    Fix this by making the various variable-length data checks use the
-padded
-    length.
----
+  packet: fix tp_reserve race in packet_set_ring
 
->From what I can see, this could leak 3 bytes of memory to userspace or
-possibly corrupt 3 bytes of memory,
+  Updates to tp_reserve can race with reads of the field in
+  packet_set_ring. Avoid this by holding the socket lock during
+  updates in setsockopt PACKET_RESERVE.
 
-Upstream fix
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5f2f97656ada8d811d3c1bef503ced266fcd53a0
+  This bug was discovered by syzkaller.
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2017-7482
+  Fixes: 8913336a7e8d ("packet: add PACKET_RESERVE sockopt")
+  Reported-by: Andrey Konovalov <andreyknvl@...gle.com>
+  Signed-off-by: Willem de Bruijn <willemb@...gle.com>
 
--- 
+  c27927e372f0785f3303e8fad94b85945e2c97b7
+  http://patchwork.ozlabs.org/patch/800274/
 
-Wade Mealing
+Timeline:
 
-Product Security - Kernel, RHCE
-
-Red Hat
-
-<https://www.redhat.com>
-
-wmealing@...hat.com
-<https://red.ht/sig>
-TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
-
+2017.08.03 - Bug reported to security@...nel.org
+2017.08.04 - Bug reported to linux-distros@
+2017.08.10 - Patch submitted to netdev
+2017.08.10 - Announcement on oss-security@
