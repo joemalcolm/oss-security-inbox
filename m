@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2515" "Wednesday" "20" "January" "2016" "14:34:21" "+0100" "Yann Droneaud" "ydroneaud@opteya.com" "<1453296861.9500.81.camel@opteya.com>" "60" "Re: [oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" "^Date:" nil nil "1" "2016012013:34:21" "[oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778" (number mark "        ydroneaud@op Jan 20   60/2515  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778\"\n") "<569CE313.4060002@redhat.com>" ("<20160114171301.GH28298@localhost.localdomain>" "<5698D299.6020202@redhat.com>" "<1452862593.9500.48.camel@opteya.com>" "<569CE313.4060002@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1096" "Thursday" "10" "August" "2017" "15:25:20" "-0700" "Willem de Bruijn" "willemdebruijn.kernel@gmail.com" "<CAF=yD-K+abq_ZK18map1SCAd2x0BnFNAKB5t0+RrdxYROxSd1g@mail.gmail.com>" "33" "[oss-security] Linux kernel: CVE-2017-1000111: heap out-of-bounds in AF_PACKET sockets" nil nil nil "8" "2017081022:25:20" "[oss-security] Linux kernel: CVE-2017-1000111: heap out-of-bounds in AF_PACKET sockets" (number mark "U       willemdebrui Aug 10   33/1096  " thread-indent "\"[oss-security] Linux kernel: CVE-2017-1000111: heap out-of-bounds in AF_PACKET sockets\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 2043 invoked by uid 550); 20 Jan 2016 13:34:34 -0000
+Received: (qmail 28502 invoked by uid 550); 10 Aug 2017 22:26:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 2025 invoked from network); 20 Jan 2016 13:34:33 -0000
-Message-ID: <1453296861.9500.81.camel@opteya.com>
-In-Reply-To: <569CE313.4060002@redhat.com>
-References: <20160114171301.GH28298@localhost.localdomain>
-	 <5698D299.6020202@redhat.com> <1452862593.9500.48.camel@opteya.com>
-	 <569CE313.4060002@redhat.com>
-Organization: OPTEYA
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.3 (3.18.3-1.fc23) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 80.12.91.199
-X-SA-Exim-Mail-From: ydroneaud@opteya.com
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:24:06 +0000)
-X-SA-Exim-Scanned: Yes (on ou.quest-ce.net)
-Date: Wed, 20 Jan 2016 14:34:21 +0100
-From: Yann Droneaud <ydroneaud@opteya.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - Roaming through the
- OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+Received: (qmail 28148 invoked from network); 10 Aug 2017 22:26:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=Zvj7HCXe+OSRTPxAAQzSlDcO4S7UKFDnck54Sdj6IeU=;
+        b=jLzdM9LMaqY4lkYv4sPimvK2A/9bTU81iycsvZIykMoWIfsBnXJwYrbIBzAkkC0VvD
+         sHJPFr4MJqMqmIUrNY7U2iz9MTTacp4zafM0e/mkMIHbWGfEBpvnueqtaqUWsKwj1Vql
+         Qzp4jwkprPNKLSkEMKrhyfHRJQUbcyRS4iteyDnAywOpthMvfi1YqQ2t3r+eIFMPQAtb
+         pAAZsueq1qIdZXRZ1/uQqRsx1SfbVhhKi4xXjCxp61ysUFuNdg75Y7nrCK9PXXGyd55k
+         7lHBMWhQxNgTxnv85RwpP5c++BZxoL2peP18T0zg9j2N2xogF0zvq/ttVo5VfHLQxubC
+         3mog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Zvj7HCXe+OSRTPxAAQzSlDcO4S7UKFDnck54Sdj6IeU=;
+        b=GCVuR8xlmSDrq5ZcwT7SKGOFKVAaRPUdPYHzrHGuKyVeks2fuybUWo3RVUYPHFQ3Qx
+         kif3mo/4bS3kovM0R5fb1GKi/sQUEw4vukgVCp9gwUW09Sp7o4ufGNkci57JAUGnJd8m
+         D9dAj/4y4A98Lz87CaC15LpimiRznNt14w08AseWgQ/bBLaRdcc5qkiXm9ackzMeJQ7o
+         kQjonIvIqHC7i5LJakNUkOo26rskTnpBr/EgqzhbxYN9c/rRvnLjeZNIzSmDl57n81Ke
+         febxrYoLWOQReY7SKs6zKmon9ZyT2wYo2NhEfHvZylkNyjBQqvuOb3SdpgXDfvSyFbdP
+         G5YQ==
+X-Gm-Message-State: AHYfb5gUfEiSZtnHD5NUJ62Ti5NSdDF7l/QZekUdc6potVOPe7gTlYF/
+	wcnCVpQBkUqEwQIdVEhi5hfYf0rfrxsvOSk=
+X-Received: by 10.202.3.70 with SMTP id 67mr14269253oid.114.1502403961459;
+ Thu, 10 Aug 2017 15:26:01 -0700 (PDT)
+MIME-Version: 1.0
+From: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Date: Thu, 10 Aug 2017 15:25:20 -0700
+Message-ID: <CAF=yD-K+abq_ZK18map1SCAd2x0BnFNAKB5t0+RrdxYROxSd1g@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux kernel: CVE-2017-1000111: heap out-of-bounds in AF_PACKET sockets
 
 Hi,
 
-Le lundi 18 janvier 2016 à 14:05 +0100, Florian Weimer a écrit :
-> On 01/15/2016 01:56 PM, Yann Droneaud wrote:
-> > Le vendredi 15 janvier 2016 à 12:06 +0100, Florian Weimer a écrit :
-> > > On 01/14/2016 06:13 PM, Qualys Security Advisory wrote:
-> > > > Internal stdio buffering is the most severe of the three
-> > > > problems discussed in this section, although GNU/Linux is not
-> > > > affected because the glibc mmap()s and munmap()s (and therefore
-> > > > cleanses) stdio buffers.
-> > > 
-> > > This will change in glibc 2.23, stdio will use regular malloc and
-> > > free for its buffers.  I did not expect this change to have
-> > > security implications.  Considering that the actual bug lies
-> > > elsewhere, and stdio usage is based on copying out of the buffer
-> > > (so leaks can still happen elsewhere), I do not wish to revert
-> > > this change.
-> > > 
-> > 
-> > Would setvbuf(stream, NULL, _IONBF, 0); be used to disable buffer
-> > before reading/writting sensible data to a stream ?
-> 
-> That entirely depends on how the data is read or written.  glibc will
-> make additional copies on the heap in some cases.  In any case, this
-> is an implementation detail.
-> 
+Syzkaller found a race condition in PF_PACKET sockets with setting
+socket option PACKET_RESERVE. The bug is analogous to a previous one
+with PACKET_VERSION reported as CVE-2016-8655. The same analysis
+applies.
 
-So one should probably not use stdio stream (fgets(), fread(),
-fscanf(), fputs(), fwrite(), etc.) to load sensible data from/to,
-depending on the threat model. In particular, in case it's not from/to
-a local socket nor a pipe, reading or writing such data in cleartext
-might be bad idea after all).
+The bug requires CAP_NET_RAW to open a packet socket. This is a
+privileged operation, unless unprivileged user namespaces are enabled.
 
-> Even if the data is gone from the process image, the kernel or its
-> hypervisor may still keep copies, particularly if the data is (or was
-> once) on the file system.  It is very hard to override data reliably
-> on modern systems.
+The fix has been submitted to netdev as
 
-If an userspace application is allowed to access sensitible
-information, this imply the kernel is also allowed to access it.
+  packet: fix tp_reserve race in packet_set_ring
 
-Userspace has to trust kernel/hypervisor. And kernel/hypervisor has to
-work so that they are trustworthy from the userspace point of view,
-that is, to not exchange data between namespaces, users, processes when
-not explicitly allowed to.
+  Updates to tp_reserve can race with reads of the field in
+  packet_set_ring. Avoid this by holding the socket lock during
+  updates in setsockopt PACKET_RESERVE.
 
-AFAICT, having shadows / ghosts copies in kernelspace is not a problem
-*provided* it's harder for a malicious party to retrieve them through a
-kernel exploit than through an userspace exploit. And it should be !
+  This bug was discovered by syzkaller.
 
-Anyway, having the (Linux) kernel clearing memory, buffers, whatever...
-as soon as it doesn't need them anymore will probably happen at some
-point to prevent most leak.
+  Fixes: 8913336a7e8d ("packet: add PACKET_RESERVE sockopt")
+  Reported-by: Andrey Konovalov <andreyknvl@google.com>
+  Signed-off-by: Willem de Bruijn <willemb@google.com>
 
-Regards.
+  c27927e372f0785f3303e8fad94b85945e2c97b7
+  http://patchwork.ozlabs.org/patch/800274/
 
--- 
-Yann Droneaud
-OPTEYA
+Timeline:
 
+2017.08.03 - Bug reported to security@kernel.org
+2017.08.04 - Bug reported to linux-distros@
+2017.08.10 - Patch submitted to netdev
+2017.08.10 - Announcement on oss-security@
