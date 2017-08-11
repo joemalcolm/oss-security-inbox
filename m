@@ -1,4 +1,9 @@
-Received: (qmail 19499 invoked by uid 550); 23 Jun 2023 06:38:48 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2379" "Friday" "11" "August" "2017" "12:17:52" "-0700" "Yiteng Zhang" "yiteng.zhang@oracle.com" "<4ec90439-635a-adba-a27e-9aed3af232d8@oracle.com>" "96" "Re: [oss-security] [SECURITY ADVISORY] curl: FILE buffer read out of bounds" nil nil nil "8" "2017081119:17:52" "[oss-security] [SECURITY ADVISORY] curl: FILE buffer read out of bounds" (number mark "U       yiteng.zhang Aug 11   96/2379  " thread-indent "\"Re: [oss-security] [SECURITY ADVISORY] curl: FILE buffer read out of bounds\"\n") "<alpine.DEB.2.20.1708090803380.7715@tvnag.unkk.fr>" ("<alpine.DEB.2.20.1708090803380.7715@tvnag.unkk.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 14309 invoked by uid 550); 11 Aug 2017 20:11:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,68 +12,118 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11411 invoked from network); 23 Jun 2023 01:20:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1687483231; x=1719019231;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-id:content-transfer-encoding:mime-version;
-  bh=I/qsmFJqJPVHf/5K99tfZsjHXhZ4bATaGtszczratmE=;
-  b=d7dRtnJUPQ3LqqAa6ImFx182/3TtG5c33a/zfG56LyoZo3F5qXWikRV2
-   KtHniDye54prPlun9MBBXTWOkrXIaiRJbMTScGOZSo6V1fRwhlYKUR254
-   v1cUegFTV1sbwMEIp2K5PV1oNDOj070zCX2Vw0oyUfBSA+FCt53TYiRrb
-   w=;
-X-IronPort-AV: E=Sophos;i="6.01,150,1684800000"; 
-   d="scan'208";a="138658808"
-From: "Smith, Stewart" <trawets@amazon.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [oss-security] CVE-2023-31975: memory leak in yasm
-Thread-Index: AQHZpXDebM9V9B3nFkmUBYgxW778NQ==
-Date: Fri, 23 Jun 2023 01:20:17 +0000
-Message-ID: <72BCBA86-4192-47C9-ACA7-5F1A39994104@amazon.com>
-References: <a37bfa30-f7d2-ae37-5af4-e3674af29a7a@oracle.com>
-In-Reply-To: <a37bfa30-f7d2-ae37-5af4-e3674af29a7a@oracle.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-mailer: Apple Mail (2.3731.600.7)
-x-originating-ip: [10.111.100.149]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <0A4162EC989C7E44A26AE900F722ADB0@amazon.com>
-Content-Transfer-Encoding: base64
+Received: (qmail 28293 invoked from network); 11 Aug 2017 19:20:38 -0000
+To: oss-security@lists.openwall.com,
+        curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>
+References: <alpine.DEB.2.20.1708090803380.7715@tvnag.unkk.fr>
+From: Yiteng Zhang <yiteng.zhang@oracle.com>
+Message-ID: <4ec90439-635a-adba-a27e-9aed3af232d8@oracle.com>
+Date: Fri, 11 Aug 2017 12:17:52 -0700
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Subject: Re: [oss-security] CVE-2023-31975: memory leak in yasm
+In-Reply-To: <alpine.DEB.2.20.1708090803380.7715@tvnag.unkk.fr>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Source-IP: userv0021.oracle.com [156.151.31.71]
+Subject: Re: [oss-security] [SECURITY ADVISORY] curl: FILE buffer read out of
+ bounds
 
-T24gSnVuIDIwLCAyMDIzLCBhdCAzOjQ3IFBNLCBBbGFuIENvb3BlcnNtaXRo
-IDxhbGFuLmNvb3BlcnNtaXRoQG9yYWNsZS5jb20+IHdyb3RlOg0KPiBodHRw
-czovL252ZC5uaXN0Lmdvdi92dWxuL2RldGFpbC9DVkUtMjAyMy0zMTk3NSBp
-cyBmcmVha2luZyBvdXQgc2Nhbm5lcnMNCj4gc2luY2UgaXQgY2xhaW1zIHRo
-aXMgYnVnIGhhcyBhIENWU1Mgb2YgOS44Lg0KPiANCj4gRnJvbSB3aGF0IEkg
-c2VlIGF0IGh0dHBzOi8vZ2l0aHViLmNvbS95YXNtL3lhc20vaXNzdWVzLzIx
-MCB0aG91Z2gsIEkgY2FuJ3QNCj4gc2VlIGFueSBDVlNTIGhpZ2hlciB0aGFu
-IDAuMCBiZWluZyByZWxldmFudCBoZXJlIGFuZCB0aGluayB0aGUgQ1ZFIHNo
-b3VsZA0KPiBiZSB3aXRoZHJhd24uICBBbSBJIG1pc3Npbmcgc29tZXRoaW5n
-IGhlcmU/ICBBbGwgSSBzZWUgaXMgMiBvYmplY3RzIG9mDQo+IDE2IGJ5dGVz
-IGVhY2ggbm90IGJlaW5nIGZyZWVkIGluIHRoZSBmcmFjdGlvbiBvZiBhIHNl
-Y29uZCBiZWZvcmUgdGhlDQo+IGNvbW1hbmQgZXhpdHMgYW5kIGF1dG9tYXRp
-Y2FsbHkgZnJlZXMgdGhlIG1lbW9yeSAtIGluIGEgY29tbWFuZCB0aGUgdXNl
-cg0KPiBkZWxpYmVyYXRlbHkgY2hvb3NlcyB0byBydW4sIHdoaWNoIHJ1bnMg
-YXMgdGhlbXNlbHZlcyB3aXRoIG5vIHJhaXNlZA0KPiBwcml2aWxlZ2VzLCBv
-biBhbiBpbnB1dCBmaWxlIHRoZXkgcHJvdmlkZSwgYW5kIHdoaWNoIGV4aXRz
-IGFmdGVyIHByb2Nlc3NpbmcNCj4gdGhlIGZpbGUgYW5kIGRvZXNuJ3QgaGFu
-ZyBhcm91bmQga2VlcGluZyB0aGF0IG1lbW9yeSBhbGxvY2F0ZWQgLSBub3Qg
-YSBiaXQNCj4gb2Ygc2VjdXJpdHkgcmlzayBhdCBhbGwgdGhlcmUuICAoWWVz
-LCBpdCdzIGEgc21hbGwgYnVnIGFuZCBpcyBnb29kIHRvIGZpeCwNCj4gYnV0
-IG5vdCB0byByYWlzZSBzZWN1cml0eSBhbGFybXMgZm9yLikNCj4gDQo+IC0t
-DQo+ICAgICAgICAtQWxhbiBDb29wZXJzbWl0aC0gICAgICAgICAgICAgICAg
-IGFsYW4uY29vcGVyc21pdGhAb3JhY2xlLmNvbQ0KPiAgICAgICAgIE9yYWNs
-ZSBTb2xhcmlzIEVuZ2luZWVyaW5nIC0gaHR0cHM6Ly9ibG9ncy5vcmFjbGUu
-Y29tL3NvbGFyaXMNCg0KSSBkb27igJl0IHRoaW5rIHlvdSBhcmUsIEkgY2Fu
-4oCZdCBzZWUgYW55dGhpbmcgaGVyZSBlaXRoZXIuDQoNCkV2ZW4gaWYgeW91
-IHdlcmUgZG9pbmcgYWxsIHRoZSB3cm9uZyB0aGluZ3MgYW5kIHJ1bm5pbmcg
-YSB5YXNtLWFzLWEtc2VydmljZSBjb250aW51YWxseSBidWlsZGluZyB1bnRy
-dXN0ZWQgc291cmNlIHJpZ2h0IGFsb25nc2lkZSBvdGhlciBwcm9jZXNzZXMg
-YXMgdGhlIHNhbWUgdXNlciwgdGhhdCBjb250YWluIGFsbCBzb3J0cyBvZiB0
-aGluZ3MgeW91IGRvbuKAmXQgd2FudCBleHBvc2VkLCBJIHN0aWxsIGRvbuKA
-mXQgc2VlIGhvdyB0aGlzIHdvdWxkIGJlIGFueXRoaW5nIGJ1dCBhIDAuMC4=
+Bug Filed:
+
+26620281 - CVE-2017-1000099 curl: FILE buffer read out of bounds
+
+Yiteng
+
+On 08/ 8/17 11:05 PM, Daniel Stenberg wrote:
+> FILE buffer read out of bounds
+> ==============================
+>
+> Project curl Security Advisory, August 9th 2017 -
+> [Permalink](https://curl.haxx.se/docs/adv_20170809C.html)
+>
+> VULNERABILITY
+> -------------
+>
+> When asking to get a file from a file:// URL, libcurl provides a 
+> feature that
+> outputs meta-data about the file using HTTP-like headers.
+>
+> The code doing this would send the wrong buffer to the user (stdout or 
+> the
+> application's provide callback), which could lead to other private 
+> data from
+> the heap to get inadvertently displayed.
+>
+> The wrong buffer was an uninitialized memory area allocated on the 
+> heap and if
+> it turned out to not contain any zero byte, it would continue and 
+> display the
+> data following that buffer in memory.
+>
+> We are not aware of any exploit of this flaw.
+>
+> INFO
+> ----
+>
+> This flaw also affects the curl command line tool.
+>
+> The Common Vulnerabilities and Exposures (CVE) project has assigned 
+> the name
+> CVE-2017-1000099 to this issue.
+>
+> AFFECTED VERSIONS
+> -----------------
+>
+> This bug has been was pushed to curl in commit
+> [7c312f84ea930d8](https://github.com/curl/curl/commit/7c312f84ea930d8), 
+> April
+> 2017.
+>
+> - Affected versions: libcurl 7.54.1
+> - Not affected versions: libcurl < 7.54.1 and >= 7.55.0
+>
+> libcurl is used by many applications, but not always advertised as such.
+>
+> THE SOLUTION
+> ------------
+>
+> The function now sends the correct buffer to the application.
+>
+> A [patch for 
+> CVE-2017-1000099](https://curl.haxx.se/CVE-2017-1000099.patch) is
+> available.
+>
+> RECOMMENDATIONS
+> ---------------
+>
+> We suggest you take one of the following actions immediately, in order of
+> preference:
+>
+>  A - Upgrade curl and libcurl to version 7.55.0
+>
+>  B - Apply the patch to your version and rebuild
+>
+>  C - Do not use `CURLOPT_NOBODY` *and* `CURLOPT_HEADER` with file:// URLs
+>
+> TIME LINE
+> ---------
+>
+> It was reported to the curl project on July 15, 2017. We contacted
+> distros@openwall on August 1.
+>
+> libcurl 7.55.0 was released on August 9 2017, coordinated with the 
+> publication
+> of this advisory.
+>
+> CREDITS
+> -------
+>
+> Reported by Even Rouault. Discovery: credit to OSS-Fuzz. Patch by Even 
+> Rouault.
+>
+> Thanks a lot!
+>
+
