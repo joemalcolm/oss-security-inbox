@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/03/2
-Message-ID: <alpine.LFD.2.20.1704031535260.21857@wniryva>
-Date: Mon, 3 Apr 2017 15:41:12 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-7377 Qemu: 9pfs: host memory leakage via v9fs_create
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/11/4
+Message-ID: <20170811192447.aqlul7ixqv5ymlxi@eldamar.local>
+Date: Fri, 11 Aug 2017 21:24:47 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVS and ssh command injection (see CVE-2017-1000117, etc.)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi
 
-Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable 
-to a memory leakage issue. It could occur while doing a I/O operation via 
-v9fs_create/v9fs_lcreate routine.
+On Fri, Aug 11, 2017 at 01:40:33PM +0200, Salvatore Bonaccorso wrote:
+> hi
+> 
+> On Fri, Aug 11, 2017 at 10:10:18AM +0200, Andreas Stieger wrote:
+> > On 08/11/2017 01:32 AM, Hank Leininger wrote:
+> > > SSH command injection via -o... impacts CVS 1.12.x as well
+> > > [...]
+> > > I don't know if these were discussed on a private list prior to publication, and whether that discussion included CVS.
+> > 
+> > cvs did not come up in the private discussions that I am aware of,
+> > thanks for pointing it out.
+> 
+> FWIW, I have requested a CVE via the MITRE webform. Will followup here
+> once/if it gets assigned.
 
-A privileged user/process inside guest could use this flaw to leak host memory 
-resulting in Dos.
+CVE-2017-12836 was assigned for this issue.
 
-Upstream patch:
----------------
-   -> http://git.qemu-project.org/?p=qemu.git;a=commit;h=d63fb193e71644a073b77ff5ac6f1216f2f6cf6e
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1437871
-
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Regards,
+Salvatore
