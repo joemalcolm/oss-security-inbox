@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/22/1
-Message-ID: <CAHqykcQNaNcFOrpPdDMny0oVFbuLkReex34wV1NWDYCkevp1EA@mail.gmail.com>
-Date: Sun, 22 Oct 2017 08:55:44 +0300
-From: Noam Rathaus <noamr@...ondsecurity.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/11/3
+Message-ID: <20170811114033.grl36vle44nygwta@eldamar.local>
+Date: Fri, 11 Aug 2017 13:40:33 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Netlink XFRM socket subsystem NULL pointer dereference
+Subject: Re: CVS and ssh command injection (see CVE-2017-1000117, etc.)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+hi
 
-I was forwarded by:
-Dan Carpenter <dan.carpenter@...cle.com>
+On Fri, Aug 11, 2017 at 10:10:18AM +0200, Andreas Stieger wrote:
+> On 08/11/2017 01:32 AM, Hank Leininger wrote:
+> > SSH command injection via -o... impacts CVS 1.12.x as well
+> > [...]
+> > I don't know if these were discussed on a private list prior to publication, and whether that discussion included CVS.
+> 
+> cvs did not come up in the private discussions that I am aware of,
+> thanks for pointing it out.
 
-To you regarding obtaining a CVE for the mentioned (in the title)
-vulnerability
+FWIW, I have requested a CVE via the MITRE webform. Will followup here
+once/if it gets assigned.
 
-I know a patch is being created and placed into mainstream code of the
-Kernel
-
-I would like also to get a CVE for it, so that we can put that in the
-advisory we will release
-
-Do we need to give you the full technical writeup of the vulnerability?
-
--- 
-
-Thanks,
-Noam Rathaus
-Beyond Security
-
-PGP Key ID: 2D24B275B1EB4475 (Exp 2018-03)
-
+Regards,
+Salvatore
