@@ -1,50 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/4
-Message-ID: <20170417180728.GA31692@openwall.com>
-Date: Mon, 17 Apr 2017 20:07:28 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Kenton Varda <kenton@...udflare.com>, Tom Lee <debian@...lee.co>
-Subject: Re: Re: CVE Request: Cap'n Proto: Bounds check elided by compiler optimization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/11/5
+Message-ID: <4ec90439-635a-adba-a27e-9aed3af232d8@oracle.com>
+Date: Fri, 11 Aug 2017 12:17:52 -0700
+From: Yiteng Zhang <yiteng.zhang@...cle.com>
+To: oss-security@...ts.openwall.com, curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>
+Subject: Re: [SECURITY ADVISORY] curl: FILE buffer read out of bounds
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 17, 2017 at 10:35:51AM -0700, Kenton Varda wrote:
-> Whoops, apparently I'm supposed to use the web form now. Sorry!
+Bug Filed:
 
-Yes, but many of us in here care(d) about being notified of security
-issues much more than about CVEs, hence as a moderator I approved your
-posting anyway.  Once you've obtained the CVE ID from MITRE, please post
-it to this same thread as a "reply".
+26620281 - CVE-2017-1000099 curl: FILE buffer read out of bounds
 
-> On Mon, Apr 17, 2017 at 10:32 AM, Kenton Varda <kenton@...udflare.com> wrote:
-> > Full details and fix covered here: https://github.com/sandstorm-i
-> > o/capnproto/blob/master/security-advisories/2017-04-17-0-
-> > apple-clang-elides-bounds-check.md
+Yiteng
 
-The lack of detail in your posting goes against published oss-security
-guidelines, which are:
+On 08/ 8/17 11:05 PM, Daniel Stenberg wrote:
+> FILE buffer read out of bounds
+> ==============================
+>
+> Project curl Security Advisory, August 9th 2017 -
+> [Permalink](https://curl.haxx.se/docs/adv_20170809C.html)
+>
+> VULNERABILITY
+> -------------
+>
+> When asking to get a file from a file:// URL, libcurl provides a 
+> feature that
+> outputs meta-data about the file using HTTP-like headers.
+>
+> The code doing this would send the wrong buffer to the user (stdout or 
+> the
+> application's provide callback), which could lead to other private 
+> data from
+> the heap to get inadvertently displayed.
+>
+> The wrong buffer was an uninitialized memory area allocated on the 
+> heap and if
+> it turned out to not contain any zero byte, it would continue and 
+> display the
+> data following that buffer in memory.
+>
+> We are not aware of any exploit of this flaw.
+>
+> INFO
+> ----
+>
+> This flaw also affects the curl command line tool.
+>
+> The Common Vulnerabilities and Exposures (CVE) project has assigned 
+> the name
+> CVE-2017-1000099 to this issue.
+>
+> AFFECTED VERSIONS
+> -----------------
+>
+> This bug has been was pushed to curl in commit
+> [7c312f84ea930d8](https://github.com/curl/curl/commit/7c312f84ea930d8), 
+> April
+> 2017.
+>
+> - Affected versions: libcurl 7.54.1
+> - Not affected versions: libcurl < 7.54.1 and >= 7.55.0
+>
+> libcurl is used by many applications, but not always advertised as such.
+>
+> THE SOLUTION
+> ------------
+>
+> The function now sends the correct buffer to the application.
+>
+> A [patch for 
+> CVE-2017-1000099](https://curl.haxx.se/CVE-2017-1000099.patch) is
+> available.
+>
+> RECOMMENDATIONS
+> ---------------
+>
+> We suggest you take one of the following actions immediately, in order of
+> preference:
+>
+>  A - Upgrade curl and libcurl to version 7.55.0
+>
+>  B - Apply the patch to your version and rebuild
+>
+>  C - Do not use `CURLOPT_NOBODY` *and* `CURLOPT_HEADER` with file:// URLs
+>
+> TIME LINE
+> ---------
+>
+> It was reported to the curl project on July 15, 2017. We contacted
+> distros@...nwall on August 1.
+>
+> libcurl 7.55.0 was released on August 9 2017, coordinated with the 
+> publication
+> of this advisory.
+>
+> CREDITS
+> -------
+>
+> Reported by Even Rouault. Discovery: credit to OSS-Fuzz. Patch by Even 
+> Rouault.
+>
+> Thanks a lot!
+>
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
-
-"At least the most essential part of your message (e.g., vulnerability
-detail and/or exploit) should be directly included in the message itself
-(and in plain text), rather than only included by reference to an
-external resource.  Posting links to relevant external resources as well
-is acceptable, but posting only links is not.  Your message should
-remain valuable even with all of the external resources gone."
-
-Here's the "unbroken" GitHub URL:
-
-https://github.com/sandstorm-io/capnproto/blob/master/security-advisories/2017-04-17-0-apple-clang-elides-bounds-check.md
-
-and I've attached to this message the "raw" (text) version from:
-
-https://raw.githubusercontent.com/sandstorm-io/capnproto/master/security-advisories/2017-04-17-0-apple-clang-elides-bounds-check.md
-
-as text/plain.
-
-Thanks,
-
-Alexander
-
-View attachment "2017-04-17-0-apple-clang-elides-bounds-check.md" of type "text/plain" (6443 bytes)
