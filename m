@@ -1,4 +1,9 @@
-Received: (qmail 11901 invoked by uid 550); 30 Jun 2022 14:44:45 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2833" "Sunday" "13" "August" "2017" "18:21:55" "+0200" "Andrey Konovalov" "andreyknvl@gmail.com" "<CA+fCnZdcQGnmXULmdoEKnLd2WTO1Ubdcd8bDBD3-3TjosOjtpg@mail.gmail.com>" "72" "[oss-security] Re: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due to UFO to non-UFO path switch" "^Cc:" nil nil "8" "2017081316:21:55" "[oss-security] Re: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due to UFO to non-UFO path switch" (number mark "        andreyknvl@g Aug 13   72/2833  " thread-indent "\"[oss-security] Re: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due to UFO to non-UFO path switch\"\n") "<CA+fCnZfFS=iSJV9ke-XtX-S8abRZHjQRL31_Hvr6W_gHhRpMqw@mail.gmail.com>" ("<CA+fCnZfFS=iSJV9ke-XtX-S8abRZHjQRL31_Hvr6W_gHhRpMqw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15600 invoked by uid 550); 13 Aug 2017 16:22:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,479 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15581 invoked from network); 13 Aug 2017 16:22:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2BHnffHIf+uoUj6lLk0yPts42Gg2pDaUT9szr1+H3hU=;
+        b=It83KfdVcZYvV9xZoLQRnA+iPnB7L9P6r8tMybUbCjtMqpCDwMpMIAOG7dXAeKpACC
+         IE6fBaqQB8a8dNIuQ6ikvWW8qR4MAH/6N2+ZRUGK5dKC5D1FjJ3sCsyu9d5/b7NwyGht
+         Uzl6nV3/HoCx1xJVNQ69kvPgujj03zgx2noMeHf9iAahfQwgDfqu1IiJwfDa6+RT88Xa
+         asQm7jqSFkF6hztNHayzDJp9PR2yX0E+UuHTJ9J2d20I62hO2xW4EmmP73o6/PNPCiy8
+         O9rNgpWFzaNGhMA/J8faxjG2WWnLNBPJT1RHrOyaXxdfo/UWaZlcEDN4ACoqVzzZvpIN
+         yOjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2BHnffHIf+uoUj6lLk0yPts42Gg2pDaUT9szr1+H3hU=;
+        b=TKmhgmFkX3/NLcFzFOt5CQ4KvzEBqNqGOcuKr0dQ3mnIuXKfXT0qas78++6tkGEqkt
+         P0jvh2aHzjYDZK2Vhds/MZUPpxl7wcpuf4gAf3ljRHnF+7gZm11ZyfgEdZbGZ5hs/7UC
+         hedJVEz36xj00mET/n9Cs23cV3QPlrktf7As8zhcSNmkedW1DjVRN6odZM2sXzesVMNP
+         ANP9rI3zJRRukOZI1PPXDBf4i5Zy+ymKdQNHnX/nJB7NB9n71WNf/xD/S+4MbmxMZdTr
+         XpzUMI+B7vbuTZm0GdPfHuIKBGR6r6LnVExanMRP7a2HAgjTRITLZQsRrIS6pqdd5VMy
+         bO9A==
+X-Gm-Message-State: AHYfb5jxClkUIxJ1xqpZqI7+oxYKMj6gdCpdtAkHr6BVJ9kQ3e3NWrTo
+	FStuUOKqfNXmd12a/SINuV+xBygPH4kKSV0=
+X-Received: by 10.80.186.100 with SMTP id 33mr21085369eds.47.1502641315842;
+ Sun, 13 Aug 2017 09:21:55 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <CA+fCnZfFS=iSJV9ke-XtX-S8abRZHjQRL31_Hvr6W_gHhRpMqw@mail.gmail.com>
+References: <CA+fCnZfFS=iSJV9ke-XtX-S8abRZHjQRL31_Hvr6W_gHhRpMqw@mail.gmail.com>
+Message-ID: <CA+fCnZdcQGnmXULmdoEKnLd2WTO1Ubdcd8bDBD3-3TjosOjtpg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: willemdebruijn.kernel@gmail.com, Dmitry Vyukov <dvyukov@google.com>, 
+	Kostya Serebryany <kcc@google.com>
+Date: Sun, 13 Aug 2017 18:21:55 +0200
+From: Andrey Konovalov <andreyknvl@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11868 invoked from network); 30 Jun 2022 14:44:45 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-Message-Id: <A0107057-3D70-4F39-ABD3-B186779F6A3C@beckweb.net>
-Date: Thu, 30 Jun 2022 16:44:33 +0200
+Subject: [oss-security] Re: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due
+ to UFO to non-UFO path switch
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3696.80.82.1.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1656600285;198dd4d5;
-X-HE-SMSGID: 1o6vPF-000211-HE
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* GitLab Plugin 1.5.35
-* requests-plugin Plugin 2.2.17
-* TestNG Results Plugin 555.va0d5f66521e3
-* XebiaLabs XL Release Plugin 22.0.1
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Build Notifications Plugin
-* build-metrics Plugin
-* Cisco Spark Plugin
-* Deployment Dashboard Plugin
-* Elasticsearch Query Plugin
-* eXtreme Feedback Panel Plugin
-* Failed Job Deactivator Plugin
-* HPE Network Virtualization Plugin
-* Jigomerge Plugin
-* Matrix Reloaded Plugin
-* OpsGenie Plugin
-* Plot Plugin
-* Project Inheritance Plugin
-* Recipe Plugin
-* Request Rename Or Delete Plugin
-* Rich Text Publisher Plugin
-* RocketChat Notifier Plugin
-* RQM Plugin
-* Skype notifier Plugin
-* Validating Email Parameter Plugin
-* XPath Configuration Viewer Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2022-06-30/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2316 / CVE-2022-34777
-GitLab Plugin 1.5.34 and earlier does not escape multiple user-provided
-values shown as part of the build case of webhook-triggered builds.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-
-SECURITY-2788 / CVE-2022-34778
-TestNG Results Plugin has options in its post-build step configuration to
-not escape test descriptions and exception messages.
-
-If those options are unchecked, TestNG Results Plugin 554.va4a552116332 and
-earlier renders the unescaped text provided in test results.
-
-This results in a cross-site scripting (XSS) vulnerability exploitable by
-attackers able to configure jobs or control test results.
-
-
-SECURITY-2773 (1) / CVE-2022-34779
-XebiaLabs XL Release Plugin 22.0.0 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-2773 (2) / CVE-2022-34780 (CSRF) & CVE-2022-34781 (missing authori=
-zation)
-XebiaLabs XL Release Plugin 22.0.0 and earlier does not perform permission
-checks in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified HTTP server using attacker-specified credentials IDs
-obtained through another method, capturing credentials stored in Jenkins.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-2650 / CVE-2022-34782
-requests-plugin Plugin 2.2.16 and earlier does not correctly perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to view the list of
-pending requests.
-
-NOTE: This is basically the same vulnerability as SECURITY-1995, whose fix
-was ineffective.
-
-
-SECURITY-2220 / CVE-2022-34783
-Plot Plugin 2.1.10 and earlier does not escape plot descriptions.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1118 / CVE-2022-34784
-build-metrics Plugin 1.3 does not escape the build description on one of
-its views.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Build/Update permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2643 / CVE-2022-34785
-build-metrics Plugin 1.3 and earlier does not perform a permission check in
-multiple HTTP endpoints.
-
-This allows attackers with Overall/Read permission to obtain information
-about jobs otherwise inaccessible to them.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2332 / CVE-2022-34786
-Rich Text Publisher Plugin 1.4 and earlier does not escape the HTML message
-set by its post-build step.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to configure jobs.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1919 / CVE-2022-34787
-Project Inheritance Plugin 21.04.03 and earlier does not escape the reason
-a build is blocked in tooltips.
-
-This results in a cross-site scripting (XSS) vulnerability exploitable by
-attackers able to control the reason a queue item is blocked.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1926 / CVE-2022-34788
-Matrix Reloaded Plugin 1.1.3 and earlier does not escape the agent name in
-tooltips.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Agent/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2016 / CVE-2022-34789
-Matrix Reloaded Plugin 1.1.3 and earlier does not require POST requests for
-an HTTP endpoint, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-This vulnerability allows attackers to rebuild previous matrix builds.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1939 / CVE-2022-34790
-eXtreme Feedback Panel Plugin 2.0.1 and earlier does not escape the job
-names used in tooltips.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2165 / CVE-2022-34791
-Validating Email Parameter Plugin 1.10 and earlier does not escape the name
-and description of its parameter type.
-
-Additionally, it disables the security hardening added in Jenkins 2.44 and
-LTS 2.32.2 as part of the SECURITY-353 / CVE-2017-2601 fix that protects
-the "Build With Parameters" and "Parameters" pages from vulnerabilities
-like this by default.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2000 / CVE-2022-34792 (CSRF) & CVE-2022-34793 (XXE) &
-CVE-2022-34794 (missing permission check)
-Recipe Plugin 1.2 and earlier does not perform a permission check in
-multiple HTTP endpoints.
-
-This allows attackers with Overall/Read permission to send an HTTP request
-to an attacker-specified URL and parse the response as XML.
-
-As the plugin does not configure its XML parser to prevent XML external
-entity (XXE) attacks, attackers can have Jenkins parse a crafted XML
-response that uses external entities for extraction of secrets from the
-Jenkins controller or server-side request forgery.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-Additionally, the plugin allows users to export the full configuration of
-jobs as part of a recipe, granting access to job configuration XML data to
-every user with Item/Read permission. The encrypted values of secrets
-stored in the job configuration are not redacted, as they would be by the
-config.xml API for users without Item/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2799 / CVE-2022-34795
-Deployment Dashboard Plugin 1.0.10 and earlier does not escape environment
-names on its Deployment Dashboard view.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with View/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2798 (1) / CVE-2022-34796
-Deployment Dashboard Plugin 1.0.10 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2798 (2) / CVE-2022-34797 (CSRF) & CVE-2022-34798 (missing authori=
-zation)
-Deployment Dashboard Plugin 1.0.10 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified HTTP URL using attacker-specified username and password.
-
-Additionally, these endpoints do not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2070 / CVE-2022-34799
-Deployment Dashboard Plugin 1.0.10 and earlier stores a password
-unencrypted in its global configuration file
-`de.codecentric.jenkins.dashboard.DashboardView.xml` on the Jenkins
-controller as part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2056 / CVE-2022-34800 (storage) & CVE-2022-34801 (transmission)
-Build Notifications Plugin 1.5.0 and earlier stores multiple tokens
-unencrypted in its global configuration files on the Jenkins controller as
-part of its configuration:
-
-* Pushover Application Token in
-  `tools.devnull.jenkins.plugins.buildnotifications.PushoverNotifier.xml`
-* Slack Bot Token in
-  `tools.devnull.jenkins.plugins.buildnotifications.SlackNotifier.xml`
-* Telegram Bot Token in
-  `tools.devnull.jenkins.plugins.buildnotifications.TelegramNotifier.xml`
-
-Additionally, they are transmitted in plain text as part of the global
-configuration form.
-
-These tokens can be viewed by users with access to the Jenkins controller
-file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2088 / CVE-2022-34802
-RocketChat Notifier Plugin 1.5.2 and earlier stores the login password and
-webhook token unencrypted in its global configuration file
-`RocketChatNotifier.xml` on the Jenkins controller as part of its
-configuration.
-
-These secrets can be viewed by users with access to the Jenkins controller
-file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1877 / CVE-2022-34803 (storage) & CVE-2022-34804 (transmission)
-OpsGenie Plugin 1.9 and earlier stores API keys unencrypted in its global
-configuration file `com.opsgenie.integration.jenkins.OpsGenieNotifier.xml`
-and in job `config.xml` files on the Jenkins controller as part of its
-configuration.
-
-Additionally, they are transmitted in plain text as part of the respective
-configuration forms.
-
-These API keys can be viewed by users with Item/Extended Read permission
-(job `config.xml` only) or access to the Jenkins controller file system
-(both).
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2160 / CVE-2022-34805
-Skype notifier Plugin 1.1.0 and earlier stores a password unencrypted in
-its global configuration file
-`hudson.plugins.skype.im.transport.SkypePublisher.xml` on the Jenkins
-controller as part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2083 / CVE-2022-34806
-Jigomerge Plugin 0.9 and earlier stores passwords unencrypted in job
-`config.xml` files on the Jenkins controller as part of its configuration.
-
-These passwords can be viewed by users with Item/Extended Read permission
-or access to the Jenkins controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2073 / CVE-2022-34807
-Elasticsearch Query Plugin 1.2 and earlier stores a password unencrypted in
-its global configuration file
-`org.jenkinsci.plugins.elasticsearchquery.ElasticsearchQueryBuilder.xml` on
-the Jenkins controller as part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2055 / CVE-2022-34808
-Cisco Spark Plugin 1.1.1 and earlier stores bearer tokens unencrypted in
-its global configuration file
-`org.jenkinsci.plugins.spark.SparkNotifier.xml` on the Jenkins controller
-as part of its configuration.
-
-These bearer tokens can be viewed by users with access to the Jenkins
-controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2155 / CVE-2022-34809
-RQM Plugin 2.8 and earlier stores a password unencrypted in its global
-configuration file `net.praqma.jenkins.rqm.RqmBuilder.xml` on the Jenkins
-controller as part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2806 / CVE-2022-34810
-RQM Plugin 2.8 and earlier does not perform a permission check in an HTTP
-endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2002 / CVE-2022-34811
-XPath Configuration Viewer Plugin 1.1.1 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to access the XPath
-Configuration Viewer page. Given appropriate XPath expressions, this page
-grants access to job configuration XML data to every user with Item/Read
-permission. The encrypted values of secrets stored in the job configuration
-are not redacted, as they would be by the config.xml API for users without
-Item/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2658 / CVE-2022-34812 (CSRF) & CVE-2022-34813 (missing permission =
-check)
-XPath Configuration Viewer Plugin 1.1.1 and earlier does not perform
-permission checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to create and delete
-XPath expressions.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1996 / CVE-2022-34814
-Request Rename Or Delete Plugin 1.1.0 and earlier does not correctly
-perform a permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to view an
-administrative configuration page listing pending requests.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2657 / CVE-2022-34815
-Request Rename Or Delete Plugin 1.1.0 and earlier does not require POST
-requests for HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to accept pending requests, thereby
-renaming or deleting jobs.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2080 / CVE-2022-34816
-HPE Network Virtualization Plugin 1.0 stores passwords unencrypted in its
-global configuration file
-`org.jenkinsci.plugins.nvemulation.plugin.NvEmulationBuilder.xml` on the
-Jenkins controller as part of its configuration.
-
-These passwords can be viewed by users with access to the Jenkins
-controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2061 / CVE-2022-34817 (CSRF) & CVE-2022-34818 (missing authorizati=
-on)
-Failed Job Deactivator Plugin 1.2.1 and earlier does not perform permission
-checks in several views and HTTP endpoints.
-
-This allows attackers with Overall/Read permission to disable jobs.
-
-Additionally, these endpoints do not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-NOTE: This CSRF vulnerability is only exploitable in Jenkins 2.286 and
-earlier, LTS 2.277.1 and earlier.
-
-As of publication of this advisory, there is no fix.
-
-
-
+On Thu, Aug 10, 2017 at 10:55 PM, Andrey Konovalov <andreyknvl@gmail.com> wrote:
+> Hi!
+>
+> syzkaller found an exploitable memory corruption in UFO code in the
+> Linux kernel, the details are below.
+>
+> ### Bug details
+>
+> When building a UFO packet with MSG_MORE __ip_append_data() calls
+> ip_ufo_append_data() to append. However in between two send() calls,
+> the append path can be switched from UFO to non-UFO one, which leads
+> to a memory corruption.
+>
+> In case UFO packet lengths exceeds MTU, copy = maxfraglen - skb->len
+> becomes negative on the non-UFO path and the branch to allocate new
+> skb is taken. This triggers fragmentation and computation of fraggap =
+> skb_prev->len - maxfraglen. Fraggap can exceed MTU, causing copy =
+> datalen - transhdrlen - fraggap to become negative. Subsequently
+> skb_copy_and_csum_bits() writes out-of-bounds.
+>
+> A similar issue is present in IPv6 code.
+>
+> The bug was introduced in e89e9cf539a2 ("[IPv4/IPv6]: UFO
+> Scatter-gather approach") on Oct 18 2005.
+>
+> The fix has been submitted to netdev [1] and should be committed to
+> mainline and to stable kernels soon. David has also sent an RFC series
+> to remove UFO completely [2], which should be merged in 4.14.
+>
+> If unprivileged user namespaces are available, this bug can be
+> exploited to gain root privileges. I'll share the details and the
+> exploit in a few days.
+>
+> Thanks!
+>
+> ### Timeline
+>
+> 2017.08.03 - Bug reported to security@kernel.org
+> 2017.08.04 - Bug reported to linux-distros@
+> 2017.08.10 - Patch submitted to netdev
+> 2017.08.10 - Announcement on oss-security@
+>
+> ### Links
+>
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=85f1bd9a7b5a79d5baa8bf44af19658f7bf77bfa
+>
+> [2] https://www.spinics.net/lists/netdev/msg443815.html
+
+### Exploitation
+
+The bug can be exploited by an unprivileged user if:
+
+1. User can set up an interface with UFO enabled and MTU < 65535 or
+such interface is already present in the system. The former is
+possible from inside a user namespace.
+
+2. User can disable the NETIF_F_UFO interface feature or set the
+SO_NO_CHECK socket option. The former requires CAP_NET_ADMIN. The
+latter is only possible after 40ba330227ad ("udp: disallow UFO for
+sockets with SO_NO_CHECK option") from Jan 11 2016. Both are possible
+from inside a user namespace.
+
+In particular, the bug can be exploited by an unprivileged user if
+unprivileged user namespaces are available.
+
+Below is a link to a proof-of-concept exploit, that gets root on a
+range of Ubuntu kernels. The exploit triggers an out-of-bounds write
+on a socket buffer and overwrites
+skb_shared_info.destructor_arg->callback with a pointer to shellcode.
+The exploit includes a SMEP and KASLR bypasses, but no SMAP bypass.
+
+Link: https://github.com/xairy/kernel-exploits/blob/master/CVE-2017-1000112/poc.c
