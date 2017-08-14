@@ -1,86 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/14
-Message-ID: <1499267174.28229.1.camel@gmail.com>
-Date: Wed, 05 Jul 2017 11:06:14 -0400
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/14/2
+Message-ID: <1502708627.10890.12.camel@apache.org>
+Date: Mon, 14 Aug 2017 14:03:47 +0300
+From: Robert Munteanu <rombert@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+Subject: CVE-2017-9802: Apache Sling XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2017-07-05 at 15:50 +0100, John Haxby wrote:
-> On 05/07/17 14:53, Simon McVittie wrote:
-> > On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@...cle.com wrote:
-> > > > 2) If user name specified in systemd unit file is syntactically
-> > > > correct
-> > > > (according to systemd check) but user name does not exist then
-> > > > systemd
-> > > > refuse to start that unit.
-> > > 
-> > > Should systemd really valid usernames?  I would think that you
-> > > would 
-> > > either use getpwnam(username) and if that fails you may then parse
-> > > it as a 
-> > > numeric value.  If "0day" isn't a valid username according to
-> > > getpwnam(), 
-> > > when converting it to a numeric uid should *also* fail because
-> > > "0day" 
-> > > isn't a properly numeric value.
-> > 
-> > It *does* fail. The problem is in the handling of that failure.
-> > systemd
-> > interprets that failure as "this line is nonsense, so behave as
-> > though the
-> > line didn't exist" rather than "this line can be positively
-> > identified as
-> > an attempt to name a nonexistent or unacceptable user, so fail to
-> > load
-> > the unit". So User=7up does the same thing as User=0day - it doesn't
-> > run as uid 7, which is 'lp' on my Debian system.
-> 
-> 
-> And therein lies the problem.  "0day" and "7up" are valid user names
-> according to Posix[1], they may or may not exist, but they are valid.
-> You may think Posix is wrong to allow an initial digit, but that isn't
-> the issue.  The problem is that systemd treats an "invalid" username
-> as
-> either an integer or not specified and in either case this results in
-> a
-> program running as the wrong user, probably as root.
-> 
-> Having systemd balk at what Posix considers to be a valid username is
-> a
-> bug that systemd is free to say "this is stupid, we're not allowing
-> that".   If, as appears to be the case, systemd says "that username is
-> stupid, we're going to interpret it differently" then that's when we
-> need a CVE because, to my mind on this hot and sunny say, that's
-> systemd
-> apparently doing something for security that it is not.
-> 
-> jch
-> 
-> 
-> [1]
-> http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.htm
-> l#tag_03_431
+CVE-2017-9802: Apache Sling XSS vulnerability
 
-https://github.com/shadow-maint/shadow/blob/master/libmisc/chkname.c#L49
+Severity: Important
 
-POSIX also says "." is a portable character, which isn't allowed by
-shadow either. What are distributions using to provide useradd if not
-shadow?
+Vendor: The Apache Software Foundation
 
-systemd's On Error Resume Next error handling seems like the main issue.
-If a unit has invalid values, it should reject it. It shouldn't ever be
-ignoring a User field because it considers it invalid. It's unfortunate
-that it enables invalid field names like Usre=validusername too, but it
-probably does that so they can introduce new fields that can be adopted
-by projects for their units without breaking compatibility with older
-versions of systemd.
+Versions Affected:
+Apache Sling Servlets Post 2.3.20
 
-I don't think it makes much sense for programs that are only consuming
-the password database to enforce their own checks, but they're free to
-do silly things like that if they feel like it and it doesn't make it a
-vulnerability. If it rejected the unit as a whole when it considers the
-username invalid, it would only be an annoyance for people that actually
-want to have a shadow / systemd incompatible username, not a potential
-security gotcha.
+Description:
+The Javascript method Sling.evalString() uses the javascript `eval`
+function to parse input strings, which allows for XSS attacks by
+passing specially crafted input strings.
+
+Mitigation:
+Users should upgrade to version 2.3.22 or later of the Sling Servlets
+Post bundle.
+
+Credit: This issue was discovered and reported by Dmitriev V.
+Daniil Dmitriev V. Daniil <sgoesw@...il.com>.
+
+References:
+
+- https://issues.apache.org/jira/browse/SLING-7041
+- https://sling.apache.org/project-information/security.html
+
+Robert Munteanu
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
