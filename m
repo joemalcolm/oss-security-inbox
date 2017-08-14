@@ -1,50 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/7
-Message-ID: <8e3602af-836a-d812-91ed-d78d7ed2a150@suse.com>
-Date: Tue, 10 Jan 2017 15:56:57 +0100
-From: Andreas Stieger <astieger@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/14/3
+Message-ID: <20170814223948.w4j6rsznsgixhc43@jwilk.net>
+Date: Tue, 15 Aug 2017 00:39:48 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8
+Subject: UnRAR: directory traversal + memory safety bugs
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+(I'm not sure UnRAR bugs are on-topic here. UnRAR is not free software, even 
+though the source is available. But the last time UnRAR was discussed nobody 
+objected, so hey, let me try too.)
 
-GnuTLS 3.3.26 and 3.5.8 were released, with the following:
+I found directory traversal and a few memory safety bugs in UnRAR 5.5.6. These 
+bugs have been fixed in UnRAR 5.5.7.
 
-https://gnutls.org/security.html#GNUTLS-SA-2017-1
+The memory safety bugs were found using American Fuzzy Lop.
 
-It was found using the OSS-FUZZ fuzzer infrastructure that decoding a
-specially crafted X.509 certificate with Proxy Certificate Information
-extension present could lead to a double free. This issue was fixed in
-GnuTLS 3.3.26 and 3.5.8.
+Here are details of the bugs:
 
-https://gitlab.com/gnutls/gnutls/commit/c5aaa488a3d6df712dc8dff23a049133cab5ec1b
+* Directory traversal
+
+The PoC (traversal.rar) contains two symlinks and a regular file:
+
+   cur -> .
+   cur/par -> ..
+   par/moo
+
+This setup defeats UnRAR's directory traversal protections:
+
+   $ ls ../moo
+   /bin/ls: cannot access '../moo': No such file or directory
+
+   $ unrar x traversal.rar
+   ...
+   Extracting  cur                                                       OK
+   Extracting  cur/par                                                   OK
+   Extracting  par/moo                                                   OK
+   All OK
+
+   $ ls ../moo
+   ../moo
+
+The code that was used to generate the PoC is available here:
+https://github.com/jwilk/path-traversal-samples
 
 
+* Out-of-bounds read in Archive::ReadHeader15 / EncodeFileName::Decode
 
-https://gnutls.org/security.html#GNUTLS-SA-2017-2
+The Archive::ReadHeader15 method contains the following code (with boring parts 
+omitted):
 
-It was found using the OSS-FUZZ fuzzer infrastructure that decoding a specially crafted OpenPGP certificate could lead to heap and stack overflows. 
+   size_t NameSize=Raw.Get2();
+   // ...
+   char FileName[NM*4];
+   size_t ReadNameSize=Min(NameSize,ASIZE(FileName)-1);
+   Raw.GetB((byte *)FileName,ReadNameSize);
+   FileName[ReadNameSize]=0;
 
-The support of OpenPGP certificates in GnuTLS is considered obsolete. As
-such, it is not recommended to use OpenPGP certificates with GnuTLS.
+   if (FileBlock)
+   {
+     if ((hd->Flags & LHD_UNICODE)!=0)
+     {
+       EncodeFileName NameCoder;
+       size_t Length=strlen(FileName);
+       Length++;
+       NameCoder.Decode(FileName,(byte *)FileName+Length,
+                        NameSize-Length,hd->FileName,
+                        ASIZE(hd->FileName));
+   // ...
 
-https://gitlab.com/gnutls/gnutls/commit/49be4f7b82eba2363bb8d4090950dad976a77a3a
-https://gitlab.com/gnutls/gnutls/commit/5140422e0d7319a8e2fe07f02cbcafc4d6538732
-https://gitlab.com/gnutls/gnutls/commit/94fcf1645ea17223237aaf8d19132e004afddc1a
+If NameSize is bigger than NM*4, this can make EncodeFileName::Decode read past 
+the bounds of the FileName array.
+
+PoC: oob-archive-readheader15.rar
 
 
+* Out-of-bounds reads in Unpack::Unpack20
 
-Could CVEs please be assigned for these issues?
+This method contains:
 
-Thanks,
-Andreas
+     int DistNumber=DecodeNumber(Inp,&BlockTables.DD);
+     unsigned int Distance=DDecode[DistNumber]+1;
 
+The array size is 48; but for the PoC (oob-unpack-unpack20.rar), DistNumber is 
+58.
+
+
+* Buffer overflow in Unpack::LongLZ
+
+This method contains:
+
+   ChSetB[DistancePlace]=ChSetB[NewDistancePlace];
+
+The array size is 256; but for the PoC (oob-unpack-longlz.rar), DistancePlace 
+is 256.
 
 -- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
+Jakub Wilk
 
+Download attachment "traversal.rar" of type "application/rar" (161 bytes)
 
+Download attachment "oob-archive-readheader15.rar" of type "application/rar" (8256 bytes)
+
+Download attachment "oob-unpack-unpack20.rar" of type "application/rar" (272 bytes)
+
+Download attachment "oob-unpack-longlz.rar" of type "application/rar" (25 bytes)
