@@ -1,4 +1,9 @@
-Received: (qmail 32232 invoked by uid 550); 17 Jun 2025 13:19:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4630" "Monday" "14" "August" "2017" "09:52:51" "+0000" "=?gb2312?B?wazSu7q6?=" "lianyihan@360.cn" "<A962A2D04FAB5C4499FEFD15B642FA0A33288BDA@EX02.corp.qihoo.net>" "79" "[oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file." nil nil nil "8" "2017081409:52:51" "[oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file." (number mark "U       lianyihan@36 Aug 14   79/4630  " thread-indent "\"[oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 14327 invoked by uid 550); 14 Aug 2017 11:49:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,209 +12,101 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5635 invoked from network); 17 Jun 2025 10:05:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ssi.gouv.fr;
-	s=20240601; t=1750154706;
-	bh=pr9x+oXC0qorfH2Ltp43DI9Tyh22mJj4UZzK8Pqskn8=;
-	h=From:To:Subject:Date:From:Subject;
-	b=EvtOqQ9lwCQ/D6fythtbYl8A5ocBbHMHFAtX6K6c+Cfa7YVLh8L/8gBJJylp5Rd1a
-	 w0e8q/68QjaH07wnbYjP1ry/n4KxBDvq39qFUQb9PoMGuhkjbJRjMwvgo7l28DIKCI
-	 TDT70p/I7HMsS+hcb+B/L+U9UP6H4AZCLUew+4m/VWjqoMvR3z+hU+0HKAOTftHqaP
-	 F3h8nM0SXWZOkLw99wdKm1hF4u1hrKUA7Ij2brDOnbAZ6u0upyCfq1KdvqSoRPIRTu
-	 Ia4HuZHqd3adgjyY6cKnqudFU98KIEKMqZbQUbc1M6NUt/91uw+frbbSJwhPzMy+Un
-	 jHzgA0Q2RYAqg==
-From: BAL-PETRE Olivier <Olivier.Bal-Petre@ssi.gouv.fr>
+Received: (qmail 16017 invoked from network); 14 Aug 2017 09:53:05 -0000
+From: =?gb2312?B?wazSu7q6?= <lianyihan@360.cn>
 To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: pam: pam_namespace local privilege escalation (CVE-2025-6020)
-Thread-Index: Advem4pwpk9KUULHRl+LwfPz4rrg6A==
-Date: Tue, 17 Jun 2025 10:05:05 +0000
-Message-ID: <610246365f5341c8b3588e207b85042e@ssi.gouv.fr>
-Accept-Language: fr-FR, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: yes
+Thread-Topic: [CVE-2017-9608] null-point-exception happened when ffmpeg
+ using dnxhd decoder to parsing a crafted mv file.
+Thread-Index: AdMU4uNT11hmz+M5T5G9WO8oGfiavg==
+Date: Mon, 14 Aug 2017 09:52:51 +0000
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A33288BDA@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
-Content-Type: multipart/signed; protocol="application/pgp-signature";
-	micalg=pgp-sha256; boundary="=-=lmVlO1F3uWjd58=-="
+x-originating-ip: [10.18.213.15]
+Content-Type: multipart/alternative;
+	boundary="_000_A962A2D04FAB5C4499FEFD15B642FA0A33288BDAEX02corpqihoone_"
 MIME-Version: 1.0
-Subject: [oss-security] pam: pam_namespace local privilege escalation (CVE-2025-6020)
+Subject: [oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using
+ dnxhd decoder to parsing a crafted mv file.
 
---=-=lmVlO1F3uWjd58=-=
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+--_000_A962A2D04FAB5C4499FEFD15B642FA0A33288BDAEX02corpqihoone_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Hello,
+SGksDQoNCkmhr20gWWloYW4gTGlhbiwgYSBzZWN1cml0eSByZXNlYXJjaGVy
+IG9mIFFpaG9vIDM2MCBHZWFyVGVhbS4NCg0KSSBmb3VuZCBhIHZ1bG5lcmFi
+aWxpdHkgb2YgZmZtcGVnLTMuMy4yLg0KDQpGRm1wZWcgY291bGQgYmUgY3Jh
+c2hlZCB3aGVuIGl0IGlzIHBhcnNpbmcgYSBjcmFmdGVkIG1vdiBmaWxlLg0K
+DQo9PT09PT09PT09PT09PT09PT09PT09PT0gdGVzdCBjb21tYW5kID09PT09
+PT09PT09PT09PT09PT09PT09PT0NCmZmbXBlZyAtYzp2IGRueGhkIC1pIHBv
+Yy5tb3YgLXkgb3V0cHV0LnRzDQoNCj09PT09PT09PT09PT09PT09PT09PT09
+PSBjcmFzaCBpbmZvID09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KUHJv
+Z3JhbSByZWNlaXZlZCBzaWduYWwgU0lHU0VHViwgU2VnbWVudGF0aW9uIGZh
+dWx0Lg0KMHgwMDAwMDAwMDAwYjY3MmU3IGluIGZmX2NvbWJpbmVfZnJhbWUg
+KHBjPTB4MjJmNGJmMCwgbmV4dD0tMSwgYnVmPTB4N2ZmZmZmZmZkNWI4LCBi
+dWZfc2l6ZT0weDdmZmZmZmZmZDViNCkgYXQgbGliYXZjb2RlYy9wYXJzZXIu
+YzozMTENCg0KMzExICAgICAgICAgICAgIHBjLT5zdGF0ZSAgID0gcGMtPnN0
+YXRlICAgPDwgOCB8IHBjLT5idWZmZXJbcGMtPmxhc3RfaW5kZXggKyBuZXh0
+XTsNCk1pc3Npbmcgc2VwYXJhdGUgZGVidWdpbmZvcywgdXNlOiBkZWJ1Z2lu
+Zm8taW5zdGFsbCBnbGliYy0yLjE3LTEwNi5lbDdfMi40Lng4Nl82NCBsaWJY
+YXUtMS4wLjgtMi4xLmVsNy54ODZfNjQgbGlieGNiLTEuMTEtNC5lbDcueDg2
+XzY0IHh6LWxpYnMtNS4xLjItMTJhbHBoYS5lbDcueDg2XzY0DQoNCihnZGIp
+IGJ0DQojMCAgMHgwMDAwMDAwMDAwYjY3MmU3IGluIGZmX2NvbWJpbmVfZnJh
+bWUgKHBjPTB4MjJmNGJmMCwgbmV4dD0tMSwgYnVmPTB4N2ZmZmZmZmZkNWI4
+LCBidWZfc2l6ZT0weDdmZmZmZmZmZDViNCkgYXQgbGliYXZjb2RlYy9wYXJz
+ZXIuYzozMTENCg0KIzEgIDB4MDAwMDAwMDAwMDg4ZjNiNiBpbiBkbnhoZF9w
+YXJzZSAocz0weDIyZjRhODAsIGF2Y3R4PTB4MjJmNDVmMCwgcG91dGJ1Zj0w
+eDdmZmZmZmZmZDcyOCwgcG91dGJ1Zl9zaXplPTB4N2ZmZmZmZmZkNzMwLCBi
+dWY9MHgyMmY1ZjUwICIiLCBidWZfc2l6ZT0tMSkNCg0KICAgIGF0IGxpYmF2
+Y29kZWMvZG54aGRfcGFyc2VyLmM6MTM4DQojMiAgMHgwMDAwMDAwMDAwYjY2
+ZDhlIGluIGF2X3BhcnNlcl9wYXJzZTIgKHM9MHgyMmY0YTgwLCBhdmN0eD0w
+eDIyZjQ1ZjAsIHBvdXRidWY9MHg3ZmZmZmZmZmQ3MjgsIHBvdXRidWZfc2l6
+ZT0weDdmZmZmZmZmZDczMCwgYnVmPTB4MjJmNWY1MCAiIiwgYnVmX3NpemU9
+MTAyNCwNCg0KICAgIHB0cz0tOTIyMzM3MjAzNjg1NDc3NTgwOCwgZHRzPS05
+MjIzMzcyMDM2ODU0Nzc1ODA4LCBwb3M9MCkgYXQgbGliYXZjb2RlYy9wYXJz
+ZXIuYzoxODINCiMzICAweDAwMDAwMDAwMDA3Y2IzNWMgaW4gcGFyc2VfcGFj
+a2V0IChzPTB4MjJmMzMxMCwgcGt0PTB4N2ZmZmZmZmZkODAwLCBzdHJlYW1f
+aW5kZXg9MCkgYXQgbGliYXZmb3JtYXQvdXRpbHMuYzoxNDE1DQojNCAgMHgw
+MDAwMDAwMDAwN2NiZjVjIGluIHJlYWRfZnJhbWVfaW50ZXJuYWwgKHM9MHgy
+MmYzMzEwLCBwa3Q9MHg3ZmZmZmZmZmRiNTApIGF0IGxpYmF2Zm9ybWF0L3V0
+aWxzLmM6MTYxMA0KIzUgIDB4MDAwMDAwMDAwMDdkMmFlMCBpbiBhdmZvcm1h
+dF9maW5kX3N0cmVhbV9pbmZvIChpYz0weDIyZjMzMTAsIG9wdGlvbnM9MHgy
+MmYzY2YwKSBhdCBsaWJhdmZvcm1hdC91dGlscy5jOjM1NzQNCiM2ICAweDAw
+MDAwMDAwMDA0MGYzZDggaW4gb3Blbl9pbnB1dF9maWxlIChvPTB4N2ZmZmZm
+ZmZkZTcwLCBmaWxlbmFtZT0weDdmZmZmZmZmZTcyNSAibW92L2lucHV0Lm1v
+diIpIGF0IGZmbXBlZ19vcHQuYzoxMDEzDQoNCiM3ICAweDAwMDAwMDAwMDA0
+MTg2ZmYgaW4gb3Blbl9maWxlcyAobD0weDIyZjMwMjgsIGlub3V0PTB4MTNk
+ZDY5NyAiaW5wdXQiLCBvcGVuX2ZpbGU9MHg0MGVhOTQgPG9wZW5faW5wdXRf
+ZmlsZT4pIGF0IGZmbXBlZ19vcHQuYzozMjAzDQoNCiM4ICAweDAwMDAwMDAw
+MDA0MTg4NjAgaW4gZmZtcGVnX3BhcnNlX29wdGlvbnMgKGFyZ2M9NywgYXJn
+dj0weDdmZmZmZmZmZTQ3OCkgYXQgZmZtcGVnX29wdC5jOjMyNDMNCiM5ICAw
+eDAwMDAwMDAwMDA0MmQxOTMgaW4gbWFpbiAoYXJnYz03LCBhcmd2PTB4N2Zm
+ZmZmZmZlNDc4KSBhdCBmZm1wZWcuYzo0NzYwDQooZ2RiKSBwIHBjLT5idWZm
+ZXINCiQxID0gKHVpbnQ4X3QgKikgMHgwDQoNCldlIGNhbiBzZWUgdGhhdCB0
+aGUgdmFsdWUgb2YgcGMtPmJ1ZmZlciBpcyBOVUxMICEhIQ0KDQoNCkFuZCBJ
+IGhhdmUgc2VudCB0aGlzIFBPQyB0byBIWVBFUkxJTksgIm1haWx0bzpjdmUt
+cmVxdWVzdEBtaXRyZS5vcmciY3ZlLXJlcXVlc3RAbWl0cmUub3JnLiBUaGV5
+IGdpdmUgbWUgYSBDVkUgbnVtYmVyLiBVc2UgQ1ZFLTIwMTctOTYwOC4NCg0K
+QmVsb3cgaXMgaXRzIGVtYWlsOg0KLS0tLS3Tyrz+1K28/i0tLS0tDQq3orz+
+yMs6IGN2ZS1yZXF1ZXN0QG1pdHJlLm9yZzxtYWlsdG86Y3ZlLXJlcXVlc3RA
+bWl0cmUub3JnPiBbbWFpbHRvOmN2ZS1yZXF1ZXN0QG1pdHJlLm9yZ10NCrei
+y83KsbzkOiAyMDE3xOo21MIxNMjVIDEwOjUwDQrK1bz+yMs6IMGs0ru6ug0K
+s63LzTogY3ZlLXJlcXVlc3RAbWl0cmUub3JnPG1haWx0bzpjdmUtcmVxdWVz
+dEBtaXRyZS5vcmc+DQrW98ziOiBSZTogW3NjcjM0Njc5OF0gZmZtcGVnIC0g
+My4zLjINCg0KPiBbVnVsbmVyYWJpbGl0eVR5cGUgT3RoZXJdDQo+IG51bGwt
+cG9pbnQtZXhjZXB0aW9uDQo+DQo+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLQ0KPg0KPiBbQWZmZWN0ZWQgUHJvZHVjdCBD
+b2RlIEJhc2VdDQo+IGZmbXBlZyAtIDMuMy4yDQo+DQo+IC0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPg0KPiBbQXR0YWNr
+IFR5cGUgT3RoZXJdDQo+IExvY2FsIGFuZCByZW1vdGUNCj4NCj4gLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+DQo+IFtJ
+bXBhY3QgRGVuaWFsIG9mIFNlcnZpY2VdDQo+IHRydWUNCg0KVXNlIENWRS0y
+MDE3LTk2MDguDQoNCi0tDQpDVkUgQXNzaWdubWVudCBUZWFtDQpNL1MgTTMw
+MCwgMjAyIEJ1cmxpbmd0b24gUm9hZCwgQmVkZm9yZCwgTUEgMDE3MzAgVVNB
+IFsgQSBQR1Aga2V5IGlzIGF2YWlsYWJsZSBmb3IgZW5jcnlwdGVkIGNvbW11
+bmljYXRpb25zIGF0DQogIGh0dHA6Ly9jdmUubWl0cmUub3JnL2N2ZS9yZXF1
+ZXN0X2lkLmh0bWwgXQ0KDQoNCg0K
 
-This is a report about a potential privilege escalation in the
-pam_namespace.so PAM module. This module is one of the core PAM
-modules from the linux-pam project [1].
-
-The vulnerability has been fixed in linux-pam v1.7.1 [2] and is tracked
-as CVE-2025-6020 and GHSA-f9p8-gjr4-j9gx [3].
-
-In addition to upgrading to the latest version, users of pam_namespace
-may want to update their namespace.init script if they do not use the
-one provided by their distribution. See section "Patches and mitigation"
-for more details.
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-The vulnerability
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-When setting up the polyinstantiation of directories, the module
-pam_namespace may access files and directories owned by unprivileged
-users. This is for instance the case when configuring polyinstantiated
-home directories for the users in the following way, inspired by the
-example in man namespace.conf(5):
-
-    $HOME  $HOME/$USER.inst/  user  root
-
-When accessing a directory owned by a user or writable by a user,
-pam_namespace does it with great care. It resorts to two techniques:
-
-1. Using file descriptors and relative paths instead of absolute paths.
-
-2. Bind mounting on themselves all the directories that can be modified
-   by an unprivileged user and are part of the given path. The goal is
-   to forbid changes on these directories while operating on the path.
-   This is what functions protect_dir() and protect_mount() do.
-
-The first technique is used in some parts of the code, but some
-operations are also made on user-controlled paths using absolute paths.
-Thus, these operations are safe only if the second technique is reliable.
-
-At the time the pam_namespace module was written, the second technique
-was effective against a malicious user operating in any mount namespace.
-However, since Linux 3.18, it's only effective if the malicious user is
-operating *in the same mount namespace* as the one the mount was made
-in. Indeed, as man mount_namespaces(7) states:
-
-    A file or directory that is a mount point in one namespace that is
-    not a mount point in another namespace, may be renamed, unlinked,
-    or removed (rmdir(2)) in the mount namespace in which it is not
-    a mount point [...]. Consequently, the mount point is removed in
-    the mount namespace where it was a mount point.
-
-    Previously (before Linux 3.18), attempting to unlink, rename,
-    or remove a file or directory that was a mount point in another
-    mount namespace would result in the error EBUSY.
-
-Therefore, if a user can launch a process outside of the mount namespace
-created by pam_namespace (i.e. outside of their PAM session), they are
-able to alter the paths on which pam_namespace is operating as root.
-Doing so, they can launch symlink attacks, race the other security
-checks in the code, and elevate their privileges to root.
-
-It may be complicated to launch a process outside of a mount namespace
-as an unprivileged user, but the context can help an attacker to do so.
-For instance:
-
-* If two users are colluding or are compromised on the same system, the
-  first one can mess with the paths used to polyinstantiate directories
-  for the second user. Indeed, they will not be restricted by
-  pam_namespace, as they will be in their own PAM session and therefore
-  in their own mount namespace with their own mounts.
-
-* A PAM service is misconfigured and do not call pam_namespace when
-  creating a new PAM session. This can be found in the wild, especially
-  because some packages come with PAM service files that do not include
-  the common PAM service files of their distribution (common-session,
-  system-auth, ...). This easily leads to misconfigurations, and in this
-  case, can be turned into a local privilege escalation to root.
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Patches and mitigation
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-In order to fix the issue, the following changes were made:
-
-* All the functions that may operate on a user-controlled path were
-  converted to operate on file descriptors instead of absolute path.
-
-* The existing bind-mount protection provided by protect_mount() is kept
-  as a defense in depth measure.
-
-* Protecting the shell script namespace.init against symlink attacks and
-  race conditions was deemed too complicated, especially because its
-  content can be modified by vendors and users. Instead, it now
-  receives two additional flags as arguments to indicate if the polydir
-  path and the instance path are safe to operate on as root.
-
-  If they provide their own script in place of the default one, vendors
-  and users are expected to update their script to check for these
-  flags and not operate on user-controlled paths.
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-2025-01-29: The vulnerability is reported to the maintainers. A PoC
-            demonstrating the LPE to root and a draft of a patch are
-            provided as well.
-
-2025-02-17: An upstream maintainer acknowledge the issue and provides
-            the first comments on the patch.
-
-2025-06-05: After successive iterations and reviews, the patch is ready.
-
-2025-06-11: Issue shared with the linux-distro mailing list.
-            CVE-2025-6020 is assigned.
-
-2025-06-17: Upstream linux-pam releases v1.7.1 containing the fix.
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-References
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-[1]: https://github.com/linux-pam/linux-pam
-[2]: https://github.com/linux-pam/linux-pam/releases/tag/v1.7.1
-[3]: https://github.com/linux-pam/linux-pam/security/advisories/GHSA-f9p8-g=
-jr4-j9gx
-
---
-
-Best regards,
-
-Olivier BAL-PETRE
-ANSSI - French Cybersecurity Agency
-https://cyber.gouv.fr/
-
---=-=lmVlO1F3uWjd58=-=
-Content-Type: application/pgp-signature;
-	name="openpgp-digital-signature.asc"
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAEBCAAdFiEE0ftIAyz7k8fVDUlh1duLaXH3c0wFAmhRPcgACgkQ1duLaXH3
-c0wBWAwAlo/AxVUoyXKkxx+eOqp0BNOdM9z1zWoGVx2ZoNxammuTF14RDrFPEZXL
-xo0WvytE8GpQbIIcHzJISeG4B8/0ndbZja9RmmareBEldeFsKdzOlmEar0nt0895
-4atCCVx+RjIkmavCPBEfotu6IHpVsMHzj07/HYo9IfKwnxhl/EUamkfEfeIwxDu4
-233tdv6xHdJ0rsoJ6oiQbZFU3bFcvuN38qFQhA2MAAQ/MWFzS6vKuUZi1+v21Ech
-mtWe4hY/5OypiHuUvmvQEeVcCHitWNCBPjxquqY0kgoGa90JSlOunBnfdOI4JBlV
-35v68RBI6t4V628xJieZhTP0FNpC0E5IOYldoA6iOHx3XjzMe9ONW6ebktOiSMRJ
-sQ25us2ALJqj8Gve3tQml67znW7xEKcnQWVPXWAWJDJ5HgscGtk32U0yvU/uHBAy
-uR1M6TxmGaqfvCYiFhNUtqzfv49ijQ3wBRZNbBEztZYBbP/9KjS/kcuNK8lFdPYJ
-v087UhpG
-=Jdp3
------END PGP SIGNATURE-----
-
-
---=-=lmVlO1F3uWjd58=-=--
+--_000_A962A2D04FAB5C4499FEFD15B642FA0A33288BDAEX02corpqihoone_--
