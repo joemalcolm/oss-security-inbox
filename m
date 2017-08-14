@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1577" "Tuesday" "9" "February" "2016" "18:37:26" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160209233726.D5C4342E09B@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: KDE Plasma vulnerability: need CVE" nil nil nil "2" "2016020923:37:26" "[oss-security] Re: KDE Plasma vulnerability: need CVE" (number mark "U       cve-assign@m Feb  9   38/1577  " thread-indent "\"[oss-security] Re: KDE Plasma vulnerability: need CVE\"\n") "<4879177.l6fT5WhknG@xps>" ("<4879177.l6fT5WhknG@xps>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1509" "Monday" "14" "August" "2017" "14:03:47" "+0300" "Robert Munteanu" "rombert@apache.org" "<1502708627.10890.12.camel@apache.org>" "51" "[oss-security] CVE-2017-9802: Apache Sling XSS vulnerability" nil nil nil "8" "2017081411:03:47" "[oss-security] CVE-2017-9802: Apache Sling XSS vulnerability" (number mark "U       rombert@apac Aug 14   51/1509  " thread-indent "\"[oss-security] CVE-2017-9802: Apache Sling XSS vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22338 invoked by uid 550); 9 Feb 2016 23:37:39 -0000
+Received: (qmail 15592 invoked by uid 550); 14 Aug 2017 11:49:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22315 invoked from network); 9 Feb 2016 23:37:38 -0000
-From: cve-assign@mitre.org
-To: aacid@kde.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@kde.org
-In-Reply-To: <4879177.l6fT5WhknG@xps>
-Message-Id: <20160209233726.D5C4342E09B@smtpvbsrv1.mitre.org>
-Date: Tue,  9 Feb 2016 18:37:26 -0500 (EST)
-Subject: [oss-security] Re: KDE Plasma vulnerability: need CVE
+Received: (qmail 8125 invoked from network); 14 Aug 2017 11:04:17 -0000
+Message-ID: <1502708627.10890.12.camel@apache.org>
+From: Robert Munteanu <rombert@apache.org>
+To: oss-security@lists.openwall.com
+Date: Mon, 14 Aug 2017 14:03:47 +0300
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-p54AchgEX8D+Y4DOFQBQ"
+X-Mailer: Evolution 3.24.4 
+Mime-Version: 1.0
+Subject: [oss-security] CVE-2017-9802: Apache Sling XSS vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--=-p54AchgEX8D+Y4DOFQBQ
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> https://www.kde.org/info/security/advisory-20160209-1.txt
+CVE-2017-9802: Apache Sling XSS vulnerability
 
-> https://bugs.kde.org/show_bug.cgi?id=358125
-> https://bugzilla.opensuse.org/show_bug.cgi?id=964548
+Severity: Important
 
-> Qt allows to have no screens. If all XRandR screens are disconnected
-> there are also no QScreens. This is from an X11 perspective wrong, but
-> we have to deal with it. No QScreens means that all views are destroyed
-> and no new ones are created. Thus all windows close and the greeter
-> exited successfully which in turn unlocked the screen.
+Vendor: The Apache Software Foundation
 
-Use CVE-2016-2312.
+Versions Affected:
+Apache Sling Servlets Post 2.3.20
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Description:
+The Javascript method Sling.evalString() uses the javascript `eval`
+function to parse input strings, which allows for XSS attacks by
+passing specially crafted input strings.
+
+Mitigation:
+Users should upgrade to version 2.3.22 or later of the Sling Servlets
+Post bundle.
+
+Credit: This issue was discovered and reported by Dmitriev V.
+Daniil Dmitriev V. Daniil <sgoesw@gmail.com>.
+
+References:
+
+- https://issues.apache.org/jira/browse/SLING-7041
+- https://sling.apache.org/project-information/security.html
+
+Robert Munteanu=
+
+--=-p54AchgEX8D+Y4DOFQBQ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWundZAAoJEL54rhJi8gl5D9sQAIdek7UXlkLwVbO0syNQ0wMs
-TsZBLePf5Ja0cfJQAAwK9yglPj2qDTHGfao9uZ+SEOsSG1u/cl61xsnHJB2RTBmv
-eyUZEWi1ysC4PuVJ/lIA5BhoIC3x/UWto1jLf/p4e/C5z/h4x13uMeaaRf68q/eW
-yRIYfWejHa/KpaqWj7cp5btKQoQbimfU1z8cR9kTomt9lVnOhKWSSutBZI9n9ffO
-PP2N6MrwnjaBOA+RUe++qUSyn1xEA2s5QDNYnKGyFZbusaLNqTy+QlBnTpU1a6Aq
-kA4+d6nsq7uZ3uxEhhgRfTBhPBmrl8k/N6/tgJFLDWsPZVSt1ZN+2RsYTh9P+Hit
-8cZyQj1kZSOnUufcv7qvxLIiUkIKq0/H3k+fgcXODQDhxt8+pymcNZE7lHiHhlyG
-fnduLHWIYXj7W+F15lpM7OTAVYi/cmbF9NNw43fg/I5xp0GHVV481KD7zW7CT6J+
-bihhdZiAl0SgxP/nR91D/JiKOKcw9KXhuaZChUKlhVgXyLGetbivTLkp+Qhbh1Dt
-DL/OyWprFy/cJSJIKAaAxDLWTo7gbNl/FnSHCjzPwl+nbrw11DeVD5W313VFSGwQ
-f7itbKMjlribDEZX6WC5OuXvv8uVWGUFTsVb3Ki5fi8pJeItzMS6lyZ6yJS3Skm5
-2Pz3zbA8ldJBJGX/anss
-=ti15
+iQEzBAABCAAdFiEECmZcRnC0eL8SI1zNM5UIZU9j7FQFAlmRg5MACgkQM5UIZU9j
+7FT4swgAtMFJoTvtKdXl1BkRpCBm3DvpMn2NwKW31QG3/x22FvEJEPwy7kTyWia2
+Nt0h2rXO4jkL6WDTyEzSZE6X2XV6D7m2dRfR8J3ZJ094qx8zrxvdh3WZq0E7oUGf
+7LbltT3oza3lLy5TWo5gKgZIcYMY/ub85lLZ7dhM8JdVmutaiV9OhtmpsiISt4CX
+k4oh34HxgVQgtTs8HBSrGZO3zcrxKn4TSmtgLvrLDoCVYs+0mCdeNlpM5abgX8hD
+Q63nP7m9kmcYuw3XokgX/XslFq+ep8HGP67TNMEG0LUXAlXKyncKzLxC/Df3wMIx
+IGf9uisL7orts+KuOF+iDC1VSeEJ2Q==
+=0t4E
 -----END PGP SIGNATURE-----
+
+--=-p54AchgEX8D+Y4DOFQBQ--
+
