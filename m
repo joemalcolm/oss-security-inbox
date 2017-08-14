@@ -1,54 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/1
-Message-ID: <CAE-_4r1+bd+5utcah-_TEh3CiDWdj=030=COQjtg57GTx997pQ@mail.gmail.com>
-Date: Sun, 26 Feb 2017 11:07:10 +0200
-From: Ariel Zelivansky <ariel.zelivans@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Multiple vulnerabilities in gdk-pixbuf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/14/1
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A33288BDA@EX02.corp.qihoo.net>
+Date: Mon, 14 Aug 2017 09:52:51 +0000
+From: 连一汉 <lianyihan@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file.
 Content-Type: text/plain; charset=utf-8
 
-To keep all the information in one place, the following CVE IDs had been
-assigned by MITRE:
-CVE-2017-6313 for [1]
-CVE-2017-6314 for [2]
-CVE-2017-6312 for [3]
-CVE-2017-6311 for [4]
+Hi,
+
+I’m Yihan Lian, a security researcher of Qihoo 360 GearTeam.
+
+I found a vulnerability of ffmpeg-3.3.2.
+
+FFmpeg could be crashed when it is parsing a crafted mov file.
+
+======================== test command =========================
+ffmpeg -c:v dnxhd -i poc.mov -y output.ts
+
+======================== crash info ===========================
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000b672e7 in ff_combine_frame (pc=0x22f4bf0, next=-1, buf=0x7fffffffd5b8, buf_size=0x7fffffffd5b4) at libavcodec/parser.c:311
+
+311             pc->state   = pc->state   << 8 | pc->buffer[pc->last_index + next];
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-106.el7_2.4.x86_64 libXau-1.0.8-2.1.el7.x86_64 libxcb-1.11-4.el7.x86_64 xz-libs-5.1.2-12alpha.el7.x86_64
+
+(gdb) bt
+#0  0x0000000000b672e7 in ff_combine_frame (pc=0x22f4bf0, next=-1, buf=0x7fffffffd5b8, buf_size=0x7fffffffd5b4) at libavcodec/parser.c:311
+
+#1  0x000000000088f3b6 in dnxhd_parse (s=0x22f4a80, avctx=0x22f45f0, poutbuf=0x7fffffffd728, poutbuf_size=0x7fffffffd730, buf=0x22f5f50 "", buf_size=-1)
+
+    at libavcodec/dnxhd_parser.c:138
+#2  0x0000000000b66d8e in av_parser_parse2 (s=0x22f4a80, avctx=0x22f45f0, poutbuf=0x7fffffffd728, poutbuf_size=0x7fffffffd730, buf=0x22f5f50 "", buf_size=1024,
+
+    pts=-9223372036854775808, dts=-9223372036854775808, pos=0) at libavcodec/parser.c:182
+#3  0x00000000007cb35c in parse_packet (s=0x22f3310, pkt=0x7fffffffd800, stream_index=0) at libavformat/utils.c:1415
+#4  0x00000000007cbf5c in read_frame_internal (s=0x22f3310, pkt=0x7fffffffdb50) at libavformat/utils.c:1610
+#5  0x00000000007d2ae0 in avformat_find_stream_info (ic=0x22f3310, options=0x22f3cf0) at libavformat/utils.c:3574
+#6  0x000000000040f3d8 in open_input_file (o=0x7fffffffde70, filename=0x7fffffffe725 "mov/input.mov") at ffmpeg_opt.c:1013
+
+#7  0x00000000004186ff in open_files (l=0x22f3028, inout=0x13dd697 "input", open_file=0x40ea94 <open_input_file>) at ffmpeg_opt.c:3203
+
+#8  0x0000000000418860 in ffmpeg_parse_options (argc=7, argv=0x7fffffffe478) at ffmpeg_opt.c:3243
+#9  0x000000000042d193 in main (argc=7, argv=0x7fffffffe478) at ffmpeg.c:4760
+(gdb) p pc->buffer
+$1 = (uint8_t *) 0x0
+
+We can see that the value of pc->buffer is NULL !!!
 
 
+And I have sent this POC to HYPERLINK "mailto:cve-request@...re.org"cve-request@...re.org. They give me a CVE number. Use CVE-2017-9608.
 
-On Thu, Feb 23, 2017 at 10:26 AM, Ariel Zelivansky <ariel.zelivans@...il.com
-> wrote:
+Below is its email:
+-----邮件原件-----
+发件人: cve-request@...re.org<mailto:cve-request@...re.org> [mailto:cve-request@...re.org]
+发送时间: 2017年6月14日 10:50
+收件人: 连一汉
+抄送: cve-request@...re.org<mailto:cve-request@...re.org>
+主题: Re: [scr346798] ffmpeg - 3.3.2
 
-> Leo, thanks for the reference.
+> [VulnerabilityType Other]
+> null-point-exception
 >
-> I have requested a CVE via the web form and haven't heard from MITRE so
-> far. Do they usually take time in responding?
-> Or am I supposed to contact some other CNA?
+> ------------------------------------------
 >
-> On Tue, Feb 21, 2017 at 10:42 PM, Leo Famulari <leo@...ulari.name> wrote:
+> [Affected Product Code Base]
+> ffmpeg - 3.3.2
 >
->> On Tue, Feb 21, 2017 at 05:20:11PM +0200, Ariel Zelivanski wrote:
->> > Hello,
->> >
->> > I just reported several vulnerabilities in gdk-pixbuf. I am adding the
->> > relevant details but you can also refer to the bug reports in the
->> links. If
->> > suitable please assign CVEs.
->>
->> As announced previously [0], MITRE is no longer assigning CVEs based on
->> messages to this list. Will you request the CVE IDs via the new web
->> form? [1]
->>
->> [0]
->> http://seclists.org/oss-sec/2017/q1/351
->>
->> [1]
->> https://cveform.mitre.org/
->>
+> ------------------------------------------
 >
+> [Attack Type Other]
+> Local and remote
 >
+> ------------------------------------------
 >
-> --
-> *Ariel Zelivansky *— 0503990401 <050-399-0401>
->
+> [Impact Denial of Service]
+> true
+
+Use CVE-2017-9608.
+
+--
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA [ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+
+
 
