@@ -1,73 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/5
-Message-ID: <9288234.IgCNv62ja1@arcadia>
-Date: Sun, 29 Jan 2017 17:50:41 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/15/7
+Message-ID: <17c021e8-7b27-32ef-cfa1-1bbc51389359@chbi.eu>
+Date: Tue, 15 Aug 2017 20:54:01 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Subject: mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)
+Subject: CVE-2017-12850, CVE-2017-12851: Privilege Escalation in Kanboard <= v1.0.45
 Content-Type: text/plain; charset=utf-8
 
-Description:
-mp3splt is a command line utility to split mp3 and ogg files without decoding.
+Hi,
 
-A fuzz on it discovered a NULL pointer access.
+there are two security issues in Kanboard <= v1.0.45 (https://kanboard.net)
 
-The complete ASan output:
 
-# mp3splt -P -f -t 0.1 -a $FILE
-==2581==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x7f36fb0a159a bp 0x7ffdc2708cb0 sp 0x7ffdc2708438 T0)
-==2581==The signal is caused by a READ memory access.
-==2581==Hint: address points to the zero page.
-    #0 0x7f36fb0a1599 in strlen /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76
-    #1 0x47a571 in __interceptor_fopen64 /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:5167
-    #2 0x7f36fbf0d27e in splt_cue_export_to_file /tmp/portage/media-
-libs/libmp3splt-0.9.2/work/libmp3splt-0.9.2/src/cue.c:725
-    #3 0x7f36fbf0911b in mp3splt_export /tmp/portage/media-
-libs/libmp3splt-0.9.2/work/libmp3splt-0.9.2/src/mp3splt.c:1665
-    #4 0x51d5f0 in main /tmp/portage/media-
-sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/mp3splt.c:901:13
-    #5 0x7f36fb04061f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #6 0x41ad08 in _init (/usr/bin/mp3splt+0x41ad08)
+CVE-2017-12850:
+By altering form data an authenticated standard user can set a new
+password for any other user (including the admin) to takeover the account.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
-r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76 in strlen
-==2581==ABORTING
+Fix:
+https://github.com/kanboard/kanboard/commit/88dd6abbf3f519897f2f6280e95c9eec9123a4ae
 
-Affected version:
-0.9.2
 
-Fixed version:
-N/A
+CVE-2017-12851:
+By altering form data an authenticated standard user can change the mail
+address of the admin account to set a new password via "Forgot
+password?" to takeover the admin account.
 
-Commit fix:
-N/A
+Fix:
+https://github.com/kanboard/kanboard/commit/b79b18efd7a1a8b591753a4eddd473f88d55b7df
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-N/A
+Both issues are fixed in Kanboard v1.0.46.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00129-mp3splt-nullptr-splt_cue_export_to_file
-
-Timeline:
-2017-01-01: private report to upstream via mail
-2017-01-29: public upstream report on sourceforge
-2017-01-29: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/29/mp3splt-null-pointer-dereference-in-splt_cue_export_to_file-cue-c
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
