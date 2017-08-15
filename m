@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3101" "Wednesday" "14" "February" "2018" "16:04:52" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<11bafb9e-8c50-db0b-4640-65ba072e0eaf@orlitzky.com>" "102" "[oss-security] CVE-2017-18188: opentmpfiles root privilege escalation via recursive chown" nil nil nil "2" "2018021421:04:52" "[oss-security] CVE-2017-18188: opentmpfiles root privilege escalation via recursive chown" (number mark "U       michael@orli Feb 14  102/3101  " thread-indent "\"[oss-security] CVE-2017-18188: opentmpfiles root privilege escalation via recursive chown\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["14577" "Tuesday" "15" "August" "2017" "12:05:49" "+0000" "Xen.org security team" "security@xen.org" "<E1dhabV-0006du-B7@xenbits.xenproject.org>" "310" "[oss-security] Xen Security Advisory 227 (CVE-2017-12137) - x86: PV privilege escalation via map_grant_ref" nil nil nil "8" "2017081512:05:49" "[oss-security] Xen Security Advisory 227 (CVE-2017-12137) - x86: PV privilege escalation via map_grant_ref" (number mark "U       security@xen Aug 15  310/14577 " thread-indent "\"[oss-security] Xen Security Advisory 227 (CVE-2017-12137) - x86: PV privilege escalation via map_grant_ref\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20303 invoked by uid 550); 14 Feb 2018 21:05:11 -0000
+Received: (qmail 17669 invoked by uid 550); 15 Aug 2017 12:06:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,125 +12,327 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20284 invoked from network); 14 Feb 2018 21:05:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1518642299; bh=aFioq5IVqQSmz4fxq0oA8npmmE1Km+ownpG6iWdc3UA=;
-	h=To:From:Subject:Date;
-	b=qzuffCIa6kxFyeo4NcAwSkDWcQrX6zPnD/pIpFWSfLBOwhcc7nfNHIvbYHGOsfaHR
-	 j48gRASmxyiBrHc/n3Oz0ar4xDk8FYwoiYWULe80c4XM/Duzq0ThIV+7EbPsQRn0PZ
-	 ra2s1oFtBhc0ItJ7VF8okEzywouljto30ycpVGXs=
-To: oss-security@lists.openwall.com
-From: Michael Orlitzky <michael@orlitzky.com>
-Message-ID: <11bafb9e-8c50-db0b-4640-65ba072e0eaf@orlitzky.com>
-Date: Wed, 14 Feb 2018 16:04:52 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+Received: (qmail 17647 invoked from network); 15 Aug 2017 12:06:06 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2017-18188: opentmpfiles root privilege escalation via recursive
- chown
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1dhabV-0006du-B7@xenbits.xenproject.org>
+Date: Tue, 15 Aug 2017 12:05:49 +0000
+Subject: [oss-security] Xen Security Advisory 227 (CVE-2017-12137) - x86: PV privilege
+ escalation via map_grant_ref
 
-Product: opentmpfiles
-Versions-affected: 0.1.3 and earlier (all)
-Author: Michael Orlitzky
-Bug-report: https://github.com/OpenRC/opentmpfiles/issues/3
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-== Summary ==
+            Xen Security Advisory CVE-2017-12137 / XSA-227
+                               version 3
 
-The opentmpfiles program implements the tmpfiles.d specification for
-POSIX systems that do not run systemd. When processing a "Z" type entry,
-opentmpfiles calls chown recursively to change ownership of the target
-directory and its contents. An attacker can introduce a hard link into
-that directory pointing to a sensitive file, and the next time that
-opentmpfiles is run, ownership of the hard link's target will be given
-to the attacker.
+            x86: PV privilege escalation via map_grant_ref
 
+UPDATES IN VERSION 3
+====================
 
-== Details ==
+Public release.
 
-The specification for the Z-type tmpfiles.d entry implies some type of
-recursive chown:
+ISSUE DESCRIPTION
+=================
 
-  Z
+When mapping a grant reference, a guest must inform Xen of where it
+would like the grant mapped.  For PV guests, this is done by nominating
+an existing linear address, or an L1 pagetable entry, to be altered.
 
-  Recursively set the access mode, group and user, and restore the
-  SELinux security context of a file or directory if it exists, as well
-  as of its subdirectories and the files contained therein (if
-  applicable). Lines of this type accept shell-style globs in place of
-  normal path names. Does not follow symlinks.
+Neither of these PV paths check for alignment of the passed parameter.
+The linear address path suitably truncates the linear address when
+calculating the L1 entry to use, but the path which uses a directly
+nominated L1 entry performs no checks.
 
-In opentmpfiles, this is implemented in the "tmpfiles" script:
+This causes Xen to make an incorrectly-aligned update to a pagetable,
+which corrupts both the intended entry and the subsequent entry with
+values which are largely guest controlled.  If the misaligned value
+crosses a page boundary, then an arbitrary other heap page is
+corrupted.
 
-  _Z() {
-    # Recursively set ownership, access mode and relabel security
-    # context of a path and all its subdirectories (if it is a
-    # directory). Lines of this type accept shell-style globs in
-    # place of normal path names.
-    [ $CREATE -gt 0 ] || return 0
+IMPACT
+======
 
-    CHOPTS=-R relabel "$@"
-  }
+A PV guest can elevate its privilege to that of the host.
 
-  relabel() {
-    ...
-    if [ $uid != '-' ]; then
-      dryrun_or_real chown $CHOPTS "$uid" "$path"
-      x=$?
-      if [ $x -ne 0 ]; then
-        status=$x
-      fi
-    fi
-    ...
-  }
+VULNERABLE SYSTEMS
+==================
 
-  dryrun_or_real() {
-    local dryrun=
-    if [ $DRYRUN -eq 1 ]; then
-      dryrun=echo
-    fi
-    $dryrun "$@"
-  }
+All versions of Xen are vulnerable.
 
-Ultimately, the target of the Z-type entry has "chown -R" called on
-it. By default, chown will refuse to follow symlinks when operating
-recursively; however, hard links are another story. Unless some
-(nonstandard) kernel-level protection is enabled, unprivileged users
-are free to create hard links to root-owned files, and chown will
-follow them.
+Only x86 systems are vulnerable.
 
-This is straightforward to exploit as the user who owns the target of
-a Z-type entry. Take for example the following tmpfiles.d entry, in
-/etc/tmpfiles.d/exploit.conf:
+Any system running untrusted PV guests is vulnerable.
 
-  d /var/lib/opentmpfiles-exploit 0755 mjo mjo
-  Z /var/lib/opentmpfiles-exploit 0755 mjo mjo
+The vulnerability is exposed to PV stub qemu serving as the device model
+for HVM guests.  Our default assumption is that an HVM guest has
+compromised its PV stub qemu.  By extension, it is likely that the
+vulnerability is exposed to HVM guests which are served by a PV stub
+qemu.
 
-When opentmpfiles is run, ownership of that directory is given to my mjo
-user:
+MITIGATION
+==========
 
-  mjo $ sudo /etc/init.d/opentmpfiles-setup start
-  mjo $ ls -ld /var/lib/opentmpfiles-exploit
-  drwxr-xr-x 2 mjo mjo 4096 Feb 13 18:38 /var/lib/opentmpfiles-exploit
+Running only HVM guests, served by a dom0-based qemu, will avoid this
+vulnerability.
 
-At that point, I'm free to introduce whatever hard links I want,
+CREDITS
+=======
 
-  mjo $ ln /etc/passwd /var/lib/opentmpfiles-exploit/x
+This issue was discovered by Andrew Cooper of Citrix.
 
-and then restart opentmpfiles (which would happen after a reboot, anyway):
+RESOLUTION
+==========
 
-  mjo $ sudo /etc/init.d/opentmpfiles-setup restart
+Applying the appropriate attached patch resolves this issue.
 
-The "chown -R" follows my link, and afterwards I own /etc/passwd:
+xsa227.patch           xen-unstable, Xen 4.9.x, 4.8.x, 4.7.x
+xsa227-4.6.patch       Xen 4.6.x
+xsa227-4.5.patch       Xen 4.5.x
 
-  mjo $ ls -l /etc/passwd
-  -rwxr-xr-x 2 mjo mjo 1504 Feb 13 19:15 /etc/passwd
+$ sha256sum xsa227*
+c48cc3be47e81a4ceebcf60659b8755516c68916fc5150920ed42c6b61e3f219  xsa227.meta
+9923a47e5f86949800887596f098954a08ef73a01d74b1dbe16cab2e6b1fabb2  xsa227.patch
+6f83d0d9ff853192840d2b82d26d8fde21473bf4ac1441a153f3ee02efd1dd67  xsa227-4.5.patch
+162b991b27b86f210089526a01cae715563d3a069c92f42538b423bba7709fcc  xsa227-4.6.patch
+$
 
+(The .meta file is a prototype machine-readable file for describing
+which patches are to be applied how.)
 
-== Mitigation ==
+DEPLOYMENT DURING EMBARGO
+=========================
 
-On Linux, the fs.protected_hardlinks sysctl should be enabled:
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
-  root # sysctl --write fs.protected_hardlinks=1
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZkuNOAAoJEIP+FMlX6CvZ9wsH/3/DA8EENxPdhgoNEihvHgPP
+rquggFGcmgiJZyuy6+e3PZKUwQmUcVdPuVE5h+8NWYRCTjxa15LC/auAmkMHP170
+f7nkSA6oU0zT1mxxqWWjht+CCJ56dmpJN+WGXQMasVEO9PLYR7gOxf90rqDuzqE8
+zcQA4OyIOpsEH4Y2k2hjYFeLleWSLZKSPAy8fupZv34FakZDDLgxPMdWSrYQX/pP
+r2QmLoVk4pSQYZzy5aAZWgLugR+ewOmgYTntzGYSEB2VqEgl6vtA8STVqB5WsYZ4
+eumUUZRBUeo9n2U9TgWPmKr5JtvC9w2/cjV6HysO5vUwuLJUICX25O9BE3VnBs0=
+=ulEd
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa227.meta"
+Content-Disposition: attachment; filename="xsa227.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAyMjcsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC45IiwKICAgICI0LjgiLAogICAgIjQuNyIsCiAg
+ICAiNC42IiwKICAgICI0LjUiCiAgXSwKICAiVHJlZXMiOiBbCiAgICAieGVu
+IgogIF0sCiAgIlJlY2lwZXMiOiB7CiAgICAiNC41IjogewogICAgICAiWGVu
+VmVyc2lvbiI6ICI0LjUiLAogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
+eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIzMjE3MTI5ZWI2NWMw
+ZDQ5OTVlZDA4ZmI4OTE5ZTNjMzM0Y2FkNTQ4IiwKICAgICAgICAgICJQcmVy
+ZXFzIjogWwogICAgICAgICAgICAyMjYKICAgICAgICAgIF0sCiAgICAgICAg
+ICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTIyNy00LjUucGF0Y2gi
+CiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQu
+NiI6IHsKICAgICAgIlhlblZlcnNpb24iOiAiNC42IiwKICAgICAgIlJlY2lw
+ZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYi
+OiAiZDcwOGI2OTVhMzZiNGZkY2Q4ZTQ4ZTZmYzhlNjExZTAxMGY1MjgwYiIs
+CiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjI2CiAgICAg
+ICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4
+c2EyMjctNC42LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
+fQogICAgfSwKICAgICI0LjciOiB7CiAgICAgICJYZW5WZXJzaW9uIjogIjQu
+NyIsCiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
+ICAgICAiU3RhYmxlUmVmIjogIjRmYmZhMzRiMWEwYmIzMjlhYTU3Mjc1NDIx
+ZTJlOTAyN2QzMmFhZDUiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAg
+ICAgICAgIDIyNgogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjog
+WwogICAgICAgICAgICAieHNhMjI3LnBhdGNoIgogICAgICAgICAgXQogICAg
+ICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjgiOiB7CiAgICAgICJYZW5W
+ZXJzaW9uIjogIjQuOCIsCiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4
+ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjFlNmM4OGZhZmNiNDY2
+NGE1MDEyMzlkMWQ4NjY1YzM0YjUzODQ2NDgiLAogICAgICAgICAgIlByZXJl
+cXMiOiBbCiAgICAgICAgICAgIDIyNgogICAgICAgICAgXSwKICAgICAgICAg
+ICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjI3LnBhdGNoIgogICAg
+ICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjkiOiB7
+CiAgICAgICJYZW5WZXJzaW9uIjogIjQuOSIsCiAgICAgICJSZWNpcGVzIjog
+ewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjBm
+YWRhMDU5YTc5NDgxNTM5NzZjYzE1MmUzNjYzM2RlZTNkNWIyNzMiLAogICAg
+ICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDIyNgogICAgICAgICAg
+XSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjI3
+LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwK
+ICAgICJtYXN0ZXIiOiB7CiAgICAgICJYZW5WZXJzaW9uIjogIm1hc3RlciIs
+CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
+ICAiU3RhYmxlUmVmIjogIjU1OTI0YmFmMjIxMWRkY2Y1YmE4ZjcwMmM5YTRj
+MDc3MzBlMGM4ZTgiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAg
+ICAgIDIyNgogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwog
+ICAgICAgICAgICAieHNhMjI3LnBhdGNoIgogICAgICAgICAgXQogICAgICAg
+IH0KICAgICAgfQogICAgfQogIH0KfQ==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa227.patch"
+Content-Disposition: attachment; filename="xsa227.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBmYTcyNjhiOTRmOGEwYTc3OTJlZTEyZDViOGUyM2E2MGU1MmEzYTg0
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgQ29vcGVy
+IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpEYXRlOiBUdWUsIDIwIEp1
+biAyMDE3IDE5OjE4OjU0ICswMTAwClN1YmplY3Q6IFtQQVRDSF0geDg2L2dy
+YW50OiBEaXNhbGxvdyBtaXNhbGlnbmVkIFBURXMKClBhZ2V0YWJsZSBlbnRy
+aWVzIG11c3QgYmUgYWxpZ25lZCB0byBmdW5jdGlvbiBjb3JyZWN0bHkuICBE
+aXNhbGxvdyBhdHRlbXB0cwpmcm9tIHRoZSBndWVzdCB0byBoYXZlIGEgZ3Jh
+bnQgUFRFIGNyZWF0ZWQgYXQgYSBtaXNhbGlnbmVkIGFkZHJlc3MsIHdoaWNo
+CndvdWxkIHJlc3VsdCBpbiBjb3JydXB0aW9uIG9mIHRoZSBMMSB0YWJsZSB3
+aXRoIGxhcmdlbHktZ3Vlc3QtY29udHJvbGxlZAp2YWx1ZXMuCgpUaGlzIGlz
+IFhTQS0yMjcKClNpZ25lZC1vZmYtYnk6IEFuZHJldyBDb29wZXIgPGFuZHJl
+dy5jb29wZXIzQGNpdHJpeC5jb20+ClJldmlld2VkLWJ5OiBKYW4gQmV1bGlj
+aCA8amJldWxpY2hAc3VzZS5jb20+Ci0tLQogeGVuL2FyY2gveDg2L21tLmMg
+fCAxMyArKysrKysrKysrKysrCiAxIGZpbGUgY2hhbmdlZCwgMTMgaW5zZXJ0
+aW9ucygrKQoKZGlmZiAtLWdpdCBhL3hlbi9hcmNoL3g4Ni9tbS5jIGIveGVu
+L2FyY2gveDg2L21tLmMKaW5kZXggOTdiM2I0Yi4uMDBmNTE3YSAxMDA2NDQK
+LS0tIGEveGVuL2FyY2gveDg2L21tLmMKKysrIGIveGVuL2FyY2gveDg2L21t
+LmMKQEAgLTM3NjMsNiArMzc2Myw5IEBAIHN0YXRpYyBpbnQgY3JlYXRlX2dy
+YW50X3B0ZV9tYXBwaW5nKAogICAgIGwxX3BnZW50cnlfdCBvbDFlOwogICAg
+IHN0cnVjdCBkb21haW4gKmQgPSB2LT5kb21haW47CiAKKyAgICBpZiAoICFJ
+U19BTElHTkVEKHB0ZV9hZGRyLCBzaXplb2YobmwxZSkpICkKKyAgICAgICAg
+cmV0dXJuIEdOVFNUX2dlbmVyYWxfZXJyb3I7CisKICAgICBhZGp1c3RfZ3Vl
+c3RfbDFlKG5sMWUsIGQpOwogCiAgICAgZ21mbiA9IHB0ZV9hZGRyID4+IFBB
+R0VfU0hJRlQ7CkBAIC0zODE5LDYgKzM4MjIsMTYgQEAgc3RhdGljIGludCBk
+ZXN0cm95X2dyYW50X3B0ZV9tYXBwaW5nKAogICAgIHN0cnVjdCBwYWdlX2lu
+Zm8gKnBhZ2U7CiAgICAgbDFfcGdlbnRyeV90IG9sMWU7CiAKKyAgICAvKgor
+ICAgICAqIGFkZHIgY29tZXMgZnJvbSBYZW4ncyBhY3RpdmVfZW50cnkgdHJh
+Y2tpbmcgc28gaXNuJ3QgZ3Vlc3QgY29udHJvbGxlZCwKKyAgICAgKiBidXQg
+aXQgaGFkIHN0aWxsIGJldHRlciBiZSBQVEUtYWxpZ25lZC4KKyAgICAgKi8K
+KyAgICBpZiAoICFJU19BTElHTkVEKGFkZHIsIHNpemVvZihvbDFlKSkgKQor
+ICAgIHsKKyAgICAgICAgQVNTRVJUX1VOUkVBQ0hBQkxFKCk7CisgICAgICAg
+IHJldHVybiBHTlRTVF9nZW5lcmFsX2Vycm9yOworICAgIH0KKwogICAgIGdt
+Zm4gPSBhZGRyID4+IFBBR0VfU0hJRlQ7CiAgICAgcGFnZSA9IGdldF9wYWdl
+X2Zyb21fZ2ZuKGQsIGdtZm4sIE5VTEwsIFAyTV9BTExPQyk7CiAKLS0gCjIu
+MS40Cgo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa227-4.5.patch"
+Content-Disposition: attachment; filename="xsa227-4.5.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSAzYWFiODgxYzczMzFjZjkzZmZkOGQyZjJkZDlhZGZkMThlZDRmYzk5
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgQ29vcGVy
+IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpEYXRlOiBUdWUsIDIwIEp1
+biAyMDE3IDE5OjE4OjU0ICswMTAwClN1YmplY3Q6IFtQQVRDSF0geDg2L2dy
+YW50OiBEaXNhbGxvdyBtaXNhbGlnbmVkIFBURXMKClBhZ2V0YWJsZSBlbnRy
+aWVzIG11c3QgYmUgYWxpZ25lZCB0byBmdW5jdGlvbiBjb3JyZWN0bHkuICBE
+aXNhbGxvdyBhdHRlbXB0cwpmcm9tIHRoZSBndWVzdCB0byBoYXZlIGEgZ3Jh
+bnQgUFRFIGNyZWF0ZWQgYXQgYSBtaXNhbGlnbmVkIGFkZHJlc3MsIHdoaWNo
+CndvdWxkIHJlc3VsdCBpbiBjb3JydXB0aW9uIG9mIHRoZSBMMSB0YWJsZSB3
+aXRoIGxhcmdlbHktZ3Vlc3QtY29udHJvbGxlZAp2YWx1ZXMuCgpUaGlzIGlz
+IFhTQS0yMjcKClNpZ25lZC1vZmYtYnk6IEFuZHJldyBDb29wZXIgPGFuZHJl
+dy5jb29wZXIzQGNpdHJpeC5jb20+ClJldmlld2VkLWJ5OiBKYW4gQmV1bGlj
+aCA8amJldWxpY2hAc3VzZS5jb20+Ci0tLQogeGVuL2FyY2gveDg2L21tLmMg
+ICAgICAgIHwgMTMgKysrKysrKysrKysrKwogeGVuL2luY2x1ZGUveGVuL2Nv
+bmZpZy5oIHwgIDIgKysKIDIgZmlsZXMgY2hhbmdlZCwgMTUgaW5zZXJ0aW9u
+cygrKQoKZGlmZiAtLWdpdCBhL3hlbi9hcmNoL3g4Ni9tbS5jIGIveGVuL2Fy
+Y2gveDg2L21tLmMKaW5kZXggNzBiZjUyZjYwYS4uNzBkZmVjNWFmMSAxMDA2
+NDQKLS0tIGEveGVuL2FyY2gveDg2L21tLmMKKysrIGIveGVuL2FyY2gveDg2
+L21tLmMKQEAgLTM3ODEsNiArMzc4MSw5IEBAIHN0YXRpYyBpbnQgY3JlYXRl
+X2dyYW50X3B0ZV9tYXBwaW5nKAogICAgIGwxX3BnZW50cnlfdCBvbDFlOwog
+ICAgIHN0cnVjdCBkb21haW4gKmQgPSB2LT5kb21haW47CiAKKyAgICBpZiAo
+ICFJU19BTElHTkVEKHB0ZV9hZGRyLCBzaXplb2YobmwxZSkpICkKKyAgICAg
+ICAgcmV0dXJuIEdOVFNUX2dlbmVyYWxfZXJyb3I7CisKICAgICBhZGp1c3Rf
+Z3Vlc3RfbDFlKG5sMWUsIGQpOwogCiAgICAgZ21mbiA9IHB0ZV9hZGRyID4+
+IFBBR0VfU0hJRlQ7CkBAIC0zODM4LDYgKzM4NDEsMTYgQEAgc3RhdGljIGlu
+dCBkZXN0cm95X2dyYW50X3B0ZV9tYXBwaW5nKAogICAgIHN0cnVjdCBwYWdl
+X2luZm8gKnBhZ2U7CiAgICAgbDFfcGdlbnRyeV90IG9sMWU7CiAKKyAgICAv
+KgorICAgICAqIGFkZHIgY29tZXMgZnJvbSBYZW4ncyBhY3RpdmVfZW50cnkg
+dHJhY2tpbmcgc28gaXNuJ3QgZ3Vlc3QgY29udHJvbGxlZCwKKyAgICAgKiBi
+dXQgaXQgaGFkIHN0aWxsIGJldHRlciBiZSBQVEUtYWxpZ25lZC4KKyAgICAg
+Ki8KKyAgICBpZiAoICFJU19BTElHTkVEKGFkZHIsIHNpemVvZihvbDFlKSkg
+KQorICAgIHsKKyAgICAgICAgQVNTRVJUX1VOUkVBQ0hBQkxFKCk7CisgICAg
+ICAgIHJldHVybiBHTlRTVF9nZW5lcmFsX2Vycm9yOworICAgIH0KKwogICAg
+IGdtZm4gPSBhZGRyID4+IFBBR0VfU0hJRlQ7CiAgICAgcGFnZSA9IGdldF9w
+YWdlX2Zyb21fZ2ZuKGQsIGdtZm4sIE5VTEwsIFAyTV9BTExPQyk7CiAKZGlm
+ZiAtLWdpdCBhL3hlbi9pbmNsdWRlL3hlbi9jb25maWcuaCBiL3hlbi9pbmNs
+dWRlL3hlbi9jb25maWcuaAppbmRleCA3YmVmOGE2NDhkLi5hM2FhMWQ0ODMy
+IDEwMDY0NAotLS0gYS94ZW4vaW5jbHVkZS94ZW4vY29uZmlnLmgKKysrIGIv
+eGVuL2luY2x1ZGUveGVuL2NvbmZpZy5oCkBAIC04Miw2ICs4Miw4IEBACiAK
+ICNlbmRpZiAvKiAhX19BU1NFTUJMWV9fICovCiAKKyNkZWZpbmUgSVNfQUxJ
+R05FRCh2YWwsIGFsaWduKSAoKCh2YWwpICYgKChhbGlnbikgLSAxKSkgPT0g
+MCkKKwogI2RlZmluZSBfX1NUUiguLi4pICNfX1ZBX0FSR1NfXwogI2RlZmlu
+ZSBTVFIoLi4uKSBfX1NUUihfX1ZBX0FSR1NfXykKIAotLSAKMi4xMy4yCgo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa227-4.6.patch"
+Content-Disposition: attachment; filename="xsa227-4.6.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA2OTdlZGM0MTQzNTJlODlmMjljYTNkZTc0NGE3NmMxNjI1YzA0NjZj
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgQ29vcGVy
+IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpEYXRlOiBUdWUsIDIwIEp1
+biAyMDE3IDE5OjE4OjU0ICswMTAwClN1YmplY3Q6IFtQQVRDSF0geDg2L2dy
+YW50OiBEaXNhbGxvdyBtaXNhbGlnbmVkIFBURXMKClBhZ2V0YWJsZSBlbnRy
+aWVzIG11c3QgYmUgYWxpZ25lZCB0byBmdW5jdGlvbiBjb3JyZWN0bHkuICBE
+aXNhbGxvdyBhdHRlbXB0cwpmcm9tIHRoZSBndWVzdCB0byBoYXZlIGEgZ3Jh
+bnQgUFRFIGNyZWF0ZWQgYXQgYSBtaXNhbGlnbmVkIGFkZHJlc3MsIHdoaWNo
+CndvdWxkIHJlc3VsdCBpbiBjb3JydXB0aW9uIG9mIHRoZSBMMSB0YWJsZSB3
+aXRoIGxhcmdlbHktZ3Vlc3QtY29udHJvbGxlZAp2YWx1ZXMuCgpUaGlzIGlz
+IFhTQS0yMjcKClNpZ25lZC1vZmYtYnk6IEFuZHJldyBDb29wZXIgPGFuZHJl
+dy5jb29wZXIzQGNpdHJpeC5jb20+ClJldmlld2VkLWJ5OiBKYW4gQmV1bGlj
+aCA8amJldWxpY2hAc3VzZS5jb20+Ci0tLQogeGVuL2FyY2gveDg2L21tLmMg
+ICAgICAgIHwgMTMgKysrKysrKysrKysrKwogeGVuL2luY2x1ZGUveGVuL2Nv
+bmZpZy5oIHwgIDIgKysKIDIgZmlsZXMgY2hhbmdlZCwgMTUgaW5zZXJ0aW9u
+cygrKQoKZGlmZiAtLWdpdCBhL3hlbi9hcmNoL3g4Ni9tbS5jIGIveGVuL2Fy
+Y2gveDg2L21tLmMKaW5kZXggMjEzYjUyYS4uM2JmNzI4YiAxMDA2NDQKLS0t
+IGEveGVuL2FyY2gveDg2L21tLmMKKysrIGIveGVuL2FyY2gveDg2L21tLmMK
+QEAgLTM4NzgsNiArMzg3OCw5IEBAIHN0YXRpYyBpbnQgY3JlYXRlX2dyYW50
+X3B0ZV9tYXBwaW5nKAogICAgIGwxX3BnZW50cnlfdCBvbDFlOwogICAgIHN0
+cnVjdCBkb21haW4gKmQgPSB2LT5kb21haW47CiAKKyAgICBpZiAoICFJU19B
+TElHTkVEKHB0ZV9hZGRyLCBzaXplb2YobmwxZSkpICkKKyAgICAgICAgcmV0
+dXJuIEdOVFNUX2dlbmVyYWxfZXJyb3I7CisKICAgICBhZGp1c3RfZ3Vlc3Rf
+bDFlKG5sMWUsIGQpOwogCiAgICAgZ21mbiA9IHB0ZV9hZGRyID4+IFBBR0Vf
+U0hJRlQ7CkBAIC0zOTM1LDYgKzM5MzgsMTYgQEAgc3RhdGljIGludCBkZXN0
+cm95X2dyYW50X3B0ZV9tYXBwaW5nKAogICAgIHN0cnVjdCBwYWdlX2luZm8g
+KnBhZ2U7CiAgICAgbDFfcGdlbnRyeV90IG9sMWU7CiAKKyAgICAvKgorICAg
+ICAqIGFkZHIgY29tZXMgZnJvbSBYZW4ncyBhY3RpdmVfZW50cnkgdHJhY2tp
+bmcgc28gaXNuJ3QgZ3Vlc3QgY29udHJvbGxlZCwKKyAgICAgKiBidXQgaXQg
+aGFkIHN0aWxsIGJldHRlciBiZSBQVEUtYWxpZ25lZC4KKyAgICAgKi8KKyAg
+ICBpZiAoICFJU19BTElHTkVEKGFkZHIsIHNpemVvZihvbDFlKSkgKQorICAg
+IHsKKyAgICAgICAgQVNTRVJUX1VOUkVBQ0hBQkxFKCk7CisgICAgICAgIHJl
+dHVybiBHTlRTVF9nZW5lcmFsX2Vycm9yOworICAgIH0KKwogICAgIGdtZm4g
+PSBhZGRyID4+IFBBR0VfU0hJRlQ7CiAgICAgcGFnZSA9IGdldF9wYWdlX2Zy
+b21fZ2ZuKGQsIGdtZm4sIE5VTEwsIFAyTV9BTExPQyk7CiAKZGlmZiAtLWdp
+dCBhL3hlbi9pbmNsdWRlL3hlbi9jb25maWcuaCBiL3hlbi9pbmNsdWRlL3hl
+bi9jb25maWcuaAppbmRleCBmNzI1OGM3Li5kZWQ4MTU2IDEwMDY0NAotLS0g
+YS94ZW4vaW5jbHVkZS94ZW4vY29uZmlnLmgKKysrIGIveGVuL2luY2x1ZGUv
+eGVuL2NvbmZpZy5oCkBAIC03Miw2ICs3Miw4IEBACiAjZGVmaW5lIE1CKF9t
+YikgICAgIChfQUMoX21iLCBVTEwpIDw8IDIwKQogI2RlZmluZSBHQihfZ2Ip
+ICAgICAoX0FDKF9nYiwgVUxMKSA8PCAzMCkKIAorI2RlZmluZSBJU19BTElH
+TkVEKHZhbCwgYWxpZ24pICgoKHZhbCkgJiAoKGFsaWduKSAtIDEpKSA9PSAw
+KQorCiAjZGVmaW5lIF9fU1RSKC4uLikgI19fVkFfQVJHU19fCiAjZGVmaW5l
+IFNUUiguLi4pIF9fU1RSKF9fVkFfQVJHU19fKQogCi0tIAoyLjEuNAoK
+
+--=separator--
