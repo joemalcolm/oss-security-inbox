@@ -1,31 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/11
-Message-ID: <1510086603.29942.2.camel@pnnl.gov>
-Date: Tue, 7 Nov 2017 20:30:05 +0000
-From: "Maier, Kurt H" <kurt.maier@...l.gov>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/15/3
+Message-Id: <E1dhabZ-0006fK-78@xenbits.xenproject.org>
+Date: Tue, 15 Aug 2017 12:05:53 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 228 (CVE-2017-12136) - grant_table: Race conditions with maptrack free list handling
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
-> 
-> I hate to ask, but why are you getting CVEs for bugs fixed over a
-> year
-> ago, and are already in all stable kernel releases a year ago?  Why
-> does
-> it matter?
-> 
-> Unless you happen to have a product that doesn't ever do kernel
-> updates
-> from the stable trees, and well, then you know what you are doing and
-> don't need CVEs assigned either, right?  :)
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Kernel maintainers' policy is clear, and nobody is asking for that to
-change, but please don't sandbag the process of keeping track of
-vulnerabilities.  The fraction of "products" (regardless of vendor)
-that run linux and never get updates approaches unity.  Being able to
-precisely catalog which linux releases suffer from which
-vulnerabilities is useful to many.
+            Xen Security Advisory CVE-2017-12136 / XSA-228
+                               version 3
 
-khm
+     grant_table: Race conditions with maptrack free list handling
+
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The grant table code in Xen has a bespoke semi-lockfree allocator for
+recording grant mappings ("maptrack" entries).  This allocator has a
+race which allows the free list to be corrupted.
+
+Specifically: the code for removing an entry from the free list, prior
+to use, assumes (without locking) that if inspecting head item shows
+that it is not the tail, it will continue to not be the tail of the
+list if it is later found to be still the head and removed with
+cmpxchg.  But the entry might have been removed and replaced, with the
+result that it might be the tail by then.  (The invariants for the
+semi-lockfree data structure were never formally documented.)
+
+Additionally, a stolen entry is put on the free list with an incorrect
+link field, which will very likely corrupt the list.
+
+IMPACT
+======
+
+A malicious guest administrator can crash the host, and can probably
+escalate their privilege to that of the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.6 and later are vulnerable.
+
+Xen 4.5 and earlier are not vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation for this vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Ian Jackson of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa228.patch           xen-unstable, Xen 4.9.x
+xsa228-4.8.patch       Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
+
+$ sha256sum xsa228*
+35a1a7f8905770fa64da0756fe3e0400bb8c28ecae0b7cf80e749cb7962018db  xsa228.meta
+1979e111442517891b483e316a15a760a4c992ac4440f95e361ff12f4bebff62  xsa228.patch
+5a7416f15ac9cd7cace354b6102ff58199fe0581f65a36a36869650c71784e48  xsa228-4.8.patch
+$
+
+(The .meta file is a prototype machine-readable file for describing
+which patches are to be applied how.)
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZkuNRAAoJEIP+FMlX6CvZRz4IAMnEQggvKPrt1zOC14JncQwG
+7q6DRlwHcAYVxD8GEJATNV3uyDhEUiOK8A9WwDrR42FInLBHtNk1iMvJSWvBII5/
+jr8OBRf8Ealv/G38jilKjX08aiYmOTnHFjMRGTT+Nw7JJImPJq3bqi+nSeiM1IDP
+v3Z6m9YtmXOCUPq087OngfEqtR3gG3seEqC7bKQgSk9nAojtJiPVcpw4jm3p3rl5
+FYsLMVdLLxhFtiMItcdHa38/JHzxynIaCMHz8K1M/uBSLe58g6KZRerIWWls99RE
+Fyo5rKUQ/6HlDuJcHXcf3GHtzujSNxN3PRbtyUMNSOP9/LDgd6fHSJiEOd9fphw=
+=hzXD
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa228.meta" of type "application/octet-stream" (1553 bytes)
+
+Download attachment "xsa228.patch" of type "application/octet-stream" (7193 bytes)
+
+Download attachment "xsa228-4.8.patch" of type "application/octet-stream" (7176 bytes)
