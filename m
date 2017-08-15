@@ -1,4 +1,9 @@
-Received: (qmail 25692 invoked by uid 550); 8 Sep 2023 22:17:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8040" "Tuesday" "15" "August" "2017" "13:49:40" "+0000" "Xen.org security team" "security@xen.org" "<E1dhcE0-0007WU-Le@xenbits.xenproject.org>" "194" "[oss-security] Xen Security Advisory 230 (CVE-2017-12855) - grant_table: possibly premature clearing of GTF_writing / GTF_reading" nil nil nil "8" "2017081513:49:40" "[oss-security] Xen Security Advisory 230 (CVE-2017-12855) - grant_table: possibly premature clearing of GTF_writing / GTF_reading" (number mark "U       security@xen Aug 15  194/8040  " thread-indent "\"[oss-security] Xen Security Advisory 230 (CVE-2017-12855) - grant_table: possibly premature clearing of GTF_writing / GTF_reading\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32646 invoked by uid 550); 15 Aug 2017 13:50:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,96 +12,211 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20298 invoked from network); 8 Sep 2023 22:12:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=s31663417; t=1694211153; x=1694815953; i=alexander.bluhm@gmx.net;
- bh=ss/aO3SSEtqV3swt2CLAPanGdAv610SeGIjLcQbFTao=;
- h=X-UI-Sender-Class:Date:From:To:Subject:References:In-Reply-To;
- b=iqADgE0lUIJ8wF3mEaPoAI1KVuaS8jjVL+OTYT4sHxeBrSbTywyg/PTTfIAaBo3BuCxVWj7
- H8TLH0EYU9Ntxa7j1pwf/96tHsHpyCNw2tia1dC3SzcAjfHKBTAF460vooRegEmILxb40rLwD
- KLff5tIJP14yBBzsrxP19QjpAyGG03RBWB9YVNDXbz24hlASj7TGADkaD/+g0iZTlGUuKTwSn
- v1hJk3cZVG2SMhlCG/iPScGQox7OH1k3VTVe9EHSFQRSge4RX2fFs3p8VzWrtLOQCsc9PHUb0
- D0OdFSVSHFXc/vXbX24c/65wOfwyWqWKndWocf8zOXgdBQ6jTawQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Date: Sat, 9 Sep 2023 00:12:31 +0200
-From: Alexander Bluhm <alexander.bluhm@gmx.net>
-To: oss-security@lists.openwall.com
-Message-ID: <ZPucT1zmygLfWnPR@t430s.bluhm.invalid>
-References: <50dfd9cf-a4c8-9b4c-6419-91f68ca45e88@di.uniroma1.it>
+Received: (qmail 32622 invoked from network); 15 Aug 2017 13:50:07 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="7vUU5rA4wxdDHTUN"
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1dhcE0-0007WU-Le@xenbits.xenproject.org>
+Date: Tue, 15 Aug 2017 13:49:40 +0000
+Subject: [oss-security] Xen Security Advisory 230 (CVE-2017-12855) - grant_table:
+ possibly premature clearing of GTF_writing / GTF_reading
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <50dfd9cf-a4c8-9b4c-6419-91f68ca45e88@di.uniroma1.it>
-User-Agent: Mutt/2.2.11 (2023-08-18)
-X-Provags-ID: V03:K1:O6Q/cLIyQ5W5Y5EgoP2G9RgGsSxp/7H5TQYJobCrT4Rc9xCplCt
- ORxFHDY8lHeuhvXjiFL0LNOT985P+BlcsuHm6idDZBDqM/fmlQufSoNeh4jCcViW+Q+BBfE
- xgNsURrFbvrOQvt3XREoX0DX32lZppMT0b2sRiKssVQwYXT4vSWlCklfZfby7H8OmUNxcBr
- rWJuv7A3bsJ70Bv8MqwKw==
-UI-OutboundReport: notjunk:1;M01:P0:5enFMDIh6ws=;4DaFXi8HN7x/QCJT0RKkcublusj
- zC+FhCHEInVM7UPrE4Lsn8//Pfv5geX7y4MXJj2Sm0dpw/OnzUhniFEFvxR6yekPaUO3ePcJL
- iUV8KdFDWaogprqXGabj6UvYYPj3DIUzeozOBNhzk+TXhR/e0eikoeGdUHmlS/pkbh8V12e9s
- YY8gaGmrRwWgEeNgWOb/kiqTQsHM37ThWY+pWBF9GuDDmNHfPpEDIWNEDfdd9ZSGNEOEK0F3R
- s49VoOc14+WvDsAOf2uGpILFVwMgDkTjdVlx2F5i9IixTCAwAJxvotv02A7jyWFj2vWxhAzYe
- uqI2VBGUz95TwzAEu8cc9rdvwrypd2Z9/xXGyLnqX/zTVNE1ih2Hm9iCpElyefXB76/51bLUI
- v4+Z5cpMskFN1FeTj8I2eHmk/ywZZ9feC+z8rDBmleszzKKdLzLJsR4+pe7J749ofRB0q+Ton
- d7s7+TDPWFf8mfxsABkGvPZ++3m9jWqeD5KLnsvR+mZPpaEpzs/fxlbcNR4MRwXet2vE8bfXZ
- 0tFUTlS0JDUXpV7UjFlX67j7pHDTviUfK0b216vBjT2WAZQ2P6tK42ZBlhtfjcLoVQj2qLalm
- KkkS++crUXb1gIvnMEpQ8zcvjea+Iw6pq/00cqXYpus2yx3+PjgNwPCgvNYj8g6atAGIqm9nq
- ckXNQJafQK4lxPGVikuCeBHJ9VD1CbFBqAACfr1oxA9vPC5hOs5yiqvhMn5yTxVWSL45dAPzd
- k9icz+1B+L7uAVLmeEXPYPQMj3qfVDEJCp1BOfP/itbYFFjdVj6xq2l88r4Zmkd6d1YOZRbX5
- bceuKa8EdfgAL0icmGUPD+s2ZOCMYJHzmBYJZHazrEvDLb937+KwU1b+X8ir3PC+OjZlQld7e
- zpnwLJZuKnUdQC3A3xv74REqdCfPaeFkDJYwRGC1rMRh1HBtNowNIylNQHuWWizR8FS7TKhYp
- 2Cr1XiCz3kpJMQUC4mcHp+jFuDA=
-Subject: Re: [oss-security] CVE-2023-4809: FreeBSD pf bypass when using IPv6
+Content-Transfer-Encoding: 7bit
 
---7vUU5rA4wxdDHTUN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Fri, Sep 08, 2023 at 07:48:21PM +0200, Enrico Bassetti wrote:
-> A FreeBSD with `pf` as firewall for IPv6 traffic and `scrub` enabled to=20
-> reassemble IPv6 fragments is vulnerable to an attack that uses a crafted=
-=20
-> packet posing as IPv6 "atomic" fragment to bypass the rules.
+            Xen Security Advisory CVE-2017-12855 / XSA-230
+                              version 3
 
-I would like to mention that OpenBSD pf is not affected by the bug.
-As I am the original author of IPv6 fragment reassembly, I have
-just added a regression test to show that our pf drops such packets.
+ grant_table: possibly premature clearing of GTF_writing / GTF_reading
 
-https://cvsweb.openbsd.org/src/regress/sys/netinet6/frag6/frag6_doubleatomi=
-c.py
+UPDATES IN VERSION 3
+====================
 
-This behavior seems to be present since 2013 when I added support
-for atomic fragments to pf.  The relevant code is in OpenBSD
-pf_walk_header6() in pf.c.  There a bunch of sanity checks are done
-for the IPv6 header chain resulting in packet drops.  This function
-does not exist in FreeBSD.
+CVE assigned.
 
-https://github.com/openbsd/src/blame/cc53a24ce58eb2212822060db742650de2787e=
-e4/sys/net/pf.c#L7076
+ISSUE DESCRIPTION
+=================
 
-bluhm
+Xen maintains the _GTF_{read,writ}ing bits as appropriate, to inform the
+guest that a grant is in use.  A guest is expected not to modify the
+grant details while it is in use, whereas the guest is free to
+modify/reuse the grant entry when it is not in use.
 
---7vUU5rA4wxdDHTUN
-Content-Type: application/pgp-signature; name="signature.asc"
+Under some circumstances, Xen will clear the status bits too early,
+incorrectly informing the guest that the grant is no longer in use.
 
+IMPACT
+======
+
+A guest may prematurely believe that a granted frame is safely private
+again, and reuse it in a way which contains sensitive information, while
+the domain on the far end of the grant is still using the grant.
+
+VULNERABLE SYSTEMS
+==================
+
+All systems are vulnerable.
+
+MITIGATION
+==========
+
+There are no mitigations.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa230.patch           xen-unstable, 4.9, 4.8, 4.7, 4.6, 4.5
+
+$ sha256sum xsa230*
+912c24771dc9e9b305be630b7771505abb3db735564c5574fc30b58a5da0139e  xsa230.meta
+77a73f1c32d083e315ef0b1bbb119cb8840ceb5ada790cad76cbfb9116f725cc  xsa230.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+
+
+NOTE REGARDING SHORT EMBARGO
+============================
+
+This issue was discovered while investigating problems with the initial
+version of XSA-226.  Accordingly, XSA-230 is embargoed and the embargo
+will end at the same time as that of XSA-226.
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCAAdFiEEHju+pGwg6gAv/N5NxfSDrd7oY4AFAmT7nE8ACgkQxfSDrd7o
-Y4B2mA/9ECl/9TckBfx6WJjM4S0QfBIrLL2NH43Kv5Qza0JxhT9VviOiLE7+TU+a
-mZEM0SsZpYLAHZods6C7QOsJHkseCUWpUXyg+VeRvlDKa38IAHR8T7zm4lgZ/SH7
-15T73yTP0hR/zTpwY178ODiY4WPQtMEOOSmxrEQTfmYeMUM9kHfVwtxwuT+Wsccs
-XgaTC3jVcbPcGddhvzESO4Nu1CvHiFkQ0h0ZBUq4S1DdEIRIdnKrgYCAaBOWZ+sz
-5G9uNWMxug7rAYOGJaNX9LAsSaNwD5lyFos4o5WxydX5ZAxKtuKeFU3ePH5x6SLv
-FM2Il0hQmwvkx76PDcnUXmeXLxqNqzHfc+uhRCUQVJwYfB4+Ts+5IokWtbcJWggw
-9GcTbW2rTVorSzQ91PJhTTG1v3CW1zH1bMNOZykyoUgoKKRIFj6JHUSWBTa5i4Dc
-xjCQabsOXiu6icCvslppdosqlE2cf+x+uXHKjS/weBfGN+H2BL41pnst+YlJFoOm
-FRL7l20IcoRYSLZTjDL93Wm7opl0MJEcyRSzhjkSTW10d8HwV/1exNDugr6DGza7
-ijs1u1N2HiZJhLDKxnSe4kOKMFdjb4z9Mtgo57QsMFTfZV9SDLgw06wdcu/+aLJD
-dlppRgqbpvDb9lixnB1ps1qruL3EQiIdAZLpxfR+1bPDe4VhK7U=
-=M8f8
+iQEcBAEBCAAGBQJZkvttAAoJEIP+FMlX6CvZBX4H/j68Tf+YJYNV6coTx6/Ag0wo
+WVRepDbj/WTfpY4lT3SL57dpyhnfDNUgUaMkNfEUU9GV9FGtYEChHtQ3kDh9PvVG
+ifZgyHxJnRgZY3Mr12FcevyevyPpluMFHZ7RzCl6hVXgekd2+YZOnSbY/FYPhvuh
+Chzv2HUUMY/5Yt3HkbTgez3vRIxQW74TjERIqGx6y0bD3z+NYmOtmzeYcyUGsUBL
+sf+QnBH6/bjZjiycojK7LEb4u032Kgws0lXABIypql7D8YlVH75ZOxxWxV1TmerR
+Alc71JR+22ze76Tz0C4b0rafNv3xmn3o/0qoGQWo+7/o01Eg6XHuN9nn78bz2tw=
+=x4fa
 -----END PGP SIGNATURE-----
 
---7vUU5rA4wxdDHTUN--
+--=separator
+Content-Type: application/octet-stream; name="xsa230.meta"
+Content-Disposition: attachment; filename="xsa230.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAyMzAsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC45IiwKICAgICI0LjgiLAogICAgIjQuNyIsCiAg
+ICAiNC42IiwKICAgICI0LjUiCiAgXSwKICAiVHJlZXMiOiBbCiAgICAieGVu
+IgogIF0sCiAgIlJlY2lwZXMiOiB7CiAgICAiNC41IjogewogICAgICAiWGVu
+VmVyc2lvbiI6ICI0LjUiLAogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
+eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICIzMjE3MTI5ZWI2NWMw
+ZDQ5OTVlZDA4ZmI4OTE5ZTNjMzM0Y2FkNTQ4IiwKICAgICAgICAgICJQcmVy
+ZXFzIjogWwogICAgICAgICAgICAyMjYsCiAgICAgICAgICAgIDIyNwogICAg
+ICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWyAieHNhMjMwLnBhdGNo
+IiBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuNiI6IHsKICAg
+ICAgIlhlblZlcnNpb24iOiAiNC42IiwKICAgICAgIlJlY2lwZXMiOiB7CiAg
+ICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiZDcwOGI2
+OTVhMzZiNGZkY2Q4ZTQ4ZTZmYzhlNjExZTAxMGY1MjgwYiIsCiAgICAgICAg
+ICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjI2LAogICAgICAgICAgICAy
+MjcsCiAgICAgICAgICAgIDIyOAogICAgICAgICAgXSwKICAgICAgICAgICJQ
+YXRjaGVzIjogWyAieHNhMjMwLnBhdGNoIiBdCiAgICAgICAgfQogICAgICB9
+CiAgICB9LAogICAgIjQuNyI6IHsKICAgICAgIlhlblZlcnNpb24iOiAiNC43
+IiwKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAg
+ICAgICJTdGFibGVSZWYiOiAiNGZiZmEzNGIxYTBiYjMyOWFhNTcyNzU0MjFl
+MmU5MDI3ZDMyYWFkNSIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAg
+ICAgICAgMjI2LAogICAgICAgICAgICAyMjcsCiAgICAgICAgICAgIDIyOAog
+ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWyAieHNhMjMwLnBh
+dGNoIiBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuOCI6IHsK
+ICAgICAgIlhlblZlcnNpb24iOiAiNC44IiwKICAgICAgIlJlY2lwZXMiOiB7
+CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiMWU2
+Yzg4ZmFmY2I0NjY0YTUwMTIzOWQxZDg2NjVjMzRiNTM4NDY0OCIsCiAgICAg
+ICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjI2LAogICAgICAgICAg
+ICAyMjcsCiAgICAgICAgICAgIDIyOAogICAgICAgICAgXSwKICAgICAgICAg
+ICJQYXRjaGVzIjogWyAieHNhMjMwLnBhdGNoIiBdCiAgICAgICAgfQogICAg
+ICB9CiAgICB9LAogICAgIjQuOSI6IHsKICAgICAgIlhlblZlcnNpb24iOiAi
+NC45IiwKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAg
+ICAgICAgICJTdGFibGVSZWYiOiAiMGZhZGEwNTlhNzk0ODE1Mzk3NmNjMTUy
+ZTM2NjMzZGVlM2Q1YjI3MyIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAg
+ICAgICAgICAgMjI2LAogICAgICAgICAgICAyMjcsCiAgICAgICAgICAgIDIy
+OAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWyAieHNhMjMw
+LnBhdGNoIiBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIm1hc3Rl
+ciI6IHsKICAgICAgIlhlblZlcnNpb24iOiAibWFzdGVyIiwKICAgICAgIlJl
+Y2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVS
+ZWYiOiAiNTU5MjRiYWYyMjExZGRjZjViYThmNzAyYzlhNGMwNzczMGUwYzhl
+OCIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjI2LAog
+ICAgICAgICAgICAyMjcsCiAgICAgICAgICAgIDIyOAogICAgICAgICAgXSwK
+ICAgICAgICAgICJQYXRjaGVzIjogWyAieHNhMjMwLnBhdGNoIiBdCiAgICAg
+ICAgfQogICAgICB9CiAgICB9CiAgfQp9
+
+--=separator
+Content-Type: application/octet-stream; name="xsa230.patch"
+Content-Disposition: attachment; filename="xsa230.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiBnbnR0YWI6IGNvcnJlY3QgcGluIHN0YXR1cyBmaXh1cCBmb3IgY29weQoK
+UmVnYXJkbGVzcyBvZiBjb3B5IG9wZXJhdGlvbnMgb25seSBzZXR0aW5nIEdO
+VFBJTl9oc3QqLCBHTlRQSU5fZGV2KgphbHNvIG5lZWQgdG8gYmUgdGFrZW4g
+aW50byBhY2NvdW50IHdoZW4gZGVjaWRpbmcgd2hldGhlciB0byBjbGVhcgpf
+R1RGX3tyZWFkLHdyaXR9aW5nLiBBdCBsZWFzdCBmb3IgY29uc2lzdGVuY3kg
+d2l0aCBjb2RlIGVsc2V3aGVyZSB0aGUKcmVhZCBwYXJ0IGJldHRlciBkb2Vz
+bid0IHVzZSBhbnkgbWFzayBhdCBhbGwuCgpUaGlzIGlzIFhTQS0yMzAuCgpT
+aWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+
+ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0Bj
+aXRyaXguY29tPgpkaWZmIC0tZ2l0IGEveGVuL2NvbW1vbi9ncmFudF90YWJs
+ZS5jIGIveGVuL2NvbW1vbi9ncmFudF90YWJsZS5jCmluZGV4IGFlMzQ1NDcu
+LjljOWQzM2MgMTAwNjQ0Ci0tLSBhL3hlbi9jb21tb24vZ3JhbnRfdGFibGUu
+YworKysgYi94ZW4vY29tbW9uL2dyYW50X3RhYmxlLmMKQEAgLTIxMDcsMTAg
+KzIxMDcsMTAgQEAgX19yZWxlYXNlX2dyYW50X2Zvcl9jb3B5KAogc3RhdGlj
+IHZvaWQgX19maXh1cF9zdGF0dXNfZm9yX2NvcHlfcGluKGNvbnN0IHN0cnVj
+dCBhY3RpdmVfZ3JhbnRfZW50cnkgKmFjdCwKICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgdWludDE2X3QgKnN0YXR1cykKIHsKLSAgICBp
+ZiAoICEoYWN0LT5waW4gJiBHTlRQSU5faHN0d19tYXNrKSApCisgICAgaWYg
+KCAhKGFjdC0+cGluICYgKEdOVFBJTl9oc3R3X21hc2sgfCBHTlRQSU5fZGV2
+d19tYXNrKSkgKQogICAgICAgICBnbnR0YWJfY2xlYXJfZmxhZyhfR1RGX3dy
+aXRpbmcsIHN0YXR1cyk7CiAKLSAgICBpZiAoICEoYWN0LT5waW4gJiBHTlRQ
+SU5faHN0cl9tYXNrKSApCisgICAgaWYgKCAhYWN0LT5waW4gKQogICAgICAg
+ICBnbnR0YWJfY2xlYXJfZmxhZyhfR1RGX3JlYWRpbmcsIHN0YXR1cyk7CiB9
+CiAKQEAgLTIzMTgsNyArMjMxOCw3IEBAIF9fYWNxdWlyZV9ncmFudF9mb3Jf
+Y29weSgKICAKICB1bmxvY2tfb3V0X2NsZWFyOgogICAgIGlmICggIShyZWFk
+b25seSkgJiYKLSAgICAgICAgICEoYWN0LT5waW4gJiBHTlRQSU5faHN0d19t
+YXNrKSApCisgICAgICAgICAhKGFjdC0+cGluICYgKEdOVFBJTl9oc3R3X21h
+c2sgfCBHTlRQSU5fZGV2d19tYXNrKSkgKQogICAgICAgICBnbnR0YWJfY2xl
+YXJfZmxhZyhfR1RGX3dyaXRpbmcsIHN0YXR1cyk7CiAKICAgICBpZiAoICFh
+Y3QtPnBpbiApCg==
+
+--=separator--
