@@ -1,80 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/18/7
-Message-ID: <20170918193159.GL2409@yuggoth.org>
-Date: Mon, 18 Sep 2017 19:32:00 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OSSN-0081] sha512_crypt is insufficient for password hashing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/15/2
+Message-Id: <E1dhabV-0006du-B7@xenbits.xenproject.org>
+Date: Tue, 15 Aug 2017 12:05:49 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 227 (CVE-2017-12137) - x86: PV privilege escalation via map_grant_ref
 Content-Type: text/plain; charset=utf-8
 
-On 2017-09-17 15:04:10 +0200 (+0200), Solar Designer wrote:
-[...]
-> the wording of the advisory and in the discussion at
-> https://bugs.launchpad.net/ossn/+bug/1668503 is weird.
-> 
-> I assume that sha512_crypt refers to the algorithm introduced in
-> glibc 2.7 and now used by many Linux distros and more. It is
-> typically called sha512crypt without the underscore. I also assume
-> that pbkdf2_sha512 refers to PBKDF2-HMAC-SHA512.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Yes, or more specifically these:
+            Xen Security Advisory CVE-2017-12137 / XSA-227
+                               version 3
 
-https://passlib.readthedocs.io/en/stable/lib/passlib.hash.sha512_crypt.html
-https://passlib.readthedocs.io/en/stable/lib/passlib.hash.pbkdf2_digest.html
+            x86: PV privilege escalation via map_grant_ref
 
-> sha512crypt's "computational cost factor" is tunable, and sha512crypt
-> isn't quicker to crack than PBKDF2-HMAC-SHA512 when both are tuned for
-> the same defensive running time and use implementations optimized to a
-> similar extent.  However, PBKDF2-HMAC has worse missed optimization
-> pitfalls, so highly unoptimal implementations of PBKDF2 are very common:
-> 
-> https://jbp.io/2015/08/11/pbkdf2-performance-matters
+UPDATES IN VERSION 3
+====================
 
-Thanks for the pointer! I wasn't familiar with the fastpbkdf2 talk,
-definitely some helpful research there.
+Public release.
 
-> Obviously, password crackers may use more optimal implementations.
-> 
-> I guess the names with underscores are some specific instantiations with
-> fixed cost factors?  I guess bcrypt and scrypt referred to here are also
-> specific instantiations with fixed cost factors?  Then the wording would
-> start to make sense.  For completeness, what are the specific cost
-> factors used for each of those four?
-> 
-> Reading the discussion on relevant Bug entries and proposed commits, it
-> appears that pbkdf2_sha512 was recently introduced under the flawed
-> understanding that "sha512_crypt is considered insufficient (even with
-> significant rounds) in comparison to pdkfd_sha512, bcrypt, or scrypt for
-> password hashing."  While the references to bcrypt and scrypt are
-> correct, the reference to (presumably) PBKDF2-HMAC-SHA512 is wrong.  It
-> is in the same category with sha512crypt.  As it is, pbkdf2_sha512 might
-> very well allow for quicker cracking than sha512_crypt does.  Without
-> knowing the specific settings and efficiency of implementations, we
-> can't tell.
-[...]
-> I don't recommend any further code changes at this time.  Rather, I
-> recommend that the confusion be dealt with: clarify the settings used,
-> don't refer to pbkdf2_sha512 as a clear improvement upon sha512_crypt.
+ISSUE DESCRIPTION
+=================
 
-I must admit, the confusion was probably primarily mine. When asked
-for feedback on the earlier bug report, I mistook the description at
-face value assuming that "sha512 based password hashing" referred to
-a raw one-way hash function along the lines of hashlib.sha512(), and
-spouted the usual recommendation for using a KDF instead of a bare
-hash:
+When mapping a grant reference, a guest must inform Xen of where it
+would like the grant mapped.  For PV guests, this is done by nominating
+an existing linear address, or an L1 pagetable entry, to be altered.
 
-https://launchpad.net/bugs/1543048
+Neither of these PV paths check for alignment of the passed parameter.
+The linear address path suitably truncates the linear address when
+calculating the L1 entry to use, but the path which uses a directly
+nominated L1 entry performs no checks.
 
-Had I instead taken the time to look at the existing implementation
-in the source tree (as I would have done were it flagged for a
-formal advisory) I would have probably noticed that it already was
-using a KDF... tunnel vision on my part perhaps. I've added a
-comment to this effect on the bug report linked from the security
-note and will write up some appropriate errata to accompany it.
+This causes Xen to make an incorrectly-aligned update to a pagetable,
+which corrupts both the intended entry and the subsequent entry with
+values which are largely guest controlled.  If the misaligned value
+crosses a page boundary, then an arbitrary other heap page is
+corrupted.
 
-Thanks for noticing and pointing out this error, and my apologies
-for any inconvenience my lack of attention may have caused.
--- 
-Jeremy Stanley
+IMPACT
+======
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+A PV guest can elevate its privilege to that of the host.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only x86 systems are vulnerable.
+
+Any system running untrusted PV guests is vulnerable.
+
+The vulnerability is exposed to PV stub qemu serving as the device model
+for HVM guests.  Our default assumption is that an HVM guest has
+compromised its PV stub qemu.  By extension, it is likely that the
+vulnerability is exposed to HVM guests which are served by a PV stub
+qemu.
+
+MITIGATION
+==========
+
+Running only HVM guests, served by a dom0-based qemu, will avoid this
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa227.patch           xen-unstable, Xen 4.9.x, 4.8.x, 4.7.x
+xsa227-4.6.patch       Xen 4.6.x
+xsa227-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa227*
+c48cc3be47e81a4ceebcf60659b8755516c68916fc5150920ed42c6b61e3f219  xsa227.meta
+9923a47e5f86949800887596f098954a08ef73a01d74b1dbe16cab2e6b1fabb2  xsa227.patch
+6f83d0d9ff853192840d2b82d26d8fde21473bf4ac1441a153f3ee02efd1dd67  xsa227-4.5.patch
+162b991b27b86f210089526a01cae715563d3a069c92f42538b423bba7709fcc  xsa227-4.6.patch
+$
+
+(The .meta file is a prototype machine-readable file for describing
+which patches are to be applied how.)
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZkuNOAAoJEIP+FMlX6CvZ9wsH/3/DA8EENxPdhgoNEihvHgPP
+rquggFGcmgiJZyuy6+e3PZKUwQmUcVdPuVE5h+8NWYRCTjxa15LC/auAmkMHP170
+f7nkSA6oU0zT1mxxqWWjht+CCJ56dmpJN+WGXQMasVEO9PLYR7gOxf90rqDuzqE8
+zcQA4OyIOpsEH4Y2k2hjYFeLleWSLZKSPAy8fupZv34FakZDDLgxPMdWSrYQX/pP
+r2QmLoVk4pSQYZzy5aAZWgLugR+ewOmgYTntzGYSEB2VqEgl6vtA8STVqB5WsYZ4
+eumUUZRBUeo9n2U9TgWPmKr5JtvC9w2/cjV6HysO5vUwuLJUICX25O9BE3VnBs0=
+=ulEd
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa227.meta" of type "application/octet-stream" (1867 bytes)
+
+Download attachment "xsa227.patch" of type "application/octet-stream" (1535 bytes)
+
+Download attachment "xsa227-4.5.patch" of type "application/octet-stream" (1934 bytes)
+
+Download attachment "xsa227-4.6.patch" of type "application/octet-stream" (1977 bytes)
