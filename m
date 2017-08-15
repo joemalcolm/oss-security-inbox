@@ -1,51 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/16
-Message-ID: <CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>
-Date: Fri, 29 Sep 2017 01:03:31 +0200
-From: Guido Vranken <guidovranken@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/15/4
+Message-Id: <E1dhabd-0006gl-Oo@xenbits.xenproject.org>
+Date: Tue, 15 Aug 2017 12:05:57 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 229 (CVE-2017-12134) - linux: Fix Xen block IO merge-ability calculation
 Content-Type: text/plain; charset=utf-8
 
-I found a buffer overflow in one of the projects within 30 minutes,
-and there are probably many more issues to be found (as in virtually
-any large, unaudited project). What makes this project special
-compared to other bug bounties for C libraries (such as the regular
-Internet Big Bounty programs) is that they require a full, reliable
-exploit.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-If they would be willing to be lenient in their qualification of what
-constitutes a working exploit, such as exploitation of a binary
-without advanced anti-exploit protections such ASLR, I might bother,
-otherwise I won't. Enhancing open source projects is a honourable
-pursuit indeed and I've done it many times for free, but if I'm going
-to hack for money I might as well choose something that is easier or
-more profitable or both at the same time. You can fetch $500 for any
-old XSS on a web page or a buffer overflow in the clusterfucks that
-are the PHP and Python code
-(https://hackerone.com/directory?query=ibb%3Ayes&sort=published_at%3Adescending&page=1
--- see the sheer number of submissions to both those programs).
+            Xen Security Advisory CVE-2017-12134 / XSA-229
+                               version 3
 
-Right after the program was announced, I sent an email to the IBB
-asking if exploitation of a non-ASLR configuration of the binary at
-hand would be sufficient. Unfortunately, I have not yet received a
-reply. The reason they want full exploits is, I think, to cut the
-chaff from the grain and solicit bugs that at least have real
-potential. A nice middle ground would be paying a percentage (25%?) of
-their current bounty offering for raw submissions of bugs that are
-generally assumed to constitute a security risk. It will attract a
-larger body of researchers for sure, and in the end this will be more
-beneficial to the overall security of the internet than under their
-current approach.
+            linux: Fix Xen block IO merge-ability calculation
 
-A Heartbleed-like vulnerability in an image parsing or conversion
-library, where an attacker can send a crafted image file resulting in
-exposure of unrelated memory, would not be eligible under this
-program. Case in point: see Chris Evans' Yahoobleed:
-https://scarybeastsecurity.blogspot.nl/2017/05/bleed-more-powerful-dumping-yahoo.html
+UPDATES IN VERSION 3
+====================
 
-All in all I think they should reconsider their current program
-stipulations, if only to increase their own return-on-investment
-(making the internet safer with a limited funding).
+Public release.
 
-Guido
+ISSUE DESCRIPTION
+=================
+
+The block layer in Linux may choose to merge adjacent block IO requests.
+When Linux is running as a Xen guest, the default merging algorithm is
+replaced with a Xen-specific one.  When Linux is running as an x86 PV
+guest, some BIO's are erroneously merged, corrupting the data stream
+to/from the block device.
+
+This can result in incorrect access to an uncontrolled adjacent frame.
+
+IMPACT
+======
+
+A buggy or malicious guest can cause Linux to read or write incorrect
+memory when processing a block stream.  This could leak information from
+other guests in the system or from Xen itself, or be used to DoS or
+escalate privilege within the system.
+
+VULNERABLE SYSTEMS
+==================
+
+All x86 Xen systems using pvops Linux in a backend role (either as
+dom0, or as a disk device driver domain) are affected.  This includes
+upstream Linux versions 2.6.37 and later.  Systems using the older
+classic-linux fork are not affected.
+
+All PV x86 domains doing block IO on behalf of a guest, including dom0
+and any PV driver domains, are vulnerable.  (Any HVM driver domains
+running are not vulnerable.)  This includes Xen vbd backends such as
+blkback, but also direct IO performed for the guest via eg qemu.
+
+ARM systems are not affected.
+
+The vulnerability is only exposed if the underlying block device has
+request merging enabled.  See Mitigation.
+
+The vulnerability is only exposed to configurations which use grant
+mapping as a transport mechanism for the block data.  Configurations
+which use exclusively grant copy are not vulnerable.
+
+MITIGATION
+==========
+
+Disable bio merges on all relevant underlying backend block devices.
+For example,
+  echo 2 > /sys/block/nvme0n1/queue/nomerges
+
+CREDITS
+=======
+
+This issue was discovered by Jan H. Schönherr of Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa229.patch           Linux
+
+$ sha256sum xsa229*
+5f96c72c8c5a971d52f5540475a3fc6f4fef2071ec772ef21392fdc238eda858  xsa229.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZkuNWAAoJEIP+FMlX6CvZBt4H/3tpKPBmzTaI5yKPdBf6wU7L
+hjmKG6QROeWV+EX3wmmmRi+iG0M90hDYFCTmhdNY4sjCdDEFDMB1KM8XA/LwHlz2
+3gX6TVKQ/cXQRJFhlWSZQUDDd5jPqZzDK7KnhS2DC+MjnKvnnuS6N2ibIfaHJmUG
+HL6VdS7GZ8Z434mgOZskWPFn5xeaWd1vXGV+GI9Ih2RRn/axe6l0RSzgDpfeGB3T
+hVRQdy9wW4aXrnnUXEuuz5JNlTU1fuGXGz7W5BDP8mu9l/dzmDye6NOgVqo5wAkz
++l/fRbFrjdO9JnKDpASDjGuoOCZgkBBxmG2wUz8COi6JTA5X0IRysG5OMOYZ/KU=
+=lyzV
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa229.patch" of type "application/octet-stream" (2451 bytes)
