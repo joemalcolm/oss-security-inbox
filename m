@@ -1,99 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/4
-Message-Id: <E1e4n9G-0001KT-1X@xenbits.xenproject.org>
-Date: Wed, 18 Oct 2017 12:08:34 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/15/5
+Message-Id: <E1dhabg-0006i6-PG@xenbits.xenproject.org>
+Date: Tue, 15 Aug 2017 12:06:00 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 241 (CVE-2017-15588) - Stale TLB entry due to page type release race
+Subject: Xen Security Advisory 230 - grant_table: possibly premature clearing of GTF_writing / GTF_reading
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2017-15588 / XSA-241
-                              version 4
+                    Xen Security Advisory XSA-230
+                              version 2
 
-             Stale TLB entry due to page type release race
+ grant_table: possibly premature clearing of GTF_writing / GTF_reading
 
-UPDATES IN VERSION 4
+UPDATES IN VERSION 2
 ====================
 
-CVE assigned.
+Public release.  (A CVE request for this issue is currently outstanding.)
 
 ISSUE DESCRIPTION
 =================
 
-x86 PV guests effect TLB flushes by way of a hypercall.  Xen tries to
-reduce the number of TLB flushes by delaying them as much as possible.
-When the last type reference of a page is dropped, the need for a TLB
-flush (before the page is re-used) is recorded.  If a guest TLB flush
-request involves an Inter Processor Interrupt (IPI) to a CPU in which
-is the process of dropping the last type reference of some page, and
-if that IPI arrives at exactly the right instruction boundary, a stale
-time stamp may be recorded, possibly resulting in the later omission
-of the necessary TLB flush for that page.
+Xen maintains the _GTF_{read,writ}ing bits as appropriate, to inform the
+guest that a grant is in use.  A guest is expected not to modify the
+grant details while it is in use, whereas the guest is free to
+modify/reuse the grant entry when it is not in use.
+
+Under some circumstances, Xen will clear the status bits too early,
+incorrectly informing the guest that the grant is no longer in use.
 
 IMPACT
 ======
 
-A malicious x86 PV guest may be able to access all of system memory,
-allowing for all of privilege escalation, host crashes, and
-information leaks.
+A guest may prematurely believe that a granted frame is safely private
+again, and reuse it in a way which contains sensitive information, while
+the domain on the far end of the grant is still using the grant.
 
 VULNERABLE SYSTEMS
 ==================
 
-All Xen versions from at least 3.2 onwards are vulnerable.  Earlier
-versions have not been checked.
-
-Only x86 systems are affected.  ARM systems are not affected.
-
-Only x86 PV guests can leverage the vulnerability.  x86 HVM guests
-cannot leverage the vulnerability.
-
-RISK ASSESSMENT
-===============
-
-A successful attack would require introducing an extended delay between
-two adjacent operations on one cpu -- long enough for two hypercalls to
-complete on another cpu.  The security team currently has no
-proof-of-concept for this vulnerability.
-
-However, techniques for these sorts of timing-based attacks are
-continually advancing, so we still recommend users potentially affected
-by this issue apply the patch as soon as reasonably possible.
+All systems are vulnerable.
 
 MITIGATION
 ==========
 
-Running only HVM guests will avoid this vulnerability.
-
-For PV guests, the vulnerability can be avoided if the guest kernel is
-controlled by the host rather than guest administrator, provided that
-further steps are taken to prevent the guest administrator from loading
-code into the kernel (e.g. by disabling loadable modules etc) or from
-using other mechanisms which allow them to run code at kernel privilege.
+There are no mitigations.
 
 CREDITS
 =======
 
-This issue was discovered by Jann Horn of Google Project Zero.
+This issue was discovered by Jan Beulich of SUSE.
 
 RESOLUTION
 ==========
 
 Applying the appropriate attached patch resolves this issue.
 
-xsa241.patch           xen-unstable
-xsa241-4.9.patch       Xen 4.9.x
-xsa241-4.8.patch       Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
+xsa230.patch           xen-unstable, 4.9, 4.8, 4.7, 4.6, 4.5
 
-$ sha256sum xsa241*
-5e239ba4dbd74fd61e59a27f9abc8ea6ba32532bdf81eeb2d7e66f0fd53e40b4  xsa241.meta
-b8db933d53e7e289652ffda6c46ce284a0254a9f8bc9e1be6793e388009f49ce  xsa241.patch
-443a5b0818045ada44fad0370ac01af0c96181be5a4078ae3b2575799e4a4e5b  xsa241-4.8.patch
-927ef14d875556481c38d4065f501211a78eec1c2396a954a4a4abfb9255960f  xsa241-4.9.patch
+$ sha256sum xsa230*
+912c24771dc9e9b305be630b7771505abb3db735564c5574fc30b58a5da0139e  xsa230.meta
+77a73f1c32d083e315ef0b1bbb119cb8840ceb5ada790cad76cbfb9116f725cc  xsa230.patch
 $
 
 DEPLOYMENT DURING EMBARGO
@@ -111,6 +81,7 @@ Predisclosure list members who wish to deploy significantly different
 patches and/or mitigations, please contact the Xen Project Security
 Team.
 
+
 (Note: this during-embargo deployment notice is retained in
 post-embargo publicly released Xen Project advisories, even though it
 is then no longer applicable.  This is to enable the community to have
@@ -119,22 +90,26 @@ oversight of the Xen Project Security Team's decisionmaking.)
 For more information about permissible uses of embargoed information,
 consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
+
+
+NOTE REGARDING SHORT EMBARGO
+============================
+
+This issue was discovered while investigating problems with the initial
+version of XSA-226.  Accordingly, XSA-230 is embargoed and the embargo
+will end at the same time as that of XSA-226.
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCAAGBQJZ50QlAAoJEIP+FMlX6CvZp/cH/2z+BXU30Jg8PlfnXM7LDulR
-+ZyoPggsqJfE8AlY7XmsPXo8qY1vsG1NHI6D0YoTvgQyFDVa2h2IBkIc/aZd7jfW
-iUYTluAQcxFKSC7G02HCrMdY6w9HkpIo4AtYw9Rm6tueF9/0vaWm0jy7MCMrNxAt
-Dbx8a91dkKiJ9MImLralZUMewK6kym1p2PhVPgWmF3lprvLiLSbRu19eiYSAdjBa
-C8ulKhUZsDymM3Lpe+F7+9FATZ58sEyvqgAach0Wn/vhaJ0axHroW3KKVCdNMNVJ
-AqFHjv6NKgHGS3HU9TEOCfCptYqE+Ne/UB4M19nVOZulfZn4Ok2MgBvogJXIA/Q=
-=7sHr
+iQEcBAEBCAAGBQJZkuNZAAoJEIP+FMlX6CvZ+UwH/AjbZSL+HVazwku2f5qtV4SK
+tBO0oiA4+o4hC9N71jV2JroQub37zEKBahpVIe0YpZ7QmedNme9URTnndkI7J9xj
+qarVafofxbtgqHA8Dqe8TcvOiU0PgmR3JgJYUbXIQYwsPRpJsCtTgWB/IOwYZlcM
+FpQSdPhvfVUAONTcM8bGqqe8pww40kW61dvwu4qlqyA1W4nj+Et4Yu9yn+Ga5H94
+E8BjHgVE26sh5Q4D8JL70IpgQeuHPQ3wgRvnmzQgnpc5192zUC9ybDC5j9L17O1r
+ckJlbaSNKgEHrYhflog/Haa55ZfyiYJF67KIQAYcOa5em0jvgCr7zIzPUPprsT0=
+=eYJA
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa241.meta" of type "application/octet-stream" (2185 bytes)
+Download attachment "xsa230.meta" of type "application/octet-stream" (1914 bytes)
 
-Download attachment "xsa241.patch" of type "application/octet-stream" (6123 bytes)
-
-Download attachment "xsa241-4.8.patch" of type "application/octet-stream" (4959 bytes)
-
-Download attachment "xsa241-4.9.patch" of type "application/octet-stream" (4981 bytes)
+Download attachment "xsa230.patch" of type "application/octet-stream" (1360 bytes)
