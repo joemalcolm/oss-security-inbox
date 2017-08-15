@@ -1,24 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/06/5
-Message-ID: <f47526d9-157e-1600-8f64-d737db07753c@web.de>
-Date: Fri, 6 Jan 2017 18:08:36 +0100
-From: sivmu <sivmu@....de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Firejail local root exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/15/6
+Message-Id: <E1dhcE0-0007WU-Le@xenbits.xenproject.org>
+Date: Tue, 15 Aug 2017 13:49:40 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 230 (CVE-2017-12855) - grant_table: possibly premature clearing of GTF_writing / GTF_reading
 Content-Type: text/plain; charset=utf-8
 
-Am 05.01.2017 um 23:37 schrieb Martin Carpenter:
-> Setuid-root makes me sad, copy_file() worries me still and the ability
-> for a non-priv user to run any seccomp filter on anything feels like an
-> accident waiting to happen (assuming it cannot already be exploited).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Non-priv users can run seccomp filter on anything anyway.
-Seccomp does not rewuire any privileges and as far as I know it onl
-restricts permissions (to use syscalls) and never expands them.
+            Xen Security Advisory CVE-2017-12855 / XSA-230
+                              version 3
+
+ grant_table: possibly premature clearing of GTF_writing / GTF_reading
+
+UPDATES IN VERSION 3
+====================
+
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+Xen maintains the _GTF_{read,writ}ing bits as appropriate, to inform the
+guest that a grant is in use.  A guest is expected not to modify the
+grant details while it is in use, whereas the guest is free to
+modify/reuse the grant entry when it is not in use.
+
+Under some circumstances, Xen will clear the status bits too early,
+incorrectly informing the guest that the grant is no longer in use.
+
+IMPACT
+======
+
+A guest may prematurely believe that a granted frame is safely private
+again, and reuse it in a way which contains sensitive information, while
+the domain on the far end of the grant is still using the grant.
+
+VULNERABLE SYSTEMS
+==================
+
+All systems are vulnerable.
+
+MITIGATION
+==========
+
+There are no mitigations.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa230.patch           xen-unstable, 4.9, 4.8, 4.7, 4.6, 4.5
+
+$ sha256sum xsa230*
+912c24771dc9e9b305be630b7771505abb3db735564c5574fc30b58a5da0139e  xsa230.meta
+77a73f1c32d083e315ef0b1bbb119cb8840ceb5ada790cad76cbfb9116f725cc  xsa230.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-Also the question is how many of these issues are specific to firejail
-and how many of them also applied to (user)namespaces in general or
-wrapper tool lke bubblewrap that utilise namespaces as firejail does.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-Meaning some of these issues could applie to a lot more programms.
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+
+
+NOTE REGARDING SHORT EMBARGO
+============================
+
+This issue was discovered while investigating problems with the initial
+version of XSA-226.  Accordingly, XSA-230 is embargoed and the embargo
+will end at the same time as that of XSA-226.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZkvttAAoJEIP+FMlX6CvZBX4H/j68Tf+YJYNV6coTx6/Ag0wo
+WVRepDbj/WTfpY4lT3SL57dpyhnfDNUgUaMkNfEUU9GV9FGtYEChHtQ3kDh9PvVG
+ifZgyHxJnRgZY3Mr12FcevyevyPpluMFHZ7RzCl6hVXgekd2+YZOnSbY/FYPhvuh
+Chzv2HUUMY/5Yt3HkbTgez3vRIxQW74TjERIqGx6y0bD3z+NYmOtmzeYcyUGsUBL
+sf+QnBH6/bjZjiycojK7LEb4u032Kgws0lXABIypql7D8YlVH75ZOxxWxV1TmerR
+Alc71JR+22ze76Tz0C4b0rafNv3xmn3o/0qoGQWo+7/o01Eg6XHuN9nn78bz2tw=
+=x4fa
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa230.meta" of type "application/octet-stream" (1914 bytes)
+
+Download attachment "xsa230.patch" of type "application/octet-stream" (1360 bytes)
