@@ -1,23 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/7
-Message-id: <A94014E2-68EB-47B6-88B1-088FAD967837@apple.com>
-Date: Wed, 09 Aug 2017 09:07:04 -0400
-From: Jesse Hertz <jesse_hertz@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/16/1
+Message-ID: <d3e0c378-10ac-4ac9-0b60-b5993308a058@redhat.com>
+Date: Wed, 16 Aug 2017 10:50:33 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Cve issue discussion
+Subject: Insecure DNS dependency in many Kerberos deployments
 Content-Type: text/plain; charset=utf-8
 
-If a non-ASAN build under valgrind caused it to consume a lot of memory, then its a legitimate issue, report it to libpng.
-> On Aug 9, 2017, at 8:18 AM, Glenn Randers-Pehrson <glennrp@...il.com> wrote:
-> 
-> On Wed, Aug 9, 2017 at 3:49 AM, ne xo <nexo123@...look.kr> wrote:
->> Most bugs in ASan do not cause crash in non-ASan environments.
->> 
->> You should check with the valgrind tool.
-> 
-> That's what I do.
-> 
-> Valgrind exhibited the large memory request but did it quickly.
+By default, Kerberos clients perform host name canonicalization (search
+path resolution, CNAME chain chasing and PTR lookups) to obtain a
+service principal name.  This allows service impersonification:
 
+  https://ssimo.org/blog/id_015.html
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+As a rule of thumb, the impact is similar to running TLS with CA-based
+certificate validation, but without host name checks (but perhaps
+slightly less because the trust domains could be much smaller).
+
+The Kerberos client library enables this canonicalization by default:
+
+       dns_canonicalize_hostname
+              Indicate  whether  name lookups will
+              be used  to  canonicalize  hostnames
+              for  use in service principal names.
+              Setting  this  flag  to  false   can
+              improve    security    by   reducing
+              reliance  on  DNS,  but  means  that
+              short  hostnames will not be canoni‐
+              calized  to  fully-qualified   host‐
+              names.  The default value is true.
+
+       rdns   If this flag is true,  reverse  name
+              lookup  will  be used in addition to
+              forward name lookup to  canonicaliz‐
+              ing  hostnames  for  use  in service
+              principal names.  If  dns_canonical‐
+              ize_hostname  is  set to false, this
+              flag has  no  effect.   The  default
+              value is true.
+
+Some deployments have implemented compatibility with
+dns_canonicalize_hostname = false by moving the canonicalization to the
+application instead, which is of course equally insecure:
+
+  https://pagure.io/koji/c/fc8a8c6582c5e3b7a8a3a4b887061ba7a3f150a1
+  https://bugzilla.redhat.com/show_bug.cgi?id=1481983
+
+Kerberos upstream does not want to enable secure behavior by default
+because of backwards compatibility concerns.
+
+Thanks,
+Florian
