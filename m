@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["294" "Monday" "6" "February" "2017" "13:02:34" "+0100" "Andrey Konovalov" "andreyknvl@google.com" "<CAAeHK+xqSzMxjrs=DX9RVxiJrRKkWq22tLybcKMmFs4ZQZz=Ag@mail.gmail.com>" "11" "[oss-security] CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()" nil nil nil "2" "2017020612:02:34" "[oss-security] CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()" (number mark "U       andreyknvl@g Feb  6   11/294   " thread-indent "\"[oss-security] CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2027" "Wednesday" "16" "August" "2017" "12:10:09" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>" "56" "[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" "^Date:" nil nil "8" "2017081616:10:09" "[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" (number mark "        michael@orli Aug 16   56/2027  " thread-indent "\"[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21932 invoked by uid 550); 6 Feb 2017 12:18:12 -0000
+Received: (qmail 22295 invoked by uid 550); 16 Aug 2017 16:13:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15625 invoked from network); 6 Feb 2017 12:02:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=k+9ZfU13WklWDE0vNjPYH36jOdzwSjdtZTkQqOCtZcs=;
-        b=aTxEf0DEHbKgx5jt+FqP1v2MXbOAzPpTtZ3itjlAiyJy2DEK84DvzLtirHjQnjftzu
-         eznmtQbK026xKF8SvGrtotmXOI0bxqK8cDZCGxOAyfbenTvse7R0o+2WP01J2fnyF3bM
-         /IUwNGaZ4asvlvexhCE9qDOT3qI3ucYOjsvQwVJIm4l+XGVM2/2UW8x1vl8T3Vy7tqlk
-         SVuTI5t1VZYhvr4xybPgDk7PBxegVMXh2vWvEkGxXSdhMUCBfazsFMaNNjPoo2JTDAXy
-         cPDOT1awCddikSkP5UGgNUul+sYsu+cyuv63myx4hKo6hw2vybhRSY8h86umtPI/pTgB
-         aIIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=k+9ZfU13WklWDE0vNjPYH36jOdzwSjdtZTkQqOCtZcs=;
-        b=ObRkNNve5VS9Di4kr2x2WRM5ye255Kh+n3pGnoUSulxMhot3HEcEURsnmzLLcBhgSh
-         sdgg+TS2Z2MWU7a74HRRYcqHBEDCIZ/6JinId3Lu4xX21wJw+weu09X/E3E7Es9bhpZ9
-         fgsjv1FLbiDBPJyWAP0YbOsun7ht5Tkfg8wyY9gPYa5ryZuuV9bCIzYJouLjs8Fl/xTY
-         3YLwB4hlRP2knegALnM7toJSELVn2//v+doJLPemfPLrIx3Y43Qcij2UIgA+q1dAYSi1
-         lxySWlOE0Q1Zga7xPZ2ivPD7g9PF4isdNpw4bHf9ZDCCn3qx5NzAKGhD7w8fFN6naoq1
-         kuMg==
-X-Gm-Message-State: AMke39mAn8mPLgb0rs+bxKLkSSzvyr3My1ArS7Rto64vMn9BcG1uER0RqoE/VgRntNTzvZyT4oW8FWKMCn3hDTgT
-X-Received: by 10.28.228.213 with SMTP id b204mr9101105wmh.59.1486382554617;
- Mon, 06 Feb 2017 04:02:34 -0800 (PST)
+Received: (qmail 17795 invoked from network); 16 Aug 2017 16:10:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1502899811; bh=AzNw9a7nN8/W7sKX21vO7abiE7sp63C8L4zQyBkf2IY=;
+	h=To:From:Subject:Date;
+	b=Oa1022qHpBvy8vL5JbPeQbHRplLDJTSf4o605RAfrvvUWM8HUGx2ePqNfprj+myd0
+	 WUdI0r6IplsQ9FSTU0S2BLj9rfzwKQeaEZ9qqXH0Jy3eA7hZqbd5IE43eeA/tY1b3q
+	 zbNUMKPh2SeeFFYWOcOYag3Ks9TTK6Iu5DZy7N/U=
+Message-ID: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-From: Andrey Konovalov <andreyknvl@google.com>
-Date: Mon, 6 Feb 2017 13:02:34 +0100
-Message-ID: <CAAeHK+xqSzMxjrs=DX9RVxiJrRKkWq22tLybcKMmFs4ZQZz=Ag@mail.gmail.com>
-To: cve-assign@mitre.org, oss-security@lists.openwall.com
-Cc: Dmitry Vyukov <dvyukov@google.com>, Eric Dumazet <edumazet@google.com>, 
-	syzkaller <syzkaller@googlegroups.com>, Kostya Serebryany <kcc@google.com>
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Date: Wed, 16 Aug 2017 12:10:09 -0400
+From: Michael Orlitzky <michael@orlitzky.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file
+ manipulation
+To: oss-security@lists.openwall.com
 
-Hi,
+Product: Nagios Core
+Versions-affected: 4.3.2 and earlier
+Fixed-in: commits 1b19734 and 3baffa7, version 4.3.3
+Bug-report: https://github.com/NagiosEnterprises/nagioscore/issues/404
+Author: Michael Orlitzky
+Acknowledgments: Bryan Heden (upstream) for his fast response and help
 
-There's a bug in the Linux kernel ipv6 implementation which allows a
-remote attacker to trigger an out-of-bounds access.
+== Summary ==
 
-Upsteam fix:
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=7892032cfe67f4bde6fc2ee967e45a8fbaf33756
+The nagios daemon should create its PID file before dropping
+privileges. This represents a minor security issue; additional factors
+are needed to make it exploitable.
 
-Could you assign a CVE for this?
+== Details ==
 
-Thanks!
+The purpose of the PID file is to hold the PID of the running daemon,
+so that later it can be stopped, restarted, or otherwise signalled
+(many daemons reload their configurations in response to a SIGHUP).
+To fulfill that purpose, the contents of the PID file need to be
+trustworthy. If the PID file is writable by a non-root user, then he
+can replace its contents with the PID of a root process. Afterwards,
+any attempt to signal the PID contained in the PID file will instead
+signal a root process chosen by the non-root user (a vulnerability).
+
+This is commonly exploitable by init scripts that are run as root and
+which blindly trust the contents of their PID files. Nagios itself ships
+such an init script (daemon-init.in), so the risk is not theoretical in
+this case.
+
+== Exploitation ==
+
+An example scenario involving an init script would be,
+
+1. I run "/etc/init.d/nagios start" to start the daemon.
+
+2. nagios drops to the "nagios" user.
+
+3. nagios writes its PID file, now owned by the "nagios" user.
+
+4. Someone compromises the daemon, which sits on the network.
+
+5. The attacker is generally limited in what he can do because the
+   daemon doesn't run as root. However, he can write "1" into the
+   PID file, and he does.
+
+6. I run "/etc/init.d/nagios stop" to stop the daemon while I
+   investigate the weird behavior resulting from the hack.
+
+7. The machine reboots, because I killed PID 1 (this is normally
+   restricted to root).
+
+== Resolution ==
+
+The problem is avoided by creating the PID file as root, before dropping
+privileges.
+
