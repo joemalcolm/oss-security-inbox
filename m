@@ -1,33 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/7
-Message-ID: <10ee2c35-ee9d-47d4-0822-011eed60fb5e@gentoo.org>
-Date: Sun, 2 Jul 2017 21:22:46 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/16/8
+Message-ID: <87y3qjcscp.fsf@hope.eyrie.org>
+Date: Wed, 16 Aug 2017 10:52:54 -0700
+From: Russ Allbery <eagle@...ie.org>
+To: Florian Weimer <fweimer@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Insecure DNS dependency in many Kerberos deployments
 Content-Type: text/plain; charset=utf-8
 
-On 07/02/2017 07:27 PM, Solar Designer wrote:
-> (*) I admit there are things we probably could do better with greater
-> effort.  For example, we could rewrite from scratch and release as Open
-> Source the encrypted mailing list software, which is currently an awful
-> hack.  I wouldn't oppose doing that piece of software development under
-> a separate funded project, if capable people were available for that.
-> However, I am worried that most teams tasked to work on something like
-> this would produce a complex monster, which wouldn't otherwise be
-> directly comparable (as in: is it better or worse? is it more or less
-> secure?) to the current hack.
+Florian Weimer <fweimer@...hat.com> writes:
 
-To have it mentioned as part of the discussion at least; has something
-like http://schleuder2.nadir.org/documentation/v2.2/concept.html even
-been considered? and if considered and found not appropriate, the
-rationale for it is likely interesting as well.
+> As a rule of thumb, the impact is similar to running TLS with CA-based
+> certificate validation, but without host name checks (but perhaps
+> slightly less because the trust domains could be much smaller).
+
+I think this overstates the impact somewhat.  This is more worrisome with
+TLS because for most TLS applications there is a single global trust
+domain with certificates issued by dozens or hundreds of parties and no
+organizational scoping.  This is *not* the case for Kerberos.  To exploit
+this flaw in Kerberos, the attacker has to be able to control service
+principals (for the same target service with a different hostname) within
+the same Kerberos realm (or, in some circumstances, one reachable by
+cross-realm trust).  This is a much higher bar to meet, and in a lot of
+organizations this bar cannot be easily met by an attacker.
+
+The attack is definitely possible, and the Kerberos community has been
+aware of this problem for a long time (there are a lot of difficult issues
+involved in closing it, but everyone has wanted to close it), but it's not
+as exploitable as the TLS equivalent (at least in the absence of
+organizational cert pinning).
+
+> The Kerberos client library enables this canonicalization by default:
+
+>        dns_canonicalize_hostname
+>               Indicate  whether  name lookups will
+>               be used  to  canonicalize  hostnames
+>               for  use in service principal names.
+>               Setting  this  flag  to  false   can
+>               improve    security    by   reducing
+>               reliance  on  DNS,  but  means  that
+>               short  hostnames will not be canoni‐
+>               calized  to  fully-qualified   host‐
+>               names.  The default value is true.
+
+>        rdns   If this flag is true,  reverse  name
+>               lookup  will  be used in addition to
+>               forward name lookup to  canonicaliz‐
+>               ing  hostnames  for  use  in service
+>               principal names.  If  dns_canonical‐
+>               ize_hostname  is  set to false, this
+>               flag has  no  effect.   The  default
+>               value is true.
+
+For the record, those are settings for *a* Kerberos client library, not
+*the* Kerberos client library (specifically, the MIT Kerberos
+implementation).  Heimdal does not use those settings, and there are other
+Kerberos implementations as well.
 
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
