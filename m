@@ -1,123 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/06/2
-Message-ID: <489609.792220534-sendEmail@localhost>
-Date: Wed, 6 Sep 2017 07:32:24 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: openjpeg: heap-based buffer overflow in opj_write_bytes_LE (cio.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/2
+Message-ID: <87ziazjhca.fsf@fifthhorseman.net>
+Date: Wed, 16 Aug 2017 18:08:53 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Russ Allbery <eagle@...ie.org>, Florian Weimer <fweimer@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Insecure DNS dependency in many Kerberos deployments
 Content-Type: text/plain; charset=utf-8
 
-Description:
-openjpeg is an open-source JPEG 2000 library.
+On Wed 2017-08-16 10:52:54 -0700, Russ Allbery wrote:
+> Florian Weimer <fweimer@...hat.com> writes:
+>
+>> As a rule of thumb, the impact is similar to running TLS with CA-based
+>> certificate validation, but without host name checks (but perhaps
+>> slightly less because the trust domains could be much smaller).
+>
+> I think this overstates the impact somewhat.  This is more worrisome with
+> TLS because for most TLS applications there is a single global trust
+> domain with certificates issued by dozens or hundreds of parties and no
+> organizational scoping.
 
-The complete ASan output of the issue:
+fwiw, I think that's what Florian means by his parenthetical aside.
 
-# opj_compress -I -cinema4K -n 1 -i $FILE -o null.jp2
-==133214==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61100000012b at pc 0x7f221efde81a bp 0x7ffd4c1d9ad0 sp 0x7ffd4c1d9ac8           
-WRITE of size 1 at 0x61100000012b thread T0                                                                                                          
-    #0 0x7f221efde819 in opj_write_bytes_LE /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/cio.c:67:23               
-    #1 0x7f221f0261b8 in opj_j2k_write_sot /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:4237:5               
-    #2 0x7f221f0261b8 in opj_j2k_write_all_tile_parts /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11604     
-    #3 0x7f221f0261b8 in opj_j2k_post_write_tile /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11273          
-    #4 0x7f221f0240fd in opj_j2k_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11014:15                
-    #5 0x7f221f06edf8 in opj_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/openjpeg.c:775:20                 
-    #6 0x50b9a2 in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1990:36                            
-    #7 0x7f221da06680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                       
-    #8 0x41bc78 in _start (/usr/bin/opj_compress+0x41bc78)                                                                                           
-                                                                                                                                                     
-0x61100000012b is located 0 bytes to the right of 235-byte region [0x611000000040,0x61100000012b)                                                    
-allocated by thread T0 here:                                                                                                                         
-    #0 0x4d1628 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66         
-    #1 0x7f221f11a8a9 in opj_malloc /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/opj_malloc.c:196:12               
-    #2 0x7f221f051260 in opj_j2k_update_rates /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:5156:22
-    #3 0x7f221f027f8c in opj_j2k_exec /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:7940:33
-    #4 0x7f221f027f8c in opj_j2k_start_compress /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11089
-    #5 0x7f221f059260 in opj_jp2_start_compress /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/jp2.c:2474:12
-    #6 0x7f221f06ec9c in opj_start_compress /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/openjpeg.c:758:20
-    #7 0x50b96f in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1967:20
-    #8 0x7f221da06680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+> This is a much higher bar to meet, and in a lot of organizations this
+> bar cannot be easily met by an attacker.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/cio.c:67:23 in opj_write_bytes_LE
-Shadow bytes around the buggy address:
-  0x0c227fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff8000: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c227fff8010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c227fff8020: 00 00 00 00 00[03]fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8070: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==133214==ABORTING
-CINEMA 4K profile activated
-Other options specified could be overridden
-[WARNING] JPEG 2000 Profile-4 (4k dc profile) requires:
-Number of decomposition levels >= 1 &&  Number of decomposition levels forced to 1 (rather than 2)
-[WARNING] JPEG 2000 Profile-3 and 4 (2k/4k dc profile) requires:
-Maximum 1302083 compressed bytes @ 24fps
-As no rate has been given, this limit will be used.
-[WARNING] JPEG 2000 Profile-3 and 4 (2k/4k dc profile) requires:
-Maximum 1041666 compressed bytes @ 24fps
-As no rate has been given, this limit will be used.
-[WARNING] JPEG 2000 Profile-3 (2k dc profile) requires:
-Precision of each component shall be 12 bits unsigned-> At least component 0 of input image (8 bits, unsigned) is not compliant
--> Non-profile-3 codestream will be generated
-[INFO] tile number 1 / 1
+While i understand the desire to be clear about the constrained scope of
+the risk, i think another way of saying what you're saying is "control
+over one service in a domain and the ability to poison the DNS allows
+that service operator to masquerade as any other service in the domain".
 
-Affected version:
-2.2.0
+Even for domains where a single administrator controls all machines,
+this violates principles of privilege separation that admins rely on to
+be able to deploy potentially-buggy services without putting the other
+services at risk.
 
-Fixed version:
-N/A
+So i think it's worth taking this seriously, despite(?) its age and
+widespread deployment.
 
-Commit fix:
-https://github.com/uclouvain/openjpeg/commit/4241ae6fbbf1de9658764a80944dc8108f2b4154
+> For the record, those are settings for *a* Kerberos client library,
+> not *the* Kerberos client library (specifically, the MIT Kerberos
+> implementation).  Heimdal does not use those settings, and there are
+> other Kerberos implementations as well.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+The fact that some client libraries *don't* do this should give us hope
+that it's fixable, even in existing deployments :)
 
-CVE:
-CVE-2017-14152
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00317-openjpeg-heapoverflow-opj_write_bytes_LE
-
-Timeline:
-2017-08-15: bug discovered and reported to upstream
-2017-08-15: upstream released a fix
-2017-08-16: blog post about the issue
-2017-09-05: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/16/openjpeg-heap-based-buffer-overflow-in-opj_write_bytes_le-cio-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+     --dkg
 
 
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
