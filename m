@@ -1,25 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/2
-Message-ID: <58b3f24c-90fe-a92e-1ae8-dc8ad702401f@insomniasec.com>
-Date: Tue, 13 Jun 2017 15:39:26 +1200
-From: Murray McAllister <murray.mcallister@...omniasec.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/16/7
+Message-ID: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>
+Date: Wed, 16 Aug 2017 12:10:09 -0400
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory in vmw_gb_surface_define_ioctl()
+Subject: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-The vmw_gb_surface_define_ioctl() function (accessible via
-DRM_IOCTL_VMW_GB_SURFACE_CREATE) defines a backup_handle variable but
-does not give it an initial value. If you attempt to create a GB
-surface, and provide a previously-allocated DMA buffer to be used as a
-backup buffer, the backup_handle variable does not get written to and is
-then later returned to user-space.
+Product: Nagios Core
+Versions-affected: 4.3.2 and earlier
+Fixed-in: commits 1b19734 and 3baffa7, version 4.3.3
+Bug-report: https://github.com/NagiosEnterprises/nagioscore/issues/404
+Author: Michael Orlitzky
+Acknowledgments: Bryan Heden (upstream) for his fast response and help
 
-Upstream commit:
+== Summary ==
 
-https://github.com/torvalds/linux/commit/07678eca2cf9c9a18584e546c2b2a0d0c9a3150c
+The nagios daemon should create its PID file before dropping
+privileges. This represents a minor security issue; additional factors
+are needed to make it exploitable.
 
-CVE:
+== Details ==
 
-I'll request one now and reply once I have one.
+The purpose of the PID file is to hold the PID of the running daemon,
+so that later it can be stopped, restarted, or otherwise signalled
+(many daemons reload their configurations in response to a SIGHUP).
+To fulfill that purpose, the contents of the PID file need to be
+trustworthy. If the PID file is writable by a non-root user, then he
+can replace its contents with the PID of a root process. Afterwards,
+any attempt to signal the PID contained in the PID file will instead
+signal a root process chosen by the non-root user (a vulnerability).
 
-Chur
+This is commonly exploitable by init scripts that are run as root and
+which blindly trust the contents of their PID files. Nagios itself ships
+such an init script (daemon-init.in), so the risk is not theoretical in
+this case.
+
+== Exploitation ==
+
+An example scenario involving an init script would be,
+
+1. I run "/etc/init.d/nagios start" to start the daemon.
+
+2. nagios drops to the "nagios" user.
+
+3. nagios writes its PID file, now owned by the "nagios" user.
+
+4. Someone compromises the daemon, which sits on the network.
+
+5. The attacker is generally limited in what he can do because the
+   daemon doesn't run as root. However, he can write "1" into the
+   PID file, and he does.
+
+6. I run "/etc/init.d/nagios stop" to stop the daemon while I
+   investigate the weird behavior resulting from the hack.
+
+7. The machine reboots, because I killed PID 1 (this is normally
+   restricted to root).
+
+== Resolution ==
+
+The problem is avoided by creating the PID file as root, before dropping
+privileges.
+
