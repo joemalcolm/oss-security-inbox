@@ -1,85 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/9
-Message-ID: <38c661a9-5631-2bc0-a4eb-7821733d0f24@cispa.saarland>
-Date: Wed, 8 Feb 2017 00:00:24 +0100
-From: Jens Heyens <jens.heyens@...pa.saarland>
-To: oss-security@...ts.openwall.com
-Cc: Ben Stock <stock@...uni-saarland.de>
-Subject: CVE Request - Code execution vulnerability in GNU/bash v4.4 autocompletion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/16/4
+Message-ID: <87y3qjhd2q.fsf@fifthhorseman.net>
+Date: Wed, 16 Aug 2017 09:11:41 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: Insecure DNS dependency in many Kerberos deployments
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed 2017-08-16 10:50:33 +0200, Florian Weimer wrote:
+> By default, Kerberos clients perform host name canonicalization (search
+> path resolution, CNAME chain chasing and PTR lookups) to obtain a
+> service principal name.  This allows service impersonification:
 
-we would like to request a CVE ID for a vulnerability in GNU/bash
-version 4.4, discovered on 2017-01-17. The issue has been fixed.
-A detailed description can be found in our report (available at
-https://github.com/jheyens/bash_completion_vuln | direct link
-https://github.com/jheyens/bash_completion_vuln/raw/master/2017-01-17.bash_completion_report.pdf
-).
+This is a long-standing security flaw in kerberos, and i think it has
+probably been stumbled across by anyone who has tried to deploy a new
+kerberos environment.  (i know, because i did, many many years ago)
 
-In short: We can create a file with a specially crafted file name. A
-user trying to use bash' path completion feature ('TAB-completion') on
-this file will execute shell code without any additional actions taken.
+It's particularly bad that this is the default for new deployments
+because novices deploying a new kerberos domain are unlikely to deviate
+from the defaults out of fear of breaking something.  The result is that
+nearly every single krb5 deployment has this bug.
 
-The issue has been reported on 2017-01-17, a fix has been added to the
-git's master branch on 2017-01-20 by GNU/bash maintainer Chet Ramey
-(Commit ID 4f747edc625815f449048579f6e65869914dd715, available at
-http://git.savannah.gnu.org/cgit/bash.git/commit/?id=4f747edc625815f449048579f6e65869914dd715
-).
+The band-aid needs to have been pulled off ages ago so that it's fixed
+for new deployments, and legacy deployments need to explicitly enable it
+if they need it.
 
+Alas, I don't know how to make this transition happen smoothly :(
 
-Sincerely,
+> Some deployments have implemented compatibility with
+> dns_canonicalize_hostname = false by moving the canonicalization to the
+> application instead, which is of course equally insecure:
 
-Jens Heyens
-CISPA
+Thanks for noticing these, Florian.  This is a disturbing trend:
+backflow of security flaws as they get fixed in one place for
+"compatibility" in another. :/
 
-Additional information as requested on the disclosure wiki:
+      --dkg
 
-1. Email address of requester (so we can contact them)
-	jens.heyens@...pa.saarland,  stock@...uni-saarland.de
-2. Software name and optionally vendor name
-	GNU/bash
-3. At least one of (to determine is this a security issue):
-  -  Type of vulnerability
-	arbitrary code execution
-  -  Exploitation vectors
-	local, drive-by downloads, anything able to name files anywhere
-  -  Attack outcome
-	system compromised?
-4. For Open Source at least one of:
-  -  Link to vulnerable source code or fix
-	Fix:
-http://git.savannah.gnu.org/cgit/bash.git/commit/?id=4f747edc625815f449048579f6e65869914dd715
-  -  Link to source code change log
-	N/A
-  -  Link to security advisory
-	Original report:
-https://github.com/jheyens/bash_completion_vuln/raw/master/2017-01-17.bash_completion_report.pdf
-  -  Link to bug entry
-	in GNU/Savannah, but it's a non-public issue
-  -  Request comes from project member (a.k.a. “trust me, it's a problem”)
-	No.
-5. Affected version(s) (3.2.4, 3.x, current version, all current
-releases, something)
-	>4.3, <4.4-patch7
-6. Whether or not this has been previously requested (i.e. on OSS-Sec or
-to cve-assign)
-	Yes, but we did not receive any information at all for three weeks.
-Full story (and the advice to write to this list) here:
-https://www.reddit.com/r/security/comments/5slvtu/how_do_i_request_a_cve_id_for_a_gnubash/
-7. Is this an Open Source or commercial software request
-	Yes, GPLed
-8. Is this an embargoed issue (if yes and commercial: send to
-cve-assign, if yes and open source: send to distros@?)
-	I wouldn't think so
-9. If multiple issues are listed please list affected versions for each
-issue and/or who reported them (so we can determine CVE split/merge).
-	No
-
-
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (871 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
