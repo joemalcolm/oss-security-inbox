@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["88" "Tuesday" "16" "August" "2016" "12:46:05" "+0200" "Greg KH" "greg@kroah.com" "<20160816104605.GA28026@kroah.com>" "6" "Re: [oss-security] Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master" "^Date:" nil nil "8" "2016081610:46:05" "[oss-security] Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master" (number mark "        greg@kroah.c Aug 16    6/88    " thread-indent "\"Re: [oss-security] Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master\"\n") "<CAFkTriJ7-kN_KH-pOJCDkZHen=6uiJKhL775PTV17zcX-YMHSQ@mail.gmail.com>" ("<CAFkTriL_5WgBrDLLujB=83-RXNYFW3bhNxi6Dr99vKnob_M3Rg@mail.gmail.com>" "<20160815075453.GE6359@kroah.com>" "<CAFkTriKKuwHjAMgY7N6OCt2p=8SYL_coQFy+rXy1PzksF2+uyA@mail.gmail.com>" "<20160815083632.GA1172@kroah.com>" "<CAFkTriJ7-kN_KH-pOJCDkZHen=6uiJKhL775PTV17zcX-YMHSQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6892" "Wednesday" "16" "August" "2017" "11:52:54" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<540309.755920561-sendEmail@localhost>" "117" "[oss-security] imagemagick: heap-based buffer overflow in .omp_outlined..32 (enhance.c)" nil nil nil "8" "2017081611:52:54" "[oss-security] imagemagick: heap-based buffer overflow in .omp_outlined..32 (enhance.c)" (number mark "U       ago@gentoo.o Aug 16  117/6892  " thread-indent "\"[oss-security] imagemagick: heap-based buffer overflow in .omp_outlined..32 (enhance.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9951 invoked by uid 550); 16 Aug 2016 10:46:07 -0000
+Received: (qmail 15969 invoked by uid 550); 16 Aug 2017 11:53:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,36 +11,130 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9933 invoked from network); 16 Aug 2016 10:46:06 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=OTTx1zD0PozteD03S7McVzA15U8=; b=WTnvI
-	jvkcLgCNg6FatT9S8xzbqQFbmW9Vlke25BvCET+8ErKoArlYB8WZXufbMqxMqI8Z
-	7UkUHCbF4UWse72aDpnL2Nb0/AbgYelIsrKT2fwHc7yt2qx/tWMH/6Sis7F8/3+I
-	l3yD5yG9O+U/BMVKqnhP81m91xO3Jz2wmW94Rg=
-X-Sasl-enc: jTSBn814GrwS1qHysV9xhwt3fGVyIxwale3wdJfGoMQQ 1471344354
-Message-ID: <20160816104605.GA28026@kroah.com>
-References: <CAFkTriL_5WgBrDLLujB=83-RXNYFW3bhNxi6Dr99vKnob_M3Rg@mail.gmail.com>
- <20160815075453.GE6359@kroah.com>
- <CAFkTriKKuwHjAMgY7N6OCt2p=8SYL_coQFy+rXy1PzksF2+uyA@mail.gmail.com>
- <20160815083632.GA1172@kroah.com>
- <CAFkTriJ7-kN_KH-pOJCDkZHen=6uiJKhL775PTV17zcX-YMHSQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFkTriJ7-kN_KH-pOJCDkZHen=6uiJKhL775PTV17zcX-YMHSQ@mail.gmail.com>
-User-Agent: Mutt/1.6.2 (2016-07-01)
-Date: Tue, 16 Aug 2016 12:46:05 +0200
-From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux tcp_xmit_retransmit_queue use after free on
- 4.8-rc1 / master
-To: oss-security@lists.openwall.com
+Received: (qmail 15939 invoked from network); 16 Aug 2017 11:53:10 -0000
+Message-ID: <540309.755920561-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Wed, 16 Aug 2017 11:52:54 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-698722.868765802"
+Subject: [oss-security] imagemagick: heap-based buffer overflow in .omp_outlined..32 (enhance.c)
 
-On Mon, Aug 15, 2016 at 04:37:31PM +0800, Marco Grassi wrote:
-> yes please
+------MIME delimiter for sendEmail-698722.868765802
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Now done.
+Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap images.
 
+The complete ASan output of the issue:
+
+# convert $FILE null
+==109188==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000049f8 at pc 0x7f81ecd9b4c2 bp 0x7ffe3c52f850 sp 0x7ffe3c52f848
+READ of size 8 at 0x6020000049f8 thread T0   
+    #0 0x7f81ecd9b4c1 in .omp_outlined..32 /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/enhance.c:1248:13  
+    #1 0x7f81eb8395c2 in __kmp_invoke_microtask /var/tmp/portage/sys-libs/libomp-4.0.1/work/openmp-4.0.1.src/runtime/src/z_Linux_asm.s:1399 
+    #2 0x7f81eb7e125a in __kmp_fork_call /var/tmp/portage/sys-libs/libomp-4.0.1/work/openmp-4.0.1.src/runtime/src/kmp_runtime.cpp:1858 
+    #3 0x7f81eb7cd74f in __kmpc_fork_call /var/tmp/portage/sys-libs/libomp-4.0.1/work/openmp-4.0.1.src/runtime/src/kmp_csupport.cpp:337
+    #4 0x7f81ecd999b9 in ContrastStretchImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/enhance.c:1213:11    
+    #5 0x7f81ecbd2280 in SetImageType /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/attribute.c:1262:18
+    #6 0x7f81e5acd5bd in WriteTIFFImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/coders/tiff.c:3245:16  
+    #7 0x7f81eccc4026 in WriteImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/constitute.c:1114:14 
+    #8 0x7f81eccc55a9 in WriteImages /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/constitute.c:1333:13
+    #9 0x7f81ec50f456 in ConvertImageCommand /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickWand/convert.c:3280:11
+    #10 0x7f81ec62e225 in MagickCommandGenesis /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickWand/mogrify.c:183:14    
+    #11 0x5093e9 in MagickMain /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/utilities/magick.c:149:10  
+    #12 0x5093e9 in main /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/utilities/magick.c:180 
+    #13 0x7f81eb206680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289   
+    #14 0x41a1f8 in _init (/usr/bin/magick+0x41a1f8)   
+
+0x6020000049f8 is located 0 bytes to the right of 8-byte region [0x6020000049f0,0x6020000049f8)
+allocated by thread T0 here:  
+    #0 0x4cfba8 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7f81ecef8df7 in AcquireMagickMemory /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/memory.c:464:10  
+    #2 0x7f81ecef8df7 in AcquireQuantumMemory /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/memory.c:537    
+    #3 0x7f81ecd97037 in ContrastStretchImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/enhance.c:1052:20    
+    #4 0x7f81ecbd2280 in SetImageType /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/attribute.c:1262:18
+    #5 0x7f81e5acd5bd in WriteTIFFImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/coders/tiff.c:3245:16
+    #6 0x7f81eccc4026 in WriteImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/constitute.c:1114:14
+    #7 0x7f81eccc55a9 in WriteImages /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/constitute.c:1333:13
+    #8 0x7f81ec50f456 in ConvertImageCommand /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickWand/convert.c:3280:11
+    #9 0x7f81ec62e225 in MagickCommandGenesis /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickWand/mogrify.c:183:14
+    #10 0x5093e9 in MagickMain /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/utilities/magick.c:149:10
+    #11 0x5093e9 in main /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/utilities/magick.c:180
+    #12 0x7f81eb206680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/enhance.c:1248:13 in .omp_outlined..32
+Shadow bytes around the buggy address:
+  0x0c047fff88e0: fa fa fd fd fa fa fd fd fa fa fd fd fa fa fd fd
+  0x0c047fff88f0: fa fa fd fd fa fa fd fd fa fa fd fd fa fa fd fd
+  0x0c047fff8900: fa fa fd fd fa fa fd fd fa fa fd fd fa fa fd fd
+  0x0c047fff8910: fa fa fd fd fa fa fd fd fa fa fd fd fa fa fd fd
+  0x0c047fff8920: fa fa 00 03 fa fa 00 04 fa fa 05 fa fa fa 00 00
+=>0x0c047fff8930: fa fa 00 07 fa fa 00 04 fa fa 00 04 fa fa 00[fa]
+  0x0c047fff8940: fa fa 00 fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8950: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8960: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8970: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8980: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==109188==ABORTING
+
+Affected version:
+7.0.6-5
+
+Fixed version:
+7.0.6-6 (not released atm)
+
+Commit fix:
+https://github.com/ImageMagick/ImageMagick/commit/1cc6f0ccc92c20c7cab6c4a7335daf29c91f0d8e
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-12876
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00306-imagemagick-heapoverflow-enhance_c
+
+Timeline:
+2017-08-09: bug discovered and reported to upstream
+2017-08-10: blog post about the issue
+2017-08-15: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/10/imagemagick-heap-based-buffer-overflow-in-omp_outlined-32-enhance-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-698722.868765802--
 
