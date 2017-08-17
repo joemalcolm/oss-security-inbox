@@ -1,27 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/5
-Message-ID: <20171207111718.GA1230@kroah.com>
-Date: Thu, 7 Dec 2017 12:17:18 +0100
-From: Greg KH <greg@...ah.com>
-To: at zhou <zhouat2017@...il.com>
-Cc: security@...nel.org, secalert@...hat.com, security@...e.com, tglx@...utronix.de, oss-security@...ts.openwall.com, linux-distros@...openwall.org
-Subject: Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/7
+Message-ID: <0880ca9f-a632-2da6-8ce6-8be03f332d7f@orlitzky.com>
+Date: Thu, 17 Aug 2017 12:48:39 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-11746: tenshi privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 07, 2017 at 06:01:43PM +0800, at zhou wrote:
-> Hi all,
-> 
-> credit   to   L5@...vulcan team
-> 
-> I fuzzed the linux kernel and find signed integer overflow on linux
-> 4.15.0-rc1+.
-> the crash log can see below, the .config and the poc file ,please see the
-> attachments.
+Product: Tenshi (log monitoring tool)
+Vendor: Inverse Path (F-Secure)
+Versions-affected: 0.15 and earlier
+Fixed-in: commits 46b0148 and d0e7f28, version 0.16
+Bug-report: https://github.com/inversepath/tenshi/issues/6
+Author: Michael Orlitzky
+Acknowledgments: Andrea Barisani who fixed several other issues and got
+  a new release out to help fix this one.
 
-Odd, doesn't seem to affect a 4.9 or 4.15-rc2 kernel here on my
-machines, is there something specific in the .config that might be
-triggering this?
+== Summary ==
 
-thanks,
+The tenshi daemon should create its PID file before dropping
+privileges. This represents a minor security issue; additional factors
+are needed to make it exploitable.
 
-greg k-h
+== Details ==
+
+The purpose of the PID file is to hold the PID of the running daemon,
+so that later it can be stopped, restarted, or otherwise signalled
+(many daemons reload their configurations in response to a SIGHUP).
+To fulfil that purpose, the contents of the PID file need to be
+trustworthy. If the PID file is writable by a non-root user, then he
+can replace its contents with the PID of a root process. Afterwards,
+any attempt to signal the PID contained in the PID file will instead
+signal a root process chosen by the non-root user (a vulnerability).
+
+This is commonly exploitable by init scripts that are run as root and
+which blindly trust the contents of their PID files. Tenshi itself ships
+a few such init scripts: tenshi.debian-init, tenshi.suse-init, etc.
+
+== Exploitation ==
+
+An example of a problematic scenario involving an init script would be,
+
+1. I run "/etc/init.d/tenshi start" to start the daemon.
+
+2. tenshi drops to the "tenshi" user.
+
+3. tenshi writes its PID file, now owned by the "tenshi" user.
+
+4. Someone compromises the daemon, which processes untrusted input.
+
+5. The attacker is generally limited in what he can do because the
+   daemon doesn't run as root. However, he can write "1" into the
+   PID file, and he does.
+
+6. I run "/etc/init.d/tenshi stop" to stop the daemon while I
+   investigate the weird behavior resulting from the hack.
+
+7. The machine reboots, because I killed PID 1 (this is normally
+   restricted to root).
+
+== Resolution ==
+
+The problem is avoided by creating the PID file as root, before dropping
+privileges.
