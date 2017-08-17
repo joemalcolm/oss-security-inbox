@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2473" "Thursday" "30" "June" "2016" "04:00:46" "+0000" "halfdog" "me@halfdog.net" "<fake-VM-id.0d012f75613e61c14fa476b20e779933@talos.iv>" "68" "[oss-security] Debian Exim Spool Local Root" nil nil nil "6" "2016063004:00:46" "[oss-security] Debian Exim Spool Local Root" (number mark "U       me@halfdog.n Jun 30   68/2473  " thread-indent "\"[oss-security] Debian Exim Spool Local Root\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4375" "Thursday" "17" "August" "2017" "20:16:18" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<720560.061602981-sendEmail@localhost>" "81" "[oss-security] libfpx: NULL pointer dereference in wchar.c" nil nil nil "8" "2017081720:16:18" "[oss-security] libfpx: NULL pointer dereference in wchar.c" (number mark "U       ago@gentoo.o Aug 17   81/4375  " thread-indent "\"[oss-security] libfpx: NULL pointer dereference in wchar.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8039 invoked by uid 550); 30 Jun 2016 04:41:52 -0000
+Received: (qmail 16311 invoked by uid 550); 17 Aug 2017 20:16:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +12,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8006 invoked from network); 30 Jun 2016 04:41:47 -0000
-From: halfdog <me@halfdog.net>
-To: oss-security@lists.openwall.com
+Received: (qmail 16120 invoked from network); 17 Aug 2017 20:16:35 -0000
+Message-ID: <720560.061602981-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 17 Aug 2017 20:16:18 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 30 Jun 2016 04:00:46 +0000
-Subject: [oss-security] Debian Exim Spool Local Root
-Message-ID: <20160630040046.1k1Wi9C8fvHf9Wht2elxjL0AiJoYENKh_MwHIz8Uc-k@z>
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-537730.81635973"
+Subject: [oss-security] libfpx: NULL pointer dereference in wchar.c
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+------MIME delimiter for sendEmail-537730.81635973
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Hello List,
+Description:
+libfpx is a library for manipulating FlashPIX images.
 
-This is just a minor issue in Exim, no replies so far, so publication
-should be OK.
+I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
+again.
+Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
+are only accepting patches and push new releases.
+This issue was found using the gm command line tool of graphicsmagick.
 
-Introduction:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Exim4 in some variants is started as root but switches to uid/gid
-Debian-exim/Debian-exim. But as Exim might need to store received
-messages in user mailboxes, it has to have the ability to regain
-privileges. This is also true when Exim is started as "sendmail".
-During internal operation, sendmail (Exim) will manipulate message
-spool files in directory structures owned by user "Debian-exim"
-without caring about symlink attacks. Thus execution of code as
-user "Debian-exim" can be used to gain root privileges by invoking
-"sendmail" as user "Debian-exim".
+The complete ASan output of the issue:
 
+# gm identify $FILE
+==11400==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7fdead094f30 bp 0x608000000fa0 sp 0x7fff5867d3a8 T0)
+==11400==The signal is caused by a READ memory access.
+==11400==Hint: address points to the zero page.
+    #0 0x7fdead094f2f  /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/wchar.c:140
+    #1 0x7fdead0765db in OLEStream::WriteVT_LPWSTR(unsigned short*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olestrm.cpp:1538
+    #2 0x7fdead072e06 in OLEPropertySection::Write() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:477
+    #3 0x7fdead073101 in OLEPropertySet::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:131
+    #4 0x7fdead049f16 in PFileFlashPixView::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:583
+    #5 0x7fdead049fbf in PFileFlashPixView::~PFileFlashPixView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:444
+    #6 0x7fdead04a0c8 in PFileFlashPixView::~PFileFlashPixView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:487
+    #7 0x7fdead05365c in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:524
+    #8 0x7fdead0536b8 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:532
+    #9 0x7fdead05529e in FPX_CloseImage /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:766
+    #10 0x7fdead2c7bf4 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:344:14
+    #11 0x7fdeb2b5be2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #12 0x7fdeb2b58e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
+    #13 0x7fdeb2a24ae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
+    #14 0x7fdeb2a2b065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #15 0x7fdeb2ad67fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #16 0x7fdeb2ad3931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #17 0x7fdeb133e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #18 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
 
-POC:
-=3D=3D=3D
-http://www.halfdog.net/Security/2016/DebianEximSpoolLocalRoot/EximUpgrade.c
-demonstrates the issue using a ELF file being both executable
-and shared library which is invoked multiple times by different
-processes.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/wchar.c:140 
+==11400==ABORTING
 
+Affected version:
+1.3.1_p6
 
-Results, Discussion:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-As Exim4 process itself is already quite privileged - it has to
-access the user mailboxes with different UIDs anyway - the having
-such problems is expectable and explainable. A change in documentation
-might make sense, to indicate, that the special user "Debian-exim"
-is only intended to mark files being used by the daemon, but not
-to provide root/daemon user privilege separation.
+Fixed version:
+N/A
 
-Even without this vulnerability, a "Debian-exim" process could
-use http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
-to escalate to "adm" group, which again makes it very likely to
-use "syslog", "apache" or other components to escalate to root
-via "/var/log". This is annoying, perhaps this should get a CVE
-to make daemon-to-root escalations harder in general.
+Commit fix:
+N/A
 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-12922
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00310-libfpx-NULLptr-wchar_c
 
 Timeline:
-=3D=3D=3D=3D=3D=3D=3D=3D
-20160605: Discovery, report Debian security
-20160607: Writeup
-20160611: Also verified in Ubuntu, https://bugs.launchpad.net/ubuntu/+sourc=
-e/exim4/+bug/1580454/
-20160630: Publication
+2017-08-01: bug discovered
+2017-08-09: blog post about the issue
+2017-08-17: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/09/libfpx-null-pointer-dereference-in-wchar-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-References:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-* http://www.halfdog.net/Security/2016/DebianEximSpoolLocalRoot/
-* http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/
-* https://bugs.launchpad.net/ubuntu/+source/exim4/+bug/1580454/
------BEGIN PGP SIGNATURE-----
-
-iEYEAREKAAYFAld0lPUACgkQxFmThv7tq+5MeACePVuh5CppGyhUudMfK7kjDXjj
-8mcAn2AcZFVEwUKSHadffJJyCNLP0X7H
-=3D4IJk
------END PGP SIGNATURE-----
-
+------MIME delimiter for sendEmail-537730.81635973--
 
