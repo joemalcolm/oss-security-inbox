@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1366" "Tuesday" "7" "July" "2015" "16:42:22" "+0300" "Solar Designer" "solar@openwall.com" "<20150707134222.GA8667@openwall.com>" "37" "[oss-security] CVE-2015-3281 HAProxy information leak vulnerability" nil nil nil "7" "2015070713:42:22" "[oss-security] CVE-2015-3281 HAProxy information leak vulnerability" (number mark "U       solar@openwa Jul  7   37/1366  " thread-indent "\"[oss-security] CVE-2015-3281 HAProxy information leak vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4265" "Thursday" "17" "August" "2017" "20:14:46" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<929304.649445356-sendEmail@localhost>" "77" "[oss-security] libfpx: NULL pointer dereference in PFileFlashPixView::GetGlobalInfoProperty (f_fpxvw.cpp)" nil nil nil "8" "2017081720:14:46" "[oss-security] libfpx: NULL pointer dereference in PFileFlashPixView::GetGlobalInfoProperty (f_fpxvw.cpp)" (number mark "U       ago@gentoo.o Aug 17   77/4265  " thread-indent "\"[oss-security] libfpx: NULL pointer dereference in PFileFlashPixView::GetGlobalInfoProperty (f_fpxvw.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11738 invoked by uid 550); 7 Jul 2015 13:42:40 -0000
+Received: (qmail 5903 invoked by uid 550); 17 Aug 2017 20:15:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11575 invoked from network); 7 Jul 2015 13:42:26 -0000
-Date: Tue, 7 Jul 2015 16:42:22 +0300
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20150707134222.GA8667@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] CVE-2015-3281 HAProxy information leak vulnerability
+Received: (qmail 5734 invoked from network); 17 Aug 2017 20:15:03 -0000
+Message-ID: <929304.649445356-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 17 Aug 2017 20:14:46 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-426991.045548679"
+Subject: [oss-security] libfpx: NULL pointer dereference in PFileFlashPixView::GetGlobalInfoProperty (f_fpxvw.cpp)
 
-Hi,
+------MIME delimiter for sendEmail-426991.045548679
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-I think this should be brought in here, from the news section on the
-HAProxy website:
+Description:
+libfpx is a library for manipulating FlashPIX images.
 
-http://www.haproxy.org/news.html
+I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
+again.
+Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
+are only accepting patches and push new releases.
+This issue was found using the gm command line tool of graphicsmagick.
 
-"July, 3rd, 2015 : 1.5.14 : fixes an information leak vulnerability
-(CVE-2015-3281) 
+The complete ASan output of the issue:
 
-A vulnerability was found when HTTP pipelining is used.  In some cases,
-a client might be able to cause a buffer alignment issue and retrieve
-uninitialized memory contents that exhibit data from a past request or
-session.  I want to address sincere congratulations to Charlie
-Smurthwaite of aTech Media for the really detailed traces he provided
-which made it possible to find the cause of this bug.  Every user of
-1.5-dev, 1.5.x or 1.6-dev must upgrade to 1.5.14 or latest 1.6-dev
-snapshot to fix this issue, or use the backport of the fix provided by
-their operating system vendors.  CVE-2015-3281 was assigned to this bug."
+# gm identify $FILE
+==11430==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7fc529a4a4e7 bp 0x000000000001 sp 0x7ffefe672888 T0)
+==11430==The signal is caused by a READ memory access.
+==11430==Hint: address points to the zero page.
+    #0 0x7fc529a4a4e6 in PFileFlashPixView::GetGlobalInfoProperty(unsigned int, OLEProperty**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:791
+    #1 0x7fc529a4b40f in PFileFlashPixView::Init() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:293
+    #2 0x7fc529a4bde9 in PFileFlashPixView::PFileFlashPixView(FicNom&, char const*, mode_Ouverture, unsigned int) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:121
+    #3 0x7fc529a52e92 in PFlashPixImageView::PFlashPixImageView(FicNom&, char const*, mode_Ouverture, long, PSearchHookObject*, FPXStatus*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:405
+    #4 0x7fc529a55c81 in OpenImageByFilename(FicNom&, char const*, unsigned long, unsigned int*, unsigned int*, unsigned int*, unsigned int*, FPXColorspace*, PFlashPixImageView**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:1629
+    #5 0x7fc529a55dc9 in FPX_OpenImageByFilename /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:1686
+    #6 0x7fc529cc45e6 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:226:16
+    #7 0x7fc52f599e2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #8 0x7fc52f596e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
+    #9 0x7fc52f462ae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
+    #10 0x7fc52f469065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #11 0x7fc52f5147fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #12 0x7fc52f511931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #13 0x7fc52dd7c680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #14 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
 
-Fix:
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxvw.cpp:791 in PFileFlashPixView::GetGlobalInfoProperty(unsigned int, OLEProperty**)
+==11430==ABORTING
 
-http://git.haproxy.org/?p=haproxy-1.5.git;a=commit;h=7ec765568883b2d4e5a2796adbeb492a22ec9bd4
+Affected version:
+1.3.1_p6
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
+CVE-2017-12921
 
-https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-3281
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00311-libfpx-NULLptr-PFileFlashPixView_GetGlobalInfoProperty
 
-"The buffer_slow_realign function in HAProxy 1.5.x before 1.5.14 and
-1.6-dev does not properly realign a buffer that is used for pending
-outgoing data, which allows remote attackers to obtain sensitive
-information (uninitialized memory contents of previous requests) via a
-crafted request."
+Timeline:
+2017-08-01: bug discovered
+2017-08-09: blog post about the issue
+2017-08-17: CVE assigned
 
-Debian and Ubuntu have already sent out advisories.
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
-Alexander
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/09/libfpx-null-pointer-dereference-in-pfileflashpixviewgetglobalinfoproperty-f_fpxvw-cpp/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-426991.045548679--
+
