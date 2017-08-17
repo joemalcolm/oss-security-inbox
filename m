@@ -1,44 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/14
-Message-ID: <32e68d18-01e4-ff5f-c386-9aae4569205b@gentoo.org>
-Date: Fri, 13 Jan 2017 20:55:42 +0100
-From: Thomas Deutschmann <whissi@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/4
+Message-ID: <874lt7awbt.fsf@hope.eyrie.org>
+Date: Wed, 16 Aug 2017 17:09:58 -0700
+From: Russ Allbery <eagle@...ie.org>
+To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+Cc: Florian Weimer <fweimer@...hat.com>,  oss-security@...ts.openwall.com
+Subject: Re: Insecure DNS dependency in many Kerberos deployments
 Content-Type: text/plain; charset=utf-8
 
-On 2017-01-13 19:26, Carlos Alberto Lopez Perez wrote:
-> /me happy to know that logrotate has a sane behaviour and avoids 
-> trying to rotate symlinks.
+Daniel Kahn Gillmor <dkg@...thhorseman.net> writes:
+> On Wed 2017-08-16 10:52:54 -0700, Russ Allbery wrote:
+>> Florian Weimer <fweimer@...hat.com> writes:
 
-But don't forget hardlinks ...
+>>> As a rule of thumb, the impact is similar to running TLS with CA-based
+>>> certificate validation, but without host name checks (but perhaps
+>>> slightly less because the trust domains could be much smaller).
 
+>> I think this overstates the impact somewhat.  This is more worrisome
+>> with TLS because for most TLS applications there is a single global
+>> trust domain with certificates issued by dozens or hundreds of parties
+>> and no organizational scoping.
 
-> So the issue is than when in var/log/nginx/ there are standard logs
-> (non symlinked) that need to be rotated (appart from the malicious
-> symlinked one), then logrotate will rotate those ones, finally
-> running the post-rotate script that send SIGURSR1 to the nginx pid.
+> fwiw, I think that's what Florian means by his parenthetical aside.
 
-Just to be sure that we don't misunderstand each other:
+Yes, apologies, I should have noted that.
 
-Dawid's advisory only uses logrotate because this is present on most
-servers and guarantees privilege escalation on a given time which makes
-it easier to understand.
+> While i understand the desire to be clear about the constrained scope of
+> the risk, i think another way of saying what you're saying is "control
+> over one service in a domain and the ability to poison the DNS allows
+> that service operator to masquerade as any other service in the domain".
 
-But escalation happens via nginx master process which is running as root
-and changes owner of existing files.
+Well, it has to be a service of the same type.  If you can control the key
+for host/foo.example.com and poison DNS, you can masquerade as
+host/bar.example.com, but it does you no good for masquerading as
+nfs/bar.example.com.  But yes, certainly still a bad thing.
 
-Without logrotate you can still exploit any system when you can write to
-the directory used by nginx for storing log files (and don't forget your
-vhosts!). The attacker only have to wait an undefined amount of time,
-i.e. for anyone causing nginx to chown files again. On systems running
-nginx it is not the question *if* it will happen but only *when*.
+> Even for domains where a single administrator controls all machines,
+> this violates principles of privilege separation that admins rely on to
+> be able to deploy potentially-buggy services without putting the other
+> services at risk.
 
+> So i think it's worth taking this seriously, despite(?) its age and
+> widespread deployment.
+
+Oh, certainly, I agree.
+
+>> For the record, those are settings for *a* Kerberos client library, not
+>> *the* Kerberos client library (specifically, the MIT Kerberos
+>> implementation).  Heimdal does not use those settings, and there are
+>> other Kerberos implementations as well.
+
+> The fact that some client libraries *don't* do this should give us hope
+> that it's fixable, even in existing deployments :)
+
+Well... I'm not making the assertion that the implementations don't do
+this, only that they don't support the same configuration options.  I
+haven't verified how Heimdal handles DNS canonicalization, only that it
+doesn't use those krb5.conf options.  It's more of an aside to warn people
+that just turning off those options may not be adequate.
 
 -- 
-Regards,
-Thomas Deutschmann
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
