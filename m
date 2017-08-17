@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1825" "Thursday" "7" "January" "2016" "18:55:25" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160107235525.A35F6332283@smtpvbsrv1.mitre.org>" "49" "[oss-security] Re: CVE request --  NULL dereference in libdwarf" nil nil nil "1" "2016010723:55:25" "[oss-security] Re: CVE request -- NULL dereference in libdwarf" (number mark "U       cve-assign@m Jan  7   49/1825  " thread-indent "\"[oss-security] Re: CVE request --  NULL dereference in libdwarf\"\n") "<716e2c96.f09e.1521678e486.Coremail.xiaoqixue_1@163.com>" ("<716e2c96.f09e.1521678e486.Coremail.xiaoqixue_1@163.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4926" "Thursday" "17" "August" "2017" "20:13:19" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<450974.601644219-sendEmail@localhost>" "84" "[oss-security] libfpx: NULL pointer dereference in OLEStream::WriteVT_LPSTR (olestrm.cpp)" nil nil nil "8" "2017081720:13:19" "[oss-security] libfpx: NULL pointer dereference in OLEStream::WriteVT_LPSTR (olestrm.cpp)" (number mark "U       ago@gentoo.o Aug 17   84/4926  " thread-indent "\"[oss-security] libfpx: NULL pointer dereference in OLEStream::WriteVT_LPSTR (olestrm.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15400 invoked by uid 550); 7 Jan 2016 23:55:38 -0000
+Received: (qmail 28120 invoked by uid 550); 17 Aug 2017 20:13:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +12,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15382 invoked from network); 7 Jan 2016 23:55:37 -0000
-From: cve-assign@mitre.org
-To: xiaoqixue_1@163.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <716e2c96.f09e.1521678e486.Coremail.xiaoqixue_1@163.com>
-Message-Id: <20160107235525.A35F6332283@smtpvbsrv1.mitre.org>
-Date: Thu,  7 Jan 2016 18:55:25 -0500 (EST)
-Subject: [oss-security] Re: CVE request --  NULL dereference in libdwarf
+Received: (qmail 27963 invoked from network); 17 Aug 2017 20:13:36 -0000
+Message-ID: <450974.601644219-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 17 Aug 2017 20:13:19 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-57976.5644661201"
+Subject: [oss-security] libfpx: NULL pointer dereference in OLEStream::WriteVT_LPSTR (olestrm.cpp)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------MIME delimiter for sendEmail-57976.5644661201
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-> we report  a NULL dereference in libdwarf  which is found by Qixue Xiao.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1294264
+Description:
+libfpx is a library for manipulating FlashPIX images.
 
->> https://bugzilla.redhat.com/show_bug.cgi?id=1294264#c2
+I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
+again.
+Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
+are only accepting patches and push new releases.
+This issue was found using the gm command line tool of graphicsmagick.
 
->> The problem is that the debug_abbrev section is marked as NOBITS in
->> the ELF file - in other words as a zero-init section rather than a
->> section with contents in the file.
+The complete ASan output of the issue:
 
->> That is clearly bogus, but obviously shouldn't crash
+# gm identify $FILE
+==11182==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7fbac56ca5f6 bp 0x7ffc56dee420 sp 0x7ffc56dedba8 T0)
+==11182==The signal is caused by a READ memory access.
+==11182==Hint: address points to the zero page.
+    #0 0x7fbac56ca5f5 in strlen /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76
+    #1 0x43ea3c in __interceptor_strlen /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:282
+    #2 0x7fbac1376493 in OLEStream::WriteVT_LPSTR(char*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olestrm.cpp:1472
+    #3 0x7fbac1372e06 in OLEPropertySection::Write() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:477
+    #4 0x7fbac1373101 in OLEPropertySet::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:131
+    #5 0x7fbac134da36 in PFlashPixFile::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:581
+    #6 0x7fbac134da8f in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:276
+    #7 0x7fbac134db78 in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:306
+    #8 0x7fbac1379ed3 in PHierarchicalImage::~PHierarchicalImage() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ri_image/ph_image.cpp:168
+    #9 0x7fbac1349c38 in PFileFlashPixIO::~PFileFlashPixIO() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxio.cpp:277
+    #10 0x7fbac13536a5 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:519
+    #11 0x7fbac13536b8 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:532
+    #12 0x7fbac135529e in FPX_CloseImage /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:766
+    #13 0x7fbac15c7bf4 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:344:14
+    #14 0x7fbac6e89e2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #15 0x7fbac6e86e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
+    #16 0x7fbac6d52ae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
+    #17 0x7fbac6d59065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #18 0x7fbac6e047fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #19 0x7fbac6e01931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #20 0x7fbac566c680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #21 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
 
->>> http://www.prevanders.net/dwarf.html
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76 in strlen
+==11182==ABORTING
 
->>> Work In Progress 2015-12-30
+Affected version:
+1.3.1_p6
 
->>> Thanks to Tom Hughes for bringing a problem reading a
->>> badly-damaged (fuzzed) elf object to my attention: now libdwarf
->>> gets an error not a coredump.
+Fixed version:
+N/A
 
->>>> https://github.com/tomhughes/libdwarf/commit/11750a2838e52953013e3114ef27b3c7b1780697
+Commit fix:
+N/A
 
-Use CVE-2015-8750.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+CVE:
+CVE-2017-12923
 
-iQIcBAEBCAAGBQJWjvojAAoJEL54rhJi8gl5BwoP/2yl38aXiRB772a3+OhHyfsa
-1DiUFglVG5/1QnLAcG3jOzTnXxHje7f3pTKbCv2csbBtiQmAMDT70OKSCxA2E96q
-rbpKnysRbfT8AYZ76mSQCKE1tPwE+ZBG730DrHyhsUWm+cTLh+gYUX6tV7BFPbU2
-mQOhI00YpFZ8U/20W1ri8cAHvQ4CJCi2Ta2EViZ4Y7v58fbapeI3MUnR0DifKlUj
-ob1tpmfIL3N1OAFFo9vYNGM6xgxfuZoVbNOUoAYeXagsAsHfivpDwhSeeZNCeUsf
-58qfI9OhYZWj6xHopPDQ8K1QD+e9g9VpnUepgB319OssgI6pcjG49i4tNVva4JO3
-jTNQ+UpvbeoLYOOr80FtYjr51CfwgX3XkcZvz/wsSulLDPhTeqKZz4Q69JKCC2Ib
-R2Oby2Hs9476yj28jF9Sg9Ekf2y2vVpqfv5JhQy08Nhx43xUurhgCsBUhixoHgwQ
-5E7NT+iMQtRiJN2Ucu/2mK9A9z6RYmEAmaHQx/aRWUfLFNeoynWE/1xJ/3tUvPJT
-FsVP8bI6OAq0VDzqNhMJIDTOLlQjfLo6gUTEmuiuW0jjWh5NUV96EJBaZSfQsoFx
-//oSh9MOJfiQlfPhb7ws+l/Ae13QwUeOVZ77jkWKxgPlxC2ZzMtQJrsx0MVI+7wM
-s9ovDcDoapmCIhtkv/JQ
-=oEHA
------END PGP SIGNATURE-----
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00312-libfpx-NULLptr-OLEStream_WriteVT_LPSTR
+
+Timeline:
+2017-08-01: bug discovered
+2017-08-09: blog post about the issue
+2017-08-17: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/09/libfpx-null-pointer-dereference-in-olestreamwritevt_lpstr-olestrm-cpp/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-57976.5644661201--
+
