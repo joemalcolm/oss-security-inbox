@@ -1,34 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/16/2
-Message-ID: <alpine.LFD.2.20.1702161016040.1918@wniryva>
-Date: Thu, 16 Feb 2017 10:17:54 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-6000 Qemu: crypto: memory leakage in qcrypto_ivgen_essiv_init
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/9
+Message-ID: <450974.601644219-sendEmail@localhost>
+Date: Thu, 17 Aug 2017 20:13:19 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libfpx: NULL pointer dereference in OLEStream::WriteVT_LPSTR (olestrm.cpp)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Description:
+libfpx is a library for manipulating FlashPIX images.
 
-Quick Emulator(Qemu) built with the Crypto block IV generator - essiv support 
-is vulnerable to a host memory leakage issue. It could occur while 
-initialising the crypto device in 'qcrypto_ivgen_essiv_init'.
+I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
+again.
+Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
+are only accepting patches and push new releases.
+This issue was found using the gm command line tool of graphicsmagick.
 
-A guest user/process could use this flaw to leak host memory resulting in DoS.
+The complete ASan output of the issue:
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-01/msg00295.html
+# gm identify $FILE
+==11182==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7fbac56ca5f6 bp 0x7ffc56dee420 sp 0x7ffc56dedba8 T0)
+==11182==The signal is caused by a READ memory access.
+==11182==Hint: address points to the zero page.
+    #0 0x7fbac56ca5f5 in strlen /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76
+    #1 0x43ea3c in __interceptor_strlen /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:282
+    #2 0x7fbac1376493 in OLEStream::WriteVT_LPSTR(char*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olestrm.cpp:1472
+    #3 0x7fbac1372e06 in OLEPropertySection::Write() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:477
+    #4 0x7fbac1373101 in OLEPropertySet::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:131
+    #5 0x7fbac134da36 in PFlashPixFile::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:581
+    #6 0x7fbac134da8f in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:276
+    #7 0x7fbac134db78 in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:306
+    #8 0x7fbac1379ed3 in PHierarchicalImage::~PHierarchicalImage() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ri_image/ph_image.cpp:168
+    #9 0x7fbac1349c38 in PFileFlashPixIO::~PFileFlashPixIO() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxio.cpp:277
+    #10 0x7fbac13536a5 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:519
+    #11 0x7fbac13536b8 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:532
+    #12 0x7fbac135529e in FPX_CloseImage /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:766
+    #13 0x7fbac15c7bf4 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:344:14
+    #14 0x7fbac6e89e2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #15 0x7fbac6e86e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
+    #16 0x7fbac6d52ae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
+    #17 0x7fbac6d59065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #18 0x7fbac6e047fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #19 0x7fbac6e01931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #20 0x7fbac566c680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #21 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1422656
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76 in strlen
+==11182==ABORTING
 
-This issue was reported by Li Qiang of 360.cn Inc.
+Affected version:
+1.3.1_p6
 
-'CVE-2017-6000' assigned via -> https://cveform.mitre.org/
+Fixed version:
+N/A
 
-Thank you.
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-12923
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00312-libfpx-NULLptr-OLEStream_WriteVT_LPSTR
+
+Timeline:
+2017-08-01: bug discovered
+2017-08-09: blog post about the issue
+2017-08-17: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/09/libfpx-null-pointer-dereference-in-olestreamwritevt_lpstr-olestrm-cpp/
+
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
