@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4182" "Tuesday" "23" "November" "2021" "12:11:36" "+0000" "Xen.org security team" "security@xen.org" nil "120" "[oss-security] Xen Security Advisory 387 v2 (CVE-2021-28703) - grant table v2 status pages may remain accessible after de-allocation (take two)" nil nil nil "11" nil nil (number mark "U       security@xen Nov 23  120/4182  " thread-indent "\"[oss-security] Xen Security Advisory 387 v2 (CVE-2021-28703) - grant table v2 status pages may remain accessible after de-allocation (take two)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 387 v2 (CVE-2021-28703) - grant table v2 status pages may remain accessible after de-allocation (take two)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5587" "Thursday" "17" "August" "2017" "20:17:33" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<277948.13792886-sendEmail@localhost>" "89" "[oss-security] libfpx: NULL pointer dereference in CDirectory::GetDirEntry (dir.cxx)" nil nil nil "8" "2017081720:17:33" "[oss-security] libfpx: NULL pointer dereference in CDirectory::GetDirEntry (dir.cxx)" (number mark "U       ago@gentoo.o Aug 17   89/5587  " thread-indent "\"[oss-security] libfpx: NULL pointer dereference in CDirectory::GetDirEntry (dir.cxx)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21981 invoked by uid 550); 23 Nov 2021 12:12:27 -0000
+Received: (qmail 24374 invoked by uid 550); 17 Aug 2017 20:17:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,143 +12,101 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21897 invoked from network); 23 Nov 2021 12:12:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=q2HCCmRA4eyGBtlwL+LNVG30xiN/OakaIW2lLeVdN2E=; b=JTuizbbtWZk8XJEe1kYE1c8utZ
-	fJ4p3XTcPB1Do3cF5H0FHnjqMwN5GlIu9Ld/CseW4EZh5XaNpAYVQD89tGRgCWTdTENS41PskXuco
-	zazicsphTovKT/1CxD3niTkJhPjVoJ/gRebdKdEZiOPBMT8Nxf0gJgtKLxq0XVONuPFI=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 24192 invoked from network); 17 Aug 2017 20:17:50 -0000
+Message-ID: <277948.13792886-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 17 Aug 2017 20:17:33 +0000
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1mpUe8-0004X3-Q0@xenbits.xenproject.org>
-Date: Tue, 23 Nov 2021 12:11:36 +0000
-Subject: [oss-security] Xen Security Advisory 387 v2 (CVE-2021-28703) - grant table v2
- status pages may remain accessible after de-allocation (take two)
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-781739.8573543"
+Subject: [oss-security] libfpx: NULL pointer dereference in CDirectory::GetDirEntry (dir.cxx)
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+------MIME delimiter for sendEmail-781739.8573543
+Content-Type: text/plain;
+        charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+libfpx is a library for manipulating FlashPIX images.
 
-            Xen Security Advisory CVE-2021-28703 / XSA-387
-                               version 2
+I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
+again.
+Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
+are only accepting patches and push new releases.
+This issue was found using the gm command line tool of graphicsmagick.
 
- grant table v2 status pages may remain accessible after de-allocation (take two)
+The complete ASan output of the issue:
 
-UPDATES IN VERSION 2
-====================
+# gm identify $FILE
+ASAN:DEADLYSIGNAL
+=================================================================
+==11276==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000258 (pc 0x7f508f88a3f5 bp 0x000000000007 sp 0x7fffbde029f0 T0)
+==11276==The signal is caused by a READ memory access.
+==11276==Hint: address points to the zero page.
+    #0 0x7f508f88a3f4 in CDirectory::GetDirEntry(unsigned int, unsigned int, CDirEntry**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/dir.cxx:1097
+    #1 0x7f508f88a64e in CDirectory::SetSize(unsigned int, unsigned int) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/dir.cxx:437
+    #2 0x7f508f89440a in CDirectStream::WriteAt(unsigned int, void const*, unsigned int, unsigned int*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/sstream.cxx:367
+    #3 0x7f508f88e7cd in CExposedStream::Write(void const*, unsigned int, unsigned int*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/expst.cxx:206
+    #4 0x7f508f875a3e in OLEStream::Write(void const*, unsigned long) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olestrm.cpp:143
+    #5 0x7f508f875119 in OLEStream::WriteVT_I4(unsigned int*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olestrm.cpp:1370
+    #6 0x7f508f872ded in OLEPropertySection::Write() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:476
+    #7 0x7f508f873101 in OLEPropertySet::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:131
+    #8 0x7f508f84da36 in PFlashPixFile::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:581
+    #9 0x7f508f84da8f in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:276
+    #10 0x7f508f84db78 in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:306
+    #11 0x7f508f879ed3 in PHierarchicalImage::~PHierarchicalImage() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ri_image/ph_image.cpp:168
+    #12 0x7f508f849c38 in PFileFlashPixIO::~PFileFlashPixIO() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxio.cpp:277
+    #13 0x7f508f8536a5 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:519
+    #14 0x7f508f8536b8 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:532
+    #15 0x7f508f85529e in FPX_CloseImage /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:766
+    #16 0x7f508fac7bf4 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:344:14
+    #17 0x7f5095333e2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #18 0x7f5095330e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
+    #19 0x7f50951fcae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
+    #20 0x7f5095203065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #21 0x7f50952ae7fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #22 0x7f50952ab931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #23 0x7f5093b16680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #24 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
 
-Public release.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/dir.cxx:1097 in CDirectory::GetDirEntry(unsigned int, unsigned int, CDirEntry**)
+==11276==ABORTING
 
-ISSUE DESCRIPTION
-=================
+Affected version:
+1.3.1_p6
 
-Guest get permitted access to certain Xen-owned pages of memory.  The
-majority of such pages remain allocated / associated with a guest for
-its entire lifetime.  Grant table v2 status pages, however, get
-de-allocated when a guest switched (back) from v2 to v1.  The freeing
-of such pages requires that the hypervisor know where in the guest
-these pages were mapped.  The hypervisor tracks only one use within
-guest space, but racing requests from the guest to insert mappings of
-these pages may result in any of them to become mapped in multiple
-locations.  Upon switching back from v2 to v1, the guest would then
-retain access to a page that was freed and perhaps re-used for other
-purposes.
+Fixed version:
+N/A
 
-This bug was fortuitously fixed by code cleanup in Xen 4.14, and
-backported to security-supported Xen branches as a prerequisite of the
-fix for XSA-378.
+Commit fix:
+N/A
 
-IMPACT
-======
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-A malicious guest may be able to elevate its privileges to that of the
-host, cause host or guest Denial of Service (DoS), or cause information
-leaks.
+CVE:
+CVE-2017-12920
 
-VULNERABLE SYSTEMS
-==================
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00308-libfpx-NULLptr-CDirectory_GetDirEntry
 
-All Xen branches up to and including 4.13 are vulnerable,
-but only if the patches for XSA-378 have not been applied.
+Timeline:
+2017-08-01: bug discovered
+2017-08-09: blog post about the issue
+2017-08-17: CVE assigned
 
-Xen versions 4.13.4, 4.14.x and 4.15.x are not affected.
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
-Only x86 HMV and PVH guests permitted to use grant table version 2
-interfaces can leverage this vulnerability.  x86 PV guests cannot
-leverage this vulnerability.  On Arm, grant table v2 use is explicitly
-unsupported.
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/09/libfpx-null-pointer-dereference-in-cdirectorygetdirentry-dir-cxx/
 
-MITIGATION
-==========
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-Running only PV guests will avoid this vulnerability.
 
-Suppressing use of grant table v2 interfaces for HVM or PVH guests will
-also avoid this vulnerability.
+------MIME delimiter for sendEmail-781739.8573543--
 
-CREDITS
-=======
-
-This issue was discovered by Patryk Balicki and Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the following patch resolves the issue:
-  x86/p2m: don't assert that the passed in MFN matches for a remove
-
-This patch was supplied with XSA-378, as one of 378's prerequisites.
-The fix has already been applied to Xen stable branches as follows:
-
-c65ea16dbcafbe4fe21693b18f8c2a3c5d14600e   in Xen 4.14.x, 4.15.x
-f50fbddbae81fcccae56d27317bd71cc0e678ba2   in Xen 4.13.4
-d44643199c96ac22491ae002d3bcd1c989b95ea4   in xen.git#stable-4.12
-66f400c71d12fe8adfb895984b14f2941e8cb6ce   in xen.git#stable-4.11
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmGc2jgMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZlWUIAJ4bU9n2q9A4sqhiW0xJOCI4MIdwV2ym6xziP9iN
-e5sg0u3gdp94M1vLf//8h7julxLXgdJd10HWWpJkfRQcsfz3E1ul1O+mAsoHxJwI
-/qGl1Xis7AkDFjrPXthJUKh/DNgi8F1Rok7XDbfFznk34v4g6anh4JDfqJIUwIFQ
-l2s6qIOc2PjvmrJMXEboT1wEUADZNtChIqOL7Ibre9Zz6/mdr0FjPfPvLAqfvf9m
-aLaMElJMRx5iTEUG7qCYXUn8oKLbWNTv88yceudE7QZl3/zv/UnEL8nvBZWs/Gkx
-UbrC6wkNFUSpF/ngexvzsSE/SrfMYYaUPfIciyuxvuosGJY=
-=DmKh
------END PGP SIGNATURE-----
-
---=separator--
