@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4651" "Monday" "1" "July" "2019" "16:02:10" "+0930" "Simon Lees" "sflees@suse.de" "<21cb97a5-99a4-edc9-41ce-19ceb92e62bf@suse.de>" "102" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "7" "2019070106:32:10" "[oss-security] linux-distros membership application - Microsoft" (number mark "        sflees@suse. Jul  1  102/4651  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190628170812.GG11506@sasha-vm>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5829" "Thursday" "17" "August" "2017" "20:11:49" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<352619.356566237-sendEmail@localhost>" "85" "[oss-security] libfpx: divide-by-zero in CDirVector::GetTable (dirfunc.hxx)" nil nil nil "8" "2017081720:11:49" "[oss-security] libfpx: divide-by-zero in CDirVector::GetTable (dirfunc.hxx)" (number mark "U       ago@gentoo.o Aug 17   85/5829  " thread-indent "\"[oss-security] libfpx: divide-by-zero in CDirVector::GetTable (dirfunc.hxx)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22099 invoked by uid 550); 1 Jul 2019 06:32:40 -0000
+Received: (qmail 17848 invoked by uid 550); 17 Aug 2017 20:12:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,124 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22075 invoked from network); 1 Jul 2019 06:32:40 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-References: <20190626141358.GK7898@sasha-vm>
- <20190627140321.GA29338@openwall.com> <20190627170508.GB11506@sasha-vm>
- <20190628125743.GA2187@openwall.com> <20190628170812.GG11506@sasha-vm>
-Message-ID: <21cb97a5-99a4-edc9-41ce-19ceb92e62bf@suse.de>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
-MIME-Version: 1.0
-In-Reply-To: <20190628170812.GG11506@sasha-vm>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Date: Mon, 1 Jul 2019 16:02:10 +0930
-From: Simon Lees <sflees@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership application - Microsoft
-To: oss-security@lists.openwall.com
+Received: (qmail 17822 invoked from network); 17 Aug 2017 20:12:07 -0000
+Message-ID: <352619.356566237-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 17 Aug 2017 20:11:49 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-9905.57747809717"
+Subject: [oss-security] libfpx: divide-by-zero in CDirVector::GetTable (dirfunc.hxx)
+
+------MIME delimiter for sendEmail-9905.57747809717
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+Description:
+libfpx is a library for manipulating FlashPIX images.
+
+I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
+again.
+Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
+are only accepting patches and push new releases.
+This issue was found using the gm command line tool of graphicsmagick.
+
+The complete ASan output of the issue:
+
+# gm identify $FILE
+==11203==ERROR: AddressSanitizer: FPE on unknown address 0x7fc9f8a8a403 (pc 0x7fc9f8a8a403 bp 0x7fffbf287b28 sp 0x7fffbf287ae0 T0)
+    #0 0x7fc9f8a8a402 in CDirVector::GetTable(unsigned int, unsigned int, CDirSect**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/h/dirfunc.hxx:250
+    #1 0x7fc9f8a8a402 in CDirectory::GetDirEntry(unsigned int, unsigned int, CDirEntry**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/dir.cxx:1102
+    #2 0x7fc9f8a91cff in CDirectory::GetSize(unsigned int, unsigned int*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/h/dirfunc.hxx:316
+    #3 0x7fc9f8a91cff in CMStream::Init() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/mstream.cxx:431
+    #4 0x7fc9f8a912e7 in DllMultiStreamFromStream(CMStream**, ILockBytes**, unsigned int) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/msf.cxx:88
+    #5 0x7fc9f8a9388b in CRootExposedDocFile::InitRoot(ILockBytes*, unsigned int, unsigned short, unsigned short**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/rexpdf.cxx:124
+    #6 0x7fc9f8a8bad6 in DfFromLB(ILockBytes*, unsigned short, unsigned int, unsigned short**, CExposedDocFile**, _XGUID*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/docfile.cxx:66
+    #7 0x7fc9f8a8bdfc in DfOpenStorageOnILockBytesW(ILockBytes*, IStorage*, unsigned int, unsigned short**, unsigned int, IStorage**, _XGUID*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/docfile.cxx:277
+    #8 0x7fc9f8a88878 in DfOpenStorageOnILockBytes(ILockBytes*, IStorage*, unsigned int, char**, unsigned int, IStorage**, _XGUID*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/ascii.cxx:461
+    #9 0x7fc9f8a9458e in StgOpenStorageOnILockBytes /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/storage.cxx:116
+    #10 0x7fc9f8a9461a in StgOpenStorage /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/storage.cxx:70
+    #11 0x7fc9f8a7008e in OLEFile::OpenOLEFile(_XGUID&, OLEStorage**, unsigned int) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olefiles.cpp:184
+    #12 0x7fc9f8a70557 in OLEFile::GetCLSID(_XGUID*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olefiles.cpp:346
+    #13 0x7fc9f8a52d64 in PFlashPixImageView::PFlashPixImageView(FicNom&, char const*, mode_Ouverture, long, PSearchHookObject*, FPXStatus*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:389
+    #14 0x7fc9f8a55c81 in OpenImageByFilename(FicNom&, char const*, unsigned long, unsigned int*, unsigned int*, unsigned int*, unsigned int*, FPXColorspace*, PFlashPixImageView**) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:1629
+    #15 0x7fc9f8a55dc9 in FPX_OpenImageByFilename /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:1686
+    #16 0x7fc9f8cc45e6 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:226:16
+    #17 0x7fc9fe564e2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #18 0x7fc9fe561e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
+    #19 0x7fc9fe42dae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
+    #20 0x7fc9fe434065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #21 0x7fc9fe4df7fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #22 0x7fc9fe4dc931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #23 0x7fc9fcd47680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #24 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: FPE /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/oless/h/dirfunc.hxx:250 in CDirVector::GetTable(unsigned int, unsigned int, CDirSect**)
+==11203==ABORTING
+
+Affected version:
+1.3.1_p6
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-12924
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00313-libfpx-FPE-CDirVector_GetTable
+
+Timeline:
+2017-08-01: bug discovered
+2017-08-09: blog post about the issue
+2017-08-17: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/09/libfpx-divide-by-zero-in-cdirvectorgettable-dirfunc-hxx/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
+------MIME delimiter for sendEmail-9905.57747809717--
 
-On 29/06/2019 02:38, Sasha Levin wrote:
-> On Fri, Jun 28, 2019 at 02:57:43PM +0200, Solar Designer wrote:
->> On Thu, Jun 27, 2019 at 01:05:08PM -0400, Sasha Levin wrote:
->>> security@k.o is not a disclosure list, but
->>> rather just a way to pull in kernel folks to fix issues. Some (most?) of
->>> the kernel bugs that get fixed don't go through that list to begin with.
->>
->> "Some (most?) of the kernel [security] bugs that get fixed don't go
->> through" linux-distros as well.
-> 
-> True, but we care about more than just the kernel side of things.
-> 
->>> The kernel's documentation with regards to security issues and
->>> disclosure actually points to linux-distros:
->>> https://www.kernel.org/doc/Documentation/admin-guide/security-bugs.rst .
->>
->> I'm not entirely happy with the wording used there, which currently is:
->>
->> ---
->> Fixes for sensitive bugs, such as those that might lead to privilege
->> escalations, may need to be coordinated with the private
->> <linux-distros@vs.openwall.org> mailing list so that distribution vendors
->> are well prepared to issue a fixed kernel upon public disclosure of the
->> upstream fix. Distros will need some time to test the proposed patch and
->> will generally request at least a few days of embargo, and vendor update
->> publication prefers to happen Tuesday through Thursday. When appropriate,
->> the security team can assist with this coordination, or the reporter can
->> include linux-distros from the start. In this case, remember to prefix
->> the email Subject line with "[vs]" as described in the linux-distros 
->> wiki:
->> <http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists> 
->>
->> ---
->>
->> This says that "Distros [...] will generally request at least a few days
->> of embargo", but the actual policy of (linux-)distros is that the
->> reporter must provide a tentative public disclosure date/time in their
->> very first message.
->>
->> Also, this doesn't say that by disclosing something to (linux-)distros
->> the reporter accepts the list's policy, and leaves actually reading that
->> wiki page with the policy optional.
->>
->> I don't readily have suggested edits, but we should address these issues
->> somehow.  Please feel free to suggest edits.
-> 
-> Can I suggest that we fork the discussion around security-bugs.rst to
-> LKML? I can suggest an initial patch to address your comments here but I
-> think that this is better handled on LKML.
-> 
->> On a related note, this might not be representative, but I ran a Twitter
->> poll on days of week for vulnerability disclosures:
->>
->> https://twitter.com/solardiz/status/923885360001757185
->>
->> Poll: What days of week work best for you for public disclosure by
->> others of vulnerabilities in software you (or your employer, etc.) use?
->>
->> 23% No preference or Other
->> 33% Mon
->> 36% Tue, Wed, Thu
->> 8% Fri, Sat, Sun
->>
->> 164 votes
->>
->> 12:13 PM - 27 Oct 2017
->>
->> As you can see, Mon fared really well - almost same as Tue, Wed, Thu
->> combined, meaning that it might be _the_ preferred day of week for
->> vulnerability disclosures.  So we probably shouldn't exclude Mondays.
-> 
-> My concern with Monday is timezones: we should do the math here, but I'd
-> like to avoid spilling over to Sunday (or very early Monday for that
-> matter) for some timezones.
-
-I missed the twitter poll but from my perspective as someone involved in 
-making and releasing such updates for SUSE customers Monday disclosures 
-tend to work for us but only due to timezones, generally disclosure 
-times happen into the late afternoon evening, which means that if 
-lengthy QA tests were left running over the weekend our QA team will 
-have time to review the results during Monday and we will be ready to 
-release. I am guessing that some other distro's wouldn't end up with 
-this luxury. Having said that it will often depend on the amount of 
-total time we have and the size of the test suite, having said that many 
-of our automated tests will finish over night.
-
-I guess for distro's who employ people to fix security issues, a Monday 
-morning / lunch time disclosure is mostly going to mean that everyone 
-will aim to have update's ready on the Friday night if possible which 
-doesn't really help with keeping embargo times as short as practical. On 
-the other hand it might give people patching issues in there spare time 
-more of a chance.
-
--- 
-
-Simon Lees (Simotek)                            http://simotek.net
-
-Emergency Update Team                           keybase.io/simotek
-SUSE Linux                           Adelaide Australia, UTC+10:30
-GPG Fingerprint: 5B87 DB9D 88DC F606 E489 CEC5 0922 C246 02F0 014B
