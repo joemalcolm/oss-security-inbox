@@ -1,22 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/13
-Message-ID: <32e60988-4ab4-fe39-9d94-5f3453eb50b0@orlitzky.com>
-Date: Wed, 1 Nov 2017 13:52:41 -0400
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/18/4
+Message-ID: <815123.168143572-sendEmail@localhost>
+Date: Fri, 18 Aug 2017 13:54:45 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: graphicsmagick: invalid memory read in SetImageColorCallBack (image.c)
 Content-Type: text/plain; charset=utf-8
 
-On 11/01/2017 11:41 AM, Z5T1 wrote:
-> 
-> " Move the swap file location to protect against CVE-2017-1000382
-> silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
-> set directory=~/.vim/swap/
-> 
-> This safely sets the swap file directory to a directory that should not
-> cause any security problems.
-This is what I used to do in emacs before I disabled the backups
-completely. I was wondering if there were any problems with it. If there
-aren't, it seems like a better default to me, for both emacs and vim.
+Description:
+graphicsmagick is a collection of tools and libraries for many image formats.
 
-It might be interesting to ask upstream how they'd feel about moving them.
+The complete ASan output of the issue:
+
+# gm convert -clip -negate $FILE out
+==11324==ERROR: AddressSanitizer: SEGV on unknown address 0x7f9ccac18000 (pc 0x7f9dbacf58ce bp 0x7ffec95349c0 sp 0x7ffec9534980 T0)
+    #0 0x7f9dbacf58cd in SetImageColorCallBack /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:2090:15
+    #1 0x7f9dbaf16bbd in .omp_outlined..4 /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_iterator.c:378:23
+    #2 0x7f9dbaf11873 in PixelIterateMonoModifyImplementation /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_iterator.c:348:33
+    #3 0x7f9dbaf111be in PixelIterateMonoSet /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_iterator.c:415:10
+    #4 0x7f9dbacf379b in SetImageEx /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:2125:10
+    #5 0x7f9db448bc86 in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5016:26
+    #6 0x7f9dbaa14e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #7 0x7f9dba8a7f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #8 0x7f9dba8e40c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #9 0x7f9dba98f85b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #10 0x7f9dba98c991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #11 0x7f9db91f7680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #12 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:2090:15 in SetImageColorCallBack
+==11324==ABORTING
+
+Affected version:
+1.3.26
+
+Fixed version:
+N/A
+
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/cd699a44f188
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-12935
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00303-graphicsmagick-invalidread-SetImageColorCallBack
+
+Timeline:
+2017-07-12: bug discovered and reported to upstream
+2017-07-26: upstream released a fix
+2017-08-05: blog post about the issue
+2017-08-18: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/05/graphicsmagick-invalid-memory-read-in-setimagecolorcallback-image-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
