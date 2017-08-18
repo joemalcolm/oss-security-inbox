@@ -1,87 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/7
-Message-ID: <290801.443715708-sendEmail@localhost>
-Date: Tue, 9 May 2017 08:23:34 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/18/5
+Message-ID: <968080.896509008-sendEmail@localhost>
+Date: Fri, 18 Aug 2017 13:55:24 +0000
 From: "Agostino Sarubbo" <ago@...too.org>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: lrzip: use-after-free in read_stream (stream.c)
+Subject: graphicsmagick: heap-based buffer overflow in ReadSUNImage (sun.c)
 Content-Type: text/plain; charset=utf-8
 
 Description:
-lrzip is a compression utility that excels at compressing large files.
+graphicsmagick is a collection of tools and libraries for many image formats.
 
 The complete ASan output of the issue:
 
-# lrzip -t $FILE
-==4026==ERROR: AddressSanitizer: heap-use-after-free on address 0x62100000dd00 at pc 0x0000004bccc5 bp 0x7ffcf3b4d9f0 sp 0x7ffcf3b4d1a0
-READ of size 1 at 0x62100000dd00 thread T0
-    #0 0x4bccc4 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #1 0x53cff6 in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1747:4
-    #2 0x5307fc in read_vchars /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:79:6
-    #3 0x5307fc in unzip_match /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:208
-    #4 0x5307fc in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:329
-    #5 0x5307fc in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #6 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #7 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #8 0x7f743a5d278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #9 0x41abf8 in _init (/usr/bin/lrzip+0x41abf8)
+# gm convert -clip -negate $FILE out
+==18510==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000015f4 at pc 0x7f6e936c556b bp 0x7fff17c33ab0 sp 0x7fff17c33aa8
+READ of size 4 at 0x6020000015f4 thread T0
+    #0 0x7f6e936c556a in ReadSUNImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/sun.c:581:26
+    #1 0x7f6e98fa8e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #2 0x7f6e98e3bf18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #3 0x7f6e98e780c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #4 0x7f6e98f2385b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #5 0x7f6e98f20991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #6 0x7f6e9778b680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
 
-0x62100000dd00 is located 0 bytes inside of 4096-byte region [0x62100000dd00,0x62100000ed00)
-freed by thread T0 here:
-    #0 0x4d3660 in free /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47
-    #1 0x53d186 in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1574:3
-    #2 0x53d186 in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
-    #3 0x5307fc in read_vchars /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:79:6
-    #4 0x5307fc in unzip_match /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:208
-    #5 0x5307fc in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:329
-    #6 0x5307fc in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #9 0x7f743a5d278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+0x6020000015f4 is located 0 bytes to the right of 4-byte region [0x6020000015f0,0x6020000015f4)
+allocated by thread T0 here:
+    #0 0x4cf688 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7f6e9938a4d6 in MagickMalloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:156:10
+    #2 0x7f6e98db2590 in AllocateImageColormap /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/colormap.c:76:21
+    #3 0x7f6e936b0f87 in ReadSUNImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/sun.c:428:14
+    #4 0x7f6e98fa8e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #5 0x7f6e98e3bf18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #6 0x7f6e98e780c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #7 0x7f6e98f2385b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #8 0x7f6e98f20991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #9 0x7f6e9778b680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-previously allocated by thread T1 here:
-    #0 0x4d39b8 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x54b0d7 in lzma_decompress_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:546:20
-    #2 0x54b0d7 in ucompthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1522
-    #3 0x7f743b36e4a3 in start_thread /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_create.c:333
-
-Thread T1 created by T0 here:
-    #0 0x42d49d in pthread_create /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:245
-    #1 0x53e70f in create_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:133:6
-    #2 0x53e70f in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1673
-    #3 0x53e70f in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
-    #4 0x5303e3 in read_u8 /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:55:6
-    #5 0x5303e3 in read_header /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:144
-    #6 0x5303e3 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:314
-    #7 0x5303e3 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #8 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #9 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #10 0x7f743a5d278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-use-after-free 
-/tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413 in __asan_memcpy
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/sun.c:581:26 in ReadSUNImage
 Shadow bytes around the buggy address:
-  0x0c427fff9b50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff9b60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff9b70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff9b80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff9b90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c427fff9ba0:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c427fff9bb0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c427fff9bc0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c427fff9bd0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c427fff9be0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c427fff9bf0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c047fff8260: fa fa 04 fa fa fa 00 00 fa fa 00 00 fa fa fd fd
+  0x0c047fff8270: fa fa fd fd fa fa 07 fa fa fa fd fd fa fa 00 01
+  0x0c047fff8280: fa fa 00 00 fa fa fd fa fa fa fd fa fa fa 02 fa
+  0x0c047fff8290: fa fa 02 fa fa fa 00 fa fa fa 06 fa fa fa 00 fa
+  0x0c047fff82a0: fa fa 00 07 fa fa 04 fa fa fa 04 fa fa fa fd fa
+=>0x0c047fff82b0: fa fa 00 00 fa fa 00 00 fa fa 04 fa fa fa[04]fa
+  0x0c047fff82c0: fa fa fd fa fa fa 00 00 fa fa fa fa fa fa fa fa
+  0x0c047fff82d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff82e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff82f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
 Shadow byte legend (one shadow byte represents 8 application bytes):
   Addressable:           00
   Partially addressable: 01 02 03 04 05 06 07 
   Heap left redzone:       fa
-  Heap right redzone:      fb
   Freed heap region:       fd
   Stack left redzone:      f1
   Stack mid redzone:       f2
   Stack right redzone:     f3
-  Stack partial redzone:   f4
   Stack after return:      f5
   Stack use after scope:   f8
   Global redzone:          f9
@@ -93,36 +69,38 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   ASan internal:           fe
   Left alloca redzone:     ca
   Right alloca redzone:    cb
-==4026==ABORTING
+==18510==ABORTING
 
 Affected version:
-0.631
+1.3.26
 
 Fixed version:
 N/A
 
 Commit fix:
-N/A
+http://hg.code.sf.net/p/graphicsmagick/code/rev/95d00d55e978
 
 Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-CVE-2017-8846
+CVE-2017-12937
 
 Reproducer:
-https://github.com/asarubbo/poc/blob/master/00233-lrzip-UAF-read_stream
+https://github.com/asarubbo/poc/blob/master/00304-graphicsmagick-heapoverflow-ReadSUNImage
 
 Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-05-07: blog post about the issue
-2017-05-08: CVE assigned
+2017-07-17: bug discovered and reported to upstream
+2017-07-31: upstream released a fix
+2017-08-05: blog post about the issue
+2017-08-18: CVE assigned
 
 Note:
 This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
 Permalink:
-https://blogs.gentoo.org/ago/2017/05/07/lrzip-use-after-free-in-read_stream-stream-c/
+https://blogs.gentoo.org/ago/2017/08/05/graphicsmagick-heap-based-buffer-overflow-in-readsunimage-sun-c/
 
 --
 Agostino Sarubbo
