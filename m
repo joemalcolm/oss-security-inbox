@@ -1,59 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/07/6
-Message-ID: <5ced8dfa-a2e9-1dff-9708-54a76f6b4c59@linux.com>
-Date: Tue, 7 Mar 2017 20:45:48 +0300
-From: Alexander Popov <alex.popov@...ux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/18/7
+Message-ID: <2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>
+Date: Fri, 18 Aug 2017 13:12:03 -0400
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: CVE-2017-2636: local privilege escalation flaw in n_hdlc
+Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+On 08/16/2017 06:17 PM, Daniel Kahn Gillmor wrote:
+> On Wed 2017-08-16 12:10:09 -0400, Michael Orlitzky wrote:
+>> The problem is avoided by creating the PID file as root, before
+>> dropping privileges.
+> 
+> The problem can also be avoided by not using PID files at all, and
+> relying instead on a service manager that actually keeps track of its
+> children using more robust means (like wait() and SIGCHLD).
+> 
 
-This is an announcement of CVE-2017-2636, which is a race condition in
-the n_hdlc Linux kernel driver (drivers/tty/n_hdlc.c). It can be exploited
-to gain a local privilege escalation.
+I'm scared to reply because this is guaranteed to turn into a "you
+should just use systemd, grandpa" holy war.
 
-This driver provides HDLC serial line discipline and comes as a kernel module
-in many Linux distributions, which have CONFIG_N_HDLC=m in the kernel config.
+If we had it all to do over again, I would probably agree with you. But
+there are still users with simple init systems, and many of those users
+are happy (or stuck) that way. If you want to convince upstreams to
+delete their PID file code and drop support for the associated init
+systems, you'll have to offer them something to make up for the users
+they'll lose.
 
-The bug was introduced on 22 June 2009:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=be10eb7589337e5defbe214dae038a53dd21add8
-
-My fix to the Linux kernel mainline was proposed on 28 February 2017 and
-should be available soon. Please see the attachment.
-
-I will publish my PoC exploit later, giving people some time to update
-their systems.
-
-I've found this bug investigating a suspicious kernel crash made by syzkaller
-(https://github.com/google/syzkaller).
-
--- Bug details --
-
-N_HDLC line discipline uses a self-made singly linked lists for data
-buffers and has n_hdlc.tbuf pointer for buffer retransmitting after
-an error. If sending of a data buffer is not successful, then its
-address is saved in n_hdlc.tbuf and the next time n_hdlc_send_frames()
-will try to resend it first of all.
-
-But the commit be10eb7589337e5defbe214dae038a53dd21add8 ("tty: n_hdlc add
-buffer flushing") introduced racy access to n_hdlc.tbuf.
-
-After transmission error concurrent flush_tx_queue() and n_hdlc_send_frames()
-can put a buffer pointed by n_hdlc.tbuf to tx_free_buf_list twice. That
-causes an exploitable double free error in n_hdlc_release().
-
-To fix the issue I used a standard kernel linked list protected by a spinlock
-and got rid of n_hdlc.tbuf. In case of transmission error the current data
-buffer is put after the head of tx_buf_list.
-
---
-
-Kernel updates are ready, please update your systems.
-
-Best regards,
-Alexander Popov
-Positive Technologies
-https://www.ptsecurity.com
-
-View attachment "0001-tty-n_hdlc-get-rid-of-racy-n_hdlc.tbuf.patch" of type "text/x-diff" (10054 bytes)
+For some projects, "the code gets simpler and to hell with those users"
+will suffice. But for big projects where actual money is involved,
+you'll have a harder time.
