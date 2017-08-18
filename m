@@ -1,4 +1,9 @@
-Received: (qmail 32752 invoked by uid 550); 28 Feb 2024 15:01:02 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1055" "Friday" "18" "August" "2017" "13:12:03" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>" "23" "Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" "^Date:" nil nil "8" "2017081817:12:03" "[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" (number mark "        michael@orli Aug 18   23/1055  " thread-indent "\"Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation\"\n") "<87wp63jgxn.fsf@fifthhorseman.net>" ("<f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>" "<87wp63jgxn.fsf@fifthhorseman.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28322 invoked by uid 550); 18 Aug 2017 17:14:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,54 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 27697 invoked from network); 18 Aug 2017 17:12:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1503076324; bh=ksmzC+m9W7gT5WQ0PFAu7JcVlnRy8dVJSz92oCm9FyA=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=e0+l4EAtbw9LlO9camPIRTCdtj8qHYOgLVsKYqEBDLbPlz0cETXu+1uriMkn5B0+7
+	 dHfB+yXp0NtkNfh6rYg231u6++InVuLy5YArY5QOCPQc0HncN/XreUtkLVyZpbwWC8
+	 eoaZBnOD+t0bWZPljEBXdfcR0EfndeM+FuRupKsU=
+References: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>
+ <87wp63jgxn.fsf@fifthhorseman.net>
+Message-ID: <2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
+MIME-Version: 1.0
+In-Reply-To: <87wp63jgxn.fsf@fifthhorseman.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Date: Fri, 18 Aug 2017 13:12:03 -0400
+From: Michael Orlitzky <michael@orlitzky.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32197 invoked from network); 28 Feb 2024 15:00:33 -0000
-Date: Wed, 28 Feb 2024 16:04:05 +0100
-From: Solar Designer <solar@openwall.com>
-To: Ali Raza Mumtaz <raza.mumtaz@ebryx.com>
-Cc: oss-security@lists.openwall.com,
-	Faran Abdullah <faran.abdullah@ebryx.com>
-Message-ID: <20240228150405.GA14767@openwall.com>
-References: <AM0PR05MB6660688A27BDB6F3CD0B6286FD582@AM0PR05MB6660.eurprd05.prod.outlook.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <AM0PR05MB6660688A27BDB6F3CD0B6286FD582@AM0PR05MB6660.eurprd05.prod.outlook.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2024-22857: Heap Based Buffer overflow in zlog library
+Subject: Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation
+ via PID file manipulation
+To: oss-security@lists.openwall.com
 
-Hi,
-
-On Wed, Feb 28, 2024 at 09:24:29AM +0000, Ali Raza Mumtaz wrote:
-> We have found a vulnerability in zlog that is essentially a heap-based buffer overflow leading to denial of service and arbitrary code execution.
+On 08/16/2017 06:17 PM, Daniel Kahn Gillmor wrote:
+> On Wed 2017-08-16 12:10:09 -0400, Michael Orlitzky wrote:
+>> The problem is avoided by creating the PID file as root, before
+>> dropping privileges.
 > 
-> We have been trying to contact the maintainer of this project for almost three months and haven't received any response. Additionally, we have reserved a CVE number with MITRE (CVE-2024-22857) and now we intend to publish it.
+> The problem can also be avoided by not using PID files at all, and
+> relying instead on a service manager that actually keeps track of its
+> children using more robust means (like wait() and SIGCHLD).
 > 
-> We have a working PoC that provides code execution, along with a detailed blog regarding this vulnerability (which, of course, remains unpublished).
 
-Thank you for bringing this to oss-security.  Normally, we expect
-postings to include actual vulnerability detail right away, but I
-understand the circumstances here are different.
+I'm scared to reply because this is guaranteed to turn into a "you
+should just use systemd, grandpa" holy war.
 
-I found that you also brought this up in:
+If we had it all to do over again, I would probably agree with you. But
+there are still users with simple init systems, and many of those users
+are happy (or stuck) that way. If you want to convince upstreams to
+delete their PID file code and drop support for the associated init
+systems, you'll have to offer them something to make up for the users
+they'll lose.
 
-https://github.com/HardySimpson/zlog/issues/250
-
-and I've just posted some comments to there.  It appears that zlog
-author Hardy Simpson is currently mostly inactive on GitHub and with the
-project - only one contribution in a year (on December 4).  However,
-another person was merging pull requests recently, so maybe they can
-help, as I am asking in a comment I posted.
-
-Please remember to add the full vulnerability detail in a reply to this
-oss-security thread on the same day that the same information is made
-public elsewhere (e.g., in a GitHub pull request).
-
-Please also do this soon (e.g., in a couple of weeks from now) even in
-case communication with project maintainers doesn't start or fails, so
-that distros and users have a chance to know the risk and patch the
-issue on their own.
-
-Thanks,
-
-Alexander
+For some projects, "the code gets simpler and to hell with those users"
+will suffice. But for big projects where actual money is involved,
+you'll have a harder time.
