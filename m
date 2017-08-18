@@ -1,28 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/02/2
-Message-Id: <4F81C4B3-94D3-4F62-9B83-7564BDF36B6D@gmail.com>
-Date: Sun, 1 Jan 2017 19:39:38 -0600
-From: Brandon Perry <bperry.volatile@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/18/1
+Message-ID: <20170818101323.GD1841@suse.de>
+Date: Fri, 18 Aug 2017 12:13:23 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple issues in OpenH264 1.5.1
+Subject: Re: ***UNCHECKED*** UnRAR: directory traversal + memory safety bugs
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-> On Jan 1, 2017, at 7:32 PM, Brandon Perry <bperry.volatile@...il.com> wrote:
-> 
-> Recently, Firefox updated their OpenH264 plugin to 1.6. Earlier this year, I reported multiple crashes I had found while fuzzing version 1.5.1 of the decoder (which was what was shipped at the time).
-> 
-> While these issues have been resolved on the 1.6 branch of the openh264 codebase for some time (a year?), it doesn’t seem like Firefox got the update until recently (correct me if I’m wrong), which is why I am releasing my fuzz results. I initially reported these to Mozilla, but collided with Tyler Smith, one of their security engineers who had also been fuzzing the decoder. I am not sure if these issues got CVEs or not, but I don’t see any.
-> 
-> https://raw.githubusercontent.com/brandonprry/openh264-fuzz/ <https://raw.githubusercontent.com/brandonprry/openh264-fuzz/>
-Whoops, mislinked.
+I filed a generic CVE request at the Mitre CVE Webform for this E-Mail.
 
-https://github.com/brandonprry/openh264-fuzz <https://github.com/brandonprry/openh264-fuzz>
+Ciao, Marcus
+On Tue, Aug 15, 2017 at 12:39:48AM +0200, Jakub Wilk wrote:
+> (I'm not sure UnRAR bugs are on-topic here. UnRAR is not free software, even
+> though the source is available. But the last time UnRAR was discussed nobody
+> objected, so hey, let me try too.)
 > 
-> Attached is the README for the linked GitHub repo, which shows the three distinct bugs and their stack traces. There might be another bug or two that I missed during triage. None of the crashes work on 1.6, which is now shipped with up-to-date Firefox installs.
+> I found directory traversal and a few memory safety bugs in UnRAR 5.5.6.
+> These bugs have been fixed in UnRAR 5.5.7.
 > 
-> Happy New Year!
+> The memory safety bugs were found using American Fuzzy Lop.
 > 
-> <README.md>
+> Here are details of the bugs:
+> 
+> * Directory traversal
+> 
+> The PoC (traversal.rar) contains two symlinks and a regular file:
+> 
+>   cur -> .
+>   cur/par -> ..
+>   par/moo
+> 
+> This setup defeats UnRAR's directory traversal protections:
+> 
+>   $ ls ../moo
+>   /bin/ls: cannot access '../moo': No such file or directory
+> 
+>   $ unrar x traversal.rar
+>   ...
+>   Extracting  cur                                                       OK
+>   Extracting  cur/par                                                   OK
+>   Extracting  par/moo                                                   OK
+>   All OK
+> 
+>   $ ls ../moo
+>   ../moo
+> 
+> The code that was used to generate the PoC is available here:
+> https://github.com/jwilk/path-traversal-samples
+> 
+> 
+> * Out-of-bounds read in Archive::ReadHeader15 / EncodeFileName::Decode
+> 
+> The Archive::ReadHeader15 method contains the following code (with boring
+> parts omitted):
+> 
+>   size_t NameSize=Raw.Get2();
+>   // ...
+>   char FileName[NM*4];
+>   size_t ReadNameSize=Min(NameSize,ASIZE(FileName)-1);
+>   Raw.GetB((byte *)FileName,ReadNameSize);
+>   FileName[ReadNameSize]=0;
+> 
+>   if (FileBlock)
+>   {
+>     if ((hd->Flags & LHD_UNICODE)!=0)
+>     {
+>       EncodeFileName NameCoder;
+>       size_t Length=strlen(FileName);
+>       Length++;
+>       NameCoder.Decode(FileName,(byte *)FileName+Length,
+>                        NameSize-Length,hd->FileName,
+>                        ASIZE(hd->FileName));
+>   // ...
+> 
+> If NameSize is bigger than NM*4, this can make EncodeFileName::Decode read
+> past the bounds of the FileName array.
+> 
+> PoC: oob-archive-readheader15.rar
+> 
+> 
+> * Out-of-bounds reads in Unpack::Unpack20
+> 
+> This method contains:
+> 
+>     int DistNumber=DecodeNumber(Inp,&BlockTables.DD);
+>     unsigned int Distance=DDecode[DistNumber]+1;
+> 
+> The array size is 48; but for the PoC (oob-unpack-unpack20.rar), DistNumber
+> is 58.
+> 
+> 
+> * Buffer overflow in Unpack::LongLZ
+> 
+> This method contains:
+> 
+>   ChSetB[DistancePlace]=ChSetB[NewDistancePlace];
+> 
+> The array size is 256; but for the PoC (oob-unpack-longlz.rar),
+> DistancePlace is 256.
+> 
+> -- 
+> Jakub Wilk
 
 
+
+
+
+
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
