@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["892" "Thursday" "15" "March" "2018" "13:55:59" "+0000" "Thomas Kluyver" "thomas@kluyver.me.uk" "<1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>" "36" "[oss-security] CVE request: maliciously crafted notebook files in Jupyter" "^Cc:" nil nil "3" "2018031513:55:59" "[oss-security] CVE request: maliciously crafted notebook files in Jupyter" (number mark "        thomas@kluyv Mar 15   36/892   " thread-indent "\"[oss-security] CVE request: maliciously crafted notebook files in Jupyter\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4673" "Sunday" "20" "August" "2017" "21:34:32" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170820213432.0ec33271@pc1>" "118" "[oss-security] unrar-free/unrar-gpl: directory traversal and other issues" "^Date:" nil nil "8" "2017082019:34:32" "[oss-security] unrar-free/unrar-gpl: directory traversal and other issues" (number mark "        hanno@hboeck Aug 20  118/4673  " thread-indent "\"[oss-security] unrar-free/unrar-gpl: directory traversal and other issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11264 invoked by uid 550); 15 Mar 2018 14:26:22 -0000
+Received: (qmail 29871 invoked by uid 550); 20 Aug 2017 19:34:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,133 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13921 invoked from network); 15 Mar 2018 13:56:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kluyver.me.uk;
-	 h=cc:content-transfer-encoding:content-type:date:from
-	:message-id:mime-version:subject:to:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; bh=JPvpAS/RwD8JeWFcPoxCVAQKjG/E5oA7M43l53DwX
-	dA=; b=xxUz3mkzifJgriqbdTszAW2qL4ebtjOR5pSviPdk+Kt1xNoHHjcH4l8wl
-	V7uHBLPjV59gtg4bmMpCMcEY4ShtasC3msPR//WWm2YJiDD3kjv11v20Srw2g428
-	qfizgmkIHEIhcZYeurbqhzr7BMjuOWe04HT0s/llbl+I5Z6QHckv7MyoxN2cgXCu
-	lMU2cPE/PxAnXeHxhHIN6NAsgxyxUUgBUBqlMrySX1/Mgi9ohexnmfhtWEASyfEt
-	IUEL92UTtRu3Dbhoy6b6hEZZPuGJGBbJU9iDjbbbSHIk5U8QltpW/Ufx6NWgoAkz
-	d6uJGjUOH8p5Pjdpi+xwSdolf7GrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; bh=JPvpAS/RwD8JeWFcPoxCVAQKjG/E5
-	oA7M43l53DwXdA=; b=J5+5NQ18Faz4jSnQ6KjS1QlWwllcOlla8OTK0a/naojMm
-	+zZIryIx8E6h+7kPoKARGB9bfh5jt2TXZF1eNbf3QXyChx2eHNjTCo6eZJke5b4Y
-	h534qrlntTp0g8ub2fkEZDOeeNAeMdzDbs9k3xcbByYimsYLK0O1AT78us6Zu0WN
-	B3evRPm5Xl/crgEPuonTvw2FrNWYRSpi+TUjMR9fPUvtrzadt/qKORwde9Yn97ov
-	2rzUz3UecZRO26+J4qn9sexY7a8hsZwPjSv/YTOATrmBYxC3k5g/4Eq9ERW9XweK
-	wgog2RVs6+84dKhrbHhyB7qOJ5q3Vhr2a5Qh8fu0g==
-X-ME-Sender: <xms:b3uqWnhpjK_V4l1S4Q6oKpMDAODYZi7u_TK1CWSLkeAWpuhG9JDC0A>
-Message-Id: <1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>
+Received: (qmail 29833 invoked from network); 20 Aug 2017 19:34:43 -0000
+Message-ID: <20170820213432.0ec33271@pc1>
+X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-b3834dbb
-Cc: security <security@ipython.org>, MinRK <benjaminrk@gmail.com>,
- jkamens@quantopian.com, ssanderson@quantopian.com
-Date: Thu, 15 Mar 2018 13:55:59 +0000
-From: Thomas Kluyver <thomas@kluyver.me.uk>
+Content-Type: multipart/mixed; boundary="MP_/=qMKO5jLgxEmFkgp_FvSSm2"
+Date: Sun, 20 Aug 2017 21:34:32 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: maliciously crafted notebook files in Jupyter
-To: oss-security@lists.openwall.com
+Subject: [oss-security] unrar-free/unrar-gpl: directory traversal and other issues
+To:
+  "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Email address of requester: security@ipython.org, thomas@kluyver.me.uk, ben=
-jaminrk@gmail.com, jkamens@quantopian.com, ssanderson@quantopian.com
+--MP_/=qMKO5jLgxEmFkgp_FvSSm2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Software name: Jupyter Notebook (formerly IPython Notebook)
-Type of vulnerability: Maliciously forged file
-Attack outcome: Possible remote execution
+Hi,
 
-Vulnerability: A maliciously forged notebook file can bypass sanitization t=
-o execute Javascript in the notebook context. Specifically, invalid HTML is=
- 'fixed' by jQuery after sanitization, making it dangerous.
+There exists a package that is named in some distros unrar-free and in
+others unrar-gpl. It's - as the name says - a gpl licensed unpacker for
+old versions of the rar format. (The "original" unrar is not FOSS, as
+it contains a restricted license.)
 
-Affected versions:
+It was hosted on gna [1], which got shut down recently.
+It hasn't been developed for a while.
 
-- notebook =E2=89=A4 5.4.0
+unrar-free suffers from a trivial directory traversal vulnerability
+(poc attacked). I also found a stack overread and null pointer crash
+within a few minutes of running afl. In all likelyhood there are more
+issues.
+evince uses unrar-free if available and named like that for cbr files.
+Thus it adds more vulns like the recent issues with evince and comic
+book formats.
 
-URI with issues:
+Given that it's no longer developed, has no active upstream and isn't
+very useful I'd recommend simply removing that package. It only supports
+very old rar files up to version 2, which aren't very common. When
+looking for a FOSS licensed rar unpacker: libarchive supports modern RAR
+files and is well maintained.
 
-- GET /notebook/**
+I'm maintaining the Gentoo package and I'm going to propose to remove
+it from Gentoo. (Unless someone steps in and takes up upstream
+maintainership of this package, which is probably unlikely.)
 
-Patches:  not yet finalised
+Issue 1: Directory Traversal
 
-Mitigations:
+Creating a rar v2 archive with path names of the form ../[filename]
+will unpack them into the upper directory.
 
-Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
-If using pip,
 
-    pip install --upgrade notebook
+Issue 2: Stack overread
 
-For conda:
+A malformed archive can cause a stack overread, detectable with asan.
+This issue doesn't happen reliably, I haven't investigated further.
 
-    conda update conda
-    conda update notebook
+=3D=3D2585=3D=3DERROR: AddressSanitizer: stack-buffer-overflow on address 0=
+x7fff76184120 at pc 0x000000445d25 bp 0x7fff76183ef0 sp 0x7fff761836a0
+READ of size 519 at 0x7fff76184120 thread T0
+    #0 0x445d24 in __interceptor_strchr.part.33 (/r/unrar-gpl/unrar+0x445d2=
+4)
+    #1 0x516d0d in stricomp /f/unrar-gpl/unrar/src/unrarlib.c:851:19
+    #2 0x511613 in ExtrFile /f/unrar-gpl/unrar/src/unrarlib.c:745:20
+    #3 0x510b02 in urarlib_get /f/unrar-gpl/unrar/src/unrarlib.c:303:13
+    #4 0x50b249 in unrar_extract_file /f/unrar-gpl/unrar/src/unrar.c:343:8
+    #5 0x50be32 in unrar_extract /f/unrar-gpl/unrar/src/unrar.c:483:9
+    #6 0x50c69c in main /f/unrar-gpl/unrar/src/unrar.c:556:14
+    #7 0x7f632d3834f0 in __libc_start_main (/lib64/libc.so.6+0x204f0)
+    #8 0x419e19 in _start (/r/unrar-gpl/unrar+0x419e19)
 
-Vulnerability reported by vkgonka@mail.ru , via Jonathan Kamens at Quantopi=
-an
+Address 0x7fff76184120 is located in stack of thread T0 at offset 544 in fr=
+ame
+    #0 0x516c1f in stricomp /f/unrar-gpl/unrar/src/unrarlib.c:844
 
+  This frame has 2 object(s):
+    [32, 544) 'S1'
+    [608, 1120) 'S2' <=3D=3D Memory access at offset 544 partially
+    underflows this variable
+
+Issue 3: Null pointer
+
+A malformed input file can cause a null pointer read.
+
+=3D=3D3328=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x00000000=
+0020 (pc 0x00000051ed2c bp 0x000000278b18 sp 0x7fffc410e300 T0)
+=3D=3D3328=3D=3DThe signal is caused by a READ memory access.
+=3D=3D3328=3D=3DHint: address points to the zero page.
+    #0 0x51ed2b in DecodeNumber /f/unrar-gpl/unrar/src/unrarlib.c:1649:16
+    #1 0x5186f5 in Unpack /f/unrar-gpl/unrar/src/unrarlib.c:1148:4
+    #2 0x511c47 in ExtrFile /f/unrar-gpl/unrar/src/unrarlib.c:799:10
+    #3 0x510b02 in urarlib_get /f/unrar-gpl/unrar/src/unrarlib.c:303:13
+    #4 0x50b249 in unrar_extract_file /f/unrar-gpl/unrar/src/unrar.c:343:8
+    #5 0x50be32 in unrar_extract /f/unrar-gpl/unrar/src/unrar.c:483:9
+    #6 0x50c69c in main /f/unrar-gpl/unrar/src/unrar.c:556:14
+    #7 0x7f0a337df4f0 in __libc_start_main (/lib64/libc.so.6+0x204f0)
+    #8 0x419e19 in _start (/r/unrar-gpl/unrar+0x419e19)
+
+
+[1] https://web.archive.org/web/20170326081002/http://home.gna.org/unrar
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+--MP_/=qMKO5jLgxEmFkgp_FvSSm2
+Content-Type: application/vnd.rar
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=unrar-gpl-directory-traversal.rar
+
+UmFyIRoHAM+QcwAADQAAAAAAAABvvXQAgCUABQAAAAUAAAAAm7HC/4+CR0YU
+MAUAIAAAAC4uL3h4YWFiDQo=
+
+--MP_/=qMKO5jLgxEmFkgp_FvSSm2
+Content-Type: application/vnd.rar
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=unrar-gpl-nullptr.rar
+
+UmFyIRoHAM+QcwAADQAAAAAAAABvvXQAgCUABQAAAAUAAAAAm7HC/4+CR0YU
+AAAAAAAAb70=
+
+--MP_/=qMKO5jLgxEmFkgp_FvSSm2
+Content-Type: application/vnd.rar
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=unrar-gpl-stack-overread.rar
+
+UmFyIRoHADAwMDAwDQAwMDAwMDAwMHQwMDA=
+
+--MP_/=qMKO5jLgxEmFkgp_FvSSm2--
