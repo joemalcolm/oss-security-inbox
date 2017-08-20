@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2819" "Wednesday" "4" "May" "2016" "10:47:11" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0PxH3R6erUL1y=zoqpuxTh3y8Kxu_D6i60gnC=F=EcWA@mail.gmail.com>" "75" "[oss-security] Older OpenSSL RSA key/64 bit bug (now with added CVE!)" "^Date:" nil nil "5" "2016050416:47:11" "[oss-security] Older OpenSSL RSA key/64 bit bug (now with added CVE!)" (number mark "        kseifried@re May  4   75/2819  " thread-indent "\"[oss-security] Older OpenSSL RSA key/64 bit bug (now with added CVE!)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1682" "Sunday" "20" "August" "2017" "21:49:05" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170820214905.478b89da@pc1>" "47" "Re: [oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)" "^Date:" nil nil "8" "2017082019:49:05" "[oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)" (number mark "        hanno@hboeck Aug 20   47/1682  " thread-indent "\"Re: [oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)\"\n") "<20170810171047.5cdf7131-a82f-46f0-b4c4-3015acbc431b@korelogic.com>" ("<20170810171047.5cdf7131-a82f-46f0-b4c4-3015acbc431b@korelogic.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18116 invoked by uid 550); 4 May 2016 16:47:23 -0000
+Received: (qmail 24533 invoked by uid 550); 20 Aug 2017 19:49:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,101 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18095 invoked from network); 4 May 2016 16:47:23 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=Sm/0U29r4htFZjN/HW17IHreoGtVfAi8LWkkTAqkx2M=;
-        b=fZuYtT7Pd+dxki1F8SZGcMdB/37TxRtGYbvBJRDSqOPjht63SmS0eW4fJRgcpG0Rac
-         GAg9Iv4E+IYLd6V9SYa8ZkgBE6hLJrP5V0LPszijKSTrPK+kYibnDz4hn+G0GcZRrUEZ
-         +dYuVeKNnE2SFU+L/9HpUsOEz5rxz9ZAixJlDhlLNQgwgbmxLKGf07q70aFp8X9JmKWp
-         TBffe2n0wIiAsrC5u7iZ8MXMOkDtLo9aR0uYBAfrjq9AT9xZJ1RDgSlrYkdZOmGxcnc2
-         YdGKouKqHD0CBpyrpsy7OnbAFApigEkJjGV7MwUV4mSl6MVJvMitJdnScLhTjI0utk1O
-         d7XQ==
-X-Gm-Message-State: AOPr4FV24uHGM3uduVL3M4DkaZuyQ20qfFreBIeXMh2IQqlREabQb+t050eLd4Lte5zvfYRWiJjetIG+ClxFdFcB
-MIME-Version: 1.0
-X-Received: by 10.37.6.139 with SMTP id 133mr5330292ybg.46.1462380431537; Wed,
- 04 May 2016 09:47:11 -0700 (PDT)
-Message-ID: <CANO=Ty0PxH3R6erUL1y=zoqpuxTh3y8Kxu_D6i60gnC=F=EcWA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113c55c02636f1053206fad5
-Date: Wed, 4 May 2016 10:47:11 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Received: (qmail 24513 invoked from network); 20 Aug 2017 19:49:15 -0000
+Message-ID: <20170820214905.478b89da@pc1>
+In-Reply-To: <20170810171047.5cdf7131-a82f-46f0-b4c4-3015acbc431b@korelogic.com>
+References: <20170810171047.5cdf7131-a82f-46f0-b4c4-3015acbc431b@korelogic.com>
+X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-7240-1503258543-0001-2"
+Date: Sun, 20 Aug 2017 21:49:05 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Older OpenSSL RSA key/64 bit bug (now with added CVE!)
-To: oss-security <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] CVS and ssh command injection (see
+ CVE-2017-1000117, etc.)
+To: oss-security@lists.openwall.com
 
---001a113c55c02636f1053206fad5
+--=_zucker.schokokeks.org-7240-1503258543-0001-2
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
----------- Forwarded message ----------
-From: <cve-assign@mitre.org>
-Date: Wed, May 4, 2016 at 9:25 AM
-Subject: Re: [oss-security] broken RSA keys
-To: solar@openwall.com
-Cc: cve-assign@mitre.org, kseifried@redhat.com
+Hi,
 
+There's now an inofficial patch:
+https://www.mirbsd.org/cvs.cgi/src/gnu/usr.bin/cvs/src/rsh-client.c.diff?r1=
+=3D1.6;r2=3D1.7
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Developed by Thorsten Glaser for MirBSD and Debian:
+https://www.mirbsd.org/permalinks/wlog-10_e20170811-tg.htm
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D871810
 
-> On Wed, May 04, 2016 at 07:50:24AM -0600, Kurt Seifried wrote:
->> Is this something we should look at with respect to CVE assignment (ala
->> CVE-2008-0166)?
+Debian Security Advisory:
+https://www.debian.org/security/2017/dsa-3940
 
-> The old OpenSSL bug from 2000 could get a CVE from 2000, since that's
-> when it was publicly reported
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
->>> http://marc.info/?l=openssl-users&m=95961024500509
->>>
->>> Under 64 bit HP-UX,
->>> the problem manifests itself as RSA_F4 becoming 0x1000100010001. The bug
->>> is that 1 is an int, and according to the ANSI C standard, shifting more
->>> than the size of the an expression is undefined. On this architechture,
->>> only the 5 least significant bits of the shift is used, thus 1<<32==1
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Use CVE-2000-1254. The commit is:
-https://git.openssl.org/?p=openssl.git;a=commit;h=db82b8f9bd432a59aea8e1014694e15fc457c2bb
+--=_zucker.schokokeks.org-7240-1503258543-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-(We are not sure how this CVE ID would be used. It is possible that
-nobody will use this ID for OpenSSL risk management, but someone will
-use this ID in deciding to pursue further research on "shifting more
-than the size of an expression" issues.)
-
-If this ID is sent in an oss-security followup, the Subject: header
-should be changed to mention OpenSSL. Also, MITRE currently plans to
-publish the CVE for this along with the CVEs for the OpenSSL
-2016-05-03 issues, which should be very soon.
-
-- --
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXKhODAAoJEHb/MwWLVhi2bREQAKYSRGk+hCcwiAy19+RYQC1g
-AvRnK7+5kJnLXVdQO7K2yPQo1aLHcKgbmv+VNcu9tf4kJg/7ebROecdgrtWXHzI1
-yksyozDzX574LtFuyBWDax7ethEWdHY1BSmSWRIUOmFj6IOTSks8eI7T5rgEd+Gp
-dB2kRLSKEWlPV1ld6B//bfnW1bo/cbfuEgxCkpYh97zwbADSZdGltTqpvzQGt6d/
-BRCDLoV688aTS1lEqrrmxcf4BaAWUa1TMHuCg3GSuTfnu8iVDvOuuMrvDItpmovk
-5/Z3G/Z23RHwAq6R8yMmXPdDq4aelS0IzxuFCCEU9zCcZsAc90HP1Vt6CDgOQagW
-kVRMi2wTVsy+FqlMyDN5CeGDmwlKe5BegAB/sanRzUlv4gn0/rpF223bvgKcYYRc
-4LJlOMxhn+eymktp+8neJhwlR5rWzC2Na4HxJFitKQmv2FnQhzYD3BvNyhQSPwJ9
-k4ky1/+/T6WyxNNXsA2DnqbYBgDD4crq58IDHfdVEBXpq+wiyGT+b32FS1+fLC29
-cIi97XUrzUh6Fzvx1m3Bjwbt31B/lWs13iNy8qz5Z+91Y6ud5UERqjZ2ogv/AVIX
-Na3ycUizKATKRdfr2WuEOFXR5Cu+rLB8ayPVlKAc8bNeUcWpOoWUrWTsTyBC0rzT
-yka/lgb3X77XRXs9gYgt
-=yEbu
+iQIzBAEBCAAdFiEE/nN1f6YOTiG5N1efpYgAcru1HkIFAlmZ57EACgkQpYgAcru1
+HkKlpg/9GfNO7WVbJ6BzMtbCZaevgPa4wuB73nGxTZz1vaeTyw8RRbBP/gMIeYUZ
+963yjGJvGA/RGhiUgsnI83J6vhzgf1UuaZAbmQiEJtjaUZQsC4iDfbR0s+a+Opyn
+X7LYt0SNUkoHPrG8F0fNEizQ8K6bCcKscdbd4MCxzBsUl7BS/39XA4p358tVMUXH
+bgbBVdYK99VBZOPFt7RL/HAf9t4UIQNFpuBKvJcLrXF5RP5xcyJBSOWDMucrSgrj
+egvM3ffGJD2sB6iDlcmGI5NUfLtpT14/m03PDSp7ZOOX0ZcDx96GAdvnLQjAj/tE
+sp76Jdx57W18SEsjIFmrxFidS/Y2LRZjB9NorETjCekiqVZCzOf19aqrs8tk/T4G
+oZk5/pp6pL/wz1l0Oj/4W7SeZ2X20+fEz5acivt+p3sk1eUs2Sd7+VR9EU/80s8Z
+vHvydaBohU8Qhjzrx0EzuifCYJwib2F+eCHcb1LwyTEN6X6GC9+vpoUZfV0ob9YM
+PF4kJaYsmtJR3BRh6vgv4l/oyutss5Zi6gv81YW7S4e7ORo7ea3AZLS+6puQ+5nM
+3tdIgQa3+upO+Aau7BRZsOk7oBsEr8gPolOzYmSeUtIaNbyeBJBHU8py3mChIiOm
+Wxp4xRWTkJgfFM6P7YmNPE3IJZXpiADc4fH1aa8ht66xEGlx2Kg=
+=7Omv
 -----END PGP SIGNATURE-----
 
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a113c55c02636f1053206fad5--
+--=_zucker.schokokeks.org-7240-1503258543-0001-2--
