@@ -1,57 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/14/1
-Message-ID: <CALy8Cw5KNydTryiDytu=AC88w06VpkEawB3ohsa8SOj0=1miZA@mail.gmail.com>
-Date: Fri, 13 Jan 2017 21:47:02 +0000
-From: Craig Small <csmall@...ian.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Wordpress: 8 security issues in 4.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/20/1
+Message-ID: <20170820213432.0ec33271@pc1>
+Date: Sun, 20 Aug 2017 21:34:32 +0200
+From: Hanno Böck <hanno@...eck.de>
+To:  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: unrar-free/unrar-gpl: directory traversal and other issues
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-  I couldn't find any CVE for the 8 issues wordpress 4.7 (including some
-earlier versions) have.
-The announcement is at [1] but it is often better to look at [2] to work
-out what is what, though their announcement for 4.7.1 is one of the more
-better ones.
 
-Remote code execution (RCE) in PHPMailer – No specific issue appears to
-affect WordPress or any of the major plugins we investigated but, out of an
-abundance of caution, we updated PHPMailer in this release. This issue was
-reported to PHPMailer by Dawid Golunski and Paul Buonopane.
-(this is an extra  fix for the CVE-2016-10066 and CVE-2016-10045, I'll
-leave it to you to decide if it is same ID or new)
+There exists a package that is named in some distros unrar-free and in
+others unrar-gpl. It's - as the name says - a gpl licensed unpacker for
+old versions of the rar format. (The "original" unrar is not FOSS, as
+it contains a restricted license.)
 
-The REST API exposed user data for all users who had authored a post of a
-public post type. WordPress 4.7.1 limits this to only post types which have
-specified that they should be shown within the REST API. Reported by
-Krogsgard and Chris Jean.
+It was hosted on gna [1], which got shut down recently.
+It hasn't been developed for a while.
 
-Cross-site scripting (XSS) via the plugin name or version header on
-update-core.php. Reported by Dominik Schilling of the WordPress Security
-Team.
+unrar-free suffers from a trivial directory traversal vulnerability
+(poc attacked). I also found a stack overread and null pointer crash
+within a few minutes of running afl. In all likelyhood there are more
+issues.
+evince uses unrar-free if available and named like that for cbr files.
+Thus it adds more vulns like the recent issues with evince and comic
+book formats.
 
-Cross-site request forgery (CSRF) bypass via uploading a Flash file.
-Reported by Abdullah Hussam.
+Given that it's no longer developed, has no active upstream and isn't
+very useful I'd recommend simply removing that package. It only supports
+very old rar files up to version 2, which aren't very common. When
+looking for a FOSS licensed rar unpacker: libarchive supports modern RAR
+files and is well maintained.
 
-Cross-site scripting (XSS) via theme name fallback. Reported by Mehmet Ince.
+I'm maintaining the Gentoo package and I'm going to propose to remove
+it from Gentoo. (Unless someone steps in and takes up upstream
+maintainership of this package, which is probably unlikely.)
 
-Post via email checks mail.example.com if default settings aren’t changed.
-Reported by John Blackbourn of the WordPress Security Team.
+Issue 1: Directory Traversal
 
-A cross-site request forgery (CSRF) was discovered in the accessibility
-mode of widget editing. Reported by Ronnie Skansing.
-
-Weak cryptographic security for multisite activation key. Reported by Jack.
-
- - Craig
-
-1:
-https://wordpress.org/news/2017/01/wordpress-4-7-1-security-and-maintenance-release/
-2: https://wpvulndb.com/wordpresses/47
+Creating a rar v2 archive with path names of the form ../[filename]
+will unpack them into the upper directory.
 
 
+Issue 2: Stack overread
+
+A malformed archive can cause a stack overread, detectable with asan.
+This issue doesn't happen reliably, I haven't investigated further.
+
+==2585==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7fff76184120 at pc 0x000000445d25 bp 0x7fff76183ef0 sp 0x7fff761836a0
+READ of size 519 at 0x7fff76184120 thread T0
+    #0 0x445d24 in __interceptor_strchr.part.33 (/r/unrar-gpl/unrar+0x445d24)
+    #1 0x516d0d in stricomp /f/unrar-gpl/unrar/src/unrarlib.c:851:19
+    #2 0x511613 in ExtrFile /f/unrar-gpl/unrar/src/unrarlib.c:745:20
+    #3 0x510b02 in urarlib_get /f/unrar-gpl/unrar/src/unrarlib.c:303:13
+    #4 0x50b249 in unrar_extract_file /f/unrar-gpl/unrar/src/unrar.c:343:8
+    #5 0x50be32 in unrar_extract /f/unrar-gpl/unrar/src/unrar.c:483:9
+    #6 0x50c69c in main /f/unrar-gpl/unrar/src/unrar.c:556:14
+    #7 0x7f632d3834f0 in __libc_start_main (/lib64/libc.so.6+0x204f0)
+    #8 0x419e19 in _start (/r/unrar-gpl/unrar+0x419e19)
+
+Address 0x7fff76184120 is located in stack of thread T0 at offset 544 in frame
+    #0 0x516c1f in stricomp /f/unrar-gpl/unrar/src/unrarlib.c:844
+
+  This frame has 2 object(s):
+    [32, 544) 'S1'
+    [608, 1120) 'S2' <== Memory access at offset 544 partially
+    underflows this variable
+
+Issue 3: Null pointer
+
+A malformed input file can cause a null pointer read.
+
+==3328==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000020 (pc 0x00000051ed2c bp 0x000000278b18 sp 0x7fffc410e300 T0)
+==3328==The signal is caused by a READ memory access.
+==3328==Hint: address points to the zero page.
+    #0 0x51ed2b in DecodeNumber /f/unrar-gpl/unrar/src/unrarlib.c:1649:16
+    #1 0x5186f5 in Unpack /f/unrar-gpl/unrar/src/unrarlib.c:1148:4
+    #2 0x511c47 in ExtrFile /f/unrar-gpl/unrar/src/unrarlib.c:799:10
+    #3 0x510b02 in urarlib_get /f/unrar-gpl/unrar/src/unrarlib.c:303:13
+    #4 0x50b249 in unrar_extract_file /f/unrar-gpl/unrar/src/unrar.c:343:8
+    #5 0x50be32 in unrar_extract /f/unrar-gpl/unrar/src/unrar.c:483:9
+    #6 0x50c69c in main /f/unrar-gpl/unrar/src/unrar.c:556:14
+    #7 0x7f0a337df4f0 in __libc_start_main (/lib64/libc.so.6+0x204f0)
+    #8 0x419e19 in _start (/r/unrar-gpl/unrar+0x419e19)
+
+
+[1] https://web.archive.org/web/20170326081002/http://home.gna.org/unrar
 -- 
-Craig Small (@smallsees)   http://dropbear.xyz/     csmall at : enc.com.au
-Debian GNU/Linux           http://www.debian.org/   csmall at : debian.org
-GPG fingerprint:        5D2F B320 B825 D939 04D2  0519 3938 F96B DF50 FEA5
+Hanno Böck
+https://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+Download attachment "unrar-gpl-directory-traversal.rar" of type "application/vnd.rar" (62 bytes)
+
+Download attachment "unrar-gpl-nullptr.rar" of type "application/vnd.rar" (53 bytes)
+
+Download attachment "unrar-gpl-stack-overread.rar" of type "application/vnd.rar" (26 bytes)
