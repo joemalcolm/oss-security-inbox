@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/1
-Message-ID: <CAGqxZSUxjgaWr67Hiwfh1RfA8L5-JtezAQwhuwmjQbyus45Lhw@mail.gmail.com>
-Date: Tue, 03 Oct 2017 07:30:06 +0000
-From: Terry Chia <terrycwk1994@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/20/2
+Message-ID: <20170820214905.478b89da@pc1>
+Date: Sun, 20 Aug 2017 21:49:05 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Graphicsmagick: NULL Pointer Dereference in DICOM Decoder (CVE-2017-14994)
+Subject: Re: CVS and ssh command injection (see CVE-2017-1000117, etc.)
 Content-Type: text/plain; charset=utf-8
 
-A null pointer dereference vulnerability in the GraphicsMagick DICOM image
-decoder allows an attacker to cause a denial-of-service condition or other
-unspecified impact.
+Hi,
 
-Bug: https://sourceforge.net/p/graphicsmagick/bugs/512/
-Writeup: https://nandynarwhals.org/CVE-2017-14994/
+There's now an inofficial patch:
+https://www.mirbsd.org/cvs.cgi/src/gnu/usr.bin/cvs/src/rsh-client.c.diff?r1=1.6;r2=1.7
 
-Timeline:
-30 Sept 2017 - Discovery of the vulnerability.
-1 Oct 2017 - Disclosure of vulnerability to the vendor.
-1 Oct 2017 - Vulnerability fixed in mercurial commit.
-2 Oct 2017 - CVE number requested.
-3 Oct 2017 - CVE-2017-14994 assigned.
-3 Oct 2017 - Advisory sent to oss-security mailing list.
+Developed by Thorsten Glaser for MirBSD and Debian:
+https://www.mirbsd.org/permalinks/wlog-10_e20170811-tg.htm
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=871810
 
-This issue was discovered by Terry Chia (Ayrx) and Jeremy Heng (@nn_amon).
+Debian Security Advisory:
+https://www.debian.org/security/2017/dsa-3940
 
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+Content of type "application/pgp-signature" skipped
