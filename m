@@ -1,51 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/26/3
-Message-ID: <CAA_Lw39mq10gPSpsFTvCgvug-Ewgjeisj14bDrwvftV-QTeuSg@mail.gmail.com>
-Date: Thu, 26 Jan 2017 18:35:12 +0100
-From: Noryungi <noryungi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/21/4
+Message-ID: <20170821140808.nwvjj5nmdmf45vro@f195.suse.de>
+Date: Mon, 21 Aug 2017 16:08:08 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local privesc on Linux
+Subject: Re: tcmu-runner: multiple vulnerabilities in tcmu-runner daemon allowing local DoS, information leak and a memory leak
 Content-Type: text/plain; charset=utf-8
 
-Does not work on centos 7.1 (unpatched) running stock openssh.
+Hello,
 
-TTY capture works, /tmp/sh is created but user is unprivileged.
+CVEs have been assigned now:
 
-On Jan 26, 2017 5:52 PM, <up201407890@...nos.dcc.fc.up.pt> wrote:
+> ------------------------------------------------------------------------
+> glfs handler allows local DoS via crafted CheckConfig strings
+> ------------------------------------------------------------------------
+[...]
+>   https://github.com/open-iscsi/tcmu-runner/commit/61bd03e600d2abf309173e9186f4d465bb1b7157
 
-> Hi list,
->
-> I know I'm late to the party, but I was bored, so I decided to write an
-> exploit for CVE-2015-6565 which affects OpenSSH 6.8-6.9
-> It is mostly considered to be a "DoS", even though Jann Horn publicly told
-> how it could be exploited for local privilege escalation, but I guess its
-> either PoC||GTFO for users to update.
->
-> From https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6565
->
-> "sshd in OpenSSH 6.8 and 6.9 uses world-writable permissions for TTY
-> devices, which allows local users to cause a denial of service (terminal
-> disruption) or possibly have unspecified other impact by writing to a
-> device, as demonstrated by writing an escape sequence."
->
-> I think the description should be updated.
->
-> $ gcc not_an_sshnuke.c -o not_an_sshnuke
-> $ ./not_an_sshnuke /dev/pts/3
-> [*] Waiting for slave device /dev/pts/3
-> [+] Got PTY slave /dev/pts/3
-> [+] Making PTY slave the controlling terminal
-> [+] SUID shell at /tmp/sh
-> $ /tmp/sh --norc --noprofile -p
-> # id
-> euid=0(root) groups=0(root)
->
-> Thanks,
-> Federico Bento.
->
->
->
-> ----------------------------------------------------------------
-> This message was sent using IMP, the Internet Messaging Program.
->
+CVE-2017-1000198
 
+> ------------------------------------------------------------------------
+> UnregisterHandler dbus method in tcmu-runner daemon for non-existing
+> handler causes DoS
+> ------------------------------------------------------------------------
+[...]
+> - upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/e2d953050766ac538615a811c64b34358614edce
+
+CVE-2017-1000201
+
+> ------------------------------------------------------------------------
+> UnregisterHandler D-Bus method in tcmu-runner daemon for internal
+> handler causes DoS
+> ------------------------------------------------------------------------
+[...]
+> - upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/bb80e9c7a798f035768260ebdadffb6eb0786178
+
+CVE-2017-1000200
+
+> ------------------------------------------------------------------------
+> Memory leaks can be triggered in tcmu-runner daemon by calling D-Bus
+> method for (Un)RegisterHandler
+> ------------------------------------------------------------------------
+[...]
+> - upstream fix: https://github.com/open-iscsi/tcmu-runner/commit/7a78eda52d973d3edc06fea84ad874678d6055f0
+
+CVE for this one is still pending
+
+> ------------------------------------------------------------------------
+> qcow handler opens up an information leak via the CheckConfig D-Bus
+> method
+> ------------------------------------------------------------------------
+[...]
+>   https://github.com/open-iscsi/tcmu-runner/commit/8cf8208775022301adaa59c240bb7f93742d1329
+
+CVE-2017-1000190
+
+also see my summary in comment at
+
+https://github.com/open-iscsi/tcmu-runner/pull/200#issuecomment-323750247
+
+Best regards
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
+
+SUSE Linux GmbH 
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
+On Mon, Jul 24, 2017 at 12:12:04PM +0200, Matthias Gerstner wrote:
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
