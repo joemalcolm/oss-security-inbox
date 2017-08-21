@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1225" "Friday" "29" "January" "2021" "17:42:08" "+0100" "Solar Designer" "solar@openwall.com" "<20210129164208.GA8779@openwall.com>" "29" "Re: [oss-security] Linux Kernel: local priv escalation via futexes" nil nil nil "1" "2021012916:42:08" "[oss-security] Linux Kernel: local priv escalation via futexes" (number mark "U       solar@openwa Jan 29   29/1225  " thread-indent "\"Re: [oss-security] Linux Kernel: local priv escalation via futexes\"\n") "<20210129100928.GD6548@suse.de>" ("<20210129100928.GD6548@suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] Linux Kernel: local priv escalation via futexes" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4644" "Monday" "21" "August" "2017" "06:54:12" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<873891.467784659-sendEmail@localhost>" "71" "[oss-security] openjpeg: memory allocation failure in opj_aligned_alloc_n (opj_malloc.c)" nil nil nil "8" "2017082106:54:12" "[oss-security] openjpeg: memory allocation failure in opj_aligned_alloc_n (opj_malloc.c)" (number mark "U       ago@gentoo.o Aug 21   71/4644  " thread-indent "\"[oss-security] openjpeg: memory allocation failure in opj_aligned_alloc_n (opj_malloc.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12216 invoked by uid 550); 29 Jan 2021 16:42:40 -0000
+Received: (qmail 8053 invoked by uid 550); 21 Aug 2017 06:54:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +12,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12131 invoked from network); 29 Jan 2021 16:42:26 -0000
-Date: Fri, 29 Jan 2021 17:42:08 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20210129164208.GA8779@openwall.com>
-References: <20210129100928.GD6548@suse.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210129100928.GD6548@suse.de>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux Kernel: local priv escalation via futexes
+Received: (qmail 8010 invoked from network); 21 Aug 2017 06:54:29 -0000
+Message-ID: <873891.467784659-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Mon, 21 Aug 2017 06:54:12 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-435904.817962186"
+Subject: [oss-security] openjpeg: memory allocation failure in opj_aligned_alloc_n (opj_malloc.c)
 
-Hi,
+------MIME delimiter for sendEmail-435904.817962186
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-I'm not familiar with futexes, but just to save others a few minutes on
-looking this up:
+Description:
+openjpeg is an open-source JPEG 2000 library.
 
-On Fri, Jan 29, 2021 at 11:09:28AM +0100, Marcus Meissner wrote:
->        - Address a longstanding issue where the user space part of the PI
->          futex is not writeable. The kernel returns with inconsistent state
->          which can in the worst case result in a UAF of a tasks kernel
->          stack.
-> 
->          The solution is to establish consistent kernel state which makes
->          future operations on the futex fail because user space and kernel
->          space state are inconsistent. Not a problem as PI futexes
->          fundamentaly require a functional RW mapping and if user space
->          pulls the rug under it, then it can keep the pieces it asked for.
+The complete ASan output of the issue:
 
->     * tag 'locking-urgent-2021-01-28' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip:
->       futex: Handle faults correctly for PI futexes
+# opj_compress -n 1 -i $FILE -o null.j2c
+==78690==ERROR: AddressSanitizer failed to allocate 0x5ea7983000 (406538694656) bytes of LargeMmapAllocator (error code: 12)
+==78690==Process memory map follows:
+	[..cut here..]
+==78690==End of process memory map.
+==78690==AddressSanitizer CHECK failed: /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" 
+(0x0, 0x0)
+    #0 0x4db60f in AsanCheckFailed /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_rtl.cc:69
+    #1 0x4f6375 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_termination.cc:79
+    #2 0x4e59a2 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120
+    #3 0x4ef2a5 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_posix.cc:132
+    #4 0x426caa in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
+    #5 0x426caa in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalcache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
+    #6 0x426caa in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:407
+    #7 0x42138d in __asan::asan_posix_memalign(void**, unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:815
+    #8 0x4d206d in __interceptor_posix_memalign /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:144
+    #9 0x7f2627d95aa4 in opj_aligned_alloc_n /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/opj_malloc.c:61:9
+    #10 0x7f2627d95aa4 in opj_aligned_malloc /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/opj_malloc.c:209
+    #11 0x7f2627c79d09 in opj_image_create /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/image.c:77:39
+    #12 0x53437b in bmptoimage /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/convertbmp.c:768:13
+    #13 0x50b635 in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1844:21
+    #14 0x7f2626681680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #15 0x41bc78 in _start (/usr/bin/opj_compress+0x41bc78)
 
-FWIW, this commit has:
+Affected version:
+2.2.0
 
-Fixes: 1b7558e457ed ("futexes: fix fault handling in futex_lock_pi")
+Fixed version:
+N/A
 
-and that other commit is from 2008.  So probably all currently
-maintained Linux distros and deployments are affected, unless something
-else mitigated the issue in some kernel versions.
+Commit fix:
+https://github.com/uclouvain/openjpeg/commit/baf0c1ad4572daa89caa3b12985bdd93530f0dd7
 
-Alexander
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-12982
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00315-openjpeg-memallocfailure-opj_aligned_alloc_n
+
+Timeline:
+2017-08-14: bug discovered and reported to upstream
+2017-08-14: blog post about the issue
+2017-08-21: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/14/openjpeg-memory-allocation-failure-in-opj_aligned_alloc_n-opj_malloc-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-435904.817962186--
+
