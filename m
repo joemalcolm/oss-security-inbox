@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/23
-Message-ID: <4644054.hoH7EUZc3H@blackgate>
-Date: Mon, 13 Mar 2017 11:35:12 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/21/6
+Message-ID: <20170821160856.y3ewehenfowokfot@f195.suse.de>
+Date: Mon, 21 Aug 2017 18:08:56 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: jasper: heap-based buffer overflow in jpc_dec_tiledecode (jpc_dec.c)
+Subject: Re: tcmu-runner: multiple vulnerabilities in tcmu-runner daemon allowing local DoS, information leak and a memory leak
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 23 October 2016 10:01:07 Agostino Sarubbo 
-wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2016/10/23/jasper-heap-based-buffer-overflow-in
-> -jpc_dec_tiledecode-jpc_dec-c/
+> > ------------------------------------------------------------------------
+> > qcow handler opens up an information leak via the CheckConfig D-Bus
+> > method
+> > ------------------------------------------------------------------------
+> [...]
+> >   https://github.com/open-iscsi/tcmu-runner/commit/8cf8208775022301adaa59c240bb7f93742d1329
+> 
+> CVE-2017-1000190
 
-This is CVE-2016-10249
+Sorry, made a mistake here. This is CVE-2017-1000199.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
