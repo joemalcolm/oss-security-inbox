@@ -1,61 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/9
-Message-ID: <750bd9c8-a236-4149-ddfb-b8cc026b2935@gentoo.org>
-Date: Mon, 13 Nov 2017 20:38:59 +0100
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: (linux-)distros list use statistics
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/21/3
+Message-ID: <2694019.X3JYPNZand@wanheda>
+Date: Mon, 21 Aug 2017 15:37:42 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: libmirage: NULL pointer dereference in mirage_stream_get_filename (stream.c)
 Content-Type: text/plain; charset=utf-8
 
-On 11/13/2017 08:33 PM, Solar Designer wrote:
-> On Mon, Nov 13, 2017 at 08:13:05PM +0100, Kristian Fiskerstrand wrote:
->> As far as I'm aware I haven't gotten access to edit the wiki page for
->> publishing it.
-> 
-> Please feel free to create a page like:
-> 
-> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
-> 
-> You don't need any special access for that.
+There is a NULL pointer dereference in libmirage when handling .dmg/.isz file.
+The bug was found via mirage2iso (https://github.com/mgorny/mirage2iso) which 
+uses limirage to convert various CD/DVD image formats into .iso
+The bug was initially spotted by Michał Górny so the credit goes to him.
 
-Ah, will look into that soon then.
+I hitted the bug too and I'm pointing out the security implication. The 
+complete asan output of the issue:
 
-> 
->> The wikified stats based on the generated DocuWiki output is available
->> in very basic style at the testing instance:
->>
->> https://wiki.sumptuouscapital.com/doku.php?id=distros_stats
-> 
-> Thank you, Kristian!
-> 
-> This lists two very long embargo periods for two Linux kernel issues: 96
-> days for CVE-2017-7533 and 28 days for CVE-2017-1000255.  While this is
-> useful info, it does not reflect (linux-)distros' lists performance as
-> it includes embargo periods from prior to disclosure to those lists.
-> Also, we can't reliably know of such prior embargo periods, so our data
-> would be inconsistent, which is especially bad for calculating averages.
+# mirage2iso $FILE out.iso
+==22879==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x7f9c67f5dde9 bp 0x7f9c5e533e26 sp 0x7ffeb47ffe20 T0)
+==22879==The signal is caused by a READ memory access.
+==22879==Hint: address points to the zero page.
+    #0 0x7f9c67f5dde8 in mirage_stream_get_filename /var/tmp/portage/dev-
+libs/libmirage-3.0.4/work/libmirage-3.0.4/mirage/stream.c:61
+    #1 0x7f9c5e5306c8 in mirage_filter_stream_dmg_open_streams 
+/var/tmp/portage/dev-libs/libmirage-3.0.4/work/libmirage-3.0.4/filters/filter-
+dmg/filter-stream.c:603
+    #2 0x7f9c5e5306c8 in mirage_filter_stream_dmg_open /var/tmp/portage/dev-
+libs/libmirage-3.0.4/work/libmirage-3.0.4/filters/filter-dmg/filter-
+stream.c:719
+    #3 0x7f9c67f5726c in mirage_filter_stream_open /var/tmp/portage/dev-
+libs/libmirage-3.0.4/work/libmirage-3.0.4/mirage/filter-stream.c:209
+    #4 0x7f9c67f53aa5 in mirage_context_create_input_stream 
+/var/tmp/portage/dev-
+libs/libmirage-3.0.4/work/libmirage-3.0.4/mirage/context.c:471
+    #5 0x7f9c67f53bea in mirage_context_load_image /var/tmp/portage/dev-
+libs/libmirage-3.0.4/work/libmirage-3.0.4/mirage/context.c:359
+    #6 0x50d6ca in miragewrap_open /var/tmp/portage/app-
+cdr/mirage2iso-0.4.2/work/mirage2iso-0.4.2/src/mirage-wrapper.c:87:9
+    #7 0x50a3cb in main /var/tmp/portage/app-
+cdr/mirage2iso-0.4.2/work/mirage2iso-0.4.2/src/mirage2iso.c:281:7
+    #8 0x7f9c66e38680 in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #9 0x41ab98 in _start (/usr/bin/mirage2iso+0x41ab98)
 
-It is calculated from first report on distros list, that said, for
-CVE-2017-1000255 there was some missing data for first publication (it
-is public through
-https://access.redhat.com/security/cve/CVE-2017-1000255 and
-http://www.securityfocus.com/bid/101264 since 9th), so the publication
-time is 5.97 days (although not for oss-security posting).
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/dev-
+libs/libmirage-3.0.4/work/libmirage-3.0.4/mirage/stream.c:61 in 
+mirage_stream_get_filename
+==22879==ABORTING
 
-> 
-> I think for our statistics collection, we should primarily use embargo
-> periods since disclosure to (linux-)distros' lists, and secondarily
-> since the possibly earlier embargo start dates when known (like you did
-> now).  Can you add such data?
-> 
+Testcase:
+https://github.com/mgorny/mirage2iso/blob/master/tests/21_hdiutil_ulfo.dmg
 
-That should be the data already used.
+Upstream bug report:
+https://sourceforge.net/p/cdemu/bugs/105/
+
+Upstream commit:
+https://sourceforge.net/p/cdemu/code/ci/d874b3b1bc86b94b1f323d7df9e665279fb966cb/
+
+A CVE request was not requested.
 
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Agostino Sarubbo
+Gentoo Linux Developer
