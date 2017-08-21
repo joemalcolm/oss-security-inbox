@@ -1,89 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/01/2
-Message-ID: <20170701140735.GA10593@openwall.com>
-Date: Sat, 1 Jul 2017 16:07:35 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/21/1
+Message-ID: <873891.467784659-sendEmail@localhost>
+Date: Mon, 21 Aug 2017 06:54:12 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: openjpeg: memory allocation failure in opj_aligned_alloc_n (opj_malloc.c)
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 01, 2017 at 01:57:55PM +0200, Mark Hatle wrote:
-> We (Wind River) can take a more active role in at least some of the
-> administrative tasks..
+Description:
+openjpeg is an open-source JPEG 2000 library.
 
-Thank you!
+The complete ASan output of the issue:
 
-> However, I can assure you we don't have the time or
-> ability to do it ourselves.
+# opj_compress -n 1 -i $FILE -o null.j2c
+==78690==ERROR: AddressSanitizer failed to allocate 0x5ea7983000 (406538694656) bytes of LargeMmapAllocator (error code: 12)
+==78690==Process memory map follows:
+	[..cut here..]
+==78690==End of process memory map.
+==78690==AddressSanitizer CHECK failed: /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" 
+(0x0, 0x0)
+    #0 0x4db60f in AsanCheckFailed /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_rtl.cc:69
+    #1 0x4f6375 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_termination.cc:79
+    #2 0x4e59a2 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120
+    #3 0x4ef2a5 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_posix.cc:132
+    #4 0x426caa in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
+    #5 0x426caa in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalcache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
+    #6 0x426caa in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:407
+    #7 0x42138d in __asan::asan_posix_memalign(void**, unsigned long, unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:815
+    #8 0x4d206d in __interceptor_posix_memalign /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:144
+    #9 0x7f2627d95aa4 in opj_aligned_alloc_n /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/opj_malloc.c:61:9
+    #10 0x7f2627d95aa4 in opj_aligned_malloc /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/opj_malloc.c:209
+    #11 0x7f2627c79d09 in opj_image_create /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/image.c:77:39
+    #12 0x53437b in bmptoimage /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/convertbmp.c:768:13
+    #13 0x50b635 in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1844:21
+    #14 0x7f2626681680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #15 0x41bc78 in _start (/usr/bin/opj_compress+0x41bc78)
 
-No "time or ability" to take care of any one (or preferably more) of the
-administrative micro-roles I listed?  This makes no sense to me.  All of
-the administrative tasks combined are far less than one full-time job.
-With good discipline and focus, they can probably be taken care of with
-1 hour of effort per day on average (of course, there will be occasional
-busy days, but also many days with no work of this type).  All of them
-at once.  I think I know this because of me being the fallback person
-for this type of work so far.  OTOH, I do recognize that I listed a few
-additional tasks now - such as producing statistics - and the extent of
-work on tasks involving monitoring external resources can vary greatly.
-So maybe it's more than 1 hour/day on average with those extra tasks and
-desired greater extent now.  But not much more.
+Affected version:
+2.2.0
 
-What I do understand is needing to temporarily transfer responsibility
-to another distro if your own team subscribed to the list is small and
-many of these people may simultaneously go on vacation.
+Fixed version:
+N/A
 
-A reason why I listed so many administrative micro-tasks/roles is that
-I'd like to allow for an even (or close to it) distribution of the
-effort across the distros, where every one of them bears a tiny portion
-of this small total effort of running the list.  This would also serve
-to ensure and demonstrate to the rest of us that every distro is still
-an active member, without us needing responsiveness tests.
+Commit fix:
+https://github.com/uclouvain/openjpeg/commit/baf0c1ad4572daa89caa3b12985bdd93530f0dd7
 
-The technical expertise tasks could be worked on to varying extent,
-including becoming a full-time job for someone or even for several
-people.  There's no decision on the exact extent yet, but it should be
-sufficient to almost always avoid things like the recent incomplete fix
-in Sudo.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-> So the more then one 'actor' on an action would definitely be what I suggest.
+CVE:
+CVE-2017-12982
 
-That's within consideration, but we got to start by listing at least one
-distro per task.  When we eventually have more than one listed for some
-task, we or they will need to coordinate their activities, and that
-could create extra work.  Perhaps a "primary and backup" arrangement for
-two distros sharing a task will work best: will not result in "no one's
-responsibility" and will have low coordination overhead.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00315-openjpeg-memallocfailure-opj_aligned_alloc_n
 
-The first administrative task of getting back to message senders is so
-trivial that I think it'd make sense to keep it reserved to the distro
-who was last to join, perhaps switching responsibility to them from the
-previous distro once the new member has confirmed they're successfully
-receiving messages through the list.  The new distro will be "primary"
-and the previous will be "backup" for that role.  Always that way,
-unless the newly joining distro opts for something less trivial right
-away.  (I know some people would be offended by being asked to
-participate in this trivial activity.  I think they'd be wrong, but we
-can accommodate their egos, no problem.)  This will quickly test each
-new distro's responsiveness and get them involved, and hopefully
-encourage them to pick up several of the less trivial tasks as well
-(they will need to, or otherwise they'd be left without a task once
-another distro joins, which would be inappropriate).
+Timeline:
+2017-08-14: bug discovered and reported to upstream
+2017-08-14: blog post about the issue
+2017-08-21: CVE assigned
 
-> Unfortunately I really don't have a good sense (based on the link to the tasks)
-> as to what would be appropriate to volunteer for.  I'm open to suggestions.
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
-It's really anything you feel like doing.  Perhaps see in which areas
-you have been helping already, and suggest that you focus on those.
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/14/openjpeg-memory-allocation-failure-in-opj_aligned_alloc_n-opj_malloc-c/
 
-If you really want me to narrow down the list for you, let me know.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-This may also start happening on its own, due to other distros picking
-up tasks.  Once a task is taken by one or two distros, I will want
-further distros to volunteer for other tasks.  So if you want to have
-more freedom of choice, hurry up.
 
-OTOH, with distros not volunteering for specific tasks (like we've seen
-so far), I might just assign tasks to distros myself.
-
-Alexander
