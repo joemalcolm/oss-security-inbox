@@ -1,34 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/8
-Message-ID: <alpine.LFD.2.20.1701242332030.18573@wniryva>
-Date: Tue, 24 Jan 2017 23:37:45 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: serial: host memory leakage in 16550A UART emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/23/5
+Message-Id: <7363538D-EADE-4A90-8C22-9ECE268983DA@beckweb.net>
+Date: Thu, 24 Aug 2017 01:49:17 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Jenkins plugins -- multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-Quick Emulator(Qemu) built with the 16550A UART serial device emulation 
-support is vulnerable to a memory leakage issue. It could occur while doing a 
-device unplug operation; Doing so repeatedly would result in leaking host 
-memory, affecting other services on the host.
+> On 11. Jul 2017, at 13:52, Daniel Beck <ml@...kweb.net> wrote:
+> 
+> JENKINS-21436
+> The SSH Plugin stores credentials which allow jobs to access remote servers 
+> via the SSH protocol. User passwords and passphrases for encrypted SSH keys 
+> are stored in plaintext in a configuration file. SSH Plugin now integrates 
+> with the Credentials Plugin and existing credentials are migrated.
 
-A privileged user inside guest could use this flaw to cause a DoS and/or 
-potentially crash the Qemu process on the host.
-
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01945.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1416157
-
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This has been assigned CVE-2017-1000245
