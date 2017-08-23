@@ -1,53 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/06/7
-Message-ID: <87ingva5rf.fsf@fifthhorseman.net>
-Date: Wed, 06 Sep 2017 17:15:00 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Michael Orlitzky <michael@...itzky.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/23/1
+Message-ID: <1205294999.1101309.1503488822700.JavaMail.zimbra@redhat.com>
+Date: Wed, 23 Aug 2017 07:47:02 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-7558: Linux kernel: sctp: out-of-bounds read in inet_diag_msg_sctp{,l}addr_fill() and sctp_get_sctp_info()
 Content-Type: text/plain; charset=utf-8
 
-On Fri 2017-08-18 13:12:03 -0400, Michael Orlitzky wrote:
-> I'm scared to reply because this is guaranteed to turn into a "you
-> should just use systemd, grandpa" holy war.
+Heololo,
 
-I'm pleasantly surprised to see that that didn't happen :) And thanks
-for your thoughtful response.
+A kernel data leak due to an out-of-bound read was found in Linux kernel in
+inet_diag_msg_sctp{,l}addr_fill() and sctp_get_sctp_info() functions present
+since v4.7-rc1 upto v4.13-rc6 including. A data leak happens when these functions
+fill in sockaddr data structures used to export socket's diagnostic information.
+As a result up to 100 bytes of the slab data could be leaked to a userspace.
 
-fwiw, i wasn't thinking specifically of systemd -- there are several
-process managers that do more sensible things, including those in the
-daemontools lineage (e.g. runit) and others.  Even sysvinit's /sbin/init
-itself can monitor single-process daemons without any trouble or need
-for a pidfile.
+Details: it is leaking exactly 100 bytes of a kernel slab whenever we answer to
+a netlink request of type INET_DIAG_LOCALS or INET_DIAG_PEERS for a SCTP socket
+(e.g. sent by the 'ss' tool included in the 'iproute2' package with 'ss -Si' or
+'ss -Sm').
 
-> If we had it all to do over again, I would probably agree with you. But
-> there are still users with simple init systems, and many of those users
-> are happy (or stuck) that way. If you want to convince upstreams to
-> delete their PID file code and drop support for the associated init
-> systems, you'll have to offer them something to make up for the users
-> they'll lose.
->
-> For some projects, "the code gets simpler and to hell with those users"
-> will suffice. But for big projects where actual money is involved,
-> you'll have a harder time.
+A researcher of this flaw and a patch author is Stefano Brivio of the Red Hat.
 
-Yup, these are the tradeoffs.
+References:
 
-But i think future reports of problems with pidfiles (e.g. your helpful
-cleanup of mimedefang -- thanks!)  should always include the suggestion
-to disable pidfiles entirely and to encourage developers who must
-implement them to ensure that they're only an extra feature, for use
-with otherwise limited service managers, and perhaps to be compile-time
-disabled.
+https://bugzilla.redhat.com/show_bug.cgi?id=1480266
 
-Having a pidfile by default ought to be treated as an increase in the
-attack surface in general, since they're so easy to get wrong.
+https://marc.info/?t=150348787500002&r=1&w=2
 
-Thanks for your work in tracking these down and cleaning them up,
-Michael.
+Suggested patch:
 
-Regards,
+https://marc.info/?l=linux-netdev&m=150348777122761&w=2
 
-          --dkg
-
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
