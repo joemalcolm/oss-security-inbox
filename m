@@ -1,44 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/6
-Message-ID: <20171207151506.GB13067@yuggoth.org>
-Date: Thu, 7 Dec 2017 15:15:06 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/23/2
+Message-ID: <275699042.1103140.1503489204622.JavaMail.zimbra@redhat.com>
+Date: Wed, 23 Aug 2017 07:53:24 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+Cc: winsonliu(刘科) <winsonliu@...cent.com>,  cve-assign <cve-assign@...re.org>
+Subject: Re: CVE Request: Multiple security issues in OpenJPEG
 Content-Type: text/plain; charset=utf-8
 
-On 2017-12-07 06:32:11 +0000 (+0000), halfdog wrote:
-[...]
-> For all steps regarding system startup, I switched to LUKS only,
-> using detached headers for special features. For release signing,
-> mail sign/encrypt, a good light-weight solution is still needed.
-[...]
+> Most of these seem to be fixed now in OpenJPEG's recent 2.2.0 release.
+> Did CVE id's ever get assigned for them?
 
-I continue to use gpg2 in a release signing context, but strip
-symmetrical encryption from the private signing subkey with a custom
-keyring due to it being used by a headless/automated CI system which
-runs on virtual machines that get deleted as soon as the signature
-is generated thus leaving keys in memory isn't a concern there (and
-the master private key _is_ encrypted but only ever used to create
-signing subkeys and never goes anywhere near the CI system).
+If no one reported them and requested CVE-ids via https://cveform.mitre.org/
+then I suppose not, no CVE-ids were assigned.
 
-Sounds like my use case is likely not your use case, so perhaps you
-should look at the signify utility OpenBSD developed for this
-purpose instead? It's included in Debian since Stretch under the
-package name "signify-openbsd" and seems to work well; I've used it
-semi-regularly as I tend to do a lot of cross-platform things in a
-mixed Debian/OpenBSD environment.
-
-For E-mail I'll confess I still use mutt's (well, neomutt's at
-least) GnuPG integration, which has been working okay for me with
-gpg2 on Debian. I haven't seen a lot of good OpenPGP implementations
-besides GnuPG with at least equal levels of PGP/MIME integration
-there. The obvious alternative is switching to S/MIME but you've
-likely already considered that and the never-ending TTP vs WoT
-debate, not to mention Debian as a community is fairly invested in
-OpenPGP keys as a means of identifying and authenticating its
-developers/maintainers.
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
