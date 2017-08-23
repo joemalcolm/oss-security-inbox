@@ -1,4 +1,9 @@
-Received: (qmail 5126 invoked by uid 550); 20 Oct 2023 13:28:17 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["313" "Wednesday" "23" "August" "2017" "07:53:24" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<275699042.1103140.1503489204622.JavaMail.zimbra@redhat.com>" "8" "Re: [oss-security] CVE Request: Multiple security issues in OpenJPEG" "^Cc:" nil nil "8" "2017082311:53:24" "[oss-security] CVE Request: Multiple security issues in OpenJPEG" (number mark "        vdronov@redh Aug 23    8/313   " thread-indent "\"Re: [oss-security] CVE Request: Multiple security issues in OpenJPEG\"\n") "<90a93b0c-f36a-7a69-03cb-2203b9167d68@oracle.com>" ("<1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7@EXMBX-TJ002.tencent.com>" "<90a93b0c-f36a-7a69-03cb-2203b9167d68@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 16063 invoked by uid 550); 23 Aug 2017 11:53:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,55 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16045 invoked from network); 23 Aug 2017 11:53:36 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 1C76E356DC
+Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
+Message-ID: <275699042.1103140.1503489204622.JavaMail.zimbra@redhat.com>
+In-Reply-To: <90a93b0c-f36a-7a69-03cb-2203b9167d68@oracle.com>
+References: <1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7@EXMBX-TJ002.tencent.com> <90a93b0c-f36a-7a69-03cb-2203b9167d68@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.4.130, 10.4.195.26]
+Thread-Topic: CVE Request: Multiple security issues in OpenJPEG
+Thread-Index: dxK3rt1fYRkUXHzu43ZQNupwcpk09g==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Wed, 23 Aug 2017 11:53:25 +0000 (UTC)
+Cc: =?utf-8?B?d2luc29ubGl1KOWImOenkSk=?= <winsonliu@tencent.com>, 
+	cve-assign <cve-assign@mitre.org>
+Date: Wed, 23 Aug 2017 07:53:24 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3347 invoked from network); 20 Oct 2023 13:27:44 -0000
-Date: Fri, 20 Oct 2023 15:27:41 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] CVE Request: Multiple security issues in
+ OpenJPEG
 To: oss-security@lists.openwall.com
-Message-ID: <20231020132741.GA4951@openwall.com>
-References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed> <3a2a90f88bf54fd7687234a8f5a92c43.49e9d693@crystals.bloom>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3a2a90f88bf54fd7687234a8f5a92c43.49e9d693@crystals.bloom>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] with firefox on X11, any page can pastejack you anytime
 
-On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
-> In firefox running on X11, any script from any page can freely write to the
-> primary selection, and that can be easily exploited to run arbitrary code
-> on the user's machine.
+> Most of these seem to be fixed now in OpenJPEG's recent 2.2.0 release.
+> Did CVE id's ever get assigned for them?
 
-What about other web browsers running on X11, most notably Chrome and
-Chromium?  If the issue is unique to Firefox or at least not universal
-across browsers, that's an extra reason for Firefox to make a change.
+If no one reported them and requested CVE-ids via https://cveform.mitre.org/
+then I suppose not, no CVE-ids were assigned.
 
-On Fri, Oct 20, 2023 at 02:10:06AM +0300, Turistu wrote:
-> OK this was probably too technical and terse for people not familiar
-> with X11 programming and terminology, so thing goes like this:
-> 
-> 1. If you're a user who has first learned to use a GUI on e.g. Windows,
-> and who is used to copy & paste with Ctrl-C Ctrl-V (or with left-click,
-> choose Copy from the menu, and then again left-click, choose Paste),
-> then congratulations! this DOES NOT AFFECT YOU.
-> 
-> (Unless you're using some clipboard tools which merges the primary and
-> clipboard selection, but I guess you don't ;-))
-> 
-> 2. But if you're a *native* X11 user who is used to just select the text and
-> then paste it with a middle-click or shift-Insert, then this means you're
-> pretty much done, and you should immediately either stop using firefox or
-> try the workaround and patch described in my report. This also includes
-> Wayland users.
-
-Or isolate Firefox to its own X server (or at least a separate one from
-where you run terminal emulators managing important stuff), like it
-happens when you run it in its own VM (or perhaps many instances of it
-in many VMs) on Qubes OS.  Indeed this also removes the convenience of
-being able to paste stuff from Firefox with middle-click to outside of
-its VM - you have to be explicit by using Qubes' Ctrl-Shift-C and
-Ctrl-Shift-V - but that's currently the price for having control.  The
-remaining security issue is that some JavaScript running in Firefox can
-still race you when you do explicitly copy/paste stuff from Firefox.
-
-Alexander
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
