@@ -1,55 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/27
-Message-ID: <CACn5sdQ4SaFqZDxhE5_s6x2L68Gf66Hq0MWjfN4=0T9zb3rSxw@mail.gmail.com>
-Date: Thu, 9 Feb 2017 14:24:58 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com, Agustin Mista <mista.agustin@...il.com>
-Subject: Multiple DoS parsing and executing extended regex expressions in GNU libc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/23/4
+Message-Id: <E1dkXQ4-0005BZ-U9@xenbits.xenproject.org>
+Date: Wed, 23 Aug 2017 15:18:12 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 235 - add-to-physmap error paths fail to release lock on ARM
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We found a few extended regex expressions in GNU libc that will crash or
-abort the execution of regcomp or regexec. For instance:
+                    Xen Security Advisory XSA-235
 
-\a?{1,32767}
+        add-to-physmap error paths fail to release lock on ARM
 
-will immediately exhaust the stack calling calc_eclosure_iter in the
-compilation. A small variation of this regex is:
+ISSUE DESCRIPTION
+=================
 
-\a?{0,32767}
+When dealing with the grant map space of add-to-physmap operations,
+ARM specific code recognizes a number of error conditions, but fails
+to release a lock being held on the respective exit paths.
 
-will consume a very large amount of memory: it seems to eat 16GB in less
-than a minute. It is also possible to exhaust the stack memory trying to
-parse:
+IMPACT
+======
 
-(((((((( ... repeated 15000 times
+A malicious guest administrator can cause a denial of service.
+Specifically, prevent use of a physical CPU for an indefinite period
+of time.
 
-this issue is caused because regcomp will call the parse_expression,
-parse_branch and parse_reg_exp functions over and over again.
-Finally, the following regex will trigger an abort or invalid free when
-regexec is called:
+VULNERABLE SYSTEMS
+==================
 
-/S^^|\0|()//S^^|\0|()//S^^|\1|()/
+Xen versions 4.4 and later are vulnerable.  Xen versions 4.3 and
+earlier are not vulnerable.
 
-I don't think these issues can be used to execute arbitrary code, but it
-seems quite easy to produce a DoS if a remote application is parsing
-untrusted regex expressions.
-In fact, we asked one of our students, Agustín Mista, to create a simple PoC
-to show how to crash a proFTP server if you can write a .ftpaccess file.
-You can find the script attached.
+Only ARM systems are affected.  X86 systems are not affected.
 
-These issues were tested in GNU libc 2.19 (Ubuntu 14.04) and 2.24 (ArchLinux).
+MITIGATION
+==========
 
-I think it should affect the last version of GNU libc as well. Can someone
-confirm it?
+On systems where the guest kernel is controlled by the host rather than
+guest administrator, running only kernels which only issue sane
+hypercalls will prevent untrusted guest users from exploiting this
+issue.  However untrusted guest administrators can still trigger it
+unless further steps are taken to prevent them from loading code into
+the kernel (e.g by disabling loadable modules etc) or from using other
+mechanisms which allow them to run code at kernel privilege.
 
-I'm investigating how to submit these issues in the new CVE form...
+CREDITS
+=======
 
+This issue was discovered by Wei Liu of Citrix.
 
-Regards,
-Gustavo.
+RESOLUTION
+==========
 
-Content of type "text/html" skipped
+Applying the appropriate attached patch resolves this issue.
 
-View attachment "PoC.hs" of type "text/x-haskell" (1087 bytes)
+xsa235.patch           xen-unstable
+xsa235-4.9.patch       Xen 4.9.x, Xen 4.8.x
+xsa235-4.7.patch       Xen 4.7.x
+xsa235-4.6.patch       Xen 4.6.x
+xsa235-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa235*
+6ec8bf9462de65fee3896246f52c00941b2d83c759b3f7b28a440eb977fcbc37  xsa235.meta
+c81f534e96fe38b9f77794bb143d104d66ce2d7177bda43f872642616e23df65  xsa235.patch
+3c21cb1a53f5979b069568c6cd6df3aad00c19e0e459e37625d6a3c0f4f360cc  xsa235-4.5.patch
+47cda4f32b65f3543af368c324a2e5b308b698a1c7d8bc84fc274eb2cdb45c0e  xsa235-4.6.patch
+f30848eee71e66687b421b87be1d8e3f454c0eb395422546c62a689153d1e31c  xsa235-4.7.patch
+d8f012734fbf6019c1ff864744e308c41dfb9c7804ca3be2771c2c972cdf4bd5  xsa235-4.9.patch
+$
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The issue was discussed publicly before being recognized as a security
+issue.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZnZxeAAoJEIP+FMlX6CvZTj4IALE9/7IoG1Ak/TZuHE4xRxZx
+Zd2APyf+lCNj3wwdFRGC/969ilQ9OjLlJ408RyY6bVpwfmsjJTZWnAcWuS/fIdhY
+niillD1sdP7Eg65JG8bxL2jCaISH7AJKSePoLuc8G55I7uuJYEnipyvDZuz6W+qy
+k03+Bbz+TwNezA4YoNFsSpRdX48iIevFy9AIhZmggLUqdgmTR1rygjW/bxanBX8z
+2dSch8LMcsVArTmwE3NnxVSJC1/g3Tc07wll7LnB6npecbCmiMqk+rhPUFdHZXl7
+pYZy+Qp7w5rqcd91cOuKQKml4O3lO9ajblfpqKmbH3+hnuDqEnVlHSvVNVGWyag=
+=mGPq
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa235.meta" of type "application/octet-stream" (1585 bytes)
+
+Download attachment "xsa235.patch" of type "application/octet-stream" (1508 bytes)
+
+Download attachment "xsa235-4.5.patch" of type "application/octet-stream" (1526 bytes)
+
+Download attachment "xsa235-4.6.patch" of type "application/octet-stream" (1527 bytes)
+
+Download attachment "xsa235-4.7.patch" of type "application/octet-stream" (1526 bytes)
+
+Download attachment "xsa235-4.9.patch" of type "application/octet-stream" (1542 bytes)
