@@ -1,4 +1,9 @@
-Received: (qmail 17508 invoked by uid 550); 10 Apr 2024 15:38:26 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1311" "Thursday" "24" "August" "2017" "11:03:14" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20170824180314.GA9813@hunt>" "38" "Re: [oss-security] Linux kernel: fixed bug in net/core/flow_dissector.c" "^Date:" nil nil "8" "2017082418:03:14" "[oss-security] Linux kernel: fixed bug in net/core/flow_dissector.c" (number mark "        seth.arnold@ Aug 24   38/1311  " thread-indent "\"Re: [oss-security] Linux kernel: fixed bug in net/core/flow_dissector.c\"\n") "<459c5905-fded-264c-ac85-c5a456aa836e@linux.com>" ("<459c5905-fded-264c-ac85-c5a456aa836e@linux.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 24274 invoked by uid 550); 24 Aug 2017 18:04:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,67 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3978 invoked from network); 10 Apr 2024 15:07:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712761624; x=1713366424; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=kvMdjO5994N9JVffWOlZoOn2asg/cwqM10L+1BlJYEE=;
-        b=gPMszSbW3x2NTNtxJ2kok8m9Ol6R3KTjktgPu1ALsJM15GlsRjOhvTKJLpOI4u1O/V
-         gOgW33E+nWIkORUh8SKJzWI1d6JVgeYt8jdxcsns5IBlNIDG+ftzdLJHdj6PZmYQ6sly
-         zPDjRiQvB1IGn/KSX+E/RrHawZpHpCAfePzJ0OfD35IEgv5nwU0zPt16XJWJC6jl0W64
-         Z6FLlDMU+0c2kbxPlK1e0GsiqBXKem9vL6RS3kVzGCbPNmVVVLB/JlIOeCXqxnqh3WLe
-         j9gi7Xi6brs5tLzZ4urMiWVHci3zRZ+6oB0ADPIymNkI9osJi4MNbgpaHh8vFeCinCr1
-         Y8Qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712761624; x=1713366424;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kvMdjO5994N9JVffWOlZoOn2asg/cwqM10L+1BlJYEE=;
-        b=Z4xaqvb+t2T/NWpRl6tkH3NoYqP1qJQxxDrEjJ7GUKfR5Bj2XDLpJRqRSSX1nek5hs
-         DtKeaRz55Dx1RLBMJKNKV6E56D1iUJoD8obI/DIp5feyPJqJUcV7RnAejeFty8iIejv2
-         1tZahmwvfB2YLA+Bg1heAI+CX7iz094h84ahAHWiJCuZF1qk6ZmYoqFNp8LNqLyimjNf
-         1E+kT03fwjB/wgOcGZys3x64r+4MTT5lHMfO41kCdjjBniHBK6+/0SZiblhNND6RuKaM
-         yDteJ2XYHZSLH5Nx80s8pFxYmTzofRKc/1eF2oZEZvjCkIqpC/DCvD/xTgQVdHR2ph+s
-         DuhQ==
-X-Gm-Message-State: AOJu0YwfYTnRRtPzA3WtL/a2MR2vbjPmLJgVJjRwulyxahyihTmw3uM+
-	hAzujq5vIKtIDvMfM/huQt/MYJyMOu83BSu2RRD4c1hBdinyvZVyDc/bI1Caquk=
-X-Google-Smtp-Source: AGHT+IHL/Wscnq3dnz8WVqJolJ3U8UAr+AdshMTgJ60KkBW7ah+sw6Q5lUIpuiWGxIeQz9CklZ8UFQ==
-X-Received: by 2002:ac2:5dce:0:b0:516:cf23:588 with SMTP id x14-20020ac25dce000000b00516cf230588mr2019515lfq.27.1712761624253;
-        Wed, 10 Apr 2024 08:07:04 -0700 (PDT)
-Sender: Maxim Nikulin <m.a.nikulin@gmail.com>
-Message-ID: <fb09b3ff-6187-46b3-b544-182e7dd76412@gmail.com>
-Date: Wed, 10 Apr 2024 22:07:02 +0700
+Received: (qmail 24031 invoked from network); 24 Aug 2017 18:03:28 -0000
+Message-ID: <20170824180314.GA9813@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <459c5905-fded-264c-ac85-c5a456aa836e@linux.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="8t9RHnE3ZwKMSgU+"
+Content-Disposition: inline
+In-Reply-To: <459c5905-fded-264c-ac85-c5a456aa836e@linux.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Thu, 24 Aug 2017 11:03:14 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel: fixed bug in
+ net/core/flow_dissector.c
 To: oss-security@lists.openwall.com
-Cc: Sean Whitton <spwhitton@spwhitton.name>, emacs@packages.debian.org,
- emacs-devel@gnu.org, Ihor Radchenko <yantar92@posteo.net>
-References: <874jccjpvy.fsf@melete.silentflame.com> <87y19nu22i.fsf@localhost>
- <87bk6he8h4.fsf_-_@melete.silentflame.com> <87o7ahe85l.fsf@localhost>
- <Zhafa3wcZONJX-_k@eldamar.lan>
-Content-Language: en-US, ru-RU
-From: Max Nikulin <manikulin@gmail.com>
-In-Reply-To: <Zhafa3wcZONJX-_k@eldamar.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Re: Is CVE-2024-30203 bogus? (Emacs)
 
-On 10/04/2024 21:17, Salvatore Bonaccorso wrote:
-> On Wed, Apr 10, 2024 at 12:04:06PM +0000, Ihor Radchenko wrote:
->>
->> Yes, CVE-2024-30203 title is superfluous.
->> And CVE-2024-30204 title is not accurate - it only applies to
->> certain attachments with specific (text/x-org) mime type.
-[...]
-> If you think the CVE assignment is not valid, then you might ask for a
-> REJECT on https://cveform.mitre.org/ .
+--8t9RHnE3ZwKMSgU+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Do 2 CVE numbers make sense to track fixes in Emacs and Org mode? 
-Various versions of Org mode may be loaded to different versions of 
-Emacs and both parties must have fixes to avoid the issue.
+On Thu, Aug 24, 2017 at 05:52:45PM +0300, Alexander Popov wrote:
+> I was asked to investigate a suspicious kernel crash on some Linux
+> server. It is at least a remote DoS (and maybe RCE): Linux is crashed by
+> receiving a single special MPLS packet.
+>=20
+> I bisected and found out that the bug was introduced in
+> commit b3baa0fbd02a1a9d493d8cb92ae4a4491b9e9d13
+> And was later fixed it in
+> commit a6e544b0a88b53114bfa5a57e21b7be7a8dfc9d0
 
+> Is it worth requesting a CVE ID for that issue?
+
+I think it is, it's an easy way to make sure all downstream consumers
+are alerted to the issue.
+
+Thanks
+
+--8t9RHnE3ZwKMSgU+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCgAGBQJZnxTiAAoJEPMhclmdjS6XJwUH/jL+Mfqz86inifMcgjH2NcZl
+XcSJHiEvFHIyyI4Mw/d6g2Lz3D70MYr4KlFoKzBMbp3sWqhmIHRSErW4gbr0vXSC
+T/NXbNnvx7rEcunkY/eJ3/dI5hHwHa/AKF6CZgiOEARdaaiwg7FAaINwdb6qOrJQ
+5yLLLPBsh9ioHofp42BUHBqeaK4wfMZ6jA0Su0vdrUJMiVYEOLDmkXpgqkFeIqtx
+JMscCRp5peGkkm2Lx/LZX3vLl2bQZDTBS+dzmS3aFmgmOXw8kK5HdPBsi8QdPg2v
+9qaFnnpCc3nhEKosswjgx9NNvWlu3GwHteK8DVFmh44tjxl3VLwH/4hunl2XXJU=
+=Df+i
+-----END PGP SIGNATURE-----
+
+--8t9RHnE3ZwKMSgU+--
