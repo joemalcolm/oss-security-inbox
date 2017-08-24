@@ -1,45 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/1
-Message-ID: <20171108091517.GA18656@kroah.com>
-Date: Wed, 8 Nov 2017 10:15:17 +0100
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/24/3
+Message-ID: <459c5905-fded-264c-ac85-c5a456aa836e@linux.com>
+Date: Thu, 24 Aug 2017 17:52:45 +0300
+From: Alexander Popov <alex.popov@...ux.com>
+To: oss-security@...ts.openwall.com, Tom Herbert <tom@...bertland.com>, "David S. Miller" <davem@...emloft.net>
+Subject: Linux kernel: fixed bug in net/core/flow_dissector.c
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 07, 2017 at 08:30:05PM +0000, Maier, Kurt H wrote:
-> On Tue, 2017-11-07 at 21:22 +0100, Greg KH wrote:
-> > 
-> > I hate to ask, but why are you getting CVEs for bugs fixed over a
-> > year
-> > ago, and are already in all stable kernel releases a year ago?  Why
-> > does
-> > it matter?
-> > 
-> > Unless you happen to have a product that doesn't ever do kernel
-> > updates
-> > from the stable trees, and well, then you know what you are doing and
-> > don't need CVEs assigned either, right?  :)
-> > 
-> 
-> Kernel maintainers' policy is clear, and nobody is asking for that to
-> change, but please don't sandbag the process of keeping track of
-> vulnerabilities.  The fraction of "products" (regardless of vendor)
-> that run linux and never get updates approaches unity.  Being able to
-> precisely catalog which linux releases suffer from which
-> vulnerabilities is useful to many.
+Hello,
 
-Well, I'm working on fixing the "devices do not get updates" issue
-through other means, so don't just give up on that one just yet :)
+I was asked to investigate a suspicious kernel crash on some Linux
+server. It is at least a remote DoS (and maybe RCE): Linux is crashed by
+receiving a single special MPLS packet.
 
-As for the "keep track of vulnerabilities", is that what is really
-happening here?  Why pick a random bug fix from over a year ago for a
-CVE vs. the 100 other bugfixes in the past few weeks/months?
+I bisected and found out that the bug was introduced in
+commit b3baa0fbd02a1a9d493d8cb92ae4a4491b9e9d13
+Author: Tom Herbert <tom@...bertland.com>
+Date:   Thu Jun 4 09:16:46 2015 -0700
 
-I'm really curious as to what triggered this specific CVE request that
-somehow misses the hundreds/thousands of other fixes that land in newer
-kernel releases?
+And was later fixed it in
+commit a6e544b0a88b53114bfa5a57e21b7be7a8dfc9d0
+Author: Tom Herbert <tom@...bertland.com>
+Date:   Tue Sep 1 09:24:26 2015 -0700
 
-thanks,
+So currently the mainline kernel is not affected.
 
-greg k-h
+However, this fix is obfuscated and looks like unimportant code
+cleanup from the first glance. IMO that is not good. Moreover,
+the fix is a part of a branch which breaks the kernel build, so
+bisecting was not easy.
+
+Actually the vulnerability is the usage of uninitialized variables. It
+is caused by returning true without setting values for n_proto, ip_proto
+and thoff in __skb_flow_dissect().
+
+Is it worth requesting a CVE ID for that issue?
+
+Best regards,
+Alexander
