@@ -1,53 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/5
-Message-ID: <87k266yq9p.fsf@curie.anarc.at>
-Date: Thu, 27 Apr 2017 08:43:46 -0400
-From: Antoine Beaupré <anarcat@...ngeseeds.org>
-To: Emilio Pozuelo Monfort <pochu27@...il.com>, oss-security@...ts.openwall.com
-Subject: Re: kedpm: Information leak via the command history file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/24/2
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F712D4B511@EXMBX-TJ002.tencent.com>
+Date: Thu, 24 Aug 2017 01:26:14 +0000
+From: winsonliu(刘科) <winsonliu@...cent.com>
+To: Vladis Dronov <vdronov@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Alan Coopersmith <alan.coopersmith@...cle.com>
+CC: cve-assign <cve-assign@...re.org>
+Subject: RE: CVE Request: Multiple security issues inOpenJPEG(Internet mail)
 Content-Type: text/plain; charset=utf-8
 
-On 2017-04-27 10:09:13, Emilio Pozuelo Monfort wrote:
-> Hi,
->
-> On 26/04/17 22:52, Antoine Beaupré wrote:
->> A vulnerability was discovered in the kedpm password manager that may
->> expose the master password when changed, if passed on the commandline.
->> 
->> Example, good:
->> 
->> kedpm> passwd
->> New password:
->> Repeat password:
->> Password changed.
->> kedpm>
->> 
->> Example, bad:
->> 
->> kedpm:/> passwd bar
->> Password changed
->> 
->> The former will show "passwd" in the ~/.kedpm/history file while the
->> latter will show "passwd bar" in the history file, divulging the
->> password in clear text.
->> 
->> Also, all password *names* that are created or consulted are saved in
->> the history file, something that users may not expect (although you have
->> to wonder how they thought history worked).
->> 
->> This is documented in the Debian bugtracker:
->> 
->> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=860817
->> 
->> But I would like to get a CVE assigned for wider diffusion.
->
-> You need to request it at https://cveform.mitre.org/
->
-> You can follow up here with the number when you get one assigned.
+I'm afraid no CVEs were assigned. At least I did not submit these issues to https://cveform.mitre.org/ 
 
-I have requested a CVE.
+Regards,
+Ke
 
--- 
-The history of any one part of the earth, like the life of a soldier,
-consists of long periods of boredom and short periods of terror.
-                       - British geologist Derek V. Ager
+-----Original Message-----
+From: Vladis Dronov [mailto:vdronov@...hat.com] 
+Sent: 2017年8月23日 19:53
+To: oss-security@...ts.openwall.com
+Cc: winsonliu(刘科) <winsonliu@...cent.com>; cve-assign <cve-assign@...re.org>
+Subject: Re: [oss-security] CVE Request: Multiple security issues inOpenJPEG(Internet mail)
+
+> Most of these seem to be fixed now in OpenJPEG's recent 2.2.0 release.
+> Did CVE id's ever get assigned for them?
+
+If no one reported them and requested CVE-ids via https://cveform.mitre.org/ then I suppose not, no CVE-ids were assigned.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+
