@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/3
-Message-ID: <b518129eb46542e29e8d44f94ebb1c4a@imshyb01.MITRE.ORG>
-Date: Sun, 29 Jan 2017 07:10:29 -0500
-From: <cve-assign@...re.org>
-To: <jmm@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <abe@...ian.org>
-Subject: Re: CVE request: GNU screen escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/24/4
+Message-ID: <20170824180314.GA9813@hunt>
+Date: Thu, 24 Aug 2017 11:03:14 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: fixed bug in net/core/flow_dissector.c
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://lists.gnu.org/archive/html/screen-devel/2017-01/msg00025.html
-> http://savannah.gnu.org/bugs/?50142
+On Thu, Aug 24, 2017 at 05:52:45PM +0300, Alexander Popov wrote:
+> I was asked to investigate a suspicious kernel crash on some Linux
+> server. It is at least a remote DoS (and maybe RCE): Linux is crashed by
+> receiving a single special MPLS packet.
 > 
-> The check opens the logfile with full root privileges.
+> I bisected and found out that the bug was introduced in
+> commit b3baa0fbd02a1a9d493d8cb92ae4a4491b9e9d13
+> And was later fixed it in
+> commit a6e544b0a88b53114bfa5a57e21b7be7a8dfc9d0
 
-Use CVE-2017-5618.
+> Is it worth requesting a CVE ID for that issue?
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I think it is, it's an easy way to make sure all downstream consumers
+are alerted to the issue.
 
-iQIcBAEBCAAGBQJYjdleAAoJEHb/MwWLVhi2LOEP/jug+MKiWxPDN/Ywh7YXL6kx
-2yQqV3fGscQSXijyhSPiduutau9Moqro5zMLVQCAhptOgO9QAhbNSA8xQbSx5NRE
-h0+Zbuj+XG0/D3q3ArkYbbEFhrAcFznCBiTlc8WasGFTlEXPsgEfuwU/Xbe85xUW
-JlObPGCDFAAjiPtuHjb2jAf97XnxocpO5h4YGGHN5k0yhC+nNg5wWNRaI0DK/T93
-rhxgktycXPa7syzYPtzLkmL6OT665OxLFDpkO+FPPVISe9gVeJc3Ql6xALLGOmSJ
-UBa0L1i/cDMl322fFgvnkcTbkzxljSPJK63MnRPZm0ziS1O/2Xj+2lu6BXNtWJZc
-wObGXGS3Egz0uFwORD3h0HAR7KfeLePEWWD8UCUyXPBn4SGqhZXK/uhPxCj5MGZy
-tXGD4wl9tc2HDf88v3eSQSKToaOxVOhZxP49TuyCxCohX+GPDsffPvbhau+CPhs1
-/6cEGMo8WBqpaS6zjm0ZHz3nwR3xs70yg5FZ4DTzsL0fmyYpG3dsQ3vZcWqHwYb2
-p1VTzf7sYc9EzWsIp2ST62AvgmfBgEf6CHcKXGkec0KgM7WFbLKmf86qEBgSAceA
-1uQhrIKrx2lmJ2o4qKkfgrFqPXjWIr8Un5S6Dk9jj48fDxEWJeiSfyBcnVbel5r5
-05Ha7umLpfibnMDOtJV9
-=rvJd
------END PGP SIGNATURE-----
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
