@@ -1,43 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/4
-Message-ID: <b5c385d79e4a496c93b95cd3e1f543b8@imshyb01.MITRE.ORG>
-Date: Sat, 4 Feb 2017 21:37:33 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: podofo: heap-based buffer overflow in PoDoFo::PdfTokenizer::GetNextToken (PdfTokenizer.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/25/3
+Message-ID: <6128ec04-31d7-6978-e1bd-41e70ef4cf7d@igalia.com>
+Date: Fri, 25 Aug 2017 18:27:59 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2017-0007
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0007
+------------------------------------------------------------------------
 
-> https://blogs.gentoo.org/ago/2017/02/03/podofo-heap-based-buffer-overflow-in-podofopdftokenizergetnexttoken-pdftokenizer-cpp
-> 
-> AddressSanitizer: heap-buffer-overflow ... WRITE of size 1
-> PoDoFo::PdfTokenizer::GetNextToken
-> podofo-0.9.4/src/base/PdfTokenizer.cpp:319:35
+Date reported      : August 25, 2017
+Advisory ID        : WSA-2017-0007
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0007.html
+CVE identifiers    : CVE-2017-1000121, CVE-2017-1000122.
 
-Use CVE-2017-5886.
+Several vulnerabilities were discovered in WebKitGTK+.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+CVE-2017-1000121
+    Versions affected: WebKitGTK+ before 2.16.3.
+    Credit to Nathan Crandall.
+    Impact: Processing maliciously crafted input may lead to arbitrary
+    code execution or application crash. Description: An input
+    validation issue on the handling of UNIX IPC messages may allow an
+    attacker to trigger an integer overflow. The issue was addressed
+    through improved state management.
 
-iQIcBAEBCAAGBQJYlo4QAAoJEHb/MwWLVhi2T54P/3G4AZvxhRQ/saMpglz/74oO
-pJJlK/9Jyz2XS6dVOtl9TvZEKeoBDMBRVLSn/pmmd0+4Xc6xJH6jHOFJ7aj3uBYa
-zsezTQ//REBWTqGj4KzVv5rDnWzHgjxQOVXKlgpE7Hjk33Qj0MpBFOMLohhcJvRb
-hQDDVX5ESBPd8QqId3LeH7Shvuwmc2BdzmnmPIKIQhyhX0Bko15cv6HNkMi3Glwm
-iNKyLBYfAG6SqxL79+R6nA1Lwwuiggei1o+D0KCJnbNyseSmN5+3/BwEYV1NCKk+
-gOBVFQzQZCNEDhOjm4jniIvayq7Xz9CcdU2UrNw9zz8Wqbo2zpDnOK45/Bc8A0VK
-6PT8E+4ZIRHCpawKI6ahLa/2R4JX+0cbgVvBAsXi8ag0hv/GaCB07tpwmNixUGpU
-gAGiTdhLkYgaggFxl/Lhy98YJ+nylxda53X+p5oufLKeNDNG++eNoCdK/G4Xe1cs
-DDO2NO+bJgVuS1F3LnUkPKICAOB2oX3uyTvNZYf4HyT1siE5xAexW74aPgzgBBAo
-XHop6F9+UfPXoirsjYYf7eXg11/nsgWOMaQGMhOiTRtmO1vCtnvPivzQQFddOzAo
-dzVyY4vauylo3u3uHvGZ55cdGQlOI3zqCfuxMrTiy/5oeDAUm0gJbY+8JZ8gQa55
-WhzHoLiuILdVj/UH9Uo7
-=Si1S
------END PGP SIGNATURE-----
+CVE-2017-1000122
+    Versions affected: WebKitGTK+ before 2.16.3.
+    Credit to Nathan Crandall.
+    Impact: Processing maliciously crafted input may lead to application
+    crash. Description: An input validation issue on the handling of
+    UNIX IPC messages allows an attacker to trigger an application
+    crash. The issue was addressed through improved state management.
+
+
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+August 25, 2017
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
