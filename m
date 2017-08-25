@@ -1,38 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/1
-Message-ID: <20170101080326.sin4gisgscjtgouc@eldamar.local>
-Date: Sun, 1 Jan 2017 09:03:26 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, daved@...siol.usyd.edu.au, jf@...kes.org, willi@...ian.org, security@...ian.org
-Subject: Re: CVE Request: UnRTF: stack-based buffer overflows in cmd_* functions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/25/1
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F712D4B94F@EXMBX-TJ002.tencent.com>
+Date: Fri, 25 Aug 2017 12:15:47 +0000
+From: winsonliu(刘科) <winsonliu@...cent.com>
+To: Vladis Dronov <vdronov@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Alan Coopersmith <alan.coopersmith@...cle.com>
+CC: cve-assign <cve-assign@...re.org>
+Subject: RE: CVE Request: Multiple security issues in OpenJPEG
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-On Sat, Dec 31, 2016 at 12:12:14PM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> >> I've found a Stack-based buffer overflow in unrtf 0.21.9, which
-> >> affects three functions including: cmd_expand, cmd_emboss and
-> >> cmd_engrave.
-> 
-> >> Apparently writing a negative integer to the buffer can trigger the
-> >> overflow (Minus sign needs an extra byte).
-> 
-> > https://bugs.debian.org/849705
-> 
-> >>> I guess that you can just add a package patch to increate the str[] buffer
-> >>> size, something like
-> >>> 
-> >>> - char str[10];
-> >>> + char str[15];
-> 
-> Use CVE-2016-10091 (for all of the 849705 report).
-
-Upstream patch:
-http://hg.savannah.gnu.org/hgweb/unrtf/rev/3b16893a6406
+I'll submit them to cveform next week. And I'll update this thread when more information is available.
 
 Regards,
-Salvatore
+Ke
+
+-----Original Message-----
+From: winsonliu(刘科) 
+Sent: 2017年8月24日 9:26
+To: 'Vladis Dronov' <vdronov@...hat.com>; oss-security@...ts.openwall.com; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
+Cc: cve-assign <cve-assign@...re.org>
+Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
+
+I'm afraid no CVEs were assigned. At least I did not submit these issues to https://cveform.mitre.org/ 
+
+Regards,
+Ke
+
+-----Original Message-----
+From: Vladis Dronov [mailto:vdronov@...hat.com] 
+Sent: 2017年8月23日 19:53
+To: oss-security@...ts.openwall.com
+Cc: winsonliu(刘科) <winsonliu@...cent.com>; cve-assign <cve-assign@...re.org>
+Subject: Re: [oss-security] CVE Request: Multiple security issues inOpenJPEG(Internet mail)
+
+> Most of these seem to be fixed now in OpenJPEG's recent 2.2.0 release.
+> Did CVE id's ever get assigned for them?
+
+If no one reported them and requested CVE-ids via https://cveform.mitre.org/ then I suppose not, no CVE-ids were assigned.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+
