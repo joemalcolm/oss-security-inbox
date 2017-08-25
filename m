@@ -1,4 +1,9 @@
-Received: (qmail 17819 invoked by uid 550); 19 Mar 2026 15:21:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3407" "Friday" "25" "August" "2017" "18:27:59" "+0200" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<6128ec04-31d7-6978-e1bd-41e70ef4cf7d@igalia.com>" "82" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0007" nil nil nil "8" "2017082516:27:59" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0007" (number mark "U       clopez@igali Aug 25   82/3407  " thread-indent "\"[oss-security] WebKitGTK+ Security Advisory WSA-2017-0007\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32119 invoked by uid 550); 25 Aug 2017 16:28:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,216 +12,109 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18286 invoked from network); 19 Mar 2026 15:18:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773933504; x=1774538304; darn=lists.openwall.com;
-        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=OKe2dG9438PSvqrgXshRybclEzNR5panm8L3o4AoO5w=;
-        b=leU4sNY+i6QQfNwg6BCkMDr5Fp7OkJ8LorIXJGtxS1lGoeOhN0R9WY9IwIBEKCffq/
-         XaSNCGBDVpNYzQoCnewBQ0hfXzPl5z5NkDH3iiqnjxKlm1uiTt2Fo6WF7xocFWKAP61+
-         gbO6iFKSwfXxtaeMcJJ2GPNQemU8w4B0xzCfJBzJ+6u6FD5T7YW9H8bLL/BdM7tys5FD
-         2Zkf7/LqlqOrR7f99aV4QuncDBqDxNVtrJatRaKnPhPNsnLTQ9pvqs8ShE4v8tm8NPyT
-         bUo2aYLw9BENxoHILjhx6AeAp/My1p3rB9rHbV+Nb/HUSWEn5LTgDVJbreRPnCp4vClE
-         3OaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773933504; x=1774538304;
-        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OKe2dG9438PSvqrgXshRybclEzNR5panm8L3o4AoO5w=;
-        b=oIYEYiRoAEA1y3+qw+pDo7krHGz1jqCuouWTcoXrXqoWMj7KpqZjpK0NXukI2k9pJQ
-         2nZayp8W/01vXN05W8dyoOUZVoheD32MPrFfxucwjnGPMpkGlAsKvNUS+q7PML6KNffG
-         3D/s+LWG50OhJ56C5QaxUH5HDPcmuj/pGEMplWjA6y36dNy9LVCLu1Fs+XTQnDSVBu5L
-         M62e1XIn6Emhb2U/tJCW8rfOTEZDC/wcdH/ZUU/Lb+VV5qrq1vfUVFVu5hmV3/PLkwvB
-         u3Gs2O5/o8sguaChzBb9u8iZgqXw6gwsIi3Pael5WolP2XLmEBcOR8fpdNCJsFQeZOXR
-         nymw==
-X-Gm-Message-State: AOJu0YyldnYmKg7GmnYgpRHVSYoulybZL40yZPm27P//1aOdsH193ViM
-	YUj2X45ILYsMXjT5tFCWUP8vPazCuKziIY2SEsekbhPzRWIWqps7FfrPGidnsA==
-X-Gm-Gg: ATEYQzyo5S5zzGHayxoQDxIrfnGkfvVcOh0ETbAN2E4W/0j4W4psSe8KzePSxwlqleV
-	7dVCe+eG2/UiS1j8J0iTqc/LQhwz7JbeMxWiFCGMJH/NJHmpxJlGGEa+k4AjVriuPOjocLYRcFG
-	W6xGjxoux5QSNQjOHGlfxFY5Gpog9q4G7HUCPUYMXBghiiU4vTIbcsK3VeyQt15WgwhiESHA+2M
-	MN2LZxcMKVvWwla+0sUGu2WQCCXbYeKd6tdQdBty4G/ra8sbSS1giISJoHMWQhGXOQYl+va/Sfo
-	yWjfbrsIKLDBprlQjlLK88wUpyoGQlVZstx0gqT/Pr+TEjvqDuis90mskeP0oevhK4VhoYikNix
-	fom9ybGQkPgyOt3IwYj77ytiB/MWKHTfmwLLpDnxnQPi8H0fqi/QaL91lGfQvRKWANt5BDxIm22
-	DNEBI6n5KmdmOYbZ4mEXlEGx2j48zVGTz4aRkwB0o1J+Y=
-X-Received: by 2002:a05:6214:21e9:b0:89c:40b3:1093 with SMTP id 6a1803df08f44-89c6b5624bdmr84150876d6.3.1773933504060;
-        Thu, 19 Mar 2026 08:18:24 -0700 (PDT)
-Message-ID: <fd9bf76e-e03d-4614-9486-f17419d5241f@gmail.com>
-Date: Thu, 19 Mar 2026 11:18:21 -0400
+Received: (qmail 31966 invoked from network); 25 Aug 2017 16:28:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=HCJNZqbOQRJvaqhqQ26dSpquRKqxaVV26Ej0mLXv51c=;
+	b=eqlqkEH8IikuJPeTDp8yXSAfGSVF/MI1VyBDI3P5C3c9SicKVBKKPSIsO+flQWV37/DvCZ1SdWup1fg3oQEwrPVXwO3pVjIqkHkMgLx1PgEiuPLor93jpL9BjLCZY13oSH6p7xBu5vq13TPbB+e5TCVi09XzQzhd0y2JQvgmRDphV+KD3nq9I485HCPhrk7A46kwJ+DI7cpGA6orlLMc+gwOMaAPst5zlIVGL2yZqbHSL2wPO8oQaXpQlGNKb/NwLt0SI04Lj3A9Xfrxm5j6Y42qi1iCyhLvL5PfI14iGoVP2ThjjvhPRe8JPJis7sS05/53GfM60bVwWHQjr6vk1w==;
+To: webkit-gtk@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
+ url=http://key.neutrino.es
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, security@webkit.org,
+ distributor-list@gnome.org, oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com
+Message-ID: <6128ec04-31d7-6978-e1bd-41e70ef4cf7d@igalia.com>
+Date: Fri, 25 Aug 2017 18:27:59 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Brian Rosmaita <rosmaita.fossdev@gmail.com>
-Autocrypt: addr=rosmaita.fossdev@gmail.com; keydata=
- xjMEY01PKxYJKwYBBAHaRw8BAQdAOa0HRLMXltP2O0ib20YOTSGK8inPjlX/VmCXILiqVhbN
- K0JyaWFuIFJvc21haXRhIDxyb3NtYWl0YS5mb3NzZGV2QGdtYWlsLmNvbT7CmQQTFgoAQQIb
- AwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBFtHo/3WbKuySXhmU+g0xidi2IVsBQJm
- MopuBQkGp6JDAAoJEOg0xidi2IVsR7QBANnfDjqZgUyZ29nFhnDTXAc/VTH5aJAbPB8Y79UN
- TZOMAQC1iHgitzwRcwYq+dshM81IMk+YRviPxSYwx6EhI1jfBc44BGNNTysSCisGAQQBl1UB
- BQEBB0CrqLr6OGnCrupbdrDZJNyXhLDE9vTMTybNd675csuAOgMBCAfCfgQYFgoAJgIbDBYh
- BFtHo/3WbKuySXhmU+g0xidi2IVsBQJmMoqnBQkGp6J8AAoJEOg0xidi2IVsjLoA/3QExwr4
- BSetYDSb1XLaIu1Uu0D0TVZn3XFJVpfK8QmJAP4mb+r6P1X4l6RA5djJUn4Y006iTptiCyJG
- 82zlf/nJBg==
-Content-Type: multipart/signed; micalg=pgp-sha256;
+Content-Type: multipart/signed; micalg=pgp-sha512;
  protocol="application/pgp-signature";
- boundary="------------HHOON1xEP0SevxrlhK4N3g0D"
-Subject: [oss-security] [OSSA-2026-004] Glance: Server-Side Request Forgery (SSRF)
- vulnerabilities in OpenStack Glance image import functionality
- (CVE-2026-pending)
+ boundary="ngVoNwhgk7qutUEHpAWm7NSso3k557wEE"
+Subject: [oss-security] WebKitGTK+ Security Advisory WSA-2017-0007
 
---------------HHOON1xEP0SevxrlhK4N3g0D
-Content-Type: multipart/mixed; boundary="------------CtUYfJZ1wb2A0zhvrOsxAr7V";
+--ngVoNwhgk7qutUEHpAWm7NSso3k557wEE
+Content-Type: multipart/mixed; boundary="OLivMimJ7TCOetI26fjgwTql665t1ClXN";
  protected-headers="v1"
-Message-ID: <fd9bf76e-e03d-4614-9486-f17419d5241f@gmail.com>
-Date: Thu, 19 Mar 2026 11:18:21 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Brian Rosmaita <rosmaita.fossdev@gmail.com>
-Subject: [OSSA-2026-004] Glance: Server-Side Request Forgery (SSRF)
- vulnerabilities in OpenStack Glance image import functionality
- (CVE-2026-pending)
-Autocrypt: addr=rosmaita.fossdev@gmail.com; keydata=
- xjMEY01PKxYJKwYBBAHaRw8BAQdAOa0HRLMXltP2O0ib20YOTSGK8inPjlX/VmCXILiqVhbN
- K0JyaWFuIFJvc21haXRhIDxyb3NtYWl0YS5mb3NzZGV2QGdtYWlsLmNvbT7CmQQTFgoAQQIb
- AwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBFtHo/3WbKuySXhmU+g0xidi2IVsBQJm
- MopuBQkGp6JDAAoJEOg0xidi2IVsR7QBANnfDjqZgUyZ29nFhnDTXAc/VTH5aJAbPB8Y79UN
- TZOMAQC1iHgitzwRcwYq+dshM81IMk+YRviPxSYwx6EhI1jfBc44BGNNTysSCisGAQQBl1UB
- BQEBB0CrqLr6OGnCrupbdrDZJNyXhLDE9vTMTybNd675csuAOgMBCAfCfgQYFgoAJgIbDBYh
- BFtHo/3WbKuySXhmU+g0xidi2IVsBQJmMoqnBQkGp6J8AAoJEOg0xidi2IVsjLoA/3QExwr4
- BSetYDSb1XLaIu1Uu0D0TVZn3XFJVpfK8QmJAP4mb+r6P1X4l6RA5djJUn4Y006iTptiCyJG
- 82zlf/nJBg==
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+To: webkit-gtk@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-ID: <6128ec04-31d7-6978-e1bd-41e70ef4cf7d@igalia.com>
+Subject: WebKitGTK+ Security Advisory WSA-2017-0007
 
---------------CtUYfJZ1wb2A0zhvrOsxAr7V
-Content-Type: multipart/mixed; boundary="------------ZYrTJcpKbKqHp36aCs5wQz8X"
-
---------------ZYrTJcpKbKqHp36aCs5wQz8X
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT0NCk9TU0EtMjAyNi0wMDQ6IFNlcnZlci1TaWRlIFJlcXVlc3QgRm9yZ2VyeSAo
-U1NSRikgdnVsbmVyYWJpbGl0aWVzIGluDQpPcGVuU3RhY2sgR2xhbmNlIGltYWdlIGltcG9ydCBm
-dW5jdGlvbmFsaXR5DQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQo6RGF0ZTogTWFyY2ggMTksIDIwMjYNCjpDVkU6
-IENWRS0yMDI2LXBlbmRpbmcNCg0KDQpBZmZlY3RzDQp+fn5+fn5+DQotIEdsYW5jZTogPDI5LjEu
-MSwgPj0zMC4wLjAgPDMwLjEuMSwgPT0zMS4wLjANCg0KDQpEZXNjcmlwdGlvbg0Kfn5+fn5+fn5+
-fn4NCkh5ZW9uZ2V1bl9KaSBvZiBPcGVuIHRoZSBXaW5kb3cgYW5kIEFiaGlzaGVrIEtla2FuZSBv
-ZiBSZWQgSGF0DQpyZXBvcnRlZCBtdWx0aXBsZSBTZXJ2ZXItU2lkZSBSZXF1ZXN0IEZvcmdlcnkg
-KFNTUkYpDQp2dWxuZXJhYmlsaXRpZXMgaW4gR2xhbmNlIGltYWdlIGltcG9ydC4gQnkgdXNlIG9m
-IEhUVFAgcmVkaXJlY3RzLA0KYW4gYXV0aGVudGljYXRlZCB1c2VyIGNhbiBieXBhc3MgVVJMIHZh
-bGlkYXRpb24gY2hlY2tzIGFuZA0KcmVkaXJlY3QgdG8gaW50ZXJuYWwgc2VydmljZXMuDQoNCk9u
-bHkgZ2xhbmNlIGltYWdlIGltcG9ydCBmdW5jdGlvbmFsaXR5IGlzIGFmZmVjdGVkLiBJbiBwYXJ0
-aWN1bGFyLA0KdGhlICd3ZWItZG93bmxvYWQnIGFuZCAnZ2xhbmNlLWRvd25sb2FkJyBpbXBvcnQg
-bWV0aG9kcyBhcmUNCnN1YmplY3QgdG8gdGhpcyB2dWxuZXJhYmlsaXR5LCBhcyBpcyB0aGUgb3B0
-aW9uYWwgKG5vdCBlbmFibGVkIGJ5DQpkZWZhdWx0KSAnb3ZmX3Byb2Nlc3MnIGltYWdlIGltcG9y
-dCBwbHVnaW4uICBXZSBkaXNjdXNzIGVhY2ggb2YNCnRoZSB2dWxuZXJhYmlsaXRpZXMgaW4gdHVy
-biBiZWxvdy4NCg0Kd2ViLWRvd25sb2FkIEltcG9ydCBNZXRob2QgU1NSRg0KLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLQ0KVGhlIHdlYi1kb3dubG9hZCBpbXBvcnQgbWV0aG9kIGhhcyB0
-d28gU1NSRiB2dWxuZXJhYmlsaXRpZXM6DQoNCkhUVFAgUmVkaXJlY3QgQnlwYXNzDQorKysrKysr
-KysrKysrKysrKysrKw0KVGhlIHdlYi1kb3dubG9hZCBpbXBvcnQgbWV0aG9kIGRpZCBub3QgdmFs
-aWRhdGUgcmVkaXJlY3QNCmRlc3RpbmF0aW9ucyB3aGVuIGZvbGxvd2luZyBIVFRQIHJlZGlyZWN0
-cy4gQW4gYXR0YWNrZXIgY291bGQNCnByb3ZpZGUgYW4gaW5pdGlhbCBVUkwgdGhhdCBwYXNzZWQg
-dmFsaWRhdGlvbiBidXQgcmVkaXJlY3RlZCB0byBhbg0KaW50ZXJuYWwgb3IgZGlzYWxsb3dlZCBy
-ZXNvdXJjZTsgdGhlIHJlZGlyZWN0ZWQgVVJMIHdhcyBub3QNCnN1YmplY3QgdG8gc2VjdXJpdHkg
-Y2hlY2tzLg0KDQpUaGlzIGlzIGZpeGVkIGJ5IGltcGxlbWVudGluZyBhIFNhZmVSZWRpcmVjdEhh
-bmRsZXIgdGhhdCB2YWxpZGF0ZXMNCnJlZGlyZWN0IGRlc3RpbmF0aW9ucyBiZWZvcmUgZm9sbG93
-aW5nIHRoZW0sIHVzaW5nIHNhbWUNCnZhbGlkYXRlX2ltcG9ydF91cmkoKSBjaGVja3MgYXMgdGhl
-IGluaXRpYWwgVVJMLg0KDQpJUCBBZGRyZXNzIEVuY29kaW5nIEJ5cGFzcw0KKysrKysrKysrKysr
-KysrKysrKysrKysrKysNClRoZSB3ZWItZG93bmxvYWQgaW1wb3J0IG1ldGhvZCBVUkwgdmFsaWRh
-dGlvbiBjb3VsZCBiZSBieXBhc3NlZCBieQ0KZW5jb2RpbmcgSVAgYWRkcmVzc2VzIGluIGFsdGVy
-bmF0aXZlIGZvcm1hdHMgKGRlY2ltYWwgaW50ZWdlciwNCmhleGFkZWNpbWFsLCBvY3RhbCkuICBG
-b3IgZXhhbXBsZSwgMTI3LjAuMC4xIGNvdWxkIGJlIGVuY29kZWQgYXMNCjIxMzA3MDY0MzMgKGRl
-Y2ltYWwpIG9yIDB4N2YwMDAwMDEgKGhleGFkZWNpbWFsKSB0byBieXBhc3MNCmJsYWNrbGlzdCBj
-aGVja3MuDQoNClRoaXMgaXMgZml4ZWQgYnkgaW1wbGVtZW50aW5nIGEgbm9ybWFsaXplX2hvc3Ru
-YW1lKCkgZnVuY3Rpb24gdGhhdA0KdXNlcyB0aGUgUHl0aG9uIHN0YW5kYXJkIGxpYnJhcnkgaXBh
-ZGRyZXNzIG1vZHVsZSB0byB2YWxpZGF0ZSBJUA0KYWRkcmVzc2VzLiBUaGUgaXBhZGRyZXNzIG1v
-ZHVsZSBvbmx5IGFjY2VwdHMgc3RhbmRhcmQNCmRvdHRlZC1kZWNpbWFsIG5vdGF0aW9uIGZvciBJ
-UHY0IGFuZCBzdGFuZGFyZCBmb3JtYXQgZm9yIElQdjYsDQphdXRvbWF0aWNhbGx5IHJlamVjdGlu
-ZyBhbGwgZW5jb2RlZCBmb3JtYXRzIChkZWNpbWFsLCBoZXhhZGVjaW1hbCwNCm9jdGFsKS4gQW55
-IGF0dGVtcHQgdG8gdXNlIGVuY29kZWQgSVAgZm9ybWF0cyBpcyByZWplY3RlZCwgdGhlcmVieQ0K
-cHJldmVudGluZyBTU1JGIGJ5cGFzcyBhdHRhY2tzLg0KDQpnbGFuY2UtZG93bmxvYWQgSW1wb3J0
-IE1ldGhvZCBTU1JGDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpUaGUgZ2xh
-bmNlLWRvd25sb2FkIGltcG9ydCBtZXRob2QgaGFkIHJlZGlyZWN0IHZhbGlkYXRpb24gYnlwYXNz
-DQp2dWxuZXJhYmlsaXRpZXMgaW4gdHdvIHN0ZXBzIG9mIHRoZSBpbXBvcnQgZmxvdzoNCg0KSW1h
-Z2UgRGF0YSBEb3dubG9hZA0KKysrKysrKysrKysrKysrKysrKw0KV2hlbiBkb3dubG9hZGluZyBp
-bWFnZSBkYXRhIGZyb20gYSByZW1vdGUgR2xhbmNlIGVuZHBvaW50LA0KcmVkaXJlY3RzIHdlcmUg
-bm90IHZhbGlkYXRlZCwgYWxsb3dpbmcgYXR0YWNrZXJzIHRvIHJlZGlyZWN0IHRvDQppbnRlcm5h
-bCBzZXJ2aWNlcy4NCg0KTWV0YWRhdGEgRmV0Y2gNCisrKysrKysrKysrKysrDQpXaGVuIGZldGNo
-aW5nIGltYWdlIG1ldGFkYXRhIGZyb20gYSByZW1vdGUgR2xhbmNlIGVuZHBvaW50LA0KcmVkaXJl
-Y3RzIHdlcmUgbm90IHZhbGlkYXRlZCwgYWxsb3dpbmcgYXR0YWNrZXJzIHRvIHJlZGlyZWN0IHRv
-DQppbnRlcm5hbCBzZXJ2aWNlcy4NCg0KQm90aCBzdGVwcyBhcmUgZml4ZWQgYnkgdXNpbmcgdGhl
-IFNhZmVSZWRpcmVjdEhhbmRsZXIgZGVzY3JpYmVkDQplYXJsaWVyIHRvIHZhbGlkYXRlIHJlZGly
-ZWN0IGRlc3RpbmF0aW9ucyBiZWZvcmUgZm9sbG93aW5nIHRoZW0uDQoNCk9WRiBQcm9jZXNzaW5n
-IFNTUkYNCi0tLS0tLS0tLS0tLS0tLS0tLS0NClRoZSBPVkYgcHJvY2Vzc2luZyBmdW5jdGlvbmFs
-aXR5IGhhZCBjcml0aWNhbCBTU1JGIHZ1bG5lcmFiaWxpdHkNCndpdGggemVybyBwcm90ZWN0aW9u
-IC0gbm8gVVJJIHZhbGlkYXRpb24sIG5vIHJlZGlyZWN0IHZhbGlkYXRpb24sDQphbmQgbm8gSVAg
-bm9ybWFsaXphdGlvbi4gVGhlIGNvZGUgZGlyZWN0bHkgY2FsbGVkDQp1cmxsaWIucmVxdWVzdC51
-cmxvcGVuKHVyaSkgd2l0aG91dCBhbnkgdmFsaWRhdGlvbiBjaGVja3MuIFRoaXMgaXMNCmZpeGVk
-IGJ5IGFkZGluZyBVUkkgdmFsaWRhdGlvbiB1c2luZyB2YWxpZGF0ZV9pbXBvcnRfdXJpKCkgYW5k
-DQpyZWRpcmVjdCB2YWxpZGF0aW9uIHVzaW5nIFNhZmVSZWRpcmVjdEhhbmRsZXIuDQoNCg0KDQoN
-ClBhdGNoZXMNCn5+fn5+fn4NCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTgxMzAwICgy
-MDIzLjEvYW50ZWxvcGUpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk4MTI5OSAoMjAy
-NC4yL2RhbG1hdGlhbikNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTgxMjk4ICgyMDI1
-LjEvZXBveHkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk4MTI5NyAoMjAyNS4yL2Zs
-YW1pbmdvKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85ODEyOTYgKDIwMjYuMS9nYXpw
-YWNobykNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTgxMjk1ICgyMDI2LjIvaGliaXNj
-dXMpDQoNCg0KQ3JlZGl0cw0Kfn5+fn5+fg0KLSBIeWVvbmdldW5fSmkgZnJvbSBPcGVuIHRoZSBX
-aW5kb3cgKENWRS0yMDI2LXBlbmRpbmcpDQotIEFiaGlzaGVrIEtla2FuZSBmcm9tIFJlZCBIYXQg
-KENWRS0yMDI2LXBlbmRpbmcpDQoNCg0KUmVmZXJlbmNlcw0Kfn5+fn5+fn5+fg0KLSBodHRwczov
-L2xhdW5jaHBhZC5uZXQvYnVncy8yMTM4NjAyDQotIGh0dHBzOi8vbGF1bmNocGFkLm5ldC9idWdz
-LzIxMzg2NzINCi0gaHR0cHM6Ly9sYXVuY2hwYWQubmV0L2J1Z3MvMjEzODY3NQ0KLSBodHRwOi8v
-Y3ZlLm1pdHJlLm9yZy9jZ2ktYmluL2N2ZW5hbWUuY2dpP25hbWU9Q1ZFLTIwMjYtcGVuZGluZw0K
-DQoNCk5vdGVzDQp+fn5+fg0KLSBBIENWRSByZXF1ZXN0IHdhcyBmaWxlZCB3aXRoIE1JVFJFIG9u
-IDIwMjYtMDItMTYuDQotIFByZXJlbGVhc2VzIG9mIE9wZW5TdGFjayBzb2Z0d2FyZSBhcmUgbm90
-IG9mZmljaWFsIHByb2R1Y3Rpb24gcmVsZWFzZXMNCiAgIGFuZCBzbyBub3QgY292ZXJlZCBieSB0
-aGUgYWZmZWN0ZWQgdmVyc2lvbnMgbGlzdC4gVGhlIGZpcnN0IEdsYW5jZQ0KICAgcmVsZWFzZSBj
-YW5kaWRhdGUgZm9yIGdhenBhY2hvICgzMi4wLjAuMHJjMSkgaXMgdnVsbmVyYWJsZTsNCiAgIDMy
-LjAuMC4wcmMyIHdpbGwgY29udGFpbiB0aGUgZml4Lg0KLSBUaGUgdW5tYWludGFpbmVkLzIwMjMu
-MSBicmFuY2gsIGJlaW5nIHVubWFpbnRhaW5lZCwgd2lsbCByZWNlaXZlIG5vDQogICBuZXcgcG9p
-bnQgcmVsZWFzZXMsIGJ1dCBhIHBhdGNoIGZvciBpdCBpcyBwcm92aWRlZCBhcyBhIGNvdXJ0ZXN5
-Lg0KDQo=
-
---------------ZYrTJcpKbKqHp36aCs5wQz8X
-Content-Type: application/pgp-keys; name="OpenPGP_0xE834C62762D8856C.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xE834C62762D8856C.asc"
-Content-Description: OpenPGP public key
+--OLivMimJ7TCOetI26fjgwTql665t1ClXN
+Content-Type: text/plain; charset=utf-8
+Content-Language: es
 Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xjMEY01PKxYJKwYBBAHaRw8BAQdAOa0HRLMXltP2O0ib20YOTSGK8inPjlX/VmCX=0A=
-ILiqVhbNK0JyaWFuIFJvc21haXRhIDxyb3NtYWl0YS5mb3NzZGV2QGdtYWlsLmNv=0A=
-bT7CmQQTFgoAQQIbAwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBFtHo/3W=0A=
-bKuySXhmU+g0xidi2IVsBQJmMopuBQkGp6JDAAoJEOg0xidi2IVsR7QBANnfDjqZ=0A=
-gUyZ29nFhnDTXAc/VTH5aJAbPB8Y79UNTZOMAQC1iHgitzwRcwYq+dshM81IMk+Y=0A=
-RviPxSYwx6EhI1jfBc44BGNNTysSCisGAQQBl1UBBQEBB0CrqLr6OGnCrupbdrDZ=0A=
-JNyXhLDE9vTMTybNd675csuAOgMBCAfCfgQYFgoAJgIbDBYhBFtHo/3WbKuySXhm=0A=
-U+g0xidi2IVsBQJmMoqnBQkGp6J8AAoJEOg0xidi2IVsjLoA/3QExwr4BSetYDSb=0A=
-1XLaIu1Uu0D0TVZn3XFJVpfK8QmJAP4mb+r6P1X4l6RA5djJUn4Y006iTptiCyJG=0A=
-82zlf/nJBg=3D=3D=0A=
-=3D071n=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0007
+------------------------------------------------------------------------
 
---------------ZYrTJcpKbKqHp36aCs5wQz8X--
+Date reported      : August 25, 2017
+Advisory ID        : WSA-2017-0007
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0007.html
+CVE identifiers    : CVE-2017-1000121, CVE-2017-1000122.
 
---------------CtUYfJZ1wb2A0zhvrOsxAr7V--
+Several vulnerabilities were discovered in WebKitGTK+.
 
---------------HHOON1xEP0SevxrlhK4N3g0D
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+CVE-2017-1000121
+    Versions affected: WebKitGTK+ before 2.16.3.
+    Credit to Nathan Crandall.
+    Impact: Processing maliciously crafted input may lead to arbitrary
+    code execution or application crash. Description: An input
+    validation issue on the handling of UNIX IPC messages may allow an
+    attacker to trigger an integer overflow. The issue was addressed
+    through improved state management.
+
+CVE-2017-1000122
+    Versions affected: WebKitGTK+ before 2.16.3.
+    Credit to Nathan Crandall.
+    Impact: Processing maliciously crafted input may lead to application
+    crash. Description: An input validation issue on the handling of
+    UNIX IPC messages allows an attacker to trigger an application
+    crash. The issue was addressed through improved state management.
+
+
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+August 25, 2017
+
+
+--OLivMimJ7TCOetI26fjgwTql665t1ClXN--
+
+--ngVoNwhgk7qutUEHpAWm7NSso3k557wEE
+Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Comment: You can fetch my GnuPG key from http://key.neutrino.es
 
-wnsEABYIACMWIQRbR6P91myrskl4ZlPoNMYnYtiFbAUCabwTvQUDAAAAAAAKCRDoNMYnYtiFbIQd
-AP42gsNYQbp71ya+cLEA8bk6GDewAqh6TiNXDxNYD8jQXwD/XPUxfVqa0ourmEsGAjUdPFBKFCAi
-TVCp2md81RixjAo=
-=flWF
+iQIzBAEBCgAdFiEEtdK1C8SOx/HukNmrllCJzmuV+IIFAlmgUA8ACgkQllCJzmuV
++IJ2IRAAvzlCMGjLSJnjrLpGIu3l8KXhUYeofxuH4wyreHRL7go6IezJJ8FvvYRd
+k+nU0MBwL29e8WGmYfSlvolDYqnC9Z0LzjnNPt5QX0MEncfld6WR0RLTFePzVqaL
+N/Oy1ZltirvGjrBzZHi9SWmn4QgP64UX+TmFl3dbxlVrxazTBb2Uqgv7hb1DF623
+7LOHi+XppFp9RyA6E6U6skuc92kLqxqk/j8LzEvmlrev2Ggtu19gmTpwYXf9qw67
+PkdR5ecRF/tINaHwRDFIk4xK7QSMg97s0mZvGYIryLGVmNhP9dG43dwDtxmCHeeJ
+mkCUVwwOxUMWnAm70kX56ISoYeZyLHV9Bm03aF5E6AGE98Z6kJfpwapRhGWZ4HmK
+NP6+YKoRvRE945AtrJJ/5eZGSKJF0+ENBqd5e/+peux+HOZkK1ZOh10B6/DUfir1
+b3yXHJ2UtJdZGouDsDDed3oIqPXXdodiwYs0XIbdYSy34EThT8ANvJuWQ4NXbH14
+t6DJqLOvG1WRf9Z2NXqNPgX+CauBoNkVnLFDmLFjNigcyjuCBdlFFH4TMTgySPuh
+t6zGrNFc9ChjCtHXwxPKb9db206ph8IptX9GcqrLE7HnykPMN+zk5U4a2Mrk8vKw
+aPVYhgSmLaJlAez3hsaXtoQ8oZW1AH2ndG8eWSfGek7guNb4wcQ=
+=ytgZ
 -----END PGP SIGNATURE-----
 
---------------HHOON1xEP0SevxrlhK4N3g0D--
+--ngVoNwhgk7qutUEHpAWm7NSso3k557wEE--
