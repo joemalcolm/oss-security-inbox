@@ -1,31 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/6
-Message-ID: <234c46c2-a4a9-4f65-d65e-e3bd5152fd0e@redhat.com>
-Date: Thu, 12 Jan 2017 13:10:41 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/27/1
+Message-ID: <8760d9nd9y.fsf@frougon.crabdance.com>
+Date: Sun, 27 Aug 2017 19:14:49 +0200
+From: Florent Rougon <f.rougon@...e.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: invalid free in GNU ed before 1.14.1
+Subject: CVE-2017-13709: Incorrect access control in FlightGear
 Content-Type: text/plain; charset=utf-8
 
-On 01/12/2017 12:14 PM, Hanno Böck wrote:
-> Hi,
->
-> ed 1.14.1 fixes an invalid free, reported here:
-> https://lists.gnu.org/archive/html/bug-ed/2017-01/msg00000.html
->
-> Reproducer:
-> echo -e "H\n?\{" | ed
->
-> Found with afl. ed 1.14.1 didn't show any more issues with afl/asan
-> fuzzing.
->
-> Not sure if there's any scenario where ed is used with untrusted input.
+Hi,
 
-There is red/ed -r.  I wouldn't rely on it for security isolation, but 
-the functionality does exist.
+Please find below the info for CVE-2017-13709. I'm also attaching a
+patch combining the security fix applied to FlightGear's 'next'
+branch[1] with its parent commit[2], because [1] requires [2] to work
+properly.
 
-(Debian's APT uses ed scripts for package list diffs, but it doesn't use 
-ed to apply them.)
+However, I don't expect the combined patch nor [2] to apply cleanly to
+FlightGear 2017.2 or earlier, because commit [3] introduced changes in
+the close vicinity of the changes in [2] (two conflicts). If you need to
+adapt [2] for such releases, just put the fgInitAllowedPaths() call
+after the one to Options::processOptions() in src/Main/fg_init.cxx[4] and
+src/Main/main.cxx[5], and you should be good.
 
-Thanks,
-Florian
+I will probably backport the needed changes to a few of the last
+releases in the next days: see the FlightGear release branches at [6].
+
+[1] https://sourceforge.net/p/flightgear/flightgear/ci/2a5e3d06b2c0d9f831063afe7e7260bca456d679/
+[2] https://sourceforge.net/p/flightgear/flightgear/ci/c7a2aef59979af3e9ff22daabb37bdaadb91cd75/
+[3] https://sourceforge.net/p/flightgear/flightgear/ci/b2cc191bc665d13f50360e5508234e653669a372/
+[4] https://sourceforge.net/p/flightgear/flightgear/ci/next/tree/src/Main/fg_init.cxx#l1147
+[5] https://sourceforge.net/p/flightgear/flightgear/ci/next/tree/src/Main/main.cxx#l543
+[6] https://sourceforge.net/p/flightgear/flightgear/ref/next/branches/
+
+Now here is the info for CVE-2017-13709:
+
+[Suggested description]
+In FlightGear before version 2017.3.1, Main/logger.cxx in the FGLogger
+subsystem allows one to overwrite any file via a resource that affects
+the contents of the global Property Tree.
+
+------------------------------------------
+
+[Additional Information]
+In FlightGear before version 2017.3.1, the FGLogger subsystem allows
+one to overwrite any file the user has write access to (with enough
+control over the contents to run arbitrary commands if the target file
+is then executed). A resource such as a malicious third-party aircraft
+or add-on could exploit this to damage files belonging to the user.
+
+The security fix
+(https://sourceforge.net/p/flightgear/flightgear/ci/2a5e3d06b2c0d9f831063afe7e7260bca456d679/)
+requires its parent commit
+(https://sourceforge.net/p/flightgear/flightgear/ci/c7a2aef59979af3e9ff22daabb37bdaadb91cd75/)
+to work correctly.
+
+We are not aware of any malicious resource exploiting the problem.
+
+The fix will be in FlightGear 2017.3.1 (expected in a few days).
+
+------------------------------------------
+
+[Vulnerability Type]
+Incorrect Access Control
+
+------------------------------------------
+
+[Vendor of Product]
+FlightGear (http://flightgear.org/)
+
+------------------------------------------
+
+[Affected Product Code Base]
+FlightGear - Affected: releases earlier than 2017.3.1 (at least since
+version 2.0.0).
+
+------------------------------------------
+
+[Affected Component]
+source file: src/Main/logger.cxx in the FlightGear repository
+(https://sourceforge.net/p/flightgear/flightgear/ci/next/tree/src/Main/logger.cxx)
+executable: fgfs
+
+------------------------------------------
+
+[Attack Type]
+Local
+
+------------------------------------------
+
+[Impact Code execution]
+true
+
+------------------------------------------
+
+[Impact Denial of Service]
+true
+
+------------------------------------------
+
+[CVE Impact Other]
+Allows one to overwrite any file the user has write access to, and to
+control a significant part of the written contents. This leads to code
+execution using .bashrc and such.
+
+------------------------------------------
+
+[Attack Vectors]
+Trick users into installing a resource that enables logging to a
+chosen file, via properties /logging/log/... For instance, a malicious
+third-party aircraft or add-on could do that (add-ons loaded via 'fgfs
+--addon=...').
+
+------------------------------------------
+
+[Reference]
+https://sourceforge.net/p/flightgear/flightgear/ci/2a5e3d06b2c0d9f831063afe7e7260bca456d679/
+https://sourceforge.net/p/flightgear/flightgear/ci/c7a2aef59979af3e9ff22daabb37bdaadb91cd75/
+
+------------------------------------------
+
+[Has vendor confirmed or acknowledged the vulnerability?]
+true
+
+------------------------------------------
+
+[Discoverer]
+wkitty42
+
+-- 
+Florent
+
+View attachment "combined-patch-for-CVE-2017-13709.patch" of type "text/x-diff" (5459 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
