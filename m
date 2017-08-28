@@ -1,123 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/7
-Message-Id: <E3819982-B8D2-42EF-9345-5E8221023B85@recoil.org>
-Date: Fri, 23 Jun 2017 17:33:39 +0100
-From: Anil Madhavapeddy <anil@...oil.org>
-To: Leo Famulari <leo@...ulari.name>
-Cc: oss-security@...ts.openwall.com, Damien Doligez <damien.doligez@...ia.fr>
-Subject: Re: CVE-2017-9772: OCaml release 4.04.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/28/4
+Message-ID: <676040.933092253-sendEmail@localhost>
+Date: Mon, 28 Aug 2017 14:39:23 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi Leo,
+Description:
+openjpeg is an open-source JPEG 2000 library.
 
-The ocaml.org <http://ocaml.org/> site is just being rebuilt in CI so it will be a few minutes
-before the release is on the live site.  In the meanwhile, all the distribution
-tarballs are available at:
+The complete ASan output of the issue:
 
-https://caml.inria.fr/pub/distrib/ocaml-4.04/ <https://caml.inria.fr/pub/distrib/ocaml-4.04/>
+# opj_compress -n 1 -i $FILE -o null.j2k
+==159529==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7fde59900160 at pc 0x000000450bef bp 0x7ffe7641f3c0 sp 0x7ffe7641eb70
+WRITE of size 36 at 0x7fde59900160 thread T0
+    #0 0x450bee in scanf_common /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors_format.inc:343
+    #1 0x451d20 in __interceptor___isoc99_vfscanf /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1265
+    #2 0x451e02 in __interceptor___isoc99_fscanf /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1282
+    #3 0x525417 in pgxtoimage /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/convert.c:1188:9
+    #4 0x50b520 in main /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/opj_compress.c:1831:21
+    #5 0x7fde5d0c1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x41bc18 in _start (/usr/bin/opj_compress+0x41bc18)
 
-regards,
-Anil
+Address 0x7fde59900160 is located in stack of thread T0 at offset 352 in frame
+    #0 0x52523f in pgxtoimage /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/convert.c:1158
 
-> On 23 Jun 2017, at 17:24, Leo Famulari <leo@...ulari.name> wrote:
-> 
-> Hi Anil,
-> 
-> Can you tell us where to get OCaml 4.04.2? It's not available here:
-> 
-> https://ocaml.org/releases/
-> 
-> On Fri, Jun 23, 2017 at 04:28:28PM +0100, Anil Madhavapeddy wrote:
->> Anyone packaging OCaml 4.04.0 or OCaml 4.04.1 and installing setuid binaries
->> with it should be aware of this CVE, and upgrade their distribution packaging
->> accordingly.  Please get in touch with me if you are having any issues with
->> upgrading to the latest OCaml 4.04.2.
->> 
->> Anil
->> 
->>> Begin forwarded message:
->>> 
->>> From: Damien Doligez <Damien.Doligez@...ia.fr>
->>> Subject: [Caml-list] OCaml release 4.04.2
->>> Date: 23 June 2017 at 16:18:44 BST
->>> To: caml announce <caml-announce@...ia.fr>, caml users <caml-list@...ia.fr>
->>> Reply-To: Damien Doligez <Damien.Doligez@...ia.fr>
->>> 
->>> 
->>> Dear OCaml users,
->>> 
->>> We have the pleasure of celebrating the birthday of Alan Turing by
->>> announcing the release of OCaml version 4.04.2.
->>> 
->>> This minor release fixes the security issue described in
->>> CVE-2017-9772 (included below).
->>> 
->>> All users should eventually upgrade to 4.04.2 from 4.04.0 and 4.04.1.
->>> Any user who produces setuid programs with OCaml should read the CVE
->>> and upgrade immediately.
->>> 
->>> It is available as an OPAM switch, or as a source download here:
->>> https://caml.inria.fr/pub/distrib/ocaml-4.04/
->>> https://github.com/ocaml/ocaml/archive/4.04.2.tar.gz
->>> 
->>> Happy hacking,
->>> 
->>> -- Damien Doligez for the OCaml team.
->>> 
->>> 
->>> OCaml 4.04.2 (23 Jun 2017):
->>> ---------------------------
->>> 
->>> ### Security fix:
->>> 
->>> - PR#7557: Local privilege escalation issue with ocaml binaries.
->>> (Damien Doligez, report by Eric Milliken, review by Xavier Leroy)
->>> 
->>> --------------------------------------------------------------------
->>> 
->>> CVE-2017-9772: Privilege escalation in OCaml runtime for SUID executables
->>> 
->>> The environment variables CAML_CPLUGINS, CAML_NATIVE_CPLUGINS, and
->>> CAML_BYTE_CPLUGINS can be used to auto-load code into any ocamlopt-compiled
->>> executable or any ocamlc-compiled executable in ‘custom runtime mode’.
->>> This can lead to privilege escalation if the executable is marked setuid.
->>> 
->>> Vulnerable versions: OCaml 4.04.0 and 4.04.1
->>> 
->>> Workarounds:
->>>  - Upgrade to OCaml 4.04.2 or higher.
->>> or - Compile the OCaml distribution with the "-no-cplugins" configure option.
->>> or - OPAM users can "opam update && opam switch recompile 4.04.1", as
->>>    the repository has had backported patches applied.
->>> 
->>> Impact: This only affects binaries that have been installed on Unix-like
->>> operating systems (including Linux and macOS) with the setuid bit set.
->>> However, in that situation, any user who execute the program gains all
->>> the privileges of the owner of the executable (meaning that root-owned
->>> setuid executables provide root access).
->>> 
->>> Fix: OCaml 4.04.2 mitigates this by modifying Sys.getenv and Unix.getenv
->>> to raise an exception if the process has ever had elevated privileges.
->>> The OCaml runtime has also been modified to use this function for
->>> retrieving all of the runtime environment variables which could potentially
->>> cause files to be accessed or modified.  The older behaviour is available
->>> in Sys.unsafe_getenv for applications that require strict compatibility.
->>> 
->>> Credits: This was originally reported by Eric Milliken on the OCaml Mantis
->>> bug tracker. https://caml.inria.fr/mantis/view.php?id=7557
->>> 
->>> References: see CVE-2017-9779 for a lesser vulnerability in older versions.
->>> 
->>> CVSS v2 Vector:
->>> AV:L/AC:L/Au:S/C:C/I:C/A:N/E:F/RL:OF/RC:C/CDP:H/TD:L/CR:H/IR:H/AR:L
->>> CWE ID: 114
->>> 
->>> 
->>> -- 
->>> Caml-list mailing list.  Subscription management and archives:
->>> https://sympa.inria.fr/sympa/arc/caml-list
->>> Beginner's list: http://groups.yahoo.com/group/ocaml_beginners
->>> Bug reports: http://caml.inria.fr/bin/caml-bugs
->> 
+  This frame has 16 object(s):
+    [32, 33) 'c1.i192'
+    [48, 49) 'c2.i193'
+    [64, 65) 'c3.i'
+    [80, 81) 'c4.i'
+    [96, 97) 'c1.i188'
+    [112, 113) 'c2.i'
+    [128, 129) 'c1.i183'
+    [144, 145) 'c1.i'
+    [160, 164) 'w'
+    [176, 180) 'h'
+    [192, 196) 'prec'
+    [208, 244) 'cmptparm'
+    [288, 289) 'endian1'
+    [304, 305) 'endian2'
+    [320, 352) 'signtmp'
+    [384, 416) 'temp' 0x0ffc4b318020: f2 f2 f2 f2 01 f2 01 f2 00 00 00 00[f2]f2 f2 f2
+  0x0ffc4b318030: 00 00 00 00 f3 f3 f3 f3 00 00 00 00 00 00 00 00
+  0x0ffc4b318040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffc4b318050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffc4b318060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffc4b318070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==159529==ABORTING
+Aborted
+
+Affected version:
+2.2.0
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/uclouvain/openjpeg/commit/e5285319229a5d77bf316bb0d3a6cbd3cb8666d9
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+Waiting for a CVE assignment
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00327-openjpeg-stackoverflow-pgxtoimage
+
+Timeline:
+2017-08-18: bug discovered and reported to upstream
+2017-08-18: upstream released a patch
+2017-08-28: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/28/openjpeg-stack-based-buffer-overflow-write-in-pgxtoimage-convert-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
