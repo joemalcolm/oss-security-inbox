@@ -1,69 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/2
-Message-ID: <CANO=Ty0mQugCFyHqxzSVyc+2NUQcL5f42xXu9w=NQ5XvJHU75w@mail.gmail.com>
-Date: Thu, 15 Jun 2017 08:21:29 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: pali.rohar@...il.com
-Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/28/3
+Message-ID: <1380.82969667153-sendEmail@localhost>
+Date: Mon, 28 Aug 2017 14:29:32 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: openjpeg: invalid memory write in tgatoimage (convert.c)
 Content-Type: text/plain; charset=utf-8
 
-This does bring up an old question:
+Description:
+openjpeg is an open-source JPEG 2000 library.
 
-Should we assign CVEs for code examples/documentation? E.g. We assign CVEs
-for code shipped to people in digital form. Why not assign CVEs for code in
-documentation or commonly used examples? We can go with the rational that
-CVEs get assigned to the affected code bases (e.g. when someone implements
-that documentation/code), but it might also be good to educate the
-community about bad examples/documentation/etc.
+The complete ASan output of the issue:
 
-My thinking is:
+# opj_compress -r 20,10,1 -jpip -EPH -SOP -cinema2K 24 -n 1 -i $FILE -o null.j2k
+ASAN:DEADLYSIGNAL                                                                                                                                                                                                 
+=================================================================                                                                                                                                                 
+==13239==ERROR: AddressSanitizer: SEGV on unknown address 0x7f4f2e9b4800 (pc 0x00000052264a bp 0x7ffff176def0 sp 0x7ffff176dde0 T0)                                                                               
+==13239==The signal is caused by a WRITE memory access.                                                                                                                                                           
+    #0 0x522649 in tgatoimage /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/convert.c:928:45                                                                                           
+    #1 0x50b4e6 in main /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/opj_compress.c:1881:21                                                                                           
+    #2 0x7f5de2316680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                    
+    #3 0x41bc18 in _start (/usr/bin/opj_compress+0x41bc18)                                                                                                                                                        
+                                                                                                                                                                                                                  
+AddressSanitizer can not provide additional info.                                                                                                                                                                 
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/convert.c:928:45 in tgatoimage                                                                           
+==13239==ABORTING                                                                                                                                                                                                 
+CINEMA 2K profile activated                                                                                                                                                                                       
+Other options specified could be overridden
 
-1) Official documentation that says "do this [insecure thing]" should
-probably get a CVE (e.g. "turn off all the encryption to make it work more
-easily"). This should probably get a CVE, especially as it results in
-operational changes which won't get a CVE (since it's not in code that
-"ships", it's just on the end of whoever is using it).
+Affected version:
+Master at 2017-08-17 and maybe paste releases
 
-2) Official code examples, as above, actual implementations get CVEs, it
-might be useful to raise awareness that the example is bad.
+Fixed version:
+N/A
 
-3) Unofficial but commonly used documentation and code examples, I guess
-the best example here is stackoverflow and friends?
+Commit fix:
+https://github.com/uclouvain/openjpeg/commit/2cd30c2b06ce332dede81cccad8b334cde997281
 
-Thoughts/comments (feel free to reply privately if you don't want to be
-public)? I'd like to collect what people think and then present it to the
-CVE board later (this has been on my long term todo list).
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+Waiting for a CVE assignment
 
-On Thu, Jun 15, 2017 at 7:50 AM, Adam Maris <amaris@...hat.com> wrote:
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00326-openjpeg-invalidwrite-tgatoimage
 
-> On Mon, 2017-06-12 at 23:47 +0200, Pali Rohár wrote:
-> > Hello!
-> >
-> > Any idea how to handle this particular problem?
-> >
-> >
->
-> Hi!
->
-> Given that Oracle (silently) updated the vulnerable example in their
-> documentation, this likely indicates the way to handle this -
-> applications that copied the vulnerable example needs to be fixed and
-> CVEs will be assigned per application.
->
-> Best Regards,
->
-> --
-> Adam Mariš, Red Hat Product Security
-> 1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
->
+Timeline:
+2017-08-17: bug discovered and reported to upstream
+2017-08-28: blog post about the issue
 
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/28/openjpeg-invalid-memory-write-in-tgatoimage-convert-c/
 
--- 
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
 
