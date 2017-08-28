@@ -1,4 +1,9 @@
-Received: (qmail 11699 invoked by uid 550); 18 Feb 2026 16:36:43 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5454" "Monday" "28" "August" "2017" "15:00:20" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<506975.984989793-sendEmail@localhost>" "77" "[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" "^Date:" nil nil "8" "2017082815:00:20" "[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" (number mark "        ago@gentoo.o Aug 28   77/5454  " thread-indent "\"[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 10130 invoked by uid 550); 28 Aug 2017 15:00:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,61 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 6070 invoked from network); 18 Feb 2026 12:15:50 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=geeklan.co.uk; h=
-	message-id:date:mime-version:subject:to:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=geeklan;
-	 bh=henWiNydlh+4hYTn8t974tc9DXY=; b=cvDnIfs5O8d5uH2PuO1Bdf0PZMFs
-	W6YtnAfa4GeJIYtdpb6dPEQ9LiaHln8b29m8VMnts+gFeiBmSEWT5z6pmzfNWPU1
-	yBh/Bfb6oeKp9Rnwy1aE7PnFW6o+DyrBQ1Z17jbNNAvrir0Be1Vh6dL78qINLZk3
-	yufChC6WgpoVCp8SpSuVtLXRL+VkeYSvG4x11vXwQD7ZB8JioZnulT0KoPVwZxH5
-	jIUc/3z47oRq2KHFGJVjfesZHYAVvV8HvbILrLOhWA2E+UGW+XIvNzM5S8tUfxJU
-	zW/WiAY2S3a863oIBykGWHiu3gZJc0V2lsnhp68wQXIe9fIcz7twEAIFWQ==
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=geeklan.co.uk; h=message-id
-	:date:mime-version:subject:to:references:from:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=geeklan; b=AoB
-	Qc6KJh36ZYcjG6Zb6paO9sRqjvbODh10tXS0piJJb/q+hwzaNf9qixpiQV+fHxJP
-	QgRhgVvPirjydCSEiKoaEiFGzWccW8nfx/0g0/7JxELcw/ZJaGy6/3x2y/8i7OHo
-	0b/mZm/8ckzTt4tfqB+LO0/SxPwWgClS4mPuSI3rcExFpYCWbvmj8ixNMWFwgWsa
-	B8ATV4KpsQ7CuMrnNGGARONOrhZrHZdj78+KOvyDqSicE4JmqVqpFviW18AA/GbI
-	E1g5TV3mLVsjpUjErgG7FSnBF3+kf+2OL2YNf1W3uhor8dHGUZ9xQ41diEpbcTlv
-	m9LaO4o837MjgeL62eQ==
-Message-ID: <75f0e607-6842-4f5e-b523-64f5cbcdc883@geeklan.co.uk>
-Date: Wed, 18 Feb 2026 12:15:33 +0000
+Received: (qmail 10060 invoked from network); 28 Aug 2017 15:00:36 -0000
+Message-ID: <506975.984989793-sendEmail@localhost>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <87seazqslh.fsf@gentoo.org> <87a4x7awxe.fsf@josefsson.org>
- <515f855d-cb54-4eb4-912f-a88454e6a26b@geeklan.co.uk>
-Content-Language: en-GB
-From: Sevan Janiyan <venture37@geeklan.co.uk>
-In-Reply-To: <515f855d-cb54-4eb4-912f-a88454e6a26b@geeklan.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-483171.291257353"
+Date: Mon, 28 Aug 2017 15:00:20 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+
+------MIME delimiter for sendEmail-483171.291257353
+Content-Type: text/plain;
+        charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Re: zlib security audit by 7asecurity
 
-On 17/02/2026 23:57, Sevan Janiyan wrote:
-> I could set -std=gnu99 but then it's not going to be a quiet drop-in 
-> upgrade for all the exist packages built.
-> Was actually thinking that what happens during configure and the build 
-> are completely different. configure "detects" the presence of 
-> vsnprintf() by the compiler not making any noise, but things are handled 
-> separately in gzguts.h which until you dig in are left wondering why is 
-> it complaining about the lack of vsnprintf() when the configure stage 
-> was happy). Will raise a ticket for that.
+Description:
+graphicsmagick is a collection of tools and libraries for many image formats.
 
-Dug in a bit further and realised the logic in gzguts.h makes the wrong 
-assumption about "if C89/90, assume no C99 snprintf() or vsnprintf()" as 
-these functions have been around for a very long time[1] though 
-formalised in C99. All versions of OS X include it and you are likely 
-going to be building with a compiler that only supports C89/90 on the 
-earlier releases or defaults to it.
+The relevant ASan output of the issue:
 
-Raised a pull request[2], let's see if it lands.
+# gm convert -clip -negate $FILE out
+==15168==End of process memory map.
+==15168==AddressSanitizer CHECK failed: /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" 
+(0x0, 0x0)
+    #0 0x4d966f in AsanCheckFailed /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_rtl.cc:69
+    #1 0x4f43d5 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_termination.cc:79
+    #2 0x4e3a02 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120
+    #3 0x4ed305 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_posix.cc:132
+    #4 0x420a02 in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
+    #5 0x420a02 in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
+    #6 0x420a02 in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:407
+    #7 0x420a02 in __asan::asan_malloc(unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:782
+    #8 0x4cf664 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:67
+    #9 0x7fe7563f4171 in MagickRealloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:471:18
+    #10 0x7fe7564ca47c in OpenCache /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3155:7
+    #11 0x7fe7564c62c7 in ModifyCache /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:2955:18
+    #12 0x7fe7564dfb44 in SetCacheNexus /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3886:7
+    #13 0x7fe7564df028 in SetCacheViewPixels /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3965:10
+    #14 0x7fe74fbbe2fe in ReadPNMImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/pnm.c:628:19
+    #15 0x7fe756011e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #16 0x7fe755ea4f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #17 0x7fe755ee10c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #18 0x7fe755f8c85b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #19 0x7fe755f89991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #20 0x7fe7547f4680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #21 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+
+/usr/bin/gm convert: abort due to signal 6 (SIGABRT) "Abort"...
+
+Affected version:
+1.3.26
+
+Fixed version:
+N/A
+
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/3bbf7a13643d
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+Waiting for a CVE assignment
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00331-graphicsmagick-memallocfailure-MagickRealloc
+
+Timeline:
+2017-07-12: bug discovered and reported to upstream privately
+2017-08-16: bug reported to the public upstream bugtracker
+2017-08-20: upstream released a fix
+2017-08-28: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/28/graphicsmagick-memory-allocation-failure-in-magickrealloc-memory-c-2/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Sevan
-[1] https://www.tuhs.org/cgi-bin/utree.pl?file=Net2/usr/src/lib/libc/stdio
-[2] https://github.com/madler/zlib/pull/1167
+------MIME delimiter for sendEmail-483171.291257353--
+
