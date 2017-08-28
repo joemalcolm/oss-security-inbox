@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4389" "Friday" "22" "September" "2017" "07:48:12" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<956014.48961267-sendEmail@localhost>" "101" "[oss-security] bento4: heap-based buffer overflow in AP4_BitStream::ReadBytes (Ap4BitStream.cpp)" nil nil nil "9" "2017092207:48:12" "[oss-security] bento4: heap-based buffer overflow in AP4_BitStream::ReadBytes (Ap4BitStream.cpp)" (number mark "U       ago@gentoo.o Sep 22  101/4389  " thread-indent "\"[oss-security] bento4: heap-based buffer overflow in AP4_BitStream::ReadBytes (Ap4BitStream.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3995" "Monday" "28" "August" "2017" "14:39:23" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<676040.933092253-sendEmail@localhost>" "105" "[oss-security] openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)" nil nil nil "8" "2017082814:39:23" "[oss-security] openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)" (number mark "U       ago@gentoo.o Aug 28  105/3995  " thread-indent "\"[oss-security] openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12259 invoked by uid 550); 22 Sep 2017 07:48:30 -0000
+Received: (qmail 20027 invoked by uid 550); 28 Aug 2017 14:39:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12240 invoked from network); 22 Sep 2017 07:48:29 -0000
-Message-ID: <956014.48961267-sendEmail@localhost>
+Received: (qmail 20009 invoked from network); 28 Aug 2017 14:39:39 -0000
+Message-ID: <676040.933092253-sendEmail@localhost>
 From: "Agostino Sarubbo" <ago@gentoo.org>
 To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Fri, 22 Sep 2017 07:48:12 +0000
+Date: Mon, 28 Aug 2017 14:39:23 +0000
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-587581.607121141"
-Subject: [oss-security] bento4: heap-based buffer overflow in AP4_BitStream::ReadBytes (Ap4BitStream.cpp)
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-363004.952975647"
+Subject: [oss-security] openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)
 
-------MIME delimiter for sendEmail-587581.607121141
+------MIME delimiter for sendEmail-363004.952975647
 Content-Type: text/plain;
         charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 
 Description:
-bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
+openjpeg is an open-source JPEG 2000 library.
 
 The complete ASan output of the issue:
 
-# aac2mp4 $FILE /tmp/out.mp4
-AAC frame [000000]: size = -7, 96000 kHz, 0 ch
-=================================================================
-==8420==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x625000002100 at pc 0x0000004eed45 bp 0x7ffdd3db9900 sp 0x7ffdd3db90b0
-READ of size 4294963374 at 0x625000002100 thread T0
-    #0 0x4eed44 in __asan_memcpy /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_interceptors.cc:453
-    #1 0x54734d in AP4_BitStream::ReadBytes(unsigned char*, unsigned int) /tmp/Bento4-1.5.0-617/Source/C++/Codecs/Ap4BitStream.cpp:202:13
-    #2 0x543498 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Aac2Mp4/Aac2Mp4.cpp:142:29
-    #3 0x7f7742500680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #4 0x44fc28 in _start (/usr/bin/aac2mp4+0x44fc28)
+# opj_compress -n 1 -i $FILE -o null.j2k
+==159529==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7fde59900160 at pc 0x000000450bef bp 0x7ffe7641f3c0 sp 0x7ffe7641eb70
+WRITE of size 36 at 0x7fde59900160 thread T0
+    #0 0x450bee in scanf_common /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors_format.inc:343
+    #1 0x451d20 in __interceptor___isoc99_vfscanf /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1265
+    #2 0x451e02 in __interceptor___isoc99_fscanf /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:1282
+    #3 0x525417 in pgxtoimage /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/convert.c:1188:9
+    #4 0x50b520 in main /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/opj_compress.c:1831:21
+    #5 0x7fde5d0c1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x41bc18 in _start (/usr/bin/opj_compress+0x41bc18)
 
-0x625000002100 is located 0 bytes to the right of 8192-byte region [0x625000000100,0x625000002100)
-allocated by thread T0 here:
-    #0 0x53e7e0 in operator new[](unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_new_delete.cc:84
-    #1 0x546445 in AP4_BitStream::AP4_BitStream() /tmp/Bento4-1.5.0-617/Source/C++/Codecs/Ap4BitStream.cpp:45:16
-    #2 0x5449fb in AP4_AdtsParser::AP4_AdtsParser() /tmp/Bento4-1.5.0-617/Source/C++/Codecs/Ap4AdtsParser.cpp:124:17
-    #3 0x542d8b in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Aac2Mp4/Aac2Mp4.cpp:100:20
-    #4 0x7f7742500680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+Address 0x7fde59900160 is located in stack of thread T0 at offset 352 in frame
+    #0 0x52523f in pgxtoimage /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/convert.c:1158
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_interceptors.cc:453 in __asan_memcpy
-Shadow bytes around the buggy address:
-  0x0c4a7fff83d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c4a7fff83e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c4a7fff83f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c4a7fff8400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c4a7fff8410: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c4a7fff8420:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c4a7fff8430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c4a7fff8440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c4a7fff8450: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c4a7fff8460: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c4a7fff8470: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  This frame has 16 object(s):
+    [32, 33) 'c1.i192'
+    [48, 49) 'c2.i193'
+    [64, 65) 'c3.i'
+    [80, 81) 'c4.i'
+    [96, 97) 'c1.i188'
+    [112, 113) 'c2.i'
+    [128, 129) 'c1.i183'
+    [144, 145) 'c1.i'
+    [160, 164) 'w'
+    [176, 180) 'h'
+    [192, 196) 'prec'
+    [208, 244) 'cmptparm'
+    [288, 289) 'endian1'
+    [304, 305) 'endian2'
+    [320, 352) 'signtmp'
+    [384, 416) 'temp' 0x0ffc4b318020: f2 f2 f2 f2 01 f2 01 f2 00 00 00 00[f2]f2 f2 f2
+  0x0ffc4b318030: 00 00 00 00 f3 f3 f3 f3 00 00 00 00 00 00 00 00
+  0x0ffc4b318040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffc4b318050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffc4b318060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffc4b318070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 Shadow byte legend (one shadow byte represents 8 application bytes):
   Addressable:           00
   Partially addressable: 01 02 03 04 05 06 07 
@@ -82,43 +86,43 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   ASan internal:           fe
   Left alloca redzone:     ca
   Right alloca redzone:    cb
-==8420==ABORTING
+==159529==ABORTING
 Aborted
 
 Affected version:
-1.5.0-617
+2.2.0
 
 Fixed version:
 N/A
 
 Commit fix:
-The maintainer said that one of the previous commit fixed this issue. It needs a bisect.
+https://github.com/uclouvain/openjpeg/commit/e5285319229a5d77bf316bb0d3a6cbd3cb8666d9
 
 Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-CVE-2017-14645
+Waiting for a CVE assignment
 
 Reproducer:
-https://github.com/asarubbo/poc/blob/master/00335-bento4-heapoverflow-Ap4BitStream_cpp
+https://github.com/asarubbo/poc/blob/master/00327-openjpeg-stackoverflow-pgxtoimage
 
 Timeline:
-2017-09-08: bug discovered and reported to upstream
-2017-09-14: blog post about the issue
-2017-09-21: CVE assigned
+2017-08-18: bug discovered and reported to upstream
+2017-08-18: upstream released a patch
+2017-08-28: blog post about the issue
 
 Note:
 This bug was found with American Fuzzy Lop.
 This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
 Permalink:
-https://blogs.gentoo.org/ago/2017/09/14/bento4-heap-based-buffer-overflow-in-ap4_bitstreamreadbytes-ap4bitstream-cpp/
+https://blogs.gentoo.org/ago/2017/08/28/openjpeg-stack-based-buffer-overflow-write-in-pgxtoimage-convert-c/
 
 --
 Agostino Sarubbo
 Gentoo Linux Developer
 
 
-------MIME delimiter for sendEmail-587581.607121141--
+------MIME delimiter for sendEmail-363004.952975647--
 
