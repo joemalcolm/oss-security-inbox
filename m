@@ -1,89 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/11/6
-Message-ID: <e50ea131-db59-eb6b-835a-512a1d5e4bb8@orlitzky.com>
-Date: Mon, 11 Sep 2017 18:00:28 -0400
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-14159: OpenLDAP privilege escalation via PID file manipulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/28/1
+Message-ID: <20170828094932.GA22546@kroah.com>
+Date: Mon, 28 Aug 2017 11:49:32 +0200
+From: Greg KH <greg@...ah.com>
+To: 小雨 <1326397@...com>
+Cc: linux-distros@...openwall.org, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: Integer overflow in bttv driver
 Content-Type: text/plain; charset=utf-8
 
-Product: OpenLDAP (slapd server)
-Versions-affected: all modern
-Bug-report: http://www.openldap.org/its/index.cgi?findid=8703
-Author: Michael Orlitzky
+On Mon, Aug 28, 2017 at 05:42:24PM +0800, 小雨 wrote:
+> 
+> > hello ,
+> > 
+> > I found a potential security problem which code located in https://github.com/torvalds/linux/blob/master/drivers/media/pci/bt8xx/bttv-driver.c <https://github.com/torvalds/linux/blob/master/drivers/media/pci/bt8xx/bttv-driver.c>.
+> > 
+> > In setup_window_lock function,as follows:
+> > 
+> > 
+> > 
+> > It did not check the clipcount param,causing a overflow.
 
+Really?  What kernel version are you looking at?  The latest kernel tree
+shows this, from the repo you link to above:
+  https://github.com/torvalds/linux/blob/master/drivers/media/pci/bt8xx/bttv-driver.c#L2098
 
-== Summary ==
+what am I missing here?
 
-slapd in all modern versions of OpenLDAP creates a PID file after
-dropping privileges to a non-root account, which might allow local users
-to kill arbitrary processes by leveraging access to this non-root
-account for PID file modification before a root script executes a "kill
-`cat /pathname`" command, as demonstrated by openldap-initscript.
+Also, any specific reason you sent this to oss-security just a few
+minutes after sending it to security@...nel.org?  I don't really care
+for something like this that is not really an issue, but if it was,
+well, you sure didn't give anyone a chance to actually fix it :)
 
+thanks,
 
-== Details ==
-
-The purpose of the PID file is to hold the PID of the running daemon,
-so that later it can be stopped, restarted, or otherwise signalled
-(many daemons reload their configurations in response to a SIGHUP).
-To fulfill that purpose, the contents of the PID file need to be
-trustworthy. If the PID file is writable by a non-root user, then he
-can replace its contents with the PID of a root process. Afterwards,
-any attempt to signal the PID contained in the PID file will instead
-signal a root process chosen by the non-root user (a vulnerability).
-
-This is commonly exploitable through init scripts that are run as root
-and which blindly trust the contents of their PID files. An example of
-such an init script can be found at,
-
-  https://github.com/ltb-project/openldap-initscript
-
-
-== Exploitation ==
-
-There is only a risk of exploitation when some other user relies on
-the data in the PID file.
-
-An example of a problematic scenario involving an init script would be,
-
-1. I run "/etc/init.d/slapd start" to start the daemon.
-
-2. slapd drops to the "slapd" user.
-
-3. slapd writes its PID file, now owned by the "slapd" user.
-
-4. Someone compromises the daemon, which sits on the network.
-
-5. The attacker is generally limited in what he can do because the
-   daemon doesn't run as root. However, he can write "1" into the
-   PID file, and he does.
-
-6. I run "/etc/init.d/slapd stop" to stop the daemon while I investigate
-   the weird behavior resulting from the hack.
-
-7. The machine reboots, because I killed PID 1 (this is normally
-   restricted to root).
-
-
-== Resolution ==
-
-The slapd PID file will remain owned by its unprivileged runtime user:
-the OpenLDAP project believes it is the responsibility of the init
-script to address this problem.
-
-The POSIX "ps" command can be used towards that end. You can get the
-user of the process whose PID you find with
-
-  ps -p <pid> -o user=
-
-and you can get the name of the command with
-
-  ps -p <pid> -o comm=
-
-Init script authors should check the output of those two command against
-the expected values before sending a signal to a running process. That
-will eliminate the most serious scenarios (where the attacker e.g. kills
-the firewall), but still leaves open the possibility that the attacker
-can prevent "/etc/init.d/slapd stop" from terminating his compromised
-process by entering junk into the PID file.
+greg k-h
