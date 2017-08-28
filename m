@@ -1,101 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/09/2
-Message-ID: <CAOfWR+ELnVxixsJ3HCLCQWC_wXwQxqNMvpmW=F+P8Nmt_iz1Lw@mail.gmail.com>
-Date: Thu, 9 Nov 2017 07:12:21 -0500
-From: Robert Watson <robertcwatson1@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2017-14604] .desktop vulnerability again
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/28/5
+Message-ID: <506975.984989793-sendEmail@localhost>
+Date: Mon, 28 Aug 2017 15:00:20 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 5, 2017 at 4:37 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
-> Last time we had a vulnerability related to the handling of .desktop file, it
-> was handled by refusing to run it unless it has the executable bit.
-> Unfortunately, this permission bit is maintained when storing inside a
-> tarball, for example, so if an attacker wraps an executable .desktop file
-> posing (for example) as a PDF inside a tarball, a victim could extract the
-> file and double click on the PDF and the system will happily execute the
-> command inside the Exec= field of the .desktop file.
+Description:
+graphicsmagick is a collection of tools and libraries for many image formats.
 
-Why then can't I find any PDF files on my system with an executable bit set?
+The relevant ASan output of the issue:
 
-Wouldn't it be common for PDFs to be executable in order for this
-exploit to work?
+# gm convert -clip -negate $FILE out
+==15168==End of process memory map.
+==15168==AddressSanitizer CHECK failed: /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120 "((0 && "unable to mmap")) != (0)" 
+(0x0, 0x0)
+    #0 0x4d966f in AsanCheckFailed /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_rtl.cc:69
+    #1 0x4f43d5 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_termination.cc:79
+    #2 0x4e3a02 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char const*, char const*, int, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_common.cc:120
+    #3 0x4ed305 in __sanitizer::MmapOrDie(unsigned long, char const*, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/sanitizer_common/sanitizer_posix.cc:132
+    #4 0x420a02 in __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, unsigned long, unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_secondary.h:41
+    #5 0x420a02 in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >, __sanitizer::LargeMmapAllocator >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64 >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_allocator_combined.h:70
+    #6 0x420a02 in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:407
+    #7 0x420a02 in __asan::asan_malloc(unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_allocator.cc:782
+    #8 0x4cf664 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:67
+    #9 0x7fe7563f4171 in MagickRealloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:471:18
+    #10 0x7fe7564ca47c in OpenCache /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3155:7
+    #11 0x7fe7564c62c7 in ModifyCache /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:2955:18
+    #12 0x7fe7564dfb44 in SetCacheNexus /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3886:7
+    #13 0x7fe7564df028 in SetCacheViewPixels /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_cache.c:3965:10
+    #14 0x7fe74fbbe2fe in ReadPNMImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/pnm.c:628:19
+    #15 0x7fe756011e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #16 0x7fe755ea4f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #17 0x7fe755ee10c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #18 0x7fe755f8c85b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #19 0x7fe755f89991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #20 0x7fe7547f4680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #21 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
 
-Why would a PDF, which is a specially formatted data file, be made executable?
+/usr/bin/gm convert: abort due to signal 6 (SIGABRT) "Abort"...
 
-I fear there may be one or more misunderstandings at play here of how
-Unix/Linux works.
+Affected version:
+1.3.26
 
-Some Experiments...
+Fixed version:
+N/A
 
-(0)  The Setup
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/3bbf7a13643d
 
-[root@...3:/] ls -l /usr/share/applications/minimal.desktop
--rw-r--r-- 1 root root 28 2017-11-09 05:02
-/usr/share/applications/minimal.desktop
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-[root@...3:/] cat /usr/share/applications/minimal.desktop
-[Desktop Entry]
-Exec=cat $0
+CVE:
+Waiting for a CVE assignment
 
-(1)  Is .desktop file executed when all is normal?
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00331-graphicsmagick-memallocfailure-MagickRealloc
 
-[root@...3:/] /usr/share/applications/minimal.desktop
-bash: /usr/share/applications/minimal.desktop: Permission denied
+Timeline:
+2017-07-12: bug discovered and reported to upstream privately
+2017-08-16: bug reported to the public upstream bugtracker
+2017-08-20: upstream released a fix
+2017-08-28: blog post about the issue
 
-[root@...3:/] bash -c /usr/share/applications/minimal.desktop
-bash: /usr/share/applications/minimal.desktop: Permission denied
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
-(2)  Is .desktop file executable when made executable?
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/28/graphicsmagick-memory-allocation-failure-in-magickrealloc-memory-c-2/
 
-[root@...3:/] chmod 744 /usr/share/applications/minimal.desktop
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-[root@...3:/] ls -l /usr/share/applications/minimal.desktop
--rwxr--r-- 1 root root 28 2017-11-09 05:02
-/usr/share/applications/minimal.desktop
 
-[root@...3:/] /usr/share/applications/minimal.desktop
-/usr/share/applications/minimal.desktop: line 1: [Desktop: command not found
-/usr/share/applications/minimal.desktop: line 1: [Desktop: command not found
-    (endless loop. Ctrl-C to abort)
-
-[root@...3:/] bash -c '/usr/share/applications/minimal.desktop'
-/usr/share/applications/minimal.desktop: line 1: [Desktop: command not found
-/usr/share/applications/minimal.desktop: line 1: [Desktop: command not found
-    (endless loop. Ctrl-C to abort)
-
-(3) Is .desktop file executable by another user?
-
-[root@...3:/] grep 'chromium' /etc/passwd
-chromium:x:1005:1005:Software - chromium:/home/Chromium27:/bin/bash
-
-[root@...3:/] su chromium -c '/usr/share/applications/minimal.desktop'
-bash: /usr/share/applications/minimal.desktop: Permission denied
-
-[root@...3:/] su - chromium -c '/usr/share/applications/minimal.desktop'
--bash: /usr/share/applications/minimal.desktop: Permission denied
-
-CONCLUSIONS
-
-(1)  File (and directory) ownership and permissions control what can
-be executed. Not whether the command appears in a file or script
-somewhere.
-
-(2)  Appropriate settings of the standard ownership and permissions in
-/etc/passwd and on the .desktop file seem to be working to prevent
-unauthorized execution.
-
-(3)  If an unexpected user IS able to execute the command, then the
-system is misconfigured (a VERY common situation).
-
-(4)  If misconfigured (incorrect ownership/permissions somewhere),
-thinking a user shouldn't be able to do something because there is no
-explicit path to doing it is a misunderstanding of how Unix/Linux
-works.
-
-(5)  The text following "Exec=" in a .desktop file is "exec'd". That
-is, it replaces whatever program is processing the .desktop file. Then
-the OUTPUT of the exec'd command is executed. That's not what I
-expected. I expected the 'cat' command to display the contents of the
-desktop file... not try to execute it recursively. Is that a bug or
-just my misunderstanding of something?
