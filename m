@@ -1,49 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/23/4
-Message-ID: <301dd43f-a9b8-0e08-d7f6-de7c1ceb2a31@redhat.com>
-Date: Thu, 23 Nov 2017 21:05:31 +0000
-From: Luke Hinds <lhinds@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: OpenDayLight: Password change doesn't result in Karaf clearing cache, allowing old password to still be used (CVE-2017-1000406)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/9
+Message-ID: <20170830005418.4E30.93016A1C@nri-secure.co.jp>
+Date: Wed, 30 Aug 2017 00:54:23 +0900
+From: "Daisuke Noguchi[NRIセキュア　野口]" <noguchi@...-secure.co.jp>
+To: <oss-security@...ts.openwall.com>
+CC: noguchi@...-secure.co.jp
+Subject: ConnMan #ConnManDo Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-This email is a notification of a vulnerability discovered in
-OpenDayLights AAA module. The current status of the vulnerability is
-open / public, so no embargo is currently active.
+Hi ALL
 
-opendaylight-advisory: Password change doesn't result in Karaf clearing
-cache, allowing old password to still be used)
+We have published the web page which describes about detail of CVE-2017-12865, ConnMan vulnerability.
+http://connmando.nri-secure.co.jp/index.html
 
-cve: CVE-2017-1000406
+This patch has been merged to master branch of debian and yocto Linux distribution.
+And now we are trying to communicate with other Linux distribution security teams.
+- [debian][DSA 3956-1] connman security update
+  https://www.debian.org/security/2017/dsa-3956
+- [yocto]connman: Fix for CVE-2017-12865
+  http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=9086b525dd00f482ea68a384540cd30778413c9e
 
-Vaibhav Hemant Dixit from Arizona State University reported a
-vulnerability in OpenDayLight AAA, whereby should a user update a
-password, the login is still successful with both OLD and NEW passwords.
+If it would be worth posting, could you please deal with it.
 
-This is a result of how claimCache is flushed in AAA IDM when using the
-Karaf CLI.
+Best regards,
 
-The issue is not present when using the AAA IDM REST API, as the
-handlers already invoke the clearing of the IdmLightProxy claimCache
-upon user update.
-
-A flush can be made by performing a reboot of Karaf or by applying the
-patches referenced in this advisory, as the patches enable the Karaf CLI
-to call IdmLightProxy claimCache and perform a flush every time a user
-changes a password.
-
-branch: master, nitrogen, carbon
-review: https://git.opendaylight.org/gerrit/#/q/topic:AAA-151
-jira: https://jira.opendaylight.org/browse/AAA-151
-
-release-notes:
-The fixes will be be available in the coming Nitrogen-SR1 and Carbon-SR3
-releases.
-
--- 
-Luke Hinds
-OpenDaylight Security Team
+------------------------------------------------------------
+Daisuke Noguchi
+Seinor Security Consultant
+NRI Secure Technologies, Ltd. Cyber Security Technical Development Department
+Tokyo Office   TEL +81-3-6831-8514 Fax +81-3-6706-0599
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+----------------------------------------------------------------
+このメールは、本来の宛先の方のみに限定された機密情報が含まれてい
+る場合がございます。お心あたりのない場合は、送信者にご連絡のうえ、
+このメールを削除いただきますようお願い申し上げます。
+
+PLEASE READ :This e-mail is confidential and intended for the
+named recipient only. If you are not an intended recipient,
+please notify the sender and delete this e-mail.
+----------------------------------------------------------------
