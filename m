@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/2
-Message-ID: <CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>
-Date: Fri, 23 Jun 2017 18:04:00 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Brad Spengler <spender@...ecurity.net>
-Cc: oss-security@...ts.openwall.com, pageexec@...email.hu
-Subject: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/5
+Message-ID: <alpine.GSO.2.20.1708291116010.12310@scrappy.simplesystems.org>
+Date: Tue, 29 Aug 2017 11:44:53 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: A bunch of duplicate CVEs requested for?? bho..
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 23, 2017 at 5:50 PM, Brad Spengler <spender@...ecurity.net> wrote:
+On Tue, 29 Aug 2017, Agostino Sarubbo wrote:
+
+> Hi all.
 >
-> BTW, we're happy to go toe-to-toe with you here in public on actual facts
-> instead of pathetic ad hominems.
+> In the last time there are some people that run afl for fuzzing...that's just
+> fine and great. Some people miss to communicate their findings to upstream and
+> request a CVE from mitre.
+> However I'm noticing that every day there are new duplicates, let me post some
+> examples:
 
-Quite frankly, I'd much rather see *you* actually send in patches that
-are acceptable for inclusion, something you've never done.
+It is important to keep in mind that CVEs are issued against 
+"products".  There might be a CVE issued against a software version 
+distributed by Red Hat or Debian which is not applicable to the 
+upstream version.  Since each distribution patches their version it is 
+difficult to know the "product" that a particular CVE is applicable 
+to.
 
-As it is, other people have tried to clean up parts of the grsecurity
-patches, and tried to make them acceptable.
+I agree that in my personal experience upstream maintainers are rarely 
+involved in the CVE process.
 
-Wouldn't it be nice if you actually tried to make the baseline actually better?
-
-Please.
-
-                Linus
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
