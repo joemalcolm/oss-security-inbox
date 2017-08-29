@@ -1,4 +1,9 @@
-Received: (qmail 8054 invoked by uid 550); 3 Aug 2025 17:48:49 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2893" "Tuesday" "29" "August" "2017" "21:19:25" "+0300" "Henri S." "henri@nerv.fi" "<20170829181925.lvaf5f4itx42idr3@tunkki.bugs.fi>" "76" "Re: [oss-security] A bunch of duplicate CVEs requested for?? bho.." "^Cc:" nil nil "8" "2017082918:19:25" "[oss-security] A bunch of duplicate CVEs requested for?? bho.." (number mark "        henri@nerv.f Aug 29   76/2893  " thread-indent "\"Re: [oss-security] A bunch of duplicate CVEs requested for?? bho..\"\n") "<6609652.OIiHvm4qLd@wanheda>" ("<6609652.OIiHvm4qLd@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23683 invoked by uid 550); 29 Aug 2017 18:20:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,44 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18003 invoked from network); 3 Aug 2025 09:59:32 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: PJ Fanning <fanningpj@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <3319dcff-5d41-ff72-7b1f-d32e553d8f54@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 03 Aug 2025 09:59:20 +0000
+Received: (qmail 23662 invoked from network); 29 Aug 2017 18:20:04 -0000
+X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
+Message-ID: <20170829181925.lvaf5f4itx42idr3@tunkki.bugs.fi>
+References: <6609652.OIiHvm4qLd@wanheda>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-52279: Apache Zeppelin: Arbitrary file read by adding
- malicious JDBC connection string 
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="yw2yr2gb7ei4ew4u"
+Content-Disposition: inline
+In-Reply-To: <6609652.OIiHvm4qLd@wanheda>
+User-Agent: NeoMutt/20170113 (1.7.2)
+Cc: oss-security@lists.openwall.com, robert@users.sf.net
+Date: Tue, 29 Aug 2017 21:19:25 +0300
+From: "Henri S." <henri@nerv.fi>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] A bunch of duplicate CVEs requested for?? bho..
+To: Agostino Sarubbo <ago@gentoo.org>
 
-Severity: moderate=20
+--yw2yr2gb7ei4ew4u
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Affected versions:
+Hello ago,
 
-- Apache Zeppelin (org.apache.zeppelin:zeppelin-jdbc) 0.11.1 before 0.12.0
+On Tue, Aug 29, 2017 at 02:46:22PM +0200, Agostino Sarubbo wrote:
+> Some CVEs about lame was issued, also there are an high number of=20
+> vulnerabilities never confirmed by upstream nor posted on their bug track=
+ing=20
+> system. Yes, sometimes I receive emails that say that the bug is not=20
+> reproducible but I'm always trying to help to reproduce. Instead some rep=
+ort=20
+> says: "If you want the poc please contact me at $email"
 
-Description:
+I'm currently fuzzing LAME with help from Robert Hegemann who is upstream. I
+understand that the latest LAME release in the web page is from 2012, but
+hopefully we will get a new release after the fuzzing is finished. If there=
+ are
+any outstanding issues from your fuzzing feel free to contact me and I can
+verify that those are fixed in the CVS version of it (link below). I can ch=
+eck
+your blog for related issues at least. Robert has been fixing the issues ve=
+ry
+quickly after reports. I also plan to fuzz other argument combinations. May=
+be
+we can even include LAME to oss-fuzz later on if upstream agrees.
 
-Improper Input Validation vulnerability in Apache Zeppelin. The fix for JDB=
-C URL validation in CVE-2024-31864 did not account for URL encoded input.
+http://lame.cvs.sourceforge.net/viewvc/lame/lame/
 
-This issue affects Apache Zeppelin: from 0.11.1 before 0.12.0.
+Recently closed issues:
 
-Users are recommended to upgrade to version 0.12.0, which fixes the issue.
+https://sourceforge.net/p/lame/bugs/464/
+https://sourceforge.net/p/lame/bugs/465/
+https://sourceforge.net/p/lame/bugs/466/
+https://sourceforge.net/p/lame/bugs/467/
+https://sourceforge.net/p/lame/bugs/468/
+https://sourceforge.net/p/lame/bugs/470/
+https://sourceforge.net/p/lame/bugs/472/
 
-Credit:
+All feedback is welcome regarding my fuzzing activities. You can also conta=
+ct
+me via IRC in e.g. #afl-users in Freenode if you want to participate in CVS
+build fuzzing. If not I can also notify you after the next release.
 
-H Ming (finder)
+> How to avoid to file duplicate?
 
-References:
+Maybe giving them a link for documentation how to avoid this in the future.
 
-https://github.com/apache/zeppelin/pull/4838
-https://issues.apache.org/jira/browse/ZEPPELIN-6095
-https://www.cve.org/CVERecord?id=3DCVE-2024-31864
-https://zeppelin.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-52279
+CCing robert without permission :)
 
+--=20
+Henri Salo
+
+--yw2yr2gb7ei4ew4u
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAlmlsCoACgkQJ633pE6q
+dXTIlw/+LqH0FM8UoVGRovhBJxagtstZCVoXg1VRCbbJJzkoAM8v0RpuxJRUfl0y
+1j3EsbfQ0XYRRP8428YKZQrFfGW//Yn9Vm4Eg/gVLT+5Ac4IroTp7o1YWi3NSLjf
+iGhGCxSWBr1JXuCWN4K7BwTF0sQvLDYVixXRf+WTcxEFZNg4xz/Hk3fujrJAS7Fy
+CuH9ih/yL4f71mm8BUL6zlYXIsBdtfbndNy3l2vFm7weBzRGg1iTxaySoZFzwk0M
+V7K//01VAEl820NjLn13yGg9WqVWi/AUZoR5JhFUC+YjzbjnD19f50JwijzFWp/Z
+tO+OBoyHXX4YKQmblu3yHX4wzWtKINFsyOKfHVgVLLjwtDi2yO5pc217J2IZd5C7
+GEeR9YWzFm1sTr7+WoMJwbJDpqyASwKAHQgM06bQOaIKCV9dSEsvaMGQmyXEM+kw
+5qTzR6I2na2fRpc+chjo1+zpfWBjb5ksx9oeumNry932U6B9tEBQE2OFcLOBcF9E
+eAXnclxMAbvccBsSUNiGz7k+CUPvJ4qL7ocBkBJYRJT1BbAhlv6H8QhOChg+OC0s
+5Pu8xFlJQb6+uz2SbC0nUJbItATC6smWXoBf01EvoJYVEKmN4lGiX9wToYYRIhUT
+djzFingP8hBL0x5uyKqSOpGDN+0cUtVeoxYDwJKnr+bJ2O0KAFE=
+=tsYQ
+-----END PGP SIGNATURE-----
+
+--yw2yr2gb7ei4ew4u--
