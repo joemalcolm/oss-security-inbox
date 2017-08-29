@@ -1,45 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/5
-Message-ID: <CAKG8Do54HFg5=COMtYKowz+9ZJg6WK67EqeQavSNCFb_uUVssg@mail.gmail.com>
-Date: Wed, 18 Jan 2017 16:22:20 +0100
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/4
+Message-ID: <3051527.WuieGNAktk@wanheda>
+Date: Tue, 29 Aug 2017 15:49:46 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-2591 389 Directory Server: DoS via OOB heap read in "attribute uniqueness" plugin
+Subject: Re: A bunch of duplicate CVEs requested for?? bho..
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Another recent example by owl337:
+https://nvd.nist.gov/vuln/detail/CVE-2017-13737 which points to:
+https://bugzilla.redhat.com/show_bug.cgi?id=1484196
+There is an invalid free in the MagickFree function in magick/memory.c in 
+GraphicsMagick 1.3.26 that will lead to a remote denial of service attack.
 
-This is to disclose the following CVE:
 
-CVE-2017-2591 389 Directory Server: DoS via OOB heap read
+The maintainer of Graphicsmagick, Mr Bob Friesenhahn said to me:
 
-Description :
+"It looks like this problem is not a GM bug but it is already fixed in 
+libtiff.  Using latest libtiff CVS sources I see this in the GM traces 
+which are produced by libtiff:
 
-The "attribute uniqueness" plugin did not properly NULL-terminate an array
-when building up its configuration, if a so called 'old-style'
-configuration, was being used (Using nsslapd-pluginarg<X> parameters) .
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/2268/Coder:
+   Allocating scanline buffer of 104 bytes
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
+   TIFF Warning: Discarding 89 bytes to avoid buffer overrun.
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
+   TIFF Warning: Discarding 16 bytes to avoid buffer overrun.
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
+   TIFF Warning: Discarding 1 bytes to avoid buffer overrun.
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/932/Coder:
+   TIFF Warning: Terminating PackBitsDecode due to lack of data..
+08:41:48 0:01 0.000u 25164 tiff.c/unknown/793/Coder:
+   Not enough data for scanline 3. (PackBitsDecode)
 
-A attacker, authenticated, but possibly also unauthenticated, could
-possibly force the plugin to read beyond allocated memory and trigger a
-segfault.
-
-The crash could also possibly be triggered accidentally.
-
-Upstream patch :
-https://fedorahosted.org/389/changeset/ffda694dd622b31277da07be76d3469fad86150f/
-Affected versions : from 1.3.4.0
-
-Fixed version : 1.3.6
-
-Impact: Low
-CVSS3 scoring : 3.7 -- CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L
-
-Upstream bug report : https://fedorahosted.org/389/ticket/48986
-
-Best Regards,
-
+I am not sure what libtiff Red Hat is using.  It may be that the 
+changes are since the latest libtiff release.  I could help with that 
+by making another libtiff release."
 
 -- 
-Cedric Buissart,
-Product Security
-
+Agostino Sarubbo
+Gentoo Linux Developer
