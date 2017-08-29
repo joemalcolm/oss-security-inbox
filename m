@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/12
-Message-ID: <903f93ca-afdc-cdce-66af-dab09b0136ca@framasoft.org>
-Date: Mon, 22 May 2017 16:21:15 -0400
-From: Martin <martin.gubri@...masoft.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: How to request a CVE for open source projects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/1
+Message-ID: <50169957-6b4a-9e6e-e8d2-8e09918e6cbc@linux.com>
+Date: Tue, 29 Aug 2017 12:46:24 +0300
+From: Alexander Popov <alex.popov@...ux.com>
+To: Seth Arnold <seth.arnold@...onical.com>, oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: fixed bug in net/core/flow_dissector.c
 Content-Type: text/plain; charset=utf-8
 
-On 22/05/2017 at 15:16, Kurt Seifried wrote:
+On 24.08.2017 21:03, Seth Arnold wrote:
+> On Thu, Aug 24, 2017 at 05:52:45PM +0300, Alexander Popov wrote:
+>> I was asked to investigate a suspicious kernel crash on some Linux
+>> server. It is at least a remote DoS (and maybe RCE): Linux is crashed by
+>> receiving a single special MPLS packet.
+>>
+>> I bisected and found out that the bug was introduced in
+>> commit b3baa0fbd02a1a9d493d8cb92ae4a4491b9e9d13
+>> And was later fixed it in
+>> commit a6e544b0a88b53114bfa5a57e21b7be7a8dfc9d0
+> 
+>> Is it worth requesting a CVE ID for that issue?
+> 
+> I think it is, it's an easy way to make sure all downstream consumers
+> are alerted to the issue.
 
-> Ah, I recently did a large number of CVE assignments, I haven't emailed out
-> to the sequesters yet, yours was
-> https://github.com/distributedweaknessfiling/DWF-CVE-2017-1000000/blob/f2e15ac3468dd382d9ffa3d5acc032c106f3248c/CVE-2017-1000025.json
-> I believe.
+I've requested a CVE ID at https://cveform.mitre.org/ and got
+CVE-2017-13715 for this issue.
 
-I was in the same situation than Michael. I found mine now.
-Is it normal that these CVE aren't accessible on MITRE?
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000025
-
+Best regards,
+Alexander
