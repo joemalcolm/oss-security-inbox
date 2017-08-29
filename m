@@ -1,50 +1,163 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/6
-Message-ID: <20170113093611.ztx4osufhxtcgany@workbook.ipv6.hrusecky.net>
-Date: Fri, 13 Jan 2017 10:36:11 +0100
-From: Michal Hrusecky <Michal.Hrusecky@....cz>
-To: oss-security@...ts.openwall.com
-Subject: linux-distros subscription
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/2
+Message-Id: <E1dmfFY-00029c-RU@xenbits.xenproject.org>
+Date: Tue, 29 Aug 2017 12:04:08 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 226 (CVE-2017-12135) - multiple problems with transitive grants
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-Hi,
+            Xen Security Advisory CVE-2017-12135 / XSA-226
+                               version 7
 
-I would like to request subscription to linux-distros mailing list. I'm one of
-the maintainers of Turris OS - OpenWRT fork used on Turris and Turris Omnia
-routers[1].
+               multiple problems with transitive grants
 
-Not sure what has to be part of application, on wiki[2] I found only that I
-should request it here.
+UPDATES IN VERSION 7
+====================
 
-Probably you will need some proof that I'm who I claim to be. You can see bunch
-of commits on our gitlab[3] (signed by the same key I'm using to sign this
-mail) and you can reach me and some of my colleagues on security@...ris.cz
-e-mail alias that is also listed as security contact on our web[4].
+First patch provided in version 6 regressed 32-bit Dom0 or backend
+domains. The updated patch includes a fix for this.
 
-We have infrastructure in place to work on embargoed issues without disclosing
-them to public. Not sure whether there are any other requirements to meet. If
-so, please let me know.
+ISSUE DESCRIPTION
+=================
 
-[1] https://omnia.turris.cz/en/
-[2] http://oss-security.openwall.org/wiki/mailing-lists/distros
-[3] https://gitlab.labs.nic.cz/turris/openwrt/commits/test
-[4] https://www.turris.cz/en/contacts
+1) Code to handle copy operations on transitive grants has built in
+   retry logic, involving a function reinvoking itself with unchanged
+   parameters.  Such use assumes that the compiler would also translate
+   this to a so called "tail call" when generating machine code.
+   Empirically, this is not commonly the case, allowing for
+   theoretically unbounded nesting of such function calls.
+
+2) The reference counting and locking discipline for transitive grants
+   is broken.  Concurrent use of the transitive grant can leak
+   references on the transitively-referenced grant.
+
+IMPACT
+======
+
+A malicious or buggy guest may be able to crash Xen.  Privilege
+escalation and information leaks cannot be ruled out.  A malicious or
+buggy guest can leak references on grants it has been given, amounting
+to a DoS against the grantee.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+The security team would also like to thank Amazon for helping to identify that
+the problems with transitive grants were deeper than originally believed.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached pair of patches from the list below
+addresses this issue:
+
+xsa226-unstable/*.patch     xen-unstable
+xsa226-4.9/*.patch          Xen 4.9.x, Xen 4.8.x, Xen 4.7.x
+xsa226-4.6/*.patch          Xen 4.6.x
+xsa226-4.5/*.patch          Xen 4.5.x
+
+Note that these patches have already been applied to the respective staging
+trees.
+
+Alternatively, applying the appropriate attached patch from the list
+below works around this issue by disabling transitive grants by default:
+
+xsa226.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x
+xsa226-4.7.patch       Xen 4.7.x
+xsa226-4.6.patch       Xen 4.6.x
+xsa226-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa226* xsa226*/*
+b09e07aaf422ae04a4ece5e2c5b5e54036cfae5b5c632bfc6953a0cacd6f60ff  xsa226.patch
+d999767014501d3ac62def06ccd43b97bbbf0ef7d402d3bd70ca96ac9997a14d  xsa226-unstable/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch
+4473fd96ce4fdea5e19e0b502d65f20bd279d82473ac34ff404ce2b2cbc10be1  xsa226-unstable/0002-gnttab-fix-transitive-grant-handling.patch
+ca8b92b2ff58b87e8bec137a34784cbf11e2820659046df6e1d71e23bf7e7dee  xsa226-4.5.patch
+ca77d01172abf263b5b731f26f5e3f74b0b8c75b3e29bee3f65a9318236daba7  xsa226-4.5/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch
+de6359e50fd2bb710469da74a596013ce275edb43d3d1c36d41452f88eee9b7d  xsa226-4.5/0002-gnttab-fix-transitive-grant-handling.patch
+28c7df7edabb91fb2f1fa3fc7d6906bfae75a6e701f1cd335baafaae3e087696  xsa226-4.6.patch
+0186f78e99f5f6eec913da8355e0c28946a14a6099a7219bd4e0d385fdf8c306  xsa226-4.6/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch
+e34dbba7b94942faeb3e6b7630ba06f01998e2b56be1035d76e67aa47e77457d  xsa226-4.6/0002-gnttab-fix-transitive-grant-handling.patch
+fffcc0a4428723e6aea391ff4f1d27326b5a3763d2308cbde64e6a786502c702  xsa226-4.7.patch
+3878c27b77ba24012599289e0e0fb1e5198b1e4efe2f87f7c46def5f335f2fd5  xsa226-4.9/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch
+01d773c5bb4cafe54daf0d14e8a3af899a7c5863513d18927c4a570a74afdb15  xsa226-4.9/0002-gnttab-fix-transitive-grant-handling.patch
+$
+
+(The .meta file is a prototype machine-readable file for describing
+which patches are to be applied how.)
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCAAdFiEEo5WdE9VMgau/ozp2sqowqJRyn7MFAlh4n38ACgkQsqowqJRy
-n7PfZw/8DHrybIB8/m4i/NIc6lKcjgv5gmCfuccOgr45wQv6sDgqXop9at9SpkDu
-vjrzno4++VhzjpgDkIVJhofWkuMGQBdPn6ytmtvTuk9ha8C9buUQzgO9fQgpssRB
-nME8egS0tLS/fE/bJqONF9lN7RNukND5/fR0lrxUlJ0HcdT5ACY9vx+D6vlsQmFO
-MxFgBxTeVEaV0cUnsDqVOa1plfS2uSLFO+Sr6AIh4FfO37Gild5KHZmFYHEEITZa
-qutAy82LyqcMGyjaJ+fP5zb6iMZ2MasIhXpQlJ73hyburN6+mSMmOddDxYOcrsvo
-DHt1VzfK4lYd97Y8m5+8HuM8gL8EKrJYEeecdT3bJ+dM73cIdFLDNF2y34UwU1rr
-fIH9JmC/c2EKlJr0Ibiw5T5e8wDPvJHRUPjMcBoMxuWpPphTFQO9k+wpSl2z4VX8
-CLioyI3AD5xPvPboJD7DLuYw375GwchU4yb0MQEr58vT23Xh7aLffCSKwnRt+ZzI
-wvsaqfmTvH6tpjVzes4wL+ZFycVeZwTmsBNCyrjGS79MJoEGQda75QLikhY7un/t
-XHApVt61dwBzQN+mVCucFyRJIDXY28LwOL6ozYtO0mK3/U+jotkbletYovs2IZh8
-o6L4V5l63agTmxOGS3TdTMKnBFo3UkQEqSZJgD/NOqdCiAy5lY4=
-=FSaN
+iQEcBAEBCAAGBQJZpVgpAAoJEIP+FMlX6CvZ228H/jXq5lHGZwtGmbgFY1O6/LBk
+wrExcAq5iSXVHmfXCR1budkAEYxqCptAbO6FNljvfZVu1bMnGq/ONJs6+UUMCcLb
+TCLoqqAvSN06dftIcKSCDOW6GpmRs+lEdZYHO6qkEh1hTHY83OjqqQW2jhOGf4iV
+IS1kytbERXzjzApeTECcUJ4Fxd2sGD8PUMiD4XFagtJu3mjSl5Y1M57z21WBzSuK
+dHwUzt9sKAd/FOHvpT27GxWw69XR2dI0vKrVtY+Wgudmi4cVt4qnLPirhxkulRVL
+yVWZeC3dBgjwR1kE2NNuuBXUTHfmyV/kj8s9Jd0z4Z3aGyX/24uZfL1eJq02Sa8=
+=oTGH
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa226.patch" of type "application/octet-stream" (4517 bytes)
+
+Download attachment "xsa226-unstable/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch" of type "application/octet-stream" (5136 bytes)
+
+Download attachment "xsa226-unstable/0002-gnttab-fix-transitive-grant-handling.patch" of type "application/octet-stream" (11182 bytes)
+
+Download attachment "xsa226-4.5.patch" of type "application/octet-stream" (4545 bytes)
+
+Download attachment "xsa226-4.5/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch" of type "application/octet-stream" (4508 bytes)
+
+Download attachment "xsa226-4.5/0002-gnttab-fix-transitive-grant-handling.patch" of type "application/octet-stream" (11334 bytes)
+
+Download attachment "xsa226-4.6.patch" of type "application/octet-stream" (4510 bytes)
+
+Download attachment "xsa226-4.6/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch" of type "application/octet-stream" (5137 bytes)
+
+Download attachment "xsa226-4.6/0002-gnttab-fix-transitive-grant-handling.patch" of type "application/octet-stream" (11179 bytes)
+
+Download attachment "xsa226-4.7.patch" of type "application/octet-stream" (4521 bytes)
+
+Download attachment "xsa226-4.9/0001-gnttab-dont-use-possibly-unbounded-tail-calls.patch" of type "application/octet-stream" (5136 bytes)
+
+Download attachment "xsa226-4.9/0002-gnttab-fix-transitive-grant-handling.patch" of type "application/octet-stream" (11169 bytes)
