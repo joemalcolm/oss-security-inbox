@@ -1,104 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/16
-Message-ID: <20170713163442.GA14986@f195.suse.de>
-Date: Thu, 13 Jul 2017 18:34:42 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: firewalld: lockdown whitelist cmdline access check is not secure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/6
+Message-ID: <nycvar.YSQ.7.76.1708292212520.5828@wniryva>
+Date: Tue, 29 Aug 2017 22:15:17 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: wjjzhang <wjjzhang@...cent.com>
+Subject: CVE-2017-13711 Qemu: Slirp: use-after-free when sending response
 Content-Type: text/plain; charset=utf-8
 
-This is a about a security issue I've found in firewalld. It is related
-to the "lockdown" feature in firewalld. By default firewalld allows any
-local applications to perform operations on the firewall. The applied
-security model here is the use of polkit rules. Modifying the firewall
-by default requires admin privileges (i.e. 'admin_auth_keep').
+    Hello,
 
-The "lockdown" feature is an additional / alternative security scheme
-implemented in firewalld. It is supposed to restrict firewall
-modifications via the D-Bus interface of firewalld to processes matching
-a whitelist configuration. It is not active by default. The following
-whitelisting categories are available (also see `man
-firewalld.lockdown-whitelist` [5]):
+Quick emulator(Qemu) built with the Slirp networking support is vulnerable to 
+an use-after-free issue. It occurs due to Socket referenced from multiple 
+packets is freed while responding to a message.
 
-1) processes running with a specific SELinux context
-2) processes running as a specific user
-3) processes running a specific command line
+A user/process could use this flaw to crash the Qemu process on the host 
+resulting in DoS.
 
-While 1) and 2) seem not to be problematic, variant 3) is easily
-bypassed by an attacker. The command line of a requesting process is
-determined in firewalld via
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg05201.html
 
-	dbus_utils.py:command_of_sender(),command_of_pid()
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1486400
 
-which in the end checks /proc/<pid>/cmdline of the requesting process.
-The evaluation of this happens in
+This issue was reported by Wjjzhang.
 
-	server/config.py:accessCheck()
-
-and
-
-	server/firewalld.py:accessCheck()
-
-The problems with checking /proc/<pid>/cmdline for this purpose are the
-following:
-
-- it is prone to race conditions. The requesting process can try to
-  replace itself by some other command that didn't ever send a dbus
-  request, before firewalld can make the check
-
-- every program can change its cmdline to arbitrary values without
-  special privileges using the "setproctitle" approach
-
-Thus any program can effectively bypass the whitelist check by just
-changing its cmdline to one of the whitelisted ones. Since there is an
-entry in the shipped whitelist for 'firewall-config', the lockdown can
-be bypassed in default installations, if a user relies on the lockdown
-feature for security instead of safe polkit rules.
-
-As I see it currently the only protection against this are strict polkit
-rules that require admin authorization for all sensitive dbus methods of
-firewalld. This is currently the case for the polkit rules shipped with
-firewalld. However, individual distributions or users might choose to
-lessen the polkit authorization checking, relying on the lockdown
-feature to provide security.
-
-Upstream told me that they know that the lockdown feature is not secure
-and they wouldn't know how to fix it, except for removing the feature
-completely.  It seems to me the intention of the feature is to protect
-only against unwanted misconfiguration but not against malicious
-programs or users.  However, the documentation in the firewalld wiki,
-man pages and source code give no clear warning about the limited
-security the lockdown feature can provide.
-
-This report is a heads-up, because an unaware user or integrator might
-be tempted to rely on the lockdown feature for security for some reason.
-
-Please find attached a proof of concept python program that demonstrates
-the bypass of an active lockdown. It renames itself to the whitelisted
-firewall-config command and then issues a command to open 'imaps' in the
-public zone.
-
-I did not request a CVE for this as of yet. If you think it is worth one
-please tell me so and I will request it.
-
-References:
-
-[1] https://fedoraproject.org/wiki/Features/FirewalldLockdown
-[2] https://fedoraproject.org/wiki/Firewalld?rd=FirewallD#Lockdown
-[3] https://github.com/firewalld/firewalld
-[4] http://www.firewalld.org/documentation/man-pages/firewall-cmd.html
-[5] http://www.firewalld.org/documentation/man-pages/firewalld.lockdown-whitelist.html
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-
-SUSE Linux GmbH 
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
-View attachment "fwd_setproctitle_poc.py" of type "text/x-python" (1973 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
