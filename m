@@ -1,25 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/8
-Message-ID: <9669ba15-3aaf-8d2d-c97b-0d9bd2fc6646@pre-sense.de>
-Date: Sat, 23 Sep 2017 20:50:19 +0200
-From: Till Dörges <doerges@...-sense.de>
-To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
-Subject: Re: Why send bugs embargoed to distros?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/3
+Message-ID: <6609652.OIiHvm4qLd@wanheda>
+Date: Tue, 29 Aug 2017 14:46:22 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: A bunch of duplicate CVEs requested for?? bho..
 Content-Type: text/plain; charset=utf-8
 
-Am 23.09.2017 um 13:44 schrieb Hanno Böck:
+Hi all.
 
-> Also I haven't found any info about updated opensuse packages.
+In the last time there are some people that run afl for fuzzing...that's just 
+fine and great. Some people miss to communicate their findings to upstream and 
+request a CVE from mitre.
+However I'm noticing that every day there are new duplicates, let me post some 
+examples:
 
-JFTR, there are:
+1) posted by owl337 on the redhat bugzilla, found by me months ago:
 
-  https://bugzilla.opensuse.org/show_bug.cgi?id=CVE-2017-9798
+https://nvd.nist.gov/vuln/detail/CVE-2017-13753 duplicate of:
+https://nvd.nist.gov/vuln/detail/CVE-2016-9396
 
-Regards -- Till
+
+
+The other recent examples here: http://i.imgur.com/q8g9SQi.png
+
+2) Other duplicates are filed from qflb.wu which posts on full-disclosure.
+http://seclists.org/fulldisclosure/2017/Jul/author.html
+See about lame/mpg123/libmad
+Some CVEs about lame was issued, also there are an high number of 
+vulnerabilities never confirmed by upstream nor posted on their bug tracking 
+system. Yes, sometimes I receive emails that say that the bug is not 
+reproducible but I'm always trying to help to reproduce. Instead some report 
+says: "If you want the poc please contact me at $email"
+
+How to avoid to file duplicate? for the example number 1 just checking here:
+https://marc.info/?l=oss-security&w=2&r=1&s=JPC_NOMINALGAIN&q=b
+https://nvd.nist.gov/vuln/search/results?
+adv_search=false&form_type=basic&results_type=overview&search_type=all&query=JPC_NOMINALGAIN
+
+
+Another strange thing, time ago I discovered an FPE in lame, which happens 
+only in the command-line tool:
+https://blogs.gentoo.org/ago/2017/06/17/lame-divide-by-zero-in-parse_wave_header-get_audio-c/
+
+After digging I discovered it was already reported by Brian Carpenter here:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777159 which says:
+
+"fortunately, this is all in the frontend code in
+frontend/get_audio.c:parse_wave_header() and not in the library"
+
+At the time I filed the CVE request I failed too see that it is not suitable 
+for a CVE, follow what mitre said about:
+"There is no CVE ID for this. Even if a web site runs the lame
+command-line tool, a divide-by-zero error does not have any
+availability impact for the web service, because the crash would occur
+in an independent process."
+
+Great..fine..that was my bad, but months later we have:
+https://nvd.nist.gov/vuln/detail/CVE-2017-11720
+"There is a division-by-zero vulnerability in LAME 3.99.5, caused by a 
+malformed input file."
+which points to:
+https://sourceforge.net/p/lame/bugs/460/
+Fortunately the author shared the poc and the password.
+
+I'm providing (http://i.imgur.com/GDWnHRM.png) a screenshot md5sum-included to 
+demonstrate that the issues are identically.
+
+
+Does someone know:
+1) How to avoid that CVE duplicates are issued?
+2) Why the same issue was considered not-suitable and months later suitable 
+for a CVE?
+
 -- 
-Dipl.-Inform. Till Dörges                  doerges@...-sense.de
-                                  Tel. +49 - 40 - 244 2407 - 14
-                                  Fax  +49 - 40 - 244 2407 - 24
-PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
-Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
-Till Dörges, Jürgen Sander               USt-IdNr.: DE263765024
+Agostino Sarubbo
+Gentoo Linux Developer
