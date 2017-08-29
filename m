@@ -1,55 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/5
-Message-Id: <1510676630.u75ilcjvpm.tristanC@fedora>
-Date: Tue, 14 Nov 2017 16:28:50 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2017-005] Nova Filter Scheduler bypass through rebuild action (CVE-2017-16239)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/7
+Message-ID: <CANO=Ty0+7=X0u+o6yyvZcjbEmvj-_c0QzDQiSRxgUAFy7mF6hw@mail.gmail.com>
+Date: Tue, 29 Aug 2017 10:49:17 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: A bunch of duplicate CVEs requested for?? bho..
 Content-Type: text/plain; charset=utf-8
 
-==================================================================
-OSSA-2017-005: Nova Filter Scheduler bypass through rebuild action
-==================================================================
+On Tue, Aug 29, 2017 at 10:44 AM, Bob Friesenhahn <
+bfriesen@...ple.dallas.tx.us> wrote:
 
-:Date: November 14, 2017
-:CVE: CVE-2017-16239
-
-
-Affects
-~~~~~~~
-- Nova: <=14.0.9, >=15.0.0 <=15.0.7, >=16.0.0 <=16.0.2
-
-
-Description
-~~~~~~~~~~~
-George Shuklin from servers.com reported a vulnerability in Nova. By
-rebuilding an instance, an authenticated user may be able to
-circumvent the Filter Scheduler bypassing imposed filters (for
-example, the ImagePropertiesFilter or the IsolatedHostsFilter). All
-setups using Nova Filter Scheduler are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/519684 (Newton)
-- https://review.openstack.org/519681 (Ocata)
-- https://review.openstack.org/519672 (Pike)
-- https://review.openstack.org/519662 (Queens)
+> On Tue, 29 Aug 2017, Agostino Sarubbo wrote:
+>
+> Hi all.
+>>
+>> In the last time there are some people that run afl for fuzzing...that's
+>> just
+>> fine and great. Some people miss to communicate their findings to
+>> upstream and
+>> request a CVE from mitre.
+>> However I'm noticing that every day there are new duplicates, let me post
+>> some
+>> examples:
+>>
+>
+> It is important to keep in mind that CVEs are issued against "products".
+> There might be a CVE issued against a software version distributed by Red
+> Hat or Debian which is not applicable to the upstream version.  Since each
+> distribution patches their version it is difficult to know the "product"
+> that a particular CVE is applicable to.
 
 
-Credits
-~~~~~~~
-- George Shuklin from Servers.com (CVE-2017-16239)
+Actually no, that is incorrect. Please see the CVE counting rules, it's a
+LOT more nuanced than "CVEs are issued against products". THe docs are at
+
+https://cve.mitre.org/cve/editorial_policies/counting_rules.html
+
+TL;DR: CNT1 comes into play and you get situations like libxml/gzip being
+embedded all over the place, but only a single CVE because 1) it's a single
+code based that's copied everywhere and 2) pragmatism.
 
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1664931
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16239
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+>
+> I agree that in my personal experience upstream maintainers are rarely
+> involved in the CVE process.
 
 
-Content of type "application/pgp-signature" skipped
+Something I am trying to change. If you are an upstream and you want to
+become a CVE Numbering Authority (CNA) for your project(s) please contact
+me.
+
+
+>
+>
+> Bob
+> --
+> Bob Friesenhahn
+> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
