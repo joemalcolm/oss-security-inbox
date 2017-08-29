@@ -1,30 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/1
-Message-ID: <CAFw=huUjK8X=AEimVPLtg9bGh3rKpJ8CpLujQEqwWQ7kvdxmNQ@mail.gmail.com>
-Date: Wed, 18 Oct 2017 15:33:12 +0800
-From: amon <amon@...dynarwhals.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/11
+Message-ID: <3533882.5TzxdV0c9i@wanheda>
+Date: Tue, 29 Aug 2017 21:40:21 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: MuPDF mutools Out-of-Bounds Write Vulnerability (CVE-2017-15587)
+Cc: "Henri S." <henri@...v.fi>, robert@...rs.sf.net
+Subject: Re: A bunch of duplicate CVEs requested for?? bho..
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability in mutools PDF parsing functionality allows an attacker to
-write controlled data to an arbitrary location in memory due to an integer
-overflow when performing truncated xref checks.
+On martedì 29 agosto 2017 20:19:25 CEST Henri S. wrote:
+> Hello ago,
+> 
+> On Tue, Aug 29, 2017 at 02:46:22PM +0200, Agostino Sarubbo wrote:
+> > Some CVEs about lame was issued, also there are an high number of
+> > vulnerabilities never confirmed by upstream nor posted on their bug
+> > tracking system. Yes, sometimes I receive emails that say that the bug is
+> > not reproducible but I'm always trying to help to reproduce. Instead some
+> > report says: "If you want the poc please contact me at $email"
+> 
+> I'm currently fuzzing LAME with help from Robert Hegemann who is upstream. I
+> understand that the latest LAME release in the web page is from 2012, but
+> hopefully we will get a new release after the fuzzing is finished. If there
+> are any outstanding issues from your fuzzing feel free to contact me and I
+> can verify that those are fixed in the CVS version of it (link below). I
+> can check your blog for related issues at least. Robert has been fixing the
+> issues very quickly after reports. I also plan to fuzz other argument
+> combinations. Maybe we can even include LAME to oss-fuzz later on if
+> upstream agrees.
+> 
+> http://lame.cvs.sourceforge.net/viewvc/lame/lame/
+> 
+> Recently closed issues:
+> 
+> https://sourceforge.net/p/lame/bugs/464/
+> https://sourceforge.net/p/lame/bugs/465/
+> https://sourceforge.net/p/lame/bugs/466/
+> https://sourceforge.net/p/lame/bugs/467/
+> https://sourceforge.net/p/lame/bugs/468/
+> https://sourceforge.net/p/lame/bugs/470/
+> https://sourceforge.net/p/lame/bugs/472/
+> 
+> All feedback is welcome regarding my fuzzing activities. You can also
+> contact me via IRC in e.g. #afl-users in Freenode if you want to
+> participate in CVS build fuzzing. If not I can also notify you after the
+> next release.
+> > How to avoid to file duplicate?
+> 
+> Maybe giving them a link for documentation how to avoid this in the future.
+> 
+> CCing robert without permission :)
 
-Fix:
-http://git.ghostscript.com/?p=mupdf.git;h=82df2631d7d0446b206ea6b434ea609b6c28b0e8
-Writeup: https://nandynarwhals.org/CVE-2017-15587/
 
-Timeline
-28 Sept 2017 - Discovery of the vulnerability.
-28 Sept 2017 - Disclosure (
-https://bugs.ghostscript.com/show_bug.cgi?id=698605) of vulnerability to
-the vendor and to Debian Security Team.
-16 Oct 2017 - Vendor fixes the issue in git commit (
-http://git.ghostscript.com/?p=mupdf.git;h=82df2631d7d0446b206ea6b434ea609b6c28b0e8
-).
-18 Oct 2017 - CVE-2017-15587 assigned to the issue.
-18 Oct 2017 - Publication of the vulnerability details.
+Hello Henri,
 
-This issue was discovered by Terry Chia (Ayrx) and Jeremy Heng (nn_amon).
+lame was just an example, but it wasn't the point. The point was about the 
+reporter's behavior and the world around the cve assignments.
 
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
