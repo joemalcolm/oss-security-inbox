@@ -1,31 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/3
-Message-ID: <d414e085-1071-0815-98cf-94d68ca76df5@gathman.org>
-Date: Tue, 25 Apr 2017 16:56:56 -0400
-From: Stuart Gathman <stuart@...hman.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/8
+Message-ID: <20170829181925.lvaf5f4itx42idr3@tunkki.bugs.fi>
+Date: Tue, 29 Aug 2017 21:19:25 +0300
+From: "Henri S." <henri@...v.fi>
+To: Agostino Sarubbo <ago@...too.org>
+Cc: oss-security@...ts.openwall.com, robert@...rs.sf.net
+Subject: Re: A bunch of duplicate CVEs requested for?? bho..
 Content-Type: text/plain; charset=utf-8
 
-On 04/24/2017 05:14 PM, Dawid Golunski wrote:
-> SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
->
-> Desc.:
-> SquirrelMail is affected by a critical Remote Code Execution vulnerability
-> which stems from insufficient escaping of user-supplied data when
-> SquirrelMail has been configured with Sendmail as the main transport.
-> An authenticated attacker may be able to exploit the vulnerability
-> to execute arbitrary commands on the target and compromise the remote
-> system.
-We deploy squirrelmail NOT using sendmail for sending mail ($useSendmail
-= false).  There is no reason not to use SMTP instead of running
-sendmail directly.  It doesn't seem to be vulnerable that way - and I
-suggest that as a mitigation.  Just to be sure, after reading this
-advisory I added  $sendmail_path  = '/usr/sbin/false'; (We always avoid
-direct command execution with PHP because PHP is prone to quoting bugs.) 
+Hello ago,
 
-OT: is there already a utility that *safely* logs arguments and stdin
-(as was apparently used to explain the exploit)?  I could write a C
-prog, or a carefully quoted bash script - but would rather use an
-already proven utility.
+On Tue, Aug 29, 2017 at 02:46:22PM +0200, Agostino Sarubbo wrote:
+> Some CVEs about lame was issued, also there are an high number of 
+> vulnerabilities never confirmed by upstream nor posted on their bug tracking 
+> system. Yes, sometimes I receive emails that say that the bug is not 
+> reproducible but I'm always trying to help to reproduce. Instead some report 
+> says: "If you want the poc please contact me at $email"
 
+I'm currently fuzzing LAME with help from Robert Hegemann who is upstream. I
+understand that the latest LAME release in the web page is from 2012, but
+hopefully we will get a new release after the fuzzing is finished. If there are
+any outstanding issues from your fuzzing feel free to contact me and I can
+verify that those are fixed in the CVS version of it (link below). I can check
+your blog for related issues at least. Robert has been fixing the issues very
+quickly after reports. I also plan to fuzz other argument combinations. Maybe
+we can even include LAME to oss-fuzz later on if upstream agrees.
+
+http://lame.cvs.sourceforge.net/viewvc/lame/lame/
+
+Recently closed issues:
+
+https://sourceforge.net/p/lame/bugs/464/
+https://sourceforge.net/p/lame/bugs/465/
+https://sourceforge.net/p/lame/bugs/466/
+https://sourceforge.net/p/lame/bugs/467/
+https://sourceforge.net/p/lame/bugs/468/
+https://sourceforge.net/p/lame/bugs/470/
+https://sourceforge.net/p/lame/bugs/472/
+
+All feedback is welcome regarding my fuzzing activities. You can also contact
+me via IRC in e.g. #afl-users in Freenode if you want to participate in CVS
+build fuzzing. If not I can also notify you after the next release.
+
+> How to avoid to file duplicate?
+
+Maybe giving them a link for documentation how to avoid this in the future.
+
+CCing robert without permission :)
+
+-- 
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
