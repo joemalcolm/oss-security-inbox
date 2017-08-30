@@ -1,14 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/09/2
-Message-ID: <CALJHwhQ3biJq_PjSZr6vPCStww78ptMRjzNzj_-BVkX9=UVARQ@mail.gmail.com>
-Date: Thu, 9 Mar 2017 15:25:00 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/5
+Message-ID: <1d770872-05b4-6e74-930f-09a49c34ad24@isc.org>
+Date: Wed, 30 Aug 2017 08:01:31 -0800
+From: ISC Security Officer <security-officer@....org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE-2017-5972
+Subject: A recommendation for maintainers of BIND packages (re: DNSSEC validation)
 Content-Type: text/plain; charset=utf-8
 
-A reference which i omitted:
+Hello, oss-security list subscribers --
 
-https://cxsecurity.com/issue/WLB-2017020112
+Please pardon the intrusion but ISC are trying to reach packagers who
+maintain and redistribute packages of BIND based on our source.
 
-This contains the necessary information to show the result of the flaw.
+We know that many of you selectively pick and choose changes which are
+added to current BIND releases for backporting to older BIND versions
+on which your distributed packages are based.  For those of you who do,
+we would like to make sure you have selected this change:
+
+4564.	[maint]		Update the built in managed keys to include the
+			upcoming root KSK. [RT #44579]
+
+and distributed it to users prior to the completion of the in-progress
+root key rollover in order to ensure that DNSSEC validation continues
+to work for operators who are using BIND's managed-keys functionality.
+
+If you have any questions, you may contact us using security-officer@....org
+
+Thank you,
+
+Michael McNally
+ISC Security Officer
