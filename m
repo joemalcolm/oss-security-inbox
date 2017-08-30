@@ -1,65 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/7
-Message-ID: <0880ca9f-a632-2da6-8ce6-8be03f332d7f@orlitzky.com>
-Date: Thu, 17 Aug 2017 12:48:39 -0400
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-11746: tenshi privilege escalation via PID file manipulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/3
+Message-ID: <nycvar.YSQ.7.76.1708301531270.5404@wniryva>
+Date: Wed, 30 Aug 2017 15:33:00 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: David Buchanan <d@...buchanan.co.uk>
+Subject: CVE-2017-13672 Qemu: vga: OOB read access during display update
 Content-Type: text/plain; charset=utf-8
 
-Product: Tenshi (log monitoring tool)
-Vendor: Inverse Path (F-Secure)
-Versions-affected: 0.15 and earlier
-Fixed-in: commits 46b0148 and d0e7f28, version 0.16
-Bug-report: https://github.com/inversepath/tenshi/issues/6
-Author: Michael Orlitzky
-Acknowledgments: Andrea Barisani who fixed several other issues and got
-  a new release out to help fix this one.
+   Hello,
 
-== Summary ==
+Quick emulator(Qemu) built with the VGA display emulator support is vulnerable 
+to an out-of-bounds read access issue. It could occur while reading VGA memory 
+to update graphics display.
 
-The tenshi daemon should create its PID file before dropping
-privileges. This represents a minor security issue; additional factors
-are needed to make it exploitable.
+A privileged user/process inside guest could use this flaw to crash the Qemu 
+process on the host resulting in DoS situation.
 
-== Details ==
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg04684.html
 
-The purpose of the PID file is to hold the PID of the running daemon,
-so that later it can be stopped, restarted, or otherwise signalled
-(many daemons reload their configurations in response to a SIGHUP).
-To fulfil that purpose, the contents of the PID file need to be
-trustworthy. If the PID file is writable by a non-root user, then he
-can replace its contents with the PID of a root process. Afterwards,
-any attempt to signal the PID contained in the PID file will instead
-signal a root process chosen by the non-root user (a vulnerability).
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1486560
 
-This is commonly exploitable by init scripts that are run as root and
-which blindly trust the contents of their PID files. Tenshi itself ships
-a few such init scripts: tenshi.debian-init, tenshi.suse-init, etc.
+This issue was reported by David Buchanan.
 
-== Exploitation ==
-
-An example of a problematic scenario involving an init script would be,
-
-1. I run "/etc/init.d/tenshi start" to start the daemon.
-
-2. tenshi drops to the "tenshi" user.
-
-3. tenshi writes its PID file, now owned by the "tenshi" user.
-
-4. Someone compromises the daemon, which processes untrusted input.
-
-5. The attacker is generally limited in what he can do because the
-   daemon doesn't run as root. However, he can write "1" into the
-   PID file, and he does.
-
-6. I run "/etc/init.d/tenshi stop" to stop the daemon while I
-   investigate the weird behavior resulting from the hack.
-
-7. The machine reboots, because I killed PID 1 (this is normally
-   restricted to root).
-
-== Resolution ==
-
-The problem is avoided by creating the PID file as root, before dropping
-privileges.
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
