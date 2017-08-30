@@ -1,27 +1,319 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/3
-Message-ID: <87k201ynu5.wl-wmealing@redhat.com>
-Date: Thu, 12 Oct 2017 14:47:14 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-12192 kernel: NULL pointer dereference due to KEYCTL_READ on negative key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/2
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F712D4C54A@EXMBX-TJ002.tencent.com>
+Date: Wed, 30 Aug 2017 07:33:28 +0000
+From: winsonliu(刘科) <winsonliu@...cent.com>
+To: Vladis Dronov <vdronov@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Alan Coopersmith <alan.coopersmith@...cle.com>
+CC: cve-assign <cve-assign@...re.org>
+Subject: RE: CVE Request: Multiple security issues in OpenJPEG
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-Gday,
+CVE-2016-10504 ~ 10507 have been assigned to these issues.
 
-A vulnerability in the Key Management sub component was found in the Linux
-kernel. Trying to KEYTCL_READ on negative key would lead to a NULL pointer
-dereference. A local attacker could use this flaw to crash the kernel.
+Regards,
+Ke
 
-It looks as though the read primitive is limited to a fixed address so this
-has very limited use as an arbitrary read primitive to leverage for another
-exploit.
+> [Suggested description]
+> Heap-based buffer overflow vulnerability in the opj_mqc_byteout 
+> function in mqc.c in OpenJPEG before 2.2.0 allows remote attackers to 
+> cause a denial of service (application crash) via a crafted bmp file.
+> 
+> ------------------------------------------
+> 
+> [Vulnerability Type]
+> Buffer Overflow
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> OpenJPEG
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> OpenJPEG - before 2.2.0
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> executable file: opj_compress, function: opj_mqc_byteout, file: mqc.c
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> via a crafted bmp file
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://github.com/uclouvain/openjpeg/issues/835
+> https://github.com/uclouvain/openjpeg/commit/397f62c0a838e15d667ef50e2
+> 7d5d011d2c79c04
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?] true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Ke Liu of Tencent's Xuanwu LAB
 
-Fixed by:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=37863c43b2c6464f252862bf2e9768264e961678
+Use CVE-2016-10504.
 
-Introduced by:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=61ea0c0ba904a55f55317d850c1072ff7835ac92
 
-Wade Mealing
+> [Suggested description]
+> NULL pointer dereference vulnerabilities in the imagetopnm function in 
+> convert.c, sycc444_to_rgb function in color.c, color_esycc_to_rgb 
+> function in color.c, and sycc422_to_rgb function in color.c in 
+> OpenJPEG before 2.2.0 allow remote attackers to cause a denial of 
+> service (application crash) via crafted j2k files.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> Null pointer dereference
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> OpenJPEG
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> OpenJPEG - before 2.2.0
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> executable file: opj_decompress, function: imagetopnm, sycc444_to_rgb, 
+> color_esycc_to_rgb, sycc422_to_rgb, file: color.c, convert.c
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> via crafted j2k files
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://github.com/uclouvain/openjpeg/issues/776
+> https://github.com/uclouvain/openjpeg/issues/784
+> https://github.com/uclouvain/openjpeg/issues/785
+> https://github.com/uclouvain/openjpeg/issues/792
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?] true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Ke Liu of Tencent's Xuanwu LAB
+
+Use CVE-2016-10505.
+
+
+> [Suggested description]
+> Division-by-zero vulnerabilities in the functions opj_pi_next_cprl, 
+> opj_pi_next_pcrl, and opj_pi_next_rpcl in pi.c in OpenJPEG before
+> 2.2.0 allow remote attackers to cause a denial of service (application 
+> crash) via crafted j2k files.
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> division-by-zero
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> OpenJPEG
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> OpenJPEG - before 2.2.0
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> executable file: opj_decompress, function: opj_pi_next_cprl, 
+> opj_pi_next_pcrl, opj_pi_next_rpcl, file: pi.c
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> via crafted j2k files
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://github.com/uclouvain/openjpeg/issues/731
+> https://github.com/uclouvain/openjpeg/issues/732
+> https://github.com/uclouvain/openjpeg/issues/777
+> https://github.com/uclouvain/openjpeg/issues/778
+> https://github.com/uclouvain/openjpeg/issues/779
+> https://github.com/uclouvain/openjpeg/issues/780
+> https://github.com/uclouvain/openjpeg/commit/d27ccf01c68a31ad62b33d2dc
+> 1ba2bb1eeaafe7b
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?] true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Ke Liu of Tencent's Xuanwu LAB
+
+Use CVE-2016-10506.
+
+
+> [Suggested description]
+> Integer overflow vulnerability in the bmp24toimage function in 
+> convertbmp.c in OpenJPEG before 2.2.0 allows remote attackers to cause 
+> a denial of service (heap-based buffer over-read and application crash) via a crafted bmp file.
+> 
+> ------------------------------------------
+> 
+> [Vulnerability Type]
+> Integer Overflow
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> OpenJPEG
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> OpenJPEG - before 2.2.0
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> executable file: opj_compress, function: bmp24toimage, file: 
+> convertbmp.c
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Remote
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> via a crafted bmp file
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://github.com/uclouvain/openjpeg/issues/833
+> https://github.com/uclouvain/openjpeg/commit/da940424816e11d624362ce08
+> 0bc026adffa26e8
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?] true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Ke Liu of Tencent's Xuanwu LAB
+
+Use CVE-2016-10507.
+
+-----Original Message-----
+From: winsonliu
+Sent: 2017年8月30日 10:48
+To: 'Vladis Dronov' <vdronov@...hat.com>; 'oss-security@...ts.openwall.com' <oss-security@...ts.openwall.com>; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
+Cc: 'cve-assign' <cve-assign@...re.org>
+Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
+
+Hello,
+
+I've already submitted these issues to https://cveform.mitre.org/ . As expected, four CVE numbers will be assigned since some of them have the same root cause.
+
+Regards,
+Ke
+
+-----Original Message-----
+From: winsonliu
+Sent: 2017年8月25日 20:16
+To: 'Vladis Dronov' <vdronov@...hat.com>; 'oss-security@...ts.openwall.com' <oss-security@...ts.openwall.com>; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
+Cc: 'cve-assign' <cve-assign@...re.org>
+Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
+
+Hello,
+
+I'll submit them to cveform next week. And I'll update this thread when more information is available.
+
+Regards,
+Ke
+
+-----Original Message-----
+From: winsonliu 
+Sent: 2017年8月24日 9:26
+To: 'Vladis Dronov' <vdronov@...hat.com>; oss-security@...ts.openwall.com; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
+Cc: cve-assign <cve-assign@...re.org>
+Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
+
+I'm afraid no CVEs were assigned. At least I did not submit these issues to https://cveform.mitre.org/ 
+
+Regards,
+Ke
+
+-----Original Message-----
+From: Vladis Dronov [mailto:vdronov@...hat.com] 
+Sent: 2017年8月23日 19:53
+To: oss-security@...ts.openwall.com
+Cc: winsonliu <winsonliu@...cent.com>; cve-assign <cve-assign@...re.org>
+Subject: Re: [oss-security] CVE Request: Multiple security issues inOpenJPEG(Internet mail)
+
+> Most of these seem to be fixed now in OpenJPEG's recent 2.2.0 release.
+> Did CVE id's ever get assigned for them?
+
+If no one reported them and requested CVE-ids via https://cveform.mitre.org/ then I suppose not, no CVE-ids were assigned.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+
