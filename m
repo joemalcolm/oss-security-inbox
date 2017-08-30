@@ -1,29 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/13
-Message-ID: <1507061053.24302.4.camel@debian.org>
-Date: Tue, 03 Oct 2017 22:04:13 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/1
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F712D4C415@EXMBX-TJ002.tencent.com>
+Date: Wed, 30 Aug 2017 02:48:24 +0000
+From: winsonliu(刘科) <winsonliu@...cent.com>
+To: Vladis Dronov <vdronov@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Alan Coopersmith <alan.coopersmith@...cle.com>
+CC: cve-assign <cve-assign@...re.org>
+Subject: RE: CVE Request: Multiple security issues in OpenJPEG
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2017-09-27 at 17:09 +0200, Solar Designer wrote:
-> However, if Debian and any
-> other distros doing similar have the resources, I'd appreciate it if
-> they bring in here info on vulnerabilities in Open Source software that
-> they're tracking / are about to patch / have already patched / have even
-> issued advisories on, but that haven't been mentioned in here before.
+Hello,
 
-When working on an advisory and update for Debian, I usually scheme through
-oss-sec in order to see if the vulnerability has already been discussed here,
-or if the package I'm working on has been discussed recently.
-
-I'll try to send a brief summary mail to this list if it happens that the
-package and/or vulnerability is not on the oss-sec radar. Something along the
-line of “We've just fixed / We're currently in the process of fixing
-$vulnerability in $package (CVE-XXXX).
+I've already submitted these issues to https://cveform.mitre.org/ . As expected, four CVE numbers will be assigned since some of them have the same root cause.
 
 Regards,
--- 
-Yves-Alexis
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Ke
+
+-----Original Message-----
+From: winsonliu
+Sent: 2017年8月25日 20:16
+To: 'Vladis Dronov' <vdronov@...hat.com>; 'oss-security@...ts.openwall.com' <oss-security@...ts.openwall.com>; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
+Cc: 'cve-assign' <cve-assign@...re.org>
+Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
+
+Hello,
+
+I'll submit them to cveform next week. And I'll update this thread when more information is available.
+
+Regards,
+Ke
+
+-----Original Message-----
+From: winsonliu 
+Sent: 2017年8月24日 9:26
+To: 'Vladis Dronov' <vdronov@...hat.com>; oss-security@...ts.openwall.com; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
+Cc: cve-assign <cve-assign@...re.org>
+Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
+
+I'm afraid no CVEs were assigned. At least I did not submit these issues to https://cveform.mitre.org/ 
+
+Regards,
+Ke
+
+-----Original Message-----
+From: Vladis Dronov [mailto:vdronov@...hat.com] 
+Sent: 2017年8月23日 19:53
+To: oss-security@...ts.openwall.com
+Cc: winsonliu <winsonliu@...cent.com>; cve-assign <cve-assign@...re.org>
+Subject: Re: [oss-security] CVE Request: Multiple security issues inOpenJPEG(Internet mail)
+
+> Most of these seem to be fixed now in OpenJPEG's recent 2.2.0 release.
+> Did CVE id's ever get assigned for them?
+
+If no one reported them and requested CVE-ids via https://cveform.mitre.org/ then I suppose not, no CVE-ids were assigned.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+
