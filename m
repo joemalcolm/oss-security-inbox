@@ -1,94 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/5
-Message-ID: <alpine.LRH.2.21.1711021348230.19623@namei.org>
-Date: Thu, 2 Nov 2017 14:47:35 +1100 (AEDT)
-From: James Morris <jmorris@...ei.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/7
+Message-ID: <20170830170415.GA5594@suse.de>
+Date: Wed, 30 Aug 2017 19:04:15 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Linux Security Summit 2017 Summary
+Subject: Re: RubyGems flaws
 Content-Type: text/plain; charset=utf-8
 
-The 2017 Linux Security Summit (LSS) [1] was held on Sept 14th and 15th in 
-Los Angeles, USA.  It was co-located with Open Source Summit North America 
-[2] (previously/including LinuxCon) and the Linux Plumbers Conference 
-(LPC) [3].
+On Wed, Aug 30, 2017 at 10:30:19AM -0600, Kurt Seifried wrote:
+> Does anyone know if these got CVEs?
+> 
+> https://www.ruby-lang.org/en/news/2017/08/29/multiple-vulnerabilities-in-rubygems/
+> http://blog.rubygems.org/2017/08/27/2.6.13-released.html
+> 
+> Security fixes:
+> 
+> *Fix a DNS request hijacking vulnerability. Discovered by Jonathan
+> Claudius, fix by Samuel Giddins.
+> *Fix an ANSI escape sequence vulnerability. Discovered by Yusuke Endoh, fix
+> by Evan Phoenix.
+> *Fix a DOS vulernerability in the query command. Discovered by Yusuke
+> Endoh, fix by Samuel Giddins.
+> *Fix a vulnerability in the gem installer that allowed a malicious gem to
+> overwrite arbitrary files. Discovered by Yusuke Endoh, fix by Samuel
+> Giddins.
+> 
+> Affected Versions
+> 
+> *Ruby 2.2 series: 2.2.7 and earlier
+> *Ruby 2.3 series: 2.3.4 and earlier
+> *Ruby 2.4 series: 2.4.1 and earlier
+> *prior to trunk revision 59672
 
-LSS is unique as a security conference as it's dedicated to Linux and Open 
-Source, and tends to be focused on defensive security engineering.
+Mitre communicated to me the following CVEs on query:
 
-This year we had refereed presentations, Linux kernel security subsystem 
-updates, and BoF topics.
+CVE-2017-0899  ANSI escape issue
 
-The schedule is here:
-http://events.linuxfoundation.org/events/archive/2017/linux-security-summit/program/schedule
+CVE-2017-0900  query command
 
-Slides may be found here:
-http://events.linuxfoundation.org/events/archive/2017/linux-security-summit/program/slides
-(and in some cases by clicking on the session topics).
+CVE-2017-0901  overwrite any file
 
-There was no video this year, unfortunately, and we'll work on making that 
-happen for next year.
+CVE-2017-0902  DNS issue
 
-Also, due to the LPC co-location and schedule overlap, we had no LWN 
-coverage of the event.
-
-You can find attendee coverage here:
-
-http://blog.namei.org/2017/10/02/linux-security-summit-2017-roundup/
-http://www.paul-moore.com/blog/d/2017/09/linux-security-summit.html
-https://tyhicks.com/2017/09/22/2017-Linux-Security-Summit-Day-1/
-https://tyhicks.com/2017/09/25/2017-Linux-Security-Summit-Day-2/
-
-There was also a shared day with LPC (on the 13th), where the TPMs and 
-containers microconfs were held. See:
-
-https://etherpad.openstack.org/p/LPC2017_TPM
-https://etherpad.openstack.org/p/LPC2017_Containers
-
-It was certainly useful to have so many security-interested Linux folk 
-there across both conferences, although we will avoid co-locating with LPC 
-in the future.  It's also useful to have some time between LPC and LSS for 
-ideas raised at one to be developed further and discussed at the other.
-
-For 2018, there will be a new European version of LSS, which will be held 
-in addition to the main event in North America.  This will be led by Elena 
-Reshetova, a member of the LSS program committee, who proposed the idea as 
-there are a lot of Linux and Open Source security folk in Europe who may 
-not be able to make it to the US event.  Stay tuned for an official 
-announcement soon (all such announcements can be found at @LinuxSecSummit 
-on twitter).
-
-In terms of trends, over the past year, we've seen a lot of activity again 
-in kernel hardening via the kernel self protection project, and you can 
-see where things are at by looking at Kees' slides:
-
-http://schd.ws/hosted_files/lss2017/aa/LSS-2017-Kernel-Self-Protection-Project.pdf
-
-This work is primarily focused on forward-porting grsecurity/PaX to 
-mainline, and I gather this will continue to be the case over the next 1-2 
-years.  One of the most significant effects of the project is more 
-mainline kernel developers gaining knowledge and skills in security via 
-involvement in KSPP.  And culturally, there is also now much greater 
-awareness of contemporary security threats and acceptance of the need to 
-mitigate them.  Kernel security is hopefully becoming less of a 
-specialized niche area, and more open to general kernel developers.
-
-We're also seeing continued activity in TPMs (v2.0 stack developoment), 
-integrity/boot verification, hardware-based mitigations, mobile/device, 
-and containers.  There are lots of challenges across these areas, and the 
-materials I've linked from LSS and LPC are a good place to start if you're 
-interested in where things are at currently.
-
-
-References:
-
-[1] http://events.linuxfoundation.org/events/archive/2017/linux-security-summit
-[2] http://events.linuxfoundation.org/events/open-source-summit-north-america
-[3] http://www.linuxplumbersconf.org/2017/
-
-
-
-
--- 
-James Morris
-<jmorris@...ei.org>
-
+Ciao, Marcus
