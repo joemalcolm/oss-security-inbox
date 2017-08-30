@@ -1,18 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/8
-Message-ID: <CAHmME9pvD3WYORH7u0WZEwxfsURJ+DZ0tQeYbx8fptZLeY-x6w@mail.gmail.com>
-Date: Wed, 26 Apr 2017 22:27:12 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: remote heap overflow in linux networking stack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/4
+Message-ID: <nycvar.YSQ.7.76.1708301533140.5404@wniryva>
+Date: Wed, 30 Aug 2017 15:34:51 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: David Buchanan <d@...buchanan.co.uk>
+Subject: CVE-2017-13673 Qemu: vga: reachable assert failure during during display update
 Content-Type: text/plain; charset=utf-8
 
-Hey guys,
+   Hello,
 
-Just following up on CVE-2017-7477 -- systems must also be patched
-with this commit that landed today:
+Quick emulator(Qemu) built with the VGA display emulator support is vulnerable 
+to an assert failure issue. It could occur while updating graphics display, 
+due to miscalculating region for dirty bitmap snapshot in split screen mode.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=5294b83086cc1c35b4efeca03644cf9d12282e5b
+A privileged user/process inside guest could use this flaw to crash the Qemu 
+process on the host resulting in DoS.
 
-Regards,
-Jason
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg04685.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1486588
+
+This issue was reported by David Buchanan.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
