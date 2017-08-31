@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/5
-Message-ID: <713762f9-3ee0-724c-e56e-6103a2aa2b6c@gentoo.org>
-Date: Mon, 3 Jul 2017 15:37:38 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Anthony Liguori <anthony@...emonkey.ws>
-Subject: Bugzilla implementation of OpenPGP and Memory Hole (Was: Re: accepting new members to (linux-)distros lists)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/31/2
+Message-ID: <99e7d55b-3743-4237-9d98-58e0f674c70b.tony.sh@alibaba-inc.com>
+Date: Thu, 31 Aug 2017 10:03:29 +0800
+From: "孙浩" <tony.sh@...baba-inc.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Cc: "Bob Friesenhahn" <bfriesen@...ple.dallas.tx.us>, "张洪亮(望初)" <wangchu.zhl@...baba-inc.com>, "曲富平(杭特)" <fuping.qfp@...baba-inc.com>
+Subject: CVE-2017-13776: GraphicsMagick 1.3.26 Denial of Service issue in ReadXBMImage() in coders/xbm.c
 Content-Type: text/plain; charset=utf-8
 
-[Changing subject as it has likely gone too off target with the previous
-one]
+Hi all.
+Description:graphicsmagick is a collection of tools and libraries for many image formats.
+We found a denial of service (DoS) issue in xbm.c at line 322, GraphicsMagick-1.3.26.The vulnerable code snippet is shown as below.    322     for (i=0; i < (long) (bytes_per_line*image->rows); i++)
+    323     {
+    324       value=XBMInteger(image,hex_digits);
+    325       *p++=(unsigned char) value;
+    326     }When a crafted XBM image file, which claims large image->rows and image->columns but does not contains sufficient backing data, is provided,the
+ loop at line 322 would consume huge CPU and memroy 
+resources, since there is no EOF (End of File) check inside the loop.It is worth noting that variable bytes_per_line is computed based on image->columns earlier.In our test, we used a machine with Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz, 4 CPU cores and 16GB RAM.This bug casued 100% CPU and up to 2GB RAM consumption.
+This process lasted for about 6 minutes.
+Affected version:
+1.3.26
 
-On 07/03/2017 02:35 PM, Kristian Fiskerstrand wrote:
-> On 07/02/2017 10:58 PM, Anthony Liguori wrote:
->> On Jul 2, 2017 1:38 PM, "Kristian Fiskerstrand"<k_f@...too.org> wrote:
->>> The immediate thought that springs to mind is the [lack of OpenPGP
->>> support in bugzilla] which makes it difficult to ensure confidentiality
->>> unless disabling all email warnings.
->>
->> I would just assume all email is disabled.  I don't know of a tool that
->> does this right so for security sensitive things, I think disabling email
->> notification is a best practice.
-> 
-> It wouldn't take much to have a tool that does, mainly what I outline in
-> the previous post to ensure OpenPGP keyblock management for the
-> individual users, and as an extension of the scope for that perhaps a
-> [MemoryHole] implementation to ensure confidentiality / integrity
-> verification of the RFC822 headers such as Subject. Enigmail users
-> should already have such support read-only[Note:A]
+Fixed version:
+N/A
 
-Just to add that when I say read only here it goes to the encrypted
-subject aspect of things (as, perhaps, inferred from the note). Enigmail
-should already, by default, use MemoryHole for signed messages in
-OpenPGP/MIME mode, which should be visible as a separate first MIME part
-e.g of this email.
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/233a720bfd5eCredit:
+This bug was discovered by Xiaohei and Wangchu from Alibaba Security Team.
 
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+CVE:
+CVE-2017-13776
 
+Reproducer:
+https://github.com/shqking/graphicsmagick-poc/blob/master/poc-322.xbmThe command we was using is     gm convert poc-322.xbm test.jpg
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Timeline:
+2017-08-24: bug discovered and reported to upstream privately
+2017-08-26: upstream released a fix
+2017-08-30: CVE assigned
