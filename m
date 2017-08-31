@@ -1,42 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/17
-Message-ID: <CAG_fn=UmeU0K9HRVz1mrkxsTejVHMMG3fwrxWdcwMCpTrR8hYw@mail.gmail.com>
-Date: Tue, 20 Jun 2017 17:35:00 +0200
-From: Alexander Potapenko <glider@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/31/5
+Message-ID: <20170831130409.trythk5aqvjhrryd@lorien.valinor.li>
+Date: Thu, 31 Aug 2017 15:04:09 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a data race in ALSA timer
+Cc: nicolas.gregoire@...rri.fr
+Subject: Re: CVE request: incorrect URL parsing in async-http-client <= 2.0.35
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 13, 2017 at 5:18 PM, Adam Maris <amaris@...hat.com> wrote:
->
->> > https://github.com/torvalds/linux/commit/d11662f4f798b50d8c8743f43384
-> 2c3e40fe3378
->> > https://github.com/torvalds/linux/commit/ba3021b2c79b2fa9114f92790a99
-> deb27a65b728
->>
->>
->
-> For reference, CVE-2017-1000380 was assigned for this issue.
->
-> Regards,
->
-> --
-> Adam Mariš, Red Hat Product Security
-> 1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
+Hi Nicolas,
 
-Please find the PoC exploit attached.
+On Thu, Aug 31, 2017 at 02:06:34PM +0200, Nicolas Grégoire wrote:
+> Hello,
+> 
+> a flaw was identified in the URL parsing code of async-http-client, a
+> Java HTTP client used in other projects like the Play Framework
+> (through its WS library):
+> https://www.playframework.com/documentation/2.6.x/JavaWS
+> 
+> The bug is similar to CVE-2016-8624 affecting cURL (incorrect
+> processing of string "#@" in the hostname):
+> https://curl.haxx.se/docs/adv_20161102J.html
+> 
+> Version 2.0.35 of async-http-client includes a fix and is available
+> through Maven since Monday. Relevant GitHub issue:
+> https://github.com/AsyncHttpClient/async-http-client/issues/1455
 
+CVEs cannot be requested anymore via the oss-security list.  Could you
+please request the CVE via the form at https://cveform.mitre.org/ and
+possibly keep us posted with a followup to this thread once the CVE
+has been assigned?
 
--- 
-Alexander Potapenko
-Software Engineer
-
-Google Germany GmbH
-Erika-Mann-Straße, 33
-80636 München
-
-Geschäftsführer: Matthew Scott Sucherman, Paul Terence Manicle
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-
-View attachment "snd_timer.c" of type "text/x-csrc" (7623 bytes)
+Regards,
+Salvatore
