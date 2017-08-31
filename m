@@ -1,43 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/2
-Message-ID: <nycvar.YSQ.7.76.1711221200110.4822@wniryva>
-Date: Wed, 22 Nov 2017 12:13:23 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: Re: CVE-2017-16845 Qemu: ps2: information leakage via post_load routine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/31/3
+Message-ID: <de6ce21e-1bd5-4fac-9222-e916e92943c1.tony.sh@alibaba-inc.com>
+Date: Thu, 31 Aug 2017 09:54:01 +0800
+From: "孙浩" <tony.sh@...baba-inc.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Cc: "Bob Friesenhahn" <bfriesen@...ple.dallas.tx.us>, "张洪亮(望初)" <wangchu.zhl@...baba-inc.com>, "曲富平(杭特)" <fuping.qfp@...baba-inc.com>
+Subject: CVE-2017-13775: GraphicsMagick 1.3.26 Denial of Service issue in ReadJNXImage() in coders/jnx.c
 Content-Type: text/plain; charset=utf-8
 
-  Hello Ian,
+Hi all.
+Description:graphicsmagick is a collection of tools and libraries for many image formats.
+We found a denial of service (DoS) issue in jnx.c at line 326, GraphicsMagick-1.3.26.The vulnerable code snippet is shown as below.    326       for (j = 0; j < JNXLevelInfo[i].TileCount; j++)
+    327         {
+    328           PositionList[j].TileBounds.NorthEast.lat = ReadBlobLSBLong(image);
+    329           PositionList[j].TileBounds.NorthEast.lon = ReadBlobLSBLong(image);
+    330           PositionList[j].TileBounds.SouthWest.lat = ReadBlobLSBLong(image);
+    331           PositionList[j].TileBounds.SouthWest.lon = ReadBlobLSBLong(image);
+    332           PositionList[j].PicWidth = ReadBlobLSBShort(image);
+    333           PositionList[j].PicHeight = ReadBlobLSBShort(image);
+    334           PositionList[j].PicSize = ReadBlobLSBLong(image);
+    335           PositionList[j].PicOffset = ReadBlobLSBLong(image);
+    336         }When a crafted JNX image file, which claims large TileCount but does not contain sufficient backing data, is provided,the loop at line 326 would consume huge CPU and memroy resources, since there is no EOF (End of File) check inside the loop.In our test, we used a machine with Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz, 4 CPU cores and 16GB RAM.This bug caused 100% CPU and up to 4GB RAM consumption.This process lasted for about 4 minutes.
+Affected version:
+1.3.26
 
-+-- On Tue, 21 Nov 2017, Ian Zimmerman wrote --+
-| >   -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02982.html
-| 
-| Hi, what can I do with these QEMU reports?  I can try to apply the
-| patch, but I have no idea if it will work, because I don't know which
-| branch or revision it is based on.
+Fixed version:
+N/A
 
-  Patch is sent against upstream Qemu git repository(below) and is merged 
-after due review on the -devel list.
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/b037d79b6ccd
+Credit:
+This bug was discovered by Xiaohei and Wangchu from Alibaba Security Team.
 
-  -> https://git.qemu.org/?p=qemu.git;a=summary
+CVE:
+CVE-2017-13775
 
-| By my unscientific counting, there are only 2 other userspace projects which 
-| earn CVEs as frequently as QEMU: openjpeg and graphicsmagick.  In both these 
-| cases, starting with the message posted here and following the references, I 
-| can quickly locate the actual VC commit (in git and mercurial, respectively) 
-| and thus have a sound basis for deciding what to do: patch, wait for an 
-| updated distro package, or fork the distro package.
-| 
-| Is there a reason why that cannot be done with QEMU?
+Reproducer:
+https://github.com/shqking/graphicsmagick-poc/blob/master/poc.jnxThe command we was using is     gm convert poc.jnx test.jpg
 
-Reviewed patches soon show-up in the above master repository. In this case, it 
-so happened that an earlier version v1 of the patch was more acceptable
+Timeline:
+2017-08-24: bug discovered and reported to upstream privately
+2017-08-26: upstream released a fix
+2017-08-30: CVE assigned
 
-  -> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg02946.html
-
-It should make it upstream soon, I'll update here accordingly.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
