@@ -1,106 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/14
-Message-ID: <3455585.WHHIzQRhE4@blackgate>
-Date: Thu, 09 Feb 2017 14:46:31 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: zziplib: out of bounds read in zzip_mem_entry_new (memdisk.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/31/1
+Message-ID: <b2719aac-c013-4b29-ad19-c1aa26d298a5.tony.sh@alibaba-inc.com>
+Date: Thu, 31 Aug 2017 10:07:24 +0800
+From: "孙浩" <tony.sh@...baba-inc.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Cc: "张洪亮(望初)" <wangchu.zhl@...baba-inc.com>, "Bob Friesenhahn" <bfriesen@...ple.dallas.tx.us>, "曲富平(杭特)" <fuping.qfp@...baba-inc.com>
+Subject: CVE-2017-13777: GraphicsMagick 1.3.26 Denial of Service issue in ReadXBMImage() in coders/xbm.c
 Content-Type: text/plain; charset=utf-8
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
-
-A fuzz on it discovered an out of bounds read.
-
-The complete ASan output:
-
-# unzzipcat-mem $FILE
-==7934==ERROR: AddressSanitizer: unknown-crash on address 0x7f439a704000 at pc 
-0x0000004bb815 bp 0x7fff911ebe30 sp 0x7fff911eb5e0
-READ of size 59396 at 0x7f439a704000 thread T0
-    #0 0x4bb814 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #1 0x7f439a3da299 in zzip_mem_entry_new /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:210:13
-    #2 0x7f439a3da299 in zzip_mem_disk_load /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
-    #3 0x7f439a3d98b7 in zzip_mem_disk_open /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
-    #4 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12
-    #5 0x7f439951961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #6 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
-
-AddressSanitizer can not describe address in more detail (wild memory access 
-suspected).
-SUMMARY: AddressSanitizer: unknown-crash /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413 
-in __asan_memcpy
-Shadow bytes around the buggy address:
-  0x0fe8f34d87b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe8f34d87c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe8f34d87d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe8f34d87e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe8f34d87f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0fe8f34d8800:[fe]fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fe8f34d8810: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fe8f34d8820: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fe8f34d8830: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fe8f34d8840: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fe8f34d8850: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==7934==ABORTING
-
+Hi all.
+Description:graphicsmagick is a collection of tools and libraries for many image formats.
+We found a denial of service (DoS) issue in xbm.c at line 314, GraphicsMagick-1.3.26.The vulnerable code snippet is shown as below.    313   if (version == 10)
+    314     for (i=0; i < (long) (bytes_per_line*image->rows); (i+=2))
+    315     {
+    316       value=XBMInteger(image,hex_digits);
+    317       *p++=(unsigned char) value;
+    318       if (!padding || ((i+2) % bytes_per_line))
+    319         *p++=(unsigned char) (value >> 8);
+    320     }When a crafted XBM image file, which claims large image->rows and image->columns but does not contains sufficient backing data, is provided,the
+ loop at line 314 would consume huge CPU and memroy 
+resources, since there is no EOF (End of File) check inside the loop.It is worth noting that variable bytes_per_line is computed based on image->columns earlier.In our test, we used a machine with Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz, 4 CPU cores and 16GB RAM.This bug casued 100% CPU and up to 4GB RAM consumption.
+This process lasted for more than 9 minutes.
 Affected version:
-0.13.62
+1.3.26
 
 Fixed version:
 N/A
 
 Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+http://hg.code.sf.net/p/graphicsmagick/code/rev/233a720bfd5eCredit:
+This bug was discovered by Xiaohei and Wangchu from Alibaba Security Team.
 
 CVE:
-N/A
+CVE-2017-13777
 
 Reproducer:
-https://github.com/asarubbo/poc/blob/master/00156-zziplib-oobread-zzip_mem_entry_new
+https://github.com/shqking/graphicsmagick-poc/blob/master/poc-314.xbmThe command we was using is     gm convert poc-314.xbm test.jpg
 
 Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
+2017-08-24: bug discovered and reported to upstream privately
+2017-08-26: upstream released a fix
+2017-08-30: CVE assigned
 
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-out-of-bounds-read-in-zzip_mem_entry_new-memdisk-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
