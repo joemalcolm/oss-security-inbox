@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/24
-Message-ID: <20170621221511.GC28151@localhost.localdomain>
-Date: Wed, 21 Jun 2017 15:15:11 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/31/4
+Message-ID: <1504181194.31557.160.camel@agarri.fr>
+Date: Thu, 31 Aug 2017 14:06:34 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Cc: Theo de Raadt <deraadt@...nbsd.org>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+Subject: CVE request: incorrect URL parsing in async-http-client <= 2.0.35
 Content-Type: text/plain; charset=utf-8
 
-Hi Brad, Theo, all,
+Hello,
 
-On Wed, Jun 21, 2017 at 08:25:26AM -0400, Brad Spengler wrote:
-> OpenBSD publishing this commit
-> ...
-> What's the official
-> explanation for this, and is any action being taken for what I assume is a
-> member of the private list breaking the embargo?
+a flaw was identified in the URL parsing code of async-http-client, a
+Java HTTP client used in other projects like the Play Framework
+(through its WS library):
+https://www.playframework.com/documentation/2.6.x/JavaWS
 
-OpenBSD is not a member of distros@, and we therefore contacted them
-separately: we tried a first time on May 3, then a few times after that,
-and on May 12 we received a reply.  On that same day, and before we sent
-them our advisory draft (OpenBSD part only), we asked them if they would
-accept an embargo until May 30, and they accepted.
+The bug is similar to CVE-2016-8624 affecting cURL (incorrect
+processing of string "#@" in the hostname):
+https://curl.haxx.se/docs/adv_20161102J.html
 
-On May 13 they acknowledged receipt of our advisory draft, on May 17 we
-sent them our proof-of-concept, and on May 18 we were notified by a
-distros@ member that OpenBSD publicly patched their qsort(), and on May
-19 we were notified by another distros@ member that OpenBSD publicly
-patched their stack guard-page implementation.
+Version 2.0.35 of async-http-client includes a fix and is available
+through Maven since Monday. Relevant GitHub issue:
+https://github.com/AsyncHttpClient/async-http-client/issues/1455
 
-On May 19 we asked OpenBSD for an explanation as to why they broke the
-embargo, and on May 21 we received a mail from them but no explanation.
+Regards,
+Nicolas Grégoire
 
-However, instead of dwelling on the past, we would like to ask an
-important question about the future:  what should we do the next time we
-(or other researchers) discover a vulnerability that affects OpenBSD and
-other operating systems?  Will OpenBSD properly enforce the next
-embargo?  Please advise.  Thank you very much!
 
-With best regards,
-
--- 
-the Qualys Security Advisory team
