@@ -1,25 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/15
-Message-ID: <20170223162028.GA14624@mail.hallyn.com>
-Date: Thu, 23 Feb 2017 10:20:28 -0600
-From: "Serge E. Hallyn" <serge@...lyn.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/31/6
+Message-ID: <1504195219.31557.162.camel@agarri.fr>
+Date: Thu, 31 Aug 2017 18:00:19 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
+Subject: Re: CVE request: incorrect URL parsing in async-http-client <= 2.0.35
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 23, 2017 at 05:08:48PM +0100, Hanno Böck wrote:
-> On Thu, 23 Feb 2017 07:56:51 -0500
-> Assaf Gordon <assafgordon@...il.com> wrote:
-> 
-> > GNU Coreutils stopped installing 'su' by default in 2007,
-> > and completely removed 'su' (including the 'su.c' source file)
-> > in 2012.
-> 
-> That's good to know, so now there are only 2 competing versions of su
-> instead of 3 in major packages :-)
-> 
-> Anyone have a good idea who is using shadow vs. util-linux su? Do they
-> have specific advantages/disadvantages, would it be reasonable to try
-> to get all distros to use them same one?
+> Could you please request the CVE via the form at
+> https://cveform.mitre.org/ and possibly keep us posted with a 
+> followup to this thread once the CVE has been assigned?
 
-There is a debian bug to switch over to the util-linux version of su.
+CVE-2017-14063 was assigned.
+
+Cheers,
+Nicolas
