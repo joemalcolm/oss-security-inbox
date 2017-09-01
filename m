@@ -1,36 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/2
-Message-Id: <06FEF7A9-73A6-43C5-A8FA-36FA1349E5A4@shiz.me>
-Date: Mon, 8 May 2017 04:03:24 +0200
-From: Shiz <hi@...z.me>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/5
+Message-ID: <1800933.Ch0Tc53MgN@wanheda>
+Date: Fri, 01 Sep 2017 14:01:25 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: terminal emulators' processing of escape sequences
+Subject: Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
 Content-Type: text/plain; charset=utf-8
 
-> On 1 May 2017, at 18:44, Solar Designer <solar@...nwall.com> wrote:
-> 
-> Unfortunately, I did not record which terminal emulators did not crash
-> for me.  However, Jason recorded both kinds of results for him, coming
-> up with:
-> 
-> Konsole: no crash
-> Xterm: no crash
-> rxvt: crash
-> Yakuake: no crash
-> Mosh (which is a terminal emulator, after all): no crash
-> Screen: 100% CPU usage --> DoS
-> rxvt-unicode: no crash
-> Qterminal: no crash
-> putty: no crash
-> 
-> This adds "screen" to terminal emulators with problematic processing of
-> terminal escapes.  Due to minor known impact, we did not handle this
-> under embargo - it should be investigated and fixed now, in public.
+This is CVE-2017-14042
 
-Despite not being open source and thus unfit for the list, I can confirm this
-also causes high CPU usage for macOS Terminal.app, version 2.7.1 (387),
-as shipped on macOS 10.12.1.
 
-- Shiz
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
