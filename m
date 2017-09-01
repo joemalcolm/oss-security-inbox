@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["613" "Monday" "7" "August" "2017" "09:52:49" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<613154429.39760878.1502113969550.JavaMail.zimbra@redhat.com>" "14" "Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" nil nil nil "8" "2017080713:52:49" "[oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" (number mark "U       vdronov@redh Aug  7   14/613   " thread-indent "\"Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()\"\n") "<d0a17b55-f653-4b64-1459-cab178ff0a56@oracle.com>" ("<754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>" "<d0a17b55-f653-4b64-1459-cab178ff0a56@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7299" "Friday" "1" "September" "2017" "12:19:57" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<772188.223523216-sendEmail@localhost>" "123" "[oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c) (INCOMPLETE FIX FOR CVE-2017-11403)" "^Date:" nil nil "9" "2017090112:19:57" "[oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c) (INCOMPLETE FIX FOR CVE-2017-11403)" (number mark "        ago@gentoo.o Sep  1  123/7299  " thread-indent "\"[oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c) (INCOMPLETE FIX FOR CVE-2017-11403)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17886 invoked by uid 550); 7 Aug 2017 13:53:02 -0000
+Received: (qmail 16136 invoked by uid 550); 1 Sep 2017 12:20:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,136 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17769 invoked from network); 7 Aug 2017 13:53:01 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com A36205D697
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
-Date: Mon, 7 Aug 2017 09:52:49 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <613154429.39760878.1502113969550.JavaMail.zimbra@redhat.com>
-In-Reply-To: <d0a17b55-f653-4b64-1459-cab178ff0a56@oracle.com>
-References: <754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com> <d0a17b55-f653-4b64-1459-cab178ff0a56@oracle.com>
+Received: (qmail 16118 invoked from network); 1 Sep 2017 12:20:13 -0000
+Message-ID: <772188.223523216-sendEmail@localhost>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-29040.7122383876"
+Date: Fri, 1 Sep 2017 12:19:57 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] graphicsmagick: use-after-free in CloseBlob (blob.c) (INCOMPLETE FIX FOR CVE-2017-11403)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+
+------MIME delimiter for sendEmail-29040.7122383876
+Content-Type: text/plain;
+        charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.4.119, 10.4.195.12]
-Thread-Topic: kernel: inotify: a race between inotify_handle_event() and sys_rename()
-Thread-Index: tqnb4eiY64pFDmxIvR21NuXkBZanjw==
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Mon, 07 Aug 2017 13:52:49 +0000 (UTC)
-Subject: Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between
- inotify_handle_event() and sys_rename()
 
-Hello, John,
+Description:
+graphicsmagick is a collection of tools and libraries for many image formats.
 
-> > https://access.redhat.com/security/vulnerabilities/3112931
->
-> I suspect there's nothing in this that's not repeated elsewhere, but
-> that page says "Access Denied".
+After some test I realized that the fix for CVE-2017-11403 was not enough, see also:
+https://blogs.gentoo.org/ago/2017/07/12/graphicsmagick-use-after-free-in-closeblob-blob-c/
 
-Indeed, this article is not published yet and we are (I am) working on it, it should be ready soon.
-I've included the link to the article in the announce for the reference of future readers. You are
-correct, the article mostly duplicates the announce and the only additional information is related
-to the Red Hat's products, like advisories with the fix.
+The complete ASan output of the issue:
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+# gm identify $FILE
+==20404==ERROR: AddressSanitizer: heap-use-after-free on address 0x6230000053c0 at pc 0x7fc01a253357 bp 0x7fffcd2d2630 sp 0x7fffcd2d2628
+READ of size 8 at 0x6230000053c0 thread T0
+    #0 0x7fc01a253356 in CloseBlob /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/blob.c:859:3
+    #1 0x7fc013fbed77 in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5144:11
+    #2 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #3 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #4 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #5 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #6 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #7 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #8 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+
+0x6230000053c0 is located 6848 bytes inside of 6856-byte region [0x623000003900,0x6230000053c8)
+freed by thread T0 here:
+    #0 0x4cf4d0 in __interceptor_cfree /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:55
+    #1 0x7fc01a8f13d2 in MagickFree /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:509:5
+    #2 0x7fc01a7dc750 in DestroyImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:1277:3
+    #3 0x7fc01a8a7cda in DestroyImageList /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/list.c:239:5
+    #4 0x7fc013fbed6f in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5143:11
+    #5 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #6 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #7 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #8 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #9 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #10 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+previously allocated by thread T0 here:
+    #0 0x4cf688 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7fc01a8f04d6 in MagickMalloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:156:10
+    #2 0x7fc01a7a6fa3 in AllocateImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:336:18
+    #3 0x7fc013f7819a in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:3872:9
+    #4 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
+    #5 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
+    #6 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
+    #7 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
+    #8 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
+    #9 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-use-after-free /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/blob.c:859:3 in CloseBlob
+Shadow bytes around the buggy address:
+  0x0c467fff8a20: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a30: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a40: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a50: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c467fff8a60: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+=>0x0c467fff8a70: fd fd fd fd fd fd fd fd[fd]fa fa fa fa fa fa fa
+  0x0c467fff8a80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8a90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8aa0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8ab0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c467fff8ac0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==20404==ABORTING
+
+Affected version:
+1.3.26
+
+Fixed version:
+N/A
+
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/98721124e51f
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+Waiting for a CVE assignment
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00333-graphicsmagick-UAF-CloseBlob
+
+Timeline:
+2017-08-02: bug discovered and reported to upstream
+2017-08-27: upstream released a fix
+2017-09-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/01/graphicsmagick-use-after-free-in-closeblob-blob-c-incomplete-fix-for-cve-2017-11403/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-29040.7122383876--
+
