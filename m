@@ -1,25 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/2
-Message-ID: <CAN6_dU-=Z2bXnXSnkjTx6F6-So6gju2QnWWMoAdS-yENVWLY+g@mail.gmail.com>
-Date: Tue, 31 Jan 2017 13:17:43 +0800
-From: chunibalon <chunibalon@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/7
+Message-ID: <1682595.j4QYMsr6oW@wanheda>
+Date: Fri, 01 Sep 2017 15:24:48 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)
+Subject: Re: graphicsmagick: use-after-free in CloseBlob (blob.c) (INCOMPLETE FIX FOR CVE-2017-11403)
 Content-Type: text/plain; charset=utf-8
 
-Hi:
+This is CVE-2017-14103
 
-        These issues were discovered via libtiff 4.0.7, however after
-upstream analysis they were found that they are in netpbm(10.47.63)
-       The url of bug tracker:
-        http://bugzilla.maptools.org/show_bug.cgi?id=2654
-        http://bugzilla.maptools.org/show_bug.cgi?id=2655
-        Then I mailed the maintainer of netpbm and he promised fix them in
-the next Netpbm Super Stable release (the release series I tested) at the
-end of March.
-       Could you please assign CVE id's for these?
 
-Best Regards,
-chunibalon of VARAS@IIE
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
