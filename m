@@ -1,4 +1,9 @@
-Received: (qmail 9547 invoked by uid 550); 22 Sep 2023 13:21:57 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1614" "Friday" "1" "September" "2017" "19:20:54" "+0300" "Vasily Averin" "vvs@virtuozzo.com" "<ec789926-c94c-cbd8-375d-34f34118e74e@virtuozzo.com>" "41" "[oss-security] CVE-2017-14106 kernel: net/ipv4: divide by 0 in __tcp_select_window()" "^Cc:" nil nil "9" "2017090116:20:54" "[oss-security] CVE-2017-14106 kernel: net/ipv4: divide by 0 in __tcp_select_window()" (number mark "        vvs@virtuozz Sep  1   41/1614  " thread-indent "\"[oss-security] CVE-2017-14106 kernel: net/ipv4: divide by 0 in __tcp_select_window()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3618 invoked by uid 550); 1 Sep 2017 16:22:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,63 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5769 invoked from network); 22 Sep 2023 13:18:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1695388703;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OdzDolk3Qyw+dNKRlJ2gdhfr/Z3eumPU+BwPbcBWKdo=;
-	b=ZUorPA+v2l+uf509KaxQbyYcbLwA21PPz/chhEURzsicyHya3PMIVgTiNeb2CyBOXzYQF4
-	GrPx1DAIYHxqdWEHYmOX8XvpdGdgx+msu/ErylYUe5AYLQsPuIw2G33qvrHXY0YEeAobVJ
-	3jRYDLpOHs9ejMK74k3oxnIl8OD4OAI=
-X-MC-Unique: SLthiYBIObCVqFyrx_NSaw-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695388699; x=1695993499;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OdzDolk3Qyw+dNKRlJ2gdhfr/Z3eumPU+BwPbcBWKdo=;
-        b=SQwBcvdzGCrdmAQ2c9XEvOIuXhBWyB5BG1efHIQVBH6Y1pXAkuXZ3pY3kFVVL5PGAk
-         zMKI3NELnKdpRIFA2wFp53KEztKd2JLrTMgmgcAVCAkBahxN+gI7HnoytkR/kGpcP4Y7
-         tMa1I8pjaanpXMcBhsduIFCQSHnciIwjYF65MjAc3PVcerQsqzdTxLPx+rdt5WrObl3/
-         QPVYCnmidiHpvhkcI9W6+VKrLlIO+mUbfuHFPSt8VLTAVdpv5lJ+44upx3j8rc3Coe9I
-         4vJG4LQdPIavY0XrqDdUOblUGDWjiYhnqCNIDGysO2IoNhmrzGPT3LRpRGmHyCGLahmq
-         4fWA==
-X-Gm-Message-State: AOJu0YycmoohfKPYSrqJhaWViq9ZgKOebPB/pvinSRN3l1KGeuGqrQSC
-	mMxdSvm76gob2rc8vdFyVfrG4tBzgqQfgEdLlKp11nA3z1bHXyCCW7jm/zC88LsVBQIrRUdIa1y
-	zEHYkiHVGVgMxRh7z6ZqWXZKEKSnkvnyrL5lHZVgwTeC743PmOdQU
-X-Received: by 2002:a2e:9b42:0:b0:2bf:fab9:db28 with SMTP id o2-20020a2e9b42000000b002bffab9db28mr7834985ljj.6.1695388699257;
-        Fri, 22 Sep 2023 06:18:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEzPOuycTkuJ4eCy2+k5ao+63l+IN9Pbm+8xvu2jsrahGJzekH76gW2XDSwOPRw0mqAUSnicz4lFvOpbAet9QM=
-X-Received: by 2002:a2e:9b42:0:b0:2bf:fab9:db28 with SMTP id
- o2-20020a2e9b42000000b002bffab9db28mr7834961ljj.6.1695388698888; Fri, 22 Sep
- 2023 06:18:18 -0700 (PDT)
+Received: (qmail 1621 invoked from network); 1 Sep 2017 16:21:07 -0000
+Message-ID: <ec789926-c94c-cbd8-375d-34f34118e74e@virtuozzo.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-References: <20230921205250.GA13106@openwall.com> <20230922072817.092917d2.hanno@hboeck.de>
- <72a6e741-1420-d21d-11cc-2592598e53f4@canonical.com>
-In-Reply-To: <72a6e741-1420-d21d-11cc-2592598e53f4@canonical.com>
-From: Rodrigo Freire <rfreire@redhat.com>
-Date: Fri, 22 Sep 2023 10:18:07 -0300
-Message-ID: <CAHjsZGb3P0dt1fe-SzcFXY_UiJWTR4v_Krv8ZaMDDaps09T6uQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Cc: Andrey Konovalov <andreyknvl@google.com>
+Date: Fri, 1 Sep 2017 19:20:54 +0300
+From: Vasily Averin <vvs@virtuozzo.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-14106 kernel: net/ipv4: divide by 0 in __tcp_select_window()
 To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE-2023-4863: libwebp: Heap buffer overflow in
- WebP Codec
 
-On Fri, Sep 22, 2023 at 8:43=E2=80=AFAM Marc Deslauriers
-<marc.deslauriers@canonical.com> wrote:
-> We (Ubuntu) didn't include that second commit in our libwebp updates, and=
- I
-> don't believe Red Hat/Fedora did either. If that second commit does have a
-> security impact, it probably needs a different CVE to clear up confusion.
+[Suggested description]
+The tcp_disconnect function in net/ipv4/tcp.c in the Linux kernel before 4.12 allows
+local users to cause a denial of service (__tcp_select_window divide-by-zero error and system crash) 
+by triggering a disconnect within a certain tcp_recvmsg code path.
 
-And hope that time the CNA assigns the CVE to the right component...
+[VulnerabilityType Other]
+CWE-369: Divide By Zero
 
-- RF
+[Reference]
+https://groups.google.com/forum/#!topic/syzkaller/e4SrsEBEziQ
+https://www.mail-archive.com/netdev@vger.kernel.org/msg186255.html
+https://github.com/torvalds/linux/commit/499350a5a6e7512d9ed369ed63a4244b6536f4f8
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=499350a5a6e7512d9ed369ed63a4244b6536f4f8
 
+
+[Discoverer]
+Andrey Konovalov  <andreyknvl@google.com>
+
+It was fixed in linux mainline 4.12-rc3
+
+commit 499350a5a6e7512d9ed369ed63a4244b6536f4f8
+Author: Wei Wang <weiwan@google.com>
+Date:   Thu May 18 11:22:33 2017 -0700
+
+    tcp: initialize rcv_mss to TCP_MIN_MSS instead of 0
+    
+    When tcp_disconnect() is called, inet_csk_delack_init() sets
+    icsk->icsk_ack.rcv_mss to 0.
+    This could potentially cause tcp_recvmsg() => tcp_cleanup_rbuf() =>
+    __tcp_select_window() call path to have division by 0 issue.
+    So this patch initializes rcv_mss to TCP_MIN_MSS instead of 0.
+    
+    Reported-by: Andrey Konovalov  <andreyknvl@google.com>
+    Signed-off-by: Wei Wang <weiwan@google.com>
+    Signed-off-by: Eric Dumazet <edumazet@google.com>
+    Signed-off-by: Neal Cardwell <ncardwell@google.com>
+    Signed-off-by: Yuchung Cheng <ycheng@google.com>
+    Signed-off-by: David S. Miller <davem@davemloft.net>
+
+Thank you,
+	Vasily Averin
