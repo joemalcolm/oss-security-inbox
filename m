@@ -1,33 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/9
-Message-ID: <CAN_LGv1TvwzDnsOSrEos7zuKbsqEsZHB5ahnONK-63CotmUKkA@mail.gmail.com>
-Date: Wed, 25 Jan 2017 01:20:49 +0500
-From: "Alexander E. Patrakov" <patrakov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/8
+Message-ID: <ec789926-c94c-cbd8-375d-34f34118e74e@virtuozzo.com>
+Date: Fri, 1 Sep 2017 19:20:54 +0300
+From: Vasily Averin <vvs@...tuozzo.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Headsup: systemd v228 local root exploit (CVE-2016-10156)
+Cc: Andrey Konovalov <andreyknvl@...gle.com>
+Subject: CVE-2017-14106 kernel: net/ipv4: divide by 0 in __tcp_select_window()
 Content-Type: text/plain; charset=utf-8
 
-2017-01-24 13:55 GMT+05:00 Sebastian Krahmer <krahmer@...e.com>:
-> Hi
->
-> This is a heads up for a trivial systemd local root exploit, that
-> was silently fixed in the upstream git as:
->
-> commit 06eeacb6fe029804f296b065b3ce91e796e1cd0e
-> Author: ....
-> Date:   Fri Jan 29 23:36:08 2016 +0200
->
->     basic: fix touch() creating files with 07777 mode
+[Suggested description]
+The tcp_disconnect function in net/ipv4/tcp.c in the Linux kernel before 4.12 allows
+local users to cause a denial of service (__tcp_select_window divide-by-zero error and system crash) 
+by triggering a disconnect within a certain tcp_recvmsg code path.
 
-That's important for users of Arch Linux and other rolling distributions.
+[VulnerabilityType Other]
+CWE-369: Divide By Zero
 
-If the system has booted the vulnerable version of systemd at least
-once, then the files with dangerous permissions will be there. There
-is no code in systemd that fixes permissions on already existing stamp
-files. There is no postinstall script in Arch that does it, either.
-So, you have to fix permissions to 0644 or remove the stamp files
-manually, once, even though the commit appeared in Arch repositories
-long time ago.
+[Reference]
+https://groups.google.com/forum/#!topic/syzkaller/e4SrsEBEziQ
+https://www.mail-archive.com/netdev@vger.kernel.org/msg186255.html
+https://github.com/torvalds/linux/commit/499350a5a6e7512d9ed369ed63a4244b6536f4f8
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=499350a5a6e7512d9ed369ed63a4244b6536f4f8
 
--- 
-Alexander E. Patrakov
+
+[Discoverer]
+Andrey Konovalov  <andreyknvl@...gle.com>
+
+It was fixed in linux mainline 4.12-rc3
+
+commit 499350a5a6e7512d9ed369ed63a4244b6536f4f8
+Author: Wei Wang <weiwan@...gle.com>
+Date:   Thu May 18 11:22:33 2017 -0700
+
+    tcp: initialize rcv_mss to TCP_MIN_MSS instead of 0
+    
+    When tcp_disconnect() is called, inet_csk_delack_init() sets
+    icsk->icsk_ack.rcv_mss to 0.
+    This could potentially cause tcp_recvmsg() => tcp_cleanup_rbuf() =>
+    __tcp_select_window() call path to have division by 0 issue.
+    So this patch initializes rcv_mss to TCP_MIN_MSS instead of 0.
+    
+    Reported-by: Andrey Konovalov  <andreyknvl@...gle.com>
+    Signed-off-by: Wei Wang <weiwan@...gle.com>
+    Signed-off-by: Eric Dumazet <edumazet@...gle.com>
+    Signed-off-by: Neal Cardwell <ncardwell@...gle.com>
+    Signed-off-by: Yuchung Cheng <ycheng@...gle.com>
+    Signed-off-by: David S. Miller <davem@...emloft.net>
+
+Thank you,
+	Vasily Averin
