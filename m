@@ -1,30 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/06/3
-Message-ID: <20170106101153.GB9517@suse.de>
-Date: Fri, 6 Jan 2017 11:11:53 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/4
+Message-ID: <8698906.Jpa684UyaA@wanheda>
+Date: Fri, 01 Sep 2017 14:01:07 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Firejail local root exploit
+Subject: Re: openjpeg: stack-based buffer overflow write in pgxtoimage (convert.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi Mitre,
+This is CVE-2017-14041
 
-On Wed, Jan 04, 2017 at 12:16:49PM -0500, cve-assign@...re.org wrote:
-> >  * Firejail has too broad attack surface that allows users
-> >  * to specify a lot of options, where one of them eventually
-> >  * broke by accessing user-files while running with euid 0.
-> 
-> > const char *const ldso = "/etc/ld.so.preload";
-> > ...
-> > snprintf(path, sizeof(path) - 1, "%s/.firenail/.Xauthority", home);
-> > ...
-> > symlink(ldso, path)
-> 
-> Use CVE-2017-5180.
-
-Is this correct? It starts quite far into the 2017 namespace?
-
-Or have other CNAs allocated the previous 5000 ?
-
-Ciao, Marcus
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
