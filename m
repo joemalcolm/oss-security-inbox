@@ -1,16 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/9
-Message-ID: <CA+PdXctD5w7vuWEnPaivtdccpBO-cm6bzNQLU_LatPq0eE_8yA@mail.gmail.com>
-Date: Thu, 8 Jun 2017 17:04:57 -0400
-From: Glenn Randers-Pehrson <glennrp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/3
+Message-ID: <14897455.GIhqfEeHBG@wanheda>
+Date: Fri, 01 Sep 2017 14:00:38 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Is not memory allocation failure a bug?
+Subject: Re: openjpeg: invalid memory write in tgatoimage (convert.c)
 Content-Type: text/plain; charset=utf-8
 
-I just checked a fix for one of those into Firefox yesterday.  It wasn't
-considered a serious problem because the malloc would eventually
-fail safely, but it's better to predict the problem ahead of time and not
-even try to malloc all available memory.
+This is CVE-2017-14040
 
-See https://bugzilla.mozilla.org/show_bug.cgi?id=1368407
-in which a tiny PNG file tries to claim Gigabytes of memory.
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
