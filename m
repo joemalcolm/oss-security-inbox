@@ -1,22 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/9
-Message-ID: <20171003170533.GY2338@netmeister.org>
-Date: Tue, 3 Oct 2017 13:05:33 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/2
+Message-ID: <1564163.qSnceChrjU@wanheda>
+Date: Fri, 01 Sep 2017 14:00:17 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)
+Subject: Re: openjpeg: heap-based buffer overflow in opj_t2_encode_packet (t2.c)
 Content-Type: text/plain; charset=utf-8
 
-Qualys Security Advisory <qsa@...lys.com> wrote:
-> 
-> Qualys Security Advisory
-> 
-> Linux PIE/stack corruption (CVE-2017-1000253)
+This is CVE-2017-14039
 
-How come this CVE does not yet show up on cve.mitre.org?
-
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000253
-
-It's been a week since the publication.
-
--Jan
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
