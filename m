@@ -1,75 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/8
-Message-ID: <72e4041404044830a9451428dfc81eba@imshyb01.MITRE.ORG>
-Date: Sat, 28 Jan 2017 17:40:36 -0500
-From: <cve-assign@...re.org>
-To: <seb@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: cgiemail multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/02/2
+Message-ID: <411473.584917502-sendEmail@localhost>
+Date: Sat, 2 Sep 2017 18:43:53 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libzip: use-after-free in _zip_buffer_free (zip_buffer.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+libzip is a library for manipulating zip archives.
 
-> https://news.cpanel.com/tsr-2017-0001-full-disclosure
+The relevant ASan output of the issue:
 
-It is possible that the upstream distribution is unmaintained because the
-latest release is from about 19 years ago:
+# ziptool $FILE cat index
+==1771==ERROR: AddressSanitizer: heap-use-after-free on address 0x6030000000d1 at pc 0x7f267d085fc1 bp 0x7ffed21f65f0 sp 0x7ffed21f65e8     
+READ of size 1 at 0x6030000000d1 thread T0   
+    #0 0x7f267d085fc0 in _zip_buffer_free /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_buffer.c:53:17    
+    #1 0x7f267d092646 in _zip_dirent_read /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_dirent.c
+    #2 0x7f267d0aabfe in _zip_read_cdir /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:380:69  
+    #3 0x7f267d0aabfe in _zip_find_central_dir /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:613   
+    #4 0x7f267d0aabfe in _zip_open /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:200
+    #5 0x7f267d0a89b7 in zip_open_from_source /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:148:11 
+    #6 0x7f267d0a7e93 in zip_open /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:74:15    
+    #7 0x513392 in read_from_file /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/src/ziptool.c:698:13    
+    #8 0x513392 in main /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/src/ziptool.c:1113 
+    #9 0x7f267c1b5680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289    
+    #10 0x41b058 in _init (/usr/bin/ziptool+0x41b058)  
 
-  http://web.mit.edu/wwwdev/cgiemail/webmaster.html#1.6
+0x6030000000d1 is located 1 bytes inside of 32-byte region [0x6030000000d0,0x6030000000f0)
+freed by thread T0 here: 
+    #0 0x4d0850 in __interceptor_cfree /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:55  
+    #1 0x7f267d085f83 in _zip_buffer_free /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_buffer.c:57:5
+    #2 0x7f267d0935ea in _zip_dirent_read /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_dirent.c:571:9    
+    #3 0x7f267d0aabfe in _zip_read_cdir /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:380:69  
+    #4 0x7f267d0aabfe in _zip_find_central_dir /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:613   
+    #5 0x7f267d0aabfe in _zip_open /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:200
+    #6 0x7f267d0a89b7 in zip_open_from_source /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:148:11 
+    #7 0x7f267d0a7e93 in zip_open /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:74:15    
+    #8 0x513392 in read_from_file /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/src/ziptool.c:698:13
+    #9 0x513392 in main /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/src/ziptool.c:1113
+    #10 0x7f267c1b5680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-> [] SEC-212 Format string injection
->
-> The ability to supply arbitrary format strings to cgiemail and
-> cgiecho allowed code execution whenever a user was able to provide a
-> cgiemail template file.
+previously allocated by thread T0 here:
+    #0 0x4d0a08 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7f267d0879d8 in _zip_buffer_new /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_buffer.c:168:35
+    #2 0x7f267d0879d8 in _zip_buffer_new_from_source /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_buffer.c:190
+    #3 0x7f267d0927c2 in _zip_dirent_read /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_dirent.c:443:23
+    #4 0x7f267d0aabfe in _zip_read_cdir /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:380:69
+    #5 0x7f267d0aabfe in _zip_find_central_dir /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:613
+    #6 0x7f267d0aabfe in _zip_open /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:200
+    #7 0x7f267d0a89b7 in zip_open_from_source /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:148:11
+    #8 0x7f267d0a7e93 in zip_open /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_open.c:74:15
+    #9 0x513392 in read_from_file /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/src/ziptool.c:698:13
+    #10 0x513392 in main /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/src/ziptool.c:1113
+    #11 0x7f267c1b5680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Use CVE-2017-5613.
+SUMMARY: AddressSanitizer: heap-use-after-free /var/tmp/portage/dev-libs/libzip-1.2.0/work/libzip-1.2.0/lib/zip_buffer.c:53:17 in _zip_buffer_free
+Shadow bytes around the buggy address:
+  0x0c067fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff8000: fa fa 00 00 00 00 fa fa 00 00 00 00 fa fa fd fd
+=>0x0c067fff8010: fd fd fa fa fd fd fd fd fa fa[fd]fd fd fd fa fa
+  0x0c067fff8020: 00 00 00 00 fa fa fd fd fd fa fa fa fd fd fd fd
+  0x0c067fff8030: fa fa 00 00 00 fa fa fa 00 00 00 fa fa fa 00 00
+  0x0c067fff8040: 00 fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1771==ABORTING
+
+Affected version:
+1.2.0
+
+Fixed version:
+1.3.0
+
+Commit fix:
+https://github.com/nih-at/libzip/commit/2217022b7d1142738656d891e00b3d2d9179b796
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+This issue can be identified as CVE-2017-12858 which was originally discovered by Brian Carpenter
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00239-libzip-UAF-_zip_buffer_free
+
+Timeline:
+2017-08-29: upstream released a fix as it fixed another issue
+2017-08-24: bug discovered and reported to upstream
+2017-09-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/01/libzip-use-after-free-in-_zip_buffer_free-zip_buffer-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-> [] SEC-214 Open redirect
->
-> The cgiemail and cgiecho binaries served as an open redirect due to
-> their handling of the success and failure parameters.
-
-Use CVE-2017-5614.
-
-
-> [] SEC-215 HTTP header injection
->
-> The handling of redirects in cgiemail and cgiecho did not protect
-> against the injection of additional HTTP headers.
-
-Use CVE-2017-5615.
-
-
-> [] Reflected XSS vulnerability
->
-> The "addendum" parameter was reflected without any escaping in
-> success and error messages produced by cgiemail and cgiecho.
-
-Use CVE-2017-5616.
-
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYjR2WAAoJEHb/MwWLVhi2TIsQAIJf9c1Txc5RZd1IfaRu/Hll
-nGPmkbzxzb8ZRTzI0pkgwGEnt0oFgjOamkFY3xL52glZp9ptvqs/aKRl0DXFI3U5
-8DzEhOHUOZEr4JGGswyIIhopz1rMXaOQXfQj/Uv3Z6097L7BLOMMHn/3SYSSltan
-yRy1j1Noa/RP2fmb1VgznewEnXeO+wOwX4j2Oq/PBh+glNkx2VDZnZM+cEF4H2sN
-FrsDmd6r1vupzBj7Ret/SfgUMTXYkkIO0r3LafeaeOrvC5+dJI/U+pezUCj9aDIZ
-spb6lMUkBrz9njFBzEP4XYvyNGtnIFcM8UJIrU1t+XVihqBgiRb0HGpogGuXmmf3
-N3prECUA5JQdk3co8MTgK+6Vo7glmJxlEwJJelq4Pksckra0oygMJdpRKxnMva04
-eOhb4NcfRtZxeRxo/Cl1IWEVV8oc0QK2MQMjtWMNDMck9cWrcdcoTKt7KlBxcfg1
-5Yzi2ZBzgfH2tGMJQD12+UhHMEDDL2SLSFNGU3j6z2ZPOuq0AzmM1ul+Mt3OoPla
-yz3wrPJtKlj9N3sUYzO4g+vZvLbEJr+g0DgnYJK0tDXN90gjxUBU4DRA50YOXLKR
-wnTs21ncGqEPlpRQ3TjXptbqZ0bdbFnIugRjqn6AIqmEQgaQsmKveDYq+gvHt0PH
-Y+94UdCb9f/0Hi04Ouqz
-=fGzB
------END PGP SIGNATURE-----
