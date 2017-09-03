@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4446" "Tuesday" "31" "January" "2017" "14:19:58" "-0500" "Leo Famulari" "leo@famulari.name" "<20170131191958.GC16979@jasmine>" "93" "Re: [oss-security] CVE Request: ffmpeg remote exploitaion results code execution" nil nil nil "1" "2017013119:19:58" "[oss-security] CVE Request: ffmpeg remote exploitaion results code execution" (number mark "U       leo@famulari Jan 31   93/4446  " thread-indent "\"Re: [oss-security] CVE Request: ffmpeg remote exploitaion results code execution\"\n") "<835F27A3-C4DD-4E9F-B6ED-8D271C083B42@seclab.cs.msu.su>" ("<835F27A3-C4DD-4E9F-B6ED-8D271C083B42@seclab.cs.msu.su>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2337" "Sunday" "3" "September" "2017" "18:30:18" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<5d143215-bf10-6f6a-e1f1-bf4264f8a10a@orlitzky.com>" "68" "[oss-security] CVE-2017-14102: MIMEDefang privilege escalation via PID file manipulation" "^Date:" nil nil "9" "2017090322:30:18" "[oss-security] CVE-2017-14102: MIMEDefang privilege escalation via PID file manipulation" (number mark "U       michael@orli Sep  3   68/2337  " thread-indent "\"[oss-security] CVE-2017-14102: MIMEDefang privilege escalation via PID file manipulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20130 invoked by uid 550); 31 Jan 2017 19:28:00 -0000
+Received: (qmail 25834 invoked by uid 550); 3 Sep 2017 23:58:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,129 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28432 invoked from network); 31 Jan 2017 19:20:10 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=famulari.name; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=eAMY/8m2vgAZLkSzWpIGxRzOWjY=; b=xjMDug
-	zu5ahtJngq7IlMJo1ghl+dHD57sYViJe5Wrfm284nr4Y4keEuM9T7qckOvj5plcN
-	+jgg2DhsHySO2MiCcyGphQQ7lp+RUJ/40BH0bdIcpKdlH/tc9+WW2+FBiVWMmjIG
-	uhIHgyzqI7P6H3KuxbZvvgo6/PYDOl0UWrygE=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=eAMY/8m2vgAZLk
-	SzWpIGxRzOWjY=; b=CT3PqkpxoGjKpUM57QNwCw+AvuoBQtdfYeM9DT//VKBoKt
-	EGbPQK3T1i9l6WDeYRtkhY221rH/RaoEmGgmi9uH62W6ppB4Fc/+AUSpZnotB2D4
-	/0OIJ1BTXBRtrhHlt8WRTGxNUyz1IzbsvwPxOfK3kgqyeXlRbzz9iwWkc93uM=
-X-ME-Sender: <xms:XuOQWFZcmF945-w7fWsCUwR5_6zxy3Q6q6odkuCkGEq-jPwX0rJBSA>
-X-Sasl-enc: Ccg/GROsn547ydahB1R8VFTh5FWzPmkK4j51WvkcxTmO 1485890398
-Date: Tue, 31 Jan 2017 14:19:58 -0500
-From: Leo Famulari <leo@famulari.name>
-To: oss-security@lists.openwall.com
-Cc: =?utf-8?B?0K3QvNC40LvRjCDQm9C10YDQvdC10YA=?= <neex.emil@gmail.com>
-Message-ID: <20170131191958.GC16979@jasmine>
-References: <835F27A3-C4DD-4E9F-B6ED-8D271C083B42@seclab.cs.msu.su>
+Received: (qmail 26190 invoked from network); 3 Sep 2017 22:30:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1504477835; bh=yMDJgOrJCgxvd1ipskbIdbV5kXaQU2GKQhZZ8+0WNLc=;
+	h=To:From:Subject:Date;
+	b=MMxUjGVhWRaGeYTC0JQXsP3a5kiXuSOhbkUOMg4VCYQKasjFjf1ozQtPYIikurDUD
+	 L8LfEIu8V3svFwSeAZV8fkX/dghsQObjzaQKqf7DJvaJ5SFu3MVI/gx1W+VbHUMPxg
+	 LLLmnX3dego5yXOs9a9L9MDv9sj624Qyb+xilxdc=
+Message-ID: <5d143215-bf10-6f6a-e1f1-bf4264f8a10a@orlitzky.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="8NvZYKFJsRX2Djef"
-Content-Disposition: inline
-In-Reply-To: <835F27A3-C4DD-4E9F-B6ED-8D271C083B42@seclab.cs.msu.su>
-User-Agent: Mutt/1.7.2 (2016-11-26)
-Subject: Re: [oss-security] CVE Request: ffmpeg remote exploitaion results
- code execution
-
---8NvZYKFJsRX2Djef
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Date: Sun, 3 Sep 2017 18:30:18 -0400
+From: Michael Orlitzky <michael@orlitzky.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-14102: MIMEDefang privilege escalation via PID file
+ manipulation
+To: oss-security@lists.openwall.com
 
-In case anyone else is curious, here are the corresponding commits
-reachable from the n3.2.2 release tag:
+Product: MIMEDefang
+Versions-affected: 2.80 and earlier
+Fixed-in: Version 2.81
+Bug-report:
+http://lists.roaringpenguin.com/pipermail/mimedefang/2017-August/038077.html
+Author: Michael Orlitzky
+Acknowledgments: Dianne Skoll, who had an initial fix ready within
+  minutes of my report.
 
-On Wed, Feb 01, 2017 at 12:40:54AM +0900, Paul Cher wrote:
-> --[ 1 - libavformat/http.c  ]
->=20
-> After executing of http_read_stream we read each http header, where we pa=
-ss "Transfer-Encoding: chunked=E2=80=9D header, and we come into http_buf_r=
-ead function [1]. Due to incorrect use of strtoll function and integer size=
-s (chunk_size in int64_t)[2], it was possible to pass negative chunk_size i=
-n chunk encoding, so after computing final size using FFMIN function later =
-on it would be passed as argument to avio_read function. This results a hea=
-p-overflow which we found out to be exploitable, because overflowed buffer =
-is allocated right next to the AVIOContext structure[3]. Overflowing functi=
-on pointer in this structure immediately results rip control and then code =
-execution.
->=20
-> * [1] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96=
-acc6cbddd050a/libavformat/http.c#L1166 <https://github.com/FFmpeg/FFmpeg/bl=
-ob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1166>
-> * [2] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96=
-acc6cbddd050a/libavformat/http.c#L1259 <https://github.com/FFmpeg/FFmpeg/bl=
-ob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1259>
-> * [3] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96=
-acc6cbddd050a/libavformat/aviobuf.c#L899 <https://github.com/FFmpeg/FFmpeg/=
-blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/aviobuf.c#L899>
->=20
-> This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/2a05c8f81=
-3de6f2278827734bf8102291e7484aa <https://github.com/FFmpeg/FFmpeg/commit/2a=
-05c8f813de6f2278827734bf8102291e7484aa>
 
-https://github.com/FFmpeg/FFmpeg/commit/0e0a413725e0221e1a9d0b7595e22bf57e2=
-3a09c
+== Summary ==
 
-> --[ 2 - libavformat/rtmppkt.c ]
->=20
-> Issue is connected with buffer overflow on the heap in RTMP protocol. Aft=
-er a bit of reverse engineering of RTMP protocol you can notice that it use=
-s chunk (of max 0x80 bytes) to _transfer_ data, but chunks of more size cou=
-ld be used to _store_ the data. Because size of packet is not check that it=
- is the same as it was in the same transmission you can first send packet w=
-ith smaller size and then bigger size, and this results heap-overflow[1]. I=
-f you can align chunks right you can achieve white-what-where condition and=
- that results and RCE.
->=20
-> * [1] - https://github.com/FFmpeg/FFmpeg/blob/d903b4e3ad4a81b3dd79f12c2f3=
-b9cb16e511173/libavformat/rtmppkt.c#L268 <https://github.com/FFmpeg/FFmpeg/=
-blob/d903b4e3ad4a81b3dd79f12c2f3b9cb16e511173/libavformat/rtmppkt.c#L268>
->=20
-> The issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/7d57ca4d9a=
-75562fa32e40766211de150f8b3ee7 <https://github.com/FFmpeg/FFmpeg/commit/7d5=
-7ca4d9a75562fa32e40766211de150f8b3ee7>
+The MIMEDefang daemons should create their PID files before dropping
+privileges. This represents a minor security issue; additional factors
+are needed to make it exploitable.
 
-https://github.com/FFmpeg/FFmpeg/commit/32b95471a86ae383c0f76361d954aec511f=
-7043a
 
-> --[ 3 - ffserver.c ]
->=20
-> This issue is completely like the first one and it results heap overflow.
->=20
-> This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/a5d25faa3=
-f4b18dac737fdb35d0dd68eb0dc2156 <https://github.com/FFmpeg/FFmpeg/commit/a5=
-d25faa3f4b18dac737fdb35d0dd68eb0dc2156>
+== Details ==
 
-https://github.com/FFmpeg/FFmpeg/commit/c12ee64e80af2517005231388fdf4ea78f1=
-6bb0e
+The purpose of the PID file is to hold the PID of the running daemon,
+so that later it can be stopped, restarted, or otherwise signalled
+(many daemons reload their configurations in response to a SIGHUP).
+To fulfil that purpose, the contents of the PID file need to be
+trustworthy. If the PID file is writable by a non-root user, then he
+can replace its contents with the PID of a root process. Afterwards,
+any attempt to signal the PID contained in the PID file will instead
+signal a root process chosen by the non-root user (a vulnerability).
 
---8NvZYKFJsRX2Djef
-Content-Type: application/pgp-signature; name="signature.asc"
+This is commonly exploitable through init scripts that are run as root
+and which blindly trust the contents of their PID files. Examples of
+said init scripts can be found in the MIMEDefang source tree:
 
------BEGIN PGP SIGNATURE-----
+  * examples/init-script.in
+  * redhat/mimedefang-init.in
 
-iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAliQ414ACgkQJkb6MLrK
-fwim/g/8Dzzu7pUq3+qdgduz8mt2HkvBU9YOrqdnUHX2pZa+OQzSYkoJyowv+pE2
-zop2/d48WCE8gKupURwVSW625h1k4TarZzVBk8VSxdLYmB/GpJpWEHTI18JVvER4
-/+FpVAFUtXnrCphYuTvwbmBNrbJsPW+hcrOYeZXRjyJpGBc+fjLo5WNtC+4jQ0sT
-Q+dG20FuWbkg3Pqhke7azjp3DV2I626vOS1k4RG3sQsBEdx/Kye1LQ/bmpQfzjmJ
-1iFWLLXiB/bvN/nSJxBene0+vM0BRBNrTtiKnzLsKpXvIrK904yUyWkldseaSDvH
-0kDQuzDmga2ncOc2ja4gk9LVMHIQa+6Rn5IF74i7MoSipspW4Hqj1SMwiNiJ5/Nt
-QKS4+ddsv70engpIdb3uDScAXZlz8a4Jff+m+DuHKam4N3+VUlP+yGCupHoPm4q1
-95nyOrFccGWuJlYVPCqB9kvzCo9d75eO6UGGd/r6fX32yAcgEst/scLUWWvuIEGG
-9g3U6ocJ9YiaLDcz3WqrJDKqo8PAi6w+sz7E6m7PCAnemV5+nTj4rpLyXx+njJvu
-DB9Qddx2jhxuuDFxL2S3Iq4GrXPEXdktf3kLd063Pxm9iZDCrEOThrGrewVBNVBH
-CIyp/qNXyIYiimUBWFXSzp1ehylI4Sp+3RkNvN71CIdu9O/rT44=
-=246l
------END PGP SIGNATURE-----
 
---8NvZYKFJsRX2Djef--
+== Exploitation ==
+
+An example of a problematic scenario involving an init script would be,
+
+1. I run "/etc/init.d/mimedefang start" to start the daemon.
+
+2. mimedefang drops to the "defang" user.
+
+3. mimedefang writes its PID file, now owned by the "defang" user.
+
+4. Someone compromises the daemon.
+
+5. The attacker is generally limited in what he can do because the
+   daemon doesn't run as root. However, he can write "1" into the
+   PID file, and he does.
+
+6. I run "/etc/init.d/mimedefang stop" to stop the daemon while I
+   investigate the weird behavior resulting from the hack.
+
+7. The machine reboots, because I killed PID 1 (this is normally
+   restricted to root).
+
+
+== Resolution ==
+
+The problem is resolved in MIMEDefang 2.81 by creating the PID files as
+root before dropping privileges. The role of the lock files --
+previously played by the PID files -- is now played by a separate set of
+files (specified on the command-line with "-o").
+
+Init script authors should relocate their PID files to either /run or
+/var/run.
