@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["765" "Friday" "29" "April" "2016" "16:24:52" "+0200" "Martin Prpic" "mprpic@redhat.com" "<87mvocv6ff.fsf@redhat.com>" "22" "[oss-security] CVE request: three issues in libksba" nil nil nil "4" "2016042914:24:52" "[oss-security] CVE request: three issues in libksba" (number mark "U       mprpic@redha Apr 29   22/765   " thread-indent "\"[oss-security] CVE request: three issues in libksba\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["609" "Monday" "4" "September" "2017" "14:41:07" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170904124107.GB6792@suse.de>" "16" "Re: [oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler" nil nil nil "9" "2017090412:41:07" "[oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler" (number mark "U       meissner@sus Sep  4   16/609   " thread-indent "\"Re: [oss-security] CVE-2017-1000083: evince: Command injection vulnerability in CBT handler\"\n") "<C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>" ("<20170713154344.GG21662@suse.com>" "<C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7416 invoked by uid 550); 29 Apr 2016 14:25:08 -0000
+Received: (qmail 11340 invoked by uid 550); 4 Sep 2017 12:41:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7392 invoked from network); 29 Apr 2016 14:25:07 -0000
-User-agent: mu4e 0.9.9.5; emacs 24.3.1
-Message-ID: <87mvocv6ff.fsf@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 11316 invoked from network); 4 Sep 2017 12:41:19 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Mon, 4 Sep 2017 14:41:07 +0200
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20170904124107.GB6792@suse.de>
+References: <20170713154344.GG21662@suse.com>
+ <C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Fri, 29 Apr 2016 14:24:55 +0000 (UTC)
-Date: Fri, 29 Apr 2016 16:24:52 +0200
-From: Martin Prpic <mprpic@redhat.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: three issues in libksba
-To: "OSS Security Mailinglist" <oss-security@lists.openwall.com>
+In-Reply-To: <C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] CVE-2017-1000083: evince: Command injection
+ vulnerability in CBT handler
 
-Hi,
+> > This can be exploited by creating a tar archive with an embedded file
+> > named something
+> > like this: "--checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg"
+> > 
+> > (Make sure evince is not sandboxed by apparmor before trying to reproduce
+> > the attached POC)
+> 
+> Not sure if the list ate the attachment, but I don’t see it available. Perhaps a link to it somewhere else would be of use?
 
-Can CVEs please be assigned to these three issues (unless they've
-already been assigned and I failed to find them):
+Sebastian Krahmer of SUSE recreated one that starts xeyes.
 
-Denial of Service due to stack overflow in src/ber-decoder.c
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=07116a314f4dcd4d96990bbd74db95a03a9f650a
+https://bugzilla.suse.com/show_bug.cgi?id=1046856
 
-Integer overflow in the BER decoder src/ber-decoder.c
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=aea7b6032865740478ca4b706850a5217f1c3887
+	( attachment link https://bugzilla.suse.com/attachment.cgi?id=739314 ) 
 
-Integer overflow in the DN decoder src/dn.c
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3
-
-A Gentoo advisory lists them as being fixed in version 1.3.3 and higher:
-
-https://lwn.net/Alerts/685271/
-
-Thank you!
-
--- 
-Martin Prpič / Red Hat Product Security
+Ciao, Marcus
