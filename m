@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/2
-Message-ID: <1498111252.32057.3.camel@gmail.com>
-Date: Thu, 22 Jun 2017 02:00:52 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com, Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/04/2
+Message-ID: <20170904124107.GB6792@suse.de>
+Date: Mon, 4 Sep 2017 14:41:07 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-1000083: evince: Command injection vulnerability in CBT handler
 Content-Type: text/plain; charset=utf-8
 
-Is it planned to have glibc use a larger 1M gap for secondary stacks
-rather than a single guard page? That would be a *lot* easier than it
-was to set it up for the main thread stack. It follows the main thread
-stack rlimit as a guideline so it seems to make sense to use the same
-guard region size too. If it ends up exposed as a sysctl, it could read
-the current value from there.
+> > This can be exploited by creating a tar archive with an embedded file
+> > named something
+> > like this: "--checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg"
+> > 
+> > (Make sure evince is not sandboxed by apparmor before trying to reproduce
+> > the attached POC)
+> 
+> Not sure if the list ate the attachment, but I don’t see it available. Perhaps a link to it somewhere else would be of use?
 
-For the local setuid/setgid/setcap binary attack surface, the main
-thread stack is most relevant, but in general many cases of large stack
-frames that were found are called in threads other than the initial one.
-Secondary stacks are also mixed in with other mmap allocations rather
-than having a separate ASLR base and glibc doesn't do any secondary
-stack ASLR. IIRC, it does cache color the stacks but not randomly and I
-don't remember how much space it currently reserves for that.
+Sebastian Krahmer of SUSE recreated one that starts xeyes.
+
+https://bugzilla.suse.com/show_bug.cgi?id=1046856
+
+	( attachment link https://bugzilla.suse.com/attachment.cgi?id=739314 ) 
+
+Ciao, Marcus
