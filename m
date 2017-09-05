@@ -1,33 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/10
-Message-ID: <766b0dc0-d9c8-be88-18b9-c0044b7b6635@gentoo.org>
-Date: Mon, 13 Nov 2017 20:42:49 +0100
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: (linux-)distros list use statistics
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/05/1
+Message-ID: <CAMopvkNPG--EVqRtg4rO0G1bYrJ0cgYiBh=P=o2poEZq8kvdtQ@mail.gmail.com>
+Date: Tue, 5 Sep 2017 15:17:09 +0200
+From: Lukasz Lenart <lukaszlenart@...che.org>
+To: Struts Users Mailing List <user@...uts.apache.org>
+Cc: "announcements@...uts.apache.org" <announcements@...uts.apache.org>,  Struts Developers List <dev@...uts.apache.org>, announce@...che.org,  "security@...uts.apache.org" <security@...uts.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com, Jonathan Bullock <jonbullock@...il.com>,  Man Yue Mo <mmo@...mle.com>, Bas van Schaik <bas@...mle.com>, Adam Cazzolla <acazzolla@...atype.com>,  chenhuijun <874892484@...com>
+Subject: [ANN] Apache Struts 2.5.13 GA with Security Fixes Release
 Content-Type: text/plain; charset=utf-8
 
-On 11/13/2017 08:38 PM, Kristian Fiskerstrand wrote:
-> On 11/13/2017 08:33 PM, Solar Designer wrote:
->> On Mon, Nov 13, 2017 at 08:13:05PM +0100, Kristian Fiskerstrand wrote:
->>> As far as I'm aware I haven't gotten access to edit the wiki page for
->>> publishing it.
->> Please feel free to create a page like:
->>
->> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
->>
->> You don't need any special access for that.
-> Ah, will look into that soon then.
-> 
+The Apache Struts group is pleased to announce that Struts 2.5.13 is
+available as a “General Availability” release. The GA designation is
+our highest quality grade.
 
-Page created:
-http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+Apache Struts 2 is an elegant, extensible framework for creating
+enterprise-ready Java web applications. The framework is designed to
+streamline the full development cycle, from building, to deploying, to
+maintaining applications over time.
 
+This release contains fixes for the following potential security
+vulnerabilities:
+
+- S2-050 A regular expression Denial of Service when using
+URLValidator (similar to S2-044 & S2-047)
+    http://struts.apache.org/docs/s2-050.html
+- S2-051 A remote attacker may create a DoS attack by sending crafted
+xml request when using the Struts REST plugin
+    http://struts.apache.org/docs/s2-051.html
+- S2-052 Possible Remote Code Execution attack when using the Struts
+REST plugin with XStream handler to handle XML payloads
+    http://struts.apache.org/docs/s2-050.html
+
+Except the above this release also contains several improvements just
+to mention few of them:
+
+Except the above this release also contains several improvements just
+to mention few of them:
+
+- Struts2 JSON Plugin: Send Map with Strings as Key to JSON Action is
+ignored, Numeric Keys will work and mapped
+- NP with TextProvider and wildcardmapping
+- Threads get blocked due to unnecessary synchronization in OgnlRuntime
+- Default Multipart validation regex is invalid
+- Not fully initialized ObjectFactory tries to create beans
+- http://struts.apache.org/dtds/struts-2.5.dtd missing
+- Set a global resource bundle in class
+- Override TextProvider doesnot work in struts 2.5.12
+- Array-of-null parameters are converted to string “null”
+- JakartaStreamMultiPartRequest Should Honor “struts.multipart.maxSize”
+- Build Fails Due to Unused com.sun Import
+- Struts2.5.12 - NPE in DeligatingValidatorContext
+- Struts 2 Fails to Initialize with JRebel
+- Allow define more than one Action suffix
+- Remove jQuery from debugging interceptor views
+- update dependencies page on the struts site
+- Improve RegEx used to validate URLs
+- Make REST ContentHandlers configurable
+- expose Freemarker incompatible_improvements into FreemarkerManager
+and StrutsBeansWrapper
+- Upgrade Commons Collections to 3.2.2
+- Upgrade Commons IO to 2.5
+- Upgrade to ASM version 5.2
+- Upgrade to OGNL 3.1.15
+- Upgrade xstream to the latest version
+- Upgrade to struts-master 11
+
+Please read the Version Notes to find more details about performed bug
+fixes and improvements.
+http://struts.apache.org/docs/version-notes-2513.html
+
+All developers are strongly advised to perform this action.
+
+The 2.5.x series of the Apache Struts framework has a minimum
+requirement of the following specification versions: Servlet API 2.4,
+JSP API 2.0, and Java 7.
+
+Should any issues arise with your use of any version of the Struts
+framework, please post your comments to the user list, and, if
+appropriate, file a tracking ticket.
+
+You can download this version from our download page.
+http://struts.apache.org/download.cgi#struts-ga
+
+
+Regards
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Łukasz
++ 48 606 323 122 http://www.lenart.org.pl/
