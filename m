@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2118" "Monday" "10" "December" "2018" "19:57:21" "+0100" "Solar Designer" "solar@openwall.com" "<20181210185721.GA4259@openwall.com>" "53" "Re: [oss-security] libvnc and tightvnc vulnerabilities" "^Cc:" nil nil "12" "2018121018:57:21" "[oss-security] libvnc and tightvnc vulnerabilities" (number mark "U       solar@openwa Dec 10   53/2118  " thread-indent "\"Re: [oss-security] libvnc and tightvnc vulnerabilities\"\n") "<200f245d2ec342c3bc05586d3f277b42@kaspersky.com>" ("<9396dbd0a417440abe9bbb830e7b612f@kaspersky.com>" "<20181210154020.GA2063@openwall.com>" "<200f245d2ec342c3bc05586d3f277b42@kaspersky.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1512" "Tuesday" "5" "September" "2017" "09:30:23" "-0700" "Tim Graham" "timograham@gmail.com" "<da74bef7-e0dc-4fff-a44e-8fd51bc2d012@googlegroups.com>" "27" "[oss-security] Django security releases issued: 1.11.5 and 1.10.8" nil nil nil "9" "2017090516:30:23" "[oss-security] Django security releases issued: 1.11.5 and 1.10.8" (number mark "U       timograham@g Sep  5   27/1512  " thread-indent "\"[oss-security] Django security releases issued: 1.11.5 and 1.10.8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9551 invoked by uid 550); 10 Dec 2018 18:58:18 -0000
+Received: (qmail 20342 invoked by uid 550); 5 Sep 2017 16:30:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8143 invoked from network); 10 Dec 2018 18:57:33 -0000
-Message-ID: <20181210185721.GA4259@openwall.com>
-References: <9396dbd0a417440abe9bbb830e7b612f@kaspersky.com> <20181210154020.GA2063@openwall.com> <200f245d2ec342c3bc05586d3f277b42@kaspersky.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <200f245d2ec342c3bc05586d3f277b42@kaspersky.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Mon, 10 Dec 2018 19:57:21 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] libvnc and tightvnc vulnerabilities
-To: Pavel Cheremushkin <Pavel.Cheremushkin@kaspersky.com>
+Received: (qmail 20291 invoked from network); 5 Sep 2017 16:30:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:subject:mime-version;
+        bh=mUhC/NYXSKegMKTDEeiyOJXRioFHOUrj+x7LODow3lI=;
+        b=ZYuFkqTNYoiXrZmPt32lZdYelW1nD0nhVp14857rke1hgpEX2eXl0LVJDGU91vXIqD
+         u3UYg6ZnZeowpNrzix6h/YSIjv5fBFS5Zt0uAKhVWrFEg1GhF97Y8iNWvWGqT27zcuzO
+         5eZ5HIZM3JR4okgBWGUkRF7Deb21DTgsGKTCLisS2+X616zFOcfMTo8c8t8WqLqoPs+A
+         WPoWp0Gov+420PqEQI3Hm/AW0OYS6vajpQD36UjNoORN4oeeyDSVhbLBEv10NOZVXToL
+         t82M77cGQmqYF0JaK2QeGOuP9BJHPAFF5Pk9A8nLlr/hdB52sC/Cjl2YkEPF39A2x04V
+         5WMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:subject:mime-version;
+        bh=mUhC/NYXSKegMKTDEeiyOJXRioFHOUrj+x7LODow3lI=;
+        b=LW+hPYgkn/BAHILH01ptPEaSohKCCi4wcLMvbPBwz9lpF7UMyIlmNHzsP12t/Bvomo
+         e3OZzanxHCWRSYB8rZxLTAsQiERA+HLO4Jbc0kj1DOqtK8ou2N72E49QnsAlfPCTkRll
+         P0efuwCFqu4dgHVd2YerVwMVV85fsIckMoQE3RwLRMM2W9EGh1RQeH+avKWYUXZnE0Ir
+         geNTZPOw10RWINEYUlsxO/vVtWG7VPRGPFC06ad5pacmAoaaYhhraKrP83UDXRB5uxrn
+         20+zetRyFvxKJ3qGjTn75mV3RdaCoHZNSvL4vqNPG2NdXiELtDUg8IzraIzxcH83+v4m
+         WRXg==
+X-Gm-Message-State: AHPjjUhHQd+0CznDX1hTr9Pg20R/NLUEG81o6COcRZzXGokzEATHR4Uw
+	Rf4H9hyCJAUMdhmIdrR5
+X-Google-Smtp-Source: ADKCNb6KKkcClhJifDgAhBx4iUU1OLT4v/1qSiTyVaAZGl+3O3cf9aDH/Weac9DZWbDc1sdjOf2vo2Ec7Q==
+X-Received: by 10.31.155.76 with SMTP id d73mr28349vke.23.1504629024015;
+        Tue, 05 Sep 2017 09:30:24 -0700 (PDT)
+X-Google-Already-Archived: Yes
+X-Google-Already-Archived-Group-Id: 5f8633310a
+X-Google-Doc-Id: 17b1be6415787
+X-Google-Thread-Id: f20d31d2d271c52a
+X-Google-Message-Url: http://groups.google.com/group/django-announce/msg/17b1be6415787
+X-Google-Thread-Url: http://groups.google.com/group/django-announce/t/f20d31d2d271c52a
+X-Google-Web-Client: true
+Date: Tue, 5 Sep 2017 09:30:23 -0700 (PDT)
+From: Tim Graham <timograham@gmail.com>
+To: django-announce <django-announce@googlegroups.com>
+Cc: django-users@googlegroups.com, django-developers@googlegroups.com,
+	oss-security@lists.openwall.com
+Message-Id: <da74bef7-e0dc-4fff-a44e-8fd51bc2d012@googlegroups.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_1386_2007218016.1504629023529"
+X-Google-Token: EJ-iu80FFvQ0bWF_mUc0
+X-Google-IP: 71.175.65.223
+Subject: [oss-security] Django security releases issued: 1.11.5 and 1.10.8
 
-On Mon, Dec 10, 2018 at 04:08:00PM +0000, Pavel Cheremushkin wrote:
-> These particular issues I was describing in my previous letter are located in source code of TightVNC vncviewer. Source code of TightVNC 1.3.10 vncviewer can be acquired though this link https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_unixsrc.tar.gz and integer overflow that leads to a heap-buffer-overflow I was speaking about is located on the line 1220 inside file `vnc_unixsrc/vncviewer/rfbproto.c`. It is a fun fact that inside `libvncclient/rfbproto.c` the same code is located on line 2220, but all bugs connected with LibVNC I described in Github issues inside LibVNC repository.
+------=_Part_1386_2007218016.1504629023529
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_1387_1915782764.1504629023530"
 
-Oh.  So you reported the instance of that one issue in LibVNC here:
+------=_Part_1387_1915782764.1504629023530
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-https://github.com/LibVNC/libvncserver/issues/247
+Today the Django team issued 1.11.5 and 1.10.8 as part of our security 
+process. These releases address a security issue, and we encourage all 
+users to upgrade as soon as possible:
 
-Upstream's fix appears to be to add casts to (uint64_t) before adding 1
-in those many malloc() calls.  On platforms with larger than 32-bit
-size_t, this should be sufficient against integer overflows since the
-sizes are read from 32-bit protocol fields, but it isn't sufficient to
-prevent maliciously large memory allocation on the client by a rogue
-server.  On a platform with 32-bit size_t, this isn't even sufficient to
-prevent the integer overflows.  If I haven't missed anything, it'd be
-great if you open a new issue suggesting introduction of safety limits
-prior to those malloc() lines.
+https://www.djangoproject.com/weblog/2017/sep/05/security-releases/
 
-The current code is:
+As a reminder, we ask that potential security issues be reported via 
+private email to security@djangoproject.com and not via Django's Trac 
+instance or the django-developers list. Please see 
+https://www.djangoproject.com/security for further information.
 
-  case rfbServerCutText:
-  {
-    char *buffer;
+------=_Part_1387_1915782764.1504629023530
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-    if (!ReadFromRFBServer(client, ((char *)&msg) + 1,
-			   sz_rfbServerCutTextMsg - 1))
-      return FALSE;
+<div dir="ltr">Today the Django team issued 1.11.5 and 1.10.8 as part of our security process. These releases address a security issue, and we encourage all users to upgrade as soon as possible:<br><br>https://www.djangoproject.com/weblog/2017/sep/05/security-releases/<br><br>As a reminder, we ask that potential security issues be reported via private email to security@djangoproject.com and not via Django&#39;s Trac instance or the django-developers list. Please see https://www.djangoproject.com/security for further information.<br></div>
+------=_Part_1387_1915782764.1504629023530--
 
-    msg.sct.length = rfbClientSwap32IfLE(msg.sct.length);
-
-    buffer = malloc((uint64_t)msg.sct.length+1);
-
-    if (!ReadFromRFBServer(client, buffer, msg.sct.length)) {
-      free(buffer);
-      return FALSE;
-    }
-
-    buffer[msg.sct.length] = 0;
-
-    if (client->GotXCutText)
-      client->GotXCutText(client, buffer, msg.sct.length);
-
-    free(buffer);
-
-    break;
-}
-
-but per the commits referenced in issue #247 above, there are many more
-instances of the "malloc(... + 1)" pattern, which were patched similarly
-incompletely.
-
-Thanks,
-
-Alexander
+------=_Part_1386_2007218016.1504629023529--
