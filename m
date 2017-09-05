@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["877" "Sunday" "16" "October" "2016" "00:50:36" "+0800" "Ben Woods" "woodsb02@gmail.com" "<CAOc73CA3jpn3V=m0js8=n0jrLZ9=-bUmjVn3+D=ab2tzQBYyhQ@mail.gmail.com>" "36" "[oss-security] dcraw and CVE-2015-8366 + CVE-2015-8367" nil nil nil "10" "2016101516:50:36" "[oss-security] dcraw and CVE-2015-8366 + CVE-2015-8367" (number mark "U       woodsb02@gma Oct 16   36/877   " thread-indent "\"[oss-security] dcraw and CVE-2015-8366 + CVE-2015-8367\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3177" "Tuesday" "5" "September" "2017" "15:17:09" "+0200" "Lukasz Lenart" "lukaszlenart@apache.org" "<CAMopvkNPG--EVqRtg4rO0G1bYrJ0cgYiBh=P=o2poEZq8kvdtQ@mail.gmail.com>" "80" "[oss-security] [ANN] Apache Struts 2.5.13 GA with Security Fixes Release" nil nil nil "9" "2017090513:17:09" "[oss-security] [ANN] Apache Struts 2.5.13 GA with Security Fixes Release" (number mark "U       lukaszlenart Sep  5   80/3177  " thread-indent "\"[oss-security] [ANN] Apache Struts 2.5.13 GA with Security Fixes Release\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1426 invoked by uid 550); 15 Oct 2016 16:54:18 -0000
+Received: (qmail 32488 invoked by uid 550); 5 Sep 2017 13:40:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,71 +12,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31950 invoked from network); 15 Oct 2016 16:50:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=L+EQS7sEfvFLgcQDVZFxGHpGsE1zG8DhhtATWbnTn5U=;
-        b=AvCP7uLAJ9VIGeHU9gUGq7e9plvQrT+ykP1jMXhIUxxI3SZuFWGdy5nCQDJtMC6TP+
-         C07rLcaZm3wbMVY7XoTAVS7K8z2Nep8pdWRLXDdzavleTHyZhkEQAo4IHPGl3ZlO3Z2G
-         spL5HWmPQmkARL13idGjLP2Dc410p81MFUNa7nVzV27e37xOeVOGuZxvpPagrtj740Ke
-         z5GfCpJ0E34nBGsXnHsW4mF5ZBzS7vNx33QAdYcQh4ynchPWVW7EGkm7pklRKAdVm4US
-         MPpvGb8ufZPqGnoyaVsK/XWYISA9p6U5pR8mGry0TKY06bEnIYaSk5XwkFBtQt3DvJG3
-         YxCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=L+EQS7sEfvFLgcQDVZFxGHpGsE1zG8DhhtATWbnTn5U=;
-        b=TPEzPt0LNSqkuPff5rOVYSQHp0ov/R78Dx+8+LlVYjXgWILR7hSPAVT7ZLPyEgXyhb
-         6DowML7DaVrW4++GvwQPjMZNXPXDZVYnPLUs1AI52JIpisKPR2LNZs879PeXjUhezYug
-         BEeoppXotYr9OJ4UlErupVWcO2P/0/w2PNs9aMTjRVYMNp6sF/sk25ZByM/4d4Z+xmKq
-         mIAcOKzYg3gB+rXIih0xhYJSFs1iqdCL7qxTSfbPZmDDXK26BAwHem9zneHFeYuNroEl
-         8LXPbDUBrPQNmHXWR968+I/m0bThOSYklnAoL8jozymKYQI4BDv9kj9XCII5v49Bg7uD
-         niqA==
-X-Gm-Message-State: AA6/9RkQMUNaWszZM3FtJ92Nv3l7wJQTKe6ruGjJ0ZWCPvjgdKDA8LxvoGMF/YLldv1GpH60A9d7cIKUvZNrNQ==
-X-Received: by 10.107.59.150 with SMTP id i144mr19641780ioa.155.1476550237185;
- Sat, 15 Oct 2016 09:50:37 -0700 (PDT)
+Received: (qmail 11846 invoked from network); 5 Sep 2017 13:17:47 -0000
+X-Gm-Message-State: AHPjjUjCv8f9nUwpOilzvfD0oN2HU1WJnFV7wlUyluYmMF6Y8JgAN65/
+	aKjbG0COi5A2Eg6CU6PM1k8/q9UTOA==
+X-Google-Smtp-Source: ADKCNb6RiyUhVyRHRTS4gnnBI66iX/e01SmzXG11Oe0D7LM0z+PsnhaoFKZJAnGdST6LSWRzs/NwaNmPjbfnoM/1Z0I=
+X-Received: by 10.46.68.9 with SMTP id r9mr1538505lja.174.1504617449943; Tue,
+ 05 Sep 2017 06:17:29 -0700 (PDT)
 MIME-Version: 1.0
-From: Ben Woods <woodsb02@gmail.com>
-Date: Sun, 16 Oct 2016 00:50:36 +0800
-Message-ID: <CAOc73CA3jpn3V=m0js8=n0jrLZ9=-bUmjVn3+D=ab2tzQBYyhQ@mail.gmail.com>
-To: dcoffin@cybercom.net, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a114f8eae6171d9053eea2431
-Subject: [oss-security] dcraw and CVE-2015-8366 + CVE-2015-8367
+From: Lukasz Lenart <lukaszlenart@apache.org>
+Date: Tue, 5 Sep 2017 15:17:09 +0200
+X-Gmail-Original-Message-ID: <CAMopvkNPG--EVqRtg4rO0G1bYrJ0cgYiBh=P=o2poEZq8kvdtQ@mail.gmail.com>
+Message-ID: <CAMopvkNPG--EVqRtg4rO0G1bYrJ0cgYiBh=P=o2poEZq8kvdtQ@mail.gmail.com>
+To: Struts Users Mailing List <user@struts.apache.org>
+Cc: "announcements@struts.apache.org" <announcements@struts.apache.org>, 
+	Struts Developers List <dev@struts.apache.org>, announce@apache.org, 
+	"security@struts.apache.org" <security@struts.apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com, Jonathan Bullock <jonbullock@gmail.com>, 
+	Man Yue Mo <mmo@semmle.com>, Bas van Schaik <bas@semmle.com>, Adam Cazzolla <acazzolla@sonatype.com>, 
+	chenhuijun <874892484@qq.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [ANN] Apache Struts 2.5.13 GA with Security Fixes Release
 
---001a114f8eae6171d9053eea2431
-Content-Type: text/plain; charset=UTF-8
+The Apache Struts group is pleased to announce that Struts 2.5.13 is
+available as a =E2=80=9CGeneral Availability=E2=80=9D release. The GA desig=
+nation is
+our highest quality grade.
 
-Hi Dave,
+Apache Struts 2 is an elegant, extensible framework for creating
+enterprise-ready Java web applications. The framework is designed to
+streamline the full development cycle, from building, to deploying, to
+maintaining applications over time.
 
-I was wondering if you could comment on whether dcraw is affected by these
-2 CVEs and whether new versions have been released which remove the
-vulnerability?
+This release contains fixes for the following potential security
+vulnerabilities:
 
-I noticed you mentioned in the mailing list post below that "CVE-2015-8366
-will be fixed in v9.27" - did that end up getting fixed in 9.27? How about
-CVE-2015-83667?
-http://seclists.org/oss-sec/2016/q1/526
+- S2-050 A regular expression Denial of Service when using
+URLValidator (similar to S2-044 & S2-047)
+    http://struts.apache.org/docs/s2-050.html
+- S2-051 A remote attacker may create a DoS attack by sending crafted
+xml request when using the Struts REST plugin
+    http://struts.apache.org/docs/s2-051.html
+- S2-052 Possible Remote Code Execution attack when using the Struts
+REST plugin with XStream handler to handle XML payloads
+    http://struts.apache.org/docs/s2-050.html
 
-CVE-2015-8366
-Index overflow in smal_decode_segment
-Fixed in LibRaw by:
-https://github.com/LibRaw/LibRaw/commit/89d065424f09b788f443734d44857289489ca9e2
+Except the above this release also contains several improvements just
+to mention few of them:
+
+Except the above this release also contains several improvements just
+to mention few of them:
+
+- Struts2 JSON Plugin: Send Map with Strings as Key to JSON Action is
+ignored, Numeric Keys will work and mapped
+- NP with TextProvider and wildcardmapping
+- Threads get blocked due to unnecessary synchronization in OgnlRuntime
+- Default Multipart validation regex is invalid
+- Not fully initialized ObjectFactory tries to create beans
+- http://struts.apache.org/dtds/struts-2.5.dtd missing
+- Set a global resource bundle in class
+- Override TextProvider doesnot work in struts 2.5.12
+- Array-of-null parameters are converted to string =E2=80=9Cnull=E2=80=9D
+- JakartaStreamMultiPartRequest Should Honor =E2=80=9Cstruts.multipart.maxS=
+ize=E2=80=9D
+- Build Fails Due to Unused com.sun Import
+- Struts2.5.12 - NPE in DeligatingValidatorContext
+- Struts 2 Fails to Initialize with JRebel
+- Allow define more than one Action suffix
+- Remove jQuery from debugging interceptor views
+- update dependencies page on the struts site
+- Improve RegEx used to validate URLs
+- Make REST ContentHandlers configurable
+- expose Freemarker incompatible_improvements into FreemarkerManager
+and StrutsBeansWrapper
+- Upgrade Commons Collections to 3.2.2
+- Upgrade Commons IO to 2.5
+- Upgrade to ASM version 5.2
+- Upgrade to OGNL 3.1.15
+- Upgrade xstream to the latest version
+- Upgrade to struts-master 11
+
+Please read the Version Notes to find more details about performed bug
+fixes and improvements.
+http://struts.apache.org/docs/version-notes-2513.html
+
+All developers are strongly advised to perform this action.
+
+The 2.5.x series of the Apache Struts framework has a minimum
+requirement of the following specification versions: Servlet API 2.4,
+JSP API 2.0, and Java 7.
+
+Should any issues arise with your use of any version of the Struts
+framework, please post your comments to the user list, and, if
+appropriate, file a tracking ticket.
+
+You can download this version from our download page.
+http://struts.apache.org/download.cgi#struts-ga
 
 
-CVE-2015-8367
-Memory objects are not intialized properly
-Fixed in LibRaw by:
-https://github.com/LibRaw/LibRaw/commit/490ef94d1796f730180039e80997efe5c58db780
-
-
-Thanks for your help.
-
-Regards,
-Ben
-
---
-From: Benjamin Woods
-woodsb02@gmail.com
-
---001a114f8eae6171d9053eea2431--
+Regards
+--=20
+=C5=81ukasz
++ 48 606 323 122 http://www.lenart.org.pl/
