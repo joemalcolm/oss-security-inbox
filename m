@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["943" "Monday" "1" "February" "2016" "19:05:21" "-0500" "Larry Cashdollar" "larry0@me.com" "<D2D55CF1.332B4%larry0@me.com>" "23" "[oss-security] Wordpress plugin Reflected XSS in connections v8.5.8" nil nil nil "2" "2016020200:05:21" "[oss-security] Wordpress plugin Reflected XSS in connections v8.5.8" (number mark "U       larry0@me.co Feb  1   23/943   " thread-indent "\"[oss-security] Wordpress plugin Reflected XSS in connections v8.5.8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2555" "Tuesday" "5" "September" "2017" "18:24:24" "+0200" "Thomas Jarosch" "thomas.jarosch@intra2net.com" "<39621748.Sj05Oj4PW6@nova.m.i2n>" "81" "[oss-security] CVE-2017-1000249: file: stack based buffer overflow" nil nil nil "9" "2017090516:24:24" "[oss-security] CVE-2017-1000249: file: stack based buffer overflow" (number mark "U       thomas.jaros Sep  5   81/2555  " thread-indent "\"[oss-security] CVE-2017-1000249: file: stack based buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7615 invoked by uid 550); 2 Feb 2016 00:05:44 -0000
+Received: (qmail 8181 invoked by uid 550); 5 Sep 2017 16:28:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +12,95 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7533 invoked from network); 2 Feb 2016 00:05:37 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2016-02-02_01:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=1 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1510270003 definitions=main-1602010402
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=me.com; h=date : subject
- : from : to : message-id : mime-version : content-type :
- content-transfer-encoding; s=4d515a;
- bh=dPnaBWL8iq4I4FLdeDgyidpV0XuVFyxWKvF1JFSSzUU=;
- b=Y45+JeEi5qBYgN/tLId8s29Xj/GiN7WM6/DSvVHX6y9L8OxI6YzsqA9JeC/CPRMYLUba
- qqRxXSmZe3sOFeAZ4UWGoe3wGGl+9QyS3FeFErkCnZfcTE57Qfa+Peury/AcYuVEOi3l
- uHxEeVeYfGlD2XXuv1QsjpSLM4BVJqh8dPUyT0MeDD5vXXzwRqPrkG/Cf3yrzfijzr0D
- n269MJZiJPKmENpTTE1E9YnipGZX+KigUtPdtQUrkjp4G5KpWPpZrEnwaNlBSDgiEzca
- exTTotDTddrxYnqMqFA8Hou35iocFIng5zY442kfP68bnq7iB/flBvHe10C08D15EoBn Yg==
-User-Agent: Microsoft-MacOutlook/14.6.0.151221
-Date: Mon, 01 Feb 2016 19:05:21 -0500
-From: Larry Cashdollar <larry0@me.com>
-To: Open Security <oss-security@lists.openwall.com>
-Message-id: <D2D55CF1.332B4%larry0@me.com>
-Thread-topic: Wordpress plugin Reflected XSS in connections v8.5.8
-MIME-version: 1.0
-Content-type: text/plain; charset=UTF-8
-Content-transfer-encoding: quoted-printable
-Subject: [oss-security] Wordpress plugin Reflected XSS in connections v8.5.8
+Received: (qmail 5976 invoked from network); 5 Sep 2017 16:24:39 -0000
+X-Virus-Scanned: by Intra2net Mail Security (AVE=8.3.46.6,VDF=8.14.19.50)
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+To: oss-security@lists.openwall.com
+Date: Tue, 05 Sep 2017 18:24:24 +0200
+Message-ID: <39621748.Sj05Oj4PW6@nova.m.i2n>
+Organization: Intra2net AG
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="nextPart2771929.PriRzGynN4"; micalg="pgp-sha1"; protocol="application/pgp-signature"
+Subject: [oss-security] CVE-2017-1000249: file: stack based buffer overflow
 
-Title: Wordpress plugin Reflected XSS in connections v8.5.8
-Author: Larry W. Cashdollar, @_larry0
-Date: 2016-01-26
-Download Site: https://wordpress.org/plugins/connections/
-Vendor: https://profiles.wordpress.org/shazahm1hotmailcom/
-Vendor Notified: 2016-01-28
-Vendor Fixed: 2016-02-01, v8.5.9
-Vendor Contact: https://profiles.wordpress.org/shazahm1hotmailcom/
-Description: An easy to use directory plugin to create an address book,
-business directory, staff
-directory or church directory.
-Vulnerability:Line 320 contains unfiltered user input for the search field
-being sent directly via
-echo back to the users browser via the =E2=80=99s=E2=80=99 variable.
-In file includes/admin/pages/manage.php
-Line 320:
-<input type=3D"search" id=3D"entry-search-input" name=3D=E2=80=9Cs" value=
-=3D"<?php if (
-isset( $_GET['s'] ) && ! empty( $_GET['s'] )) echo $_GET['s'] ; ?>" />
-CVEID: 2016-0770
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D161
+--nextPart2771929.PriRzGynN4
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
+Hello oss security,
+
+file(1) versions 5.29, 5.30 and 5.31 contain a stack based
+buffer overflow when parsing a specially crafted input file.
+
+The issue lets an attacker overwrite a fixed 20 bytes stack buffer
+with a specially crafted .notes section in an ELF binary file.
+
+There are systems like amavisd-new that automatically run file(1)
+on every email attachment. To prevent an automated exploit by email,
+another layer of protection like -fstack-protector is needed.
+
+Upstream fix:
+https://github.com/file/file/commit/35c94dc6acc418f1ad7f6241a6680e5327495793
+
+The issue was introduced with this code change in October 2016:
+https://github.com/file/file/commit/9611f31313a93aa036389c5f3b15eea53510d4d1
+
+file-5.32 has been released including the fix:
+ftp://ftp.astron.com/pub/file/file-5.32.tar.gz
+ftp://ftp.astron.com/pub/file/file-5.32.tar.gz.asc
+
+[An official release announcement on the file mailinglist
+will follow once a temporary outage of the mailinglist is solved]
+
+
+The cppcheck tool helped to discover the issue:
+----
+[readelf.c:514]: (warning) Logical disjunction always evaluates to true:
+descsz >= 4 || descsz <= 20.
+----
+
+
+Credits:
+The issue has been found by Thomas Jarosch of Intra2net AG.
+Code fix and new release provided by Christos Zoulas.
+
+
+Fixed packages from distributions should start to be available soon.
+
+
+Timeline (key entries):
+2017-08-26: Notified the maintainer Christos Zoulas
+2017-08-27: Christos pushed a fix to CVS / git
+            with innocent looking commit message
+
+2017-08-28: Notified Redhat security team to coordinate release
+            and request CVE ID. Redhat responds it's better to directly
+            contact the distros list instead through them.
+
+2017-09-01: Notified distros mailinglist, asking for CVE ID
+            and requesting embargo until 2017-09-08
+2017-09-01: CVE-2017-1000249 ID is assigned
+
+2017-09-04: After discussion that the issue is semi-public already,
+            moved embargo date to 2017-09-05
+2017-09-05: Public release
+
+
+Best regards,
+Thomas Jarosch / Intra2net AG
+
+--nextPart2771929.PriRzGynN4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iEYEABECAAYFAlmuz7gACgkQwLWsl6nGk7uoMACfTiFGwaVbsL4biNcRKPiwqCoI
+ov4AoJeMgElvyzEAj4riZYAlrFyDGk4Z
+=VnPi
+-----END PGP SIGNATURE-----
+
+--nextPart2771929.PriRzGynN4--
 
