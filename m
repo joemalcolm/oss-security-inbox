@@ -1,39 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/1
-Message-ID: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
-Date: Mon, 25 Sep 2017 21:50:59 +0000
-From: "Priedhorsky, Reid" <reidpr@...l.gov>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/05/3
+Message-ID: <39621748.Sj05Oj4PW6@nova.m.i2n>
+Date: Tue, 05 Sep 2017 18:24:24 +0200
+From: Thomas Jarosch <thomas.jarosch@...ra2net.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-1000249: file: stack based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Hello oss security,
 
-Debian recently issued DSA-3981-1, which announced fixes for quite a few CVEs affecting the Linux kernel. For five of these, I could find no evidence of any mention on oss-security:
+file(1) versions 5.29, 5.30 and 5.31 contain a stack based
+buffer overflow when parsing a specially crafted input file.
 
-  CVE-2017-10661
-  CVE-2017-11600
-  CVE-2017-12146
-  CVE-2017-12154
-  CVE-2017-14156
+The issue lets an attacker overwrite a fixed 20 bytes stack buffer
+with a specially crafted .notes section in an ELF binary file.
 
-Another CVE not in Debian’s announcement also seems not to have been mentioned here:
+There are systems like amavisd-new that automatically run file(1)
+on every email attachment. To prevent an automated exploit by email,
+another layer of protection like -fstack-protector is needed.
 
-  CVE-2016-10200
+Upstream fix:
+https://github.com/file/file/commit/35c94dc6acc418f1ad7f6241a6680e5327495793
 
-Of these six, three are possible privilege escalations (CVE-2016-10200, CVE-2017-10661, CVE-2017-12146). One was reported on oss-security, but not by CVE (CVE-2017-14156); the subject was “Linux kernel: driver/video/fbdev/aty/atyfb_base.c: atyfb_ioctl() stack infoleak”.
+The issue was introduced with this code change in October 2016:
+https://github.com/file/file/commit/9611f31313a93aa036389c5f3b15eea53510d4d1
 
-I looked for mentions with the Google query ‘"CVE-xxxx-yyyyy" oss-security’ as well as in my own database that I maintain directly from list postings. For CVEs that do appear here on the list, the posting is usually the first Google hit. I don’t believe any of the above are recent enough not to have been announced.
+file-5.32 has been released including the fix:
+ftp://ftp.astron.com/pub/file/file-5.32.tar.gz
+ftp://ftp.astron.com/pub/file/file-5.32.tar.gz.asc
 
-This is related to previous discussions here about CVE requests moving from this list to a web form. IIRC, a key hypothesis was that CVE requestors would forward notices to oss-security. Above, I provide evidence that this is not happening consistently for Linux kernel vulnerabilities.
+[An official release announcement on the file mailinglist
+will follow once a temporary outage of the mailinglist is solved]
 
-My questions:
 
-1. Is oss-security’s coverage of security issues in open-source software intended to be comprehensive? If so, this appears not to be true for the Linux kernel.
+The cppcheck tool helped to discover the issue:
+----
+[readelf.c:514]: (warning) Logical disjunction always evaluates to true:
+descsz >= 4 || descsz <= 20.
+----
 
-2. Is there another source of comprehensive coverage of vulnerabilities in the Linux kernel, including but not necessarily limited to all CVEs issued for it?
 
-I appreciate everyone’s time and effort on all this stuff. This post should not be interpreted as singling out Debian for criticism.
+Credits:
+The issue has been found by Thomas Jarosch of Intra2net AG.
+Code fix and new release provided by Christos Zoulas.
 
-Thanks,
-Reid
+
+Fixed packages from distributions should start to be available soon.
+
+
+Timeline (key entries):
+2017-08-26: Notified the maintainer Christos Zoulas
+2017-08-27: Christos pushed a fix to CVS / git
+            with innocent looking commit message
+
+2017-08-28: Notified Redhat security team to coordinate release
+            and request CVE ID. Redhat responds it's better to directly
+            contact the distros list instead through them.
+
+2017-09-01: Notified distros mailinglist, asking for CVE ID
+            and requesting embargo until 2017-09-08
+2017-09-01: CVE-2017-1000249 ID is assigned
+
+2017-09-04: After discussion that the issue is semi-public already,
+            moved embargo date to 2017-09-05
+2017-09-05: Public release
+
+
+Best regards,
+Thomas Jarosch / Intra2net AG
+
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
