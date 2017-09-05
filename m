@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/10
-Message-ID: <CAJmbs8hbW+BOp8T3rXLRsgi0Lh8izoYwp-sM7AX60hm9gZqQLA@mail.gmail.com>
-Date: Thu, 13 Jul 2017 23:25:39 +0700
-From: Maxim Solodovnik <solomax@...che.org>
-To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2017-7681 - Apache OpenMeetings - SQL injection in web services
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/05/4
+Message-Id: <da74bef7-e0dc-4fff-a44e-8fd51bc2d012@googlegroups.com>
+Date: Tue, 5 Sep 2017 09:30:23 -0700 (PDT)
+From: Tim Graham <timograham@...il.com>
+To: django-announce <django-announce@...glegroups.com>
+Cc: django-users@...glegroups.com, django-developers@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Django security releases issued: 1.11.5 and 1.10.8
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+Today the Django team issued 1.11.5 and 1.10.8 as part of our security 
+process. These releases address a security issue, and we encourage all 
+users to upgrade as soon as possible:
 
-Vendor: The Apache Software Foundation
+https://www.djangoproject.com/weblog/2017/sep/05/security-releases/
 
-Versions Affected: Apache OpenMeetings 1.0.0
+As a reminder, we ask that potential security issues be reported via 
+private email to security@...ngoproject.com and not via Django's Trac 
+instance or the django-developers list. Please see 
+https://www.djangoproject.com/security for further information.
 
-Description: Apache OpenMeetings is vulnerable to SQL injection This
-allows authenticated users to modify the structure of the existing
-query and leak the structure of other queries being made by the
-application in the back-end
-CVE-2017-7681
-
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
-
-Credit: This issue was identified by Security Innovation
+Content of type "text/html" skipped
