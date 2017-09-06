@@ -1,68 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/11/2
-Message-ID: <1489267555.30133.7.camel@gmail.com>
-Date: Sat, 11 Mar 2017 22:25:55 +0100
-From: Ailin Nemui <ailin.nemui@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/06/6
+Message-ID: <8210399.4Q3lmaS87A@wanheda>
+Date: Wed, 06 Sep 2017 21:03:43 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Irssi use after free in netjoin condition (2017/03)
+Subject: Re: openjpeg: heap-based buffer overflow in opj_write_bytes_LE (cio.c) (INCOMPLETE FIX FOR CVE-2017-14152)
 Content-Type: text/plain; charset=utf-8
 
-Dear CVE Assignment Team,
+On mercoledì 6 settembre 2017 20:59:29 CEST Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/09/06/graphicsmagick-memory-allocation-fai
+> lure-in-magickmalloc-memory-c-2/
 
-please provide CVE for the following issue:
+I'm sorry I sent a wrong permalink, this is the correct:
+https://blogs.gentoo.org/ago/2017/09/06/heap-based-buffer-overflow-in-opj_write_bytes_le-cio-c-incomplete-fix-for-cve-2017-14152/
 
-use after free condition during netjoin processing [1]
-======================================================
-CWE Classification: CWE-416
-
-
-
-Description
------------
-
-Use after free while producing list of netjoins (CWE-416)
-
-This issue was found and reported to us by APic.
-
-
-Impact
-------
-
-This issue usually leads to segmentation faults. Targeted code
-execution should be difficult.
-
-
-Affected versions
------------------
-
-Irssi up to and including 1.0.1
-
-We believe Irssi 0.8.21 and prior are not affected since a different
-code path causes the netjoins to be flushed prior to reaching the use
-after free condition.
-
-
-Fixed in
---------
-
-Irssi 1.0.2
-
-
-Recommended action
-------------------
-
-Upgrade to Irssi 1.0.2. Irssi 1.0.2 is a maintenance release
-without any new features.
-
-
-Patch
------
-
-https://github.com/irssi/irssi/commit/77b2631c78461965bc9a7414aae206b5c
-514e1b3
-
-
-References
-----------
-
-[1] https://irssi.org/security/irssi_sa_2017_03.txt
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
