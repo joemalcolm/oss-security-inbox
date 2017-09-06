@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["822" "Sunday" "13" "November" "2016" "00:13:40" "+0100" "Daniel Beck" "ml@beckweb.net" "<041433EB-C484-41D5-8589-A5CE9F8BA0E7@beckweb.net>" "25" "[oss-security] CVE request: Jenkins remote code execution vulnerability" nil nil nil "11" "2016111223:13:40" "[oss-security] CVE request: Jenkins remote code execution vulnerability" (number mark "U       ml@beckweb.n Nov 13   25/822   " thread-indent "\"[oss-security] CVE request: Jenkins remote code execution vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6237" "Wednesday" "6" "September" "2017" "19:02:56" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<576662.508395629-sendEmail@localhost>" "108" "[oss-security] libarchive: heap-based buffer overflow in xml_data (archive_read_support_format_xar.c)" nil nil nil "9" "2017090619:02:56" "[oss-security] libarchive: heap-based buffer overflow in xml_data (archive_read_support_format_xar.c)" (number mark "U       ago@gentoo.o Sep  6  108/6237  " thread-indent "\"[oss-security] libarchive: heap-based buffer overflow in xml_data (archive_read_support_format_xar.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29858 invoked by uid 550); 12 Nov 2016 23:13:53 -0000
+Received: (qmail 16108 invoked by uid 550); 6 Sep 2017 19:03:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,120 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29840 invoked from network); 12 Nov 2016 23:13:53 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 16032 invoked from network); 6 Sep 2017 19:03:16 -0000
+Message-ID: <576662.508395629-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Wed, 6 Sep 2017 19:02:56 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-451994.986579852"
+Subject: [oss-security] libarchive: heap-based buffer overflow in xml_data (archive_read_support_format_xar.c)
+
+------MIME delimiter for sendEmail-451994.986579852
+Content-Type: text/plain;
+        charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <041433EB-C484-41D5-8589-A5CE9F8BA0E7@beckweb.net>
-Date: Sun, 13 Nov 2016 00:13:40 +0100
-To: oss-security@lists.openwall.com
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1478992433;5649334e;
-Subject: [oss-security] CVE request: Jenkins remote code execution vulnerability
 
-Hello,
+Description:
+libarchive is a multi-format archive and compression library.
 
-An unauthenticated remote code execution vulnerability was discovered in the
-Jenkins continuous integration and continuous delivery automation server.
-A serialized Java object transferred to the Jenkins CLI can make Jenkins
-connect to an attacker-controlled LDAP server, which in turn can send a
-serialized payload leading to code execution, bypassing existing protection
-mechanisms.
+The complete ASan output of the issue:
 
-The Jenkins project tracks this as SECURITY-360. Releases with the fix are
-planned for Wednesday, November 16.
+# bsdtar -t -f $FILE
+==13144==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x631000038800 at pc 0x7fb1c808f650 bp 0x7ffdd1b40990 sp 0x7ffdd1b40988            
+READ of size 1 at 0x631000038800 thread T0                                                                                                           
+    #0 0x7fb1c808f64f in xml_data /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c      
+    #1 0x7fb1c808f64f in expat_data_cb /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:3230                                                                                                                                                 
+    #2 0x7fb1c697c3b6 in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:2960                                            
+    #3 0x7fb1c697cb9b in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:2418                                            
+    #4 0x7fb1c697e988 in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:4366                                            
+    #5 0x7fb1c697f137 in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:4089                                            
+    #6 0x7fb1c6980fc7 in XML_ParseBuffer /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:1915                                  
+    #7 0x7fb1c807d62a in expat_read_toc /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:3273:8                                                                                                                                              
+    #8 0x7fb1c807d62a in read_toc /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:584  
+    #9 0x7fb1c807d62a in xar_read_header /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:677                                                                                                                                                
+    #10 0x7fb1c7f728ed in _archive_read_next_header2 /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read.c:648:7
+    #11 0x7fb1c7f72590 in _archive_read_next_header /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read.c:686:8 
+    #12 0x51483f in read_archive /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/tar/read.c:260:7
+    #13 0x513d89 in tar_mode_t /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/tar/read.c:94:2
+    #14 0x50eaae in main /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/tar/bsdtar.c:858:3
+    #15 0x7fb1c6ffe680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #16 0x41c628 in _init (/usr/bin/bsdtar+0x41c628)
 
-Please assign a CVE to this issue.
+0x631000038800 is located 0 bytes to the right of 65536-byte region [0x631000028800,0x631000038800)
+allocated by thread T0 here:
+    #0 0x4d1fd8 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7fb1c69811f5 in XML_GetBuffer /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:2004
 
-References:
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c in xml_data
+Shadow bytes around the buggy address:
+  0x0c627ffff0b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c627ffff0c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c627ffff0d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c627ffff0e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c627ffff0f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c627ffff100:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c627ffff110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c627ffff120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c627ffff130: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c627ffff140: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c627ffff150: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==13144==ABORTING
 
-Jenkins website:
-https://jenkins.io/
+Affected version:
+3.3.2
 
-Publication of the vulnerability in this talk:
-https://www.deepsec.net/speaker.html#PSLOT250
+Fixed version:
+N/A
 
-Notification and workaround by the Jenkins project here:
-https://groups.google.com/d/msg/jenkinsci-advisories/-fc-w9tNEJE/GRvEzWoJBgAJ
+Commit fix:
+https://github.com/libarchive/libarchive/commit/fa7438a0ff4033e4741c807394a9af6207940d71
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14166
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00316-libarchive-heapoverflow-archive_read_support_format_xar
+
+Timeline:
+2017-08-15: bug discovered and reported to upstream
+2017-09-05: upstream released a patch
+2017-09-06: blog post about the issue
+2017-09-06: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/06/libarchive-heap-based-buffer-overflow-in-xml_data-archive_read_support_format_xar-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-451994.986579852--
 
