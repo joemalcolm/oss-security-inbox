@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1249" "Wednesday" "21" "September" "2016" "08:09:27" "+0800" "Carl Peng" "felixk3y@gmail.com" "<CAEiFw0UDwyLFxRK0PPVKVGA3+B112scA3M+sskZ6Q8-0K1vAuQ@mail.gmail.com>" "37" "[oss-security] =?UTF-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4zLjkgeHNzIHZ1bG5lcmFiaWxpdHkgaQ==?==?UTF-8?B?biB3b3JsZHBheQ==?=" nil nil nil "9" "2016092100:09:27" "[oss-security] =?UTF-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4zLjkgeHNzIHZ1bG5lcmFiaWxpdHkgaQ==?==?UTF-8?B?biB3b3JsZHBheQ==?=" (number mark "U       felixk3y@gma Sep 21   37/1249  " thread-indent "\"[oss-security] =?UTF-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4zLjkgeHNzIHZ1bG5lcmFiaWxpdHkgaQ==?==?UTF-8?B?biB3b3JsZHBheQ==?=\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6399" "Wednesday" "6" "September" "2017" "18:59:29" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<281650.74330488-sendEmail@localhost>" "124" "[oss-security] openjpeg: heap-based buffer overflow in opj_write_bytes_LE (cio.c) (INCOMPLETE FIX FOR CVE-2017-14152)" nil nil nil "9" "2017090618:59:29" "[oss-security] openjpeg: heap-based buffer overflow in opj_write_bytes_LE (cio.c) (INCOMPLETE FIX FOR CVE-2017-14152)" (number mark "U       ago@gentoo.o Sep  6  124/6399  " thread-indent "\"[oss-security] openjpeg: heap-based buffer overflow in opj_write_bytes_LE (cio.c) (INCOMPLETE FIX FOR CVE-2017-14152)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25625 invoked by uid 550); 21 Sep 2016 00:46:28 -0000
+Received: (qmail 28082 invoked by uid 550); 6 Sep 2017 18:59:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,73 +12,136 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1654 invoked from network); 21 Sep 2016 00:09:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=eHiRAgaNIkKBPM8C/2r9V1G/GLrY8EJG5pQDeasjlZA=;
-        b=WT9wW6LpA158AZkANlWWAgF5KxKACadKWWUiI9aC2p+Gyw0ziivN+8IqanoWBMzkkg
-         dwDnBbruPhxnqgmFt28bDofrPcW+klGG3ehkDXbk2QMM3sEFGK008VKgtwAwoa1gE1s8
-         44TdgYF+oUHlI7sdyQnOlJIxsNZRn0lcKAconnRncn+98tBx1oY091ghvv13F3GSpDj4
-         1pY1PYHupd2mY2ZJdgZ3CPBfp+US8a1bx5yvbfRj1nz9EraO/iuDd+iwHaZkV33Awxah
-         g7znUotsSFD8Fzd+nnL7gof0r7Ti70yvoWbwLsX43qv8AKau9eZmHfRf4TMjDEfvucRE
-         LXIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=eHiRAgaNIkKBPM8C/2r9V1G/GLrY8EJG5pQDeasjlZA=;
-        b=EjRAyHEO6VOzOBzqlYXrdfQxDeyUgn7CcRZ/oP6ehjIU9+ac8gWrkythWGt2mDXQR9
-         rnAUrVqRROB30wzBWPxy4hWpYU/d1RGmxFas/Un3841i09g+4oaXVexzWYizyn4IjRrK
-         oGzGy5AweMQcWjfn+yQ861WRyDXruI018c6MK7ow45c/6QLOgRw9ZLjMzgHp5G3ZXHA0
-         oTPTdy4af42pfLkoGo/9CWCvfWU//u8Nx7Zvi34unG/DpJ8DHHJLI4oNDQyq3BOIlNwL
-         437+PlPyJWK658m5raHLyq8kYuZyhn+LDf9yTK6JFWEl4392no8OqzXnulimjh/Y3AZg
-         mU7A==
-X-Gm-Message-State: AE9vXwNzwmoxIvRcp9AYb5+hktB9FAokwWm1Xl6OILO+azCHLIlUp8Jf6LaFqlbwIE1Uv1PcYaPj9zfQMAu9Bw==
-X-Received: by 10.194.173.168 with SMTP id bl8mr30191776wjc.136.1474416567385;
- Tue, 20 Sep 2016 17:09:27 -0700 (PDT)
+Received: (qmail 28058 invoked from network); 6 Sep 2017 18:59:49 -0000
+Message-ID: <281650.74330488-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Wed, 6 Sep 2017 18:59:29 +0000
 MIME-Version: 1.0
-From: Carl Peng <felixk3y@gmail.com>
-Date: Wed, 21 Sep 2016 08:09:27 +0800
-Message-ID: <CAEiFw0UDwyLFxRK0PPVKVGA3+B112scA3M+sskZ6Q8-0K1vAuQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=089e0122ebe4c00415053cf95bce
-Subject: [oss-security] =?UTF-8?Q?CVE_request=EF=BC=9AExponent_CMS_2=2E3=2E9_xss_vulnerability_i?=
-	=?UTF-8?Q?n_worldpay?=
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-240416.638161154"
+Subject: [oss-security] openjpeg: heap-based buffer overflow in opj_write_bytes_LE (cio.c) (INCOMPLETE FIX FOR CVE-2017-14152)
 
---089e0122ebe4c00415053cf95bce
-Content-Type: text/plain; charset=UTF-8
+------MIME delimiter for sendEmail-240416.638161154
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Hi, I reported the following Cross Site Scripting vulnerability to the
-ExponentCMS team on Sep 16, 2016:
-vulnerability:
-/external/worldpay/callback.php
-line 7-11:
-```
-<head>
-<meta http-equiv="refresh" content="2;url=<?php echo URL_FULL;
-?>cart/preprocess?transStatus=<?php echo $_POST["transStatus"];
-?>&transId=<?php echo $_POST["transId"]; ?>"> //xss
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-<title></title>
-</head>
-```
-"transStatus", "transId" parameters are fail to sufficiently sanitize.
+Description:
+openjpeg is an open-source JPEG 2000 library.
 
-Proof of concept:
-http://www.exponentcms.org/external/worldpay/callback.php
-And post:transStatus="/><script>alert(/xss/)</script>
+The fix for CVE-2017-14152 seems that wasn’t enough.
+
+The complete ASan output of the issue:
+
+# opj_compress -r 20,10,1 -jpip -EPH -SOP -cinema2K 24 -n 1 -i $FILE -o null.j2k
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not sorted in ascending order. 
+TIFFReadDirectory: Warning, Unknown field with tag 6376 (0x18e8) encountered. 
+TIFFReadDirectory: Warning, Unknown field with tag 27154 (0x6a12) encountered.
+TIFFReadDirectory: Warning, Unknown field with tag 32512 (0x7f00) encountered.
+TIFFReadDirectory: Warning, Unknown field with tag 15163 (0x3b3b) encountered.
+TIFFFetchNormalTag: Warning, Sanity check on size of "Tag 6376" value failed; tag ignored.
+TIFFFetchNormalTag: Warning, Incorrect count for "FillOrder"; tag ignored.    
+TIFFReadDirectory: Warning, TIFF directory is missing required "StripByteCounts" field, calculating from imagelength.   
+================================================================= 
+==62004==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6060000000b6 at pc 0x7fd4d46ef89a bp 0x7ffc068d7070 sp 0x7ffc068d7068 
+WRITE of size 1 at 0x6060000000b6 thread T0     
+    #0 0x7fd4d46ef899 in opj_write_bytes_LE /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/cio.c:67:23
+    #1 0x7fd4d4736bef in opj_j2k_write_sot /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:4225:5
+    #2 0x7fd4d4736bef in opj_j2k_write_all_tile_parts 
+/var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:11575  
+    #3 0x7fd4d4736bef in opj_j2k_post_write_tile /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:11287 
+    #4 0x7fd4d473545d in opj_j2k_encode /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:11028:15 
+    #5 0x7fd4d47802f8 in opj_encode /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/openjpeg.c:775:20  
+    #6 0x50b942 in main /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/opj_compress.c:1993:36 
+    #7 0x7fd4d3117680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #8 0x41bc18 in _start (/usr/bin/opj_compress+0x41bc18)  
+
+0x6060000000b6 is located 0 bytes to the right of 54-byte region [0x606000000080,0x6060000000b6)
+allocated by thread T0 here:  
+    #0 0x4d15c8 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66    
+    #1 0x7fd4d482be29 in opj_malloc /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/opj_malloc.c:196:12
+    #2 0x7fd4d4762760 in opj_j2k_update_rates /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:5157:22
+    #3 0x7fd4d473937f in opj_j2k_exec /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:7954:33
+    #4 0x7fd4d473937f in opj_j2k_start_compress /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/j2k.c:11103
+    #5 0x7fd4d478019c in opj_start_compress /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/openjpeg.c:758:20
+    #6 0x50b90f in main /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/opj_compress.c:1970:20
+    #7 0x7fd4d3117680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/lib/openjp2/cio.c:67:23 in 
+opj_write_bytes_LE
+Shadow bytes around the buggy address:
+  0x0c0c7fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0c7fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0c7fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0c7fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0c7fff8000: fa fa fa fa 00 00 00 00 00 00 07 fa fa fa fa fa
+=>0x0c0c7fff8010: 00 00 00 00 00 00[06]fa fa fa fa fa 00 00 00 00
+  0x0c0c7fff8020: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c0c7fff8030: fa fa fa fa 00 00 00 00 00 00 00 fa fa fa fa fa
+  0x0c0c7fff8040: 00 00 00 00 00 00 00 00 fa fa fa fa 00 00 00 00
+  0x0c0c7fff8050: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c0c7fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:     00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==62004==ABORTING
+CINEMA 2K profile activated
+Other options specified could be overridden
+[WARNING] JPEG 2000 Profile-3 and 4 (2k/4k dc profile) requires:
+1 single quality layer-> Number of layers forced to 1 (rather than 3)
+-> Rate of the last layer (1.0) will be used[INFO] tile number 1 / 1
+
+Affected version:
+2.2.0
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/uclouvain/openjpeg/commit/dcac91b8c72f743bda7dbfa9032356bc8110098a
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14164
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00321-openjpeg-heapoverflow-opj_write_bytes_LE
+
+Timeline:
+2017-08-16: bug discovered and reported to upstream
+2017-08-16: upstream released a fix
+2017-09-06: blog post about the issue
+2017-09-06: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/06/graphicsmagick-memory-allocation-failure-in-magickmalloc-memory-c-2/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-And Now, Cross Site Scripting vulnerability have been fixed.
-https://exponentcms.lighthouseapp.com/projects/61783/changesets/5e4b749bff4314f2a22c7afef903c67ccb862caf
-https://github.com/exponentcms/exponent-cms/commit/5e4b749bff4314f2a22c7afef903c67ccb862caf
+------MIME delimiter for sendEmail-240416.638161154--
 
-This issue was reported by Peng Hua of silence.com.cn Inc. and I would like
-to request a CVE for this issue (if not done so).
-
-Thank you.
----------------------------------http://www.silence.com.cn
-penghua#silence.com.cn
-PKAV Team
-
---089e0122ebe4c00415053cf95bce--
