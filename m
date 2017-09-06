@@ -1,71 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/8
-Message-ID: <a8482eb5-f245-9a3a-0fe2-5ba206358205@mvista.com>
-Date: Tue, 1 Aug 2017 13:36:07 -0700
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: CoreOS membership to linux-distros (updated)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/06/2
+Message-ID: <489609.792220534-sendEmail@localhost>
+Date: Wed, 6 Sep 2017 07:32:24 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: openjpeg: heap-based buffer overflow in opj_write_bytes_LE (cio.c)
 Content-Type: text/plain; charset=utf-8
 
+Description:
+openjpeg is an open-source JPEG 2000 library.
 
+The complete ASan output of the issue:
 
-On 07/31/2017 01:53 PM, Solar Designer wrote:
-> On Fri, Jul 21, 2017 at 03:26:47PM +0200, Solar Designer wrote:
->> I intend to add CoreOS to linux-distros in early August unless there are
->> any well-reasoned objections by then.
-> I've just added CoreOS to linux-distros.
->
-> On Tue, Jul 18, 2017 at 02:56:23PM -0700, Euan Kemp wrote:
->> Based on your previous messages, it sounds like it???s expected for us to
->> inherit 'primary' for the administrative tasks of:
->>> 1. Promptly review new issue reports for meeting the list's requirements and confirm receipt of the report and, when necessary, inform the reporter of any issues with their report (e.g., obviously not actionable by the distros) and request and/or propose any required yet missing information (most notably, a tentative public disclosure date) - primary: CloudLinux, backup: vacant
->>> 2. If the proposed public disclosure date is not within list policy, insist on getting this corrected and propose a suitable earlier date - primary: CloudLinux, backup: vacant
-> Off-list, CloudLinux kindly offered this:
->
-> On Sun, Jul 23, 2017 at 06:15:23AM -0700, Igor Seletskiy wrote:
->> We can pickup #3 & #6 as #1 & #2 are picked up by CoreOS.
-> On Tue, Jul 18, 2017 at 02:56:23PM -0700, Euan Kemp wrote:
->> I???ll also volunteer us for the administrative task of:
->>> 6. If multiple issues are reported at once, see if any of them can reasonably be made public sooner than the rest, and if so help untangle them and stay on top of their disclosure process
->> We???ll be happy to be on the lookout for possible conflation of issues
->> and kick off discussion if we think something can be broken up.
-> Maybe Igor had overlooked the clash on #6, but anyway this combination
-> resulted in:
->
-> 1. Promptly review new issue reports for meeting the list's requirements
-> and confirm receipt of the report and, when necessary, inform the
-> reporter of any issues with their report (e.g., obviously not actionable
-> by the distros) and request and/or propose any required yet missing
-> information (most notably, a tentative public disclosure date)
-> - primary: CoreOS, backup: Oracle
->
-> 2. If the proposed public disclosure date is not within list policy,
-> insist on getting this corrected and propose a suitable earlier date
-> - primary: CoreOS, backup: CloudLinux
->
-> 3. Evaluate if the issue (or one of the issues) is effectively already
-> public (e.g., a fix is committed upstream with a descriptive message)
-> or/and is low severity and thus the report (or its portion pertaining to
-> the issue) should be made public right away for one or both of these
-> reasons, get a few other list members to confirm this understanding, and
-> if there are no objections then communicate this strong preference to
-> the reporter
-> - primary: CloudLinux, backup: vacant
->
-> 6. If multiple issues are reported at once, see if any of them can
-> reasonably be made public sooner than the rest, and if so help untangle
-> them and stay on top of their disclosure process
-> - primary: CoreOS, backup: CloudLinux
->
-> This looks fine to me.
->
-> However, many distros still haven't picked up a task, and many tasks are
-> not picked up by any distro.  That should change.
+# opj_compress -I -cinema4K -n 1 -i $FILE -o null.jp2
+==133214==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61100000012b at pc 0x7f221efde81a bp 0x7ffd4c1d9ad0 sp 0x7ffd4c1d9ac8           
+WRITE of size 1 at 0x61100000012b thread T0                                                                                                          
+    #0 0x7f221efde819 in opj_write_bytes_LE /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/cio.c:67:23               
+    #1 0x7f221f0261b8 in opj_j2k_write_sot /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:4237:5               
+    #2 0x7f221f0261b8 in opj_j2k_write_all_tile_parts /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11604     
+    #3 0x7f221f0261b8 in opj_j2k_post_write_tile /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11273          
+    #4 0x7f221f0240fd in opj_j2k_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11014:15                
+    #5 0x7f221f06edf8 in opj_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/openjpeg.c:775:20                 
+    #6 0x50b9a2 in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1990:36                            
+    #7 0x7f221da06680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                       
+    #8 0x41bc78 in _start (/usr/bin/opj_compress+0x41bc78)                                                                                           
+                                                                                                                                                     
+0x61100000012b is located 0 bytes to the right of 235-byte region [0x611000000040,0x61100000012b)                                                    
+allocated by thread T0 here:                                                                                                                         
+    #0 0x4d1628 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66         
+    #1 0x7f221f11a8a9 in opj_malloc /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/opj_malloc.c:196:12               
+    #2 0x7f221f051260 in opj_j2k_update_rates /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:5156:22
+    #3 0x7f221f027f8c in opj_j2k_exec /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:7940:33
+    #4 0x7f221f027f8c in opj_j2k_start_compress /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11089
+    #5 0x7f221f059260 in opj_jp2_start_compress /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/jp2.c:2474:12
+    #6 0x7f221f06ec9c in opj_start_compress /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/openjpeg.c:758:20
+    #7 0x50b96f in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1967:20
+    #8 0x7f221da06680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Is there a consolidated summary on where we stand on what has been 
-spoken for?
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/cio.c:67:23 in opj_write_bytes_LE
+Shadow bytes around the buggy address:
+  0x0c227fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff8000: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c227fff8010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff8020: 00 00 00 00 00[03]fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8070: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==133214==ABORTING
+CINEMA 4K profile activated
+Other options specified could be overridden
+[WARNING] JPEG 2000 Profile-4 (4k dc profile) requires:
+Number of decomposition levels >= 1 &&  Number of decomposition levels forced to 1 (rather than 2)
+[WARNING] JPEG 2000 Profile-3 and 4 (2k/4k dc profile) requires:
+Maximum 1302083 compressed bytes @ 24fps
+As no rate has been given, this limit will be used.
+[WARNING] JPEG 2000 Profile-3 and 4 (2k/4k dc profile) requires:
+Maximum 1041666 compressed bytes @ 24fps
+As no rate has been given, this limit will be used.
+[WARNING] JPEG 2000 Profile-3 (2k dc profile) requires:
+Precision of each component shall be 12 bits unsigned-> At least component 0 of input image (8 bits, unsigned) is not compliant
+-> Non-profile-3 codestream will be generated
+[INFO] tile number 1 / 1
 
-regards,
-Armin
-> Alexander
+Affected version:
+2.2.0
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/uclouvain/openjpeg/commit/4241ae6fbbf1de9658764a80944dc8108f2b4154
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14152
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00317-openjpeg-heapoverflow-opj_write_bytes_LE
+
+Timeline:
+2017-08-15: bug discovered and reported to upstream
+2017-08-15: upstream released a fix
+2017-08-16: blog post about the issue
+2017-09-05: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/08/16/openjpeg-heap-based-buffer-overflow-in-opj_write_bytes_le-cio-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
