@@ -1,100 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/4
-Message-ID: <163984.21171786-sendEmail@localhost>
-Date: Thu, 14 Sep 2017 07:01:45 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: mp3gain: global buffer overflow in III_dequantize_sample (mpglibDBL/layer3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/06/7
+Message-ID: <87ingva5rf.fsf@fifthhorseman.net>
+Date: Wed, 06 Sep 2017 17:15:00 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Michael Orlitzky <michael@...itzky.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-Description:
-mp3gain is a program to analyze and adjust MP3 files to same volume.
+On Fri 2017-08-18 13:12:03 -0400, Michael Orlitzky wrote:
+> I'm scared to reply because this is guaranteed to turn into a "you
+> should just use systemd, grandpa" holy war.
 
-The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
-The upstream project seems to be dead, so the issue wasn’t communicated to them.
+I'm pleasantly surprised to see that that didn't happen :) And thanks
+for your thoughtful response.
 
-The complete ASan output of the issue:
+fwiw, i wasn't thinking specifically of systemd -- there are several
+process managers that do more sensible things, including those in the
+daemontools lineage (e.g. runit) and others.  Even sysvinit's /sbin/init
+itself can monitor single-process daemons without any trouble or need
+for a pidfile.
 
-# aacgain -f $FILE
-==23791==ERROR: AddressSanitizer: global-buffer-overflow on address 0x00000107ff80 at pc 0x0000008e2acc bp 0x7fff34f7d100 sp 0x7fff34f7d0f8
-WRITE of size 8 at 0x00000107ff80 thread T0
-    #0 0x8e2acb in III_dequantize_sample /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:779
-    #1 0x8e2acb in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1646
-    #2 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643
-    #3 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
-    #4 0x7f36927b3680 in __libc_start_main (/lib64/libc.so.6+0x20680)
-    #5 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
+> If we had it all to do over again, I would probably agree with you. But
+> there are still users with simple init systems, and many of those users
+> are happy (or stuck) that way. If you want to convince upstreams to
+> delete their PID file code and drop support for the associated init
+> systems, you'll have to offer them something to make up for the users
+> they'll lose.
+>
+> For some projects, "the code gets simpler and to hell with those users"
+> will suffice. But for big projects where actual money is involved,
+> you'll have a harder time.
 
-0x00000107ff80 is located 32 bytes to the left of global variable 'sideinfo' defined in 'layer3.c:1521:21' (0x107ffa0) of size 488
-0x00000107ff80 is located 0 bytes to the right of global variable 'hybridIn' defined in 'layer3.c:1612:17' (0x107db80) of size 9216
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:779 in III_dequantize_sample
-Shadow bytes around the buggy address:
-  0x000080207fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080207fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080207fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080207fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080207fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x000080207ff0:[f9]f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080208000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080208010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080208020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080208030: 00 f9 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x000080208040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==23791==ABORTING
+Yup, these are the tradeoffs.
 
-Affected version:
-1.5.2
+But i think future reports of problems with pidfiles (e.g. your helpful
+cleanup of mimedefang -- thanks!)  should always include the suggestion
+to disable pidfiles entirely and to encourage developers who must
+implement them to ensure that they're only an extra feature, for use
+with otherwise limited service managers, and perhaps to be compile-time
+disabled.
 
-Fixed version:
-N/A
+Having a pidfile by default ought to be treated as an increase in the
+attack surface in general, since they're so easy to get wrong.
 
-Commit fix:
-N/A
+Thanks for your work in tracking these down and cleaning them up,
+Michael.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Regards,
 
-CVE:
-CVE-2017-14409
+          --dkg
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00350-aacgain-globaloverflow-III_dequantize_sample
-
-Timeline:
-2017-08-28: bug discovered
-2017-09-08: blog post about the issue
-2017-09-13: CVE Assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/08/mp3gain-global-buffer-overflow-in-iii_dequantize_sample-mpglibdbllayer3-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
