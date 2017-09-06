@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7941" "Sunday" "23" "October" "2016" "10:01:07" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<295468895.Z3kUJlH9qt@arcadia>" "136" "[oss-security] jasper: heap-based buffer overflow in jpc_dec_tiledecode (jpc_dec.c)" nil nil nil "10" "2016102308:01:07" "[oss-security] jasper: heap-based buffer overflow in jpc_dec_tiledecode (jpc_dec.c)" (number mark "U       ago@gentoo.o Oct 23  136/7941  " thread-indent "\"[oss-security] jasper: heap-based buffer overflow in jpc_dec_tiledecode (jpc_dec.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5939" "Wednesday" "6" "September" "2017" "07:31:54" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<988038.938350172-sendEmail@localhost>" "112" "[oss-security] openjpeg: heap-based buffer overflow in opj_mqc_flush (mqc.c)" nil nil nil "9" "2017090607:31:54" "[oss-security] openjpeg: heap-based buffer overflow in opj_mqc_flush (mqc.c)" (number mark "U       ago@gentoo.o Sep  6  112/5939  " thread-indent "\"[oss-security] openjpeg: heap-based buffer overflow in opj_mqc_flush (mqc.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29792 invoked by uid 550); 23 Oct 2016 08:00:41 -0000
+Received: (qmail 21773 invoked by uid 550); 6 Sep 2017 07:32:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,106 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29774 invoked from network); 23 Oct 2016 08:00:40 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Sun, 23 Oct 2016 10:01:07 +0200
-Message-ID: <295468895.Z3kUJlH9qt@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+Received: (qmail 21746 invoked from network); 6 Sep 2017 07:32:13 -0000
+Message-ID: <988038.938350172-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Wed, 6 Sep 2017 07:31:54 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] jasper: heap-based buffer overflow in jpc_dec_tiledecode (jpc_dec.c)
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-237529.159131558"
+Subject: [oss-security] openjpeg: heap-based buffer overflow in opj_mqc_flush (mqc.c)
+
+------MIME delimiter for sendEmail-237529.159131558
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
 Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+openjpeg is an open-source JPEG 2000 library.
 
-Another round of fuzzing on an updated version (1.900.10) a buffer over read 
-because of an integer overflow.
+The complete ASan output of the issue:
 
-The complete ASan output:
+# opj_compress -n 1 -i $FILE -o null.j2c
+==81142==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000000b6 at pc 0x7fc39ca4a189 bp 0x7fff91c10aa0 sp 0x7fff91c10a98
+WRITE of size 1 at 0x6020000000b6 thread T0
+    #0 0x7fc39ca4a188 in opj_mqc_flush /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/mqc.c
+    #1 0x7fc39ca7db6a in opj_t1_encode_cblk /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/t1.c:2213:21
+    #2 0x7fc39ca7db6a in opj_t1_encode_cblks /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/t1.c:2061
+    #3 0x7fc39cae8689 in opj_tcd_t1_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/tcd.c:2184:11
+    #4 0x7fc39cae8689 in opj_tcd_encode_tile /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/tcd.c:1362
+    #5 0x7fc39ca05527 in opj_j2k_write_sod /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:4661:11
+    #6 0x7fc39ca05527 in opj_j2k_write_first_tile_part /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11507
+    #7 0x7fc39ca05527 in opj_j2k_post_write_tile /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11265
+    #8 0x7fc39ca040fd in opj_j2k_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11014:15
+    #9 0x7fc39ca4edf8 in opj_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/openjpeg.c:775:20
+    #10 0x50b9a2 in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1990:36
+    #11 0x7fc39b3e6680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #12 0x41bc78 in _start (/usr/bin/opj_compress+0x41bc78)
 
-# imginfo -f $FILE
-warning: not enough tile data (9 bytes)                                                                                                                                                        
-=================================================================                                                                                                                              
-==15870==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x7f0c6a964770 at pc 0x7f0c729e93a4 bp 0x7ffd08758cf0 sp 0x7ffd08758ce8                                                      
-READ of size 8 at 0x7f0c6a964770 thread T0                                                                                                                                                     
-    #0 0x7f0c729e93a3 in jpc_dec_tiledecode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:1126:43                                                   
-    #1 0x7f0c729d9567 in jpc_dec_process_eoc /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:1170:8                                                   
-    #2 0x7f0c729e20c4 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:390:10                                                        
-    #3 0x7f0c729e20c4 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:254                                                               
-    #4 0x7f0c729afc41 in jp2_decode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_dec.c:215:21                                                            
-    #5 0x7f0c7293fa29 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_image.c:392:16                                                   
-    #6 0x4f1686 in main /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/appl/imginfo.c:188:16                                                                                 
-    #7 0x7f0c71a4c61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
-    #8 0x418e68 in _init (/usr/bin/imginfo+0x418e68)                                                                                                                                           
+0x6020000000b6 is located 0 bytes to the right of 6-byte region [0x6020000000b0,0x6020000000b6)
+allocated by thread T0 here:
+    #0 0x4d1628 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7fc39cafa8a9 in opj_malloc /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/opj_malloc.c:196:12
+    #2 0x7fc39cae3522 in opj_tcd_code_block_enc_allocate_data /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/tcd.c:1196:42
+    #3 0x7fc39cae3522 in opj_tcd_init_tile /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/tcd.c:1113
+    #4 0x7fc39c9ff364 in opj_j2k_pre_write_tile /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11115:11
+    #5 0x7fc39c9ff364 in opj_j2k_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:10958
+    #6 0x7fc39ca4edf8 in opj_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/openjpeg.c:775:20
+    #7 0x50b9a2 in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1990:36
+    #8 0x7fc39b3e6680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-0x7f0c6a964770 is located 0 bytes to the right of 64749424-byte region 
-[0x7f0c66ba4800,0x7f0c6a964770)                                                                                         
-allocated by thread T0 here:                                                                                                                                                                   
-    #0 0x4c03b8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52                                                   
-    #1 0x7f0c7297efbe in jas_malloc /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_malloc.c:105:11                                                        
-    #2 0x7f0c7297efbe in jas_alloc2 /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_malloc.c:136                                                           
-    #3 0x7f0c7297fb44 in jas_matrix_create /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_seq.c:129:25                                                    
-    #4 0x7f0c7297f71b in jas_seq2d_create /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_seq.c:90:17                                                      
-    #5 0x7f0c729d4280 in jpc_dec_tileinit /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:702:23                                                      
-    #6 0x7f0c729d4280 in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:559                                                      
-    #7 0x7f0c729e20c4 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:390:10                                                        
-    #8 0x7f0c729e20c4 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:254                                                               
-    #9 0x7f0c729afc41 in jp2_decode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_dec.c:215:21                                                            
-    #10 0x7f0c7293fa29 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_image.c:392:16                                                  
-    #11 0x4f1686 in main /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/appl/imginfo.c:188:16
-    #12 0x7f0c71a4c61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
-libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:1126:43 
-in jpc_dec_tiledecode
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/mqc.c in opj_mqc_flush
 Shadow bytes around the buggy address:
-  0x0fe20d524890: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe20d5248a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe20d5248b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe20d5248c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fe20d5248d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0fe20d5248e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00[fa]fa
-  0x0fe20d5248f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fe20d524900: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fe20d524910: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fe20d524920: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fe20d524930: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff8000: fa fa fd fa fa fa 00 00 fa fa 00 00 fa fa 00 00
+=>0x0c047fff8010: fa fa 00 fa fa fa[06]fa fa fa 06 fa fa fa 06 fa
+  0x0c047fff8020: fa fa 06 fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
 Shadow byte legend (one shadow byte represents 8 application bytes):
   Addressable:           00
   Partially addressable: 01 02 03 04 05 06 07 
   Heap left redzone:       fa
-  Heap right redzone:      fb
   Freed heap region:       fd
   Stack left redzone:      f1
   Stack mid redzone:       f2
   Stack right redzone:     f3
-  Stack partial redzone:   f4
   Stack after return:      f5
   Stack use after scope:   f8
   Global redzone:          f9
@@ -123,40 +92,44 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   ASan internal:           fe
   Left alloca redzone:     ca
   Right alloca redzone:    cb
-==15870==ABORTING
+==81142==ABORTING
+[INFO] tile number 1 / 1
 
 Affected version:
-1.900.10
+2.2.0
 
 Fixed version:
-1.900.12
+N/A
 
 Commit fix:
-https://github.com/mdadams/jasper/commit/988f8365f7d8ad8073b6786e433d34c553ecf568
+https://github.com/uclouvain/openjpeg/commit/afb308b9ccbe129608c9205cf3bb39bbefad90b9
 
 Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-N/A
+CVE-2017-14151
 
 Reproducer:
-https://github.com/asarubbo/poc/blob/master/00001-jasper-heapoverflow-jpc_dec_tiledecode
+https://github.com/asarubbo/poc/blob/master/00314-openjpeg-heapoverflow-opj_mqc_flush
 
 Timeline:
-2016-10-22: bug discovered
-2016-10-22: bug reported to upstream
-2016-10-22: upstream released the patch
-2016-10-23: upstream released 1.900.12
-2016-10-23: blog post about the issue
+2017-08-14: bug discovered and reported to upstream
+2017-08-14: upstream releases a fix
+2017-08-16: blog post about the issue
+2017-09-05: CVE assigned
 
 Note:
 This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
 Permalink:
-https://blogs.gentoo.org/ago/2016/10/23/jasper-heap-based-buffer-overflow-in-jpc_dec_tiledecode-jpc_dec-c/
+https://blogs.gentoo.org/ago/2017/08/16/openjpeg-heap-based-buffer-overflow-in-opj_mqc_flush-mqc-c/
 
-
--- 
+--
 Agostino Sarubbo
 Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-237529.159131558--
+
