@@ -1,207 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/10
-Message-ID: <20170927173907.GA4606@openwall.com>
-Date: Wed, 27 Sep 2017 19:39:08 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Ben Seri <ben@...is.com>
-Subject: Re: Linux BlueBorne vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/06/5
+Message-ID: <576662.508395629-sendEmail@localhost>
+Date: Wed, 6 Sep 2017 19:02:56 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: libarchive: heap-based buffer overflow in xml_data (archive_read_support_format_xar.c)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 15, 2017 at 12:40:06PM +0000, Ben Seri wrote:
-> In any case, we respect the need for a short embargo period, and in this
-> case we disclosed the issues 7 days prior to publication.
+Description:
+libarchive is a multi-format archive and compression library.
 
-Thank you, Ben!
+The complete ASan output of the issue:
 
-All -
+# bsdtar -t -f $FILE
+==13144==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x631000038800 at pc 0x7fb1c808f650 bp 0x7ffdd1b40990 sp 0x7ffdd1b40988            
+READ of size 1 at 0x631000038800 thread T0                                                                                                           
+    #0 0x7fb1c808f64f in xml_data /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c      
+    #1 0x7fb1c808f64f in expat_data_cb /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:3230                                                                                                                                                 
+    #2 0x7fb1c697c3b6 in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:2960                                            
+    #3 0x7fb1c697cb9b in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:2418                                            
+    #4 0x7fb1c697e988 in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:4366                                            
+    #5 0x7fb1c697f137 in _init /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:4089                                            
+    #6 0x7fb1c6980fc7 in XML_ParseBuffer /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:1915                                  
+    #7 0x7fb1c807d62a in expat_read_toc /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:3273:8                                                                                                                                              
+    #8 0x7fb1c807d62a in read_toc /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:584  
+    #9 0x7fb1c807d62a in xar_read_header /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c:677                                                                                                                                                
+    #10 0x7fb1c7f728ed in _archive_read_next_header2 /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read.c:648:7
+    #11 0x7fb1c7f72590 in _archive_read_next_header /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read.c:686:8 
+    #12 0x51483f in read_archive /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/tar/read.c:260:7
+    #13 0x513d89 in tar_mode_t /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/tar/read.c:94:2
+    #14 0x50eaae in main /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/tar/bsdtar.c:858:3
+    #15 0x7fb1c6ffe680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #16 0x41c628 in _init (/usr/bin/bsdtar+0x41c628)
 
-Ben brought additional detail to linux-distros on September 24, and Petr
-Matousek promptly posted a reply.  I am including both below (in short:
-older kernels are also affected).  I asked but failed to get Ben or/and
-Petr to post this to oss-security, but it must be posted ASAP since it's
-already non-embargoed info.  So I am doing this myself.  Arguably, this
-falls under administrative task "3. Evaluate if the issue (or one of the
-issues) is effectively already public ...", which is CloudLinux's, but
-maybe I was quicker to initiate the requests to Ben and Petr, and as
-list admin I am in a better position to actually enforce policy when
-things go wrong like that.
+0x631000038800 is located 0 bytes to the right of 65536-byte region [0x631000028800,0x631000038800)
+allocated by thread T0 here:
+    #0 0x4d1fd8 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
+    #1 0x7fb1c69811f5 in XML_GetBuffer /var/tmp/portage/dev-libs/expat-2.2.1/work/expat-2.2.1/lib/xmlparse.c:2004
 
-To make this clearer for future occasions, I've just added this piece:
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/app-arch/libarchive-3.3.2/work/libarchive-3.3.2/libarchive/archive_read_support_format_xar.c in xml_data
+Shadow bytes around the buggy address:
+  0x0c627ffff0b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c627ffff0c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c627ffff0d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c627ffff0e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c627ffff0f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c627ffff100:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c627ffff110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c627ffff120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c627ffff130: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c627ffff140: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c627ffff150: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==13144==ABORTING
 
-"If you'd like to post a follow-up to or otherwise continue discussing
-an issue that has already been made public, please post those messages
-only to oss-security instead.  The (linux-)distros lists are for
-embargoed discussions only, and we mean it.  If you do have a good
-reason to keep your follow-up(s) under a new embargo, it's OK to send
-them to (linux-)distros, but please be aware that this starts the whole
-process all over again - you need to propose a public disclosure date
-right away, etc., and then bring those follow-up(s) to oss-security once
-the new embargo is over."
+Affected version:
+3.3.2
 
-to:
+Fixed version:
+N/A
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
+Commit fix:
+https://github.com/libarchive/libarchive/commit/fa7438a0ff4033e4741c807394a9af6207940d71
 
-This is not a new problem.  Sometimes it takes some reminders to force
-the remainder of a discussion thread to the public after the issue has
-been made public.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Ben Seri wrote:
+CVE:
+CVE-2017-14166
 
----
-Hi
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00316-libarchive-heapoverflow-archive_read_support_format_xar
 
-We are writing to inform you that we have found that the Bluetooth RCE
-vulnerability (CVE-2017-1000251) we have disclosed a few weeks ago, can
-also be triggered on older Kernels than what we initially identified.
+Timeline:
+2017-08-15: bug discovered and reported to upstream
+2017-09-05: upstream released a patch
+2017-09-06: blog post about the issue
+2017-09-06: CVE assigned
 
-In our initial report we stated that this vulnerability affects Kernels
-starting at v3.3-rc1 - and this is true for the code flow we have
-identified in that report. However, we have found that the same underlying
-bug can also be triggered by a separate code flow that exists in the
-Kernels starting at v2.6.32 (in commit:
-f2fcfcd670257236ebf2088bbdf26f6a8ef459fe).
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
-This is the code flow that can also trigger this vulnerability in older
-Kernels:
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/06/libarchive-heap-based-buffer-overflow-in-xml_data-archive_read_support_format_xar-c/
 
-In l2cap_config_rsp, a second call to l2cap_parse_conf_rsp exist:
-
-...
-
-case L2CAP_CONF_UNACCEPT:
-
-if (l2cap_pi(sk)->num_conf_rsp <= L2CAP_CONF_MAX_CONF_RSP) {
-
-char req[64];
-
-if (len > sizeof(req) - sizeof(struct l2cap_conf_req)) {
-
-l2cap_send_disconn_req(conn, sk, ECONNRESET);
-
-goto done;
-
-}
-
-/* throw out any old stored conf requests */
-
-result = L2CAP_CONF_SUCCESS;
-
-len = l2cap_parse_conf_rsp(sk, rsp->data,
-
-len, req, &result);
-
-
-
-
-Despite checking the length of the incoming l2cap config response, this
-flow is susceptible to a stack overflow of the req buffer.
-
-The incoming config response may be limited to the maximum 60 bytes, and
-still create an output response that exceeds that allocated 64 bytes. This
-is because l2cap_parse_conf_rsp can create an outgoing response that is
-larger than the incoming configuration response it parses:
-
-
-
-while (len >= L2CAP_CONF_OPT_SIZE) {
-
-len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
-
-switch (type) {
-
-case L2CAP_CONF_MTU:
-
-if (val < L2CAP_DEFAULT_MIN_MTU) {
-
-*result = L2CAP_CONF_UNACCEPT;
-
-pi->imtu = L2CAP_DEFAULT_MIN_MTU;
-
-} else
-
-pi->imtu = val;
-
-l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, pi->imtu);
-
-
-
-
-For example, an attacker can send a configuration response that contain
-multiple MTU elements that are all sized 0 (\x01\x00) and the above code
-will create an MTU element of size 2 for each received MTU element,
-regardless of its received size. This means that the outgoing response
-size would be twice the incoming response size. For instance, an incoming
-configuration response built using 30 MTU elements of size 0 will have a
-total size of 60 bytes (and will pass the if in l2cap_config_rsp
-successfully) but the output configuration response would be 120 bytes that
-would result in overflow of the req buffer above.
-
-An attacker could of course craft a configuration response in this flow
-that would result in effective overflow of the stack that can lead to
-remote code execution.
-
-It is our understanding that no new patch is necessary to address this
-second flow, as the original patch we submitted already mitigated this flow
-as well. However, we do feel that the CVE details should reflect that this
-vulnerability affects Kernels starting from v2.6.32.
-
-I have added Kurt Seifried to this communication as well, in order to
-assist with alteration of the CVE.
-
-Kurt - Since this is flow is a bit different than our original report, do
-you think changing the CVE details is the way to go, or would it be better
-to assign a separate CVE ID for this?
-
-If you need any additional details from us, please let us know.
-
-Thank you,
-
-Ben Seri
-
-Armis Labs
----
-
-Petr Matousek wrote:
-
----
-Hi,
-
-On Sun, Sep 24, 2017 at 07:20:18PM +0000, Ben Seri wrote:
->    Hi
-> 
->    We are writing to inform you that we have found that the Bluetooth RCE
->    vulnerability (CVE-2017-1000251) we have disclosed a few weeks ago, can
->    also be triggered on older Kernels than what we initially identified.
-> 
->    In our initial report we stated that this vulnerability affects Kernels
->    starting at v3.3-rc1 - and this is true for the code flow we have
->    identified in that report. However, we have found that the same underlying
->    bug can also be triggered by a separate code flow that exists in the
->    Kernels starting at v2.6.32 (in commit:
->    f2fcfcd670257236ebf2088bbdf26f6a8ef459fe).
-
-FWIW, we've already informed linux-distros about this earlier this month
-(Sep 11th). We found it while analysing impact of the original issue on
-rhel-6 (and released patches for 2.6.32 based rhel-6 too).
-
-Thanks,
 --
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
----
+Agostino Sarubbo
+Gentoo Linux Developer
 
-I had missed that this detail was on linux-distros but was not made
-public along with the rest of the info on September 14.  Per the maximum
-embargo time, we should have made this public no later than September 25,
-so we're a couple of days late now.  Per common sense, it shouldn't have
-been delayed at all, and Ben's message quoted above should have been
-sent to oss-security instead of to linux-distros.
 
-I am not blaming anyone.  Just pointing out how I think - and insist -
-this should be done going forward.
-
-Thanks,
-
-Alexander
