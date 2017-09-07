@@ -1,28 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/3
-Message-ID: <20171122081339.eacdjs5pewelvhod@scully.more-magic.net>
-Date: Wed, 22 Nov 2017 09:13:39 +0100
-From: Peter Bex <peter@...e-magic.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Go programming language invalid modular exponentiation result (Exp() in math/big pkg)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/6
+Message-ID: <87a8268ong.fsf@fifthhorseman.net>
+Date: Thu, 07 Sep 2017 12:22:11 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Michael Orlitzky <michael@...itzky.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 22, 2017 at 12:30:08AM +0100, Guido Vranken wrote:
-> Dear list,
-> 
-> I've written a bignum fuzzer that compares the results of mathematical
-> operations (addtion, subtraction, multiplication, ...) across multiple
-> bignum libraries.
+On Thu 2017-09-07 08:38:23 -0400, Michael Orlitzky wrote:
+> I've been reluctant to do this because I'm approaching these as an
+> OpenRC user, and OpenRC has the ability to supervise the daemon. I
+> always hate it when someone makes a suggestion (at my expense) that
+> amounts to "I don't need this, so you don't need this" -- and I don't
+> want to be /that/ guy.
 
-Hi there,
+You don't need to be /that/ guy to point out that there are multiple
+possible approaches to managing services, and some service management
+approaches are simply less vulnerable to this stuff than others.
 
-Is this fuzzer freely available?  I'd love to try it out on the bignum
-support I added to the CHICKEN Scheme implementation for its upcoming
-new major release (probably somewhere mid-2018).  Being able to release
-it with a bit higher confidence in its correctness would be nice, as this
-is almost all brand new code.
+You're helping to identify a class of problems here that need to be
+eliminated.  I don't think we do anyone any favors by hiding the fact
+that the class of problems can be completely avoided by using systemd,
+openrc, runit, s6, /sbin/init, etc.
 
-Cheers,
-Peter Bex (CHICKEN core maintainer)
+> I've found services that run with *two* PID files, one of which is
+> ignored. I've found services that go out of their way to give away
+> ownership of /run/foo, even though /run/foo/foo.pid is created and owned
+> by root. Pretty much any way you can go wrong has made an appearance at
+> least once, and all of these are for daemons that should be supervised
+> -- the service scripts should be trivial.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+sigh.  are you cataloging these somewhere?  this is really valuable
+work, and it'd be great to see a list of common failures.  Do you know
+if any of them are collected under CWE or any other widely-accepted
+taxonomy?
+
+Is there any way to automate these tests, or do we need a human to read
+each initscript and look for flaws?  Are other people helping you in
+this review?  how are you tracking/coordinating your reviews?
+
+> Anyway, my point is, it may be optimistic to think that we can help
+> people not do weird things in their service scripts =)
+
+thank you for doing this review, but i disagree with your conclusion --
+you're already helping people to not do weird things in their service
+scripts, just by writing these reports :)
+
+You might not be able to prevent all the bad from happening, but
+establishing what a bad practice looks like will help people push back
+against those practices in the future.
+
+Regards,
+
+         --dkg
+
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
