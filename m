@@ -1,57 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/5
-Message-ID: <SG2PR0401MB18348536139981B099234273888B0@SG2PR0401MB1834.apcprd04.prod.outlook.com>
-Date: Wed, 9 Aug 2017 07:49:25 +0000
-From: ne xo <nexo123@...look.kr>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Cve issue discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/3
+Message-ID: <fb6b7e2d-977d-7eae-346e-a638f806bf34@orlitzky.com>
+Date: Thu, 7 Sep 2017 08:38:23 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security@...ts.openwall.com
+Cc: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-Most bugs in ASan do not cause crash in non-ASan environments.
+On 09/06/2017 05:15 PM, Daniel Kahn Gillmor wrote:
+> 
+> But i think future reports of problems with pidfiles (e.g. your helpful
+> cleanup of mimedefang -- thanks!)  should always include the suggestion
+> to disable pidfiles entirely and to encourage developers who must
+> implement them to ensure that they're only an extra feature, for use
+> with otherwise limited service managers, and perhaps to be compile-time
+> disabled.
+> 
 
-You should check with the valgrind tool.
-________________________________
-���� ���: Glenn Randers-Pehrson <glennrp@...il.com>
-���� ��¥: 2017�� 8�� 8�� ȭ���� ���� 4:32:13
-�޴� ���: oss-security@...ts.openwall.com
-���: Re: [oss-security] Cve issue discussion
+I've been reluctant to do this because I'm approaching these as an
+OpenRC user, and OpenRC has the ability to supervise the daemon. I
+always hate it when someone makes a suggestion (at my expense) that
+amounts to "I don't need this, so you don't need this" -- and I don't
+want to be /that/ guy.
 
-It doesn't occur on my own Ubuntu platform without ASAN.  But anyone
-running with
-a malloc that initializes the memory (trusted systems, etc) would be affected
+I think a compile-time option is reasonable, though. Maybe the ability
+to fork into the background should also be compiled out in that case.
+When I encounter more of these, I'll provide a list of possible
+solutions and include "get rid of the PID file" along with its trade-offs.
 
-On Mon, Aug 7, 2017 at 1:22 PM, Jesse Hertz <jesse_hertz@...le.com> wrote:
-> fwiw, double check and make sure the issue occurs in libpng without ASAN. Sometimes ASAN can cause "heisenbugs" which only happen if ASAN is used.
->
->> On Aug 7, 2017, at 9:57 AM, Glenn Randers-Pehrson <glennrp@...il.com> wrote:
->>
->> OK I'll request a CVE for this libpng issue.
->>
->> Glenn
->>
->> On Mon, Aug 7, 2017 at 9:05 AM, John Haxby <john.haxby@...cle.com> wrote:
->>> On 07/08/17 13:47, Glenn Randers-Pehrson wrote:
->>>> It's not causing a crash, just a delay.  You'll safely get either an OOM
->>>> message or an EOF message.and no memory leak.
->>>>
->>>
->>> That's scant comfort when your browser is the one hit by the OOM killer
->>> and then again when you restart it.  And also while you're wondering
->>> what's going on because your laptop is basically completely
->>> non-responsive ...
->>>
->>> So yes, it's a remote DoS and definitely worth a CVE.  We have had other
->>> similar CVEs in the past with image handling libraries not being
->>> sufficiently paranoid.
->>>
->>> jch
->>>
->>>> Glenn
->>>>
->>>> On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@...e.de> wrote:
->>>>> Hi,
->>>>>
->>>>> if it could crash the image reader I would consider it "remote denial of service"
->>>>> classed and CVE worthy.
->>>
->
+Most of the PID file vulnerabilities that I've found are in the
+distribution init scripts: the only ones that hit this list are the
+upstream projects that make it impossible for the distro developers to
+get it right. Curiously though, a lot of the problems that I've found in
+the distro scripts are for daemons that run in the foreground and are
+supposed to be supervised.
+
+Basically, there are two accepted approaches. Forking,
+
+  1. Daemon forks
+  2. Daemon writes a PID file
+  3. Daemon drops privileges
+
+And supervised:
+
+  4. Daemon runs in the foreground, and does nothing special
+
+What I've found is that many programs choose any old subset of (1)
+through (4), and implement them in any order. As a result, init script
+authors haven't developed a feel for the right way to do things; they
+copy/paste snippets from other init scripts until things seem to work.
+
+I've found services that run with *two* PID files, one of which is
+ignored. I've found services that go out of their way to give away
+ownership of /run/foo, even though /run/foo/foo.pid is created and owned
+by root. Pretty much any way you can go wrong has made an appearance at
+least once, and all of these are for daemons that should be supervised
+-- the service scripts should be trivial.
+
+Anyway, my point is, it may be optimistic to think that we can help
+people not do weird things in their service scripts =)
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (982 bytes)
