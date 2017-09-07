@@ -1,32 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/29/4
-Message-ID: <alpine.LFD.2.20.1703292229380.2723@austen3.home>
-Date: Wed, 29 Mar 2017 23:16:15 +0100
-From: Michael Young <m.a.young@...ham.ac.uk>
-To: "Xen.org security team" <security@....org>
-CC: <xen-announce@...ts.xen.org>, <xen-devel@...ts.xen.org>, <xen-users@...ts.xen.org>, <oss-security@...ts.openwall.com>
-Subject: Re: [Xen-devel] Xen Security Advisory 206 - xenstore denial of service via repeated update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/4
+Message-ID: <20170907151829.lff5etqqtwceqvq4@perpetual.pseudorandom.co.uk>
+Date: Thu, 7 Sep 2017 16:27:25 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 29 Mar 2017, Xen.org security team wrote:
+On Thu, 07 Sep 2017 at 08:38:23 -0400, Michael Orlitzky wrote:
+> supervised:
+> 
+>   4. Daemon runs in the foreground, and does nothing special
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->                    Xen Security Advisory XSA-206
->                              version 9
->
->            xenstore denial of service via repeated update
+If other services can depend on this daemon (for example situations like
+"NetworkManager must start after dbus-daemon is ready" or "ntpd must
+start after syslogd is ready"), then it frequently does need to do
+something special, to tell larger infrastructure when it is ready to
+satisfy dependencies.
 
-I am seeing a build failure from these patches when using gcc 7. The 
-problem is with
-xsa206-4.80002-xenstored-Log-when-the-write-transaction-rate-limit-.patch 
-because in tools/xenstore/xenstored_domain.c the patch adds the boolean 
-wrl_delay_logged to the structure "domain" but later it tries to increment 
-it, resulting in the error 
-xenstored_domain.c: In function 'wrl_apply_debit_actual':
-xenstored_domain.c:949:32: error: increment of a boolean expression 
-[-Werror=bool-operation]
-    if (!domain->wrl_delay_logged++) {
+systemd implements several mechanisms for this: the daemon can fork (as
+below; Type=forking in systemd jargon), or it can request a D-Bus name
+(Type=dbus), or it can send a systemd-specific message over a Unix socket
+(Type=notify). For simplicity, Type=dbus and Type=notify daemons should
+normally "stay in the foreground" and not fork, although I don't think
+that's actually required (systemd can supervise them regardless).
+systemd units (configuration/integration files) typically set a desired
+Type, then run the daemon with appropriate command-line options to make
+it behave in a way that matches the Type.
 
- 	Michael Young
+Other init/rc systems can implement whatever mechanisms they want to for
+readiness notification, but they typically have *something*. I've seen
+some (runit) that advocate having dependent services just fail and exit
+when their dependencies are not satisfied, using a retry loop to get
+them started successfully, and not telling the service manager anything
+about the dependency tree; but that seems like the exception rather than
+the rule.
+
+> Forking,
+> 
+>   1. Daemon forks
+>   2. Daemon writes a PID file
+>   3. Daemon drops privileges
+
+Forking is not just for backgrounding, it's also a form of semi-explicit
+readiness-notification. In a world of sysv-style shell init scripts,
+an easy way to implement the common semantics "wait for daemon to be
+ready to accept requests and satisfy other daemons' dependencies, then
+return" is to have the daemon use the forking pattern like daemon(3).
+Then the shell script does something like:
+
+    #!/bin/sh
+    case "$1" in
+        (start)
+            dbus-daemon --system --fork \
+                --address=unix:/var/run/dbus/system_bus_socket
+            exit 0
+            ;;
+        ...
+    esac
+
+which means it won't exit until the initial process of the daemon
+has exited, for example because it has called daemon(3) or equivalent.
+A well-behaved daemon that implements this pattern will make sure not to
+call daemon(3) until it is ready to accept requests and satisfy other
+daemons' dependencies. For example, in the dbus-daemon invocation in
+my shell script fragment above, dbus-daemon has already called bind()
+and listen() on /var/run/dbus/system_bus_socket before it daemonizes
+(double-forks), so as soon as it daemonizes, clients can rely on being
+able to connect() to that address without a race condition causing them
+to fail.
+
+Some service supervisors (in particular I'm aware of systemd and Upstart)
+identify and track this forking pattern as a way to know when dependencies
+on this daemon can be assumed to be satisfied. This is orthogonal to
+whether they supervise the daemon - systemd will certainly do so whether
+the daemon forks or not, and I think Upstart does too.
+
+Ideally, the sequence of events would be something that ensures that
+the pid file already exists by the time readiness has been announced,
+like this pseudocode:
+
+    have the necessary privileges to write a pid file
+    fork
+    if (parent) {
+        write child pid to pid file
+        exit    /* tells supervisor we are ready */
+    }
+    else /* child */ {
+        drop privileges
+        while (1) { process request }
+    }
+
+Regards,
+    smcv
