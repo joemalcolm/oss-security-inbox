@@ -1,4 +1,9 @@
-Received: (qmail 28421 invoked by uid 550); 28 Sep 2025 14:51:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1346" "Thursday" "7" "September" "2017" "16:06:05" "-0400" "Leo Famulari" "leo@famulari.name" "<20170907200605.GA13030@jasmine.lan>" "34" "[oss-security] Tcpdump 4.9.2" "^Date:" nil nil "9" "2017090720:06:05" "[oss-security] Tcpdump 4.9.2" (number mark "        leo@famulari Sep  7   34/1346  " thread-indent "\"[oss-security] Tcpdump 4.9.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1781 invoked by uid 550); 7 Sep 2017 20:08:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,85 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22360 invoked from network); 28 Sep 2025 14:12:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=selector1; bh=gvL6s5DsbE
-	abb3JfZRzL3dQrkMuIUHQtV/fW2PkTXBM=; h=date:references:in-reply-to:
-	subject:cc:to:from; d=openbsd.org; b=NVq6g+c5bYvtfBY3RxvYHt/RdUNFRrXI2
-	OkOEqMiCvyu6vgjRfzHdyaaq3ewfjlE1orudSdAVHJlYVGnn78J6sGi120MGBWnEbcrqOS
-	24upl+bdaI40dZk57UE7pqjeXab2djvyrt5bgZcV/Gx67QjNKUmGbLv2zuAH4zuNbdcsok
-	g08NEcseLRM8TSwyfKTXDJ2ZprLJ8Tpa9GlYDeMqgo7pEGGinkkAXk37DX3Amaup3+PIHW
-	8gchtMa6q/xb3ThIDA3T9pPr3vSpdOyGnsuBP4/B9GkdyM+Ow+1x/yPT04RVTSHsqXB8OP
-	UOIbwfixLPmmq+iOZo2P9h7bg61OA==
-From: "Theo de Raadt" <deraadt@openbsd.org>
-To: Damien Miller <djm@mindrot.org>
-cc: "Adiletta, Andrew" <ajadiletta@wpi.edu>,
-    Solar Designer <solar@openwall.com>,
-    "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-    "openssh@openssh.com" <openssh@openssh.com>,
-    "Tol,
-    Caner" <mtol@wpi.edu>, "Sunar, Berk" <sunar@wpi.edu>,
-    "Doroz,
-    Yarkin" <ydoroz@wpi.edu>,
-    "Todd C. Miller" <Todd.Miller@courtesan.com>,
-    "pgut001@cs.auckland.ac.nz" <pgut001@cs.auckland.ac.nz>
-In-reply-to: <c5d66517-f422-1fe7-03a0-d79cf4af1fbf@mindrot.org>
-References: <92a89d5d-e0de-c713-e7d2-83f971574eff@mindrot.org> <20250923032113.GA14348@openwall.com> < BL1PR01MB772308134BF946DF07159A05C11CA%BL1PR01MB7723.prod.exchangelabs.com@mailhub.eait.uq.edu.au> <c5d66517-f422-1fe7-03a0-d79cf4af1fbf@mindrot.org>
-Comments: In-reply-to Damien Miller <djm@mindrot.org>
-   message dated "Wed, 24 Sep 2025 15:32:35 +1000."
+Received: (qmail 31779 invoked from network); 7 Sep 2017 20:06:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=famulari.name;
+	 h=content-type:date:from:message-id:mime-version:subject:to
+	:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=EI8
+	xssMEG61S+EykrsiwCuq61mTykuO0S0PrnI8by+I=; b=RTGuQkParD1D2Cqmoro
+	k3UTjAn76AEiShdrmKjKmcWKc8q6IQlZ2TQyPO9pSy2wUuJvPttvdPGLHx9E8JsH
+	lQ095diwfp+ezeM1tcdO/5+vYfJSPdfLzxJXFI+o8H4aPd0IajOQUr8Hn5wE7/WA
+	gMRGbSug1zZqjC5rCRmD/cCo=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:message-id
+	:mime-version:subject:to:x-me-sender:x-me-sender:x-sasl-enc
+	:x-sasl-enc; s=fm1; bh=EI8xssMEG61S+EykrsiwCuq61mTykuO0S0PrnI8by
+	+I=; b=JOXkfwMy95m7deAVvEFtRCjPtp3FlomL3+k9vZZWaZnNNTarQuuA0FgOz
+	3LpZ2Ml0SDE0an0oWdJTLXu1kdTgyJdFCid8FCwMcYUObJlxNB/SMi+GCWsYdtQI
+	gRgmH9J9l7wKGDdPMU1uPR/UCArnwiv9p2tkJQ4rr7W/dmdvwASttgRdKKPzFJWY
+	hzbFsZogaGVvYMXjPAiu+2ngQRnjWuTR07CIqqQSe+OkYTwlPVY1Iwr5psWpK1Je
+	kwM/kHwInXyKm4CR6saTpoyemgocHtSH/UjD6Vjoc+grleZBLp4KwHeKRpIzOvZs
+	QearWkHPxVRQP8+FoweMhzoRscK4w==
+X-ME-Sender: <xms:rqaxWdnqsbNQ3o_JB-eZ8rzpWlP77xfv3zep7VnIfzxRf1t9r8sUtg>
+X-Sasl-enc: pe57C1ngA7/9JF3M12hOBUS8p3VAqkc9D8H+Ju5etaaW 1504814766
+Message-ID: <20170907200605.GA13030@jasmine.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 28 Sep 2025 08:12:26 -0600
-Message-ID: <76091.1759068746@cvs.openbsd.org>
-Subject: [oss-security] Re: [EXT] Re: [oss-security] CVE-2023-51767: a bogus CVE in OpenSSH
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="5vNYLRcllDrimb99"
+Content-Disposition: inline
+User-Agent: Mutt/1.8.3 (2017-05-23)
+Date: Thu, 7 Sep 2017 16:06:05 -0400
+From: Leo Famulari <leo@famulari.name>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Tcpdump 4.9.2
+To: oss-security@lists.openwall.com
 
-Damien Miller <djm@mindrot.org> wrote:
+--5vNYLRcllDrimb99
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> On Wed, 24 Sep 2025, Adiletta, Andrew wrote:
->=20
-> > Hi Alexander and Team,
-> >=20
-> > Thank your for the interest in our paper, and we appreciate all the
-> > feedback. We wanted to address two points - the OpenSSH CVE, and the
-> > comments from the OpenSSH community about the practicality of the attac=
-k.=C2=A0
-> >=20
-> > On CVE-2023-51767 (OpenSSH), we did not submit this CVE. Our team
-> > coordinates with vendors / software mantainers before submitting CVEs to
-> > make sure there is agreement. The CVE description does seem
-> > mischaracterized, as this is not a zero-click type vulnability as the C=
-VE
-> > suggests, and we would not oppose either a revision or other action. We=
- did
-> > work with Todd Miller on a SUDO CVE (CVE-2023-42465), of which we worked
-> > with him to release a patch.=C2=A0
-> >=20
-> > However, on the practicality, I do believe that we did not mischaracter=
-ize
-> > the attack in the paper, and as Alexander concisely mentioned, we are r=
-eally
-> > trying to emphasize the issues with simple 0/1 flag logic that leads do=
-wn to
-> > sensitive execution flows.=20
->=20
-> Sure, but my criticism at the time was that your paper claimed in
-> the abstract to have successfully attacked OpenSSH to bypass
-> authentication but what was actually attacked was a modified version
-> of sshd run in a highly unrealistic and synchronised setting.
->=20
-> IMO this context matters and doesn't detract from your findings.
+My understanding is that tcpdump 4.9.2 was supposed to be embargoed
+until September 25.
 
-Andrew, I think you should answer Damien's comment.
+However, it's already being distributed publicly:
 
-I'm a bit more cynical, and think this is very close to open source
-community engagement malpractice -- where you picked projects
-specifically to increase readership of your paper, and went through the
-effort to construct synthetic justification, and I think you should
-consider issuing an official apology and/or official retraction of those
-statements about OpenSSH being vulnerable.  There you have it, that's my
-opinion on this.
+https://git.archlinux.org/svntogit/packages.git/commit/trunk/PKGBUILD?h=packages/tcpdump&id=ae8cb07d00feb32a4f8a500fc8fa668d3f8c5275
 
+So, I recommend that everyone update ASAP.
 
+--5vNYLRcllDrimb99
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAlmxpq0ACgkQJkb6MLrK
+fwg97xAA1e75nj+3AdKt7RZe4JOtHJ2stwiwXnCJ9jTFN43l6+NXUZodTFP/V9Q3
+jZMRp2ksQwlR9ibENKJu8t7CkXa0mL0KX6HeyGkzkDVTw1pJUgoPQAePYh/52vnz
+5pR+XQ7rGA8kmtewD0x8nsjJL2batYtZmancFq412XePVIUW8riRXoJwvI7A9C8g
+TW36Vr+hJ66GhVdMgMcWVpdGsD0gAugd+5ZWXRZB4RBw+1nlnM/pgSCNQn789aCR
+6Qr4vRnXBuxKvl7KbhnVnDCUQQUHQuQUxDqtNAyXx9WAth47r+kMIyF1vgL+h1R4
+ZbdwCKCu1bFmiIRFuOwyiuiZQbIpMhsHYv0JRCdJCPCoRgbdt+FyMbB8MzOAh/np
+9IZioStsdfFLZ0aJw8BerkDpxl6hhyXUkTmFQpPXo33Moos8z/MP8A2j/bpMNn7L
+03HlsH4v1gTpqQTG7bQuL2kgCCm9yWkW/aZ4BeSgmUFlU46wVZwfwKfTI7xEdqpk
+4SbdD6hEqbnWChcb9BY8jNUqi4MP6/FCwyp14xjXmWyIwlpe6bvGP8flXcDNO5qt
+noAitLBmELAo96MAtzKHh941SIYQzSJmgniyaXih+XoK8VMPg7eUo3yiYwahDoB1
+jDmxGHgs3YPkII5203qu4VcNk+kZHUpLqEczPUrROhB+tnD4yHk=
+=DmSv
+-----END PGP SIGNATURE-----
+
+--5vNYLRcllDrimb99--
