@@ -1,46 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/8
-Message-ID: <CA+LM4MvaXPq4yO0iS0RSMcZorjWwPtexj0L4ozJ7jPRZqxC4ug@mail.gmail.com>
-Date: Mon, 10 Jul 2017 10:27:37 -0700
-From: Sailesh Mukil <sailesh@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: [SECURITY] CVE-2017-5652 Apache Impala (incubating) Information Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/10
+Message-ID: <87ingu6wt5.fsf@fifthhorseman.net>
+Date: Thu, 07 Sep 2017 17:08:54 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Simon McVittie <smcv@...ian.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-5652 Apache Impala (incubating) Information Disclosure
+On Thu 2017-09-07 21:38:11 +0100, Simon McVittie wrote:
+> The daemon doesn't need to be ready to actually do its work before
+> forking, only ready to take responsibility for keeping clients waiting
+> until it *is* ready.
 
+yep, understood, but this is yet more subtle nuance for the daemon
+developer to make sense of (and possibly get wrong).
 
-Severity: High
+otoh, socket-activation (or the equivalent) solves this problem nicely
+by having the supervisor take this responsibility, as long as the daemon
+can deal with inheriting a live socket.
 
+socket-activated services don't need to signal readiness either, so
+they're that much simpler.
 
-Versions Affected:
+> Arguably yes, but putting a minimal amount of setup before forking closes
+> the race condition, and some of that setup is probably going to need
+> privileges anyway (for example web servers that want to listen on port
+> 80, or dbus-daemon --system which wants to listen on the root-owned
+> /var/run/dbus/system_bus_socket).
 
-Apache Impala (incubating) 2.7.0 to 2.8.0
+Some systems might set up a daemon with CAP_NET_BIND_SERVICE so that it
+doesn't need to be launched as root but can still be bound to a
+low-numbered port (this is how the DNS resolver "stubby" is launched
+safely as a non-priv user).  That's a good security protection in
+general, but it doesn't seem to combine well with a self-generated
+pidfile that is not under the control of the running process, either.
+So here's another sense in which secure pidfile is actually working
+against the security interests of the rest of the system.
 
+(additionally, socket-activated services don't need these sorts of
+privileged accesses at all, because they inherit the socket rather than
+needing to open it themselves)
 
-Description:
+These all seem like pretty strong security/simplicity/maintainability
+arguments for socket activation, and pretty clear arguments *against*
+pidfiles on a maintainable and secure operating system.
 
-During a routine security analysis, it was found that one of the ports sent
-data in plaintext even when the cluster was configured to use TLS. The port
-in question was used by the StatestoreSubscriber class which did not use
-the appropriate secure Thrift transport when TLS was turned on. It was
-therefore possible for an adversary, with access to the network, to
-eavesdrop on the packets going to and coming from that port and view the
-data in plaintext.
+          --dkg
 
-
-Mitigation:
-
-Users of the affected versions should apply the following mitigation:
-
- - Upgrade to Apache Impala (incubating) 2.9.0
-
-
-Credit:
-This issue was identified and reported responsibly by the Cloudera security
-team.
-
-
-References:
-[1] https://issues.apache.org/jira/browse/IMPALA-5253
-
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
