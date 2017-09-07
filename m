@@ -1,40 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/13
-Message-ID: <1496153035.941.9.camel@gmail.com>
-Date: Tue, 30 May 2017 10:03:55 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com
-Cc: Roee Hay <roeehay@...il.com>
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/8
+Message-ID: <20170907200605.GA13030@jasmine.lan>
+Date: Thu, 7 Sep 2017 16:06:05 -0400
+From: Leo Famulari <leo@...ulari.name>
+To: oss-security@...ts.openwall.com
+Subject: Tcpdump 4.9.2
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2017-05-30 at 15:47 +0200, Florian Weimer wrote:
-> On 05/30/2017 03:25 PM, Daniel Micay wrote:
-> > Secure boot means verifying boot chain from a root of trust in
-> > hardware.
-> 
-> My comments were specifically about UEFI Secure Boot, which apparently
-> behaves quite differently from what you expect.
+My understanding is that tcpdump 4.9.2 was supposed to be embargoed
+until September 25.
 
-UEFI Secure Boot can be used for a useful verified boot implementation.
+However, it's already being distributed publicly:
 
-It doesn't behave differently than I expect.
+https://git.archlinux.org/svntogit/packages.git/commit/trunk/PKGBUILD?h=packages/tcpdump&id=ae8cb07d00feb32a4f8a500fc8fa668d3f8c5275
 
-Only covering the kernel without covering any of the userspace or even
-the kernel line is an incomplete implementation. It doesn't need to
-cover the whole userspace OS to be useful but if it doesn't even cover
-init and enough of the userspace OS to include some useful isolated code
-then it's not accomplishing anything.
+So, I recommend that everyone update ASAP.
 
-Secure / verified boot is useful primarily for preventing an attacker
-from persisting privileged code. A good implementation tries to fully
-prevent persistence, even of unprivileged code. The secondary value is
-making tampering a lot more difficult, but it can't ever fully prevent
-that. If there's no kernel line / userspace coverage, then it's not
-doing either of those... so the lack of an enforced boundary between
-root and the kernel at least without SELinux, etc. is an orthogonal
-issue to this.
-
-What security property does verified boot provide without including the
-kernel line and at the very least enough of the core userspace OS to do
-*something* useful?
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
