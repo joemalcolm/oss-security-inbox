@@ -1,153 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/17
-Message-ID: <46fe3e2c-05b5-f574-4bd6-eb62ad99b68c@x41-dsec.de>
-Date: Thu, 23 Feb 2017 17:53:54 +0100
-From: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
-To: oss-security@...ts.openwall.com
-Subject: Advisory X41-2017-004: Multiple Vulnerabilities in tnef
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/1
+Message-ID: <CAMopvkOyO1_KUpjHXO0EjVDDrs6tYRW=X9B8LpekG1YKvoVLLQ@mail.gmail.com>
+Date: Thu, 7 Sep 2017 10:24:38 +0200
+From: Lukasz Lenart <lukaszlenart@...che.org>
+To: "announcements@...uts.apache.org" <announcements@...uts.apache.org>,  Struts Developers List <dev@...uts.apache.org>, announce@...che.org,  "security@...uts.apache.org" <security@...uts.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com, Adam Cazzolla <acazzolla@...atype.com>,  Jonathan Bullock <jonbullock@...il.com>, Man Yue Mo <mmo@...mle.com>, Bas van Schaik <bas@...mle.com>,  lupin1314@...il.com, rgm <struts@....nu>, David Greene <david@...mpetx.com>
+Subject: [ANN] Apache Struts 2.3.34 General Availability with Security Fixes Release
 Content-Type: text/plain; charset=utf-8
 
+The Apache Struts group is pleased to announce that Struts 2.3.34 is
+available as a “General Availability” release. The GA designation is
+our highest quality grade.
 
-X41 D-Sec GmbH Security Advisory: X41-2017-004
+This release addresses these potential security vulnerabilities:
+- S2-050 A regular expression Denial of Service when using
+URLValidator (similar to S2-044 & S2-047)
+- S2-051 A remote attacker may create a DoS attack by sending crafted
+xml request when using the Struts REST plugin
+- S2-052 Possible Remote Code Execution attack when using the Struts
+REST plugin with XStream handler to handle XML payloads
+- S2-053 A possible Remote Code Execution attack when using an
+unintentional expression in Freemarker tag instead of string literals
 
-Multiple Vulnerabilities in tnef
-================================
+This release contains several minor improvements just to mention few of them:
+ - Struts2 JSON Plugin: Send Map with Strings as Key to JSON Action is
+ignored, Numeric Keys will work and mapped
+ - Threads get blocked due to unnecessary synchronization in OgnlRuntime
+ - Upgrade to OGNL 3.0.21
+ - Upgrade to struts-master 11
+ - Improve RegEx used to validate URLs
 
-Overview
---------
-Confirmed Affected Versions: 1.4.12 and earlier
-Confirmed Patched Versions:
-Vendor: verdammelt
-Vendor URL: https://github.com/verdammelt/tnef/
-Vector: File
-Credit: X41 D-Sec GmbH, Eric Sesterhenn
-Status: Public
-Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2017-004-tnef/
+More details in version notes
+http://struts.apache.org/docs/version-notes-2334.html
 
+All developers are strongly advised to perform this action.
 
-Summary and Impact
-------------------
-Multiple Integer Overflows, Type Confusions and Out of Band Reads and
-Writes have been discovered in tnef 1.4.12 and earlier. These could
-be exploited by tricking a user into opening a malicious winmail.dat file.
+The 2.3.x series of the Apache Struts framework has a minimum
+requirement of the following specification versions: Servlet API 2.4,
+JSP API 2.0, and Java 6.
+Should any issues arise with your use of any version of the Struts
+framework, please post your comments to the user list, and, if
+appropriate, file a tracking ticket.
 
-
-Product Description
--------------------
-From the Readme.md:
-TNEF is a program for unpacking MIME attachments of type
-"application/ms-tnef". This is a Microsoft only attachment. Due to the
-proliferation of Microsoft Outlook and Exchange mail servers, more and
-more mail is encapsulated into this format. The TNEF program allows one
-to unpack the attachments which were encapsulated into the TNEF
-attachment. Thus alleviating the need to use Microsoft Outlook to view
-the attachment. TNEF is mainly tested and used on GNU/Linux and CYGWIN
-systems. It 'should' work on other UNIX and UNIX-like systems.
-
-
-
-Integer Overflows in Memory Allocator
-=====================================
-Severity Rating: High
-Vector: Local
-CVE: Not yet assigned
-CVSS Score: 7.0
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
-
-Summary and Impact
-------------------
-Several Integer Overflows, which can lead to Heap Overflows have been
-identified in the functions, which wrap memory allocation.
-
-Workarounds
------------
-None, X41 D-Sec GmbH recommends to update to the latest version.
+You can download this version from our download page.
+http://struts.apache.org/download.html#struts-23x
 
 
-
-Type Confusion in src/tnef.c:parse_file()
-=========================================
-Severity Rating: High
-Vector: Local
-CVE: Not yet assigned
-CVSS Score: 7.0
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
-
-Summary and Impact
-------------------
-Two type confusions have been identified in the parse_file() function.
-These might lead to invalid read and write operations, controlled by an
-attacker.
-
-Workarounds
------------
-None, X41 D-Sec GmbH recommends to update to the latest version.
-
-
-
-OOB Writes in src/mapi_attr.c:mapi_attr_read()
-==============================================
-Severity Rating: High
-Vector: Local
-CVE: Not yet assigned
-CVSS Score: High
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
-
-Summary and Impact
-------------------
-Two OOB Writes have been identified in src/mapi_attr.c:mapi_attr_read().
-These might lead to invalid read and write operations, controlled by an
-attacker.
-
-Workarounds
------------
-None, X41 D-Sec GmbH recommends to update to the latest version.
-
-
-Type Confusion in src/file.c:file_add_mapi_attrs()
-==================================================
-Severity Rating: High
-Vector: Local
-CVE: Not yet assigned
-CVSS Score: 7.0
-CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
-
-Summary and Impact
-------------------
-Four type confusions have been identified in the file_add_mapi_attrs()
-function. These might lead to invalid read and write operations,
-controlled by an attacker.
-
-Workarounds
------------
-None, X41 D-Sec GmbH recommends to update to the latest version.
-
-
-About X41 D-Sec GmbH
---------------------
-X41 D-Sec is a provider of application security services. We focus on
-application code reviews, design review and security testing. X41 D-Sec
-GmbH was founded in 2015 by Markus Vervier. We support customers in
-various industries such as finance, software development and public
-institutions.
-
-Timeline
---------
-2017-02-17	Issue found
-2017-02-19	Vendor contacted
-2017-02-20	CVE IDs requested
-2017-02-21	Vendor Reply
-2017-02-23	Vendor releases patched version
-2017-02-23	Advisory released
-
+Kind regards
 -- 
-X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
-T: +49 241 9809418-0, Fax: -9
-Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
-Geschäftsführer: Markus Vervier
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Łukasz
++ 48 606 323 122 http://www.lenart.org.pl/
