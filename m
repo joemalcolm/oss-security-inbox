@@ -1,112 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/22/4
-Message-ID: <1508682959.3197.1.camel@gmail.com>
-Date: Sun, 22 Oct 2017 16:35:59 +0200
-From: Ailin Nemui <ailin.nemui@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/9
+Message-ID: <20170907203811.bnzbtjq4c56cgxgw@perpetual.pseudorandom.co.uk>
+Date: Thu, 7 Sep 2017 21:38:11 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Irssi 1.0.5: CVE-2017-15228, CVE-2017-15227, CVE-2017-15721, CVE-2017-15722, CVE-2017-15723
+Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-> Irssi 1.0.5 has been released. This release fixes a few security 
-> issues in Irssi as well as a few bugs. There are no new features. 
-> All Irssi users should upgrade to this version. See the NEWS for 
-> details.
+On Thu, 07 Sep 2017 at 12:29:50 -0400, Daniel Kahn Gillmor wrote:
+> On Thu 2017-09-07 16:27:25 +0100, Simon McVittie wrote:
+> > Ideally, the sequence of events would be something that ensures that
+> > the pid file already exists by the time readiness has been announced,
+> > like this pseudocode:
+> >
+> >     have the necessary privileges to write a pid file
+> >     fork
+> >     if (parent) {
+> >         write child pid to pid file
+> >         exit    /* tells supervisor we are ready */
+> >     }
+> >     else /* child */ {
+> >         drop privileges
+> >         while (1) { process request }
+> >     }
+> 
+> Is there a potential race condition here?  for example, if dropping
+> privileges takes some amount of time, or if there is additional setup
+> that ought to be done as non-root (building tables, pre-processing a
+> dataset from the filesystem, initializing a PRNG), then this pattern is
+> actually pretty hard to get right as a notification.
 
-> Most issues have been identified using fuzzing, thanks to Hanno Böck 
-> and Joseph Bisch. We expect Joseph will be able to tell you more 
-> about his newest fuzzer at freenode.live on the weekend!
+I was assuming a structure a bit like dbus-daemon, which calls bind()
+and listen() while still privileged before forking. It does do some
+additional setup as non-root after dropping privileges, but if a
+client connects during that window, the client's socket will just block
+for a short time (whether that means actually blocking or EAGAIN is up
+to the client), until the dbus-daemon is ready to enter its main loop.
+It won't get ECONNREFUSED, because the socket is already listening
+(assuming the socket backlog is sufficiently long to accommodate all the
+clients).
 
-IRSSI-SA-2017-10 Irssi Security Advisory [1]
-============================================
-CVE-2017-15228, CVE-2017-15227, CVE-2017-15721, CVE-2017-15723,
-CVE-2017-15722
+The daemon doesn't need to be ready to actually do its work before
+forking, only ready to take responsibility for keeping clients waiting
+until it *is* ready.
 
-Description
------------
+>  0) if dropping privs is known to be fast, then move any lengthy
+>     initialization/setup into the root/pre-fork side.  this is a
+>     violation of the principle of least privilege.
 
-Multiple vulnerabilities have been located in Irssi.
+Arguably yes, but putting a minimal amount of setup before forking closes
+the race condition, and some of that setup is probably going to need
+privileges anyway (for example web servers that want to listen on port
+80, or dbus-daemon --system which wants to listen on the root-owned
+/var/run/dbus/system_bus_socket).
 
-(a) When installing themes with unterminated colour formatting
-    sequences, Irssi may access data beyond the end of the
-    string. (CWE-126) Found by Hanno Böck.
-
-    CVE-2017-15228 was assigned to this issue.
-
-(b) While waiting for the channel synchronisation, Irssi may
-    incorrectly fail to remove destroyed channels from the query list,
-    resulting in use after free conditions when updating the state
-    later on. Found by Joseph Bisch. (CWE-416 caused by CWE-672)
-
-    CVE-2017-15227 was assigned to this issue.
-
-(c) Certain incorrectly formatted DCC CTCP messages could cause NULL
-    pointer dereference. Found by Joseph Bisch. This is a separate,
-    but similar issue to CVE-2017-9468. (CWE-690)
-
-    CVE-2017-15721 was assigned to this issue.
-
-(d) Overlong nicks or targets may result in a NULL pointer dereference
-    while splitting the message. Found by Joseph Bisch. (CWE-690)
-
-    CVE-2017-15723 was assigned to this issue.
-
-(e) In certain cases Irssi may fail to verify that a Safe channel ID
-    is long enough, causing reads beyond the end of the string. Found
-    by Joseph Bisch. (CWE-126)
-
-    CVE-2017-15722 was assigned to this issue.
-
-
-Impact
-------
-
-(a,b,c,d) May result in denial of service (remote crash).
-
-(e) May affect the stability of Irssi.
-
-
-Affected versions
------------------
-
-(a,b,c,e) All Irssi versions that we observed.
-
-(d) Starting from 0.8.17.
-
-
-Fixed in
---------
-
-Irssi 1.0.5
-
-
-Recommended action
-------------------
-
-Upgrade to Irssi 1.0.5. Irssi 1.0.5 is a maintenance release in the
-1.0 series, without any new features.
-
-After installing the updated packages, one can issue the /upgrade
-command to load the new binary. TLS connections will require
-/reconnect.
-
-
-Mitigating facts
-----------------
-
-(a) requires user to install malicious or broken theme file
-
-(b,c,e) requires a broken ircd or control over the ircd
-
-(d) irc servers typically have length limits in place
-
-
-Patch
------
-
-https://github.com/irssi/irssi/commit/43e44d553d44e313003cee87e6ea5e24d68b84a1
-
-
-References
-----------
-
-[1] https://irssi.org/security/irssi_sa_2017_10.txt
+    S
