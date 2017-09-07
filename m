@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["656" "Monday" "20" "March" "2017" "16:33:17" "+0100" "Ailin Nemui" "ailin.nemui@gmail.com" "<1490023997.1783.5.camel@gmail.com>" "24" "[oss-security] Re: CVE Request: Irssi use after free in netjoin condition (2017/03)" nil nil nil "3" "2017032015:33:17" "[oss-security] Re: CVE Request: Irssi use after free in netjoin condition (2017/03)" (number mark "U       ailin.nemui@ Mar 20   24/656   " thread-indent "\"[oss-security] Re: CVE Request: Irssi use after free in netjoin condition (2017/03)\"\n") "<1489267555.30133.7.camel@gmail.com>" ("<1489267555.30133.7.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1740" "Thursday" "7" "September" "2017" "10:24:38" "+0200" "Lukasz Lenart" "lukaszlenart@apache.org" "<CAMopvkOyO1_KUpjHXO0EjVDDrs6tYRW=X9B8LpekG1YKvoVLLQ@mail.gmail.com>" "44" "[oss-security] [ANN] Apache Struts 2.3.34 General Availability with Security Fixes Release" nil nil nil "9" "2017090708:24:38" "[oss-security] [ANN] Apache Struts 2.3.34 General Availability with Security Fixes Release" (number mark "U       lukaszlenart Sep  7   44/1740  " thread-indent "\"[oss-security] [ANN] Apache Struts 2.3.34 General Availability with Security Fixes Release\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28396 invoked by uid 550); 20 Mar 2017 15:44:19 -0000
+Received: (qmail 14257 invoked by uid 550); 7 Sep 2017 08:35:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12221 invoked from network); 20 Mar 2017 15:33:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=xe/qoG8nCRKeMWVLTXyaVcYFS0yZDJz0jx+pGAgMaoY=;
-        b=S/NFtR90HKpSH3DaqEijB+pmo17A7tZiXwKIu3+lPHyBvlKlZdue9868vGvaUddfg0
-         1y97kF6/QvH/74C9x9e5Dwxl7pC4ob8EidzE79zW0NCJGa+uaT+0r/qifyd1as0Tc7aT
-         69f5L7w3zdGaUmm7CIR0xmyVX8USmQLualIxHRU1HgsrEMuTDw1VerKckFMFj0JAK/mA
-         xzg12zT/rI+VA90bmjtmTfVX37omSV7L/loRP0Lx0x+Dc42C41pAO9382QWjohx67O1w
-         G+1t2dFw5+oNXAm1tlKsPCvlVcdym6QERuKlBedXqdj7LGc4tfuSN7SyVzxIF2w82BS4
-         qX7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xe/qoG8nCRKeMWVLTXyaVcYFS0yZDJz0jx+pGAgMaoY=;
-        b=RnsBH9kjgbKTw3bU/DKPvoqO5PKiA15YzoaAZYqXwtDcAbrQE4igsfrio6tYH6kgFB
-         0NOPuPfsYZLbpBR0LTW4lZUzY9hhtlPvlLLAwwXqHSCBlcvuuwjGaqyqeytjtHuNAJLx
-         QyZ8QTdaKvhGCorECBycPs4wX0xLqi4YTGgF0f6VUF5bplo8XdvWAiTjO9ak0oli4fEt
-         3kiKOg9YfCTmDvoj7fHjTnJqfrWLsiQvupQuXl0mC/31hN7dODckCZ6jUr+PP4NylKhK
-         QNj+zIbypqaN/+7iaxcsDcVPJZOk6hg6pzeBjsk7ESfyXnOfMXZW2UJ6u14PtvpIrLrS
-         HV1Q==
-X-Gm-Message-State: AFeK/H2PhWOmyNfsmCsTHErHMCSvffWG/TJIVk2BSh8oEJ8kKgVbc0z/hGzy4+CBSm97ng==
-X-Received: by 10.28.133.84 with SMTP id h81mr10388253wmd.23.1490023998960;
-        Mon, 20 Mar 2017 08:33:18 -0700 (PDT)
-Message-ID: <1490023997.1783.5.camel@gmail.com>
-From: Ailin Nemui <ailin.nemui@gmail.com>
-To: oss-security@lists.openwall.com
-Date: Mon, 20 Mar 2017 16:33:17 +0100
-In-Reply-To: <1489267555.30133.7.camel@gmail.com>
-References: <1489267555.30133.7.camel@gmail.com>
+Received: (qmail 7616 invoked from network); 7 Sep 2017 08:25:17 -0000
+X-Gm-Message-State: AHPjjUhNAZV977EhCumwzmDRVKGbP9HqTrnYT3GeQAmPOGGnyGSO3+4R
+	VN1jdmgpNWCk2iSVyYmdcq8vSfdCkA==
+X-Google-Smtp-Source: ADKCNb6K/1nR5LrUlIwo9qW8oX1K+jhqgxui9qb7lUHe5Ewn9MrZUDnINnRGlKOcB8buQhHRWubhXnUdsBpxin0gla4=
+X-Received: by 10.46.97.26 with SMTP id v26mr706157ljb.176.1504772698935; Thu,
+ 07 Sep 2017 01:24:58 -0700 (PDT)
+MIME-Version: 1.0
+From: Lukasz Lenart <lukaszlenart@apache.org>
+Date: Thu, 7 Sep 2017 10:24:38 +0200
+X-Gmail-Original-Message-ID: <CAMopvkOyO1_KUpjHXO0EjVDDrs6tYRW=X9B8LpekG1YKvoVLLQ@mail.gmail.com>
+Message-ID: <CAMopvkOyO1_KUpjHXO0EjVDDrs6tYRW=X9B8LpekG1YKvoVLLQ@mail.gmail.com>
+To: "announcements@struts.apache.org" <announcements@struts.apache.org>, 
+	Struts Developers List <dev@struts.apache.org>, announce@apache.org, 
+	"security@struts.apache.org" <security@struts.apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com, Adam Cazzolla <acazzolla@sonatype.com>, 
+	Jonathan Bullock <jonbullock@gmail.com>, Man Yue Mo <mmo@semmle.com>, Bas van Schaik <bas@semmle.com>, 
+	lupin1314@gmail.com, rgm <struts@rgm.nu>, David Greene <david@trumpetx.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.5 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Re: CVE Request: Irssi use after free in netjoin condition (2017/03)
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [ANN] Apache Struts 2.3.34 General Availability with Security Fixes Release
 
-On Sat, 2017-03-11 at 22:25 +0100, Ailin Nemui wrote:
-> Dear CVE Assignment Team,
-> 
-> please provide CVE for the following issue:
-> 
-> use after free condition during netjoin processing [1]
-> ======================================================
+The Apache Struts group is pleased to announce that Struts 2.3.34 is
+available as a =E2=80=9CGeneral Availability=E2=80=9D release. The GA desig=
+nation is
+our highest quality grade.
 
--------- Forwarded Message --------
-From: cve-request@mitre.org
-Subject: Re: [scr308011] Irssi - 1.0.0, 1.0.1
-Date: Mon, 20 Mar 2017 09:14:07 -0400
+This release addresses these potential security vulnerabilities:
+- S2-050 A regular expression Denial of Service when using
+URLValidator (similar to S2-044 & S2-047)
+- S2-051 A remote attacker may create a DoS attack by sending crafted
+xml request when using the Struts REST plugin
+- S2-052 Possible Remote Code Execution attack when using the Struts
+REST plugin with XStream handler to handle XML payloads
+- S2-053 A possible Remote Code Execution attack when using an
+unintentional expression in Freemarker tag instead of string literals
 
-Use CVE-2017-7191.
+This release contains several minor improvements just to mention few of the=
+m:
+ - Struts2 JSON Plugin: Send Map with Strings as Key to JSON Action is
+ignored, Numeric Keys will work and mapped
+ - Threads get blocked due to unnecessary synchronization in OgnlRuntime
+ - Upgrade to OGNL 3.0.21
+ - Upgrade to struts-master 11
+ - Improve RegEx used to validate URLs
+
+More details in version notes
+http://struts.apache.org/docs/version-notes-2334.html
+
+All developers are strongly advised to perform this action.
+
+The 2.3.x series of the Apache Struts framework has a minimum
+requirement of the following specification versions: Servlet API 2.4,
+JSP API 2.0, and Java 6.
+Should any issues arise with your use of any version of the Struts
+framework, please post your comments to the user list, and, if
+appropriate, file a tracking ticket.
+
+You can download this version from our download page.
+http://struts.apache.org/download.html#struts-23x
 
 
--- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
-
-
-> [1] https://irssi.org/security/irssi_sa_2017_03.txt
+Kind regards
+--=20
+=C5=81ukasz
++ 48 606 323 122 http://www.lenart.org.pl/
