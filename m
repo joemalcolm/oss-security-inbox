@@ -1,38 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/16
-Message-ID: <CAL8hw9Et3-hdcmJPZk7cY+Z87Ggk3+yGpbbVZgMXJbuQ9CAdrw@mail.gmail.com>
-Date: Tue, 17 Jan 2017 09:06:10 -0600
-From: Nathan Van Gheem <nathan.van.gheem@...ne.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Plone Sandbox escape vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/5
+Message-ID: <821859.070656018-sendEmail@localhost>
+Date: Thu, 7 Sep 2017 15:32:58 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: aacplusenc: NULL pointer dereference in DeleteBitBuffer (bitbuffer.c)
 Content-Type: text/plain; charset=utf-8
 
-Dear oss-security List,
+Description:
+aacplusenc is an High-Efficiency AAC (AAC+) Encoder.
 
-Please provide a CVE for the following issue:
+The complete ASan output of the issue:
 
-Sandbox escape
-    Accessing private content via `str.format` in through-the-web templates
-and scripts. See this blog post by Armin Ronacher (
-http://lucumr.pocoo.org/2016/12/29/careful-with-str-format/) for the
-general idea. Since the `format` method was introduced in Python 2.6, this
-part of the hotfix is only relevant for Plone 4 and 5, not Plone 3.
-    Credit: Plone security team, Armin Ronacher
-    Reference: https://plone.org/security/hotfix/20170117/sandbox-escape
+# aacplusenc $FILE out.aac 32
+                                                                                                                                                                                                                  
+*************************************************************                                                                                                                                                     
+* Enhanced aacPlus Encoder                                                                                                                                                                                        
+* Build Aug 30 2017, 14:40:49                                                                                                                                                                                     
+* Matteo Croce                                                                                                                                                                                
+*************************************************************                                                                                                                                                     
+                                                                                                                                                                                                                  
+input file 101.crashes.wav:                                                                                                                                                                                       
+sr = 48000, nc = 1                                                                                                                                                                                                
+                                                                                                                                                                                                                  
+output file out.aac:                                                                                                                                                                                              
+br = 32000 sr-OUT = 48000  nc-OUT = 1                                                                                                                                                                             
+                                                                                                                                                                                                                  
+                                                                                                                                                                                                                  
+ASAN:DEADLYSIGNAL
+=================================================================
+==21496==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000030 (pc 0x000000562e2f bp 0x7ffc2ec32430 sp 0x7ffc2ec32430 T0)
+==21496==The signal is caused by a WRITE memory access.
+==21496==Hint: address points to the zero page.
+    #0 0x562e2e in DeleteBitBuffer /var/tmp/portage/media-sound/aacplusenc-0.17.5/work/aacplusenc/libbitbuf/bitbuffer.c:97:23
+    #1 0x50d909 in AacEncClose /var/tmp/portage/media-sound/aacplusenc-0.17.5/work/aacplusenc/libaacenc/aacenc.c:469:5
+    #2 0x50c0df in main /var/tmp/portage/media-sound/aacplusenc-0.17.5/work/aacplusenc/aacplusenc.c:536:2
+    #3 0x7f0e4c21b680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #4 0x419e78 in _init (/usr/bin/aacplusenc+0x419e78)
 
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-sound/aacplusenc-0.17.5/work/aacplusenc/libbitbuf/bitbuffer.c:97:23 in DeleteBitBuffer
+==21496==ABORTING
 
-Versions Affected:
-4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
+Affected version:
+0.17.5
 
-Code fixes:
-https://pypi.python.org/pypi/Products.PloneHotfix20170117
+Fixed version:
+N/A
 
-Recommended action:
-Install the https://pypi.python.org/pypi/Products.PloneHotfix20170117
-package.
+Commit fix:
+N/A
 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Thank you,
-Nathan Van Gheem
-Plone Security Team
+CVE:
+CVE-2017-14181
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00332-aacplusenc-NULLptr-DeleteBitBuffer
+
+Timeline:
+2017-08-31: bug discovered and reported to upstream
+2017-09-07: blog post about the issue
+2017-09-07: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/07/aacplusenc-null-pointer-dereference-in-deletebitbuffer-bitbuffer-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
