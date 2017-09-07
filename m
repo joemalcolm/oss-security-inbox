@@ -1,21 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/06/4
-Message-ID: <CAAeHK+xqSzMxjrs=DX9RVxiJrRKkWq22tLybcKMmFs4ZQZz=Ag@mail.gmail.com>
-Date: Mon, 6 Feb 2017 13:02:34 +0100
-From: Andrey Konovalov <andreyknvl@...gle.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Cc: Dmitry Vyukov <dvyukov@...gle.com>, Eric Dumazet <edumazet@...gle.com>,  syzkaller <syzkaller@...glegroups.com>, Kostya Serebryany <kcc@...gle.com>
-Subject: CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/2
+Message-ID: <nycvar.YSQ.7.76.1709071533330.14257@wniryva>
+Date: Thu, 7 Sep 2017 15:43:37 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Thomas Garnier <thgarnie@...gle.com>
+Subject: CVE-2017-14167 Qemu: i386: multiboot OOB access while loading guest kernel image
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-There's a bug in the Linux kernel ipv6 implementation which allows a
-remote attacker to trigger an out-of-bounds access.
+Quick Emulator(Qemu) built with the PC System Emulator with multiboot feature 
+support is vulnerable to an OOB r/w memory access issue. It could occur due to 
+an integer overflow while loading a kernel image during a guest boot.
 
-Upsteam fix:
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=7892032cfe67f4bde6fc2ee967e45a8fbaf33756
+A user/process could use this flaw to potentially achieve arbitrary code 
+execution on a host.
 
-Could you assign a CVE for this?
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-09/msg01483.html
 
-Thanks!
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1489375
+
+This issue was reported by Thomas Garnier of Google.com.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
