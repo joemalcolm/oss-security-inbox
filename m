@@ -1,61 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/29/4
-Message-ID: <20170629142346.GA30874@openwall.com>
-Date: Thu, 29 Jun 2017 16:23:46 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: TIOCSTI not going away
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/08/1
+Message-ID: <CAA7hUgFVeLSChQuCvYaribpdt=9kj=o+A_LYoa1v7QgMy=RzmA@mail.gmail.com>
+Date: Fri, 8 Sep 2017 10:59:35 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: Tcpdump 4.9.2
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 03, 2017 at 06:58:13PM +0200, Solar Designer wrote:
-> On LKML, CC'ed to the kernel-hardening mailing list, Matt Brown has been
-> pushing for the upstream Linux kernel to introduce an option (likely to
-> be disabled by default) that would block the TIOCSTI ioctl.  Alan Cox
-> repeatedly NAK'ed this:
-> 
-> http://www.openwall.com/lists/kernel-hardening/2017/05/
-> 
-> Sorry there's no one specific message/thread to link to - there were
-> multiple patch revisions, and multiple NAKs with different wording.
-> 
-> Alan's reasoning is that userspace apps like this have to be allocating
-> a new pty anyway, and the kernel change wouldn't help much since TIOCSTI
-> isn't the only way to cause trouble (although per my reading of the
-> examples given, other ways/troubles are either not exactly as bad or not
-> exactly as generic).
+On 7 September 2017 at 22:06, Leo Famulari <leo@...ulari.name> wrote:
+> My understanding is that tcpdump 4.9.2 was supposed to be embargoed
+> until September 25.
+>
+> However, it's already being distributed publicly:
+>
+> https://git.archlinux.org/svntogit/packages.git/commit/trunk/PKGBUILD?h=packages/tcpdump&id=ae8cb07d00feb32a4f8a500fc8fa668d3f8c5275
+>
+> So, I recommend that everyone update ASAP.
 
-While TIOCSTI is apparently not going away on Linux, it is on OpenBSD,
-and here's some analysis of the apparently almost non-existent impact
-this will have on Emacs (which was one of the primary examples cited for
-keeping TIOCSTI on Linux):
 
-https://marc.info/?l=openbsd-tech&m=149868123704451
+Quoting the CHANGES file of the tarball[1]:
 
-Theo de Raadt wrote:
+> Sunday September 3, 2017 denis@...ienko.info
+>   Summary for 4.9.2 tcpdump release
+>     Do not use getprotobynumber() for protocol name resolution.  Do not do
+>       any protocol name resolution if -n is specified.
+>     Improve errors detection in the test scripts.
+>     Fix a segfault with OpenSSL 1.1 and improve OpenSSL usage.
+>     Clean up IS-IS printing.
+>     Fix buffer overflow vulnerabilities:
+>       CVE-2017-11543 (SLIP)
+>       CVE-2017-13011 (bittok2str_internal)
+>     Fix infinite loop vulnerabilities:
+>       CVE-2017-12989 (RESP)
+>       CVE-2017-12990 (ISAKMP)
+>       CVE-2017-12995 (DNS)
+>       CVE-2017-12997 (LLDP)
+>     Fix buffer over-read vulnerabilities:
+>       CVE-2017-11541 (safeputs)
+>       CVE-2017-11542 (PIMv1)
+>       CVE-2017-12893 (SMB/CIFS)
+>       CVE-2017-12894 (lookup_bytestring)
+>       CVE-2017-12895 (ICMP)
+>       CVE-2017-12896 (ISAKMP)
+>       CVE-2017-12897 (ISO CLNS)
+>       CVE-2017-12898 (NFS)
+>       CVE-2017-12899 (DECnet)
+>       CVE-2017-12900 (tok2strbuf)
+>       CVE-2017-12901 (EIGRP)
+>       CVE-2017-12902 (Zephyr)
+>       CVE-2017-12985 (IPv6)
+>       CVE-2017-12986 (IPv6 routing headers)
+>       CVE-2017-12987 (IEEE 802.11)
+>       CVE-2017-12988 (telnet)
+>       CVE-2017-12991 (BGP)
+>       CVE-2017-12992 (RIPng)
+>       CVE-2017-12993 (Juniper)
+>       CVE-2017-11542 (PIMv1)
+>       CVE-2017-11541 (safeputs)
+>       CVE-2017-12994 (BGP)
+>       CVE-2017-12996 (PIMv2)
+>       CVE-2017-12998 (ISO IS-IS)
+>       CVE-2017-12999 (ISO IS-IS)
+>       CVE-2017-13000 (IEEE 802.15.4)
+>       CVE-2017-13001 (NFS)
+>       CVE-2017-13002 (AODV)
+>       CVE-2017-13003 (LMP)
+>       CVE-2017-13004 (Juniper)
+>       CVE-2017-13005 (NFS)
+>       CVE-2017-13006 (L2TP)
+>       CVE-2017-13007 (Apple PKTAP)
+>       CVE-2017-13008 (IEEE 802.11)
+>       CVE-2017-13009 (IPv6 mobility)
+>       CVE-2017-13010 (BEEP)
+>       CVE-2017-13012 (ICMP)
+>       CVE-2017-13013 (ARP)
+>       CVE-2017-13014 (White Board)
+>       CVE-2017-13015 (EAP)
+>       CVE-2017-11543 (SLIP)
+>       CVE-2017-13016 (ISO ES-IS)
+>       CVE-2017-13017 (DHCPv6)
+>       CVE-2017-13018 (PGM)
+>       CVE-2017-13019 (PGM)
+>       CVE-2017-13020 (VTP)
+>       CVE-2017-13021 (ICMPv6)
+>       CVE-2017-13022 (IP)
+>       CVE-2017-13023 (IPv6 mobility)
+>       CVE-2017-13024 (IPv6 mobility)
+>       CVE-2017-13025 (IPv6 mobility)
+>       CVE-2017-13026 (ISO IS-IS)
+>       CVE-2017-13027 (LLDP)
+>       CVE-2017-13028 (BOOTP)
+>       CVE-2017-13029 (PPP)
+>       CVE-2017-13030 (PIM)
+>       CVE-2017-13031 (IPv6 fragmentation header)
+>       CVE-2017-13032 (RADIUS)
+>       CVE-2017-13033 (VTP)
+>       CVE-2017-13034 (PGM)
+>       CVE-2017-13035 (ISO IS-IS)
+>       CVE-2017-13036 (OSPFv3)
+>       CVE-2017-13037 (IP)
+>       CVE-2017-13038 (PPP)
+>       CVE-2017-13039 (ISAKMP)
+>       CVE-2017-13040 (MPTCP)
+>       CVE-2017-13041 (ICMPv6)
+>       CVE-2017-13042 (HNCP)
+>       CVE-2017-13043 (BGP)
+>       CVE-2017-13044 (HNCP)
+>       CVE-2017-13045 (VQP)
+>       CVE-2017-13046 (BGP)
+>       CVE-2017-13047 (ISO ES-IS)
+>       CVE-2017-13048 (RSVP)
+>       CVE-2017-13049 (Rx)
+>       CVE-2017-13050 (RPKI-Router)
+>       CVE-2017-13051 (RSVP)
+>       CVE-2017-13052 (CFM)
+>       CVE-2017-13053 (BGP)
+>       CVE-2017-13054 (LLDP)
+>       CVE-2017-13055 (ISO IS-IS)
+>       CVE-2017-13687 (Cisco HDLC)
+>       CVE-2017-13688 (OLSR)
+>       CVE-2017-13689 (IKEv1)
+>       CVE-2017-13690 (IKEv2)
+>       CVE-2017-13725 (IPv6 routing headers)
 
-"There are indications that a few ports use TIOCSTI.  The list is
-pretty small, and I have not reviewed whether the use of TIOCSTI
-actually occurs during runtime on OpenBSD:
+[1] https://sources.archlinux.org/other/packages/tcpdump/tcpdump-4.9.2.tar.gz
 
-    x11vnc tcsh ucblogo brltty epic4 trn libsanitizer
-    jvim2.0r+onew2.2.10-wnn4 emacs qemu ngspice
-
-I hope those programs get fixed quickly"
-
-Jeremie Courreges-Anglas wrote:
-
-"TIOCSTI is only used once in editors/emacs.  The return value of
-ioctl(2) isn't checked.  This is in the "suspend-emacs" function, ie
-what's called when pressing ^Z, can take an optional string to be sent
-to the parent process.
-
-I could spot only one place in emacs-25.2 where this optional string is
-used, lisp/obsolete/ledit.el, an obsolete mode for Franz Lisp"
-
-Maybe Christos could comment on tcsh?
-
-Whatever happens (or doesn't happen) for upstream Linux, there will be
-system(s) dropping TIOCSTI or at least introducing a way to disable it,
-so reducing userspace programs' dependencies on TIOCSTI makes sense.
-
-Alexander
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
