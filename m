@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["592" "Monday" "22" "August" "2016" "21:54:35" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160822195435.naiv4hyfs6lxwenf@eldamar.local>" "19" "[oss-security] CVE Request: lshell: shell outbreak vulnerabilities via bad syntax parse and multiline commands" nil nil nil "8" "2016082219:54:35" "[oss-security] CVE Request: lshell: shell outbreak vulnerabilities via bad syntax parse and multiline commands" (number mark "U       carnil@debia Aug 22   19/592   " thread-indent "\"[oss-security] CVE Request: lshell: shell outbreak vulnerabilities via bad syntax parse and multiline commands\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["845" "Friday" "8" "September" "2017" "11:20:23" "+0000" "Sean Owen" "srowen@apache.org" "<CAEccTyz4bbvAf+GAY_86HUzdKMN74DUAV8GQkh2oGy+tO1ic7g@mail.gmail.com>" "28" "[oss-security] CVE-2017-12612 Unsafe deserialization in Apache Spark launcher API" nil nil nil "9" "2017090811:20:23" "[oss-security] CVE-2017-12612 Unsafe deserialization in Apache Spark launcher API" (number mark "U       srowen@apach Sep  8   28/845   " thread-indent "\"[oss-security] CVE-2017-12612 Unsafe deserialization in Apache Spark launcher API\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17640 invoked by uid 550); 22 Aug 2016 19:54:49 -0000
+Received: (qmail 11272 invoked by uid 550); 8 Sep 2017 11:35:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17619 invoked from network); 22 Aug 2016 19:54:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=VqytjGdiD7g8J8vdacwVaUPZ5rHIF4MiZYgEQsKESzU=;
-        b=s+B7vO2Ss/jB1m5QtJikIvCqFfN/BqNLacffieztOJSRWTc8uq1N7+c2V29cOzpTjq
-         6dGRgqZq7xltuWlBYiKAvUdOiMgfajeVLzpXxyfnHgg/yKNRXLPlDLowyMRQMmpBNv9w
-         GbJNnRhGjpiB3Sg8SICtkuxMHFTR9ISHgMaKvaDBGn3cIMBYRGwRVgaRO7SBeL7WK3tS
-         0RYZBGGpe7YboN02IjLBTm1IszPYZCwaR6BOjexuJ48lA/fEOzRRN4YolMuKt/XWGXOo
-         ARmGy69QfFsog/oL5kBw+NqHrUoEduGbIQARyg+1UGjXm5RnwdXYZZ2jRTfBEJI5AmPs
-         Y0ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=VqytjGdiD7g8J8vdacwVaUPZ5rHIF4MiZYgEQsKESzU=;
-        b=TsuImqrVwWXuXbWAuKmIw0msXvKOMQZhI7G0awyRJ64kzhZHxM5dXPqXrOGN8mbQXk
-         1tXK+HgGCoXnnJaCzT9ol5d1MWXMmV3GMhZnVWjquDO7n4OTydwhci3eyoSUB3V7jcr2
-         8hrlU1aNOmGpLXONtQKrV7SZyv8RYN1B8UF3VbxIjdz2ZGbWB4xlk2muNpue9UsvJCpl
-         jyMR4ZRax3lAXJc2UaJDYUqc6B+ymuMsVa+GZ7iOQJOSO7hNJ6lJQXTRpz3WmiFFMzTr
-         IDPPaNJ6OscvMa27EiMDK0vklnOgQzXbuQpjPecNq+6h6M4aHzgVaHAMnqWLLsiqIE1+
-         n8hQ==
-X-Gm-Message-State: AEkoouvLWo80ZQR2fwk6uOGxfQMRFhH+AnXg+OqQL9Gcn7pF7xd+dHUDUOIob0CZeSzLDA==
-X-Received: by 10.28.32.77 with SMTP id g74mr15952603wmg.45.1471895677351;
-        Mon, 22 Aug 2016 12:54:37 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Mon, 22 Aug 2016 21:54:35 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160822195435.naiv4hyfs6lxwenf@eldamar.local>
+Received: (qmail 32332 invoked from network); 8 Sep 2017 11:20:52 -0000
+X-Gm-Message-State: AHPjjUimp+XbY22vS+gAQVUTu0juElFj0jF1WRPR38Q17iPXKul2uZgu
+	BX5o7ow6vgQrb4gcDQzQHac1oACq5Q==
+X-Google-Smtp-Source: ADKCNb6rm6XuCernCVWnaJDT4WraifR+J7Vqvsyn/jgI6Yn/S9d52PQjZJf8HvAs4moupUY5DcgDj1+j0Kr0DmhewUc=
+X-Received: by 10.80.190.13 with SMTP id a13mr1894782edi.2.1504869634381; Fri,
+ 08 Sep 2017 04:20:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.6.2-neo (2016-08-08)
-Subject: [oss-security] CVE Request: lshell: shell outbreak vulnerabilities via bad syntax
- parse and multiline commands
+From: Sean Owen <srowen@apache.org>
+Date: Fri, 08 Sep 2017 11:20:23 +0000
+X-Gmail-Original-Message-ID: <CAEccTyz4bbvAf+GAY_86HUzdKMN74DUAV8GQkh2oGy+tO1ic7g@mail.gmail.com>
+Message-ID: <CAEccTyz4bbvAf+GAY_86HUzdKMN74DUAV8GQkh2oGy+tO1ic7g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="f4030438d710fd9d2f0558abc3ff"
+Subject: [oss-security] CVE-2017-12612 Unsafe deserialization in Apache Spark launcher API
 
-Hi
+--f4030438d710fd9d2f0558abc3ff
+Content-Type: text/plain; charset="UTF-8"
 
-Two shell outbreak vulnerability for lshell, a shell coded in python,
-that is intended to restrict a user's environment to only a limited
-sets of commands.
+Severity: Medium
 
-1/ Shell outbreak due to bad syntax parse
-   - https://github.com/ghantoos/lshell/issues/147
-   - https://bugs.debian.org/834949
+Vendor: The Apache Software Foundation
 
-2/ Shell outbreak with multiline commands
-   - https://github.com/ghantoos/lshell/issues/149
-   - Fix: https://github.com/ghantoos/lshell/commit/e72dfcd1f258193f9aaea3591ecbdaed207661a0
-   - https://bugs.debian.org/834946
+Versions Affected:
+Versions of Apache Spark from 1.6.0 until 2.1.1
 
-Could you please assign two CVEs for those lshell issues?
+Description:
+In Apache Spark 1.6.0 until 2.1.1, the launcher API performs unsafe
+deserialization of data received by  its socket. This makes applications
+launched programmatically using the launcher API potentially
+vulnerable to arbitrary code execution by an attacker with access to any
+user
+account on the local machine. It does not affect apps run by spark-submit or
+spark-shell. The attacker would be able to execute code as the user that ran
+the Spark application. Users are encouraged to update to version 2.2.0 or
+later.
 
-Regards,
-Salvatore
+Mitigation:
+Update to Apache Spark 2.2.0 or later.
+
+Credit:
+Aditya Sharad, Semmle
+
+--f4030438d710fd9d2f0558abc3ff--
