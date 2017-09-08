@@ -1,61 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/4
-Message-ID: <20170702180746.GA15341@openwall.com>
-Date: Sun, 2 Jul 2017 20:07:46 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CloudLinux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/08/2
+Message-ID: <87mv658rqa.fsf@dell.be.48ers.dk>
+Date: Fri, 08 Sep 2017 11:27:57 +0200
+From: Peter Korsgaard <peter@...sgaard.com>
+To: Raphael Geissert <geissert@...ian.org>
+Cc: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: Tcpdump 4.9.2
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+>>>>> "Raphael" == Raphael Geissert <geissert@...ian.org> writes:
 
-I am inclined to add CloudLinux to the linux-distros list unless there
-are well-reasoned objections.  I'd appreciate any comments.
+Hi,
 
-On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
-> I would like to apply for membership in linux-distros list for CloudLinux
-> OS. Please, see application attached.
+ > Quoting the CHANGES file of the tarball[1]:
 
-Thank you for posting this, Igor.
+Wow!
 
-I am most concerned about your answer to:
+ > [1] https://sources.archlinux.org/other/packages/tcpdump/tcpdump-4.9.2.tar.gz
 
-> 4. Not be (only) downstream or a rebuild of another distro (or else we
-> need convincing additional justification of how the list membership
-> would enable you to release fixes sooner, presumably not relying on the
-> upstream distro having released their fixes first?)
+Can we please have this tarball officially released on tcpdump.org /
+4.9.2 tagged in git then?
 
-> Our kernel has significant amount of changes comparing to OpenVZ kernel
-> We also do slight modifications to Apache web server, ship customized
-> versions of PHP (multiple versions), python, ruby, MySQL and MariaDB that
-> are  packaged by us, and not taken from upstream.
-
-So are you saying that you'll release fixes sooner (once you're on the
-linux-distros list) only for this subset of packages that are modified
-or packaged by you?  What about the rest?
-
-> We would be happy to help with administrative tasks:
-> 
->    1. Promptly review new issue reports for meeting the list's requirements
->    and confirm receipt of the report and, when necessary, inform the reporter
->    of any issues with their report (e.g., obviously not actionable by the
->    distros) and request and/or propose any required yet missing information
->    (most notably, a tentative public disclosure date)
->    2. If the proposed public disclosure date is not within list policy,
->    insist on getting this corrected and propose a suitable earlier date
-> 
-> And possibly more in the future, as we have a better understanding of the
-> amount of work needed to handle those tasks.
-> We will need some handholding at first to make sure we do things correctly.
-
-OK.  You'll likely need to choose additional/other tasks very soon since
-these trivial ones will likely transfer to another new distro joining,
-if one requests membership and meets the criteria shortly after you.
-
-> Please, find PGP related info
-
-Thanks.  Out of the people you listed, you and Konstantin appear to have
-been on oss-security for a long while, but Leonid doesn't appear to be
-subscribed - or is he?  If not, he probably needs to subscribe now.
-
-Alexander
+-- 
+Bye, Peter Korsgaard
