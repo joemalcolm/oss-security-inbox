@@ -1,50 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/15/1
-Message-ID: <CA++9HO-W2feM80=KZ_ifdAiL2jvMLJ3ENsqBaadg5E=apBVwxA@mail.gmail.com>
-Date: Fri, 15 Sep 2017 12:28:11 +0000
-From: Ben Seri <ben@...is.com>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: Linux BlueBorne vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/08/3
+Message-ID: <f55c2071-40ca-ad1a-6c1b-33f8326325c5@dns-oarc.net>
+Date: Fri, 8 Sep 2017 12:44:11 +0200
+From: Jerry Lundström <jerry@...-oarc.net>
+To: Peter Korsgaard <peter@...sgaard.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Tcpdump 4.9.2
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+On 09/08/17 11:27, Peter Korsgaard wrote:
+> Can we please have this tarball officially released on tcpdump.org /
+> 4.9.2 tagged in git then?
 
-Our thought is that since these issues affect multi vendors that are using
-Linux, the longer the embargo period, the better chance there is a
-coordinated patch goes out to as many users as possible once the embargo is
-lifted.
+There is a tarball, just no tag yet.
 
-Armis Labs
+Version: 4.9.2
+Release Date: September 3, 2017
 
-On Fri, Sep 15, 2017 at 12:26 AM Solar Designer <solar@...nwall.com> wrote:
+- http://www.tcpdump.org/release/tcpdump-4.9.2.tar.gz
+- http://www.tcpdump.org/release/tcpdump-4.9.2.tar.gz.sig
+- http://www.tcpdump.org/tcpdump-changes.txt
 
-> On Thu, Sep 14, 2017 at 08:14:03PM +0000, Armis Security wrote:
-> > On August 15th we have contacted one of the senior maintiners of BlueZ
-> and
-> > attempted to establish a longer embargo period with him. Unfortunatelly
-> his
-> > suggestion was to post our findings to linux-bluetooth@...r.kernel.org,
-> > which is a public mailing list.
->
-> While I understand you not wanting to post to a public mailing list
-> right away, why exactly would you have wanted a longer embargo than e.g.
-> linux-distros' maximum of 14 days?
->
-> > So we decided to disclose our findings to the secure mailing list that
-> > unfortunatelly only have a maximum of 7 days embargo periods.
->
-> You're probably referring to the Linux kernel security list.  7 days
-> sounds like a reasonable embargo period to me, but if you really wanted
-> more, you could get up to 14 by first contacting linux-distros only, and
-> then bringing the issue to the Linux kernel security list in no more
-> than 7 days to the planned public disclosure.
->
-> > I am happy to hear the red hat security team allows for longer embargo
-> > periods, and we will contact you directly in the future.
->
-> I hope you will only go for a longer embargo when there's actually a
-> good reason for that.  There might or might not have been in this case.
->
-> Alexander
->
-
+/Jerry
