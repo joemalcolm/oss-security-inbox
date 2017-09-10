@@ -1,54 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/02/3
-Message-ID: <20170802120117.GA18748@openwall.com>
-Date: Wed, 2 Aug 2017 14:01:17 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/10/1
+Message-ID: <20170910195431.fvcvbo24su3zkl3n@eldamar.local>
+Date: Sun, 10 Sep 2017 21:54:31 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: security@...e.de
-Subject: Re: CoreOS membership to linux-distros (updated)
+Cc: David Buchanan <d@...buchanan.co.uk>, Michael Tokarev <mjt@....msk.ru>
+Subject: Re: CVE-2017-13673 Qemu: vga: reachable assert failure during during display update
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 02, 2017 at 12:11:20PM +0200, Johannes Segitz wrote:
-> On Tue, Aug 01, 2017 at 10:54:14PM +0200, Solar Designer wrote:
-> > I keep the wiki page up to date:
-> > 
-> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+Hi!
+
+On Wed, Aug 30, 2017 at 03:34:51PM +0530, P J P wrote:
+>   Hello,
 > 
-> SUSE has been active in the past in various activities listed in the
-> document and will continue to do so. Officially we would like to commit to
-> task 5 and 10.
+> Quick emulator(Qemu) built with the VGA display emulator support is
+> vulnerable to an assert failure issue. It could occur while updating
+> graphics display, due to miscalculating region for dirty bitmap snapshot in
+> split screen mode.
+> 
+> A privileged user/process inside guest could use this flaw to crash the Qemu
+> process on the host resulting in DoS.
+> 
+> Upstream patch:
+> ---------------
+>   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg04685.html
+> 
+> Reference:
+> ----------
+>   -> https://bugzilla.redhat.com/show_bug.cgi?id=1486588
+> 
+> This issue was reported by David Buchanan.
 
-Thank you.  This results in:
+Can you clarify the affected versions? I noticed while looking at the
+above, that MITRE description mentions "Qemu 2.8.0 through 2.9.0". I
+perfectly realize those does not come from the above.  As far as I can
+see, e.g. cpu_physical_memory_snapshot_get_dirty was only introduced
+in v2.10.0-rc0. The upstream commit associated with the above issue
+is:
 
-5. Determine if the reported issues are Linux-specific, and if so help
-ensure that (further) private discussion goes on the linux-distros
-sub-list only (thus, not spamming and unnecessarily disclosing to the
-non-Linux distros)
-- primary: SUSE, backup: vacant
+ https://git.qemu.org/gitweb.cgi?p=qemu.git;a=commit;h=bfc56535f793c557aa754c50213fc5f882e6482d
 
-10. Monitor relevant public channels (mailing lists, code repositories,
-etc.) and inform the reporter and the list in case an issue is made
-public prematurely (that is, leaks or is independently rediscovered)
-- primary: Amazon, backup: SUSE
+which fixes
 
-This leaves without an assigned distro only 1 of 13 administrative tasks
-requiring (linux-)distros list membership to handle:
+ https://git.qemu.org/gitweb.cgi?p=qemu.git;a=commit;h=fec5e8c92becad223df9d972770522f64aafdb72
 
-4. Evaluate relevance to other parties such as the upstream, other
-affected distros (not present on the (sub-)list), and other Open Source
-projects, see if the report mentions notifying any of these, communicate
-your findings and possible concerns to the reporter and the list, and
-stay on top of the resulting discussion until a decision is made on who
-else to possibly notify (or not) and any such notifications are in fact
-made (with the reporter's approval)
+introducing the use of dirty bitmap snapshots in vga_draw_graphic().
 
-This is counterpart to task "5. Determine if the reported issues are
-Linux-specific ..." above.  Handling of this task "4. Evaluate relevance
-to other parties ..." includes bringing discussions from linux-distros
-to the full distros list when relevant to the *BSD's (and/or to whatever
-other non-Linux distros are on that list at the time, if any join by
-then), and a lot more.
+Do I miss something makeing it affecting as well earlier versions than
+2.10?
 
-Also still fully vacant are 3 out of 6 technical tasks.
-
-Alexander
+Regards and thanks already for your help,
+Salvatore
