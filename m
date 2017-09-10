@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1466" "Tuesday" "11" "October" "2016" "12:28:33" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161011162833.2F1006C1338@smtpvmsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Cc:" nil nil "10" "2016101116:28:33" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        cve-assign@m Oct 11   37/1466  " thread-indent "\"[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>" ("<CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1446" "Sunday" "10" "September" "2017" "21:54:31" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20170910195431.fvcvbo24su3zkl3n@eldamar.local>" "43" "Re: [oss-security] CVE-2017-13673 Qemu: vga: reachable assert failure during during display update" nil nil nil "9" "2017091019:54:31" "[oss-security] CVE-2017-13673 Qemu: vga: reachable assert failure during during display update" (number mark "U       carnil@debia Sep 10   43/1446  " thread-indent "\"Re: [oss-security] CVE-2017-13673 Qemu: vga: reachable assert failure during during display update\"\n") "<nycvar.YSQ.7.76.1708301533140.5404@wniryva>" ("<nycvar.YSQ.7.76.1708301533140.5404@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7895 invoked by uid 550); 11 Oct 2016 16:28:45 -0000
+Received: (qmail 22211 invoked by uid 550); 10 Sep 2017 19:54:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7875 invoked from network); 11 Oct 2016 16:28:44 -0000
-In-Reply-To: <CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>
-Message-Id: <20161011162833.2F1006C1338@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 11 Oct 2016 12:28:33 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
-To: taviso@google.com
+Received: (qmail 22190 invoked from network); 10 Sep 2017 19:54:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=iFgXDuorwUXyeLe0BKyLhBJdkRxKViQo3hwglnWPHxs=;
+        b=k9nZdu3xzhbFjXrNMkJ9WlcoJ48a0x9nG1AfXd3YjmrZO7An8nPTJWBXp/d3LMVyFd
+         GFDsM+t0JAQDKtMnLPaVff6bCtU5Z4zeXWd3N66x4Mwp4y1t8426VSBDt5LfgeISs6DR
+         5XGx2DMLnqfEgnJ+qeeUEudrviIxg/s9mE7uBkciF07s/N/xhMcK6nxZlzj97I2amj74
+         HCqvsf8YV3tmOVEhtfFdtqjZvrpemF5XjWlQVZzriB2XwQ177y/bbsTpL+jnwpUmqaqB
+         8wkP10MGR81wXqQ37jZXBnsUo7FXDYKpFX2Q8Vr7am2YbocAtInf8IH1E6UzQQe/Ln44
+         uHSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=iFgXDuorwUXyeLe0BKyLhBJdkRxKViQo3hwglnWPHxs=;
+        b=G9ant7BP1WEcj0fsstKytnghEDEln4x5CNntMgBXtxv3NGwW8VliC0RncpPNDWEB9Q
+         GqQwnYKnw8QzTdH3uFKoN7317g0RxZJW9meSaZM1+AVpMkL/aV3Fv07UwNzxf+Kkbw7l
+         upv32Om5TYHBxGf6zC2m3IZMaio9IkqaXgZRuQu0helgiVHIzJk7n+R6OAhn6mGAvcDc
+         ey95xOmzOz4HBjy9pR6h1NvlFaCkJBkj9Fg3TjREPjqD1AjhEfxDuxXktZYsAAVTZ/MA
+         714o7zKTbD2SQhezvNUFTr2ch4bYH6pRnDkg9fRGUs8zuYwmqP6xyXmRHVnYL1kI32Np
+         g9hg==
+X-Gm-Message-State: AHPjjUiXWnrsUOo8xn7si2qMJrEYdXyj1nQokmYF1M8L7xu7Qk00hgRb
+	YrCpqIV7uKQxhw==
+X-Google-Smtp-Source: AOwi7QB4Aj1p7kidcBkQG+biy0WsySEtDmSgBwhnN9KD+oS+sXCP8firV0Jbm33JBZTiprGS6xkHzg==
+X-Received: by 10.28.45.14 with SMTP id t14mr6282081wmt.113.1505073273932;
+        Sun, 10 Sep 2017 12:54:33 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sun, 10 Sep 2017 21:54:31 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Cc: David Buchanan <d@vidbuchanan.co.uk>, Michael Tokarev <mjt@tls.msk.ru>
+Message-ID: <20170910195431.fvcvbo24su3zkl3n@eldamar.local>
+References: <nycvar.YSQ.7.76.1708301533140.5404@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.YSQ.7.76.1708301533140.5404@wniryva>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Subject: Re: [oss-security] CVE-2017-13673 Qemu: vga: reachable assert
+ failure during during display update
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi!
 
-> Here is a different type confusion bug, originally I thought it was
-> just a NULL dereference, but after seeing the patch it does look
-> exploitable.
+On Wed, Aug 30, 2017 at 03:34:51PM +0530, P J P wrote:
+>   Hello,
 > 
-> id: http://bugs.ghostscript.com/show_bug.cgi?id=697203
-> patch: http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=f5c7555c30393e64ec1f5ab0dfae5b55b3b3fc78
-> repro: clear 16#41414141 .sethalftone5
+> Quick emulator(Qemu) built with the VGA display emulator support is
+> vulnerable to an assert failure issue. It could occur while updating
+> graphics display, due to miscalculating region for dirty bitmap snapshot in
+> split screen mode.
 > 
-> Please assign a CVE for this one.
+> A privileged user/process inside guest could use this flaw to crash the Qemu
+> process on the host resulting in DoS.
+> 
+> Upstream patch:
+> ---------------
+>   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg04685.html
+> 
+> Reference:
+> ----------
+>   -> https://bugzilla.redhat.com/show_bug.cgi?id=1486588
+> 
+> This issue was reported by David Buchanan.
 
-Use CVE-2016-8602.
+Can you clarify the affected versions? I noticed while looking at the
+above, that MITRE description mentions "Qemu 2.8.0 through 2.9.0". I
+perfectly realize those does not come from the above.  As far as I can
+see, e.g. cpu_physical_memory_snapshot_get_dirty was only introduced
+in v2.10.0-rc0. The upstream commit associated with the above issue
+is:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+ https://git.qemu.org/gitweb.cgi?p=qemu.git;a=commit;h=bfc56535f793c557aa754c50213fc5f882e6482d
 
-iQIcBAEBCAAGBQJX/RJMAAoJEHb/MwWLVhi2eRAP/0pY2yag9OtfjcTBqJ30efgV
-pdWeaaGnY/V793JA8TuygA4GfWlutx7wEHaIsO+FR4Ur3YD63r4Ru3dkMk5w6nHR
-GAKfKseZDGPx4vYHqmvMULmwmh97WkBZXgwSFmIP2Z7qBnXzTb0LphhvQLymZTDu
-gc/B8hlTRbjVKZk2nwq5VajG5I6zY776Ok0fN6TSkVkrN6QWTdzOHr7XsNw33fks
-a01IqHrb3kMeaOOTyyrnm1nCehz3yF7uqBJb7PzY28FFqeX6rKqB3hulkB+7Ulnn
-7txIzxqdeHJHJjAG3Z0drfu0yoDcXXFl6aVSy/+2mxPs5H+CyTHzzmCkWdWDlw4y
-6sJahKu+A/Q0yxsfqmFqc0wXQXv0/Db8hbaP5ZPa1Io9Hp3VqM/ZmGt0elsFWFq1
-QcKV3TF35PfNJeR/5EuVBUCQLH017pA4ozT90qPYDTFAcbUZMH1PBlcNheLz10M4
-XXFsaocBYbKDxcr22/cWiUWOTefDgkBdFTWzg5RxVLAEcY2/ov1KdwRmRF9O1X+h
-z/bwoD/HHbt3xTwoZ7zZuj8qK1hli2aoiIk4sGekwD0lmmbECyL1kSYpZORAXLG9
-3adzKdoIQ+31rrubIoJbOrZVtv0O+/7ZfIAcJVMytz3seQH7QYP6BEgVGlH34v7d
-YgyQlr15jLLG5YrXRhQN
-=YVnm
------END PGP SIGNATURE-----
+which fixes
+
+ https://git.qemu.org/gitweb.cgi?p=qemu.git;a=commit;h=fec5e8c92becad223df9d972770522f64aafdb72
+
+introducing the use of dirty bitmap snapshots in vga_draw_graphic().
+
+Do I miss something makeing it affecting as well earlier versions than
+2.10?
+
+Regards and thanks already for your help,
+Salvatore
