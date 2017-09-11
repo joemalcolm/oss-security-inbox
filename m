@@ -1,4 +1,9 @@
-Received: (qmail 5322 invoked by uid 550); 20 Jun 2024 09:49:01 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1479" "Sunday" "10" "September" "2017" "23:56:20" "-0700" "Paul Eggert" "eggert@cs.ucla.edu" "<09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>" "40" "[oss-security] GNU Emacs 25.2 enriched text remote code execution" "^Date:" nil nil "9" "2017091106:56:20" "[oss-security] GNU Emacs 25.2 enriched text remote code execution" (number mark "        eggert@cs.uc Sep 10   40/1479  " thread-indent "\"[oss-security] GNU Emacs 25.2 enriched text remote code execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 24204 invoked by uid 550); 11 Sep 2017 10:41:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,43 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13421 invoked from network); 20 Jun 2024 08:15:16 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <e4e003e5-a89a-e56a-461b-743c67bb53ff@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 20 Jun 2024 08:14:08 +0000
+Received: (qmail 3399 invoked from network); 11 Sep 2017 06:56:37 -0000
+X-Virus-Scanned: amavisd-new at zimbra.cs.ucla.edu
+Organization: UCLA Computer Science Department
+Message-ID: <09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-34693: Apache Superset: Server arbitrary file read 
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Date: Sun, 10 Sep 2017 23:56:20 -0700
+From: Paul Eggert <eggert@cs.ucla.edu>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] GNU Emacs 25.2 enriched text remote code execution
+To: oss-security@lists.openwall.com
 
-Affected versions:
+GNU Emacs is an extensible, customizable, free/libre text editor and software 
+environment.  When Emacs renders MIME text/enriched data (Internet RFC 1896), it 
+is vulnerable to arbitrary code execution. Since Emacs-based mail clients decode 
+"Content-Type: text/enriched", this code is exploitable remotely. This bug 
+affects GNU Emacs versions 19.29 through 25.2.
 
-- Apache Superset before 3.1.3
-- Apache Superset 4.0.0 before 4.0.1
+Although we know no efforts to exploit this in the wild, exploitation is easy.
 
-Description:
+== Details ==
 
-Improper Input Validation vulnerability in Apache Superset, allows for an a=
-uthenticated attacker to create a MariaDB connection with local_infile enab=
-led. If both the MariaDB server (off by default) and the local mysql client=
- on the web server are set to allow for local infile, it's possible for the=
- attacker to execute a specific MySQL/MariaDB SQL command that is able to r=
-ead files from the server and insert their content on a MariaDB database ta=
-ble.This issue affects Apache Superset: before 3.1.3 and version 4.0.0
+https://bugs.gnu.org/28350
 
-Users are recommended to upgrade to version 4.0.1 or 3.1.3, which fixes the=
- issue.
+== Patch ==
 
-Credit:
+https://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-25&id=9ad0fcc54442a9a01d41be19880250783426db70
 
-Matei "Mal" Badanoiu (finder)
-Daniel Vaz Gaspar (remediation developer)
+== Mitigation ==
 
-References:
+To work around the bug in unfixed versions of Emacs, put the following code in 
+your personal or site-wide Emacs init file (~/.emacs, ~/emacs.d/init.el, 
+site-start.el):
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2024-34693
+   ;; Mitigate Bug#28350 (security) in Emacs 25.2 and earlier.
+   (eval-after-load "enriched"
+     '(defun enriched-decode-display-prop (start end &optional param)
+        (list start end)))
 
+and avoid 'emacs -Q' and similar options that bypass normal initialization.
+
+== Timeline ==
+
+2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
+
+2017-09-07. POC for remote code execution sent to the maintainers of Emacs and 
+Gnus (Reiner Steib <Reiner.Steib@gmx.de>, private mail).
+
+2017-09-08. Patch (by Lars Ingebrigtsen <larsi@gnus.org>) to disable the 
+problematic code and mitigation (private mail).
+
+2017-09-09. Patch committed in main development repository.
