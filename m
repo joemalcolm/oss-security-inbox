@@ -1,26 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/6
-Message-ID: <20170601134213.GA23889@inutil.org>
-Date: Thu, 1 Jun 2017 15:42:13 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/11/1
+Message-ID: <09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>
+Date: Sun, 10 Sep 2017 23:56:20 -0700
+From: Paul Eggert <eggert@...ucla.edu>
 To: oss-security@...ts.openwall.com
-Subject: Re: Information on recent sqlite3 issues?
+Subject: GNU Emacs 25.2 enriched text remote code execution
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 01, 2017 at 07:14:46AM -0600, Kurt Seifried wrote:
-> I will bring this up at the next cve board meeting (2 weeks from now).
+GNU Emacs is an extensible, customizable, free/libre text editor and software 
+environment.  When Emacs renders MIME text/enriched data (Internet RFC 1896), it 
+is vulnerable to arbitrary code execution. Since Emacs-based mail clients decode 
+"Content-Type: text/enriched", this code is exploitable remotely. This bug 
+affects GNU Emacs versions 19.29 through 25.2.
 
-Thanks! That also goes beyond sqlite, BTW. There's also a number of
-CVE IDs issued by Apple for libxml/libxslt which are in the same 
-position.
+Although we know no efforts to exploit this in the wild, exploitation is easy.
 
-libxml:
-CVE-2016-4619 CVE-2016-4616 CVE-2016-4615 CVE-2016-4614 CVE-2015-7116
-CVE-2015-7115
+== Details ==
 
-libxslt:
-CVE-2017-2477 CVE-2016-4612 CVE-2016-4610 CVE-2016-4609 CVE-2016-4608
-CVE-2016-4607
+https://bugs.gnu.org/28350
 
-Cheers,
-        Moritz
+== Patch ==
+
+https://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-25&id=9ad0fcc54442a9a01d41be19880250783426db70
+
+== Mitigation ==
+
+To work around the bug in unfixed versions of Emacs, put the following code in 
+your personal or site-wide Emacs init file (~/.emacs, ~/emacs.d/init.el, 
+site-start.el):
+
+   ;; Mitigate Bug#28350 (security) in Emacs 25.2 and earlier.
+   (eval-after-load "enriched"
+     '(defun enriched-decode-display-prop (start end &optional param)
+        (list start end)))
+
+and avoid 'emacs -Q' and similar options that bypass normal initialization.
+
+== Timeline ==
+
+2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
+
+2017-09-07. POC for remote code execution sent to the maintainers of Emacs and 
+Gnus (Reiner Steib <Reiner.Steib@....de>, private mail).
+
+2017-09-08. Patch (by Lars Ingebrigtsen <larsi@...s.org>) to disable the 
+problematic code and mitigation (private mail).
+
+2017-09-09. Patch committed in main development repository.
