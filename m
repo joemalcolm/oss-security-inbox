@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["424" "Thursday" "2" "April" "2015" "19:19:45" "+0200" "D.S. Ljungmark" "ljungmark@modio.se" "<CAO0vwOXOPSGb8xWiutn+r+rXhSQc3SwC8-S2bkpRZuRAvDOyHw@mail.gmail.com>" "12" "[oss-security] CVE Request : IPv6 Hop limit lowering via RA messages" nil nil nil "4" "2015040217:19:45" "[oss-security] CVE Request : IPv6 Hop limit lowering via RA messages" (number mark "        ljungmark@mo Apr  2   12/424   " thread-indent "\"[oss-security] CVE Request : IPv6 Hop limit lowering via RA messages\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1025" "Monday" "11" "September" "2017" "20:58:57" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20170911185857.hfti4mrponqoddin@eldamar.local>" "27" "Re: [oss-security] GNU Emacs 25.2 enriched text remote code execution" "^Date:" nil nil "9" "2017091118:58:57" "[oss-security] GNU Emacs 25.2 enriched text remote code execution" (number mark "        carnil@debia Sep 11   27/1025  " thread-indent "\"Re: [oss-security] GNU Emacs 25.2 enriched text remote code execution\"\n") "<09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>" ("<09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20361 invoked by uid 550); 2 Apr 2015 23:10:12 -0000
+Received: (qmail 14153 invoked by uid 550); 11 Sep 2017 18:59:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7837 invoked from network); 2 Apr 2015 17:19:56 -0000
+Received: (qmail 14132 invoked from network); 11 Sep 2017 18:59:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1++bs9c3VKgDU885pXxR8GaqmVXorO8drFtOoCOhnBU=;
+        b=qE/MiNFUd2GvvElowWSinvednYGZHHxxPnSVhFnWVWg54V8z0xvQZVE0wGQZLEAgGa
+         B2Vs6aTGcAwJKNuJHU5O5/W+jfELARXc7LM6CYbCzM1rwUnHbRtAqhZW23JQ1XcPbLof
+         Fq4VFka+4K/6yVtWx4VWWfLgIpQ23JnE/EeZSSRGJ7Jss+wyNqG8aF2t6vf+bi1wKOzU
+         3O4yTum8Suow/erYrHiTfyIo4zmUbM9KGvcgUjs8rI2+oqUSeSf20yhfpoWvd7h8Rq9Z
+         nra6rjchFcVm9af1Y9tp5gqtiEsCLcd8Pjn/SKpyAgQF/jr2kq0Jf4AZ3pnwN4K8ZrFO
+         lLtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=VGFrCG3DhT0uIAYR+O5YClsit4u5ZdE+FCOFnpG0bWM=;
-        b=B9zyeQDgdexuyPol8i28WP4zXe6/zCI3k/+JqASdGkTLsk8U0vNwKspGm9JCjFzwzu
-         Om69DFpsAwTYVHForp6+SjL26VB9ArCGKAqbKFJjEZ48DLnTC+bNCktfKCAVJGQDH9QU
-         a9lvdzbTJAfsnTg1btsA0GEj0L0MJTmzVwaD7zD2YNHdAIZ42TdwrHVA1DisXbRjn1s6
-         /HdBuh13cRtb3EO/If6CEKMNPM3m0sl1GC+afYvxxfXQRnzQQNKMxndduDDptleB9Kna
-         rAw03/HlUtPgZysnbHY4J/oBgEFKvIihf77ebsEf19VGo4ZesNaiREZ3eKtfw5HmMMfd
-         IhEg==
-X-Gm-Message-State: ALoCoQnH3AEY7o0/ZZFGKSHD3waebKgVPjNb+lo8PjroP8w8BPOLqxI83vREF0VhDQ7zllwQ8JNH
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1++bs9c3VKgDU885pXxR8GaqmVXorO8drFtOoCOhnBU=;
+        b=EVmbF2CDvtDEvjOj52+22wPBnCHaWG5ZOLNaeq0CXws/md0DiFSv0wfwz6QwT28zUw
+         4zgrfl8GzBSj/rF+hptsDYF5sTDS9FRi3CZYgni9nfCZqLzJDkFlk0nsHrB3hG4cMAR4
+         3yDAdJMyINIF9qTqH4w+8brzbslbUNMVVpgQlll0AkihuFNVhSInPLUwTrSb4PY10FYX
+         ZBfdgEzjhgmF57dQ5T4AkBf35B730K8s8zg00KtFsF/BYlbFKtLqLjq739/Ykob0zOU5
+         bJrz0sGND4zEDzKunx8OYzZ6q94dyiewSORgEWFX64ta+6lLowcmppKkckA9UIdVwUhU
+         II5w==
+X-Gm-Message-State: AHPjjUh+AEsROa6D9ltiUNItJmsS7Oz4wpsoqATyYiKGUD3AZWLCK8JG
+	lsll/ogQjgG9q6/F6cz7tQkU7Q==
+X-Google-Smtp-Source: AOwi7QDEWpQxFfWWQdtnbA8fth35MVpRplCJuglzJjENDgYUMszd7UgQrM9W1DYyUkHUs0o5QFeE+w==
+X-Received: by 10.28.232.138 with SMTP id f10mr6824443wmi.130.1505156338580;
+        Mon, 11 Sep 2017 11:58:58 -0700 (PDT)
+Message-ID: <20170911185857.hfti4mrponqoddin@eldamar.local>
+References: <09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>
 MIME-Version: 1.0
-X-Received: by 10.182.125.130 with SMTP id mq2mr19454368obb.52.1427995185059;
- Thu, 02 Apr 2015 10:19:45 -0700 (PDT)
-Message-ID: <CAO0vwOXOPSGb8xWiutn+r+rXhSQc3SwC8-S2bkpRZuRAvDOyHw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 2 Apr 2015 19:19:45 +0200
-From: "D.S. Ljungmark" <ljungmark@modio.se>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <09f18b8d-037d-edd2-84d5-270cd9b44d54@cs.ucla.edu>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Date: Mon, 11 Sep 2017 20:58:57 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request : IPv6 Hop limit lowering via RA messages
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] GNU Emacs 25.2 enriched text remote code execution
 To: oss-security@lists.openwall.com
 
-An unprivileged user on a local network can use IPv6 Neighbour
-Discovery ICMP to broadcast a non-route with a low hop limit, this
-causing machines to lower the hop limit on existing IPv6 routes.
+Hi Paul,
 
-Linux Patch: http://www.spinics.net/lists/netdev/msg322361.html
-Redhat bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=1203712
+On Sun, Sep 10, 2017 at 11:56:20PM -0700, Paul Eggert wrote:
+> GNU Emacs is an extensible, customizable, free/libre text editor and
+> software environment.  When Emacs renders MIME text/enriched data (Internet
+> RFC 1896), it is vulnerable to arbitrary code execution. Since Emacs-based
+> mail clients decode "Content-Type: text/enriched", this code is exploitable
+> remotely. This bug affects GNU Emacs versions 19.29 through 25.2.
+> 
+> Although we know no efforts to exploit this in the wild, exploitation is easy.
+[...]
+> == Timeline ==
+> 
+> 2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
+> 
+> 2017-09-07. POC for remote code execution sent to the maintainers of Emacs
+> and Gnus (Reiner Steib <Reiner.Steib@gmx.de>, private mail).
+> 
+> 2017-09-08. Patch (by Lars Ingebrigtsen <larsi@gnus.org>) to disable the
+> problematic code and mitigation (private mail).
+> 
+> 2017-09-09. Patch committed in main development repository.
 
-Projects impacted:  Linux kernel,  NetworkManager, FreeBSD Kernel
-
+Have you requested a CVE for this issue?
 
 Regards,
-  D.S. Ljungmark
+Salvatore
