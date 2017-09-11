@@ -1,63 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/4
-Message-ID: <874lt7awbt.fsf@hope.eyrie.org>
-Date: Wed, 16 Aug 2017 17:09:58 -0700
-From: Russ Allbery <eagle@...ie.org>
-To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Cc: Florian Weimer <fweimer@...hat.com>,  oss-security@...ts.openwall.com
-Subject: Re: Insecure DNS dependency in many Kerberos deployments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/11/4
+Message-ID: <20170911202142.rnfiesjl7mjho4pg@perpetual.pseudorandom.co.uk>
+Date: Mon, 11 Sep 2017 21:21:42 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-Daniel Kahn Gillmor <dkg@...thhorseman.net> writes:
-> On Wed 2017-08-16 10:52:54 -0700, Russ Allbery wrote:
->> Florian Weimer <fweimer@...hat.com> writes:
+On Mon, 11 Sep 2017 at 15:58:45 -0400, Michael Orlitzky wrote:
+> With OpenRC
+> we get to cheat a little, because we always have the option to run the
+> daemon in the foreground and supervise it.
 
->>> As a rule of thumb, the impact is similar to running TLS with CA-based
->>> certificate validation, but without host name checks (but perhaps
->>> slightly less because the trust domains could be much smaller).
+For SysV, if you don't need readiness-notification (for daemons that
+other daemons don't depend on, so the ones where Type=simple would be
+acceptable in a systemd unit) then Debian's start-stop-daemon can provide
+the daemonization, and create a pid file if desired. This isn't proper
+supervision, but does give the ability to write the daemon as though it
+relied on being supervised.
 
->> I think this overstates the impact somewhat.  This is more worrisome
->> with TLS because for most TLS applications there is a single global
->> trust domain with certificates issued by dozens or hundreds of parties
->> and no organizational scoping.
+start-stop-daemon is shipped as part of dpkg for historical reasons, but
+I doubt it changes very often. If SysV init script writers wanted to spin
+it off into a separate upstream project, then it could perhaps eventually
+become non-Essential in Debian (since it isn't necessary if a machine boots
+with systemd and all the daemons on that machine have native systemd units),
+and that seems like a potential win for everyone?
 
-> fwiw, I think that's what Florian means by his parenthetical aside.
+(Also, one of the most vocally SysV-based distributions is a
+Debian derivative, so they have start-stop-daemon anyway.)
 
-Yes, apologies, I should have noted that.
-
-> While i understand the desire to be clear about the constrained scope of
-> the risk, i think another way of saying what you're saying is "control
-> over one service in a domain and the ability to poison the DNS allows
-> that service operator to masquerade as any other service in the domain".
-
-Well, it has to be a service of the same type.  If you can control the key
-for host/foo.example.com and poison DNS, you can masquerade as
-host/bar.example.com, but it does you no good for masquerading as
-nfs/bar.example.com.  But yes, certainly still a bad thing.
-
-> Even for domains where a single administrator controls all machines,
-> this violates principles of privilege separation that admins rely on to
-> be able to deploy potentially-buggy services without putting the other
-> services at risk.
-
-> So i think it's worth taking this seriously, despite(?) its age and
-> widespread deployment.
-
-Oh, certainly, I agree.
-
->> For the record, those are settings for *a* Kerberos client library, not
->> *the* Kerberos client library (specifically, the MIT Kerberos
->> implementation).  Heimdal does not use those settings, and there are
->> other Kerberos implementations as well.
-
-> The fact that some client libraries *don't* do this should give us hope
-> that it's fixable, even in existing deployments :)
-
-Well... I'm not making the assertion that the implementations don't do
-this, only that they don't support the same configuration options.  I
-haven't verified how Heimdal handles DNS canonicalization, only that it
-doesn't use those krb5.conf options.  It's more of an aside to warn people
-that just turning off those options may not be adequate.
-
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+    S
