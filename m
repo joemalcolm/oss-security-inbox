@@ -1,64 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/12
-Message-ID: <CABniQZNP2rP2OBdSYtVwrVGVL3wu52_Z_1bLmK7=ZRhgU6ZQOg@mail.gmail.com>
-Date: Sun, 25 Jun 2017 00:07:10 +0800
-From: Shawn <citypw@...il.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/11/3
+Message-ID: <8662b4c6-c830-bb09-0414-67e4aa52981d@orlitzky.com>
+Date: Mon, 11 Sep 2017 15:58:45 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security@...ts.openwall.com
+Cc: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+On 09/07/2017 12:22 PM, Daniel Kahn Gillmor wrote:
+> 
+>> I've found services that run with *two* PID files...
+> 
+> sigh.  are you cataloging these somewhere?  this is really valuable
+> work, and it'd be great to see a list of common failures.  Do you know
+> if any of them are collected under CWE or any other widely-accepted
+> taxonomy?
 
-I respect your decision. Because this is your list. To myself, it's
-not a crap. I was just simply talking the fact I know. I've been
-suffering from Linux security for a long time due to lacking of the
-defensive mitigation. Anyway, this kind of discussion may be somewhere
-else but not on oss-security.
+I collected a bunch of common problems into a pull request for OpenRC:
 
-S0rry for the extra maintainence work on pre-moderation.
+   https://github.com/OpenRC/openrc/pull/162
 
+I would like to have something more comprehensive for init script
+writers, but we would need to consolidate some of the existing
+documentation from both OpenRC and various Gentoo sources. With OpenRC
+we get to cheat a little, because we always have the option to run the
+daemon in the foreground and supervise it. A comparable document for
+SysV init script writers would need different workarounds for the
+problems that OpenRC services solve in that manner.
 
-On Sat, Jun 24, 2017 at 11:55 PM, Solar Designer <solar@...nwall.com> wrote:
-> Shawn,
->
-> I really don't appreciate you CC'ing kernel-hardening on this.  As I
-> wrote to you in the rejection message for that copy of your message:
->
-> "It's sufficient that we have this crap on oss-security.  Let's not spam
-> kernel-hardening with it as well.  Let's have it on just one list, and
-> it just so happens it started on oss-security this one time.  As a
-> moderator, I fully expect I'll have to shut down this thread soon anyway."
->
-> I also had to switch kernel-hardening to full message pre-moderation
-> because of your CC.  Hopefully temporarily again.  Last time I did this
-> (recently), and had since undone it (re-enabling the whitelist until
-> today), was because of what I'll call an "anti-grsecurity crap" thread.
->
-> Why pre-moderate even for previously whitelisted senders?  Because they
-> might be replying to this thread that you attempted to CC to
-> kernel-hardening, without them realizing that your initial message was
-> not approved there.  This is a general problem with CC's to moderated
-> lists, and why I ask that all of us please use CC's sparingly.
->
-> I don't like censorship, but I also want these mailing lists to remain
-> usable for their primary intended purposes for all of us.  This is why
-> we generally don't reject individual messages in these discussion
-> threads until eventually having to shut down the threads.  So all sides
-> have an equal opportunity to speak.
->
-> FWIW, my own opinion on the actual matters raised in these threads is
-> nuanced.  I'm not with either side.  I guess this makes it easier for me
-> to stay neutral as a moderator.
->
-> Alexander
+The motivation for those tips can be found in the Gentoo bugs I've been
+filing on bugs.gentoo.org. You can find most of them by searching for
+"pid" in the summary with "mjo@...too.org" as the reporter (don't forget
+to include resolved bugs). It's slow going because I'm trying to provide
+either a complete list of suggestions, or a rewritten init script that
+does things right.
 
 
+> Is there any way to automate these tests, or do we need a human to read
+> each initscript and look for flaws?  Are other people helping you in
+> this review?  how are you tracking/coordinating your reviews?
 
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
+It's just me as far as I know. I stumbled onto this by accident while
+cleaning up an OpenRC init script that was shipped as part of an
+upstream package. I updated it, and then noticed that my init script was
+vulnerable to the PID file trick. Then I realized that everybody else
+has the same problem.
 
-regards
-Shawn
+You probably need a human to make the final decision on whether or not
+an init script is vulnerable, but my lame heuristic so far has been
+hilariously accurate: does the init script mess with file/directory
+ownership? If so, it's probably vulnerable to *something*.
+
+I've still got a list of 100 or so to investigate that change ownership
+of a directory under /var/run. Very few of those will be false positives
+-- it's OK to put a socket or lock file there, but not a PID file.
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (982 bytes)
