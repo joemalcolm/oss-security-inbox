@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4476" "Friday" "17" "February" "2017" "13:52:45" "+0100" "Tomas Hoger" "thoger@redhat.com" "<20170217135245.5717fc91@redhat.com>" "112" "Re: [oss-security] MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]" nil nil nil "2" "2017021712:52:45" "[oss-security] MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]" (number mark "U       thoger@redha Feb 17  112/4476  " thread-indent "\"Re: [oss-security] MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]\"\n") "<CADSYzstzBNkz6hmpw_4CDyFWR_aQaa-T5yHSTEcVK_Bj-p2ndg@mail.gmail.com>" ("<CADSYzstzBNkz6hmpw_4CDyFWR_aQaa-T5yHSTEcVK_Bj-p2ndg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2887" "Monday" "11" "September" "2017" "18:00:28" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<e50ea131-db59-eb6b-835a-512a1d5e4bb8@orlitzky.com>" "80" "[oss-security] CVE-2017-14159: OpenLDAP privilege escalation via PID file manipulation" nil nil nil "9" "2017091122:00:28" "[oss-security] CVE-2017-14159: OpenLDAP privilege escalation via PID file manipulation" (number mark "U       michael@orli Sep 11   80/2887  " thread-indent "\"[oss-security] CVE-2017-14159: OpenLDAP privilege escalation via PID file manipulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26149 invoked by uid 550); 17 Feb 2017 12:53:05 -0000
+Received: (qmail 30062 invoked by uid 550); 11 Sep 2017 22:00:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,131 +12,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26116 invoked from network); 17 Feb 2017 12:53:02 -0000
-Date: Fri, 17 Feb 2017 13:52:45 +0100
-From: Tomas Hoger <thoger@redhat.com>
-To: Dawid Golunski <dawid@legalhackers.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20170217135245.5717fc91@redhat.com>
-In-Reply-To: <CADSYzstzBNkz6hmpw_4CDyFWR_aQaa-T5yHSTEcVK_Bj-p2ndg@mail.gmail.com>
-References: <CADSYzstzBNkz6hmpw_4CDyFWR_aQaa-T5yHSTEcVK_Bj-p2ndg@mail.gmail.com>
+Received: (qmail 30032 invoked from network); 11 Sep 2017 22:00:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1505167229; bh=47i8kB8oWwyaQ0AURsK+0rx4vHfuTpUboOS8KsG9to0=;
+	h=To:From:Subject:Date;
+	b=iNDgGAsoLaJw6djIssfUfXS/wfJk4ui35hc2g3H/RnJbLJrr/2yj5frjzRKdfKTgH
+	 xmkQkOfzvYk9m7HjY13xarlqM/kTPPlIq9KC1A6iB4GohB/bEYQifrOP9JxpUjFbhU
+	 Wy9a4OT3RfugLnJlanbztqXWC+GPJTFnnuNR4rIk=
+To: oss-security@lists.openwall.com
+From: Michael Orlitzky <michael@orlitzky.com>
+Message-ID: <e50ea131-db59-eb6b-835a-512a1d5e4bb8@orlitzky.com>
+Date: Mon, 11 Sep 2017 18:00:28 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Fri, 17 Feb 2017 12:52:52 +0000 (UTC)
-Subject: Re: [oss-security] MySQL / MariaDB / Percona - Root Privilege
- Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2017-14159: OpenLDAP privilege escalation via PID file
+ manipulation
 
-On Mon, 14 Nov 2016 14:36:16 -0200 Dawid Golunski wrote:
-
-> Vulnerability: MySQL / MariaDB / PerconaDB - Root Privilege Escalation
-> CVE-2016-6664 / (Oracle)CVE-2016-5617
-
-The original MySQL fix for this issue was quite incomplete and easy to
-bypass.  It had the following problems:
-
-- Symlink check was racy - it was easy to replace log file created by
-  touch by a symlink before chmod and chown was used.
-
-- You could avoid the symlink check completely by directly setting
-  log-error to the path name of the file you want to corrupt, such as:
-
-  log-error = /etc/ld.so.preload
-
-- Symlink check did not cover hardlinks (this is a variant of the
-  previous, sort of).
-
-- Existing symlinks were used even if they were not chmoded / chowned
-  any more, so it was possible to corrupt files with myslqd_safe's log
-  messages.
-
-I reported these problems to Oracle, and they assigned CVE-2017-3312
-for the incomplete fix.  They were addressed in the following commit:
-
-https://github.com/mysql/mysql-server/commit/1f93f4381b60e3a8012ba36a4dec920416073759
-
-Note that the commit pre-dates Oct 2016 CPU, when Oracle first
-mentioned CVE-2016-6664 / CVE-2016-5617 as fixed, but it was only
-included in MySQL 5.5.54, 5.6.35, and 5.7.17 released mid-Dec 2016, and
-hence listed in Jan 2017 CPU.  The fix also pre-dates my report.
-
-Dawid, I assume you were aware of these problems and reported them
-too.  You're acknowledged as a reporter of (at least) one of the issues
-in the Jan 2017 CPU:
-
-http://www.oracle.com/technetwork/security-advisory/cpujan2017-2881727.html
-
-and also in Percona Server release notes:
-
-https://www.percona.com/doc/percona-server/LATEST/release-notes/Percona-Server-5.7.17-11.html
-
-  mysqld_safe now limits the use of rm and chown to avoid privilege
-  escalation. chown can now be used only for /var/log directory. Bug
-  fixed #1660265. Thanks to Dawid Golunski (https://legalhackers.com).
-
-Linked Percona bug is not public, but the above text matches MySQL
-commit linked above.
-
-As Oracle is refusing to publicly share any information about their
-CVEs, can you, Dawid, provide information on what CVE or CVEs were
-given to you by Oracle in response to your reports, and for what
-issues?  If you've not received that information yet, would you mind
-asking?  I suspect you may have some info to share on CVE-2017-3317 and
-CVE-2017-3318.
+Product: OpenLDAP (slapd server)
+Versions-affected: all modern
+Bug-report: http://www.openldap.org/its/index.cgi?findid=8703
+Author: Michael Orlitzky
 
 
-Besides the above, I also reported the following issues.  CVEs below
-were assigned by Oracle.
+== Summary ==
+
+slapd in all modern versions of OpenLDAP creates a PID file after
+dropping privileges to a non-root account, which might allow local users
+to kill arbitrary processes by leveraging access to this non-root
+account for PID file modification before a root script executes a "kill
+`cat /pathname`" command, as demonstrated by openldap-initscript.
 
 
-CVE-2017-3265 unsafe chmod/chown use in the init script
+== Details ==
 
-https://github.com/mysql/mysql-server/blob/mysql-5.6.34/packaging/rpm-oel/mysql.init#L97
-https://github.com/mysql/mysql-server/blob/mysql-5.6.34/packaging/rpm-oel/mysql.init#L73
+The purpose of the PID file is to hold the PID of the running daemon,
+so that later it can be stopped, restarted, or otherwise signalled
+(many daemons reload their configurations in response to a SIGHUP).
+To fulfill that purpose, the contents of the PID file need to be
+trustworthy. If the PID file is writable by a non-root user, then he
+can replace its contents with the PID of a root process. Afterwards,
+any attempt to signal the PID contained in the PID file will instead
+signal a root process chosen by the non-root user (a vulnerability).
 
-These may allow mysql -> root privilege escalation similar to
-CVE-2016-6664.  Fixed in:
+This is commonly exploitable through init scripts that are run as root
+and which blindly trust the contents of their PID files. An example of
+such an init script can be found at,
 
-https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-5fccc3d0e109e8f9ad0653728bd1d975
-
-
-CVE-2017-3291 was assigned to two independent issues
-
-- unrestricted mysqld_safe's ledir
-
-By setting ledir to say /tmp in my.cnf, you could make mysqld_safe
-execute mysqld from there rather than some expected location
-under /usr.  Besides mysql -> root escalation, this also could have
-been used by non-mysql local users in combination with the
-CVE-2016-6662 issue against MySQL versions that do not support
-malloc-lib (e.g. MySQL 5.1).  Fixed in:
-
-https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-144aa2f11374843c969d96b7b84247ea
-
-- insecure path use in mysqld_safe
-
-This code tries to find my_print_defaults command:
-
-https://github.com/mysql/mysql-server/blob/mysql-5.6.34/scripts/mysqld_safe.sh#L466
-
-It first tries relative to $MY_BASEDIR_VERSION, which could have been
-set to $PWD:
-
-https://github.com/mysql/mysql-server/blob/mysql-5.6.34/scripts/mysqld_safe.sh#L402
-
-If root ran mysqld_safe while their $PWD was /tmp, arbitrary code
-controlled by some unprivileged local (not necessarily mysql) user
-could have been executed.  This was fixed in:
-
-https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-144aa2f11374843c969d96b7b84247eaL397
+  https://github.com/ltb-project/openldap-initscript
 
 
-There are few more related problems fixed in Jan 2017 CPU, but as noted
-above, Oracle refuses to acknowledge mapping to CVEs publicly.
+== Exploitation ==
 
-https://github.com/mysql/mysql-server/commit/76e9d7e5b30365e8b167e2070ee00f81cb115b8b
-https://github.com/mysql/mysql-server/commit/7a5145e445ee802241957eb5290a3e65ea4da70c
+There is only a risk of exploitation when some other user relies on
+the data in the PID file.
 
--- 
-Tomas Hoger / Red Hat Product Security
+An example of a problematic scenario involving an init script would be,
+
+1. I run "/etc/init.d/slapd start" to start the daemon.
+
+2. slapd drops to the "slapd" user.
+
+3. slapd writes its PID file, now owned by the "slapd" user.
+
+4. Someone compromises the daemon, which sits on the network.
+
+5. The attacker is generally limited in what he can do because the
+   daemon doesn't run as root. However, he can write "1" into the
+   PID file, and he does.
+
+6. I run "/etc/init.d/slapd stop" to stop the daemon while I investigate
+   the weird behavior resulting from the hack.
+
+7. The machine reboots, because I killed PID 1 (this is normally
+   restricted to root).
+
+
+== Resolution ==
+
+The slapd PID file will remain owned by its unprivileged runtime user:
+the OpenLDAP project believes it is the responsibility of the init
+script to address this problem.
+
+The POSIX "ps" command can be used towards that end. You can get the
+user of the process whose PID you find with
+
+  ps -p <pid> -o user=
+
+and you can get the name of the command with
+
+  ps -p <pid> -o comm=
+
+Init script authors should check the output of those two command against
+the expected values before sending a signal to a running process. That
+will eliminate the most serious scenarios (where the attacker e.g. kills
+the firewall), but still leaves open the possibility that the attacker
+can prevent "/etc/init.d/slapd stop" from terminating his compromised
+process by entering junk into the PID file.
