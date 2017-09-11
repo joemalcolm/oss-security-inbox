@@ -1,49 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/3
-Message-ID: <b78bd7f6e37e44beb66433715efe0717@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 03:42:16 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: serial: host memory leakage in 16550A UART emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/11/2
+Message-ID: <20170911185857.hfti4mrponqoddin@eldamar.local>
+Date: Mon, 11 Sep 2017 20:58:57 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: GNU Emacs 25.2 enriched text remote code execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Paul,
 
-> Quick Emulator(Qemu) built with the 16550A UART serial device emulation
-> support is vulnerable to a memory leakage issue. It could occur while doing a
-> device unplug operation; Doing so repeatedly would result in leaking host
-> memory, affecting other services on the host.
+On Sun, Sep 10, 2017 at 11:56:20PM -0700, Paul Eggert wrote:
+> GNU Emacs is an extensible, customizable, free/libre text editor and
+> software environment.  When Emacs renders MIME text/enriched data (Internet
+> RFC 1896), it is vulnerable to arbitrary code execution. Since Emacs-based
+> mail clients decode "Content-Type: text/enriched", this code is exploitable
+> remotely. This bug affects GNU Emacs versions 19.29 through 25.2.
 > 
-> A privileged user inside guest could use this flaw to cause a DoS and/or
-> potentially crash the Qemu process on the host.
+> Although we know no efforts to exploit this in the wild, exploitation is easy.
+[...]
+> == Timeline ==
 > 
-> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01945.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1416157
-> http://git.qemu.org/?p=qemu.git;a=commit;h=8409dc884a201bf74b30a9d232b6bbdd00cb7e2b
+> 2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
+> 
+> 2017-09-07. POC for remote code execution sent to the maintainers of Emacs
+> and Gnus (Reiner Steib <Reiner.Steib@....de>, private mail).
+> 
+> 2017-09-08. Patch (by Lars Ingebrigtsen <larsi@...s.org>) to disable the
+> problematic code and mitigation (private mail).
+> 
+> 2017-09-09. Patch committed in main development repository.
 
-Use CVE-2017-5579.
+Have you requested a CVE for this issue?
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYiGO9AAoJEHb/MwWLVhi2pMwQAJ8+hQLeRu4ralJGGyn9AL2t
-wmUkA4A/QH5e1MjsxFoiFOICw691NlmXYk3kEGlK8VMJsRRXQv82N4IboniW1X42
-tTu7+ovYK4FCgsngX0r15gxFHe7AoyYQ0RpCQm/ugUe1IdQbLLIK2B5tAOxArCFx
-pac/+/Av6JK0gP+C9Fc3HYP8Rm0VWYf8DqDcK+ndrIlet0Y/G2BDTrO+vm3R2Yos
-LrT1qfMScVUhqmGZrVVLyB2B4wMHRYOdWmECN7c3owwrpWc3zHG5NetwyjWBMGRy
-yyJ5u1x+7FbPIDn4mq2bTqJY9/3Gq2AqA60bTJdu2sbTp78hI+4xqBeRrTwpQtIN
-nCVoyAXhcbPJMXy0vbpkOwaH3LuMg/SWJpsC3wyjxwxYwldkvvuYzkrS6YyAesPz
-rTPG341iFHowh3XrR3WmZGE52l/IZU2iXJjeXKxoO4hjjpgIdP4e+oXTNxm1Jweu
-EMjepn3hzICKPCfhrAlUV7a+k9ukGjlSguudMFmceImd3nxqoVp2uBCB58Ft5nfn
-0amrCFUsFgv5xVABrWAX6WR+2EjygEjmRhTeW7ItL1mMQpZElD7k4NeARNiUnhve
-+W5/fQPuNAMK79iYKkmRgbYYxBqD9XFGH3N8VscQ+mRz4nl5YkTUNlSQcA20+AcV
-Pc5WY/s2U82JKsjWc67Y
-=DDIw
------END PGP SIGNATURE-----
+Regards,
+Salvatore
