@@ -1,52 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/27
-Message-ID: <CAAY7cL-AGR=GeyLXfBjDkxnShLysjtAgq4=KZqNt4N4UoHpT3g@mail.gmail.com>
-Date: Tue, 30 May 2017 15:02:49 -0500
-From: Sergio Pena <sergio.pena@...udera.com>
-To: dev <dev@...e.apache.org>
-Cc: "security@...e.apache.org" <security@...e.apache.org>, "bcrawford@...tco.com" <bcrawford@...tco.com>,  "announce@...che.org" <announce@...che.org>,  "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "user@...e.apache.org" <user@...e.apache.org>
-Subject: Re: CVE-2016-3083: Apache Hive SSL vulnerability bug disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/12/3
+Message-Id: <E1drjub-000809-A0@xenbits.xenproject.org>
+Date: Tue, 12 Sep 2017 12:03:29 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 231 (CVE-2017-14316) - Missing NUMA node parameter verification
 Content-Type: text/plain; charset=utf-8
 
-Hi Vaibhav,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Do you happen to know which JIRA or patches addressed this issue?
+            Xen Security Advisory CVE-2017-14316 / XSA-231
+                               version 3
 
-- Sergio
+               Missing NUMA node parameter verification
 
-On Wed, May 24, 2017 at 5:56 PM, Vaibhav Gumashta <vgumashta@...tonworks.com
-> wrote:
+UPDATES IN VERSION 3
+====================
 
-> Severity: Important
->
-> Vendor: The Apache Software Foundation
->
-> Versions Affected:
-> Apache Hive 0.13.x
-> Apache Hive 0.14.x
-> Apache Hive 1.0.0 - 1.0.1
-> Apache Hive 1.1.0 - 1.1.1
-> Apache Hive 1.2.0 - 1.2.1
-> Apache Hive 2.0.0
->
-> Description:
->
-> Apache Hive (JDBC + HiveServer2) implements SSL for plain TCP and HTTP
-> connections (it supports both transport modes). While validating the
-> server's certificate during the connection setup, the client doesn't seem
-> to be verifying the common name attribute of the certificate. In this way,
-> if a JDBC client sends an SSL request to server abc.com, and the server
-> responds with a valid certificate (certified by CA) but issued to xyz.com,
-> the client will accept that as a valid certificate and the SSL handshake
-> will go through.
->
-> Mitigation:
->
-> Upgrade to Apache Hive 1.2.2 for 1.x release line, or to Apache Hive 2.0.1
-> or later for 2.0.x release line, or to Apache Hive 2.1.0 and later for
-> 2.1.x release line.
->
-> Credit: This issue was discovered by Branden Crawford from Inteco Systems
-> Limited (inetco.com).
->
+Updated metadata file
 
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The function `alloc_heap_pages` allows callers to specify the first
+NUMA node that should be used for allocations through the `memflags`
+parameter; the node is extracted using the `MEMF_get_node` macro.
+
+While the function checks to see if the special constant
+`NUMA_NO_NODE` is specified, it otherwise does not handle the case
+where `node >= MAX_NUMNODES`.  This allows an out-of-bounds access
+to an internal array.
+
+IMPACT
+======
+
+An attacker using crafted hypercalls can execute arbitrary code within
+Xen.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are affected.
+
+Both ARM and x86 are affected.
+
+Both systems running HVM guests and system running PV guests are
+affected.
+
+MITIGATION
+==========
+
+No known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Matthew Daley.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa231.patch           xen-unstable
+xsa231-4.9.patch       Xen 4.9, Xen 4.8
+xsa231-4.7.patch       Xen 4.7, Xen 4.6
+xsa231-4.5.patch       Xen 4.5
+
+$ sha256sum xsa231*
+4255d2bc4ca668e7abcbf8256b0a8f21acef2a47a06d626aad6d22c685034587  xsa231.meta
+b72af3fb8c44925ea7973533e8a8701becfc194f3e1c97f12af0392e1edd16a3  xsa231.patch
+d9853b2d2649679d8810bd7e93f7b51bd9fefb3472da60ae464bde88aae3389c  xsa231-4.5.patch
+ce29b56a0480f4835b37835b351e704d204bb0ccd22325f487127aa2776cc2cf  xsa231-4.7.patch
+71a53a5133c8d4e381dd0e3e54205d31dea545ab62b261084dd3aea140f88cad  xsa231-4.9.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZt80DAAoJEIP+FMlX6CvZrooIALgotDR4DC367J1SF87V2dHW
+Wo2O05rF8uBl12ofMA4LirjPfbNq49ZikaDr01jq+srFZLDw72IzgjbNJOwThkZt
+DHFR12LABvAPHT/Je58vGqS24HKKhK1o+Q0vDcbZHzBGXkj6gwxNC+DJAzF9D9Ye
+qXtZv4GmkmhFs0nQuzUF8bLu7ZvIQjB7QVoXnOvynx/mpCI9GPvoRGLptIJhbc8A
+CqSLsgF+7cXC6E8u/pp9XorpsQf2ekQwJMkLiG3UXieeShwrmY1mCE/vWBgsFeyj
+k7/+dQhj6X+7vwLA385Df3cF7hDjDi23AJMUN1AuVd9fx9/ie4o+9nJIa0FpUOA=
+=al8X
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa231.meta" of type "application/octet-stream" (1778 bytes)
+
+Download attachment "xsa231.patch" of type "application/octet-stream" (3635 bytes)
+
+Download attachment "xsa231-4.5.patch" of type "application/octet-stream" (3437 bytes)
+
+Download attachment "xsa231-4.7.patch" of type "application/octet-stream" (3382 bytes)
+
+Download attachment "xsa231-4.9.patch" of type "application/octet-stream" (3394 bytes)
