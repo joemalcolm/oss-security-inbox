@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/22/1
-Message-ID: <01becbfa-72eb-838e-4cfa-0891c392326f@oracle.com>
-Date: Sat, 21 Jan 2017 22:25:38 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: Pierre Ossman <ossman@...dio.se>, tigervnc-devel@...glegroups.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [tigervnc-announce] TigerVNC 1.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/12/8
+Message-ID: <20170912182640.eadivhvqx2v2gudh@eldamar.local>
+Date: Tue, 12 Sep 2017 20:26:40 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Shibboleth plugin for WordPress: CVE-2017-14313: XSS vulnerability due to improper use of add_query_arg()
 Content-Type: text/plain; charset=utf-8
 
-Is there a CVE assigned to this issue that we should use when passing this
-fix through to our packages/distros?  I don't see one mentioned in the commit
-or pull requests:
+Hi
 
-https://github.com/TigerVNC/tigervnc/commit/18c020124ff1b2441f714da2017f63dba50720ba
-https://github.com/TigerVNC/tigervnc/pull/399
+MITRE has assigned CVE-2017-14313 for the following cross-site
+scripting vulnerability in the Shibboleth plugin for Wordpress, caused
+due improper use of add_query_arg(), found in the
+shibboleth_login_form function in shibboleth.php.
 
-Thanks,
+Decided to still forward the assignment here to the list even as
+Dominic mentioned the issue was long known already, but apparently at
+least never reported in Debian.
 
-	-alan-
+Only now a CVE was requested, triggered by the bugreport in Debian:
 
-On 01/20/17 01:00 AM, Pierre Ossman wrote:
-> This is a security update for TigerVNC 1.7.0 which fixes a memory overflow issue
-> via the RRE decoder. A malicious server could possibly use this issue to take
-> control of the TigerVNC viewer.
->
-> Users are advised to upgrade as soon as possible.
->
-> Binaries are available from bintray:
->
-> https://bintray.com/tigervnc/stable/tigervnc/1.7.1
->
-> Regards
-> The TigerVNC Developers
->
+https://bugs.debian.org/874416
 
+Upstream fix (contained in 1.8):
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+https://github.com/michaelryanmcneill/shibboleth/commit/1d65ad6786282d23ba1865f56e2fd19188e7c26a
+
+Regards,
+Salvatore
