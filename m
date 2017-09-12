@@ -1,33 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/25/2
-Message-ID: <6627125.qZ1aFFj61H@arcadia>
-Date: Sat, 25 Mar 2017 14:57:07 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: libtiff: multiple divide-by-zero
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/12/5
+Message-Id: <E1drjug-00084W-JI@xenbits.xenproject.org>
+Date: Tue, 12 Sep 2017 12:03:34 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 233 (CVE-2017-14317) - cxenstored: Race in domain cleanup
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 01 January 2017 16:46:12 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-divide-by-zero
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> # tiffcp $FILE /tmp/foo
-> ==12079==ERROR: AddressSanitizer: FPE on unknown address 0x7fd319436251 (pc
-> 0x7fd319436251 bp 0x7fff851e3d80 sp 0x7fff851e3d30 T0)
->     #0 0x7fd319436250 in TIFFReadEncodedStrip /tmp/portage/media-
-> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_read.c:351:22
+            Xen Security Advisory CVE-2017-14317 / XSA-233
+                               version 3
 
-This is CVE-2016-10266
- 
+                  cxenstored: Race in domain cleanup
 
-> # tiffmedia $FILE /tmp/foo
-> ==28106==ERROR: AddressSanitizer: FPE on unknown address 0x7faeae7f744e (pc
-> 0x7faeae7f744e bp 0x7ffceab45e40 sp 0x7ffceab45ce0 T0)
->     #0 0x7faeae7f744d in OJPEGDecodeRaw /tmp/portage/media-
-> libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_ojpeg.c:816:8
+UPDATES IN VERSION 3
+====================
 
-This is CVE-2016-10267
+Added metadata file
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+When shutting down a VM with a stubdomain, a race in cxenstored may
+cause a double-free.
+
+IMPACT
+======
+
+The xenstored daemon may crash, resulting in a DoS of any parts of the
+system relying on it (including domain creation / destruction,
+ballooning, device changes, etc).
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only systems running the C version os xenstored ("xenstored") are
+vulnerable; systems running the Ocaml version ("oxenstored") are not
+vulnerable.
+
+Only systems running devicemodel stubdomains are vulnerable.  Only x86
+HVM guests can use stubdomains.  Therefore ARM systems, x86 systems
+running only PV guests, and x86 systems running HVM guests with the
+devicemodel not in a stubdomain (eg in dom0), are not vulnerable.
+
+MITIGATION
+==========
+
+Running oxenstored will mitigate this issue.  Not using stubdomains
+will also mitigate the issue.
+
+CREDITS
+=======
+
+This issue was discovered by Eric Chanudet of AIS.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa233.patch     xen-unstable, Xen 4.9.x Xen 4.8.x Xen 4.7.x Xen 4.6.x Xen 4.5.x
+
+$ sha256sum xsa233*
+66b6f6c0837a5d12a77db7e5cbfd0514968bd47e2d192824da3bc9ddf119bfe0  xsa233.meta
+f721cc49ba692b2f36299b631451f51d7340b8b4732f74c98f01cb7a80d8662b  xsa233.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZt80GAAoJEIP+FMlX6CvZVO8IALTEAV/xiPTN1uUPISLQYLmX
+6Bu80yrD+5UjVVI01FrkeUfNJBABmxf5q6sTOFeuYctwY6iPMJI46jHda8ugew5j
+wnOgtgat0lfQT1/E/C8SsGEHeTULXPHVOaaXRQT55ExhVvEhLvSQV5vd6YNituyq
+ow3hYrK3crK3uCOdLyZlxbuHXMFyLIbpoTYnRgXzV/3uLOB5TPsoRzKf4E+Z1Muo
+chQXk8OQG+CEYupf00+H/QTvrDLSnf4KT4t4rZXDqUd39QoxV1l9s0daLyMjyJg/
+Lu5t1WmcmarZvYICJhWf3Vi2NpaNTyQEeepwUM/XHe+vgHJXzesWyuRoLApmEfE=
+=trYV
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa233.meta" of type "application/octet-stream" (1829 bytes)
+
+Download attachment "xsa233.patch" of type "application/octet-stream" (1776 bytes)
