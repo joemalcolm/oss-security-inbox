@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/2
-Message-ID: <CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>
-Date: Wed, 27 Sep 2017 10:14:04 +0100
-From: Muhammed Mustapha Abiola <1@...tapha.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/12/2
+Message-ID: <nycvar.YSQ.7.76.1709121258160.2226@wniryva>
+Date: Tue, 12 Sep 2017 13:01:15 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: David Buchanan <d@...buchanan.co.uk>, Michael Tokarev <mjt@....msk.ru>
+Subject: Re: CVE-2017-13673 Qemu: vga: reachable assert failure during during display update
 Content-Type: text/plain; charset=utf-8
 
-Isn't this exactly what Vendor-Sec tried to solve?
++-- On Sun, 10 Sep 2017, Salvatore Bonaccorso wrote --+
+|  As far as I can see, e.g. cpu_physical_memory_snapshot_get_dirty was only 
+| introduced in v2.10.0-rc0. The upstream commit associated with the above 
 
-On Tue, Sep 26, 2017 at 4:04 PM, Greg KH <greg@...ah.com> wrote:
+  Right.
 
-> On Tue, Sep 26, 2017 at 04:50:10PM +0200, Agostino Sarubbo wrote:
-> > On martedě 26 settembre 2017 09:32:14 CEST Greg KH wrote:
-> > > > I guess this would be benefit for all.
-> > >
-> > > Define "all"
-> >
-> > You know, for example in Gentoo we are following the upstream releases.
-> So
-> > from time to time we stabilize a newer kernel that "syncs" with upstream.
-> > This does not happen for non-rolling (release) distros that may want to
-> patch/
-> > backport the security fix.
->
-> I understand the issue well, I talk to companies all the time about this :)
->
-> The rule for the kernel is, "if a distro/company/user is not following
-> the stable kernel updates, they are on their own".  I recommend either
-> using the stable kernels, or paying for a company that knows what they
-> are doing in this area and provides support (Red Hat, SuSE, etc.)
->
-> And if you try to argue "just tell us what needs to be fixed", well, we
-> are, am, we are providing about 10-12 patches a day that people should
-> be incorporating into their kernels.  Why they ignore that curated and
-> tested stream of fixes is beyond me...
->
-> Anyway, this is getting a bit off-topic here, sorry for the noise.
->
-> Best of luck,
->
-> greg k-h
->
+|  https://git.qemu.org/gitweb.cgi?p=qemu.git;a=commit;h=bfc56535f793c557aa754c50213fc5f882e6482d
+| 
+| which fixes
+| 
+|  https://git.qemu.org/gitweb.cgi?p=qemu.git;a=commit;h=fec5e8c92becad223df9d972770522f64aafdb72
+| 
+| introducing the use of dirty bitmap snapshots in vga_draw_graphic().
+| 
+| Do I miss something makeing it affecting as well earlier versions than
+| 2.10?
 
+There were two issues, one reproducer worked with Qemu 2.9.x, other didn't 
+IIRC.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
