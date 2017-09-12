@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/11/3
-Message-ID: <20171011130353.GD667@suse.de>
-Date: Wed, 11 Oct 2017 15:03:53 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Linux kernel: alsa: use-after-free in /dev/snd/seq CVE-2017-15265
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/12/7
+Message-ID: <87mv5zzt6n.fsf@mid.deneb.enyo.de>
+Date: Tue, 12 Sep 2017 20:08:00 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: Paul Eggert <eggert@...ucla.edu>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: GNU Emacs 25.2 enriched text remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+* Paul Eggert:
 
-This kernel issue is being published without embargoe.
-(came via security@...nel.org to Takashi@...E);
+> == Mitigation ==
+>
+> To work around the bug in unfixed versions of Emacs, put the following code in 
+> your personal or site-wide Emacs init file (~/.emacs, ~/emacs.d/init.el, 
+> site-start.el):
+>
+>    ;; Mitigate Bug#28350 (security) in Emacs 25.2 and earlier.
+>    (eval-after-load "enriched"
+>      '(defun enriched-decode-display-prop (start end &optional param)
+>         (list start end)))
 
-Reported by Michael23 Yu.
+This does not override the function in all cases when enriched is
+loaded.  Something like this would be more reliable, but it will of
+course slow down the starting of Emacs:
 
-https://bugzilla.suse.com/show_bug.cgi?id=1062520
-
-Proposed Patch:
-http://mailman.alsa-project.org/pipermail/alsa-devel/2017-October/126292.html
-
-A use-after-free window in /dev/snd/seq, Mitre has assigned CVE-2017-15265 to it.
-
-Ciao, Marcus
+(require 'enriched)
+(defun enriched-decode-display-prop (start end &optional param)
+  (list start end))
