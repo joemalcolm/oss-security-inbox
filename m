@@ -1,96 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/07/1
-Message-ID: <CAL8hw9H02w_B8XYr_zFxCdfLPD5mUG_Fbfd07GNAxgWwDyhpbA@mail.gmail.com>
-Date: Sat, 7 Jan 2017 06:26:27 -0600
-From: Nathan Van Gheem <nathan.van.gheem@...ne.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/12/1
+Message-ID: <20170912052251.yunyqonyel2hibg4@lorien.valinor.li>
+Date: Tue, 12 Sep 2017 07:22:51 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Plone Multiple Vulnerabilities
+Subject: Re: GNU Emacs 25.2 enriched text remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Well, okay.
+Hi
 
-Turns out CVEs were indeed already issued for these disclosures.
+On Mon, Sep 11, 2017 at 08:58:57PM +0200, Salvatore Bonaccorso wrote:
+> Hi Paul,
+> 
+> On Sun, Sep 10, 2017 at 11:56:20PM -0700, Paul Eggert wrote:
+> > GNU Emacs is an extensible, customizable, free/libre text editor and
+> > software environment.  When Emacs renders MIME text/enriched data (Internet
+> > RFC 1896), it is vulnerable to arbitrary code execution. Since Emacs-based
+> > mail clients decode "Content-Type: text/enriched", this code is exploitable
+> > remotely. This bug affects GNU Emacs versions 19.29 through 25.2.
+> > 
+> > Although we know no efforts to exploit this in the wild, exploitation is easy.
+> [...]
+> > == Timeline ==
+> > 
+> > 2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
+> > 
+> > 2017-09-07. POC for remote code execution sent to the maintainers of Emacs
+> > and Gnus (Reiner Steib <Reiner.Steib@....de>, private mail).
+> > 
+> > 2017-09-08. Patch (by Lars Ingebrigtsen <larsi@...s.org>) to disable the
+> > problematic code and mitigation (private mail).
+> > 
+> > 2017-09-09. Patch committed in main development repository.
+> 
+> Have you requested a CVE for this issue?
 
-I was pointed to https://vuldb.com/?id.92694 and so was told to get CVEs
-quickly.
+FTR, it seems this was submitted to DWF already as per:
+https://debbugs.gnu.org/cgi/bugreport.cgi?bug=28350#63
 
-https://vuldb.com/?id.92694 -- seems like the reporter also requested his
-own CVEs under different groupings and now we have duplication
-disclosures/cves with classification conflicts.
-
-Not sure what to do about the duplicates but you can ignore this request.
-
-On Sat, Jan 7, 2017 at 5:54 AM, Nathan Van Gheem <nathan.van.gheem@...ne.org
-> wrote:
-
-> Dear oss-security List,
->
-> Please provide CVEs for the following 6 issues:
->
-> 1) Filesystem information leak
-> A vulnerability that allows remote attackers to obtain information on
-> files on the server
-> Credit: Sebastian Perez
-> Impact: By using relative paths and guessing locations on a server Plone
-> is installed on, an attacker can read data from a target server that the
-> process running plone has permission to read. The attacker needs
-> administrator privileges on the Plone site to perform this attack.
-> Reference: https://plone.org/security/hotfix/20160830/filesystem-
-> information-leak
->
-> 2) Non-Persistent XSS in Plone forms
-> z3c.form will currently accept data from GET requests when the form is
-> supposed to be POST. This allows a user to inject a potential XSS attack
-> into a form. With certain widgets in Plone admin forms, the input is
-> expected to be safe and can cause a reflexive XSS attack. Additionally,
-> there is potential for an attack that will trick a user into saving a
-> persistent XSS.
-> Credit: Sebastian Perez
-> Reference: https://plone.org/security/hotfix/20160830/non-
-> persistent-xss-in-plone-forms
->
->
-> 3) Open Redirection
-> In multiple places, Plone blindly uses the referer header to redirect a
-> user to the next page after a particular action. An attacker could utilize
-> this to draw a user into a redirection attack.
-> Credit: Sebastian Perez
-> Reference: https://plone.org/security/hotfix/20160830/open-
-> redirection-in-plone
->
->
-> 4) Non-Persistent XSS
-> Plone's URL checking infrastructure includes a method for checking if URLs
-> valid and located in the Plone site. By passing javascript into this
-> specially crafted url, XSS can be achieved.
-> Credit: Sebastian Perez
-> Reference: https://plone.org/security/hotfix/20160830/non-
-> persistent-xss-in-plone-1
->
->
-> 5) Non-Persistent XSS on user form
-> Plone has unescaped user input in a page template that is open to XSS
-> Credit: Sebastian Perez
-> Reference: https://plone.org/security/hotfix/20160830/non-
-> persistent-xss-in-plone
->
->
-> 6) Non-Persistent XSS in Zope2
-> In multiple places, Zope2's ZMI pages do not properly escape user input
-> Credit: Sebastian Perez
-> Reference: https://plone.org/security/hotfix/20160830/non-
-> persistent-xss-in-zope2
->
->
->
-> Versions Affected:
-> 4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
->
-> Code fixes:
-> https://pypi.python.org/pypi/Products.PloneHotfix20160830
->
-> Recommended action:
-> Install the https://pypi.python.org/pypi/Products.PloneHotfix20160830
-> package.
->
-
+Regards,
+Salvatore
