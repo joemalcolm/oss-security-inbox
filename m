@@ -1,75 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/5
-Message-ID: <997258.47630495-sendEmail@localhost>
-Date: Tue, 9 May 2017 08:21:41 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: lrzip: invalid memory read in lzo_decompress_buf (stream.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/12/4
+Message-Id: <E1drjue-00081T-1W@xenbits.xenproject.org>
+Date: Tue, 12 Sep 2017 12:03:32 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 232 (CVE-2017-14318) - Missing check for grant table
 Content-Type: text/plain; charset=utf-8
 
-Description:
-lrzip is a compression utility that excels at compressing large files.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The complete ASan output of the issue:
+            Xen Security Advisory CVE-2017-14318 / XSA-232
+                               version 4
 
-# lrzip -t $FILE
-==3311==ERROR: AddressSanitizer: SEGV on unknown address 0x602000010000 (pc 0x7f75cabe8834 bp 0x62100002c11f sp 0x7f7085ab4d78 T5)
-==3311==The signal is caused by a READ memory access.
-    #0 0x7f75cabe8833 in lzo1x_decompress /tmp/portage/dev-libs/lzo-2.08/work/lzo-2.08/src/lzo1x_d.ch:108
-    #1 0x54af2f in lzo_decompress_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:590:10
-    #2 0x54af2f in ucompthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1525
-    #3 0x7f75ca2944a3 in start_thread /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_create.c:333
-    #4 0x7f75c95bf66c in clone /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/misc/../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+                     Missing check for grant table
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/lzo-2.08/work/lzo-2.08/src/lzo1x_d.ch:108 in lzo1x_decompress
-Thread T5 created by T0 here:
-    #0 0x42d49d in pthread_create /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:245
-    #1 0x53e70f in create_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:133:6
-    #2 0x53e70f in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1673
-    #3 0x53e70f in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
-    #4 0x531075 in unzip_literal /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:162:16
-    #5 0x531075 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:320
-    #6 0x531075 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #9 0x7f75c94f878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+UPDATES IN VERSION 4
+====================
 
-Dunno wtf decompression type to use!
-==3311==AddressSanitizer: while reporting a bug found another one. Ignoring.
-Fatal error - exiting
+Added metadata file
 
-Affected version:
-0.631
+Public release.
 
-Fixed version:
-N/A
+ISSUE DESCRIPTION
+=================
 
-Commit fix:
-N/A
+The function `__gnttab_cache_flush` handles GNTTABOP_cache_flush grant
+table operations. It checks to see if the calling domain is the owner
+of the page that is to be operated on. If it is not, the owner's grant
+table is checked to see if a grant mapping to the calling domain
+exists for the page in question.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8845
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00230-lrzip-invalidread-lzo1x_decompress
-
-Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-05-07: blog post about the issue
-2017-05-08: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/07/lrzip-invalid-memory-read-in-lzo_decompress_buf-stream-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+However, the function does not check to see if the owning domain
+actually has a grant table or not. Some special domains, such as
+`DOMID_XEN`, `DOMID_IO` and `DOMID_COW` are created without grant
+tables. Hence, if __gnttab_cache_flush operates on a page owned by
+these special domains, it will attempt to dereference a null pointer
+in the domain struct.
 
 
+IMPACT
+======
+
+The guest can get Xen to dereference a NULL pointer.
+
+For ARM guests and x86 PV guests on systems with SMAP enabled, this will
+cause a host crash (denial-of-service).
+
+For x86 PV guests on systems without SMAP enabled, an attacker can map
+a crafted grant structure at virtual address 0.  This can be leveraged
+to increment an arbitrary virtual address, which can then probably be
+leveraged into a full privilege escalation.
+
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen since Xen 4.5 are vulnerable.
+
+x86 HVM guests do not expose the vulnerability.
+
+ARM guests and x86 PV guests on systems with SMAP enabled are only
+vulnerable to a Denial-of-Service (host crash).
+
+x86 PV guests on systems without SMAP running are vulnerable to a
+privilege escalation.
+
+MITIGATION
+==========
+
+Hardware supporting Supervisor Mode Access Prevention (Intel Broadwell,
+AMD Zen) can mitigate the privilege escalation to a DoS.
+
+CREDITS
+=======
+
+This issue was discovered by Matthew Daley.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa232.patch           xen-unstable, 4.9, 4.8, 4.7, 4.6, 4.5
+
+$ sha256sum xsa232*
+b193a711d013fe14556610ef3e703585164fdfc437c3a32a717c419e7a5afab2  xsa232.meta
+5068a78293daa58557c30c95141b775becfb650de6a5eda0d82a4a321ced551c  xsa232.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZt80FAAoJEIP+FMlX6CvZjCcH/0arWvHYjB/Zrnu9dMEjbfW8
+ydFwwHm0foHY7ALp/RDazJjsNBDyt7iol0Z1Kv5wgxt+iLvgCuqVokkg80eoI6ku
+TYkytzWsZOw1NOJQJ2nH7v5kW76qXceMAByrWZOm09xfFQ2hhGthz8IMwfyAhWc/
+GtbsK4K3k2hEp2Uh1yhvT0m2pKvB1190MfNzsKeYIoAlYnDKQu1BB93NTkIlKypz
+TgVfvm/1M6F/nnsekipFbGJ6/v7TEi0YqSm6uOudlbUSj0DTZYU5smBizfGwA8Ih
+D5ROdlqfRsXsXiUdu/HAT/IB9r9knZpicQQPPmwYPhyB+Fn8UCQei3Z+pRYzGYI=
+=aOmL
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa232.meta" of type "application/octet-stream" (1727 bytes)
+
+Download attachment "xsa232.patch" of type "application/octet-stream" (716 bytes)
