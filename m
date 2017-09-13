@@ -1,44 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/2
-Message-ID: <20171102235647.GA22038@altlinux.org>
-Date: Fri, 3 Nov 2017 02:56:47 +0300
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/13/4
+Message-ID: <CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>
+Date: Wed, 13 Sep 2017 21:08:31 +0000
+From: Armis Security <security@...is.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: tftpd-hpa - insecure chroot()
+Subject: Linux BlueBorne vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 02, 2017 at 03:16:55PM +0300, gremlin@...mlin.ru wrote:
-> Just look at this code and guess how it would be compiled on most
-> systems:
-> 
-> ========================================
->     /* Chroot and drop privileges */
->     if (secure) {
->         if (chroot(".")) {
->             syslog(LOG_ERR, "chroot: %m");
->             exit(EX_OSERR);
->         }
-> #ifdef __CYGWIN__
->         chdir("/");             /* Cygwin chroot() bug workaround */
-> #endif
->     }
-> ========================================
-> 
-> :-)
+Hello,
 
-Sorry, why do you think that
+We are writing to inform you of two security vulnerabilities we have found
+in the Bluetooth stack in Linux (BlueZ).
 
-	chdir(dir) == 0 && chroot(".") == 0
+These vulnerabilities have been made public yesterday (Sept. 12, 2017), and
+are part of 8 vulnerabilities we have disclosed to various vendors (as a
+group they are called "BlueBorne").
 
-is any worse than
+Both Linux-related vulnerabilities where disclosed to
+distros@...openwall.org.
+The kernel-related vulnerability (CVE-2017-1000251) was also disclosed to
+security@...nel.org
+Both disclosures began on Sept. 5, 2017, and patches were made available
+yesterday and today.
+I will link to these patches bellow.
 
-	chroot(dir) == 0 && chdir("/") == 0
+1) CVE-2017-1000250
+This vulnerability lies in the bluetoothd process, in the processing of
+incoming requests in the SDP server. It is an information disclosure
+vulnerability in the function service_search_attr_req (src/sdpd-request.c)
+that handles incoming sdp search attribute requests. It can be triggered
+without any user interaction in the victim’s machine and without any prior
+authentication (pairing), as it is part of stack’s Service discovery
+protocol (SDP) server that is meant to be accessed prior to authentication.
+This vulnerability can lead to a very large information disclosure from the
+heap of the bluetoothd process, that can potentially hold critical
+information including Bluetooth encryption keys, or other valuable data.
 
-assuming that you have control over your signal handlers and can ensure
-they won't issue any chdir or chroot calls between these two calls?
+Here are the specifics of this vulnerability:
+In the SDP server search attribute request handler
+(service_search_attr_req, under src/sdpd-request.c), this flow exists:
+...
+} else {
+/* continuation State exists -> get from cache */
+sdp_buf_t *pCache = sdp_get_cached_rsp(cstate);
+if (pCache) {
+uint16_t sent = MIN(max, pCache->data_size -
+
+ cstate->cStateValue.maxBytesSent);
+pResponse = pCache->data;
+memcpy(buf->data,
+                             pResponse + cstate->cStateValue.maxBytesSent,
+                             sent);
+buf->data_size += sent;
+cstate->cStateValue.maxBytesSent += sent;
+if (cstate->cStateValue.maxBytesSent == pCache->data_size)
+cstate_size = sdp_set_cstate_pdu(buf, NULL);
+else
+cstate_size = sdp_set_cstate_pdu(buf, cstate);
+} else {
+status = SDP_INVALID_CSTATE;
+SDPDBG("Non-null continuation state, but null cache buffer");
+}
+}
+...
+
+When a long response is returned to a specific search attribute request, a
+continuation state is returned to allow reception of additional fragments,
+via additional requests that contain the last continuation state sent.
+However, the incoming “cstate” that requests additional fragments isn’t
+validated properly, and thus an out-of-bounds read of the response buffer
+(pResponse) can be achieved, leading to information disclosure of the heap.
+
+A patch for this vulnerability was pushed today to BlueZ upstream:
+https://git.kernel.org/pub/scm/bluetooth/bluez.git/commit/?id=9e009647b14e810e06626dde7f1bb9ea3c375d09
+
+2) CVE-2017-1000251
+
+This vulnerability is an RCE vulnerability in the Kernel's implementation
+of Bluetooth's L2CAP (net/bluetooth/l2cap_core.c):
+
+In l2cap_config_rsp this flow exists:
+...
+     case L2CAP_CONF_PENDING:
+         set_bit(CONF_REM_CONF_PEND, &chan->conf_state);
+         if (test_bit(CONF_LOC_CONF_PEND, &chan->conf_state)) {
+             char buf[64];
+             len = l2cap_parse_conf_rsp(chan, rsp->data, len,
+                            buf, &result);
+...
+The function l2cap_parse_conf_rsp parses the configuration elements in the
+configuration response (rsp->data), and copies them (after validating them)
+to the output buffer (buf). The function does not receive a maximum length
+of the output buffer, and this buffer is allocated on the stack of
+l2cap_config_rsp. So sending a configuration response which contains a
+large number of configuration elements (they can also be the same type of
+element repeated multiple times) - would cause a stack overflow of the
+output buffer (buf). Reaching this case (L2CAP_CONF_PENDING) is achievable
+by sending a configuration request with an EFS element, and setting the
+stype field to L2CAP_SERV_NOTRAFIC, prior to the crafted configuration
+response that would trigger the stack overflow.
+
+A patch for this vulnerability was pushed yesterday to upstream Linux
+Kernel:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e860d2c904d1a9f38a24eb44c9f34b8f915a6ea3
 
 
--- 
-ldv
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+If you need any additional information on these issues we would be happy to
+help.
+
+Thank you,
+Armis Labs
+
