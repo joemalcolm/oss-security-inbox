@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7829" "Thursday" "30" "July" "2015" "10:05:26" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20150730100526.5846786b@redhat.com>" "129" "Re: [oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g" nil nil nil "7" "2015073008:05:26" "[oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g" (number mark "U       scorneli@red Jul 30  129/7829  " thread-indent "\"Re: [oss-security] Re: CVE Request: Multiple vulnerabilities in freexl 1.0.0g\"\n") "<20150706124945.3b70a6fa@redhat.com>" ("<CABfY0L1Y2CYFQ-Hd-kohtzLKDy9aFFKmQM_drwsiR3MpEZ+KJA@mail.gmail.com>" "<20150327234801.AB6AC6C003B@smtpvmsrv1.mitre.org>" "<20150706124945.3b70a6fa@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["600" "Wednesday" "13" "September" "2017" "12:24:06" "-0700" "akuster" "akuster@mvista.com" "<54a4f144-6765-b444-fe00-c2779bd86c3d@mvista.com>" "24" "Re: [oss-security] Tcpdump 4.9.2" "^Date:" nil nil "9" "2017091319:24:06" "[oss-security] Tcpdump 4.9.2" (number mark "        akuster@mvis Sep 13   24/600   " thread-indent "\"Re: [oss-security] Tcpdump 4.9.2\"\n") "<f55c2071-40ca-ad1a-6c1b-33f8326325c5@dns-oarc.net>" ("<20170907200605.GA13030@jasmine.lan>" "<CAA7hUgFVeLSChQuCvYaribpdt=9kj=o+A_LYoa1v7QgMy=RzmA@mail.gmail.com>" "<87mv658rqa.fsf@dell.be.48ers.dk>" "<f55c2071-40ca-ad1a-6c1b-33f8326325c5@dns-oarc.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31849 invoked by uid 550); 30 Jul 2015 08:58:17 -0000
+Received: (qmail 6129 invoked by uid 550); 13 Sep 2017 19:24:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,150 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31831 invoked from network); 30 Jul 2015 08:58:16 -0000
-Date: Thu, 30 Jul 2015 10:05:26 +0200
-From: Stefan Cornelius <scorneli@redhat.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Message-ID: <20150730100526.5846786b@redhat.com>
-In-Reply-To: <20150706124945.3b70a6fa@redhat.com>
-References: <CABfY0L1Y2CYFQ-Hd-kohtzLKDy9aFFKmQM_drwsiR3MpEZ+KJA@mail.gmail.com>
-	<20150327234801.AB6AC6C003B@smtpvmsrv1.mitre.org>
-	<20150706124945.3b70a6fa@redhat.com>
+Received: (qmail 6106 invoked from network); 13 Sep 2017 19:24:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mvista-com.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=WeF9HmYH438i4L796jW5Bw0bbrxw2G5cLByF7H2OaJY=;
+        b=KC61MgS11QfTMZ/OsxQAMXJDwOBowFysZC8rbxt2iONh/5yt1+9LGueV7TWHuFs/1/
+         ZRI2ZtVwuR+SR27Wli+EjRMS7gxp8AboW+IU4jAyMrjhSNGikQVfEqoktpyBZZqIYdkl
+         ig+NiAffO2LjQjM27ny9Wk0NJ0DiSOdf+mix8TEmZ8N6PNX6lYBQmJg4h5QHo+KTKVAg
+         wQrmXMgP1GbKtZ0zDhkkCgAAsaM5u5nIT3RizIBKLliXi09zbwr9UuHdyxU1DMh1Zw+C
+         DXyLeo6BYRCOkc80cyFbyVYQfPVgRKMWPCDVzCJupuQOeU0c/y1W0yJ4MNR3oAN3Izcf
+         8J+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=WeF9HmYH438i4L796jW5Bw0bbrxw2G5cLByF7H2OaJY=;
+        b=tLfn0J8JmXelBJnjS8y7RnFzclPM8MppQT0HLQ4i5RdTdw/Xa7WJVbuOf5I5LWITsk
+         0J/qXwieI+DXhLvUNNz/Ycqsney+lWKHop7QBFhtLC0ivcbLicdiuga1uyuCrHqIVHyi
+         MORRISbVnXIDQ3LrqL0R3biqUMXL4hwso3riuHn0PKax+q5i82eSbdMtA4Mq1sIWV4xp
+         ggq/ET/j2GjA3MQ3r7K8Rll/spxg+ysCk+We7j5borJP/xCsCk63FHcauZJTvgx+hlFa
+         wMfEIi22HwqQ/dGlN79VeKJpv8iVXRex2nZ8H4HPjaUP4HAxqRSpARWbFRHnB/6jnNvp
+         IJTQ==
+X-Gm-Message-State: AHPjjUh6HVoFAeL5I//G/rPXIqRma0FVFxX93MdsXWvXlwA87e2//YGl
+	EtldBKE8GC45I8BWsDH6hg==
+X-Google-Smtp-Source: ADKCNb65HygwMJHkYEGbbzd/orth2lXIS50cEwF3dCmeXeGjc1y13Wy2IUHK+YgmOWR0Muhv7N8vXg==
+X-Received: by 10.84.209.228 with SMTP id y91mr21669262plh.130.1505330649952;
+        Wed, 13 Sep 2017 12:24:09 -0700 (PDT)
+References: <20170907200605.GA13030@jasmine.lan>
+ <CAA7hUgFVeLSChQuCvYaribpdt=9kj=o+A_LYoa1v7QgMy=RzmA@mail.gmail.com>
+ <87mv658rqa.fsf@dell.be.48ers.dk>
+ <f55c2071-40ca-ad1a-6c1b-33f8326325c5@dns-oarc.net>
+Message-ID: <54a4f144-6765-b444-fe00-c2779bd86c3d@mvista.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: base64
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Subject: Re: [oss-security] Re: CVE Request: Multiple vulnerabilities in
- freexl 1.0.0g
+In-Reply-To: <f55c2071-40ca-ad1a-6c1b-33f8326325c5@dns-oarc.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Date: Wed, 13 Sep 2017 12:24:06 -0700
+From: akuster <akuster@mvista.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Tcpdump 4.9.2
+To: oss-security@lists.openwall.com, =?UTF-8?Q?Jerry_Lundstr=c3=b6m?=
+ <jerry@dns-oarc.net>, Peter Korsgaard <peter@korsgaard.com>
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hB
-MjU2DQoNCk9uIE1vbiwgNiBKdWwgMjAxNSAxMjo0OTo0NSArMDIwMA0KU3Rl
-ZmFuIENvcm5lbGl1cyA8c2Nvcm5lbGlAcmVkaGF0LmNvbT4gd3JvdGU6DQoN
-Cj4gLS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KPiBIYXNo
-OiBTSEEyNTYNCj4gDQo+IE9uIEZyaSwgMjcgTWFyIDIwMTUgMTk6NDg6MDEg
-LTA0MDAgKEVEVCkNCj4gY3ZlLWFzc2lnbkBtaXRyZS5vcmcgd3JvdGU6DQo+
-IA0KPiA+IC0tLS0tQkVHSU4gUEdQIFNJR05FRCBNRVNTQUdFLS0tLS0NCj4g
-PiBIYXNoOiBTSEExDQo+ID4gDQo+ID4gPj4gIzQ6IEZyZWVYTCAxLjAuMGcg
-ZGlkIG5vdCBwcm9wZXJseSBjaGVjayByZXF1ZXN0cyBmb3Igd29ya2Jvb2sN
-Cj4gPiA+PiBtZW1vcnkgYWxsb2NhdGlvbi4gQSBzcGVjaWFsbHkgY3JhZnRl
-ZCBpbnB1dCBmaWxlIGNvdWxkIGNhdXNlIGENCj4gPiA+PiBEZW5pYWwgb2Yg
-U2VydmljZSwgb3IgcG9zc2libHkgd3JpdGUgb250byB0aGUgc3RhY2suDQo+
-ID4gDQo+ID4gPiBUaGlzIHZ1bG5lcmFiaWxpdHkgaXMgcmVsYXRlZCB0byB0
-aGUgbWlzc2luZyAiPiAxMDI0ICogMTAyNCIgdGVzdA0KPiA+ID4gaW4gdGhl
-IHBhcnNlX1NTVCBmdW5jdGlvbi4NCj4gPiANCj4gPiBVc2UgQ1ZFLTIwMTUt
-Mjc3Ni4NCj4gPiANCj4gPiANCj4gPiA+Pj4gIzI6IEEgZmxhdyB3YXMgZm91
-bmQgaW4gdGhlIGZ1bmN0aW9uIGFsbG9jYXRlX2NlbGxzKCkuIEENCj4gPiA+
-Pj4gc3BlY2lhbGx5IGNyYWZ0ZWQgZmlsZSB3aXRoIGludmFsaWQgd29ya2Jv
-b2sgZGltZW5zaW9ucyBjb3VsZA0KPiA+ID4+PiBwb3NzaWJseSByZXN1bHQg
-aW4gc3RhY2sgY29ycnVwdGlvbiBuZWFyIGZyZWV4bC5jOjEwNzQNCj4gPiAN
-Cj4gPiA+PiBEb2VzIHRoaXMgcmVmZXIgdG8gdGhlIG1pc3NpbmcgIj09IE5V
-TEwiIHRlc3RzIHdpdGhpbiB0aGUNCj4gPiA+PiBhbGxvY2F0ZV9jZWxscyBm
-dW5jdGlvbj8NCj4gPiANCj4gPiA+IFllcw0KPiA+IA0KPiA+ID4+IElzIGEg
-TlVMTCBwb2ludGVyIGRlcmVmZXJlbmNlIGdvaW5nIHRvIG9jY3VyDQo+ID4g
-Pj4gYmVmb3JlIHRoZSBjb2RlIHJlYWNoZXMgYSBwb2ludCB3aGVyZSB0aGVy
-ZSBjYW4gYmUgc3RhY2sNCj4gPiA+PiBjb3JydXB0aW9uPw0KPiA+IA0KPiA+
-ID4gSSBkb24ndCBiZWxpZXZlIHNvLiBJdCBsb29rcyBsaWtlIHRoZXNlIGFy
-ZSBpbml0aWFsaXplZCBhcyBOVUxMLA0KPiA+ID4gYW5kIGlmIHRoZXkgYXJl
-IHN0aWxsIE5VTEwgYXQgdGhpcyBwb2ludCBpbiBleGVjdXRpb24gdGhlbiB3
-ZQ0KPiA+ID4gYXNzdW1lIHRoZSBpbnB1dCBmaWxlIHdhcyBtYWxmb3JtZWQg
-YW5kIGV4aXQgd2l0aCB0aGUgYXBwcm9wcmlhdGUNCj4gPiA+IHJldHVybiBj
-b2RlLg0KPiA+IA0KPiA+IEluIHRoYXQgY2FzZSwgd2UgZG9uJ3Qga25vdyB3
-aGF0IHZ1bG5lcmFiaWxpdHkgeW91IG1lYW4gZm9yICMyLg0KPiA+IA0KPiA+
-IEJldHdlZW4gdGhlIHVucGF0Y2hlZCBjb2RlIGFuZCB0aGUgcGF0Y2hlZCBj
-b2RlLCB0aGUgb25seSBjaGFuZ2UgaW4NCj4gPiB0aGUgYWxsb2NhdGVfY2Vs
-bHMgZnVuY3Rpb24gaXMgdGhlIGFkZGl0aW9uIG9mIGNoZWNrcyBmb3Igd2hl
-dGhlcg0KPiA+IHdvcmtib29rIG9yIHdvcmtib29rLT5hY3RpdmVfc2hlZXQg
-aXMgTlVMTC4gSW4gdGhlIHVucGF0Y2hlZCBjb2RlLA0KPiA+IGlmIGVpdGhl
-ciBvZiB0aGVzZSB3ZXJlIE5VTEwsIHdvcmtib29rLT5hY3RpdmVfc2hlZXQt
-PnJvd3Mgd291bGQNCj4gPiByZXN1bHQgaW4gYSBOVUxMIHBvaW50ZXIgZGVy
-ZWZlcmVuY2UuIEFzIGZhciBhcyB3ZSBrbm93LCB0aGlzDQo+ID4gb3V0Y29t
-ZSBpcyBub3QgdHlwaWNhbGx5IGRlc2NyaWJlZCBhcyAic3RhY2sgY29ycnVw
-dGlvbi4iDQo+ID4gDQo+ID4gSWYgdGhlIGRlc2lnbiBvZiB0aGUgYWxsb2Nh
-dGVfY2VsbHMgZnVuY3Rpb24gd2FzIHN1cHBvc2VkIHRvDQo+ID4gYW50aWNp
-cGF0ZSB0aGF0IGNhbGxlcnMgbWlnaHQgcHJvdmlkZSBhIE5VTEwgdmFsdWUg
-Zm9yIHdvcmtib29rIG9yDQo+ID4gd29ya2Jvb2stPmFjdGl2ZV9zaGVldCwg
-dGhlbiB0aGUgdW5wYXRjaGVkIGNvZGUgaGFkIGEgdnVsbmVyYWJpbGl0eQ0K
-PiA+IGluIHRoZSBhbGxvY2F0ZV9jZWxscyBmdW5jdGlvbiB0aGF0IG1pZ2h0
-IGxvb3NlbHkgYmUgZGVzY3JpYmVkIGFzIGENCj4gPiAiTlVMTCBwb2ludGVy
-IGRlcmVmZXJlbmNlIHZ1bG5lcmFiaWxpdHkuIg0KPiA+IA0KPiA+IFdlIHRo
-aW5rIHlvdSBtYXkgbWVhbiB0aGF0LCBpbiBzb21lIGNhc2VzLCBzdGFjayBj
-b3JydXB0aW9uIGhhcw0KPiA+IG9jY3VycmVkIGJlY2F1c2Ugb2YgaW52YWxp
-ZCB3b3JrYm9vayBkaW1lbnNpb25zIGJlZm9yZSB0aGUNCj4gPiBhbGxvY2F0
-ZV9jZWxscyBmdW5jdGlvbiBpcyBjYWxsZWQuIEluIHNvbWUgb3IgYWxsIG9m
-IHRoZXNlIGNhc2VzLCBhDQo+ID4gc2lkZSBlZmZlY3Qgb2YgdGhlIHN0YWNr
-IGNvcnJ1cHRpb24gaXMgdGhhdCBlaXRoZXIgd29ya2Jvb2sgb3INCj4gPiB3
-b3JrYm9vay0+YWN0aXZlX3NoZWV0IGlzIE5VTEwuIFRoZSBwYXRjaGVkIGNv
-ZGUsIGluc3RlYWQgb2YNCj4gPiBwcmV2ZW50aW5nIHRoZSBzdGFjayBjb3Jy
-dXB0aW9uIChvciBkZXRlY3RpbmcgdGhlIHN0YWNrIGNvcnJ1cHRpb24NCj4g
-PiBiZWZvcmUgY2FsbGluZyBhbGxvY2F0ZV9jZWxscyksIGNob29zZXMgdG8g
-dXNlIHRoZXNlICI9PSBOVUxMIiB0ZXN0cw0KPiA+IHRvIGluZmVyIHRoYXQg
-c3RhY2sgY29ycnVwdGlvbiBoYXMgb2NjdXJyZWQuIElzIHRoaXMgY29ycmVj
-dD8NCj4gDQo+IEhpLA0KPiANCj4gSXQgc2VlbXMgbGlrZSB0aGlzIHN0aWxs
-IGhhcyBubyBDVkUsIGFwcGFyZW50bHkgYmVjYXVzZSB0aGUgZXhhY3QNCj4g
-ZGV0YWlscyBvZiB0aGlzIGlzc3VlIGFyZSB1bmNsZWFyLiBJJ2xsIHRyeSB0
-byBjbGVhciB1cCB0aGUgc2l0dWF0aW9uDQo+IGFuZCB3aWxsIGFsc28gcHJv
-dmlkZSBkZXRhaWxzIGZvciBhbm90aGVyLCBuZXcgaXNzdWUgYmVsb3cuDQo+
-IA0KPiBGdXJ0aGVyIGluZm8gZm9yICJpc3N1ZSAjMiI6DQo+ID09PT09PT09
-PT09PT09PT09PT09PT09PT09PT0NCj4gVGhlIGNvbW1vbl9vcGVuKCkgZnVu
-Y3Rpb24gaW5pdGlhbGl6ZXMgdGhlIHdvcmtib29rIChhdCB0aGF0IHBvaW50
-LA0KPiBtb3N0IGludGVyZXN0aW5nIG1lbWJlcnMgYXJlIE5VTEwpLiBBIGJp
-dCBmdXJ0aGVyIGRvd24sIGl0IHBhcnNlcw0KPiBhbGwgdGhlIGJpZmYgcmVj
-b3JkcyB2aWEgdGhlIGxvb3AgYXJvdW5kIHJlYWRfYmlmZl9uZXh0X3JlY29y
-ZCgpOg0KPiA+ICB3aGlsZSAoMSkNCj4gPiAgICB7DQo+ID4JaW50IHJldCA9
-IHJlYWRfYmlmZl9uZXh0X3JlY29yZCAod29ya2Jvb2ssIHN3YXAsICZlcnJj
-b2RlKTsNCj4gPglpZiAocmV0ID09IC0xKQ0KPiA+CSAgICBicmVhazsJLyog
-RU9GICovDQo+ID4JaWYgKHJldCA9PSAwKQ0KPiA+CSAgICBnb3RvIHN0b3A7
-DQo+ID4gICAgfQ0KPiANCj4gDQo+IEFmdGVyIHBhcnNpbmcgYWxsIHRoZSBy
-ZWNvcmRzLCB0aGUgd29ya2Jvb2stPmZpcnN0X3NoZWV0IG1lbWJlcg0KPiBw
-b2ludHMgdG8gc29tZXRoaW5nIHZhbGlkLCBidXQgd29ya2Jvb2stPmFjdGl2
-ZV9zaGVldCBkb2VzIG5vdCwNCj4gaXQncyBzdGlsbCBOVUxMLg0KPiBjb21t
-b25fb3BlbigpIGhhcyBhIGNoZWNrIGZvciBmaXJzdF9zaGVldCwgYnV0IHNp
-bmNlIHRoZQ0KPiBhbGxvY2F0ZV9jZWxscygpIGZ1bmN0aW9uIG9wZXJhdGVz
-IG9uIHRoZSB3b3JrYm9vay0+YWN0aXZlX3NoZWV0DQo+IG1lbWJlciwgc28g
-d2UgdWx0aW1hdGVseSBnZXQgYSBOVUxMIHBvaW50ZXIgZGVyZWZlcmVuY2Ug
-aW4NCj4gYWxsb2NhdGVfY2VsbHMoKS4gSSd2ZSBub3Qgc2VlbiBhbnkgaW5k
-aWNhdGlvbiBvZiBhIHN0YWNrDQo+IGNvcnJ1cHRpb24uDQo+IA0KPiA+ICAg
-ICBwX3NoZWV0ID0gd29ya2Jvb2stPmZpcnN0X3NoZWV0Ow0KPiA+ICAgICB3
-aGlsZSAocF9zaGVldCkNCj4gPiAgICAgICB7DQo+ID4gCSAgaWYgKHBfc2hl
-ZXQtPnZhbGlkX2RpbWVuc2lvbiA9PSAwKQ0KPiA+IAkgICAgew0KPiA+IAkJ
-Lyogc2V0dGluZyBTaGVldCBkaW1lbnNpb25zICovDQo+ID4gCQlpbnQgcmV0
-Ow0KPiA+IAkJcF9zaGVldC0+cm93cyArPSAxOw0KPiA+IAkJcF9zaGVldC0+
-Y29sdW1ucyArPSAxOw0KPiA+IAkJcmV0ID0gYWxsb2NhdGVfY2VsbHMgKHdv
-cmtib29rKTsNCj4gDQo+IERvZXMgdGhhdCBjbGVhciB0aGUgc2l0dWF0aW9u
-IHVwIGVub3VnaCB0byBhc3NpZ24gYSBDVkUgdG8gdGhpcz8NCg0KQW55IHVw
-ZGF0ZSBoZXJlPw0KDQo+IE5ldyBpc3N1ZTogYWxsb2NhdGVfY2VsbHMoKSBp
-bnRlZ2VyIG92ZXJmbG93DQo+ID09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09DQo+IA0KPiBUaGVyZSdzIGFuIGludGVnZXIg
-b3ZlcmZsb3cgaW4gdGhlIGFsbG9jYXRlX2NlbGxzKCkgZnVuY3Rpb24NCj4g
-d2hlbiB0cnlpbmcgdG8gYWxsb2NhdGUgdGhlIG1lbW9yeSBmb3Igd29ya3No
-ZWV0IHdpdGggc3BlY2lhbGx5DQo+IGNyYWZ0ZWQgcm93L2NvbHVtbiBkaW1l
-bnNpb25zLiBUaGlzIGNhbiBiZSBleHBsb2l0ZWQgdG8gY2F1c2UgYQ0KPiBo
-ZWFwIG1lbW9yeSBjb3JydXB0aW9uLiBUaGUgbW9zdCBsaWtlbHkgb3V0Y29t
-ZSBvZiB0aGlzIGlzIGEgY3Jhc2gNCj4gd2hlbiB0cnlpbmcgdG8gaW5pdGlh
-bGl6ZSB0aGUgY2VsbHMgbGF0ZXIgaW4gdGhlIGZ1bmN0aW9uLg0KPiA+IHdv
-cmtib29rLT5hY3RpdmVfc2hlZXQtPmNlbGxfdmFsdWVzID0NCj4gPiAJbWFs
-bG9jIChzaXplb2YgKGJpZmZfY2VsbF92YWx1ZSkgKg0KPiA+IAkJKHdvcmti
-b29rLT5hY3RpdmVfc2hlZXQtPnJvd3MgKg0KPiA+IAkJIHdvcmtib29rLT5h
-Y3RpdmVfc2hlZXQtPmNvbHVtbnMpKTsNCj4gDQo+IEkndmUgbm90IGFzc2ln
-bmVkIGEgQ1ZFIHRvIHRoaXMsIHNvIEknbSBoZXJlYnkgcmVxdWVzdGluZyBv
-bmUgKG1haW5seQ0KPiBiZWNhdXNlIHRoaXMgdGhyZWFkIGlzIGEgYml0IG9s
-ZCBhbmQgdGhlIHByb2JsZW0gaXMgZmFpcmx5IGNsb3NlIHRvDQo+IHRoZSBw
-YXRjaGVkIGNvZGUsIHNvIHRoZXJlIG1heSBiZSBhIHNsaW0gY2hhbmNlIHRo
-YXQgc29tZWJvZHkgZWxzZQ0KPiBub3RpY2VkIHRoaXMgaW5kZXBlbmRlbnRs
-eSBhbmQgcmVxdWVzdGVkIGEgQ1ZFIGZvciB0aGlzIGluIHByaXZhdGUpLg0K
-DQpUaGlzIGlzIGZpeGVkIGluIHZlcnNpb24gMS4wLjIuIENhbiBJIGdldCBh
-IENWRT8NCg0KVGhhbmtzLA0KLSAtLSANClN0ZWZhbiBDb3JuZWxpdXMgLyBS
-ZWQgSGF0IFByb2R1Y3QgU2VjdXJpdHkNCi0tLS0tQkVHSU4gUEdQIFNJR05B
-VFVSRS0tLS0tDQpWZXJzaW9uOiBHbnVQRyB2Mg0KDQppUUVjQkFFQkNBQUdC
-UUpWdWRySEFBb0pFRVR3aVlDalZTbVBMVzBILzBmV2E2dTIzNlhiRUE3V2Y5
-eWNTYVdWDQphUnZvL1BpWmp3U1ptdER2YUdSYWROaTlBVDl4bmhZVnRGQml0
-L1pJd3IvdlFhQlJSMHFyNHRNc0NlZnJucWZ1DQpHYTJQenRyZ1d0RHQ5UHBP
-K1lIbW5aZ0xORjlabHJISGlCN240Z1RuTmQrTmhDSGJ6SENnaDJmK3NNRHM0
-aGRXDQpncFpyNW1NaHEzaEZXWDdYWkdOQ1ErZjl5aTZhN2s4a0U3MUQwOTBL
-allobzZ0dDRxK1Zud1MrNitpN0x2K1N0DQp3YW9tcE4vRUkxUmlHMitUa0lT
-cEE1SXNOclVta0Rhcm1SYmcxdG5Cbm1iY3FHRWgxc2I4TGdyNTJ6NzRxVVFx
-DQp5OWpzUjlwQXhHVjg4YXc4Vko3RUI3RWQ0Ky9hUUE5ckFsc2s2YnEzUTlx
-bjlFSjlZaE1WZE5vUlQxVzFPM009DQo9TVV1bw0KLS0tLS1FTkQgUEdQIFNJ
-R05BVFVSRS0tLS0tDQo=
+
+
+On 09/08/2017 03:44 AM, Jerry Lundström wrote:
+> On 09/08/17 11:27, Peter Korsgaard wrote:
+>> Can we please have this tarball officially released on tcpdump.org /
+>> 4.9.2 tagged in git then?
+> There is a tarball, just no tag yet.
+
+It appears the external github has updated the commits with CVE info 
+included.
+
+https://github.com/the-tcpdump-group/tcpdump
+
+- armin
+>
+> Version: 4.9.2
+> Release Date: September 3, 2017
+>
+> - http://www.tcpdump.org/release/tcpdump-4.9.2.tar.gz
+> - http://www.tcpdump.org/release/tcpdump-4.9.2.tar.gz.sig
+> - http://www.tcpdump.org/tcpdump-changes.txt
+>
+> /Jerry
+
