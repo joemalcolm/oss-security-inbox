@@ -1,98 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/23
-Message-ID: <CAK0OdpzgDzedff7xC=bEiSoG69QzHfPSjhWQLUaMdJA5UNXO2g@mail.gmail.com>
-Date: Wed, 1 Feb 2017 20:35:01 +0100
-From: Bálint Réczey <balint@...intreczey.hu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/13/2
+Message-ID: <1305037188.10465008.1505329611875.JavaMail.zimbra@redhat.com>
+Date: Wed, 13 Sep 2017 15:06:51 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Use after free in libmysqlclient.so (was: Re: Use after free in libmysqlclient.so)
+Subject: CVE-2017-12153 Linux kernel: nl80211: null pointer dereference in nl80211_set_rekey_data()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Heololo,
 
-I'm adjusting the subject to reflect the content in case the request
-was accidentally missed.
+A security flaw was discovered in nl80211_set_rekey_data() function in the Linux
+kernel since v3.1-rc1 through v4.13. This function does not check whether
+the required attributes are present in a netlink request. This request can be
+issued by a user with CAP_NET_ADMIN privilege and may result in NULL dereference
+and a system crash.
 
-Thanks for the report!
+References:
 
-Cheers,
-Balint
+https://bugzilla.redhat.com/show_bug.cgi?id=1491046
 
-2017-01-27 23:53 GMT+01:00  <pali@...n.org>:
-> Hello, I would like to report problem related to MySQL/MariaDB and
-> possibly asking for assigning CVE if this list is the right place.
->
-> C client library for MySQL (libmysqlclient.so) has use-after-free defect
-> which can cause crash of applications using that MySQL client.
->
-> Defect occurs by calling mysql_close() function from libmysqlclient.so.
-> If mysql_close() is called before calling all mysql_stmt_close() (for
-> all allocated stmts), then following mysql_stmt_close() call try to
-> write to already released memory. mysql_close() let dangling pointer
-> exist for prepared statements. Real problem is in function
-> mysql_prune_stmt_list() which incorrectly iterate over elements.
-> Function list_add() overwrite ->next pointer of current element which
-> overwrite next element for iteration.
->
-> Basically it is just wrong usage of linked list structure.
->
-> Languages in which is not guaranteed order of executing destructor of
-> created objects have a big problem as such writing to memory pointed by
-> dangling can cause crash of whole application.
->
-> E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of
-> whole perl process with simple script:
->
-> perl -MDBI -e '
-> $dbh = DBI->connect("dbi:mysql:", "root", undef,
->                     {RaiseError => 1, mysql_server_prepare => 1});
-> $sth1 = $dbh->prepare("SELECT 1");
-> $sth2 = $dbh->prepare("USE mysql");
-> $dbh->disconnect;
-> $dbh = undef;
-> '
-> Segmentation fault
->
-> Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce change
-> username, password and host where is running mysql server. Valgrind can
-> prove that memory corruption really occurs.
->
-> This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But is
-> present in all MySQL 5.5 versions (and also older) and appropriate older
-> 5.6 and 5.7 versions. MySQL 5.5 is still used, supported and included in
-> lot of linux distributions.
->
-> Moreover this defect is present also in MariaDB releases. I tested all
-> last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all those are
-> affected.
->
-> MySQL and MariaDB provides also standalone package with only C client
-> library libmysqlclient.so (without server) under name "Connector/C" and
-> so appropriate versions of it are affected too.
->
-> I found that this defected was fixed in MySQL git repository by commit:
-> https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc552424132806f46e93
->
-> That commit can be easily applied to last MySQL 5.5.54 version and fixes
-> this defect.
->
-> Looks like problem was already reported and is publically available in
-> MySQL bug tracker, see more details on links:
-> https://bugs.mysql.com/bug.php?id=70429
-> https://bugs.mysql.com/bug.php?id=63363
-> (tickets are closed despite fact that MySQL 5.5 and older are not fixed)
->
-> ---
->
-> I reported this problem to Oracle secalert_us@...cle.com two months ago,
-> but they did absolutely nothing for fixing it in MySQL 5.5. Instead they
-> started resending this problem to some random people with @cpan.org
-> address for unknown reason. And told me to not disclose information
-> about this defect. Resending does not look like normal handling of
-> security related problem! Therefore I suggest other people to not
-> wasting time reporting problems to Oracle for open source applications.
->
-> As two months is really long time to fix such problem which was already
-> fixed in new versions; it is already publically disclosed in MySQL bug
-> tracker; fix available in public git; problem is in major MariaDB
-> versions; fix is small; and this is open source product included in many
-> linux distributions I decided to send information to oss-security.
+https://marc.info/?t=150525503100001&r=1&w=2
+
+Suggested upstream patch:
+
+https://marc.info/?l=linux-wireless&m=150525493517953&w=2
+
+Vulnerability surface:
+
+Further analysis showed that NL80211_CMD_SET_REKEY_OFFLOAD request should be
+issued for a WiFi interface connected to a wireless network. This mean that an
+attacker should be root already or should be root in a user+net namespace to
+which a WiFi interface was moved from a main net namespace. We believe the
+later configuration to be very unlikely.
+
+[NON-PRIVILEGED USER]
+$ /tmp/nl80211_rekey_poc 
+NLMSG_ERROR: nerr=0x7ffe0f092eb0 err=-1 txt=Operation not permitted 
+
+[ROOT IN USER+NET NAMESPACE] (WiFi interface is not present in it by default)
+$ unshare -U -r -n
+# ip a
+1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+
+# /tmp/nl80211_rekey_poc 
+NLMSG_ERROR: nerr=0x7ffe06d2a7b0 err=-19 txt=No such device 
+
+[ROOT IN JUST A USER NAMESPACE]
+$ unshare -U -r
+# ip a
+4: wlp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noop state UP
+    link/ether a4:c4:94:31:44:76 brd ff:ff:ff:ff:ff:ff
+
+# /tmp/nl80211_rekey_poc 
+NLMSG_ERROR: nerr=0x7ffeda640ca0 err=-1 txt=Operation not permitted 
+
+[A REAL ROOT]
+# ./nl80211_rekey_poc
+[   22.836967] BUG: unable to handle kernel NULL pointer dereference at           (null)
+[   22.838069] IP: nl80211_set_rekey_data+0xb2/0x1d0
+[   22.838659] PGD 1368c6067 
+[   22.838660] P4D 1368c6067 
+[   22.839082] PUD 138f31067 
+[   22.839482] PMD 0 
+[   22.840891] Oops: 0000 [#1] SMP
+[   22.841769] Modules linked in: iwlmvm iwlwifi
+[   22.842771] CPU: 3 PID: 2937 Comm: nl80211_rekey_poc Not tainted 4.13.0-rc7 #21
+[   22.843899] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.9.3-1.fc25 04/01/2014
+[   22.845470] task: ffff8fd9b98d44c0 task.stack: ffffafa800b7c000
+[   22.846480] RIP: 0010:nl80211_set_rekey_data+0xb2/0x1d0
+[   22.847403] RSP: 0018:ffffafa800b7fab8 EFLAGS: 00010296
+[   22.848320] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000006
+[   22.849654] RDX: 0000000000000007 RSI: 0000000000000086 RDI: ffff8fd9bfcccc90
+[   22.850820] RBP: ffffafa800b7fb18 R08: 000000000000020f R09: 0000000000000000
+[   22.851995] R10: ffff8fd9ba124000 R11: ffffffff8905fce0 R12: ffff8fd9b8d62000
+[   22.853143] R13: ffff8fd9b7d70000 R14: ffff8fd9b8d62850 R15: ffffffff89501e80
+[   22.854299] FS:  00007eff01bea740(0000) GS:ffff8fd9bfcc0000(0000) knlGS:0000000000000000
+[   22.856038] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   22.857033] CR2: 0000000000000000 CR3: 0000000138e14000 CR4: 00000000001406e0
+[   22.858184] Call Trace:
+[   22.858788]  ? printk+0x3e/0x46
+[   22.859463]  genl_family_rcv_msg+0x378/0x3c0
+[   22.860302]  genl_rcv_msg+0x47/0x90
+[   22.861032]  ? genl_family_rcv_msg+0x3c0/0x3c0
+[   22.861860]  netlink_rcv_skb+0x7a/0x100
+[   22.862613]  genl_rcv+0x23/0x40
+[   22.863281]  netlink_unicast+0x164/0x200
+[   22.864047]  netlink_sendmsg+0x28e/0x380
+[   22.864812]  sock_sendmsg+0x33/0x40
+[   22.865516]  ___sys_sendmsg+0x251/0x2a0
+[   22.867221]  ? remove_wait_queue+0x48/0x50
+[   22.868264]  ? __wake_up+0x3f/0x50
+[   22.869173]  ? tty_write_unlock+0x2c/0x30
+[   22.870159]  ? tty_ldisc_deref+0x11/0x20
+[   22.871136]  ? process_echoes+0x60/0x60
+[   22.872084]  __sys_sendmsg+0x40/0x70
+[   22.873067]  ? __sys_sendmsg+0x40/0x70
+[   22.874096]  SyS_sendmsg+0xd/0x20
+[   22.874889]  entry_SYSCALL_64_fastpath+0x1a/0xa5
+[   22.875736] RIP: 0033:0x7eff01707547
+[   22.876457] RSP: 002b:00007fff7efa6e28 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+[   22.877901] RAX: ffffffffffffffda RBX: 00000000004008e6 RCX: 00007eff01707547
+[   22.879056] RDX: 0000000000000000 RSI: 00007fff7efa6e50 RDI: 0000000000000003
+[   22.880190] RBP: 00007fff7efa6d40 R08: 0000000000000000 R09: 0000000000000000
+[   22.881484] R10: 0000000000000003 R11: 0000000000000246 R12: 00007fff7efa6d50
+[   22.882710] R13: 0000000000000003 R14: 00007eff019ce700 R15: 0000000000000064
+[   22.883885] Code: e9 04 e8 22 b6 aa ff 48 c7 c7 d8 79 2b 89 89 c3 89 c6 e8 4e
+[   22.886961] RIP: nl80211_set_rekey_data+0xb2/0x1d0 RSP: ffffafa800b7fab8
+[   22.888054] CR2: 0000000000000000
+[   22.888888] ---[ end trace 8c1ee6a48df7edf4 ]---
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
