@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/6
-Message-ID: <nycvar.YSQ.7.76.1708292212520.5828@wniryva>
-Date: Tue, 29 Aug 2017 22:15:17 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: wjjzhang <wjjzhang@...cent.com>
-Subject: CVE-2017-13711 Qemu: Slirp: use-after-free when sending response
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/13/3
+Message-ID: <54a4f144-6765-b444-fe00-c2779bd86c3d@mvista.com>
+Date: Wed, 13 Sep 2017 12:24:06 -0700
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com, Jerry Lundström <jerry@...-oarc.net>, Peter Korsgaard <peter@...sgaard.com>
+Subject: Re: Tcpdump 4.9.2
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
 
-Quick emulator(Qemu) built with the Slirp networking support is vulnerable to 
-an use-after-free issue. It occurs due to Socket referenced from multiple 
-packets is freed while responding to a message.
 
-A user/process could use this flaw to crash the Qemu process on the host 
-resulting in DoS.
+On 09/08/2017 03:44 AM, Jerry Lundström wrote:
+> On 09/08/17 11:27, Peter Korsgaard wrote:
+>> Can we please have this tarball officially released on tcpdump.org /
+>> 4.9.2 tagged in git then?
+> There is a tarball, just no tag yet.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg05201.html
+It appears the external github has updated the commits with CVE info 
+included.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1486400
+https://github.com/the-tcpdump-group/tcpdump
 
-This issue was reported by Wjjzhang.
+- armin
+>
+> Version: 4.9.2
+> Release Date: September 3, 2017
+>
+> - http://www.tcpdump.org/release/tcpdump-4.9.2.tar.gz
+> - http://www.tcpdump.org/release/tcpdump-4.9.2.tar.gz.sig
+> - http://www.tcpdump.org/tcpdump-changes.txt
+>
+> /Jerry
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
