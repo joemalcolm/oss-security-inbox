@@ -1,42 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/2
-Message-ID: <a01c4fba9f0e467688e24a4738d21f6f@imshyb01.MITRE.ORG>
-Date: Sun, 29 Jan 2017 07:08:58 -0500
-From: <cve-assign@...re.org>
-To: <luc.lynx@...dex.ru>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: SSRF issue in the svgsalamander library
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/13/5
+Message-ID: <15e7d09e363.baac2a74163896.7143621165441625815@ovsienko.info>
+Date: Wed, 13 Sep 2017 21:59:13 +0100
+From: Denis Ovsienko <denis@...ienko.info>
+To: <oss-security@...ts.openwall.com>
+Subject: tcpdump 4.9.2 is fully available
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello all.
 
-> https://github.com/blackears/svgSalamander/issues/11
-> 
-> <svg ...
-> <image xlink:href="https://host-in-the-trusted-network.com/test.jpg" ...
+As per Alexander's advice, let me comment for the avoidance of doubt that all deliverables for the tcpdump 4.9.2 release are public since today as advised last week. This includes individual commits in the public git repository with reference to particular CVE IDs and credits to the original reporter(s) and the author of each bugfix.
 
-Use CVE-2017-5617.
+To report a new security issue (segfault, buffer overflow, infinite loop, arbitrary code execution etc) with tcpdump or libpcap please send an e-mail to security@...dump.org, do not use the public bug tracker.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Thank you.
 
-iQIcBAEBCAAGBQJYjdlWAAoJEHb/MwWLVhi2lBAP/AmEC5U0G/8Cy1a6By1nTYMC
-wdzp7WTuV3rAoSoK7+xkaucNG8zw/clt35a4ngYhN8DQ4IzGRyg078c/UaLt8r/S
-flc5I7rR+x9Mdje2M6Z/G8mIh8vnyhFzIIA9s3QFjUu3x5jNSynnLoPfKg/AcJaX
-7ZEdeG+30o/6qHQcbCLN/cA4UaShsxwcleuyfe6/O/aSOHPyvEf2arv+N5VmFKyZ
-V0MHek+5tqJN+U+mwIk7dj27Vn4kpa1874FwH41+pmE9cfM4oxnLngVlhNUgacgh
-oNJY6nGQwp4pudTUfu+i3xRBROYqqhGT6a+e/d/GeTUBqKn36WyFLIZQS4Sltsc0
-85TeQgCd2MvkdMGbD7yXV1qu+KssLRBBRmyje3XboF492hzUlFkWy222ZFFKTyrH
-nF01Xr9PrzfZh9MYP0ajxJcvdUZq6YmVuso+Y4tiOvuqckJTBDbuMuvM6uW7yl6Q
-5nP+ab8tq4EPGjWSy42apEz/h6aQLYXhKlCsdS20RIDbr8XOODPIfcqFC719aG3P
-+2TatG980NtI7zYngUYbMy1hNiC5uo9Qx4oRsS1Gp8Z8MxzAgqQsrjbG1vKRzYwn
-VtGZrQKV15TyeFPnZJFMQFYnJ1gOW2JjRbe3NXCxpAXYHJMNJvXOohG1onbsNo2C
-tmyxTVXIiWa3ptHBeaI6
-=UYBx
------END PGP SIGNATURE-----
+-- 
+
+    Denis Ovsienko
+
+
+
+
