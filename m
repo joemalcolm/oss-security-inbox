@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/6
-Message-ID: <8007904f-d86d-783f-35c9-b53aeb025e32@comcast.net>
-Date: Wed, 22 Nov 2017 12:10:02 -0500
-From: Chad Dougherty <dougherty477@...cast.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/9
+Message-ID: <20170914072445.bq2r6vtcnxietd4j@perpetual.pseudorandom.co.uk>
+Date: Thu, 14 Sep 2017 08:24:45 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Go programming language invalid modular exponentiation result (Exp() in math/big pkg)
+Subject: Re: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
 Content-Type: text/plain; charset=utf-8
 
-On 2017-11-22 11:34, Michal Zalewski wrote:
->> Is this fuzzer freely available?  I'd love to try it out on the bignum
->> support I added to the CHICKEN Scheme implementation for its upcoming
->> new major release (probably somewhere mid-2018).  Being able to release
->> it with a bit higher confidence in its correctness would be nice, as this
->> is almost all brand new code.
-> 
-> Not the same tool, but Hanno released a bignum fuzzer that found quite
-> a few issues back in the day:
-> 
-> https://github.com/hannob/bignum-fuzz/
-> 
+On Thu, 14 Sep 2017 at 07:00:25 +0000, Agostino Sarubbo wrote:
+> The fuzz was done via the aacgain command-line tool which uses mp3gain
+> which bundles an old-modified version of mpg123 called mpglibDBL.
 
-One more reference that might help you, perhaps indirectly, is 
-Ralf-Philipp Weinmann's talk from BlackHat USA 2015, "Assessing and 
-Exploiting BigNum Vulnerabilities":
+I wouldn't recommend putting effort into fuzzing mp3gain. mpglibDBL
+is known to have security vulnerabilities anyway:
+https://security-tracker.debian.org/tracker/source-package/mp3gain
+(I wonder whether you've rediscovered those, or found new vulnerabilities?)
 
-<https://comsecuris.com/slides/slides-bignum-bhus2015.pdf>
+It probably also suffers from most other historical vulnerabilities
+that are listed for mpg123. We removed it from Debian in 2014,
+with a recommendation to use the rgain Python package instead:
+https://tracker.debian.org/pkg/rgain
 
--- 
-     -Chad
+rgain uses libmad or ffmpeg via GStreamer for decoding, so it isn't
+exactly bug-free either; but those libraries are actively maintained,
+and when they have vulnerabilities, they'd need to be fixed anyway for
+the benefit of other packages.
+
+Regards,
+    smcv
