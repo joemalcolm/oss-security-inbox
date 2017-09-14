@@ -1,46 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/11
-Message-ID: <cb1ae0f8e06e43d180b360cd96d8c69f@imshyb02.MITRE.ORG>
-Date: Sun, 1 Jan 2017 12:52:56 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libtiff: stack-based buffer overflow in _TIFFVGetField (tif_dir.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/19
+Message-ID: <20170914172140.gncnsqipfsnaa2yi@eldamar.local>
+Date: Thu, 14 Sep 2017 19:21:40 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: GNU Emacs 25.2 enriched text remote code execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> https://blogs.gentoo.org/ago/2017/01/01/libtiff-stack-based-buffer-overflow-in-_tiffvgetfield-tif_dir-c
+On Tue, Sep 12, 2017 at 07:22:51AM +0200, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> On Mon, Sep 11, 2017 at 08:58:57PM +0200, Salvatore Bonaccorso wrote:
+> > Hi Paul,
+> > 
+> > On Sun, Sep 10, 2017 at 11:56:20PM -0700, Paul Eggert wrote:
+> > > GNU Emacs is an extensible, customizable, free/libre text editor and
+> > > software environment.  When Emacs renders MIME text/enriched data (Internet
+> > > RFC 1896), it is vulnerable to arbitrary code execution. Since Emacs-based
+> > > mail clients decode "Content-Type: text/enriched", this code is exploitable
+> > > remotely. This bug affects GNU Emacs versions 19.29 through 25.2.
+> > > 
+> > > Although we know no efforts to exploit this in the wild, exploitation is easy.
+> > [...]
+> > > == Timeline ==
+> > > 
+> > > 2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
+> > > 
+> > > 2017-09-07. POC for remote code execution sent to the maintainers of Emacs
+> > > and Gnus (Reiner Steib <Reiner.Steib@....de>, private mail).
+> > > 
+> > > 2017-09-08. Patch (by Lars Ingebrigtsen <larsi@...s.org>) to disable the
+> > > problematic code and mitigation (private mail).
+> > > 
+> > > 2017-09-09. Patch committed in main development repository.
+> > 
+> > Have you requested a CVE for this issue?
+> 
+> FTR, it seems this was submitted to DWF already as per:
+> https://debbugs.gnu.org/cgi/bugreport.cgi?bug=28350#63
 
-> tiffsplit
-> AddressSanitizer: stack-buffer-overflow ... WRITE of size 4 at
-> tiff-4.0.7/libtiff/tif_dir.c:1077:29
+CVE-2017-14482 was assigned for this issue.
 
->> http://bugzilla.maptools.org/show_bug.cgi?id=2625
->> Reported: 2016-12-04
-
-Use CVE-2016-10095.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYaUD7AAoJEHb/MwWLVhi2MEUP/3BmH0gq++MW96w7r1FJgdmw
-+LDl1nEAQfZwiCRVP5G6iL0Egguw8VW2LlYK4YLmnorh8wYWf5mYJQDOI+44f+sK
-oxO1uu2lv/IfePRqgMdWIoJFvuv7QzfplbXSQkH0oW8fCdo7FZ5dbEy3KzWlrFeU
-dGWFx3ypXQ08VvddLssLuG4yLvw4KRI5nYfxkxMNY9N2wFzooVMm64m/bz4T9ZRJ
-DvNMsIU6Yspk2Gv5NLVv4+isqWOTkOgRcuh4Gh8j9Rdni46pnjCEF6Bc1tDI+zmV
-8XnUDURVfRDgXUR2X63/bKbRzTFfkY6lHECAOJ0mAc3fx105Pf6qfy1KvqSSxhi5
-4VV9OaK3Nh/8QAdkalL1MoZZ4qCvmxoevxRIYN3pINx6qlHssYj52tNvaszumq6t
-X7rDfdgKYxQf+uegYFiiEigTu7+UV8tEsRyx/kBfHiZqfkyXMw4eIAEJEJekC6y4
-6RFnaC37VbhCScfHevmrEH8MW2IbVd6zfu3Taayp2WvJmMT0QQ+dXPY3TUgtZXdR
-um0XCOgbrbMTWMVuR7huDzrzMnvkEUMvJtUlNZw+tx0gZerm4hxzrMiyKFhr2Bkj
-8WLRWmgmaDWfeeeMzIZH+cbjI7z/7Mr/5dr2PPc9gXqwVJHpQc1sGjLSO2c4I5pT
-bjm1p3FJdbBJi+DMt82Y
-=2Tt2
------END PGP SIGNATURE-----
+Regards,
+Salvatore
