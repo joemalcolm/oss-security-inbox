@@ -1,4 +1,9 @@
-Received: (qmail 32412 invoked by uid 550); 11 Apr 2023 12:41:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1152" "Thursday" "14" "September" "2017" "13:12:20" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<18140748.47rzSOn8yn@wanheda>" "33" "Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)" nil nil nil "9" "2017091411:12:20" "[oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)" (number mark "U       ago@gentoo.o Sep 14   33/1152  " thread-indent "\"Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)\"\n") "<20170914115142.1d481ea0@cortex.rrz.uni-hamburg.de>" ("<427445.19640425-sendEmail@localhost>" "<4196795.4HvRXNqvRy@wanheda>" "<20170914115142.1d481ea0@cortex.rrz.uni-hamburg.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13855 invoked by uid 550); 14 Sep 2017 11:12:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,61 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5898 invoked from network); 11 Apr 2023 11:22:48 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=geeklan.co.uk; h=
-	message-id:date:mime-version:to:from:subject:content-type
-	:content-transfer-encoding; s=geeklan; bh=PaRWXpxDTJo4Zm8uxlssoe
-	iiJ6o=; b=BnoL+EjbG0JWbQp0tNe4mkySREXm/Ih5REOcjRzH7fcxBzd0ex/o0y
-	WZx6PFnoBXuyxM5//pxu1i3UmnDr8ZW2xPs9U3uqZYs3thciGoWFyj+X3IXbJF4n
-	F8K2k2uI1HIE/t7j1rr/tavRRq/PzpxXUBwQMgHMQS+2oafm4JltzbJn6END2XUb
-	khUaxIzKiVkPMIwoz7m1ZCnnKA7F5Ux2p0I+4rjVFzkM4opAZ/O6csGF73Po91bf
-	dv86V6CB1oqfn8GAfVU+ikBXHPT8FZEJd6+lcFkmbjQavUZ+tzOOVhGQQs4ece+G
-	HyRSRR/HQOcmh+85XC8bhWVJJqCI87QA==
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=geeklan.co.uk; h=message-id
-	:date:mime-version:to:from:subject:content-type
-	:content-transfer-encoding; q=dns; s=geeklan; b=qgUzw7dH9HQREqS4
-	mVSCjKBQjO5smPj6+XR7+2uTPooqod18Gu/ewuFs6LgsbqAeuEgBPPN1aGgDUdBT
-	fq/28HoLd+qyF08sRgzwOdol2GRWsK12Wi4s74N7600QZgzlGcLY8ktCUbI0qQyJ
-	FlV1gVcmmiExstsWiOx1Cams4Bu1GGsmhmTG3cS1j48F/jZtPKjlRAA0rfxo33Pw
-	6naIssFTKkHyCk709X3zCWfe//F0/K2L6aOPwAApJphqMY/XM5PU2Z/Kqb5JaZx2
-	U0zu0ORswTTFQky79uMl43coTisc0OaVJ209ci/thpEL5oe59l1LxlyJux88HNv/
-	rSrnXA==
-Message-ID: <ec07456b-6a04-60a3-35e5-c266b6348530@geeklan.co.uk>
-Date: Tue, 11 Apr 2023 12:22:34 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.1
-Content-Language: en-GB
+Received: (qmail 13835 invoked from network); 14 Sep 2017 11:12:34 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-From: Sevan Janiyan <venture37@geeklan.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2017-11164 - stack exhaustion in PCRE
+Cc: "Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>
+Date: Thu, 14 Sep 2017 13:12:20 +0200
+Message-ID: <18140748.47rzSOn8yn@wanheda>
+In-Reply-To: <20170914115142.1d481ea0@cortex.rrz.uni-hamburg.de>
+References: <427445.19640425-sendEmail@localhost> <4196795.4HvRXNqvRy@wanheda> <20170914115142.1d481ea0@cortex.rrz.uni-hamburg.de>
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
 
-Hi,
-CVE-2017-11164 landed some years back[1] for PCRE 8.x and is marked
-up with a high base score on the article[2], yet no fix was ever listed 
-and is still commonly packaged, so I asked Philip Hazel (the PCRE 
-maintainer) regarding the issue, and this is what Philip said
+On gioved=C3=AC 14 settembre 2017 11:51:42 CEST Dr. Thomas Orgis wrote:
+> I disagree. I am considering cleaning up mp3gain and omitting nearly
+> all of the vulnerabilities by removing the decoder fork. Reason: rgain
+> does not do what mp3gain did. Mp3gain can directly modify the MPEG
+> frames so that the gain is changed also for decoders that do not
+> support the added metadata (it additionally stores metadata to be able
+> to revert the changes).
+>=20
+> While I am not regularily using this myself, I do think that it's a
+> nifty hack that should not disappear. Maybe it can re-enter distros if
+> it does not rely on an outdated internal decoder =E2=80=A6
+>=20
+> This is becoming a bit off-topic =E2=80=A6 but I just wanted to note that=
+ the
+> bug reports do serve a purpose in alerting me to that other copy of
+> mpg123 code in the wild.
+>=20
+>=20
+> Alrighty then,
+>=20
+> Thomas
 
-"Stack exhaustion is a FEP (frequently encountered problem) in PCRE1
-(the 8.xx series). There are various limiting options that the user can
-apply to limit stack usage.
+Hello Thomas,
 
-...
+the suggestion of removal was because of the dead status of the upstream=20
+project.
+If there will be people that fix the issues, will be great.
 
-The code in PCRE2 has been re-written so as to use heap storage instead
-of the stack when executing patterns, thus getting rid of a problem that
-lots of people encountered with PCRE1."
+Feel free to update this thread when you have news about.
 
-"PCRE1 has become totally obsolete and is no longer maintained. The
-final release was 8.45 (June 2021)"
-
-So just a heads up if you're still linking against PCRE 8.x but software
-in question supports PCRE2, perhaps it's time to switch and default to
-PCRE2.
-
-
-Sevan
-[1] https://www.openwall.com/lists/oss-security/2017/07/11/3
-[2] https://nvd.nist.gov/vuln/detail/CVE-2017-11164
+--=20
+Agostino Sarubbo
+Gentoo Linux Developer
