@@ -1,42 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/1
-Message-ID: <1489656677.3059.3.camel@redhat.com>
-Date: Thu, 16 Mar 2017 10:31:17 +0100
-From: Adam Maris <amaris@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: peter@...e-magic.net
-Subject: Re: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/18
+Message-ID: <0066D0CA-AF18-48FD-AB6E-34EF5CF7A986@leventepolyak.net>
+Date: Thu, 14 Sep 2017 16:08:21 +0200
+From: Levente Polyak <levente@...entepolyak.net>
+To: oss-security@...ts.openwall.com,Solar Designer <solar@...nwall.com>
+CC: Denis Ovsienko <denis@...ienko.info>
+Subject: Re: tcpdump 4.9.2 is fully available
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2017-03-15 at 23:47 +0100, Peter Bex wrote:
-> Hello all,
-> 
-> I'd like to request a CVE for an unchecked malloc() argument in
-> CHICKEN Scheme's SRFI-4 vector constructors, when allocating the
-> vector in unmanaged memory.  Due to the missing range check, this
-> could result in negative or too small size allocations, which would
-> result in a crash or a buffer overrun, depending on the size.
-> 
-> This issue affects all current releases of CHICKEN Scheme, including
-> the latest release, 4.12.0.
-> 
-> The official announcement was made here:
-> http://lists.gnu.org/archive/html/chicken-announce/2017-03/msg00000.h
-> tml
-> 
-> 
+On September 14, 2017 3:04:43 PM GMT+02:00, Solar Designer <solar@...nwall.com> wrote:
+>
+>September 7 - an Arch Linux developer (who is not on (linux-)distros
+>and
+>apparently was not aware of the distros list discussion) brings the
+>issue to oss-security (it's unclear to me how that person knew of the
+>September 25 initial CRD); I approve that message right away
+>
 
-Hi Peter,
+Leo Famulari has posted this here, and he is not affiliated with Arch Linux. AFAIK he is involved in the GNU Guix project.
 
-oss-security mailing is no longer a place for requesting CVEs. Please,
-request CVE from MITRE via https://cveform.mitre.org/ or also possibly
-from DWF project via http://iwantacve.org/
+Everything else sounds valid.
 
-Thanks!
-
-Best Regards,
-
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Cheers,
+Levente 
