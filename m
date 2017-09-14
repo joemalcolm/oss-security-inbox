@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/19/3
-Message-ID: <20170719090651.u2yvhthnbovzoos5@lorien.valinor.li>
-Date: Wed, 19 Jul 2017 11:06:51 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: gnome-exe-thumbnailer: CVE-2017-11421: VBScript script injection when generating thumbnails for MSI files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/12
+Message-ID: <20170914115142.1d481ea0@cortex.rrz.uni-hamburg.de>
+Date: Thu, 14 Sep 2017 11:51:42 +0200
+From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Am Thu, 14 Sep 2017 09:51:36 +0200
+schrieb Agostino Sarubbo <ago@...too.org>:
 
-MITRE has assigned CVE-2017-11421 for the following issue in
-gnome-exe-thumbnailer, a Wine .exe and other executable thumbnailer
-for GNOME:
+> Anwyay I agree with you that is time to drop the packages.
 
-gnome-exe-thumbnailer before 0.9.5 is prone to a VBScript Injection
-when generating thumbnails for MSI files. There is a local attack if
-the victim uses the GNOME Files file manager, and navigates to a
-directory containing a .msi file with VBScript code in its filename.
+I disagree. I am considering cleaning up mp3gain and omitting nearly
+all of the vulnerabilities by removing the decoder fork. Reason: rgain
+does not do what mp3gain did. Mp3gain can directly modify the MPEG
+frames so that the gain is changed also for decoders that do not
+support the added metadata (it additionally stores metadata to be able
+to revert the changes).
 
-Upstream fix:
+While I am not regularily using this myself, I do think that it's a
+nifty hack that should not disappear. Maybe it can re-enter distros if
+it does not rely on an outdated internal decoder … 
 
-https://github.com/gnome-exe-thumbnailer/gnome-exe-thumbnailer/commit/1d8e3102dd8fd23431ae6127d14a236da6b4a4a5
+This is becoming a bit off-topic … but I just wanted to note that the
+bug reports do serve a purpose in alerting me to that other copy of
+mpg123 code in the wild.
 
-References:
 
-https://bugs.debian.org/868705
-http://news.dieweltistgarnichtso.net/posts/gnome-thumbnailer-msi-fail.html
+Alrighty then,
 
-Regards,
-Salvatore
+Thomas
+
+-- 
+Dr. Thomas Orgis
+Universität Hamburg
+RRZ / Basis-Infrastruktur / HPC
+Schlüterstr. 70
+20146 Hamburg
+Tel.: 040/42838 8826
+Fax: 040/428 38 6270
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4967 bytes)
