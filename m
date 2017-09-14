@@ -1,29 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/16
-Message-ID: <20170620132204.GA6240@openwall.com>
-Date: Tue, 20 Jun 2017 15:22:04 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/4
+Message-ID: <163984.21171786-sendEmail@localhost>
+Date: Thu, 14 Sep 2017 07:01:45 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: mp3gain: global buffer overflow in III_dequantize_sample (mpglibDBL/layer3.c)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 19, 2017 at 10:39:33PM +0200, Solar Designer wrote:
-> Since we were making this public in pieces like that, I have to say: no,
-> there's nothing else left to publish as part of this series of Qualys'
-> findings.  Everything Qualys brought to distros so far is now public.
+Description:
+mp3gain is a program to analyze and adjust MP3 files to same volume.
 
-I have to correct the above statement as I totally forgot about the
-exploits.  While all issues Qualys brought to distros so far are now
-public, Qualys' own exploits for them are not public yet.  IIRC, Qualys
-selectively sent the exploits to affected vendors, but that included
-sending the Linux-specific exploits to the linux-distros sub-list.
+The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
+The upstream project seems to be dead, so the issue wasn’t communicated to them.
 
-Qualys, I suggest that, like you did with the Sudo exploit, you publish
-your Stack Clash exploits in here as soon as third-party exploits of
-comparable functionality appear, or next Tuesday, whichever is earlier.
+The complete ASan output of the issue:
 
-Please confirm that you intend to do so in a reply to this message, so
-that everyone in here knows what to expect.
+# aacgain -f $FILE
+==23791==ERROR: AddressSanitizer: global-buffer-overflow on address 0x00000107ff80 at pc 0x0000008e2acc bp 0x7fff34f7d100 sp 0x7fff34f7d0f8
+WRITE of size 8 at 0x00000107ff80 thread T0
+    #0 0x8e2acb in III_dequantize_sample /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:779
+    #1 0x8e2acb in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1646
+    #2 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643
+    #3 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
+    #4 0x7f36927b3680 in __libc_start_main (/lib64/libc.so.6+0x20680)
+    #5 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
 
-Alexander
+0x00000107ff80 is located 32 bytes to the left of global variable 'sideinfo' defined in 'layer3.c:1521:21' (0x107ffa0) of size 488
+0x00000107ff80 is located 0 bytes to the right of global variable 'hybridIn' defined in 'layer3.c:1612:17' (0x107db80) of size 9216
+SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:779 in III_dequantize_sample
+Shadow bytes around the buggy address:
+  0x000080207fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080207fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080207fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080207fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080207fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x000080207ff0:[f9]f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080208000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080208010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080208020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080208030: 00 f9 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+  0x000080208040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==23791==ABORTING
+
+Affected version:
+1.5.2
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14409
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00350-aacgain-globaloverflow-III_dequantize_sample
+
+Timeline:
+2017-08-28: bug discovered
+2017-09-08: blog post about the issue
+2017-09-13: CVE Assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/08/mp3gain-global-buffer-overflow-in-iii_dequantize_sample-mpglibdbllayer3-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
