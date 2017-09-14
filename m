@@ -1,30 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/11/4
-Message-ID: <20170811192447.aqlul7ixqv5ymlxi@eldamar.local>
-Date: Fri, 11 Aug 2017 21:24:47 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVS and ssh command injection (see CVE-2017-1000117, etc.)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/8
+Message-ID: <706317.355713935-sendEmail@localhost>
+Date: Thu, 14 Sep 2017 07:05:44 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: mp3gain: memcpy-param-overlap in set_pointer (mpglibDBL/common.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Additionally to the previous discovered bugs there a memcpy-param-overlap. Under a non-asan build the crash does not occur, so there is no CVE, but you may want to have it fixed in your repository.
 
-On Fri, Aug 11, 2017 at 01:40:33PM +0200, Salvatore Bonaccorso wrote:
-> hi
-> 
-> On Fri, Aug 11, 2017 at 10:10:18AM +0200, Andreas Stieger wrote:
-> > On 08/11/2017 01:32 AM, Hank Leininger wrote:
-> > > SSH command injection via -o... impacts CVS 1.12.x as well
-> > > [...]
-> > > I don't know if these were discussed on a private list prior to publication, and whether that discussion included CVS.
-> > 
-> > cvs did not come up in the private discussions that I am aware of,
-> > thanks for pointing it out.
-> 
-> FWIW, I have requested a CVE via the MITRE webform. Will followup here
-> once/if it gets assigned.
 
-CVE-2017-12836 was assigned for this issue.
+Description:
+mp3gain is a program to analyze and adjust MP3 files to same volume.
 
-Regards,
-Salvatore
+The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
+The upstream project seems to be dead, so the issue wasn’t communicated to them.
+
+The complete ASan output of the issue:
+
+# aacgain -f $FILE
+==23175==ERROR: AddressSanitizer: memcpy-param-overlap: memory ranges [0x7f004fb593ff,0x7f004fb594fd) and [0x7f004fb59381, 0x7f004fb5947f) overlap
+    #0 0x7f00532d5906  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5c906)
+    #1 0x8e9b25 in set_pointer /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/common.c:328
+    #2 0x8cd58d in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1582
+    #3 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643
+    #4 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
+    #5 0x7f00525ee680 in __libc_start_main (/lib64/libc.so.6+0x20680)
+    #6 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
+
+Address 0x7f004fb593ff is located in stack of thread T0 at offset 21503 in frame
+    #0 0x4341ff in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:1411
+
+  This frame has 7 object(s):
+    [32, 33) 'maxgain'
+    [96, 97) 'mingain'
+    [160, 164) 'nprocsamp'
+    [224, 232) 'maxsample'
+    [288, 9504) 'lsamples'
+    [9536, 18752) 'rsamples'
+    [18784, 50704) 'mp' <== Memory access at offset 21503 is inside this variable
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
+      (longjmp and C++ exceptions *are* supported)
+Address 0x7f004fb59381 is located in stack of thread T0 at offset 21377 in frame
+    #0 0x4341ff in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:1411
+
+  This frame has 7 object(s):
+    [32, 33) 'maxgain'
+    [96, 97) 'mingain'
+    [160, 164) 'nprocsamp'
+    [224, 232) 'maxsample'
+    [288, 9504) 'lsamples'
+    [9536, 18752) 'rsamples'
+    [18784, 50704) 'mp' <== Memory access at offset 21377 is inside this variable
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
+      (longjmp and C++ exceptions *are* supported)
+SUMMARY: AddressSanitizer: memcpy-param-overlap (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5c906) 
+==23175==ABORTING
+
+Affected version:
+1.5.2
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00349-aacgain-memcpyparamoverlap-set_pointer
+
+Timeline:
+2017-08-28: bug discovered
+2017-09-08: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/08/mp3gain-memcpy-param-overlap-in-set_pointer-mpglibdblcommon-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
