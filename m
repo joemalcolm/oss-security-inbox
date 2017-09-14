@@ -1,58 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/1
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F712D4C415@EXMBX-TJ002.tencent.com>
-Date: Wed, 30 Aug 2017 02:48:24 +0000
-From: winsonliu(刘科) <winsonliu@...cent.com>
-To: Vladis Dronov <vdronov@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Alan Coopersmith <alan.coopersmith@...cle.com>
-CC: cve-assign <cve-assign@...re.org>
-Subject: RE: CVE Request: Multiple security issues in OpenJPEG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/2
+Message-ID: <427445.19640425-sendEmail@localhost>
+Date: Thu, 14 Sep 2017 07:00:25 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Description:
+mp3gain is a program to analyze and adjust MP3 files to same volume.
 
-I've already submitted these issues to https://cveform.mitre.org/ . As expected, four CVE numbers will be assigned since some of them have the same root cause.
+The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
+The upstream project seems to be dead, so the issue wasn’t communicated to them.
 
-Regards,
-Ke
+The complete ASan output of the issue:
 
------Original Message-----
-From: winsonliu
-Sent: 2017年8月25日 20:16
-To: 'Vladis Dronov' <vdronov@...hat.com>; 'oss-security@...ts.openwall.com' <oss-security@...ts.openwall.com>; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
-Cc: 'cve-assign' <cve-assign@...re.org>
-Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
+# aacgain -f $FILE
+ASAN:DEADLYSIGNAL                                                                                                                                                                                                 
+=================================================================                                                                                                                                                 
+==23063==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000010 (pc 0x0000008aafe0 bp 0x7ffe06c66450 sp 0x7ffe06c663f0 T0)
+    #0 0x8aafdf in sync_buffer /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:393
+    #1 0x8ae64c in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:665
+    #2 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
+    #3 0x7fa37f734680 in __libc_start_main (/lib64/libc.so.6+0x20680)
+    #4 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
 
-Hello,
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:393 in sync_buffer
+==23063==ABORTING
 
-I'll submit them to cveform next week. And I'll update this thread when more information is available.
+Affected version:
+1.5.2
 
-Regards,
-Ke
+Fixed version:
+N/A
 
------Original Message-----
-From: winsonliu 
-Sent: 2017年8月24日 9:26
-To: 'Vladis Dronov' <vdronov@...hat.com>; oss-security@...ts.openwall.com; 'Alan Coopersmith' <alan.coopersmith@...cle.com>
-Cc: cve-assign <cve-assign@...re.org>
-Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
+Commit fix:
+N/A
 
-I'm afraid no CVEs were assigned. At least I did not submit these issues to https://cveform.mitre.org/ 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Regards,
-Ke
+CVE:
+CVE-2017-14406
 
------Original Message-----
-From: Vladis Dronov [mailto:vdronov@...hat.com] 
-Sent: 2017年8月23日 19:53
-To: oss-security@...ts.openwall.com
-Cc: winsonliu <winsonliu@...cent.com>; cve-assign <cve-assign@...re.org>
-Subject: Re: [oss-security] CVE Request: Multiple security issues inOpenJPEG(Internet mail)
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00347-aacgain-NULLptr-sync_buffer
 
-> Most of these seem to be fixed now in OpenJPEG's recent 2.2.0 release.
-> Did CVE id's ever get assigned for them?
+Timeline:
+2017-08-28: bug discovered
+2017-09-08: blog post about the issue
+2017-09-13: CVE Assigned
 
-If no one reported them and requested CVE-ids via https://cveform.mitre.org/ then I suppose not, no CVE-ids were assigned.
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/08/mp3gain-null-pointer-dereference-in-sync_buffer-mpglibdblinterface-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
