@@ -1,4 +1,9 @@
-Received: (qmail 4033 invoked by uid 550); 6 Mar 2025 04:49:17 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["668" "Thursday" "14" "September" "2017" "20:14:03" "+0000" "Armis Security" "security@armis.com" "<CA++9HO8FVAQw-oPFzqQUdOX6MnyP0s681grArPSPusGHAmChQA@mail.gmail.com>" "26" "Re: [oss-security] Linux BlueBorne vulnerabilities" "^Date:" nil nil "9" "2017091420:14:03" "[oss-security] Linux BlueBorne vulnerabilities" (number mark "        security@arm Sep 14   26/668   " thread-indent "\"Re: [oss-security] Linux BlueBorne vulnerabilities\"\n") "<20170914121219.GW11536@dhcp-25-225.brq.redhat.com>" ("<CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>" "<20170914121219.GW11536@dhcp-25-225.brq.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15392 invoked by uid 550); 14 Sep 2017 21:18:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,76 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 24199 invoked from network); 14 Sep 2017 20:14:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=armis.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=FEAUNPoiHIq+4UKbddbLTJqBINwEeAB9hmVRjD12nZ4=;
+        b=YXpPS7fCyiwVRyEIZ+2C7jRk+OTbEMsHpM+xo/zbQeGcynIcZnidQt0TG7NuwUL9iq
+         pEdSGjqfljvObi/lTRoGFJfCTs1dB8YDFnvDNUJkRrbmn9E/pnzVbTDQm0/+vtlFXrlG
+         llsF1meW43LvuE/4E9m1NpVgQ+tEDBqBdAFq4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=FEAUNPoiHIq+4UKbddbLTJqBINwEeAB9hmVRjD12nZ4=;
+        b=CUb0UAMt2LjLdHLasTI/UAw61giXa74acquNTZS3RJo8wwcUa82vWaEzHOMS5YSgDR
+         MC9RyrBHl6iggvq5IzDJ17DMmFUDa/Tcgxx98K8WCdcD5MHSic6ulNEm/vzxxBX/52Ra
+         ZtibRaLa2zWsrU8zsOhmMlAa9Bld+MmH5FwjG8obKXnkBXceNGvcSZsWCHA+Y6rTu6AR
+         OLfJctQfPlTR7yV31aomGtxB731Q7ytpbnnCyixW6p3LQlXk7eVWTTLMD1JhZ8KaN0Q1
+         CKM0btaCzwAYYBRoDcVa7+1eYV75siCkczqYEi9jkwRqh2Q/4JadaaLicwf2rFItr8HG
+         TzGg==
+X-Gm-Message-State: AHPjjUjryYCeUI4NvoRot6o3vkzt7SHpZkiw41rEOsTN1/Zkgd1Tljo2
+	AEa48uV1Brx0HBNkjOX7nRvT6kofmBdtZZwpYZ4eew==
+X-Google-Smtp-Source: ADKCNb6Cn9vDzdRnyWsjJRzt9nEsVt1EbZQ8ucFiocUVvt54VbJUajjNX0Myzfbgyyycv3PwVbrZnMWyTDTnKGYmr0k=
+X-Received: by 10.80.204.10 with SMTP id m10mr11524327edi.73.1505420054195;
+ Thu, 14 Sep 2017 13:14:14 -0700 (PDT)
+MIME-Version: 1.0
+References: <CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>
+ <20170914121219.GW11536@dhcp-25-225.brq.redhat.com>
+In-Reply-To: <20170914121219.GW11536@dhcp-25-225.brq.redhat.com>
+Message-ID: <CA++9HO8FVAQw-oPFzqQUdOX6MnyP0s681grArPSPusGHAmChQA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="f40304392f0491828705592beb27"
+Date: Thu, 14 Sep 2017 20:14:03 +0000
+From: Armis Security <security@armis.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3462 invoked from network); 6 Mar 2025 04:48:57 -0000
-Date: Thu, 6 Mar 2025 05:48:56 +0100
-From: Solar Designer <solar@openwall.com>
-To: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20250306044856.GA6417@openwall.com>
-References: <b3afc964-2840-4583-bb39-e05d390d3e55@citrix.com> <20250306031513.GA4873@openwall.com> <b21e9116-4108-4d52-b3b0-8c1e96486888@citrix.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b21e9116-4108-4d52-b3b0-8c1e96486888@citrix.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Xen Security Notice 2 (CVE-2024-35347) AMD CPU Microcode Signature Verification Vulnerability
+Subject: Re: [oss-security] Linux BlueBorne vulnerabilities
+To: Petr Matousek <pmatouse@redhat.com>, oss-security@lists.openwall.com
 
-On Thu, Mar 06, 2025 at 04:11:25AM +0000, Andrew Cooper wrote:
-> On 06/03/2025 3:15 am, Solar Designer wrote:
-> > Maybe you can also clarify what Xen's threat model is here, and how this
-> > mitigation fits into it?
-> >
-> > Specifically, what are "Xen's microcode loading capabilities" and are
-> > they in any way more exposed than the host system's root account?  Even
-> > with Xen's mitigation above, host root can still load microcode without
-> > Xen involvement, right?  Unless you block (at least) MSR access and
-> > kernel module loading?
-> 
-> First of all, there's an equivalent change in Linux.
-> 
-> https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=bb2281fb05e50108ce95c43ab7e701ee564565c8
+--f40304392f0491828705592beb27
+Content-Type: text/plain; charset="UTF-8"
 
-Oh, I had missed that, thanks!
+Hi Petr.
 
-> [...] 3rd party repositories of microcode repositories ripped
-> out of firmware exist, there is a small but known usergroup who take
-> microcode from a 3rd party source.
-> 
-> As of today, anyone can make an arbitrary malicious microcode that will
-> load on Zen1-4 CPUs.
-> 
-> This issue wins points for spite, because the highest risk users are the
-> ones who were taking proactive steps to try and improve their security,
-> betting that AMD's patchloader crypto was sound.
+On August 15th we have contacted one of the senior maintiners of BlueZ and
+attempted to establish a longer embargo period with him. Unfortunatelly his
+suggestion was to post our findings to linux-bluetooth@vger.kernel.org,
+which is a public mailing list.
 
-OK, so this is to protect legitimate sysadmins from loading malicious
-microcode inadvertently or via a supply chain attack.  Makes sense.
+So we decided to disclose our findings to the secure mailing list that
+unfortunatelly only have a maximum of 7 days embargo periods.
 
-> Under Host UEFI Secure Boot, there is a security boundary between kernel
-> code and root.  Part of the requirement is "no unsigned code running
-> privileged", and while this is technically a grey area (the malicious
-> blob is signed; it's just not signed by AMD), it's also easy to argue
-> that root definitely shouldn't be able to load a malicious microcode,
-> just like it shouldn't be able to swap out the kernel with an unsigned
-> one and reboot.
+I am happy to hear the red hat security team allows for longer embargo
+periods, and we will contact you directly in the future.
 
-Yes, but can't Xen's and the kernel's new protections be bypassed by MSR
-access via /dev/cpu/*/msr?  The AMD microcode loader released by Google
-now doesn't appear to require more than that:
 
-https://github.com/google/security-research/blob/master/pocs/cpus/entrysign/zentool/loader.c
+Thank you,
 
-> In Xen we're working towards properly supporting UEFI Secure Boot. 
-> We're not there yet (there's a lot of technical debt to overcome), hence
-> why this isn't a full-blown XSA.
-> 
-> All of that said, it's also likely that there are a lot of vulnerable
-> but uncompromised systems.  These measures in Xen and Linux are a
-> stopgap; a bit of extra defence in depth.  They're certainly not perfect.
+Armis Labs.
 
-OK.  Thanks again,
 
-Alexander
+>
+>
+
+--f40304392f0491828705592beb27--
