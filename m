@@ -1,20 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/13
-Message-ID: <ca9bedc0-1bd2-e13d-3df2-67fdc4d463bd@redhat.com>
-Date: Thu, 6 Jul 2017 14:52:58 -0600
-From: "kseifried@...hat.com" <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/11
+Message-ID: <20170914092615.5e8ab5e3@sturbolzen>
+Date: Thu, 14 Sep 2017 09:26:15 +0200
+From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Subject: Re: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
 Content-Type: text/plain; charset=utf-8
 
-Ah sorry I didn't realize Red Hat should probably reply to this, we
-already do a lot of this work, we're happy to keep doing it. I'm not
-clear on some of the things though (e.g. the tracking progress, if there
-isn't any then what? sometimes these things take time or new
-complications are found).
+Hi Agostino,
+
+thanks for pointing out that mp3gain is yet another user of an outdated
+fork of mpg123 code. But this time with a twist: This again seems to be
+a lifted version of the modified mpg123 code from Lame! A forked fork.
+
+I'll have a look if I can rip that mpglib out of mp3gain and provide a
+patch that uses an up-to-date libmpg123 for parsing instead. This would
+perhaps be a better path forward for distros than to remove the
+vulnerable mp3gain altogether.
+
+An impressive list of vulnerabilities you have there … perhaps some
+specific to mp3gain's modifications, but I guess the overflows in
+layer3.c are well-known already from mpg123 and Lame.
+
+
+Alrighty then,
+
+Thomas
 
 -- 
+Dr. Thomas Orgis
+Universität Hamburg
+RRZ / Basisinfrastruktur / HPC
+Schlüterstr. 70
+20146 Hamburg
+Tel.: 040/42838 8826
+Fax: 040/428 38 6270
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (5898 bytes)
