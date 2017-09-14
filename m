@@ -1,30 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/8
-Message-id: <4B868989-042B-4372-B240-CA7A707CA929@me.com>
-Date: Wed, 01 Mar 2017 04:38:07 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Persistent XSS in wordpress plugin rockhoist-badges v1.2.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/14
+Message-ID: <20170914121219.GW11536@dhcp-25-225.brq.redhat.com>
+Date: Thu, 14 Sep 2017 14:12:21 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com, Armis Security <security@...is.com>
+Subject: Re: Linux BlueBorne vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Title: Persistent XSS in wordpress plugin rockhoist-badges v1.2.2
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-02-20
-Download Site: https://wordpress.org/plugins/rockhoist-badges/
-Vendor: https://profiles.wordpress.org/esserq/
-Vendor Notified: 2017-02-20
-Vendor Contact:
-Description: A Stack Overflow inspired plugin for WordPress which allows users to acquire badges for contributing website content. Badges are created and managed through the WordPress Dashboard.
-Vulnerability:
-There is a persistent cross site scripting vulnerability in the plugin Rockhoist Badges.  A user with the 
-ability to edit_posts can inject malicious javascript.  Into the badge description or title field.
+Hi,
 
-Line 603 doesn't sanitize user input before sending it to the browser in file ./rockhoist-badges/rh-badges.php:
+On Wed, Sep 13, 2017 at 09:08:31PM +0000, Armis Security wrote:
+> We are writing to inform you of two security vulnerabilities we have found
+> in the Bluetooth stack in Linux (BlueZ).
+> 
+> These vulnerabilities have been made public yesterday (Sept. 12, 2017), and
+> are part of 8 vulnerabilities we have disclosed to various vendors (as a
+> group they are called "BlueBorne").
+> 
+> Both Linux-related vulnerabilities where disclosed to
+> distros@...openwall.org.
+> The kernel-related vulnerability (CVE-2017-1000251) was also disclosed to
+> security@...nel.org
+> Both disclosures began on Sept. 5, 2017, and patches were made available
+> yesterday and today.
 
--> 603: <span class="delete"><a href="?page=badges&action=deletecondition&badge_ID=<?php echo $_GET['badge_ID']; ?>&badge_condition_ID=<?php echo $badge_condition->badge_condition_id; ?>" class="delete-tag">Delete</a></span>
+at https://www.armis.com/blueborne/, "A Coordinated Disclosure"
+paragraph you write that:
 
-CVE-ID: CVE-2017-6102
-Exploit Code:
-	• "><script>alert(1);</script> in the title or description field will inject js.
-Screen Shots: [http://www.vapidlabs.com/m/badges.jpg]
-Advisory: http://www.vapidlabs.com/advisory.php?v=176
+"Linux - Contacted August 15 and 17, 2017. On September 5, 2017, we
+connected and provided the necessary information to the the Linux kernel
+security team and to the Linux distributions security contact list and
+conversations followed from there. Targeting updates for on or about
+September 12, 2017 for coordinated disclosure."
+
+May you please share with us who was contacted on August 15th and 17th
+and why you waited until September 5th with the disclosure to
+linux-distros and security@...nel.org?
+
+If it was because of the strict embargo rules for linux-distros and
+security@...nel.org mailing lists, next time please feel free to reach
+Red Hat directly via secalert@...hat.com . We will honour any reporter
+set embargo and can contact other vendors directly. And also work on the
+fixes.
+
+Thank you,
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
