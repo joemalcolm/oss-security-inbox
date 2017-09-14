@@ -1,95 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/4
-Message-ID: <20170907151829.lff5etqqtwceqvq4@perpetual.pseudorandom.co.uk>
-Date: Thu, 7 Sep 2017 16:27:25 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/7
+Message-ID: <552869.637121574-sendEmail@localhost>
+Date: Thu, 14 Sep 2017 07:03:29 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: mp3gain: global buffer overflow in III_i_stereo (mpglibDBL/layer3.c)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 07 Sep 2017 at 08:38:23 -0400, Michael Orlitzky wrote:
-> supervised:
-> 
->   4. Daemon runs in the foreground, and does nothing special
+Description:
+mp3gain is a program to analyze and adjust MP3 files to same volume.
 
-If other services can depend on this daemon (for example situations like
-"NetworkManager must start after dbus-daemon is ready" or "ntpd must
-start after syslogd is ready"), then it frequently does need to do
-something special, to tell larger infrastructure when it is ready to
-satisfy dependencies.
+The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
+The upstream project seems to be dead, so the issue wasn’t communicated to them.
 
-systemd implements several mechanisms for this: the daemon can fork (as
-below; Type=forking in systemd jargon), or it can request a D-Bus name
-(Type=dbus), or it can send a systemd-specific message over a Unix socket
-(Type=notify). For simplicity, Type=dbus and Type=notify daemons should
-normally "stay in the foreground" and not fork, although I don't think
-that's actually required (systemd can supervise them regardless).
-systemd units (configuration/integration files) typically set a desired
-Type, then run the daemon with appropriate command-line options to make
-it behave in a way that matches the Type.
+The complete ASan output of the issue:
 
-Other init/rc systems can implement whatever mechanisms they want to for
-readiness notification, but they typically have *something*. I've seen
-some (runit) that advocate having dependent services just fail and exit
-when their dependencies are not satisfied, using a retry loop to get
-them started successfully, and not telling the service manager anything
-about the dependency tree; but that seems like the exception rather than
-the rule.
+# aacgain -f $FILE
+==20037==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000010803e0 at pc 0x0000008dde6c bp 0x7fff0aee7020 sp 0x7fff0aee7018                                                                       
+READ of size 8 at 0x0000010803e0 thread T0                                                                                                                                                                        
+    #0 0x8dde6b in III_i_stereo /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1076                                                                                         
+    #1 0x8dde6b in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1661                                                                                            
+    #2 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643                                                                                          
+    #3 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262                                                                                                          
+    #4 0x7f756ace0680 in __libc_start_main (/lib64/libc.so.6+0x20680)                                                                                                                                             
+    #5 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)                                                                                                                                                             
+                                                                                                                                                                                                                  
+0x0000010803e0 is located 32 bytes to the left of global variable 'pow2_1' defined in 'layer3.c:109:27' (0x1080400) of size 256                                                                                   
+0x0000010803e0 is located 0 bytes to the right of global variable 'pow1_2' defined in 'layer3.c:109:41' (0x10802e0) of size 256                                                                                   
+SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1076 in III_i_stereo                                                       
+Shadow bytes around the buggy address:                                                                                                                                                                            
+  0x000080208020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                 
+  0x000080208030: 00 f9 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+  0x000080208040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080208050: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
+  0x000080208060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x000080208070: 00 00 00 00 00 00 00 00 00 00 00 00[f9]f9 f9 f9
+  0x000080208080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080208090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000802080a0: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000802080b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000802080c0: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==20037==ABORTING
 
-> Forking,
-> 
->   1. Daemon forks
->   2. Daemon writes a PID file
->   3. Daemon drops privileges
+Affected version:
+1.5.2
 
-Forking is not just for backgrounding, it's also a form of semi-explicit
-readiness-notification. In a world of sysv-style shell init scripts,
-an easy way to implement the common semantics "wait for daemon to be
-ready to accept requests and satisfy other daemons' dependencies, then
-return" is to have the daemon use the forking pattern like daemon(3).
-Then the shell script does something like:
+Fixed version:
+N/A
 
-    #!/bin/sh
-    case "$1" in
-        (start)
-            dbus-daemon --system --fork \
-                --address=unix:/var/run/dbus/system_bus_socket
-            exit 0
-            ;;
-        ...
-    esac
+Commit fix:
+N/A
 
-which means it won't exit until the initial process of the daemon
-has exited, for example because it has called daemon(3) or equivalent.
-A well-behaved daemon that implements this pattern will make sure not to
-call daemon(3) until it is ready to accept requests and satisfy other
-daemons' dependencies. For example, in the dbus-daemon invocation in
-my shell script fragment above, dbus-daemon has already called bind()
-and listen() on /var/run/dbus/system_bus_socket before it daemonizes
-(double-forks), so as soon as it daemonizes, clients can rely on being
-able to connect() to that address without a race condition causing them
-to fail.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Some service supervisors (in particular I'm aware of systemd and Upstart)
-identify and track this forking pattern as a way to know when dependencies
-on this daemon can be assumed to be satisfied. This is orthogonal to
-whether they supervise the daemon - systemd will certainly do so whether
-the daemon forks or not, and I think Upstart does too.
+CVE:
+CVE-2017-14410
 
-Ideally, the sequence of events would be something that ensures that
-the pid file already exists by the time readiness has been announced,
-like this pseudocode:
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00353-aacgain-globaloverflow-III_i_stereo
 
-    have the necessary privileges to write a pid file
-    fork
-    if (parent) {
-        write child pid to pid file
-        exit    /* tells supervisor we are ready */
-    }
-    else /* child */ {
-        drop privileges
-        while (1) { process request }
-    }
+Timeline:
+2017-08-28: bug discovered
+2017-09-08: blog post about the issue
+2017-09-13: CVE Assigned
 
-Regards,
-    smcv
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/08/mp3gain-global-buffer-overflow-in-iii_i_stereo-mpglibdbllayer3-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
