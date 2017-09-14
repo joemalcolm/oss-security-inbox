@@ -1,4 +1,9 @@
-Received: (qmail 23613 invoked by uid 550); 17 May 2022 12:25:16 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1674" "Thursday" "14" "September" "2017" "14:12:21" "+0200" "Petr Matousek" "pmatouse@redhat.com" "<20170914121219.GW11536@dhcp-25-225.brq.redhat.com>" "40" "Re: [oss-security] Linux BlueBorne vulnerabilities" "^Date:" nil nil "9" "2017091412:12:21" "[oss-security] Linux BlueBorne vulnerabilities" (number mark "        pmatouse@red Sep 14   40/1674  " thread-indent "\"Re: [oss-security] Linux BlueBorne vulnerabilities\"\n") "<CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>" ("<CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9404 invoked by uid 550); 14 Sep 2017 12:12:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,116 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5199 invoked from network); 17 May 2022 12:13:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1652789592;
-	bh=kV1vqUzkLjdjiaLiFjmMwOID1msr7AjWL9zVaFEllYw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=W+b1LrtAEQ/lKbKoQ+TmFYsB38/MH96uSBvOz69eFT12pVqRw9LqQOCxLpDVBQLeB
-	 e0TZfuWkYpfV8RAJFcDtb0xFr2fUKQ5r7ZgADKfKB+ZiIf9Xrj+b2kiIv1S+Xd8wXk
-	 E0QAh1uPqn4bI3LG4MAY1CpHNESpCTrIVmTX8cjPNH6E0ywJncf6vG4zBQ+a98V2BD
-	 ywzeAKSRFQv18BCR/QFLcO/2jkg6C3AGy0J62hFqqDWMIeYJpH32nmbjP4f3qtYcji
-	 5wbgAMIrriXlhCi22LLMocEXmj3vprhpkY4W4JXJaFc42gkOoR30Kt0W3MTKsMjtbJ
-	 F4uMVmfTZcvuQ==
-Date: Tue, 17 May 2022 09:13:08 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-To: oss-security@lists.openwall.com
-Cc: Seth Arnold <seth.arnold@canonical.com>
-Message-ID: <YoORVO2BbBDdjyd2@quatroqueijos>
-References: <20220517033033.GA3403712@millbarge>
- <YoOCmBqfouvgbEX0@zx2c4.com>
+Received: (qmail 9383 invoked from network); 14 Sep 2017 12:12:36 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 7D410806BD
+Authentication-Results: ext-mx02.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx02.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=pmatouse@redhat.com
+Message-ID: <20170914121219.GW11536@dhcp-25-225.brq.redhat.com>
+References: <CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YoOCmBqfouvgbEX0@zx2c4.com>
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel
+In-Reply-To: <CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Thu, 14 Sep 2017 12:12:24 +0000 (UTC)
+Date: Thu, 14 Sep 2017 14:12:21 +0200
+From: Petr Matousek <pmatouse@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux BlueBorne vulnerabilities
+To: oss-security@lists.openwall.com, Armis Security <security@armis.com>
 
-On Tue, May 17, 2022 at 01:10:16PM +0200, Jason A. Donenfeld wrote:
-[...] 
-> This brings us back to the original topic of this (sub-)thread: do
-> public fixes make security vulnerabilities manifest to the public? I
-> guess it depends on who you consider to be the public. If you're
-> speaking from the perspective of placating customers and taking care of
-> some commercial bottom line, the answer is no. No public PR situation
-> coming your way, so no work to be done, vulnerability doesn't exist yet.
-> But if you're speaking from the perspective of whether attackers now are
-> aware of the bug and can write exploits for it -- that is, a real threat
-> model -- then the answer is obviously yes, if the fix is public, the bug
-> is public.
+Hi,
+
+On Wed, Sep 13, 2017 at 09:08:31PM +0000, Armis Security wrote:
+> We are writing to inform you of two security vulnerabilities we have found
+> in the Bluetooth stack in Linux (BlueZ).
 > 
-> So when I read in this thread calls for extending embargoes until the
-> vulnerability is "disclosed" in some sort of announcement (that is, PR),
-> rather than just until the public git fix, it seems plain that the end
-> goal is a messaging or communication one, rather than a security one. On
-> the surface, delaying the release of a vulnerability until it's had time
-> to reach customer systems sounds like a good idea. But zoom in a little
-> bit and you quickly realize that the vulnerability has *already* been
-> released to attackers who read commit logs, and the thing we're talking
-> about delaying is an official announcement. It turns out, attackers
-> don't care about your official announcements; the marketing team does.
+> These vulnerabilities have been made public yesterday (Sept. 12, 2017), and
+> are part of 8 vulnerabilities we have disclosed to various vendors (as a
+> group they are called "BlueBorne").
 > 
-> And as I understand it, the Openwall mailing lists have never been about
-> enabling companies to better control their messaging. They've been about
-> a deterministic embargo & disclosure process, to strike the right
-> balance of letting people coordinate privately when needed, and then
-> letting various parties make the best decisions they can once the cat is
-> out of the bag. Should the distros@ policy change to be more PR-friendly,
-> or should it stay true to its security policy ideals?
-> 
-> Jason
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/commit/?id=2505a981114dcb715f8977b8433f7540854851d8
+> Both Linux-related vulnerabilities where disclosed to
+> distros@vs.openwall.org.
+> The kernel-related vulnerability (CVE-2017-1000251) was also disclosed to
+> security@kernel.org
+> Both disclosures began on Sept. 5, 2017, and patches were made available
+> yesterday and today.
 
-Hey, Jason.
+at https://www.armis.com/blueborne/, "A Coordinated Disclosure"
+paragraph you write that:
 
-Lots of good discussion points there, but let me focus on these last ones, as I
-think I am able to address them better than the others. Thanks.
+"Linux - Contacted August 15 and 17, 2017. On September 5, 2017, we
+connected and provided the necessary information to the the Linux kernel
+security team and to the Linux distributions security contact list and
+conversations followed from there. Targeting updates for on or about
+September 12, 2017 for coordinated disclosure."
 
-Notice this is my personal opinion, having been a linux-distros member list for
-around a year or a bit less.
+May you please share with us who was contacted on August 15th and 17th
+and why you waited until September 5th with the disclosure to
+linux-distros and security@kernel.org?
 
-I think you are taking this backwards. The linux-distros policy is not that the
-fix should be kept private until there is a security disclosure, but that the
-security implications (that were disclosed to linux-distros) be made public as
-soon as the fix is public.
+If it was because of the strict embargo rules for linux-distros and
+security@kernel.org mailing lists, next time please feel free to reach
+Red Hat directly via secalert@redhat.com . We will honour any reporter
+set embargo and can contact other vendors directly. And also work on the
+fixes.
 
-It is about communication, but not only communication. It is also about process
-and balancing stability and security.
-
-If distros are supposed to include many different fixes in a very short time
-frame, just in order to hide the security implications of a fix, there are
-chances of other things breaking because: 1) there are many changes; 2) there
-was a short time to get them tested. Don't get this wrong. I also agree that a
-good strategy is to release as many fixes as are identified to go to stable@ as
-often as possible. But doing it weekly is not feasible for everyone out there.
-
-And if distros ship a new kernel release with a single fix without mentioning
-any security implications, honestly, we are already shouting out to attackers:
-"hey, we decided this was important enough to include this single fix, look at
-that!". And it looks like distros are breaking an embargo that was requested.
-
-I may be wrong on this, but I have the impression that disclosures are on the
-hands of the researchers/reporters. They are doing the work you described,
-going through fixes, syzkaller and other bug reports, and evaluating their
-security implications. Then, they go to security@kernel.org and the policy, as
-we mentioned, is that the security implications are not disclosed unless the
-reporter does it. Then, linux-distros/distros has the policy that whatever is
-posted there must be disclosed to oss-sec after up to 14 days. But it is still
-the reporter that does it. I think it is important that we are aware of that in
-order to find out how we could get this better or discuss if we should do it at
-all.
-
-And the status quo today is this: the reporter is the one who does the
-disclosure, distros won't ship a single fix after they have been told about a
-security vulnerability (and asked to not communicate its security implications)
-without a Coordinated Release Date, and distros won't ship hundreds or
-thousands of fixes in a short time frame just in order to release a security
-fix and yet hide the security implications.
-
-As I read your last question, and recall the initial message that started this
-discussion, I think people were being true to distros@ security policy ideals
-when it was asked that reports be made public as fixes were already public.
-
-Cascardo.
+Thank you,
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
