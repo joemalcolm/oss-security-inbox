@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3821" "Tuesday" "14" "August" "2018" "17:57:18" "+0200" "Marcus Meissner" "meissner@suse.de" "<20180814155718.3gcvbcs7am4xrpy5@suse.de>" "117" "[oss-security] CVE-2018-14722: btrfsmaintenance: Code execution" nil nil nil "8" "2018081415:57:18" "[oss-security] CVE-2018-14722: btrfsmaintenance: Code execution" (number mark "U       meissner@sus Aug 14  117/3821  " thread-indent "\"[oss-security] CVE-2018-14722: btrfsmaintenance: Code execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3945" "Thursday" "14" "September" "2017" "07:01:45" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<163984.21171786-sendEmail@localhost>" "98" "[oss-security] mp3gain: global buffer overflow in III_dequantize_sample (mpglibDBL/layer3.c)" nil nil nil "9" "2017091407:01:45" "[oss-security] mp3gain: global buffer overflow in III_dequantize_sample (mpglibDBL/layer3.c)" (number mark "U       ago@gentoo.o Sep 14   98/3945  " thread-indent "\"[oss-security] mp3gain: global buffer overflow in III_dequantize_sample (mpglibDBL/layer3.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5275 invoked by uid 550); 14 Aug 2018 15:57:32 -0000
+Received: (qmail 13940 invoked by uid 550); 14 Sep 2017 07:02:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,135 +12,110 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5257 invoked from network); 14 Aug 2018 15:57:31 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 14 Aug 2018 17:57:18 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>
-Message-ID: <20180814155718.3gcvbcs7am4xrpy5@suse.de>
+Received: (qmail 13816 invoked from network); 14 Sep 2017 07:02:02 -0000
+Message-ID: <163984.21171786-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 14 Sep 2017 07:01:45 +0000
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="mqxezyyxfzbpffu6"
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: NeoMutt/20170421 (1.8.2)
-Subject: [oss-security] CVE-2018-14722: btrfsmaintenance: Code execution
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-788858.915054337"
+Subject: [oss-security] mp3gain: global buffer overflow in III_dequantize_sample (mpglibDBL/layer3.c)
 
---mqxezyyxfzbpffu6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+------MIME delimiter for sendEmail-788858.915054337
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Hi,
+Description:
+mp3gain is a program to analyze and adjust MP3 files to same volume.
 
-SUSE employee Fabian Vogt has found a shell code injection issue in the "btrfsmaintenance" tools.
+The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
+The upstream project seems to be dead, so the issue wasn’t communicated to them.
 
-https://bugzilla.suse.com/show_bug.cgi?id=1102721
+The complete ASan output of the issue:
 
-Mounting btrfs images with a label including shell injection characters could cause
-the cron jobs (running as root) to execute the include shellcode.
+# aacgain -f $FILE
+==23791==ERROR: AddressSanitizer: global-buffer-overflow on address 0x00000107ff80 at pc 0x0000008e2acc bp 0x7fff34f7d100 sp 0x7fff34f7d0f8
+WRITE of size 8 at 0x00000107ff80 thread T0
+    #0 0x8e2acb in III_dequantize_sample /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:779
+    #1 0x8e2acb in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1646
+    #2 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643
+    #3 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
+    #4 0x7f36927b3680 in __libc_start_main (/lib64/libc.so.6+0x20680)
+    #5 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
 
-Our proposed fix attached to this email.
+0x00000107ff80 is located 32 bytes to the left of global variable 'sideinfo' defined in 'layer3.c:1521:21' (0x107ffa0) of size 488
+0x00000107ff80 is located 0 bytes to the right of global variable 'hybridIn' defined in 'layer3.c:1612:17' (0x107db80) of size 9216
+SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:779 in III_dequantize_sample
+Shadow bytes around the buggy address:
+  0x000080207fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080207fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080207fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080207fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080207fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x000080207ff0:[f9]f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080208000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080208010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080208020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080208030: 00 f9 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+  0x000080208040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==23791==ABORTING
 
-bad image can be created with:
-	mkfs.btrfs --label "`/evil/command`' /dev/sdx
+Affected version:
+1.5.2
 
-Ciao, Marcus
+Fixed version:
+N/A
 
---mqxezyyxfzbpffu6
-Content-Type: text/x-patch; charset=us-ascii
-Content-Disposition: attachment; filename="btrfsmaintenance-CVE-2018-14722.patch"
+Commit fix:
+N/A
 
-@@ -, +, @@ 
- mkfs.btrfs --label "`/evil/command`' /dev/sdx
- # /dev/sdx is auto-mounted
- # the respective btrfs-{scrub,trim,balance} job with configured 'auto' runs
----
- btrfs-balance.sh           |  2 +-
- btrfs-scrub.sh             |  2 +-
- btrfs-trim.sh              |  2 +-
- btrfsmaintenance-functions | 22 +++++++++++-----------
- 4 files changed, 14 insertions(+), 14 deletions(-)
---- a/btrfs-balance.sh	
-+++ a/btrfs-balance.sh	
-@@ -18,7 +18,7 @@ LOGIDENTIFIER='btrfs-balance'
- . $(dirname $(realpath "$0"))/btrfsmaintenance-functions
- 
- {
--evaluate_auto_mountpoint BTRFS_BALANCE_MOUNTPOINTS
-+BTRFS_BALANCE_MOUNTPOINTS=$(expand_auto_mountpoint "$BTRFS_BALANCE_MOUNTPOINTS")
- OIFS="$IFS"
- IFS=:
- exec 2>&1 # redirect stderr to stdout to catch all output to log destination
---- a/btrfs-scrub.sh	
-+++ a/btrfs-scrub.sh	
-@@ -29,7 +29,7 @@ if [ "$BTRFS_SCRUB_PRIORITY" = "normal" ]; then
- fi
- 
- {
--evaluate_auto_mountpoint BTRFS_SCRUB_MOUNTPOINTS
-+BTRFS_SCRUB_MOUNTPOINTS=$(expand_auto_mountpoint "$BTRFS_SCRUB_MOUNTPOINTS")
- OIFS="$IFS"
- IFS=:
- exec 2>&1 # redirect stderr to stdout to catch all output to log destination
---- a/btrfs-trim.sh	
-+++ a/btrfs-trim.sh	
-@@ -18,7 +18,7 @@ LOGIDENTIFIER='btrfs-trim'
- . $(dirname $(realpath "$0"))/btrfsmaintenance-functions
- 
- {
--evaluate_auto_mountpoint BTRFS_TRIM_MOUNTPOINTS
-+BTRFS_TRIM_MOUNTPOINTS=$(expand_auto_mountpoint "$BTRFS_TRIM_MOUNTPOINTS")
- OIFS="$IFS"
- IFS=:
- exec 2>&1 # redirect stderr to stdout to catch all output to log destination
---- a/btrfsmaintenance-functions	
-+++ a/btrfsmaintenance-functions	
-@@ -3,23 +3,24 @@ 
- # this file contains common code for the btrfs maintenance scripts
- #
- 
--# function: evaluate_auto_mountpoint
--# parameter: A variable name
-+# function: expand_auto_mountpoint
-+# parameter: path list from config variable or 'auto'
- #
--# this function checks whether the variable contains the special keyword "auto"
--# if yes, all currently mounted btrfs filesystems are evaluated and their mountpoints
--# are put into the parameter variable
--evaluate_auto_mountpoint() {
--	MOUNTPOINTSVAR=\$"$1"
--	if [ "$(eval expr \"$MOUNTPOINTSVAR\")" = "auto" ]; then
-+# if the parameter is 'auto', this function prints path list of all btrfs
-+# mountpoints, otherwise prints the parameter unchanged
-+expand_auto_mountpoint() {
-+	local MNTLIST="$1"
-+
-+	if [ "$MNTLIST" = "auto" ]; then
- 		local BTRFS_DEVICES=""
- 		local DEVICE=""
- 		local MNT=""
--		local MNTLIST=""
-+
- 		# find all mounted btrfs filesystems, print their device nodes, sort them
- 		# and remove identical entries
- 		BTRFS_DEVICES=$(findmnt --types btrfs --output "SOURCE" --nofsroot --noheading | sort | uniq)
- 		# find one (and only one) corresponding mountpoint for each btrfs device node
-+		MNTLIST=""
- 		for DEVICE in $BTRFS_DEVICES; do
- 			MNT=$(findmnt --types btrfs --first-only --noheadings --output "TARGET" --source "$DEVICE")
- 			if [ -n "$MNTLIST" ]; then
-@@ -28,9 +29,8 @@ evaluate_auto_mountpoint() {
- 				MNTLIST="$MNT"
- 			fi
- 		done
--		echo "evaluate mounted filesystems: $MNTLIST"
--		eval "$1=$MNTLIST"
- 	fi
-+	echo -n "$MNTLIST"
- }
- 
- # function: detect_mixed_bg
--- 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
---mqxezyyxfzbpffu6--
+CVE:
+CVE-2017-14409
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00350-aacgain-globaloverflow-III_dequantize_sample
+
+Timeline:
+2017-08-28: bug discovered
+2017-09-08: blog post about the issue
+2017-09-13: CVE Assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/08/mp3gain-global-buffer-overflow-in-iii_dequantize_sample-mpglibdbllayer3-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-788858.915054337--
+
