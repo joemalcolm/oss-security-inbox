@@ -1,193 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/2
-Message-ID: <76bfe937-f6da-48e2-7844-65c889eb8e85@eenterphace.org>
-Date: Mon, 22 May 2017 13:47:43 +0200
-From: Moritz Bechler <mbechler@...terphace.org>
-To: oss-security@...ts.openwall.com
-Subject: Code Execution through a variety Java (Un-)Marshallers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/3
+Message-ID: <153103.090913163-sendEmail@localhost>
+Date: Thu, 14 Sep 2017 07:00:58 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: mp3gain: stack-based buffer overflow in copy_mp (mpglibDBL/interface.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
+mp3gain is a program to analyze and adjust MP3 files to same volume.
 
-(As per list policy I tried to include the most relevant information,
-but I don't think including the full details makes any sense - hope that
-is okay.)
+The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
+The upstream project seems to be dead, so the issue wasn’t communicated to them.
 
-Full paper as well as payload generation tools are available at
-<https://www.github.com/mbechler/marshalsec/>
+The complete ASan output of the issue:
 
+# aacgain -f $FILE
+==17667==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7f71080af610 at pc 0x7f710b824cfb bp 0x7ffd67817fa0 sp 0x7ffd67817750
+WRITE of size 72 at 0x7f71080af610 thread T0
+    #0 0x7f710b824cfa  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5ccfa)
+    #1 0x8a8ad0 in copy_mp /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:188
+    #2 0x8ac8bd in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:685
+    #3 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
+    #4 0x7f710ab3d680 in __libc_start_main (/lib64/libc.so.6+0x20680)
+    #5 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
 
-Over the past two years we have seen a great number of vulnerabilities
-resulting from careless use of Java serialization.
+Address 0x7f71080af610 is located in stack of thread T0 at offset 50704 in frame
+    #0 0x4341ff in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:1411
 
-This research shows that issues like that are in no way limited to
-mechanisms as expressive or "powerful" as Java serialization but can be
-generalized to a wide range of other ones.
+  This frame has 7 object(s):
+    [32, 33) 'maxgain'
+    [96, 97) 'mingain'
+    [160, 164) 'nprocsamp'
+    [224, 232) 'maxsample'
+    [288, 9504) 'lsamples'
+    [9536, 18752) 'rsamples'
+    [18784, 50704) 'mp' 0x0feea100dec0: 00 00[f4]f4 f3 f3 f3 f3 00 00 00 00 00 00 00 00
+  0x0feea100ded0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0feea100dee0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0feea100def0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0feea100df00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0feea100df10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==17667==ABORTING
 
-Any unmarshaller that performs object binding, implicitly (e.g. magic
-methods on collection insertion) or explicitly (e.g. property setters)
-executes behaviors attached to the object's type (read: calls
-methods/executes codes).
+Affected version:
+1.5.2
 
-To do their work these mechanisms need to assume some kind of contract
-on these behaviors - simply put, they should not have any side effects.
-In practice however these conventions are broken quite often, either
-deliberately or unconsciously, and can lead to the execution of code
-with unwanted side-effects, in the worst case trigger command or remote
-code execution.
+Fixed version:
+N/A
 
-Many mechanisms embed type information in their outputs. In some form
-this is always required to properly restore polymorphic types (and pre
-Java 1.5 this was even required for regular collections as well).
-Insufficiently restricting the types that can be used there however
-means that an attacker can trigger these behaviors on more or less
-arbitrary types on the classpath (which in a normal Java projects is a
-humongous amount of code no-one fully understands - standard library
-alone...).
+Commit fix:
+N/A
 
-That usually is enough to achieve RCE, in some cases using some third
-party library code, in many cases even universally through code in the
-Java standard library.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Even the most restrictive implicit (technical) type restrictions (e.g.
-constructor requirements) that can be applied by these mechanisms are
-insufficient to prevent these issues. With Java's java.io.Serializable
-we have already seen a model fail where the types themselves declare
-their intent to be used in such a situation (for various reasons),
-although not having such a restriction seems even worse.
+CVE:
+CVE-2017-14411
 
-The only option left is explicit restriction to types known to fulfill
-the contract by the user, be that in the form of registration (e.g. JAXB
-or a variety of mechanisms requiring schema definitions or compilation),
-an explicit whitelist or strict runtime type checking from a root type.
-Hybrid type checking and registration like found in GSON or Jackson with
-JsonTypeInfo.Id.Name so far seem to offer the best balance between
-convenience and security.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00348-aacgain-stackoverflow-copy_mp
 
-While in the best case scenario one would restrict to data objects not
-containing any logic at all -- for practical purposes restricting to the
-types that are actually used seems good enough, usually it's the ton of
-code that you don't even care about that will get you pwned.
+Timeline:
+2017-08-28: bug discovered
+2017-09-08: blog post about the issue
+2017-09-13: CVE Assigned
 
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/08/mp3gain-stack-based-buffer-overflow-in-copy_mp-mpglibdblinterface-c/
 
-(Open Source) marshaller libraries (some pretty rare, but for the sake
-of completeness) that allow(ed) for unmarshalling into arbitrary types,
-their their known worst case impacts and possible mitigations, are
-
--------------------------------
-Apache BlazeDS AMF Marshalling
-- JDK only escalation to Java serialization
-- third party library RCEs (spring, c3p0)
-
-Mitigations: Configure a DeserializationValidator for type whitelisting.
-Upgrade to 4.7.3 which enables it by default (CVE-2017-5641).
-
--------------------------------
-Hessian/Burlap:
-- third party library RCEs (spring, rome, xbean-naming, resin)
-
-Mitigation: Upgrade to 4.0.51 and enable type whitelisting through
-ClassFactory.
-
--------------------------------
-Castor:
--> POM dependency library RCE (spring)
-
-Mitigation: N/A
-
--------------------------------
-Jackson:
-- >=2.7.0: not totally reliable JDK only RCE
-- possibly JDK only escalation to Java serialization
-- third party library RCEs (spring, c3p0)
-
-Jackson takes a somewhat special position here, in that by default it is
-unaffected but only becomes exploitable when class based polymorphism is
-enabled
-(https://github.com/FasterXML/jackson-docs/wiki/JacksonPolymorphicDeserialization)
-and there are unbounded or insufficiently bounded properties.
-
-Mitigation: Use explicit polymorphism with JsonTypeInfo.Id.Name
-
--------------------------------
-Java serialization:
-- one new library gadget
-
--------------------------------
-Java XMLDecoder:
-- well, we know about that one...
-
--------------------------------
-json-io
--> JDK only RCE
-
-Mitigation: N/A
-
--------------------------------
-jYAML
--> JDK only RCE
-
-Mitigation: N/A
-
--------------------------------
-Kryo:
-- using default instantiation: third party RCEs (commons-beanutils, spring)
-- using StdInstantiatorStrategy: JDK only RCE
-
-Mitigation: Enforce type registration
-
--------------------------------
-Red5 AMF Marshalling:
--> JDK only RCE
-
-Mitigation: Upgrade to 1.0.8 which enables type blacklisting :( of the
-known bad ones
-
--------------------------------
-SnakeYAML
--> JDK only RCE
-
-Mitigation: Use SafeConstructor or a custom implementation for type
-whitelisting.
-
--------------------------------
-XStream
--> JDK only RCE
-
-Mitigation: Use XStream's TypePermission for type whitelisting.
-
--------------------------------
-YAMLBeans:
-- third party library RCE (c3p0)
-
-Mitigation: N/A
-
--------------------------------
-
-
-Vulnerabilities where one of these was exploitable under some
-circumstances identified as a part of this research and have been fixed
-include:
-
-- JBoss Resteasy - SnakeYAML (CVE-2016-9606)
-- Apache Camel - SnakeYAML/Jackson/... (CVE-2017-3159,CVE-2016-8749)
-- Apache Brooklyn - SnakeYAML (CVE-2016-8744)
-- Jenkins - XStream (CVE-2017-2608)
-- Red5 Media Server/Apache OpenMeetings (CVE-2017-5878)
-- Magnolia CMS - json-io (CVE N/A, tracking MGNLCACHE-165)
-- OpenNMS - Castor (CVE N/A, tracking NMS-9099/9100)
-- Atlassian Bamboo - XStream (CVE 2016-5229)
-- Adobe Coldfusion - BlazeDS (CVE 2017-3066)
-
-Other affected instances, which have been reported but the author hasn't
-recently received feedback on their current state include: Caucho Resin
-(Hessian), Netflix Eureka (XStream), Amazon's AWS Simple Workflow
-Library (Jackson).
-
-
-regards
-
-Moritz
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
