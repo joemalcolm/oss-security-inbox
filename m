@@ -1,14 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/01/2
-Message-ID: <1564163.qSnceChrjU@wanheda>
-Date: Fri, 01 Sep 2017 14:00:17 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/15
+Message-ID: <20170914122719.GA21243@openwall.com>
+Date: Thu, 14 Sep 2017 14:27:19 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: openjpeg: heap-based buffer overflow in opj_t2_encode_packet (t2.c)
+Subject: Re: Linux BlueBorne vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-This is CVE-2017-14039
+On Wed, Sep 13, 2017 at 09:08:31PM +0000, Armis Security wrote:
+> Both Linux-related vulnerabilities where disclosed to
+> distros@...openwall.org.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+To clarify: although some messages in fact wrongly went to the distros
+list that also reaches two *BSD's, further discussion was moved to the
+linux-distros list in order to avoid spamming and disclosing to *BSD's.
+
+Alexander
