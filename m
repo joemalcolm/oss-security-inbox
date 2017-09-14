@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1932" "Thursday" "27" "October" "2016" "03:06:55" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161027070655.76FB46C1A17@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: CVE requests: some issues in gif2webp" nil nil nil "10" "2016102707:06:55" "[oss-security] Re: CVE requests: some issues in gif2webp" (number mark "U       cve-assign@m Oct 27   50/1932  " thread-indent "\"[oss-security] Re: CVE requests: some issues in gif2webp\"\n") "<CACn5sdQdpOjojXJRfKsHvRR0p+PNmvxciH+hFL-6Xq9mx3Y-Uw@mail.gmail.com>" ("<CACn5sdQdpOjojXJRfKsHvRR0p+PNmvxciH+hFL-6Xq9mx3Y-Uw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3577" "Thursday" "14" "September" "2017" "07:05:44" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<706317.355713935-sendEmail@localhost>" "88" "[oss-security] mp3gain: memcpy-param-overlap in set_pointer (mpglibDBL/common.c)" nil nil nil "9" "2017091407:05:44" "[oss-security] mp3gain: memcpy-param-overlap in set_pointer (mpglibDBL/common.c)" (number mark "U       ago@gentoo.o Sep 14   88/3577  " thread-indent "\"[oss-security] mp3gain: memcpy-param-overlap in set_pointer (mpglibDBL/common.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32088 invoked by uid 550); 27 Oct 2016 07:07:07 -0000
+Received: (qmail 7351 invoked by uid 550); 14 Sep 2017 07:06:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32067 invoked from network); 27 Oct 2016 07:07:06 -0000
-From: cve-assign@mitre.org
-To: gustavo.grieco@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CACn5sdQdpOjojXJRfKsHvRR0p+PNmvxciH+hFL-6Xq9mx3Y-Uw@mail.gmail.com>
-Message-Id: <20161027070655.76FB46C1A17@smtpvmsrv1.mitre.org>
-Date: Thu, 27 Oct 2016 03:06:55 -0400 (EDT)
-Subject: [oss-security] Re: CVE requests: some issues in gif2webp
+Received: (qmail 7236 invoked from network); 14 Sep 2017 07:06:01 -0000
+Message-ID: <706317.355713935-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 14 Sep 2017 07:05:44 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-863772.737401636"
+Subject: [oss-security] mp3gain: memcpy-param-overlap in set_pointer (mpglibDBL/common.c)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------MIME delimiter for sendEmail-863772.737401636
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-> * NULL pointer derreference
-> 
-> Bug report: https://bugs.chromium.org/p/webp/issues/detail?id=310 (private)
-> 
-> Fix:
-> https://chromium.googlesource.com/webm/libwebp/+/806f6279aef4de8deca01c8e727db4a508716e95
-
-As far as we can tell, what you mean is that gif2webp is a
-command-line program that only operates on one GIF input file, and if
-there's crafted EXTENSION_RECORD_TYPE data, the program will crash
-with a NULL pointer derreference. That would not be a security impact
-for purposes of CVE. The user can work around the bug by not running
-gif2webp again on the crafted file.
+Additionally to the previous discovered bugs there a memcpy-param-overlap. Under a non-asan build the crash does not occur, so there is no CVE, but you may want to have it fixed in your repository.
 
 
-> * Several integer overflows:
-> 
-> Report: https://bugs.chromium.org/p/webp/issues/detail?id=314 (private)
-> 
-> Fix:
-> https://chromium.googlesource.com/webm/libwebp/+/e2affacc35f1df6cc3b1a9fa0ceff5ce2d0cce83
+Description:
+mp3gain is a program to analyze and adjust MP3 files to same volume.
 
-Use CVE-2016-9085 for everything fixed by
-e2affacc35f1df6cc3b1a9fa0ceff5ce2d0cce83.
+The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
+The upstream project seems to be dead, so the issue wasn’t communicated to them.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The complete ASan output of the issue:
 
-iQIcBAEBCAAGBQJYEacxAAoJEHb/MwWLVhi2fd0P/3D1sCCixX4yrhproI1v4VJr
-d3iKMxA1uSkyqArZ6AMAnvo3iH/SmVLp9SGs/uXsCeml2CxxuzsDB6X+nlIYZArG
-6OcZ70JEDv4YJXj6eUdg0Xco8Xxjv08v4RvohqVMvxuQIF+8LLHJGz5NH4mOCviT
-Q79TBF4ZSmb33UdT1CqT8OZYL/LokPXnXrGk4CiwL1CZ4Ku3GiSZuOz7J4hDPbEd
-+k/6x+PuJd2z8uc6XZ4di136z5fbbgufvl4ZTR5W8nXNU2PnbF+9FSvxYInymXUt
-91JdLnkQ1V83LzuNJxwUoIouSe9EOiz1zwOeSOYaYOV8WHkXLw0YpOeCe6L1rj3G
-llXaQm00azGoIe3M4auH2lGUTqpRO14ZaX8zRnN2pnIKEmnHJ+98nzyr8RHPQgh/
-vhoqLWvgtxQaefgWOa6bMfqXojwoUTT/b/r4SAt9WTYm4YvKoL+OO/TpQrvs5GdA
-w2oihWIRlDO2ncbHhUzQ6fjCmWjVxPElYquVXG0urhyqNyLcVf79o25nG/fMyd5V
-lDLE219oqXtuCZtbVOJkafVz2YlOAQhog0YKyyt9xS2OQf9tsX/lIz+a2q2VAIMT
-g+rxQ+2s2BEVfpj26cexvEpj71XMQjW5OuK6CM0ENqj2sklxCS2gVUTsKN6M5z4p
-LkH4PQK8xJyle9iiKwS/
-=Ra2B
------END PGP SIGNATURE-----
+# aacgain -f $FILE
+==23175==ERROR: AddressSanitizer: memcpy-param-overlap: memory ranges [0x7f004fb593ff,0x7f004fb594fd) and [0x7f004fb59381, 0x7f004fb5947f) overlap
+    #0 0x7f00532d5906  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5c906)
+    #1 0x8e9b25 in set_pointer /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/common.c:328
+    #2 0x8cd58d in do_layer3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/layer3.c:1582
+    #3 0x8ac2f9 in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:643
+    #4 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
+    #5 0x7f00525ee680 in __libc_start_main (/lib64/libc.so.6+0x20680)
+    #6 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
+
+Address 0x7f004fb593ff is located in stack of thread T0 at offset 21503 in frame
+    #0 0x4341ff in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:1411
+
+  This frame has 7 object(s):
+    [32, 33) 'maxgain'
+    [96, 97) 'mingain'
+    [160, 164) 'nprocsamp'
+    [224, 232) 'maxsample'
+    [288, 9504) 'lsamples'
+    [9536, 18752) 'rsamples'
+    [18784, 50704) 'mp' <== Memory access at offset 21503 is inside this variable
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
+      (longjmp and C++ exceptions *are* supported)
+Address 0x7f004fb59381 is located in stack of thread T0 at offset 21377 in frame
+    #0 0x4341ff in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:1411
+
+  This frame has 7 object(s):
+    [32, 33) 'maxgain'
+    [96, 97) 'mingain'
+    [160, 164) 'nprocsamp'
+    [224, 232) 'maxsample'
+    [288, 9504) 'lsamples'
+    [9536, 18752) 'rsamples'
+    [18784, 50704) 'mp' <== Memory access at offset 21377 is inside this variable
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
+      (longjmp and C++ exceptions *are* supported)
+SUMMARY: AddressSanitizer: memcpy-param-overlap (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5c906) 
+==23175==ABORTING
+
+Affected version:
+1.5.2
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00349-aacgain-memcpyparamoverlap-set_pointer
+
+Timeline:
+2017-08-28: bug discovered
+2017-09-08: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/08/mp3gain-memcpy-param-overlap-in-set_pointer-mpglibdblcommon-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-863772.737401636--
+
