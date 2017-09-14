@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/23
-Message-ID: <20170714210219.GA21423@openwall.com>
-Date: Fri, 14 Jul 2017 23:02:19 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/20
+Message-ID: <CA++9HO8FVAQw-oPFzqQUdOX6MnyP0s681grArPSPusGHAmChQA@mail.gmail.com>
+Date: Thu, 14 Sep 2017 20:14:03 +0000
+From: Armis Security <security@...is.com>
+To: Petr Matousek <pmatouse@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: Linux BlueBorne vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 14, 2017 at 12:11:26PM -0700, Anthony Liguori wrote:
-> On Fri, Jul 14, 2017 at 11:23 AM, Solar Designer <solar@...nwall.com> wrote:
-> > This leaves administrative task 10 with no primary yet, though:
-> >
-> > 10. Monitor relevant public channels (mailing lists, code repositories,
-> > etc.) and inform the reporter and the list in case an issue is made
-> > public prematurely (that is, leaks or is independently rediscovered) -
-> > primary: vacant, backup: Amazon
-> >
-> > Does this mean Amazon will be taking care of it until we find a primary?
-> > Or only in cases when no other distro (visibly) does?
-> >
-> > Ideally, a distro should volunteer to be primary for that task now, so
-> > that Amazon wouldn't have to volunteer for more than they offered.
-> 
-> I don't mind making us primary here.  I don't think backup/primary
-> really matter for this one the more folks doing this the better.
+Hi Petr.
 
-Thanks.  Amazon is now primary for this task.  I agree this doesn't
-require coordination except possibly to avoid duplicate work, so
-multiple other distros are welcome to contribute to this task as well.
+On August 15th we have contacted one of the senior maintiners of BlueZ and
+attempted to establish a longer embargo period with him. Unfortunatelly his
+suggestion was to post our findings to linux-bluetooth@...r.kernel.org,
+which is a public mailing list.
 
-Alexander
+So we decided to disclose our findings to the secure mailing list that
+unfortunatelly only have a maximum of 7 days embargo periods.
+
+I am happy to hear the red hat security team allows for longer embargo
+periods, and we will contact you directly in the future.
+
+
+Thank you,
+
+Armis Labs.
+
+
+>
+>
+
