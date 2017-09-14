@@ -1,46 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/15
-Message-ID: <CADyTPEwtFD=d_JB4n0s+9G867D_tNmSQOTt_f=EtNeqYp22Eyw@mail.gmail.com>
-Date: Fri, 3 Nov 2017 14:14:11 -0400
-From: Nick Bowler <nbowler@...conx.ca>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/6
+Message-ID: <696458.548397885-sendEmail@localhost>
+Date: Thu, 14 Sep 2017 07:02:46 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: mp3gain: invalid memory write in copy_mp (mpglibDBL/interface.c)
 Content-Type: text/plain; charset=utf-8
 
-On 2017-11-03, Scott Court <z5t1@...1.com> wrote:
-> I have refined the vimrc changes that I originally posted (with the help
-> of Christian) and have found appending the following to your vimrc be a
-> decent way to mitigate against all known forms of this attack until a
-> proper patch is released:
->
-> " Move the swap file location to protect against CVE-2017-1000382
-> " More information at
-> http://security.cucumberlinux.com/security/details.php?id=120
-> " A big thanks goes to Christian Brabandt (cb@...bit.org)
-> " for helping with this fix.
-> if ! isdirectory("~/.vim/swap/")
->         silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
-> endif
-> set directory=~/.vim/swap//
->
-> The only drawback to this approach is that it eliminates the warning
-> when multiple users attempt to edit the same file at the same time;
-> however, this seems preferable to the alternative of being vulnerable.
+Description:
+mp3gain is a program to analyze and adjust MP3 files to same volume.
 
-This is not the "only drawback".  Among other things, such configuration
-fails very badly when network mounts are involved.
+The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
+The upstream project seems to be dead, so the issue wasn’t communicated to them.
 
- - If the swap directory is shared between multiple hosts (e.g., $HOME
-   is NFS-mounted), then you will get false positives when editing files
-   that happen to share a filename on different hosts.
+The complete ASan output of the issue:
 
- - If the file being edited is shared between multiple hosts, then you
-   will get false negatives when trying to edit that file from different
-   hosts.
+# aacgain -f $FILE
+ASAN:DEADLYSIGNAL
+=================================================================
+==15053==ERROR: AddressSanitizer: SEGV on unknown address 0x104db559357d (pc 0x7f06b1457af7 bp 0x7ffed0c702a0 sp 0x7ffed0c6fa30 T0)
+    #0 0x7f06b1457af6  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5caf6)
+    #1 0x8a8ad0 in copy_mp /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:188
+    #2 0x8ad77e in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:538
+    #3 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
+    #4 0x7f06b0770680 in __libc_start_main (/lib64/libc.so.6+0x20680)
+    #5 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
 
-Or a combination of the two scenarios.  In the default mode, network
-mounts basically work as expected because the swapfile location is
-shared the same way.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5caf6) 
+==15053==ABORTING
 
-Cheers,
-  Nick
+Affected version:
+1.5.2
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14412
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00352-aacgain-invalidwrite-copy_mp
+
+Timeline:
+2017-08-28: bug discovered
+2017-09-08: blog post about the issue
+2017-09-13: CVE Assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/08/mp3gain-invalid-memory-write-in-copy_mp-mpglibdblinterface-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
