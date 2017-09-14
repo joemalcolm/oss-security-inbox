@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["960" "Tuesday" "23" "April" "2019" "10:05:50" "-0400" "Mike Dalessio" "mike.dalessio@gmail.com" "<CAGJbjKad9c-kqKS9B3rqYfOsRwwvYRW7CftF1f5uyCxUs3vVpA@mail.gmail.com>" "38" "Re: [oss-security] Nokogiri security update v1.10.3" "^Cc:" nil nil "4" "2019042314:05:50" "[oss-security] Nokogiri security update v1.10.3" (number mark "        mike.dalessi Apr 23   38/960   " thread-indent "\"Re: [oss-security] Nokogiri security update v1.10.3\"\n") "<874l6pgkpg.fsf@oldenburg2.str.redhat.com>" ("<CAGJbjKYzq0PbZYOedTha2xaOOUgTg-UJjp6CrWjwaaA8qwiTKg@mail.gmail.com>" "<874l6pgkpg.fsf@oldenburg2.str.redhat.com>") nil nil nil nil nil nil nil "Re: [oss-security] Nokogiri security update v1.10.3" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["958" "Thursday" "14" "September" "2017" "08:24:45" "+0100" "Simon McVittie" "smcv@debian.org" "<20170914072445.bq2r6vtcnxietd4j@perpetual.pseudorandom.co.uk>" "21" "Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)" "^Date:" nil nil "9" "2017091407:24:45" "[oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)" (number mark "U       smcv@debian. Sep 14   21/958   " thread-indent "\"Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)\"\n") "<427445.19640425-sendEmail@localhost>" ("<427445.19640425-sendEmail@localhost>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14057 invoked by uid 550); 23 Apr 2019 14:33:21 -0000
+Received: (qmail 9298 invoked by uid 550); 14 Sep 2017 07:25:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20356 invoked from network); 23 Apr 2019 14:06:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JUxiFotxnCEgKggNF+A69nR2liGn8XcpP8+DgywLI5k=;
-        b=Axm5b68K3ZdtpGKFnPMLkM60NfhQXnIuFuNsqd5LirfFy0brMRIQjnR5awSO0Xfrdn
-         IFX6N+b1YDouagsxkitgIGWY+4zeC3MM0+UrreDix2Fbp69+SNC/QeGtoAGWNGbFIX2p
-         WPAFkG+D70zQ/EpWLjeaPo2bvpoM+PK/CF8r3oBFKduDNpln1pIViIWgMpZsQ1ti15aP
-         JxdG3KcvHavCT1Pce5XaCkN+cvRcL2omUpYcko5ucxl0vG3GPgj+5RWk1yUBuutesNqy
-         3oX6o6f40tzbtTHP/Da1RBuIo7wvGuZcb/iHEDcNtWHBoc0oZzejUqiYPwXkArcllao1
-         R13A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JUxiFotxnCEgKggNF+A69nR2liGn8XcpP8+DgywLI5k=;
-        b=eigpmjogIT2artelBsATEAiKucmraxRGOwyPulwaQRrVPAZ4Fk79brreGuvUoR4gop
-         49ofrO3lw37XjHLAU8fG9+hpY3ycm47jX67eKaJnOYF7AFaO01oJOLzs45AEg6jSdVB0
-         WsKWUmeFhvOfBI5TWey3AI9zWV0J95nh7q7EoGY/EmC5fCw3edGToPUxFzKROC0TzLf4
-         nT1TI6uADJNL4lxwfUMQxVh5QcWHR4qkeybIVdJFlQZAdB3d4fGMuzJQtua+5+4ITRtC
-         T5ItcDdT4Tg5V6Eg1HH+FvYb712Hpzy02K1k9YDjFoIoR/9LpyiCdlqVsYbkLRFgK+x0
-         DLDw==
-X-Gm-Message-State: APjAAAWlc+nir3Gt7xMVKd7LcRD2SiSN14mKuNBuUhpxf/RpOH6sa70s
-	o8E912gzejH+CDUy9BzASbIplwTr/I3Jf8TqMWI=
-X-Google-Smtp-Source: APXvYqwFm0NwCjOT9AXnEsMLnuPCMnHZiP/kinH0XDwlgdyoE6S5mhZmOE7HR+Wgs49J0k49eY13RYXJOUVCXq9zgI0=
-X-Received: by 2002:a9d:3db4:: with SMTP id l49mr15958044otc.131.1556028361525;
- Tue, 23 Apr 2019 07:06:01 -0700 (PDT)
+Received: (qmail 9280 invoked from network); 14 Sep 2017 07:25:18 -0000
+Message-ID: <20170914072445.bq2r6vtcnxietd4j@perpetual.pseudorandom.co.uk>
+References: <427445.19640425-sendEmail@localhost>
 MIME-Version: 1.0
-References: <CAGJbjKYzq0PbZYOedTha2xaOOUgTg-UJjp6CrWjwaaA8qwiTKg@mail.gmail.com>
- <874l6pgkpg.fsf@oldenburg2.str.redhat.com>
-In-Reply-To: <874l6pgkpg.fsf@oldenburg2.str.redhat.com>
-Message-ID: <CAGJbjKad9c-kqKS9B3rqYfOsRwwvYRW7CftF1f5uyCxUs3vVpA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000bfdba905873315bb"
-Cc: nokogiri-talk <nokogiri-talk@googlegroups.com>, ruby-talk <ruby-talk@ruby-lang.org>, 
-	ruby-security-ann@googlegroups.com, oss-security@lists.openwall.com
-Date: Tue, 23 Apr 2019 10:05:50 -0400
-From: Mike Dalessio <mike.dalessio@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <427445.19640425-sendEmail@localhost>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Date: Thu, 14 Sep 2017 08:24:45 +0100
+From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Nokogiri security update v1.10.3
-To: Florian Weimer <fweimer@redhat.com>
+Subject: Re: [oss-security] mp3gain: NULL pointer dereference in sync_buffer
+ (mpglibDBL/interface.c)
+To: oss-security@lists.openwall.com
 
---000000000000bfdba905873315bb
-Content-Type: text/plain; charset="UTF-8"
+On Thu, 14 Sep 2017 at 07:00:25 +0000, Agostino Sarubbo wrote:
+> The fuzz was done via the aacgain command-line tool which uses mp3gain
+> which bundles an old-modified version of mpg123 called mpglibDBL.
 
-Florian, thanks for the clarification.
+I wouldn't recommend putting effort into fuzzing mp3gain. mpglibDBL
+is known to have security vulnerabilities anyway:
+https://security-tracker.debian.org/tracker/source-package/mp3gain
+(I wonder whether you've rediscovered those, or found new vulnerabilities?)
 
-NVD indicates that this is a CVSS v3.0 severity "9.8: Critical".
+It probably also suffers from most other historical vulnerabilities
+that are listed for mpg123. We removed it from Debian in 2014,
+with a recommendation to use the rgain Python package instead:
+https://tracker.debian.org/pkg/rgain
 
-Here are permalinks:
+rgain uses libmad or ffmpeg via GStreamer for decoding, so it isn't
+exactly bug-free either; but those libraries are actively maintained,
+and when they have vulnerabilities, they'd need to be fixed anyway for
+the benefit of other packages.
 
-   - NVD entry:
-   https://nvd.nist.gov/vuln/detail/CVE-2019-11068#vulnCurrentDescriptionTitle
-   - expanded CVSS 3.0 score:
-   https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2019-11068&vector=AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
-
--m
-
-
-
-
-
-On Tue, Apr 23, 2019 at 5:00 AM Florian Weimer <fweimer@redhat.com> wrote:
-
-> * Mike Dalessio:
->
-> > This is a security release. It addresses a CVE in upstream libxslt rated
-> as
-> > "Priority: medium" by Canonical, and "NVD Severity: high" by Debian. More
-> > details are available below.
->
-> Note that the Debian security tracker only relays what NVD provides in
-> this field.  It is not updated if a separate review yields different
-> results.
->
-> Thanks,
-> Florian
->
-
---000000000000bfdba905873315bb--
+Regards,
+    smcv
