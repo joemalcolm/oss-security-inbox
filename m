@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/09/4
-Message-ID: <8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>
-Date: Thu, 9 Mar 2017 10:55:12 -0600
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/13
+Message-ID: <18140748.47rzSOn8yn@wanheda>
+Date: Thu, 14 Sep 2017 13:12:20 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Stéphane Graber <stgraber@...ntu.com>
-Subject: LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
+Cc: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
+Subject: Re: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
 Content-Type: text/plain; charset=utf-8
 
-Jann Horn discovered that the lxc-user-nic program could be tricked into
-operating on a network namespace over which the caller did not hold
-privilege.
+On giovedì 14 settembre 2017 11:51:42 CEST Dr. Thomas Orgis wrote:
+> I disagree. I am considering cleaning up mp3gain and omitting nearly
+> all of the vulnerabilities by removing the decoder fork. Reason: rgain
+> does not do what mp3gain did. Mp3gain can directly modify the MPEG
+> frames so that the gain is changed also for decoders that do not
+> support the added metadata (it additionally stores metadata to be able
+> to revert the changes).
+> 
+> While I am not regularily using this myself, I do think that it's a
+> nifty hack that should not disappear. Maybe it can re-enter distros if
+> it does not rely on an outdated internal decoder …
+> 
+> This is becoming a bit off-topic … but I just wanted to note that the
+> bug reports do serve a purpose in alerting me to that other copy of
+> mpg123 code in the wild.
+> 
+> 
+> Alrighty then,
+> 
+> Thomas
 
-The behavior didn't follow what was documented in the lxc-user-nic(1)
-man page:
+Hello Thomas,
 
- It ensures that the calling user is privileged over the network
- namespace to which the interface will be attached.
+the suggestion of removal was because of the dead status of the upstream 
+project.
+If there will be people that fix the issues, will be great.
 
-This issue is CVE-2017-5985.
+Feel free to update this thread when you have news about.
 
-https://lists.linuxcontainers.org/pipermail/lxc-users/2017-March/012925.html
-https://launchpad.net/bugs/1654676
-https://github.com/lxc/lxc/commit/16af238036a5464ae8f2420ed3af214f0de875f9
-
-Tyler
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
