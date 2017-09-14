@@ -1,56 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/6
-Message-ID: <20170124134604.0b4e5ba1@pc1>
-Date: Tue, 24 Jan 2017 13:46:04 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Windows ports of Linux software bundling outdated libraries (Gajim / PyCurl)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/10
+Message-ID: <4196795.4HvRXNqvRy@wanheda>
+Date: Thu, 14 Sep 2017 09:51:36 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Simon McVittie <smcv@...ian.org>
+Subject: Re: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-I feel I've opened a can of worms here.
-
-In a comment on the news site heise a reader pointed out that Gajim for
-windows ships very old versions of OpenSSL and Python [1].
-
-I decided to have a look and gajim indeed bundled files SSLEAY32.dll
-and LIBEAY32.dll that came from OpenSSL 0.9.8l. However it seems that
-was the least of the problems, as these are probably just some leftover
-and not used by anything.
-
-However, as it turns out gajim ships several copies of old versions of
-OpenSSL (bug report here [2]).
-
-The source of those is actually that gajim itself uses other projects,
-mentioned in the bug report are gtk+, pycurl and cryptodome.
-
-I verified that for pycurl, which provides a windows installer that
-bundles the curl and openssl version at the time of the last release,
-which was in June 2015.
-Note that it seems pycurl matches the version numbers of curl, however
-the latest release is 7.43.0. On linux systems it'll use whatever curl
-is on the system, which can be newer, so everything's fine, but the
-windows installer bundles the matching 7.43.0 curl version, which is
-quite old. Notably it was long before the recent audit of curl, which
-uncovered a large number of security vulnerabilities.
-I reported this to pycurl as well [3].
-
-The moral of the story is probably that if you recommend windows ports
-of your favorite linux desktop application to your windows using
-friends you may want to check if they bundle some really outdated
-stuff. I encourage everyone to watch out for similar issues and report
-them to the affected projects.
-
-
-[1]
-https://www.heise.de/forum/heise-Security/News-Kommentare/XMPP-Jabber-Krypto-Messenger-ChatSecure-verschluesselt-mit-OMEMO-Protokoll/Gajim-Release-enthaelt-uralte-Versionen-von-Python-OpenSSL/posting-29818036/show/
-[2] https://dev.gajim.org/gajim/gajim/issues/8513
-[3] https://github.com/pycurl/pycurl/issues/437
+On giovedì 14 settembre 2017 09:24:45 CEST Simon McVittie wrote:
+> On Thu, 14 Sep 2017 at 07:00:25 +0000, Agostino Sarubbo wrote:
+> > The fuzz was done via the aacgain command-line tool which uses mp3gain
+> > which bundles an old-modified version of mpg123 called mpglibDBL.
+> 
+> I wouldn't recommend putting effort into fuzzing mp3gain. mpglibDBL
+> is known to have security vulnerabilities anyway:
+> https://security-tracker.debian.org/tracker/source-package/mp3gain
+> (I wonder whether you've rediscovered those, or found new vulnerabilities?)
+> 
+> It probably also suffers from most other historical vulnerabilities
+> that are listed for mpg123. We removed it from Debian in 2014,
+> with a recommendation to use the rgain Python package instead:
+> https://tracker.debian.org/pkg/rgain
+> 
+> rgain uses libmad or ffmpeg via GStreamer for decoding, so it isn't
+> exactly bug-free either; but those libraries are actively maintained,
+> and when they have vulnerabilities, they'd need to be fixed anyway for
+> the benefit of other packages.
+> 
+> Regards,
+>     smcv
+I didn't investigate to the mpg123 bugs, I searched for mp3gain into the CVE 
+database.
+Anwyay I agree with you that is time to drop the packages.
 
 -- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Agostino Sarubbo
+Gentoo Linux Developer
