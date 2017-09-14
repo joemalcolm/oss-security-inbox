@@ -1,4 +1,9 @@
-Received: (qmail 20086 invoked by uid 550); 18 Mar 2026 19:59:03 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2542" "Thursday" "14" "September" "2017" "15:04:43" "+0200" "Solar Designer" "solar@openwall.com" "<20170914130443.GA21420@openwall.com>" "55" "Re: [oss-security] tcpdump 4.9.2 is fully available" "^Cc:" nil nil "9" "2017091413:04:43" "[oss-security] tcpdump 4.9.2 is fully available" (number mark "        solar@openwa Sep 14   55/2542  " thread-indent "\"Re: [oss-security] tcpdump 4.9.2 is fully available\"\n") "<15e7d09e363.baac2a74163896.7143621165441625815@ovsienko.info>" ("<15e7d09e363.baac2a74163896.7143621165441625815@ovsienko.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 6059 invoked by uid 550); 14 Sep 2017 13:05:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,173 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 16292 invoked from network); 18 Mar 2026 19:39:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=lVBH4epDJpQaxObeBnpUv32QmS76OjYobFVy7hbBMnE=; b=q2VfLj3Uhkltp0FxrjyH+lJq1Q
-	cDWZtMWAvR5P0T2y92a5Bmb5ozU7EcJO5ksbj6+k5iHUDuqxK3jhNhcKWpBEP43HzGcvP3Xyn5Kup
-	h+uzf8iyzUCub/abM57/CW+SQayrdld96qJIV+kN0CsW/a7/Fp6e6xBzV92cZPQTRBvHgvEftZtN1
-	ATrLGVIeRcRc/xbaP2GIA1v/wqCs2a+/FUrLYGFU50eOb4hbnuFonJYxUojNPLa9steeofUfmzrRt
-	AUYIx68oNOneJvxD1T0DtUgLLfEJAK0U4JgZ+LJxFXSSK5TsAEgersRyUg2vnCx9Pf2AIRlduSmiK
-	0i8dD2mw==;
-Date: Wed, 18 Mar 2026 21:39:43 +0200
-Message-ID: <20260318213943.GB202313@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="BgqCKKTnd3EGdYHu"; micalg="pgp-sha256"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2026-0001
-
---BgqCKKTnd3EGdYHu
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 5222 invoked from network); 14 Sep 2017 13:04:53 -0000
+Message-ID: <20170914130443.GA21420@openwall.com>
+References: <15e7d09e363.baac2a74163896.7143621165441625815@ovsienko.info>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: base64
+In-Reply-To: <15e7d09e363.baac2a74163896.7143621165441625815@ovsienko.info>
+User-Agent: Mutt/1.4.2.3i
+Cc: Denis Ovsienko <denis@ovsienko.info>
+Date: Thu, 14 Sep 2017 15:04:43 +0200
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] tcpdump 4.9.2 is fully available
+To: oss-security@lists.openwall.com
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
-eSAgICAgICAgICAgICAgICAgV1NBLTIwMjYtMDAwMQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
-b3J0ZWQgICAgICAgICAgIDogTWFyY2ggMTgsIDIwMjYKQWR2aXNvcnkgSUQgICAgICAgICAgICAg
-OiBXU0EtMjAyNi0wMDAxCldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJraXRn
-dGsub3JnL3NlY3VyaXR5L1dTQS0yMDI2LTAwMDEuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5IFVS
-TCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNi0wMDAxLmh0bWwKQ1ZF
-IGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyMy00MzAxMCwgQ1ZFLTIwMjUtMzEyMjMsCiAg
-ICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjUtMzEyNzcsIENWRS0yMDI1LTQzMjEzLAog
-ICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTQzMjE0LCBDVkUtMjAyNS00MzQzMywK
-ICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS00MzQzOCwgQ1ZFLTIwMjUtNDM0NDEs
-CiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjUtNDM0NTcsIENWRS0yMDI1LTQzNTEx
-LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTQ2Mjk5LCBDVkUtMjAyNi0yMDYw
-OCwKICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNi0yMDYzNSwgQ1ZFLTIwMjYtMjA2
-MzYsCiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjYtMjA2NDQsIENWRS0yMDI2LTIw
-NjUyLAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI2LTIwNjc2LgoKU2V2ZXJhbCB2
-dWxuZXJhYmlsaXRpZXMgd2VyZSBkaXNjb3ZlcmVkIGluIFdlYktpdEdUSyBhbmQgV1BFIFdlYktp
-dC4KCkNWRS0yMDIzLTQzMDEwCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBX
-UEUgV2ViS2l0IGJlZm9yZSAyLjQ0LjAuCiAgICBDcmVkaXQgdG8gQXBwbGUuCiAgICBJbXBhY3Q6
-IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0bwog
-ICAgbWVtb3J5IGNvcnJ1cHRpb24uIFRoaXMgZml4IGFzc29jaWF0ZWQgd2l0aCB0aGUgQ29ydW5h
-IGV4cGxvaXQgd2FzCiAgICBzaGlwcGVkIGluIGlPUyAxNy4yIG9uIERlY2VtYmVyIDExdGgsIDIw
-MjMuIFRoaXMgdXBkYXRlIGJyaW5ncyB0aGF0CiAgICBmaXggdG8gZGV2aWNlcyB0aGF0IGNhbm5v
-dCB1cGRhdGUgdG8gdGhlIGxhdGVzdCBpT1MgdmVyc2lvbi4KICAgIERlc2NyaXB0aW9uOiBUaGUg
-aXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAgIFdl
-YktpdCBCdWd6aWxsYTogMjYwOTEzCgpDVkUtMjAyNS0zMTIyMwogICAgVmVyc2lvbnMgYWZmZWN0
-ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41MC4wLgogICAgQ3JlZGl0IHRv
-IEFuZHJlYXMgSmFlZ2Vyc2JlcmdlciAmIFJvIEFjaHRlcmJlcmcgb2YgTm9zZWJlYXJkIExhYnMu
-CiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBt
-YXkgbGVhZCB0bwogICAgbWVtb3J5IGNvcnJ1cHRpb24uIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUg
-d2FzIGFkZHJlc3NlZCB3aXRoCiAgICBpbXByb3ZlZCBjaGVja3MuCiAgICBXZWJLaXQgQnVnemls
-bGE6IDI4OTM4NwoKQ1ZFLTIwMjUtMzEyNzcKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRH
-VEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTAuMC4KICAgIENyZWRpdCB0byBZdWhhbyBIdSwg
-WWFuIEthbmcsIENoZW5nZ2FuZyBXdSwgYW5kIFhpYW9qaWUgV2VpLgogICAgSW1wYWN0OiBQcm9j
-ZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8KICAgIG1l
-bW9yeSBjb3JydXB0aW9uLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0
-aAogICAgaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyOTE3
-NDUKCkNWRS0yMDI1LTQzMjEzCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBX
-UEUgV2ViS2l0IGJlZm9yZSAyLjUwLjUuCiAgICBDcmVkaXQgdG8gR29vZ2xlIFY4IFNlY3VyaXR5
-IFRlYW0uCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29u
-dGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBTYWZhcmkgY3Jhc2guIERlc2NyaXB0
-aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoCiAgICBpbXByb3ZlZCBtZW1vcnkgaGFu
-ZGxpbmcuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI5MjYyMQoKQ1ZFLTIwMjUtNDMyMTQKICAgIFZl
-cnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTAuNS4K
-ICAgIENyZWRpdCB0byBzaGFuZGlrcmkgd29ya2luZyB3aXRoIFRyZW5kIE1pY3JvIFplcm8gRGF5
-IEluaXRpYXRpdmUsIEdvb2dsZSBWOAogICAgU2VjdXJpdHkgVGVhbS4KICAgIEltcGFjdDogUHJv
-Y2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFuCiAg
-ICB1bmV4cGVjdGVkIFNhZmFyaSBjcmFzaC4gRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRk
-cmVzc2VkIHdpdGgKICAgIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBCdWd6
-aWxsYTogMjkyNTk5CgpDVkUtMjAyNS00MzQzMwogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktp
-dEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41MC4yLgogICAgQ3JlZGl0IHRvIEdvb2dsZSBC
-aWcgU2xlZXAuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIg
-Y29udGVudCBtYXkgbGVhZCB0bwogICAgbWVtb3J5IGNvcnJ1cHRpb24uIERlc2NyaXB0aW9uOiBU
-aGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoCiAgICBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcu
-CiAgICBXZWJLaXQgQnVnemlsbGE6IDI5ODA5MwoKQ1ZFLTIwMjUtNDM0MzgKICAgIFZlcnNpb25z
-IGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTAuMi4KICAgIENy
-ZWRpdCB0byByaGV6YSAoQGdpbmdnaWxCZXNlbCksIHNoYW5kaWtyaSB3b3JraW5nIHdpdGggVHJl
-bmQgTWljcm8gWmVybyBEYXkKICAgIEluaXRpYXRpdmUuCiAgICBJbXBhY3Q6IFByb2Nlc3Npbmcg
-bWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBl
-Y3RlZCBTYWZhcmkgY3Jhc2guIERlc2NyaXB0aW9uOiBBIHVzZS1hZnRlci1mcmVlIGlzc3VlIHdh
-cwogICAgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgbWVtb3J5IG1hbmFnZW1lbnQuCiAgICBXZWJL
-aXQgQnVnemlsbGE6IDI5NzY2MgoKQ1ZFLTIwMjUtNDM0NDEKICAgIFZlcnNpb25zIGFmZmVjdGVk
-OiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTAuMi4KICAgIENyZWRpdCB0byBy
-aGV6YSAoQGdpbmdnaWxCZXNlbCkuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkg
-Y3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBwcm9jZXNz
-IGNyYXNoLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aAogICAgaW1w
-cm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyOTg0OTYKCkNWRS0y
-MDI1LTQzNDU3CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0
-IGJlZm9yZSAyLjUwLjYuCiAgICBDcmVkaXQgdG8gR2FyeSBLd29uZywgSG9zc2VpbiBMb3RmaSAo
-QGhvc3NlbG90KSBvZiBUcmVuZCBNaWNybyBaZXJvIERheQogICAgSW5pdGlhdGl2ZS4KICAgIElt
-cGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFk
-IHRvIGFuCiAgICB1bmV4cGVjdGVkIFNhZmFyaSBjcmFzaC4gRGVzY3JpcHRpb246IEEgdXNlLWFm
-dGVyLWZyZWUgaXNzdWUgd2FzCiAgICBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCBtZW1vcnkgbWFu
-YWdlbWVudC4KICAgIFdlYktpdCBCdWd6aWxsYTogMjk4NjA2CgpDVkUtMjAyNS00MzUxMQogICAg
-VmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41MC41
-LgogICAgQ3JlZGl0IHRvIOydtOuPme2VmCAoTGVlIERvbmcgSGEgb2YgQm9CIDE0dGgpLgogICAg
-SW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxl
-YWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgcHJvY2VzcyBjcmFzaC4gRGVzY3JpcHRpb246IEEgdXNl
-LWFmdGVyLWZyZWUgaXNzdWUgd2FzCiAgICBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCBtZW1vcnkg
-bWFuYWdlbWVudC4KICAgIFdlYktpdCBCdWd6aWxsYTogMzAwOTI2CgpDVkUtMjAyNS00NjI5OQog
-ICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41
-Mi4wLgogICAgQ3JlZGl0IHRvIEdvb2dsZSBCaWcgU2xlZXAuCiAgICBJbXBhY3Q6IFByb2Nlc3Np
-bmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgZGlzY2xvc2UKICAgIGludGVy
-bmFsIHN0YXRlcyBvZiB0aGUgYXBwLiBEZXNjcmlwdGlvbjogQSBtZW1vcnkgaW5pdGlhbGl6YXRp
-b24KICAgIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcu
-CiAgICBXZWJLaXQgQnVnemlsbGE6IDI5OTUxOAoKQ1ZFLTIwMjYtMjA2MDgKICAgIFZlcnNpb25z
-IGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTAuNi4KICAgIENy
-ZWRpdCB0byBIYW5RaW5nIGZyb20gVFNEdWJoZSBhbmQgTmFuIFdhbmcgKEBldGVybmFsc2FrdXJh
-MTMpLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRl
-bnQgbWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgcHJvY2VzcyBjcmFzaC4gRGVzY3JpcHRp
-b246IFRoaXMgaXNzdWUgd2FzIGFkZHJlc3NlZAogICAgdGhyb3VnaCBpbXByb3ZlZCBzdGF0ZSBt
-YW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAzMDMzNTcKCkNWRS0yMDI2LTIwNjM1CiAg
-ICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjUw
-LjYuCiAgICBDcmVkaXQgdG8gRW50cnlIaS4KICAgIEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lv
-dXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIHBy
-b2Nlc3MgY3Jhc2guIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoCiAg
-ICBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcuCiAgICBXZWJLaXQgQnVnemlsbGE6IDMwNDY2MQoK
-Q1ZFLTIwMjYtMjA2MzYKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBX
-ZWJLaXQgYmVmb3JlIDIuNTAuNi4KICAgIENyZWRpdCB0byBFbnRyeUhpLgogICAgSW1wYWN0OiBQ
-cm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYW4K
-ICAgIHVuZXhwZWN0ZWQgcHJvY2VzcyBjcmFzaC4gRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMg
-YWRkcmVzc2VkIHdpdGgKICAgIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBC
-dWd6aWxsYTogMzA0NjU3CgpDVkUtMjAyNi0yMDY0NAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdl
-YktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41MC42LgogICAgQ3JlZGl0IHRvIEhhblFp
-bmcgZnJvbSBUU0R1YmhlIGFuZCBOYW4gV2FuZyAoQGV0ZXJuYWxzYWt1cmExMykuCiAgICBJbXBh
-Y3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0
-byBhbgogICAgdW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjogVGhlIGlzc3Vl
-IHdhcyBhZGRyZXNzZWQgd2l0aAogICAgaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2Vi
-S2l0IEJ1Z3ppbGxhOiAzMDM0NDQKCkNWRS0yMDI2LTIwNjUyCiAgICBWZXJzaW9ucyBhZmZlY3Rl
-ZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjUwLjYuCiAgICBDcmVkaXQgdG8g
-TmF0aGFuaWVsIE9oIChAY2FseXN0ZW9uKS4KICAgIEltcGFjdDogQSByZW1vdGUgYXR0YWNrZXIg
-bWF5IGJlIGFibGUgdG8gY2F1c2UgYSBkZW5pYWwtb2Ytc2VydmljZS4KICAgIERlc2NyaXB0aW9u
-OiBUaGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4K
-ICAgIFdlYktpdCBCdWd6aWxsYTogMzAzOTU5CgpDVkUtMjAyNi0yMDY3NgogICAgVmVyc2lvbnMg
-YWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41MC42LgogICAgQ3Jl
-ZGl0IHRvIFRvbSBWYW4gR29ldGhlbS4KICAgIEltcGFjdDogQSB3ZWJzaXRlIG1heSBiZSBhYmxl
-IHRvIHRyYWNrIHVzZXJzIHRocm91Z2ggU2FmYXJpIHdlYgogICAgZXh0ZW5zaW9ucy4gRGVzY3Jp
-cHRpb246IFRoaXMgaXNzdWUgd2FzIGFkZHJlc3NlZCB0aHJvdWdoIGltcHJvdmVkCiAgICBzdGF0
-ZSBtYW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAzMDUwMjAKCldlIHJlY29tbWVuZCB1
-cGRhdGluZyB0byB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9ucyBvZiBXZWJLaXRHVEsgYW5kIFdQ
-RQpXZWJLaXQuIEl0IGlzIHRoZSBiZXN0IHdheSB0byBlbnN1cmUgdGhhdCB5b3UgYXJlIHJ1bm5p
-bmcgc2FmZSB2ZXJzaW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBvdXIgd2Vic2l0ZXMgZm9y
-IGluZm9ybWF0aW9uIGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVhc2VzLgoKRnVydGhlciBp
-bmZvcm1hdGlvbiBhYm91dCBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgc2VjdXJpdHkgYWR2aXNv
-cmllcwpjYW4gYmUgZm91bmQgYXQ6IGh0dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS5odG1s
-IG9yCmh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS4KClRoZSBXZWJLaXRHVEsgYW5kIFdQ
-RSBXZWJLaXQgdGVhbSwK
+On Wed, Sep 13, 2017 at 09:59:13PM +0100, Denis Ovsienko wrote:
+> As per Alexander's advice, let me comment for the avoidance of doubt that all deliverables for the tcpdump 4.9.2 release are public since today as advised last week. This includes individual commits in the public git repository with reference to particular CVE IDs and credits to the original reporter(s) and the author of each bugfix.
 
---BgqCKKTnd3EGdYHu
-Content-Type: application/pgp-signature; name="signature.asc"
+Thank you, Denis.  I was hoping you'd post more like a full advisory,
+and include the credits and maybe the disclosure timeline.  I should
+have been more specific.
 
------BEGIN PGP SIGNATURE-----
+Here's my reconstruction of the timeline:
 
-iF0EABEIAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCabr/fwAKCRCRxVnb5MkS
-O2SwAJkBBX9NQo1ki5peZhmDLhby3wcyngCeP4sG50j96nQeZ20R1RflBmYSJ8I=
-=YjFB
------END PGP SIGNATURE-----
+Unknown date(s) - issues found
 
---BgqCKKTnd3EGdYHu--
+Unknown date(s) - issues reported to upstream
+
+September 3 - tcpdump 4.9.2 release prepared, but not supposed to be
+made public yet
+
+Unknown date(s) - private disclosure (by upstream?) to some distros (not
+via the distros list) with CRD set to September 25 (since a 3 week
+embargo was mentioned elsewhere, this could have been on September 4)
+
+September 4 - "The tar.gz turned up in the public release directory on 4
+September by an accident"
+
+September 5 - "and was deleted on 5 September"
+
+September 5 - at least Mageia and Fedora update their tcpdump packages,
+apparently due to these projects' automated monitoring for new upstream
+releases (IIRC, as confirmed by links to automatically-created bug
+tracking entries and such)
+
+September 6 - upstream sends private message to some distros about the
+leak, moving the CRD to September 13
+
+September 6 - first notification to the distros list by NixOS, who are
+not on the list and who thought the information was already known to
+list members, saying in part "We don't think that the embargo can be
+sustained under these conditions, even for another week."
+
+September 6-8 - several people and distros try and fail to convince
+upstream to go public with the full detail ASAP, but nevertheless
+receive explicit permission to go ahead with releasing updated packages
+
+September 7 - an Arch Linux developer (who is not on (linux-)distros and
+apparently was not aware of the distros list discussion) brings the
+issue to oss-security (it's unclear to me how that person knew of the
+September 25 initial CRD); I approve that message right away
+
+September 8 - upstream posts a clarification to oss-security, confirming
+that distros are right to proceed with releasing updates; the tarball is
+placed on the tcpdump.org website
+
+September 13 - full detail is made public (I think this means individual
+commits rather than only the tree as a whole)
+
+Alexander
