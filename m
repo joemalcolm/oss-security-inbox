@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3230" "Wednesday" "12" "May" "2021" "14:46:31" "+0000" "harris.johnson.x" "harris.johnson.x@protonmail.com" nil "58" "[oss-security] Re: [CVE-2020-28018] Use-After-Free on Exim Question" nil nil nil "5" nil nil (number mark "U       harris.johns May 12   58/3230  " thread-indent "\"[oss-security] Re: [CVE-2020-28018] Use-After-Free on Exim Question\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: [CVE-2020-28018] Use-After-Free on Exim Question" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1749" "Friday" "15" "September" "2017" "12:28:11" "+0000" "Ben Seri" "ben@armis.com" "<CA++9HO-W2feM80=KZ_ifdAiL2jvMLJ3ENsqBaadg5E=apBVwxA@mail.gmail.com>" "45" "Re: [oss-security] Linux BlueBorne vulnerabilities" "^Date:" nil nil "9" "2017091512:28:11" "[oss-security] Linux BlueBorne vulnerabilities" (number mark "        ben@armis.co Sep 15   45/1749  " thread-indent "\"Re: [oss-security] Linux BlueBorne vulnerabilities\"\n") "<20170914212638.GA26968@openwall.com>" ("<CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>" "<20170914121219.GW11536@dhcp-25-225.brq.redhat.com>" "<CA++9HO8FVAQw-oPFzqQUdOX6MnyP0s681grArPSPusGHAmChQA@mail.gmail.com>" "<20170914212638.GA26968@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30531 invoked by uid 550); 12 May 2021 14:59:05 -0000
+Received: (qmail 19754 invoked by uid 550); 15 Sep 2017 12:28:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25611 invoked from network); 12 May 2021 14:46:48 -0000
-Date: Wed, 12 May 2021 14:46:31 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail; t=1620830796;
-	bh=Pj8W8VYUZuNk4d2NQ9fVPAkR1qkkRXOiiu42h/IL4lM=;
-	h=Date:To:From:Cc:Reply-To:Subject:From;
-	b=rp35HgroWMeiVO5pFzjEDN/1CFMlBoZRdzBIo8ABNxnNX6jCx4cvSrHPGivzYaYSZ
-	 qUcgPgFdoRQoynTSJBlgQ5M8H0UMlWwH3GtGRbMswAGY6m5yXjPyXIclSuqK4IhHDG
-	 lqfL45zom9GHUX9PSC4Ox77xwPNuc5XzHZxfXKfY=
-To: "qsa@qualys.com" <qsa@qualys.com>
-From: "harris.johnson.x" <harris.johnson.x@protonmail.com>
-Cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-In-Reply-To: <20210511222021.GA23723@localhost.localdomain>
-Message-ID: <-PX6HwUqABskTVCZ1I6D8RgZ1ZqDwqGw56VKpf4-39X_dCz7PBtqXbtP_W5lRNHPOgaR4t4IpwbDJ0o-CTmJbT9BYJbUZYutrWS4_hBl-FU=@protonmail.com>
+Received: (qmail 19729 invoked from network); 15 Sep 2017 12:28:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=armis.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=4uvpwtxC8Yd6RG2QBcVy1ueLfCyzwgWynK+Qo60JH+M=;
+        b=iOkp+1uQ8l/wGfpOV6TqRLPvNE2ql9pSjjTk605jme8yGCUTblB8RaJ4xPDmkTWl0o
+         nmyp+44rrpsIYu4ERzRM4rbjTn6utoMsfjJcYn17fYyUlELCQrOLfJfuXWh5m3MUjpCV
+         K2ZmE5FYTdkeZXnLdJIF/A6WDD3PUA6h+zq9A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=4uvpwtxC8Yd6RG2QBcVy1ueLfCyzwgWynK+Qo60JH+M=;
+        b=DYVK3LTWUrqi/bwkPdVUznPcPmzKxmiujFue78N2Cpax43pe2D6iessk5tddxV1yVR
+         tnNjTdVRS5k8FfmgjsdNJ8lhfgcUIyFv5H9Mv748RucF3Xvl3QCUfQnIkRh/+Dznuakc
+         w4ugQChijKJAlBEyXTZGlmVSzppInne1H1/cyWm4NvIkpAaXqzS/MhBBnaSzgyXbPlHc
+         0O40QG/MGeIFEnoCdJwFEMslZD5PDvm6kh50kmvqMPjL/sym9argT06tDf9mvhemkrAt
+         2AaGsdQAcXZS55ENF3t/tYn8VKEMIpsUPSzspAG5zVm5jA2edN9/EEjr4rg4N3BlwO6a
+         /e2Q==
+X-Gm-Message-State: AHPjjUi0Vxn5ssrhKv0MRCx43lwhSVuGAkQ37i1xs/+v8s5RC2zWYKbo
+	ZYPHX1CSt+6HEHrtZ2FMBRAUnSXqiqOhRTXPZI3J6A2m
+X-Google-Smtp-Source: ADKCNb7m9I3PXwMcf4O/0XdzG/djNRz/CnW4EZCLRBHhXaN82DqLxnOGfIcHkIR1ORYb88ut7xJYCsKUJByzQvIIO9w=
+X-Received: by 10.80.169.11 with SMTP id l11mr12139339edc.126.1505478502149;
+ Fri, 15 Sep 2017 05:28:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_q4XQY9ZTzWjgLIVdID8XMUWoW7ChAIgMmTQI8B6CvM"
-Subject: [oss-security] Re: [CVE-2020-28018] Use-After-Free on Exim Question
+References: <CA++9HO8J91=AAqH6cUkYOi=AWpw=FXD7sajp2mQkdD66AO3WBw@mail.gmail.com>
+ <20170914121219.GW11536@dhcp-25-225.brq.redhat.com> <CA++9HO8FVAQw-oPFzqQUdOX6MnyP0s681grArPSPusGHAmChQA@mail.gmail.com>
+ <20170914212638.GA26968@openwall.com>
+In-Reply-To: <20170914212638.GA26968@openwall.com>
+Message-ID: <CA++9HO-W2feM80=KZ_ifdAiL2jvMLJ3ENsqBaadg5E=apBVwxA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="94eb2c0c3a3c56849b05593987a0"
+Date: Fri, 15 Sep 2017 12:28:11 +0000
+From: Ben Seri <ben@armis.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux BlueBorne vulnerabilities
+To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
 
---b1_q4XQY9ZTzWjgLIVdID8XMUWoW7ChAIgMmTQI8B6CvM
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+--94eb2c0c3a3c56849b05593987a0
+Content-Type: text/plain; charset="UTF-8"
 
-R3JlZXRpbmdzIE9TUy1TZWN1cml0eSEKCkkgdG9vayBhIGxvb2sgYXQgdGhh
-dCBmbGF3IHRvby4uLmJ1dCBJIHdvbmRlciBpZiB0aGVyZSBpcyBhIGdvb2Qg
-dGVjaG5pcXVlIHRvIGdyb29tIHRoZSBoZWFwIHRvIGdldCB0aGF0IGFsbG9j
-YXRpb24gcmlnaHQgYmVmb3JlIHRoZSBvYmplY3RpdmUgZGF0YS4gVGhlcmUg
-YXJlIHNvbWUgbGltaXRzIG9uIHVzaW5nIGEgTUFJTCBjbWQsIGZpcnN0IHUg
-Y2Fubm90IHVzZSBpdCBpZiBhbm90aGVyIE1BSUwgY21kIHdhcyBzdWNjZXNz
-ZnVsLiBTZWNvbmQgaXQgY2FsbHMgc210cF9yZXNldCgpIGFmdGVyIGZpbmlz
-aGVkLiBUaGUgb25seSB3YXkgJ2QgYmUgdXNpbmcgUlNFVCBzbyB1IGNhbiB1
-c2UgTUFJTCBhZ2FpbiwgYnV0IGl0IHdpbGwgZnJlZSBhbGwgdGhlIHN1YnNl
-cXVlbnQgaGVhcCBidWZmZXJzIGFuZCByZXR1cm4geWllbGQgdG8gdGhlIHB0
-ciBzcGVjaWZpZWQgb24gc210cF9yZXNldCgpLgoKVGhlIG9ubHkgdGltZSBp
-biB3aGljaCB1IGNhbiBzZW5kIGEgTUFJTCBjbWQgdG8gYWxsb2MgaXQgd291
-bGQgYmUgYmV0d2VlbiB0aGUgc2Vjb25kIHBhcnQgb2YgdGhlIGNtZCBzZW50
-IGluIHRoZSBmaXJzdCBUTFMgc2Vzc2lvbiwgYW5kIHRoZSBpbml0aWFsaXph
-dGlvbiBvZiB0aGUgbmV3IFRMUyBzZXNzaW9uLiBBZnRlciB0aGUgaW5pdGlh
-bGl6YXRpb24gb2YgdGhlIGZpcnN0IFRMUyBzZXNzaW9uIGxvdCBvZiBhbGxv
-Y2F0aW9ucyBoYXBwZW4sIHRoaXMgd2lsbCBpbiBmYWN0IGV4dGVuZCB0aGUg
-aGVhcCBmcm9tIHRoZSB0b3AgY2h1bmsuCgpPbmNlIFRMUyBjb25uZWN0aW9u
-IGlzIGRyb3BwZWQgb3V0LCBhbmQgd2Ugc3RhcnQgb24gcGxhaW50ZXh0IGFn
-YWluLCBhZnRlciBzZW5kaW5nIHRoZSBFSExPIGNtZCwgc210cF9yZXNldCgp
-IHdpbGwgYmUgY2FsbGVkLCB3aGljaCB3aWxsIGZpbmFsbHkgZW5kIHVwIG9u
-IGZyZWVpbmcgYWxsIHN1YnNlcXVlbnQgaGVhcCBidWZmZXJzLCBleGNlcHQg
-ZnJvbSB0aGUgb25lIHBvaW50ZWQgdG8gYnkgcmVzZXRfcG9pbnQgaW4gdGhl
-IG1pZGRsZSwgd2hpY2ggaXQncyB5aWVsZCBpcyBqdXN0IHJlc3RvcmVkIHRv
-IHBvaW50IHRvIGl0LiBBdCB0aGlzIHBvaW50LCB0b3AgY2h1bmsgc2l6ZSBp
-bmNyZWFzZWQgdGhhbmtzIHRvIGFsbCB0aGUgcmVjZW50bHkgcmVsZWFzZWQg
-Y2h1bmtzIGNvbnNlcXVlbnQgdG8gZWFjaCBvdGhlci4gQW5kIHRoZSBvYmpl
-Y3RpdmUgc3RydWN0IGlzIGludGFjdCBvbiB0aGUgdG9wIGNodW5rLgoKQXMg
-dSBtZW50aW9uZWQgdG8gIm51bGwgcDBpbnQzciIsIHRoZXJlIGlzIGFuIGlu
-dGVyZXN0aW5nIHBhcmFtZXRlciBmb3IgTUFJTCBjbWQgdGhhdCBsZXRzIHlv
-dSB1c2UgZW5jb2Rpbmcgc28gaXQgaXMgYW4gc3RyaW5nLCBidXQgdGhlbiBj
-b252ZXJ0ZWQgdG8gYmluYXJ5IGRhdGEgd2hlbiBjb3BpZWQgdG8gdGhlIGFs
-bG9jYXRlZCBtZW1vcnksIHNvIGl0IGJ5cGFzc2VzIGFueSBzdHVmZiByZWxh
-dGVkIHRvIHBhcnNpbmcgb3IgTlVMTCBieXRlcy4gVGhhdCBzcGVjaWZpYyBw
-YXJhbWV0ZXIgdXNlcyBzdG9yZV9nZXQoKSwgc28gaXQgaGFuZ3MgZnJvbSB0
-aGUgUE9PTF9NQUlOIG1lbW9yeS4gVGhpcyBtZWFucyB0aGUgb25seSB3YXkg
-dG8gcGVyZm9ybSBhbiBpbmRlcGVuZGVudCBtYWxsb2MoKSAoc28gbWVtb3J5
-IGZyb20gdG9wIGNodW5rIGlzIHN0b2xlbiwgaW5jbHVkaW5nIHRoZSBvYmpl
-Y3RpdmUgZGF0YSkgaXMgZmlyc3QgZmlsbGluZyB0aGUgY3VycmVudCBibG9j
-aywgc28gaW4gdGhlIHN0b3JlLmMgY29kZSwgc2l6ZSB3aWxsIGJlID4geWll
-bGRfbGVuZ3RoW3N0b3JlX3Bvb2xdLCBhbmQgd2lsbCBjYWxsIG1hbGxvYywg
-c28gZmluYWxseSByZXR1cm5pbmcgdG8gdXMgcG9pbnRlciB0byBvYmplY3Rp
-dmUgZGF0YSB0byBiZSBvdmVyd3JpdGUgd2l0aCBvdXJzLiBBbHNvLCBpdCB3
-aWxsIGJlIGJldHRlciBmb3IgdGhhdCBtYWxsb2MoKSB0byBoYXZlIGEgcmVh
-bGx5IGhpZ2ggcmVxdWVzdCBzaXplLCBzbyB0aGUgbWFsbG9jKCkgcmVxdWVz
-dCBkb2VzIG5vdCByZXVzZSBhIGZyZWVkIGNodW5rIHdpdGggc3BlY2lmaWMg
-cmVxdWlyZW1lbnRzIHRvIGJlIHJldHVybmVkIChpZiBhbnkpLgoKUiB1IGd1
-eXMgdXNpbmcgYW55IHNwZWNpZmljIHRlY2huaXF1ZSB0byBncm9vbSB0aGUg
-aGVhcCAvIGdldCB0aGUgY2h1bmsgcmV0dXJuZWQgYnkgc3RvcmVfZ2V0KCkg
-b24gdGhhdCBzdHJ1Y3Q/CgpHb29kIGx1Y2shCgotLS0KSGFycmlzIEpvaG5z
-b24=
+Hi Alexander,
 
---b1_q4XQY9ZTzWjgLIVdID8XMUWoW7ChAIgMmTQI8B6CvM--
+Our thought is that since these issues affect multi vendors that are using
+Linux, the longer the embargo period, the better chance there is a
+coordinated patch goes out to as many users as possible once the embargo is
+lifted.
 
+Armis Labs
+
+On Fri, Sep 15, 2017 at 12:26 AM Solar Designer <solar@openwall.com> wrote:
+
+> On Thu, Sep 14, 2017 at 08:14:03PM +0000, Armis Security wrote:
+> > On August 15th we have contacted one of the senior maintiners of BlueZ
+> and
+> > attempted to establish a longer embargo period with him. Unfortunatelly
+> his
+> > suggestion was to post our findings to linux-bluetooth@vger.kernel.org,
+> > which is a public mailing list.
+>
+> While I understand you not wanting to post to a public mailing list
+> right away, why exactly would you have wanted a longer embargo than e.g.
+> linux-distros' maximum of 14 days?
+>
+> > So we decided to disclose our findings to the secure mailing list that
+> > unfortunatelly only have a maximum of 7 days embargo periods.
+>
+> You're probably referring to the Linux kernel security list.  7 days
+> sounds like a reasonable embargo period to me, but if you really wanted
+> more, you could get up to 14 by first contacting linux-distros only, and
+> then bringing the issue to the Linux kernel security list in no more
+> than 7 days to the planned public disclosure.
+>
+> > I am happy to hear the red hat security team allows for longer embargo
+> > periods, and we will contact you directly in the future.
+>
+> I hope you will only go for a longer embargo when there's actually a
+> good reason for that.  There might or might not have been in this case.
+>
+> Alexander
+>
+
+--94eb2c0c3a3c56849b05593987a0--
