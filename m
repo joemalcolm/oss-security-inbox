@@ -1,25 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/5
-Message-ID: <5247425.MMXgAd8cuH@wanheda>
-Date: Mon, 10 Jul 2017 12:34:36 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/15/3
+Message-ID: <CA++9HO9fwy-w1HqYF3Jpu_+makXOf1_dzy=U0KQjzQ=r20shnQ@mail.gmail.com>
+Date: Fri, 15 Sep 2017 12:40:06 +0000
+From: Ben Seri <ben@...is.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux BlueBorne vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-All the info were updated.
+I agree. And I wish all vendors had such short time frames for releasing
+patches.
+Unfortunately this is not the case.
 
+On top of this, it was unclear to us whether the linux-distros mailing list
+would be able to coordinate the kernel patch, so we chose to contact both
+lists, which required the 7 day embargo period.
 
-On Monday 10 July 2017 11:42:53 Dr. Thomas Orgis wrote:
-> Is this really worth a CVE, though? So far I was only able to see a
-> crash triggered by the AddressSanitizer.
+In any case, we respect the need for a short embargo period, and in this
+case we disclosed the issues 7 days prior to publication.
 
-Often, when there is an out-of-bound condition there is no crash, and the 
-application works as expected. It is only visible with debuggers or in case of 
-stack overflow with fortify_source enabled, so I think it's an expected 
-behaviour.
+Ben.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+On Fri, Sep 15, 2017 at 3:31 PM Solar Designer <solar@...nwall.com> wrote:
+
+> On Fri, Sep 15, 2017 at 12:28:11PM +0000, Ben Seri wrote:
+> > Our thought is that since these issues affect multi vendors that are
+> using
+> > Linux, the longer the embargo period, the better chance there is a
+> > coordinated patch goes out to as many users as possible once the embargo
+> is
+> > lifted.
+>
+> Indeed, but it's 2017, not 1997.  14 days is considered a long embargo
+> period now.  Unnecessarily long embargoes hurt more than they help.
+>
+> Alexander
+>
+
