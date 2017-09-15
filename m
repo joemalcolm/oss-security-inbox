@@ -1,45 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/9
-Message-ID: <20170113150447.6abc7f30@redhat.com>
-Date: Fri, 13 Jan 2017 15:04:47 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, hanno@...eck.de
-Subject: Re: Re: Fuzzing jasper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/15/1
+Message-ID: <CA++9HO-W2feM80=KZ_ifdAiL2jvMLJ3ENsqBaadg5E=apBVwxA@mail.gmail.com>
+Date: Fri, 15 Sep 2017 12:28:11 +0000
+From: Ben Seri <ben@...is.com>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: Linux BlueBorne vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 22 Oct 2016 21:00:23 -0400 (EDT) cve-assign@...re.org wrote:
+Hi Alexander,
 
-> > https://github.com/mdadams/jasper/issues/28
-> > Heap overflow in jpc_dec_cp_setfromcox()  
-> 
-> > AddressSanitizer: heap-buffer-overflow
-> > WRITE of size 1  
-> 
-> > malformed jpeg2000 file  
-> 
-> > jpc_dec_cp_setfromcox ... libjasper/jpc/jpc_dec.c:1668:32  
-> 
-> Use CVE-2016-8880.
-> 
-> 
-> > https://github.com/mdadams/jasper/issues/29
-> > Heap overflow in jpc_getuint16()  
-> 
-> > AddressSanitizer: heap-buffer-overflow
-> > WRITE of size 8  
-> 
-> > jpc_getuint16 ... libjasper/jpc/jpc_cs.c:1572:8  
-> 
-> Use CVE-2016-8881.
+Our thought is that since these issues affect multi vendors that are using
+Linux, the longer the embargo period, the better chance there is a
+coordinated patch goes out to as many users as possible once the embargo is
+lifted.
 
-Can the above two CVEs be rejected as duplicates of CVE-2011-4516 and
-CVE-2011-4517 respectively?
+Armis Labs
 
-https://github.com/mdadams/jasper/issues/28#issuecomment-267053875
-https://github.com/mdadams/jasper/issues/29#issuecomment-267322934
+On Fri, Sep 15, 2017 at 12:26 AM Solar Designer <solar@...nwall.com> wrote:
 
-Thank you!
+> On Thu, Sep 14, 2017 at 08:14:03PM +0000, Armis Security wrote:
+> > On August 15th we have contacted one of the senior maintiners of BlueZ
+> and
+> > attempted to establish a longer embargo period with him. Unfortunatelly
+> his
+> > suggestion was to post our findings to linux-bluetooth@...r.kernel.org,
+> > which is a public mailing list.
+>
+> While I understand you not wanting to post to a public mailing list
+> right away, why exactly would you have wanted a longer embargo than e.g.
+> linux-distros' maximum of 14 days?
+>
+> > So we decided to disclose our findings to the secure mailing list that
+> > unfortunatelly only have a maximum of 7 days embargo periods.
+>
+> You're probably referring to the Linux kernel security list.  7 days
+> sounds like a reasonable embargo period to me, but if you really wanted
+> more, you could get up to 14 by first contacting linux-distros only, and
+> then bringing the issue to the Linux kernel security list in no more
+> than 7 days to the planned public disclosure.
+>
+> > I am happy to hear the red hat security team allows for longer embargo
+> > periods, and we will contact you directly in the future.
+>
+> I hope you will only go for a longer embargo when there's actually a
+> good reason for that.  There might or might not have been in this case.
+>
+> Alexander
+>
 
--- 
-Tomas Hoger / Red Hat Product Security
