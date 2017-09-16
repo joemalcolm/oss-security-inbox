@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1921" "Thursday" "8" "December" "2016" "12:19:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<47ec68bee7cc4c0d873931a344c85e74@imshyb02.MITRE.ORG>" "46" "[oss-security] Re: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)" nil nil nil "12" "2016120817:19:17" "[oss-security] Re: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)" (number mark "U       cve-assign@m Dec  8   46/1921  " thread-indent "\"[oss-security] Re: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)\"\n") "<753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>" ("<753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1230" "Saturday" "16" "September" "2017" "21:05:44" "+0200" "Solar Designer" "solar@openwall.com" "<20170916190543.GA6340@openwall.com>" "26" "Re: [oss-security] Podbeuter podcast fetcher: remote code execution" "^Cc:" nil nil "9" "2017091619:05:44" "[oss-security] Podbeuter podcast fetcher: remote code execution" (number mark "        solar@openwa Sep 16   26/1230  " thread-indent "\"Re: [oss-security] Podbeuter podcast fetcher: remote code execution\"\n") "<20170916180518.GB28963@curry>" ("<20170916180518.GB28963@curry>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5146 invoked by uid 550); 8 Dec 2016 17:19:30 -0000
+Received: (qmail 27932 invoked by uid 550); 16 Sep 2017 19:06:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 27792 invoked from network); 16 Sep 2017 19:05:50 -0000
+Message-ID: <20170916190543.GA6340@openwall.com>
+References: <20170916180518.GB28963@curry>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170916180518.GB28963@curry>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com
+Date: Sat, 16 Sep 2017 21:05:44 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4094 invoked from network); 8 Dec 2016 17:19:29 -0000
-From: <cve-assign@mitre.org>
-To: <bluewind@xinu.at>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>
-Message-ID: <47ec68bee7cc4c0d873931a344c85e74@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 12:19:17 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)
+Subject: Re: [oss-security] Podbeuter podcast fetcher: remote code execution
+To: Alexander Batischev <eual.jp@gmail.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sat, Sep 16, 2017 at 09:05:18PM +0300, Alexander Batischev wrote:
+> I've requested a CVE from MITRE on August 27th, but haven't heard back 
+> yet, so decided to disclose without a number.
 
-> The linux kernel contains a bug where a fragmented IPv6 packet causes a
-> panic after a timeout (seems to be roughly 60 seconds). This can be
-> triggered remotely via the internet and results in a DoS (kernel panic).
+Thanks.  Going forward, please report relevant issues in here right
+away, without waiting on MITRE.  We previously had these guidelines in a
+footnote, but I've just upgraded them to their own section here:
 
-> https://bugzilla.kernel.org/show_bug.cgi?id=189851
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
 
->> unable to handle kernel NULL pointer dereference
+"Previously, one could request CVE IDs for issues in Open Source
+software from oss-security.  This is no longer the case.  Instead, please
+start by posting about the (to be made) public issue to oss-security
+(without a CVE ID), request a CVE ID from MITRE directly, and finally
+"reply" to your own posting when you also have the CVE ID to add.  With
+the described approach you would only approach MITRE after the issue is
+already public, but if you choose to do things differently and contact
+MITRE about an issue that is not yet public, then please do not disclose
+to them more than the absolute minimum needed for them to assign a CVE ID."
 
->> Seems I can reliably crash said machines running 4.8.12-2 by sending
->> them incomplete fragmented IPv6 packets. The kernel indeed has
->> NET_L3_MASTER_DEV.
+with links to:
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=79dc7e3f1cd323be4c81aa1a94faa1b3ed987fb2
+https://cveform.mitre.org
+http://www.openwall.com/lists/oss-security/2015/04/14/3
 
->> the dst->dev should be preferred for determining the L3 domain
->> if the dst has been set on the skb. Fallback to the skb->dev if it has
->> not. This covers the case reported here where icmp6_send is invoked on
->> Rx before the route lookup.
-
-Use CVE-2016-9919.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYSZWMAAoJEHb/MwWLVhi2UAAQAKUTqLnsjpwqlBAxNh9rEexe
-ljitZUtj0WSTrYAY+EdPm6n5mDocVCw5IlB2wd8Fa/8z2kPigG/9oDafnWXJFKK1
-hlqNZAep/GBGX9ISVxbLPFJ5jel8BWsZ3kwiAdj5t4GcuTDbwOkujvknHyhxBS6T
-kKBE/TVtafKcLUd+D6qzWyt0BaOz+ATKKrekrkRKkm7yEBaGIUHIekWZnK0tJ+sS
-08sFKUxzfDCud//OepxNgxRDlecqlcK0PKNp9NNRgD/+D99JgLaxItMVVMkQrh5s
-854jFifEhObQKeJLAUotfvSJjIoASXHrndyhwCw2C636vqsASE9KVItzmXV4MzSW
-4+8Yqi/jLExwSe1z3Z4R6+zpQopok/ZmGJ9BPBODrU8bsCm/eFvA2eXRvXD/v2Oh
-/lFbDJf34P8FM8wvzFTc0tDJB5Lf2xZ2pjEUfEdM0hlryfKWIoaGDzcpKPGfewiN
-M3yHp3CcuKCX6pVxrmonA1goJTpddBqALUavwWtRRnF6ozUhKpWG6G2zhkVn9ZaT
-vwSSlsYw6BTYpMz1ZPF6rqeCowtdQDI/J6gM8OuQAq/aV/i0jmFv5ToB158dy5yc
-rq2wKEdUv6y0ZM7lWX5aleGlEfyMyIB/ZtTWy5wAvyfpwlv6X3/OSc/9eXxFB27M
-R2CpnZwv2wLfC6/R9czc
-=DVJY
------END PGP SIGNATURE-----
+Alexander
