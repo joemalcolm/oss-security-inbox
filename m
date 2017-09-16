@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3004" "Monday" "7" "March" "2016" "15:28:03" "+0000" "Radzykewycz, T (Radzy)" "radzy@windriver.com" "<33006C99F5A5194A9B7A7715DFA3E383EB84DCEF@ALA-MBA.corp.ad.wrs.com>" "64" "[oss-security] RE: [security-vendor] Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" "^Date:" nil nil "3" "2016030715:28:03" "[oss-security] RE: [security-vendor] Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "        radzy@windri Mar  7   64/3004  " thread-indent "\"[oss-security] RE: [security-vendor] Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<56DCDDCD.8070600@treenet.co.nz>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<20160305172039.GA20796@openwall.com>" "<20160306062700.GA25289@gremlin.ru>" "<110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>" "<20160306150917.GA29105@openwall.com>" "<CAFHyJTqHw=Cjg6C-u4eUyUVe9bcntn+LombQ+fnosgXBy79OZA@mail.gmail.com>" "<20160306161617.GA30781@openwall.com>" "<8BB58F16-D629-48CB-96C6-3EA7406BA6A6@fearnothingproductions.net>" "<56DC959A.6060200@gmail.com>" "<56DCDDCD.8070600@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2049" "Saturday" "16" "September" "2017" "21:05:18" "+0300" "Alexander Batischev" "eual.jp@gmail.com" "<20170916180518.GB28963@curry>" "55" "[oss-security] Podbeuter podcast fetcher: remote code execution" "^Date:" nil nil "9" "2017091618:05:18" "[oss-security] Podbeuter podcast fetcher: remote code execution" (number mark "        eual.jp@gmai Sep 16   55/2049  " thread-indent "\"[oss-security] Podbeuter podcast fetcher: remote code execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32637 invoked by uid 550); 7 Mar 2016 15:28:32 -0000
+Received: (qmail 7457 invoked by uid 550); 16 Sep 2017 18:48:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32608 invoked from network); 7 Mar 2016 15:28:31 -0000
-Thread-Topic: [security-vendor] Re: [oss-security] Concerns about CVE
- coverage shrinking - direct impact to researchers/companies
-Thread-Index: AQHRdwOmbuXn7Px030WZBvVj/Xd8Ip9MenYAgABoJgCAACnGgIAACqGAgAAIF4CAABDfAIAAOMkAgABWEYCAAF3S2g==
-Message-ID: <33006C99F5A5194A9B7A7715DFA3E383EB84DCEF@ALA-MBA.corp.ad.wrs.com>
-References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>
- <56D9DD1F.1030302@cert.org> <20160305172039.GA20796@openwall.com>
- <20160306062700.GA25289@gremlin.ru>
- <110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>
- <20160306150917.GA29105@openwall.com>
- <CAFHyJTqHw=Cjg6C-u4eUyUVe9bcntn+LombQ+fnosgXBy79OZA@mail.gmail.com>
- <20160306161617.GA30781@openwall.com>
- <8BB58F16-D629-48CB-96C6-3EA7406BA6A6@fearnothingproductions.net>
- <56DC959A.6060200@gmail.com>,<56DCDDCD.8070600@treenet.co.nz>
-In-Reply-To: <56DCDDCD.8070600@treenet.co.nz>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [147.11.216.89]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 9587 invoked from network); 16 Sep 2017 18:05:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=pfJ04BPvZ4NNoNOl5tw1lRxJxXZDoRlSV6mOwDNF4Rc=;
+        b=UaK+rRto+6I5vCdvHHBSscw71KO9bZ50mhphdx9mOP2ut5T0+mlx7xctEZZk45V2UQ
+         yDPW2EwBYQz621CRlp1GEo6HimmctruVFH0dzSpT7lY01TvF4fjn7BFzA9WFg1epX2HE
+         ZwB0jTabirshufd9jWzKrxLnno0hsBOgliBuk41GHLkFCVcPBf/VIS745x5OIPg0oFa7
+         lRMtmXY35Y8XqmHylhnFgTctXm22R+F8z5Ss50RvNinT4o7TKQrvtRGDh9UYcZoYbnSi
+         lsD+82QBI71IIU/AVOlqODEblEXJVnJPsFDNARpIqITmyxHQcDys6At2L4ZfJGbnqNo+
+         T2Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=pfJ04BPvZ4NNoNOl5tw1lRxJxXZDoRlSV6mOwDNF4Rc=;
+        b=CCIyg4PwcxTLSWTY8AeNbS28ClEThGDgBH9up51I6HsErlNPlwv8MIZ0YcJXNY0hCp
+         eAZQH8wpy12z74aNFyWgpUBzGXW9emb1AXZc75by+PGAryNhhyeSxlvGscM9JOfgBdD7
+         oS22w4Gh5xKeaUejB9CDfli4TTipzE7JIXs3rO/k84NWNK5NqqKjOHxgQxVpbM4hmFvm
+         4NOFTzq2zeh24TEIm4P845OSb5yHYw5Q9SrYBWi9AHL8b+Af8LdBdmS9rdfhcffJ+u50
+         TwEkdWF3aN/bZENCLlP2IB/robZJ61Xu4TYiKPPamkdubgnOK8HEaAqGSOM13GSS1NUv
+         kQig==
+X-Gm-Message-State: AHPjjUhjGQBXPWe5PtpqHDoE3+yMujNdLKwAnfbyuXKKdmk6TTGmhIX4
+	eQiM+iP8Hfl+FgXgFi0=
+X-Google-Smtp-Source: AOwi7QCkpMtNzbl0fAZ6r9OZ4MLomrg5V0HT9AVRUI1TE1ojAHmbjB8Sr5Ovk9HuOTV/rW/QzzzPzw==
+X-Received: by 10.25.216.85 with SMTP id p82mr2301891lfg.21.1505585120174;
+        Sat, 16 Sep 2017 11:05:20 -0700 (PDT)
+Message-ID: <20170916180518.GB28963@curry>
 MIME-Version: 1.0
-Date: Mon, 7 Mar 2016 15:28:03 +0000
-From: "Radzykewycz, T (Radzy)" <radzy@windriver.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Bn2rw/3z4jIqBvZU"
+Content-Disposition: inline
+User-Agent: Mutt/1.8.3 (2017-05-23)
+Date: Sat, 16 Sep 2017 21:05:18 +0300
+From: Alexander Batischev <eual.jp@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] RE: [security-vendor] Re: [oss-security] Concerns about CVE
- coverage shrinking - direct impact to researchers/companies
-To: Amos Jeffries <squid3@treenet.co.nz>,
-        "oss-security@lists.openwall.com"
-	<oss-security@lists.openwall.com>
+Subject: [oss-security] Podbeuter podcast fetcher: remote code execution
+To: oss-security@lists.openwall.com
+
+--Bn2rw/3z4jIqBvZU
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Podbeuter is a podcast fetcher and player that's developed alongside=20
+with Newsbeuter, an RSS/Atom feed reader for text consoles.
+
+Versions 0.3 through 2.9 are vulnerable to remote code execution. An=20
+attacker can craft an RSS item where the name of media enclosure
+(the podcast file) contains shell code. When user plays the file in=20
+Podbeuter, the shell code will be executed.
+
+A commit fixing the vulnerability in Git:=20
+https://github.com/akrennmair/newsbeuter/commit/c8fea2f60c18ed30bdd1bb6f798=
+e994e51a58260
+
+A patch for Podbeuter 2.9:=20
+https://github.com/akrennmair/newsbeuter/commit/26f5a4350f3ab5507bb8727051c=
+87bb04660f333
+
+Upstream issue: https://github.com/akrennmair/newsbeuter/issues/598
+
+I've requested a CVE from MITRE on August 27th, but haven't heard back=20
+yet, so decided to disclose without a number.
+
+--=20
+Regards,
+Alexander Batischev
+
+PGP key 356961A20C8BFD03
+Fingerprint: CE6C 4307 9348 58E3 FD94  A00F 3569 61A2 0C8B FD03
 
 
-________________________________________
-> From: Amos Jeffries [squid3@treenet.co.nz]
-> Sent: Sunday, March 06, 2016 5:47 PM
-> To: oss-security@lists.openwall.com
-> Subject: [security-vendor] Re: [oss-security] Concerns about CVE coverage=
- shrinking - direct impact to researchers/companies
->=20
-> On 7/03/2016 9:39 a.m., Gsunde Orangen wrote:
-> > I totally agree.
-> > The concern addressed by Kurt initially is fully valid (for both
-> > researchers and for companies that are not on Mitre's product/sources
-> > list), so a new (better: additional) solution is required.
-> > However, creating a new standard independently of CVE would be too
-> > disruptive and be a disservice to the software industry.
-> > I'd propose to work out a new solution together with Mitre, whilst
-> > keeping the CVE IDs as today.
-> > Since 2014, virtually unlimited number of CVE IDs can be assigned per
-> > year [1], so a solution could be that
-> >  - Mitre continues to assign 4 and 5 digit IDs as today
-> >  - 6 digit IDs are reserved for the new process (hosted outside Mitre)
-> > If more than one million vulnerabilities need to be addressed in one
-> > year, we could follow the rule (odd digits -> Mitre, even digits ->
-> > "other process")
-> > From Mitre's POC, this "other process" would become a "CNA", just with
-> > its own policy and process definition, not prescribed by Mitre.
-> > It would soon become clear to everyone (and all tools and products that
-> > rely on CVE) where to look at for the authoritative vulnerability
-> > information.
->=20
->=20
-> While reading this whole thread I have been thinking along very similar
-> but slightly different lines.
->=20
-> Right now as a vendor 'security desk' I/we have the situation where we
-> have to allocate an internal reference ID anyway while awaiting Mitre
-> assignment. These IDs are not spread so widely as CVE in the early
-> stages, so we end up with other vendors and downstream distributions not
-> quite in the same discussion loop allocating their own temporary numbers
-> for the same issue. And some do anyway just because thats the way they
-> operate.
-> (Those aware of the history might recall this was the exact same
-> situation which caused CVE to be created and centralized through Mitre
-> in the first place.)
->=20
-> Having an easily self-assigned OVI number does sound nice. At least for
-> use as a temporary ID that can be publicly shared before the proper
-> analysis can be completed by Mitre for a CVE, which can then sub-link.
->=20
-> AYJ
+--Bn2rw/3z4jIqBvZU
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Seems like it would be a very simple change, if Mitre were willing
-to do it, to have vulnerability reporters include an OVE or OVI
-tracking number with every report.  That way, there would be
-a number to track from the initial report, and still have the
-benefits of a significant review for CVE identifiers.
+-----BEGIN PGP SIGNATURE-----
 
-If Mitre were willing to make it mandatory, I think that might
-be best.  But even if not, that wouldn't prohibit researchers
-from doing this, though it would be more ad-hoc.
+iQIzBAEBCAAdFiEEzmxDB5NIWOP9lKAPNWlhogyL/QMFAlm9Z94ACgkQNWlhogyL
+/QMKtw/9HipZGuTQQTh1pDh5Jc1LnKVcwKh31dn2Zh3X98DcXfzAeAG77onA3roa
+a4TaB7LRz/U06Pv/ym45BmNHdYhD7KozRBZS7d8c3sTl3DP4tXBxEAf42ELN2wcA
+50j+nHukCFfoNy7NRqRZ7028tr/6yHw6DN1OyUIcU5DitCTWcxcfGmf2filq625y
+ko6lp5D3hNCS8AHZ9I4gzj0Pe2IO5rclGzjrOtJw12JIZMh2pFUM+Wd9akvm+Uqf
+XmGaxpeHz9bgF7O1pc7hTs4AdSnDuDt2Ho/5mZ9boGY2LEl6ZggZYUAAG9FbA/RS
+I7LH9c21imojv+A5uYALBqxcpNXUPtGS4IzPIEQiZjJRGKyz18ZthcWM/NPwLVOG
+4FXWCSNdgfi5nWAK9wRTlM3b8cqs70Jzc6of2CNOSXQeQaJDAryB5iP7kk6YqKeq
+IeVMEAHkgMXR8CS7B/TuGLlF3JiK8ePoOLMFnMYZSQY09z5glz+jbE/AhlUlCyVZ
+lR9MMIqV7pGL48fkgGKpYkH9mB2TzWZ7ODKq1YGVggxNLqQI2trzl+sXT8QINkYz
+ZqdZ9tQl8TNd1p1yk56NgVoEtltEcb8HofjeRoiGYg+V8qH+Kes+MU0gpHM7uRv1
+gboMblHVRG7CvZyO9AAY48wK1H0y8Xz3vTH2BY54BVUjRcVFBgk=
+=+fRa
+-----END PGP SIGNATURE-----
 
-Enjoy!
-
-				-- radzy
+--Bn2rw/3z4jIqBvZU--
