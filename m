@@ -1,98 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/9
-Message-ID: <5243626.fZFJWZMf6g@arcadia>
-Date: Sun, 01 Jan 2017 16:54:34 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/16/1
+Message-ID: <20170916180518.GB28963@curry>
+Date: Sat, 16 Sep 2017 21:05:18 +0300
+From: Alexander Batischev <eual.jp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: libtiff: NULL pointer dereference in TIFFReadRawData (tiffinfo.c)
+Subject: Podbeuter podcast fetcher: remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Libtiff is a software that provides support for the Tag Image File Format 
-(TIFF), a widely used format for storing image data.
+Podbeuter is a podcast fetcher and player that's developed alongside 
+with Newsbeuter, an RSS/Atom feed reader for text consoles.
 
-A crafted tiff file revealed a NULL pointer access.
+Versions 0.3 through 2.9 are vulnerable to remote code execution. An 
+attacker can craft an RSS item where the name of media enclosure
+(the podcast file) contains shell code. When user plays the file in 
+Podbeuter, the shell code will be executed.
 
-The complete ASan output:
+A commit fixing the vulnerability in Git: 
+https://github.com/akrennmair/newsbeuter/commit/c8fea2f60c18ed30bdd1bb6f798e994e51a58260
 
-# tiffinfo -Dijr $FILE
+A patch for Podbeuter 2.9: 
+https://github.com/akrennmair/newsbeuter/commit/26f5a4350f3ab5507bb8727051c87bb04660f333
 
-TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
-sorted in ascending order.
-TIFFReadDirectory: Warning, Unknown field with tag 384 (0x180) encountered.
-TIFFReadDirectory: Warning, Unknown field with tag 1093 (0x445) encountered.
-TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
-TIFFFetchNormalTag: Warning, ASCII value for tag "DocumentName" contains null 
-byte in value; value incorrectly truncated during reading due to 
-implementation limitations.
-TIFFFetchNormalTag: Warning, Incorrect count for "JpegProc"; tag ignored.
-TIFFReadDirectory: Warning, Photometric tag value assumed incorrect, assuming 
-data is YCbCr instead of RGB.
-TIFFReadDirectory: Warning, SamplesPerPixel tag is missing, applying correct 
-SamplesPerPixel value of 3.
-_TIFFVSetField: Warning, SamplesPerPixel tag value is changing, but 
-SMinSampleValue tag was read with a different value. Cancelling it.
-ASAN:DEADLYSIGNAL
-=================================================================
-==15897==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x00000050d8ad bp 0x7ffc4a3eaf90 sp 0x7ffc4a3eaec0 T0)
-==15897==The signal is caused by a READ memory access.
-==15897==Hint: address points to the zero page.
-    #0 0x50d8ac in TIFFReadRawData /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:421:29
-    #1 0x50b2de in tiffinfo /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:473:4
-    #2 0x50a999 in main /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:152:6
-    #3 0x7f6258f0961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #4 0x419f38 in _init (/usr/bin/tiffinfo+0x419f38)
+Upstream issue: https://github.com/akrennmair/newsbeuter/issues/598
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:421:29 in TIFFReadRawData
-==15897==ABORTING
-TIFF Directory at offset 0xc (12)
-  Image Width: 128 Image Length: 1
-  Bits/Sample: 32189
-  Compression Scheme: Old-style JPEG
-  Photometric Interpretation: YCbCr
-  YCbCr Subsampling: 2, 2
-  Samples/Pixel: 3
-  Rows/Strip: 2048
-  Planar Configuration: single image plane
-  DocumentName: 
-  Tag 384: 16779264
-
-Affected version:
-4.0.7
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/vadz/libtiff/commit/c2f931bb558b9db41cb3516a6df3aa600fd85744
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00056-libtiff-nullptr-TIFFReadRawData
-
-Timeline:
-2016-11-22: bug discovered and reported to upstream
-2016-12-03: upstream released a patch
-2017-01-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/01/libtiff-null-pointer-dereference-in-tiffreadrawdata-tiffinfo-c
+I've requested a CVE from MITRE on August 27th, but haven't heard back 
+yet, so decided to disclose without a number.
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Regards,
+Alexander Batischev
+
+PGP key 356961A20C8BFD03
+Fingerprint: CE6C 4307 9348 58E3 FD94  A00F 3569 61A2 0C8B FD03
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
