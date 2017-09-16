@@ -1,31 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/7
-Message-ID: <alpine.LFD.2.20.1701131706000.25713@wniryva>
-Date: Fri, 13 Jan 2017 17:09:40 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-2584 Kernel: kvm: use after free in complete_emulated_mmio
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/16/2
+Message-ID: <20170916190543.GA6340@openwall.com>
+Date: Sat, 16 Sep 2017 21:05:44 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Alexander Batischev <eual.jp@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Podbeuter podcast fetcher: remote code execution
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Sat, Sep 16, 2017 at 09:05:18PM +0300, Alexander Batischev wrote:
+> I've requested a CVE from MITRE on August 27th, but haven't heard back 
+> yet, so decided to disclose without a number.
 
-Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
-is vulnerable to a use after free flaw. It could occur on x86 platform, when 
-emulating instructions fxsave, fxrstor, sgdt, etc.
+Thanks.  Going forward, please report relevant issues in here right
+away, without waiting on MITRE.  We previously had these guidelines in a
+footnote, but I've just upgraded them to their own section here:
 
-A user/process could use this flaw to crash the host kernel resulting in DoS.
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
 
-Upstream patch:
----------------
-   -> https://www.spinics.net/lists/kvm/msg143571.html
+"Previously, one could request CVE IDs for issues in Open Source
+software from oss-security.  This is no longer the case.  Instead, please
+start by posting about the (to be made) public issue to oss-security
+(without a CVE ID), request a CVE ID from MITRE directly, and finally
+"reply" to your own posting when you also have the CVE ID to add.  With
+the described approach you would only approach MITRE after the issue is
+already public, but if you choose to do things differently and contact
+MITRE about an issue that is not yet public, then please do not disclose
+to them more than the absolute minimum needed for them to assign a CVE ID."
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1413001
+with links to:
 
-'CVE-2017-2584' is assigned to this issue by Red Hat Inc.
+https://cveform.mitre.org
+http://www.openwall.com/lists/oss-security/2015/04/14/3
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Alexander
