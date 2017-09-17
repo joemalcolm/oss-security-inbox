@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2425" "Monday" "9" "November" "2015" "18:12:59" "-0500" "Larry Cashdollar" "larry0@me.com" "<D26692AB.28D03%larry0@me.com>" "66" "[oss-security] Blind SQL injection in wp-championship wordpress plugin v5.8" nil nil nil "11" "2015110923:12:59" "[oss-security] Blind SQL injection in wp-championship wordpress plugin v5.8" (number mark "U       larry0@me.co Nov  9   66/2425  " thread-indent "\"[oss-security] Blind SQL injection in wp-championship wordpress plugin v5.8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3559" "Sunday" "17" "September" "2017" "15:04:10" "+0200" "Solar Designer" "solar@openwall.com" "<20170917130410.GA8650@openwall.com>" "74" "Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing" "^Date:" nil nil "9" "2017091713:04:10" "[oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing" (number mark "        solar@openwa Sep 17   74/3559  " thread-indent "\"Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing\"\n") "<6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com>" ("<6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22404 invoked by uid 550); 9 Nov 2015 23:13:22 -0000
+Received: (qmail 17701 invoked by uid 550); 17 Sep 2017 13:04:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +11,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16291 invoked from network); 17 Sep 2017 13:04:19 -0000
+Message-ID: <20170917130410.GA8650@openwall.com>
+References: <6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sun, 17 Sep 2017 15:04:10 +0200
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22359 invoked from network); 9 Nov 2015 23:13:16 -0000
-User-Agent: Microsoft-MacOutlook/14.5.7.151005
-Date: Mon, 09 Nov 2015 18:12:59 -0500
-From: Larry Cashdollar <larry0@me.com>
-To: Open Security <oss-security@lists.openwall.com>
-Message-id: <D26692AB.28D03%larry0@me.com>
-Thread-topic: Blind SQL injection in wp-championship wordpress plugin v5.8
-MIME-version: 1.0
-Content-type: multipart/alternative; boundary=B_3529937583_30720687
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2015-11-09_18:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- kscore.is_bulkscore=0 kscore.compositescore=1 compositescore=0.9
- suspectscore=0 phishscore=0 bulkscore=0 kscore.is_spamscore=0 rbsscore=0
- spamscore=0 urlsuspectscore=0.9 adultscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.0.1-1510090000 definitions=main-1511090389
-Subject: [oss-security] Blind SQL injection in wp-championship wordpress plugin v5.8
+Subject: Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing
+To: oss-security@lists.openwall.com
 
---B_3529937583_30720687
-Content-type: text/plain;
-	charset="US-ASCII"
-Content-transfer-encoding: 7bit
+On Sun, Sep 17, 2017 at 12:27:41PM +0100, Luke Hinds wrote:
+> Keystone uses sha512_crypt for password hashing. This provides
+> insufficient and limited protection, since sha512_crypt algorithm has a
+> low computational cost factor, therefore making it easier to crack
+> passwords offline in a short period of time.
+> 
+> The correct mechanism is to use the more secure hashing algorithms with
+> a higher computational cost factor such as bcrypt, scrypt, or
+> pbkdf2_sha512 instead of sha512_crypt.
+> 
+> ### Recommended Actions ###
+> 
+> It is recommended that operators upgrade to the Pike release where all
+> future passwords would be bcrypt hashed.
 
-Title: Blind SQL injection in wp-championship wordpress plugin v5.8
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-10-22
-Download Site: https://wordpress.org/plugins/wp-championship/
-Vendor: https://profiles.wordpress.org/tuxlog/ http://www.tuxlog.de/
-Vendor Notified: 2015-10-23, fixed in v5.9
-Vendor Contact: webmaster@tuxlog.de
-Description: wp-championship is a plugin for wordpress letting you play a
-guessing game of a tournament e.g. soccer.
-Vulnerability:
-The following lines do not properly sanitize user input resulting in SQLi,
-injection points are POST request
-To user, isadmin,mail service,mailresceipt,stellv,champtipp and tippgroup.
-Also GET requests to userid.
+The move to bcrypt makes sense as a defense against GPU attacks, which
+are currently most relevant.  I would have recommended it, too.
 
-The code from cs_admin_users.php is as follows:
+However, the wording of the advisory and in the discussion at
+https://bugs.launchpad.net/ossn/+bug/1668503 is weird.
 
-69                                 $sql="select count(*) as anz from
-$cs_users where userid=".$_POST['user'].";";
- 70                                 $results = $wpdb->get_row($sql);
-.
-.
- 74                                         $sql = "insert into ". $cs_users
-." values (". $_POST['user'] . "," . $_POST['isadmin'] . "," . $
-_POST['mailservice'] . "," .$_POST['mailreceipt'] . "," . $_POST['stellv'] .
-",".$_POST['champtipp'].",'1900-01-01 00:00:00',-1,'".$_POST
-['tippgroup']."');";
- 75                                         $results = $wpdb->query($sql);
-.
-.
-86                                 $sql = "update ".$cs_users." set admin="
-. $_POST['isadmin'] . ", mailservice=" . $_POST['mailservice'] .    ",
-mailreceipt=" . $_POST['mailreceipt'] . ",stellvertreter=" .
-$_POST['stellv'] . ",champion=" . $_POST['champtipp'] . ", tippgroup='".$
-_POST['tippgroup']."' where userid=".$_POST['user'].";";
- 87                                 $results = $wpdb->query($sql);
-.
-.
-98                         $sql= "delete from ".$cs_users." where
-userid=".$_GET['userid'].";";
-99                         $results = $wpdb->query($sql);
-.
-.
-110                         $sql= "select * from  $cs_users where
-userid=".$_GET['userid'].";";
-111                         $results = $wpdb->get_row($sql);
-CVEID: 2015-5308
-OSVDB:
-Exploit Code:
-Untested: 
-$ sqlmap -u 
-'http://wp.site:80/wp-admin/wp-championship/cs_admin_users.php&userid='
---data="isadmin=1&user" --cookie=AUTH_COOKIE_HERE --level=5 --risk=3
-Screen Shots:
-Advisory: http://www.vapidlabs.com/advisory.php?v=155
+I assume that sha512_crypt refers to the algorithm introduced in glibc
+2.7 and now used by many Linux distros and more.  It is typically called
+sha512crypt without the underscore.  I also assume that pbkdf2_sha512
+refers to PBKDF2-HMAC-SHA512.
 
+sha512crypt's "computational cost factor" is tunable, and sha512crypt
+isn't quicker to crack than PBKDF2-HMAC-SHA512 when both are tuned for
+the same defensive running time and use implementations optimized to a
+similar extent.  However, PBKDF2-HMAC has worse missed optimization
+pitfalls, so highly unoptimal implementations of PBKDF2 are very common:
 
+https://jbp.io/2015/08/11/pbkdf2-performance-matters
 
---B_3529937583_30720687--
+Obviously, password crackers may use more optimal implementations.
 
+I guess the names with underscores are some specific instantiations with
+fixed cost factors?  I guess bcrypt and scrypt referred to here are also
+specific instantiations with fixed cost factors?  Then the wording would
+start to make sense.  For completeness, what are the specific cost
+factors used for each of those four?
 
+Reading the discussion on relevant Bug entries and proposed commits, it
+appears that pbkdf2_sha512 was recently introduced under the flawed
+understanding that "sha512_crypt is considered insufficient (even with
+significant rounds) in comparison to pdkfd_sha512, bcrypt, or scrypt for
+password hashing."  While the references to bcrypt and scrypt are
+correct, the reference to (presumably) PBKDF2-HMAC-SHA512 is wrong.  It
+is in the same category with sha512crypt.  As it is, pbkdf2_sha512 might
+very well allow for quicker cracking than sha512_crypt does.  Without
+knowing the specific settings and efficiency of implementations, we
+can't tell.
+
+Then, Bug 1668503 lists FPGAs as part of the motivation for the change.
+However, bcrypt fits FPGAs very well:
+
+http://www.openwall.com/lists/john-users/2017/06/25/1
+http://www.openwall.com/lists/john-users/2017/07/03/4
+
+The move from sha512crypt to bcrypt is good against GPUs, but makes
+little difference against FPGAs.  It's still a fine move to take now -
+it is an improvement, and GPU attacks are more relevant.  You just need
+to know what you achieve (GPU attack resistance) and what you don't
+achieve (FPGA attack resistance).
+
+Of the four algorithms, only scrypt (and only at high enough settings)
+is somewhat FPGA attack resistant by requiring external memory and
+memory bandwidth, which has to be part of the attack platform's cost.
+
+I don't recommend any further code changes at this time.  Rather, I
+recommend that the confusion be dealt with: clarify the settings used,
+don't refer to pbkdf2_sha512 as a clear improvement upon sha512_crypt.
+
+Alexander
