@@ -1,65 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/8
-Message-ID: <20170830200346.dhmg6koiwpn3rauh@eldamar.local>
-Date: Wed, 30 Aug 2017 22:03:46 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: James Cowgill <jcowgill@...ian.org>
-Subject: mbed TLS: CVE-2017-14032: Bypass of authentication of peer possible when the authentication mode is configured as 'optional'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/4
+Message-ID: <20170917152143.GA10498@openwall.com>
+Date: Sun, 17 Sep 2017 17:21:43 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Alexander Batischev <eual.jp@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Podbeuter podcast fetcher: remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi
-
-MITRE has assigned CVE-2017-14032 for the following issue in mbed TLS:
-
-https://tls.mbed.org/tech-updates/security-advisories/mbedtls-security-advisory-2017-02
-
->   Title     Bypass of authentication of peer possible when the authentication
->                             mode is configured as 'optional'
-> Date      28th August 2017
-> Affects   All versions of mbed TLS from version 1.3.10 and up, including all
->           2.1 and later releases
-> Not       mbed TLS 1.3.9 and earlier
-> affected
-> Impact    Use of the 'optional' authentication mode can permit the peer to
->           bypass peer authentication
-> Severity  High
+On Sun, Sep 17, 2017 at 02:55:12PM +0300, Alexander Batischev wrote:
+> On Sat, Sep 16, 2017 at 09:05:44PM +0200, Solar Designer wrote:
+> >"Instead, please start by posting about the (to be made) public issue 
+> >to oss-security (without a CVE ID), request a CVE ID from MITRE 
+> >directly, and finally "reply" to your own posting when you also have 
+> >the CVE ID to add."
 > 
-> Vulnerability
-> -------------
-> If a malicious peer supplies an X.509 certificate chain that has more than
-> MBEDTLS_X509_MAX_INTERMEDIATE_CA intermediates (which by default is 8), it
-> could bypass authentication of the certificates, when the authentication mode
-> was set to 'optional' eg. MBEDTLS_SSL_VERIFY_OPTIONAL. The issue could be
-> triggered remotely by both the client and server sides.
-> 
-> If the authentication mode, which can be set by the function
-> mbedtls_ssl_conf_authmode(), was set to 'required' eg.
-> MBEDTLS_SSL_VERIFY_REQUIRED which is the default, authentication would occur
-> normally as intended.
-> 
-> Impact
-> ------
-> Depending on the platform, an attack exploiting this vulnerability could allow
-> successful impersonation of the intended peer and permit man-in-the-middle
-> attacks.
-> 
-> Resolution
-> ----------
-> Affected users should upgrade to mbed TLS 1.3.21, mbed TLS 2.1.9 or mbed TLS
-> 2.6.0.
-> 
-> Workaround
-> ----------
-> Users should wherever possible upgrade to the newer version of mbed TLS. Where
-> this is not practical, users should consider if changing the authentication to
-> the 'required' mode MBEDTLS_SSL_VERIFY_REQUIRED is practical for their
-> application.
+> I was under impression that having a CVE ID speeds up processes in 
+> distros, and fixes are released quicker.
 
-References:
- -  https://github.com/ARMmbed/mbedtls/commit/31458a18788b0cf0b722acda9bb2f2fe13a3fb32
- - https://github.com/ARMmbed/mbedtls/commit/d15795acd5074e0b44e71f7ede8bdfe1b48591fc
- - https://bugs.debian.org/873557
+This might be the case for some issues and some distros, such as when
+having a CVE ID is deemed to indicate the issue is serious or has to be
+patched for publicity reasons.  It may be that it's easier to ignore an
+issue that doesn't yet have a CVE ID, publicity-wise.
 
-Regards,
-Salvatore
+While CVE IDs are helpful for tracking, they should not be required, so
+if a distro technically can't promptly process issues without CVE IDs (I
+am unaware of such cases), they need to revise their processes anyhow.
+
+> Was my impression wrong?
+
+I'm unaware of statistics to confirm or disprove your impression.  If
+someone has such data and analysis, please share.
+
+Intuitively, I'd expect having or lacking a CVE ID to affect priority
+more than it affects capability to track.  Ideally it shouldn't affect
+either, but realistically I expect that it sometimes does.
+
+> I just want to do things "right", so that 
+> attackers have as little time as possible to exploit users. (I do 
+> realize this all is best-effort and distros might still take time to 
+> release, and then users might take ages to upgrade.)
+
+You're talking about the window of exposure: time period since public
+disclosure of an issue and until it gets patched.  However, this metric
+varies across users and distros, and it's not the only metric.  It's
+also desirable to get the issue known and fixed sooner.  Now, an extra
+three weeks (as in your most recent case) isn't unacceptably bad as long
+as the chances of abuse or leaks during this period are low, but you do
+slightly increase this risk by reporting to MITRE.  Although I'm unaware
+of evidence there's ever been abuse by or leaks from MITRE, and there
+have been fairly convincing statements to the contrary, I think it's
+good practice to avoid or at least minimize the pre-public-disclosure
+exposure to MITRE as it serves no other purpose than getting CVE IDs
+assigned, which in my opinion does not justify even minor risk.
+
+> Now that I had an experience of waiting for three weeks, I'll also 
+> re-consider if I want to become a CNA for my project. Previously it 
+> seemed like a hassle; I'm not so sure now.
+
+This does seem like a hassle to me.  Probably not worth it.  Publicly
+disclosing without CVE IDs and adding them later is probably better.
+You can always use your own tracking IDs to add clarify (so that e.g.
+different issues are not erroneously lumped together), or use OVE IDs:
+
+http://www.openwall.com/ove/
+
+then associate them with CVE IDs when you have those, such as in a
+revision of your advisory.  See e.g. how Xen publishes revised versions
+of their advisories when they add CVE IDs.
+
+Alexander
