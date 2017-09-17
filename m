@@ -1,69 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/7
-Message-ID: <70750590.5axfNR7Pl0@arcadia>
-Date: Sun, 29 Jan 2017 17:52:34 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: mp3splt: NULL pointer dereference in main (mp3splt.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/3
+Message-ID: <20170917115512.GA11577@curry>
+Date: Sun, 17 Sep 2017 14:55:12 +0300
+From: Alexander Batischev <eual.jp@...il.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Podbeuter podcast fetcher: remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Description:
-mp3splt is a command line utility to split mp3 and ogg files without decoding.
+Hi,
 
-A fuzz on it discovered a NULL pointer access.
+This has been assigned CVE-2017-14500: 
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14500
 
-The complete ASan output:
+On Sat, Sep 16, 2017 at 09:05:44PM +0200, Solar Designer wrote:
+>"Instead, please start by posting about the (to be made) public issue 
+>to oss-security (without a CVE ID), request a CVE ID from MITRE 
+>directly, and finally "reply" to your own posting when you also have 
+>the CVE ID to add."
 
-# mp3splt -P -f -t 0.1 -a $FILE
-==3081==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x00000046dbd9 bp 0x7ffc4cdabdb0 sp 0x7ffc4cdab520 T0)
-==3081==The signal is caused by a READ memory access.
-==3081==Hint: address points to the zero page.
-    #0 0x46dbd8 in __interceptor_strncmp /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:302
-    #1 0x51d727 in main /tmp/portage/media-
-sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/mp3splt.c:906:11
-    #2 0x7f8512cf061f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #3 0x41ad08 in _init (/usr/bin/mp3splt+0x41ad08)
+I was under impression that having a CVE ID speeds up processes in 
+distros, and fixes are released quicker. That's why for my previous (and 
+first ever) vulnerability I first got an ID and only then released the 
+details and the patch. The assignment took just a day.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:302 in 
-__interceptor_strncmp
-==3081==ABORTING
+Was my impression wrong? I just want to do things "right", so that 
+attackers have as little time as possible to exploit users. (I do 
+realize this all is best-effort and distros might still take time to 
+release, and then users might take ages to upgrade.)
 
-Affected version:
-0.9.2
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00128-mp3splt-nullptr-main
-
-Timeline:
-2017-01-01: private report to upstream via mail
-2017-01-29: public upstream report on sourceforge
-2017-01-29: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/29/mp3splt-null-pointer-dereference-in-mp3splt-c
+Now that I had an experience of waiting for three weeks, I'll also 
+re-consider if I want to become a CNA for my project. Previously it 
+seemed like a hassle; I'm not so sure now.
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Regards,
+Alexander Batischev
+
+PGP key 356961A20C8BFD03
+Fingerprint: CE6C 4307 9348 58E3 FD94  A00F 3569 61A2 0C8B FD03
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
