@@ -1,225 +1,143 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/31/3
-Message-ID: <20170731154955.GA19657@lonestar>
-Date: Mon, 31 Jul 2017 21:19:55 +0530
-From: Dhiru Kholia <dhiru.kholia@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Potential security bugs in "eapmd5pass" software (3 CVE IDs)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/7
+Message-ID: <d81772f2-2f68-f9c6-dbb6-5e3427b06228@orlitzky.com>
+Date: Sun, 17 Sep 2017 12:29:02 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2017-14312: Nagios core root privilege escalation via insecure permissions
 Content-Type: text/plain; charset=utf-8
 
-Summary
--------
+Product: Nagios core
+Vendor: Nagios Enterprises, LLC
+Versions-affected: all
+Bug-report: https://github.com/NagiosEnterprises/nagioscore/issues/424
+Author: Michael Orlitzky
 
-This report describes 4 bugs in the eapmd5pass software package as shipped with
-Kali Linux. Bug 1 is a regular functionality related bug. The other 3 bugs are
-memory safety bugs that can be triggered remotely.
+(This has yet to be fixed upstream, but the workaround is
+straightforward and will suffice for most users.)
 
-I found these bugs with the help of libFuzzer.
-
-The worst case security impact of these three memory safety bugs seems to be
-limited to a remote denial of service (eapmd5pass crash and loss of intended
-functionality) under certain circumstances.
-
-Reproducers are available at https://github.com/kholia/reproducers URL.
-
-
-Steps to reproduce
-------------------
-
-http://www.willhackforsushi.com/?page_id=67
-
-https://tools.kali.org/wireless-attacks/eapmd5pass
-
-Add "-fsanitize=address" to Makefile and build eapmd5pass.
-
-After building eapmd5pass with "make", ensure that ASan is enabled.
-
-$ ldd ./eapmd5pass | grep asan
-	libasan.so.3 => /lib64/libasan.so.3 (0x00007fc7e85a5000)
-
-
-Bug 1
------
-
-$ ./eapmd5pass -r brad.eaptest.cap -w wordlist
-eapmd5pass - Dictionary attack against EAP-MD5
-Error placing pcap interface in non-blocking mode.
-pcap_setnonblock: No such file or directory
-
-It seems eapmd5pass has a non-security bug which causes it to fail to process
-.pcap files. Here is a patch to fix this problem,
-
-diff --git a/eapmd5pass.c b/eapmd5pass.c
-index 10b2a48..7ee51bb 100644
---- a/eapmd5pass.c
-+++ b/eapmd5pass.c
-@@ -684,7 +684,7 @@ int main(int argc, char *argv[])
-        }
-
-        /* Set non-blocking */
--       if (pcap_setnonblock(p, PCAP_DONOTBLOCK, errbuf) != 0) {
-+       if (!strlen(pcapfile) > 0 && pcap_setnonblock(p, PCAP_DONOTBLOCK, errbuf) != 0) {
-                fprintf(stderr, "Error placing pcap interface in non-blocking "
-                        "mode.\n");
-                perror("pcap_setnonblock");
-
-
-After applying this patch,
-
-$ ./eapmd5pass -r brad.eaptest.cap -w wordlist
-eapmd5pass - Dictionary attack against EAP-MD5
-Collected all data necessary to attack password for "brad-foundstone", starting attack.
-User password is "bradtest".
-1 passwords in 0.00 seconds: 4424.78 passwords/second.
-
-
-Bug 2
------
-
-$ ./eapmd5pass -r crash-4c384505c65c675a6a821f2a2f25ea967ec2a8c0 -w wordlist
-
-==22182==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6310000147ff at pc 0x000000403a7c bp 0x7ffe04164960 sp 0x7ffe04164950
-READ of size 1 at 0x6310000147ff thread T0
-    #0 0x403a7b in assess_packet /fuzzing/eapmd5pass-orig/eapmd5pass.c:134
-    #1 0x7f13f28ec87c in pcap_offline_read (/lib64/libpcap.so.1+0x2187c)
-    #2 0x401c4b in main /fuzzing/eapmd5pass-orig/eapmd5pass.c:734
-    #3 0x7f13f20c8730 in __libc_start_main (/lib64/libc.so.6+0x20730)
-    #4 0x402018 in _start (/fuzzing/eapmd5pass-orig/eapmd5pass+0x402018)
-
-The "offset" variable is -2 and "if (dot11->u1.fc.from_ds == 1 && dot11->u1.fc.to_ds == 1)" line is dereferencing out-of-bounds memory.
-
-Here is a fix for ignoring invalid "offset" values,
-
-diff --git a/eapmd5pass.c b/eapmd5pass.c
-index 10b2a48..7a7d900 100644
---- a/eapmd5pass.c
-+++ b/eapmd5pass.c
-@@ -115,6 +115,9 @@ void assess_packet(char *user, struct pcap_pkthdr *h, u_int8_t *pkt)
-
-        dot11buf = (pkt + offset);
-
-+       if (offset < 0)
-+               return;
-+
-        pcount++; /* Global packet counter */
-        if (__verbosity > 2) {
-                printf("Checking Frame: %ld....\n",pcount);
-
-
-Affected Component: Function "assess_packet" in eapmd5pass.c
-
-Affected Product Code Base: eapmd5pass - 1.4
-
-Attack Type: Remote
-
-Impact Denial of Service: true
-
-Attack Vectors: Network: processing crafted network traffic, Local: opening a crafted .pcap file.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the ID
-CVE-2017-11668 to this issue.
-
-Summary: An out-of-bounds read flaw related to eapmd5pass.c:134 was found in
-the way eapmd5pass handled processing of network packets. A remote attacker
-could potentially use this flaw to crash the eapmd5pass process under certain
-circumstances by generating specially crafted network traffic.
-
-
-Bug 3
------
-
-$ ./eapmd5pass -r crash-9a3774d38a5959db160a2564c1487c57f2b336b9 -w wordlist
-=================================================================
-==22237==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efe8 at pc 0x000000403e45 bp 0x7ffd6b32b6c0 sp 0x7ffd6b32b6b0
-READ of size 1 at 0x60200000efe8 thread T0
-    #0 0x403e44 in assess_packet /fuzzing/eapmd5pass-orig/eapmd5pass.c:211
-    #1 0x7f9d6c67b87c in pcap_offline_read (/lib64/libpcap.so.1+0x2187c)
-    #2 0x401c4b in main /fuzzing/eapmd5pass-orig/eapmd5pass.c:737
-    #3 0x7f9d6be57730 in __libc_start_main (/lib64/libc.so.6+0x20730)
-    #4 0x402018 in _start (/fuzzing/eapmd5pass-orig/eapmd5pass+0x402018)
-
-
-This invalid read occurs on "if (dot2hdr->dsap != IEEE8022_SNAP ||
-dot2hdr->ssap != IEEE8022_SNAP)" line. The packet length is too small, and it
-isn't validated before the packet is consumed.
-
-Here is a patch to fix this problem,
-
-index 10b2a48..b125e53 100644
---- a/eapmd5pass.c
-+++ b/eapmd5pass.c
-@@ -115,6 +115,13 @@ void assess_packet(char *user, struct pcap_pkthdr *h, u_int8_t *pkt)
-
-        dot11buf = (pkt + offset);
-
-+       /* Check minimum packet length */
-+       if (offset + sizeof(struct dot11hdr) > h->caplen)
-+               return;
-+
-        pcount++; /* Global packet counter */
-        if (__verbosity > 2) {
-                printf("Checking Frame: %ld....\n",pcount);
-
-Affected Component: Function "assess_packet" in eapmd5pass.c
-
-Note: Similar validation checks should be added at other places in this function.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the ID
-CVE-2017-11669 to this issue. This issue is different from CVE-2017-11668 (Bug
-2).
-
-Summary: An out-of-bounds read flaw related to eapmd5pass.c:211 was found in
-the way eapmd5pass handled processing of network packets. A remote attacker
-could potentially use this flaw to crash the eapmd5pass process under certain
-circumstances by generating specially crafted network traffic.
-
-
-Bug 4
------
-
-$ ./eapmd5pass -r crash-1717d491a7b9beba422fe919d524ab973fbe7266 -w wordlist
-==23135==ERROR: AddressSanitizer: negative-size-param: (size=-1)
-    #0 0x7f9185d1b31b  (/lib64/libasan.so.3+0x5f31b)
-    #1 0x402a4f in extract_eapusername /fuzzing/eapmd5pass-orig/eapmd5pass.c:459
-    #2 0x403f25 in extract_eapusername /fuzzing/eapmd5pass-orig/eapmd5pass.c:441
-    #3 0x403f25 in assess_packet /fuzzing/eapmd5pass-orig/eapmd5pass.c:284
-    #4 0x7f9185a9987c in pcap_offline_read (/lib64/libpcap.so.1+0x2187c)
-    #5 0x401c4b in main /fuzzing/eapmd5pass-orig/eapmd5pass.c:744
-    #6 0x7f9185275730 in __libc_start_main (/lib64/libc.so.6+0x20730)
-    #7 0x402018 in _start (/fuzzing/eapmd5pass-orig/eapmd5pass+0x402018)
-
-
-This crash occurs in "memcpy(em->username, (eap+5), usernamelen)" line.
-"usernamelen" is negative at this point in the execution flow.  This bug can be
-reliably used to crash eapmd5pass (non-ASan and ASan builds) remotely.
-
-Here is a patch to fix this problem,
-
-diff --git a/eapmd5pass.c b/eapmd5pass.c
-index 10b2a48..b643d9b 100644
---- a/eapmd5pass.c
-@@ -444,6 +454,9 @@ int extract_eapusername(uint8_t *eap, int len, struct eapmd5pass_data *em)
-        /* 5 bytes for EAP header information without identity information */
-        usernamelen = (eaplen - 5);
-
-+       if (usernamelen < 0)
-+               return 1;
-+
-        usernamelen = (eaplen > sizeof(em->username))
-                        ? sizeof(em->username) : usernamelen;
-        memcpy(em->username, (eap+5), usernamelen);
-
-
-Affected Component: Function "extract_eapusername" in eapmd5pass.c
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the ID
-CVE-2017-11670 to this issue.
-
-Summary: An out-of-bounds read and write flaw was found in the way eapmd5pass
-handled network traffic. A remote attacker could potentially use this flaw to
-crash the eapmd5pass process by generating specially crafted network traffic.
-
--- 
-Dhiru
-
-View attachment "combined-fixes.diff" of type "text/plain" (2369 bytes)
+== Summary ==
+
+Nagios installs two sets of files with insecure permissions: after
+installation, the executables and the configuration files are all owned
+by the same unprivileged user and group (typically, "nagios") that the
+daemon runs as. In one attack, the unprivileged user simply replaces the
+nagios executable with one that does his bidding. A slightly more
+complicated attack can be mounted by the unprivileged user by scheduling
+a malicious service check and then altering nagios.cfg to execute that
+check as root.
+
+
+== Details ==
+
+The Nagios build system allows you to specify a runtime user and group
+(default: nagios) via the two ./configure parameters --with-nagios-user
+and --with-nagios-group:
+
+  AC_ARG_WITH(
+    nagios_user,
+    AC_HELP_STRING([--with-nagios-user=<user>],
+                   [sets user name to run nagios]),
+    nagios_user=$withval,
+    nagios_user=nagios)
+
+  AC_ARG_WITH(
+    nagios_group,
+    AC_HELP_STRING([--with-nagios-group=<grp>],
+                   [sets group name to run nagios]),
+    nagios_grp=$withval,
+    nagios_grp=nagios)
+
+  AC_SUBST(nagios_user)
+  AC_SUBST(nagios_grp)
+
+The daemon runs as that user and group by default, because the upstream
+configuration file nagios.cfg incorporates those flag values into the
+nagios_user and nagios_group settings in sample-config/nagios.cfg.in:
+
+  # NAGIOS USER
+  # This determines the effective user that Nagios should run as.
+  # You can either supply a username or a UID.
+  nagios_user=@...ios_user@
+
+  # NAGIOS GROUP
+  # This determines the effective group that Nagios should run as.
+  # You can either supply a group name or a GID.
+  nagios_group=@...ios_grp@
+
+The build system then installs most of the files for the package with
+their owners/groups set to the user and group specified, through the
+pervasive use of the following INSTALL_OPTS in configure.ac:
+
+  INSTALL_OPTS="-o $nagios_user -g $nagios_grp"
+  AC_SUBST(INSTALL_OPTS)
+
+This creates vulnerabilities because the nagios daemon is intended to be
+run as root.
+
+
+== Exploitation ==
+
+The default ownership is exploitable in at least two ways:
+
+  1 The Nagios runtime user owns the daemon executable, typically
+    located at /usr/sbin/nagios. That executable is run as root, and
+    drops privileges to the runtime user itself. This invites a simple
+    attack where the runtime user replaces the daemon executable with
+    his own code.
+
+  2 The main configuration file nagios.cfg is also owned by the
+    unprivileged runtime user, but nagios.cfg is where the runtime user
+    and group are specified. The unprivileged runtime user can schedule
+    a malicious service check (specified in the configuration files he
+    owns) and then put nagios_user=root in nagios.cfg. The next time the
+    daemon is restarted, it will run as root and execute the command set
+    by the unprivileged user.
+
+
+== Resolution ==
+
+A fix is still pending upstream, because there are third-party tools
+that rely on the ability to modify nagios.cfg. However, there is no
+legitimate reason for any of the installed executables to be owned by
+the Nagios runtime user or group, so a partial resolution is to ensure
+that the installed executables are owned by root and its group. Even
+users of those third-party tools can adapt the workaround below to
+secure the ownership of their executables.
+
+
+== Workaround ==
+
+Most users will not need to allow a third-party tool to access
+nagios.cfg, and should reset all ownership and group information to safe
+values:
+
+  dirs="/bin /sbin /usr /etc"
+  nagios_user=nagios
+  nagios_group=nagios
+  find $dirs -user "${nagios_user}" -print0 | \
+    xargs --null chown --no-dereference --from="${nagios_user}" root
+  find $dirs -group "${nagios_group}" -print0 | \
+    xargs --null chown --no-dereference --from=":${nagios_group}" :0
+
+The find commands above are intended to omit precisely one Nagios
+directory, its $localstatedir. The Nagios runtime user does need to be
+able to write to its logfile and to record the results of its service
+checks. On Gentoo, that information is stored under /var/nagios as the
+result of passing --localstatedir=/var/nagios to the ./configure script.
+Thus the owner and group of /var/nagios (or wherever your $localstatedir
+happens to be) should be left alone.
+
+If you would like to allow a group of non-root users to modify the
+Nagios configuration, that is possible with two caveats:
+
+  1 You should create an entirely new group called (for example)
+    "nagiosconfig" that is allowed to modify the configuration. The
+    Nagios runtime user should *not* be added to this group!
+
+  2 Most of Nagios's configuration files can have their groups set to
+    the new "nagiosconfig" group, and their modes set g+w. However, the
+    main configuration file nagios.cfg must *not* have its group changed
+    or be made group-writable! Otherwise anyone in the nagiosconfig
+    group would be able to gain root through the exploit described
+    earlier.
