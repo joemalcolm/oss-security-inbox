@@ -1,51 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/5
-Message-ID: <6b21533852d44795ba8d3bc376692029@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 03:44:30 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Virglrenderer: OOB access while parsing texture instruction
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/8
+Message-Id: <D1EB28A9-7BC2-49FF-96F0-4C6309839864@redhat.com>
+Date: Sun, 17 Sep 2017 15:25:53 -0600
+From: Kurt Seifried <kseifrie@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Alexander Batischev <eual.jp@...il.com>
+Subject: Re: Podbeuter podcast fetcher: remote code execution
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I never spoke or advocated about delaying things or timelines and CVEs except in the sense I'd like to make it easier and get CVEs attached to things fast so that issues can be disclosed ASAP, ideally with a CVE. I want to have my cake, and eat it, and share it with everyone else.
 
-> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
-> for the virtio GPU, is vulnerable to an OOB array access issue. It could occur
-> when parsing texture instructions in parse_instruction().
+
+-Kurt
+
+
+
+
+
+> On Sep 17, 2017, at 10:23, Solar Designer <solar@...nwall.com> wrote:
 > 
-> A guest user/process could use this flaw to crash the Qemu process instance
-> resulting DoS.
+>> On Sun, Sep 17, 2017 at 09:59:11AM -0600, Kurt Seifried wrote:
+>> many orgs (probably not open source distros run by
+>> volunteers, but more big corps) literally do have a clock start ticking
+>> when a CVE comes to light
 > 
-> https://lists.freedesktop.org/archives/virglrenderer-devel/2017-January/000105.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1415986
-
-Use CVE-2017-5580.
-
-This is not yet available at
-https://cgit.freedesktop.org/virglrenderer/log/src/gallium/auxiliary/tgsi/tgsi_text.c
-but that may be an expected place for a later update.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYiGPKAAoJEHb/MwWLVhi2438P/AtuBKdNEJ5lVOpdCtO3qU8B
-OywpoakBGGu0+b3pbeQ7zshonl5YeVnguaxmV7TNMej3cEgiXOtsdIW1pcwRjnxE
-H7vTGK3Lw1OPvJQZpcdYUf1NAJQRcNiYJ/x26dRK5D2vhBut5WaAylN4EXpuX9sw
-jU3wKXa9KvPfw8Iald1VB/sZWMc8HclhUTVxNVacA2PbdSnHYH27RT+jWLR9K+vV
-jE8m+vZrGvuUlEoPVhxwQ2x096+hadiQXlWEK/q50iLGIw/GMMLO17Jd7+Sbi8zH
-PNjFt5TR/bb9obHrABGg9DUHUv+/65UevkyKeuj5NI9ZoZneKvbR+NCLXm3wOdMb
-3BrlFe26wQRmA379YnWdlPeH65p7pMYeUDpddocGoV0O2Ile4y1E0RL9kz3NCLgn
-F2IVNTqZIyHwDxIgRprqd/WMWfu+azn62mnYoheCOrFealenyZBq8Z8A7Al6hF7P
-VXcanbg11IhZD/AACZUrDrids7xz5TujmA+Yt09I5GReHYmEmWZlJeHFcXaZP+iM
-dMW1i98cStTbMMv42a1QG0hQaGuYAWEN2J/JnMZP4YYsfx+Wq/vReHhyhmeoBsTV
-4dz/XLAXTdXD1v8//Gff0wXnTRm3dDUiLuQCegVSdruZmdUy7pdm5mn2v9CqTszL
-WPlCZPkCAUA7uSEe6srn
-=+9vv
------END PGP SIGNATURE-----
+> I think that's not a reason to delay disclosing an issue to everyone
+> else until there's a CVE ID.  If those orgs have such poor, limited, or
+> maybe cost-saving processes (saving on not needing to bother with issues
+> lacking CVE IDs, no matter how serious), it's their problem and their
+> users'.  They deliberately put themselves at a competitive disadvantage.
+> So be it.  This only reaffirms me in my suggested approach: public
+> disclosure first, CVE next.  So those big corps will have a reason to
+> fix the issues anyway, just with their self-imposed delay.
+> 
+> Alexander
