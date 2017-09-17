@@ -1,60 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/3
-Message-ID: <363108.313034417-sendEmail@localhost>
-Date: Mon, 20 Mar 2017 10:25:22 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libpcre: NULL pointer dereference in main (pcretest.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/6
+Message-ID: <20170917162344.GA10837@openwall.com>
+Date: Sun, 17 Sep 2017 18:23:44 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Alexander Batischev <eual.jp@...il.com>
+Subject: Re: Podbeuter podcast fetcher: remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libpcre is a perl-compatible regular expression library.
+On Sun, Sep 17, 2017 at 09:59:11AM -0600, Kurt Seifried wrote:
+> many orgs (probably not open source distros run by
+> volunteers, but more big corps) literally do have a clock start ticking
+> when a CVE comes to light
 
-A fuzz on libpcre1 through the pcretest utility revealed a null pointer dereference in the utility itself. For the nature of the crash, it is not security relevant because the library is not affected 
-but if you have a web application that calls directly the pcretest utility to parse untrusted data, then you are affected.
-Also, it is important share the details because some distros/packagers may want to take the patch in their repository.
+I think that's not a reason to delay disclosing an issue to everyone
+else until there's a CVE ID.  If those orgs have such poor, limited, or
+maybe cost-saving processes (saving on not needing to bother with issues
+lacking CVE IDs, no matter how serious), it's their problem and their
+users'.  They deliberately put themselves at a competitive disadvantage.
+So be it.  This only reaffirms me in my suggested approach: public
+disclosure first, CVE next.  So those big corps will have a reason to
+fix the issues anyway, just with their self-imposed delay.
 
-The complete ASan output:
-
-# pcretest -16 -d $FILE
-==26399==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000052db1c bp 0x7ffc7de68070 sp 0x7ffc7de67ba0 T0)
-==26399==The signal is caused by a READ memory access.
-==26399==Hint: address points to the zero page.
-    #0 0x52db1b in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5083:25
-    #1 0x7f70603bc78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #2 0x41b438 in _init (/usr/bin/pcretest+0x41b438) 
-
-Affected version:
-8.40
-
-Fixed version:
-8.41 (not released atm)
-
-Commit fix:
-https://vcs.pcre.org/pcre/code/trunk/pcretest.c?r1=1685&r2=1686&sortby=date
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00195-pcre-nullptr-main
-
-Timeline:
-2017-02-22: bug discovered and reported to upstream
-2017-02-23: upstream released a patch
-2017-03-14: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/14/libpcre-null-pointer-dereference-in-main-pcretest-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Alexander
