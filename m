@@ -1,22 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/3
-Message-ID: <20170428030522.GA53619@wopr>
-Date: Thu, 27 Apr 2017 20:05:22 -0700
-From: Kurt H Maier <khm@...ops.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8291 ghostscript remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/1
+Message-ID: <6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com>
+Date: Sun, 17 Sep 2017 12:27:41 +0100
+From: Luke Hinds <lhinds@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: [OSSN-0081] sha512_crypt is insufficient for password hashing
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 28, 2017 at 01:50:04AM -0000, security@...assian.com wrote:
->  Hi,
-> 
-> 
->  CVE-2017-8291 was reported initially to Ghostscript by the Atlassian Security Team. We worked with the developers of Ghostscript to address this vulnerability. This vulnerability impacts versions 9.21 and earlier, and is called from many other libraries, such as Pillow and ImageMagick. Fortunately, fixes have now been pushed to master and can be reviewed here: https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirKb6U3wFxO6cZ2MrfZFe9KXxeenPQ9IFz8TJhw6LOtOaFuB-2BSAw9BeCw0BhtT081tIKPb6Ah9qpSmP-2FzO2sx-2BjA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbIeCjEPp1RqnDE5ZMVkV8u-2FQck2RKXjMbDOcixr2-2BNtOmj3Wzq5XwkhDFXhU2AKyL9layYKe-2BQtxt0vvnrLW-2BhggU2jp-2FuYmlu1mgnKq3GLT-2BQs66xRLMVK0ptzU4dayw9UBPVRQ2Fkfj-2FJw1BXrk-2BY-3D and https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirJzYNkGRnjRAeENnIy4IlGMktl4IMwqOL-2F6c9eA2tuyk4XtZY7kQE2gU21K2S6Iame7IH19-2BL1vfBFf0SU6yEiA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbPyFjltEjXNsT3qz-2Fb9AtZOlxcf7srfg3ApNJwAPl06rQsoKGLAu393JsVQP6IMnwpmfkPtqhUc0Kd-2Fr-2BdA39SFaSuqgV1MSaFq7Bx7Osg3G1ng9ujPr9Xt71FOQOsCM9Ada5YhYxQbHq72hBUfE7-2Bo-3D
-> 
-> 
->  Since this issue is potentially serious, we encourage people to patch and update as soon as possible.
-> 
+sha512_crypt is insufficient for password hashing
+-------------------------------------------------
 
-Why are you sending user-tracking urls to this list?
+### Summary ###
 
-khm
+Use of sha512_crypt for password hashing in versions of Keystone prior
+to Pike, is insufficient and provides limited protection against
+brute-forcing of password hashes.
+
+### Affected Services / Software ###
+OpenStack Identity Service (Keystone). OpenStack Releases Ocata, Newton.
+
+### Discussion ###
+
+Keystone uses sha512_crypt for password hashing. This provides
+insufficient and limited protection, since sha512_crypt algorithm has a
+low computational cost factor, therefore making it easier to crack
+passwords offline in a short period of time.
+
+The correct mechanism is to use the more secure hashing algorithms with
+a higher computational cost factor such as bcrypt, scrypt, or
+pbkdf2_sha512 instead of sha512_crypt.
+
+### Recommended Actions ###
+
+It is recommended that operators upgrade to the Pike release where all
+future passwords would be bcrypt hashed.
+
+Operators should also force password changes on all users [1], which
+will result in the users newly generated passwords being bcrypt hashed.
+
+### Contacts / References ###
+Author: Luke Hinds <lhinds@...hat.com>
+[1]:
+https://docs.openstack.org/keystone/latest/admin/identity-security-compliance.html#force-users-to-change-password-upon-first-use
+[2] http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf
+This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0081
+Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1668503
+Mailing List : [Security] tag on openstack-dev@...ts.openstack.org
+OpenStack Security Project : https://launchpad.net/~openstack-ossg
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
