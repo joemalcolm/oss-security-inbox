@@ -1,33 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/18/2
-Message-Id: <C5482347-011C-4B52-A495-0CB4CA059168@beckweb.net>
-Date: Sat, 18 Nov 2017 08:23:48 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/2
+Message-ID: <20170917130410.GA8650@openwall.com>
+Date: Sun, 17 Sep 2017 15:04:10 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: [OSSN-0081] sha512_crypt is insufficient for password hashing
 Content-Type: text/plain; charset=utf-8
 
-
-> On 11. Oct 2017, at 18:25, Daniel Beck <ml@...kweb.net> wrote:
+On Sun, Sep 17, 2017 at 12:27:41PM +0100, Luke Hinds wrote:
+> Keystone uses sha512_crypt for password hashing. This provides
+> insufficient and limited protection, since sha512_crypt algorithm has a
+> low computational cost factor, therefore making it easier to crack
+> passwords offline in a short period of time.
 > 
-> SECURITY-557
-> Maven Plugin bundled a version of the commons-httpclient library with the 
-> vulnerability CVE-2012-6153 that incorrectly verified SSL certificates, 
-> making it susceptible to man-in-the-middle attacks.
+> The correct mechanism is to use the more secure hashing algorithms with
+> a higher computational cost factor such as bcrypt, scrypt, or
+> pbkdf2_sha512 instead of sha512_crypt.
+> 
+> ### Recommended Actions ###
+> 
+> It is recommended that operators upgrade to the Pike release where all
+> future passwords would be bcrypt hashed.
 
-CVE-2017-1000397
+The move to bcrypt makes sense as a defense against GPU attacks, which
+are currently most relevant.  I would have recommended it, too.
 
-> SECURITY-597
-> Swarm Plugin Client bundled a version of the commons-httpclient library 
-> with the vulnerability CVE-2012-6153 that incorrectly verified SSL 
-> certificates, making it susceptible to man-in-the-middle attacks.
+However, the wording of the advisory and in the discussion at
+https://bugs.launchpad.net/ossn/+bug/1668503 is weird.
 
-CVE-2017-1000402
+I assume that sha512_crypt refers to the algorithm introduced in glibc
+2.7 and now used by many Linux distros and more.  It is typically called
+sha512crypt without the underscore.  I also assume that pbkdf2_sha512
+refers to PBKDF2-HMAC-SHA512.
 
-> SECURITY-623
-> Speaks! Plugin allows users with Job/Configure permission to run arbitrary 
-> Groovy code inside the Jenkins JVM, effectively elevating privileges to 
-> Overall/Run Scripts.
+sha512crypt's "computational cost factor" is tunable, and sha512crypt
+isn't quicker to crack than PBKDF2-HMAC-SHA512 when both are tuned for
+the same defensive running time and use implementations optimized to a
+similar extent.  However, PBKDF2-HMAC has worse missed optimization
+pitfalls, so highly unoptimal implementations of PBKDF2 are very common:
 
-CVE-2017-1000403
+https://jbp.io/2015/08/11/pbkdf2-performance-matters
 
+Obviously, password crackers may use more optimal implementations.
+
+I guess the names with underscores are some specific instantiations with
+fixed cost factors?  I guess bcrypt and scrypt referred to here are also
+specific instantiations with fixed cost factors?  Then the wording would
+start to make sense.  For completeness, what are the specific cost
+factors used for each of those four?
+
+Reading the discussion on relevant Bug entries and proposed commits, it
+appears that pbkdf2_sha512 was recently introduced under the flawed
+understanding that "sha512_crypt is considered insufficient (even with
+significant rounds) in comparison to pdkfd_sha512, bcrypt, or scrypt for
+password hashing."  While the references to bcrypt and scrypt are
+correct, the reference to (presumably) PBKDF2-HMAC-SHA512 is wrong.  It
+is in the same category with sha512crypt.  As it is, pbkdf2_sha512 might
+very well allow for quicker cracking than sha512_crypt does.  Without
+knowing the specific settings and efficiency of implementations, we
+can't tell.
+
+Then, Bug 1668503 lists FPGAs as part of the motivation for the change.
+However, bcrypt fits FPGAs very well:
+
+http://www.openwall.com/lists/john-users/2017/06/25/1
+http://www.openwall.com/lists/john-users/2017/07/03/4
+
+The move from sha512crypt to bcrypt is good against GPUs, but makes
+little difference against FPGAs.  It's still a fine move to take now -
+it is an improvement, and GPU attacks are more relevant.  You just need
+to know what you achieve (GPU attack resistance) and what you don't
+achieve (FPGA attack resistance).
+
+Of the four algorithms, only scrypt (and only at high enough settings)
+is somewhat FPGA attack resistant by requiring external memory and
+memory bandwidth, which has to be part of the attack platform's cost.
+
+I don't recommend any further code changes at this time.  Rather, I
+recommend that the confusion be dealt with: clarify the settings used,
+don't refer to pbkdf2_sha512 as a clear improvement upon sha512_crypt.
+
+Alexander
