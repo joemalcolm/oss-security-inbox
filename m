@@ -1,67 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/8
-Message-ID: <1485931455.2391.3.camel@debian.org>
-Date: Wed, 01 Feb 2017 07:44:15 +0100
-From: "Laszlo Boszormenyi (GCS)" <gcs@...ian.org>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-0358 ntfs-3g: modprobe influence vulnerability via environment variables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/18/6
+Message-ID: <qWCZkHrkayvHEmeBy-991q6imWh5pr0TEcjq2lfM_P8bQd-92ImpaBaS0gT0cPe6vpteJjOFXRcoHk-HW3EcP4UfxoB-30ViHwUGVQv68tY=@protonmail.ch>
+Date: Mon, 18 Sep 2017 14:00:09 -0400
+From: Jordan Glover <Golden_Miller83@...tonmail.ch>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: [OSSN-0081] sha512_crypt is insufficient for password hashing
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+What number of iterations is considered secure for sha512crypt/pbkdf2 these days?
 
-Jann Horn, Project Zero (Google) discovered that ntfs-3g, a read-write
-NTFS driver for FUSE does not not scrub the environment before
-executing modprobe to load the fuse module. This influence the behavior
-of modprobe (MODPROBE_OPTIONS environment variable, --config and
---dirname options) potentially allowing for local root privilege
-escalation if ntfs-3g is installed setuid. This is the case for Debian,
-Ubuntu and probably Gentoo.
-
-This problem is in the source since 2008, maybe before.
-The fix is easy, use execle instead of execl and pass NULL as
-environment variables.
--- cut --
---- ntfs-3g/src/lowntfs-3g.c.ref        2016-12-31 08:56:59.011749600 +0100
-+++ ntfs-3g/src/lowntfs-3g.c    2017-01-05 14:41:52.041473700 +0100
-@@ -4291,13 +4291,14 @@
-        struct stat st;
-        pid_t pid;
-        const char *cmd = "/sbin/modprobe";
-+       char *env = (char*)NULL;
-        struct timespec req = { 0, 100000000 };   /* 100 msec */
-        fuse_fstype fstype;
-
-        if (!stat(cmd, &st) && !geteuid()) {
-                pid = fork();
-                if (!pid) {
--                       execl(cmd, cmd, "fuse", NULL);
-+                       execle(cmd, cmd, "fuse", NULL, &env);
-                        _exit(1);
-                } else if (pid != -1)
-                        waitpid(pid, NULL, 0);
---- ntfs-3g/src/ntfs-3g.c.ref   2016-12-31 08:56:59.022518700 +0100
-+++ ntfs-3g/src/ntfs-3g.c       2017-01-05 15:45:45.912499400 +0100
-@@ -3885,13 +3885,14 @@
-        struct stat st;
-        pid_t pid;
-        const char *cmd = "/sbin/modprobe";
-+       char *env = (char*)NULL;
-        struct timespec req = { 0, 100000000 };   /* 100 msec */
-        fuse_fstype fstype;
-
-        if (!stat(cmd, &st) && !geteuid()) {
-                pid = fork();
-                if (!pid) {
--                       execl(cmd, cmd, "fuse", NULL);
-+                       execle(cmd, cmd, "fuse", NULL, &env);
-                        _exit(1);
-                } else if (pid != -1)
-                        waitpid(pid, NULL, 0);
--- cut --
-
-CVE-2017-0358 is assigned to this issue by Salvatore Bonaccorso,
-Debian Security Team.
-
-Regards,
-Laszlo/GCS
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+> -------- Original Message --------
+> Subject: Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing
+> Local Time: September 17, 2017 1:04 PM
+> UTC Time: September 17, 2017 1:04 PM
+> From: solar@...nwall.com
+> To: oss-security@...ts.openwall.com
+>
+> On Sun, Sep 17, 2017 at 12:27:41PM +0100, Luke Hinds wrote:
+>> Keystone uses sha512_crypt for password hashing. This provides
+>> insufficient and limited protection, since sha512_crypt algorithm has a
+>> low computational cost factor, therefore making it easier to crack
+>> passwords offline in a short period of time.
+>>
+>> The correct mechanism is to use the more secure hashing algorithms with
+>> a higher computational cost factor such as bcrypt, scrypt, or
+>> pbkdf2_sha512 instead of sha512_crypt.
+>>
+>> ### Recommended Actions ###
+>>
+>> It is recommended that operators upgrade to the Pike release where all
+>> future passwords would be bcrypt hashed.
+>
+> The move to bcrypt makes sense as a defense against GPU attacks, which
+> are currently most relevant. I would have recommended it, too.
+>
+> However, the wording of the advisory and in the discussion at
+> https://bugs.launchpad.net/ossn/+bug/1668503 is weird.
+>
+> I assume that sha512_crypt refers to the algorithm introduced in glibc
+> 2.7 and now used by many Linux distros and more. It is typically called
+> sha512crypt without the underscore. I also assume that pbkdf2_sha512
+> refers to PBKDF2-HMAC-SHA512.
+>
+> sha512crypt"s "computational cost factor" is tunable, and sha512crypt
+> isn"t quicker to crack than PBKDF2-HMAC-SHA512 when both are tuned for
+> the same defensive running time and use implementations optimized to a
+> similar extent. However, PBKDF2-HMAC has worse missed optimization
+> pitfalls, so highly unoptimal implementations of PBKDF2 are very common:
+>
+> https://jbp.io/2015/08/11/pbkdf2-performance-matters
+>
+> Obviously, password crackers may use more optimal implementations.
+>
+> I guess the names with underscores are some specific instantiations with
+> fixed cost factors? I guess bcrypt and scrypt referred to here are also
+> specific instantiations with fixed cost factors? Then the wording would
+> start to make sense. For completeness, what are the specific cost
+> factors used for each of those four?
+>
+> Reading the discussion on relevant Bug entries and proposed commits, it
+> appears that pbkdf2_sha512 was recently introduced under the flawed
+> understanding that "sha512_crypt is considered insufficient (even with
+> significant rounds) in comparison to pdkfd_sha512, bcrypt, or scrypt for
+> password hashing." While the references to bcrypt and scrypt are
+> correct, the reference to (presumably) PBKDF2-HMAC-SHA512 is wrong. It
+> is in the same category with sha512crypt. As it is, pbkdf2_sha512 might
+> very well allow for quicker cracking than sha512_crypt does. Without
+> knowing the specific settings and efficiency of implementations, we
+> can"t tell.
+>
+> Then, Bug 1668503 lists FPGAs as part of the motivation for the change.
+> However, bcrypt fits FPGAs very well:
+>
+> http://www.openwall.com/lists/john-users/2017/06/25/1
+> http://www.openwall.com/lists/john-users/2017/07/03/4
+>
+> The move from sha512crypt to bcrypt is good against GPUs, but makes
+> little difference against FPGAs. It"s still a fine move to take now -
+> it is an improvement, and GPU attacks are more relevant. You just need
+> to know what you achieve (GPU attack resistance) and what you don"t
+> achieve (FPGA attack resistance).
+>
+> Of the four algorithms, only scrypt (and only at high enough settings)
+> is somewhat FPGA attack resistant by requiring external memory and
+> memory bandwidth, which has to be part of the attack platform"s cost.
+>
+> I don"t recommend any further code changes at this time. Rather, I
+> recommend that the confusion be dealt with: clarify the settings used,
+> don"t refer to pbkdf2_sha512 as a clear improvement upon sha512_crypt.
+>
+> Alexander
