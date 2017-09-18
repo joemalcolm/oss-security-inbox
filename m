@@ -1,4 +1,9 @@
-Received: (qmail 14331 invoked by uid 550); 21 Jul 2023 11:24:18 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8373" "Monday" "18" "September" "2017" "05:09:51" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1833013643.11628252.1505725791885.JavaMail.zimbra@redhat.com>" "220" "[oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()" "^Date:" nil nil "9" "2017091809:09:51" "[oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()" (number mark "U       vdronov@redh Sep 18  220/8373  " thread-indent "\"[oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()\"\n") "<490676762.11626765.1505724795059.JavaMail.zimbra@redhat.com>" ("<490676762.11626765.1505724795059.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17750 invoked by uid 550); 18 Sep 2017 09:10:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,123 +11,244 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12280 invoked from network); 21 Jul 2023 01:22:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1689902551; x=1689988951; bh=qTjhfiOu2VfcgbVtIOR4q55J2Go9psXwoJb
-	z2Ha+kEk=; b=Hgajes7EbiWnphJZzlSC9BBwAuGkvne3WY1B+JBFHl1YjpLWLDT
-	0Fw6ZTLjrvEjip49BkcKmpbOtegP+9ex3tO/OOLeJ+2H7OQYLVkJhZiFWk0lYfP1
-	x+laqf5Kr0MjPR0sEPU4zSHcS5d8XZo4Fc+1EVWnjDgtVEKNqgbpgq5c0+IJwPBr
-	OaC9gH3odH41BL5qWrdN84jzStkVxgBY6sxzRGW+LffiEiRpq14+annexlRd4WBh
-	koAcFRWjgclIOHLVXFYOYDu+9uUR+grld2qlSbqPsaxJ3aKyLnp57xLNmFttvLdg
-	dbYqfQQ83s3+O20okNNB4jytUT0uX+uISMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1689902551; x=1689988951; bh=qTjhfiOu2Vfcg
-	bVtIOR4q55J2Go9psXwoJbz2Ha+kEk=; b=pSWkyV3oDHRqTXQTjOWxDrplh1QzF
-	lmxVj6W1XJuEKojxOteL/wsEID7cfOuhpphMIP0QKyF7TSnxQ1hgLWuYu3UbPlZl
-	gZk7Qc7d8Sa6GmjFg4nQzC2n1Z2MDhDuI7KrbLWL5O3NukwuXr1q6oxurygvrReq
-	tH/RRgj+pSwhSnn6Gwn42AsdLYGjvXcSAGeeXvX01x4DofCqU1FHKzGQIxajlLd+
-	L0S08770Cr7Js6gxA0TXAr7/yDc0rK773G2UiSoIYMtuDpmfw8A2MG6gnzvmNlQ/
-	qWrxBmXd/Ld3bnneANzpUwCYcpo1D9tH762gqfracyrHVdkCLUmvLJJ2Q==
-X-ME-Sender: <xms:1925ZHuIlfPXX_jNMSU6jiePdZK8hTxOpCWrZW-FXevOVLAj4xh3Pw>
-    <xme:1925ZIe6o9Jf8Rzb-ZpSvMUaB1S7fhCRpvfKKMwwRnFBb4k4Us7kaIwuuALwb-4h7
-    DRfv0cjn9Geovs>
-X-ME-Received: <xmr:1925ZKwNIMcWySFDk8-AlTTUJ2ndZDphnE6LvoMfdy-gBdEa4fEE8ZWcGVgVqlaOhILS3BKghC6t3sc1RSwjFR1eMpY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrhedugdeggecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttdejnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihes
-    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    dttedtueeivdefiedugfejtdeutdelfedvueekledtudegjedviedukeefhfeuteenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmihesih
-    hnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
-X-ME-Proxy: <xmx:1925ZGPGYZwCQo2b82SRundNwF14JldtEyKZsKtCOAAA0vzKSuWgww>
-    <xmx:1925ZH8uZmfPRXkotFea6yvsWM9g9PGGq64soUijWqJ2BKEuuHC2Sg>
-    <xmx:1925ZGWCQlR-JlJzgond8C_uNd2Xcpigce_5IZApvwvAMPgjzkmIww>
-    <xmx:1925ZKJnIvF50TDi6NvbwC0kVsm72TjXJoAEGZJsp2XJNsQVwJCWXg>
-Feedback-ID: iac594737:Fastmail
-Date: Thu, 20 Jul 2023 21:22:08 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ZLndwziGSn83SBUM@itl-email>
-References: <e9c022742fc07cee@cvs.openbsd.org>
- <ZLk1hSUEt00caovk@itl-email>
- <1c005469-a540-5cd1-642e-5aebc35dd17b@geeklan.co.uk>
- <633ff42d-052a-df7b-dc34-6264e9d4eb77@gmail.com>
+Received: (qmail 17723 invoked from network); 18 Sep 2017 09:10:04 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 1ECF7883BA
+Authentication-Results: ext-mx02.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx02.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
+Message-ID: <1833013643.11628252.1505725791885.JavaMail.zimbra@redhat.com>
+In-Reply-To: <490676762.11626765.1505724795059.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zhV7lY259kvvlCVB"
-Content-Disposition: inline
-In-Reply-To: <633ff42d-052a-df7b-dc34-6264e9d4eb77@gmail.com>
-Subject: Re: [oss-security] Announce: OpenSSH 9.3p2 released
-
---zhV7lY259kvvlCVB
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 20 Jul 2023 21:22:08 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.4.223, 10.4.195.11]
+Thread-Topic: CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()
+Thread-Index: aQ0soOcq4fIVeOreD9KbI4e3Iqb28g==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Mon, 18 Sep 2017 09:09:52 +0000 (UTC)
+Date: Mon, 18 Sep 2017 05:09:51 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in
+ tpacket_rcv()
 To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Announce: OpenSSH 9.3p2 released
 
-On Fri, Jul 21, 2023 at 11:04:49AM +1000, Matthew Fernandez wrote:
->=20
->=20
-> On 7/20/23 23:41, Sevan Janiyan wrote:
-> > On 20/07/2023 14:24, Demi Marie Obenour wrote:
-> > > Should there be a system-wide configuration file containing a list
-> > > of known-good PKCS#11 libraries? ssh-agent having to guess if
-> > > something is a PKCS#11 library is less than awesome.
-> >=20
-> > There's a compile time setting for paths from which you are able to load
-> > libraries from.
->=20
-> I don=E2=80=99t think this helps much though, right? The Qualys research =
-that
-> motivated this found an exploit chain using only libs present in /usr/lib=
- in
-> a default Ubuntu install. If you want to lock down loading to a specific
-> non-/usr/lib path that you have control over, this suggests you know and =
-are
-> in control of the PKCS#11 providers you=E2=80=99re going to support. In w=
-hich case,
-> why not avoid dynamic loading to begin with? I guess the allowlist and new
-> defaults are the answer to this conundrum though.
+Heololo,
 
-IMO the root cause of this problem is that PKCS#11 libraries are installed
-in /usr/lib, rather than in /usr/lib/pkcs11 or another subdirectory.
-There should be an automated way to check if a library is a PKCS#11
-library without having to load it.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+> [Suggested description]
+> The tpacket_rcv() function in 'net/packet/af_packet.c' file in the Linux
+> kernel before 4.13 mishandles vnet headers, which might allow local users
+> to cause a denial of service (buffer overflow, and disk and memory corruption)
+> or possibly have unspecified other impact via crafted system calls.
+>
+> ------------------------------------------
+>
+> [Additional Information]
+> A buffer overflow was discovered in tpacket_rcv() function in the
+> Linux kernel since v4.6-rc1 through v4.13. A number of socket-related
+> syscalls can be made to set up a configuration when each packet
+> received by a network interface can cause writing up to 10 bytes to a
+> kernel memory outside of a kernel buffer. This can cause unspecified
+> kernel data corruption effects, including damage of in-memory and
+> on-disk XFS data.
 
---zhV7lY259kvvlCVB
-Content-Type: application/pgp-signature; name="signature.asc"
+An upstream commit which introduced the flaw is 58d19b19cd (v4.6-rc1),
+the flaw was fixed by edbd58be15 (v4.13).
 
------BEGIN PGP SIGNATURE-----
+> our research shows:
+>
+> - a reproducer run as root makes the issue apparent (detected via
+>   KASAN). That is, writing up to 10 bytes to an unallocated kernel
+>   memory per each packet sent to a network interface on the host.
+>
+> - while having a reproducer running as root, it can corrupt xfs root
+>   filesystem by flooding the test machine with packets while doing a
+>   rsync of high number of small files. after corrupting the in-memory
+>   XFS data (and subsequent XFS self-unmount), the on-disk layout is
+>   damaged too.
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmS53cMACgkQsoi1X/+c
-IsFcxBAAyYHc7G00G+qKYgEU7rCdwZuOOcdQWtoKrauJB3ERhLxPI2mEqbx/ENyf
-q5Rx14l+Qpj3iqtaCVibPs1qylpnlYrqR93HcFP7IndY18Kc16XlugLMj9dxnnvB
-vlz3FPbwhM/xd1QhGC+Ui3oOea2sNietAd6mTqSPkc8gK1135yHwHLs0zfUcjVOr
-+33V/L8wbPfCarHlX2Ht5jLvFpSd4tkm880fNh3Hc4FBdajch+BWayhr7JtGMxSJ
-nMzCRqtUEfwvjf8Q83g23dLcQziADvoIDE7GBXnECvEXBaDwMQEpm7LNJdvxKpnh
-P671WYtRPY1nmZDH1KxJPIHVVN7En0IQuKw8pSew/Gcq90UrR/NgbCgu/TBdNZu+
-kM9zDzPBbQka1q8RkPtR/yX/qeTVHRw++OZwohuUbhqSEMqrH1oUAWrFJQ/kvYqt
-dS9Zu5UNdPupnn22Y5crm0elvCkux1HATmIBrT042sZ5UM6LIwAR3W3N+JM1i/8M
-+Js4tGxW9iWswOdjliQOWVfb/QUEr+4IsFJp++udk/s3nWquBEcD1uAZJ98GJHy9
-1eJJV80oGWYrZBi+f7T9QjteduAQchP7duT3eJaY1AVk52YkqQt+lp2j7jPauT/w
-Ifw8o9uXfIct146rlaE79CLDvSQBlZXBQgYhRT7apoEog35TMqs=
-=D+EC
------END PGP SIGNATURE-----
+An attacker can exploit the flaw if granted root permissions in
+a user+net namespace, i.e. with an ability to open PF_PACKET+SOCK_RAW
+sockets:
 
---zhV7lY259kvvlCVB--
+[REGULAR USER] <= not vulnerable, expected
+
+$ ./vnethdr
+socket(): create raw packet socket failed: Operation not permitted
+
+[ROOT] <= vulnerable, expected
+
+# ./vnethdr 
+socket() fd=3
+setsockopt() ret=0
+mmap() map=0x7f24fc585000
+bind() ret=0
+
+[ROOT IN JUST USER-NS] <= not vulnerable, expected
+
+$ unshare -U -r
+# ./vnethdr
+socket(): create raw packet socket failed: Operation not permitted
+
+[ROOT IN USER+NET NS] <= vulnerable, bad!
+
+$ unshare -U -r -n
+# ./vnethdr
+socket() fd=3
+setsockopt() ret=0
+mmap() map=0x7fab6b965000
+bind() ret=0
+
+> There are still points which are open in the assessment:
+>
+>  - whether we are effectively able to spray the heap with a shellcode
+>    (and gain root access) from the host itself
+>
+>  - whether we are effectively able to spray the heap with a shellcode
+>    from outside, by crafting packets
+>
+> ------------------------------------------
+>
+> [Vulnerability Type]
+> Buffer Overflow
+>
+> ------------------------------------------
+>
+> [Vendor of Product]
+> kernel.org: Linux kernel
+>
+> ------------------------------------------
+>
+> [Affected Product Code Base]
+> Linux kernel - since v4.6-rc1 through v4.13
+>
+> ------------------------------------------
+>
+> [Affected Component]
+> Linux kernel, net/packet/af_packet.c file, tpacket_rcv() function
+>
+> ------------------------------------------
+>
+> [Attack Type]
+> Local
+>
+> ------------------------------------------
+>
+> [Impact Denial of Service]
+> true
+>
+> ------------------------------------------
+>
+> [CVE Impact Other]
+> Data corruption
+>
+> ------------------------------------------
+>
+> [Attack Vectors]
+> a number of socket-related syscalls can be made to set up a
+> configuration when each packet received by a network interface can
+> cause writing up to 10 bytes to a kernel memory outside of a kernel
+> buffer
+>
+> ------------------------------------------
+>
+> [Reference]
+> https://marc.info/?l=linux-kernel&m=150394500728906&w=2
+> https://marc.info/?t=150394517700001&r=1&w=2
+> https://github.com/torvalds/linux/commit/edbd58be15a957f6a760c4a514cd475217eb97fd
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=edbd58be15a957f6a760c4a514cd475217eb97fd
+>
+> ------------------------------------------
+>
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+>
+> ------------------------------------------
+>
+> [Discoverer]
+> Benjamin Poirier <bpoirier@suse.com>
+>
+> Use CVE-2017-14497.
+
+[Proof of the flaw presence]
+
+[53606.579471] ==================================================================
+[53606.585074] BUG: KASAN: use-after-free in tpacket_rcv+0x6e4/0x14e0 at addr ffff880117639ffe
+[53606.589586] Write of size 10 by task swapper/1/0
+[53606.593681] page:ffffea00045d8e40 count:2 mapcount:1 mapping:          (null) index:0x0
+[53606.597866] flags: 0x2fffff80000000()
+[53606.601470] raw: 002fffff80000000 0000000000000000 0000000000000000 0000000200000000
+[53606.605867] raw: dead000000000100 dead000000000200 0000000000000000 0000000000000000
+[53606.611068] page dumped because: kasan: bad access detected
+[53606.615188] CPU: 1 PID: 0 Comm: swapper/1 Not tainted 4.11.0kasan_driver_fixes_03+ #36
+[53606.621325] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.9.3-1.fc25 04/01/2014
+[53606.628767] Call Trace:
+[53606.633875]  <IRQ>
+[53606.637539]  dump_stack+0x86/0xcf
+[53606.641321]  kasan_report.part.2+0x4d2/0x510
+[53606.644543]  ? tpacket_rcv+0x6e4/0x14e0
+[53606.647665]  kasan_report+0x24/0x30
+[53606.650646]  check_memory_region+0x13c/0x1a0
+[53606.653566]  memset+0x23/0x40
+[53606.656354]  tpacket_rcv+0x6e4/0x14e0
+[53606.659017]  ? packet_rcv+0x790/0x790
+[53606.660631]  ? packet_rcv+0x790/0x790
+[53606.662124]  __netif_receive_skb_core+0x63a/0x1510
+[53606.663747]  ? get_rps_cpu+0x760/0x760
+[53606.665193]  ? sched_clock_cpu+0x1b/0x100
+[53606.666736]  ? lock_acquire+0x127/0x2a0
+[53606.668187]  ? debug_lockdep_rcu_enabled.part.2+0x1a/0x30
+[53606.669748]  ? lock_acquire+0x127/0x2a0
+[53606.671762]  __netif_receive_skb+0x26/0xb0
+[53606.673349]  ? debug_lockdep_rcu_enabled.part.2+0x1a/0x30
+[53606.674950]  netif_receive_skb_internal+0x15e/0x2a0
+[53606.676444]  ? dev_cpu_dead+0x360/0x360
+[53606.677784]  ? dev_gro_receive+0x81/0x960
+[53606.679156]  ? __lock_is_held+0x2d/0x100
+[53606.680572]  ? __asan_loadN+0xf/0x20
+[53606.681991]  napi_gro_receive+0x1d0/0x2b0
+[53606.683729]  virtnet_receive+0x61a/0x2830 [virtio_net]
+[53606.685163]  ? __asan_loadN+0xf/0x20
+[53606.686420]  ? virtnet_xdp_xmit.isra.40+0x3b0/0x3b0 [virtio_net]
+[53606.688309]  ? __lock_acquire+0x7bb/0x1a50
+[53606.689796]  ? debug_check_no_locks_freed+0x1d0/0x1d0
+[53606.691174]  ? trace_hardirqs_off_caller+0x75/0x120
+[53606.692532]  ? mark_held_locks+0x22/0xc0
+[53606.693723]  virtnet_poll+0x22/0xa0 [virtio_net]
+[53606.694928]  net_rx_action+0x4a3/0x840
+[53606.696063]  ? napi_complete_done+0x1f0/0x1f0
+[53606.697307]  ? __lock_is_held+0x2d/0x100
+[53606.698398]  ? sched_clock+0x9/0x10
+[53606.699442]  __do_softirq+0x11b/0x6de
+[53606.700490]  irq_exit+0x187/0x1b0
+[53606.701485]  do_IRQ+0x70/0x140
+[53606.702438]  common_interrupt+0x9d/0x9d
+[53606.703438] RIP: 0010:native_safe_halt+0x6/0x10
+[53606.704642] RSP: 0018:ffff88011993fd58 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff3e
+[53606.706426] RAX: ffffed0023325817 RBX: ffff88011992b440 RCX: ffffffff8119d447
+[53606.707903] RDX: dffffc0000000000 RSI: 0000000000000001 RDI: ffff88011992c0bc
+[53606.709594] RBP: ffff88011993fd58 R08: 0000000000000003 R09: 0000000000000000
+[53606.710961] R10: 0000000000000000 R11: 0000000000000000 R12: ffff88011992b440
+[53606.712364] R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000000
+[53606.713647]  </IRQ>
+[53606.714511]  ? trace_hardirqs_on_caller+0x187/0x280
+[53606.715590]  ? trace_hardirqs_on+0xd/0x10
+[53606.716586]  default_idle+0x27/0x260
+[53606.717567]  arch_cpu_idle+0xf/0x20
+[53606.718523]  default_idle_call+0x2c/0x40
+[53606.719565]  do_idle+0x1db/0x270
+[53606.720499]  cpu_startup_entry+0xbe/0xc0
+[53606.721517]  ? cpu_in_idle+0x20/0x20
+[53606.723026]  ? __asan_loadN+0xf/0x20
+[53606.724071]  start_secondary+0x292/0x350
+[53606.725123]  ? set_cpu_sibling_map+0xd30/0xd30
+[53606.726233]  start_cpu+0x14/0x141
+[53606.727282] Memory state around the buggy address:
+[53606.728371]  ffff880117639f00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[53606.729682]  ffff880117639f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[53606.730976] >ffff88011763a000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[53606.732264]                    ^
+[53606.733433]  ffff88011763a080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[53606.735124]  ffff88011763a100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
