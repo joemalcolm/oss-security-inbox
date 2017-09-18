@@ -1,4 +1,9 @@
-Received: (qmail 14329 invoked by uid 550); 10 May 2023 15:59:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["59" "Monday" "18" "September" "2017" "11:18:13" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1108967946.11738827.1505747893076.JavaMail.zimbra@redhat.com>" "3" "Re: [oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()" nil nil nil "9" "2017091815:18:13" "[oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()" (number mark "U       vdronov@redh Sep 18    3/59    " thread-indent "\"Re: [oss-security] CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()\"\n") "<1833013643.11628252.1505725791885.JavaMail.zimbra@redhat.com>" ("<1833013643.11628252.1505725791885.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15844 invoked by uid 550); 18 Sep 2017 15:18:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,56 +12,27 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9390 invoked from network); 10 May 2023 15:53:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683733978; x=1686325978;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=1voDRZqMuJsrCyY1Eq4TL7Du/B8/76bbokwGnOpFqEQ=;
-        b=DJeceYByk3DgYN/7ZZvW/3KH41FBZBo+Ha+2ZuJdF+ck1wUU8qyJvupRD5959ooF9c
-         n9zrmZ7rGiIlucDJrjahL3eLPZx9klXgM3LxbEfm6xaRhCsiLnoSptnwg8+IQHcTtjwy
-         fnjNBEGmQTV8s9/ByP0O9BSywByq9PEvzCvj1mYswtbLSzyFC0iiHt+pTv+4bHkOu86i
-         6yvCWLkgxs4SEnYm2oyjhK+j8Sehg9J5WDFzrgvkKdpCMdbbu0irqgT5AebCDGu/GUC0
-         MOFD9HfQh+1JRusP8RTTWdN4dKrzNgFxD+Jrgvn4UJUAOP5EwybuXFR8CedHAOP+CDhW
-         /qYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683733978; x=1686325978;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1voDRZqMuJsrCyY1Eq4TL7Du/B8/76bbokwGnOpFqEQ=;
-        b=hPl3XyNqJDG/ZZMsfnnHqEVdq/cQEu1RJtpjzd5JQ3RcvZ/pqFvStDLvLJPeutA/zT
-         nklUjDIECjZRMfOpNF35CgRav98y9vEs7axKq3SwVn5dbqkQzo7h4OZ+UchVC0QD0dAO
-         8/6iJ7qWPYjUNgZNv5ifkANrwT7ZZnR+k2UCr1VrFRhqELpfb9xaeFGVzSAaXfkG7J2T
-         PHfmcbEKh4fHLlKIMFKIt0eF2Y/hF1Dlq8CUZB2MuWrnNKGfNXKWJHJnhp9lCd1/nRGm
-         Q8xXqsDLyVDUbMu7YodIZMk4eLzLMSw7lmfm6LFvoLnHVnxGquB43rbzOuhOPGwa3YsR
-         LhqQ==
-X-Gm-Message-State: AC+VfDw6kyIvibUgZ3AoSDgS9QQCHfre+f3mkbAsMBz3115OoM//d7qJ
-	zC2wDkVN6C8qn//vs8q+eremzVCX6LAQGg8ANMzRLMF1tzc=
-X-Google-Smtp-Source: ACHHUZ7aBc1B9Oa/4k9HCDQwJCYQeQQJ5jXcCvLnrU6HfGBEWOIxBG+fL45fMK9Qo5NQaWh127ppfkAgeKLlewOGpSw=
-X-Received: by 2002:a25:19c4:0:b0:ba2:6aea:2b2 with SMTP id
- 187-20020a2519c4000000b00ba26aea02b2mr11137679ybz.39.1683733978089; Wed, 10
- May 2023 08:52:58 -0700 (PDT)
-MIME-Version: 1.0
-From: Turritopsis Dohrnii Teo En Ming <tdtemccnp@gmail.com>
-Date: Wed, 10 May 2023 23:52:58 +0800
-Message-ID: <CAD3upLvuttgu3i6qZyB2LLY2CPcTvMdhQQLKdAYV2eoPD5Wjjg@mail.gmail.com>
+Received: (qmail 15822 invoked from network); 18 Sep 2017 15:18:25 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 583F9AB46E
+Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx03.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
+Date: Mon, 18 Sep 2017 11:18:13 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
 To: oss-security@lists.openwall.com
-Cc: ceo@teo-en-ming-corp.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] New Linux kernel NetFilter flaw gives attackers root privileges
+Message-ID: <1108967946.11738827.1505747893076.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1833013643.11628252.1505725791885.JavaMail.zimbra@redhat.com>
+References: <1833013643.11628252.1505725791885.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.4.223, 10.4.195.22]
+Thread-Topic: CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()
+Thread-Index: aQ0soOcq4fIVeOreD9KbI4e3Iqb28s9iQ9xa
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Mon, 18 Sep 2017 15:18:13 +0000 (UTC)
+Subject: Re: [oss-security] CVE-2017-14497: Linux kernel: packet: buffer
+ overflow in tpacket_rcv()
 
-Subject: New Linux kernel NetFilter flaw gives attackers root privileges
+also:
 
-Good day from Singapore,
-
-I have just come across this article. Thought of sharing it.
-
-Article: New Linux kernel NetFilter flaw gives attackers root privileges
-Link: https://www.bleepingcomputer.com/news/security/new-linux-kernel-netfilter-flaw-gives-attackers-root-privileges/
-
-Thank you.
-
-Regards,
-
-Mr. Turritopsis Dohrnii Teo En Ming
-Targeted Individual in Singapore
+https://bugzilla.redhat.com/show_bug.cgi?id=1492593
