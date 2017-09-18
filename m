@@ -1,185 +1,177 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/12
-Message-ID: <600131.444024981-sendEmail@localhost>
-Date: Mon, 1 May 2017 12:05:44 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libarchive: two heap-based buffer overflow read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/18/2
+Message-ID: <20170918151834.2228fb73@pc1>
+Date: Mon, 18 Sep 2017 15:18:34 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Optionsbleed bug in Apache HTTPD
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libarchive is a multi-format archive and compression library.
+Also at:
+https://blog.fuzzing-project.org/60-Optionsbleed-HTTP-OPTIONS-method-can-leak-Apaches-server-memory.html
 
-In the 2016 I reported two heap-based buffer over-read to libarchive. They appear to have already been fixed in the trunk when I reported them; here are the details:
+If you're using the HTTP protocol in everday Internet use you are
+usually only using two of its methods: GET and POST. However HTTP has a
+number of other methods, so I wondered what you can do with them and if
+there are any vulnerabilities.
 
-# bsdtar -t -f $FILE
-=================================================================                                                                                                                              
-==27838==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61500000ff05 at pc 0x7fad7b060778 bp 0x7ffe35698a10 sp 0x7ffe35698a08                                                      
-READ of size 1 at 0x61500000ff05 thread T0                                                                                                                                                     
-    #0 0x7fad7b060777 in archive_le32dec /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_endian.h:122:20                                                       
-    #1 0x7fad7b060777 in cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:669                                         
-    #2 0x7fad7b060777 in archive_read_format_cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903                     
-    #3 0x7fad7affa45b in _archive_read_next_header2 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:649:7                                               
-    #4 0x7fad7affa100 in _archive_read_next_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:687:8                                                
-    #5 0x514c89 in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:261:7                                                                                  
-    #6 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
-    #7 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3                                                                                        
-    #8 0x7fad7a08d61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
-    #9 0x41c168 in _init (/usr/bin/bsdtar+0x41c168)                                                                                                                                            
-                                                                                                                                                                                               
-0x61500000ff05 is located 5 bytes to the right of 512-byte region [0x61500000fd00,0x61500000ff00)                                                                                              
-allocated by thread T0 here:                                                                                                                                                                   
-    #0 0x4d4f28 in malloc /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                       
-    #1 0x7fad7aff5854 in __archive_read_filter_ahead /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:1436:17                                            
-    #2 0x7fad7b0db8cd in archive_read_format_tar_bid /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_tar.c:310:6                           
-    #3 0x7fad7afef670 in choose_format /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:712:10                                                           
-    #4 0x7fad7afef670 in archive_read_open1 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:529                                                         
-    #5 0x7fad7b0162e1 in archive_read_open_filenames /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:152:10                               
-    #6 0x7fad7b015e8b in archive_read_open_filename /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:109:9                                 
-    #7 0x5149eb in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:223:6                                                                                  
-    #8 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
-    #9 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3                                                                                        
-    #10 0x7fad7a08d61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                       
-                                                                                                                                                                                               
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_endian.h:122:20 in archive_le32dec
-Shadow bytes around the buggy address:
-  0x0c2a7fff9f90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c2a7fff9fe0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==27838==ABORTING
+One HTTP method is called OPTIONS. It simply allows asking a server
+which other HTTP methods it supports. The server answers with the
+"Allow" header and gives us a comma separated list of supported methods.
 
-Affected version:
-3.2.2
-Fixed version:
-3.3.0
-Commit fix:
-N/A
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00105-libarchive-heapoverflow-archive_le32dec
-CVE:
-CVE-2016-10349
+A scan of the Alexa Top 1 Million revealed something strange: Plenty of
+servers sent out an "Allow" header with what looked like corrupted
+data. Some examples: Allow: ,GET,,,POST,OPTIONS,HEAD,, Allow:
+POST,OPTIONS,,HEAD,:09:44 GMT Allow:
+GET,HEAD,OPTIONS,,HEAD,,HEAD,,HEAD,,
+HEAD,,HEAD,,HEAD,,HEAD,POST,,HEAD,, HEAD,!DOCTYPE html PUBLIC
+"-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" Allow:
+GET,HEAD,OPTIONS,=write HTTP/1.0,HEAD,,HEAD,POST,,HEAD,TRACE
 
-#############################
+That clearly looked interesting - and dangerous. It suspiciously looked
+like a "bleed"-style bug, which has become a name for bugs where
+arbitrary pieces of memory are leaked to a potential attacker. However
+these were random servers on the Internet, so at first I didn't know
+what software was causing this.
 
-# bsdtar -t -f $FILE
-==21129==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61500000ff00 at pc 0x7fa070bd7827 bp 0x7fffb7183a30 sp 0x7fffb7183a28                                                      
-READ of size 1 at 0x61500000ff00 thread T0                                                                                                                                                     
-    #0 0x7fa070bd7826 in archive_read_format_cab_read_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903:9                   
-    #1 0x7fa070b7145b in _archive_read_next_header2 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:649:7                                               
-    #2 0x7fa070b71100 in _archive_read_next_header /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:687:8                                                
-    #3 0x514c89 in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:261:7                                                                                  
-    #4 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2                                                                                     
-    #5 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3
-    #6 0x7fa06fc0461f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #7 0x41c168 in _init (/usr/bin/bsdtar+0x41c168)
+Sometimes HTTP servers send a "Server" header telling the software.
+However one needs to be aware that the "Server" header can lie. It's
+quite common to have one HTTP server proxying another. I got all kinds
+of different "Server" headers back, but I very much suspected that
+these were all from the same bug.
 
-0x61500000ff00 is located 0 bytes to the right of 512-byte region [0x61500000fd00,0x61500000ff00)
-allocated by thread T0 here:
-    #0 0x4d4f28 in malloc /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x7fa070b6c854 in __archive_read_filter_ahead /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:1436:17
-    #2 0x7fa070c528cd in archive_read_format_tar_bid /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_tar.c:310:6
-    #3 0x7fa070b66670 in choose_format /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:712:10
-    #4 0x7fa070b66670 in archive_read_open1 /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read.c:529
-    #5 0x7fa070b8d2e1 in archive_read_open_filenames /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:152:10
-    #6 0x7fa070b8ce8b in archive_read_open_filename /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_open_filename.c:109:9
-    #7 0x5149eb in read_archive /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:223:6
-    #8 0x51416b in tar_mode_t /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/read.c:94:2
-    #9 0x50f1a8 in main /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/tar/bsdtar.c:803:3
-    #10 0x7fa06fc0461f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+I tried to contact the affected server operators, but only one of them
+answered, and he was extremely reluctant to tell me anything about his
+setup, so that wasn't very helpful either.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-arch/libarchive-3.2.2/work/libarchive-3.2.2/libarchive/archive_read_support_format_cab.c:903:9 in 
-archive_read_format_cab_read_header
-Shadow bytes around the buggy address:
-  0x0c2a7fff9f90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c2a7fff9fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c2a7fff9fe0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2a7fffa030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==21129==ABORTING
+However I got one clue: Some of the corrupted headers contained strings
+that were clearly configuration options from Apache. It seemed quite
+unlikely that those would show up in the memory of other server
+software. But I was unable to reproduce anything alike on my own Apache
+servers. I also tried reading the code that put together the Allow
+header to see if I can find any clues, but with no success. So without
+knowing any details I contacted the Apache security team.
 
-Affected version:
-3.2.2
-Fixed version:
-3.3.0
-Commit fix:
-N/A
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00106-libarchive-heapoverflow-archive_read_format_cab_read_header
-CVE:
-CVE-2016-10350
+Fortunately Apache developer Jacob Champion digged into it and figured
+out what was going on: Apache supports a configuration directive Limits
+that allows restricting access to certain HTTP methods to a specific
+user. And if one sets the Limit directive in an .htaccess file for an
+HTTP method that's not globally registered in the server then the
+corruption happens. After that I was able to reproduce it myself.
+Setting a Limit directive for any invalid HTTP method in an .htaccess
+file caused a use after free error in the construction of the Allow
+header which was also detectable with Address Sanitizer. (However ASAN
+doesn't work reliable due to the memory allocation abstraction done by
+APR.)
 
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
+FAQ
 
-Timeline:
-2016-12-06: bugs discovered and reported to upstream
-2017-05-01: blog post about the issue
-2017-05-01: CVE assigned
+What's Optionsbleed?
 
-Note:
-This bug was found with American Fuzzy Lop.
+Optionsbleed is a use after free error in Apache HTTP that causes a
+corrupted Allow header to be constructed in response to HTTP OPTIONS
+requests. This can leak pieces of arbitrary memory from the server
+process that may contain secrets. The memory pieces change after
+multiple requests, so for a vulnerable host an arbitrary number of
+memory chunks can be leaked.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/01/libarchive-two-heap-based-buffer-overflow-read/
+The bug appears if a webmaster tries to use the "Limit" directive with
+an invalid HTTP method.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Example .htaccess:
+
+<Limit abcxyz>
+</Limit>
+
+How prevalent is it?
+
+Scanning the Alexa Top 1 Million revealed 466 hosts with corrupted
+Allow headers. In theory it's possible that other server software has
+similar bugs. On the other hand this bug is nondeterministic, so not
+all vulnerable hosts may have been catched.
+
+So it only happens if you set a quite unusual configuration option?
+
+There's an additional risk in shared hosting environments. The
+corruption is not limited to a single virtual host. One customer of a
+shared hosting provider could deliberately create an .htaccess file
+causing this corruption hoping to be able to extract secret data from
+other hosts on the same system.
+
+I can't reproduce it!
+
+Due to its nature the bug doesn't appear deterministically. It only
+seems to appear on busy servers. Sometimes it only appears after
+multiple requests.
+
+Does it have a CVE?
+
+CVE-2017-9798.
+
+I'm seeing Allow headers containing HEAD multiple times!
+
+This is actually a different Apache bug (#61207) [1] that I found during
+this investigation. It causes HEAD to appear three times instead of
+once. However it's harmless and not a security bug.
+
+Launchpad also has a harmless bug [2] that produces a malformed Allow
+header, using a space-separated list instead of a comma-separated one.
+
+How can I test it?
+
+A simple way is to use Curl in a loop and send OPTIONS requests:
+
+for i in {1..100}; do curl -sI -X OPTIONS https://www.google.com/|grep
+-i "allow:"; done
+
+Depending on the server configuration it may not answer to OPTIONS
+requests on some URLs. Try different paths, HTTP versus HTTPS hosts,
+non-www versus www etc. may lead to different results.
+
+Please note that this bug does not show up with the "*" OPTIONS target,
+you need a specific path.
+
+Here's a python proof of concept script [3].
+
+What shall I do?
+
+If you run an Apache web server you should update. Most distributions
+should have updated packages by now or very soon. A patch [4] can be
+found here. A patch for Apache 2.2 is available here [5] (thanks to
+Thomas Deutschmann for backporting it).
+
+Unfortunately the communication with the Apache security team wasn't
+ideal. They were unable to provide a timeline for a coordinated release
+with a fix, so I decided to define a disclosure date on my own without
+an upstream fix.
+
+If you run an Apache web server in a shared hosting environment that
+allows users to create .htaccess files you should drop everything you
+do right now, update immediately and make sure you restart the server
+afterwards.
+
+Is this as bad as Heartbleed?
+
+No. Although similar in nature, this bug leaks only small chunks of
+memory and more importantly only affects a small number of hosts by
+default.
+
+It's still a pretty bad bug, particularly for shared hosting
+environments.
 
 
+[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=61207
+[2] https://bugs.launchpad.net/launchpad/+bug/1717682
+[3] https://github.com/hannob/optionsbleed
+[4]
+https://svn.apache.org/viewvc/httpd/httpd/branches/2.4.x/server/core.c?r1=1805223&r2=1807754&pathrev=1807754&view=patch
+[5]
+https://blog.fuzzing-project.org/uploads/apache-2.2-optionsbleed-backport.patch
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
