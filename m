@@ -1,48 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/11
-Message-ID: <20170621135727.GA12852@openwall.com>
-Date: Wed, 21 Jun 2017 15:57:27 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/18/7
+Message-ID: <20170918193159.GL2409@yuggoth.org>
+Date: Mon, 18 Sep 2017 19:32:00 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+Subject: Re: [OSSN-0081] sha512_crypt is insufficient for password hashing
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 21, 2017 at 08:25:26AM -0400, Brad Spengler wrote:
-> Finally, one thing I noted was missing from Solar's timeline is that
-> on May 18th, the day after the private distros list was notified with
-> details, this commit appeared in public:
-> https://github.com/openbsd/src/commit/4ed6bfeac112229466414b94cdbd983fb8017796
+On 2017-09-17 15:04:10 +0200 (+0200), Solar Designer wrote:
+[...]
+> the wording of the advisory and in the discussion at
+> https://bugs.launchpad.net/ossn/+bug/1668503 is weird.
+> 
+> I assume that sha512_crypt refers to the algorithm introduced in
+> glibc 2.7 and now used by many Linux distros and more. It is
+> typically called sha512crypt without the underscore. I also assume
+> that pbkdf2_sha512 refers to PBKDF2-HMAC-SHA512.
 
-IIRC, they also committed a relevant fix to their qsort().
+Yes, or more specifically these:
 
-> OpenBSD publishing this commit, in combination with Solar making repeated
-> mentions here on oss-sec about a cross-OS issue being worked on was enough
-> for me to know that the underlying issue being discussed was what we had
-> widely discussed publicly in 2010 on LWN and elsewhere.  What's the official
-> explanation for this, and is any action being taken for what I assume is a
-> member of the private list breaking the embargo?
+https://passlib.readthedocs.io/en/stable/lib/passlib.hash.sha512_crypt.html
+https://passlib.readthedocs.io/en/stable/lib/passlib.hash.pbkdf2_digest.html
 
-OpenBSD isn't a member of the distros list - they were notified by
-Qualys separately.  This matter was discussed, and some folks were
-unhappy about OpenBSD's action, but in the end it was decided that
-since, as you correctly say, the underlying issue was already publicly
-known, OpenBSD's commits don't change things much.  Sure this draws
-renewed attention to the problem, but probably not to the extent and in
-the many specific ways the Qualys findings cover.  So it was decided to
-keep the embargo on the detail.
+> sha512crypt's "computational cost factor" is tunable, and sha512crypt
+> isn't quicker to crack than PBKDF2-HMAC-SHA512 when both are tuned for
+> the same defensive running time and use implementations optimized to a
+> similar extent.  However, PBKDF2-HMAC has worse missed optimization
+> pitfalls, so highly unoptimal implementations of PBKDF2 are very common:
+> 
+> https://jbp.io/2015/08/11/pbkdf2-performance-matters
 
-Ditto for the "move mmap_area and PIE binaries away from the stack"
-patch series posted to LKML and CC'ed to kernel-hardening on June 2:
+Thanks for the pointer! I wasn't familiar with the fastpbkdf2 talk,
+definitely some helpful research there.
 
-http://www.openwall.com/lists/kernel-hardening/2017/06/02/
+> Obviously, password crackers may use more optimal implementations.
+> 
+> I guess the names with underscores are some specific instantiations with
+> fixed cost factors?  I guess bcrypt and scrypt referred to here are also
+> specific instantiations with fixed cost factors?  Then the wording would
+> start to make sense.  For completeness, what are the specific cost
+> factors used for each of those four?
+> 
+> Reading the discussion on relevant Bug entries and proposed commits, it
+> appears that pbkdf2_sha512 was recently introduced under the flawed
+> understanding that "sha512_crypt is considered insufficient (even with
+> significant rounds) in comparison to pdkfd_sha512, bcrypt, or scrypt for
+> password hashing."  While the references to bcrypt and scrypt are
+> correct, the reference to (presumably) PBKDF2-HMAC-SHA512 is wrong.  It
+> is in the same category with sha512crypt.  As it is, pbkdf2_sha512 might
+> very well allow for quicker cracking than sha512_crypt does.  Without
+> knowing the specific settings and efficiency of implementations, we
+> can't tell.
+[...]
+> I don't recommend any further code changes at this time.  Rather, I
+> recommend that the confusion be dealt with: clarify the settings used,
+> don't refer to pbkdf2_sha512 as a clear improvement upon sha512_crypt.
 
-which might have been inspired by Qualys work known to Red Hat engineers
-internally.  A difference is that Red Hat is a member of the distros
-list.  I brought this up on the distros list, and another Red Hat person
-said "We'll deal with this internally."  Given the circumstances, I find
-this response satisfactory.
+I must admit, the confusion was probably primarily mine. When asked
+for feedback on the earlier bug report, I mistook the description at
+face value assuming that "sha512 based password hashing" referred to
+a raw one-way hash function along the lines of hashlib.sha512(), and
+spouted the usual recommendation for using a KDF instead of a bare
+hash:
 
-I am far more concerned about the total embargo duration here than about
-these two semi-leaks.
+https://launchpad.net/bugs/1543048
 
-Alexander
+Had I instead taken the time to look at the existing implementation
+in the source tree (as I would have done were it flagged for a
+formal advisory) I would have probably noticed that it already was
+using a KDF... tunnel vision on my part perhaps. I've added a
+comment to this effect on the bug report linked from the security
+note and will write up some appropriate errata to accompany it.
+
+Thanks for noticing and pointing out this error, and my apologies
+for any inconvenience my lack of attention may have caused.
+-- 
+Jeremy Stanley
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
