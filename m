@@ -1,4 +1,9 @@
-Received: (qmail 9879 invoked by uid 550); 24 Jun 2024 22:40:06 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6821" "Monday" "18" "September" "2017" "15:18:34" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170918151834.2228fb73@pc1>" "171" "[oss-security] Optionsbleed bug in Apache HTTPD" "^Date:" nil nil "9" "2017091813:18:34" "[oss-security] Optionsbleed bug in Apache HTTPD" (number mark "        hanno@hboeck Sep 18  171/6821  " thread-indent "\"[oss-security] Optionsbleed bug in Apache HTTPD\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 23625 invoked by uid 550); 18 Sep 2017 13:19:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,46 +11,186 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9846 invoked from network); 24 Jun 2024 22:40:06 -0000
-From: Russ Allbery <eagle@eyrie.org>
-To: Florian Weimer <fweimer@redhat.com>
-Cc: oss-security@lists.openwall.com,  Ihor Radchenko <yantar92@posteo.net>
-In-Reply-To: <87wmmehffa.fsf@oldenburg.str.redhat.com> (Florian Weimer's
-	message of "Mon, 24 Jun 2024 11:13:13 +0200")
-Organization: The Eyrie
-References: <87wmmguk44.fsf@localhost> <87h6djh2dv.fsf@hope.eyrie.org>
-	<87wmmehffa.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Mon, 24 Jun 2024 15:39:56 -0700
-Message-ID: <87h6dikls3.fsf@hope.eyrie.org>
+Received: (qmail 23591 invoked from network); 18 Sep 2017 13:19:08 -0000
+Message-ID: <20170918151834.2228fb73@pc1>
+X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Arbitrary shell command evaluation in Org mode
- (GNU Emacs)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 18 Sep 2017 15:18:34 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Optionsbleed bug in Apache HTTPD
+To: oss-security@lists.openwall.com
 
-Florian Weimer <fweimer@redhat.com> writes:
+Also at:
+https://blog.fuzzing-project.org/60-Optionsbleed-HTTP-OPTIONS-method-can-le=
+ak-Apaches-server-memory.html
 
-> As far as I understand it, this only controls inline vs attachment
-> rendering.  Content-Disposition: inline MIME parts are still displayed
-> automatically, even if corresponding entries have been removed from
-> mm-automatic-display.
+If you're using the HTTP protocol in everday Internet use you are
+usually only using two of its methods: GET and POST. However HTTP has a
+number of other methods, so I wondered what you can do with them and if
+there are any vulnerabilities.
 
-> I looked at this and as far as I can tell, to disable rendering, you
-> have to remove entries from mm-inline-media-tests.  I don't think this
-> is possible through customization because the variable has bytecode
-> objects in it.
+One HTTP method is called OPTIONS. It simply allows asking a server
+which other HTTP methods it supports. The server answers with the
+"Allow" header and gives us a comma separated list of supported methods.
 
-> I think it should be possible to filter it down, with something like the
-> code below.  Some comments on the choices: Patch rendering is just too
-> useful to skip.  HTML rendering is necessary (and obviously quite risky)
-> because Jira and other tools do not generate useful plaintext mail.
+A scan of the Alexa Top 1 Million revealed something strange: Plenty of
+servers sent out an "Allow" header with what looked like corrupted
+data. Some examples: Allow: ,GET,,,POST,OPTIONS,HEAD,, Allow:
+POST,OPTIONS,,HEAD,:09:44 GMT Allow:
+GET,HEAD,OPTIONS,,HEAD,,HEAD,,HEAD,,
+HEAD,,HEAD,,HEAD,,HEAD,POST,,HEAD,, HEAD,!DOCTYPE html PUBLIC
+"-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" Allow:
+GET,HEAD,OPTIONS,=3Dwrite HTTP/1.0,HEAD,,HEAD,POST,,HEAD,TRACE
 
-Thank you!  This was extremely helpful.
+That clearly looked interesting - and dangerous. It suspiciously looked
+like a "bleed"-style bug, which has become a name for bugs where
+arbitrary pieces of memory are leaked to a potential attacker. However
+these were random servers on the Internet, so at first I didn't know
+what software was causing this.
 
-You may also want to keep message/rfc822 for better display of forwarded
-mail.  I am making the assumption that the recursive expansion of the
-included message will apply the same rules as the outer message.
+Sometimes HTTP servers send a "Server" header telling the software.
+However one needs to be aware that the "Server" header can lie. It's
+quite common to have one HTTP server proxying another. I got all kinds
+of different "Server" headers back, but I very much suspected that
+these were all from the same bug.
 
--- 
-Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
+I tried to contact the affected server operators, but only one of them
+answered, and he was extremely reluctant to tell me anything about his
+setup, so that wasn't very helpful either.
+
+However I got one clue: Some of the corrupted headers contained strings
+that were clearly configuration options from Apache. It seemed quite
+unlikely that those would show up in the memory of other server
+software. But I was unable to reproduce anything alike on my own Apache
+servers. I also tried reading the code that put together the Allow
+header to see if I can find any clues, but with no success. So without
+knowing any details I contacted the Apache security team.
+
+Fortunately Apache developer Jacob Champion digged into it and figured
+out what was going on: Apache supports a configuration directive Limits
+that allows restricting access to certain HTTP methods to a specific
+user. And if one sets the Limit directive in an .htaccess file for an
+HTTP method that's not globally registered in the server then the
+corruption happens. After that I was able to reproduce it myself.
+Setting a Limit directive for any invalid HTTP method in an .htaccess
+file caused a use after free error in the construction of the Allow
+header which was also detectable with Address Sanitizer. (However ASAN
+doesn't work reliable due to the memory allocation abstraction done by
+APR.)
+
+FAQ
+
+What's Optionsbleed?
+
+Optionsbleed is a use after free error in Apache HTTP that causes a
+corrupted Allow header to be constructed in response to HTTP OPTIONS
+requests. This can leak pieces of arbitrary memory from the server
+process that may contain secrets. The memory pieces change after
+multiple requests, so for a vulnerable host an arbitrary number of
+memory chunks can be leaked.
+
+The bug appears if a webmaster tries to use the "Limit" directive with
+an invalid HTTP method.
+
+Example .htaccess:
+
+<Limit abcxyz>
+</Limit>
+
+How prevalent is it?
+
+Scanning the Alexa Top 1 Million revealed 466 hosts with corrupted
+Allow headers. In theory it's possible that other server software has
+similar bugs. On the other hand this bug is nondeterministic, so not
+all vulnerable hosts may have been catched.
+
+So it only happens if you set a quite unusual configuration option?
+
+There's an additional risk in shared hosting environments. The
+corruption is not limited to a single virtual host. One customer of a
+shared hosting provider could deliberately create an .htaccess file
+causing this corruption hoping to be able to extract secret data from
+other hosts on the same system.
+
+I can't reproduce it!
+
+Due to its nature the bug doesn't appear deterministically. It only
+seems to appear on busy servers. Sometimes it only appears after
+multiple requests.
+
+Does it have a CVE?
+
+CVE-2017-9798.
+
+I'm seeing Allow headers containing HEAD multiple times!
+
+This is actually a different Apache bug (#61207) [1] that I found during
+this investigation. It causes HEAD to appear three times instead of
+once. However it's harmless and not a security bug.
+
+Launchpad also has a harmless bug [2] that produces a malformed Allow
+header, using a space-separated list instead of a comma-separated one.
+
+How can I test it?
+
+A simple way is to use Curl in a loop and send OPTIONS requests:
+
+for i in {1..100}; do curl -sI -X OPTIONS https://www.google.com/|grep
+-i "allow:"; done
+
+Depending on the server configuration it may not answer to OPTIONS
+requests on some URLs. Try different paths, HTTP versus HTTPS hosts,
+non-www versus www etc. may lead to different results.
+
+Please note that this bug does not show up with the "*" OPTIONS target,
+you need a specific path.
+
+Here's a python proof of concept script [3].
+
+What shall I do?
+
+If you run an Apache web server you should update. Most distributions
+should have updated packages by now or very soon. A patch [4] can be
+found here. A patch for Apache 2.2 is available here [5] (thanks to
+Thomas Deutschmann for backporting it).
+
+Unfortunately the communication with the Apache security team wasn't
+ideal. They were unable to provide a timeline for a coordinated release
+with a fix, so I decided to define a disclosure date on my own without
+an upstream fix.
+
+If you run an Apache web server in a shared hosting environment that
+allows users to create .htaccess files you should drop everything you
+do right now, update immediately and make sure you restart the server
+afterwards.
+
+Is this as bad as Heartbleed?
+
+No. Although similar in nature, this bug leaks only small chunks of
+memory and more importantly only affects a small number of hosts by
+default.
+
+It's still a pretty bad bug, particularly for shared hosting
+environments.
+
+
+[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=3D61207
+[2] https://bugs.launchpad.net/launchpad/+bug/1717682
+[3] https://github.com/hannob/optionsbleed
+[4]
+https://svn.apache.org/viewvc/httpd/httpd/branches/2.4.x/server/core.c?r1=
+=3D1805223&r2=3D1807754&pathrev=3D1807754&view=3Dpatch
+[5]
+https://blog.fuzzing-project.org/uploads/apache-2.2-optionsbleed-backport.p=
+atch
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
