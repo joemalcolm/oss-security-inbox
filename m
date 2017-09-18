@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/16/3
-Message-ID: <20171016094834.GA17053@openwall.com>
-Date: Mon, 16 Oct 2017 11:48:35 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: distros list downtime
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/18/8
+Message-ID: <1214526844.7781030.1505767448635@mail.yahoo.com>
+Date: Mon, 18 Sep 2017 20:44:08 +0000 (UTC)
+From: Nicholas Prowse <nick5990@...oo.co.uk>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: [OSSN-0081] sha512_crypt is insufficient for password hashing
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+40000 iterations of PBKDF2 algorithm according to Sophia's Naked Security as of last month.
 
-The (linux-)distros lists were down for almost 3 days because of a
-software issue, providing a 4xx SMTP error code in response to attempted
-incoming message deliveries.  The problem is corrected now.  Some
-messages sent during this time period might get through with a delay as
-the senders' servers will retry deliveries.  Some others, if any, might
-have timed out by now.
+https://nakedsecurity.sophos.com/2013/11/20/serious-security-how-to-store-your-users-passwords-safely/
 
-If you sent anything that is still relevant to (linux-)distros during
-the last 3 days, please consider resending.
+Google is your friend.
 
-Alexander
+--------------------------------------------
+On Mon, 18/9/17, Jordan Glover <Golden_Miller83@...tonmail.ch> wrote:
+
+ Subject: Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing
+ To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+ Date: Monday, 18 September, 2017, 19:00
+ 
+ What number of iterations is
+ considered secure for sha512crypt/pbkdf2 these days?
+ 
