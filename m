@@ -1,51 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/12
-Message-ID: <362f16f9-ae35-ecc0-71b7-d5f72ffd9403@gentoo.org>
-Date: Thu, 6 Jul 2017 22:09:08 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/18/5
+Message-ID: <CAOOKt53_E7=PL=drJhbQ3ar8prnWccxpVrq6dHgXnOwQL7NjLQ@mail.gmail.com>
+Date: Mon, 18 Sep 2017 10:45:14 -0700
+From: Shalin Shekhar Mangar <shalin@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-9803: Security vulnerability in kerberos delegation token functionality
 Content-Type: text/plain; charset=utf-8
 
-On 06/30/2017 03:22 PM, Solar Designer wrote:
-> This is now up to 22 items: I've split one in two, and added three more.
-> The full list is at:
-> 
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> 
-> No volunteers so far?  I know some of you are actually helping with
-> these, but I'd prefer that you explicitly take responsibility for them.
+CVE-2017-9803: Security vulnerability in kerberos delegation token functionality
 
-Gentoo is offering to take all, or a subset of, [9, 11 - 13] as primary
-distribution:
-9. Stay on top of issues to ensure progress is being made, remind others
-when there's no apparent progress, as well as when the public disclosure
-date for an issue is approaching and when it's finally reached (unless
-the reporter beats you to it by making their mandatory posting to
-oss-security first)
+Severity: Important
 
-11. Make sure the mandatory oss-security posting is made promptly and is
-sufficiently detailed, and remind the reporter if not
+Vendor:
+The Apache Software Foundation
 
-12. If exploit(s) were shared on the list, make sure that either they're
-included in the oss-security posting along with the issue detail or the
-posting includes an announcement of planned later posting of the
-exploits (with the delay being within list policy), and in the latter
-case also make sure that the later posting is in fact made as planned,
-and remind the reporter if not
+Versions Affected:
+Apache Solr 6.2.0 to 6.6.0
 
-13. Keep track of per-report and per-issue handling and disclosure
-timelines (at least times of notification of the private list and of
-actual public disclosure), at regular intervals produce and share
-statistics (most notably, the average embargo duration) as well as the
-raw data (except on issues that are still under embargo) by posting to
-oss-security
+Description:
+
+Solr's Kerberos plugin can be configured to use delegation tokens,
+which allows an application to reuse the authentication of an end-user
+or another application.
+There are two issues with this functionality (when using
+SecurityAwareZkACLProvider type of ACL provider e.g.
+SaslZkACLProvider),
+
+Firstly, access to the security configuration can be leaked to users
+other than the solr super user. Secondly, malicious users can exploit
+this leaked configuration for privilege escalation to further
+expose/modify private data and/or disrupt operations in the Solr
+cluster.
+
+The vulnerability is fixed from Solr 6.6.1 onwards.
+
+Mitigation:
+6.x users should upgrade to 6.6.1
+
+Credit:
+This issue was discovered by Hrishikesh Gadre of Cloudera Inc.
+
+References:
+https://issues.apache.org/jira/browse/SOLR-11184
+https://wiki.apache.org/solr/SolrSecurity
+
 
 -- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+The Lucene PMC
