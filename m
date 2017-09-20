@@ -1,49 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/14
-Message-ID: <20170914121219.GW11536@dhcp-25-225.brq.redhat.com>
-Date: Thu, 14 Sep 2017 14:12:21 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com, Armis Security <security@...is.com>
-Subject: Re: Linux BlueBorne vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/20/1
+Message-ID: <4b681520-4526-29ae-bc6a-d11a4a60d247@debian.org>
+Date: Tue, 19 Sep 2017 20:45:39 -0400
+From: Luciano Bello <luciano@...ian.org>
+To: hosein.askari@....com
+Cc: team@...urity.debian.org, oss-security@...ts.openwall.com
+Subject: Re: [CVE-2017-14266] tcprewrite Heap-Based Buffer Overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 09/19/2017 07:40 AM, hosein.askari@....com wrote:
+> First of all, I realy appreciate for sen­ding me an email abo­ut the mentioned vul­nerability. I have examined the vulnerab­ility
+> again on Ubuntu 16.04 due to your sent email. I have not tri­ed this vulnerability on the distributio­ns that you mentione­d. 
+> The screenshot which illustrates differe­nt steps (POC) is se­nt via this email for your kind consider­ations and uploaded on this link:
+> https://www.photobox­.co.uk/my/photo/full­?photo_id=9959498468
 
-On Wed, Sep 13, 2017 at 09:08:31PM +0000, Armis Security wrote:
-> We are writing to inform you of two security vulnerabilities we have found
-> in the Bluetooth stack in Linux (BlueZ).
-> 
-> These vulnerabilities have been made public yesterday (Sept. 12, 2017), and
-> are part of 8 vulnerabilities we have disclosed to various vendors (as a
-> group they are called "BlueBorne").
-> 
-> Both Linux-related vulnerabilities where disclosed to
-> distros@...openwall.org.
-> The kernel-related vulnerability (CVE-2017-1000251) was also disclosed to
-> security@...nel.org
-> Both disclosures began on Sept. 5, 2017, and patches were made available
-> yesterday and today.
+The link is 404ing. I might be creating the pcap wrongly. Can you make a
+input pcap available?
 
-at https://www.armis.com/blueborne/, "A Coordinated Disclosure"
-paragraph you write that:
-
-"Linux - Contacted August 15 and 17, 2017. On September 5, 2017, we
-connected and provided the necessary information to the the Linux kernel
-security team and to the Linux distributions security contact list and
-conversations followed from there. Targeting updates for on or about
-September 12, 2017 for coordinated disclosure."
-
-May you please share with us who was contacted on August 15th and 17th
-and why you waited until September 5th with the disclosure to
-linux-distros and security@...nel.org?
-
-If it was because of the strict embargo rules for linux-distros and
-security@...nel.org mailing lists, next time please feel free to reach
-Red Hat directly via secalert@...hat.com . We will honour any reporter
-set embargo and can contact other vendors directly. And also work on the
-fixes.
-
-Thank you,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+thanks! /luciano
