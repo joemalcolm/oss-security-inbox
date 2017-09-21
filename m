@@ -1,58 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/6
-Message-ID: <2831124.Ha61dFcUh2@blackgate>
-Date: Tue, 17 Jan 2017 11:30:36 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: jasper: multiple crashes with UBSAN
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/21/1
+Message-ID: <bf63ff44-fb2b-bc2b-9cad-ba818bb57162@orlitzky.com>
+Date: Wed, 20 Sep 2017 20:39:24 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2017-14609 Kannel privilege escalation via PID file manipulation
 Content-Type: text/plain; charset=utf-8
 
-On Monday 16 January 2017 19:06:47 cve-assign@...re.org wrote:
-> > http://blogs.gentoo.org/ago/2017/01/16/jasper-multiple-crashes-with-ubsan/
-> > 
-> > [] jasper-1.900.17/src/libjasper/include/jasper/jas_math.h:156:11
-> > runtime error: left shift of negative value -185
-> 
-> Use CVE-2017-5498.
-> 
-> > [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1838:9
-> > runtime error: signed integer overflow: -64356352 * 
-6359082673847140352
-> > cannot be represented in type 'long'
-> 
-> Use CVE-2017-5499.
-> 
-> > [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1819:40
-> > runtime error: shift exponent 117 is too large for 64-bit type 'jpc_fix_t'
-> > (aka 'long')
-> 
-> Use CVE-2017-5500.
-> 
-> > [] jasper-1.900.17/src/libjasper/jpc/jpc_tsfb.c:233:35
-> > runtime error: signed integer overflow: 2013306369 + 251691968 
-cannot be
-> > represented in type 'int'
-> 
-> Use CVE-2017-5501.
-> 
-> > [] jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:485:49
-> > runtime error: left shift of negative value -26
-> 
-> Use CVE-2017-5502.
-> 
-> 
-> --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
+Product: Kannel (open source WAP and SMS gateway)
+Versions-affected: all
+Bug-report: https://redmine.kannel.org/issues/771
+Author: Michael Orlitzky
 
-The previous mail clearly state:
-> Timeline:
-> 2016-10-28: bug discovered and reported to upstream
 
-Why CVE-2017-* ?
+(This hasn't been fixed upstream but I don't expect a response, so I'd
+rather not make people wait for the workaround.)
 
---
-Agostino
 
+== Summary ==
+
+The Kannel daemons create their PID files after dropping privileges to
+a non-root user. That may be exploited (through init scripts or other
+management tools) by the unprivileged user to kill root processes,
+since when a daemon is stopped, root usually sends a SIGTERM to the
+contents of its PID file (which are under the control of the runtime
+user).
+
+
+== Details ==
+
+The purpose of the PID file is to hold the PID of the running daemon,
+so that later it can be stopped, restarted, or otherwise signaled
+(many daemons reload their configurations in response to a SIGHUP).
+To fulfil that purpose, the contents of the PID file need to be
+trustworthy. If the PID file is writable by a non-root user, then he
+can replace its contents with the PID of a root process. Afterwards,
+any attempt to signal the PID contained in the PID file will instead
+signal a root process chosen by the non-root user.
+
+This is commonly exploitable through init scripts that are run as root
+and which blindly trust the contents of their PID files. Kannel itself
+ships a few such a init scripts as debian/*.init.
+
+
+== Exploitation ==
+
+There is only a risk of exploitation when some other user relies on
+the data in the PID file.
+
+An example scenario involving an init script would be,
+
+1. I run "/etc/init.d/bearerbox start" to start the daemon.
+
+2. bearerbox drops to the "kannel" user.
+
+3. bearerbox writes its PID file, now owned by the "kannel" user.
+
+4. Someone compromises the daemon.
+
+5. The attacker is generally limited in what he can do because the
+   daemon doesn't run as root. However, he can write "1" into the
+   PID file, and he does.
+
+6. I run "/etc/init.d/bearerbox stop" to stop the daemon while I
+   investigate.
+
+7. The machine reboots, because I killed PID 1 (this is normally
+   restricted to root).
+
+
+== Workaround ==
+
+The Kannel daemons can be run in the foreground (by omitting
+the --daemonize, --pid-file, and --user flags) under a modern init
+system like systemd or OpenRC. Those init systems create the PID file as
+root, and it can be relocated to a root-owned directory like /run to
+avoid the vulnerability.
+
+A SysV-style init script can mitigate the risk by verifying the PID
+data. You can get the user of the process whose PID you find with
+
+  ps -p <pid> -o user=
+
+and you can get the name of the command with
+
+  ps -p <pid> -o comm=
+
+Init script authors should check the output of those two command against
+the expected values before sending a signal to a running process. That
+will eliminate the most serious risks.
