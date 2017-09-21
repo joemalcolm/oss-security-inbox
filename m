@@ -1,74 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/2
-Message-ID: <CANO=Ty0v=dPC3Gndgg8W17frEti12AzY6DoPcRmG3cgbJ5mq5w@mail.gmail.com>
-Date: Mon, 24 Apr 2017 19:51:24 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/21/5
+Message-ID: <1910098.O2yQOzdY9B@storm.m.i2n>
+Date: Thu, 21 Sep 2017 17:36:59 +0200
+From: Thomas Jarosch <thomas.jarosch@...ra2net.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: code execution in Horde_Image 2.0.0 to 2.5.1
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 24, 2017 at 3:14 PM, Dawid Golunski <dawid@...alhackers.com>
-wrote:
+On Thursday, 21 September 2017 16:50:07 CEST Thomas Jarosch wrote:
+> Hello oss security,
 
-> SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
->
-> Desc.:
-> SquirrelMail is affected by a critical Remote Code Execution vulnerability
-> which stems from insufficient escaping of user-supplied data when
-> SquirrelMail has been configured with Sendmail as the main transport.
-> An authenticated attacker may be able to exploit the vulnerability
-> to execute arbitrary commands on the target and compromise the remote
-> system.
->
-> Discovered by:
-> Dawid Golunski (https://legalhackers.com : https://ExploitBox.io)
-> , as well as Filippo Cavallarin (see attached advisory for details)
->
-> Official solution:
-> Vendor seems to have released a new version of 1.4.23 on
-> squirrelmail-20170424_0200-SVN.stable.tar.gz
-> which still seems to be vulnerable hence a new subject/thread.
->
+just saw that CVE ids can no longer be requested via oss security.
+I'll request a CVE id and will post a follow up.
 
-So Squirrelmail's last release was 2011.
-
-**************************************
-*** SquirrelMail Stable Series 1.4 ***
-**************************************
-
-Version 1.4.22 - 12 July 2011
-
-I don't want to tell people what to do, but the fact is squirrelmail is
-probably not something you should be using.
-
-
-
->
-> The exploit from my advisory was also confirmed to work on Ubuntu
-> package: '1.4.23~svn20120406-2ubuntu1.16.04.1'.
->
-> Hence the updated version in the subject/advisory title.
->
-> Full advisory URL:
->
-> https://legalhackers.com/advisories/SquirrelMail-
-> Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
->
->
->
-> --
-> Regards,
-> Dawid Golunski
-> https://legalhackers.com
-> https://ExploitBox.io
-> t: @dawid_golunski
->
-
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Best regards,
+Thomas Jarosch / Intra2net AG
 
