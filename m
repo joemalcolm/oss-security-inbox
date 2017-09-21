@@ -1,55 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/24
-Message-ID: <CAAeHK+zP+B4b=qDFBcivEt4O7ruLcE3rfSrSXs_9ZbixmX-FqQ@mail.gmail.com>
-Date: Tue, 30 May 2017 21:12:21 +0200
-From: Andrey Konovalov <andreyknvl@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/21/4
+Message-ID: <3362705.8pMVodbJo5@storm.m.i2n>
+Date: Thu, 21 Sep 2017 16:50:07 +0200
+From: Thomas Jarosch <thomas.jarosch@...ra2net.com>
 To: oss-security@...ts.openwall.com
-Cc: Pray3r <pray3r.z@...il.com>, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
-Subject: Linux kernel: memory corruptions in IPv4/IPv6 TCP/SCTP/DCCP sockets
+Subject: CVE request: code execution in Horde_Image 2.0.0 to 2.5.1
 Content-Type: text/plain; charset=utf-8
 
-A few CVEs were assigned for similar bugs causing kernel memory
-corruption (use-after-free followed by a double-free) in IPv4/IPv6
-TCP/SCTP/DCCP sockets. The details are below.
+Hello oss security,
 
-The bugs were found with syzkaller.
+Intra2net AG found a code execution vulnerability in the "Horde_Image" library 
+of the Horde framework (https://www.horde.org/). The "_raw()" function of the 
+ImageMagick "im" backend passes the "$index" parameter unsanitized to the 
+shell. This parameter is f.e. exposed by the getImageAtIndex($index) function.
 
-* CVE-2017-8890
+No core horde application exposes the $index parameter directly
+to the net, so a "remote" code execution might be given for third party 
+applications only. Read: The risk is low for normal horde users.
 
-The inet_csk_clone_lock function in net/ipv4/inet_connection_sock.c in
-the Linux kernel through 4.10.15 allows attackers to cause a denial of
-service (double free) or possibly have unspecified other impact by
-leveraging use of the accept system call.
+Affected versions are 2.0.0 to 2.5.1.
+A fixed version 2.5.2 has been released.
 
-CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8890
-Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=657831ffc38e30092a2d5f03d385d710eb88b09a
+Upstream fix:
+https://github.com/horde/horde/commit/eb3afd14c22c77ae0d29e2848f5ac726ef6e7c5b
 
-* CVE-2017-9075
+Official release announcement:
+https://marc.info/?l=horde-announce&m=150600299528079&w=2
+-----------------------------------
+Hello,
 
-The sctp_v6_create_accept_sk function in net/sctp/ipv6.c in the Linux
-kernel through 4.11.1 mishandles inheritance, which allows local users
-to cause a denial of service or possibly have unspecified other impact
-via crafted system calls, a related issue to CVE-2017-8890.
+a Remote Code Execution vulnerability has been found in the  
+Horde_Image library when using the "Im" backend that utilizes  
+ImageMagick's "convert" utility. It's not exploitable through any  
+Horde application, because the code path to the vulnerability is not  
+used by any Horde code. Custom applications using the Horde_Image  
+library might be affected though. This vulnerability affects all  
+versions of Horde_Image from 2.0.0 to 2.5.1.
 
-CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9075
-Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fdcee2cbb8438702ea1b328fb6e0ac5e9a40c7f8
+A fixed version of the Horde_Image (version 2.5.2) library has already  
+been released and everybody is advised to upgrade to Horde_Image 2.5.2  
+as soon as possible.
 
-* CVE-2017-9076
+Thanks to long-time contributor and supporter Thomas Jarosch  
+<thomas.jarosch@...ra2net.com> for discovering and reporting these  
+vulnerabilities.
 
-The dccp_v6_request_recv_sock function in net/dccp/ipv6.c in the Linux
-kernel through 4.11.1 mishandles inheritance, which allows local users
-to cause a denial of service or possibly have unspecified other impact
-via crafted system calls, a related issue to CVE-2017-8890.
+--
+Jan Schneider
+The Horde Project
+https://www.horde.org/
+-----------------------------------
 
-CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9076
-Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=83eaddab4378db256d00d295bda6ca997cd13a52
 
-* CVE-2017-9077
+Timeline:
+2017-09-15: Found the issue during manual code review
+            after the recent CVE-2017-9773 issue.
 
-The tcp_v6_syn_recv_sock function in net/ipv6/tcp_ipv6.c in the Linux
-kernel through 4.11.1 mishandles inheritance, which allows local users
-to cause a denial of service or possibly have unspecified other impact
-via crafted system calls, a related issue to CVE-2017-8890.
+2017-09-15: Sent patch to security@...de.org
 
-CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9077
-Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=83eaddab4378db256d00d295bda6ca997cd13a52
+2017-09-16: Checked horde code base if any horde core
+            application exposes the vulnerable API.
+
+2017-09-19: Wrote to security@...de.org again
+            that the security risk for core horde apps is low,
+            no embargo via linux-distros@ needed.
+
+2017-09-19: Fix is committed to git.
+
+2017-09-21: Release of fixed version 2.5.2 by the Horde project.
+
+
+Thanks to Jan Schneider of the Horde project
+for the timely release of the fixed version.
+
+
+Best regards,
+Thomas Jarosch / Intra2net AG
+
