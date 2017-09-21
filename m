@@ -1,4 +1,9 @@
-Received: (qmail 11331 invoked by uid 550); 9 Feb 2025 18:02:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2375" "Thursday" "21" "September" "2017" "16:50:07" "+0200" "Thomas Jarosch" "thomas.jarosch@intra2net.com" "<3362705.8pMVodbJo5@storm.m.i2n>" "70" "[oss-security] CVE request: code execution in Horde_Image 2.0.0 to 2.5.1" nil nil nil "9" "2017092114:50:07" "[oss-security] CVE request: code execution in Horde_Image 2.0.0 to 2.5.1" (number mark "U       thomas.jaros Sep 21   70/2375  " thread-indent "\"[oss-security] CVE request: code execution in Horde_Image 2.0.0 to 2.5.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10080 invoked by uid 550); 21 Sep 2017 15:12:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,106 +12,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22447 invoked from network); 9 Feb 2025 11:48:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=m3J4YMaEYGzXQRiXdKyAAOKAKFGA3F/SXR9UML0K2H0=; b=We/v8FTovSyB5irpHrdMXdszL3
-	Li7dp0uyAtzeWlQiVDC6ZeEoQsb4jlKk3zEAy/tI044hiWGtYnPu3TJ9DzPQywvcIV3dsRbZ+lzMw
-	0GTI4u6zX8N3yMC5wOK4FrnNnhiCrVjBwR27Cqin/NLMNV/LwGiavGFpGUN5EQ/aAcq1DeFXwb7eS
-	5hqG3jtiK16/LmAk4AjKTioNh+NW0fS6my6ANW/vxjO/HAVeAXilGOei9nxTS8e4WwVSCql3ariYZ
-	+FWdwREX/Zq+XApXmc5ff8Gt6QgWYRgjaKUrRYp6gZxAFmv+I0xeidQgihhjSlmLRKocpt+l89DKN
-	QqJHvyag==;
-Date: Sun, 9 Feb 2025 13:48:39 +0200
-Message-ID: <20250209134839.GF813931@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
+Received: (qmail 28028 invoked from network); 21 Sep 2017 14:50:20 -0000
+X-Virus-Scanned: by Intra2net Mail Security (AVE=8.3.48.24,VDF=8.14.27.244)
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+To: oss-security@lists.openwall.com
+Date: Thu, 21 Sep 2017 16:50:07 +0200
+Message-ID: <3362705.8pMVodbJo5@storm.m.i2n>
+Organization: Intra2net AG
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="2IkFSnN+IsUD6MJc"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0001
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Subject: [oss-security] CVE request: code execution in Horde_Image 2.0.0 to 2.5.1
 
---2IkFSnN+IsUD6MJc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
+Hello oss security,
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
-eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAwMQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
-b3J0ZWQgICAgICAgICAgIDogRmVicnVhcnkgMDksIDIwMjUKQWR2aXNvcnkgSUQgICAgICAgICAg
-ICAgOiBXU0EtMjAyNS0wMDAxCldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJr
-aXRndGsub3JnL3NlY3VyaXR5L1dTQS0yMDI1LTAwMDEuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5
-IFVSTCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNS0wMDAxLmh0bWwK
-Q1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNC0yNzg1NiwgQ1ZFLTIwMjQtNTQ1NDMs
-CiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjQtNTQ2NTgsIENWRS0yMDI1LTI0MTQz
-LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTI0MTUwLCBDVkUtMjAyNS0yNDE1
-OCwKICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS0yNDE2Mi4KClNldmVyYWwgdnVs
-bmVyYWJpbGl0aWVzIHdlcmUgZGlzY292ZXJlZCBpbiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQu
-CgpDVkUtMjAyNC0yNzg1NgogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BF
-IFdlYktpdCBiZWZvcmUgMi40Ni4wLgogICAgQ3JlZGl0IHRvIE1ha3N5bWlsaWFuIE1vdHlsIG9m
-IEltbXVuaXR5IFN5c3RlbXMsIEp1bnN1bmcgTGVlIHdvcmtpbmcgd2l0aAogICAgVHJlbmQgTWlj
-cm8gWmVybyBEYXkgSW5pdGlhdGl2ZSwgYW5kIGFqYWpmeGhqLgogICAgSW1wYWN0OiBQcm9jZXNz
-aW5nIGEgZmlsZSBtYXkgbGVhZCB0byB1bmV4cGVjdGVkIGFwcCB0ZXJtaW5hdGlvbiBvcgogICAg
-YXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRy
-ZXNzZWQgd2l0aAogICAgaW1wcm92ZWQgY2hlY2tzLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNjg3
-NjUKCkNWRS0yMDI0LTU0NTQzCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBX
-UEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjUuCiAgICBDcmVkaXQgdG8gTHVrYXMgQmVybmhhcmQsIEdh
-cnkgS3dvbmcsIGFuZCBhbiBhbm9ueW1vdXMgcmVzZWFyY2hlci4KICAgIEltcGFjdDogUHJvY2Vz
-c2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvCiAgICBtZW1v
-cnkgY29ycnVwdGlvbi4gRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgK
-ICAgIGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjgyNDUw
-CgpDVkUtMjAyNC01NDY1OAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BF
-IFdlYktpdCBiZWZvcmUgMi40NC4wLgogICAgQ3JlZGl0IHRvIGFuYnUxMDI0IG9mIFNlY0FOVC4K
-ICAgIEltcGFjdDogUHJvY2Vzc2luZyB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhIGRlbmlhbC1v
-Zi1zZXJ2aWNlLgogICAgRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgg
-aW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNjM3NTgKCkNW
-RS0yMDI1LTI0MTQzCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
-S2l0IGJlZm9yZSAyLjQ2LjYuCiAgICBDcmVkaXQgdG8gYW4gYW5vbnltb3VzIHJlc2VhcmNoZXIu
-CiAgICBJbXBhY3Q6IEEgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWJwYWdlIG1heSBiZSBhYmxlIHRv
-IGZpbmdlcnByaW50IHRoZQogICAgdXNlci4gRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRk
-cmVzc2VkIHdpdGggaW1wcm92ZWQgYWNjZXNzCiAgICByZXN0cmljdGlvbnMgdG8gdGhlIGZpbGUg
-c3lzdGVtLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyODMxMTcKCkNWRS0yMDI1LTI0MTUwCiAgICBW
-ZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjYu
-CiAgICBDcmVkaXQgdG8gSm9oYW4gQ2FybHNzb24gKGpvYXhjYXIpLgogICAgSW1wYWN0OiBDb3B5
-aW5nIGEgVVJMIGZyb20gV2ViIEluc3BlY3RvciBtYXkgbGVhZCB0byBjb21tYW5kCiAgICBpbmpl
-Y3Rpb24uIERlc2NyaXB0aW9uOiBBIHByaXZhY3kgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGlt
-cHJvdmVkCiAgICBoYW5kbGluZyBvZiBmaWxlcy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjgzNzE4
-CgpDVkUtMjAyNS0yNDE1OAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BF
-IFdlYktpdCBiZWZvcmUgMi40Ni42LgogICAgQ3JlZGl0IHRvIFExSVEgKEBxMWlxRikgb2YgTlVT
-IEN1cmlPU2l0eSBhbmQgUDF1bWVyIChAcDF1bWVyKSBvZiBJbXBlcmlhbAogICAgR2xvYmFsIFNp
-bmdhcG9yZS4KICAgIEltcGFjdDogUHJvY2Vzc2luZyB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBh
-IGRlbmlhbC1vZi1zZXJ2aWNlLgogICAgRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVz
-c2VkIHdpdGggaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAy
-ODM4ODkKCkNWRS0yMDI1LTI0MTYyCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFu
-ZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjYuCiAgICBDcmVkaXQgdG8gbGluankgb2YgSEtVUzNM
-YWIgYW5kIGNobHVvIG9mIFdIVVNlY0xhYi4KICAgIEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lv
-dXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIHBy
-b2Nlc3MgY3Jhc2guIERlc2NyaXB0aW9uOiBUaGlzIGlzc3VlIHdhcyBhZGRyZXNzZWQKICAgIHRo
-cm91Z2ggaW1wcm92ZWQgc3RhdGUgbWFuYWdlbWVudC4KICAgIFdlYktpdCBCdWd6aWxsYTogMjg0
-MTU5CgpXZSByZWNvbW1lbmQgdXBkYXRpbmcgdG8gdGhlIGxhdGVzdCBzdGFibGUgdmVyc2lvbnMg
-b2YgV2ViS2l0R1RLIGFuZCBXUEUKV2ViS2l0LiBJdCBpcyB0aGUgYmVzdCB3YXkgdG8gZW5zdXJl
-IHRoYXQgeW91IGFyZSBydW5uaW5nIHNhZmUgdmVyc2lvbnMKb2YgV2ViS2l0LiBQbGVhc2UgY2hl
-Y2sgb3VyIHdlYnNpdGVzIGZvciBpbmZvcm1hdGlvbiBhYm91dCB0aGUgbGF0ZXN0CnN0YWJsZSBy
-ZWxlYXNlcy4KCkZ1cnRoZXIgaW5mb3JtYXRpb24gYWJvdXQgV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
-S2l0IHNlY3VyaXR5IGFkdmlzb3JpZXMKY2FuIGJlIGZvdW5kIGF0OiBodHRwczovL3dlYmtpdGd0
-ay5vcmcvc2VjdXJpdHkuaHRtbCBvcgpodHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkuCgpU
-aGUgV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IHRlYW0sCg==
+Intra2net AG found a code execution vulnerability in the "Horde_Image" library 
+of the Horde framework (https://www.horde.org/). The "_raw()" function of the 
+ImageMagick "im" backend passes the "$index" parameter unsanitized to the 
+shell. This parameter is f.e. exposed by the getImageAtIndex($index) function.
 
---2IkFSnN+IsUD6MJc
-Content-Type: application/pgp-signature; name="signature.asc"
+No core horde application exposes the $index parameter directly
+to the net, so a "remote" code execution might be given for third party 
+applications only. Read: The risk is low for normal horde users.
 
------BEGIN PGP SIGNATURE-----
+Affected versions are 2.0.0 to 2.5.1.
+A fixed version 2.5.2 has been released.
 
-iFwEABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZ6iWFwAKCRCRxVnb5MkS
-Ow3oAJUSyojDw5PKZyrTbnuNqsG0CimpAJ99/qZlPL4L7QvokmHBQ0eThiDY+A==
-=C6mO
------END PGP SIGNATURE-----
+Upstream fix:
+https://github.com/horde/horde/commit/eb3afd14c22c77ae0d29e2848f5ac726ef6e7c5b
 
---2IkFSnN+IsUD6MJc--
+Official release announcement:
+https://marc.info/?l=horde-announce&m=150600299528079&w=2
+-----------------------------------
+Hello,
+
+a Remote Code Execution vulnerability has been found in the  
+Horde_Image library when using the "Im" backend that utilizes  
+ImageMagick's "convert" utility. It's not exploitable through any  
+Horde application, because the code path to the vulnerability is not  
+used by any Horde code. Custom applications using the Horde_Image  
+library might be affected though. This vulnerability affects all  
+versions of Horde_Image from 2.0.0 to 2.5.1.
+
+A fixed version of the Horde_Image (version 2.5.2) library has already  
+been released and everybody is advised to upgrade to Horde_Image 2.5.2  
+as soon as possible.
+
+Thanks to long-time contributor and supporter Thomas Jarosch  
+<thomas.jarosch@intra2net.com> for discovering and reporting these  
+vulnerabilities.
+
+--
+Jan Schneider
+The Horde Project
+https://www.horde.org/
+-----------------------------------
+
+
+Timeline:
+2017-09-15: Found the issue during manual code review
+            after the recent CVE-2017-9773 issue.
+
+2017-09-15: Sent patch to security@horde.org
+
+2017-09-16: Checked horde code base if any horde core
+            application exposes the vulnerable API.
+
+2017-09-19: Wrote to security@horde.org again
+            that the security risk for core horde apps is low,
+            no embargo via linux-distros@ needed.
+
+2017-09-19: Fix is committed to git.
+
+2017-09-21: Release of fixed version 2.5.2 by the Horde project.
+
+
+Thanks to Jan Schneider of the Horde project
+for the timely release of the fixed version.
+
+
+Best regards,
+Thomas Jarosch / Intra2net AG
+
