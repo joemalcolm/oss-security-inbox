@@ -1,79 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/30/3
-Message-Id: <EC646F2B-8F97-4B77-AE45-9462445D1B6F@gmail.com>
-Date: Thu, 30 Nov 2017 19:41:03 +0900
-From: 백정운 <jeongun.baek@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/21/3
+Message-ID: <20170921125858.GA12339@openwall.com>
+Date: Thu, 21 Sep 2017 14:58:59 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: libtiff: Heap-based buffer overflow bug in pal2rgb(pal2rgb.c)
+Cc: ?????? <lianyihan@....cn>
+Subject: Re: CVE-2017-14160: libvorbis-1.3.5 bark_noise_hybridmp() integer signedness bug
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi,
 
-A heap-based buffer overflow flaw was found in pal2rgb. A malicious user can manipulate the heap memory of a process using COLORMAP, Image Width, and Image Length value of a TIFF document.
+This was sent to the list with only "CVE-2017-14160" as the Subject.
+That's against oss-security list content guidelines:
 
-http://bugzilla.maptools.org/show_bug.cgi?id=2750 <http://bugzilla.maptools.org/show_bug.cgi?id=2750>
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-The ASAN debug information is below:
-/tools/pal2rgb poc.tiff /dev/null
+"When applicable, the message Subject must include the name and
+version(s) of affected software, and vulnerability type.  For example, a
+Subject saying only "CVE-2099-99999" is not appropriate, whereas
+"CVE-2099-99999: Acme Placeholder 1.0 buffer overflow" would be OK."
 
-TIFFFetchNormalTag: Warning, IO error during reading of "XResolution"; tag
-ignored.
-TIFFFetchNormalTag: Warning, IO error during reading of "YResolution"; tag
-ignored.
-sample.tiff: JPEG compression support is not configured.
-TIFFSetField: /dev/null: Unknown pseudo-tag 65537.
-TIFFSetField: /dev/null: Unknown pseudo-tag 65538.
-sample.tiff: JPEG compression support is not configured.
-=================================================================
-==29649==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x611000009fe1 at pc 0x0000004f3109 bp 0x7fff697434d0 sp 0x7fff697434c8
-WRITE of size 1 at 0x611000009fe1 thread T0
-    #0 0x4f3108  (/home/vagrant/targets/asan/tt/tools/pal2rgb+0x4f3108)
-    #1 0x7f678dc0cf44  (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
-    #2 0x419ba5  (/home/vagrant/targets/asan/tt/tools/pal2rgb+0x419ba5)
+As a moderator, I took the liberty of correcting the Subject to my best
+guess of what it should have been, before approving the message.  This
+guess is based purely on message content as follows.  I didn't analyze
+the issue in its proper context.
 
-0x611000009fe1 is located 0 bytes to the right of 225-byte region
-[0x611000009f00,0x611000009fe1)
-allocated by thread T0 here:
-    #0 0x4c3f08  (/home/vagrant/targets/asan/tt/tools/pal2rgb+0x4c3f08)
-    #1 0x4f2748  (/home/vagrant/targets/asan/tt/tools/pal2rgb+0x4f2748)
-    #2 0x7f678dc0cf44  (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+On Thu, Sep 21, 2017 at 06:27:15AM +0000, ?????? wrote:
+> (gdb) bt
+> #0  0x0000000001f95afd in bark_noise_hybridmp (n=256, b=0x32cd940, f=0x32e5010, noise=0x32f7ed0, offset=140, fixed=-1) at psy.c:630
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow
-(/home/vagrant/targets/asan/tt/tools/pal2rgb+0x4f3108)
-Shadow bytes around the buggy address:
-  0x0c227fff93a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c227fff93f0: 00 00 00 00 00 00 00 00 00 00 00 00[01]fa fa fa
-  0x0c227fff9400: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9420: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==29649==ABORTING
-Affected version:
-4.0.9
+This shows the function name, n=256, and that the crash is on line 630.
+
+> 628         if(hi>=n)break;
+> 629
+> 630         tN = N[hi] - N[lo];
+
+> (gdb) p hi
+> $4 = 0
+> (gdb) p lo
+> $5 = 49656                                                                 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+And oops, looks like I misread this as "hi" being too high, whereas it
+was actually "lo" that was too high.  So I thought the check on line 628
+was wrongly a signed check (or else a "hi" that is too high wouldn't
+pass it).  But actually the bug is probably the lack of check of "lo".
+
+So if anyone needs a description for tracking this issue, for now it
+should be "libvorbis-1.3.5 bark_noise_hybridmp() out of bounds access".
+
+I guess the lessons here are:
+
+1. People posting to oss-security should adhere to the list guidelines.
+
+2. People should prioritize vulnerability analysis over obtaining CVE IDs.
+If can't analyze (no skills, desire, time), include some more general
+description like "crash" or "out of bounds access" - it wouldn't be very
+specific, but would show the (very limited) extent of analysis up to that
+point and would (hopefully) be correct.
+
+3. As a moderator willing to put very little time per message, maybe I
+shouldn't try to over-do my job, and if I do correct obviously unsuitable
+message Subjects (like this message originally had), then do so only in
+the minimal manner suggested above.
+
+Alexander
