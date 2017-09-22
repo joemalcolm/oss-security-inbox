@@ -1,37 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/22
-Message-Id: <630EBE51-95AF-46C9-B51F-AA3D1D584A10@apache.org>
-Date: Wed, 1 Feb 2017 14:08:50 -0500
-From: Velmurugan Periasamy <vel@...che.org>
-To: security <security@...che.org>, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Cc: private@...ger.apache.org, dev@...ger.apache.org, user@...ger.apache.org
-Subject: CVE update - fixed in Apache Ranger 0.6.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/22/6
+Message-ID: <627417.131184728-sendEmail@localhost>
+Date: Fri, 22 Sep 2017 07:50:24 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: bento4: NULL pointer dereference in AP4_DataAtom::~AP4_DataAtom (Ap4MetaData.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hello:
+Description:
+bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
 
-Please find below details on CVEs fixed in Ranger 0.6.3 release. Release details can be found at https://cwiki.apache.org/confluence/display/RANGER/0.6.3+Release+-+Apache+Ranger <https://cwiki.apache.org/confluence/display/RANGER/0.6.3+Release+-+Apache+Ranger>
+The complete ASan output of the issue:
 
-Thank you,
-Velmurugan Periasamy
+# mp42aac $FILE out.aac
+ASAN:DEADLYSIGNAL
+=================================================================
+==11595==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000005b27fe bp 0x7ffce60a67e0 sp 0x7ffce60a67c0 T0)
+==11595==The signal is caused by a READ memory access.
+==11595==Hint: address points to the zero page.
+    #0 0x5b27fd in AP4_DataAtom::~AP4_DataAtom() /tmp/Bento4-1.5.0-617/Source/C++/MetaData/Ap4MetaData.cpp:1357:5
+    #1 0x5b27fd in AP4_DataAtom::~AP4_DataAtom() /tmp/Bento4-1.5.0-617/Source/C++/MetaData/Ap4MetaData.cpp:1356
+    #2 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
+    #3 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
+    #4 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48:7
+    #5 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48
+    #6 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
+    #7 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
+    #8 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48:7
+    #9 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48
+    #10 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
+    #11 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
+    #12 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48:7
+    #13 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48
+    #14 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
+    #15 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
+    #16 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48:7
+    #17 0x60e6d8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48
+    #18 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
+    #19 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
+    #20 0x553af8 in AP4_ContainerAtom::~AP4_ContainerAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.h:48:7
+    #21 0x553af8 in AP4_MoovAtom::~AP4_MoovAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:47
+    #22 0x553af8 in AP4_MoovAtom::~AP4_MoovAtom() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:47
+    #23 0x5bf8d4 in AP4_List::DeleteReferences() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4List.h:476:9
+    #24 0x5bf8d4 in AP4_AtomParent::~AP4_AtomParent() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Atom.cpp:512
+    #25 0x54f634 in AP4_File::~AP4_File() /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:85:1
+    #26 0x5433c4 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:292:5
+    #27 0x7f0ba50e1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #28 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CVE-2016-8746: Apache Ranger path matching issue in policy evaluation
-Severity: Normal
-Vendor: The Apache Software Foundation
-Versions Affected: 0.6.0/0.6.1/0.6.2 versions of Apache Ranger
-Users affected: All users of ranger policy admin tool
-Description: Ranger policy engine incorrectly matches paths in certain conditions when policy does not contain wildcards and has recursion flag set to true.
-Fix detail: Fixed policy evaluation logic.
-Mitigation: Users should upgrade to 0.6.3 or later version of Apache Ranger with the fix.
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CVE-2016-8751: Apache Ranger stored cross site scripting issue
-Severity: Normal
-Vendor: The Apache Software Foundation
-Versions Affected: 0.5.x and 0.6.0/0.6.1/0.6.2 versions of Apache Ranger
-Users affected: All users of ranger policy admin tool
-Description: Apache Ranger was found to be vulnerable to a Stored Cross-Site Scripting in when entering custom policy conditions. Admin users can store 
-some arbitrary javascript code to be executed when normal users login and access policies.
-Fix detail: Added logic to sanitize the user input.
-Mitigation: Users should upgrade to 0.6.3 or later version of Apache Ranger with the fix.
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/Bento4-1.5.0-617/Source/C++/MetaData/Ap4MetaData.cpp:1357:5 in AP4_DataAtom::~AP4_DataAtom()
+==11595==ABORTING
+Audio Track:
+  duration: 7848 ms
+  sample count: 16
+
+Affected version:
+1.5.0-617
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/axiomatic-systems/Bento4/commit/41cad602709436628f07b4c4f64e9ff7a611f687
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14641
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00338-bento4-NULLptr-AP4_DataAtom_AP4_DataAtom
+
+Timeline:
+2017-09-08: bug discovered and reported to upstream
+2017-09-14: blog post about the issue
+2017-09-21: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/14/bento4-null-pointer-dereference-in-ap4_dataatomap4_dataatom-ap4metadata-cpp/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
