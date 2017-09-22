@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9848" "Monday" "11" "January" "2021" "15:05:23" "+0100" "Matthias Gerstner" "mgerstner@suse.de" "<X/xbI+6vsPHK6TmT@f195.suse.de>" "230" "[oss-security] Various security fixes in sudo 1.9.5 (CVE-2021-23239, CVE-2021-23240)" nil nil nil "1" "2021011114:05:23" "[oss-security] Various security fixes in sudo 1.9.5 (CVE-2021-23239, CVE-2021-23240)" (number mark "U       mgerstner@su Jan 11  230/9848  " thread-indent "\"[oss-security] Various security fixes in sudo 1.9.5 (CVE-2021-23239, CVE-2021-23240)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Various security fixes in sudo 1.9.5 (CVE-2021-23239, CVE-2021-23240)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["16206" "Friday" "22" "September" "2017" "07:52:43" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<616845.446729229-sendEmail@localhost>" "161" "[oss-security] bento4: heap-based buffer overflow in AP4_BytesToUInt32BE (Ap4Utils.h)" nil nil nil "9" "2017092207:52:43" "[oss-security] bento4: heap-based buffer overflow in AP4_BytesToUInt32BE (Ap4Utils.h)" (number mark "U       ago@gentoo.o Sep 22  161/16206 " thread-indent "\"[oss-security] bento4: heap-based buffer overflow in AP4_BytesToUInt32BE (Ap4Utils.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1466 invoked by uid 550); 11 Jan 2021 14:05:35 -0000
+Received: (qmail 17497 invoked by uid 550); 22 Sep 2017 07:53:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,245 +12,173 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1445 invoked from network); 11 Jan 2021 14:05:35 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 11 Jan 2021 15:05:23 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <X/xbI+6vsPHK6TmT@f195.suse.de>
+Received: (qmail 16337 invoked from network); 22 Sep 2017 07:53:00 -0000
+Message-ID: <616845.446729229-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Fri, 22 Sep 2017 07:52:43 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="gkbslUjjCOIrOzdy"
-Content-Disposition: inline
-Subject: [oss-security] Various security fixes in sudo 1.9.5 (CVE-2021-23239, CVE-2021-23240)
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-127062.377360748"
+Subject: [oss-security] bento4: heap-based buffer overflow in AP4_BytesToUInt32BE (Ap4Utils.h)
 
---gkbslUjjCOIrOzdy
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+------MIME delimiter for sendEmail-127062.377360748
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Hello list,
+Description:
+bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
 
-concerns have been raised with us about half a year ago that new
-features like the python plugin in sudo [1] major version 1.9 could have
-introduced new security issues. Recently I performed a review of the
-current sudo code base and found a couple of minor and moderate issues
-(not necessarily in the new features) that will be addressed in a soon
-to be available sudo upstream release 1.9.5.
+The complete ASan output of the issue:
 
-The following findings are all based on the `SUDO_1_9_4` tag in the
-Mercurial upstream repository [2]. Only the two issues c) and d) have
-been considered severe enough to request CVEs for them.
+# mp42aac $FILE out.aac
+==1966==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x617000000324 at pc 0x000000690d51 bp 0x7ffc25bed310 sp 0x7ffc25bed308                                                                          
+READ of size 1 at 0x617000000324 thread T0                                                                                                                                                                        
+    #0 0x690d50 in AP4_BytesToUInt32BE(unsigned char const*) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Utils.h:78:22                                                                                               
+    #1 0x690d50 in AP4_StszAtom::AP4_StszAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StszAtom.cpp:85                                                
+    #2 0x69036e in AP4_StszAtom::Create(unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StszAtom.cpp:51:16                                                                                
+    #3 0x5ca79a in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:442:20             
+    #4 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14                                        
+    #5 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12                                       
+    #6 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5               
+    #7 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87                       
+    #8 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20             
+    #9 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14                                        
+    #10 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12                                      
+    #11 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5              
+    #12 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87                      
+    #13 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #14 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #15 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #16 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #17 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #18 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #19 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #20 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #21 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #22 0x58e6ed in AP4_TrakAtom::AP4_TrakAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.cpp:165:5
+    #23 0x5c8e3b in AP4_TrakAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.h:58:20
+    #24 0x5c8e3b in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:377
+    #25 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #26 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #27 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #28 0x5521b0 in AP4_MoovAtom::AP4_MoovAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.cpp:79:5
+    #29 0x5cad1d in AP4_MoovAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:56:20
+    #30 0x5cad1d in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:357
+    #31 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #32 0x5c75c0 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:150:12
+    #33 0x54ea2c in AP4_File::ParseStream(AP4_ByteStream&, AP4_AtomFactory&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:104:12
+    #34 0x54f0fa in AP4_File::AP4_File(AP4_ByteStream&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:78:5
+    #35 0x542552 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:242:32
+    #36 0x7f3271712680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #37 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
 
-# a) User Could Enable Debug Settings not Intended for it
+0x617000000324 is located 0 bytes to the right of 676-byte region [0x617000000080,0x617000000324)
+allocated by thread T0 here:
+    #0 0x53dfb0 in operator new[](unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_new_delete.cc:84
+    #1 0x6909e3 in AP4_StszAtom::AP4_StszAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StszAtom.cpp:78:33
+    #2 0x69036e in AP4_StszAtom::Create(unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StszAtom.cpp:51:16
+    #3 0x5ca79a in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:442:20
+    #4 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #5 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #6 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #7 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #8 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #9 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #10 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #11 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #12 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #13 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #14 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #15 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #16 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #17 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #18 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #19 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #20 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #21 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #22 0x58e6ed in AP4_TrakAtom::AP4_TrakAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.cpp:165:5
+    #23 0x5c8e3b in AP4_TrakAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.h:58:20
+    #24 0x5c8e3b in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:377
+    #25 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #26 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #27 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #28 0x5521b0 in AP4_MoovAtom::AP4_MoovAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.cpp:79:5
+    #29 0x5cad1d in AP4_MoovAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:56:20
+    #30 0x5cad1d in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:357
+    #31 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #32 0x5c75c0 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:150:12
+    #33 0x54ea2c in AP4_File::ParseStream(AP4_ByteStream&, AP4_AtomFactory&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:104:12
+    #34 0x54f0fa in AP4_File::AP4_File(AP4_ByteStream&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:78:5
 
-Function `sudo_conf_debug_files_v1()` is passed the unfiltered program
-basename from `argv[0]`. In /etc/sudo.conf debug settings are based on
-the program name, for example:
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Utils.h:78:22 in AP4_BytesToUInt32BE(unsigned char const*)
+Shadow bytes around the buggy address:
+  0x0c2e7fff8010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2e7fff8020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2e7fff8030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2e7fff8040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2e7fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c2e7fff8060: 00 00 00 00[04]fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2e7fff8070: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2e7fff8080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2e7fff8090: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2e7fff80a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2e7fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1966==ABORTING
 
-```
-Debug sudo /var/log/sudo.log all@debug
-```
+Affected version:
+1.5.0-617
 
-Example scenario: An Admin experimented with something, say, the
-`python_plugin.so` and enabled debugging for it and afterwards removed
-the `python_plugin.so` from the Plugin configuration but forgot to also
-remove it from the Debug configuration.
+Fixed version:
+N/A
 
-Now an unprivileged user can set argv[0] to `python_plugin.so` when
-executing sudo, which will cause debugging to be enabled for the sudo
-main program.
+Commit fix:
+https://github.com/axiomatic-systems/Bento4/commit/5eb8cf89d724ccb0b4ce5f24171ec7c11f0a7647
 
-Log files created by sudo have root:root 0600 permissions so nothing
-really bad should come from this. Still I think that the unprivileged
-user should not be able to confuse the debugging system.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-This has been addressed in upstream commit 12797:1d32c53859f9 [3].
+CVE:
+CVE-2017-14643
 
-# b) Result of `fcntl(..., FD_CLOEXEC)` is not Checked in `sudo_debug_new_o=
-utput()`
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00341-bento4-heapoverflow-AP4_BytesToUInt32BE
 
-In `sudo_debug.c:183` the result of `fcntl(output->fd, F_SETFD,
-FD_CLOEXEC)` is ignored. If this would fail (while unlikely), then the
-open debug file descriptor would be inherited into the target user
-context. There seems to be no other code in place that closes this file
-descriptor before executing the target command.
+Timeline:
+2017-09-08: bug discovered and reported to upstream
+2017-09-14: blog post about the issue
+2017-09-21: CVE assigned
 
-This has been addressed in upstream commit 12798:f1ca39a0d870 [4].
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
-# c) CVE-2021-23239: Possible Dir Existence Test due to Race Condition in `=
-sudoedit`
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/14/bento4-heap-based-buffer-overflow-in-ap4_bytestouint32be-ap4utils-h/
 
-The `sudoedit` personality by default wants to prevent that the edited
-file is in any way under control of an unprivileged user. This logic is
-rooted in `sudo_edit_open()` / `sudo_edit_open_nonwritable()`. It
-follows the complete file path from the file system root downwards and
-avoids symlinks in directories that are writable by unprivileged users.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-There is a corner case, however, when the target file does not exist
-yet. This is handled in `sudo_edit.c:545`. `errno` will be set to
-`ENOENT`, because the file didn't exist yet. Now the code checks the
-parent directory of the path for existence and whether it is a
-directory. If this is both true then the edit operation continues in the
-expectation that later on a new file will be created. The check is done
-using `stat()`, however, thus if the parent directory is under control
-of the unprivileged user, it can try to win a race condition and place
-an arbitrary symlink at the parent directory location just in time for
-the check in `sudo_edit.c:549` to succeed.
 
-This means the precondition covered in `sudo_edit.c:576` is no longer
-true ("editing files in a writable directory is not permitted"). As far
-as I can see this only allows an attacker to test for existence of
-directories in arbitrary locations, if the target user is root, because
-`sudoedit` behaves differently if the link target exists and is a
-directory, or if it doesn't exist or isn't a directory. It *cannot* be
-used to write to arbitrary locations, because the write operation
-happens in `sudo_edit.c:1043` via `sudo_edit_copy_tfiles()`, which uses
-`sudo_edit_open()`, this time with `O_CREAT` to open the target file.
-This will not follow a symlink this time.
+------MIME delimiter for sendEmail-127062.377360748--
 
-Example: A regular user 'testuser' is for some reason allowed to edit
-the file /home/testuser/subdir/file with root privileges and without
-password entry.
-
-```
-sudoedit ~/subdir/file
-```
-
-Initially ~/subdir is empty or doesn't exist. The logic in
-`sudo_edit.c:545` will come into play. 'testuser' wins the race to
-create a symlink:
-
-```
-ln -s /root/.gnupg ~/subdir
-```
-
-If /root/.gnupg exists then `sudoedit` will now open the editor, if it
-doesn't exist it will fail with
-
-```
-sudoedit: /home/testuser/subdir/file: No such file or directory
-```
-
-This has been addressed in upstream commit 12799:ea19d0073c02 [5]
-
-# d) CVE-2021-23240: Possible Symlink Attack in SELinux Context in `sudoedi=
-t`
-
-If SELinux is enabled on a system then `sudoedit` uses alternate code
-paths to create temporary files and to copy temporary files to target
-files, namely `selinux_edit_copy_tfiles()` and
-`selinux_edit_create_tfiles()`. Both functions employ `chown()` system
-calls which follow symlinks.
-
-Especially in `selinux_edit_copy_tfiles()` a `chown()` to the target
-user is performed on a temporary file path that is owned by the
-unprivileged user in e.g. /var/tmp. The unprivileged user could remove
-this file and replace it by a symlink to a another file, that would be
-followed by `sudoedit` to change its ownership.
-
-When SELinux is in enforce mode then it should prevent such a thing to
-happen. But a system might run in SELinux permissive mode in which case
-the SELinux logic in `sudoedit` would still trigger but the protection
-effect would be gone. In this case still the symlink protection in the
-kernel can prevent the attack, if it is enabled.
-
-This has been addressed in upstream commit 12800:8fcb36ef422a [6].
-
-# e) Bad Buffer Size Calculation in `get_net_ifs()`
-
-In the `get_net_ifs()` function the remaining space in the `cp` buffer
-is calculated for passing it to the `snprintf()` function calls in line
-175 and line 192. The calculation `ailen - (*addrinfo - cp)` is
-erroneous, however, because the expression in parantheses will become
-negative for increasing values of `cp`, thus passing an ever larger
-buffer size to `snprintf` instead of the correctly remaining space. The
-correct calculation would be `ailen - (cp - *addrinfo)`.
-
-The impact could be a heap buffer overflow for certain values of IP
-addresses on network interfaces that would exhaust the actually
-available space in the `cp` buffer. However it should not be possible to
-trigger this, because the buffer is allocated with enough space for
-(`2 * INET6_ADDRSTRLEN`) bytes for each pair of interface address and
-netmask. And even then an unprivileged user should not usually be able
-to assign crafted IP addresses that would result in such an overflow.
-
-This has been addressed in upstream commit 12796:b0cae3ac8e46 [7].
-
-# f) Python Plugin `_verify_import()` Follows Symlinks
-
-In `python_importblocker.c:39` a `stat()` system call that follows
-symlinks is performed to determine the security of the to-be-imported
-Python module. If the target directory would be under control of an
-unprivileged user then it could attempt to place a symlink at the
-`file_path` location that points to a file that fulfills the necessary
-conditions and then could replace the symlink by a user controlled
-module that would then be loaded by the Python importer.
-
-To be completely safe here a check of all path components like done in
-`sudo_edit_open_nonwritable()` would need to be made to make sure that
-no unprivileged user has control over parent directories of the Python
-module path.
-
-Ideally a safely opened file descriptor would be used directly to load
-the module (if possible with the Python API).
-
-Upstream told me that this code is not actually intended to be a
-security check but more of a debugging utility for admins. The Python
-API does not allow to make this particular check safe. Therefore a safe
-configuration is the responsibility of the sudo administrator.
-
-# Upstream Communication
-
-I shared this report with the sudo main developer Todd Miller on
-2020-12-21. Since then we discussed the issues and possible patches, I
-requested CVEs from Mitre for issues c) and d) and this week the 1.9.5
-release with all bugfixes will be made.
-
-See also the detailed analysis of issue d) done by Todd [8].
-
-[1]: https://www.sudo.ws/
-[2]: https://www.sudo.ws/repos/sudo
-[3]: https://www.sudo.ws/repos/sudo/rev/1d32c53859f9
-[4]: https://www.sudo.ws/repos/sudo/rev/f1ca39a0d870
-[5]: https://www.sudo.ws/repos/sudo/rev/ea19d0073c02=20
-[6]: https://www.sudo.ws/repos/sudo/rev/8fcb36ef422a=20
-[7]: https://www.sudo.ws/repos/sudo/rev/b0cae3ac8e46=20
-[8]: https://www.sudo.ws/alerts/sudoedit_selinux.html
-
-Cheers
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
-
---gkbslUjjCOIrOzdy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl/8WyIACgkQFMQFyXGS
-NVO78RAAh+wqq5zi84ivKwijXovbB1DjeXfqd9xIhMgzdJGLLRElXhEjVskB38e6
-pISCUqWsVVTRDLjX+jgocujU/WeOkHX3KcexH5Y59+m9MZAvU2OL4LbwNlaeda6e
-v0UfWjQxOnGZK4GqBSF5tl+3Ui2u8FpRafdiKkqnz4GdAo9a0w7x0ptbgW4/DdJU
-vBztZp3hE1ja6tOYWdJ/HHEWQwq9YvSKAueMgy4mXlVCHYwz39DPC5zDHLIbkJ5o
-/fhbily1mypy1HNar0YZ5+PHBx+Yw4RXIEkkcRHcdH5eRev6HzWhvIeSEwY8VoGb
-LsbztcQRlGfqV8fXvOXcZlLQBNV/hQqO/sn7mM011rtXhYLtCySQle+XhGueeDc0
-51UAjnb7VHDJxk85wMjSvNkO8hT3fOUJ95K6tqFTso49s9dCwpIz7ehCObgbcyEi
-atS9ss5pEvHhyVw76H1YNYQmje6rgDLBjmlZII1Vn3lJcTziE+ETRfsFJjNMQYVI
-5F2/6rR6eEYfAEBDt4E/ZZ4IwGFVct0W5URoP9pArgn3gcLhKQgUFQGpEtI8t85s
-lXJG6DDyPAqslJgPRZcK8gzp5tzrCwHBnQ3xBC6BTf2wChd2QNYjPXistZxRmHPz
-lhVdc5VFmRMCS0NH2B1mXLzeK9jGBpYAvDA6CLwV5YJzaAHz+qQ=
-=SH9t
------END PGP SIGNATURE-----
-
---gkbslUjjCOIrOzdy--
