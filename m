@@ -1,35 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/1
-Message-ID: <alpine.LFD.2.20.1705031412570.32279@wniryva>
-Date: Wed, 3 May 2017 14:19:40 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Jiangxin <jiangxin1@...wei.com>
-Subject: CVE-2017-8309 Qemu: audio: host memory leakage via capture buffer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/22/13
+Message-ID: <2113704961.13214334.1506089666956.JavaMail.zimbra@redhat.com>
+Date: Fri, 22 Sep 2017 10:14:26 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-14489: Linux kernel: scsi: nlmsg is not properly parsed in iscsi_if_rx()
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Heololo,
 
-Quick Emulator(Qemu) built with the Audio subsystem support is vulnerable to a 
-host memory leakage issue. It could occur if a guest user was to repeatedly 
-start and stop audio capture.
+It was found that the iscsi_if_rx() function in 'drivers/scsi/scsi_transport_iscsi.c'
+in the Linux kernel since v2.6.24-rc1 through 4.13.2 allows local users to cause
+a denial of service (a system panic) by making a number of certain syscalls by
+leveraging incorrect length validation in the kernel code.
 
-A privileged user inside guest could use this flaw to exhaust host memory, 
-resulting in DoS.
+Our tests show that indeed an unprivileged local user can easily cause (i.e. run a binary)
+a system panic or a compete lock up. A wide range of kernel versions is affected, from
+v2.6.24-rc1 till the latest ones.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-04/msg05587.html
+References:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1446517
+https://bugzilla.redhat.com/show_bug.cgi?id=1490421
 
-This issue was reported by Jiang Xin (PSIRT Huawei inc.)
+https://www.suse.com/security/cve/CVE-2017-14489/
 
-'CVE-2017-8309' allocated via -> http://cveform.mitre.org/
+https://nvd.nist.gov/vuln/detail/CVE-2017-14489
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14489
+
+A suggested upstream patch:
+
+https://patchwork.kernel.org/patch/9923803/
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
