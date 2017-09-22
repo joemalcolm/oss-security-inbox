@@ -1,129 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/4
-Message-ID: <0ac49cb5-f257-f6c2-d104-7110ecf463d2@stachelkaktus.net>
-Date: Thu, 7 Dec 2017 10:16:44 +0100
-From: oss-security@...chelkaktus.net
-To: oss-security@...ts.openwall.com, halfdog <me@...fdog.net>
-Subject: Re: Recommendations GnuPG-2 replacement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/22/7
+Message-ID: <230842.578315304-sendEmail@localhost>
+Date: Fri, 22 Sep 2017 07:51:25 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: bento4: NULL pointer dereference in AP4_StdcFileByteStream::ReadPartial (Ap4StdCFileByteStream.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Description:
+bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
 
-for the gpg scenario on initrd I use:
-echo $PASSWORD |/bin/gpg -d --passphrase-fd 0 --lock-never
---no-auto-check-trustdb --no-tty -q --no-keyring --batch --yes
---no-permission-warning /etc/a_key.gpg
+The complete ASan output of the issue:
 
-To fix the "--s2k-count" problem I've added argon2 before using the pipe
-for gpg.
+# mp42aac $FILE out.aac
+ASAN:DEADLYSIGNAL
+=================================================================
+==18215==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f23fa12110e bp 0x000000000017 sp 0x7fff671b9178 T0)
+==18215==The signal is caused by a WRITE memory access.
+==18215==Hint: address points to the zero page.
+    #0 0x7f23fa12110d  /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/string/../sysdeps/x86_64/memcpy.S:71
+    #1 0x7f23fa10febd in __GI__IO_file_xsgetn /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/libio/fileops.c:1392
+    #2 0x7f23fa10520f in fread /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/libio/iofread.c:38
+    #3 0x5b6557 in AP4_StdcFileByteStream::ReadPartial(void*, unsigned int, unsigned int&) /tmp/Bento4-1.5.0-617/Source/C++/System/StdC/Ap4StdCFileByteStream.cpp:237:14
+    #4 0x544473 in AP4_ByteStream::Read(void*, unsigned int) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ByteStream.cpp:55:29
+    #5 0x622427 in AP4_HdlrAtom::AP4_HdlrAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4HdlrAtom.cpp:86:12
+    #6 0x621f4e in AP4_HdlrAtom::Create(unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4HdlrAtom.cpp:51:16
+    #7 0x5cae91 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:387:20
+    #8 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #9 0x617c17 in AP4_DrefAtom::AP4_DrefAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4DrefAtom.cpp:83:16
+    #10 0x617329 in AP4_DrefAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4DrefAtom.cpp:49:16
+    #11 0x5c90ae in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:529:20
+    #12 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #13 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #14 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #15 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #16 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #17 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #18 0x617c17 in AP4_DrefAtom::AP4_DrefAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4DrefAtom.cpp:83:16
+    #19 0x617329 in AP4_DrefAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4DrefAtom.cpp:49:16
+    #20 0x5c90ae in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:529:20
+    #21 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #22 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #23 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #24 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #25 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #26 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #27 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #28 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #29 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #30 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #31 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #32 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #33 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #34 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #35 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #36 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #37 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #38 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #39 0x58e6ed in AP4_TrakAtom::AP4_TrakAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.cpp:165:5
+    #40 0x5c8e3b in AP4_TrakAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.h:58:20
+    #41 0x5c8e3b in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:377
+    #42 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #43 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #44 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #45 0x5521b0 in AP4_MoovAtom::AP4_MoovAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.cpp:79:5
+    #46 0x5cad1d in AP4_MoovAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:56:20
+    #47 0x5cad1d in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:357
+    #48 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #49 0x5c75c0 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:150:12
+    #50 0x54ea2c in AP4_File::ParseStream(AP4_ByteStream&, AP4_AtomFactory&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:104:12
+    #51 0x54f0fa in AP4_File::AP4_File(AP4_ByteStream&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:78:5
+    #52 0x542552 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:242:32
+    #53 0x7f23fa0bf680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #54 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
 
-Its not great but it works for me.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/string/../sysdeps/x86_64/memcpy.S:71 
+==18215==ABORTING
 
-cheers
+Affected version:
+1.5.0-617
 
-wof
+Fixed version:
+N/A
 
+Commit fix:
+https://github.com/axiomatic-systems/Bento4/commit/22192de5367fa0cee985917f092be4060b7c00b0
 
-On 12/07/2017 07:32 AM, halfdog wrote:
-> Hello list,
-> 
-> Are there recommendations for open-source light-weight replacements
-> of GnuPG2 suitable for use on Debian? I would like discontinue
-> using GnuPG project, as the GnuPG design regarding security seems
-> to be moving in a direction, that does not match my personal security
-> needs any more.
-> 
-> The two main events causing me considering the change were related
-> to the Debian Jessie to Stretch switch - thus giving a small
-> impression on the current needs:
-> 
-> Event 1:
-> 
-> While gpg1 was a light-weight tool, just doing what said, the
-> new gpg2 cannot really work without gpg-agent, pinentry frontend.
-> Both are very nice for desktop usecases. As I also used it during
-> machine setup for generating material related to disk encryption,
-> the agent first did not want to start -- the primitive /dev/ttyX
-> via openvt was not the environment gpg tools were expecting
-> for password input, thus failing. gpg2 by default will not ask
-> the passphrase any more on the terminal, it was started from,
-> but tries to work out using various information, where passphrase
-> input should be delegated to.
-> 
-> After getting gpg and agent running, I noticed, that not reliably
-> stopping the gpg-agent on initrd would introduce a private key
-> data leak via /proc from early boot process to running system
-> when stopping fails. This is also more annoying as it is not possible
-> to instruct gpg, that a single private key should NOT be cached,
-> and you have to configure gpg-agent beforehand, something not
-> quite funny and little error prone on limited functionality systems
-> like on an initrd systems.
-> 
-> Thus the Debian switch from gpg1 to gpg2 just introduced efforts
-> fiddling with functionality I do not need and cannot disable,
-> provides a keymanagement that cannot be configured easily to
-> protect against the threats it should mitigate (theft of key material)
-> and creating additional attack surface without any recognizable
-> benefit.
-> 
-> Event 2:
-> 
-> After getting everything working, which was little anoying as
-> building of initrds, testing via QEmu is not very user friendly
-> regarding debugging for less experienced users - but at least not
-> GnuPG's fault at any reason - I noticed, that the password protection
-> of the key was significantly lower than expected. Getting back
-> to the developers, we found out, that the specification of the
-> "--s2k-count" parameter, which specifies the number of rounds
-> of key deriviation function to unlock the private key, has changed
-> from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
-> cause any warning or error. Thus previous audited procedures continue
-> to work but do not produce the same results any more. Of course,
-> I could have compared documentation of all parameters of (at least
-> security-related) programs after Jessie to Stretch upgrade, but
-> I assumed, that security critical parameters would not change
-> their meaning without any noticable effect - so just my fault.
-> 
-> Still, this would just be a minor mishap, but what reduced my
-> trust in GPG, was the comment of a developer: it was assumed,
-> that they know better, where there software will be run without
-> specifying that "where" in the documentation. Also his replies
-> matched that picture, e.g. "(gpg-agent will) ... calibrate the
-> S2K count to match the current machine", assuming that this is
-> good reason to change "--s2k-count" meaning and ignore the parameter.
-> I had the impression, that it did not come to mind, that someone
-> might have used such a parameter for a reason, e.g. because speed
-> calibration might not be the best idea, while the system is taking
-> in data at the maximum speed the ethernet adapter, disk controller
-> can do during system setup.
-> 
-> Another bonmot on the mathematical complexity of private key
-> unlocking: "For user experience 100ms is a good value; your
-> suggested 1000ms is an annoying long delay which would most user
-> only increase the cache time." But the discussion was not on
-> user defaults. If I deem it a good idea to requirea longer KDF
-> computation time for material with higher sensitivity, e.g. to
-> to unlock data storage once at startup, and therefore tell the
-> software to perform that computation, it should accept that
-> decision. Thus someone not understanding or accepting the
-> existance of such choices in alternative usecase might not be
-> the right person to develop the software, I want to use.
-> 
-> 
-> Result:
-> 
-> For all steps regarding system startup, I switched to LUKS only,
-> using detached headers for special features. For release signing,
-> mail sign/encrypt, a good light-weight solution is still needed.
-> 
-> hd
-> 
-> PS: I do not know, how much the gpg-agent calibration under
-> increased system load reduced the KDF complexity, as I failed
-> to extract the KDF rounds value from the gpg data structures,
-> but the value seems to be at least below 70ms due to total time
-> measurements for gpg-agent (math, interprocess communication,
-> filesystem) to unlock a key on an idle system.
-> 
-> 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14642
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00339-bento4-NULLptr-AP4_StdcFileByteStream_ReadPartial
+
+Timeline:
+2017-09-08: bug discovered and reported to upstream
+2017-09-14: blog post about the issue
+2017-09-21: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/14/bento4-null-pointer-dereference-in-ap4_stdcfilebytestreamreadpartial-ap4stdcfilebytestream-cpp/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
