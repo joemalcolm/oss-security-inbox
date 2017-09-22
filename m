@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2685" "Sunday" "8" "November" "2015" "01:48:57" "-0500" "Scott Arciszewski" "scott@paragonie.com" "<CAKws9z180P5D6H0QUAg5jcz+a6GR7Z0tCNcTzmB3U9LzwfFk1w@mail.gmail.com>" "62" "[oss-security] Joomla CMS - Bad Cryptography - Multiple Vulnerabilities" nil nil nil "11" "2015110806:48:57" "[oss-security] Joomla CMS - Bad Cryptography - Multiple Vulnerabilities" (number mark "U       scott@parago Nov  8   62/2685  " thread-indent "\"[oss-security] Joomla CMS - Bad Cryptography - Multiple Vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4389" "Friday" "22" "September" "2017" "07:48:12" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<956014.48961267-sendEmail@localhost>" "101" "[oss-security] bento4: heap-based buffer overflow in AP4_BitStream::ReadBytes (Ap4BitStream.cpp)" nil nil nil "9" "2017092207:48:12" "[oss-security] bento4: heap-based buffer overflow in AP4_BitStream::ReadBytes (Ap4BitStream.cpp)" (number mark "U       ago@gentoo.o Sep 22  101/4389  " thread-indent "\"[oss-security] bento4: heap-based buffer overflow in AP4_BitStream::ReadBytes (Ap4BitStream.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13889 invoked by uid 550); 8 Nov 2015 06:49:15 -0000
+Received: (qmail 12259 invoked by uid 550); 22 Sep 2017 07:48:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,98 +12,113 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13825 invoked from network); 8 Nov 2015 06:49:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paragonie_com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=9O5VW2sYPEHm1oxTGFkbPSew49hdBQKqRAbgMDjbgjs=;
-        b=Jt7Y9Qzl7AiTiW2tqk+WHMfGTu4BS++BKdL2FZNC0l59yjX+LHZ1c9mn628f4A7AeX
-         DVrsgyEchUPaIE6QAHbzuzorCfURslTwgU4r6vXaM4h1b2DAHFQ+NFPA/ksR3p7/o086
-         +qLhZxi0VoQ8OvAC/4F1CxiDbHuROHJcPDaBBLVrG2dVHlJZGTf/nAwCWAx2/Q9J9coc
-         MCrO2Up7MqLA0JdP4PryYnqPPOapcWtfH8vlPboERWx9TFKsR51WeGZqBNxIDXV4yLFj
-         PrjKp2Q9hyze2F+NFrZlTwyvq5tXSlFcBHGQnjMoZSriTrKII5c69bDHRq6K3CSmhJsE
-         nMVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=9O5VW2sYPEHm1oxTGFkbPSew49hdBQKqRAbgMDjbgjs=;
-        b=UgcMaYFCBXQFW1yyv09st9CV1u4GapQthc+LPjtbF9mGfQVnIiuH9MRZYKD1yNQjvz
-         E81SKTPMrs5hENIYQikRnDu8B11WyT7+wjorrfTPrAQ74N7Jye9THd5A4S3duGSzq+PP
-         P6Yh3mkggnUkr8dTMZLmCaO3satzjI+maHZelXk04QM1FJEvPxKbvWzukz7kZYelHPGk
-         uPOU1AbAC/irQ+sAHLkCZH3qd6ul5+uKWWSdjLUidfvxpj2Y7Eu1JBgMK3S22MFjJooe
-         9uBl9avoFuo1jPNyqEdVQtIwQz47mHqXif+B6nfxSM+HPrW/oH9JGaVzquMuzDQ+tQiT
-         b4+Q==
-X-Gm-Message-State: ALoCoQlD00vjdmDJt+vifufykQrApzCCeRrcbFUW5m35X/cs6j8vswKtRu8V3BXXdZvkKV0o6hnX
+Received: (qmail 12240 invoked from network); 22 Sep 2017 07:48:29 -0000
+Message-ID: <956014.48961267-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Fri, 22 Sep 2017 07:48:12 +0000
 MIME-Version: 1.0
-X-Received: by 10.112.151.37 with SMTP id un5mr8931384lbb.53.1446965337650;
- Sat, 07 Nov 2015 22:48:57 -0800 (PST)
-Date: Sun, 8 Nov 2015 01:48:57 -0500
-Message-ID: <CAKws9z180P5D6H0QUAg5jcz+a6GR7Z0tCNcTzmB3U9LzwfFk1w@mail.gmail.com>
-From: Scott Arciszewski <scott@paragonie.com>
-To: oss-security@lists.openwall.com, fulldisclosure@seclists.org
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] Joomla CMS - Bad Cryptography - Multiple Vulnerabilities
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-587581.607121141"
+Subject: [oss-security] bento4: heap-based buffer overflow in AP4_BitStream::ReadBytes (Ap4BitStream.cpp)
 
-Hi OSS-Sec, Full Disclosure, MITRE, and friends,
+------MIME delimiter for sendEmail-587581.607121141
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-I spent roughly half an hour looking at Joomla (and picking up my jaw
-from the floor at how bad their crypto is), and this is what I found:
+Description:
+bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
 
-https://github.com/joomla/joomla-cms/issues/created_by/paragonie-scott
+The complete ASan output of the issue:
 
-It seems to hit the jackpot at "bad crypto bingo", even going so far
-as to deploy a home-grown cipher that is basically XOR-ECB:
-https://github.com/joomla/joomla-cms/issues/8327
+# aac2mp4 $FILE /tmp/out.mp4
+AAC frame [000000]: size = -7, 96000 kHz, 0 ch
+=================================================================
+==8420==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x625000002100 at pc 0x0000004eed45 bp 0x7ffdd3db9900 sp 0x7ffdd3db90b0
+READ of size 4294963374 at 0x625000002100 thread T0
+    #0 0x4eed44 in __asan_memcpy /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_interceptors.cc:453
+    #1 0x54734d in AP4_BitStream::ReadBytes(unsigned char*, unsigned int) /tmp/Bento4-1.5.0-617/Source/C++/Codecs/Ap4BitStream.cpp:202:13
+    #2 0x543498 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Aac2Mp4/Aac2Mp4.cpp:142:29
+    #3 0x7f7742500680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #4 0x44fc28 in _start (/usr/bin/aac2mp4+0x44fc28)
 
-MITRE: I'd like to request just one CVE for the Joomla cryptography
-library, even though I've identified multiple issues here, as it would
-seem redundant to get a CVE for every fatal mistake they made. But
-just in case that's a no-go, here's a complete enumeration of what
-I've found:
+0x625000002100 is located 0 bytes to the right of 8192-byte region [0x625000000100,0x625000002100)
+allocated by thread T0 here:
+    #0 0x53e7e0 in operator new[](unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_new_delete.cc:84
+    #1 0x546445 in AP4_BitStream::AP4_BitStream() /tmp/Bento4-1.5.0-617/Source/C++/Codecs/Ap4BitStream.cpp:45:16
+    #2 0x5449fb in AP4_AdtsParser::AP4_AdtsParser() /tmp/Bento4-1.5.0-617/Source/C++/Codecs/Ap4AdtsParser.cpp:124:17
+    #3 0x542d8b in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Aac2Mp4/Aac2Mp4.cpp:100:20
+    #4 0x7f7742500680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-- JCrypt: Silent fallback to a weak, userspace PRNG (which is very bad
-for cryptography purposes)
-- JCryptCipherSimple: Homegrown weak cipher (XOR-ECB)
-- JCryptCipher: Chosen ciphertext attacks (no authentication)
-- JCryptCipher: Data corruption / padding oracle attack
-- JCryptCipher: Static IV for CBC mode (stored with JCryptKey under
-the misnomer property, "public") -- this sort of defeats the purpose
-of using CBC mode
-- JCryptPasswordSimple: PHP Non-Strict Type Comparison (a.k.a. Magic
-Hash vulnerability)
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_interceptors.cc:453 in __asan_memcpy
+Shadow bytes around the buggy address:
+  0x0c4a7fff83d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c4a7fff83e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c4a7fff83f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c4a7fff8400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c4a7fff8410: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c4a7fff8420:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a7fff8430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a7fff8440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a7fff8450: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a7fff8460: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a7fff8470: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==8420==ABORTING
+Aborted
 
-Additionally, there's a (probably non-exploitable) issue that affects
-all JCrypt functions:
+Affected version:
+1.5.0-617
 
-If mbstring.func_overload is enabled (set to 2, 3, or 7 in php.ini),
-strlen() and substr() will act as of the input strings are Unicode
-strings rather than raw binary strings. None of these functions are
-written to handle this, which can lead to unpredictable results (i.e.
-with timingSafeCompare()).
+Fixed version:
+N/A
 
-I'd strongly encourage people to not use the current incarnation of
-JCrypt for anything sensitive, especially if it's exposed to active
-attackers. Instead, check out libsodium, Halite (a libsodium wrapper
-that I wrote), defuse/php-encryption, or Zend\Crypt instead.
+Commit fix:
+The maintainer said that one of the previous commit fixed this issue. It needs a bisect.
 
-* https://pecl.php.net/package/libsodium
-* https://github.com/paragonie/halite
-* https://github.com/defuse/php-encryption
-* https://github.com/zendframework/zend-crypt
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Additionally, anyone whose PCI/whatever compliance is in any way
-hinged upon the cryptography that Joomla provided should probably
-notify their pen-testers and get re-evaluated with this new
-information at their earliest convenience.
+CVE:
+CVE-2017-14645
 
-That's all from me.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00335-bento4-heapoverflow-Ap4BitStream_cpp
 
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>
+Timeline:
+2017-09-08: bug discovered and reported to upstream
+2017-09-14: blog post about the issue
+2017-09-21: CVE assigned
 
-P.S. If anyone feels like the sky is falling, please take a deep
-breath. Everything will be okay. If any companies need a security
-consultant to help them assess the impact (if any) of these
-developments on their bottom line, feel free to drop me a line.
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/14/bento4-heap-based-buffer-overflow-in-ap4_bitstreamreadbytes-ap4bitstream-cpp/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-587581.607121141--
+
