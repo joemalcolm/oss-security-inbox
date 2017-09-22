@@ -1,65 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/1
-Message-ID: <20170923054715.oco5the7pqdcefu2@eldamar.local>
-Date: Sat, 23 Sep 2017 07:47:15 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Hosein Askari <hosein.askari@....com>
-Cc: luciano@...ian.org, team@...urity.debian.org, oss-security@...ts.openwall.com
-Subject: Re: [CVE-2017-14266] tcprewrite Heap-Based Buffer Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/22/8
+Message-ID: <844865.962953435-sendEmail@localhost>
+Date: Fri, 22 Sep 2017 07:52:01 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: bento4: heap-based buffer overflow in AP4_HdlrAtom::AP4_HdlrAtom (Ap4HdlrAtom.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Description:
+bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
 
-On Thu, Sep 21, 2017 at 03:05:30PM -0400, Hosein Askari wrote:
-> I uploaded the file,please check out these links:
-> https://files.fm/u/dkrrjjj2
-> 
-> http://www.filedropper.com/tcp_1
-> 
-> https://expirebox.com/download/bcef1a6e3cb2877cd26ef60add1ddaee.html
+The complete ASan output of the issue:
 
-Thanks for providing the tcp.zip (it looks the mail did not make it to
-the list, the attachment was 6.4M so maybe it was rejected).
+# mp42aac $FILE out.aac
+==10603==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000000af at pc 0x000000622588 bp 0x7ffccfc80f10 sp 0x7ffccfc80f08                                                                         
+WRITE of size 1 at 0x6020000000af thread T0                                                                                                                                                                       
+    #0 0x622587 in AP4_HdlrAtom::AP4_HdlrAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4HdlrAtom.cpp:87:21                                             
+    #1 0x621f4e in AP4_HdlrAtom::Create(unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4HdlrAtom.cpp:51:16                                                                                
+    #2 0x5cae91 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:387:20             
+    #3 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14                                        
+    #4 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12                                       
+    #5 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5               
+    #6 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87                       
+    #7 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20             
+    #8 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14                                        
+    #9 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12                                       
+    #10 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5              
+    #11 0x58e6ed in AP4_TrakAtom::AP4_TrakAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.cpp:165:5                                                       
+    #12 0x5c8e3b in AP4_TrakAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.h:58:20                                                               
+    #13 0x5c8e3b in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:377               
+    #14 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14                                       
+    #15 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12                                      
+    #16 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5              
+    #17 0x5521b0 in AP4_MoovAtom::AP4_MoovAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.cpp:79:5                                                        
+    #18 0x5cad1d in AP4_MoovAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:56:20                                                               
+    #19 0x5cad1d in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:357               
+    #20 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14                                       
+    #21 0x5c75c0 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:150:12
+    #22 0x54ea2c in AP4_File::ParseStream(AP4_ByteStream&, AP4_AtomFactory&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:104:12
+    #23 0x54f0fa in AP4_File::AP4_File(AP4_ByteStream&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:78:5
+    #24 0x542552 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:242:32
+    #25 0x7f37dafa8680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #26 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
 
-I'm attaching for list archiving purposed the base64 encoded tcp.pcap
-gzip compressed file.
-
-Now looking at an ASAN build, on i386:
-
-sid-i386:/tmp/source-tcpreplay/tcpreplay-3.4.4# ./src/tcprewrite --portmap=21:2121 --infile=/tmp/tcp.pcap --outfile=/tmp/output.pcap
-=================================================================
-==31017==ERROR: AddressSanitizer: heap-buffer-overflow on address 0xb46107ff at pc 0xb726e32a bp 0xbf82fee8 sp 0xbf82fac0
-WRITE of size 65549 at 0xb46107ff thread T0
-    #0 0xb726e329  (/usr/lib/i386-linux-gnu/libasan.so.4+0x74329)
-    #1 0x804e3b4 in rewrite_packets src/tcprewrite.c:267
-    #2 0x804da06 in main src/tcprewrite.c:140
-    #3 0xb6ff2285 in __libc_start_main (/lib/i386-linux-gnu/libc.so.6+0x18285)
-    #4 0x804a060  (/tmp/source-tcpreplay/tcpreplay-3.4.4/src/tcprewrite+0x804a060)
-
-0xb46107ff is located 0 bytes to the right of 65535-byte region [0xb4600800,0xb46107ff)
+0x6020000000af is located 1 bytes to the left of 1-byte region [0x6020000000b0,0x6020000000b1)
 allocated by thread T0 here:
-    #0 0xb72d8cd4 in malloc (/usr/lib/i386-linux-gnu/libasan.so.4+0xdecd4)
-    #1 0x80734ea in _our_safe_malloc src/common/utils.c:57
-    #2 0x804e22c in rewrite_packets src/tcprewrite.c:248
-    #3 0x804da06 in main src/tcprewrite.c:140
-    #4 0xb6ff2285 in __libc_start_main (/lib/i386-linux-gnu/libc.so.6+0x18285)
+    #0 0x53dfb0 in operator new[](unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_new_delete.cc:84
+    #1 0x6223fa in AP4_HdlrAtom::AP4_HdlrAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4HdlrAtom.cpp:85:18
+    #2 0x621f4e in AP4_HdlrAtom::Create(unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4HdlrAtom.cpp:51:16
+    #3 0x5cae91 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:387:20
+    #4 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #5 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #6 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #7 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #8 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #9 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #10 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #11 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #12 0x58e6ed in AP4_TrakAtom::AP4_TrakAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.cpp:165:5
+    #13 0x5c8e3b in AP4_TrakAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.h:58:20
+    #14 0x5c8e3b in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:377
+    #15 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #16 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #17 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #18 0x5521b0 in AP4_MoovAtom::AP4_MoovAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.cpp:79:5
+    #19 0x5cad1d in AP4_MoovAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:56:20
+    #20 0x5cad1d in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:357
+    #21 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #22 0x5c75c0 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:150:12
+    #23 0x54ea2c in AP4_File::ParseStream(AP4_ByteStream&, AP4_AtomFactory&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:104:12
+    #24 0x54f0fa in AP4_File::AP4_File(AP4_ByteStream&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:78:5
+    #25 0x542552 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:242:32
+    #26 0x7f37dafa8680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow (/usr/lib/i386-linux-gnu/libasan.so.4+0x74329)
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4HdlrAtom.cpp:87:21 in AP4_HdlrAtom::AP4_HdlrAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&)
 Shadow bytes around the buggy address:
-  0x368c20a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x368c20b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x368c20c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x368c20d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x368c20e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x368c20f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00[07]
-  0x368c2100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x368c2110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x368c2120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x368c2130: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x368c2140: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff8000: fa fa 00 00 fa fa 00 00 fa fa 00 00 fa fa 00 00
+=>0x0c047fff8010: fa fa 04 fa fa[fa]01 fa fa fa fa fa fa fa fa fa
+  0x0c047fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
 Shadow byte legend (one shadow byte represents 8 application bytes):
   Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
+  Partially addressable: 01 02 03 04 05 06 07 
   Heap left redzone:       fa
   Freed heap region:       fd
   Stack left redzone:      f1
@@ -76,70 +105,40 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   ASan internal:           fe
   Left alloca redzone:     ca
   Right alloca redzone:    cb
-==31017==ABORTING
+==10603==ABORTING
 
-In src/tcprewrite.c:
+Affected version:
+1.5.0-617
 
-230 /** 
-231  * Main loop to rewrite packets
-232  */
-233 int
-234 rewrite_packets(tcpedit_t *tcpedit, pcap_t *pin, pcap_dumper_t *pout)
-235 {
-236     tcpr_dir_t cache_result = TCPR_DIR_C2S;     /* default to primary */
-237     struct pcap_pkthdr pkthdr, *pkthdr_ptr;     /* packet header */
-238     const u_char *pktconst = NULL;              /* packet from libpcap */
-239     u_char **pktdata = NULL;
-240     static u_char *pktdata_buff;
-241     static char *frag = NULL;
-242     COUNTER packetnum = 0;
-243     int rcode, frag_len, i;
-244 
-245     pkthdr_ptr = &pkthdr;
-246 
-247     if (pktdata_buff == NULL)
-248         pktdata_buff = (u_char *)safe_malloc(MAXPACKET);
-249
-250     pktdata = &pktdata_buff;
-251
-252     if (frag == NULL)
-253         frag = (char *)safe_malloc(MAXPACKET);
-254 
-255     /* MAIN LOOP 
-256      * Keep sending while we have packets or until
-257      * we've sent enough packets
-258      */
-259     while ((pktconst = pcap_next(pin, pkthdr_ptr)) != NULL) {
-260         packetnum++;
-261         dbgx(2, "packet " COUNTER_SPEC " caplen %d", packetnum, pkthdr.caplen);
-262 
-263         /* 
-264          * copy over the packet so we can pad it out if necessary and
-265          * because pcap_next() returns a const ptr
-266          */
-267         memcpy(*pktdata, pktconst, pkthdr.caplen);
-[...]
+Fixed version:
+N/A
 
-So in line 248 MAXPACKET with originally 
+Commit fix:
+The maintainer said that one of the previous commit fixed this issue. It needs a bisect.
 
-#define MAXPACKET 65535         /* was 16436 linux loopback, but maybe something is bigger then   
-                                   linux loopback */
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-and on line 267 there is a memcpy to a destination which is too small.
+CVE:
+CVE-2017-14644
 
-Earlier there was CVE-2016-6160 which was assigned for:
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00340-bento4-heapoverflow-AP4_HdlrAtom_AP4_HdlrAtom
 
-https://bugs.debian.org/829350
+Timeline:
+2017-09-08: bug discovered and reported to upstream
+2017-09-14: blog post about the issue
+2017-09-21: CVE assigned
 
-with patch enforce-maxpacket.patch, wich addresses this issue as well.
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
-I asked MITRE if CVE-2017-14266 should be rejected, since
-CVE-2016-6160 exists, or if the two should be kept, for different
-types of issues. 
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/14/bento4-heap-based-buffer-overflow-in-ap4_hdlratomap4_hdlratom-ap4hdlratom-cpp/
 
-Regards,
-Salvatore
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-View attachment "tcp.pcap.gz.base64" of type "text/plain" (63250 bytes)
 
-View attachment "enforce-maxpacket.patch" of type "text/x-diff" (1419 bytes)
