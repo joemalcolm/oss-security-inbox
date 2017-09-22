@@ -1,61 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/16/8
-Message-ID: <87y3qjcscp.fsf@hope.eyrie.org>
-Date: Wed, 16 Aug 2017 10:52:54 -0700
-From: Russ Allbery <eagle@...ie.org>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Insecure DNS dependency in many Kerberos deployments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/22/5
+Message-ID: <38472.5740618421-sendEmail@localhost>
+Date: Fri, 22 Sep 2017 07:49:50 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: bento4: NULL pointer dereference in AP4_AtomSampleTable::GetSample (Ap4AtomSampleTable.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Florian Weimer <fweimer@...hat.com> writes:
+Description:
+bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
 
-> As a rule of thumb, the impact is similar to running TLS with CA-based
-> certificate validation, but without host name checks (but perhaps
-> slightly less because the trust domains could be much smaller).
+The complete ASan output of the issue:
 
-I think this overstates the impact somewhat.  This is more worrisome with
-TLS because for most TLS applications there is a single global trust
-domain with certificates issued by dozens or hundreds of parties and no
-organizational scoping.  This is *not* the case for Kerberos.  To exploit
-this flaw in Kerberos, the attacker has to be able to control service
-principals (for the same target service with a different hostname) within
-the same Kerberos realm (or, in some circumstances, one reachable by
-cross-realm trust).  This is a much higher bar to meet, and in a lot of
-organizations this bar cannot be easily met by an attacker.
+# mp42aac $FILE out.aac
+ASAN:DEADLYSIGNAL
+=================================================================
+==6365==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000005cf94c bp 0x7fff5857d580 sp 0x7fff5857d4c0 T0)
+==6365==The signal is caused by a READ memory access.
+==6365==Hint: address points to the zero page.
+    #0 0x5cf94b in AP4_AtomSampleTable::GetSample(unsigned int, AP4_Sample&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomSampleTable.cpp
+    #1 0x58d158 in AP4_Track::GetSample(unsigned int, AP4_Sample&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Track.cpp:435:43
+    #2 0x58d158 in AP4_Track::ReadSample(unsigned int, AP4_Sample&, AP4_DataBuffer&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4Track.cpp:469
+    #3 0x5430ad in WriteSamples(AP4_Track*, AP4_SampleDescription*, AP4_ByteStream*) /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:192:12
+    #4 0x5430ad in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:274
+    #5 0x7f41deb72680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
 
-The attack is definitely possible, and the Kerberos community has been
-aware of this problem for a long time (there are a lot of difficult issues
-involved in closing it, but everyone has wanted to close it), but it's not
-as exploitable as the TLS equivalent (at least in the absence of
-organizational cert pinning).
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomSampleTable.cpp in AP4_AtomSampleTable::GetSample(unsigned int, AP4_Sample&)
+==6365==ABORTING
+Audio Track:
+  duration: 7848 ms
+  sample count: 169
 
-> The Kerberos client library enables this canonicalization by default:
+Affected version:
+1.5.0-617
 
->        dns_canonicalize_hostname
->               Indicate  whether  name lookups will
->               be used  to  canonicalize  hostnames
->               for  use in service principal names.
->               Setting  this  flag  to  false   can
->               improve    security    by   reducing
->               reliance  on  DNS,  but  means  that
->               short  hostnames will not be canoni‐
->               calized  to  fully-qualified   host‐
->               names.  The default value is true.
+Fixed version:
+N/A
 
->        rdns   If this flag is true,  reverse  name
->               lookup  will  be used in addition to
->               forward name lookup to  canonicaliz‐
->               ing  hostnames  for  use  in service
->               principal names.  If  dns_canonical‐
->               ize_hostname  is  set to false, this
->               flag has  no  effect.   The  default
->               value is true.
+Commit fix:
+https://github.com/axiomatic-systems/Bento4/commit/2f267f89f957088197f4b1fc254632d1645b415d
 
-For the record, those are settings for *a* Kerberos client library, not
-*the* Kerberos client library (specifically, the MIT Kerberos
-implementation).  Heimdal does not use those settings, and there are other
-Kerberos implementations as well.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+CVE:
+CVE-2017-14640
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00337-bento4-NULLptr-AP4_AtomSampleTable_GetSample
+
+Timeline:
+2017-09-08: bug discovered and reported to upstream
+2017-09-14: blog post about the issue
+2017-09-21: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/14/bento4-null-pointer-dereference-in-ap4_atomsampletablegetsample-ap4atomsampletable-cpp/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
