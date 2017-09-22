@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1235" "Monday" "13" "January" "2020" "14:08:01" "-0600" "Randall Hauch" "rhauch@apache.org" "<CALYgK0H9P-omi=V29--MQH5obuH8xGw4r0otPzsras-c+fmQaw@mail.gmail.com>" "45" "[oss-security] CVE-2019-12399: Apache Kafka Connect REST API may expose plaintext secrets in tasks endpoint" nil nil nil "1" "2020011320:08:01" "[oss-security] CVE-2019-12399: Apache Kafka Connect REST API may expose plaintext secrets in tasks endpoint" (number mark "U       rhauch@apach Jan 13   45/1235  " thread-indent "\"[oss-security] CVE-2019-12399: Apache Kafka Connect REST API may expose plaintext secrets in tasks endpoint\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-12399: Apache Kafka Connect REST API may expose plaintext secrets in tasks endpoint" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["18513" "Friday" "22" "September" "2017" "07:53:22" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<165661.281298043-sendEmail@localhost>" "172" "[oss-security] bento4: heap-based buffer overflow in AP4_DataBuffer::SetData (Ap4DataBuffer.cpp)" nil nil nil "9" "2017092207:53:22" "[oss-security] bento4: heap-based buffer overflow in AP4_DataBuffer::SetData (Ap4DataBuffer.cpp)" (number mark "U       ago@gentoo.o Sep 22  172/18513 " thread-indent "\"[oss-security] bento4: heap-based buffer overflow in AP4_DataBuffer::SetData (Ap4DataBuffer.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19908 invoked by uid 550); 14 Jan 2020 06:21:01 -0000
+Received: (qmail 22003 invoked by uid 550); 22 Sep 2017 07:53:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +12,184 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10066 invoked from network); 13 Jan 2020 20:08:24 -0000
-X-Gm-Message-State: APjAAAUGgE4fzPp4jFafxg5maR3liKBIptCInTUEKa4fVI/gWFaiy4/X
-	eAz8Nn/vS+KWiJdQK91fTBgLR/dCmWkW+b6HJNs=
-X-Google-Smtp-Source: APXvYqzuDwLNrZtOelFpkCAzE45qAfq2V41qZmR1K12guuFUKnvXBeYKHaDCXMBNaJae8PhWWTDGFvrTVcswJjAxkyg=
-X-Received: by 2002:a05:620a:1522:: with SMTP id n2mr13363960qkk.108.1578946092239;
- Mon, 13 Jan 2020 12:08:12 -0800 (PST)
+Received: (qmail 21848 invoked from network); 22 Sep 2017 07:53:38 -0000
+Message-ID: <165661.281298043-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Fri, 22 Sep 2017 07:53:22 +0000
 MIME-Version: 1.0
-From: Randall Hauch <rhauch@apache.org>
-Date: Mon, 13 Jan 2020 14:08:01 -0600
-X-Gmail-Original-Message-ID: <CALYgK0H9P-omi=V29--MQH5obuH8xGw4r0otPzsras-c+fmQaw@mail.gmail.com>
-Message-ID: <CALYgK0H9P-omi=V29--MQH5obuH8xGw4r0otPzsras-c+fmQaw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000f28e6d059c0b0800"
-Subject: [oss-security] CVE-2019-12399: Apache Kafka Connect REST API may expose plaintext
- secrets in tasks endpoint
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-359238.01835543"
+Subject: [oss-security] bento4: heap-based buffer overflow in AP4_DataBuffer::SetData (Ap4DataBuffer.cpp)
 
---000000000000f28e6d059c0b0800
-Content-Type: text/plain; charset="UTF-8"
-
-CVE-2019-12399: Apache Kafka Connect REST API exposes plaintext secrets in
-tasks endpoint
-
-Severity: Medium
-
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-
-Apache Kafka 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.2.0, 2.2.1, 2.3.0
+------MIME delimiter for sendEmail-359238.01835543
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
 Description:
+bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
 
-When Connect workers in Apache Kafka 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.2.0,
-2.2.1, or 2.3.0 are configured with one or more config providers, and a
-connector is created/updated on that Connect cluster to use an externalized
-secret variable in a substring of a connector configuration property value
-(the externalized secret variable is not the whole configuration property
-value), then any client can issue a request to the same Connect cluster to
-obtain the connector's task configurations and the response will contain
-the plaintext secret rather than the externalized secrets variable.
+The complete ASan output of the issue:
+
+# mp42aac $FILE out.aac
+==20986==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x606000000174 at pc 0x0000004ee515 bp 0x7ffd0b8395f0 sp 0x7ffd0b838da0                                                                         
+READ of size 65509 at 0x606000000174 thread T0                                                                                                                                                                    
+    #0 0x4ee514 in __asan_memcpy /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_interceptors.cc:453                                                              
+    #1 0x54de2b in AP4_DataBuffer::SetData(unsigned char const*, unsigned int) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4DataBuffer.cpp:175:5                                                                      
+    #2 0x5d4a83 in AP4_AvccAtom::AP4_AvccAtom(unsigned int, unsigned char const*) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AvccAtom.cpp:165:32                                                                    
+    #3 0x5d1b6b in AP4_AvccAtom::Create(unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AvccAtom.cpp:95:16                                                                                
+    #4 0x5cb2e2 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:477:20             
+    #5 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14                                        
+    #6 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12                                       
+    #7 0x575855 in AP4_SampleEntry::Read(AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:115:9                                                                        
+    #8 0x57d624 in AP4_VisualSampleEntry::AP4_VisualSampleEntry(unsigned int, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:742:5                     
+    #9 0x57d624 in AP4_AvcSampleEntry::AP4_AvcSampleEntry(unsigned int, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:994                             
+    #10 0x5cbf58 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:305:24            
+    #11 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14                                       
+    #12 0x586a2c in AP4_StsdAtom::AP4_StsdAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StsdAtom.cpp:100:13                         
+    #13 0x58566f in AP4_StsdAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StsdAtom.cpp:56:16                                                             
+    #14 0x5ca71c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:422:20            
+    #15 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14                                       
+    #16 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12                                      
+    #17 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #18 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #19 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #20 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #21 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #22 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #23 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #24 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #25 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #26 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #27 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #28 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #29 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #30 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #31 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #32 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #33 0x58e6ed in AP4_TrakAtom::AP4_TrakAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.cpp:165:5
+    #34 0x5c8e3b in AP4_TrakAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.h:58:20
+    #35 0x5c8e3b in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:377
+    #36 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #37 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #38 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #39 0x5521b0 in AP4_MoovAtom::AP4_MoovAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.cpp:79:5
+    #40 0x5cad1d in AP4_MoovAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:56:20
+    #41 0x5cad1d in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:357
+    #42 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #43 0x5c75c0 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:150:12
+    #44 0x54ea2c in AP4_File::ParseStream(AP4_ByteStream&, AP4_AtomFactory&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:104:12
+    #45 0x54f0fa in AP4_File::AP4_File(AP4_ByteStream&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:78:5
+    #46 0x542552 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:242:32
+    #47 0x7f1552e11680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #48 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
+
+0x606000000174 is located 0 bytes to the right of 52-byte region [0x606000000140,0x606000000174)
+allocated by thread T0 here:
+    #0 0x53dfb0 in operator new[](unsigned long) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_new_delete.cc:84
+    #1 0x54c887 in AP4_DataBuffer::AP4_DataBuffer(unsigned int) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4DataBuffer.cpp:55:16
+    #2 0x5d1690 in AP4_AvccAtom::Create(unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AvccAtom.cpp:69:20
+    #3 0x5cb2e2 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:477:20
+    #4 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #5 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #6 0x575855 in AP4_SampleEntry::Read(AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:115:9
+    #7 0x57d624 in AP4_VisualSampleEntry::AP4_VisualSampleEntry(unsigned int, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:742:5
+    #8 0x57d624 in AP4_AvcSampleEntry::AP4_AvcSampleEntry(unsigned int, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:994
+    #9 0x5cbf58 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:305:24
+    #10 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #11 0x586a2c in AP4_StsdAtom::AP4_StsdAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StsdAtom.cpp:100:13
+    #12 0x58566f in AP4_StsdAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StsdAtom.cpp:56:16
+    #13 0x5ca71c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:422:20
+    #14 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #15 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #16 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #17 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #18 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #19 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #20 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #21 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #22 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #23 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #24 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #25 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #26 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #27 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #28 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #29 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #30 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #31 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #32 0x58e6ed in AP4_TrakAtom::AP4_TrakAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.cpp:165:5
+    #33 0x5c8e3b in AP4_TrakAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.h:58:20
+    #34 0x5c8e3b in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:377
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_interceptors.cc:453 in __asan_memcpy
+Shadow bytes around the buggy address:
+  0x0c0c7fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0c7fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0c7fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c0c7fff8000: fa fa fa fa 00 00 00 00 00 00 02 fa fa fa fa fa
+  0x0c0c7fff8010: 00 00 00 00 00 00 00 fa fa fa fa fa 00 00 00 00
+=>0x0c0c7fff8020: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00[04]fa
+  0x0c0c7fff8030: fa fa fa fa 00 00 00 00 00 00 04 fa fa fa fa fa
+  0x0c0c7fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff8070: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==20986==ABORTING
+
+Affected version:
+1.5.0-617
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/axiomatic-systems/Bento4/commit/53499d8d4c69142137c7c7f0097a444783fdeb90
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14646
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00342-bento4-heapoverflow-AP4_DataBuffer_SetData
+
+Timeline:
+2017-09-08: bug discovered and reported to upstream
+2017-09-14: blog post about the issue
+2017-09-21: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/14/bento4-heap-based-buffer-overflow-in-ap4_databuffersetdata-ap4databuffer-cpp/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Mitigation:
+------MIME delimiter for sendEmail-359238.01835543--
 
-Apache Kafka Connect users should upgrade to one of the following versions
-where this vulnerability has been fixed:
-- 2.0.2 or higher
-- 2.1.2 or higher
-- 2.2.2 or higher
-- 2.3.1 or higher
-
-Acknowledgements:
-
-This issue was first reported by Oleksandr Diachenko.
-
-
-Regards,
-
-Randall
-
---000000000000f28e6d059c0b0800--
