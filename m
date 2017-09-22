@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5151" "Thursday" "23" "July" "2015" "14:45:42" "+0000" "mancha" "mancha1@zoho.com" "<20150723144542.GE7017@zoho.com>" "112" "Re: [oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass" nil nil nil "7" "2015072314:45:42" "[oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass" (number mark "        mancha1@zoho Jul 23  112/5151  " thread-indent "\"Re: [oss-security] Re: CVE Request for OpenSSH vulnerability - authentication limits bypass\"\n") "<20150723125816.13ED03321FC@smtpvbsrv1.mitre.org>" ("<20150723114101.GD7017@zoho.com>" "<20150723125816.13ED03321FC@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11173" "Friday" "22" "September" "2017" "07:55:13" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<683711.049237417-sendEmail@localhost>" "135" "[oss-security] bento4: stack-based buffer underflow in AP4_VisualSampleEntry::ReadFields (Ap4SampleEntry.cpp)" nil nil nil "9" "2017092207:55:13" "[oss-security] bento4: stack-based buffer underflow in AP4_VisualSampleEntry::ReadFields (Ap4SampleEntry.cpp)" (number mark "U       ago@gentoo.o Sep 22  135/11173 " thread-indent "\"[oss-security] bento4: stack-based buffer underflow in AP4_VisualSampleEntry::ReadFields (Ap4SampleEntry.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1600 invoked by uid 550); 23 Jul 2015 14:46:09 -0000
+Received: (qmail 3724 invoked by uid 550); 22 Sep 2017 07:55:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,141 +11,148 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1580 invoked from network); 23 Jul 2015 14:46:08 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
-  b=hODdOLXe6YqH88B8hV7bk4lY+tKU3zOVXX+PfeuP+XTEXUU8DKQF1UZypM5ijHLrwmGoeKYJ6Wa4
-    WnK+RviykeiGSlcwCy0cj9mTjcYVflOhE2yU01wa2tY6wHBArzub  
-Message-ID: <20150723144542.GE7017@zoho.com>
-References: <20150723114101.GD7017@zoho.com>
- <20150723125816.13ED03321FC@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Fnm8lRGFTVS/3GuM"
-Content-Disposition: inline
-In-Reply-To: <20150723125816.13ED03321FC@smtpvbsrv1.mitre.org>
-X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
-X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
-X-Zoho-Virus-Status: 1
-Cc: cve-assign@mitre.org, isowarez.isowarez.isowarez@googlemail.com,
-	djm@mindrot.org
-Date: Thu, 23 Jul 2015 14:45:42 +0000
-From: mancha <mancha1@zoho.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request for OpenSSH vulnerability -
- authentication limits bypass
-To: oss-security@lists.openwall.com
+Received: (qmail 3629 invoked from network); 22 Sep 2017 07:55:29 -0000
+Message-ID: <683711.049237417-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Fri, 22 Sep 2017 07:55:13 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-971102.072698162"
+Subject: [oss-security] bento4: stack-based buffer underflow in AP4_VisualSampleEntry::ReadFields (Ap4SampleEntry.cpp)
 
---Fnm8lRGFTVS/3GuM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+------MIME delimiter for sendEmail-971102.072698162
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 23, 2015 at 08:58:16AM -0400, cve-assign@mitre.org wrote:
-> Our message was written from the perspective that everyone already
-> understood what the patch does, and to start from there in defining
-> what CVE-2015-5600 means.
+Description:
+bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
 
-The patch is relatively un-intrusive in terms of LoC but understanding
-its impact requires knowledge of how OpenSSH implements
-keyboard-interactive authentication. That's probably too esoteric for
-one to readily assume "everyone already understands" it.=20=20
->=20
-> > if the devices in the supplied client list all differ, the behavior
-> > is unchanged pre and post patch:
->=20
-> Yes; however, because no server supports an arbitrarily large number
-> of different KbdInteractiveDevices, a client that wishes to launch an
-> effective attack with an arbitrarily large number must use
-> duplication, as in the original example with 10000 instances of the
-> pam device. Disallowing all duplication is one way to prevent this
-> specific "arbitrarily large number" scenario. As we suggested in the
-> iahad example, disallowing all duplication might break somebody's use
-> case. (This is just theoretical; we haven't heard any reports of a
-> problem.) Even if the patch is revised to allow a small amount of
-> duplication, the definition of CVE-2015-5600 will stay the same.
+The complete ASan output of the issue:
 
-You make a compelling defense for your description of CVE-2015-5600. And
-as you say, as worded it would cover the case of a future OpenSSH
-modified to accommodate your iahad hypothetical.
+# mp42aac $FILE out.aac
+==4435==ERROR: AddressSanitizer: stack-buffer-underflow on address 0x7fe62b800e86 at pc 0x00000057b5a3 bp 0x7ffea98c1b10 sp 0x7ffea98c1b08                                                                        
+WRITE of size 1 at 0x7fe62b800e86 thread T0                                                                                                                                                                       
+    #0 0x57b5a2 in AP4_VisualSampleEntry::ReadFields(AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:780:40                                                                             
+    #1 0x575726 in AP4_SampleEntry::Read(AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:108:5                                                                        
+    #2 0x57d624 in AP4_VisualSampleEntry::AP4_VisualSampleEntry(unsigned int, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:742:5                     
+    #3 0x57d624 in AP4_AvcSampleEntry::AP4_AvcSampleEntry(unsigned int, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:994                             
+    #4 0x5cbf58 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:305:24             
+    #5 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14                                        
+    #6 0x586a2c in AP4_StsdAtom::AP4_StsdAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StsdAtom.cpp:100:13
+    #7 0x58566f in AP4_StsdAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4StsdAtom.cpp:56:16
+    #8 0x5ca71c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:422:20
+    #9 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #10 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #11 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #12 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #13 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #14 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #15 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #16 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #17 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #18 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #19 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #20 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #21 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #22 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #23 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #24 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #25 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #26 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #27 0x58e6ed in AP4_TrakAtom::AP4_TrakAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.cpp:165:5
+    #28 0x5c8e3b in AP4_TrakAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.h:58:20
+    #29 0x5c8e3b in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:377
+    #30 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #31 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #32 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #33 0x5521b0 in AP4_MoovAtom::AP4_MoovAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.cpp:79:5
+    #34 0x5cad1d in AP4_MoovAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:56:20
+    #35 0x5cad1d in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:357
+    #36 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #37 0x5c75c0 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:150:12
+    #38 0x54ea2c in AP4_File::ParseStream(AP4_ByteStream&, AP4_AtomFactory&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:104:12
+    #39 0x54f0fa in AP4_File::AP4_File(AP4_ByteStream&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:78:5
+    #40 0x542552 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:242:32
+    #41 0x7fe62e887680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #42 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
 
-Nonetheless, "arbitrarily large" isn't possible (cf. SSHBUF_SIZE_MAX and
-such) yet the duplication problem remains (it isn't reasonable for a
-user to expect that MaxAuthTries=3D6 allows 1000 password attempts).
+Address 0x7fe62b800e86 is located in stack of thread T0 at offset 6 in frame
+    #0 0x57b2ef in AP4_VisualSampleEntry::ReadFields(AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:759
 
-A crisper and more accurate description of the current issue (sans
-hypotheticals) is the ability to trigger multiple queries to a given
-keyboard-interactive device within a single userauth request by having
-duplication in the device list.
+  This frame has 1 object(s):
+    [32, 65) 'compressor_name'
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
+      (longjmp and C++ exceptions *are* supported)
+SUMMARY: AddressSanitizer: stack-buffer-underflow /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4SampleEntry.cpp:780:40 in AP4_VisualSampleEntry::ReadFields(AP4_ByteStream&)
+Shadow bytes around the buggy address:
+  0x0ffd456f8180: f1 f1 f1 f1 00 f2 f2 f2 00 f3 f3 f3 00 00 00 00
+  0x0ffd456f8190: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
+  0x0ffd456f81a0: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
+  0x0ffd456f81b0: f1 f1 f1 f1 00 f2 f2 f2 00 f3 f3 f3 00 00 00 00
+  0x0ffd456f81c0: f1 f1 f1 f1 04 f2 00 f2 f2 f2 00 f3 f3 f3 f3 f3
+=>0x0ffd456f81d0:[f1]f1 f1 f1 00 00 00 00 01 f3 f3 f3 f3 f3 f3 f3
+  0x0ffd456f81e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffd456f81f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffd456f8200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffd456f8210: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ffd456f8220: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==4435==ABORTING
 
->=20
-> > The difference in behavior can be observed when the list contains
-> > repeats:
-> >=20
-> > -oKbdInteractiveDevices=3D"snap,snap,snap"
-> >=20
-> > Pre-patch the above would query the snap device three times per
-> > userauth request while post-patch only once.
->=20
-> Yes; "the client shouldn't be able to specify an arbitrarily large
-> number of KbdInteractiveDevices and be entitled to have the server
-> cooperate" means that the vulnerable behavior was the server's
-> decision to cooperate with the client and execute a piece of code 3
-> times (or, more importantly, 10000 times), when a more reasonable
-> behavior is to execute that piece of code only once.
->=20
-> > So, your hypothetical of:
-> >=20
-> > -oKbdInteractiveDevices=3D"krb5,krb6,krb7,krb8,krb9,krb10,krb11"
-> >=20
-> > would work the same before and after the fix. Each of the seven
-> > listed devices would get queried once per userauth request. Assuming
-> > a default maxauth of 6, that means a total of 42 device queries
-> > before the connection gets severed.
->=20
-> What we are saying is that we don't consider that specific behavior,
-> after the fix, to be a separate vulnerability that requires a separate
-> CVE ID. It is possible for someone to make an argument that the "42
-> device queries" behavior is inconsistent with the documentation and
-> that the connection must be severed after 6 device queries. Although
-> we currently don't agree with that argument, we consider the argument
-> somewhat reasonable. That's why we chose to explicitly mention the
-> case of a legitimate list of seven devices, and provide our
-> perspective on whether we would support a second CVE request based on
-> a claim of an incomplete fix.
+Affected version:
+1.5.0-617
 
-RFC 4256 leaves the interpretation of the submethod field of the
-userauth request up to the server implementation.=20
+Fixed version:
+N/A
 
-The right way to frame the question isn't whether there's a legitimate
-use of 7 devices and 6 auth tries resulting in 42 total queries but what
-MaxAuthTries is meant to restrict. If it isn't entirely clear from
-documentation (and maybe it isn't) that it's a bound on userauth
-requests then that is easy enough to fix in the manpage.
+Commit fix:
+https://github.com/axiomatic-systems/Bento4/commit/03d1222ab9c2ce779cdf01bdb96cdd69cbdcfeda
 
---mancha
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
---Fnm8lRGFTVS/3GuM
-Content-Type: application/pgp-signature
+CVE:
+CVE-2017-14639
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00344-bento4-stackunderflow-AP4_VisualSampleEntry_ReadFields
 
-iQIcBAEBCgAGBQJVsP4WAAoJEB4VYy8JqhaD2lkP/iMeiEEkDMAipyHG4Kn+Ib3g
-hZrjl3JJ9jDIZty+mXNTOjElahScsTCSu4TGVi7W6MrH3582tF8TyJc0j6oAd1bq
-jHBTIfP+y5YpgqpJXW1js/gzAEaBAh8oRq6mh5sukCwO2va3+ZyedBSx0WIhyiiG
-9uAcrASxr07wJsK8Vpf3Bi9dg4cI6OUu9sm7H4SQt71nKtOrF7tgT5r1ZJok8+2y
-+Zcns5oucG4ZB5oVimOKKCZV6y2rfGyamqJm8ARZEuQf9XYMr2EOEfqc+bQCNAEi
-jXaKJyR75rOSOcBCspy5NG+lFn4Z8WsDKrrLQ27LSxEjSC1n1Z3IVemPnELCvkFd
-ZsDbaCGCu6rBujTvoskVOt2vykP87ymAjsgNKc0NUIdRY2zAUhECtksKfvbYnbep
-bkHA3KPcmNKhwy+UCIXxNgr1+mCIJ95Kseh5NOksMUVxm/QHDACm1a2mOFmMlQ4p
-Ob5S/Sz40voEHKPpAzmJ2ddZaMpk6r3nZRAqc3x3qYs7bXgKDLjvCbiwsMjo0Z7d
-DTGIZYtV/JleoYhAd3yF19mbI7PYltZFbJa4qZX73YRVM2OHBE8VC0I9Cb3HohLs
-j0f2RewwJvCwzX54lNymLvQGDaVjoH9AlqsA0JAI+urkuFWxECjVZ5iq52BxnRuJ
-r+8i/apBYejq7mBHakT2
-=+Q4p
------END PGP SIGNATURE-----
+Timeline:
+2017-09-08: bug discovered and reported to upstream
+2017-09-14: blog post about the issue
+2017-09-21: CVE assigned
 
---Fnm8lRGFTVS/3GuM--
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/14/bento4-stack-based-buffer-underflow-in-ap4_visualsampleentryreadfields-ap4sampleentry-cpp/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-971102.072698162--
 
