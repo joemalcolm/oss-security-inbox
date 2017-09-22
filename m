@@ -1,38 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/31/6
-Message-ID: <20170531131615.58752cc0@pc1>
-Date: Wed, 31 May 2017 13:16:15 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: I found Crash in tcpdump and radare2.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/22/2
+Message-ID: <577272.5132733-sendEmail@localhost>
+Date: Fri, 22 Sep 2017 06:57:48 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: graphicsmagick: assertion failure in pixel_cache.c
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
+graphicsmagick is a collection of tools and libraries for many image formats.
 
-On Wed, 31 May 2017 06:39:12 -0400
-Qhdwns123 <qhdwns123@...tonmail.com> wrote:
+The complete output of the issue:
 
-> I found Crash in tcpdump and radare2.
-> 
-> It points to the heap overflow as the result of analysis by ASAN.
-> 
-> What steps should I take to report this issue?
+# gm convert $FILE null
+gm: magick/pixel_cache.c:1089: const PixelPacket AcquireImagePixels(const Image , const long, const long, const unsigned long, const unsigned long, ExceptionInfo ): Assertion `image != (Image ) NULL' 
+failed.
 
-Please report the issues first to their respective developers and
-provide the crashing files to them.
+Affected version:
+1.3.25, 1.3.26 and maybe past releases
 
-tcpdump has a contact address for security issues:
-http://www.tcpdump.org/#security
+Fixed version:
+N/A
 
-I think radare2 has no specific security reporting process, you can
-report it through their github tracker:
-https://github.com/radare/radare2/issues
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/358608a46f0a
 
-When the bugs are fixed you can post details to this list.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
--- 
-Hanno Böck
-https://hboeck.de/
+CVE:
+CVE-2017-14649
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00366-graphicsmagick_assertionfailure_pixel_cache_c
+
+Timeline:
+2017-08-12: bug discovered and reported to upstream privately
+2017-08-16: bug reported to the public upstream bugtracker
+2017-08-29: upstream released a fix
+2017-09-19: blog post about the issue
+2017-09-21: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/19/graphicsmagick-assertion-failure-in-pixel_cache-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
