@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1578" "Friday" "18" "November" "2016" "18:59:06" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<60807621cefd437d963b2700b2a0823b@imshyb02.MITRE.ORG>" "48" "[oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-005)" nil nil nil "11" "2016111823:59:06" "[oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-005)" (number mark "U       cve-assign@m Nov 18   48/1578  " thread-indent "\"[oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-005)\"\n") "<CAMYtjAo+ggV_RBCd7LsRBVwjv10+yqv838J7DSyGDfnvZpR-xw@mail.gmail.com>" ("<CAMYtjAo+ggV_RBCd7LsRBVwjv10+yqv838J7DSyGDfnvZpR-xw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10937" "Friday" "22" "September" "2017" "07:51:25" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<230842.578315304-sendEmail@localhost>" "113" "[oss-security] bento4: NULL pointer dereference in AP4_StdcFileByteStream::ReadPartial (Ap4StdCFileByteStream.cpp)" nil nil nil "9" "2017092207:51:25" "[oss-security] bento4: NULL pointer dereference in AP4_StdcFileByteStream::ReadPartial (Ap4StdCFileByteStream.cpp)" (number mark "U       ago@gentoo.o Sep 22  113/10937 " thread-indent "\"[oss-security] bento4: NULL pointer dereference in AP4_StdcFileByteStream::ReadPartial (Ap4StdCFileByteStream.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1995 invoked by uid 550); 18 Nov 2016 23:59:31 -0000
+Received: (qmail 7300 invoked by uid 550); 22 Sep 2017 07:51:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,125 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1977 invoked from network); 18 Nov 2016 23:59:31 -0000
-From: <cve-assign@mitre.org>
-To: <pere@orga.cat>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CAMYtjAo+ggV_RBCd7LsRBVwjv10+yqv838J7DSyGDfnvZpR-xw@mail.gmail.com>
-Message-ID: <60807621cefd437d963b2700b2a0823b@imshyb02.MITRE.ORG>
-Date: Fri, 18 Nov 2016 18:59:06 -0500
+Received: (qmail 7181 invoked from network); 22 Sep 2017 07:51:42 -0000
+Message-ID: <230842.578315304-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Fri, 22 Sep 2017 07:51:25 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-005)
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-73992.577222274"
+Subject: [oss-security] bento4: NULL pointer dereference in AP4_StdcFileByteStream::ReadPartial (Ap4StdCFileByteStream.cpp)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------MIME delimiter for sendEmail-73992.577222274
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-> https://www.drupal.org/SA-CORE-2016-005
+Description:
+bento4 is a fast, modern, open source C++ toolkit for all your MP4 and MPEG DASH media format needs.
 
-> Inconsistent name for term access query (Drupal 7 and Drupal 8)
->> information on taxonomy terms might have been disclosed to unprivileged users.
+The complete ASan output of the issue:
 
-Use CVE-2016-9449.
+# mp42aac $FILE out.aac
+ASAN:DEADLYSIGNAL
+=================================================================
+==18215==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f23fa12110e bp 0x000000000017 sp 0x7fff671b9178 T0)
+==18215==The signal is caused by a WRITE memory access.
+==18215==Hint: address points to the zero page.
+    #0 0x7f23fa12110d  /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/string/../sysdeps/x86_64/memcpy.S:71
+    #1 0x7f23fa10febd in __GI__IO_file_xsgetn /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/libio/fileops.c:1392
+    #2 0x7f23fa10520f in fread /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/libio/iofread.c:38
+    #3 0x5b6557 in AP4_StdcFileByteStream::ReadPartial(void*, unsigned int, unsigned int&) /tmp/Bento4-1.5.0-617/Source/C++/System/StdC/Ap4StdCFileByteStream.cpp:237:14
+    #4 0x544473 in AP4_ByteStream::Read(void*, unsigned int) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ByteStream.cpp:55:29
+    #5 0x622427 in AP4_HdlrAtom::AP4_HdlrAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4HdlrAtom.cpp:86:12
+    #6 0x621f4e in AP4_HdlrAtom::Create(unsigned int, AP4_ByteStream&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4HdlrAtom.cpp:51:16
+    #7 0x5cae91 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:387:20
+    #8 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #9 0x617c17 in AP4_DrefAtom::AP4_DrefAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4DrefAtom.cpp:83:16
+    #10 0x617329 in AP4_DrefAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4DrefAtom.cpp:49:16
+    #11 0x5c90ae in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:529:20
+    #12 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #13 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #14 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #15 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #16 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #17 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #18 0x617c17 in AP4_DrefAtom::AP4_DrefAtom(unsigned int, unsigned char, unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4DrefAtom.cpp:83:16
+    #19 0x617329 in AP4_DrefAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4DrefAtom.cpp:49:16
+    #20 0x5c90ae in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:529:20
+    #21 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #22 0x60c29f in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #23 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #24 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #25 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #26 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #27 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #28 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #29 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #30 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #31 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #32 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #33 0x60b1d2 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #34 0x60b1d2 in AP4_ContainerAtom::Create(unsigned int, unsigned long long, bool, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:87
+    #35 0x5ca44c in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:751:20
+    #36 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #37 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #38 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #39 0x58e6ed in AP4_TrakAtom::AP4_TrakAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.cpp:165:5
+    #40 0x5c8e3b in AP4_TrakAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4TrakAtom.h:58:20
+    #41 0x5c8e3b in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:377
+    #42 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #43 0x60c561 in AP4_ContainerAtom::ReadChildren(AP4_AtomFactory&, AP4_ByteStream&, unsigned long long) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:193:12
+    #44 0x60c099 in AP4_ContainerAtom::AP4_ContainerAtom(unsigned int, unsigned long long, bool, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4ContainerAtom.cpp:138:5
+    #45 0x5521b0 in AP4_MoovAtom::AP4_MoovAtom(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.cpp:79:5
+    #46 0x5cad1d in AP4_MoovAtom::Create(unsigned int, AP4_ByteStream&, AP4_AtomFactory&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4MoovAtom.h:56:20
+    #47 0x5cad1d in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned int, unsigned int, unsigned long long, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:357
+    #48 0x5c7fbd in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, unsigned long long&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:220:14
+    #49 0x5c75c0 in AP4_AtomFactory::CreateAtomFromStream(AP4_ByteStream&, AP4_Atom*&) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4AtomFactory.cpp:150:12
+    #50 0x54ea2c in AP4_File::ParseStream(AP4_ByteStream&, AP4_AtomFactory&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:104:12
+    #51 0x54f0fa in AP4_File::AP4_File(AP4_ByteStream&, bool) /tmp/Bento4-1.5.0-617/Source/C++/Core/Ap4File.cpp:78:5
+    #52 0x542552 in main /tmp/Bento4-1.5.0-617/Source/C++/Apps/Mp42Aac/Mp42Aac.cpp:242:32
+    #53 0x7f23fa0bf680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #54 0x44f3f8 in _start (/usr/bin/mp42aac+0x44f3f8)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/string/../sysdeps/x86_64/memcpy.S:71 
+==18215==ABORTING
+
+Affected version:
+1.5.0-617
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/axiomatic-systems/Bento4/commit/22192de5367fa0cee985917f092be4060b7c00b0
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14642
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00339-bento4-NULLptr-AP4_StdcFileByteStream_ReadPartial
+
+Timeline:
+2017-09-08: bug discovered and reported to upstream
+2017-09-14: blog post about the issue
+2017-09-21: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/14/bento4-null-pointer-dereference-in-ap4_stdcfilebytestreamreadpartial-ap4stdcfilebytestream-cpp/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-> Incorrect cache context on password reset page (Drupal 8)
->> can lead to cache poisoning and unwanted content on the page.
+------MIME delimiter for sendEmail-73992.577222274--
 
-Use CVE-2016-9450.
-
-
-> Confirmation forms allow external URLs to be injected (Drupal 7)
-
-Use CVE-2016-9451.
-
-
-> Denial of service via transliterate mechanism (Drupal 8)
-
-Use CVE-2016-9452.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYL5R2AAoJEHb/MwWLVhi2eHMP/187U/8tTObfz9ZRePwupSLe
-lHzn32XSQia2CFMhow4H/E+w9LSjWZ9ngcRIsqgU2mwxmFCd0EPebrglnh1fpEe0
-KfpO8DeA4BFo4M0L8IAcPspqkDlCm+l8RgOWJlZLCRXwN6qWaIapJMiWx4R9ZmQf
-NOhsCnsJAGHzJGWSpttu9BJexQYrqgO4WOLmWeugyeh+iBwPRzM/Z9K1AEquwU5f
-+xsaoMn8r6nptBNu26VpirhEbtjwv0MAnChj9z4dA5JPq5LI+iRXS6ISIb2rgIH1
-IwpMefql0wZbRaCBldgRb6NPrWvyLQO8tS3de7INIhdyAuS/ekSXxM/udguUyXAN
-bPe5XaMVQdUJZl+lk+4Z0U8L04F8jwVHgo6aMnbXZ20WYgljcN247rShTtnM/2LV
-HgnGdbn69XtcoscfBgKcdJJi9BhgHhLWbG/6on0adrQyE5pgsizr6GIJ8QhMY4r1
-AbEyfFoRhNmCNLZN6goK2UBgPygId0Xy42XnACJBNPmhGMfb4VA40s/mfMiXQauN
-HbxSMrQetr0oXEkHc5KeHtzbL+x/PNhgk9D6+sZo4chI6DJ89/kpu04SMByVzASL
-g1BIaCCbYkGnxmW/XuC1TVMzHjzT6pFiHlxFH76nb0XzLraB5hw9bGK27oVtU3TE
-BhEpOnqCHmiD6Bg30S/5
-=TWzZ
------END PGP SIGNATURE-----
