@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1998" "Monday" "14" "March" "2016" "00:16:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160314041632.96CC352E004@smtpvbsrv1.mitre.org>" "49" "[oss-security] Re: CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption" nil nil nil "3" "2016031404:16:32" "[oss-security] Re: CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption" (number mark "U       cve-assign@m Mar 14   49/1998  " thread-indent "\"[oss-security] Re: CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption\"\n") "<20160310092549.GB4470@suse.de>" ("<20160310092549.GB4470@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["880" "Saturday" "23" "September" "2017" "14:57:27" "+0100" "Simon McVittie" "smcv@debian.org" "<20170923135727.2uys3wgimmyczgy2@perpetual.pseudorandom.co.uk>" "20" "Re: [oss-security] Why send bugs embargoed to distros?" "^Date:" nil nil "9" "2017092313:57:27" "[oss-security] Why send bugs embargoed to distros?" (number mark "        smcv@debian. Sep 23   20/880   " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<20170923134418.6e460656@pc1>" ("<20170923134418.6e460656@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22042 invoked by uid 550); 14 Mar 2016 04:16:46 -0000
+Received: (qmail 23564 invoked by uid 550); 23 Sep 2017 13:57:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 22472 invoked from network); 23 Sep 2017 13:57:56 -0000
+Message-ID: <20170923135727.2uys3wgimmyczgy2@perpetual.pseudorandom.co.uk>
+References: <20170923134418.6e460656@pc1>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170923134418.6e460656@pc1>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Date: Sat, 23 Sep 2017 14:57:27 +0100
+From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22024 invoked from network); 14 Mar 2016 04:16:44 -0000
-From: cve-assign@mitre.org
-To: meissner@suse.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160310092549.GB4470@suse.de>
-Message-Id: <20160314041632.96CC352E004@smtpvbsrv1.mitre.org>
-Date: Mon, 14 Mar 2016 00:16:32 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption
+Subject: Re: [oss-security] Why send bugs embargoed to distros?
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sat, 23 Sep 2017 at 13:44:18 +0200, Hanno Böck wrote:
+> Debian+Ubuntu took more than a day after disclosure to fix. According
+> to the Debian bug tracker the bug got only opened after the public
+> disclosure[2].
 
-> https://code.google.com/p/google-security-research/issues/detail?id=758
-> 
-> A memory corruption vulnerability exists in the IPT_SO_SET_REPLACE
-> ioctl in the netfilter code for iptables support. This ioctl is can be
-> triggered by an unprivileged user on PF_INET sockets when unprivileged
-> user namespaces are available (CONFIG_USER_NS=y). Android does not
-> enable this option, but desktop/server distributions and Chrome OS
-> will commonly enable this to allow for containers support or
-> sandboxing.
-> [ Correction: IPT_SO_SET_REPLACE is reached via setsockopt, not ioctl ]
+The Debian bug tracker (bugs.debian.org) is always public and has no
+mechanism for embargoing individual bugs, so it is never used before
+public disclosure.
 
-> one for the issue above,
-> which has been proposed to be addressed by
-> http://marc.info/?l=netfilter-devel&m=145757134822741&w=2
+It's entirely possible that your conclusion is correct in this case
+(I don't have any more information than you do on whether the Debian
+security team or package maintainer made use of the embargo period
+for this vulnerability), but the late opening of a bug is not evidence
+that no work was done before public disclosure.
 
-Use CVE-2016-3134.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777545 is an example
+of a vulnerability for which the package maintainer (me) was definitely
+aware before the bug was filed.
 
-
-> one for the unsigned integer overflow on 32bit kernels
-> mentioned as an aside at the end of the original report. Proposed
-> fix is http://marc.info/?l=netfilter-devel&m=145757136822750&w=2
-
-Use CVE-2016-3135.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW5jqTAAoJEL54rhJi8gl5l38P/jfH0iB3klwlzPEfSJLcn6eB
-v/BrY5uicvrZG05V2tcN003AWTvolbkZsBOlAwRO6jGl/mj20DQfuRsjT6ZfXZ0J
-YEYnObv3f0rkH7lewbPg6wcA2Gp2xX6B5ts+IsHOzMcJ+/rD1GtEn1XJoEAtYxSQ
-XaSvbgup7Jh6wr5hQnt8z3kqtzjHD57zuwBp3QweJbX4W2wK/Xb2WZNashQSh/As
-xYWphcFmhdUJZH0l7fl03ru77On+HmDzWNLKbW+TTQ/M7n0MiPSP+X4k3wjM5jEd
-WOxoa1oasQjGpD9RLphVy1/rF03vwyW3i/Wm3d9vmDDB7hrKxyUGO2wL8ngWQSTx
-v2VY1/IEwUjigokXvNDPTCqOHz+opSOanZiD1XgBUEyrZdcNTEG2zR9VrxRdlT2C
-JImh5ncEaYHxeD+i2q0EajfcJt0YHvS3I2mvhlYk7iKJa/ZTRso4JXPt6HmDMrn8
-svXwT3fWKePRL/lIIxdEN4vIOi1L80Np3S4eDHbtHuWUuS2wj6mHIJ92jvcCq8IU
-moSoMHskkmAwI2YjUMzD6BD2O2JDATW/E3xQjpWfU+HrhIQQpEKvxBjNw5Pvl6ei
-3cHUgehRgfBfFLE9qofuFS5xACMi1XueIs2NQBnf1nn8koEF5PKFusRUxqZjySq1
-BmFYYhLN+jgPq2t2nf6D
-=iUM4
------END PGP SIGNATURE-----
+    S
