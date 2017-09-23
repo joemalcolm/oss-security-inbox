@@ -1,47 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/8
-Message-ID: <03ffaee7-2345-db4b-b16c-b859ed5637cd@canonical.com>
-Date: Tue, 27 Jun 2017 18:58:29 +0100
-From: Chris Coulson <chris.coulson@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/3
+Message-ID: <5af4f41e-2cd6-c40e-16ef-736961903579@leventepolyak.net>
+Date: Sat, 23 Sep 2017 15:56:02 +0200
+From: Levente Polyak <levente@...entepolyak.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-9445: Out-of-bounds write in systemd-resolved with crafted TCP payload
+Subject: Re: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 09/23/2017 01:44 PM, Hanno Böck wrote:
+> My understanding is that the purpose of the distros list is that
+> updates can be prepared so after a disclosure the time between "vuln is
+> known" and "patch is available" is short.
+> However from all I can see this largely didn't happen.
+> 
 
-I recently discovered an out-of-bounds write in systemd-resolved in
-Ubuntu, which is possible to trigger with a specially crafted TCP payload.
+[...]
 
-Details from the Ubuntu bug follow:
-https://launchpad.net/bugs/1695546
+> The only distro I'm aware of that prepared packages and pushed them
+> right after disclosure is Gentoo.
+> 
 
-----
-Certain sizes passed to dns_packet_new can cause it to allocate a buffer
-that's too small. A page-aligned number - sizeof(DnsPacket) +
-sizeof(iphdr) + sizeof(udphdr) will do this - so, on x86 this will be a
-page-aligned number - 80. Eg, calling dns_packet_new with a size of 4016
-on x86 will result in an allocation of 4096 bytes, but 108 bytes of this
-are for the DnsPacket struct.
+For Arch Linux I tested the patch beforehand and prepared the changed
+buildscripts locally. The final build/release/publication process was
+invoked just minutes after the public disclosure and the final artifact
+was signed and hit the repository just 20 minutes after the disclosure.
+The advisories were sent ~4 hours later once gone through a
+peer-reviewing process (yes this could have been done even faster).
 
-A malicious DNS server can exploit this by responding with a specially
-crafted TCP payload to trick systemd-resolved in to allocating a buffer
-that's too small, and subsequently write arbitrary data beyond the end
-of it.
+But that's not actually the primary goal of your mail, so lets focus on
+answering the more important questions below from my personal point of view.
 
-I believe this was introduced by
-https://github.com/systemd/systemd/commit/a0166609f782da91710dea9183d1bf138538db37
-(v223) and affects all subsequent versions up to and including v233.
-----
+> All of this makes me wonder if the distros list serves its purpose.
+> 
+> I'd be curious to hear:
+> 
+> a) if any people felt that pre-disclosure of optionsbleed was helpful
+> to them and in which way (after all - even if it only helps minor
+> distros and major distros ignore it it may still be a good thing).
+> 
+> b) if people think that they'd usually prepare a fixed package, however
+> they didn't consider optionsbleed important enough. (Naturally I
+> probably have a bias seeing my findings as more important as other
+> people, but I could live with that.)
+> 
 
-A patch to resolve this has been provided by Zbigniew
-Jędrzejewski-Szmek, along with an additional patch to implement a test.
-Both of these are attached.
+I think everyone should have come to the conclusion that this is
+potentially pretty bad for a shared hosting environment or anywhere
+where non-privileged users are able to fulfill the needed pre-requirements.
 
-Many thanks,
-Chris
+Anyway, my personal believe is that the list is important, useful and in
+fact definitively helps preparing coordinated releases and doing all
+needed work before a final fixed package can be deployed for security
+relevant fixes.
+Most of the time the provided information (at least for me :P) helps to
+analyze and understand the underlying problem and its impact beforehand.
+If patches are available (like for optionbleed) those can be tested and
+possibly slightly adjusted or discussed when not fitting a specific
+version/branch.
+All this is part of the whole process before a problem is
+analyzed/understood, prioritized, build-requirements adjusted, artifacts
+prepared and finally released so being able to do the first steps in a
+coordinated way definitively helps.
 
-View attachment "0001-test-resolved-packet-add-a-simple-test-for-our-alloc.patch" of type "text/x-patch" (3748 bytes)
+However, I indeed see your point and understand the frustration and the
+reason for your mail demonstrated via the optionbleed case. I neither
+say nor believe that every entity did perfectly to provide the users
+with fixed packages as that's obviously not the case.
+What I try to point out is that the list is IMO far from being useless
+and indeed serves its purpose. I think blaming or questioning the list
+itself is the wrong conclusion. Instead every entity on its own should
+rethink their process, prioritization and possibly lack of resources (I
+include myself to do this). This is not meant to anyone as blaming but
+we all share the goal to protect the users as good as possible and I
+believe that the distros list aids in doing so.
 
-View attachment "0002-resolved-simplify-alloc-size-calculation.patch" of type "text/x-patch" (1828 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+cheers,
+Levente
