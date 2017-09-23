@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["990" "Wednesday" "19" "October" "2016" "01:36:31" "+0000" "=?gb2312?B?yq/A2g==?=" "shilei-c@360.cn" "<88E4FB7D4EC3E04EAA5DAFEB85C81D4232B14140@EX02.corp.qihoo.net>" "19" "[oss-security] CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH" nil nil nil "10" "2016101901:36:31" "[oss-security] CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH" (number mark "U       shilei-c@360 Oct 19   19/990   " thread-indent "\"[oss-security] CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["538" "Saturday" "23" "September" "2017" "09:20:50" "-0700" "Kurt H Maier" "khm@sciops.net" "<20170923162050.GA7215@wopr>" "14" "Re: [oss-security] Why send bugs embargoed to distros?" "^Date:" nil nil "9" "2017092316:20:50" "[oss-security] Why send bugs embargoed to distros?" (number mark "        khm@sciops.n Sep 23   14/538   " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<20170923134418.6e460656@pc1>" ("<20170923134418.6e460656@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9576 invoked by uid 550); 19 Oct 2016 01:52:22 -0000
+Received: (qmail 24114 invoked by uid 550); 23 Sep 2017 16:21:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,32 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30394 invoked from network); 19 Oct 2016 01:36:44 -0000
-From: =?gb2312?B?yq/A2g==?= <shilei-c@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
-Thread-Topic: CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH
-Thread-Index: AdIpp6/Jvr6o4BL5Q/OBE2BBMYdqIQ==
-Date: Wed, 19 Oct 2016 01:36:31 +0000
-Message-ID: <88E4FB7D4EC3E04EAA5DAFEB85C81D4232B14140@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.213.37]
-Content-Type: multipart/alternative;
-	boundary="_000_88E4FB7D4EC3E04EAA5DAFEB85C81D4232B14140EX02corpqihoone_"
+Received: (qmail 24096 invoked from network); 23 Sep 2017 16:21:03 -0000
+Message-ID: <20170923162050.GA7215@wopr>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20170923134418.6e460656@pc1>
 MIME-Version: 1.0
-Subject: [oss-security] CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170923134418.6e460656@pc1>
+Date: Sat, 23 Sep 2017 09:20:50 -0700
+From: Kurt H Maier <khm@sciops.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Why send bugs embargoed to distros?
+To: oss-security@lists.openwall.com
 
---_000_88E4FB7D4EC3E04EAA5DAFEB85C81D4232B14140EX02corpqihoone_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+On Sat, Sep 23, 2017 at 01:44:18PM +0200, Hanno Böck wrote:
+> If I can trust Red Hat's CVE tracker [3] there still are no fixed
+> packages available. Also I haven't found any info about updated
+> opensuse packages.
 
-SGksDQoNClRoZSBPcGVuU1NIIGhhcyBhIG1lbW9yeSBleGhhdXN0aW9uIGJ1
-ZyBpbiBrZXkgZXhjaGFuZ2UgcHJvY2Vzcy4NCkFuIHVuYXV0aGVudGljYXRl
-ZCBwZWVyIGNvdWxkIHJlcGVhdCB0aGUgS0VYSU5JVCBhbmQgY2F1c2UgYWxs
-b2NhdGlvbiBvZiB1cCB0byAzODRNQihub3QgMTI4TUIgdGhhdCB0aGUgb2Zm
-aWNpYWwgc2FpZCkuDQpJbiB0aGUgZGVmYXVsdCBjYXNlLCBhbiBhdHRhY2tl
-ciBjYW4gYnVpbGQgMTAwIHN1Y2ggY29ubmVjdGlvbnMsIHdoaWNoIHdpbGwg
-Y29uc3VtZSAzODQwMCBNQiBvZiBtZW1vcnkgb24gdGhlIHNlcnZlci4NCg0K
-VGhlIHBhdGNoIGlzIGhlcmU6DQpodHRwOi8vY3Zzd2ViLm9wZW5ic2Qub3Jn
-L2NnaS1iaW4vY3Zzd2ViL3NyYy91c3IuYmluL3NzaC9rZXguYz9yZXY9MS4x
-MjcmY29udGVudC10eXBlPXRleHQveC1jdnN3ZWItbWFya3VwDQoNCg0KLS0N
-ClJlZ2FyZHMsDQoNClNoaSBMZWkgLyBHZWFyIFRlYW0sIFFpaG9vIDM2MCBJ
-bmMuDQpHUEcgS2V5IElEIDM3MDQ4OTM2IC8gNUM0QyA4NUM2IDA2OEMgQTVB
-MCAyM0ZBICAwMjk0IEQ5Q0UgOUMyNSAzNzA0IDg5MzYNCg0K
+This is standard operating procedure for Red Hat, at least.  Generally
+days or even weeks pass before patches are released.   If you're an
+"Extended Update Support" customer you can expect months to go by.  If
+you're super lucky you'll get a systemtap script to play with, but that
+generally requires a kernel RCE.
 
---_000_88E4FB7D4EC3E04EAA5DAFEB85C81D4232B14140EX02corpqihoone_--
+
+khm
+
