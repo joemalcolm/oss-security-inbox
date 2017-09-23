@@ -1,35 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/5
-Message-ID: <CADSYzsvmN6=Zc_hn-bk9zZRUUgz-TVDvSR8scEAcr6Gxe5PsDQ@mail.gmail.com>
-Date: Fri, 13 Jan 2017 07:35:25 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/2
+Message-ID: <20170923134418.6e460656@pc1>
+Date: Sat, 23 Sep 2017 13:44:18 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]
+Subject: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
-Updated CVE-2016-1247 advisory
+Hi,
 
-Nginx packages on Gentoo distros were also found vulnerable to Root
-Privilege Escalation (CVE-2016-1247) exploit I discovered last year.
-
-Updated advisory URL:
-https://legalhackers.com/advisories/Nginx-Exploit-Deb-Root-PrivEsc-CVE-2016-1247.html
-
-Gentoo notice:
-https://security.gentoo.org/glsa/201701-22
+A few days have passed since the optionsbleed disclosure. Some
+interesting things have surfaced, e.g. the fact that it was apparently
+discovered already in 2014, but nobody noticed it was a security bug.
 
 
-Copy of my updated advisory attached below.
+But I'd like to discuss something else:
+I had informed the distros mailing list one week earlier about the
+upcoming disclosure with a bug description and links to the already
+available patch.
+My understanding is that the purpose of the distros list is that
+updates can be prepared so after a disclosure the time between "vuln is
+known" and "patch is available" is short.
+However from all I can see this largely didn't happen.
 
-Follow:
-https://twitter.com/dawid_golunski
-for more vulns.
+Debian+Ubuntu took more than a day after disclosure to fix. According
+to the Debian bug tracker the bug got only opened after the public
+disclosure[2]. I see no sign that any work on a fix began before the
+disclosure.
+
+If I can trust Red Hat's CVE tracker [3] there still are no fixed
+packages available. Also I haven't found any info about updated
+opensuse packages.
+
+The only distro I'm aware of that prepared packages and pushed them
+right after disclosure is Gentoo.
+
+All of this makes me wonder if the distros list serves its purpose.
+
+I'd be curious to hear:
+
+a) if any people felt that pre-disclosure of optionsbleed was helpful
+to them and in which way (after all - even if it only helps minor
+distros and major distros ignore it it may still be a good thing).
+
+b) if people think that they'd usually prepare a fixed package, however
+they didn't consider optionsbleed important enough. (Naturally I
+probably have a bias seeing my findings as more important as other
+people, but I could live with that.)
+
+c) other things?
 
 
 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
+[1] https://arxiv.org/pdf/1405.2330.pdf
+https://blog.fuzzing-project.org/61-How-Optionsbleed-wasnt-found-in-2014.html
+[2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=876109
+[3] https://access.redhat.com/security/cve/cve-2017-9798
 
-View attachment "gentoo.txt" of type "text/plain" (17529 bytes)
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+
+
+
