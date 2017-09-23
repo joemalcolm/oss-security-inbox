@@ -1,66 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/04/2
-Message-ID: <20171104224428.g5w7ptjctzgzgfxy@jwilk.net>
-Date: Sat, 4 Nov 2017 23:44:28 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/6
+Message-ID: <e36752e0-c1d1-220f-76ae-5abbd047cd65@canonical.com>
+Date: Sat, 23 Sep 2017 11:14:28 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: nvi crash recovery
+Subject: Re: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
-* Jakub Wilk <jwilk@...lk.net>, 2017-11-03, 21:41:
->>nvi saves recovery files to /var/tmp/vi.recover and creates them 
->>with 600 permissions.
->>So all the problems discussed don't really apply here.
->>However the dir itself gets created by the first user using nvi.
->
->Sounds like a recipe for disaster.
+Hi,
 
-I took a closer look at what nvi does. As I expected, it's hilariously 
-bad.
+On 2017-09-23 07:44 AM, Hanno Böck wrote:
+> Hi,
+> 
+> A few days have passed since the optionsbleed disclosure. Some
+> interesting things have surfaced, e.g. the fact that it was apparently
+> discovered already in 2014, but nobody noticed it was a security bug.
+> 
+> 
+> But I'd like to discuss something else:
+> I had informed the distros mailing list one week earlier about the
+> upcoming disclosure with a bug description and links to the already
+> available patch.
+> My understanding is that the purpose of the distros list is that
+> updates can be prepared so after a disclosure the time between "vuln is
+> known" and "patch is available" is short.
+> However from all I can see this largely didn't happen.
+> 
+> Debian+Ubuntu took more than a day after disclosure to fix. According
+> to the Debian bug tracker the bug got only opened after the public
+> disclosure[2]. I see no sign that any work on a fix began before the
+> disclosure.
 
-1) The documentation says: "If the recovery directory does not exist, 
-ex/vi will attempt to create it. This can result in the recovery 
-directory being owned by a normal user, which means that that user will 
-be able to remove other user's recovery and backup files. This is 
-annoying, but is not a security issue as the user cannot otherwise 
-access or modify the files."
+Having access to the embargoed information allowed us (Ubuntu) to evaluate the
+impact of the issue, look at the fix, and start locally testing the fix to
+determine if there were any issues. It also allows us to properly assign
+resources to working on the update.
 
-Nope, it's not only annoying. For example, in strace I see:
+It would have probably taken us more than a day to publish this update if we
+didn't have access to the information in advance.
 
-open("/var/tmp/vi.recover/vi.zwHPc3", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
-...
-open("/var/tmp/vi.recover/vi.zwHPc3", O_RDWR|O_LARGEFILE) = 3
+> 
+> If I can trust Red Hat's CVE tracker [3] there still are no fixed
+> packages available. Also I haven't found any info about updated
+> opensuse packages.
+> 
+> The only distro I'm aware of that prepared packages and pushed them
+> right after disclosure is Gentoo.
 
-Between the two syscalls, malicious owner of /var/tmp/vi.recover could 
-delete vi.zwHPc3 and replace it with their own.
+For issues that aren't critical, we tend to wait until the upstream project
+commits the fix before we release updates, to make sure a last-minute adjustment
+or additional fix didn't get added.
 
+> 
+> All of this makes me wonder if the distros list serves its purpose.
+> 
+> I'd be curious to hear:
+> 
+> a) if any people felt that pre-disclosure of optionsbleed was helpful
+> to them and in which way (after all - even if it only helps minor
+> distros and major distros ignore it it may still be a good thing).
 
-2) "When the system is rebooted, all of the files in /var/tmp/vi.recover 
-named recover.XXXXXX should be sent to their owners, by email, using the 
--t option of sendmail (or a similar mechanism in other mailers)."
+Yes, I believe the pre-disclosure was helpful to us. Thanks for doing it.
 
-The script that upstream provides to implement this mailing happily 
-reads the /var/tmp/vi.recover/recover.* without checking file type, or 
-lowering privileges. This provides opportunity for denial of service, or 
-exploiting MTA bugs.
+> 
+> b) if people think that they'd usually prepare a fixed package, however
+> they didn't consider optionsbleed important enough. (Naturally I
+> probably have a bias seeing my findings as more important as other
+> people, but I could live with that.)
+> 
+> c) other things?
+> 
 
-Debian patched some of this in 2005:
-https://bugs.debian.org/298114
+Thanks,
 
-(Debian's test for symlinks is racy, but hopefully it doesn't matter at 
-boot time.)
+Marc.
 
-Oh, at some point Debian broke the script in such a way it won't send 
-any legitimate mails; but OTOH, now it lets users execute arbitrary code 
-as user "nobody":
-https://bugs.debian.org/769719
-
-
-3) The recovery files have random names, which should make you wonder 
-how does nvi know which one to open when you actually want to recover 
-something. It turns out it tries reading every 
-/var/tmp/vi.recover/recover.* file until it finds something that 
-matches. There are no ownership or file type checks.
 
 -- 
-Jakub Wilk
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
