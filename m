@@ -1,144 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/3
-Message-ID: <A71CF38B-7971-45B5-8450-43AFC566D717@apache.org>
-Date: Sun, 07 May 2017 19:45:57 -0700
-From: Madhan Neethiraj <madhan@...che.org>
-To: <dev@...as.incubator.apache.org>, <private@...as.incubator.apache.org>, <user@...as.incubator.apache.org>, <security@...che.org>, <oss-security@...ts.openwall.com>, <bugtraq@...urityfocus.com>
-Subject: CVE updates: fixes in Apache Atlas 0.7.1-incubating
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/7
+Message-ID: <20170923162050.GA7215@wopr>
+Date: Sat, 23 Sep 2017 09:20:50 -0700
+From: Kurt H Maier <khm@...ops.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
-All,
-
- 
-
-Please see below the details of CVE updates for Apache Atlas 0.7.1-incubating release. My apologies
-
-for the delay in sending this update.
-
- 
-
-Thanks,
-
-Madhan
-
- 
-
--------------------------------------------------------------------------------------------------------
-
-CVE-2017-3150: Use of insecure cookies
-
-Severity: Normal
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
-
-Users affected: All users of Apache Atlas server
-
-Description: Atlas uses cookies that could be accessible to client-side script
-
-Fix detail: Atlas was updated to make the cookies unavailable to client-side scripts
-
-Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
-
--------------------------------------------------------------------------------------------------------
-
-CVE-2017-3151: Persistent XSS vulnerability
-
-Severity: Normal
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
-
-Users affected: All users of Apache Atlas server
-
-Description: Atlas was found vulnerable to a Stored Cross-Site Scripting in the edit-tag functionality
-
-Fix detail: Atlas was updated to sanitize the user input
-
-Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
-
--------------------------------------------------------------------------------------------------------
-
-CVE-2017-3152: DOM XSS threat
-
-Severity: Normal
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
-
-Users affected: All users of Apache Atlas server
-
-Description: Atlas was found vulnerable to a DOM XSS in the edit-tag functionality
-
-Fix detail: Atlas was updated to sanitize the query parameters
-
-Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
-
--------------------------------------------------------------------------------------------------------
-
-CVE-2017-3153: Reflected XSS vulnerability
-
-Severity: Normal
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
-
-Users affected: All users of Apache Atlas server
-
-Description: Atlas was found vulnerable to a Reflected XSS in the search functionality
-
-Fix detail: Atlas was updated to sanitize the query parameters
-
-Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
-
--------------------------------------------------------------------------------------------------------
-
-CVE-2017-3154: Stack trace in error response
-
-Severity: Normal
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
-
-Users affected: All users of Apache Atlas server
-
-Description: Error response from Atlas server included stack trace, exposing excessive information
-
-Fix detail: Atlas was updated to not include stack trace in error responses
-
-Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
-
--------------------------------------------------------------------------------------------------------
-
-CVE-2017-3155: XFS - cross frame scripting vulnerability
-
-Severity: Normal
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: 0.6.0 or 0.7.0 versions of Apache Atlas
-
-Users affected: All users of Apache Atlas server
-
-Description: Atlas was found vulnerable to a cross frame scripting
-
-Fix detail: Atlas was updated to use appropriate headers to prevent this vulnerability
-
-Mitigation: Users should upgrade to Apache Atlas 0.7.1-incubating or later version
-
--------------------------------------------------------------------------------------------------------
-
- 
-
- 
-
- 
-
- 
-
+On Sat, Sep 23, 2017 at 01:44:18PM +0200, Hanno Böck wrote:
+> If I can trust Red Hat's CVE tracker [3] there still are no fixed
+> packages available. Also I haven't found any info about updated
+> opensuse packages.
+
+This is standard operating procedure for Red Hat, at least.  Generally
+days or even weeks pass before patches are released.   If you're an
+"Extended Update Support" customer you can expect months to go by.  If
+you're super lucky you'll get a systemtap script to play with, but that
+generally requires a kernel RCE.
+
+
+khm
 
