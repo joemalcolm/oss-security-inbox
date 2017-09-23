@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/1
-Message-ID: <1497534642.3053.3.camel@redhat.com>
-Date: Thu, 15 Jun 2017 15:50:42 +0200
-From: Adam Maris <amaris@...hat.com>
-To: pali.rohar@...il.com, oss-security@...ts.openwall.com
-Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/4
+Message-ID: <20170923135727.2uys3wgimmyczgy2@perpetual.pseudorandom.co.uk>
+Date: Sat, 23 Sep 2017 14:57:27 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2017-06-12 at 23:47 +0200, Pali Rohár wrote:
-> Hello!
-> 
-> Any idea how to handle this particular problem?
-> 
-> 
+On Sat, 23 Sep 2017 at 13:44:18 +0200, Hanno Böck wrote:
+> Debian+Ubuntu took more than a day after disclosure to fix. According
+> to the Debian bug tracker the bug got only opened after the public
+> disclosure[2].
 
-Hi!
+The Debian bug tracker (bugs.debian.org) is always public and has no
+mechanism for embargoing individual bugs, so it is never used before
+public disclosure.
 
-Given that Oracle (silently) updated the vulnerable example in their
-documentation, this likely indicates the way to handle this -
-applications that copied the vulnerable example needs to be fixed and
-CVEs will be assigned per application.
+It's entirely possible that your conclusion is correct in this case
+(I don't have any more information than you do on whether the Debian
+security team or package maintainer made use of the embargo period
+for this vulnerability), but the late opening of a bug is not evidence
+that no work was done before public disclosure.
 
-Best Regards,
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777545 is an example
+of a vulnerability for which the package maintainer (me) was definitely
+aware before the bug was filed.
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
+    S
