@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/22/2
-Message-ID: <411848dc-8ecb-ed81-1142-c8cce7828cb1@cleal.org>
-Date: Wed, 22 Feb 2017 13:00:26 +0000
-From: Dominic Cleal <dominic@...al.org>
-To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2016-7078: Foreman organization/location authorization vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/8
+Message-ID: <9669ba15-3aaf-8d2d-c97b-0d9bd2fc6646@pre-sense.de>
+Date: Sat, 23 Sep 2017 20:50:19 +0200
+From: Till Dörges <doerges@...-sense.de>
+To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
+Subject: Re: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-7078: Foreman user with no organizations or locations can see
-all resources
+Am 23.09.2017 um 13:44 schrieb Hanno Böck:
 
-A user account that is associated to no organizations or locations is
-able to view resources from all organizations/locations in the web UI or
-API, when either the organization or location feature is enabled. The
-user remains subject to permissions and filters on their assigned roles.
+> Also I haven't found any info about updated opensuse packages.
 
-Mitigation: ensure all users are assigned to at least one organization
-or location, or disable the feature if unused.
+JFTR, there are:
 
-This issue was reported by Daniel Lobato Garcia.
+  https://bugzilla.opensuse.org/show_bug.cgi?id=CVE-2017-9798
 
-Affects all known Foreman versions
-Fix due to be released in Foreman 1.15.0
-
-Patch:
-https://github.com/theforeman/foreman/commit/5f606e11cf39719bf62f8b1f3396861b32387905
-
-More information:
-https://theforeman.org/security.html#2016-7078
-http://projects.theforeman.org/issues/16982
-https://theforeman.org
-
+Regards -- Till
 -- 
-Dominic Cleal
-dominic@...al.org
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (210 bytes)
+Dipl.-Inform. Till Dörges                  doerges@...-sense.de
+                                  Tel. +49 - 40 - 244 2407 - 14
+                                  Fax  +49 - 40 - 244 2407 - 24
+PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
+Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
+Till Dörges, Jürgen Sander               USt-IdNr.: DE263765024
