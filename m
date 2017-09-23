@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4474" "Wednesday" "15" "June" "2016" "17:44:51" "+0200" "Marcus Meissner" "meissner@suse.de" "<20160615154451.GK360@suse.de>" "102" "[oss-security] Re: CVE Request: ruby openssl hostname verification issue" nil nil nil "6" "2016061515:44:51" "[oss-security] Re: CVE Request: ruby openssl hostname verification issue" (number mark "U       meissner@sus Jun 15  102/4474  " thread-indent "\"[oss-security] Re: CVE Request: ruby openssl hostname verification issue\"\n") "<20160609175249.85CE16C03BF@smtpvmsrv1.mitre.org>" ("<20160609080613.GA3694@suse.de>" "<20160609175249.85CE16C03BF@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3269" "Saturday" "23" "September" "2017" "15:56:02" "+0200" "Levente Polyak" "levente@leventepolyak.net" "<5af4f41e-2cd6-c40e-16ef-736961903579@leventepolyak.net>" "69" "Re: [oss-security] Why send bugs embargoed to distros?" "^Date:" nil nil "9" "2017092313:56:02" "[oss-security] Why send bugs embargoed to distros?" (number mark "        levente@leve Sep 23   69/3269  " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<20170923134418.6e460656@pc1>" ("<20170923134418.6e460656@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18359 invoked by uid 550); 15 Jun 2016 15:45:03 -0000
+Received: (qmail 17843 invoked by uid 550); 23 Sep 2017 13:57:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,125 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18336 invoked from network); 15 Jun 2016 15:45:03 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Wed, 15 Jun 2016 17:44:51 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Message-ID: <20160615154451.GK360@suse.de>
-References: <20160609080613.GA3694@suse.de>
- <20160609175249.85CE16C03BF@smtpvmsrv1.mitre.org>
+Received: (qmail 17426 invoked from network); 23 Sep 2017 13:56:37 -0000
+References: <20170923134418.6e460656@pc1>
+Message-ID: <5af4f41e-2cd6-c40e-16ef-736961903579@leventepolyak.net>
+User-Agent: Mutt/1.6.42 (2014-04-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160609175249.85CE16C03BF@smtpvmsrv1.mitre.org>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] Re: CVE Request: ruby openssl hostname verification issue
+In-Reply-To: <20170923134418.6e460656@pc1>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-bounce-key: webpack.hosteurope.de;levente@leventepolyak.net;1506174997;97f27a9f;
+X-HE-SMSGID: 1dvkuv-0003Bo-RS
+Date: Sat, 23 Sep 2017 15:56:02 +0200
+From: Levente Polyak <levente@leventepolyak.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Why send bugs embargoed to distros?
+To: oss-security@lists.openwall.com
 
-Hi Mitre,
-
-Sorry for answering late.
-
-I agree with your assessments of "underdocumentation, but not
-generally buggy".
-
-I also do not see a need for a CVE of this race condition.
-
-I hereby retract the CVE request.
-
-Sorry for the noise.
-
-Ciao, Marcus
-On Thu, Jun 09, 2016 at 01:52:49PM -0400, cve-assign@mitre.org wrote:
-> > This probably warrants a CVE:
-> > 
-> > https://github.com/ruby/openssl/issues/8
-> 
-> We are not sure exactly what issue you believe should have a CVE ID,
-> There seem to be three issues that are somewhat related. Our short
-> answer is "probably there shouldn't be a CVE ID - the main concern was
-> that the documentation needed to be improved, and the vendor instead
-> decided to change the API semantics and break one (rare) use case."
-> 
-> Here's some discussion of the three issues.
-> 
-> > VERIFY_PEER only checks the cert chain is rooted in the local
-> > truststore. It does not check if the subject is valid in and of
-> > itself.
-> 
-> One might argue that this behavior should have a CVE ID because it is
-> not properly documented. Some users might have guessed that
-> VERIFY_PEER did validate the subject, because it is very rare for
-> anyone to want to establish only that a certificate is rooted in the
-> local truststore, with any arbitrary subject.
-> 
-> Other products, such as libcurl, have a similarly named option with
-> the same behavior, but with explicit documentation, e.g.,
-> 
->   https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html
->   "Authenticating the certificate is not enough to be sure about the
->   server. You typically also want to ensure that the server is the
->   server you mean to be talking to. Use CURLOPT_SSL_VERIFYHOST for
->   that."
-> 
-> However, there apparently isn't an analogous OpenSSL::SSL::VERIFY_HOST
-> for Ruby.
-> 
-> Still, our initial thought is that underdocumenting
-> OpenSSL::SSL::VERIFY_PEER, by itself, should not have a CVE ID. Users
-> may be able to realize, possibly from their knowledge of libcurl, that
-> an option called VERIFY_PEER or VERIFYPEER is typically insufficient.
-> 
-> 
-> > My understanding is the ssl_socket.post_connection_check(hostname) method
-> > must be called to ensure the subject is correctly verified. However,
-> > communication is allowed to remote services without verifying the subject.
-> 
-> Here, maybe the problem is a race condition. In other words, there is
-> inherently a time window in which communication can occur with an
-> unexpected host. Possibly, in most common scenarios in which the
-> application author did understand the post_connection_check
-> documentation, nothing security-relevant happens in this time window,
-> e.g., a client would not be sending requests to a server before the
-> post_connection_check step. However, there may be uncommon scenarios
-> where something security-relevant can happen in this time window.
-> 
-> Do you believe that these uncommon scenarios actually occur, and
-> therefore this race condition should have a CVE ID?
-> 
-> 
-> > I would suggest throwing an exception if VERIFY_PEER is configured and
-> > I/O is attempted without first calling post_connection_check
-> 
-> Here, you seem to be suggesting that VERIFY_PEER is never sufficient
-> in any scenario. This seems to be equivalent to suggesting that the
-> libcurl choice of using CURLOPT_SSL_VERIFYPEER without
-> CURLOPT_SSL_VERIFYHOST is always wrong, and should not even be
-> possible in the libcurl API.
-> 
-> Do you believe that there should be a CVE ID, in general, for "the
-> product needlessly offers a way to skip subject validation"?
-> 
-> (We don't know all of the use cases for skipping subject validation.
-> We think that it is typically useful only within isolated networks.
-> For example, consider a scenario where the local truststore recognizes
-> exactly one CA, this CA has only ever issued one certificate, and the
-> certificate happens to have an arbitrary subject, but is intentionally
-> used on multiple intranet HTTPS servers that are trusted by the same
-> intranet clients. Here, subject validation doesn't really help anyone,
-> and mandating subject validation would break this use case.)
-> 
-> -- 
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
+On 09/23/2017 01:44 PM, Hanno Böck wrote:
+> My understanding is that the purpose of the distros list is that
+> updates can be prepared so after a disclosure the time between "vuln is
+> known" and "patch is available" is short.
+> However from all I can see this largely didn't happen.
 > 
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
+[...]
+
+> The only distro I'm aware of that prepared packages and pushed them
+> right after disclosure is Gentoo.
+> 
+
+For Arch Linux I tested the patch beforehand and prepared the changed
+buildscripts locally. The final build/release/publication process was
+invoked just minutes after the public disclosure and the final artifact
+was signed and hit the repository just 20 minutes after the disclosure.
+The advisories were sent ~4 hours later once gone through a
+peer-reviewing process (yes this could have been done even faster).
+
+But that's not actually the primary goal of your mail, so lets focus on
+answering the more important questions below from my personal point of view.
+
+> All of this makes me wonder if the distros list serves its purpose.
+> 
+> I'd be curious to hear:
+> 
+> a) if any people felt that pre-disclosure of optionsbleed was helpful
+> to them and in which way (after all - even if it only helps minor
+> distros and major distros ignore it it may still be a good thing).
+> 
+> b) if people think that they'd usually prepare a fixed package, however
+> they didn't consider optionsbleed important enough. (Naturally I
+> probably have a bias seeing my findings as more important as other
+> people, but I could live with that.)
+> 
+
+I think everyone should have come to the conclusion that this is
+potentially pretty bad for a shared hosting environment or anywhere
+where non-privileged users are able to fulfill the needed pre-requirements.
+
+Anyway, my personal believe is that the list is important, useful and in
+fact definitively helps preparing coordinated releases and doing all
+needed work before a final fixed package can be deployed for security
+relevant fixes.
+Most of the time the provided information (at least for me :P) helps to
+analyze and understand the underlying problem and its impact beforehand.
+If patches are available (like for optionbleed) those can be tested and
+possibly slightly adjusted or discussed when not fitting a specific
+version/branch.
+All this is part of the whole process before a problem is
+analyzed/understood, prioritized, build-requirements adjusted, artifacts
+prepared and finally released so being able to do the first steps in a
+coordinated way definitively helps.
+
+However, I indeed see your point and understand the frustration and the
+reason for your mail demonstrated via the optionbleed case. I neither
+say nor believe that every entity did perfectly to provide the users
+with fixed packages as that's obviously not the case.
+What I try to point out is that the list is IMO far from being useless
+and indeed serves its purpose. I think blaming or questioning the list
+itself is the wrong conclusion. Instead every entity on its own should
+rethink their process, prioritization and possibly lack of resources (I
+include myself to do this). This is not meant to anyone as blaming but
+we all share the goal to protect the users as good as possible and I
+believe that the distros list aids in doing so.
+
+cheers,
+Levente
