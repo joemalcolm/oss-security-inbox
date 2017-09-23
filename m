@@ -1,37 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/16
-Message-ID: <20171031185714.Z6cNT%steffen@sdaoden.eu>
-Date: Tue, 31 Oct 2017 19:57:14 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/5
+Message-ID: <CA+aC4ktR00GiL3H-E9g2YP9bdecQvioWXonXEPpFumMEoXdWaA@mail.gmail.com>
+Date: Sat, 23 Sep 2017 07:11:36 -0700
+From: Anthony Liguori <anthony@...emonkey.ws>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: Re: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
-Tim <tim-security@...tinelchicken.org> wrote:
- |On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno Böck wrote:
- |> I just sent this to the vim dev list, but I guess it's interesting for
- |> oss-security, too.
- |> ...
- ...
- |Sure, you can argue that maybe some systems should ignore these files,
- |block access, etc, but it is pretty absurd to expect every other piece
- |of software in the universe to work around very unsafe defaults of text
- |editors.  
- |
- |Also, it almost never makes sense to put things in /tmp, for several
- |reasons pointed out by others.  Making ~/.vim/... the default location
- |clearly is the best solution.
+On Sat, Sep 23, 2017 at 6:56 AM, Levente Polyak
+<levente@...entepolyak.net> wrote:
+> On 09/23/2017 01:44 PM, Hanno Böck wrote:
+>> My understanding is that the purpose of the distros list is that
+>> updates can be prepared so after a disclosure the time between "vuln is
+>> known" and "patch is available" is short.
+>> However from all I can see this largely didn't happen.
+>>
+>
+> [...]
+>
+>> The only distro I'm aware of that prepared packages and pushed them
+>> right after disclosure is Gentoo.
+>>
+>
+> For Arch Linux I tested the patch beforehand and prepared the changed
+> buildscripts locally. The final build/release/publication process was
+> invoked just minutes after the public disclosure and the final artifact
+> was signed and hit the repository just 20 minutes after the disclosure.
+> The advisories were sent ~4 hours later once gone through a
+> peer-reviewing process (yes this could have been done even faster).
 
-I for one really dislike that for many years (i think .gconf and
-all around that was the first time i recognized the problem) that
-more and more programs think they can simply create a dot
-directory in my $HOME.  Indeed i have started using umask 0077 due
-to this.  I use "set dir=~/traffic" and "set backupdir=~/traffic"
-and that has a mode of 0700.  My vim(s) has/ve never needed ~/.vim.
+Just as an FYI, we (Amazon Linux AMI) also did all of the preparation
+during the embargo period published shortly after embargo lift.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+> But that's not actually the primary goal of your mail, so lets focus on
+> answering the more important questions below from my personal point of view.
+>
+>> All of this makes me wonder if the distros list serves its purpose.
+>>
+>> I'd be curious to hear:
+>>
+>> a) if any people felt that pre-disclosure of optionsbleed was helpful
+>> to them and in which way (after all - even if it only helps minor
+>> distros and major distros ignore it it may still be a good thing).
+
+The pre-disclosure period gives us an opportunity to take the time to
+analyze the problem and run through testing of the reported fix.  It's
+super valuable for us.
+
+Regards,
+
+Anthony Liguori
+
+>> b) if people think that they'd usually prepare a fixed package, however
+>> they didn't consider optionsbleed important enough. (Naturally I
+>> probably have a bias seeing my findings as more important as other
+>> people, but I could live with that.)
+>>
+>
+> I think everyone should have come to the conclusion that this is
+> potentially pretty bad for a shared hosting environment or anywhere
+> where non-privileged users are able to fulfill the needed pre-requirements.
+>
+> Anyway, my personal believe is that the list is important, useful and in
+> fact definitively helps preparing coordinated releases and doing all
+> needed work before a final fixed package can be deployed for security
+> relevant fixes.
+> Most of the time the provided information (at least for me :P) helps to
+> analyze and understand the underlying problem and its impact beforehand.
+> If patches are available (like for optionbleed) those can be tested and
+> possibly slightly adjusted or discussed when not fitting a specific
+> version/branch.
+> All this is part of the whole process before a problem is
+> analyzed/understood, prioritized, build-requirements adjusted, artifacts
+> prepared and finally released so being able to do the first steps in a
+> coordinated way definitively helps.
+>
+> However, I indeed see your point and understand the frustration and the
+> reason for your mail demonstrated via the optionbleed case. I neither
+> say nor believe that every entity did perfectly to provide the users
+> with fixed packages as that's obviously not the case.
+> What I try to point out is that the list is IMO far from being useless
+> and indeed serves its purpose. I think blaming or questioning the list
+> itself is the wrong conclusion. Instead every entity on its own should
+> rethink their process, prioritization and possibly lack of resources (I
+> include myself to do this). This is not meant to anyone as blaming but
+> we all share the goal to protect the users as good as possible and I
+> believe that the distros list aids in doing so.
+>
+> cheers,
+> Levente
