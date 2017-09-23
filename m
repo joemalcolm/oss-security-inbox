@@ -1,69 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/9
-Message-ID: <20170214184332.z5goeazi2kvqsaor@pisco.westfalen.local>
-Date: Tue, 14 Feb 2017 19:43:32 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/9
+Message-ID: <20170923192315.GA17252@suse.de>
+Date: Sat, 23 Sep 2017 21:23:15 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Pending CVE requests for glibc
+Subject: Re: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 08, 2015 at 01:02:44PM +0530, Huzaifa Sidhpurwala wrote:
-> Hi MITRE,
+On Sat, Sep 23, 2017 at 01:44:18PM +0200, Hanno Böck wrote:
+> Hi,
 > 
-> I could not help but notice, some glibc security issues were not
-> assigned CVE ids.
-
-Blast from the past :-)
-
-I re-submitted this via the new MITRE webform and this got assigned
-within a few hours. Here's the assignments looped back to oss-security:
-
-> 1. glibc: multiple overflows in strxfrm()
-> Integer overflow when computing memory allocation sizes (similar to
-> CVE-2012-4412) was reported [1] in glibc strxfrm() function. Attached
-> strxfrm-int32.c should trigger this issue on a 32-bit systems.
-> Additionally, it was discovered [1] that strxfrm() falls back to an
-> unbounded alloca if malloc fails making it vulnerable to stack-based
-> buffer overflows (similar to CVE-2012-4424). Attached strxfrm-alloca.c
-> should trigger this issue.
+> A few days have passed since the optionsbleed disclosure. Some
+> interesting things have surfaced, e.g. the fact that it was apparently
+> discovered already in 2014, but nobody noticed it was a security bug.
 > 
-> Previously a request was made via:
-> http://seclists.org/oss-sec/2015/q1/540
-
-CVE-2015-8982
-
-> 2. glibc: _IO_wstr_overflow integer overflow
-> An integer overflow flaw, leading to a heap-based buffer overflow, was
-> found in glibc's _IO_wstr_overflow() function. If an application used
-> this function, it could cause the application to crash or, potentially,
-> execute arbitrary code with the privileges of the user running the
-> application.
 > 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17269
-> https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=bdf1ff052a8e23d637f2c838fa5642d78fcedc33
-
-CVE-2015-8983
-
-> 3. glibc: potential denial of service in internal_fnmatch()
-> It was reported [1] that when processing certain malformed patterns,
-> fnmatch can skip over the NUL byte terminating the pattern.  This can
-> potentially result in an application crash if fnmatch hits an unmapped
-> page before encountering a NUL byte.
+> But I'd like to discuss something else:
+> I had informed the distros mailing list one week earlier about the
+> upcoming disclosure with a bug description and links to the already
+> available patch.
+> My understanding is that the purpose of the distros list is that
+> updates can be prepared so after a disclosure the time between "vuln is
+> known" and "patch is available" is short.
+> However from all I can see this largely didn't happen.
 > 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18032
-> https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=4a28f4d55a6cc33474c0792fe93b5942d81bf185
+> Debian+Ubuntu took more than a day after disclosure to fix. According
+> to the Debian bug tracker the bug got only opened after the public
+> disclosure[2]. I see no sign that any work on a fix began before the
+> disclosure.
 > 
-> Previously a request was made via:
-> http://seclists.org/oss-sec/2015/q1/689
+> If I can trust Red Hat's CVE tracker [3] there still are no fixed
+> packages available. Also I haven't found any info about updated
 
-CVE-2015-8984
+https://www.suse.com/security/cve/CVE-2017-9798/
 
-> 4. glibc: potential denial of service in pop_fail_stack()
-> A crash was reported [1] during glibc extended regular expression
-> processing. No known patch exists at the time of writing.
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=779392
+We have released openSUSE Leap and SUSE Linux Enterprise 12 SP2/SP3 updates.
 
-CVE-2015-8985
+Where did you look and not find this?
 
-Cheers,
-        Moritz
+SUSE has rated the issue as moderate severity (bordering on important),
+as exploitability seems difficult and not targetable.
+
+So we were not targeting a "same as CRD day release" as with other more
+severe issues, but have now released updates in the next days after the CRD.
+
+In general predisclosure is useful for us, same as for the others for 
+evaluation and preparation of critical security issues.
+
+Ciao, Marcus
