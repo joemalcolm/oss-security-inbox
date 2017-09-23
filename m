@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1565" "Wednesday" "1" "June" "2016" "10:41:46" "-0400" "Velmurugan Periasamy" "vel@apache.org" "<AB91E013-C484-4EDD-98BB-0D6E4938C22A@apache.org>" "40" "[oss-security] CVE update (CVE-2016-2174) - Fixed in Ranger 0.5.3" "^Cc:" nil nil "6" "2016060114:41:46" "[oss-security] CVE update (CVE-2016-2174) - Fixed in Ranger 0.5.3" (number mark "U       vel@apache.o Jun  1   40/1565  " thread-indent "\"[oss-security] CVE update (CVE-2016-2174) - Fixed in Ranger 0.5.3\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2616" "Saturday" "23" "September" "2017" "11:14:28" "-0400" "Marc Deslauriers" "marc.deslauriers@canonical.com" "<e36752e0-c1d1-220f-76ae-5abbd047cd65@canonical.com>" "73" "Re: [oss-security] Why send bugs embargoed to distros?" "^Date:" nil nil "9" "2017092315:14:28" "[oss-security] Why send bugs embargoed to distros?" (number mark "        marc.deslaur Sep 23   73/2616  " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<20170923134418.6e460656@pc1>" ("<20170923134418.6e460656@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11488 invoked by uid 550); 1 Jun 2016 14:53:29 -0000
+Received: (qmail 32696 invoked by uid 550); 23 Sep 2017 15:14:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5448 invoked from network); 1 Jun 2016 14:42:05 -0000
-Content-Type: multipart/alternative; boundary="Apple-Mail=_CE0A7601-DB18-43F0-BE05-419205EE85B2"
-Message-Id: <AB91E013-C484-4EDD-98BB-0D6E4938C22A@apache.org>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-X-Mailer: Apple Mail (2.1878.6)
-Cc: dev@ranger.incubator.apache.org,
- user@ranger.incubator.apache.org,
- private@ranger.incubator.apache.org,
- vel@apache.org
-Date: Wed, 1 Jun 2016 10:41:46 -0400
-From: Velmurugan Periasamy <vel@apache.org>
+Received: (qmail 32678 invoked from network); 23 Sep 2017 15:14:41 -0000
+References: <20170923134418.6e460656@pc1>
+Message-ID: <e36752e0-c1d1-220f-76ae-5abbd047cd65@canonical.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+In-Reply-To: <20170923134418.6e460656@pc1>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
+Content-Transfer-Encoding: 8bit
+Date: Sat, 23 Sep 2017 11:14:28 -0400
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE update (CVE-2016-2174) - Fixed in Ranger 0.5.3
-To: security@apache.org,
- oss-security@lists.openwall.com,
- bugtraq@securityfocus.com
+Subject: Re: [oss-security] Why send bugs embargoed to distros?
+To: oss-security@lists.openwall.com
 
---Apple-Mail=_CE0A7601-DB18-43F0-BE05-419205EE85B2
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=windows-1252
+Hi,
 
-Hello:
+On 2017-09-23 07:44 AM, Hanno Böck wrote:
+> Hi,
+> 
+> A few days have passed since the optionsbleed disclosure. Some
+> interesting things have surfaced, e.g. the fact that it was apparently
+> discovered already in 2014, but nobody noticed it was a security bug.
+> 
+> 
+> But I'd like to discuss something else:
+> I had informed the distros mailing list one week earlier about the
+> upcoming disclosure with a bug description and links to the already
+> available patch.
+> My understanding is that the purpose of the distros list is that
+> updates can be prepared so after a disclosure the time between "vuln is
+> known" and "patch is available" is short.
+> However from all I can see this largely didn't happen.
+> 
+> Debian+Ubuntu took more than a day after disclosure to fix. According
+> to the Debian bug tracker the bug got only opened after the public
+> disclosure[2]. I see no sign that any work on a fix began before the
+> disclosure.
 
-Here=92s a CVE update for Ranger 0.5.3 release. Please see below details.=20
+Having access to the embargoed information allowed us (Ubuntu) to evaluate the
+impact of the issue, look at the fix, and start locally testing the fix to
+determine if there were any issues. It also allows us to properly assign
+resources to working on the update.
 
-Release details can be found at https://cwiki.apache.org/confluence/display=
-/RANGER/0.5.3+Release+-+Apache+Ranger
+It would have probably taken us more than a day to publish this update if we
+didn't have access to the information in advance.
 
-Thank you,
-Velmurugan Periasamy
+> 
+> If I can trust Red Hat's CVE tracker [3] there still are no fixed
+> packages available. Also I haven't found any info about updated
+> opensuse packages.
+> 
+> The only distro I'm aware of that prepared packages and pushed them
+> right after disclosure is Gentoo.
 
----------------------------------------------------------------------------=
---------------------
-CVE-2016-2174: Apache Ranger sql injection vulnerability
----------------------------------------------------------------------------=
---------------------
-Severity: Normal
-Vendor: The Apache Software Foundation
-Versions Affected: All versions of Apache Ranger from 0.5.0 (up to 0.5.3)
-Users Affected: All admin users of ranger policy admin tool
-Description: SQL Injection vulnerability in Audit > Access tab. When the us=
-er=20
-clicks an element from policyId row of the list, there is a call made under=
-neath=20
-with eventTime parameter which contains the vulnerability. Admin users can=
-=20
-send some arbitrary sql code to be executed along with eventTime parameter
- using /service/plugins/policies/eventTime url.
-Fix details: Replaced native queries with JPA named queries
-Mitigation: Users should upgrade to 0.5.3 version of Apache Ranger with the=
- fix.
-Credit: Thanks to Mateusz Olejarka from SecuRing for reporting this issue.
----------------------------------------------------------------------------=
---------------------=
+For issues that aren't critical, we tend to wait until the upstream project
+commits the fix before we release updates, to make sure a last-minute adjustment
+or additional fix didn't get added.
 
---Apple-Mail=_CE0A7601-DB18-43F0-BE05-419205EE85B2--
+> 
+> All of this makes me wonder if the distros list serves its purpose.
+> 
+> I'd be curious to hear:
+> 
+> a) if any people felt that pre-disclosure of optionsbleed was helpful
+> to them and in which way (after all - even if it only helps minor
+> distros and major distros ignore it it may still be a good thing).
+
+Yes, I believe the pre-disclosure was helpful to us. Thanks for doing it.
+
+> 
+> b) if people think that they'd usually prepare a fixed package, however
+> they didn't consider optionsbleed important enough. (Naturally I
+> probably have a bias seeing my findings as more important as other
+> people, but I could live with that.)
+> 
+> c) other things?
+> 
+
+Thanks,
+
+Marc.
+
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
