@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/1
-Message-ID: <79a088b371714beb89209770a077002d@imshyb02.MITRE.ORG>
-Date: Tue, 7 Feb 2017 01:52:33 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/24/2
+Message-ID: <20170924205051.GA3346@jasmine.lan>
+Date: Sun, 24 Sep 2017 16:50:51 -0400
+From: Leo Famulari <leo@...ulari.name>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>, Denis Ovsienko <denis@...ienko.info>
+Subject: Re: tcpdump 4.9.2 is fully available
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://bugs.ghostscript.com/show_bug.cgi?id=697515
+On Thu, Sep 14, 2017 at 04:08:21PM +0200, Levente Polyak wrote:
+> On September 14, 2017 3:04:43 PM GMT+02:00, Solar Designer <solar@...nwall.com> wrote:
+> >
+> >September 7 - an Arch Linux developer (who is not on (linux-)distros
+> >and
+> >apparently was not aware of the distros list discussion) brings the
+> >issue to oss-security (it's unclear to me how that person knew of the
+> >September 25 initial CRD); I approve that message right away
+> >
 > 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
-> 
-> mupdf-1.10a-source/source/fitz/pixmap.c:1210:12 in fz_subsample_pixmap
+> Leo Famulari has posted this here, and he is not affiliated with Arch
+> Linux. AFAIK he is involved in the GNU Guix project.
 
-As far as we can tell, this buffer over-read issue affects the library
-(e.g., libmupdf.a), not exclusively the mutool command-line program.
+That's correct, I was informed of the upcoming 4.9.2 release as part of
+my work on Guix security. I'm not involved with Arch.
 
-Use CVE-2017-5896.
+When the embargo failed, I notified oss-security immediately. I did not
+contact the distros lists because Guix is not represented on those
+lists.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYmW3+AAoJEHb/MwWLVhi2EuQQAIWqX8aA7zBTSSElX6o9D1hs
-Cjbeerdb/OMcIp1K1xVY2p1xfphKIqfcJHwxwrBylzACx3Vc4bQhRbUGMe/TUsY+
-njOnXPZBocipcYLd8wc/WW0Hb+0y8JlFNDR08G80hRBTttxPMzKeEEXFMaDDuH2x
-zPINFJMS18Vda+r0h6iyprtsN5A8aLoH4VqRDe0Ksi6QZXQoe6llCvIYd/dHaonR
-VVJM5sE3wmdHaSi7t+1ALu7dkdjq8T8CyJUf1xiGSuFvUMRmMc73F+HxvXQalJm8
-TgJenmdnwjYAali/Z6Q00D662hxLpEUxWOCLgcneHfM3engScCKMHXvRRQhD+N1X
-FcqAC+Ae4PKh450d0o1qiRBz7YQTLeIk8tH4m/0ljSEyou6kLVYvWky6yZgeJxEi
-upQ9ff/t4d5XGILwRCCHm1osi/VQZqXGuLEuKUynDgJsd1gaWiGP5t0e587VTIT/
-y/c0T230hbcwpNObiWPN6hly1vXSLQKWuvlFMzDhEfSx+7ZxRRIZ1KtCIjyr6PlW
-zJCXQmj2sFfcOK83JsqD67qnrq9hyNzakkDCrt4Z+t4mk2+O3U40ea6jURzCMZx4
-A38zUXHdTlo5i7Qs25wlPBTfZCPBxr22+sXLTRHZ4VrM1HX3ZX1fCQE7veykxxWU
-n88zzEgrKbo+6ytZ8at0
-=//bi
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
