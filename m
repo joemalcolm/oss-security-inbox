@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1849" "Wednesday" "11" "November" "2020" "10:13:16" "+0100" "Imre Rad" "radimre83@gmail.com" "<CAPWzz4yY2xMF4ciWRwwEBFd=_EXb12WSXyj290JqJPZGpdHSzg@mail.gmail.com>" "63" "Re: [oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents" nil nil nil "11" "2020111109:13:16" "[oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents" (number mark "U       radimre83@gm Nov 11   63/1849  " thread-indent "\"Re: [oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents\"\n") "<A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>" ("<A59B8270-B4D2-4ADC-B721-51B5E4741487@apache.org>" "<A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>") nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1929" "Sunday" "24" "September" "2017" "16:50:51" "-0400" "Leo Famulari" "leo@famulari.name" "<20170924205051.GA3346@jasmine.lan>" "47" "Re: [oss-security] tcpdump 4.9.2 is fully available" "^Cc:" nil nil "9" "2017092420:50:51" "[oss-security] tcpdump 4.9.2 is fully available" (number mark "        leo@famulari Sep 24   47/1929  " thread-indent "\"Re: [oss-security] tcpdump 4.9.2 is fully available\"\n") "<0066D0CA-AF18-48FD-AB6E-34EF5CF7A986@leventepolyak.net>" ("<15e7d09e363.baac2a74163896.7143621165441625815@ovsienko.info>" "<20170914130443.GA21420@openwall.com>" "<0066D0CA-AF18-48FD-AB6E-34EF5CF7A986@leventepolyak.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18395 invoked by uid 550); 11 Nov 2020 09:39:15 -0000
+Received: (qmail 32302 invoked by uid 550); 24 Sep 2017 21:30:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4048 invoked from network); 11 Nov 2020 09:13:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=nxWtLiw9fC1DRZ87MvGax1E6hnBuzvKwQ+Qm1kmcKSE=;
-        b=jmPYsZ9YtDJfEZ24sdprKY58JhqeC73+PUCMGtqolPP8QropeezxqOKKjP4ZL1r4Bw
-         hmsXJhIdkETY2vAGLf5UViJWjTvw4x1D4VoGhAYenOf/gAVGDcCEjDBw8pW40+9d3vB0
-         bJlbDNNWTEWKLHXIadQG788CeriTkvvK1t2lsAKt4usnHq8j1YTH0WHw/P2v7whRz7Bs
-         G07YUmnTK6H5WwNu1gPY/CX7IYt8K7Vcv3AH7zwlbQKL487XsUi2F8A9nT3KISPLTV3s
-         gEWW9kPCjh/S/3QMiki5JFJ7rQT9S6X4YkpK4DnDFKP6uusDBACIftSDmN2j1jQqL+3p
-         EDUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=nxWtLiw9fC1DRZ87MvGax1E6hnBuzvKwQ+Qm1kmcKSE=;
-        b=WmGyCVK4+IbsNdlmHlPB3aLeg0QGGnoZGO+jM4SDthNgfeScYzFmenuXim+LCXwiqM
-         4l0aJUa4AI8xJ2h7dNVPCEaEiI86kyR30N3uWPm0WOCncn9ORS9kckkX5LnGRoHbPDak
-         GQa6fb5Qu7MKgiVc3frJca0iqypVc8S2Uh7ecv2kxCyNNjUXkmP+7Ol2VIDuRRg6uz9J
-         4ei6G1MRlutLxshLuUijhmzMNwcfW2xLtp7NnYUon+WkwV1iKz3DnFmTo+m6FGhKqf+8
-         wOnueD2aTrvycKraBeiX8v6klGwSJp6k2oKx+/DAgoeamopiev/o4cSP7iv755Apv/cj
-         u09Q==
-X-Gm-Message-State: AOAM53298wJSv3KEI/XDF1EpwoyNRw2npV2y6c5gxlhGpnmHsnXD2AMS
-	WkoivhmMxkut3vsmLX8YERpcwuotH0pAR75/i22ynBUOX+srTQ==
-X-Google-Smtp-Source: ABdhPJwbOF5mI3hJ2WyFFJrXXU3bLftcRz9VJN06Q6vSeErivKTZvic/KOY3VNLsjT3P4CqMK/u41GhLANaTdlbTpm4=
-X-Received: by 2002:a63:fe0c:: with SMTP id p12mr240228pgh.31.1605085993270;
- Wed, 11 Nov 2020 01:13:13 -0800 (PST)
+Received: (qmail 30277 invoked from network); 24 Sep 2017 20:51:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=famulari.name;
+	 h=cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=tPmeU+SB2voX9p3LbCv1sh4DbfVQyIFDcPcg7R
+	iVnZ0=; b=Wqagwgsu17qdyfYdm5Cd3SFNU32onKORHOYBKWQZTkyi4FvNWGFGIP
+	rcp3f86KKFGNdGU5cfWNSwdpMppeRU2yeKyMyxsykpufMvfwFyUkfAgukqRYC7JX
+	Prv0jCidnanQs/wVTd4SupAh3W6YSkA+mRI69CaX6e+Uhi0AyHd88=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=tPmeU+SB2voX9p3LbC
+	v1sh4DbfVQyIFDcPcg7RiVnZ0=; b=XtTuhJpIOPgxUPb58H+MoPM13lARFJ6qLo
+	Rkcy4enqHg+9N6/mjHudw+pmE167ZIWGNm/g9LUWITa1/h2V3KN/vbnfjZ6NKHo7
+	6waLpLQzYN9McfePA+ur0ntOYt/wNt9na6FM+D/8q59CBgu1GZ5uv0rUXPpMD1VT
+	LfWqepYL8/Cgo/YPmKzRscOYqKwklNRIL1WVsdaQacVQALGM6fT2g4+mR5600ftH
+	Ag8Aksu64QrU7leNRE1PfcZ0g/1Zo2eNj97XSnrOEaukCkRCs8pixAO0qDVQytwm
+	fK0BckLWncMHHocLWT7gVIuJthXxbqvJB4uCJM9JFsT48PJbIOSw==
+X-ME-Sender: <xms:rBrIWeNSBWsHolEl1yVOvE8CFkfvYDcV1fRZiGzoywhTaRLoYQIYTQ>
+X-Sasl-enc: BzNCR7+gqUFPn4RC+waNpmXDJRdN7NJii6XG1YQ9+hU4 1506286252
+Message-ID: <20170924205051.GA3346@jasmine.lan>
+References: <15e7d09e363.baac2a74163896.7143621165441625815@ovsienko.info>
+ <20170914130443.GA21420@openwall.com>
+ <0066D0CA-AF18-48FD-AB6E-34EF5CF7A986@leventepolyak.net>
 MIME-Version: 1.0
-References: <A59B8270-B4D2-4ADC-B721-51B5E4741487@apache.org> <A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>
-In-Reply-To: <A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>
-From: Imre Rad <radimre83@gmail.com>
-Date: Wed, 11 Nov 2020 10:13:16 +0100
-Message-ID: <CAPWzz4yY2xMF4ciWRwwEBFd=_EXb12WSXyj290JqJPZGpdHSzg@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="WIyZ46R2i8wDzkSu"
+Content-Disposition: inline
+In-Reply-To: <0066D0CA-AF18-48FD-AB6E-34EF5CF7A986@leventepolyak.net>
+User-Agent: Mutt/1.8.3 (2017-05-23)
+Cc: Solar Designer <solar@openwall.com>,
+	Denis Ovsienko <denis@ovsienko.info>
+Date: Sun, 24 Sep 2017 16:50:51 -0400
+From: Leo Famulari <leo@famulari.name>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] tcpdump 4.9.2 is fully available
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+
+--WIyZ46R2i8wDzkSu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted
- actions leads to arbitrary code execution in crafted documents
 
-Proof of concept and more technical details can be found here:
-https://github.com/irsl/apache-openoffice-rce-via-uno-links
-
-Imre
-
-Dave Fisher <wave@apache.org> ezt =C3=ADrta (id=C5=91pont: 2020. nov. 11., =
-Sze, 7:38):
->
-> CVE-2020-13958 Unrestricted actions leads to arbitrary code execution in =
-crafted documents
->
-> Fixed in Apache OpenOffice 4.1.8
->
-> Description
->
-> A vulnerability in Apache OpenOffice scripting events allows an attacker =
-to construct
-> documents containing hyperlinks pointing to an executable on the target u=
-sers file system.
-> These hyperlinks can be triggered unconditionally. In fixed versions no i=
-nternal protocol
-> may be called from the document event handler and other hyperlinks requir=
-e a control-click.
->
-> Severity: Low
->
-> There are no known exploits of this vulnerability.
-> A proof-of-concept demonstration exists.
->
-> Vendor: The Apache Software Foundation
->
-> Versions Affected
->
-> Apache OpenOffice 4.0.0, 4.0.1, 4.1.0, 4.1.1, 4.1.2, 4.1.3, 4.1.4, 4.1.5,=
- 4.1.6, and 4.1.7
-> OpenOffice.org versions may also be affected.
->
-> Mitigation
->
-> Install Apache OpenOffice 4.1.8 for the latest maintenance and cumulative=
- security fixes.
-> Use the Apache OpenOffice download page (https://www.openoffice.org/downl=
-oad/).
->
-> Acknowledgments
->
-> The Apache OpenOffice Security Team would like to thank Imre Rad for disc=
-overing and
-> reporting this attack vector.
->
-> Further Information
->
-> For additional information and assistance, consult the Apache OpenOffice =
-Community Forums
-> (https://forum.openoffice.org) or make requests to the users@openoffice.a=
-pache.org
-> (mailto:users@openoffice.apache.org) public mailing list.
->
-> The latest information on Apache OpenOffice security bulletins can be fou=
-nd at the
-> Bulletin Archive page (https://www.openoffice.org/security/bulletin.html).
+On Thu, Sep 14, 2017 at 04:08:21PM +0200, Levente Polyak wrote:
+> On September 14, 2017 3:04:43 PM GMT+02:00, Solar Designer <solar@openwal=
+l.com> wrote:
 > >
->
+> >September 7 - an Arch Linux developer (who is not on (linux-)distros
+> >and
+> >apparently was not aware of the distros list discussion) brings the
+> >issue to oss-security (it's unclear to me how that person knew of the
+> >September 25 initial CRD); I approve that message right away
+> >
+>=20
+> Leo Famulari has posted this here, and he is not affiliated with Arch
+> Linux. AFAIK he is involved in the GNU Guix project.
+
+That's correct, I was informed of the upcoming 4.9.2 release as part of
+my work on Guix security. I'm not involved with Arch.
+
+When the embargo failed, I notified oss-security immediately. I did not
+contact the distros lists because Guix is not represented on those
+lists.
+
+--WIyZ46R2i8wDzkSu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAlnIGqoACgkQJkb6MLrK
+fwiAng/+OXw+f7A6ZEvAFMEzFiPSN9Ay9q00kwjyES1mu0Tskkcdx7U7TuOSPUhB
+QaI0QN+B5cnwl+S2J/UnD4qT8IpMBdlHRSDFnv6DZspGHmxMj0m9t9i7AEFd7kic
+2kPfWex0urMHvpEMgvvCkLiCuSinPWErGWy5hl7WX5DKf85PmnjLge1ZmcghpAZx
++gfm6oC4n9VLRSJg8r0+7WMvwST2MtiKfcakJ3d/p0C6+RRx/kDQYvIVK6ypN5JN
+SHA/GVfM9zmSlOOCXeZaMC7ug4TqK6CrMMEi9BEISQ5V1U0KjhpeMba9VfwZl43M
+1zI/i5y3qGKlHSLHEdAXZ2ow4Z5RQ9qPb/PG8GBsoOmj9+ybFZ+VkWczSbJCSkm8
+09I2h1XT/yCdo7Z7GmlP+2BRbcUobWKKGIi5hhT2JAtErRUaqOKWQsApzJbWILgS
+nnjLAegUdkhm/u1LJGaLEdulyzFqvHfbQNV878DBbYpd8ZUfw1MIWUmL91fBlGVE
+WwvSIyhuFwF/Iz39pxYgJUiNLNu/UGxwi9khyAqDbsSVxICkL/7QQEudveuzLfxz
+wGHd8BHFP8haDtcUHOkLSr66TQJ721B+qdJ1ZArcAqMOCMVYv5pYnQn/nUt1RW9Q
+2oHxb9SBCt0Q1sW0nLp0nCz2izlgj4NDlPTWaoZWhuqVJkpbAhE=
+=oWla
+-----END PGP SIGNATURE-----
+
+--WIyZ46R2i8wDzkSu--
