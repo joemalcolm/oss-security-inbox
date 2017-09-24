@@ -1,62 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/1
-Message-ID: <329641.122228594-sendEmail@localhost>
-Date: Mon, 10 Jul 2017 09:11:48 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: xar: NULL pointer dereference in xar_unserialize (archive.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/24/1
+Message-ID: <874lrr3lbn.fsf@gnu.org>
+Date: Sun, 24 Sep 2017 22:15:08 +0200
+From: ludo@....org (Ludovic Courtès)
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
-Description:
-xar is an easily extensible archive format.
+Hi,
 
-The complete ASan output of the issue:
+Hanno Böck <hanno@...eck.de> skribis:
 
-# xar -t -f $FILE
-==7615==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 0x7f71a859ebd6 bp 0x7fffd8ace150 sp 0x7fffd8acde80 T0)
-==7615==The signal is caused by a WRITE memory access.
-==7615==Hint: address points to the zero page.
-    #0 0x7f71a859ebd5 in xar_unserialize /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:1767:27
-    #1 0x7f71a859ebd5 in xar_open /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:340
-    #2 0x5139ee in list /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:1492:6
-    #3 0x5139ee in main /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/src/xar.c:2666
-    #4 0x7f71a76a2680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #5 0x41af38 in _init (/usr/bin/xar+0x41af38)
+> I had informed the distros mailing list one week earlier about the
+> upcoming disclosure with a bug description and links to the already
+> available patch.
+> My understanding is that the purpose of the distros list is that
+> updates can be prepared so after a disclosure the time between "vuln is
+> known" and "patch is available" is short.
+> However from all I can see this largely didn't happen.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/app-arch/xar-1.6.1-r1/work/xar-1.6.1/lib/archive.c:1767:27 in xar_unserialize
-==7615==ABORTING
-Affected version:
-1.6.1
+FWIW, for GNU Guix (which doesn’t have anyone yet on the distros list),
+we pushed the patch less than 30 minutes after the public disclosure on
+oss-sec¹.
 
-Fixed version:
-N/A
+The fact that your message to oss-sec was very clear on the issue and
+its consequences, and contained a link to the (small) patch surely made
+it easier to prepare the fix.
 
-Commit fix:
-N/A
+Ludo’.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-11124
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00288-xar-nullptr-xar_unserialize
-
-Timeline:
-2017-06-17: bug discovered and reported to upstream
-2017-06-28: blog post about the issue
-2017-07-10: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/06/28/xar-null-pointer-dereference-in-xar_unserialize-archive-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+¹ https://git.savannah.gnu.org/cgit/guix.git/commit/?id=e14ab0ad070b4eafa19fc1df81b7b5c3de1dc1b2
