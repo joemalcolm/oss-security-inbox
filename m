@@ -1,4 +1,9 @@
-Received: (qmail 28663 invoked by uid 550); 20 Oct 2023 13:04:34 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2720" "Monday" "25" "September" "2017" "14:52:13" "+0100" "Cliff Perry" "cperry@redhat.com" "<957f2bdc-6603-3e86-1d63-8e33c8df768a@redhat.com>" "73" "Re: [oss-security] Why send bugs embargoed to distros?" "^Date:" nil nil "9" "2017092513:52:13" "[oss-security] Why send bugs embargoed to distros?" (number mark "        cperry@redha Sep 25   73/2720  " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<20170923134418.6e460656@pc1>" ("<20170923134418.6e460656@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 29741 invoked by uid 550); 25 Sep 2017 14:01:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,60 +11,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32309 invoked from network); 20 Oct 2023 07:42:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dgl-cx.20230601.gappssmtp.com; s=20230601; t=1697787713; x=1698392513; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KvthZV6nfGEcfJZEVP4p5tEmdMQCU/5glyLAwk/zKMo=;
-        b=YV2GfrwUY2VT8n7xHJ+Y8OdtpBuP+ZNBvnXIHhY1dwA/JEFv9lR6ZL1/uJJ8ch3uEc
-         g7KsxiU2BFo5STU/T2I5zUChHlnlJx2SS55tdfQAU/5i72CmnLoQETkvr2VLeVMyLHyR
-         9QR72dMNzAPMCxjk8eeqzbbIi0MSce3OWswTmiN6wWV0xljLnqJtP5FusCzdEOVNO0Kx
-         3NqsIMAIQARffp1S6Nj2fSwEWUrJQInhleG0aErjmVC/HVUtae5mbbSsxc7crKSniFrw
-         vrl6BaRXYSBPkECTIneCtJ+iol/VlUtBBxB8iV/vVuS4muF1Kr28xKAo0H+JYBxTEfJH
-         91nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697787713; x=1698392513;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KvthZV6nfGEcfJZEVP4p5tEmdMQCU/5glyLAwk/zKMo=;
-        b=ftVdcodcJD5nuNoeC/pTth64tSZSuA/MUNsK0O6Ix7fNjQpiNPs+OMqDINXcqIpi0R
-         V/dh6PeUPFZsSvdXHOCKpAcnHLWX8W8fu33vlurEfty2DxVKpdbIOdUWO+x6XW4fY+CU
-         b8sPraJTv5hSn8TsPbRma1BvMtW07BbVHjXydVvgPzV+QcaNjN/NQCG5+Yw1PdZVhJ+B
-         r+EA4O9HI/J6G0IMPY7w9pm+aatY/Gi2+ZW9Dpo2Irwe3+R3vUX4Yxut3ab0UWwxeq+I
-         YScFkNjIBYlOfc1GV4io09scFsVd7tXtLyLHQGUFR19x7P+foZIH2MSpHC0moAofk20A
-         da3A==
-X-Gm-Message-State: AOJu0Yx+gSISXLB+D1hGPWcT9rYCf5M74YFBi5JzKE2262HveAbXxOGg
-	IQX8iFvngOdbRQWV9jWq2k4PKJ831O4qY4S9hOXKyIZOBnVRz52QmiYfxE97
-X-Google-Smtp-Source: AGHT+IFJkt1htoQN595SXSsMBrxKdsa5kzOob0OMLrH+wehZB1LAXR0FKBhEkSYiv8XreTiJAYNhYPH2SK2/srO9YMo=
-X-Received: by 2002:a05:6102:4709:b0:44e:93f4:3c85 with SMTP id
- ei9-20020a056102470900b0044e93f43c85mr1325246vsb.12.1697787713075; Fri, 20
- Oct 2023 00:41:53 -0700 (PDT)
+Received: (qmail 24386 invoked from network); 25 Sep 2017 13:52:27 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 724CA806BF
+Authentication-Results: ext-mx02.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx02.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=cperry@redhat.com
+References: <20170923134418.6e460656@pc1>
+Message-ID: <957f2bdc-6603-3e86-1d63-8e33c8df768a@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
- <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net> <d85658c838a1338c829cee30fb9c344688a2a470.camel@sambull.org>
- <20231019165354.kkjoxdbedeodyfik@yuggoth.org> <7039466aa03ec8a90e1ce3a2ae983421.a13627b7@limousine.hussar>
- <CAP9KPhDg3kpmsAyL74B5LuMmTq55pYoA+5LpJR0WkH0HO3Xw8g@mail.gmail.com>
-In-Reply-To: <CAP9KPhDg3kpmsAyL74B5LuMmTq55pYoA+5LpJR0WkH0HO3Xw8g@mail.gmail.com>
-From: David Leadbeater <dgl@dgl.cx>
-Date: Fri, 20 Oct 2023 18:41:41 +1100
-Message-ID: <CAP9KPhBoy-ES2LxZi1Ax7BaAHwF5B2--ZqWtYUVEBbQ4P66XiQ@mail.gmail.com>
+In-Reply-To: <20170923134418.6e460656@pc1>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Mon, 25 Sep 2017 13:52:15 +0000 (UTC)
+Date: Mon, 25 Sep 2017 14:52:13 +0100
+From: Cliff Perry <cperry@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Why send bugs embargoed to distros?
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] with firefox on X11, any page can pastejack you anytime
 
-On Fri, 20 Oct 2023 at 12:58, David Leadbeater <dgl@dgl.cx> wrote:
-[...]
-> Then you get a command being run with no interaction; this appears to
-> work with xterm (384) + fish for example.
+On 23/09/17 12:44, Hanno Böck wrote:
+> Hi,
+> 
+> A few days have passed since the optionsbleed disclosure. Some
+> interesting things have surfaced, e.g. the fact that it was apparently
+> discovered already in 2014, but nobody noticed it was a security bug.
+> 
+> 
+> But I'd like to discuss something else:
+> I had informed the distros mailing list one week earlier about the
+> upcoming disclosure with a bug description and links to the already
+> available patch.
+> My understanding is that the purpose of the distros list is that
+> updates can be prepared so after a disclosure the time between "vuln is
+> known" and "patch is available" is short.
+> However from all I can see this largely didn't happen.
+> 
+> Debian+Ubuntu took more than a day after disclosure to fix. According
+> to the Debian bug tracker the bug got only opened after the public
+> disclosure[2]. I see no sign that any work on a fix began before the
+> disclosure.
+> 
+> If I can trust Red Hat's CVE tracker [3] there still are no fixed
+> packages available. Also I haven't found any info about updated
+> opensuse packages.
+> 
+> The only distro I'm aware of that prepared packages and pushed them
+> right after disclosure is Gentoo.
+> 
+> All of this makes me wonder if the distros list serves its purpose.
+> 
+> I'd be curious to hear:
+> 
+> a) if any people felt that pre-disclosure of optionsbleed was helpful
+> to them and in which way (after all - even if it only helps minor
+> distros and major distros ignore it it may still be a good thing).
+> 
+> b) if people think that they'd usually prepare a fixed package, however
+> they didn't consider optionsbleed important enough. (Naturally I
+> probably have a bias seeing my findings as more important as other
+> people, but I could live with that.)
+> 
+> c) other things?
+> 
+> 
+> 
+> [1] https://arxiv.org/pdf/1405.2330.pdf
+> https://blog.fuzzing-project.org/61-How-Optionsbleed-wasnt-found-in-2014.html
+> [2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=876109
+> [3] https://access.redhat.com/security/cve/cve-2017-9798
+> 
 
-I missed that this is configurable in xterm, so this can be mitigated
-by setting the Xresource:
+Hi Hanno,
+The detail of your report was good quality and I'm sure appreciated by
+everyone who needed to review it. I know that for Red Hat the
+pre-disclosure was useful.
 
-disallowedPasteControls: BS,DEL,ENQ,EOT,ETX,ESC,NUL
+During analysis, like SUSE, we rated it as having a security impact of
+Moderate (https://access.redhat.com/security/updates/classification);
+and not highly impacting that required expedited preparation of packages
+for the embargo date. Additional information is contained within the
+bugzilla linked off our CVE page
+(https://bugzilla.redhat.com/show_bug.cgi?id=1490344).
 
-i.e. Adding "ETX" (^C) to the default set. (I've asked if this can be
-the new default.)
+We look forward to working with you again in the future.
 
-David
+Regards,
+Cliff
+
+-- 
+Senior Engineering Manager
+
+Red Hat Product Security
