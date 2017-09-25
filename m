@@ -1,61 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/09/1
-Message-ID: <CALJHwhQUW4-9YRvpEr0ygDSoskx9vCFjowAwEPK8hKB7_bYu2w@mail.gmail.com>
-Date: Thu, 9 Mar 2017 14:53:52 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/3
+Message-ID: <466141472.14007261.1506337465946.JavaMail.zimbra@redhat.com>
+Date: Mon, 25 Sep 2017 07:04:25 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: hosein.askari@....com
-Subject: Concerns about CVE-2017-5972
+Subject: Re: CVE-2017-14489: Linux kernel: scsi: nlmsg is not properly parsed in iscsi_if_rx()
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+heololo,
 
->From the original description from Hosein Askari (CC'ed) :
+an additional research shows that the very latest kernels are not showing
+a crash with a reproducer. git bisect showed that:
 
----
-The TCP stack in the Linux kernel 3.x does not properly implement a
-SYN cookie protection mechanism for the case of a fast network
-connection, which allows remote attackers to cause a denial of service
-(CPU consumption) by sending many TCP SYN packets, as demonstrated by
-an attack against the kernel-3.10.0 package in CentOS Linux 7.
----
+commit 7f564528a480084e2318cd48caba7aef4a54a77f (between v4.11 and v4.12-rc1)
+is the first commit a crash is not reproduced with:
 
-This topic was covered by github[1], in which they chose to use
-synsanity as a mitigation process.
+commit 7f564528a480084e2318cd48caba7aef4a54a77f
+Author: Steffen Klassert <steffen.klassert@...unet.com>
+Date:   Sat Apr 8 20:36:24 2017 +0200
+skbuff: Extend gso_type to unsigned int.
 
-After spending some time looking at this allocation, I was unable to
-reproduce the initial findings on either Red Hat Enterprise Linux 6
-(based on 2.6.32) or 7 (based on 3.10) using direct host to host via
-qemu or the e1000 driver as shown in the backtrace.  This with both
-syn cookies enabled and disabled.
+i.e. this is commit which fixed the crash. checking the code, it looks like
+struct skb_shared_info's fields were reordered, so a field which overwrite
+was causing a panic has been moved. nevertheless, the buffer overwrite is still
+there, so a suggested patch 9923803 (or its later version) is still needed.
 
-The backtrace provided shows that there is a slowpath in transmitting
-ICMP reply packets which does not show the TCP syn cookie function in
-the slowpath/backtrace.
+for a proof compare a flaw description:
 
-I have attempted to performance profile this and found the syncookie
-generation (under heavy syn attacks from multiple sources) did not
-show significant impact on CPU performance compared to the packet
-handling  in use.  I'm not saying its impossible I'm just saying the
-backtrace doesn't match the events that are shown.
+> ev = nlmsg_data(nlh) will acutally get skb_shinfo(SKB) instead and set a
+> new value to skb_shinfo(SKB)->nr_frags by ev->type.
 
-I -have- however been able to artificially recreate a very similar
-backtrace through stuffing fake packets in with a kernel module and
-created a hardening bug, however this seems unrelated as far as I can
-see ( See https://bugzilla.redhat.com/show_bug.cgi?id=1428684 ).
+and the commit message:
 
-The reproducer code is from a file called called "Trigemini.c" and is
-found in several DDoS kits for at least the last 2 years, although
-it's true origins are probably older, it is not possible to reproduce
-or recreate on any scale I was able to test with.
+>    The remaining two byte hole is moved to the
+>    beginning of the structure, this protects us
+>    from immediate overwites on out of bound writes
+>    to the sk_buff head.
+> 
+>    Structure layout on x86-64 before the change:
+> 
+>    struct skb_shared_info {
+>            unsigned char              nr_frags;
+>            __u8                       tx_flags;
+> 
+>    Structure layout on x86-64 after the change:
+> 
+>    struct skb_shared_info {
+>            short unsigned int         _unused;
+>            unsigned char              nr_frags;
+>            __u8                       tx_flags;
 
-I give Hosein a chance to talk more about his reproducer, in hope that
-we can get a better understanding on how this was reproduced reliably.
-
-Thank you
-
-Wade Mealing
-Red Hat Product Security
-
-[1] https://githubengineering.com/syn-flood-mitigation-with-synsanity/
-[2] https://github.com/LOLSquad/DDoS-Scripts/blob/master/TriGemini.c
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
