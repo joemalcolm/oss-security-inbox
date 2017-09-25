@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/12/1
-Message-ID: <CAMopvkMb_CDw9UNZMUec8UApNZ8Xmr2M-wTCXPuhB9fCTr2Eqg@mail.gmail.com>
-Date: Tue, 12 Dec 2017 08:13:02 +0100
-From: Lukasz Lenart <lukaszlenart@...che.org>
-To: Struts Users Mailing List <user@...uts.apache.org>
-Cc: announce@...che.org, announcements@...uts.apache.org,  oss-security@...ts.openwall.com
-Subject: [ANN] [APACHE STRUTS] Security Bulletin S2-055: impact increased to High (related to CVE-2017-7525 - JSON Jackson library)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/2
+Message-ID: <0ebe7d66-c766-269e-d044-0ffdf2aa9723@oracle.com>
+Date: Mon, 25 Sep 2017 09:07:36 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 23/09/17 12:44, Hanno Böck wrote:
+> I had informed the distros mailing list one week earlier about the
+> upcoming disclosure with a bug description and links to the already
+> available patch.
+> My understanding is that the purpose of the distros list is that
+> updates can be prepared so after a disclosure the time between "vuln is
+> known" and "patch is available" is short.
+> However from all I can see this largely didn't happen.
 
-After further clarification we increased impact of a vulnerability
-reported to us and described as S2-055 to High. The vulnerability
-exists in a JSON Jackson library and it's registered under
-CVE-2017-7525. Please read the bulletin [1] and apply possible
-solutions. This vulnerability impacts anyone using the vulnerable
-Jackson JSON library (not only Struts users).
+This pre-disclosure interval is extremely useful.  We may not, in
+general, publish a patch quite as soon after disclosure that I would
+like but that doesn't mean we have ignored the pre-disclosure or taken
+no action.
 
-[1] https://cwiki.apache.org/confluence/display/WW/S2-055
+While it may not be readily apparent, the distros list does allow us to
+get our act together so that when customers come knocking asking "what's
+this security problem all about then?" we have answers prepared.  It'll
+never be perfect, but I'd like to think we're all getting better at this.
 
-
-Regards
--- 
-Łukasz
-+ 48 606 323 122 http://www.lenart.org.pl/
+jch
