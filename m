@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2092" "Tuesday" "1" "November" "2016" "12:44:27" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<dc9efac7984445ffb65b2a86012f7255@imshyb02.MITRE.ORG>" "50" "[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12" nil nil nil "11" "2016110116:44:27" "[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12" (number mark "U       cve-assign@m Nov  1   50/2092  " thread-indent "\"[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12\"\n") "<CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>" ("<CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["605" "Monday" "25" "September" "2017" "13:36:48" "+0200" "Marek =?ISO-8859-1?Q?Hul=E1?==?ISO-8859-1?Q?n?=" "mhulan@redhat.com" "<2033359.mTVEEEsRMu@tony>" "16" "[oss-security] Foreman 1.1+ stored XSS in organizations/locations assignment to hosts" nil nil nil "9" "2017092511:36:48" "[oss-security] Foreman 1.1+ stored XSS in organizations/locations assignment to hosts" (number mark "U       mhulan@redha Sep 25   16/605   " thread-indent "\"[oss-security] Foreman 1.1+ stored XSS in organizations/locations assignment to hosts\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28402 invoked by uid 550); 1 Nov 2016 16:44:42 -0000
+Received: (qmail 7792 invoked by uid 550); 25 Sep 2017 12:10:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +12,35 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28351 invoked from network); 1 Nov 2016 16:44:39 -0000
-From: <cve-assign@mitre.org>
-To: <kaplanlior@gmail.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>
-Message-ID: <dc9efac7984445ffb65b2a86012f7255@imshyb02.MITRE.ORG>
-Date: Tue, 1 Nov 2016 12:44:27 -0400
+Received: (qmail 20161 invoked from network); 25 Sep 2017 11:37:02 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com BD4C05F7AC
+Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=mhulan@redhat.com
+From: Marek =?ISO-8859-1?Q?Hul=E1n?= <mhulan@redhat.com>
+To: oss-security@lists.openwall.com
+Cc: foreman-security@googlegroups.com
+Date: Mon, 25 Sep 2017 13:36:48 +0200
+Message-ID: <2033359.mTVEEEsRMu@tony>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Mon, 25 Sep 2017 11:36:50 +0000 (UTC)
+Subject: [oss-security] Foreman 1.1+ stored XSS in organizations/locations assignment to hosts
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2017-7535: Attempting to assign all hosts to an organization or location 
+that contains HTML does not properly escape the html in the toast notification 
+informing of success. Exploiting this requires a user to actively assign hosts 
+to an organization that contains html in its name which is visible to the user 
+prior to taking action.
 
->> Bug #73147    Use After Free in unserialize()
->> https://bugs.php.net/bug.php?id=73147
->> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+Affects Foreman 1.1 and higher.
 
-> The
-> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f commit adds
-> zend_unset_property for PHP 7.0.12, and arranges for
-> zend_unset_property to be called only from
-> "ZEND_METHOD(CURLFile, __wakeup)" in ext/curl/curl_file.c.
+Patch available at https://github.com/theforeman/foreman/pull/4851
+Fix will be released in Foreman 1.16.0 (to be released)
+For more information please see the Redmine issue http://
+projects.theforeman.org/issues/20963
 
-> 73147 discusses other concerns such as "The
-> similar bug can be also triggered via Exception::__toString with
-> DateInterval::__wakeup" and "The problem is that every __wakeup that
-> modifies any property would produce the same problem."
+--
+Marek
 
-> 2. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f fixes only the CURLFile
-> implementation. The "other concerns" mentioned above are
-> vulnerabilities that still exist in 7.0.12.
-
-Use CVE-2016-9137 for the ext/curl/curl_file.c vulnerability that was
-fixed in 5.6.27 and 7.0.12.
-
-Use CVE-2016-9138 for the remaining security problem associated with
-__wakeup that is still present in 5.6.27 and 7.0.12.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYGMYQAAoJEHb/MwWLVhi20TAP/jruOGY2MR5CzDVn+bNzZ+bv
-0U3pkkcesWCma0H+BC7xq0uxQWT4hXf8gqYfA7cKE55DLBQ3ANbYqeAPZsUVqHSC
-36t0wtxVc0kHB+yfmUKVgTyqmrNa63LYpjeVd11Q74RDfinGve664U7ZPhOdpHeE
-hgXpiR2SBLFIwVl2ZJ4SjHIe6Z6TDL3BIZQROVcxbFBP8MKJhcP1gMPlIActwjiS
-B3ZpB9QTUVIeuDHB9ZX2GiD9cWLiPx6i+ToYW+oPF3pPItdcOI7G0hWiJszHu32t
-egpC/YcQR8s22chiARcPWJLBmWYeV7RO0Z0BuWX5QKLC9YfbPSMXHtInpqUGl5Ce
-s4zbF22EAT4wAI11qOpALcoKW1jvlFVnK3KEdRKmKjD17P73fKNIRg9NeMdmUHf5
-CPh7Lbq6HvdKK1wQwp3NUbwiFjMtSACN+NX2F+DR2LzhltqGj+MX1grOh558Zzfq
-9Gyo8ufsxhqPFcSf6+kjMEVcjU2lloF6HLaij7Vk6+VuA+adUCpJiaFN4VshCwXA
-7sJm9bJVmaJS4w2GaZZ+HDam3FEehmVVBjyuf/MYuwHd5RLjH3Ccqs73yDDumiB9
-h4tiu4UTpBl3F2N/TN3+Xk2L2FhDLvAfo3FbtZSQHWBCIXPP94zCLAkQ31IesbaO
-vvned9Twm3WPJYV1HiGA
-=WLXc
------END PGP SIGNATURE-----
