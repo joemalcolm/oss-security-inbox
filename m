@@ -1,62 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/1
-Message-ID: <20170126215243.58355x6p4o9cc7ks@webmail.alunos.dcc.fc.up.pt>
-Date: Thu, 26 Jan 2017 21:52:43 +0100
-From: up201407890@...nos.dcc.fc.up.pt
-To: oss-security@...ts.openwall.com, Noryungi <noryungi@...il.com>
-Subject: Re: Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local privesc on Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/1
+Message-ID: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
+Date: Mon, 25 Sep 2017 21:50:59 +0000
+From: "Priedhorsky, Reid" <reidpr@...l.gov>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-Quoting Noryungi <noryungi@...il.com>:
+Hello all,
 
-The PTY slave must be root owned to get root obviously, for example  
-when root logs in via ssh.
+Debian recently issued DSA-3981-1, which announced fixes for quite a few CVEs affecting the Linux kernel. For five of these, I could find no evidence of any mention on oss-security:
 
-> Does not work on centos 7.1 (unpatched) running stock openssh.
->
-> TTY capture works, /tmp/sh is created but user is unprivileged.
->
-> On Jan 26, 2017 5:52 PM, <up201407890@...nos.dcc.fc.up.pt> wrote:
->
->> Hi list,
->>
->> I know I'm late to the party, but I was bored, so I decided to write an
->> exploit for CVE-2015-6565 which affects OpenSSH 6.8-6.9
->> It is mostly considered to be a "DoS", even though Jann Horn publicly told
->> how it could be exploited for local privilege escalation, but I guess its
->> either PoC||GTFO for users to update.
->>
->> From https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6565
->>
->> "sshd in OpenSSH 6.8 and 6.9 uses world-writable permissions for TTY
->> devices, which allows local users to cause a denial of service (terminal
->> disruption) or possibly have unspecified other impact by writing to a
->> device, as demonstrated by writing an escape sequence."
->>
->> I think the description should be updated.
->>
->> $ gcc not_an_sshnuke.c -o not_an_sshnuke
->> $ ./not_an_sshnuke /dev/pts/3
->> [*] Waiting for slave device /dev/pts/3
->> [+] Got PTY slave /dev/pts/3
->> [+] Making PTY slave the controlling terminal
->> [+] SUID shell at /tmp/sh
->> $ /tmp/sh --norc --noprofile -p
->> # id
->> euid=0(root) groups=0(root)
->>
->> Thanks,
->> Federico Bento.
->>
->>
->>
->> ----------------------------------------------------------------
->> This message was sent using IMP, the Internet Messaging Program.
->>
->
+  CVE-2017-10661
+  CVE-2017-11600
+  CVE-2017-12146
+  CVE-2017-12154
+  CVE-2017-14156
 
+Another CVE not in Debian’s announcement also seems not to have been mentioned here:
 
+  CVE-2016-10200
 
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
+Of these six, three are possible privilege escalations (CVE-2016-10200, CVE-2017-10661, CVE-2017-12146). One was reported on oss-security, but not by CVE (CVE-2017-14156); the subject was “Linux kernel: driver/video/fbdev/aty/atyfb_base.c: atyfb_ioctl() stack infoleak”.
 
+I looked for mentions with the Google query ‘"CVE-xxxx-yyyyy" oss-security’ as well as in my own database that I maintain directly from list postings. For CVEs that do appear here on the list, the posting is usually the first Google hit. I don’t believe any of the above are recent enough not to have been announced.
+
+This is related to previous discussions here about CVE requests moving from this list to a web form. IIRC, a key hypothesis was that CVE requestors would forward notices to oss-security. Above, I provide evidence that this is not happening consistently for Linux kernel vulnerabilities.
+
+My questions:
+
+1. Is oss-security’s coverage of security issues in open-source software intended to be comprehensive? If so, this appears not to be true for the Linux kernel.
+
+2. Is there another source of comprehensive coverage of vulnerabilities in the Linux kernel, including but not necessarily limited to all CVEs issued for it?
+
+I appreciate everyone’s time and effort on all this stuff. This post should not be interpreted as singling out Debian for criticism.
+
+Thanks,
+Reid
