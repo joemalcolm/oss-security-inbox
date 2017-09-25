@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/12
-Message-ID: <6894c38550b74c359fe000e3a47fbdfc@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 01:08:48 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: podofo: NULL pointer dereference in PdfOutputStream.cpp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/7
+Message-ID: <20170925180654.GA15007@jasmine.lan>
+Date: Mon, 25 Sep 2017 14:06:54 -0400
+From: Leo Famulari <leo@...ulari.name>
+To: oss-security@...ts.openwall.com
+Subject: Re: Why send bugs embargoed to distros?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Sep 25, 2017 at 02:52:13PM +0100, Cliff Perry wrote:
+> On 23/09/17 12:44, Hanno Böck wrote:
+> > b) if people think that they'd usually prepare a fixed package, however
+> > they didn't consider optionsbleed important enough. (Naturally I
+> > probably have a bias seeing my findings as more important as other
+> > people, but I could live with that.)
 
-> https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-pdfoutputstream-cpp
-> base/PdfOutputStream.cpp:116:33
-> null pointer passed as argument 2, which is declared to never be null
+Guix is not on the distros lists, but sometimes upstream projects
+contact us privately with pre-release embargoed bug fixes. We will test
+and prepare the updated packages during the embargo period whether or
+not we thing the bugs warrant an embargo.
 
-Use CVE-2017-5854.
+> Hi Hanno,
+> The detail of your report was good quality and I'm sure appreciated by
+> everyone who needed to review it. I know that for Red Hat the
+> pre-disclosure was useful.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Agreed, your reports are very useful to us, whether we read them in the
+pre-release period, or after they have been disclosed publicly.
 
-iQIcBAEBCAAGBQJYkscmAAoJEHb/MwWLVhi2n5QQALNRqal5Rg2zsFOPzryh+zyD
-f+rk+2P/wXRHWKsTDD36YHrePJWu9f4sdcawq5SLQ5E4dLmqhCkFcKxrlf66Y2b5
-kFDOvNicb/X0CcJ4TLj/XH5J26v3x1CI+sacRU4WuEy7U1yOTqgSuIycrlxysOaQ
-4ze/4RYT6hwkdESM6PHwO2KGEOJ9ZLvMXGJaVtXHEsycqya4FgQlbbHabNhfWBDv
-HRKiUnBukaSmRd+82ZU21u4CmYz/3vDp9vjkWPTnrfZ0kPQlgO+vsanGAd1UZLZu
-nZXb++ApsB3yZm2qJ2LUuMuw6scxfp/baDJtOeRZKq/17DarGSQ/jb2Z+cN5ZEoj
-VAT1AOoPIymK7H46erniJYL1gIsCPq47lmhfVyjBAL3zHAYeMeuPHxBT/lUwYh/I
-5fWi46WL08x1nOo2H6EXkMq76YIEHXMS+SXIf+O7VGGxy46lYS2e0Wucemr/PGGP
-l7hKdY8uPaFsWLMyBDDhTY/2K+wbOSP1JipCxCCc/MMTBqypArtshBwXJoONWGme
-yglZBhO6cjv1dxfidYO+eBzz5lTV6efxaIGoX/DHqZwVoAKL9jsR1UOpRM71DiEY
-KKJmm5xpyJ6CB77Ca042VlxJU5WpH1g26rcTuErnY9D5LNe622ix1//pvZ39cqqz
-yunPm/rZRwmZKIKwikVH
-=DC0Z
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
