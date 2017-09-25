@@ -1,50 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/25/2
-Message-ID: <20171125035912.GA20323@breadbox.private.spodhuis.org>
-Date: Fri, 24 Nov 2017 22:59:12 -0500
-From: Phil Pennock <oss-security-phil@...dhuis.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/4
+Message-ID: <2033359.mTVEEEsRMu@tony>
+Date: Mon, 25 Sep 2017 13:36:48 +0200
+From: Marek Hulán <mhulan@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: RCE in Exim reported
+Cc: foreman-security@...glegroups.com
+Subject: Foreman 1.1+ stored XSS in organizations/locations assignment to hosts
 Content-Type: text/plain; charset=utf-8
 
-In Post-Thanksgiving mail-catchup, I see that the Exim Project was
-gifted with a couple of surprises in our public bugtracker on Thursday
-morning.  Complete with proof-of-concept small Python script.
+CVE-2017-7535: Attempting to assign all hosts to an organization or location 
+that contains HTML does not properly escape the html in the toast notification 
+informing of success. Exploiting this requires a user to actively assign hosts 
+to an organization that contains html in its name which is visible to the user 
+prior to taking action.
 
-I've requested CVEs, don't have them yet.
+Affects Foreman 1.1 and higher.
 
-My mail to our announce list:
-  https://lists.exim.org/lurker/message/20171125.034842.d1d75cac.en.html
+Patch available at https://github.com/theforeman/foreman/pull/4851
+Fix will be released in Foreman 1.16.0 (to be released)
+For more information please see the Redmine issue http://
+projects.theforeman.org/issues/20963
 
-Remote code execution in the first vulnerability, getting execution as
-the Exim run-time user.
+--
+Marek
 
-A complete mitigation is to disable advertising the CHUNKING extension,
-in which case an attempt to use the BDAT verb should result in:
-
-  503 BDAT command used when CHUNKING not advertised
-
-The instructions I wrote in the mail to our announce-list, were:
-
-} With immediate effect, please apply this workaround: if you are running
-} Exim 4.88 or newer (4.89 is current, 4.90 is upcoming) then in the main
-} section of your Exim configuration, set:
-}
-}   chunking_advertise_hosts =
-}
-} That's an empty value, nothing on the right of the equals. This
-} disables advertising the ESMTP CHUNKING extension, making the BDAT verb
-} unavailable and avoids letting an attacker apply the logic.
-
-Chunking support was introduced with Exim 4.88; the current release is
-4.89, 4.90 is in RC series now, it looks like a 2-line fix (written by
-Jeremy Harris) is probably right for the first issue.
-
-Public bugtracker links:
-
-  https://bugs.exim.org/show_bug.cgi?id=2199
-  https://bugs.exim.org/show_bug.cgi?id=2201
-
--Phil
-
-Download attachment "signature.asc" of type "application/pgp-signature" (997 bytes)
