@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/04/1
-Message-ID: <20170603231528.o7zt7koxarjzdpag@ws.net.home>
-Date: Sun, 4 Jun 2017 01:15:28 +0200
-From: Karel Zak <kzak@...hat.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: TIOCSTI not going away
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/12
+Message-ID: <4188502.8b3PN4uBSd@wanheda>
+Date: Tue, 26 Sep 2017 16:50:10 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Greg KH <greg@...ah.com>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 03, 2017 at 06:58:13PM +0200, Solar Designer wrote:
-> In fact, just 2 days ago util-linux 2.30 was released with
-> the issue still deliberately not fixed:
+On martedì 26 settembre 2017 09:32:14 CEST Greg KH wrote:
+> > I guess this would be benefit for all.
 > 
-> https://marc.info/?l=util-linux-ng&m=149640144016887
-> 
-> | CVE-2016-2779 - This security issue is NOT FIXED yet.  It is possible to
-> |   disable the ioctl TIOCSTI by setsid() only.  Unfortunately, setsid()
-> |   has well-defined use cases in su(1) and runuser(1) and any changes
-> |   would introduce regressions.  It seems we need a better way -- ideally
-> |   another ioctl to disable TIOCSTI without setsid() or in a userspace
-> |   implemented pty container (planned as experimental su(1) feature).
-> 
-> I am posting this message primarily to let maintainers of userspace
-> su-like programs know that they should in fact proceed to implement
+> Define "all" 
 
-I'm working on this (su-* branches on github), but I'd like to do some 
-refactoring to implement. So, let's hope the next release.
-
-    Karel
-
+You know, for example in Gentoo we are following the upstream releases. So 
+from time to time we stabilize a newer kernel that "syncs" with upstream.
+This does not happen for non-rolling (release) distros that may want to patch/
+backport the security fix.
 
 -- 
- Karel Zak  <kzak@...hat.com>
- http://karelzak.blogspot.com
+Agostino Sarubbo
+Gentoo Linux Developer
