@@ -1,127 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/14/4
-Message-ID: <20170114164211.GA17377@openwall.com>
-Date: Sat, 14 Jan 2017 17:42:11 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Thiago Macieira <thiago@...ieira.org>
-Cc: security@...project.org, oss-security@...ts.openwall.com
-Subject: Re: [Security] Qt QXmlSimpleReader
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/6
+Message-ID: <146142.067478166-sendEmail@localhost>
+Date: Tue, 26 Sep 2017 07:03:41 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi Thiago,
+Description:
+binutils is a set of tools necessary to build programs.
 
-Thank you for your helpful response.
+The complete ASan output of the issue:
 
-On Mon, Jan 09, 2017 at 09:24:51AM -0800, Thiago Macieira wrote:
-> On s?bado, 24 de dezembro de 2016 16:18:33 PST Solar Designer wrote:
-> > To what extent has Qt's QXmlSimpleReader class been reviewed for
-> > vulnerabilities?  I found only Florian Weimer's CVE-2013-4549
-> > "XML entity expansion denial of service", which Red Hat somehow chose
-> > not to fix (no intent to parse untrusted XML?) even though they got
-> > upstream to fix it.
-> 
-> It has not been at all reviewed. That class is deprecated and we have zero 
-> resources paying attention to it.
-[...]
-> We don't have anyone who knows the source code anymore, so we simply 
-> can't tell you how much it may or may not cache.
-> 
-> The only recommended class for reading XML is QXmlStreamReader. Using any of 
-> the classes from the QtXml library should only happen with trusted sources.
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==40547==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a000000574 at pc 0x0000004c1ca8 bp 0x7ffc34f58d10 sp 0x7ffc34f584c0
+WRITE of size 6 at 0x61a000000574 thread T0
+    #0 0x4c1ca7 in __asan_memcpy /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_interceptors.cc:466
+    #1 0x7f6df2a247e5 in _bfd_x86_elf_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elfxx-x86.c:1946:3
+    #2 0x7f6df29f7b7a in elf_x86_64_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf64-x86-64.c:4963:10
+    #3 0x513df5 in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1155:21
+    #4 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #5 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #6 0x7f6df19d1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
 
-Oh.  Is this stated somewhere in the documentation for QXmlSimpleReader,
-along with the suggestion to use QXmlStreamReader instead?  Perhaps it
-should be.
+0x61a000000574 is located 0 bytes to the right of 1268-byte region [0x61a000000080,0x61a000000574)
+allocated by thread T0 here:
+    #0 0x4d8e08 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:67
+    #1 0x7f6df299dd5c in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9
+    #2 0x7f6df299dd5c in bfd_zmalloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:278
+    #3 0x7f6df2a23e29 in _bfd_x86_elf_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elfxx-x86.c:1829:26
+    #4 0x7f6df29f7b7a in elf_x86_64_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf64-x86-64.c:4963:10
+    #5 0x513df5 in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1155:21
+    #6 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #7 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #8 0x7f6df19d1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Right now, I see this:
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_interceptors.cc:466 in __asan_memcpy
+Shadow bytes around the buggy address:
+  0x0c347fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fff8060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fff8070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fff8090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c347fff80a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00[04]fa
+  0x0c347fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fff80f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==40547==ABORTING
 
-http://doc.qt.io/qt-5/qxmlsimplereader.html#details
+Affected version:
+2.29.51.20170921 and maybe past releases
 
-"The QXmlSimpleReader class provides an implementation of a simple XML
-parser.
+Fixed version:
+N/A
 
-This XML reader is suitable for a wide range of applications.  It is
-able to parse well-formed XML and can report the namespaces of elements
-to a content handler; however, it does not parse any external entities."
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=61e3bf5f83f7e505b6bc51ef65426e5b31e6e360
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=56933f9e3e90eebf1018ed7417d6c1184b91db6b
 
-http://doc.qt.io/qt-5/qxmlstreamreader.html#details
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-"The QXmlStreamReader class provides a fast parser for reading
-well-formed XML via a simple streaming API.
+CVE:
+CVE-2017-14729
 
-QXmlStreamReader is a faster and more convenient replacement for Qt's
-own SAX parser (see QXmlSimpleReader).  In some cases it might also be a
-faster and more convenient alternative for use in applications that
-would otherwise use a DOM tree"
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00367-binutils-heapoverflow-_bfd_x86_elf_get_synthetic_symtab
 
-This doesn't give the impression that either one is deprecated.  Also,
-both say they're only for "well-formed" XML, suggesting they might be
-unsuitable for use on untrusted input, but not explicitly stating so.
-In fact, QXmlStreamReader has this "well-formed" requirement in the
-one-sentence summary seen at top of page, whereas for QXmlSimpleReader
-this requirement is only included in the details (second paragraph).
+Timeline:
+2017-09-21: bug discovered and reported to upstream
+2017-09-22: upstream released a patch
+2017-09-25: blog post about the issue
+2017-09-25: CVE assigned
 
-FYI, the stack overflow from recursive calls between parseElement() and
-parseContent() got assigned CVE-2016-10040 here:
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
-http://www.openwall.com/lists/oss-security/2016/12/24/2
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/25/binutils-heap-based-buffer-overflow-in-_bfd_x86_elf_get_synthetic_symtab-elfxx-x86-c/
 
-> > Then there's value.resize(), which also accepts a signed int (so the
-> > above code's use of signed int may have been justified, after all):
-> > 
-> > http://doc.qt.io/qt-4.8/qstring.html#resize
-> > 
-> > "If size is greater than the current size, the string is extended to
-> > make it size characters long with the extra characters added to the end.
-> > The new characters are uninitialized.
-> > 
-> > If size is less than the current size, characters are removed from the end."
-> > 
-> > No clear explanation on what will happen on a negative size, and besides
-> > it might also be possible to exceed 4 GB and get to positive values again.
-> 
-> Negative sizes are the same as zero. You can't exceed 4 GB with a signed int 
-> in QString.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-I see this is now documented:
 
-http://doc.qt.io/qt-4.8/qstring.html#resize
-
-"If size is negative, it is equivalent to passing zero."
-
-Either I overlooked this detail before, or you improved the
-documentation since.
-
-If I understand correctly, this means that in this piece I quoted before:
-
- 8187 inline static void updateValue(QString &value, const QChar *array, int &arrayPos, int &valueLen)
- 8188 {
- 8189     value.resize(valueLen + arrayPos);
- 8190     memcpy(value.data() + valueLen, array, arrayPos * sizeof(QChar));
- 8191     valueLen += arrayPos;
- 8192     arrayPos = 0;
- 8193 }
-
-it will be an up to 256 bytes write with the memcpy() at about 2 GiB
-beyond the allocation, which value.resize() would reduce to 0 bytes.
-(And if this somehow succeeds, then the second time it may be a similar
-write at about 2 GiB below that allocation.)
-
-Is this right?  Is it really that bad?
-
-> > Is there anything at higher layers, yet applicable to all published Qt's
-> > APIs, consistenly limiting XML inputs to below 2 GB?  If so, this may be
-> > OK (but a comment would be nice).  If not, we have a problem.
-> 
-> No, there's no such limitation, but many classes will impose 2 GB limits due 
-> to array sizes. The only problem is that getting close to that limit will 
-> already run into code we don't usually test. There are also some problems with 
-> UB on signed overflow on Qt 4.8 and in early Qt 5 versions (I think I fixed it 
-> in 5.4 or 5.5). 
-
-In general, are applications using Qt supposed to sanity-check the sizes
-to be significantly below 2 GiB before passing such data on to Qt?
-
-Thanks again,
-
-Alexander
