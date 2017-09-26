@@ -1,68 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/20/1
-Message-ID: <20171220055918.GA32086@lorien.valinor.li>
-Date: Wed, 20 Dec 2017 06:59:18 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: GIMP parser bugs (FLIMP and more)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/14
+Message-ID: <CAPNiXbHGAzwC69b4pYbqyF2+kL+EH5HSRBeJaYa4fHtwQSBq2Q@mail.gmail.com>
+Date: Tue, 26 Sep 2017 16:55:22 +0200
+From: Alex R <alexr@...che.org>
+To: dev <dev@...os.apache.org>, user <user@...os.apache.org>,  Amon Flair <amon@...dynarwhals.org>, Lyon Yang <lyon.yang.s@...il.com>,  security <security@...che.org>, oss-security@...ts.openwall.com
+Subject: CVE-2017-7687: Libprocess might crash when decoding a malformed request.
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Severity: Important
 
-On Tue, Dec 19, 2017 at 05:11:19PM +0100, Hanno B??ck wrote:
-> Hi,
-> 
-> See also
-> https://flimp.fuzzing-project.org/
-> 
-> Background: In 2014, back when I started the fuzzing project, I
-> reported two bugs in GIMP in their more obscure parsers. Recently I was
-> contacted by Tobias St??ckmann who wrote a working exploit (on freebsd <-
-> no aslr, thus easier) for one of those bugs in the FLIC parser. He also
-> submitted a patch.
-> 
-> The bugs were ignored all the time, patches as well.
-> 
-> I reported a couple of more bugs and also contacted the GNOME security
-> team. Some have patches, others not, ony one got handled. It seems
-> overall the file format importers are unmaintained.
-> I also tried to submit a fuzzing guide to the gimp wiki, which failed,
-> because the people who are supposed to hand out user accounts don't
-> answer. (gimp is not fuzzing friendly.)
-> 
-> The bugs:
+Vendor:
+The Apache Software Foundation
 
-The following CVEs were assigned:
+Versions Affected:
+Apache Mesos 1.1.0 to 1.3.0
+The unsupported Apache Mesos 1.0.x as well as 0.x versions may be also
+affected.
 
-> Heap overflow in FLI import (the one where we have an exploit):
-> https://bugzilla.gnome.org/show_bug.cgi?id=739133
+Description:
+When handling a decoding failure for a malformed URL path of an HTTP
+request, libprocess might crash because the code accidentally calls
+inappropriate function. A malicious actor can therefore cause a denial
+of service of Mesos masters rendering the Mesos-controlled cluster
+inoperable.
 
-CVE-2017-17785
+Mitigation:
+pre-1.1.x users should upgrade to at least 1.1.3
+1.1.x users should upgrade to 1.1.3
+1.2.x users should upgrade to 1.2.2
+1.3.0 users should upgrade to 1.3.1
+1.4.0-dev users should obtain Mesos 1.4.0
 
-> OOB read in TGA (with patch)
-> https://bugzilla.gnome.org/show_bug.cgi?id=739134
+Credit:
+This issue was discovered by Lyon Yang and Jeremy Heng
 
-CVE-2017-17786
+Alex on behalf of Mesos PMC.
 
-> OOB read in XCF (patch, the only one that got merged and fixed)
-> https://bugzilla.gnome.org/show_bug.cgi?id=790783
-
-CVE-2017-17788
-
-> OOB read in GBR (no patch, looks like string/utf8 issue)
-> https://bugzilla.gnome.org/show_bug.cgi?id=790784
-
-CVE-2017-17784
-
-> Heap overflow in PSP (no patch, doesn't look straightforward to fix)
-> https://bugzilla.gnome.org/show_bug.cgi?id=790849
-
-CVE-2017-17789
-
-> OOB read in PSP (no patch)
-> https://bugzilla.gnome.org/show_bug.cgi?id=790853
-
-CVE-2017-17787
-
-Regards,
-Salvatore
