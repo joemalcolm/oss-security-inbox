@@ -1,75 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/10
-Message-ID: <1484908781.11949.37.camel@redhat.com>
-Date: Fri, 20 Jan 2017 21:39:41 +1100
-From: Harshula <harshula@...hat.com>
-To: oss-security@...ts.openwall.com, Greg KH <greg@...ah.com>
-Cc: Jesse Hertz <Jesse.Hertz@...group.trust>, Wade Mealing <wmealing@...hat.com>
-Subject: Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/8
+Message-ID: <20170926073214.GA8108@kroah.com>
+Date: Tue, 26 Sep 2017 09:32:14 +0200
+From: Greg KH <greg@...ah.com>
+To: Agostino Sarubbo <ago@...too.org>
+Cc: oss-security@...ts.openwall.com, "Priedhorsky, Reid" <reidpr@...l.gov>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-Hi Greg,
-
-On Fri, 2017-01-20 at 09:26 +0100, Greg KH wrote:
-> On Fri, Jan 20, 2017 at 01:41:52PM +1100, Harshula wrote:
-> > Hi Folks,
-> > 
-> > Red Hat Product Security has been notified of a kernel vulnerability
-> > that a local attacker can exploit to crash/panic the kernel and cause a
-> > denial of service.
-> > 
-> > This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
-> > rt411016):
-> > 
-> > "A process that is in the same process group as the ``init'' process
-> > (group id zero) can crash the Linux 2 kernel with several system calls
-> > by passing in a process ID or process group ID of zero. The value zero
-> > is a special value that indicates the current process ID or process
-> > group. However, in this case it is also the process group ID of the
-> > process."
-> > 
-> > I've been testing whether RHEL is vulnerable and found the following:
-> > 
-> > * Upstream/mainline is not vulnerable
+On Tue, Sep 26, 2017 at 09:08:20AM +0200, Agostino Sarubbo wrote:
+> This certainly does not answer to the original question, but upstream should 
+> consider to do something like ffmpeg does here:
+> https://www.ffmpeg.org/security.html
 > 
-> Is this true for the mainline kernel tree that RHEL 6 was based on?
-> 
-> > * RHEL 7 is not vulnerable
-> > * RHEL 6 is vulnerable
-> > * RHEL 5 is partially vulnerable
-> 
-> So this is only due to a specific set of patches that were added to RHEL
-> 6 and RHEL 5 yet never made it upstream?  I ask as we want to make sure
-> some of the older LTS mainline kernels might be affected and it would be
-> good to ensure they are not.
+> I guess this would be benefit for all.
 
-Good questions, I had not looked at it from a mainline timeline
-perspective.
+Define "all" :)
 
-1) Mainline kernels containing patches [a], [b] and [c] are not
-vulnerable.
+Anyway, as many people know, there are various reasons why the kernel
+security team works the way it works, let's not debate that issue again
+please.
 
-2) The vulnerability is *NOT* due to non-upstream patches that went
-into RHEL 5 and/or 6.
+But it turns out it's not all written down anywhere in one place, for
+people to easily understand, so I've started to do so.  I'm giving a
+talk about this very topic tomorrow at a conference, and should be
+turning it into a document sometime in the near future that I will
+publish somewhere.
 
-3) I suspect some older LTS mainline kernels that branched off
-mainline/upstream at around the same time as RHEL 6 would be
-vulnerable. Check if the data structure fields, corresponding to the
-initialization changes in patch [a], [b] and [c], are initialized the
-same way in the LTS mainline kernels you maintain.
+thanks,
 
-4) For any RHEL 5 vintage LTS mainline kernels, see if task_struct's
-thread_group field is not initialised. If so, it is likely partially
-vulnerable and could do with a strong dose of patch [c].
-
-Regards,
-Harshula
-
-[a] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/com
-mit/?id=f106eee10038c2ee5b6056aaf3f6d5229be6dcdd
-
-[b] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/com
-mit/?id=f20011457f41c11edb5ea5038ad0c8ea9f392023
-
-[c] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/com
-mit/?id=fa2755e20ab0c7215d99c2dc7c262e98a09b01df
+greg k-h
