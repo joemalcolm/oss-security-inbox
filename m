@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4724" "Thursday" "7" "April" "2016" "07:36:20" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<E7DB4D18-75AD-4610-8A9B-12DFB6FEE032@360.cn>" "81" "[oss-security] CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool" nil nil nil "4" "2016040707:36:20" "[oss-security] CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool" (number mark "U       wangmei@360. Apr  7   81/4724  " thread-indent "\"[oss-security] CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5350" "Tuesday" "26" "September" "2017" "07:03:41" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<146142.067478166-sendEmail@localhost>" "107" "[oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)" nil nil nil "9" "2017092607:03:41" "[oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)" (number mark "U       ago@gentoo.o Sep 26  107/5350  " thread-indent "\"[oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23718 invoked by uid 550); 7 Apr 2016 07:59:13 -0000
+Received: (qmail 3877 invoked by uid 550); 26 Sep 2017 07:04:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,101 +12,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6090 invoked from network); 7 Apr 2016 07:36:33 -0000
-From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
+Received: (qmail 3849 invoked from network); 26 Sep 2017 07:04:28 -0000
+Message-ID: <146142.067478166-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
 To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool
-Thread-Index: AQHRkKAtNv9jgpCjgUS2AbUIgQIWHg==
-Date: Thu, 7 Apr 2016 07:36:20 +0000
-Message-ID: <E7DB4D18-75AD-4610-8A9B-12DFB6FEE032@360.cn>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.162]
-Content-Type: multipart/alternative;
-	boundary="_000_E7DB4D1875AD46108A9B12DFB6FEE032360cn_"
+Date: Tue, 26 Sep 2017 07:03:41 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2016-3620 libtiff: Out-of-bounds Read in the bmp2tiff tool
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-530402.071614848"
+Subject: [oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)
 
---_000_E7DB4D1875AD46108A9B12DFB6FEE032360cn_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+------MIME delimiter for sendEmail-530402.071614848
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
-ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogT3V0
-LW9mLWJvdW5kcyBSZWFkDQpWZW5kb3IgVVJMOiBodHRwOi8vd3d3LmxpYnRp
-ZmYub3JnLw0KQ1ZFIElEOiBDVkUtMjAxNi0zNjIwDQpDcmVkaXQ6IE1laSBX
-YW5nIG9mIHRoZSBDbG91ZCBTZWN1cml0eSBUZWFtLCBRaWhvbyAzNjANCg0K
-SW50cm9kdWN0aW9uDQo9PT09PT09PT09PT0NCg0KIFpJUEVuY29kZSBmdW5j
-dGlvbiBpbiB0aWZfemlwLmMgaW4gYm1wMnRpZmYgYWxsb3dzIGF0dGFja2Vy
-cyB0byBjYXVzZSBhIGRlbmlhbCBvZiBzZXJ2aWNlIChPdXQtb2YtYm91bmRz
-IFJlYWQpIHZpYSBhIGNyYWZ0ZWQgYm1wIGltYWdlIHdpdGggcGFyYW0gLWMg
-emlwLg0KDQoNCi4vYm1wMnRpZmYgIC1jIHppcCAgLi9zYW1wbGUvYm1wMnRp
-ZmZfemlwLmJtcCAxLnRpZg0KDQo9PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KPT0x
-NDIyOD09IEVSUk9SOiBBZGRyZXNzU2FuaXRpemVyOiBoZWFwLWJ1ZmZlci1v
-dmVyZmxvdyBvbiBhZGRyZXNzIDB4N2Y1NjNiZjA1ODAwIGF0IHBjIDB4N2Y1
-NjM4ZDhlYjNmIGJwIDB4N2ZmZmNhNDEzYmIwIHNwIDB4N2ZmZmNhNDEzMzU4
-DQpSRUFEIG9mIHNpemUgMzI3NjggYXQgMHg3ZjU2M2JmMDU4MDAgdGhyZWFk
-IFQwDQogICAgIzAgMHg3ZjU2MzhkOGViM2UgKC9saWI2NC9saWJhc2FuLnNv
-LjArMHhlYjNlKQ0KICAgICMxIDB4N2Y1NjM4YjZhMTM2IGluIGZpbGxfd2lu
-ZG93ICgvbGliNjQvbGliei5zby4xKzB4MzEzNikNCiAgICAjMiAweDdmNTYz
-OGI2YWJiZiBpbiBkZWZsYXRlX3Nsb3cgKC9saWI2NC9saWJ6LnNvLjErMHgz
-YmJmKQ0KICAgICMzIDB4N2Y1NjM4YjZiYzZmIGluIGRlZmxhdGUgKC9saWI2
-NC9saWJ6LnNvLjErMHg0YzZmKQ0KICAgICM0IDB4NDljZmVkIGluIFpJUEVu
-Y29kZSAvaG9tZS9kYXpodWFuZy9hc2FuL2xpYnRpZmYtbWFzdGVyL2xpYnRp
-ZmYvdGlmX3ppcC5jOjI3Nw0KICAgICM1IDB4NDU2NjVlIGluIFRJRkZXcml0
-ZVNjYW5saW5lIC9ob21lL2Rhemh1YW5nL2FzYW4vbGlidGlmZi1tYXN0ZXIv
-bGlidGlmZi90aWZfd3JpdGUuYzoxNzMNCiAgICAjNiAweDQwNDUwZiBpbiBt
-YWluIC9ob21lL2Rhemh1YW5nL2FzYW4vbGlidGlmZi1tYXN0ZXIvdG9vbHMv
-Ym1wMnRpZmYuYzo3NzUNCiAgICAjNyAweDdmNTYzODRjNWFmNCBpbiBfX2xp
-YmNfc3RhcnRfbWFpbiAoL2xpYjY0L2xpYmMuc28uNisweDIxYWY0KQ0KICAg
-ICM4IDB4NDAxOWE4IGluIF9zdGFydCAoL2hvbWUvZGF6aHVhbmcvYXNhbi9s
-aWJ0aWZmLW1hc3Rlci90b29scy9ibXAydGlmZisweDQwMTlhOCkNCjB4N2Y1
-NjNiZjA1ODAwIGlzIGxvY2F0ZWQgMCBieXRlcyB0byB0aGUgcmlnaHQgb2Yg
-MTExNDExMi1ieXRlIHJlZ2lvbiBbMHg3ZjU2M2JkZjU4MDAsMHg3ZjU2M2Jm
-MDU4MDApDQphbGxvY2F0ZWQgYnkgdGhyZWFkIFQwIGhlcmU6DQogICAgIzAg
-MHg3ZjU2MzhkOTYxMjkgKC9saWI2NC9saWJhc2FuLnNvLjArMHgxNjEyOSkN
-CiAgICAjMSAweDQ1Yjc2MSBpbiBfVElGRm1hbGxvYyAvaG9tZS9kYXpodWFu
-Zy9hc2FuL2xpYnRpZmYtbWFzdGVyL2xpYnRpZmYvdGlmX3VuaXguYzozMTYN
-CiAgICAjMiAweDQwMzdjMyBpbiBtYWluIC9ob21lL2Rhemh1YW5nL2FzYW4v
-bGlidGlmZi1tYXN0ZXIvdG9vbHMvYm1wMnRpZmYuYzo2NzgNCiAgICAjMyAw
-eDdmNTYzODRjNWFmNCBpbiBfX2xpYmNfc3RhcnRfbWFpbiAoL2xpYjY0L2xp
-YmMuc28uNisweDIxYWY0KQ0KU1VNTUFSWTogQWRkcmVzc1Nhbml0aXplcjog
-aGVhcC1idWZmZXItb3ZlcmZsb3cgPz86MCA/Pw0KU2hhZG93IGJ5dGVzIGFy
-b3VuZCB0aGUgYnVnZ3kgYWRkcmVzczoNCiAgMHgwZmViNDc3ZDhhYjA6IDAw
-IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
-DQogIDB4MGZlYjQ3N2Q4YWMwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KICAweDBmZWI0NzdkOGFkMDogMDAg
-MDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAN
-CiAgMHgwZmViNDc3ZDhhZTA6IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
-IDAwIDAwIDAwIDAwIDAwIDAwIDAwDQogIDB4MGZlYjQ3N2Q4YWYwOiAwMCAw
-MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0K
-PT4weDBmZWI0NzdkOGIwMDpbZmFdZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
-ZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgwZmViNDc3ZDhiMTA6IGZhIGZh
-IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhDQog
-IDB4MGZlYjQ3N2Q4YjIwOiBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBm
-YSBmYSBmYSBmYSBmYSBmYSBmYQ0KICAweDBmZWI0NzdkOGIzMDogZmEgZmEg
-ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAg
-MHgwZmViNDc3ZDhiNDA6IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
-IGZhIGZhIGZhIGZhIGZhIGZhDQogIDB4MGZlYjQ3N2Q4YjUwOiBmYSBmYSBm
-YSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYQ0KU2hh
-ZG93IGJ5dGUgbGVnZW5kIChvbmUgc2hhZG93IGJ5dGUgcmVwcmVzZW50cyA4
-IGFwcGxpY2F0aW9uIGJ5dGVzKToNCiAgQWRkcmVzc2FibGU6ICAgICAgICAg
-ICAwMA0KICBQYXJ0aWFsbHkgYWRkcmVzc2FibGU6IDAxIDAyIDAzIDA0IDA1
-IDA2IDA3DQogIEhlYXAgbGVmdCByZWR6b25lOiAgICAgZmENCiAgSGVhcCBy
-aWdoIHJlZHpvbmU6ICAgICBmYg0KICBGcmVlZCBIZWFwIHJlZ2lvbjogICAg
-IGZkDQogIFN0YWNrIGxlZnQgcmVkem9uZTogICAgZjENCiAgU3RhY2sgbWlk
-IHJlZHpvbmU6ICAgICBmMg0KICBTdGFjayByaWdodCByZWR6b25lOiAgIGYz
-DQogIFN0YWNrIHBhcnRpYWwgcmVkem9uZTogZjQNCiAgU3RhY2sgYWZ0ZXIg
-cmV0dXJuOiAgICBmNQ0KICBTdGFjayB1c2UgYWZ0ZXIgc2NvcGU6IGY4DQog
-IEdsb2JhbCByZWR6b25lOiAgICAgICAgZjkNCiAgR2xvYmFsIGluaXQgb3Jk
-ZXI6ICAgICBmNg0KICBQb2lzb25lZCBieSB1c2VyOiAgICAgIGY3DQogIEFT
-YW4gaW50ZXJuYWw6ICAgICAgICAgZmUNCj09MTQyMjg9PSBBQk9SVElORw0K
-DQpSZWZlcmVuY2VzOg0KWzFdIGh0dHA6Ly93d3cucmVtb3Rlc2Vuc2luZy5v
-cmcvbGlidGlmZi8NClsyXSBodHRwOi8vYnVnemlsbGEubWFwdG9vbHMub3Jn
-L2J1Z2xpc3QuY2dpP3Byb2R1Y3Q9bGlidGlmZg0KDQoNClRoYW5rIHlvdSEN
-CkJlc3QgUmVnYXJkcywNCg0KDQpNZWkNCg0K
+Description:
+binutils is a set of tools necessary to build programs.
 
---_000_E7DB4D1875AD46108A9B12DFB6FEE032360cn_--
+The complete ASan output of the issue:
+
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==40547==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a000000574 at pc 0x0000004c1ca8 bp 0x7ffc34f58d10 sp 0x7ffc34f584c0
+WRITE of size 6 at 0x61a000000574 thread T0
+    #0 0x4c1ca7 in __asan_memcpy /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_interceptors.cc:466
+    #1 0x7f6df2a247e5 in _bfd_x86_elf_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elfxx-x86.c:1946:3
+    #2 0x7f6df29f7b7a in elf_x86_64_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf64-x86-64.c:4963:10
+    #3 0x513df5 in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1155:21
+    #4 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #5 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #6 0x7f6df19d1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
+
+0x61a000000574 is located 0 bytes to the right of 1268-byte region [0x61a000000080,0x61a000000574)
+allocated by thread T0 here:
+    #0 0x4d8e08 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:67
+    #1 0x7f6df299dd5c in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9
+    #2 0x7f6df299dd5c in bfd_zmalloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:278
+    #3 0x7f6df2a23e29 in _bfd_x86_elf_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elfxx-x86.c:1829:26
+    #4 0x7f6df29f7b7a in elf_x86_64_get_synthetic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf64-x86-64.c:4963:10
+    #5 0x513df5 in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1155:21
+    #6 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #7 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #8 0x7f6df19d1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_interceptors.cc:466 in __asan_memcpy
+Shadow bytes around the buggy address:
+  0x0c347fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fff8060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fff8070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fff8090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c347fff80a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00[04]fa
+  0x0c347fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fff80f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==40547==ABORTING
+
+Affected version:
+2.29.51.20170921 and maybe past releases
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=61e3bf5f83f7e505b6bc51ef65426e5b31e6e360
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=56933f9e3e90eebf1018ed7417d6c1184b91db6b
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14729
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00367-binutils-heapoverflow-_bfd_x86_elf_get_synthetic_symtab
+
+Timeline:
+2017-09-21: bug discovered and reported to upstream
+2017-09-22: upstream released a patch
+2017-09-25: blog post about the issue
+2017-09-25: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/25/binutils-heap-based-buffer-overflow-in-_bfd_x86_elf_get_synthetic_symtab-elfxx-x86-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-530402.071614848--
+
