@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2549" "Monday" "19" "October" "2015" "17:40:14" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "48" "Re: [oss-security] Prime example of a can of worms" nil nil nil "10" "2015101921:40:14" "[oss-security] Prime example of a can of worms" (number mark "        dkg@fifthhor Oct 19   48/2549  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<20151019193411.GA15710@hunt>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["891" "Tuesday" "26" "September" "2017" "17:10:35" "+0800" "=?ISO-8859-1?Q?NOIRFATE?=" "noirfate@vip.qq.com" "<tencent_67D03AC71B42EFBB2FE69E9FC1E18DDEE405@qq.com>" "20" "[oss-security] ImageMagick : CVE-2017-14741 : Infinite loop in ReadCAPTIONImage" nil nil nil "9" "2017092609:10:35" "[oss-security] ImageMagick : CVE-2017-14741 : Infinite loop in ReadCAPTIONImage" (number mark "U       noirfate@vip Sep 26   20/891   " thread-indent "\"[oss-security] ImageMagick : CVE-2017-14741 : Infinite loop in ReadCAPTIONImage\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30314 invoked by uid 550); 19 Oct 2015 21:40:57 -0000
+Received: (qmail 7443 invoked by uid 550); 26 Sep 2017 11:00:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30296 invoked from network); 19 Oct 2015 21:40:57 -0000
-In-Reply-To: <20151019193411.GA15710@hunt>
-References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com> <CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com> <20151019193411.GA15710@hunt>
-User-Agent: Notmuch/0.20.2 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
-Message-ID: <87eggqmta9.fsf@alice.fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: text/plain
-Date: Mon, 19 Oct 2015 17:40:14 -0400
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Prime example of a can of worms
-To: Seth Arnold <seth.arnold@canonical.com>, oss-security@lists.openwall.com
+Received: (qmail 17842 invoked from network); 26 Sep 2017 09:10:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vip.qq.com;
+	s=s201512; t=1506417036;
+	bh=ts3Eboi5CUn4wPUFW47U0kx4EFiNZQ6CxM44FWQb8as=;
+	h=From:To:Subject:Mime-Version:Content-Type:Content-Transfer-Encoding:Date:Message-ID;
+	b=Ry/g4xx9hn1tG4ljS/rgTJT2B0VssSJRmpuSODf9tGZMOW6GlzzEQAR3YNw/LU3ry
+	 hu4Qdjbq2AINEQjphwRSdhhQTKzTPMv30+kOjHeauwKZq2BIBVEWz5Q7ckvBPcN/yn
+	 6ZKSHPUDAd2HNEAuEobOuh052g1cKdV0eTXQTkuA=
+X-QQ-FEAT: 3GtnPQ8BMmZCoHsoE5zapva+7yg3UO5xWVJ63+6X6xBZh5nDOK8klOfTjH5xe
+	ERFzMhEWJv5KEjSKoYB2C0pVipSLPQoD2zQVQ4hAMWSe7ggrZUmmGj0zmLHeOQZbY4fgN0a
+	0QrRhkCodZ4pPuU3cY0AX+74eSHf2jqg8MgBqoNfD0hK28i9LOVNBcwRzx4+PJpVcUOYND8
+	3486x9Qfnzt2ETPVs3KAO1/y7IHq0/vUk6QJmN40VnFeIo6br6+0iWcOwtN2OUOeWT8oxn7
+	9IYBXStfRulIwey2GtFRWWkO4=
+X-QQ-SSF: 00000000000000F000000000000000A
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 106.120.183.218
+X-QQ-STYLE: 
+X-QQ-mid: webmail598t1506417035t5942869
+From: "=?ISO-8859-1?B?Tk9JUkZBVEU=?=" <noirfate@vip.qq.com>
+To: "=?ISO-8859-1?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_59CA198B_0CD7A660_417AE3D1"
+Content-Transfer-Encoding: 8Bit
+Date: Tue, 26 Sep 2017 17:10:35 +0800
+X-Priority: 3
+Message-ID: <tencent_67D03AC71B42EFBB2FE69E9FC1E18DDEE405@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+Feedback-ID: webmail:vip.qq.com:bgweb:bgweb115
+Subject: [oss-security] ImageMagick : CVE-2017-14741 : Infinite loop in ReadCAPTIONImage
 
-On Mon 2015-10-19 15:34:11 -0400, Seth Arnold wrote:
-> Should there be any middle-ground for how much use a specific value gets?
-> Part of the weakdh gift is the reconition that randomly generated 1024 bit
-> primes might be fine for one router or website to use but is terrible when
-> used by millions and might repay the cost to crack it.
-> 
-> Do we allow 1024-bit dhparams when they are randomly generated? Or do we
-> also want to move these to e.g. 2048 out of abundance of caution?
+------=_NextPart_59CA198B_0CD7A660_417AE3D1
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
 
-we don't just want 1024-bit primes; we want 1024-bit safe primes (p =
-2q+1, where both p and q are prime), because their structure makes it
-easy for both peers to avoid a small subgroup attack.
+RGVzY3JpcHRpb246VGhlIFJlYWRDQVBUSU9OSW1hZ2UgZnVuY3Rpb24gaW4g
+Y29kZXJzL2NhcHRpb24uYyBpbiBJbWFnZU1hZ2ljayBhbGxvd3MgYXR0YWNr
+ZXJzIHRvIGNhdXNlIGEgZGVuaWFsIG9mIHNlcnZpY2UgKGluZmluaXRlIGxv
+b3ApIHZpYSBhIGNyYWZ0ZWQgZm9udCBmaWxlLkFmZmVjdGVkIHZlcnNpb246
+SW1hZ2VNYWdpY2sgNy4wLjctMyAobWF5YmUgcHJldmlvdXMgdmVyc2lvbnMg
+YXJlIGFmZmVjdGVkIGFzIHdlbGwpRml4ZWQgdmVyc2lvbjpJbWFnZU1hZ2lj
+ayA3LjAuNy00Q29tbWl0IGZpeDpodHRwczovL2dpdGh1Yi5jb20vSW1hZ2VN
+YWdpY2svSW1hZ2VNYWdpY2svY29tbWl0LzdkOGUxNDg5OWM1NjIxNTdjNzc2
+MGE3N2ZjOTE2MjVhMjdjYjU5NmZEZXRhaWxzOmh0dHBzOi8vZ2l0aHViLmNv
+bS9JbWFnZU1hZ2ljay9JbWFnZU1hZ2ljay9pc3N1ZXMvNzcxQ3JlZGl0OlRo
+aXMgYnVnIHdhcyBkaXNjb3ZlcmVkIGJ5IFlpaGFuIExpYW4gb2YgR2VhclRl
+YW0gYXQgUWlob28zNjAgQ1ZFOkNWRS0yMDE3LTE0NzQx
 
-safe primes are expensive to generate (for the party who selects the
-prime), and they are expensive to verify (on the side of the party who
-accepts the prime).  These are difficult risks for peers to assess.
+------=_NextPart_59CA198B_0CD7A660_417AE3D1--
 
-For the peer who selects the group: how often should you re-generate a
-new prime?  Should you share a prime with other parties in the same
-position as you, or should you choose your own?  If you share a prime
-with other parties, how many parties are OK?  how much traffic is safe
-to pass under the same group?
-
-For the peer who is offered the group, should you verify that the
-modulus you receive is a safe prime?  Should you do a complete, rigorous
-proof or would a pair of probabilistic miller-rabin tests be ok?  You
-could "cheat" and ignore the check and things will "just work" most of
-the time, and save your users some battery life.  How should you reject
-an offered prime if you find it doesn't have the expected structure
-(non-safe primes could still produce valid groups, even though safe
-primes are easier to inspect for)?  What if you think you've seen this
-prime before from too many other peers?  Should you reject it then?
-
-All of these questions are really fuzzy and hard to give good guidance,
-and hard to know as an implementor that you're doing the right thing.
-
-On the flip side, saying "use only strong (>=2048bit today in 2015?),
-well-known, well-structured, publicly-vetted groups" is very simple
-guidance: clear and easy to follow.
-
-A move to well-known, large safe primes seems simpler/saner than trying
-to work with an environment where peers are generating new primes which
-may or may not be well-formed.  (similarly, we're converging on a world
-where there are a few trusted, well-vetted, well-optimized DH groups for
-elliptic curve DH, because encouraging arbitrary ECDH groups ends up
-being sketchier for everyone)
-
-      --dkg
