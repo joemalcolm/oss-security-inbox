@@ -1,22 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/2
-Message-id: <9F893C48-015F-4A88-92F0-A75B731F3ABB@me.com>
-Date: Wed, 04 Oct 2017 11:28:38 -0400
-From: Joel Esler <joel.esler@...com>
-To: oss-security@...ts.openwall.com
-Subject: Re: clamav: md5 collision based detection avoidance, Was: Out of bounds read and segfault in xar parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/19
+Message-ID: <CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>
+Date: Tue, 26 Sep 2017 12:18:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-> On Oct 3, 2017, at 2:54 PM, klondike <klondike@...cosoft.es> wrote:
-> 
-> There is also another fun issue with the way caching works (which is
-> enabled by default) that allows avoiding detection by ClamAV.
+On Tue, Sep 26, 2017 at 11:31 AM, Bob Friesenhahn <
+bfriesen@...ple.dallas.tx.us> wrote:
 
-I will ensure this is prioritized for a future release.
+> On Tue, 26 Sep 2017, Agostino Sarubbo wrote:
+>
+> This certainly does not answer to the original question, but upstream
+>> should
+>> consider to do something like ffmpeg does here:
+>> https://www.ffmpeg.org/security.html
+>>
+>> I guess this would be benefit for all.
+>>
+>
+> It is incredibly difficult for most non-commercial upstreams to do this
+> since they have limited manpower, they are not informed of all the
+> applicable CVEs, and the CVE information received is essentially hearsay,
+> received from unknown/unverifiable sources.  I am thinking that it is best
+> for most non-commercial upstreams to not mention CVEs at all.
+>
+
+Uhm. Where to begin. Ok, well for one thing just because we can't have 100%
+perfect coverage doesn't mean we should simply give up. Also CVE's aren't
+"hearsay", they are claims based, with evidence being needed (the stronger
+the claim, the more likely you are to get a CVE), especially in the open
+source world where I typically require a link to either the vuln code, or
+the code patch in order to give a CVE to something (if you can't tell me
+what code is vuln, in open source, then chances are you need to understand
+the vuln more before we CVE it up, exceptions of course can be made, e.g.
+when someone has a reproducer that works reliably).
+
+This is also why I've been pushing for a JSON format so we have better meta
+data in CVE, for things like affected projects/product so people can much
+more easily monitor what they do care about. It's not done yet but we are
+making progress.
 
 
---
-Joel Esler
-Manager
-Talos Group
-http://www.talosintelligence.com
+>
+> If someone (e.g. with identity 'bugmeister@...d.cn') informs me (an
+> upsteam maintainer) that some particular bug has been assigned a particular
+> CVE then how can I know that to be a fact?
+
+
+You can check the CVE Database? There is the official MITRE one:
+cve.mitre.org and the DWF for Open Source (and yes, I lag in submissions to
+MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/ in
+both cases the CVEs will have reference link(s) that ideally point to the
+upstream making it easy to match up.
+
+
+>
+>
+> Bob
+> --
+> Bob Friesenhahn
+> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
