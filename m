@@ -1,45 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/3
-Message-ID: <09d7ec25ba894f319c2e8257965b0ea0@imshyb01.MITRE.ORG>
-Date: Mon, 16 Jan 2017 19:10:08 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: jasper: invalid memory read in jpc_undo_roi (jpc_dec.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/23
+Message-ID: <CANO=Ty0sexAh7diVoJgCi2XH=GqpnRF4jDff=trZ0sDDyiU0yg@mail.gmail.com>
+Date: Tue, 26 Sep 2017 14:08:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Sep 26, 2017 at 1:40 PM, Bob Friesenhahn <
+bfriesen@...ple.dallas.tx.us> wrote:
 
-> [] https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jpc_undo_roi-jpc_dec-c
-> 
-> AddressSanitizer: SEGV on unknown address
-> The signal is caused by a READ memory access.
-> 
-> jpc_undo_roi ... jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1925:10
+> On Tue, 26 Sep 2017, Kurt Seifried wrote:
+>
+> On Tue, Sep 26, 2017 at 11:31 AM, Bob Friesenhahn <
+>>
+>>>
+>>> It is incredibly difficult for most non-commercial upstreams to do this
+>>> since they have limited manpower, they are not informed of all the
+>>> applicable CVEs, and the CVE information received is essentially hearsay,
+>>> received from unknown/unverifiable sources.  I am thinking that it is
+>>> best
+>>> for most non-commercial upstreams to not mention CVEs at all.
+>>>
+>>>
+>> Uhm. Where to begin. Ok, well for one thing just because we can't have
+>> 100%
+>> perfect coverage doesn't mean we should simply give up. Also CVE's aren't
+>> "hearsay", they are claims based, with evidence being needed (the stronger
+>> the claim, the more likely you are to get a CVE), especially in the open
+>> source world where I typically require a link to either the vuln code, or
+>> the code patch in order to give a CVE to something (if you can't tell me
+>> what code is vuln, in open source, then chances are you need to understand
+>> the vuln more before we CVE it up, exceptions of course can be made, e.g.
+>> when someone has a reproducer that works reliably).
+>>
+>
+> I did not mean that the CVE itself is "hearsay".  What I meant is the way
+> an upstream maintainer is informed about a CVE is often no better than
+> "hearsay".  In some cases the information comes from someone who is already
+> known and trusted while in other cases it is impossible to even tell who is
+> providing the information since the person providing the information has
+> intentionally obfusticated their identity.
+>
+> If an upstream maintainer reports that a release resolves a particular
+> CVE, then he could easily have provided wrong information given that the
+> upstream maintainer does not have access to the technical details of the
+> report and analysis which initiated the CVE and may confuse one issue with
+> another.
+>
+> It may be that the upstream maintainer fixes a problem and some weeks
+> later the CVE is created related to the problem which was fixed.
 
-Use CVE-2017-5504.
+
+One aspect of CVE is "did you tell the upstream", we really want people to
+not just get CVEs, but to also work with upstream (assuming they're
+reasonable people) and coordinate the fixes/etc (CVEs are nice, CVEs with
+patches are even nicer). If the researchers are getting CVEs and not
+telling the upstreams, or worse they are and getting no response, then at
+least the stuff will show up in the CVE database and non upstream people
+can deal with it.
 
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+>
+>
+> You can check the CVE Database? There is the official MITRE one:
+>> cve.mitre.org and the DWF for Open Source (and yes, I lag in submissions
+>> to
+>> MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/
+>> in
+>> both cases the CVEs will have reference link(s) that ideally point to the
+>> upstream making it easy to match up.
+>>
+>
+> The database entries do not contain enough information for an upstream
+> maintainer to identify one issue from another similar issue.  They only
+> contain sanitized information.
 
-iQIcBAEBCAAGBQJYfV+TAAoJEHb/MwWLVhi2BnoP/iX2MWVoRd5spNVOMwFfsnw+
-RzFqjbJfb9tiiVrUkmsvadvJ65waV8WYhiUag9eWzSi0NboaY0P4CtybFbPr2jf6
-W7hZXmbxVqUgKLnOi3dwc5L2wHedMAe2BN0euz/Grh3jgCVdw0vT8GA5L+i/+jMG
-j6J1JV5JhMlsqdLC3BnzBLvxXVkY3ctUMaoVf74WZiA2l9unsQDHqRo3Kuya4v6A
-lDOYbkEkO1DQqkmxURhxKIfGJM0a4hUNzB4WtJjoq2L3UGq+gTuvxzwcEuBOBZuf
-rnLjPKaAaLISAMU3hzlvWcMcGag16YvT78OAaY7szurBcl+BPPJeJqe9tFxQZ/cf
-HrYEdF/Xr/lTD2T/s7JsxaNtJ2mnnVWB4OzJLCE0EuZtoD6/C1OiH5T5mPPbix2v
-Vm1EEHhx/CiFUvtCS8e8ZirGfSRklJGqgjimBMgM/3cheGVgIzVKdxyD07WQCITV
-kY1Q4FFCE2vDZ8boFRWcsJnuae7kJ/kRn4/9G3oYB1XygH6GZ+RB1TG0dF1qYW2z
-uum/6YYhhAX4G7xX/DeUoUcaqzC4nuB8TRmVmm05TW8pr/NL0d68KZN1Bjm3eipa
-/bf/MQP5hE3fkpEBYYTJMaaaVZBBw8PzvWbE54ncqvZ3a+Q/bfq7JM3uMHZmeIuQ
-yRP72ZaDoxvPZvugXtsr
-=RGe1
------END PGP SIGNATURE-----
+
+That should not be happening, you may want to read
+https://cve.mitre.org/cve/editorial_policies/counting_rules.html but TL;DR:
+each CVE should have enough info to be specifically identifiable. If you
+have example to the contrary please let me know. Some of the initial DWF
+ones are a bit messy I'll grant (it's an experiment/work in progress), but
+I've worked on ensuring that new ones are cleaner going forwards.
+
+
+>
+>
+> Bob
+> --
+> Bob Friesenhahn
+> bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
