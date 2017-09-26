@@ -1,45 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/8
-Message-ID: <20170120082635.GB28326@kroah.com>
-Date: Fri, 20 Jan 2017 09:26:35 +0100
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/20
+Message-ID: <4174873.rEhhimjYuO@wanheda>
+Date: Tue, 26 Sep 2017 21:07:37 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Jesse Hertz <Jesse.Hertz@...group.trust>, Wade Mealing <wmealing@...hat.com>
-Subject: Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 20, 2017 at 01:41:52PM +1100, Harshula wrote:
-> Hi Folks,
-> 
-> Red Hat Product Security has been notified of a kernel vulnerability
-> that a local attacker can exploit to crash/panic the kernel and cause a
-> denial of service.
-> 
-> This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
-> rt411016):
-> 
-> "A process that is in the same process group as the ``init'' process
-> (group id zero) can crash the Linux 2 kernel with several system calls
-> by passing in a process ID or process group ID of zero. The value zero
-> is a special value that indicates the current process ID or process
-> group. However, in this case it is also the process group ID of the
-> process."
-> 
-> I've been testing whether RHEL is vulnerable and found the following:
-> 
-> * Upstream/mainline is not vulnerable
+On martedì 26 settembre 2017 20:18:38 CEST Kurt Seifried wrote:
+> You can check the CVE Database? There is the official MITRE one:
+> cve.mitre.org and the DWF for Open Source (and yes, I lag in submissions to
+> MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/ in
+> both cases the CVEs will have reference link(s) that ideally point to the
+> upstream making it easy to match up.
 
-Is this true for the mainline kernel tree that RHEL 6 was based on?
+As pointed out in the past (maybe spender?) the real issue is when there is a 
+silent fix of a vulnerability where the commit message does not clearly state 
+about the security implication. Afaik it happens frequently.
 
-> * RHEL 7 is not vulnerable
-> * RHEL 6 is vulnerable
-> * RHEL 5 is partially vulnerable
-
-So this is only due to a specific set of patches that were added to RHEL
-6 and RHEL 5 yet never made it upstream?  I ask as we want to make sure
-some of the older LTS mainline kernels might be affected and it would be
-good to ensure they are not.
-
-thanks,
-
-greg k-h
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
