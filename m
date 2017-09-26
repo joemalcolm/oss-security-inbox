@@ -1,37 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/12
-Message-ID: <1485294901.1902.2.camel@gmail.com>
-Date: Tue, 24 Jan 2017 16:55:01 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Headsup: systemd v228 local root exploit (CVE-2016-10156)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/2
+Message-ID: <CANO=Ty2T4=wPUVuDQcO59Pgvq7j_agZnT0TUmAa_0Fkk4Laafw@mail.gmail.com>
+Date: Mon, 25 Sep 2017 19:41:20 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2017-01-25 at 01:20 +0500, Alexander E. Patrakov wrote:
-> 2017-01-24 13:55 GMT+05:00 Sebastian Krahmer <krahmer@...e.com>:
-> > Hi
-> > 
-> > This is a heads up for a trivial systemd local root exploit, that
-> > was silently fixed in the upstream git as:
-> > 
-> > commit 06eeacb6fe029804f296b065b3ce91e796e1cd0e
-> > Author: ....
-> > Date:   Fri Jan 29 23:36:08 2016 +0200
-> > 
-> >     basic: fix touch() creating files with 07777 mode
-> 
-> That's important for users of Arch Linux and other rolling
-> distributions.
-> 
-> If the system has booted the vulnerable version of systemd at least
-> once, then the files with dangerous permissions will be there. There
-> is no code in systemd that fixes permissions on already existing stamp
-> files. There is no postinstall script in Arch that does it, either.
-> So, you have to fix permissions to 0644 or remove the stamp files
-> manually, once, even though the commit appeared in Arch repositories
-> long time ago.
+On Mon, Sep 25, 2017 at 3:50 PM, Priedhorsky, Reid <reidpr@...l.gov> wrote:
+>
+>
+> My questions:
+>
+> 1. Is oss-security’s coverage of security issues in open-source software
+> intended to be comprehensive? If so, this appears not to be true for the
+> Linux kernel.
+>
 
-Ah, sorry, I didn't see that it did this for /var/lib timer files too.
+Nope. To quote the web site: 'Open Source software security discussions "
+http://www.openwall.com/lists/ the fact that it has turned into a security
+announce list with limited discussion is  just how things go I guess. Also
+it's tough because the Linux Kernel has explicitly said they won't get
+CVE's for all their security issues, they simply fix and move on, their
+culture is "run something current, if not, to bad" (which part of me agrees
+with, but that doesn't work so well for IoT/enterprise/people needing a
+high degree of stability/assurance).
 
-It does seem to recreate them if the timers are still around at least.
-Download attachment "signature.asc" of type "application/pgp-signature" (867 bytes)
+
+>
+> 2. Is there another source of comprehensive coverage of vulnerabilities in
+> the Linux kernel, including but not necessarily limited to all CVEs issued
+> for it?
+>
+
+There are commercial security information vendors that claim to provide
+this, I won't name names as I don't know how good they are. Step 1 here for
+the open source community would be making sure Kernel issues get CVEs, and
+then that those CVEs get into the CVE database so people are aware of them.
+
+
+>
+> I appreciate everyone’s time and effort on all this stuff. This post
+> should not be interpreted as singling out Debian for criticism.
+>
+> Thanks,
+> Reid
+
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
