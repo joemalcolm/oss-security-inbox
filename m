@@ -1,43 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/6
-Message-ID: <20170621111755.GA12401@openwall.com>
-Date: Wed, 21 Jun 2017 13:17:55 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Guido Vranken <guidovranken@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: 4 remote vulnerabilities in OpenVPN
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/5
+Message-ID: <20170926070110.kf2vyzd7gsormsd5@pisco.westfalen.local>
+Date: Tue, 26 Sep 2017 09:01:10 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 21, 2017 at 12:40:57PM +0200, Guido Vranken wrote:
-> An extensive effort to find security vulnerabilities in OpenVPN has
-> resulted in 4 vulnerabilities of such severity that they have been
-> kept under embargo until today.
-> Interestingly, this comes shortly after the results of two source code
-> audits were released, which both failed to detect these problems.
-> The worst vulnerability of the 4 allows a client the drain the
-> server's memory, which, due to a particular technical circumstance,
-> may be exploited to achieve remote code execution.
-> 
-> An extensive write-up can be found here:
-> https://guidovranken.wordpress.com/2017/06/21/the-openvpn-post-audit-bug-bonanza/
-> . A technical explanation for every vulnerability is provided, and I
-> ponder the efficacy of source code audits.
+Priedhorsky, Reid wrote:
+> 1. Is oss-security’s coverage of security issues in open-source software intended to be comprehensive? If so, this appears not to be true for the Linux kernel.
 
-That's very cool, but we have a policy here to include actual
-vulnerability detail in the list postings.  Your blog might be gone in
-some years, but hopefully some oss-security archives will stay around.
+No, it's not. oss-security is just another mailing list to report security vulnerabilities,
+and not a canonical source.
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+> 2. Is there another source of comprehensive coverage of vulnerabilities in the Linux kernel, including but not necessarily limited to all CVEs issued for it?
 
-"At least the most essential part of your message (e.g., vulnerability
-detail and/or exploit) should be directly included in the message itself
-(and in plain text), rather than only included by reference to an
-external resource.  Posting links to relevant external resources as well
-is acceptable, but posting only links is not.  Your message should remain
-valuable even with all of the external resources gone."
+This Debian repo has data on all public kernel vulnerabilities affecting
+the mainline Linux kernel: https://anonscm.debian.org/viewvc/kernel-sec/
 
-I've attached a text/plain export of your blog post to this message.
-
-Alexander
-
-View attachment "openvpn-post-audit-bug-bonanza.txt" of type "text/plain" (21532 bytes)
+Cheers,
+        Moritz
+  
