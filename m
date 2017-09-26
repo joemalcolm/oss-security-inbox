@@ -1,107 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/16/4
-Message-ID: <20170216155547.z3ddx43uzzubj6wu@perpetual.pseudorandom.co.uk>
-Date: Thu, 16 Feb 2017 15:55:47 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com, dbus@...ts.freedesktop.org
-Subject: fd.o #99828: two symlink attacks fixed in dbus 1.10.16
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/15
+Message-ID: <CAPNiXbGAjOKHZH02R+T5HbtXs0F8OLbPz=SZrG4G+ZqgX--wBA@mail.gmail.com>
+Date: Tue, 26 Sep 2017 16:53:53 +0200
+From: Alex R <alexr@...che.org>
+To: dev <dev@...os.apache.org>, user <user@...os.apache.org>,  Amon Flair <amon@...dynarwhals.org>, Lyon Yang <lyon.yang.s@...il.com>,  security <security@...che.org>, oss-security@...ts.openwall.com
+Subject: CVE-2017-9790: Libprocess might crash when decoding an HTTP request with absent path.
 Content-Type: text/plain; charset=utf-8
 
-D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
-asynchronous inter-process communication system, commonly used
-for system services or within a desktop session on Linux and other
-operating systems.
+Severity: Important
 
-The latest dbus release 1.10.16 fixes two symlink attacks in
-non-production-suitable configurations. I am treating these as bugs
-rather than practical vulnerabilities, and very much hope neither of
-these is going to affect any real users, but I'm reporting them to
-oss-security in case there's an attack vector that I've missed.
+Vendor:
+The Apache Software Foundation
 
-Please reference fd.o #99828 or
-<https://bugs.freedesktop.org/show_bug.cgi?id=99828> in any notices
-that refer to these.
+Versions Affected:
+Apache Mesos 1.1.0 to 1.3.0
+The unsupported Apache Mesos 1.0.x as well as 0.x versions may be also
+affected.
 
-I have already released 1.10.16 for the stable branch. For the
-development branch, 1.11.10 will have the same fixes. For the old
-stable branch 1.8.x, I'm going to apply the same fixes, but I am
-not planning to do a release just for this unless a vendor asks me
-to - they will be released next time there is a 1.8.x release for some
-other reason.
+Description:
+When handling a libprocess message wrapped in an HTTP request, libprocess
+crashes if the request path is empty, because the parser assumes the request
+path always starts with '/'. A malicious actor can therefore cause a denial
+of service of Mesos masters rendering the Mesos-controlled cluster
+inoperable.
 
-Symlink attack in nonce-tcp transport
--------------------------------------
+Mitigation:
+pre-1.1.x users should upgrade to at least 1.1.3
+1.1.x users should upgrade to 1.1.3
+1.2.x users should upgrade to 1.2.2
+1.3.0 users should upgrade to 1.3.1
+1.4.0-dev users should obtain Mesos 1.4.0
 
-Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=99828
-Versions affected: dbus >= 1.4.10
-Fixed in: dbus >= 1.11.10, 1.10.x >= 1.10.16
-Exploitable by: local users on inadvisably configured Unix systems
-Impact: overwrite a file named "nonce" in an attacker-chosen directory
-  with random contents known only to the victim
-Reporter: Simon McVittie, Collabora Ltd.
+Credit:
+This issue was discovered by Lyon Yang and Jeremy Heng
 
-The nonce-tcp transport writes a file to a randomly-named subdirectory
-of a system-wide temporary directory. It does not check whether the
-directory already exists (EEXIST from mkdir is ignored); so if the
-chosen directory is a symlink to an attacker-chosen directory, it
-would proceed to write a file named "nonce" to that directory.
-The file is created safely (O_EXCL, 0600 permissions, atomic-overwrite)
-and has random contents not chosen by the attacker.
+Alex on behalf of Mesos PMC
 
-The reimplementation of this transport in GDBus does not have this bug.
-
-Mitigations include:
-
-* The nonce-tcp transport is only enabled if you ask for it when
-  configuring dbus-daemon or a DBusServer. It was added as a workaround
-  for Windows' lack of AF_UNIX sockets, and the only reason it is
-  available on Unix is to be able to test it. Even on Windows, it should
-  never be used on connections other than loopback (there is no
-  confidentiality or integrity protection).
-
-* The directory has a random name with approximately 35 bits of entropy,
-  so an attacker would have to either create a massive number of symlinks
-  or be very lucky.
-
-* The attacker cannot choose the file contents.
-
-* The attacker cannot read the file contents.
-
-* Versions before 1.4.10 were unaffected by this bug because nonce-tcp
-  didn't work on Unix at all.
-
-Workaround: do not use nonce-tcp. If you must use it, set the environment
-variable TMPDIR to a directory you control.
-
-Symlink attack in unit tests
-----------------------------
-
-Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=99828
-Versions affected: >= 1.1.3
-Fixed in: dbus >= 1.11.10, 1.10.x >= 1.10.16
-Exploitable by: local users sharing a system with a dbus developer
-Impact: unlikely file overwrite
-Reporter: Simon McVittie, Collabora Ltd.
-
-One of the "embedded tests" accessed a system-wide temporary directory
-in an inadvisable manner. It is probably vulnerable to a symlink
-attack due to a time-of-check/time-of-use error.
-
-Mitigations: the "embedded tests" are not compiled in by default, are
-only intended to be used by dbus developers on trusted systems, and if they
-are enabled, ./configure specifically warns that they are insecure. The
-directory used is random with approximately 35 bits of entropy, so an
-attacker would have to either create a massive number of symlinks or
-be very lucky.
-
-Workaround: if you are testing older dbus versions, use a trusted
-machine, VM or container or set the environment variable TMPDIR to a
-directory you control.
-
-----
-
-Regards,
-    S
--- 
-Simon McVittie
-Collabora Ltd. <https://www.collabora.com/> / Debian <https://www.debian.org/>
