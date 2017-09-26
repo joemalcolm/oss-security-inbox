@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["808" "Monday" "13" "July" "2015" "03:19:14" "+0300" "Solar Designer" "solar@openwall.com" "<20150713001914.GA8559@openwall.com>" "21" "Re: [oss-security] How serious is undefined behavior?" nil nil nil "7" "2015071300:19:14" "[oss-security] How serious is undefined behavior?" (number mark "        solar@openwa Jul 13   21/808   " thread-indent "\"Re: [oss-security] How serious is undefined behavior?\"\n") "<20150706181734.2b0288ca@pc1>" ("<20150706181734.2b0288ca@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1614" "Tuesday" "26" "September" "2017" "14:03:30" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>" "50" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Cc:" nil nil "9" "2017092620:03:30" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        kseifried@re Sep 26   50/1614  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<4174873.rEhhimjYuO@wanheda>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>" "<CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>" "<4174873.rEhhimjYuO@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5863 invoked by uid 550); 13 Jul 2015 00:19:18 -0000
+Received: (qmail 5831 invoked by uid 550); 26 Sep 2017 20:04:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5837 invoked from network); 13 Jul 2015 00:19:17 -0000
-Message-ID: <20150713001914.GA8559@openwall.com>
-References: <20150706181734.2b0288ca@pc1>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150706181734.2b0288ca@pc1>
-User-Agent: Mutt/1.4.2.3i
-Date: Mon, 13 Jul 2015 03:19:14 +0300
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 5809 invoked from network); 26 Sep 2017 20:04:41 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=9dmEVx7XCTVZM3alUIvOtbwAJY7Pp/+JMMUGuUPcuUQ=;
+        b=YwhcLDjhWOZP4y0AAMfCF/a1NhZHXqC/nmh5aQjHVG0pkr0sMJfCf9IO7SuSsidkVn
+         4xpwrxp2/L4v3qIUzNxq0r0vZvn1wmV5mUOuG+gMa/LM/X78NScAdxXPzhcLbOA8HkxZ
+         xcq+HXDz+xNA63hhgPkPRDRGd/ARrA8fw+BDWZsT2kRTW0sYq69fyDchwzaQ8nN6yIAv
+         a2ctRG+MZpNiCWDHu3kxgTXrNq+Kp+kfEyYsTVZlAaQoWom/nPDLIW4oDPw8L7OVG8aH
+         i5V5V1p0dLy9IiRUm8TABeBgEr4pxyPGGY5OqE3l3cV4Z9qIp6eRPA+AJrzH/c3y7TZd
+         ikBg==
+X-Gm-Message-State: AHPjjUjxSo4fJiTCXJkTNBKnIIhVjtxZJsWz5CQ+BDRMPZ4nw5QRaTlJ
+	1n1mwP83Q3cO15sgo5vj7nvOKgxn8CKnTn3DpPnhTfx4O6Q=
+X-Google-Smtp-Source: AOwi7QAmpCXwj/z4kAleTQ08J7NEPZ8dr3Il23A5h2rvy6qFoU4uxT4418T3GspwSd+JrQ39amtOg+wH37bUvLWBZAU=
+X-Received: by 10.157.81.132 with SMTP id y4mr3064805otg.9.1506456269988; Tue,
+ 26 Sep 2017 13:04:29 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <4174873.rEhhimjYuO@wanheda>
+References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
+ <alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>
+ <CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com> <4174873.rEhhimjYuO@wanheda>
+Message-ID: <CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="f403043d7ba8d7c064055a1d2e6d"
+Cc: oss-security <oss-security@lists.openwall.com>
+Date: Tue, 26 Sep 2017 14:03:30 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How serious is undefined behavior?
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
+To: Agostino Sarubbo <ago@gentoo.org>
 
-On Mon, Jul 06, 2015 at 06:17:34PM +0200, Hanno B??ck wrote:
-> However I wonder how practically relevant these issues are and also
-> how much focus should be given to them.
+--f403043d7ba8d7c064055a1d2e6d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Related:
+If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
+CVE FORM (yes, I am shouting).
 
-"What is C in practice? (Cerberus survey): Analysis of Responses"
-http://www.cl.cam.ac.uk/~pes20/cerberus/notes50-2015-05-24-survey-discussion.html
+https://cveform.mitre.org
 
-A productive direction may be for the free software community (or an
-even wider community, if possible) to agree on de facto mainstream C
-standard, where certain kinds of UB and such would in fact be defined in
-specific ways.
+Choose "Request an update to an existing CVE entry" and then for "Type of
+update requested" choose "Update References" and then eneter the CVE #, the
+ifo and URL and hit "Submit Request"
 
-There would still remain many kinds of UB and such, but fewer of them
-and the easier avoidable ones.
+TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
+(the CVE community) didn't make it easy to contribute. Well now we have
+made it easy to contribute, so please do.
 
-As things currently are, non-trivial programs sort of have to make
-certain assumptions beyond what's guaranteed by C standards anyway.
 
-Alexander
+On Tue, Sep 26, 2017 at 1:07 PM, Agostino Sarubbo <ago@gentoo.org> wrote:
+
+> On marted=C3=AC 26 settembre 2017 20:18:38 CEST Kurt Seifried wrote:
+> > You can check the CVE Database? There is the official MITRE one:
+> > cve.mitre.org and the DWF for Open Source (and yes, I lag in
+> submissions to
+> > MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/
+> in
+> > both cases the CVEs will have reference link(s) that ideally point to t=
+he
+> > upstream making it easy to match up.
+>
+> As pointed out in the past (maybe spender?) the real issue is when there
+> is a
+> silent fix of a vulnerability where the commit message does not clearly
+> state
+> about the security implication. Afaik it happens frequently.
+>
+> --
+> Agostino Sarubbo
+> Gentoo Linux Developer
+>
+
+
+
+--=20
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--f403043d7ba8d7c064055a1d2e6d--
