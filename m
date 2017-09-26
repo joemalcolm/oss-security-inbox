@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1739" "Wednesday" "16" "August" "2017" "18:17:40" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87wp63jgxn.fsf@fifthhorseman.net>" "44" "Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" "^Date:" nil nil "8" "2017081622:17:40" "[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" (number mark "        dkg@fifthhor Aug 16   44/1739  " thread-indent "\"Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation\"\n") "<f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>" ("<f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1165" "Tuesday" "26" "September" "2017" "17:04:46" "+0200" "Greg KH" "greg@kroah.com" "<20170926150446.GA11530@kroah.com>" "28" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Cc:" nil nil "9" "2017092615:04:46" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        greg@kroah.c Sep 26   28/1165  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<4188502.8b3PN4uBSd@wanheda>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<1978278.8CZP0B31Sj@wanheda>" "<20170926073214.GA8108@kroah.com>" "<4188502.8b3PN4uBSd@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 14176 invoked by uid 550); 17 Aug 2017 00:06:10 -0000
+Received: (qmail 10014 invoked by uid 550); 26 Sep 2017 15:04:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14148 invoked from network); 17 Aug 2017 00:06:09 -0000
-In-Reply-To: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>
-References: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>
-Message-ID: <87wp63jgxn.fsf@fifthhorseman.net>
+Received: (qmail 9993 invoked from network); 26 Sep 2017 15:04:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=
+	fm1; bh=m1HBvfZwSheBTELVRJBPcJHsLpGRC4uYLx0B+o63Fdg=; b=gx7lQpq+
+	OdoiyoRjLTyryY7xMjjTjBbZ7ImaduO9DG9dU5lTA26dv0DB9VKXXKJc7G7jhva+
+	jPPyDsUHHh4/98q2Td0Qki9D9mF0sDjrETiQdWM758iZcRY1Q3eKhxVyDMXvlIWE
+	FX5G7IJB6bGSgRgsd/NjCjeaWZ8L99lyLGzWrGVlm5p1ATP0F5YWloF5gUEkNfOQ
+	a9exQM3D1RmEIdn4fhBgcUJKGdOhX6v0oKS3qhKO5ePu0gw96O3+5INJlkkfHRdI
+	efn+eki6+zHdteBLQEpfIOLl+2sAicMy2smpfQJH60jwZKBrPiUs0VI08faAEqXE
+	0aEjYojZKqjjJQ==
+X-ME-Sender: <xms:hGzKWaiIyMxKreBnpJpSA5RnXdcgw41dUpcwTOv-CRNBHgOa65qFoQ>
+X-Sasl-enc: 3uOw3pUWy2/5Lz+/RmP0/GEu7jlwls7oMKx3pCWs9W6f 1506438275
+Message-ID: <20170926150446.GA11530@kroah.com>
+References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
+ <1978278.8CZP0B31Sj@wanheda>
+ <20170926073214.GA8108@kroah.com>
+ <4188502.8b3PN4uBSd@wanheda>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Wed, 16 Aug 2017 18:17:40 -0400
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4188502.8b3PN4uBSd@wanheda>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+Cc: oss-security@lists.openwall.com
+Date: Tue, 26 Sep 2017 17:04:46 +0200
+From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
-To: Michael Orlitzky <michael@orlitzky.com>, oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
+To: Agostino Sarubbo <ago@gentoo.org>
 
---=-=-=
-Content-Type: text/plain
+On Tue, Sep 26, 2017 at 04:50:10PM +0200, Agostino Sarubbo wrote:
+> On martedì 26 settembre 2017 09:32:14 CEST Greg KH wrote:
+> > > I guess this would be benefit for all.
+> > 
+> > Define "all" 
+> 
+> You know, for example in Gentoo we are following the upstream releases. So 
+> from time to time we stabilize a newer kernel that "syncs" with upstream.
+> This does not happen for non-rolling (release) distros that may want to patch/
+> backport the security fix.
 
-On Wed 2017-08-16 12:10:09 -0400, Michael Orlitzky wrote:
-> The problem is avoided by creating the PID file as root, before
-> dropping privileges.
+I understand the issue well, I talk to companies all the time about this :)
 
-The problem can also be avoided by not using PID files at all, and
-relying instead on a service manager that actually keeps track of its
-children using more robust means (like wait() and SIGCHLD).
+The rule for the kernel is, "if a distro/company/user is not following
+the stable kernel updates, they are on their own".  I recommend either
+using the stable kernels, or paying for a company that knows what they
+are doing in this area and provides support (Red Hat, SuSE, etc.)
 
-Even when a process isn't malicious, if it dies unexpectedly a different
-process may spawn re-using the PID stored in the pidfile, in an
-accidental collision.
+And if you try to argue "just tell us what needs to be fixed", well, we
+are, am, we are providing about 10-12 patches a day that people should
+be incorporating into their kernels.  Why they ignore that curated and
+tested stream of fixes is beyond me...
 
-At what point do we treat hacks like pidfiles as security risks more
-generally?
+Anyway, this is getting a bit off-topic here, sorry for the noise.
 
-pidfiles, self-daemonization, privilege-dropping, are all things that
-are easy to get subtly wrong.  What do we need to offer to developers of
-daemons to encourage them to just stop doing them?
+Best of luck,
 
-  --dkg
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlmUxIQACgkQFJitxsGS
-MjeqlA//asdR/M6Q4PeI1oIw14kU706kcjbf8xGXrsjzTJwXcjdfl95sTTDzgwrz
-OGdZnY3MB+pXAra2UoX68AeTta6x6RwUyVq3E7XYR7t5+t0iCe4TzJ2vDEK9Wihk
-ag/VaRoj2f2OccZPMJ2GwIBhfuG+XwW9wpZEixSo6fbsQRzVRVel0vUlVCJv5+9p
-sKN+Do2oKq3mrzGWNJkpEBt5NUYbvsQbwmVG7m6fntPFuEtNWQIeggtPhncH3+kg
-ZGu++pvUAjcS2V05xldwDiqnSaJz2iBxgNMUz5xXAUJGpiMCqPRAWXnW9nWf6JK3
-vagjFUworDUb1toDh3by03WiGJ2foRwXPQG708IJi1ykn4Qz/so2XC9zBNnGONQa
-CSdpO5mOdp7x9pvxkrr9pC4EMj6lm8jzDxwjVPo834E/UEMdYX0NPB9KRcxx5feS
-tZUPu04XPxwZ3Zhe3V4SOoMMdNiumZZoKBLtliheigBiaryk2VAKrNlNaTFgSSK6
-ZL/jq0FOrQemYsyUpSmKCI0jD+iGOEeEmqMrjmYH50yJNqFCrQBs4l1PsWRIGUJN
-NRZt4nMtui/guPDuoCJ/Syt9WvZ0pFoKFf8e3Jgzxu38fPnZ3CgPKGOIBGG+RizK
-zcTxKya8pbsz6N8KSL9aPTpwQnsVxaIekvo3pMiF32POFZum1lY=
-=rsS6
------END PGP SIGNATURE-----
---=-=-=--
+greg k-h
