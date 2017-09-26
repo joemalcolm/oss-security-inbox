@@ -1,67 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/8
-Message-ID: <974628.333791287-sendEmail@localhost>
-Date: Mon, 1 May 2017 11:40:19 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libmad: heap-based buffer overflow in mad_layer_III (layer3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/9
+Message-ID: <20170926090349.f5rwmd7be3tu2qad@refracta>
+Date: Tue, 26 Sep 2017 11:03:49 +0200
+From: joernchen <joernchen@...noelit.de>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: Advisory: Git cvsserver OS Command Injection
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libmad stays for “M”peg “A”udio “D”ecoder library.
-
-There is an heap overflow discovered through madplay.
-
-The complete ASan output:
-
-# madplay -v -i -o raw:out $FILE
-==14773==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61e00000fa87 at pc 0x0000004bc8ec bp 0x7ffcda3263d0 sp 0x7ffcda325b80
-WRITE of size 2060 at 0x61e00000fa87 thread T0
-    #0 0x4bc8eb in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #1 0x7f37ddfa397d in mad_layer_III /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:2635:2
-    #2 0x7f37ddf6784d in mad_frame_decode /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/frame.c:453:7
-    #3 0x7f37ddf8c4e4 in run_sync /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/decoder.c:404:11
-    #4 0x7f37ddf8ac59 in mad_decoder_run /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/decoder.c:557:12
-    #5 0x5277a1 in decode /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:1862:12
-    #6 0x5277a1 in play_one /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:1951
-    #7 0x5277a1 in play_all /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:2041
-    #8 0x5215a2 in player_run /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:2768:14
-    #9 0x50c46c in main /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/madplay.c:816:7
-    #10 0x7f37dce4f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #11 0x41aa78 in _init (/usr/bin/madplay+0x41aa78)
-
-Affected version:
-0.15.1b
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-This bug came out in the past during the debug of mp3splt with Dave Kennedy
-
-CVE:
-CVE-2017-8373
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00213-libmad-heapoverflow-mad_layer_III
-
-Timeline:
-2017-01-01: bug discovered and reported to upstream
-2017-04-30: blog post about the issue
-2017-05-01: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/30/libmad-heap-based-buffer-overflow-in-mad_layer_iii-layer3-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Hi,
 
 
+see attached advisory.
+
+Cheers,
+
+joernchen
+-- 
+joernchen ~ Phenoelit
+<joernchen@...noelit.de> ~ C776 3F67 7B95 03BF 5344
+http://www.phenoelit.de  ~ A46A 7199 8B7B 756A F5AC
+
+View attachment "git_cvsserver.txt" of type "text/plain" (2224 bytes)
