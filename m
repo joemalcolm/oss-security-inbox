@@ -1,46 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/14/1
-Message-Id: <61F736A2-A375-45DD-9137-12B53BF9A228@beckweb.net>
-Date: Thu, 14 Dec 2017 04:10:26 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/13
+Message-ID: <20170926150446.GA11530@kroah.com>
+Date: Tue, 26 Sep 2017 17:04:46 +0200
+From: Greg KH <greg@...ah.com>
+To: Agostino Sarubbo <ago@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+On Tue, Sep 26, 2017 at 04:50:10PM +0200, Agostino Sarubbo wrote:
+> On martedì 26 settembre 2017 09:32:14 CEST Greg KH wrote:
+> > > I guess this would be benefit for all.
+> > 
+> > Define "all" 
+> 
+> You know, for example in Gentoo we are following the upstream releases. So 
+> from time to time we stabilize a newer kernel that "syncs" with upstream.
+> This does not happen for non-rolling (release) distros that may want to patch/
+> backport the security fix.
 
-* Jenkins (weekly) 2.95
-* Jenkins (LTS) 2.89.2
+I understand the issue well, I talk to companies all the time about this :)
 
-Descriptions of the vulnerabilities are below. Some more details, 
-severity, and attribution can be found here:
-https://jenkins.io/security/advisory/2017-12-14/
+The rule for the kernel is, "if a distro/company/user is not following
+the stable kernel updates, they are on their own".  I recommend either
+using the stable kernels, or paying for a company that knows what they
+are doing in this area and provides support (Red Hat, SuSE, etc.)
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+And if you try to argue "just tell us what needs to be fixed", well, we
+are, am, we are providing about 10-12 patches a day that people should
+be incorporating into their kernels.  Why they ignore that curated and
+tested stream of fixes is beyond me...
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Anyway, this is getting a bit off-topic here, sorry for the noise.
 
----
+Best of luck,
 
-SECURITY-667
-A race condition during Jenkins startup could result in the wrong order of
-execution of commands during initialization.
-
-On Jenkins 2.81 and newer, including LTS 2.89.1, this could in rare cases
-(we estimate less than 20% of new instances) result in failure to
-initialize the setup wizard on the first startup. This resulted in multiple
-security-related settings not being set to their usual strict default.
-Affected instances need to be configured to restrict access.
-
-Additionally, there's a very short window of time after startup during
-which Jenkins may no longer show the "Please wait while Jenkins is getting
-ready to work" message, but Cross-Site Request Forgery (CSRF) protection
-may not yet be effective. As of publication of this advisory, we've been
-unable to confirm this can actually be exploited, but generally recommend
-that users upgrade their instances.
-
+greg k-h
