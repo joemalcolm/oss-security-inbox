@@ -1,4 +1,9 @@
-Received: (qmail 25606 invoked by uid 550); 17 Feb 2026 18:08:02 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["922" "Tuesday" "26" "September" "2017" "16:53:53" "+0200" "Alex R" "alexr@apache.org" "<CAPNiXbGAjOKHZH02R+T5HbtXs0F8OLbPz=SZrG4G+ZqgX--wBA@mail.gmail.com>" "33" "[oss-security] CVE-2017-9790: Libprocess might crash when decoding an HTTP request with absent path." nil nil nil "9" "2017092614:53:53" "[oss-security] CVE-2017-9790: Libprocess might crash when decoding an HTTP request with absent path." (number mark "U       alexr@apache Sep 26   33/922   " thread-indent "\"[oss-security] CVE-2017-9790: Libprocess might crash when decoding an HTTP request with absent path.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32071 invoked by uid 550); 26 Sep 2017 15:09:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,107 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24543 invoked from network); 17 Feb 2026 18:08:01 -0000
-Date: Tue, 17 Feb 2026 18:07:50 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aZSudt6OT1un6jBM@yuggoth.org>
-Mail-Followup-To: oss-security@lists.openwall.com
+Received: (qmail 32462 invoked from network); 26 Sep 2017 14:54:16 -0000
+X-Gm-Message-State: AHPjjUinRvZdwNGVp+Aw0HoFpIwW9QosMN2mbLpGryJ3VHUDUcf8XsIq
+	CPGkrCDwaMNrE05SWZ5DNWG+Cr0UrjIEKIshX74=
+X-Google-Smtp-Source: AOwi7QARIDncZvYlQEwtS1FZ0QbRn3Z4OhjPVW4C/eSivlzBYaJZtT4HXTsPiqxEtarwm79Ql1jPpAsk8PuVDhdcCGo=
+X-Received: by 10.176.85.94 with SMTP id u30mr10385148uaa.117.1506437633896;
+ Tue, 26 Sep 2017 07:53:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IGtIPYAPpIM+f1bh"
-Content-Disposition: inline
-In-Reply-To: <aZSaoplaTUjwzRM_@yuggoth.org>
-X-SA-Exim-Connect-IP: 66.70.103.60
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: [oss-security] [OSSA-2026-002] OpenStack Nova: calls qemu-img without format
- restrictions for resize (CVE-2026-24708) errata 1
+From: Alex R <alexr@apache.org>
+Date: Tue, 26 Sep 2017 16:53:53 +0200
+X-Gmail-Original-Message-ID: <CAPNiXbGAjOKHZH02R+T5HbtXs0F8OLbPz=SZrG4G+ZqgX--wBA@mail.gmail.com>
+Message-ID: <CAPNiXbGAjOKHZH02R+T5HbtXs0F8OLbPz=SZrG4G+ZqgX--wBA@mail.gmail.com>
+To: dev <dev@mesos.apache.org>, user <user@mesos.apache.org>, 
+	Amon Flair <amon@nandynarwhals.org>, Lyon Yang <lyon.yang.s@gmail.com>, 
+	security <security@apache.org>, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="f403045dd9740b776a055a18d813"
+Subject: [oss-security] CVE-2017-9790: Libprocess might crash when decoding an HTTP request
+ with absent path.
 
---IGtIPYAPpIM+f1bh
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--f403045dd9740b776a055a18d813
+Content-Type: text/plain; charset="UTF-8"
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2026-002: Nova calls qemu-img without format restrictions for resize
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity: Important
 
-:Date: January 17, 2026
-:CVE: CVE-2026-24708
+Vendor:
+The Apache Software Foundation
 
-Affects
-~~~~~~~
-- Nova: <30.2.2, >=3D31.0.0 <31.2.1, >=3D32.0.0 <32.1.1
+Versions Affected:
+Apache Mesos 1.1.0 to 1.3.0
+The unsupported Apache Mesos 1.0.x as well as 0.x versions may be also
+affected.
 
-Description
-~~~~~~~~~~~
-Dan Smith from Red Hat reported a vulnerability in nova. By writing=20
-a malicious QCOW header to a root or ephemeral disk and then=20
-triggering a resize, a user may convince Nova's flat image backend=20
-to call qemu-img without a format restriction resulting in an unsafe=20
-image resize operation that could destroy data on the host system.=20
-Only compute nodes using the Flat image backend (usually configured=20
-with use_cow_images=3DFalse) are affected.
+Description:
+When handling a libprocess message wrapped in an HTTP request, libprocess
+crashes if the request path is empty, because the parser assumes the request
+path always starts with '/'. A malicious actor can therefore cause a denial
+of service of Mesos masters rendering the Mesos-controlled cluster
+inoperable.
 
-Errata
-~~~~~~
-The original advisory incorrectly referred and linked to=20
-CVE-2026-24709 in some places, but CVE-2026-24708 is the correct=20
-identifier.
+Mitigation:
+pre-1.1.x users should upgrade to at least 1.1.3
+1.1.x users should upgrade to 1.1.3
+1.2.x users should upgrade to 1.2.2
+1.3.0 users should upgrade to 1.3.1
+1.4.0-dev users should obtain Mesos 1.4.0
 
-Patches
-~~~~~~~
-- https://review.opendev.org/977104 (2024.2/dalmatian)
-- https://review.opendev.org/977103 (2025.1/epoxy)
-- https://review.opendev.org/977101 (2025.2/flamingo)
-- https://review.opendev.org/977100 (2026.1/gazpacho)
+Credit:
+This issue was discovered by Lyon Yang and Jeremy Heng
 
-Credits
-~~~~~~~
-- Dan Smith from Red Hat (CVE-2026-24708)
+Alex on behalf of Mesos PMC
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2137507
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2026-24708
-
-OSSA History
-~~~~~~~~~~~~
-- 2026-02-17 - Errata 1
-- 2026-02-17 - Original Version
-
---=20
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
-
---IGtIPYAPpIM+f1bh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmmUrnZfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCmfIA//b56e5TT3E+JfSg/Q138BcX+MmbaG4BgDxquxXdIS49tJhfwjR8RhUxlD
-rXq+lXnu64oVvEbF5IdWt+bD+cyN3IEnYQ9x5CSeDVJrLUv2rb5Jxwvf8K1JQAv6
-EoJCjDR7VvUIeURI6Uv2oXu39uMabQpRQQpD8KzCdGIysf4LuNbwXULdb4X51cSk
-TbGOU7ihqnL4b+mebwsR4Y0ewKxx2zBFoFQTP6WjlEV7uJjL+yISJtPMTgFjAmHs
-TFnp1LntlHnjQCmGyYY+D2ZfC07LmXE4mJXOK0dZDl+qo+xFPzhGutu/F9t7NyyA
-Jz/i98NSqpUxGesXMmvIrRc9B9eL8IyJrxE9Mj9xE/h52q3MfIacK7ojlxgmC00u
-62W31sNdqIbjqArJmZCmvwk2xE6olP14/iekcVOZHQSDSzwnDT0JZYuO5XNg7P98
-f818MyDGDeNlSdE5AL0evE/JrT7WvvfptVepghfhFIbEb7mAhuH8j5dZPqHxbsn8
-JxHM7MrPhSHe+ZU9AaGTPmPddoqdlCiAh3+KgjFX+UizRRzOrKaHGU6NRZjPUmu7
-OtYm0OHUvU5PpkHZWXvRWKDntLuSkQliVZ6ReILK/aL8fs3D7k0vTqcwR1x70CJk
-zLE7EasRoZco4mG4rML5HTw5/QdV7ASS+bB2SKRzWTdBcBlYSZQ=
-=HzRI
------END PGP SIGNATURE-----
-
---IGtIPYAPpIM+f1bh--
+--f403045dd9740b776a055a18d813--
