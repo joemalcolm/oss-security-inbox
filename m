@@ -1,33 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/6
-Message-ID: <20170523021702.GA15419@wopr>
-Date: Mon, 22 May 2017 19:17:02 -0700
-From: Kurt H Maier <khm@...ops.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: How to request a CVE for open source projects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/22
+Message-ID: <CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>
+Date: Tue, 26 Sep 2017 14:03:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Agostino Sarubbo <ago@...too.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 22, 2017 at 08:04:41PM -0600, Kurt Seifried wrote:
+If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
+CVE FORM (yes, I am shouting).
+
+https://cveform.mitre.org
+
+Choose "Request an update to an existing CVE entry" and then for "Type of
+update requested" choose "Update References" and then eneter the CVE #, the
+ifo and URL and hit "Submit Request"
+
+TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
+(the CVE community) didn't make it easy to contribute. Well now we have
+made it easy to contribute, so please do.
+
+
+On Tue, Sep 26, 2017 at 1:07 PM, Agostino Sarubbo <ago@...too.org> wrote:
+
+> On martedì 26 settembre 2017 20:18:38 CEST Kurt Seifried wrote:
+> > You can check the CVE Database? There is the official MITRE one:
+> > cve.mitre.org and the DWF for Open Source (and yes, I lag in
+> submissions to
+> > MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/
+> in
+> > both cases the CVEs will have reference link(s) that ideally point to the
+> > upstream making it easy to match up.
 >
-> I disagree. If not assigning CVE's on the list kills this list, then...
-> wow. Good to know I personally kept this list up and running for a few
-> years.
+> As pointed out in the past (maybe spender?) the real issue is when there
+> is a
+> silent fix of a vulnerability where the commit message does not clearly
+> state
+> about the security implication. Afaik it happens frequently.
+>
+> --
+> Agostino Sarubbo
+> Gentoo Linux Developer
+>
 
-Nobody said that, and I haven't said anything that wasn't said when this
-change was first dropped on us.  The difference you're talking around is
-that vulnerabilities used to appear on this list of necessity, and now
-we either have to hope reporters cross-post or else monitor some number
-of different databases and post everything ourselves.  If you'll recall,
-this is why it was suggested that non-embargoed webforum submissions
-automatically post here.  
 
-But it's clear nobody was interested in making that happen, and now we
-get a pile of infrastructure instead.  Que sera sera, but I stand by 
-the opinion that the new processes have lost something along the way.
 
-> Which README specifically (there's a bunch), feel free to reply offlist.
+-- 
 
-I've submitted a pull request, since that seems to be the primary form
-of human communication now.
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-khm
