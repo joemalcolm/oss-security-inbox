@@ -1,71 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/8
-Message-ID: <20170601180053.GA4752@openwall.com>
-Date: Thu, 1 Jun 2017 20:00:53 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: unresponsive distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/21
+Message-ID: <alpine.GSO.2.20.1709261422390.12755@scrappy.simplesystems.org>
+Date: Tue, 26 Sep 2017 14:40:44 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 26 Sep 2017, Kurt Seifried wrote:
 
-A certain issue being handled on the distros list provided for a
-particularly good opportunity for me to test whether/which distros are
-actually paying attention and intend to respond to issues during the
-embargo period.  In the middle of a lengthy thread with a somewhat
-generic Subject (since it travels unencrypted), I asked literally all
-(and I emphasized that) distros to respond to the thread with status
-updates regarding their handling of the issue.  That was on May 27.
-I gave distros time until May 30 (Tuesday) to respond.  I then gave them
-about 2 days more, as you can see.
+> On Tue, Sep 26, 2017 at 11:31 AM, Bob Friesenhahn <
+>>
+>> It is incredibly difficult for most non-commercial upstreams to do this
+>> since they have limited manpower, they are not informed of all the
+>> applicable CVEs, and the CVE information received is essentially hearsay,
+>> received from unknown/unverifiable sources.  I am thinking that it is best
+>> for most non-commercial upstreams to not mention CVEs at all.
+>>
+>
+> Uhm. Where to begin. Ok, well for one thing just because we can't have 100%
+> perfect coverage doesn't mean we should simply give up. Also CVE's aren't
+> "hearsay", they are claims based, with evidence being needed (the stronger
+> the claim, the more likely you are to get a CVE), especially in the open
+> source world where I typically require a link to either the vuln code, or
+> the code patch in order to give a CVE to something (if you can't tell me
+> what code is vuln, in open source, then chances are you need to understand
+> the vuln more before we CVE it up, exceptions of course can be made, e.g.
+> when someone has a reproducer that works reliably).
 
-Most distros responded, with varying amount of detail.  But 3 did not:
+I did not mean that the CVE itself is "hearsay".  What I meant is the 
+way an upstream maintainer is informed about a CVE is often no better 
+than "hearsay".  In some cases the information comes from someone who 
+is already known and trusted while in other cases it is impossible to 
+even tell who is providing the information since the person providing 
+the information has intentionally obfusticated their identity.
 
-FreeBSD
-Amazon Linux AMI
-MontaVista Software
+If an upstream maintainer reports that a release resolves a particular 
+CVE, then he could easily have provided wrong information given that 
+the upstream maintainer does not have access to the technical details 
+of the report and analysis which initiated the CVE and may confuse one 
+issue with another.
 
-We had heard from FreeBSD earlier in the thread, although I would have
-expected them to reply to the specific request as well (and I did say so
-explicitly).  Maybe it's fatigue from too many encrypted messages, most
-of which happen to be focusing on Linux-specific aspects of the issue.
-That's not great at all, but it is somewhat understandable.  Part of the
-problem is that when an issue is potentially relevant to both *BSD and
-Linux, we're rarely careful to separate postings and sub-threads between
-the distros and linux-distros lists, resulting in "spamming" (and risk
-of leaks) of the Linux-specific aspects to (and via) the *BSD's.  This
-is something for us all to improve.  (Some of the sub-threads were in
-fact correctly separated to go only to linux-distros in this present
-case, though.)
+It may be that the upstream maintainer fixes a problem and some weeks 
+later the CVE is created related to the problem which was fixed.
 
-As to Amazon and MontaVista, it is likely they'll have to leave the
-distros list for inactivity.
+> You can check the CVE Database? There is the official MITRE one:
+> cve.mitre.org and the DWF for Open Source (and yes, I lag in submissions to
+> MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/ in
+> both cases the CVEs will have reference link(s) that ideally point to the
+> upstream making it easy to match up.
 
-As far as I can tell, last posting/reply on the (linux-)distros list by
-Amazon was in July 2016 and before that in November 2014.  As far as I
-can tell, MontaVista never posted to the list.  Being a user of the info
-only, without participation in discussions, is not strictly disallowed,
-but this time it's coupled with lack of response when specifically asked
-to respond, and on an issue that is at least potentially relevant to the
-distros (not just a responsiveness test).
+The database entries do not contain enough information for an upstream 
+maintainer to identify one issue from another similar issue.  They 
+only contain sanitized information.
 
-At this point, there will have to be a very good reason to justify
-keeping Amazon and MontaVista on the list.  Is there any?
-
-OTOH, there's just one person subscribed for each of Amazon and
-MontaVista, and all messages are encrypted to the recipient's own keys
-(but of course the headers are unencrypted, including the Subjects).
-So e.g. an unattended mailbox isn't that much of a risk.
-
-I am not going to ping Amazon and MontaVista directly (just like I did
-not ping NetBSD directly last month, although others promptly did
-anyway).  If they missed the messages on the distros list and also miss
-the message here, so be it.
-
-While I am at it: there have been 3624 messages on linux-distros (and a
-subset of those on distros) since the list was setup on April 3, 2011
-and until today.  That's about 1.6 messages per day on average, but
-sometimes there are spikes (like there is now) and sometimes there are
-quiet periods.
-
-Alexander
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
