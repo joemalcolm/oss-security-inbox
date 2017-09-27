@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1507" "Monday" "8" "March" "2021" "15:35:38" "+0100" "Mauro Matteo Cascella" "mcascell@redhat.com" nil "39" "[oss-security] CVE-2021-20263 QEMU: virtiofsd: 'security.capabilities' is not dropped with xattrmap option" nil nil nil "3" nil nil (number mark "U       mcascell@red Mar  8   39/1507  " thread-indent "\"[oss-security] CVE-2021-20263 QEMU: virtiofsd: 'security.capabilities' is not dropped with xattrmap option\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-20263 QEMU: virtiofsd: 'security.capabilities' is not dropped with xattrmap option" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1955" "Wednesday" "27" "September" "2017" "10:46:51" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170927084651.GB14379@suse.de>" "57" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Cc:" nil nil "9" "2017092708:46:51" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        meissner@sus Sep 27   57/1955  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>" "<CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>" "<4174873.rEhhimjYuO@wanheda>" "<CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 8171 invoked by uid 550); 8 Mar 2021 15:37:21 -0000
+Received: (qmail 17476 invoked by uid 550); 27 Sep 2017 08:47:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11331 invoked from network); 8 Mar 2021 14:36:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1615214161;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=lBZ0YfG7dbNb+AJWy3o7waFJqeIGEmaTboHw10r4JfI=;
-	b=JNBS9SbMM45bygPkBgnxPxeV3dLoA41K7Q8ry1ineawk/ShBpn3ANtKRjwMbA/bddRsWvi
-	nMVFquJcf/T68MtZT3UbAEIMhsTBnpJvf4XOckdXpc7gBCmZ19W3KK4jYZ6XCGVYGG76wK
-	LjSVvEm/ao9aWwVkj+JxQvuguqoGBr4=
-X-MC-Unique: CjPXjtvNPoW_kJD65bfA_w-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=lBZ0YfG7dbNb+AJWy3o7waFJqeIGEmaTboHw10r4JfI=;
-        b=gLvuAvToIj38C739g7rKhoFo+CO4awwV5uNw7MOMTLfRpQy0kfLduwLL+iscYRfI1G
-         RCNTYYdt/FZuvlXK+G89N1//dSlH9HxEhLmHOacrLvMRezHeKiI3HuuyjvUd2pGtW/dV
-         fUPp4Y5yXk/42jDlRhwl5R+xRwlkomTn06P1usQmUbZUYvpu26MKE6+jSZZphTOtj52y
-         nxjBzSP9rf/fhQ+79KDXbVhGr7GNqYwnUKBG7BiwXb9EeVd1vU+ddNjMZKcDJa+8pF8P
-         a4y+GA5Cx1vCpEVckpBM5cOxRq8Heh2QXZFFtQNZgo4GsPi/LhflkWwpbdWByruBJe+A
-         tkTw==
-X-Gm-Message-State: AOAM5307iQ6xUxAfR5Y1uJE3Bqhzx1lkm/iYRF0b6Wuw0SmnA2FCgmQ5
-	Z1WvP9XCHAwIRxKsyYWaUtSlznUDfJr0JMsEYKDzavxwKS2x1aWsam9eQVJguGBCIFWErCb6ffn
-	pTSW/5IZ9JKm+SuNZ8zgeUJ6+mq0ZcxNIiso6B7I17Ifj
-X-Received: by 2002:a17:906:fa04:: with SMTP id lo4mr15288288ejb.44.1615214149471;
-        Mon, 08 Mar 2021 06:35:49 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwoZa0InsSXJOWSB0LR/5tb+YSfj5QTWDil6ronu+IAl9mF9cWyt8dAASbfAxelleP+8wPUYJu7Inn0akHVkpk=
-X-Received: by 2002:a17:906:fa04:: with SMTP id lo4mr15288275ejb.44.1615214149315;
- Mon, 08 Mar 2021 06:35:49 -0800 (PST)
+Received: (qmail 17458 invoked from network); 27 Sep 2017 08:47:04 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20170927084651.GB14379@suse.de>
+References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
+ <alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>
+ <CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>
+ <4174873.rEhhimjYuO@wanheda>
+ <CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>
 MIME-Version: 1.0
-From: Mauro Matteo Cascella <mcascell@redhat.com>
-Date: Mon, 8 Mar 2021 15:35:38 +0100
-Message-ID: <CAA8xKjXLrzagaAMMSFBoFT=vgq4ksj8ZjCuFit1Hz-Mvot2vyA@mail.gmail.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: Agostino Sarubbo <ago@gentoo.org>
+Date: Wed, 27 Sep 2017 10:46:51 +0200
+From: Marcus Meissner <meissner@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
 To: oss-security@lists.openwall.com
-Cc: "Dr. David Alan Gilbert" <dgilbert@redhat.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=mcascell@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2021-20263 QEMU: virtiofsd: 'security.capabilities' is not
- dropped with xattrmap option
 
-Hello,
+Hi,
 
-A flaw was found in the virtio-fs shared file system daemon
-(virtiofsd) of QEMU. Virtio-fs is meant to share a host file system
-directory with a guest virtual machine. The new 'xattrmap' option may
-cause the 'security.capability' xattr in the guest to not drop on file
-write, potentially leading to a modified, privileged executable in the
-guest. In rare circumstances, this flaw could be used by a malicious
-user to elevate their privileges within the guest.
+Underlined _YES_ to that.
 
-For the problem to happen virtiofsd needs to be running with '-o
-xattr' and '-o xattrmap' (to enable and rename xattrs, respectively).
-The problem only occurs if 'security.capability' is one of the xattrs
-that's being renamed. Different caching modes cause different guest
-behavior: '-o cache=none' makes the issue easy to reproduce. There's a
-suspicion the flaw could be reproduced with the default option '-o
-cache=auto' as well.
+It is very easy to do this if you see something, do not get distracted by the amount of fields
+as most are optional.
 
-The impact of this flaw is limited by the fact that xattrmap is a
-recent feature that's little used so far. Additionally, unprivileged
-users shouldn't be granted write permission on privileged executables
-in the first place.
+This is lowcost detached effort.
 
-Virtiofsd 'xattrmap' feature in QEMU 5.2:
-https://gitlab.com/virtio-fs/qemu/-/commit/6084633dff3a05d6317
+Ciao, Marcus
+On Tue, Sep 26, 2017 at 02:03:30PM -0600, Kurt Seifried wrote:
+> If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
+> CVE FORM (yes, I am shouting).
+> 
+> https://cveform.mitre.org
+> 
+> Choose "Request an update to an existing CVE entry" and then for "Type of
+> update requested" choose "Update References" and then eneter the CVE #, the
+> ifo and URL and hit "Submit Request"
+> 
+> TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
+> (the CVE community) didn't make it easy to contribute. Well now we have
+> made it easy to contribute, so please do.
+> 
+> 
+> On Tue, Sep 26, 2017 at 1:07 PM, Agostino Sarubbo <ago@gentoo.org> wrote:
+> 
+> > On martedì 26 settembre 2017 20:18:38 CEST Kurt Seifried wrote:
+> > > You can check the CVE Database? There is the official MITRE one:
+> > > cve.mitre.org and the DWF for Open Source (and yes, I lag in
+> > submissions to
+> > > MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/
+> > in
+> > > both cases the CVEs will have reference link(s) that ideally point to the
+> > > upstream making it easy to match up.
+> >
+> > As pointed out in the past (maybe spender?) the real issue is when there
+> > is a
+> > silent fix of a vulnerability where the commit message does not clearly
+> > state
+> > about the security implication. Afaik it happens frequently.
+> >
+> > --
+> > Agostino Sarubbo
+> > Gentoo Linux Developer
+> >
+> 
+> 
+> 
+> -- 
+> 
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@redhat.com
 
-Upstream patch:
-https://lists.gnu.org/archive/html/qemu-devel/2021-03/msg01244.html
-
-This issue was reported by Dr. David Alan Gilbert (CC'd).
-
-CVE-2021-20263 assigned by Red Hat, Inc.
-
-Best regards.
 -- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
-
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
