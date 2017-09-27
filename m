@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2100" "Thursday" "14" "July" "2016" "12:26:42" "-0400" "Jessica Frazelle" "me@jessfraz.com" "<CAEk6tEy06LoWDWfCcBrWBPO7n0mLYajNU69dMVSg9JGQ6e5p-A@mail.gmail.com>" "69" "Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" nil nil nil "7" "2016071416:26:42" "[oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" (number mark "U       me@jessfraz. Jul 14   69/2100  " thread-indent "\"Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount\"\n") "<1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>" ("<1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>" "<20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>" "<20160713224500.GD12156@kroah.com>" "<1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1496" "Wednesday" "27" "September" "2017" "10:14:04" "+0100" "Muhammed Mustapha Abiola" "1@mustapha.org" "<CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>" "43" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Date:" nil nil "9" "2017092709:14:04" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        1@mustapha.o Sep 27   43/1496  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<20170926150446.GA11530@kroah.com>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<1978278.8CZP0B31Sj@wanheda>" "<20170926073214.GA8108@kroah.com>" "<4188502.8b3PN4uBSd@wanheda>" "<20170926150446.GA11530@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13881 invoked by uid 550); 15 Jul 2016 02:17:46 -0000
+Received: (qmail 18068 invoked by uid 550); 27 Sep 2017 09:19:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7714 invoked from network); 14 Jul 2016 16:27:13 -0000
+Received: (qmail 15454 invoked from network); 27 Sep 2017 09:14:17 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jessfraz.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=BzosMZgJxLqEdFV8VkaQK9UGQ+mQ74HR58DBVE4ycoc=;
-        b=U9ZfTqCgqquqT1MeXjGE/a1JZ9iOPgHPYuFi6qLmKfEQ8MGD+1UUZvs/+GEH2Zlruv
-         SOdCxDPt2c5bXtiugMfv5HCaSLUu6FrsXO95zujYA5NZ0fLg1ODrTIbr6XaxOxOwDXur
-         FJObNXD5QxIpqqkr9znt259tsNLuqsRKLRock=
+        d=mustapha-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=SdmZG+0paAfnafUqtRukAlF56E9JwRPWRbf9XGSOKLs=;
+        b=0HdYU2tNE7pjWt2GtuR1UeWtVHObL//vK9NGYKScX7BYuRYSN1tvRr5gvwsVmQHYeo
+         UwHw3ypN0MFvX+YhngATXafcXFKM4QzFhUSXjwkCfMs7afkgU1ztn1naNVscIm8lKA2M
+         n+QeN1jEvex/tuI/sSR8Vkj9NlVcUTiYGu/LEwLb29Xq25V7Ytarud+ODPFzTeH/QsLs
+         BCdjmsOmOvYRS45bDOZsRwy5yNor+FqJ3l9cz/T0KfHiFSMtIqFqpjlqvX8Lfdj+U/Sv
+         ZsPGtuJkT31tFyjDQBXtpum7qSUfgi00XUJOroOIdWbXCUvV5txvSA2gyGgOLNYKsiZA
+         OBLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
+        d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=BzosMZgJxLqEdFV8VkaQK9UGQ+mQ74HR58DBVE4ycoc=;
-        b=kbNhVij2FgEa3hKmH1TskCSOJrb3VIa/2MZ0FPY3uJ97/TAlv9f5pqA71+/qqOxmW+
-         sW+n+Nr0isFrnFGooy/J78QuRSAefT42egKjbkA8y+vivrqPlrWi4CDyzYoJ4swHttVk
-         QtzqQZtJ8WIj2LZjCMDp7PzfA647tak3RONk5ibATBW6cZ/oGLQwmLBXp38tDsiD9axc
-         1v/ad5QmedpSH8sSyhaTsCKUi+9pdpJ4ggKQbxdsgL6I3gTAil++A7oKhfzh/K9pkt85
-         EQWLS9yb/KzHgNMT3DNJOmb5RSWiMaBST1EVBm+6o82/fvBSGPPwkM8wxcm1sqGrHHQs
-         el2Q==
-X-Gm-Message-State: ALyK8tK6gxx533DjUYmnpFXcrzR5MseHP9ue8wCRwPPxdvhLEBHkGcg/BDUrZZTcgti1iFJ8B7/gVHFcHFjn5UdI
-X-Received: by 10.36.34.3 with SMTP id o3mr28890238ito.50.1468513621856; Thu,
- 14 Jul 2016 09:27:01 -0700 (PDT)
+         :message-id:subject:to;
+        bh=SdmZG+0paAfnafUqtRukAlF56E9JwRPWRbf9XGSOKLs=;
+        b=n5tV5nLSBpMXHAmdfyH+BcpcuvvcXBHxOUgZnTDN5Fw3+rWDklmc0zA6If6/Wz0TrI
+         4wZURMqpbLpAUG93LcDrJUVJUJs7mU5mKEPSGGBTrcY8AqUlNHA/ig1zyvvDy2Sc22fc
+         sFxK0ijFxu4TqyDf1MDs9STxtZjSt8Mz6wqE+bzF58ZpufQp1/g+c4Ra7Z5AsNP7mPeX
+         Dgu+1vgWBVviea97iwScJZ1anFx4JSKsARtFCOVDTwN5o8G+OX1HZqUHO5ZhFEwJXel/
+         yup40OzR2iMIsghwTFMX0nlQhLonYPgHTAMe95FnpNGCvJJMNqMx/1Pzp6w11vsnNhwu
+         aQqQ==
+X-Gm-Message-State: AHPjjUhJj44VjEYdvT3Ddnb6JqG0dImM2OEXhwqipXBRuJCGNLivZZ6s
+	pAOF4eOxLflBkRs5l0ytbd7Qr7eg5cWY8ujb5dxHlLc2
+X-Google-Smtp-Source: AOwi7QDYaY5uBPhhJoxu4AlNC6z+nEBJei3tI7hk4MtZsf146L6ZnBtA8gdHlYSAZNSXwNx4vyVAc87QinVWYk3G1sQ=
+X-Received: by 10.55.15.212 with SMTP id 81mr1111640qkp.262.1506503645163;
+ Wed, 27 Sep 2017 02:14:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>
-References: <1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>
- <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org> <20160713224500.GD12156@kroah.com>
- <1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>
-From: Jessica Frazelle <me@jessfraz.com>
-Date: Thu, 14 Jul 2016 12:26:42 -0400
-Message-ID: <CAEk6tEy06LoWDWfCcBrWBPO7n0mLYajNU69dMVSg9JGQ6e5p-A@mail.gmail.com>
+In-Reply-To: <20170926150446.GA11530@kroah.com>
+References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
+ <1978278.8CZP0B31Sj@wanheda> <20170926073214.GA8108@kroah.com>
+ <4188502.8b3PN4uBSd@wanheda> <20170926150446.GA11530@kroah.com>
+Message-ID: <CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="001a11475d989f8412055a2836a6"
+Date: Wed, 27 Sep 2017 10:14:04 +0100
+From: Muhammed Mustapha Abiola <1@mustapha.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
 To: oss-security@lists.openwall.com
-Cc: Greg KH <greg@kroah.com>, cve-assign@mitre.org
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel
- mount table using shared bind mount
 
-it's running systemd in a container... isn't it...
+--001a11475d989f8412055a2836a6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 14, 2016 at 12:18 PM, Jessica Frazelle <me@jessfraz.com> wrote:
-> what is the use case for mounting /mnt:/mnt in a container?
+Isn't this exactly what Vendor-Sec tried to solve?
+
+On Tue, Sep 26, 2017 at 4:04 PM, Greg KH <greg@kroah.com> wrote:
+
+> On Tue, Sep 26, 2017 at 04:50:10PM +0200, Agostino Sarubbo wrote:
+> > On marted=C4=9B 26 settembre 2017 09:32:14 CEST Greg KH wrote:
+> > > > I guess this would be benefit for all.
+> > >
+> > > Define "all"
+> >
+> > You know, for example in Gentoo we are following the upstream releases.
+> So
+> > from time to time we stabilize a newer kernel that "syncs" with upstrea=
+m.
+> > This does not happen for non-rolling (release) distros that may want to
+> patch/
+> > backport the security fix.
 >
-> On Thu, Jul 14, 2016 at 12:15 PM, CAI Qian <caiqian@redhat.com> wrote:
->> Maybe this is a better reproducer using docker. It is exploitable even with
->> user namespace enabled.
->>
->> # docker run -it -v /mnt/:/mnt/:shared --cap-add=SYS_ADMIN rhel7 /bin/bash
->>
->> # cat /proc/self/uid_map
->>          0        995      65536
->>
->> # cat /proc/self/gid_map
->>          0        992      65536
->>
->> (insider container) # for i in `seq 1 20`; mount -o bind /mnt/1 /mnt/2; done
->>    CAI Qian
->>
->> ----- Original Message -----
->>> From: "Greg KH" <greg@kroah.com>
->>> To: oss-security@lists.openwall.com
->>> Cc: caiqian@redhat.com, cve-assign@mitre.org
->>> Sent: Wednesday, July 13, 2016 6:45:00 PM
->>> Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
->>>
->>> On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@mitre.org wrote:
->>> > > It was reported that the mount table expands by a power-of-two
->>> > > with each bind mount command.
->>> >
->>> > > If the system is configured in the way that a non-root user
->>> > > allows bind mount even if with limit number of bind mount
->>> > > allowed, a non-root user could cause a local DoS by quickly
->>> > > overflow the mount table.
->>> >
->>> > > it will cause a deadlock for the whole system,
->>> >
->>> > >> form of unlimited memory consumption that is causing the problem
->>> >
->>> > Use CVE-2016-6213.
->>>
->>> A CVE for an "improperly configured system"?  Huh?  What distro has such
->>> a configuration set by default?  This isn't a kernel bug, so what is
->>> this CVE classified as being "against"?  It better not be against the
->>> Linux kernel...
->>>
->>> confused,
->>>
->>> greg k-h
->>>
+> I understand the issue well, I talk to companies all the time about this =
+:)
 >
+> The rule for the kernel is, "if a distro/company/user is not following
+> the stable kernel updates, they are on their own".  I recommend either
+> using the stable kernels, or paying for a company that knows what they
+> are doing in this area and provides support (Red Hat, SuSE, etc.)
 >
+> And if you try to argue "just tell us what needs to be fixed", well, we
+> are, am, we are providing about 10-12 patches a day that people should
+> be incorporating into their kernels.  Why they ignore that curated and
+> tested stream of fixes is beyond me...
 >
-> --
+> Anyway, this is getting a bit off-topic here, sorry for the noise.
 >
+> Best of luck,
 >
-> Jessie Frazelle
-> 4096R / D4C4 DD60 0D66 F65A 8EFC  511E 18F3 685C 0022 BFF3
-> pgp.mit.edu
+> greg k-h
+>
 
-
-
--- 
-
-
-Jessie Frazelle
-4096R / D4C4 DD60 0D66 F65A 8EFC  511E 18F3 685C 0022 BFF3
-pgp.mit.edu
+--001a11475d989f8412055a2836a6--
