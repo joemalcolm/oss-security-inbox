@@ -1,114 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/06/1
-Message-ID: <988038.938350172-sendEmail@localhost>
-Date: Wed, 6 Sep 2017 07:31:54 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: openjpeg: heap-based buffer overflow in opj_mqc_flush (mqc.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/7
+Message-ID: <20170927145713.GA2847@openwall.com>
+Date: Wed, 27 Sep 2017 16:57:13 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-Description:
-openjpeg is an open-source JPEG 2000 library.
+On Wed, Sep 27, 2017 at 03:04:24PM +0200, Greg KH wrote:
+> I've not ever really run into any "known security
+> fix" not being cc:ed to stable.  Do you have any known examples where I
+> can go poke the maintainers to do better?
 
-The complete ASan output of the issue:
+I haven't been keeping track, but as you're aware Brad Spengler brought
+these up from time to time, including recently on this list:
 
-# opj_compress -n 1 -i $FILE -o null.j2c
-==81142==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000000b6 at pc 0x7fc39ca4a189 bp 0x7fff91c10aa0 sp 0x7fff91c10a98
-WRITE of size 1 at 0x6020000000b6 thread T0
-    #0 0x7fc39ca4a188 in opj_mqc_flush /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/mqc.c
-    #1 0x7fc39ca7db6a in opj_t1_encode_cblk /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/t1.c:2213:21
-    #2 0x7fc39ca7db6a in opj_t1_encode_cblks /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/t1.c:2061
-    #3 0x7fc39cae8689 in opj_tcd_t1_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/tcd.c:2184:11
-    #4 0x7fc39cae8689 in opj_tcd_encode_tile /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/tcd.c:1362
-    #5 0x7fc39ca05527 in opj_j2k_write_sod /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:4661:11
-    #6 0x7fc39ca05527 in opj_j2k_write_first_tile_part /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11507
-    #7 0x7fc39ca05527 in opj_j2k_post_write_tile /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11265
-    #8 0x7fc39ca040fd in opj_j2k_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11014:15
-    #9 0x7fc39ca4edf8 in opj_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/openjpeg.c:775:20
-    #10 0x50b9a2 in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1990:36
-    #11 0x7fc39b3e6680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #12 0x41bc78 in _start (/usr/bin/opj_compress+0x41bc78)
+http://www.openwall.com/lists/oss-security/2017/08/05/1
 
-0x6020000000b6 is located 0 bytes to the right of 6-byte region [0x6020000000b0,0x6020000000b6)
-allocated by thread T0 here:
-    #0 0x4d1628 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
-    #1 0x7fc39cafa8a9 in opj_malloc /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/opj_malloc.c:196:12
-    #2 0x7fc39cae3522 in opj_tcd_code_block_enc_allocate_data /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/tcd.c:1196:42
-    #3 0x7fc39cae3522 in opj_tcd_init_tile /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/tcd.c:1113
-    #4 0x7fc39c9ff364 in opj_j2k_pre_write_tile /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:11115:11
-    #5 0x7fc39c9ff364 in opj_j2k_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/j2k.c:10958
-    #6 0x7fc39ca4edf8 in opj_encode /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/openjpeg.c:775:20
-    #7 0x50b9a2 in main /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/bin/jp2/opj_compress.c:1990:36
-    #8 0x7fc39b3e6680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+> We have plenty of the normal "bugfix was merged that a few years later
+> turned out to be a 'security' issue, but no one realized it at the time"
+> changes that get merged.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/media-libs/openjpeg-2.2.0/work/openjpeg-2.2.0/src/lib/openjp2/mqc.c in opj_mqc_flush
-Shadow bytes around the buggy address:
-  0x0c047fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff8000: fa fa fd fa fa fa 00 00 fa fa 00 00 fa fa 00 00
-=>0x0c047fff8010: fa fa 00 fa fa fa[06]fa fa fa 06 fa fa fa 06 fa
-  0x0c047fff8020: fa fa 06 fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==81142==ABORTING
-[INFO] tile number 1 / 1
+It feels unlikely Al Viro didn't realize the commit on 2017-07-07 was a
+security fix, given the description of the race condition and the kernel
+panic triggerable by an unprivileged user posted to linux-fsdevel on
+2017-05-31, and the Red Hat private Bug created on 2017-07-06.  Rather,
+it could have been intended to give distros some time to patch (4 weeks
+to Red Hat, 1 week to the rest?) before drawing even more attention to
+the problem.  But this also resulted in stable not CC'ed on the commit.
 
-Affected version:
-2.2.0
+I am not blaming anyone - it's a tough tradeoff.  For an already public
+issue (since 2017-05-31 on linux-fsdevel), the committed fix doesn't
+literally leak it (can't leak what's already public), although it does
+create some additional exposure (minimized by not mentioning security
+relevance and not CC'ing stable).  I am also not blaming Red Hat for
+giving linux-distros less time - that's possibly caused by linux-distros
+policy of 14 days max, 7 days preferred.  I think the 7 or 8 days was
+just right.  I think Red Hat should learn to handle such issues much
+quicker, though, so that up to 14 days would be comfortable for their
+own handling as well.  Especially for semi-public issues (in this case
+technically public, but obscure).
 
-Fixed version:
-N/A
+I am primarily saying that we should admit that such cases exist, I
+suppose for varying reasons, when stable is not CC'ed on what's known to
+be a security issue at time of commit.
 
-Commit fix:
-https://github.com/uclouvain/openjpeg/commit/afb308b9ccbe129608c9205cf3bb39bbefad90b9
+I don't know if you should "go poke" Al Viro "to do better".  While many
+would disagree with resolving the tradeoff like that, some would support
+that.  As an option, you could acknowledge that such cases will come up
+from time to time, and ask to be notified of them by means other than
+CC'ing stable.  Maybe this was already in place for that one occasion?
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+> And to help combat that, we are doing more and
+> more "smart mining"[1] of the kernel commits to try to catch patches
+> that match those types of fixes and get them merged into the stable
+> kernels.
+> 
+> You can see the initial results of this work with the huge increase in
+> patches being merged to the 4.9 and 4.4 stable kernels vs. any older
+> stable kernel trees in the past.
+> 
+> thanks,
+> 
+> greg k-h
+> 
+> [1] yes, we know people have been doing this for years, but they almost
+>     never notify upstream about this for various reasons.
 
-CVE:
-CVE-2017-14151
+Sounds great.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00314-openjpeg-heapoverflow-opj_mqc_flush
+Thanks,
 
-Timeline:
-2017-08-14: bug discovered and reported to upstream
-2017-08-14: upstream releases a fix
-2017-08-16: blog post about the issue
-2017-09-05: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/16/openjpeg-heap-based-buffer-overflow-in-opj_mqc_flush-mqc-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Alexander
