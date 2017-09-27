@@ -1,66 +1,207 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/3
-Message-ID: <fb6b7e2d-977d-7eae-346e-a638f806bf34@orlitzky.com>
-Date: Thu, 7 Sep 2017 08:38:23 -0400
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/10
+Message-ID: <20170927173907.GA4606@openwall.com>
+Date: Wed, 27 Sep 2017 19:39:08 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
+Cc: Ben Seri <ben@...is.com>
+Subject: Re: Linux BlueBorne vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 09/06/2017 05:15 PM, Daniel Kahn Gillmor wrote:
+On Fri, Sep 15, 2017 at 12:40:06PM +0000, Ben Seri wrote:
+> In any case, we respect the need for a short embargo period, and in this
+> case we disclosed the issues 7 days prior to publication.
+
+Thank you, Ben!
+
+All -
+
+Ben brought additional detail to linux-distros on September 24, and Petr
+Matousek promptly posted a reply.  I am including both below (in short:
+older kernels are also affected).  I asked but failed to get Ben or/and
+Petr to post this to oss-security, but it must be posted ASAP since it's
+already non-embargoed info.  So I am doing this myself.  Arguably, this
+falls under administrative task "3. Evaluate if the issue (or one of the
+issues) is effectively already public ...", which is CloudLinux's, but
+maybe I was quicker to initiate the requests to Ben and Petr, and as
+list admin I am in a better position to actually enforce policy when
+things go wrong like that.
+
+To make this clearer for future occasions, I've just added this piece:
+
+"If you'd like to post a follow-up to or otherwise continue discussing
+an issue that has already been made public, please post those messages
+only to oss-security instead.  The (linux-)distros lists are for
+embargoed discussions only, and we mean it.  If you do have a good
+reason to keep your follow-up(s) under a new embargo, it's OK to send
+them to (linux-)distros, but please be aware that this starts the whole
+process all over again - you need to propose a public disclosure date
+right away, etc., and then bring those follow-up(s) to oss-security once
+the new embargo is over."
+
+to:
+
+http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
+
+This is not a new problem.  Sometimes it takes some reminders to force
+the remainder of a discussion thread to the public after the issue has
+been made public.
+
+Ben Seri wrote:
+
+---
+Hi
+
+We are writing to inform you that we have found that the Bluetooth RCE
+vulnerability (CVE-2017-1000251) we have disclosed a few weeks ago, can
+also be triggered on older Kernels than what we initially identified.
+
+In our initial report we stated that this vulnerability affects Kernels
+starting at v3.3-rc1 - and this is true for the code flow we have
+identified in that report. However, we have found that the same underlying
+bug can also be triggered by a separate code flow that exists in the
+Kernels starting at v2.6.32 (in commit:
+f2fcfcd670257236ebf2088bbdf26f6a8ef459fe).
+
+This is the code flow that can also trigger this vulnerability in older
+Kernels:
+
+In l2cap_config_rsp, a second call to l2cap_parse_conf_rsp exist:
+
+...
+
+case L2CAP_CONF_UNACCEPT:
+
+if (l2cap_pi(sk)->num_conf_rsp <= L2CAP_CONF_MAX_CONF_RSP) {
+
+char req[64];
+
+if (len > sizeof(req) - sizeof(struct l2cap_conf_req)) {
+
+l2cap_send_disconn_req(conn, sk, ECONNRESET);
+
+goto done;
+
+}
+
+/* throw out any old stored conf requests */
+
+result = L2CAP_CONF_SUCCESS;
+
+len = l2cap_parse_conf_rsp(sk, rsp->data,
+
+len, req, &result);
+
+
+
+
+Despite checking the length of the incoming l2cap config response, this
+flow is susceptible to a stack overflow of the req buffer.
+
+The incoming config response may be limited to the maximum 60 bytes, and
+still create an output response that exceeds that allocated 64 bytes. This
+is because l2cap_parse_conf_rsp can create an outgoing response that is
+larger than the incoming configuration response it parses:
+
+
+
+while (len >= L2CAP_CONF_OPT_SIZE) {
+
+len -= l2cap_get_conf_opt(&rsp, &type, &olen, &val);
+
+switch (type) {
+
+case L2CAP_CONF_MTU:
+
+if (val < L2CAP_DEFAULT_MIN_MTU) {
+
+*result = L2CAP_CONF_UNACCEPT;
+
+pi->imtu = L2CAP_DEFAULT_MIN_MTU;
+
+} else
+
+pi->imtu = val;
+
+l2cap_add_conf_opt(&ptr, L2CAP_CONF_MTU, 2, pi->imtu);
+
+
+
+
+For example, an attacker can send a configuration response that contain
+multiple MTU elements that are all sized 0 (\x01\x00) and the above code
+will create an MTU element of size 2 for each received MTU element,
+regardless of its received size. This means that the outgoing response
+size would be twice the incoming response size. For instance, an incoming
+configuration response built using 30 MTU elements of size 0 will have a
+total size of 60 bytes (and will pass the if in l2cap_config_rsp
+successfully) but the output configuration response would be 120 bytes that
+would result in overflow of the req buffer above.
+
+An attacker could of course craft a configuration response in this flow
+that would result in effective overflow of the stack that can lead to
+remote code execution.
+
+It is our understanding that no new patch is necessary to address this
+second flow, as the original patch we submitted already mitigated this flow
+as well. However, we do feel that the CVE details should reflect that this
+vulnerability affects Kernels starting from v2.6.32.
+
+I have added Kurt Seifried to this communication as well, in order to
+assist with alteration of the CVE.
+
+Kurt - Since this is flow is a bit different than our original report, do
+you think changing the CVE details is the way to go, or would it be better
+to assign a separate CVE ID for this?
+
+If you need any additional details from us, please let us know.
+
+Thank you,
+
+Ben Seri
+
+Armis Labs
+---
+
+Petr Matousek wrote:
+
+---
+Hi,
+
+On Sun, Sep 24, 2017 at 07:20:18PM +0000, Ben Seri wrote:
+>    Hi
 > 
-> But i think future reports of problems with pidfiles (e.g. your helpful
-> cleanup of mimedefang -- thanks!)  should always include the suggestion
-> to disable pidfiles entirely and to encourage developers who must
-> implement them to ensure that they're only an extra feature, for use
-> with otherwise limited service managers, and perhaps to be compile-time
-> disabled.
+>    We are writing to inform you that we have found that the Bluetooth RCE
+>    vulnerability (CVE-2017-1000251) we have disclosed a few weeks ago, can
+>    also be triggered on older Kernels than what we initially identified.
 > 
+>    In our initial report we stated that this vulnerability affects Kernels
+>    starting at v3.3-rc1 - and this is true for the code flow we have
+>    identified in that report. However, we have found that the same underlying
+>    bug can also be triggered by a separate code flow that exists in the
+>    Kernels starting at v2.6.32 (in commit:
+>    f2fcfcd670257236ebf2088bbdf26f6a8ef459fe).
 
-I've been reluctant to do this because I'm approaching these as an
-OpenRC user, and OpenRC has the ability to supervise the daemon. I
-always hate it when someone makes a suggestion (at my expense) that
-amounts to "I don't need this, so you don't need this" -- and I don't
-want to be /that/ guy.
+FWIW, we've already informed linux-distros about this earlier this month
+(Sep 11th). We found it while analysing impact of the original issue on
+rhel-6 (and released patches for 2.6.32 based rhel-6 too).
 
-I think a compile-time option is reasonable, though. Maybe the ability
-to fork into the background should also be compiled out in that case.
-When I encounter more of these, I'll provide a list of possible
-solutions and include "get rid of the PID file" along with its trade-offs.
+Thanks,
+--
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+---
 
-Most of the PID file vulnerabilities that I've found are in the
-distribution init scripts: the only ones that hit this list are the
-upstream projects that make it impossible for the distro developers to
-get it right. Curiously though, a lot of the problems that I've found in
-the distro scripts are for daemons that run in the foreground and are
-supposed to be supervised.
+I had missed that this detail was on linux-distros but was not made
+public along with the rest of the info on September 14.  Per the maximum
+embargo time, we should have made this public no later than September 25,
+so we're a couple of days late now.  Per common sense, it shouldn't have
+been delayed at all, and Ben's message quoted above should have been
+sent to oss-security instead of to linux-distros.
 
-Basically, there are two accepted approaches. Forking,
+I am not blaming anyone.  Just pointing out how I think - and insist -
+this should be done going forward.
 
-  1. Daemon forks
-  2. Daemon writes a PID file
-  3. Daemon drops privileges
+Thanks,
 
-And supervised:
-
-  4. Daemon runs in the foreground, and does nothing special
-
-What I've found is that many programs choose any old subset of (1)
-through (4), and implement them in any order. As a result, init script
-authors haven't developed a feel for the right way to do things; they
-copy/paste snippets from other init scripts until things seem to work.
-
-I've found services that run with *two* PID files, one of which is
-ignored. I've found services that go out of their way to give away
-ownership of /run/foo, even though /run/foo/foo.pid is created and owned
-by root. Pretty much any way you can go wrong has made an appearance at
-least once, and all of these are for daemons that should be supervised
--- the service scripts should be trivial.
-
-Anyway, my point is, it may be optimistic to think that we can help
-people not do weird things in their service scripts =)
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (982 bytes)
+Alexander
