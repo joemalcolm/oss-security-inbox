@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2414" "Saturday" "28" "May" "2016" "23:22:55" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160529032255.12FC7332079@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: Fwd: PHP-FPM fpm_log.c memory leak and buffer overflow" "^Cc:" nil nil "5" "2016052903:22:55" "[oss-security] Re: Fwd: PHP-FPM fpm_log.c memory leak and buffer overflow" (number mark "U       cve-assign@m May 28   55/2414  " thread-indent "\"[oss-security] Re: Fwd: PHP-FPM fpm_log.c memory leak and buffer overflow\"\n") "<56B0D4EE.8010002@firma.seznam.cz>" ("<56B0D4EE.8010002@firma.seznam.cz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["368" "Wednesday" "27" "September" "2017" "22:26:38" "+0200" "Emilio Pozuelo Monfort" "pochu27@gmail.com" "<ba4bf74e-858d-f75b-81ea-f9ec2bcf1e69@gmail.com>" "11" "Re: [oss-security] CVE-2017-9772: OCaml release 4.04.2" nil nil nil "9" "2017092720:26:38" "[oss-security] CVE-2017-9772: OCaml release 4.04.2" (number mark "U       pochu27@gmai Sep 27   11/368   " thread-indent "\"Re: [oss-security] CVE-2017-9772: OCaml release 4.04.2\"\n") "<6D989FE0-69C8-4AE0-B897-B440B8F92C69@recoil.org>" ("<21771A83-D685-4776-9CE7-883775F05977@inria.fr>" "<6D989FE0-69C8-4AE0-B897-B440B8F92C69@recoil.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3827 invoked by uid 550); 29 May 2016 03:23:08 -0000
+Received: (qmail 28147 invoked by uid 550); 27 Sep 2017 21:14:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3809 invoked from network); 29 May 2016 03:23:07 -0000
-In-Reply-To: <56B0D4EE.8010002@firma.seznam.cz>
-Message-Id: <20160529032255.12FC7332079@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-Date: Sat, 28 May 2016 23:22:55 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Fwd: PHP-FPM fpm_log.c memory leak and buffer overflow
-To: oss-security@lists.openwall.com
+Received: (qmail 23953 invoked from network); 27 Sep 2017 20:26:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=9zuKvSVLlsD6WmtdSb7X0yW3MYoITBGHZvYcoUB3e8g=;
+        b=QFqSTSQ9j7cSpCgeRq121v89NXnmDtKRlqy0Czesr/tikZWsNJNoE4d84+QS0dtTAZ
+         yP5flYEmx3V33RCi/gYgAJDOrPdBTWiH5dainMZzeQ8EzdG3fFjE1cBiv5Xe2WT7fgJV
+         YG3Wuax/Amof+PHDEWKBi9VGlN+6n3v7y16cKDhRHu0Sw0IZwY8nVzY5y5jQ5ZLpu+j5
+         8pDMI5NtxOtNVdiDIOM5a7oYEw063Fhvu63lxwfrAbIiq8KFTuxFC3O4KR192/fHhSfA
+         mWO64CKrsMWstXZpzUN1m3GfqXnEwkHYYqipAqAX0ph66nFPmHHUPC7sLGT61JiyNa4D
+         f1qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=9zuKvSVLlsD6WmtdSb7X0yW3MYoITBGHZvYcoUB3e8g=;
+        b=BEn83V3MYUTOP3pNutuL2I5J1Dmvxh6rzrD7EsStAH1p7Kz7pvylibdADUa1hea6ka
+         Gi7yD4HSgUhq9ht/HuEdjhj+OAmTfbb+tdXFmjhrExcRzZII4uKzQY7HhciAGBwb93LB
+         HcHr5pFdTfPqc8jUTi2li9gqqaQk2YPGrZobAFoelirS924zOQY0s+CcOK5D1HVL/J4q
+         TpR98mLXG6hbHOy7GTG5Whn1DcI6T8dzpA63Jp/0yHZNms9IszaaYctX6eZMVPVJiOTn
+         lMWUakMPvtJyTB+BJMY6vpWZ1fMm1xSi/0hUHrfM+ZJb48ninixYySSpKi5PARuAysBQ
+         GTLQ==
+X-Gm-Message-State: AHPjjUjIpieUnxF2iIAQmD2XxOVfFeXYnhodDgQ+uiUemzFZdfSn0VYi
+	zD3R4Y2nUZ0CX5WpQ5K1Hvdixg==
+X-Google-Smtp-Source: AOwi7QBx/i4zoss344Ca8lC9sxffdyKbkigu3t5FUybk/FPihOrQNYx9XsXsb+95/E89dDqjbC7Eww==
+X-Received: by 10.223.196.161 with SMTP id m30mr2395647wrf.187.1506544000252;
+        Wed, 27 Sep 2017 13:26:40 -0700 (PDT)
+To: oss-security@lists.openwall.com, Anil Madhavapeddy <anil@recoil.org>
+Cc: Damien Doligez <damien.doligez@inria.fr>
+References: <21771A83-D685-4776-9CE7-883775F05977@inria.fr>
+ <6D989FE0-69C8-4AE0-B897-B440B8F92C69@recoil.org>
+From: Emilio Pozuelo Monfort <pochu27@gmail.com>
+Message-ID: <ba4bf74e-858d-f75b-81ea-f9ec2bcf1e69@gmail.com>
+Date: Wed, 27 Sep 2017 22:26:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+In-Reply-To: <6D989FE0-69C8-4AE0-B897-B440B8F92C69@recoil.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE-2017-9772: OCaml release 4.04.2
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Date: Tue, 2 Feb 2016 17:10:22 +0100
-> To: <oss-security@lists.openwall.com>
+On 23/06/17 17:28, Anil Madhavapeddy wrote:
+>> References: see CVE-2017-9779 for a lesser vulnerability in older versions.
 
-> Date:	Mon, 25 Jan 2016 16:50:38 +0100
-> To:	bugtraq@securityfocus.com
+Is there any information on CVE-2017-9779? Everything out there seems to link to
+the CVE-2017-9772 announcement and bug report, and I can't find anything more,
+such as a bug report, affected versions, how lesser is this...
 
-> The FastCGI Process Manager (FPM) SAPI of PHP was vulnerable to memory
-> leak and buffer overflow in the access logging feature.
-
-> the PHP engine performed an out-of-boundaries read and also wrote a \n
-> character outside of the allocated memory.
-
-> http://git.php.net/?p=php-src.git;a=commit;h=2721a0148649e07ed74468f097a28899741eb58f
-> http://www.search-lab.hu/about-us/news/111-some-unusual-vulnerabilities-in-the-php-engine
-
->> as it has some strict prerequisites, the severity is low.
-
->> This was just an expanded version of the default access.format
->> template, we added the REMOTE_ADDR and REQUEST_URI fields
-
-As explained in the www.search-lab.hu post (in the section between "We
-found the answer by reviewing the source code" and "And here we are"),
-there was really only one underlying problem: the code misinterpreted
-the semantics of the snprintf return value. Use CVE-2016-5114. The
-other outcomes were consequences of this. The "memory leak" is the
-same as the "out-of-boundaries read": extra bytes from process memory
-were being written to a log file that might be readable by untrusted
-users. The "buffer overflow" is the same as the "wrote a \n character
-outside of the allocated memory."
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXSmAHAAoJEHb/MwWLVhi2KkwQAJYehVlnt9SusqqgXhyhdZgt
-TwqfEcyDihIZRtNw1MVqSTyR3B5Tf8S0SiSeINC2uRvaWSia/NlSEjWuMshmDkIn
-vXsPj60bPpjtvU9DXK7NZ2L35zOqwaVLf/n/XnNf2dkHIVCE2uNfm2GvNyGjGSGn
-8W38RS9xu1BJeF1PKtgkd3CdYKbfy2J/NZs59E02yhJ5gtQoR64n86zj2qdv5lhd
-/pTvd3QzdCztOU+/wKRA/vOlm0UJKc4vMyP92ffYPuQkPaqaA2AovzCGJuJ+vKoL
-XHSKvwigkLK1VECfTHpxmt0JXOHe4UMdDjSFPXryixjWxT0D3OnYU1lJKCn7XjKx
-UBGOm+p3CvEZ5+3pxDqI5oULJokn6ZiLBLuWP2rhDITcyEsRbr745UQCJ0kZjuSu
-tHheUYJWRHo4XOHQkeV2eiVrZTjTo/1txTUZCoenV57WK8EnOiKuoFaBbq0xddtq
-UfQMWB6wYFf7n7O4LuMPxcE4UgC6dO04CuY12yHduarvxcPb/r7n9H8ACyexb93k
-OvmhaX2fDJNEjQ2ZGIBvOhKXJAYCe/kHjCeFH256xAfQhe2eW14SLo53Akt6dgvg
-0jzyABI/KSbJnpWqwB3Bf1K9vfmSmBCEWYJVlY0HCtE5caqe+IJSE5RygSlR22Ha
-7YksgydiRGiXmapN76dc
-=ONL0
------END PGP SIGNATURE-----
+Thanks,
+Emilio
