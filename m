@@ -1,22 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/14/2
-Message-ID: <20170614165926.GH8074@localhost.localdomain>
-Date: Wed, 14 Jun 2017 09:59:26 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/11
+Message-ID: <20170927181238.GA5036@openwall.com>
+Date: Wed, 27 Sep 2017 20:12:38 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - CVE-2017-1000367 in Sudo's get_process_ttyname() for Linux
+Subject: Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, Sep 26, 2017 at 08:08:25AM -0700, Qualys Security Advisory wrote:
+> We thank Red Hat and the members of the linux-distros@...nwall list.
 
-Since a working exploit has been published already
-(https://github.com/c0d3z3r0/sudo-CVE-2017-1000367), please find our
-Sudoer-to-root exploit (Linux_sudo_CVE-2017-1000367.c) attached to this
-mail. Thank you very much!
+FWIW, the timeline is much better this time:
 
-With best regards,
+September 15 - advisory sent to Red Hat (according to Qualys)
+September 20 - advisory sent to linux-distros
+September 26 - public disclosure
 
--- 
-the Qualys Security Advisory team
+Thanks, Qualys!
 
-View attachment "Linux_sudo_CVE-2017-1000367.c" of type "text/plain" (4705 bytes)
+Alexander
