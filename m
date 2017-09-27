@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["261" "Wednesday" "17" "May" "2017" "00:03:45" "+0200" "Solar Designer" "solar@openwall.com" "<20170516220345.GA10874@openwall.com>" "12" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Date:" nil nil "5" "2017051622:03:45" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        solar@openwa May 17   12/261   " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>" ("<20170501164428.GA12322@openwall.com>" "<CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com>" "<CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2959" "Wednesday" "27" "September" "2017" "16:57:13" "+0200" "Solar Designer" "solar@openwall.com" "<20170927145713.GA2847@openwall.com>" "65" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Date:" nil nil "9" "2017092714:57:13" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        solar@openwa Sep 27   65/2959  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<20170927130424.GA19695@kroah.com>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<1978278.8CZP0B31Sj@wanheda>" "<20170926073214.GA8108@kroah.com>" "<4188502.8b3PN4uBSd@wanheda>" "<20170926150446.GA11530@kroah.com>" "<CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>" "<20170927125149.GA2500@openwall.com>" "<20170927130424.GA19695@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7838 invoked by uid 550); 16 May 2017 22:04:42 -0000
+Received: (qmail 32406 invoked by uid 550); 27 Sep 2017 14:57:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,29 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7545 invoked from network); 16 May 2017 22:04:03 -0000
-Message-ID: <20170516220345.GA10874@openwall.com>
-References: <20170501164428.GA12322@openwall.com> <CALx_OUDauCKOg20Lp5wumy_JUiu7Cj3=-d-HJSci+nROrK8BRw@mail.gmail.com> <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
+Received: (qmail 32272 invoked from network); 27 Sep 2017 14:57:29 -0000
+Message-ID: <20170927145713.GA2847@openwall.com>
+References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov> <1978278.8CZP0B31Sj@wanheda> <20170926073214.GA8108@kroah.com> <4188502.8b3PN4uBSd@wanheda> <20170926150446.GA11530@kroah.com> <CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com> <20170927125149.GA2500@openwall.com> <20170927130424.GA19695@kroah.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAP145pgb85EujmBuvCnFq-W9RRmK8NxsoJ3327JSy03gcU-F6w@mail.gmail.com>
+In-Reply-To: <20170927130424.GA19695@kroah.com>
 User-Agent: Mutt/1.4.2.3i
-Date: Wed, 17 May 2017 00:03:45 +0200
+Date: Wed, 27 Sep 2017 16:57:13 +0200
 From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] terminal emulators' processing of escape sequences
+Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
 To: oss-security@lists.openwall.com
 
-Jason, Robert -
+On Wed, Sep 27, 2017 at 03:04:24PM +0200, Greg KH wrote:
+> I've not ever really run into any "known security
+> fix" not being cc:ed to stable.  Do you have any known examples where I
+> can go poke the maintainers to do better?
 
-On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
-> A harmless example from rxvt - pushing back the new-line character:
+I haven't been keeping track, but as you're aware Brad Spengler brought
+these up from time to time, including recently on this list:
+
+http://www.openwall.com/lists/oss-security/2017/08/05/1
+
+> We have plenty of the normal "bugfix was merged that a few years later
+> turned out to be a 'security' issue, but no one realized it at the time"
+> changes that get merged.
+
+It feels unlikely Al Viro didn't realize the commit on 2017-07-07 was a
+security fix, given the description of the race condition and the kernel
+panic triggerable by an unprivileged user posted to linux-fsdevel on
+2017-05-31, and the Red Hat private Bug created on 2017-07-06.  Rather,
+it could have been intended to give distros some time to patch (4 weeks
+to Red Hat, 1 week to the rest?) before drawing even more attention to
+the problem.  But this also resulted in stable not CC'ed on the commit.
+
+I am not blaming anyone - it's a tough tradeoff.  For an already public
+issue (since 2017-05-31 on linux-fsdevel), the committed fix doesn't
+literally leak it (can't leak what's already public), although it does
+create some additional exposure (minimized by not mentioning security
+relevance and not CC'ing stable).  I am also not blaming Red Hat for
+giving linux-distros less time - that's possibly caused by linux-distros
+policy of 14 days max, 7 days preferred.  I think the 7 or 8 days was
+just right.  I think Red Hat should learn to handle such issues much
+quicker, though, so that up to 14 days would be comfortable for their
+own handling as well.  Especially for semi-public issues (in this case
+technically public, but obscure).
+
+I am primarily saying that we should admit that such cases exist, I
+suppose for varying reasons, when stable is not CC'ed on what's known to
+be a security issue at time of commit.
+
+I don't know if you should "go poke" Al Viro "to do better".  While many
+would disagree with resolving the tradeoff like that, some would support
+that.  As an option, you could acknowledge that such cases will come up
+from time to time, and ask to be notified of them by means other than
+CC'ing stable.  Maybe this was already in place for that one occasion?
+
+> And to help combat that, we are doing more and
+> more "smart mining"[1] of the kernel commits to try to catch patches
+> that match those types of fixes and get them merged into the stable
+> kernels.
 > 
-> $ echo -ne "\eGQ;"
-> ;$ 0
-> bash: 0: command not found
+> You can see the initial results of this work with the huge increase in
+> patches being merged to the 4.9 and 4.4 stable kernels vs. any older
+> stable kernel trees in the past.
+> 
+> thanks,
+> 
+> greg k-h
+> 
+> [1] yes, we know people have been doing this for years, but they almost
+>     never notify upstream about this for various reasons.
 
-Does this also affect rxvt-unicode?
+Sounds great.
+
+Thanks,
 
 Alexander
