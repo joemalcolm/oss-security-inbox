@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1871" "Wednesday" "11" "August" "2021" "10:06:18" "+0100" "Matthew Wild" "mwild1@gmail.com" nil "42" "Re: [oss-security] STARTTLS vulnerabilities" "^Date:" nil nil "8" nil nil (number mark "        mwild1@gmail Aug 11   42/1871  " thread-indent "\"Re: [oss-security] STARTTLS vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] STARTTLS vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2423" "Wednesday" "27" "September" "2017" "09:05:46" "-0400" "Rob Tompkins" "chtompki@apache.org" "<38CA08B7-2456-4D56-AF60-BE1168ECE522@apache.org>" "74" "[oss-security] [SECURITY] CVE-2017-12621 Apache Commons Jelly connects to URL with custom doctype definitions." nil nil nil "9" "2017092713:05:46" "[oss-security] [SECURITY] CVE-2017-12621 Apache Commons Jelly connects to URL with custom doctype definitions." (number mark "U       chtompki@apa Sep 27   74/2423  " thread-indent "\"[oss-security] [SECURITY] CVE-2017-12621 Apache Commons Jelly connects to URL with custom doctype definitions.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26349 invoked by uid 550); 11 Aug 2021 11:06:26 -0000
+Received: (qmail 27688 invoked by uid 550); 27 Sep 2017 13:21:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32594 invoked from network); 11 Aug 2021 09:06:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=4BYcNULVS6Y9/MGc6w4WUdhcda7RYdIj7sF8azGob1w=;
-        b=n7dVNfwbY7WxxzGBzDauGXCe7D5RuUFwgdRvqPvX7EqWilo9eChvU1Ksah8Mhm8mNi
-         ZNxbB8Mav/lKav5GiUAftC+R1SwT20zDWyQDoYT52d7ZsipYk+/oZ7m03YhjDjleBNWN
-         CoA08iozrp+u1FhRXJ9UnBlem82eDzujtq6GiCikuy9HKoSkWWsC+g+LFV7PwQRX+g3W
-         wnBXK3c2N7hdv8EFkbXkm+xTIk9Pn1xc+YeK53OBLB0EueTRUSRAxQZsQ0ogg6Cb5riw
-         kfOX9NAVGO9/ade9lJu/jkSun6SgNGGL2NFfOtEDNupATI6IEodus6iWa+PaDuuAMZMD
-         tlBw==
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 15694 invoked from network); 27 Sep 2017 13:05:59 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=4BYcNULVS6Y9/MGc6w4WUdhcda7RYdIj7sF8azGob1w=;
-        b=HtZB3sgmAYymy0PGo2FKy18pWrVGNAfWWf9eKGE9z/MrCsO4d9vmWqkIOe3VoPYLVp
-         /beYG3480Axw1AvxCfDGz7J/YYmekpkBy9i7HqMgnNqNwEGr84ghWee91gFN6bWL+JHj
-         hAUzpf5+L6e89W1EZDblAEiblSxNBQxiqMTgQ+xkAd7dJiXSQwE2U8UZpKvlPeFKzDMV
-         N/n668PxK+6hvA+d/dP2vn1dX3HVUOIwyS2FesW3nIzNoBpWRLTsoco4go6hlSquwqBo
-         fd23mDHoFFBVryFrsct06QgXsS9Rm3ILg7wOi8wIMGC+v9Ywx1HXIc+76zEDSSKGaCq1
-         Q1+g==
-X-Gm-Message-State: AOAM532saCGobst0fGBspOE1G6dIj9O4HHfi2FGF/Kvjp0WXdrypJvrb
-	ThaDZ6ioQzLOActNsFmU6Yz6Kw7cY17ZqVjB2f6Jf8fl7KY=
-X-Google-Smtp-Source: ABdhPJwavkPxpWa0YvD5JQOQzMQxPJJ0J5FePaUkyc24hyyZQjl+tEKGU77MaE4po6P/+gG4cvnzmq/xYTAvvCQJt50=
-X-Received: by 2002:a37:a8ca:: with SMTP id r193mr30289041qke.191.1628672789646;
- Wed, 11 Aug 2021 02:06:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210810122113.3fe65cc9@computer> <20210810134156.GF1599104@hal>
- <CAJt9-x5xY3ikisc=RZ1=tqNO+8Tm8YLfjVw=3=UQ2_nAP_7Oiw@mail.gmail.com> <20210811095104.4401b1cb@computer>
-In-Reply-To: <20210811095104.4401b1cb@computer>
-Message-ID: <CAJt9-x5ATDMgrJM=toFR++V6S_Gv_PSYE5StNFUgMGybaZjGsA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000150fae05c944efa6"
-Date: Wed, 11 Aug 2021 10:06:18 +0100
-From: Matthew Wild <mwild1@gmail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] STARTTLS vulnerabilities
-To: oss-security@lists.openwall.com
-
---000000000000150fae05c944efa6
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:content-transfer-encoding:reply-to
+         :mime-version:subject:date:message-id:cc:to;
+        bh=0HiFdB0Y1jURZKAUi9+kstEyuW8djm2LYHDtHVlIIXg=;
+        b=lt+cgYUTIY+M0mJpRio6QuKJSbm+NZnmdArU8Qmlfz9ng7zHfsl7cf0Qwz/rbnmF6l
+         su884b4+e+q6xPyNec2Uk/7wGZvCkoZiY9AXAa2vi121RLy+RbDkp7td9X+NOTZKHceG
+         jCJfLgkl0JCPXn1Xkihm6l+D/XzEqE/v+8IaAt2OAD8JjvHiNZs+owt+GHc9X+oKN7lW
+         hRJH92wIzTEI5v38zWKSD42aDXPgBpKdaufO7vZQjaua4FSxFOwWhnOXWfu+2w4yWpC4
+         SDYKN6oYzZIn3NrLj5Ht8j9X/CoSGJLM7Lh3KqLlYcbfGWUonetHK7qF8lcFpod/Ee7T
+         tGzg==
+X-Gm-Message-State: AHPjjUgN0FTSO07W9yr1vSrnPWgH2J3K+dJFt7I1c4NWUwDvXQsysypy
+	hXZSi6ZOr1HiimZyEyYV1KM=
+X-Google-Smtp-Source: AOwi7QDufyrbNO/4zSLAuKE6eJ8/cxkpFcWlXvaxxnpF8Mf/m6g0/2PpxoqW6MHJyCf9K9ucWp0s4g==
+X-Received: by 10.200.27.6 with SMTP id y6mr1725689qtj.247.1506517547795;
+        Wed, 27 Sep 2017 06:05:47 -0700 (PDT)
+From: Rob Tompkins <chtompki@apache.org>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Date: Wed, 27 Sep 2017 09:05:46 -0400
+Message-Id: <38CA08B7-2456-4D56-AF60-BE1168ECE522@apache.org>
+Cc: security@apache.org,
+ "<private@commons.apache.org>" <private@commons.apache.org>
+To: announce@apache.org,
+ Commons Developers List <dev@commons.apache.org>,
+ Commons Users List <user@commons.apache.org>,
+ Luca Carettoni <luca@doyensec.com>,
+ oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3273)
+Subject: [oss-security] [SECURITY] CVE-2017-12621 Apache Commons Jelly connects to URL with
+ custom doctype definitions.
 
-On Wed, 11 Aug 2021 at 08:52, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
+CVE-2017-12621: Apache Commons Jelly connects to URL with custom doctype de=
+finitions.
 
-> On Wed, 11 Aug 2021 08:09:57 +0100
-> Matthew Wild <mwild1@gmail.com> wrote:
->
-> > XMPP has some additional protections against this in its design. It is
-> > required, after TLS negotiation, for both parties to discard the
-> > pre-TLS XML stream and negotiate a new one after TLS has been
-> > established[1].
->
-> This is actually not much different from how STARTTLS works in SMTP or
-> IMAP. You are basically advised to throw away all state from pre-TLS.
-> But yet here we are with > 40 vulnerabilities.
->
+Severity: Medium
 
-The difference with XMPP is that it is a highly structured protocol, so
-it's less vulnerable to simple injection compared to line-based protocols.
-It is not just advised to throw away pre-TLS state, but a required step of
-the TLS upgrade is starting a new XML stream from scratch after TLS
-negotiates successfully. When implemented with commonly-used XML parsers,
-this means instantiating a new parser instance, and that step will
-naturally discard any data that was fed to the pre-TLS parser instance.
+Vendor:
+The Apache Software Foundation
 
-I'm not claiming that bugs are impossible, or that they don't exist - only
-a dedicated review of implementations would be able to confirm this. But I
-stand by my original statement that XMPP has more protection against such
-attacks than SMTP, IMAP and many other protocols using STARTTLS.
+Versions Affected:
+commons-jelly-1.0 (core), namely commons-jelly-1.0.jar
 
-Regardless, XMPP is gradually moving away from STARTTLS for other reasons.
-Recent advances such as ESNI, round-trip reduction, the ability to use
-generic TLS middleware (load balancers, etc.) and generally reach through
-restrictive network environments are all drivers of this change. I think
-this is ultimately a good thing.
+Description:
+During Jelly (xml) file parsing with Apache Xerces, if a custom doctype ent=
+ity is declared with a =E2=80=9CSYSTEM=E2=80=9D entity with a URL and that =
+entity is used in the body of the Jelly file, during parser instantiation t=
+he parser will attempt to connect to said URL. This could lead to XML Exter=
+nal Entity (XXE) attacks. The Open Web Application Security Project suggest=
+s that the fix be https://www.owasp.org/index.php/XML_External_Entity_(XXE)=
+_Prevention_Cheat_Sheet#XMLReader
 
-Regards,
-Matthew
+Mitigation:
+1.0 users should migrate to 1.0.1.
 
---000000000000150fae05c944efa6--
+Example:
+
+example.jelly
+--------------
+<?xml version=3D"1.0"?>
+<!---
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+      http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<!DOCTYPE r [
+        <!ELEMENT r ANY >
+        <!ENTITY sp SYSTEM "http://127.0.0.1:4444/">
+        ]>
+<r>&sp;</r>
+<j:jelly trim=3D"false" xmlns:j=3D"jelly:core"
+         xmlns:x=3D"jelly:xml"
+         xmlns:html=3D"jelly:html">
+</j:jelly>
+--------------
+
+ExampleParser.java
+------------------
+public class ExampleParser {
+=09
+	public static void main(String[] args) throws JellyException, IOException,=
+=20
+					NoSuchMethodException, IllegalAccessException,IllegalArgumentException=
+,=20
+					InvocationTargetException {
+		JellyContext context =3D new JellyContext();
+		context.runScript("example.jelly", null);
+	}
+}
+
+Credit:
+This was discovered by Luca Carettoni of Doyensec.
+
+References:
+[1] http://commons.apache.org/jelly/security-reports.html
+[2] https://issues.apache.org/jira/browse/JELLY-293
+
