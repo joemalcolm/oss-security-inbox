@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1827" "Wednesday" "17" "August" "2016" "17:01:45" "+0200" "Gsunde Orangen" "gsunde.orangen@gmail.com" "<CAOTQaXEMKvWRH4Aexf3bXzsdx0488TkWmVq2-7+v4Ak7dar7jw@mail.gmail.com>" "52" "Re: [oss-security] CVE-2016-5696: linux kernel - challange ack information leak." "^Date:" nil nil "8" "2016081715:01:45" "[oss-security] CVE-2016-5696: linux kernel - challange ack information leak." (number mark "        gsunde.orang Aug 17   52/1827  " thread-indent "\"Re: [oss-security] CVE-2016-5696: linux kernel - challange ack information leak.\"\n") "<20160817121621.GA7146@kroah.com>" ("<CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>" "<b84b5a3f-9e85-e3f2-fbbd-95dac3a76518@enea.com>" "<20160814195158.GA19228@kroah.com>" "<3230301C09DEF9499B442BBE162C5E48ABE26AE4@SESTOEX04.enea.se>" "<20160815075301.GD6359@kroah.com>" "<8e047f04-5c48-aaa8-0e71-e06a44cb8a2c@enea.com>" "<20160816201908.GB10132@kroah.com>" "<3230301C09DEF9499B442BBE162C5E48ABE280AE@SESTOEX04.enea.se>" "<20160817121621.GA7146@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1681" "Wednesday" "27" "September" "2017" "13:20:15" "+0300" "Efraim Flashner" "efraim@flashner.co.il" "<20170927102015.GH26375@macbook42.flashner.co.il>" "44" "Re: [oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)" nil nil nil "9" "2017092710:20:15" "[oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)" (number mark "U       efraim@flash Sep 27   44/1681  " thread-indent "\"Re: [oss-security] binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)\"\n") "<146142.067478166-sendEmail@localhost>" ("<146142.067478166-sendEmail@localhost>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20341 invoked by uid 550); 17 Aug 2016 15:01:58 -0000
+Received: (qmail 3101 invoked by uid 550); 27 Sep 2017 10:23:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20321 invoked from network); 17 Aug 2016 15:01:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=O55fML+4Rta7zN5bAlXMX0RhXu26haecJttt4f66paE=;
-        b=gb5zFMXTHTKaQAVw5gOHdzOXzXEY14WyIS3zBsZCyTxtfU5NyApuBm4VSv1iOWmTAs
-         IXNABONcNYE8hYGA2kIW1nSosDhiBjTjN/OrKp7aJJaB7/e9qNtW7SXQjknpXYhssZ3+
-         5FN8nCllT34F1tIHEYX0DJz2h+7oZ4FISmePnSYD3WVdZTOq3j6gJ2OdI6xjtHo2OnmV
-         Xlg/05W0fOoUJ88vYKOZCTk3MmvZvmKTgyH6fSbWpT/nMt5DB3J25j3mKKBTVWz9wDSt
-         XKRjjCGPNiAJsBt+jDgJls7BemunaLvyczV13vhkdKz/0lto2A3PwpElcAsvozUa9aEB
-         quCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=O55fML+4Rta7zN5bAlXMX0RhXu26haecJttt4f66paE=;
-        b=j8w1+f285U0XPHInNNszVrtVVvmmOAfR8rRK/w3dynZa1xWPtTAE4Z5BwgdBwl+kv4
-         y61oA/HvJUhUt4lNNtv1CDvPrVU6H+Ip20Ux/Z0XQIfwgEU+kLhjgRvCnU3Ukk0gIkjc
-         JpAJMqu18b/LypQaKRQRbk5xIUt+u18UdRcrlcgrzz5S+sVRNcZD1EF6rQ6b2Zhfv8AX
-         ZYEphHZqJZYV83UYpDfn+Bhx3kNzizDs4zMF6M/kSjyPP09bCXN4CtzFUrr83QrKnqn7
-         lUMVnq8XcJIyGtov0d6FINNZ3tzBf4I3BHEe9cRzkk+vFHMRIfMM8vk99nYhQGbDJYVI
-         T2HQ==
-X-Gm-Message-State: AEkoouu5meAkgMvjD1sYGq8k1472OvMYk6/Vzn83pT8IsvGxk9Lj+N5ndri8jxjgaLm5R9v5wp3TmFycjuFfMw==
-X-Received: by 10.28.210.5 with SMTP id j5mr27401130wmg.67.1471446106472; Wed,
- 17 Aug 2016 08:01:46 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20160817121621.GA7146@kroah.com>
-References: <CALJHwhTAvhAB0DPe2m7h1X_uoz9R5adTOpr-YVXUd6pX3WVNyg@mail.gmail.com>
- <b84b5a3f-9e85-e3f2-fbbd-95dac3a76518@enea.com> <20160814195158.GA19228@kroah.com>
- <3230301C09DEF9499B442BBE162C5E48ABE26AE4@SESTOEX04.enea.se>
- <20160815075301.GD6359@kroah.com> <8e047f04-5c48-aaa8-0e71-e06a44cb8a2c@enea.com>
- <20160816201908.GB10132@kroah.com> <3230301C09DEF9499B442BBE162C5E48ABE280AE@SESTOEX04.enea.se>
- <20160817121621.GA7146@kroah.com>
-Message-ID: <CAOTQaXEMKvWRH4Aexf3bXzsdx0488TkWmVq2-7+v4Ak7dar7jw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11468e0e7bbde7053a45be62
-Date: Wed, 17 Aug 2016 17:01:45 +0200
-From: Gsunde Orangen <gsunde.orangen@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-5696: linux kernel - challange ack
- information leak.
+Received: (qmail 32744 invoked from network); 27 Sep 2017 10:20:30 -0000
+Date: Wed, 27 Sep 2017 13:20:15 +0300
+From: Efraim Flashner <efraim@flashner.co.il>
 To: oss-security@lists.openwall.com
+Message-ID: <20170927102015.GH26375@macbook42.flashner.co.il>
+References: <146142.067478166-sendEmail@localhost>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="dwWFXG4JqVa0wfCP"
+Content-Disposition: inline
+In-Reply-To: <146142.067478166-sendEmail@localhost>
+User-Agent: Mutt/1.8.3 (2017-05-23)
+Subject: Re: [oss-security] binutils: heap-based buffer overflow in
+ _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)
 
---001a11468e0e7bbde7053a45be62
-Content-Type: text/plain; charset=UTF-8
+--dwWFXG4JqVa0wfCP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > Heh, fair enough.  This fix is now in the kernels that were released
-today
-> > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
-It seems that Greg keeps on being bothered with questions ;-)
-Here's one more: the relevant Upstream commit
-75ff39ccc1bd5d3c455b6822ab09e533c551f758
-is referenced in all change logs of yesterday's kernel releases...
-... Except for: 4.7.1 (https://cdn.kernel.org/pub/
-linux/kernel/v4.x/ChangeLog-4.7.1)
-Did 4.7.1 miss the fix?
+On Tue, Sep 26, 2017 at 07:03:41AM +0000, Agostino Sarubbo wrote:
+>=20
+> Affected version:
+> 2.29.51.20170921 and maybe past releases
+>=20
 
-Thanks again,
-Gsunde
+As best as I can see, it looks like the bug was introduced after the
+2.28 series was frozen/split-off, and there is no part of the patch that
+applies to the 2.28.1 release.
 
-2016-08-17 14:16 GMT+02:00 Greg KH <greg@kroah.com>:
+I have not, however, tried the reproducer.
 
-> On Wed, Aug 17, 2016 at 11:54:56AM +0000, Sona Sarmadi wrote:
-> >
-> > > > > You can _always_ just apply the patch to your local tree, there's
-> > > > > never a need to wait for me to get a kernel out.  That's the
-> > > > > advantage of having the source for your systems :)
-> > > > Yes, we can do that but sometimes the patches for newer kernels don't
-> > > > apply cleanly on older versions.
-> > > > There is always a risk that our home grown patches have undesired
-> side
-> > > > effects. We prefer your sign of approval on patches for older kernels
-> > > > :)
-> > >
-> > > Heh, fair enough.  This fix is now in the kernels that were released
-> today
-> > > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
-> > >
-> > > greg k-h
-> >
-> > Thanks a lot Greg, yes this helps :) I could apply  patch from
-> linux-3.14.y branch
-> > to linux-3.12.y as well (the code looks similar).
->
-> Note, I got the patch a bit wrong, it's not as fast as it could be,
-> here's an update to put on top of the one you took from 3.14.y:
->         https://git.kernel.org/cgit/linux/kernel/git/stable/
-> stable-queue.git/commit/?id=e09bea58ec0552dbbf71fb22bf7a46da9a288fc8
->
-> thanks,
->
-> greg k-h
->
+--=20
+Efraim Flashner   <efraim@flashner.co.il>   =D7=90=D7=A4=D7=A8=D7=99=D7=9D =
+=D7=A4=D7=9C=D7=A9=D7=A0=D7=A8
+GPG key =3D A28B F40C 3E55 1372 662D  14F7 41AA E7DC CA3D 8351
+Confidentiality cannot be guaranteed on emails sent or received unencrypted
 
---001a11468e0e7bbde7053a45be62--
+--dwWFXG4JqVa0wfCP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEoov0DD5VE3JmLRT3Qarn3Mo9g1EFAlnLe1MACgkQQarn3Mo9
+g1HGyg//bKY8XPUkuhSF64WrMnLrZqLxlCz+ry7BGF1hLW1VFNTymrOChfIwBtj2
+ZlZiR+9JhZJlVTBfWVo4MZrKvEcvE9CQrE4/aOU66fHgv5pGb8Tl1N15tp2VeGPD
+QyJYTWSKw17hByeKlC92XCoz7Ywc0Jt9NgAY9T18VWUTVq6nnhSSldY/rl/4kDMa
+9eRyeXcjWg9HTa35aLrfHmbj4/GSqx2zT0GxlFUV3ynFWbvAciVinxwVAODokgLQ
+uKzc0qhLfFYcD9xbc2TMqMxEzPqoBiFfwccR6FYJ2qJFYVdmjjdrQ3G3B3jmyEpL
+/YxbS1QqGYDTSzvymp667+7/2lEgB1KNwLojXtG8LouVNjMsI3EWvNekUXHc+lKE
+RYRHwFrOvAL5Lo/iV30Gk2269rNz491YSuYMqxL75/UCUZxnl8BvXJrXv2Id4BMd
+cd/cJ8Wa6D73ZxT5tkLpvwiPEmy1tMqfHrfIvxBbsvhFJZ0OJARxhXLb4eiZy+S3
+l2ZbQHBeWOZeFmG5rs1Fs8PSvjU1sL+P+eicE2w5uVB1fhyqEUEGFwnJiz3KqAJK
+J9v7U244JYsz7mDZ/F254DGlt+49HRZeNIZUkwcFNNiZnkkG4nsGfeowacXhpkl4
+fe5Z1Tiq4SWotyDtC3By1oZfWv8AmQwWKjMc91iEyGEKns0yPnk=
+=OnJj
+-----END PGP SIGNATURE-----
+
+--dwWFXG4JqVa0wfCP--
