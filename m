@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["622" "Friday" "31" "January" "2020" "06:48:21" "-0700" "Todd C. Miller" "Todd.Miller@sudo.ws" "<aff313846ed736fa@sudo.ws>" "19" "[oss-security] Re: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled" "^Date:" nil nil "1" "2020013113:48:21" "[oss-security] Re: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled" (number mark "        Todd.Miller@ Jan 31   19/622   " thread-indent "\"[oss-security] Re: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4089" "Wednesday" "27" "September" "2017" "21:41:02" "+0200" "Solar Designer" "solar@openwall.com" "<20170927194101.GA6268@openwall.com>" "85" "Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing" nil nil nil "9" "2017092719:41:02" "[oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing" (number mark "U       solar@openwa Sep 27   85/4089  " thread-indent "\"Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing\"\n") "<20170918193159.GL2409@yuggoth.org>" ("<6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com>" "<20170917130410.GA8650@openwall.com>" "<20170918193159.GL2409@yuggoth.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30528 invoked by uid 550); 31 Jan 2020 13:58:23 -0000
+Received: (qmail 16279 invoked by uid 550); 27 Sep 2017 19:46:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26179 invoked from network); 31 Jan 2020 13:48:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=sudo.ws; h=from:to
-	:subject:mime-version:content-type:content-id:date:message-id;
-	 s=selector1; bh=ZegVwHGLGEMAwSPketl9uqMrxka4h7GFQXNaThui8Ng=; b=
-	qh8tBSK0BQgY2LNWRS0oZuc9hpno/3ycaalaL1QaAIo4/DPDv1JdFltCo7tTJIDc
-	03oxn7P4EpGAJSqtvbOUl1YijhZ2nEDKkto1dHgW//92TLTWuL20I/k1+ptj5e1Q
-	XThGO8scNhrLVl7D1HgTPdCfgSbJj9mmjf0RQVdV0fo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=sudo.ws; h=from:to:subject
-	:mime-version:content-type:content-id:date:message-id; q=dns; s=
-	selector1; b=jdH7xBPOlUAABMRXK14eCKsO5elRDq01LPN5Erlr4FyEK+GjiU6
-	+N1Qk7IZCRHr0lSwnOfa7ZkZovjDRjHkJlGpi4WTjDD0FVtDeOFHdlFWlHN0UhBm
-	hXdMowgFaRk5Yz9RCKDF7o1lfnZUGoKLKCSOh1XOhc7RTi2zzJAQ/9KM=
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <76381.1580478501.1@xerxes.sudo.ws>
-Message-ID: <aff313846ed736fa@sudo.ws>
-Date: Fri, 31 Jan 2020 06:48:21 -0700
-From: "Todd C. Miller" <Todd.Miller@sudo.ws>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2019-18634: buffer overflow in sudo when pwfeedback is enabled
+Received: (qmail 11939 invoked from network); 27 Sep 2017 19:41:32 -0000
+Date: Wed, 27 Sep 2017 21:41:02 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20170927194101.GA6268@openwall.com>
+References: <6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com> <20170917130410.GA8650@openwall.com> <20170918193159.GL2409@yuggoth.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170918193159.GL2409@yuggoth.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing
 
-On Thu, 30 Jan 2020 11:23:28 -0700, "Todd C. Miller" wrote:
+On Mon, Sep 18, 2017 at 07:32:00PM +0000, Jeremy Stanley wrote:
+> On 2017-09-17 15:04:10 +0200 (+0200), Solar Designer wrote:
+> [...]
+> > the wording of the advisory and in the discussion at
+> > https://bugs.launchpad.net/ossn/+bug/1668503 is weird.
+> > 
+> > I assume that sha512_crypt refers to the algorithm introduced in
+> > glibc 2.7 and now used by many Linux distros and more. It is
+> > typically called sha512crypt without the underscore. I also assume
+> > that pbkdf2_sha512 refers to PBKDF2-HMAC-SHA512.
+> 
+> Yes, or more specifically these:
+> 
+> https://passlib.readthedocs.io/en/stable/lib/passlib.hash.sha512_crypt.html
+> https://passlib.readthedocs.io/en/stable/lib/passlib.hash.pbkdf2_digest.html
 
-> Sudo versions affected:
->
-> Sudo versions 1.7.1 to 1.8.30 inclusive are affected but only if
-> the "pwfeedback" option is enabled in sudoers.
+These say that sha512_crypt defaults to rounds=656000, which is very
+high, whereas pbkdf2_sha512 defaults to rounds=29000, which is also high
+but is relatively lower.
 
-It turns out a change in EOF handling introduced in sudo 1.8.26
-prevents exploitation of the bug.  The EOF character is also
-initialized to 0 and sudo 1.8.26 checks for EOF before it checks
-for the kill character.
+Now, we can't directly compare these: even an optimal implementation of
+PBKDF2-HMAC needs two computations of the hash per iteration, but OTOH
+sha512crypt may call SHA-512's compression function more times when the
+password is long (this dependency on length is an issue on its own, but
+that's separate).  That said, overall your pbkdf2_sha512 is likely ~10x
+quicker to crack than your sha512_crypt with these default settings.
 
-This means that the bug actually affects sudo versions 1.7.1 to
-1.8.25p1 inclusive.
+Yet the advisory continues to recommend pbkdf2_sha512 over sha512_crypt.
+I understand that maybe you just haven't gotten around to correcting it
+yet.  Also, Morgan has since posted another confused comment to 1668503,
+saying "we should be using bcrypt, scrypt, or at *least* pbkdf2 instead
+of sha512_crypt", which continues to imply that "pbkdf2" is necessarily
+a better choice.
 
-Sorry for the oversight.  I've updated the affected versions in
-https://www.sudo.ws/alerts/pwfeedback.html
+The advisory says that "sha512_crypt algorithm has a low computational
+cost factor", but your 656000 is actually very high.  (I did not verify
+that you actually use a value this high, though.)  So the problem, if
+any, is really not what the advisory says.  Rather, it can be that
+modern hashes starting with scrypt also use memory, and there's bcrypt,
+which is inefficient on GPUs - these are good things that you were
+missing on with sha512_crypt (and would also miss with pbkdf2_sha512).
 
- - todd
+Per this page:
+
+https://passlib.readthedocs.io/en/stable/lib/passlib.hash.bcrypt.html
+
+your bcrypt defaults to cost factor 12.  It is non-obvious whether this
+is higher or lower than sha512crypt's 656000.  I just ran some tests
+with John the Ripper -jumbo on a 2x E5-2670 v1 machine, and sha512crypt
+with 656000 is crackable at ~85 c/s (at candidate password length 8)
+whereas bcrypt with 12 is crackable at ~130 c/s.  So for cracking on
+these CPUs supporting AVX but not yet AVX2, the bcrypt is slightly
+weaker.  However, for cracking on newer CPUs supporting AVX2, it'd be
+the other way around (I'd expect ~165 vs. ~130).  For cracking on GPUs,
+sha512crypt would be many times faster than bcrypt.
+
+So you can't just say that you're addressing "a low computational cost
+factor".  You're addressing other issues.
+
+Also, for your defensive use (that is, non-parallelized computation of
+one password hash) bcrypt cost factor 12 is probably way faster than
+sha512crypt's 656000.  You could want to bring the default for bcrypt on
+par with sha512crypt's 656000 if you really could afford a value this
+high before (double-check it first).  My estimate is that bcrypt cost 14
+or 15 will be it.
+
+And at cost factors this high (yes, all of these are unusually high) you
+really should consider scrypt and on, where a lot of memory could be
+filled (if affordable) in that time, resulting in a quadratic growth of
+cost of some kinds of attacks.
+
+I hope this helps.
+
+And while I am at it:
+
+On Mon, Sep 18, 2017 at 02:00:09PM -0400, Jordan Glover wrote:
+> What number of iterations is considered secure for sha512crypt/pbkdf2 these days?
+
+You'd use as many iterations as you can afford without running into
+other issues.  It's not like one number is secure and another is not.
+
+I suppose an advisory could be issued if the number of iterations is
+many times lower than what's affordable for the given use case.
+
+Alexander
