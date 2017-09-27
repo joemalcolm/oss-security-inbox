@@ -1,46 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/25/1
-Message-ID: <20171125043523.GA20472@breadbox.private.spodhuis.org>
-Date: Fri, 24 Nov 2017 23:35:23 -0500
-From: Phil Pennock <phil.pennock@...dhuis.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/3
+Message-ID: <20170927102015.GH26375@macbook42.flashner.co.il>
+Date: Wed, 27 Sep 2017 13:20:15 +0300
+From: Efraim Flashner <efraim@...shner.co.il>
 To: oss-security@...ts.openwall.com
-Subject: Re: RCE in Exim reported
+Subject: Re: binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)
 Content-Type: text/plain; charset=utf-8
 
-On 2017-11-24 at 22:59 -0500, Phil Pennock wrote:
-> A complete mitigation is to disable advertising the CHUNKING extension,
-> in which case an attempt to use the BDAT verb should result in:
+On Tue, Sep 26, 2017 at 07:03:41AM +0000, Agostino Sarubbo wrote:
 > 
->   503 BDAT command used when CHUNKING not advertised
+> Affected version:
+> 2.29.51.20170921 and maybe past releases
+> 
 
-Note: some distributions only ship older versions of Exim, so emphasis
-on "introduced with Exim 4.88".  If you have an older version, you're
-safe.
+As best as I can see, it looks like the bug was introduced after the
+2.28 series was frozen/split-off, and there is no part of the patch that
+applies to the 2.28.1 release.
 
-If you telnet to your mail-server on port 25 and issue the EHLO command,
-and look at the list of SMTP extensions offered, then the CHUNKING
-extension needs to be listed for you to be vulnerable.
+I have not, however, tried the reproducer.
 
-Exim administratively blocks use of the BDAT verb in sessions where
-the CHUNKING extension was not advertized.
+-- 
+Efraim Flashner   <efraim@...shner.co.il>   אפרים פלשנר
+GPG key = A28B F40C 3E55 1372 662D  14F7 41AA E7DC CA3D 8351
+Confidentiality cannot be guaranteed on emails sent or received unencrypted
 
-Thus:
-  chunking_advertise_hosts =
-is a _complete_ workaround.
-
-On older Exim, the BDAT verb (after MAIL and RCPT) should yield:
-
-  500 unrecognized command
-
-On safe Exim, it should yield:
-
-  503 BDAT command used when CHUNKING not advertised
-
-If you get a 2xx response to BDAT, and you're not using pipelined
-verbs and confusing the response to the MAIL verb with the response to
-the BDAT verb, then you haven't disabled CHUNKING.
-
-Regards,
--Phil
-
-Download attachment "signature.asc" of type "application/pgp-signature" (997 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
