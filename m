@@ -1,70 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/6
-Message-ID: <20170710113353.GD24936@suse.de>
-Date: Mon, 10 Jul 2017 13:33:53 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, "security@....net" <security@....net>
-Subject: Re: CVE IDs needed for PHP vulnerabilites (affects 5.6.30 and 7.0.20)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/13
+Message-ID: <ba4bf74e-858d-f75b-81ea-f9ec2bcf1e69@gmail.com>
+Date: Wed, 27 Sep 2017 22:26:38 +0200
+From: Emilio Pozuelo Monfort <pochu27@...il.com>
+To: oss-security@...ts.openwall.com, Anil Madhavapeddy <anil@...oil.org>
+Cc: Damien Doligez <damien.doligez@...ia.fr>
+Subject: Re: CVE-2017-9772: OCaml release 4.04.2
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 05, 2017 at 02:37:00PM +0300, Lior Kaplan wrote:
-> Hi,
-> 
-> The following issues have been reported and fixed in PHP. At the moment
-> they are part of PHP 7.0.21 release. The fixes are also included in the 5.6
-> branch and will be part of 5.6.31 when it will be released.
-> 
-> #73807 Performance problem with processing post request over 2000000 chars
-> https://bugs.php.net/bug.php?id=73807
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=0f8cf3b8497dc45c010c44ed9e96518e11e19fc3
+Hi,
 
-Requested CVE (5.6, 7.0 and 7.1 apparently affected).
+On 23/06/17 17:28, Anil Madhavapeddy wrote:
+>> References: see CVE-2017-9779 for a lesser vulnerability in older versions.
 
-> #74145 wddx parsing empty boolean tag leads to SIGSEGV
-> https://bugs.php.net/bug.php?id=74145
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=f269cdcd4f76accbecd03884f327cffb9a7f1ca9
+Is there any information on CVE-2017-9779? Everything out there seems to link to
+the CVE-2017-9772 announcement and bug report, and I can't find anything more,
+such as a bug report, affected versions, how lesser is this...
 
-Requested CVE. (5.6 only affected apparently)
- 
-> #74651 negative-size-param (-1) in memcpy in zif_openssl_seal()
-> https://bugs.php.net/bug.php?id=74651
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=89637c6b41b510c20d262c17483f582f115c66d6
-
-Requested CVE. (5.6 and 7.1)
-
-> #74819 wddx_deserialize() heap out-of-bound read via php_parse_date()
-> https://bugs.php.net/bug.php?id=74819
-> PHP 5.6 -
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=2aae60461c2ff7b7fbcdd194c789ac841d0747d7
-
-This commit id is incorrect, same as for bug 74145..
-
-> PHP 7.0  -
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=6b18d956de38ecd8913c3d82ce96eb0368a1f9e5
-
-Same, seems commit is also related to bug 74145.
-
-The fix for the bug 74819 seems not be in PHP GIT yet and the proposed security fix is incomplete.
-
-I requested a CVE for the bug, without GIT references.
-
-
-> Also, requests from past releases:
-> 
-> PHP 5.6.28 + 7.0.13
-> #73192 parse_url return wrong hostname
-> https://bugs.php.net/bug.php?id=73192
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=b061fa909de77085d3822a89ab901b934d0362c4
-
-CVE Requested.
-
-> 5.6.30 + 7.0.15
-> #73773 Seg fault when loading hostile phar
-> https://bugs.php.net/bug.php?id=73773
-> http://git.php.net/?p=php-src.git;a=commitdiff;h=e5246580a85f031e1a3b8064edbaa55c1643a451
-
-CVE Requested.
-
-Ciao, Marcus
+Thanks,
+Emilio
