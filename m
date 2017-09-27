@@ -1,29 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/2
-Message-ID: <0ebe7d66-c766-269e-d044-0ffdf2aa9723@oracle.com>
-Date: Mon, 25 Sep 2017 09:07:36 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/5
+Message-ID: <20170927130424.GA19695@kroah.com>
+Date: Wed, 27 Sep 2017 15:04:24 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-On 23/09/17 12:44, Hanno Böck wrote:
-> I had informed the distros mailing list one week earlier about the
-> upcoming disclosure with a bug description and links to the already
-> available patch.
-> My understanding is that the purpose of the distros list is that
-> updates can be prepared so after a disclosure the time between "vuln is
-> known" and "patch is available" is short.
-> However from all I can see this largely didn't happen.
+On Wed, Sep 27, 2017 at 02:51:49PM +0200, Solar Designer wrote:
+> Besides, Greg focuses on the problem that some ignore the stable kernels
+> or the "curated and tested stream of fixes" that could be seen in there,
+> whereas another concern mentioned earlier in the thread is that the
+> stream is also incomplete because some security fixes are not marked as
+> such and not CC'ed to stable.  So that's two problems mentioned in the
+> thread, but vendor-sec was not / linux-distros is not related to either.
 
-This pre-disclosure interval is extremely useful.  We may not, in
-general, publish a patch quite as soon after disclosure that I would
-like but that doesn't mean we have ignored the pre-disclosure or taken
-no action.
+For that second issue, I've not ever really run into any "known security
+fix" not being cc:ed to stable.  Do you have any known examples where I
+can go poke the maintainers to do better?
 
-While it may not be readily apparent, the distros list does allow us to
-get our act together so that when customers come knocking asking "what's
-this security problem all about then?" we have answers prepared.  It'll
-never be perfect, but I'd like to think we're all getting better at this.
+We have plenty of the normal "bugfix was merged that a few years later
+turned out to be a 'security' issue, but no one realized it at the time"
+changes that get merged.  And to help combat that, we are doing more and
+more "smart mining"[1] of the kernel commits to try to catch patches
+that match those types of fixes and get them merged into the stable
+kernels.
 
-jch
+You can see the initial results of this work with the huge increase in
+patches being merged to the 4.9 and 4.4 stable kernels vs. any older
+stable kernel trees in the past.
+
+thanks,
+
+greg k-h
+
+[1] yes, we know people have been doing this for years, but they almost
+    never notify upstream about this for various reasons.
