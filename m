@@ -1,95 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/20/4
-Message-ID: <c1e731cf-2841-56d0-4be7-a2ae98edd66e@securify.nl>
-Date: Fri, 21 Apr 2017 00:30:31 +0200
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/4
+Message-ID: <20170927125149.GA2500@openwall.com>
+Date: Wed, 27 Sep 2017 14:51:49 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Cross-Site Request Forgery in WordPress Connection Information
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-Cross-Site Request Forgery in WordPress Connection Information
-------------------------------------------------------------------------
-Yorick Koster, July 2016
+On Wed, Sep 27, 2017 at 10:14:04AM +0100, Muhammed Mustapha Abiola wrote:
+> Isn't this exactly what Vendor-Sec tried to solve?
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-The FTP/SSH form functionality of WordPress was found to be vulnerable
-to Cross-Site Request Forgery. This vulnerability can be used to
-overwrite the FTP or SSH connection settings of the affected WordPress
-site. An attacker can use this issue to trick an Administrator into
-logging into the attacker's FTP or SSH server, disclosing his/her login
-credentials to the attacker. In order to exploit this vulnerability, the
-attacker has to lure/force a logged on WordPress Administrator into
-opening a malicious website.
+No.  Not even similar.
 
+vendor-sec was / linux-distros is solely about the subset of issues that
+are initially embargoed, but OTOH not limited to the Linux kernel.
+So there wasn't / isn't meant to be more than a slight overlap between
+issues handled on those lists vs. all Linux kernel security issues/fixes.
 
-------------------------------------------------------------------------
-OVE ID
-------------------------------------------------------------------------
-OVE-20160717-0004
+Besides, Greg focuses on the problem that some ignore the stable kernels
+or the "curated and tested stream of fixes" that could be seen in there,
+whereas another concern mentioned earlier in the thread is that the
+stream is also incomplete because some security fixes are not marked as
+such and not CC'ed to stable.  So that's two problems mentioned in the
+thread, but vendor-sec was not / linux-distros is not related to either.
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was successfully tested on the WordPress [2] version 4.5.3 up
-till and including version 4.7.4.
+Alexander
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-There is currently no fix available.
-
-------------------------------------------------------------------------
-Introduction
-------------------------------------------------------------------------
-WordPress is web software you can use to create a website, blog, or
-app. It was found that the FTP/SSH form functionality is vulnerable to
-Cross-Site Request Forgery. This vulnerability can be used by an
-attacker to overwrite the FTP or SSH connection settings of the affected
-WordPress site. It can be used to trick in an Administrator into login
-into the attacker's FTP or SSH server, disclosing his/her login
-credentials to the attacker.
-
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-This issue exists in the method request_filesystem_credentials()
-(/wp-admin/includes/file.php). It allows overwriting of the values:
-
-- hostname
-- username
-- connection_type
-
-The request_filesystem_credentials() method is called in various
-locations in WordPress. The connection information is updated if a POST
-request contains a password or public & private key value (in case of
-connection type ssh). In order to trigger this issue, the WordPress
-installation must not be able to write to the wp-content folder. Also,
-the attacker has to lure/force a logged on WordPress Administrator into
-opening a malicious website.
-
-------------------------------------------------------------------------
-Proof of concept
-------------------------------------------------------------------------
-<html>
-	<body>
-		<form action="http://<target>/wp-admin/plugins.php" method="POST">
-			<input type="hidden" name="hostname" value="sumofpwn.nl" />
-			<input type="hidden" name="connection_type" value="ftp" />
-			<input type="hidden" name="password" value="password" />
-			<input type="submit" value="Submit request" />
-		</form>
-	</body>
-</html>
-------------------------------------------------------------------------
-References
-------------------------------------------------------------------------
-[1] 
-https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_connection_information.html
-[2] https://wordpress.org/
-------------------------------------------------------------------------
-Summer of Pwnage (https://sumofpwn.nl) is a Dutch community project. Its
-goal is to contribute to the security of popular, widely used OSS
-projects in a fun and educational way.
+> On Tue, Sep 26, 2017 at 4:04 PM, Greg KH <greg@...ah.com> wrote:
+> > The rule for the kernel is, "if a distro/company/user is not following
+> > the stable kernel updates, they are on their own".  I recommend either
+> > using the stable kernels, or paying for a company that knows what they
+> > are doing in this area and provides support (Red Hat, SuSE, etc.)
+> >
+> > And if you try to argue "just tell us what needs to be fixed", well, we
+> > are, am, we are providing about 10-12 patches a day that people should
+> > be incorporating into their kernels.  Why they ignore that curated and
+> > tested stream of fixes is beyond me...
