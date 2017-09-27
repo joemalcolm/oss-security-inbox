@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/10/5
-Message-ID: <20171210163330.GA13246@eldamar.local>
-Date: Sun, 10 Dec 2017 17:33:30 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/2
+Message-ID: <CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>
+Date: Wed, 27 Sep 2017 10:14:04 +0100
+From: Muhammed Mustapha Abiola <1@...tapha.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request -- Arbitrary command execution in mercurial repo with a git submodule
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Isn't this exactly what Vendor-Sec tried to solve?
 
-On Thu, Dec 07, 2017 at 04:53:44PM +0800, feer james wrote:
-> Hello mitre,
-> 
-> I'd like to request a cve id for this vulnerability.
-> 
-> *Vulnerability Details:*
-> https://bz.mercurial-scm.org/show_bug.cgi?id=5730
-> 
-> *Offical fix release:*
-> https://www.mercurial-scm.org/wiki/WhatsNew#Mercurial_4.4.1_.282017-11-07.29
+On Tue, Sep 26, 2017 at 4:04 PM, Greg KH <greg@...ah.com> wrote:
 
-FTR, this issue was later on assigned CVE-2017-17458.
+> On Tue, Sep 26, 2017 at 04:50:10PM +0200, Agostino Sarubbo wrote:
+> > On martedě 26 settembre 2017 09:32:14 CEST Greg KH wrote:
+> > > > I guess this would be benefit for all.
+> > >
+> > > Define "all"
+> >
+> > You know, for example in Gentoo we are following the upstream releases.
+> So
+> > from time to time we stabilize a newer kernel that "syncs" with upstream.
+> > This does not happen for non-rolling (release) distros that may want to
+> patch/
+> > backport the security fix.
+>
+> I understand the issue well, I talk to companies all the time about this :)
+>
+> The rule for the kernel is, "if a distro/company/user is not following
+> the stable kernel updates, they are on their own".  I recommend either
+> using the stable kernels, or paying for a company that knows what they
+> are doing in this area and provides support (Red Hat, SuSE, etc.)
+>
+> And if you try to argue "just tell us what needs to be fixed", well, we
+> are, am, we are providing about 10-12 patches a day that people should
+> be incorporating into their kernels.  Why they ignore that curated and
+> tested stream of fixes is beyond me...
+>
+> Anyway, this is getting a bit off-topic here, sorry for the noise.
+>
+> Best of luck,
+>
+> greg k-h
+>
 
-@Terry, CVEs cannot be requested anymore via mailing oss-security,
-rather filling the request via https://cveform.mitre.org/ for future
-requests.
-
-Regards,
-Salvatore
