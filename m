@@ -1,116 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/6
-Message-ID: <886435.587515251-sendEmail@localhost>
-Date: Wed, 28 Jun 2017 12:05:32 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: lame: global-buffer-overflow in III_i_stereo (layer3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/1
+Message-ID: <20170927084651.GB14379@suse.de>
+Date: Wed, 27 Sep 2017 10:46:51 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Agostino Sarubbo <ago@...too.org>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-Description:
-lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+Hi,
 
-Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
-bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
-downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
-dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
+Underlined _YES_ to that.
 
-The complete ASan output of the issue:
+It is very easy to do this if you see something, do not get distracted by the amount of fields
+as most are optional.
 
-# lame -f -V 9 $FILE out.wav
-==28403==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7fecc4b7eb6c at pc 0x7fecc489accc bp 0x7fff525972d0 sp 0x7fff525972c8
-READ of size 4 at 0x7fecc4b7eb6c thread T0
-    #0 0x7fecc489accb in III_i_stereo /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1149:26
-    #1 0x7fecc489accb in decode_layer3_frame /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1753
-    #2 0x7fecc48543ca in decodeMP3_clipchoice /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:615:13
-    #3 0x7fecc4851c13 in decodeMP3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:696:12
-    #4 0x7fecc4812092 in decode1_headersB_clipchoice 
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:149:11
-    #5 0x7fecc481794a in hip_decode1_headersB 
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:436:16
-    #6 0x7fecc481794a in hip_decode1_headers /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:379
-    #7 0x51e984 in lame_decode_fromfile /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:2089:11
-    #8 0x51e984 in read_samples_mp3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:877
-    #9 0x51e984 in get_audio_common /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:785
-    #10 0x51e4fa in get_audio /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:688:16
-    #11 0x50f776 in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:456:17
-    #12 0x50f776 in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
-    #13 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
-    #14 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
-    #15 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
-    #16 0x7fecc340a680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #17 0x41c998 in _init (/usr/bin/lame+0x41c998)
+This is lowcost detached effort.
 
-0x7fecc4b7eb6c is located 20 bytes to the left of global variable 'pow2_1' defined in 
-'/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:128:28' (0x7fecc4b7eb80) of size 128
-0x7fecc4b7eb6c is located 12 bytes to the right of global variable 'pow1_1' defined in 
-'/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:128:13' (0x7fecc4b7eae0) of size 128
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer3.c:1149:26 in 
-III_i_stereo
-Shadow bytes around the buggy address:
-  0x0ffe18967d10: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
-  0x0ffe18967d20: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
-  0x0ffe18967d30: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x0ffe18967d40: f9 f9 f9 f9 00 00 00 00 00 00 00 00 f9 f9 f9 f9
-  0x0ffe18967d50: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
-=>0x0ffe18967d60: 00 00 00 00 00 00 00 00 00 00 00 00 f9[f9]f9 f9
-  0x0ffe18967d70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ffe18967d80: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ffe18967d90: 00 00 00 00 f9 f9 f9 f9 00 00 00 00 00 00 00 00
-  0x0ffe18967da0: 00 00 00 00 00 00 00 00 f9 f9 f9 f9 00 00 00 00
-  0x0ffe18967db0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==28403==ABORTING
+Ciao, Marcus
+On Tue, Sep 26, 2017 at 02:03:30PM -0600, Kurt Seifried wrote:
+> If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
+> CVE FORM (yes, I am shouting).
+> 
+> https://cveform.mitre.org
+> 
+> Choose "Request an update to an existing CVE entry" and then for "Type of
+> update requested" choose "Update References" and then eneter the CVE #, the
+> ifo and URL and hit "Submit Request"
+> 
+> TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
+> (the CVE community) didn't make it easy to contribute. Well now we have
+> made it easy to contribute, so please do.
+> 
+> 
+> On Tue, Sep 26, 2017 at 1:07 PM, Agostino Sarubbo <ago@...too.org> wrote:
+> 
+> > On martedì 26 settembre 2017 20:18:38 CEST Kurt Seifried wrote:
+> > > You can check the CVE Database? There is the official MITRE one:
+> > > cve.mitre.org and the DWF for Open Source (and yes, I lag in
+> > submissions to
+> > > MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/
+> > in
+> > > both cases the CVEs will have reference link(s) that ideally point to the
+> > > upstream making it easy to match up.
+> >
+> > As pointed out in the past (maybe spender?) the real issue is when there
+> > is a
+> > silent fix of a vulnerability where the commit message does not clearly
+> > state
+> > about the security implication. Afaik it happens frequently.
+> >
+> > --
+> > Agostino Sarubbo
+> > Gentoo Linux Developer
+> >
+> 
+> 
+> 
+> -- 
+> 
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@...hat.com
 
-Affected version:
-3.99.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-9870
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00291-lame-globaloverflow-III_i_stereo
-
-Timeline:
-2017-06-01: bug discovered
-2017-06-17: blog post about the issue
-2017-06-25: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/06/17/lame-global-buffer-overflow-in-iii_i_stereo-layer3-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
