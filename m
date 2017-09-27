@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/25/3
-Message-Id: <598330B5-3AE7-49CD-B826-3FFEAA7C5048@gmail.com>
-Date: Sat, 25 Feb 2017 12:49:12 -0500
-From: Assaf Gordon <assafgordon@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/8
+Message-ID: <20170927150918.GA3037@openwall.com>
+Date: Wed, 27 Sep 2017 17:09:18 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: gnu-paxutils: multiple crashes
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Mon, Sep 25, 2017 at 09:50:59PM +0000, Priedhorsky, Reid wrote:
+> 1. Is oss-security's coverage of security issues in open-source software intended to be comprehensive?
 
-> On Feb 25, 2017, at 06:36, Agostino Sarubbo <ago@...too.org> wrote:
-> 
-> Description:
-> GNU paxutils is a suite of archive utilities [...]
-> A fuzzing on tar and pax shows multiple crashes.
-[...]
-> Note:
-> The email to upstream was rejected.
+As others have said, no.  (I think that would be an unrealistic goal.
+It could also result in so much traffic we'd have to think of splitting
+the list e.g. into notifications vs. discussions, but arguably that
+would be a good problem to have.)
 
-Not sure what "rejected" means (did the email delivery failed or the maintainer rejected your input, etc).
+However, I would like the coverage to increase.  When e.g. Debian
+sends out a security advisory, they shouldn't literally post it in here.
+We had asked (in list content guidelines) for distro-specific advisories
+not to be sent in here, for good reasons.  However, if Debian and any
+other distros doing similar have the resources, I'd appreciate it if
+they bring in here info on vulnerabilities in Open Source software that
+they're tracking / are about to patch / have already patched / have even
+issued advisories on, but that haven't been mentioned in here before.
 
-But generally for GNU Software,
-If you don't get timely response from the maintainer,
-you can send an email to "security@....org" ,
-and if that doesn't help, escalate to "maintainers@....org".
-see https://www.gnu.org/software/security/ 
+Many distros (and/or people from distros' security teams) have been
+doing just that from time to time, but certainly not consistently.
 
-regards,
- - assaf
+Maybe my encouragement above will help improve this?
 
+Alexander
