@@ -1,4 +1,9 @@
-Received: (qmail 7842 invoked by uid 550); 18 Apr 2023 01:29:24 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1382" "Wednesday" "27" "September" "2017" "15:04:24" "+0200" "Greg KH" "greg@kroah.com" "<20170927130424.GA19695@kroah.com>" "29" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Date:" nil nil "9" "2017092713:04:24" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        greg@kroah.c Sep 27   29/1382  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<20170927125149.GA2500@openwall.com>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<1978278.8CZP0B31Sj@wanheda>" "<20170926073214.GA8108@kroah.com>" "<4188502.8b3PN4uBSd@wanheda>" "<20170926150446.GA11530@kroah.com>" "<CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>" "<20170927125149.GA2500@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 5514 invoked by uid 550); 27 Sep 2017 13:04:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,79 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7792 invoked from network); 18 Apr 2023 01:29:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1681781352;
-	bh=Yik4RSJz8YI7s8cb9vjyXnLVB24DTUP9cKq3IHrD8rI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=QJDkL1BIJoBFKzlJhEV0EmgQjjw1tKxZDg+Y3m6rHg5Ls9Q1fJn/cLDl8P/DLGUkd
-	 yposHiIlZJf/khr7+HZYW1adkBWSEL4W/qjRIOiLtk8p2l7rv/2NBKKcmIB1kWSHH+
-	 zKV1HfFAHeWFAjDon1qypyF0q2LWhQdNpmCTlxl+uqCiuws6SDHaXVJq7OxuJfwERt
-	 2dCXDFjlDpC3s/AMOoblWrjx18qpOcDfKo/hHPq7lsrRqRTVuvDSL8RZm0cbuyV7Nf
-	 2GMkTDLiAeXoEVx2vj0aFgQgdG2jvUWVw/L7ZVn1q9/dBxIJhhhMwnzXxBrbwlDeTv
-	 vhEmZ6UOGQsDw==
-Date: Tue, 18 Apr 2023 01:29:10 +0000
-From: Seth Arnold <seth.arnold@canonical.com>
-To: Jialin Qiao <qiaojialin@apache.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20230418012910.GK1655348@millbarge>
-Mail-Followup-To: Jialin Qiao <qiaojialin@apache.org>,
-	oss-security@lists.openwall.com
-References: <546b3452-d9b0-a16d-76eb-d8a87429e595@apache.org>
+Received: (qmail 5490 invoked from network); 27 Sep 2017 13:04:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=Tar4jM8RChRCoCKRkk
+	YdVfhZXXhjIS4QPk/mlQ2Vsoc=; b=Yus0JdVF4906YrNJURLWTSWKwn+v8voqlF
+	l5nS6xBTyO8nWXuxxbHPOJNqYD9glLhwvGLqEFFw6Eq5zLxs69bxwug0fSKnpXEQ
+	BLiP4gHyj5RdBbxuktbiVwaSGLTUFWDe1ZsWqAcj8EudJH5ppdQIX9OaGN7XE2aV
+	Ko45C8VjyEguh4PDnAqiYWdDWX6ifS7+xqy1G0H22o8p+qiz7Ua89rsYt1bp7SQa
+	8it01tAFqZbz6sH3ctI1L5wdYe128ekn8T3k/0AjmNtYmvTLRkxeOxJ3ePnVbH+x
+	8kaREYrhkzY4cg63/XFNIVPWlb6Cf80WG1sqHRiwEdTOSiYUpVpA==
+X-ME-Sender: <xms:2qHLWbvXxT3NPLN63Bch5vX0XW_hBlL5D8pqeqgeV9BswiRQgRQUcg>
+X-Sasl-enc: 8UvwIqfSXvIf5pOEoznG8H9m8bXi6zVwnxYK+qd7AOPE 1506517465
+Message-ID: <20170927130424.GA19695@kroah.com>
+References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
+ <1978278.8CZP0B31Sj@wanheda>
+ <20170926073214.GA8108@kroah.com>
+ <4188502.8b3PN4uBSd@wanheda>
+ <20170926150446.GA11530@kroah.com>
+ <CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>
+ <20170927125149.GA2500@openwall.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="x1F0m3RQhDZyj8sd"
-Content-Disposition: inline
-In-Reply-To: <546b3452-d9b0-a16d-76eb-d8a87429e595@apache.org>
-Subject: Re: [oss-security] CVE-2023-30771: Apache IoTDB Workbench:
- apache/iotdb-web-workbench: forge the JWTToken to access workbench
-
---x1F0m3RQhDZyj8sd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20170927125149.GA2500@openwall.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+Date: Wed, 27 Sep 2017 15:04:24 +0200
+From: Greg KH <greg@kroah.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
+To: oss-security@lists.openwall.com
 
-On Sun, Apr 16, 2023 at 02:48:14AM +0000, Jialin Qiao wrote:
-> https://iotdb.apache.org
-> https://www.cve.org/CVERecord?id=CVE-2023-30771
+On Wed, Sep 27, 2017 at 02:51:49PM +0200, Solar Designer wrote:
+> Besides, Greg focuses on the problem that some ignore the stable kernels
+> or the "curated and tested stream of fixes" that could be seen in there,
+> whereas another concern mentioned earlier in the thread is that the
+> stream is also incomplete because some security fixes are not marked as
+> such and not CC'ed to stable.  So that's two problems mentioned in the
+> thread, but vendor-sec was not / linux-distros is not related to either.
 
-Hello Jialin, thanks for contacting the oss-security mail list about this
-security issue in an Apache project.
+For that second issue, I've not ever really run into any "known security
+fix" not being cc:ed to stable.  Do you have any known examples where I
+can go poke the maintainers to do better?
 
-I'd like to suggest that your email would be far more useful if
-it included some details like affected versions: ideally, when a
-vulnerability was introduced, and definitely, when it was fixed, if a
-fix is available. Best would be a direct link to a patch in a source
-control system, or attaching the patch directly.
+We have plenty of the normal "bugfix was merged that a few years later
+turned out to be a 'security' issue, but no one realized it at the time"
+changes that get merged.  And to help combat that, we are doing more and
+more "smart mining"[1] of the kernel commits to try to catch patches
+that match those types of fixes and get them merged into the stable
+kernels.
 
-This particular email has very few details and no references for a fix so
-it is very difficult for anyone to take concrete actions.
+You can see the initial results of this work with the huge increase in
+patches being merged to the 4.9 and 4.4 stable kernels vs. any older
+stable kernel trees in the past.
 
-Here's two recent postings that are far easier for downstream distributors
-and consumers alike to use:
-https://www.openwall.com/lists/oss-security/2023/04/04/1
-https://www.openwall.com/lists/oss-security/2023/03/21/3
+thanks,
 
-I'd like to encourage Apache to use these as inspiration for future
-oss-security postings.
+greg k-h
 
-Thanks
-
-
---x1F0m3RQhDZyj8sd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmQ98mUACgkQ8yFyWZ2N
-LpfQVQf/YWlaYW5xXAuNxzEc/eL1Fpxb4mmHQfWHeLjjYDWiy80q9/s8IysW6jx4
-AZTkKEH39rHGu6nVCV0ViJFJ6Th5vcac5scm228UozibXDTJgSAVLM2V7PYYkWdt
-pLZteDPS1yqcgXTprvZceE/fOD2mvzmeQUFdi0NTVCSRptDAKwPcQ7gZ9p5x2F2k
-rViW75dWnxLZWzZQ1VZ2xC0ceWo6KGw1uWtT8tJJFtc7C0FbMWdJFQDsfI9GjOkm
-8RFd6fIUOxE6e0CReSfKSW1uEVrqUrq0k0uFOiTjIXI0NlcePCqhTez2+mopKKD3
-a0DRMzxq9yxNt+xiPJYv4X6jwSjZjQ==
-=ITgJ
------END PGP SIGNATURE-----
-
---x1F0m3RQhDZyj8sd--
+[1] yes, we know people have been doing this for years, but they almost
+    never notify upstream about this for various reasons.
