@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/11/3
-Message-Id: <FBE17D96-D1AD-4F74-9D28-C82B19772071@beckweb.net>
-Date: Mon, 11 Dec 2017 15:27:43 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/15
+Message-ID: <20170928213721.GA5119@grsecurity.net>
+Date: Thu, 28 Sep 2017 17:37:21 -0400
+From: Brad Spengler <spender@...ecurity.net>
 To: oss-security@...ts.openwall.com
-Subject: Jenkins Script Security Plugin 1.36 and earlier arbitrary file read vulnerability
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-plugin releases contain fixes for security vulnerabilities:
+> > CVE-2017-0605:
+> > --------------
+> > https://security-tracker.debian.org/tracker/CVE-2017-0605
+> > upstream: (4.12-rc1) [e09e28671cda63e6308b31798b997639120e2a21]
+> > 
+> > is e.g. includedin 3.16.44 (a1141b19b23a0605d46f3fab63fd2d76207096c4),
+> > 3.2.89 (e39e64193a8a611d11d4c62579a7246c1af70d1c) but not in 4.9.
+> > 
+> > (afaics not Cc'ed to stable).
+> 
+> Ouch, thanks for letting me know, that's not good, we don't want to get
+> the trees out of sync for obvious reasons.
 
-* Script Security Plugin 1.37
+The above CVE shouldn't exist; the patch doesn't fix any vulnerability
+as the upstream commit message itself notes, and didn't need to be
+backported to any of the kernels it was backported to.  Not only that, the
+above advisory marked it as a remote vulnerability with critical severity.
+It looks like Debian and Ubuntu released updated kernels, while Red Hat and
+SuSE marked it as WONTFIX and unaffected, respectively.  I am not sure why
+neither simply rejected the CVE.
 
-Users of these plugins should upgrade them to the indicated versions.
+The MSM fix not only is wrong (truncates too early) but seemed to involve a
+naive strcpy -> strlcpy conversion and assumed it was somehow fixing some
+exploitable vulnerability (perhaps the cause of the CVE).  All methods of
+setting task->comm ensure nul termination since forever.  If nul termination
+wasn't guaranteed, there would be much bigger problems all over the tree.
 
-Descriptions of the vulnerabilities are below. Some more details, 
-severity, and attribution can be found here:
-https://jenkins.io/security/advisory/2017-12-11/
+-Brad
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-663
-Users with the ability to configure sandboxed Groovy scripts are able to
-use a type coercion feature in Groovy to create new `File` objects from
-strings. This allowed reading arbitrary files on the Jenkins master file
-system.
-
-Such a type coercion is now subject to sandbox protection and considered
-to be a call to the `new File(String)` constructor for the purpose of
-in-process script approval.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
