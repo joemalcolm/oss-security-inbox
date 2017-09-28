@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["601" "Tuesday" "19" "April" "2016" "15:11:08" "+0000" "Nathan Van Gheem" "vangheem@gmail.com" "<CAL8hw9EXLQs7QVJvR5NzeOHC0C3fWqoPptKJnvLerKmToOLrqQ@mail.gmail.com>" "26" "[oss-security] CVE Request: Unauthorized disclosure of site content" "^Date:" nil nil "4" "2016041915:11:08" "[oss-security] CVE Request: Unauthorized disclosure of site content" (number mark "U       vangheem@gma Apr 19   26/601   " thread-indent "\"[oss-security] CVE Request: Unauthorized disclosure of site content\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2562" "Thursday" "28" "September" "2017" "20:31:57" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<b26a514f-eb48-32dd-d504-64288b7f1087@chbi.eu>" "76" "[oss-security] CSRF vulnerability in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11 LTS" nil nil nil "9" "2017092818:31:57" "[oss-security] CSRF vulnerability in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11 LTS" (number mark "U       chbi@chbi.eu Sep 28   76/2562  " thread-indent "\"[oss-security] CSRF vulnerability in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11 LTS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19872 invoked by uid 550); 19 Apr 2016 15:11:30 -0000
+Received: (qmail 23661 invoked by uid 550); 28 Sep 2017 18:38:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19851 invoked from network); 19 Apr 2016 15:11:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=VvB48w/KK+Bm8rVaxs5ZbPg1be0ImET9LrXULQ1Dec4=;
-        b=hqqepZPFRpWCj3GXfdwshudJV2lZbS5G8TpD/Q8a2QzO/UN1SaADGuos+o3aByNFtH
-         4zBUL1RaLqCfWjLHZVYyHJSEbzSFrrkCWOdf20XLQeAz71jb3ICe9gKQTOI3c8oKGoLl
-         NDFvvwcrsqQWoPQN/ZfH3F+IQZ53eubuUqv+52fNdZXUeRuwex37WopSKaufntSHQ8KV
-         qDa0xlsn0fc6PF/DuH2OmuKSrFIBG1GlChyAab37216DfdU4geRv1UfbZw8jdyLY+Zdl
-         fH71NtzdlP8n3JKEasc6aIn7Ju2P0Ne8f0aApJq5vZMBjj3cEM9SwCLLjjTj9it1exWH
-         4T9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=VvB48w/KK+Bm8rVaxs5ZbPg1be0ImET9LrXULQ1Dec4=;
-        b=e7fpocRTEn4zbuUfP5k1BGXwwbB11dLwm29XCw3TnZ08wqrCEWmLY60sDdfKemUkYz
-         xZc+NxYHv4YmycOTXFfOA25qnjN/BfNI5Yx41DjZPXZJFLkKtTMJ5xJrEbjsJSUpVLdx
-         GTosNqECJzrjY8ieSfdb2N5uewcuD3pHxAQyqjrc0vpjUyNVYu6DJa1xZn2706wdVsh7
-         udiTPnxg0B5k5oUCEqNsRTcIP5Lz08ukL5i6E1hHMmC+qbEzCzYrbHX9RmQQD3Uv117t
-         OZIa0Y5LFq1QuWPSFxaxSOfAA4y2kHhoflia5flv1w9EGYbIWvf9uqdctARmkOouEmeR
-         RPPA==
-X-Gm-Message-State: AOPr4FUdrvsKLnD/DV1w1ZIKb3lT+O6jSqHbnV7H/S0mR7JYwSxKSls+8Ng0a5kz56tUY4ooC1zBzZSifsieHQ==
-X-Received: by 10.107.176.15 with SMTP id z15mr2523982ioe.78.1461078678126;
- Tue, 19 Apr 2016 08:11:18 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAL8hw9EXLQs7QVJvR5NzeOHC0C3fWqoPptKJnvLerKmToOLrqQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1145295e99467f0530d7e304
-Date: Tue, 19 Apr 2016 15:11:08 +0000
-From: Nathan Van Gheem <vangheem@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: Unauthorized disclosure of site content
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 18134 invoked from network); 28 Sep 2017 18:32:17 -0000
+To: oss-security@lists.openwall.com
+From: chbi@chbi.eu
+Message-ID: <b26a514f-eb48-32dd-d504-64288b7f1087@chbi.eu>
+Date: Thu, 28 Sep 2017 20:31:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="FG36QJwO8IOg5D6lg2WsUj1jHeiHmMUA6"
+Subject: [oss-security] CSRF vulnerability in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11 LTS
 
---001a1145295e99467f0530d7e304
-Content-Type: text/plain; charset=UTF-8
+--FG36QJwO8IOg5D6lg2WsUj1jHeiHmMUA6
+Content-Type: multipart/mixed; boundary="LL98S9rVBuNLWMBBXB5klD6hnmK0I06Pk";
+ protected-headers="v1"
+From: chbi@chbi.eu
+To: oss-security@lists.openwall.com
+Message-ID: <b26a514f-eb48-32dd-d504-64288b7f1087@chbi.eu>
+Subject: CSRF vulnerability in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11 LTS
+
+--LL98S9rVBuNLWMBBXB5klD6hnmK0I06Pk
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-Can a CVE be assigned to this issue, please?
+there are two security issues in Tiki <=3D 17.0, 16.2, 15.4 LTS and 12.11
+LTS (https://tiki.org)
 
-https://plone.org/security/20160419/unauthorized-disclosure-of-site-content
 
-A vulnerability that allows attackers to gain information about unpublished
-site content.
+Cross-Site Request Forgery (CSRF) vulnerability via IMG tag allows an
+authenticated user to gain administrator privileges if an administrator
+opens a wiki page with the IMG tag.
 
-The relevant code is:
+Fix:
+https://sourceforge.net/p/tikiwiki/code/63829
 
-*https://plone.org/security/20160419 <https://plone.org/security/20160419>*
 
-The vendor credits with the discovery: Maarten Kling
+Cross-Site Request Forgery (CSRF) vulnerability via IMG tag allows an
+authenticated user to edit global permissions if an administrator opens
+a wiki page with the IMG tag. For example, an attacker could assign
+administrator privileges to every unauthenticated user of the site.
 
-Thanks, let me know if you'd like more information.
+Fix:
+https://sourceforge.net/p/tikiwiki/code/63872
 
--- 
-Nathan Van Gheem
-Director of Solutions Engineering
-Wildcard Corp
 
---001a1145295e99467f0530d7e304--
+Both issues are fixed in Tiki 17.1, Tiki 16.3, Tiki 15.5 LTS and Tiki
+12.12 LTS.
+
+https://tiki.org/article449-Security-and-bug-fix-updates-Tiki-17-1-Tiki-16-=
+3-15-5-and-Tiki-12-12-released
+
+
+--=20
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+--LL98S9rVBuNLWMBBXB5klD6hnmK0I06Pk--
+
+--FG36QJwO8IOg5D6lg2WsUj1jHeiHmMUA6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlnNQB4ACgkQunuT+ZA3
+rn7jrg//aMnBFGXDxl2cBd/DuY+0Tx7Y2+a4RZ6JeYLzUNU8rr5pfsmphUD+EDJ7
+vxYGEs4wC0zfMrt8Q+zDrJMc+XVT4XljrPwupsQVDYS7e/dM2IlDMrZP2BnIxkWj
+D8fcLXdPNsLogbpyhnztCULMgaVbEAr6qhJDFfvotYdKcIKEo6uvF+ZQEboBSEHX
+lmPKKDMbvyNwEfAINWPrWcTs/rWwwizuCX67kY80zhzsy5r6hUchJaZREqRBNH1/
+MS36801CEQ8jtGMXTFw5ceM74HFcfCqrGDM5AW0Z8TYdoTeMXX6BsOmxssNDn2d6
+jMqJZ4Icy7zPlICW7w8N6gscifClGRkvNuZ+3NUPzSN8cAVeU9on43E1HzvR58rj
+wYnXDx3rP0qB8/QoHpM9G+X7Hw5m9PZqq5zD8sMx5NU94MwnUot5aYocau3c698P
+XOB1fmE7YmAXloayHRwQYAvNp0/s9xQfRj40kuO7EN6CWO6FCpIJGsqI5urXs8tO
+JEH1+qtl0vakj/3MUIoaVOpidMgvrLML3NZ2Og/I8/eUmWqG0Ag+kp45cwKp6W8E
+j56d7O5Hsrx/mzbL7jtEPnEe9hMfB3TNyrn8W8O8qj9cjeJMDrApm3YLUSrUTN6E
+/yWQx1vpMk0MxSx/kajmnFCKB0MiZ8l4m9ezI103CkGIhTP2y0A=
+=oNWZ
+-----END PGP SIGNATURE-----
+
+--FG36QJwO8IOg5D6lg2WsUj1jHeiHmMUA6--
