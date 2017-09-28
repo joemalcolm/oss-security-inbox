@@ -1,94 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/7
-Message-ID: <20170517110530.GA11230@openwall.com>
-Date: Wed, 17 May 2017 13:05:30 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Marc Lehmann <schmorp@...morp.de>
-Cc: "Jason A. Donenfeld" <Jason@...c4.com>, oss-security <oss-security@...ts.openwall.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/5
+Message-ID: <20170928143313.GA6123@kroah.com>
+Date: Thu, 28 Sep 2017 16:33:13 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 17, 2017 at 03:23:14AM +0200, Marc Lehmann wrote:
-> On Wed, May 17, 2017 at 12:15:55AM +0200, "Jason A. Donenfeld" <Jason@...c4.com> wrote:
-> > On Wed, May 17, 2017 at 12:03 AM, Solar Designer <solar@...nwall.com> wrote:
-> > > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
-> > >> A harmless example from rxvt - pushing back the new-line character:
-> > >>
-> > >> $ echo -ne "\eGQ;"
-> > >> ;$ 0
-> > >> bash: 0: command not found
-> > >
-> > > Does this also affect rxvt-unicode?
-> > 
-> > It does, actually. I've CCd rxvt-unicode upstream on this in order to
-> > hear their assessment.
+On Wed, Sep 27, 2017 at 04:57:13PM +0200, Solar Designer wrote:
+> On Wed, Sep 27, 2017 at 03:04:24PM +0200, Greg KH wrote:
+> > I've not ever really run into any "known security
+> > fix" not being cc:ed to stable.  Do you have any known examples where I
+> > can go poke the maintainers to do better?
 > 
-> There can't be an assessment without knowledge of what to assess - there
-> is little to no information in your mail. I can only guess that somebody
-> for the hundredth time found out that terminals are more than dumb
-> display devices and got excited that, somehow, this might be a security
-> issue. Without knowing details, I can't say for sure, but most likely,
-> this is a security issue the same way blindly feeding unknown commands to
-> your shell is, i.e., it's a problem somewhere else - the protocol between
-> terminals and programs is not a (strong) security barrier.
+> I haven't been keeping track, but as you're aware Brad Spengler brought
+> these up from time to time, including recently on this list:
 > 
-> (your echo command is bash-specific, btw.)
+> http://www.openwall.com/lists/oss-security/2017/08/05/1
+> 
+> > We have plenty of the normal "bugfix was merged that a few years later
+> > turned out to be a 'security' issue, but no one realized it at the time"
+> > changes that get merged.
+> 
+> It feels unlikely Al Viro didn't realize the commit on 2017-07-07 was a
+> security fix, given the description of the race condition and the kernel
+> panic triggerable by an unprivileged user posted to linux-fsdevel on
+> 2017-05-31, and the Red Hat private Bug created on 2017-07-06.  Rather,
+> it could have been intended to give distros some time to patch (4 weeks
+> to Red Hat, 1 week to the rest?) before drawing even more attention to
+> the problem.  But this also resulted in stable not CC'ed on the commit.
+> 
+> I am not blaming anyone - it's a tough tradeoff.  For an already public
+> issue (since 2017-05-31 on linux-fsdevel), the committed fix doesn't
+> literally leak it (can't leak what's already public), although it does
+> create some additional exposure (minimized by not mentioning security
+> relevance and not CC'ing stable).  I am also not blaming Red Hat for
+> giving linux-distros less time - that's possibly caused by linux-distros
+> policy of 14 days max, 7 days preferred.  I think the 7 or 8 days was
+> just right.  I think Red Hat should learn to handle such issues much
+> quicker, though, so that up to 14 days would be comfortable for their
+> own handling as well.  Especially for semi-public issues (in this case
+> technically public, but obscure).
+> 
+> I am primarily saying that we should admit that such cases exist, I
+> suppose for varying reasons, when stable is not CC'ed on what's known to
+> be a security issue at time of commit.
 
-You're right that we provided "little to no information" - sorry.  I'll
-correct this now.
+Yes, fair enough, you are right.  Those cases do exist, this one fell
+through the cracks, which will always happen, we are all human, even Al :)
 
-Jason's e-mail was in part prompted by my off-list message to him, where
-I wrote about this issue (or non-issue depending on one's perspective):
+> I don't know if you should "go poke" Al Viro "to do better".  While many
+> would disagree with resolving the tradeoff like that, some would support
+> that.  As an option, you could acknowledge that such cases will come up
+> from time to time, and ask to be notified of them by means other than
+> CC'ing stable.  Maybe this was already in place for that one occasion?
 
----
-I think it's pretty bad, because unlike many other terminals' automated
-responses triggered by escapes, this one includes a linefeed.  So an
-attack tarball/directory/whatever would include e.g. a program called
-"1" and a text file with that escape sequence.  When someone cat's or
-more's the file, the program would automatically be invoked _if_ they
-have . in PATH.  While we normally shouldn't have . in PATH, I think
-some people might.
+I don't have access to my email archives at the moment, but I _think_
+this one was my fault as it was on my list of things "go look at", and I
+never go to it in time.  My current list of patches that fall into that
+category is rather large, due to my recent travels, hopefully I'll catch
+up on that by the end of this month.
 
-The risk probability is low, but this is nevertheless a valid security
-issue to patch.
----
+I always suggest that if I do miss things, please let me know through
+whatever way you want to (public list, security@k.o, private email,
+poking me on irc, taking me out to drinks, etc.)
 
-(The pasted text appears to vary between "0" and "1".)
+thanks,
 
-I haven't just "found out that terminals are more than dumb display
-devices" and I haven't "got excited".  This is indeed well-known, and
-has been discussed for decades.  I fully agree that the security barrier
-should be inside each program - if a program processes untrusted input,
-it must not blindly send that to the terminal.  Unfortunately, this
-often fails in practice - many programs don't bother, many programs
-don't do it right (e.g., it's common to let the 8-bit escapes through,
-especially with some now mostly obsolete 8-bit locales), there are
-subtle asynchronous multi-producer issues with UTF-8, and there are
-clueless or/and risk-taking users/sysadmins who "cat", etc.  untrusted
-files to terminals.  Sometimes the overhead of avoiding such risky
-actions is prohibitive - e.g., sometimes one does need to issue a SQL
-query for untrusted data from a SQL shell they already have started on
-their terminal.
-
-Thus, a sentiment expressed in past discussions in here is that terminal
-emulators shouldn't have the riskiest escape sequences supported by
-default.  It is fully expected that malicious escape sequences can make
-a terminal unusable, requiring reset.  It is unexpected by many users
-(as you correctly say, hundreds end up rediscovering this and bringing
-it up as an issue) that with some terminal emulators malicious escape
-sequences, through misfeatures (rather than implementation bugs, which
-often also exist), can also paste text into their shell prompt (as
-above), modify X clipboard contents (in xterm, luckily no longer in
-typical distros' default config), etc.  Those who are aware and expect
-this may prefer to have this risky and unneeded functionality disabled
-by default.
-
-It's about defense-in-depth and about not having a loaded gun hanging on
-the wall unnecessarily.
-
-In the message that started this current thread, I included links to
-some recent past threads covering some of the aspects mentioned above:
-
-http://www.openwall.com/lists/oss-security/2017/05/01/13
-
-Alexander
+greg k-h
