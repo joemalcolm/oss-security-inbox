@@ -1,4 +1,9 @@
-Received: (qmail 32645 invoked by uid 550); 27 Sep 2022 16:22:36 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1255" "Thursday" "28" "September" "2017" "12:06:51" "+0200" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-ELKaUKMBBvYHN5rC5WYM7Z0qVHhsWL6zbqAXUpVcThoZA@mail.gmail.com>" "46" "[oss-security] OpenVPN CVE-2017-12166: remote buffer overflow" nil nil nil "9" "2017092810:06:51" "[oss-security] OpenVPN CVE-2017-12166: remote buffer overflow" (number mark "U       guidovranken Sep 28   46/1255  " thread-indent "\"[oss-security] OpenVPN CVE-2017-12166: remote buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22490 invoked by uid 550); 28 Sep 2017 10:13:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +12,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29851 invoked from network); 27 Sep 2022 15:33:40 -0000
+Received: (qmail 18424 invoked from network); 28 Sep 2017 10:07:04 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date;
-        bh=3WMrSbwY3AP+Z9jSZ5xPlYaxrj4hWsDPqr+LKtFDia4=;
-        b=sMTPWylyzzpZfwtxcRXHQR4URs/B5yis9rHComRNzUPdFQST1scWdorcBu9C1DwLAA
-         D6/t+yKJhhyJGsm0zueQNI1l2OaRvRO3PxSpiIrVCnVgu2/pMzmI0jc3A8c1qRXvrv9a
-         Q/cllLRBdIqTYyiU4vnox4V5FhzP0FzpHeYtQx9n/tDm/cx/ty7K4E7jM4lk/fTD96lM
-         jSByHbqVms+4WsyAPAbgM291j1CL+Cmli8f/4WhhmmKMDNOLY+PqTW0UyMCXFfVuF+rG
-         8vg+RW0f8v1+XuJaSWvvsxNXm4Cqc9Ipypqrs0p8mjWgWGzIif1XBHqBvsgHt3lL4N2p
-         osgQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=ulKvAsfZPJfya0RUQaOLeRZUGK28NmkEgsAquGHK/Rk=;
+        b=Cqk2pdNJJd1VheiJ0+2JlERhh6lPco/L6Kysb3QUKX+3fzA+MEzz/J9l7M17BOUKYo
+         6ZZ2xMBxAbChHEkyoc2MLHLrsXu7szdfdWGtngBFED2jqVfWNETpkTItqdQXEovxtBDx
+         /btFMYWPUZI0BGcQFVjIAfjYfod4yeeAhgwvaLXEi0Otq5BAW4bZM9LON3dHqqwj6Pp1
+         QSCIbeop5fhhbX5hYTFXKmiP3BQQWj8j2bGy8JInuRtF8kZGKY7YhU1aPDLxiqiXus92
+         PiW0JfczjnsEdJG5gEXfCiEbY7buQC6N/wf8dP5NH/o0cbdZ6cbW3kWPezapuaD2AqwH
+         yvrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=3WMrSbwY3AP+Z9jSZ5xPlYaxrj4hWsDPqr+LKtFDia4=;
-        b=ez2HH4GKMr4r3reAtFIJNacLGUhnrENBMODbmtlHEUZu1yoaDvPm1/bU3WKMwwdSG7
-         cCqiwJMQdZspDDB8JBjqxLzVoDjvHTcUe6gtOURlVY+ie8I6dBHkb1ZC3MKsVnVhJzPe
-         1xEnV8o+QGgAh+cROB8MJrHA4cj5PoueSoXiFh4CKYl3/BrpWRAH7jmJ1/4W7+T9K1lC
-         beAdpblQwi3nz/KbxtfbtyMuX/sc6zsyFk89/C9HXVNSJWy+19l5s1DNEpze0yzkgtQy
-         oUgunYR3NdpjhVpT/+V9UCaQePZMCxHmjzZSyE42KzIPHsSQYfS6kBmscd1ARbKyLMUp
-         Wb6w==
-X-Gm-Message-State: ACrzQf3APES/vSiXz/EvyoMjYrSWKT8F0zpagRzcyH+a1p4u9XAU4KL8
-	5RNKfDFE3+RZXGw9NIHPKvtGeiBFOux5Ql03kE+S+WYaqUyrCA==
-X-Google-Smtp-Source: AMsMyM4iGw7h95qf1xeZPJ7i2dhCtujeqtlVqGcomx8B+gaBCNhGTgn4SABpNA+ubk3UvwJ9v0O/Wn+Bj8OKxv0BimY=
-X-Received: by 2002:a67:b20b:0:b0:3a5:2dde:9f77 with SMTP id
- b11-20020a67b20b000000b003a52dde9f77mr6074542vsf.67.1664292807638; Tue, 27
- Sep 2022 08:33:27 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=ulKvAsfZPJfya0RUQaOLeRZUGK28NmkEgsAquGHK/Rk=;
+        b=jAx3xeqWoXMKeIt8gDmsohFAMn1JSTidFM1pJKNtdGbq0cRTrSFCJYHvepFdww3bTu
+         5J/w0J1EHqY5VGgOWCTOaDWWVQZOZmMNcPgkSOdKcnAq49otEvYC9fIbdHQlauzo/t1r
+         2ly4ejWueCdPg5MBY61kawA1cVeYFx+lXpxvUguosuKcDse5MGeTEI/+2vqwFs9Qpfhh
+         c5/48MG/WuhGCqmur64MVV89YFjqiqheLpkdmCewV9ToUqSiZJ7UXP8WWCqT5uDLVuK9
+         3GKiB7/+C0B3aHZGfJ1+SOUPFZ80h89y5b4B/SQ8ykNQ5LjZvpuZ2h1VLBkXWAWx9G5m
+         pcBQ==
+X-Gm-Message-State: AHPjjUhgl7kVGzV7NiF/gU+2TecvqkBpjexjHCMcHpvcXqZYLfM+9ZUf
+	vsVv1ExpgWc3mKVSE2PkHVQ5UAS9zDoRmeLMSXDsYc4B
+X-Google-Smtp-Source: AOwi7QCPVEoGfCDhPQJqRQ9WcWHY8pZHKFnEfpzVTKBk/XsUpxgmTHF2a9SArWp6XfA9A7zNtvCoVJIv0OJMnEq1Mlo=
+X-Received: by 10.98.159.76 with SMTP id g73mr3823680pfe.293.1506593212294;
+ Thu, 28 Sep 2017 03:06:52 -0700 (PDT)
 MIME-Version: 1.0
-From: Ana Oprea <anaoprea@google.com>
-Date: Tue, 27 Sep 2022 17:33:16 +0200
-Message-ID: <CABbtqzEUXKVaWAK49231jQCPYF9_A2kGfDUz-LY_d7LtBJnsbA@mail.gmail.com>
+From: Guido Vranken <guidovranken@gmail.com>
+Date: Thu, 28 Sep 2017 12:06:51 +0200
+Message-ID: <CAO5O-ELKaUKMBBvYHN5rC5WYM7Z0qVHhsWL6zbqAXUpVcThoZA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000009ae79b05e9aa5d03"
-Subject: [oss-security] CVE-2022-1941: Protobuf C++, Python DoS
-
---0000000000009ae79b05e9aa5d03
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] OpenVPN CVE-2017-12166: remote buffer overflow
 
-Summary
-A message parsing and memory management vulnerability in ProtocolBuffer=E2=
-=80=99s
-C++ and Python implementations can trigger an out of memory (OOM) failure
-when processing a specially crafted message, which could lead to a denial
-of service (DoS) on services using the libraries.
+This concerns a remote buffer overflow vulnerability in OpenVPN. It
+has been fixed in OpenVPN 2.4.4 and 2.3.18, released on 26 Sept 2017.
+It is suspected that only a small number of users is vulnerable to
+this issue, because it requires having explicitly enabled the outdated
+=E2=80=98key method 1=E2=80=99.
 
-Reporter
-ClusterFuzz [1]
+The OpenVPN advisory can be found here:
+https://community.openvpn.net/openvpn/wiki/CVE-2017-12166
 
-Affected versions
-All versions of C++ Protobufs (including Python) prior to the versions
-listed below.
+In ssl.c, key_method_1_read() calls read_key() which doesn=E2=80=99t perform
+adequate bounds checks. cipher_length and hmac_length are specified by
+the
+peer:
 
-Severity & Impact
-CVE-2022-1941 Medium 5.7 - CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H [2]
-A small (~500 KB) malicious payload can be constructed which causes the
-running service to allocate more than 3GB of RAM.
+1643 uint8_t cipher_length;
+1644 uint8_t hmac_length;
+1645
+1646 CLEAR(*key);
+1647 if (!buf_read(buf, &cipher_length, 1))
+1648 {
+1649     goto read_err;
+1650 }
+1651 if (!buf_read(buf, &hmac_length, 1))
+1652 {
+1653     goto read_err;
+1654 }
 
-Proof of Concept
-For reproduction details, please refer to the unit test that identifies the
-specific inputs that exercise this parsing weakness. [3]
+And this many bytes of data are then read into key->cipher and key->hmac:
 
-Mitigation / Patching
-Please update to the latest available versions of the following packages:
-- protobuf-cpp (3.18.3, 3.19.5, 3.20.2, 3.21.6)
-- protobuf-python (3.18.3, 3.19.5, 3.20.2, 4.21.6)
+1656 if (!buf_read(buf, key->cipher, cipher_length))
+1657 {
+1658     goto read_err;
+1659 }
+1660 if (!buf_read(buf, key->hmac, hmac_length))
+1661 {
+1662     goto read_err;
+1663 }
 
-[1] https://google.github.io/clusterfuzz/
-[2] https://nvd.nist.gov/vuln/detail/CVE-2022-1941
-[3]
-https://github.com/protocolbuffers/protobuf/security/advisories/GHSA-8gq9-2=
-x98-w8hf
+In other words, it=E2=80=99s a classic example of bounds check resulting in=
+ a
+buffer overflow.
 
-Kind regards,
-Ana
+Like my previous set of OpenVPN vulnerabilities, this issue was also
+found with fuzzing.
 
---0000000000009ae79b05e9aa5d03--
+Guido
