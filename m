@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["794" "Wednesday" "4" "November" "2020" "16:30:27" "-0500" "Brian Demers" "bdemers@apache.org" "<CAH9eYVpmWAVAnUm5=7ASohtnOyWsN5zoeZ7ieDCeaML_tvq35w@mail.gmail.com>" "20" "[oss-security] [CVE-2020-17510] Apache Shiro Authentication Bypass Vulnerability" nil nil nil "11" "2020110421:30:27" "[oss-security] [CVE-2020-17510] Apache Shiro Authentication Bypass Vulnerability" (number mark "U       bdemers@apac Nov  4   20/794   " thread-indent "\"[oss-security] [CVE-2020-17510] Apache Shiro Authentication Bypass Vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-17510] Apache Shiro Authentication Bypass Vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["12240" "Thursday" "28" "September" "2017" "17:26:20" "+0000" "Xen.org security team" "security@xen.org" "<E1dxcZo-0000QF-6K@xenbits.xenproject.org>" "251" "[oss-security] Xen Security Advisory 245 - ARM: Some memory not scrubbed at boot" nil nil nil "9" "2017092817:26:20" "[oss-security] Xen Security Advisory 245 - ARM: Some memory not scrubbed at boot" (number mark "U       security@xen Sep 28  251/12240 " thread-indent "\"[oss-security] Xen Security Advisory 245 - ARM: Some memory not scrubbed at boot\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9616 invoked by uid 550); 4 Nov 2020 21:53:18 -0000
+Received: (qmail 3194 invoked by uid 550); 28 Sep 2017 17:42:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,39 +12,267 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30061 invoked from network); 4 Nov 2020 21:30:51 -0000
-X-Gm-Message-State: AOAM530Ytgsm2UrXlow3eoKl92OU1RxV+UPGUXBV7PdYmiUVLih0QcPu
-	OXdMskHK0WITsus9wjjmoa/IKxHuJpdPIuN3OdU=
-X-Google-Smtp-Source: ABdhPJxVofXn8sSYSPce1wlXbYfGF4yFgRf1fkga6voYp47OjHaWH0MUcZCDaC3NFZhYwXJFN4sRb1tf03DHNN7jg7c=
-X-Received: by 2002:aa7:db82:: with SMTP id u2mr29331173edt.262.1604525437988;
- Wed, 04 Nov 2020 13:30:37 -0800 (PST)
+Received: (qmail 21923 invoked from network); 28 Sep 2017 17:26:39 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-From: Brian Demers <bdemers@apache.org>
-Date: Wed, 4 Nov 2020 16:30:27 -0500
-X-Gmail-Original-Message-ID: <CAH9eYVpmWAVAnUm5=7ASohtnOyWsN5zoeZ7ieDCeaML_tvq35w@mail.gmail.com>
-Message-ID: <CAH9eYVpmWAVAnUm5=7ASohtnOyWsN5zoeZ7ieDCeaML_tvq35w@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: security <security@shiro.apache.org>
-Content-Type: multipart/alternative; boundary="000000000000c3b64b05b34eb08e"
-Subject: [oss-security] [CVE-2020-17510] Apache Shiro Authentication Bypass Vulnerability
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1dxcZo-0000QF-6K@xenbits.xenproject.org>
+Date: Thu, 28 Sep 2017 17:26:20 +0000
+Subject: [oss-security] Xen Security Advisory 245 - ARM: Some memory not scrubbed at boot
 
---000000000000c3b64b05b34eb08e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Apache Shiro before 1.7.0, when using Apache Shiro with Spring, a specially
-crafted HTTP request may cause an authentication bypass.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-If you are NOT using Shiro=E2=80=99s Spring Boot Starter
-(`shiro-spring-boot-web-starter`), you must configure add the
-ShiroRequestMappingConfig auto configuration[1] to your application or
-configure the equivalent manually[2].
+                    Xen Security Advisory XSA-245
 
-[0] https://www.apache.org/security/
-[1] https://shiro.apache.org/spring-framework.html#SpringFramework-WebConfig
-[2]
-https://github.com/apache/shiro/blob/shiro-root-1.7.0/support/spring/src/ma=
-in/java/org/apache/shiro/spring/web/config/ShiroRequestMappingConfig.java#L=
-28-L30
+                 ARM: Some memory not scrubbed at boot
 
---000000000000c3b64b05b34eb08e--
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This bug was discussed publicly before it was realised that it was a
+security vulnerability.
+
+ISSUE DESCRIPTION
+=================
+
+Data can remain readable in DRAM across soft and even hard reboots.
+To ensure that sensitive data is not leaked from one domain to another
+after a reboot, Xen must "scrub" all memory on boot (write it with
+zeroes).
+
+Unfortunately, it was discovered that when memory was in disjoint blocks,
+or when the first block didn't begin at physical address 0, arithmetic
+errors meant that some memory was not scrubbed.
+
+IMPACT
+======
+
+Sensitive information from one domain before a reboot might be visible
+to another domain after a reboot.
+
+VULNERABLE SYSTEMS
+==================
+
+Only ARM systems are vulnerable.
+
+All versions of Xen since 4.5 are vulnerable.
+
+Only hardware with disjoint blocks, or physical addresses not starting at 0
+are vulnerable; this includes the majority of ARM systems.
+
+MITIGATION
+==========
+
+None.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patches resolves this issue.
+
+xsa245/*.patch         All versions of Xen
+
+$ sha256sum xsa245* xsa245*/*
+121829263b85fcb5eac8e38fb44e77d3aab1dd7ae6ef665bf84bb49e5e161d24  xsa245.meta
+526f9e1b127fbb316762ce8e8f4563bc9de0c55a1db581456a3017d570d35bdd  xsa245/0001-xen-page_alloc-Cover-memory-unreserved-after-boot-in.patch
+7164010112fcccd9cd88e72ace2eeabdb364dd6f4d05c434686267d18067f420  xsa245/0002-xen-arm-Correctly-report-the-memory-region-in-the-du.patch
+$
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZzTANAAoJEIP+FMlX6CvZHk4IAJpF4ruPkFKdCgsQ/ljjrpxO
+8CVQFVwxTLtLZGUB1ZP0nFntkT/FnhDo870EmDvjPZTq3MmQwlPwVhgPqmF+tsTC
+aMecUftEJxHm6cSRLYiIGEphGbJZR6utjTKd7l0ddni5QtnzUED8mE5WFAq4aLrS
+y8FHuyghE6nwBXEMhRiDYYZ2X0MeMeTisc/0s1Loe002zcpw0RUlmys21Uzzd1Xv
+t4n5e4RDMLUNpfpY3o4UVWcJJi55Bpxw9ke4IMExlNSbYR5qQeNigDT0CcE1bv6n
+mNwlADAUKT4t/K1fyk6XJLFIdzHt5NVmN2O9cYKt6voVMu1r1dh3TgiAffAJsxk=
+=Pi1Y
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa245.meta"
+Content-Disposition: attachment; filename="xsa245.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAyNDUsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC45IiwKICAgICI0LjgiLAogICAgIjQuNyIsCiAg
+ICAiNC42IiwKICAgICI0LjUiCiAgXSwKICAiVHJlZXMiOiBbCiAgICAieGVu
+IgogIF0sCiAgIlJlY2lwZXMiOiB7CiAgICAiNC41IjogewogICAgICAiWGVu
+VmVyc2lvbiI6ICI0LjUiLAogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
+eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI4MzcyNGQ5ZjNhZTIx
+YTNiOTYzNjI3NDJlMmYwNTJiMTlkOWY1NTlhIiwKICAgICAgICAgICJQcmVy
+ZXFzIjogWwogICAgICAgICAgICAyMzcsCiAgICAgICAgICAgIDIzOCwKICAg
+ICAgICAgICAgMjM5LAogICAgICAgICAgICAyNDAsCiAgICAgICAgICAgIDI0
+MSwKICAgICAgICAgICAgMjQyLAogICAgICAgICAgICAyNDMsCiAgICAgICAg
+ICAgIDI0NAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwog
+ICAgICAgICAgICAieHNhMjQ1LyoiCiAgICAgICAgICBdCiAgICAgICAgfQog
+ICAgICB9CiAgICB9LAogICAgIjQuNiI6IHsKICAgICAgIlhlblZlcnNpb24i
+OiAiNC42IiwKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsK
+ICAgICAgICAgICJTdGFibGVSZWYiOiAiMTY1OGE4NzY5MGFjODM5ZTg1ZGIx
+MmJiZjQwOWJlNjJiYjkzODY0MCIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsK
+ICAgICAgICAgICAgMjM3LAogICAgICAgICAgICAyMzgsCiAgICAgICAgICAg
+IDIzOSwKICAgICAgICAgICAgMjQwLAogICAgICAgICAgICAyNDEsCiAgICAg
+ICAgICAgIDI0MiwKICAgICAgICAgICAgMjQzLAogICAgICAgICAgICAyNDQK
+ICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAg
+ICAgInhzYTI0NS8qIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQog
+ICAgfSwKICAgICI0LjciOiB7CiAgICAgICJYZW5WZXJzaW9uIjogIjQuNyIs
+CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
+ICAiU3RhYmxlUmVmIjogImM3NzgzZDljMjZmYzE5MTg2MmQ5ODgzZGEyMjM4
+NzM0MGIxZmFiMTgiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAg
+ICAgIDIzNywKICAgICAgICAgICAgMjM4LAogICAgICAgICAgICAyMzksCiAg
+ICAgICAgICAgIDI0MCwKICAgICAgICAgICAgMjQxLAogICAgICAgICAgICAy
+NDIsCiAgICAgICAgICAgIDI0MywKICAgICAgICAgICAgMjQ0CiAgICAgICAg
+ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ey
+NDUvKiIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAg
+ICAiNC44IjogewogICAgICAiWGVuVmVyc2lvbiI6ICI0LjgiLAogICAgICAi
+UmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJs
+ZVJlZiI6ICIzNjg5OGViMTI1NzJmMGExZjg1Y2I1NGQ0YTllOTBhZmNiNmY3
+MDQ1IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAyMzcs
+CiAgICAgICAgICAgIDIzOCwKICAgICAgICAgICAgMjM5LAogICAgICAgICAg
+ICAyNDAsCiAgICAgICAgICAgIDI0MSwKICAgICAgICAgICAgMjQyLAogICAg
+ICAgICAgICAyNDMsCiAgICAgICAgICAgIDI0NAogICAgICAgICAgXSwKICAg
+ICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjQ1LyoiCiAg
+ICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuOSI6
+IHsKICAgICAgIlhlblZlcnNpb24iOiAiNC45IiwKICAgICAgIlJlY2lwZXMi
+OiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAi
+MmNjM2QzMmY0MGM3MWNiMjQyNDc3YTNmODkzODA3NGQ0ZmMzNjgyOSIsCiAg
+ICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjM3LAogICAgICAg
+ICAgICAyMzgsCiAgICAgICAgICAgIDIzOSwKICAgICAgICAgICAgMjQwLAog
+ICAgICAgICAgICAyNDEsCiAgICAgICAgICAgIDI0MiwKICAgICAgICAgICAg
+MjQzLAogICAgICAgICAgICAyNDQKICAgICAgICAgIF0sCiAgICAgICAgICAi
+UGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTI0NS8qIgogICAgICAgICAg
+XQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7CiAg
+ICAgICJYZW5WZXJzaW9uIjogIm1hc3RlciIsCiAgICAgICJSZWNpcGVzIjog
+ewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogImE4
+ZWE2ZTI2ODgxMThhM2UxOWUyOWIzOWUzMTZmYWE1Zjk2YWI5ZDEiLAogICAg
+ICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDIzNywKICAgICAgICAg
+ICAgMjM4LAogICAgICAgICAgICAyMzksCiAgICAgICAgICAgIDI0MCwKICAg
+ICAgICAgICAgMjQxLAogICAgICAgICAgICAyNDIsCiAgICAgICAgICAgIDI0
+MywKICAgICAgICAgICAgMjQ0CiAgICAgICAgICBdLAogICAgICAgICAgIlBh
+dGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyNDUvKiIKICAgICAgICAgIF0K
+ICAgICAgICB9CiAgICAgIH0KICAgIH0KICB9Cn0=
+
+--=separator
+Content-Type: application/octet-stream;
+ name="xsa245/0001-xen-page_alloc-Cover-memory-unreserved-after-boot-in.patch"
+Content-Disposition: attachment;
+ filename="xsa245/0001-xen-page_alloc-Cover-memory-unreserved-after-boot-in.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBhNDhkNDdmZWJjMTM0MGYyN2Q2YzcxNjU0NTY5MjY0MWEwOWI0MTRj
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
+PGp1bGllbi5ncmFsbEBhcm0uY29tPgpEYXRlOiBUaHUsIDIxIFNlcCAyMDE3
+IDE0OjEzOjA4ICswMTAwClN1YmplY3Q6IFtQQVRDSCAxLzJdIHhlbi9wYWdl
+X2FsbG9jOiBDb3ZlciBtZW1vcnkgdW5yZXNlcnZlZCBhZnRlciBib290IGlu
+CiBmaXJzdF92YWxpZF9tZm4KCk9uIEFybSwgc29tZSByZWdpb25zIChlLmcg
+SW5pdHJhbWZzLCBEb20wIEtlcm5lbC4uLikgYXJlIG1hcmtlZCBhcwpyZXNl
+cnZlZCB1bnRpbCB0aGUgaGFyZHdhcmUgZG9tYWluIGlzIGJ1aWx0IGFuZCB0
+aGV5IGFyZSBjb3BpZWQgaW50byBpdHMKbWVtb3J5LiBUaGVyZWZvcmUsIHRo
+ZXkgd2lsbCBub3QgYmUgYWRkZWQgaW4gdGhlIGJvb3QgYWxsb2NhdG9yIHZp
+YQppbml0X2Jvb3RfcGFnZXMuCgpJbnN0ZWFkLCBpbml0X3hlbmhlYXBfcGFn
+ZXMgd2lsbCBiZSBjYWxsZWQgb25jZSB0aGUgcmVnaW9uIGFyZSBub3QgdXNl
+ZAphbnltb3JlLgoKVXBkYXRlIGZpcnN0X3ZhbGlkX21mbiBpbiBib3RoIGlu
+aXRfaGVhcF9wYWdlcyBhbmQgaW5pdF9ib290X3BhZ2VzCihhbHJlYWR5IGV4
+aXN0KSB0byBjb3ZlciBhbGwgdGhlIGNhc2VzLgoKU2lnbmVkLW9mZi1ieTog
+SnVsaWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAYXJtLmNvbT4KW0FkanVzdCBj
+b21tZW50LCBhZGRlZCBsb2NraW5nIGFyb3VuZCBmaXJzdF92YWxpZF9tZm4g
+dXBkYXRlXQpTaWduZWQtb2ZmLWJ5OiBCb3JpcyBPc3Ryb3Zza3kgPGJvcmlz
+Lm9zdHJvdnNreUBvcmFjbGUuY29tPgotLS0KIHhlbi9jb21tb24vcGFnZV9h
+bGxvYy5jIHwgMTAgKysrKysrKysrKwogMSBmaWxlIGNoYW5nZWQsIDEwIGlu
+c2VydGlvbnMoKykKCmRpZmYgLS1naXQgYS94ZW4vY29tbW9uL3BhZ2VfYWxs
+b2MuYyBiL3hlbi9jb21tb24vcGFnZV9hbGxvYy5jCmluZGV4IDBiOWY2Y2M2
+ZGYuLmZiZTVhOGFmMzkgMTAwNjQ0Ci0tLSBhL3hlbi9jb21tb24vcGFnZV9h
+bGxvYy5jCisrKyBiL3hlbi9jb21tb24vcGFnZV9hbGxvYy5jCkBAIC0xNzAw
+LDYgKzE3MDAsMTYgQEAgc3RhdGljIHZvaWQgaW5pdF9oZWFwX3BhZ2VzKAog
+ewogICAgIHVuc2lnbmVkIGxvbmcgaTsKIAorICAgIC8qCisgICAgICogU29t
+ZSBwYWdlcyBtYXkgbm90IGdvIHRocm91Z2ggdGhlIGJvb3QgYWxsb2NhdG9y
+IChlLmcgcmVzZXJ2ZWQKKyAgICAgKiBtZW1vcnkgYXQgYm9vdCBidXQgcmVs
+ZWFzZWQganVzdCBhZnRlciAtLS0ga2VybmVsLCBpbml0cmFtZnMsCisgICAg
+ICogZXRjLikuCisgICAgICogVXBkYXRlIGZpcnN0X3ZhbGlkX21mbiB0byBl
+bnN1cmUgdGhvc2UgcmVnaW9ucyBhcmUgY292ZXJlZC4KKyAgICAgKi8KKyAg
+ICBzcGluX2xvY2soJmhlYXBfbG9jayk7CisgICAgZmlyc3RfdmFsaWRfbWZu
+ID0gbWluX3QodW5zaWduZWQgbG9uZywgcGFnZV90b19tZm4ocGcpLCBmaXJz
+dF92YWxpZF9tZm4pOworICAgIHNwaW5fdW5sb2NrKCZoZWFwX2xvY2spOwor
+CiAgICAgZm9yICggaSA9IDA7IGkgPCBucl9wYWdlczsgaSsrICkKICAgICB7
+CiAgICAgICAgIHVuc2lnbmVkIGludCBuaWQgPSBwaHlzX3RvX25pZChwYWdl
+X3RvX21hZGRyKHBnK2kpKTsKLS0gCjIuMTEuMAoK
+
+--=separator
+Content-Type: application/octet-stream;
+ name="xsa245/0002-xen-arm-Correctly-report-the-memory-region-in-the-du.patch"
+Content-Disposition: attachment;
+ filename="xsa245/0002-xen-arm-Correctly-report-the-memory-region-in-the-du.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBjYmZjZjAzOWQwZTBiNmY0YzRjYjNkZTYxMmY3YmY3ODhhMGM0N2Nk
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
+PGp1bGllbi5ncmFsbEBhcm0uY29tPgpEYXRlOiBNb24sIDE4IFNlcCAyMDE3
+IDE0OjI0OjA4ICswMTAwClN1YmplY3Q6IFtQQVRDSCAyLzJdIHhlbi9hcm06
+IENvcnJlY3RseSByZXBvcnQgdGhlIG1lbW9yeSByZWdpb24gaW4gdGhlIGR1
+bW15CiBOVU1BIGhlbHBlcnMKCk5VTUEgaXMgY3VycmVudGx5IG5vdCBzdXBw
+b3J0ZWQgb24gQXJtLiBCZWNhdXNlIGNvbW1vbiBjb2RlIGlzCk5VTUEtYXdh
+cmUsIGR1bW15IGhlbHBlcnMgYXJlIGluc3RlYWQgcHJvdmlkZWQgdG8gZXhw
+b3NlIGEgc2luZ2xlIG5vZGUuCgpUaG9zZSBoZWxwZXJzIGFyZSBmb3IgaW5z
+dGFuY2UgdXNlZCB0byBrbm93IHRoZSByZWdpb24gdG8gc2NydWIuCgpIb3dl
+dmVyIHRoZSBtZW1vcnkgcmVnaW9uIGlzIG5vdCByZXBvcnRlZCBjb3JyZWN0
+bHkuIEluZGVlZCwgdGhlCmZyYW1ldGFibGUgbWF5IG5vdCBiZSBhdCB0aGUg
+YmVnaW5uaW5nIG9mIHRoZSBtZW1vcnkgYW5kIHRoZXJlIG1pZ2h0IGJlCm11
+bHRpcGxlIG1lbW9yeSBiYW5rcy4gVGhpcyB3aWxsIGxlYWQgdG8gbm90IHNj
+cnViIHNvbWUgcGFydCBvZiB0aGUKbWVtb3J5LgoKVGhlIG1lbW9yeSBpbmZv
+cm1hdGlvbiBjYW4gYmUgZm91bmQgdXNpbmc6CiAgICAqIGZpcnN0X3ZhbGlk
+X21mbiBhcyB0aGUgc3RhcnQgb2YgdGhlIG1lbW9yeQogICAgKiBtYXhfcGFn
+ZSAtIGZpcnN0X3ZhbGlkX21mbiBhcyB0aGUgc3Bhbm5lZCBwYWdlcwoKTm90
+ZSB0aGF0IGZpcnN0X3ZhbGlkX21mbiBpcyBub3cgYmVlbiBleHBvcnRlZC4g
+VGhlIHByb3RvdHlwZSBoYXMgYmVlbgphZGRlZCBpbiBhc20tYXJtL251bWEu
+aCBhbmQgbm90IGluIGEgY29tbW9uIGhlYWRlciBiZWNhdXNlIEkgd291bGQK
+ZXhwZWN0IHRoZSB2YXJpYWJsZSB0byBiZWNvbWUgc3RhdGljIG9uY2UgTlVN
+QSBpcyBmdWxseSBzdXBwb3J0ZWQgb24KQXJtLgoKU2lnbmVkLW9mZi1ieTog
+SnVsaWVuIEdyYWxsIDxqdWxpZW4uZ3JhbGxAYXJtLmNvbT4KLS0tCiB4ZW4v
+Y29tbW9uL3BhZ2VfYWxsb2MuYyAgICB8ICA2ICsrKysrLQogeGVuL2luY2x1
+ZGUvYXNtLWFybS9udW1hLmggfCAxMCArKysrKysrKy0tCiAyIGZpbGVzIGNo
+YW5nZWQsIDEzIGluc2VydGlvbnMoKyksIDMgZGVsZXRpb25zKC0pCgpkaWZm
+IC0tZ2l0IGEveGVuL2NvbW1vbi9wYWdlX2FsbG9jLmMgYi94ZW4vY29tbW9u
+L3BhZ2VfYWxsb2MuYwppbmRleCBmYmU1YThhZjM5Li40NzJjNmZlMzI5IDEw
+MDY0NAotLS0gYS94ZW4vY29tbW9uL3BhZ2VfYWxsb2MuYworKysgYi94ZW4v
+Y29tbW9uL3BhZ2VfYWxsb2MuYwpAQCAtMTkyLDcgKzE5MiwxMSBAQCBQQUdF
+X0xJU1RfSEVBRChwYWdlX2Jyb2tlbl9saXN0KTsKICAqIEJPT1QtVElNRSBB
+TExPQ0FUT1IKICAqLwogCi1zdGF0aWMgdW5zaWduZWQgbG9uZyBfX2luaXRk
+YXRhIGZpcnN0X3ZhbGlkX21mbiA9IH4wVUw7CisvKgorICogZmlyc3RfdmFs
+aWRfbWZuIGlzIGV4cG9ydGVkIGJlY2F1c2UgaXQgaXMgdXNlIGluIEFSTSBz
+cGVjaWZpYyBOVU1BCisgKiBoZWxwZXJzLiBTZWUgY29tbWVudCBpbiBhc20t
+YXJtL251bWEuaC4KKyAqLwordW5zaWduZWQgbG9uZyBmaXJzdF92YWxpZF9t
+Zm4gPSB+MFVMOwogCiBzdGF0aWMgc3RydWN0IGJvb3RtZW1fcmVnaW9uIHsK
+ICAgICB1bnNpZ25lZCBsb25nIHMsIGU7IC8qIE1GTnMgQHMgdGhyb3VnaCBA
+ZS0xIGluY2x1c2l2ZSBhcmUgZnJlZSAqLwpkaWZmIC0tZ2l0IGEveGVuL2lu
+Y2x1ZGUvYXNtLWFybS9udW1hLmggYi94ZW4vaW5jbHVkZS9hc20tYXJtL251
+bWEuaAppbmRleCBhMmMxYTM0NzZkLi4zZTczODRkYTllIDEwMDY0NAotLS0g
+YS94ZW4vaW5jbHVkZS9hc20tYXJtL251bWEuaAorKysgYi94ZW4vaW5jbHVk
+ZS9hc20tYXJtL251bWEuaApAQCAtMTIsOSArMTIsMTUgQEAgc3RhdGljIGlu
+bGluZSBfX2F0dHJpYnV0ZV9fKChwdXJlKSkgbm9kZWlkX3QgcGh5c190b19u
+aWQocGFkZHJfdCBhZGRyKQogICAgIHJldHVybiAwOwogfQogCisvKgorICog
+VE9ETzogbWFrZSBmaXJzdF92YWxpZF9tZm4gc3RhdGljIHdoZW4gTlVNQSBp
+cyBzdXBwb3J0ZWQgb24gQXJtLCB0aGlzCisgKiBpcyByZXF1aXJlZCBiZWNh
+dXNlIHRoZSBkdW1teSBoZWxwZXJzIGlzIHVzaW5nIGl0LgorICovCitleHRl
+cm4gdW5zaWduZWQgbG9uZyBmaXJzdF92YWxpZF9tZm47CisKIC8qIFhYWDog
+aW1wbGVtZW50IE5VTUEgc3VwcG9ydCAqLwotI2RlZmluZSBub2RlX3NwYW5u
+ZWRfcGFnZXMobmlkKSAodG90YWxfcGFnZXMpCi0jZGVmaW5lIG5vZGVfc3Rh
+cnRfcGZuKG5pZCkgKHBkeF90b19wZm4oZnJhbWV0YWJsZV9iYXNlX3BkeCkp
+CisjZGVmaW5lIG5vZGVfc3Bhbm5lZF9wYWdlcyhuaWQpIChtYXhfcGFnZSAt
+IGZpcnN0X3ZhbGlkX21mbikKKyNkZWZpbmUgbm9kZV9zdGFydF9wZm4obmlk
+KSAoZmlyc3RfdmFsaWRfbWZuKQogI2RlZmluZSBfX25vZGVfZGlzdGFuY2Uo
+YSwgYikgKDIwKQogCiBzdGF0aWMgaW5saW5lIHVuc2lnbmVkIGludCBhcmNo
+X2dldF9kbWFfYml0c2l6ZSh2b2lkKQotLSAKMi4xMS4wCgo=
+
+--=separator--
