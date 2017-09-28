@@ -1,38 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/6
-Message-ID: <CANO=Ty0wfWS6kZLQO12WXu0Zd0MM-_ThiDKqttHvnZQmmxCtgA@mail.gmail.com>
-Date: Wed, 30 Aug 2017 10:30:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: RubyGems flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/9
+Message-Id: <E1dxcZo-0000QF-6K@xenbits.xenproject.org>
+Date: Thu, 28 Sep 2017 17:26:20 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 245 - ARM: Some memory not scrubbed at boot
 Content-Type: text/plain; charset=utf-8
 
-Does anyone know if these got CVEs?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://www.ruby-lang.org/en/news/2017/08/29/multiple-vulnerabilities-in-rubygems/
-http://blog.rubygems.org/2017/08/27/2.6.13-released.html
+                    Xen Security Advisory XSA-245
 
-Security fixes:
+                 ARM: Some memory not scrubbed at boot
 
-*Fix a DNS request hijacking vulnerability. Discovered by Jonathan
-Claudius, fix by Samuel Giddins.
-*Fix an ANSI escape sequence vulnerability. Discovered by Yusuke Endoh, fix
-by Evan Phoenix.
-*Fix a DOS vulernerability in the query command. Discovered by Yusuke
-Endoh, fix by Samuel Giddins.
-*Fix a vulnerability in the gem installer that allowed a malicious gem to
-overwrite arbitrary files. Discovered by Yusuke Endoh, fix by Samuel
-Giddins.
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-Affected Versions
+This bug was discussed publicly before it was realised that it was a
+security vulnerability.
 
-*Ruby 2.2 series: 2.2.7 and earlier
-*Ruby 2.3 series: 2.3.4 and earlier
-*Ruby 2.4 series: 2.4.1 and earlier
-*prior to trunk revision 59672
+ISSUE DESCRIPTION
+=================
 
+Data can remain readable in DRAM across soft and even hard reboots.
+To ensure that sensitive data is not leaked from one domain to another
+after a reboot, Xen must "scrub" all memory on boot (write it with
+zeroes).
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Unfortunately, it was discovered that when memory was in disjoint blocks,
+or when the first block didn't begin at physical address 0, arithmetic
+errors meant that some memory was not scrubbed.
 
+IMPACT
+======
+
+Sensitive information from one domain before a reboot might be visible
+to another domain after a reboot.
+
+VULNERABLE SYSTEMS
+==================
+
+Only ARM systems are vulnerable.
+
+All versions of Xen since 4.5 are vulnerable.
+
+Only hardware with disjoint blocks, or physical addresses not starting at 0
+are vulnerable; this includes the majority of ARM systems.
+
+MITIGATION
+==========
+
+None.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patches resolves this issue.
+
+xsa245/*.patch         All versions of Xen
+
+$ sha256sum xsa245* xsa245*/*
+121829263b85fcb5eac8e38fb44e77d3aab1dd7ae6ef665bf84bb49e5e161d24  xsa245.meta
+526f9e1b127fbb316762ce8e8f4563bc9de0c55a1db581456a3017d570d35bdd  xsa245/0001-xen-page_alloc-Cover-memory-unreserved-after-boot-in.patch
+7164010112fcccd9cd88e72ace2eeabdb364dd6f4d05c434686267d18067f420  xsa245/0002-xen-arm-Correctly-report-the-memory-region-in-the-du.patch
+$
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZzTANAAoJEIP+FMlX6CvZHk4IAJpF4ruPkFKdCgsQ/ljjrpxO
+8CVQFVwxTLtLZGUB1ZP0nFntkT/FnhDo870EmDvjPZTq3MmQwlPwVhgPqmF+tsTC
+aMecUftEJxHm6cSRLYiIGEphGbJZR6utjTKd7l0ddni5QtnzUED8mE5WFAq4aLrS
+y8FHuyghE6nwBXEMhRiDYYZ2X0MeMeTisc/0s1Loe002zcpw0RUlmys21Uzzd1Xv
+t4n5e4RDMLUNpfpY3o4UVWcJJi55Bpxw9ke4IMExlNSbYR5qQeNigDT0CcE1bv6n
+mNwlADAUKT4t/K1fyk6XJLFIdzHt5NVmN2O9cYKt6voVMu1r1dh3TgiAffAJsxk=
+=Pi1Y
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa245.meta" of type "application/octet-stream" (2549 bytes)
+
+Download attachment "xsa245/0001-xen-page_alloc-Cover-memory-unreserved-after-boot-in.patch" of type "application/octet-stream" (1650 bytes)
+
+Download attachment "xsa245/0002-xen-arm-Correctly-report-the-memory-region-in-the-du.patch" of type "application/octet-stream" (2600 bytes)
