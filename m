@@ -1,108 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/6
-Message-ID: <293903.679211752-sendEmail@localhost>
-Date: Mon, 1 May 2017 11:30:37 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: ettercap: etterfilter: heap-based buffer overflow write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/13
+Message-ID: <b26a514f-eb48-32dd-d504-64288b7f1087@chbi.eu>
+Date: Thu, 28 Sep 2017 20:31:57 +0200
+From: chbi@...i.eu
+To: oss-security@...ts.openwall.com
+Subject: CSRF vulnerability in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11 LTS
 Content-Type: text/plain; charset=utf-8
 
-Description:
-ettercap is a comprehensive suite for man in the middle attacks.
+Hi,
 
-There is an heap overflow write in etterfilter if it parses a malformed filter.
-
-The complete ASan output:
-
-# etterfilter $FILE
-etterfilter 0.8.2 copyright 2001-2015 Ettercap Development Team                                                                                                                                                   
-                                                                                                                                                                                                                  
-                                                                                                                                                                                                                  
- 14 protocol tables loaded:                                                                                                                                                                                       
-        DECODED DATA udp tcp esp gre icmp ipv6 ip arp wifi fddi tr eth                                                                                                                                            
-
- 13 constants loaded:
-        VRRP OSPF GRE UDP TCP ESP ICMP6 ICMP PPTP PPPOE IP6 IP ARP 
-
-=================================================================
-==3961==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61d00000a8da at pc 0x7fb38ebea5b8 bp 0x7fff8bc36cc0 sp 0x7fff8bc36cb8
-WRITE of size 1 at 0x61d00000a8da thread T0
-    #0 0x7fb38ebea5b7 in strescape /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/src/ec_strings.c:182:23
-    #1 0x51342c in encode_const /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/utils/etterfilter/ef_encode.c:134:27
-    #2 0x538e70 in yylex /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999_build/utils/etterfilter/ef_syntax.l:173:8
-    #3 0x53fe67 in yyparse /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999_build/utils/ef_grammar.c:1223:16
-    #4 0x51fadf in main /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/utils/etterfilter/ef_main.c:81:8
-    #5 0x7fb38d81178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x41abf8 in _start (/usr/bin/etterfilter+0x41abf8)
-
-AddressSanitizer can not describe address in more detail (wild memory access suspected).
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/net-analyzer/ettercap-9999/work/ettercap-9999/src/ec_strings.c:182:23 in strescape
-Shadow bytes around the buggy address:
-  0x0c3a7fff94c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff94d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff94e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff94f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff9500: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c3a7fff9510: fa fa fa fa fa fa fa fa fa fa fa[fa]fa fa fa fa
-  0x0c3a7fff9520: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff9530: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff9540: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c3a7fff9550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c3a7fff9560: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==3961==ABORTING
-
-Affected version:
-0.8.2
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8366
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00224-ettercap-heapoverflow-strescape
-
-Timeline:
-2017-03-21: bug discovered and reported to upstream
-2017-04-29: blog post about the issue
-2017-04-30: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/29/ettercap-etterfilter-heap-based-buffer-overflow-write/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+there are two security issues in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11
+LTS (https://tiki.org)
 
 
+Cross-Site Request Forgery (CSRF) vulnerability via IMG tag allows an
+authenticated user to gain administrator privileges if an administrator
+opens a wiki page with the IMG tag.
+
+Fix:
+https://sourceforge.net/p/tikiwiki/code/63829
+
+
+Cross-Site Request Forgery (CSRF) vulnerability via IMG tag allows an
+authenticated user to edit global permissions if an administrator opens
+a wiki page with the IMG tag. For example, an attacker could assign
+administrator privileges to every unauthenticated user of the site.
+
+Fix:
+https://sourceforge.net/p/tikiwiki/code/63872
+
+
+Both issues are fixed in Tiki 17.1, Tiki 16.3, Tiki 15.5 LTS and Tiki
+12.12 LTS.
+
+https://tiki.org/article449-Security-and-bug-fix-updates-Tiki-17-1-Tiki-16-3-15-5-and-Tiki-12-12-released
+
+
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
