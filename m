@@ -1,21 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/10
-Message-ID: <CAHmME9pFsfuGgvY6pkAZPoJYXUzabqxiWbo54Qo7LufhJB-J1w@mail.gmail.com>
-Date: Fri, 23 Jun 2017 22:53:56 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: dhcpcd-discuss@...ples.name, Roy Marples <roy@...ples.name>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Remotely exploitable crash in dhcpcd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/16
+Message-ID: <CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>
+Date: Fri, 29 Sep 2017 01:03:31 +0200
+From: Guido Vranken <guidovranken@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
 Content-Type: text/plain; charset=utf-8
 
-Hi Roy,
+I found a buffer overflow in one of the projects within 30 minutes,
+and there are probably many more issues to be found (as in virtually
+any large, unaudited project). What makes this project special
+compared to other bug bounties for C libraries (such as the regular
+Internet Big Bounty programs) is that they require a full, reliable
+exploit.
 
-I found that by sending the same exact DHCP response to two different
-DHCP requests on different interfaces, I was able to segfault dhcpcd.
-The attached patch fixes the problem, though you might want to
-investigate a bit further precisely why this is necessary.
+If they would be willing to be lenient in their qualification of what
+constitutes a working exploit, such as exploitation of a binary
+without advanced anti-exploit protections such ASLR, I might bother,
+otherwise I won't. Enhancing open source projects is a honourable
+pursuit indeed and I've done it many times for free, but if I'm going
+to hack for money I might as well choose something that is easier or
+more profitable or both at the same time. You can fetch $500 for any
+old XSS on a web page or a buffer overflow in the clusterfucks that
+are the PHP and Python code
+(https://hackerone.com/directory?query=ibb%3Ayes&sort=published_at%3Adescending&page=1
+-- see the sheer number of submissions to both those programs).
 
-Regards,
-Jason
+Right after the program was announced, I sent an email to the IBB
+asking if exploitation of a non-ASLR configuration of the binary at
+hand would be sufficient. Unfortunately, I have not yet received a
+reply. The reason they want full exploits is, I think, to cut the
+chaff from the grain and solicit bugs that at least have real
+potential. A nice middle ground would be paying a percentage (25%?) of
+their current bounty offering for raw submissions of bugs that are
+generally assumed to constitute a security risk. It will attract a
+larger body of researchers for sure, and in the end this will be more
+beneficial to the overall security of the internet than under their
+current approach.
 
-View attachment "dhcpcd-7.0.0-crash-fix.patch" of type "text/x-patch" (431 bytes)
+A Heartbleed-like vulnerability in an image parsing or conversion
+library, where an attacker can send a crafted image file resulting in
+exposure of unrelated memory, would not be eligible under this
+program. Case in point: see Chris Evans' Yahoobleed:
+https://scarybeastsecurity.blogspot.nl/2017/05/bleed-more-powerful-dumping-yahoo.html
+
+All in all I think they should reconsider their current program
+stipulations, if only to increase their own return-on-investment
+(making the internet safer with a limited funding).
+
+Guido
