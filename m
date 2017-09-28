@@ -1,34 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/17
-Message-ID: <nycvar.YSQ.7.76.1710122333130.10613@wniryva>
-Date: Thu, 12 Oct 2017 23:35:35 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-12188 Kernel: KVM: MMU potential stack buffer overrun during page walks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/10
+Message-ID: <20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>
+Date: Thu, 28 Sep 2017 21:25:41 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: The Internet Bug Bounty: Data Processing (hackerone.com)
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+Since these open-source software projects have been actively fixing security
+issues and some of the issues has been announced in oss-security mailing list I
+am writing about this hackerone project here as well:
 
-Linux kernel built with the KVM virtualisation support(CONFIG_KVM), with 
-nested virtualisation(nVMX) feature enabled(nested=1), is vulnerable to a 
-stack buffer overflow issue. It could occur while traversing guest page table 
-entries to resolve guest virtual address(gva).
+https://hackerone.com/ibb-data
 
-A L1 guest could use this flaw to crash the host kernel resulting in DoS. OR 
-potentially execute arbitrary code on the host to gain access to the host 
-system.
+Policy:
 
-Upstream patch:
----------------
-   -> https://www.spinics.net/lists/kvm/msg156651.html
+The Internet Bug Bounty is offering rewards to security researchers who resolve
+critical vulnerabilities in core infrastructure data processing libraries.
+Critical vulnerabilities in these libraries have widespread consequences to the
+internet community.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1500380
+Bounty Qualification:
 
-'CVE-2017-12188' assigned by Red Hat Inc.
+- Only Critical vulnerabilities that demonstrate unambiguous remote code
+  execution are eligible under this program. Findings with alternative impact
+  or severity are not in scope at this time.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+- Your Proof of Concept MUST demonstrate that remote exploitation can be
+  easily, actively, and reliably achieved.
+
+- Only versions currently supported by the upstream project are eligible.
+  Please verify your issue is present in a current release before submission.
+
+- The individual library maintainers have final decision on which issues
+  constitute security vulnerabilities. The Panel will respect their decision,
+  and we ask that you do as well. It's important to keep in mind that not all
+  submissions will qualify for a bounty, and that the decision to award a
+  bounty is entirely at the discretion of the Panel.
+
+In scope projects currently:
+
+https://github.com/the-tcpdump-group/libpcap
+https://github.com/ImageMagick/ImageMagick
+https://github.com/glennrp/libpng
+http://hg.code.sf.net/p/graphicsmagick/code/
+https://github.com/curl/curl
+https://github.com/the-tcpdump-group/tcpdump
+
+I hope to motivate people with this email. I understand that oss-security
+mailing list is not meant to announce these in regular basis, but I consider
+this hackerone project highly relevant for the researchers reading this list.
+
+Also if you have spare time please help projects like Google's oss-fuzz
+https://github.com/google/oss-fuzz to get us more safer internet for everyone.
+
+-- 
+Henri Salo
