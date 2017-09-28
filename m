@@ -1,4 +1,9 @@
-Received: (qmail 15428 invoked by uid 550); 14 Feb 2023 18:09:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2419" "Thursday" "28" "September" "2017" "20:24:58" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>" "73" "[oss-security] Stored XSS vulnerability in eGroupware Community Edition <= 16.1.20170703" nil nil nil "9" "2017092818:24:58" "[oss-security] Stored XSS vulnerability in eGroupware Community Edition <= 16.1.20170703" (number mark "U       chbi@chbi.eu Sep 28   73/2419  " thread-indent "\"[oss-security] Stored XSS vulnerability in eGroupware Community Edition <= 16.1.20170703\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20293 invoked by uid 550); 28 Sep 2017 18:26:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,99 +12,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5412 invoked from network); 14 Feb 2023 18:05:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:subject:cc:to:from:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a/30totliODEH86d4s7yTqh1xVH9NfBjaZa+zjnDO/c=;
-        b=SiRsmbcm0rYggSVTzIZOA8sZ7SWL0XqG/PuADk+YJzz8eZPcJp3akUS+61rz40V4Cy
-         IDA6vopYw9W2GaG2RtI6Su/EggkclvrUprEFshmZKKjs0AKHpfLQse+kwaoxcvlWO3IB
-         gK7tNCniHVunkHh5CBqqrxEEuVjsVV9fKzB6wgO2bWF9BY/gx3ORaGf2gUBxha8a8Txm
-         Asp2cCcJd3eMPfTH7b0efJEKiuqFV7KRtKKELX4Nu2C4q5lT7Te8pU7IxZT6pNSGj/lh
-         Vhf/NbLLB8xNQKSj1LjMAT2s9Ltb88ud0zM3yp9xxjdy3gSta2Jyfbwyo2ZjA+FhAmip
-         vfUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a/30totliODEH86d4s7yTqh1xVH9NfBjaZa+zjnDO/c=;
-        b=y9+RBbKyoGSED3le12UHVzIRIYLZdc9XK/vIyCZITkAtd4+xpDb3uuoE6GV2D9PQnY
-         uoKugBk/QTXHoWiP/UXd/jZGbEblg+gIJabiZPXkkMALwr4wA1a+cuUPkbNskSxQJAxS
-         h7BTo8i51A4a3nTxaFL5Dm5gwlK7MP0Ejpw8gFCSm5f59hGpI8fixNisNPNqxPzMEiFP
-         7VcoKoflccJXgohwS/nDTINo/oFYynfHEadYzgxJN3xJ/JoinSUSqhss+WP+och2hRkG
-         Wnrmj9S68aI3vBVzG8ziNqeBJIsVhZPMvLZj7781gDYPa/J4gPfeuyTG0pCADubHSyT8
-         253g==
-X-Gm-Message-State: AO0yUKXl5NUsMV6bv19zAqj0rJxbcZZ51BUMH3m1j+aSckV+jdtXQvDd
-	KC6OhLwEZSr9ZM/1uHvsLMo=
-X-Google-Smtp-Source: AK7set+E8VQg9Jb85Rikix0JLva+MYuPsfcgprmCG3JJ7RGuW/bliCsOwZBZugn2JnelslqQvYms0g==
-X-Received: by 2002:a17:902:d48c:b0:199:16c6:8a24 with SMTP id c12-20020a170902d48c00b0019916c68a24mr3907362plg.61.1676397903975;
-        Tue, 14 Feb 2023 10:05:03 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
-    git-packagers@googlegroups.com,
-    oss-security@lists.openwall.com,
-    git-security@googlegroups.com
-Date: Tue, 14 Feb 2023 10:05:03 -0800
-Message-ID: <xmqqr0us5dio.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+Received: (qmail 12282 invoked from network); 28 Sep 2017 18:25:18 -0000
+To: oss-security@lists.openwall.com
+From: chbi@chbi.eu
+Message-ID: <850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>
+Date: Thu, 28 Sep 2017 20:24:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] [Announce] Git 2.39.2 and friends
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="iHDGAtrP98HujLuaIx0sepilW896JpCXg"
+Subject: [oss-security] Stored XSS vulnerability in eGroupware Community Edition <=
+ 16.1.20170703
 
-A maintenance release Git v2.39.2, together with releases for older
-maintenance tracks v2.38.4, v2.37.6, v2.36.5, v2.35.7, v2.34.7,
-v2.33.7, v2.32.6, v2.31.7, and v2.30.8, are now available at the
-usual places.
+--iHDGAtrP98HujLuaIx0sepilW896JpCXg
+Content-Type: multipart/mixed; boundary="tLG3T055vaHnw3fvwkkr3UFjNAd7PsiSk";
+ protected-headers="v1"
+From: chbi@chbi.eu
+To: oss-security@lists.openwall.com
+Message-ID: <850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>
+Subject: Stored XSS vulnerability in eGroupware Community Edition <=
+ 16.1.20170703
 
-These maintenance releases are to address two security issues
-identified as CVE-2023-22490 and CVE-2023-23946.  They both affect
-ranges of existing versions and users are strongly encouraged to
-upgrade.
+--tLG3T055vaHnw3fvwkkr3UFjNAd7PsiSk
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-The tarballs are found at:
+Hi,
 
-    https://www.kernel.org/pub/software/scm/git/
+there is a security issue in eGroupware Community Edition <=3D
+16.1.20170703 (https://github.com/EGroupware/egroupware)
 
-The following public repositories all have a copy of the 'v2.39.2'
-tag, as well as the tags for older maintenance tracks listed above.
 
-  url = https://git.kernel.org/pub/scm/git/git
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
+Stored XSS vulnerability allows an unauthenticated remote attacker to
+inject JavaScript via Browser User-Agent which is triggered by the
+application administrator.
 
-The addressed issues are:
+Fix:
+https://github.com/EGroupware/egroupware/commit/0ececf8c78f1c3f9ba15465f53a=
+682dd7d89529f
 
- * CVE-2023-22490:
 
-   Using a specially-crafted repository, Git can be tricked into using
-   its local clone optimization even when using a non-local transport.
-   Though Git will abort local clones whose source $GIT_DIR/objects
-   directory contains symbolic links (c.f., CVE-2022-39253), the objects
-   directory itself may still be a symbolic link.
+The issue is fixed in eGroupware Community Edition 16.1.20170922.
 
-   These two may be combined to include arbitrary files based on known
-   paths on the victim's filesystem within the malicious repository's
-   working copy, allowing for data exfiltration in a similar manner as
-   CVE-2022-39253.
 
- * CVE-2023-23946:
+Until now vendor has not marked the new version as security update and
+also not mentioned the security issue.
+(https://github.com/EGroupware/egroupware/releases/tag/16.1.20170922)
 
-   By feeding a crafted input to "git apply", a path outside the
-   working tree can be overwritten as the user who is running "git
-   apply".
 
-Credit for finding CVE-2023-22490 goes to yvvdwf, and the fix was
-developed by Taylor Blau, with additional help from others on the
-Git security mailing list.
+I've requested a CVE ID (MITRE) but I have not received any yet.
 
-Credit for finding CVE-2023-23946 goes to Joern Schneeweisz, and the
-fix was developed by Patrick Steinhardt.
 
-Johannes Schindelin helped greatly in packaging the whole thing and
-proofreading the result.
+--=20
+chbi
+https://chbi.eu
 
-Thanks.
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+--tLG3T055vaHnw3fvwkkr3UFjNAd7PsiSk--
+
+--iHDGAtrP98HujLuaIx0sepilW896JpCXg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlnNPnoACgkQunuT+ZA3
+rn6V1A/8CKcXgFsuHBFYHlfc6/MMnn+4MI/nQ9R8jXSy7Z/CsqIFw/NP6iK1epxz
+L3IeS6tId62+gFH9rCFcKS4ycdiecSWifYl5APY9OfMRL/jyOfuiYJABggLVYgtc
+PlRLOs0zEk4WySbdZLf9ExzB/+lKJjTUrCDlnt/xTcZixNW+gSN4e/1oXAzxyykG
+gYTAfMREs08u183t0ceUlejf1nrbbecJwwAgL5c9+XzQmmsVt6+HomnoiAL66PtQ
+JQrjKAag+Mzk4X1nUoXu6QpThYd0iM5eUHD+vIYRtt3tTGK61fLv0Q4AZnPrkO7k
+vmf4SPdzyusRtLwH7A58Z7lXy7qcJrfi1tX4dq2H/5QmwZb+wyuQVYnFA6atKokB
+LX5Co/s4xOjqgU/kBV4d4N2rupjTO3J1/zqMm0pFCaUtrV9jdjFQO7Lv9C/nrS85
+HjkCyidABuz93i20IyTtzSlUKO0D+vVg92jxhg5KFHhle7jX5CEeF0zqILW194D1
+Yc97olOZ2YMxCpMSgQWiqLmckhnQ9x4Fb9+ovJI73PpjBpQvCIM1eBaiGs76qiRH
+OveEH+3kBKUid7khDlqX4TPHveTfSBZHmo/B+z+VOgwHdOTB6+GxqcKfvLf/1tdZ
+cgR9ThYtP/jC8HAoZ5Y5E5Nua4aYa1VFDgEwWgqu0XuOFxkeoRo=
+=Vb8c
+-----END PGP SIGNATURE-----
+
+--iHDGAtrP98HujLuaIx0sepilW896JpCXg--
