@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/6
-Message-ID: <20171107181904.eu7gdgk43bdacvot@perpetual.pseudorandom.co.uk>
-Date: Tue, 7 Nov 2017 18:19:04 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/11
+Message-ID: <83acfdf4-1398-8017-fc91-ab65e855d743@chbi.eu>
+Date: Thu, 28 Sep 2017 20:17:26 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Subject: Re: Net::Ping::External command injections
+Subject: Stored XSS vulnerability in Tine 2.0 Community Edition <= 2017.08.3
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 07 Nov 2017 at 17:51:27 +0100, Matthias Weckbecker wrote:
-> Net::Ping::External [0] is prone to command injection vulnerabilities.
-> 
-> The issues are roughly 10 (!) years old [1], but the code is still being
-> shipped these days (e.g. in ubuntu artful and debian stretch [2]).
+Hi,
 
-I've reported this to the Debian bug tracking system,
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=881097
+there are security issues in Tine 2.0 Community Edition <= 2017.08.3
+(https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/)
 
-In Ubuntu, libnet-ping-external is in the unsupported 'universe' archive
-area, making it unlikely to be fixed there regardless of its status in
-Debian.
 
-> Or drop this pkg. altogether?
+Stored XSS vulnerability via IMG tag at "History" of Profile, Calendar,
+Tasks and CRM allows an authenticated user to inject JavaScript which is
+triggered by the application administrator and other users.
 
-For what it's worth, Debian's archive maintenance software says nothing
-in unstable, stable or oldstable depends on this package, so there is no
-particular barrier to removing it (and bugs in it hopefully only affect
-locally-installed scripts, not anything else in Debian).
+Stored XSS vulnerability via IMG tag at "Leadname" of CRM allows an
+authenticated user to inject JavaScript which is triggered by the
+application administrator and other users.
 
-    smcv
+Stored XSS vulnerability via IMG tag at "Filename" of Filemanager allows
+an authenticated user to inject JavaScript which is triggered by the
+application administrator and other users.
+
+
+Fix:
+https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/commit/bc8a6fbd3128cf5ef27d808f6c6ba869fdc2262b
+https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/commit/146c5aaafd826c1c8990333c393bff6f64c90786
+https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/commit/24e39e1e930097b8793a03b8864d3c484ede546b
+
+
+The issues are fixed in Tine Community Edition 2017.08.4.
+
+
+Until now vendor has not marked the new version as security update and
+also not mentioned the security issues.
+(https://github.com/tine20/Tine-2.0-Open-Source-Groupware-and-CRM/releases/tag/2017.08.4)
+
+
+I've requested CVE IDs (MITRE), but I have not received any yet.
+
+
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
