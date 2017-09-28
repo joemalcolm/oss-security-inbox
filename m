@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["997" "Wednesday" "10" "October" "2018" "10:10:58" "+0100" "Eddie Chapman" "eddie@ehuk.net" "<e9f76ebb-869e-69c5-7623-bae8553636ab@ehuk.net>" "18" "Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" "^Date:" nil nil "10" "2018101009:10:58" "[oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" (number mark "        eddie@ehuk.n Oct 10   18/997   " thread-indent "\"Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)\"\n") "<CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>" ("<CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2025" "Thursday" "28" "September" "2017" "21:25:41" "+0300" "Henri Salo" "henri@nerv.fi" "<20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>" "49" "[oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" "^Date:" nil nil "9" "2017092818:25:41" "[oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" (number mark "        henri@nerv.f Sep 28   49/2025  " thread-indent "\"[oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12100 invoked by uid 550); 10 Oct 2018 12:01:19 -0000
+Received: (qmail 13720 invoked by uid 550); 28 Sep 2017 18:26:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26296 invoked from network); 10 Oct 2018 09:11:10 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 schatzi.steelbluetech.co.uk 7746CBFDD3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
-	t=1539162658; bh=QbpKMb2x4gjNTujC2fhTgoaO9J0PgrdbhaEddeDf9Xk=;
-	h=Subject:To:References:From:Reply-To:Date:In-Reply-To:From;
-	b=p1JtF6vp1F8SGcXc7WBAQoygGDLSnnSthHJdst1gWsQ99+bfkUE8BuWwXSnqXWqXW
-	 QmaiiB4KpqOUyv43qnUds8UIw2p7jOBOI5j7RVHf6EdV4bNprxv4pmI/cAayKpyIFB
-	 Xd5FwvHDCCeUhzd+fg4K1Qpu52F0Mj8P0U+ovYnE=
-References: <CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>
-Message-ID: <e9f76ebb-869e-69c5-7623-bae8553636ab@ehuk.net>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+Received: (qmail 13686 invoked from network); 28 Sep 2017 18:26:04 -0000
+X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
+Message-ID: <20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>
 MIME-Version: 1.0
-In-Reply-To: <CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-Date: Wed, 10 Oct 2018 10:10:58 +0100
-From: Eddie Chapman <eddie@ehuk.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+Date: Thu, 28 Sep 2017 21:25:41 +0300
+From: Henri Salo <henri@nerv.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ghostscript: bypassing executeonly to escape
- -dSAFER sandbox (CVE-2018-17961)
-To: oss-security@lists.openwall.com, Tavis Ormandy <taviso@google.com>
+Subject: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)
+To: oss-security@lists.openwall.com
 
-On 09/10/18 14:58, Tavis Ormandy wrote:
->  Because nautilus will automatically invoke
-> evince-thumbnailer without any user-interaction, just browsing a website 
-> is enough to trigger the vulnerability in some common configurations.
+Since these open-source software projects have been actively fixing security
+issues and some of the issues has been announced in oss-security mailing list I
+am writing about this hackerone project here as well:
 
-While the vulnerability in ghostscript itself is clear in this thread, 
-does anyone have any more info on the above aspect of this? i.e is the 
-above scenario (inadvertently running postscript, perhaps contained in 
-an image, through ghostscript by just browsing a malicious site) limited 
-to just nautilus in gnome environments? Do other browsers/environments 
-handle this better or do they do similar? It seems that, strictly 
-speaking, the "critical" nature of this vulnerability hinges on the 
-behaviour of the browser/desktop environment. Otherwise the scope is 
-limited to an individual manually downloading a postscript file and 
-opening it outside of the browser.
+https://hackerone.com/ibb-data
 
-Apologies if I'm missing anything obvious or if this has been covered 
-elsewhere online.
+Policy:
+
+The Internet Bug Bounty is offering rewards to security researchers who resolve
+critical vulnerabilities in core infrastructure data processing libraries.
+Critical vulnerabilities in these libraries have widespread consequences to the
+internet community.
+
+Bounty Qualification:
+
+- Only Critical vulnerabilities that demonstrate unambiguous remote code
+  execution are eligible under this program. Findings with alternative impact
+  or severity are not in scope at this time.
+
+- Your Proof of Concept MUST demonstrate that remote exploitation can be
+  easily, actively, and reliably achieved.
+
+- Only versions currently supported by the upstream project are eligible.
+  Please verify your issue is present in a current release before submission.
+
+- The individual library maintainers have final decision on which issues
+  constitute security vulnerabilities. The Panel will respect their decision,
+  and we ask that you do as well. It's important to keep in mind that not all
+  submissions will qualify for a bounty, and that the decision to award a
+  bounty is entirely at the discretion of the Panel.
+
+In scope projects currently:
+
+https://github.com/the-tcpdump-group/libpcap
+https://github.com/ImageMagick/ImageMagick
+https://github.com/glennrp/libpng
+http://hg.code.sf.net/p/graphicsmagick/code/
+https://github.com/curl/curl
+https://github.com/the-tcpdump-group/tcpdump
+
+I hope to motivate people with this email. I understand that oss-security
+mailing list is not meant to announce these in regular basis, but I consider
+this hackerone project highly relevant for the researchers reading this list.
+
+Also if you have spare time please help projects like Google's oss-fuzz
+https://github.com/google/oss-fuzz to get us more safer internet for everyone.
+
+-- 
+Henri Salo
