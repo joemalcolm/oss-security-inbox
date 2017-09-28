@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/4
-Message-ID: <20170228162034.qlety2rdz2skpomr@eldamar.local>
-Date: Tue, 28 Feb 2017 17:20:34 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Linux: irda: Fix lockdep annotations in hashbin_delete() (CVE-2017-6348)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/12
+Message-ID: <850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>
+Date: Thu, 28 Sep 2017 20:24:58 +0200
+From: chbi@...i.eu
+To: oss-security@...ts.openwall.com
+Subject: Stored XSS vulnerability in eGroupware Community Edition <= 16.1.20170703
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-CVE-2017-6348 was assigned by MITRE to the following (via
-https://cveform.mitre.org/):
+there is a security issue in eGroupware Community Edition <=
+16.1.20170703 (https://github.com/EGroupware/egroupware)
 
-https://git.kernel.org/linus/4c03b862b12f980456f9de92db6d508a4999b788
 
-> irda: Fix lockdep annotations in hashbin_delete().
-> 
-> A nested lock depth was added to the hasbin_delete() code but it
-> doesn't actually work some well and results in tons of lockdep splats.
-> 
-> Fix the code instead to properly drop the lock around the operation
-> and just keep peeking the head of the hashbin queue.
+Stored XSS vulnerability allows an unauthenticated remote attacker to
+inject JavaScript via Browser User-Agent which is triggered by the
+application administrator.
 
-Quoting a note from Ben Hutchins: "This actually changes locking, not just
-lockdep annotations. So I think it fixes a potential deadlock."
+Fix:
+https://github.com/EGroupware/egroupware/commit/0ececf8c78f1c3f9ba15465f53a682dd7d89529f
 
-The fix was as well backported to 4.9.13.
 
-Regards,
-Salvatore
+The issue is fixed in eGroupware Community Edition 16.1.20170922.
+
+
+Until now vendor has not marked the new version as security update and
+also not mentioned the security issue.
+(https://github.com/EGroupware/egroupware/releases/tag/16.1.20170922)
+
+
+I've requested a CVE ID (MITRE) but I have not received any yet.
+
+
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
