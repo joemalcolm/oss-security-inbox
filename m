@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/6
-Message-ID: <1497367129.2956.2.camel@redhat.com>
-Date: Tue, 13 Jun 2017 17:18:49 +0200
-From: Adam Maris <amaris@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/14
+Message-ID: <60f799fd-829c-98e4-85d0-c740b74175fa@chbi.eu>
+Date: Thu, 28 Sep 2017 21:40:09 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a data race in ALSA timer
+Subject: Re: CSRF vulnerability in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11 LTS
 Content-Type: text/plain; charset=utf-8
 
 
-> > https://github.com/torvalds/linux/commit/d11662f4f798b50d8c8743f43384
-2c3e40fe3378
-> > https://github.com/torvalds/linux/commit/ba3021b2c79b2fa9114f92790a99
-deb27a65b728
-> 
-> 
+Sorry I've forgot to write:
 
-For reference, CVE-2017-1000380 was assigned for this issue.
 
-Regards,
+I've requested two CVE IDs (MITRE) but I have not received any yet.
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
+
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
