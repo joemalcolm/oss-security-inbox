@@ -1,30 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/9
-Message-ID: <CAA=iMULG2UP6XV7voESqSE3gVOxvb4z+uYL_GoqLdETyVFpWcg@mail.gmail.com>
-Date: Sat, 11 Feb 2017 11:50:40 +0200
-From: Eyal Itkin <eyal.itkin@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE publication request - CVE 2016-8636
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/11
+Message-ID: <CAEwge-FqzrT+deCkNkM-EQZuKfg-XuqY4cGjFiqxoKBVduY1Zw@mail.gmail.com>
+Date: Fri, 29 Sep 2017 10:33:38 -0700
+From: Anthony Baker <abaker@...che.org>
+To: user@...de.apache.org, dev@...de.apache.org, announce@...che.org,  security@...che.org, oss-security@...ts.openwall.com
+Cc: Jared Stewart <jstewart@...otal.io>
+Subject: [SECURITY] CVE-2017-9794 Apache Geode gfsh query vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+CVE-2017-9794 Apache Geode gfsh query vulnerability
 
-The security patch was deployed 3 days ago in the official git repository
-of linux, after the fix was reviewed and approved by me.
-Therefore, CVE 2016-8636 can now be publicly disclosed.
+Severity: Low
+CVSS Base Score 3.5 (CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:N)
 
-Commit id of the mainline merge:
-   647bf3d8a8e5777319da92af672289b2a6c4dc66
+Vendor: The Apache Software Foundation
 
-https://github.com/torvalds/linux/commit/647bf3d8a8e5777319da92af672289b2a6c4dc66
+Versions Affected:
+Apache Geode 1.0.0 through 1.2.0
 
-Public disclosure details in my security blog:
+Description:
+When a cluster is operating in secure mode, a user with read
+privileges for specific data  regions can use the gfsh command line
+utility to execute queries.  The query results may contain data from
+another user’s concurrently executing gfsh query, potentially
+revealing data that the user is not authorized to view.
 
-https://eyalitkin.wordpress.com/2017/02/11/cve-publication-cve-2016-8636/
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.2.1 or later.
 
-P.S. The CVE id was received from the security team of ubuntu, which
-directed me to publicly disclose it with the oss-security mailing list.
+Credit:
+This issue was reported responsibly to the Apache Geode PMC by Jared
+Stewart from Pivotal.
 
-Thanks for your help,
-Eyal Itkin.
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-3217
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
 
+---
+The Geode PMC
