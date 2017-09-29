@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/21/5
-Message-ID: <20170221204235.GA26169@jasmine>
-Date: Tue, 21 Feb 2017 15:42:35 -0500
-From: Leo Famulari <leo@...ulari.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/5
+Message-ID: <20170929151218.0cfb25c2@pc1>
+Date: Fri, 29 Sep 2017 15:12:18 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Multiple vulnerabilities in gdk-pixbuf
+Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 21, 2017 at 05:20:11PM +0200, Ariel Zelivanski wrote:
-> Hello,
-> 
-> I just reported several vulnerabilities in gdk-pixbuf. I am adding the
-> relevant details but you can also refer to the bug reports in the links. If
-> suitable please assign CVEs.
+On Thu, 28 Sep 2017 23:13:22 -0700
+Reed Loden <reed@...dloden.com> wrote:
 
-As announced previously [0], MITRE is no longer assigning CVEs based on
-messages to this list. Will you request the CVE IDs via the new web
-form? [1]
+> Separately, we're happy to announce that libav (
+> https://git.libav.org/?p=libav.git;a=summary) was added to the scope
+> earlier today.
 
-[0]
-http://seclists.org/oss-sec/2017/q1/351
+I'm surprised by this. When I saw the ibb-data bounty I immediately
+wondered whether ffmpeg should be in there.
 
-[1]
-https://cveform.mitre.org/
+Is there a reason libav is in and ffmpeg is not? Were there concerns by
+the ffmpeg devs? (I'm not taking a side in the libav/ffmpeg wars, but
+my impression is that many distros who had used libav for some time
+have switched back and ffmpeg is clearly the more widely used of the
+forks.)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Given that imagemagick+graphicsmagick are already in there I assume
+there's no general problem for IBB to support competing forks.
+
+At the very least I'd recommend that you make sure all ibb-reports for
+libav get tested against ffmpeg.
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
