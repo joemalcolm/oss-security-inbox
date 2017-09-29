@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3501" "Wednesday" "5" "July" "2017" "16:37:04" "+0100" "John Haxby" "john.haxby@oracle.com" "<efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>" "87" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070515:37:04" "[oss-security] systemd fails to parse user that should run service" (number mark "        john.haxby@o Jul  5   87/3501  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<1499267174.28229.1.camel@gmail.com>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<201707051202.v65C2NDB005864@room101.nl.oracle.com>" "<20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>" "<1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>" "<1499267174.28229.1.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3544" "Friday" "29" "September" "2017" "15:09:22" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170929150922.15b800f8@pc1>" "80" "[oss-security] clamav: Out of bounds read and segfault in xar parser" "^Date:" nil nil "9" "2017092913:09:22" "[oss-security] clamav: Out of bounds read and segfault in xar parser" (number mark "        hanno@hboeck Sep 29   80/3544  " thread-indent "\"[oss-security] clamav: Out of bounds read and segfault in xar parser\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 16059 invoked by uid 550); 5 Jul 2017 15:37:20 -0000
+Received: (qmail 10015 invoked by uid 550); 29 Sep 2017 13:09:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,113 +11,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16041 invoked from network); 5 Jul 2017 15:37:19 -0000
-References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
- <20170705085034.GA2638@pali>
- <201707051202.v65C2NDB005864@room101.nl.oracle.com>
- <20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>
- <1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>
- <1499267174.28229.1.camel@gmail.com>
-Message-ID: <efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+Received: (qmail 9978 invoked from network); 29 Sep 2017 13:09:38 -0000
+Message-ID: <20170929150922.15b800f8@pc1>
+X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <1499267174.28229.1.camel@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Source-IP: userv0022.oracle.com [156.151.31.74]
-Date: Wed, 5 Jul 2017 16:37:04 +0100
-From: John Haxby <john.haxby@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 29 Sep 2017 15:09:22 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run
- service
+Subject: [oss-security] clamav: Out of bounds read and segfault in xar parser
 To: oss-security@lists.openwall.com
 
-On 05/07/17 16:06, Daniel Micay wrote:
-> On Wed, 2017-07-05 at 15:50 +0100, John Haxby wrote:
->> On 05/07/17 14:53, Simon McVittie wrote:
->>> On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@oracle.com wrote:
->>>>> 2) If user name specified in systemd unit file is syntactically
->>>>> correct
->>>>> (according to systemd check) but user name does not exist then
->>>>> systemd
->>>>> refuse to start that unit.
->>>>
->>>> Should systemd really valid usernames?  I would think that you
->>>> would 
->>>> either use getpwnam(username) and if that fails you may then parse
->>>> it as a 
->>>> numeric value.  If "0day" isn't a valid username according to
->>>> getpwnam(), 
->>>> when converting it to a numeric uid should *also* fail because
->>>> "0day" 
->>>> isn't a properly numeric value.
->>>
->>> It *does* fail. The problem is in the handling of that failure.
->>> systemd
->>> interprets that failure as "this line is nonsense, so behave as
->>> though the
->>> line didn't exist" rather than "this line can be positively
->>> identified as
->>> an attempt to name a nonexistent or unacceptable user, so fail to
->>> load
->>> the unit". So User=7up does the same thing as User=0day - it doesn't
->>> run as uid 7, which is 'lp' on my Debian system.
->>
->>
->> And therein lies the problem.  "0day" and "7up" are valid user names
->> according to Posix[1], they may or may not exist, but they are valid.
->> You may think Posix is wrong to allow an initial digit, but that isn't
->> the issue.  The problem is that systemd treats an "invalid" username
->> as
->> either an integer or not specified and in either case this results in
->> a
->> program running as the wrong user, probably as root.
->>
->> Having systemd balk at what Posix considers to be a valid username is
->> a
->> bug that systemd is free to say "this is stupid, we're not allowing
->> that".   If, as appears to be the case, systemd says "that username is
->> stupid, we're going to interpret it differently" then that's when we
->> need a CVE because, to my mind on this hot and sunny say, that's
->> systemd
->> apparently doing something for security that it is not.
->>
->> jch
->>
->>
->> [1]
->> http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.htm
->> l#tag_03_431
-> 
-> https://github.com/shadow-maint/shadow/blob/master/libmisc/chkname.c#L49
-> 
-> POSIX also says "." is a portable character, which isn't allowed by
-> shadow either. What are distributions using to provide useradd if not
-> shadow?
+Hi,
 
-Interesting.  "useradd a.b" works on Fedora so I wonder what's different
-there?
+A malformed xar file can cause an out of bounds heap read in clamav (as
+usual detectable with asan). If run against a non-asan build clamscan
+will still segfault in my tests. Found with afl.
 
-> 
-> systemd's On Error Resume Next error handling seems like the main issue.
-> If a unit has invalid values, it should reject it. It shouldn't ever be
-> ignoring a User field because it considers it invalid. It's unfortunate
-> that it enables invalid field names like Usre=validusername too, but it
-> probably does that so they can introduce new fields that can be adopted
-> by projects for their units without breaking compatibility with older
-> versions of systemd.
-> 
-> I don't think it makes much sense for programs that are only consuming
-> the password database to enforce their own checks, but they're free to
-> do silly things like that if they feel like it and it doesn't make it a
-> vulnerability. If it rejected the unit as a whole when it considers the
-> username invalid, it would only be an annoyance for people that actually
-> want to have a shadow / systemd incompatible username, not a potential
-> security gotcha.
-> 
+The bug happens in the function xar_hash_check. Despite it being
+reported more than a year ago there's still no release with the fix
+(however it's been fixed in git).
 
-I agree completely.
+I fuzzed clamav according to the instructions in this blog post:
+https://foxglovesecurity.com/2016/06/13/finding-pearls-fuzzing-clamav/
 
-jch
+Upstream fix:
+https://github.com/vrtadmin/clamav-devel/commit/d96a6b8bcc7439fa7e3876207aa=
+0a8e79c8451b6
+
+Upstream bug (not public):
+https://bugzilla.clamav.net/show_bug.cgi?id=3D11588
+
+Timeline:
+2016-06-15 reported bug
+2016-06-21 fix in git
+2017-09-29 public disclosure due to lack of upstream action
+
+base64-encoded poc (didn't want to send it as an attachment due to
+fear of crashing people's mail scanners. On the other hand I'm sure
+there are mail scanners that'll try to decode the base64...):
+eGFyIQAcMDAAAAAAAAABMAAAAAAAMDAwMDAwMHjafFPLcpwwELzvV1DcZT14LqWVKxdX7nEuuQ1i
+WFThVaC11/76CAHecrbsE61Wq6dHjOTjtWuDF5xmM/SnkD+wMMBeD5Xpz6fw9/MTycNHdZBXmNQh
+kHbQ7hMwPSFYd4Iw06ESMCcwMMKyMM4LnhUwMPpZ4g81qP/Oly6Y7VuLpzBugIfLTiCHup7RKjDp
+hjw7m/fFXDAPFgu6e/gwMDAMTOVibzYVWPAokC32Z9soMEm6wZXf/MXnMFut+FbKUfs97HlhHFuj
+fVP0Ss7vZgzpJoVJN+YFK/J/j79+/nDhMAiqMDAwMDCvdTCOSTAwMBcsyuAwMDAwhJcwMDDeGe1Z
+rnYCbb+sUNW1yDAC2X0jMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA=3D
+
+
+Meta-level comment:
+It seems to me clamav development has mostly stalled. Detection rates
+are very low and I'm considering to stop using it for mail filtering.
+(also there's of course the whole AV debate, however I never saw
+clamav as a security tool, more as something like a spam filter that
+prevents crap in my inbox. Still of course it needs to have secure
+parsers.)
+
+
+
+ASAN error:
+
+=3D=3D17489=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address 0=
+x602000504790 at pc 0x7f83622125d4 bp 0x7ffcee86b840 sp 0x7ffcee86b830
+READ of size 20 at 0x602000504790 thread T0
+    #0 0x7f83622125d3 in xar_hash_check /var/tmp/portage/app-antivirus/clam=
+av-0.99.2/work/clamav-0.99.2/libclamav/xar.c:399
+    #1 0x7f83622125d3 in cli_scanxar /var/tmp/portage/app-antivirus/clamav-=
+0.99.2/work/clamav-0.99.2/libclamav/xar.c:818
+    #2 0x7f8362053706 in magic_scandesc /var/tmp/portage/app-antivirus/clam=
+av-0.99.2/work/clamav-0.99.2/libclamav/scanners.c:3162
+    #3 0x7f8362057376 in cli_base_scandesc /var/tmp/portage/app-antivirus/c=
+lamav-0.99.2/work/clamav-0.99.2/libclamav/scanners.c:3351
+    #4 0x7f8362058a65 in scan_common /var/tmp/portage/app-antivirus/clamav-=
+0.99.2/work/clamav-0.99.2/libclamav/scanners.c:3590
+    #5 0x7f8362058d1a in scan_common /var/tmp/portage/app-antivirus/clamav-=
+0.99.2/work/clamav-0.99.2/libclamav/scanners.c:3534
+    #6 0x7f8362058d1a in cl_scandesc_callback /var/tmp/portage/app-antiviru=
+s/clamav-0.99.2/work/clamav-0.99.2/libclamav/scanners.c:3706
+    #7 0x40e41f in scanfile /var/tmp/portage/app-antivirus/clamav-0.99.2/wo=
+rk/clamav-0.99.2/clamscan/manager.c:392
+    #8 0x4126a3 in scanmanager /var/tmp/portage/app-antivirus/clamav-0.99.2=
+/work/clamav-0.99.2/clamscan/manager.c:1204
+    #9 0x403971 in main /var/tmp/portage/app-antivirus/clamav-0.99.2/work/c=
+lamav-0.99.2/clamscan/clamscan.c:161
+    #10 0x7f83616f478f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+    #11 0x403fb8 in _start (/usr/bin/clamscan+0x403fb8)
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
