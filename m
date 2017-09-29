@@ -1,4 +1,9 @@
-Received: (qmail 22111 invoked by uid 550); 16 Mar 2023 16:25:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1951" "Friday" "29" "September" "2017" "19:24:22" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<577aa455-9662-3d17-5558-1d452a286e01@chbi.eu>" "54" "Re: [oss-security] Stored XSS vulnerability in eGroupware Community Edition <= 16.1.20170703" "^Date:" nil nil "9" "2017092917:24:22" "[oss-security] Stored XSS vulnerability in eGroupware Community Edition <= 16.1.20170703" (number mark "U       chbi@chbi.eu Sep 29   54/1951  " thread-indent "\"Re: [oss-security] Stored XSS vulnerability in eGroupware Community Edition <= 16.1.20170703\"\n") "<850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>" ("<850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20032 invoked by uid 550); 29 Sep 2017 17:50:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,54 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28252 invoked from network); 16 Mar 2023 15:57:44 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.census 493A93783D77
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=census-labs.com;
-	s=D8BFA4EC-CF6E-11EB-AFC5-2C27CB7A6FA6; t=1678982252;
-	bh=oZ4FAtkpKnMtlaL430deA+jzbW7goQjWoa/+ti8VCjU=;
-	h=Date:From:To:Message-ID:MIME-Version;
-	b=GncN4oC24aXPH95wmy3WCVS6YSjkuOTKRk3zNG5kKJo0YsoKX52vf/9DctK6tgDCf
-	 h6tVrU6nwqlVH3d5fcPrYPO2iz0RPY1JqoqT1TGKHtVXe/PA9OdSVeyD8/di5H89Hl
-	 IL09OkZIh6eaZ2ottuKM65HklQ72GLNMVqjclK/otZneghSGgbuzBlBQcUrd98y44g
-	 LItdQ0qFCcy8BWl/oWlUzPGMEbdCzgzMRuXHIDmOvPzo3DRtCUmoQBMu6UoCX9UVSa
-	 OCj0eEU1lby75gENKNHGfXZHbMJxNTw3rKxzv24ZHlmRScIVaA2Oj499z4XdEMbBuo
-	 NYZFK/YzAAStw==
-Date: Thu, 16 Mar 2023 17:57:32 +0200 (EET)
-From: Giannis Christodoulakos <gchristodoulakos@census-labs.com>
-To: oss-security <oss-security@lists.openwall.com>
-Message-ID: <1457266614.331217.1678982252139.JavaMail.zimbra@census-labs.com>
+Received: (qmail 15776 invoked from network); 29 Sep 2017 17:24:40 -0000
+References: <850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>
+Message-ID: <577aa455-9662-3d17-5558-1d452a286e01@chbi.eu>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="=_33661a20-3bbf-4e24-ae2a-ee9fea93fc80"
-X-Originating-IP: [10.9.0.4]
-X-Mailer: Zimbra 8.8.15_GA_4508 (ZimbraWebClient - FF110 (Mac)/8.8.15_GA_4508)
-Thread-Index: mgMYAV0mS7a8jTgXCuFSikZB43ZDWg==
-Thread-Topic: CVE-2023-24278 - Reflected XSS vulnerabilities in Squidex "/squid.svg" endpoint
-Subject: [oss-security] CVE-2023-24278 - Reflected XSS vulnerabilities in Squidex
- "/squid.svg" endpoint
+In-Reply-To: <850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="NrvHTsUvOHMm9kTw1uGrqmFke3irhkbAR"
+Date: Fri, 29 Sep 2017 19:24:22 +0200
+From: chbi@chbi.eu
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Stored XSS vulnerability in eGroupware Community
+ Edition <= 16.1.20170703
+To: oss-security@lists.openwall.com
 
---=_33661a20-3bbf-4e24-ae2a-ee9fea93fc80
+--NrvHTsUvOHMm9kTw1uGrqmFke3irhkbAR
+Content-Type: multipart/mixed; boundary="RwB3hnH70u7rSPCTWkRskBgWo8R8x5Ph4";
+ protected-headers="v1"
+From: chbi@chbi.eu
+To: oss-security@lists.openwall.com
+Message-ID: <577aa455-9662-3d17-5558-1d452a286e01@chbi.eu>
+Subject: Re: [oss-security] Stored XSS vulnerability in eGroupware Community
+ Edition <= 16.1.20170703
+References: <850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>
+In-Reply-To: <850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>
+
+--RwB3hnH70u7rSPCTWkRskBgWo8R8x5Ph4
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-Hello all, 
 
-Squidex, a "headless" open source CMS framework was found to have two reflected XSS vulnerabilities in the "/squid.svg" endpoint 
-affecting versions prior to 7.4.0. The vulnerabilities have been addressed in version 7.4.0 of the framework. 
+CVE-2017-14920 has been assigned.
 
-CVE-2023-24278 was assigned to these vulnerabilities by MITRE. 
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2017-14920
 
-The vulnerabilities affect both authenticated and unauthenticated users and allow for 
-malicious JavaScript to be executed within victim user browsers. Moreover, the vulnerabilities 
-enable an attacker to collect the CMS authentication token from browser local storage 
-and it is therefore possible for the attacker to gain unauthorized access to a victim user's session. 
+--=20
+chbi
+https://chbi.eu
 
-More information about these issues is available here: 
-[ [ https://census-labs.com/news/2023/03/16/reflected-xss-vulnerabilities-in-squidex-squidsvg-endpoint/ | https://census-labs.com/news/2023/03/16/reflected-xss-vulnerabilities-in-squidex-squidsvg-endpoint/ ] | [ https://census-labs.com/news/2023/03/16/reflected-xss-vulnerabilities-in-squidex-squidsvg-endpoint/ | https://census-labs.com/news/2023/03/16/reflected-xss-vulnerabilities-in-squidex-squidsvg-endpoint/ ] ] 
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
 
-Best regards, 
 
-Ioannis Christodoulakos 
+--RwB3hnH70u7rSPCTWkRskBgWo8R8x5Ph4--
 
---=_33661a20-3bbf-4e24-ae2a-ee9fea93fc80--
+--NrvHTsUvOHMm9kTw1uGrqmFke3irhkbAR
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlnOgcwACgkQunuT+ZA3
+rn7scw/9GTHnVaGf1kCFEWUaY4gDQ1zJDN9N3ZMnxJl3X0jfGV7xCSpoQ31vkkFD
+aJ/bYKonpxbvwEIPI41+7aBWKPJUB/D7nRQVQDXHqkGzqkqL9j4bxlJ6Vv+q+WBG
+nruJv8/11EUzImO60xursBY/qsUtERWZOJXEXJQL8rdIWdUpN5oQZp1qRdv0B19Z
+yI5kb3qdacJ8CNJMIFiyMU4y8yPB8o1uwMKPK8/I2GD9g8mquPmBKqgyiWV4FGJM
+0c28bWLmxXpkXQdi0ra1r0M90+gK+1ew8/IMYk/3hDy+cfL9eZ+wNIsXdGat5cdE
+xZG259RaVdewXkk6j46xfRnyqnhxAvPFk9rjt5S0yfYOoCTa64I8IrxS+Qq2WJMw
+UVCfRuMuOGGwGeme1QPpSwWHZz7DKoiKRv8MMpTxct61MoTN4TdGNo/f24dnoBRx
+/uHrP0UOXlVvqQ0nCV+uUoZ55RiSmIsUHO5f8iQqtjGvD6p/lkpCqUwBGHX4EvBL
+3bjlSfRWkMuJcjVE12tNSysv5ORm67TRhbC6HGyRMNNNsjxwY9UA5ECAq2ezdKdz
+d6Ld8HIAtwHo5+55DEBTS5lu0arniIzl3Ba5HnpG3mQwiS7XyComgtjT2zye52Yp
+mtCcrtxT6JN7JWErgkqIyW9IPWcbp9RloHJocj/dU8rqRk3f0pk=
+=Fq0a
+-----END PGP SIGNATURE-----
+
+--NrvHTsUvOHMm9kTw1uGrqmFke3irhkbAR--
