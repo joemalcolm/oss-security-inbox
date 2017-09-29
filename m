@@ -1,19 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/18
-Message-ID: <20170628202221.6bvpazce7k2hidii@perpetual.pseudorandom.co.uk>
-Date: Wed, 28 Jun 2017 21:22:21 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/10
+Message-ID: <CAEwge-Hrbb7JS8Nygrh7geyFvW4bMZ3AdCmPOzMfvbniipz0bA@mail.gmail.com>
+Date: Fri, 29 Sep 2017 10:35:55 -0700
+From: Anthony Baker <abaker@...che.org>
+To: user@...de.apache.org, dev@...de.apache.org, announce@...che.org,  security@...che.org, oss-security@...ts.openwall.com
+Cc: Dan Smith <dsmith@...otal.io>
+Subject: [SECURITY] CVE-2017-9797 Apache Geode client/server authentication vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 28 Jun 2017 at 22:02:40 +0200, Solar Designer wrote:
-> Neither you nor others you inform may use the information for anything
-> other than getting the issue fixed for your distro's users [etc.]
+CVE-2017-9797 Apache Geode client/server authentication vulnerability
 
-To be clear, does this forbid bringing upstream maintainers into the loop
-to fix vulnerabilities or review fixes in the code that they maintain?
+Severity: Medium
+CVSS Base Score 6.5 (CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:H)
 
-(If it does, that seems likely to lead to bugs in the deployed fixes.)
+Vendor: The Apache Software Foundation
 
-    S
+Versions Affected:
+Apache Geode 1.0.0 through 1.2.0
+
+Description:
+When a cluster is operating in secure mode, an unauthenticated client
+can enter multi-user authentication mode and send metadata messages.
+These metadata operations could leak information about application
+data types.  In addition, an attacker could perform a denial of
+service attack on the cluster.
+
+Mitigation:
+Users of the affected versions should upgrade to Apache Geode 1.2.1 or later.
+
+Credit:
+This issue was reported responsibly to the Apache Geode Security Team
+by Dan Smith from Pivotal.
+
+References:
+[1] https://issues.apache.org/jira/browse/GEODE-3249
+[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
+
+---
+The Geode PMC
