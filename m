@@ -1,61 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/2
-Message-ID: <890963.317451195-sendEmail@localhost>
-Date: Mon, 20 Mar 2017 10:22:38 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libpcre: invalid memory read in phar (pcretest.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/8
+Message-ID: <CANO=Ty1WTxQjjqZt6KALD2hrfubJYG2gbZKaLVewG1o9KMA2XA@mail.gmail.com>
+Date: Fri, 29 Sep 2017 08:42:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libpcre is a perl-compatible regular expression library.
+On Thu, Sep 28, 2017 at 5:03 PM, Guido Vranken <guidovranken@...il.com>
+wrote:
 
-A fuzz on libpcre1 through the pcretest utility revealed an invalid read in the utility itself. For the nature of the crash, it is not security relevant because the library is not affected but if you 
-have a web application that calls directly the pcretest utility to parse untrusted data, then you are affected.
-Also, it is important share the details because some distros/packagers may want to take the patch in their repository.
+> I found a buffer overflow in one of the projects within 30 minutes,
+> and there are probably many more issues to be found (as in virtually
+> any large, unaudited project). What makes this project special
+> compared to other bug bounties for C libraries (such as the regular
+> Internet Big Bounty programs) is that they require a full, reliable
+> exploit.
+>
+> If they would be willing to be lenient in their qualification of what
+> constitutes a working exploit, such as exploitation of a binary
+> without advanced anti-exploit protections such ASLR, I might bother,
+> otherwise I won't. Enhancing open source projects is a honourable
+>
 
-The complete ASan output:
+The simple reason being is it gets rid of all the chaff and time wasters.
+Anyone can run a fuzzer and find a crash case. That's not what we need, we
+need a root cause analysis that identifies where in the code it failed, or
+a reliable exploit that causes code exec so we can do the research and
+actually figure out if this is exploitable or not. Their money, their rules.
 
-# pcretest -16 -d $FILE
-==28444==ERROR: AddressSanitizer: SEGV on unknown address 0x7f3c2de3e2dd (pc 0x0000005409dd bp 0x7fff0423db40 sp 0x7fff0423dac0 T0)
-==28444==The signal is caused by a READ memory access.
-    #0 0x5409dc in pchar /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:1986:5
-    #1 0x54006f in pchars16 /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:2115:12
-    #2 0x52e3e1 in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5092:15
-    #3 0x7f3c2dc3878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #4 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
 
-Affected version:
-8.40
 
-Fixed version:
-8.41 (not released atm)
+>
+> All in all I think they should reconsider their current program
+> stipulations, if only to increase their own return-on-investment
+> (making the internet safer with a limited funding).
+>
+> Guido
+>
 
-Commit fix:
-https://vcs.pcre.org/pcre/code/trunk/pcretest.c?r1=1665&r2=1685&sortby=date
+I think you're forgetting about the cost of analyzing a lot of false
+positives. This is why I push back and ask for more information on a lot of
+CVE requests now.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-N/A
+-- 
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00194-pcre-invalidread-phar
-
-Timeline:
-2017-02-22: bug discovered and reported to upstream
-2017-02-22: upstream released a patch
-2017-03-14: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/14/libpcre-invalid-memory-read-in-phar-pcretest-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
