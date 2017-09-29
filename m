@@ -1,98 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/1
-Message-ID: <20170607130824.6652be8c@pc1>
-Date: Wed, 7 Jun 2017 13:08:24 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: two heap overflows in raptor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/13
+Message-ID: <e1f1ca85-d911-724b-e9b5-ef5e8132c074@chbi.eu>
+Date: Fri, 29 Sep 2017 19:29:07 +0200
+From: chbi@...i.eu
+To: oss-security@...ts.openwall.com
+Subject: Re: Stored XSS vulnerability in Tine 2.0 Community Edition <= 2017.08.3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-raptor is a library to parse rdf data. Notably it is used by
-libreoffice.
+> Stored XSS vulnerability via IMG tag at "History" of Profile, Calendar,
+> Tasks and CRM allows an authenticated user to inject JavaScript which is
+> triggered by the application administrator and other users.
 
-I reported two heap overflows in april. The bug reports are private
-http://bugs.librdf.org/mantis/view.php?id=617
-http://bugs.librdf.org/mantis/view.php?id=618
+CVE-2017-14922 has been assigned.
 
-Both are fixed by the same commit:
-https://github.com/LibreOffice/core/blob/master/external/redland/raptor/0001-Calcualte-max-nspace-declarations-correctly-for-XML-.patch.1
-
-I also informed the libreoffice security team.
-
-No new release has been made yet. I'm pasting the content of my bug
-reports below, poc files attached.
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14922
 
 
-----------------------
-Summary	0000617: heap buffer overflow in raptor_qname_format_as_xml
-Description	The attached file will cause a heap buffer overflow in raptor. Can be tested with the rapper command line tool.
+> Stored XSS vulnerability via IMG tag at "Leadname" of CRM allows an
+> authenticated user to inject JavaScript which is triggered by the
+> application administrator and other users.
 
-This is a security bug, so I'm marking this private.
+CVE-2017-14923 has been assigned.
 
-Here's a stack trace of the crash (from address sanitizer):
-==24627==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x604000002090 at pc 0x000000529a9c bp 0x7fffc7e52060 sp 0x7fffc7e52058
-WRITE of size 8 at 0x604000002090 thread T0
-    #0 0x529a9b in raptor_qname_format_as_xml /f/raptor/raptor2-2.0.15/src/raptor_qname.c:666:15
-    #1 0x5cb770 in raptor_xml_writer_start_element_common /f/raptor/raptor2-2.0.15/src/raptor_xml_writer.c:242:9
-    #2 0x5cd317 in raptor_xml_writer_start_element /f/raptor/raptor2-2.0.15/src/raptor_xml_writer.c:571:3
-    #3 0x55c534 in raptor_rdfxml_start_element_grammar /f/raptor/raptor2-2.0.15/src/raptor_rdfxml.c:2044:9
-    #4 0x55c534 in raptor_rdfxml_start_element_handler /f/raptor/raptor2-2.0.15/src/raptor_rdfxml.c:830
-    #5 0x54d8e6 in raptor_sax2_start_element /f/raptor/raptor2-2.0.15/src/raptor_sax2.c:826:5
-    #6 0x7efcbd5decad in xmlParseStartTag (/usr/lib64/libxml2.so.2+0x41cad)
-    #7 0x7efcbd5ec323 (/usr/lib64/libxml2.so.2+0x4f323)
-    #8 0x7efcbd5ed3ba in xmlParseChunk (/usr/lib64/libxml2.so.2+0x503ba)
-    #9 0x54c2e7 in raptor_sax2_parse_chunk /f/raptor/raptor2-2.0.15/src/raptor_sax2.c:534:10
-    #10 0x558ec9 in raptor_rdfxml_parse_chunk /f/raptor/raptor2-2.0.15/src/raptor_rdfxml.c:1169:8
-    #11 0x512da5 in raptor_parser_parse_chunk /f/raptor/raptor2-2.0.15/src/raptor_parse.c:482:10
-    #12 0x512da5 in raptor_parser_parse_file_stream /f/raptor/raptor2-2.0.15/src/raptor_parse.c:554
-    #13 0x51324f in raptor_parser_parse_file /f/raptor/raptor2-2.0.15/src/raptor_parse.c:616:8
-    #14 0x50dd82 in main /f/raptor/raptor2-2.0.15/utils/rapper.c:917:8
-    #15 0x7efcbc4d52b0 in __libc_start_main (/lib64/libc.so.6+0x202b0)
-    #16 0x41b919 in _start (/r/raptor/rapper+0x41b919)
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14923
 
 
-------------------
+> Stored XSS vulnerability via IMG tag at "Filename" of Filemanager allows
+> an authenticated user to inject JavaScript which is triggered by the
+> application administrator and other users.
 
-Summary	0000618: heap buffer overflow in raptor_xml_writer_start_element_common
-Description	The attached file will cause a heap buffer overflow and crash raptor. This was found via fuzzing with the tool american fuzzy lop.
+CVE-2017-14921 has been assigned.
 
-This is a security bug, so I'm marking it private.
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14921
 
-Here's a stack trace (from address sanitizer):
-==3322==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x604000001f88 at pc 0x0000005ccdbc bp 0x7ffe62bb8540 sp 0x7ffe62bb8538
-WRITE of size 8 at 0x604000001f88 thread T0
-    #0 0x5ccdbb in raptor_xml_writer_start_element_common /f/raptor/raptor2-2.0.15/src/raptor_xml_writer.c:241:65
-    #1 0x5cd317 in raptor_xml_writer_start_element /f/raptor/raptor2-2.0.15/src/raptor_xml_writer.c:571:3
-    #2 0x55c534 in raptor_rdfxml_start_element_grammar /f/raptor/raptor2-2.0.15/src/raptor_rdfxml.c:2044:9
-    #3 0x55c534 in raptor_rdfxml_start_element_handler /f/raptor/raptor2-2.0.15/src/raptor_rdfxml.c:830
-    #4 0x54d8e6 in raptor_sax2_start_element /f/raptor/raptor2-2.0.15/src/raptor_sax2.c:826:5
-    #5 0x7f5125ce9cad in xmlParseStartTag (/usr/lib64/libxml2.so.2+0x41cad)
-    #6 0x7f5125cf7323 (/usr/lib64/libxml2.so.2+0x4f323)
-    #7 0x7f5125cf83ba in xmlParseChunk (/usr/lib64/libxml2.so.2+0x503ba)
-    #8 0x54c2e7 in raptor_sax2_parse_chunk /f/raptor/raptor2-2.0.15/src/raptor_sax2.c:534:10
-    #9 0x558ec9 in raptor_rdfxml_parse_chunk /f/raptor/raptor2-2.0.15/src/raptor_rdfxml.c:1169:8
-    #10 0x512da5 in raptor_parser_parse_chunk /f/raptor/raptor2-2.0.15/src/raptor_parse.c:482:10
-    #11 0x512da5 in raptor_parser_parse_file_stream /f/raptor/raptor2-2.0.15/src/raptor_parse.c:554
-    #12 0x51324f in raptor_parser_parse_file /f/raptor/raptor2-2.0.15/src/raptor_parse.c:616:8
-    #13 0x50dd82 in main /f/raptor/raptor2-2.0.15/utils/rapper.c:917:8
-    #14 0x7f5124be02b0 in __libc_start_main (/lib64/libc.so.6+0x202b0)
-    #15 0x41b919 in _start (/r/raptor/rapper+0x41b919)
-
-0x604000001f88 is located 8 bytes to the left of 38-byte region [0x604000001f90,0x604000001fb6)
-allocated by thread T0 here:
-    #0 0x4d1d28 in malloc (/r/raptor/rapper+0x4d1d28)
-    #1 0x525745 in raptor_namespace_format_as_xml /f/raptor/raptor2-2.0.15/src/raptor_namespace.c:791:12
-    #2 0x5cb4ed in raptor_xml_writer_start_element_common /f/raptor/raptor2-2.0.15/src/raptor_xml_writer.c:201:9
 
 -- 
-Hanno Böck
-https://hboeck.de/
+chbi
+https://chbi.eu
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
 
-Download attachment "raptor-heapoverflow-raptor_qname_format_as_xml.rdf" of type "application/rdf+xml" (115 bytes)
 
-Download attachment "raptor-heapoverflow-raptor_xml_writer_start_element_common.rdf" of type "application/rdf+xml" (165 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
