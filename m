@@ -1,41 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/6
-Message-ID: <20171128145226.GH6762@timmy.laas.fr>
-Date: Tue, 28 Nov 2017 15:52:26 +0100
-From: Matthieu Herrb <matthieu.herrb@...s.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/12
+Message-ID: <577aa455-9662-3d17-5558-1d452a286e01@chbi.eu>
+Date: Fri, 29 Sep 2017 19:24:22 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-16612 libXcursor: heap overflows when parsing malicious files
+Subject: Re: Stored XSS vulnerability in eGroupware Community Edition <= 16.1.20170703
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-X.Org has just release libXcursor version 1.1.15 which contains the
-following security fix:
+CVE-2017-14920 has been assigned.
 
-Author:     Tobias Stoeckmann <tobias@...eckmann.org>
-AuthorDate: Sat Oct 21 23:47:52 2017 +0200
-Commit:     Matthieu Herrb <matthieu@...rb.eu>
-CommitDate: Sat Nov 25 11:52:34 2017 +0100
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14920
 
-    Fix heap overflows when parsing malicious files. (CVE-2017-16612)
-
-    It is possible to trigger heap overflows due to an integer overflow
-    while parsing images and a signedness issue while parsing comments.
-
-    The integer overflow occurs because the chosen limit 0x10000 for
-    dimensions is too large for 32 bit systems, because each pixel takes
-    4 bytes. Properly chosen values allow an overflow which in turn will
-    lead to less allocated memory than needed for subsequent reads.
-
-    The signedness bug is triggered by reading the length of a comment
-    as unsigned int, but casting it to int when calling the function
-    XcursorCommentCreate. Turning length into a negative value allows the
-    check against XCURSOR_COMMENT_MAX_LEN to pass, and the following
-    addition of sizeof (XcursorComment) + 1 makes it possible to allocate
-    less memory than needed for subsequent reads.
-
-https://marc.info/?l=freedesktop-xorg-announce&m=151188036018262&w=2
 -- 
-Matthieu Herrb
+chbi
+https://chbi.eu
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
