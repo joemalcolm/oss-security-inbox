@@ -1,77 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/01/1
-Message-ID: <e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>
-Date: Sat, 1 Jul 2017 13:57:55 +0200
-From: Mark Hatle <mark.hatle@...driver.com>
-To: <oss-security@...ts.openwall.com>, Solar Designer <solar@...nwall.com>
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/1
+Message-ID: <CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>
+Date: Thu, 28 Sep 2017 23:13:22 -0700
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
 Content-Type: text/plain; charset=utf-8
 
-On 6/30/17 10:16 PM, Solar Designer wrote:
-> On Fri, Jun 30, 2017 at 12:55:16PM -0700, Seth Arnold wrote:
->> On Fri, Jun 30, 2017 at 03:22:09PM +0200, Solar Designer wrote:
->>> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->>>
->>> No volunteers so far?  I know some of you are actually helping with
->>> these, but I'd prefer that you explicitly take responsibility for them.
->>
->> I didn't volunteer for the things that I've already done on occasion.
->> Since I'm on the west coast of the united states and tend to sleep in and
->> work late (and spend entirely too much time in mutt already) I'm often the
->> first to spot new postings to the list if made during a few hour window.
->>
->> In those hours I'll let people know their post made it through the list.
->> (This is common practice on the list since the anti-spam setup just
->> drops mails that lack [vs] or [vs-plain] in the Subject: line. Frequent
->> posters who aren't subscribed know to look for confirmation mails from
->> list readers to see if their posts made it through and re-send if they
->> don't get a reply.)
->>
->> But this window really only works a few hours each day, a few days each
->> week. If I _sign up_ for this task, the other 160 hours each week would
->> get worse.
->>
->> Communally shared tasks have felt fine to me so far. Yes they often fall
->> to you, but not always. And if you weren't always attached to your MUA,
->> perhaps it wouldn't always fall to you either. :)
-> 
-> We can list multiple distros per task.  Or we can list Ubuntu, and that
-> wouldn't mean only you - but rather that Ubuntu's team should handle it.
-> Would that work for Ubuntu?
+(Wearing my IBB hat)
 
-We (Wind River) can take a more active role in at least some of the
-administrative tasks..  However, I can assure you we don't have the time or
-ability to do it ourselves.
+I just replied to Guido privately, but wanted to follow-up here stating
+that we (the IBB) are open to paying for issues in a non-ASLR configuration.
 
-So the more then one 'actor' on an action would definitely be what I suggest.
+The main reason we have extra stipulations on this particular program is
+that some of the projects that have signed up were worried about being
+inundated with low-severity issues that didn't actually do much to improve
+security. So, we started with a fairly high bar to emphasize the main goal
+of looking for critical vulnerabilities (i.e., RCE). However, ASLR is not
+full-proof and only delays the inevitable, so I agree that vulnerabilities
+that are solely mitigated by ASLR should still be in-scope for a bounty.
 
-Unfortunately I really don't have a good sense (based on the link to the tasks)
-as to what would be appropriate to volunteer for.  I'm open to suggestions.
+Separately, we're happy to announce that libav (
+https://git.libav.org/?p=libav.git;a=summary) was added to the scope
+earlier today.
 
---Mark
+If other well-known projects fit into the category of "data processing" and
+wish to participate, please reach out to panel [@] internetbugbounty.org,
+and we'd be happy to add you.
 
-> With multiple distros listed, there will need to be some coordination
-> between them - e.g., inform each other when transferring responsibility
-> (such as before several people go on vacation), or separate duties by
-> time of day.
-> 
-> I agree that for something as simple as getting back to message senders
-> this might not be worth the coordination.  So maybe one of the distros
-> wanting to join now would take this task, which would also serve to show
-> they care at least to read all messages promptly.  And the distros who
-> have been on the list for a while take less trivial tasks.
-> 
-> Regarding the anti-spam setup, it's not exactly as bad as you describe.
-> Messages are not dropped - rather, they're rejected during the SMTP
-> session, in response to DATA command end.  I hope that with most setups
-> on the other end, this results in the sender (person) getting notified.
-> 
-> What worries me is that for messages that are sent to us in plaintext,
-> this means they might be exposed to someone watching network traffic
-> even in cases when we don't yet accept and relay the message (because of
-> it initially lacking this tag).  Yet getting encrypted spam (for a
-> little while, before I made this setup) was no good.
-> 
-> Alexander
-> 
+Happy hacking,
+~reed
+(for the Internet Bug Bounty)
+
+On Thu, Sep 28, 2017 at 4:03 PM, Guido Vranken <guidovranken@...il.com>
+wrote:
+
+> I found a buffer overflow in one of the projects within 30 minutes,
+> and there are probably many more issues to be found (as in virtually
+> any large, unaudited project). What makes this project special
+> compared to other bug bounties for C libraries (such as the regular
+> Internet Big Bounty programs) is that they require a full, reliable
+> exploit.
+>
+> If they would be willing to be lenient in their qualification of what
+> constitutes a working exploit, such as exploitation of a binary
+> without advanced anti-exploit protections such ASLR, I might bother,
+> otherwise I won't. Enhancing open source projects is a honourable
+> pursuit indeed and I've done it many times for free, but if I'm going
+> to hack for money I might as well choose something that is easier or
+> more profitable or both at the same time. You can fetch $500 for any
+> old XSS on a web page or a buffer overflow in the clusterfucks that
+> are the PHP and Python code
+> (https://hackerone.com/directory?query=ibb%3Ayes&sort=published_at%
+> 3Adescending&page=1
+> -- see the sheer number of submissions to both those programs).
+>
+> Right after the program was announced, I sent an email to the IBB
+> asking if exploitation of a non-ASLR configuration of the binary at
+> hand would be sufficient. Unfortunately, I have not yet received a
+> reply. The reason they want full exploits is, I think, to cut the
+> chaff from the grain and solicit bugs that at least have real
+> potential. A nice middle ground would be paying a percentage (25%?) of
+> their current bounty offering for raw submissions of bugs that are
+> generally assumed to constitute a security risk. It will attract a
+> larger body of researchers for sure, and in the end this will be more
+> beneficial to the overall security of the internet than under their
+> current approach.
+>
+> A Heartbleed-like vulnerability in an image parsing or conversion
+> library, where an attacker can send a crafted image file resulting in
+> exposure of unrelated memory, would not be eligible under this
+> program. Case in point: see Chris Evans' Yahoobleed:
+> https://scarybeastsecurity.blogspot.nl/2017/05/bleed-
+> more-powerful-dumping-yahoo.html
+>
+> All in all I think they should reconsider their current program
+> stipulations, if only to increase their own return-on-investment
+> (making the internet safer with a limited funding).
+>
+> Guido
+>
 
