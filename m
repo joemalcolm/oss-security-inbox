@@ -1,71 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/5
-Message-ID: <847337.788527028-sendEmail@localhost>
-Date: Thu, 2 Mar 2017 16:35:17 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/30/2
+Message-ID: <13746.9387586577-sendEmail@localhost>
+Date: Sat, 30 Sep 2017 17:01:32 +0000
 From: "Agostino Sarubbo" <ago@...too.org>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: podofo: global buffer overflow in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)
+Subject: binutils: heap-based buffer overflow in read_1_byte (dwarf2.c)
 Content-Type: text/plain; charset=utf-8
 
 Description:
-podofo is a C++ library to work with the PDF file format.
+binutils is a set of tools necessary to build programs.
 
-A fuzz on it discovered a global overflow. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+The complete ASan output of the issue:
 
-The complete ASan output:
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==3235==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x613000000512 at pc 0x7f7c93ae3c88 bp 0x7ffe38d7a970 sp 0x7ffe38d7a968
+READ of size 1 at 0x613000000512 thread T0
+    #0 0x7f7c93ae3c87 in read_1_byte /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:616:10
+    #1 0x7f7c93ae3c87 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2311
+    #2 0x7f7c93aee92b in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3608:26
+    #3 0x7f7c93aee92b in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
+    #4 0x7f7c93aeb94f in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4755:11
+    #5 0x7f7c93a2920b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
+    #6 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
+    #7 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #8 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #9 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #10 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #11 0x7f7c9296e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #12 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
 
-# podofocolor dummy $FILE foo
-==15599==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000014a5838 at pc 0x0000004ca58c bp 0x7ffebe3248b0 sp 0x7ffebe324060
-WRITE of size 24 at 0x0000014a5838 thread T0
-    #0 0x4ca58b in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #1 0x7efe75862464 in void std::_Construct(PoDoFo::PdfParser::TXRefEntry*, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_construct.h:83:38
-    #2 0x7efe75862464 in void std::__uninitialized_fill_n::__uninit_fill_n(PoDoFo::PdfParser::TXRefEntry*, unsigned long, PoDoFo::PdfParser::TXRefEntry const&) 
-/usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:202
-    #3 0x7efe75862464 in void std::uninitialized_fill_n(PoDoFo::PdfParser::TXRefEntry*, unsigned long, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:244
-    #4 0x7efe75862464 in void std::__uninitialized_fill_n_a(PoDoFo::PdfParser::TXRefEntry*, unsigned long, PoDoFo::PdfParser::TXRefEntry const&, std::allocator&) 
-/usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:355
-    #5 0x7efe75862464 in std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator >::_M_fill_insert(__gnu_cxx::__normal_iterator<PoDoFo::PdfParser::TXRefEntry*, std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator > >, 
-unsigned long, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/vector.tcc:496
-    #6 0x7efe75855a47 in std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator >::insert(__gnu_cxx::__normal_iterator<PoDoFo::PdfParser::TXRefEntry*, std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator > >, unsigned 
-long, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:1073:9
-    #7 0x7efe75855a47 in std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator >::resize(unsigned long, PoDoFo::PdfParser::TXRefEntry) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:716
-    #8 0x7efe75855a47 in PoDoFo::PdfParser::ReadXRefSubsection(long&, long&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:772
-    #9 0x7efe758470ad in PoDoFo::PdfParser::ReadXRefContents(long, bool) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:725:17
-    #10 0x7efe75840a9e in PoDoFo::PdfParser::ReadDocumentStructure() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:337:9
-    #11 0x7efe7583de0f in PoDoFo::PdfParser::ParseFile(PoDoFo::PdfRefCountedInputDevice const&, bool) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:220:9
-    #12 0x7efe7583c1d4 in PoDoFo::PdfParser::ParseFile(char const*, bool) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:164:11
-    #13 0x7efe75a993f3 in PoDoFo::PdfMemDocument::Load(char const*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfMemDocument.cpp:186:16
-    #14 0x7efe75a990c2 in PoDoFo::PdfMemDocument::PdfMemDocument(char const*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfMemDocument.cpp:88:11
-    #15 0x51e96d in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:110:20
-    #16 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
-    #17 0x7efe7424861f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #18 0x428718 in _start (/usr/bin/podofocolor+0x428718)
+0x613000000512 is located 0 bytes to the right of 338-byte region [0x6130000003c0,0x613000000512)
+allocated by thread T0 here:
+    #0 0x4d8e08 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:67
+    #1 0x7f7c9393a37c in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9
+    #2 0x7f7c9392fb2f in bfd_get_full_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/compress.c:248:21
+    #3 0x7f7c939696d3 in bfd_simple_get_relocated_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/simple.c:193:12
+    #4 0x7f7c93ade26e in read_section /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:556:8
+    #5 0x7f7c93adef3c in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2047:9
+    #6 0x7f7c93aee92b in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3608:26
+    #7 0x7f7c93aee92b in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
+    #8 0x7f7c93aeb94f in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4755:11
+    #9 0x7f7c93a2920b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
+    #10 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
+    #11 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #12 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #13 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #14 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #15 0x7f7c9296e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-0x0000014a5838 is located 0 bytes to the right of global variable 'PoDoFo::PODOFO_BUILTIN_FONTS' defined in '/tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfFontFactoryBase14Data.h:4460:33' (0x14a4aa0) of size 
-3480
-SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413 in __asan_memcpy
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:616:10 in read_1_byte
 Shadow bytes around the buggy address:
-  0x00008028cab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008028cac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008028cad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008028cae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x00008028caf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x00008028cb00: 00 00 00 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9 f9
-  0x00008028cb10: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x00008028cb20: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x00008028cb30: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x00008028cb40: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x00008028cb50: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x0c267fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff8060: 00 00 00 00 00 00 00 00 00 00 00 04 fa fa fa fa
+  0x0c267fff8070: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c267fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff8090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c267fff80a0: 00 00[02]fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
 Shadow byte legend (one shadow byte represents 8 application bytes):
   Addressable:           00
   Partially addressable: 01 02 03 04 05 06 07 
   Heap left redzone:       fa
-  Heap right redzone:      fb
   Freed heap region:       fd
   Stack left redzone:      f1
   Stack mid redzone:       f2
   Stack right redzone:     f3
-  Stack partial redzone:   f4
   Stack after return:      f5
   Stack use after scope:   f8
   Global redzone:          f9
@@ -77,36 +80,38 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   ASan internal:           fe
   Left alloca redzone:     ca
   Right alloca redzone:    cb
-==15599==ABORTING
+==3235==ABORTING
 
 Affected version:
-0.9.4
+2.29.51.20170921 and maybe past releases
 
 Fixed version:
 N/A
 
 Commit fix:
-N/A
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=515f23e63c0074ab531bc954f84ca40c6281a724
 
 Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-N/A
+CVE-2017-14939
 
 Reproducer:
-https://github.com/asarubbo/poc/blob/master/00171-podofo-globaloverflow-PoDoFo-PdfParser-ReadXRefSubsection
+https://github.com/asarubbo/poc/blob/master/00370-binutils-heapoverflow-read_1_byte
 
 Timeline:
-2017-02-13: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
+2017-09-21: bug discovered and reported to upstream
+2017-09-24: upstream released a patch
+2017-09-26: blog post about the issue
+2017-09-29: CVE assigned
 
 Note:
 This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
 Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-global-buffer-overflow-in-podofopdfparserreadxrefsubsection-pdfparser-cpp
+https://blogs.gentoo.org/ago/2017/09/26/binutils-heap-based-buffer-overflow-in-read_1_byte-dwarf2-c
 
 --
 Agostino Sarubbo
