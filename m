@@ -1,76 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/4
-Message-ID: <2287406.W50YOaXYaS@blackgate>
-Date: Mon, 16 Jan 2017 11:59:06 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: jasper: invalid memory read in jpc_undo_roi (jpc_dec.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/30/3
+Message-ID: <991074.005930813-sendEmail@localhost>
+Date: Sat, 30 Sep 2017 17:02:40 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: binutils: NULL pointer dereference in scan_unit_for_symbols (dwarf2.c)
 Content-Type: text/plain; charset=utf-8
 
 Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+binutils is a set of tools necessary to build programs.
 
-Another round of fuzzing shows that a crafted image causes an invalid memory 
-read.
+The complete ASan output of the issue:
 
-The complete ASan output:
-
-# imginfo -f $FILE
-==22872==ERROR: AddressSanitizer: SEGV on unknown address 0x7f8a4a950800 (pc 
-0x7f8e4a543b93 bp 0x7ffe29bfdcd0 sp 0x7ffe29bfdb80 T0)
-==22872==The signal is caused by a READ memory access.
-    #0 0x7f8e4a543b92 in jpc_undo_roi /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1925:10
-    #1 0x7f8e4a543b92 in jpc_dec_tiledecode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1104
-    #2 0x7f8e4a534cdf in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:658:7
-    #3 0x7f8e4a53e6b3 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:425:10
-    #4 0x7f8e4a53e6b3 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:262
-    #5 0x7f8e4a4a0b84 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_image.c:444:16
-    #6 0x509eed in main /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/appl/imginfo.c:219:16
-    #7 0x7f8e495a861f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #8 0x419978 in _init (/usr/bin/imginfo+0x419978)
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==491==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f6e3316d573 bp 0x7ffda2ee9e50 sp 0x7ffda2ee9c60 T0)
+==491==The signal is caused by a READ memory access.
+==491==Hint: address points to the zero page.
+    #0 0x7f6e3316d572 in scan_unit_for_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3213:13
+    #1 0x7f6e331769e4 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3617:9
+    #2 0x7f6e331769e4 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
+    #3 0x7f6e331707c8 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4601:11
+    #4 0x7f6e330b120b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
+    #5 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
+    #6 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #7 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #8 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #9 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #10 0x7f6e31ff6680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #11 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
 
 AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
-libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1925:10 
-in jpc_undo_roi
-==22872==ABORTING
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3213:13 in scan_unit_for_symbols
+==491==ABORTING
 
 Affected version:
-1.900.27
+2.29.51.20170921 and maybe past releases
 
 Fixed version:
 N/A
 
 Commit fix:
-N/A
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=0d76029f92182c3682d8be2c833d45bc9a2068fe
 
 Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-N/A
+CVE-2017-14940
 
 Reproducer:
-https://github.com/asarubbo/poc/blob/master/00054-jasper-invalidread-jpc_undo_roi
+https://github.com/asarubbo/poc/blob/master/00369-binutils-NULLptr-scan_unit_for_symbols
 
 Timeline:
-2016-11-20: bug discovered and reported upstream
-2017-01-16: blog post about the issue
+2017-09-21: bug discovered and reported to upstream
+2017-09-24: upstream released a patch
+2017-09-26: blog post about the issue
+2017-09-29: CVE assigned
 
 Note:
 This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
 
 Permalink:
-https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jpc_undo_roi-jpc_dec-c
+https://blogs.gentoo.org/ago/2017/09/26/binutils-null-pointer-dereference-in-scan_unit_for_symbols-dwarf2-c
 
 --
-Agostino
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
