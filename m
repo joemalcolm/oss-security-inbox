@@ -1,27 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/9
-Message-ID: <20171108194652.fqk5alj7dhq67mqo@eldamar.local>
-Date: Wed, 8 Nov 2017 20:46:52 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Back in Time: CVE-2017-16667: shell injection in notify-send
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/30/1
+Message-ID: <71149.8755003674-sendEmail@localhost>
+Date: Sat, 30 Sep 2017 17:00:47 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: binutils: memory allocation failure in _bfd_elf_slurp_version_tables (elf.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Description:
+binutils is a set of tools necessary to build programs.
 
-MITRE has assinged CVE-2017-16667 for the following isue in Back in
-Time, "a simple backup tool for Linux". backintime is prone to a shell
-injection vulnerability via notify-sent.
+This issue was initially discovered because the nm process eat ~230GB of ram. Later on, another testcase hits the issue and now I have a 
+stracktrace.
+The relevant ASan output of the issue:
 
-Back in Time did improper escaping/quoting of file paths used as
-arguments to the 'notify-send' command, leading to some parts of file
-paths being executed as shell commands.
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+    #8 0x4d8de4 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:68
+    #9 0x7fd0deccb41d in _objalloc_alloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/libiberty/objalloc.c:143:22
+    #10 0x7fd0de921c24 in bfd_alloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/opncls.c:949:9
+    #11 0x7fd0de921c24 in bfd_zalloc2 /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/opncls.c:1031
+    #12 0x7fd0de9b2db8 in _bfd_elf_slurp_version_tables /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8222:2
+    #13 0x7fd0de999da7 in bfd_elf64_slurp_symbol_table /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elfcode.h:1165:9
+    #14 0x7fd0de9ed876 in _bfd_elf_canonicalize_dynamic_symtab /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8099:19
+    #15 0x7fd0de935fc7 in _bfd_generic_read_minisymbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/syms.c
+    #16 0x513a53 in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1107:14
+    #17 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #18 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #19 0x7fd0dd934680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #20 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
 
-An attacker could take advantage of this flaw by crafting an
-unreadable file with a specific name to run arbitrary shell commands.
+Affected version:
+2.29.51.20170921 and maybe past releases
 
-Upstream report: https://github.com/bit-team/backintime/issues/834
-Fixed by: https://github.com/bit-team/backintime/commit/cef81d0da93ff601252607df3db1a48f7f6f01b3
+Fixed version:
+N/A
 
-Regards,
-Salvatore
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=bd61e135492ecf624880e6b78e5fcde3c9716df6
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14938
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00368-binutils-memallocfailure-_bfd_elf_slurp_version_tables
+
+Timeline:
+2017-09-21: bug discovered and reported to upstream
+2017-09-24: upstream released a patch
+2017-09-26: blog post about the issue
+2017-09-29: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/26/binutils-memory-allocation-failure-in-_bfd_elf_slurp_version_tables-elf-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
