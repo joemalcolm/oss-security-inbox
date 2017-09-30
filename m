@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1283" "Thursday" "7" "May" "2015" "15:15:07" "+0300" "Solar Designer" "solar@openwall.com" "<20150507121507.GA10575@openwall.com>" "33" "Re: [oss-security] CVE request: vulnerability in wpa_supplicant and hostapd" nil nil nil "5" "2015050712:15:07" "[oss-security] CVE request: vulnerability in wpa_supplicant and hostapd" (number mark "        solar@openwa May  7   33/1283  " thread-indent "\"Re: [oss-security] CVE request: vulnerability in wpa_supplicant and hostapd\"\n") "<87k2wkfvks.fsf@redhat.com>" ("<87k2wkfvks.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6511" "Saturday" "30" "September" "2017" "17:01:32" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<13746.9387586577-sendEmail@localhost>" "118" "[oss-security] binutils: heap-based buffer overflow in read_1_byte (dwarf2.c)" nil nil nil "9" "2017093017:01:32" "[oss-security] binutils: heap-based buffer overflow in read_1_byte (dwarf2.c)" (number mark "U       ago@gentoo.o Sep 30  118/6511  " thread-indent "\"[oss-security] binutils: heap-based buffer overflow in read_1_byte (dwarf2.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11689 invoked by uid 550); 7 May 2015 12:15:13 -0000
+Received: (qmail 24532 invoked by uid 550); 30 Sep 2017 17:01:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,131 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11670 invoked from network); 7 May 2015 12:15:13 -0000
-Message-ID: <20150507121507.GA10575@openwall.com>
-References: <87k2wkfvks.fsf@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87k2wkfvks.fsf@redhat.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: Jouni Malinen <j@w1.fi>
-Date: Thu, 7 May 2015 15:15:07 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request: vulnerability in wpa_supplicant and hostapd
-To: oss-security@lists.openwall.com
+Received: (qmail 24437 invoked from network); 30 Sep 2017 17:01:49 -0000
+Message-ID: <13746.9387586577-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Sat, 30 Sep 2017 17:01:32 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-675343.350348161"
+Subject: [oss-security] binutils: heap-based buffer overflow in read_1_byte (dwarf2.c)
 
-On Thu, May 07, 2015 at 01:58:27PM +0200, Martin Prpic wrote:
-> Hi, I don't see a CVE assigned for this anywhere:
-> 
-> http://w1.fi/security/2015-4/eap-pwd-missing-payload-length-validation.txt
-> 
-> "EAP-pwd missing payload length validation
-> 
-> A vulnerability was found in EAP-pwd server and peer implementation used
-> in hostapd and wpa_supplicant, respectively. The EAP-pwd/Commit and
-> EAP-pwd/Confirm message payload is processed without verifying that the
-> received frame is long enough to include all the fields. This results in
-> buffer read overflow of up to couple of hundred bytes."
-> 
-> Patches are included in: http://w1.fi/security/2015-4/
+------MIME delimiter for sendEmail-675343.350348161
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-There are currently 5 sets of advisories+patches at:
+Description:
+binutils is a set of tools necessary to build programs.
 
-http://w1.fi/security/
+The complete ASan output of the issue:
 
-These are numbered 2014-1, 2015-[1234].  Out of them, it appears that
-only 2014-1 (CVE-2014-3686) and 2015-1 (CVE-2015-1863) have been on
-oss-security so far:
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==3235==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x613000000512 at pc 0x7f7c93ae3c88 bp 0x7ffe38d7a970 sp 0x7ffe38d7a968
+READ of size 1 at 0x613000000512 thread T0
+    #0 0x7f7c93ae3c87 in read_1_byte /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:616:10
+    #1 0x7f7c93ae3c87 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2311
+    #2 0x7f7c93aee92b in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3608:26
+    #3 0x7f7c93aee92b in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
+    #4 0x7f7c93aeb94f in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4755:11
+    #5 0x7f7c93a2920b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
+    #6 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
+    #7 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #8 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #9 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #10 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #11 0x7f7c9296e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #12 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
 
-http://www.openwall.com/lists/oss-security/2014/10/09/28
-http://www.openwall.com/lists/oss-security/2015/04/22/8
+0x613000000512 is located 0 bytes to the right of 338-byte region [0x6130000003c0,0x613000000512)
+allocated by thread T0 here:
+    #0 0x4d8e08 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:67
+    #1 0x7f7c9393a37c in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9
+    #2 0x7f7c9392fb2f in bfd_get_full_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/compress.c:248:21
+    #3 0x7f7c939696d3 in bfd_simple_get_relocated_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/simple.c:193:12
+    #4 0x7f7c93ade26e in read_section /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:556:8
+    #5 0x7f7c93adef3c in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2047:9
+    #6 0x7f7c93aee92b in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3608:26
+    #7 0x7f7c93aee92b in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
+    #8 0x7f7c93aeb94f in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4755:11
+    #9 0x7f7c93a2920b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
+    #10 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
+    #11 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #12 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #13 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #14 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #15 0x7f7c9296e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-I haven't looked into this closely, but maybe Martin's request should
-be for 2015-[234] rather than only for 2015-4.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:616:10 in read_1_byte
+Shadow bytes around the buggy address:
+  0x0c267fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff8060: 00 00 00 00 00 00 00 00 00 00 00 04 fa fa fa fa
+  0x0c267fff8070: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c267fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff8090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c267fff80a0: 00 00[02]fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==3235==ABORTING
 
-And I'd like to see the full advisories posted in here so that they are
-preserved in the list archives, unless there's a reason not to.  Jouni?
+Affected version:
+2.29.51.20170921 and maybe past releases
 
-Alexander
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=515f23e63c0074ab531bc954f84ca40c6281a724
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-14939
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00370-binutils-heapoverflow-read_1_byte
+
+Timeline:
+2017-09-21: bug discovered and reported to upstream
+2017-09-24: upstream released a patch
+2017-09-26: blog post about the issue
+2017-09-29: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/09/26/binutils-heap-based-buffer-overflow-in-read_1_byte-dwarf2-c
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-675343.350348161--
+
