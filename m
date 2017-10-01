@@ -1,54 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/29/8
-Message-ID: <20170829181925.lvaf5f4itx42idr3@tunkki.bugs.fi>
-Date: Tue, 29 Aug 2017 21:19:25 +0300
-From: "Henri S." <henri@...v.fi>
-To: Agostino Sarubbo <ago@...too.org>
-Cc: oss-security@...ts.openwall.com, robert@...rs.sf.net
-Subject: Re: A bunch of duplicate CVEs requested for?? bho..
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/01/2
+Message-ID: <1e5a78ac-a93f-f4cf-b8a2-25fde5189a63@ehuk.net>
+Date: Sun, 1 Oct 2017 08:37:55 +0100
+From: Eddie Chapman <eddie@...k.net>
+To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
+Subject: Re: clamav: Out of bounds read and segfault in xar parser
 Content-Type: text/plain; charset=utf-8
 
-Hello ago,
+On 29/09/17 14:09, Hanno Böck wrote:
+> Meta-level comment:
+> It seems to me clamav development has mostly stalled. Detection rates
+> are very low and I'm considering to stop using it for mail filtering.
+> (also there's of course the whole AV debate, however I never saw
+> clamav as a security tool, more as something like a spam filter that
+> prevents crap in my inbox. Still of course it needs to have secure
+> parsers.)
 
-On Tue, Aug 29, 2017 at 02:46:22PM +0200, Agostino Sarubbo wrote:
-> Some CVEs about lame was issued, also there are an high number of 
-> vulnerabilities never confirmed by upstream nor posted on their bug tracking 
-> system. Yes, sometimes I receive emails that say that the bug is not 
-> reproducible but I'm always trying to help to reproduce. Instead some report 
-> says: "If you want the poc please contact me at $email"
+I agree with much of this, and I think you're right that the 
+effectiveness of Clamav in mail filtering contexts can be debated, 
+though maybe more in terms of the AV debate, as you say.  As a user 
+myself with it deployed filtering multi-user domains, I agree that 
+detection rates are low.
 
-I'm currently fuzzing LAME with help from Robert Hegemann who is upstream. I
-understand that the latest LAME release in the web page is from 2012, but
-hopefully we will get a new release after the fuzzing is finished. If there are
-any outstanding issues from your fuzzing feel free to contact me and I can
-verify that those are fixed in the CVS version of it (link below). I can check
-your blog for related issues at least. Robert has been fixing the issues very
-quickly after reports. I also plan to fuzz other argument combinations. Maybe
-we can even include LAME to oss-fuzz later on if upstream agrees.
+However, checking just now on Github I do not get the impression at all 
+that development has stalled. Judging purely by number of commits, every 
+month there are consistently a very healthy number. But what has stalled 
+is stable releases; the last one being 0.99.2 on 22nd April 2016, so 
+something is not quite right. But I've seen many open source/free 
+software projects stalled over the years and definitely Clamav does not, 
+IMO, fit that description (at least not yet).
 
-http://lame.cvs.sourceforge.net/viewvc/lame/lame/
-
-Recently closed issues:
-
-https://sourceforge.net/p/lame/bugs/464/
-https://sourceforge.net/p/lame/bugs/465/
-https://sourceforge.net/p/lame/bugs/466/
-https://sourceforge.net/p/lame/bugs/467/
-https://sourceforge.net/p/lame/bugs/468/
-https://sourceforge.net/p/lame/bugs/470/
-https://sourceforge.net/p/lame/bugs/472/
-
-All feedback is welcome regarding my fuzzing activities. You can also contact
-me via IRC in e.g. #afl-users in Freenode if you want to participate in CVS
-build fuzzing. If not I can also notify you after the next release.
-
-> How to avoid to file duplicate?
-
-Maybe giving them a link for documentation how to avoid this in the future.
-
-CCing robert without permission :)
-
--- 
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Eddie
