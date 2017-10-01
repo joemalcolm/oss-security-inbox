@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/16/2
-Message-ID: <20170916190543.GA6340@openwall.com>
-Date: Sat, 16 Sep 2017 21:05:44 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Alexander Batischev <eual.jp@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Podbeuter podcast fetcher: remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/01/3
+Message-ID: <2e0fd7c2-ceff-266e-6185-6e42bd9188e1@chbi.eu>
+Date: Sun, 1 Oct 2017 17:27:05 +0200
+From: chbi@...i.eu
+To: oss-security@...ts.openwall.com
+Subject: Re: Stored XSS vulnerability in BlogoText <= 3.7.5
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 16, 2017 at 09:05:18PM +0300, Alexander Batischev wrote:
-> I've requested a CVE from MITRE on August 27th, but haven't heard back 
-> yet, so decided to disclose without a number.
+CVE-2017-14957 has been assigned.
 
-Thanks.  Going forward, please report relevant issues in here right
-away, without waiting on MITRE.  We previously had these guidelines in a
-footnote, but I've just upgraded them to their own section here:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14957
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
 
-"Previously, one could request CVE IDs for issues in Open Source
-software from oss-security.  This is no longer the case.  Instead, please
-start by posting about the (to be made) public issue to oss-security
-(without a CVE ID), request a CVE ID from MITRE directly, and finally
-"reply" to your own posting when you also have the CVE ID to add.  With
-the described approach you would only approach MITRE after the issue is
-already public, but if you choose to do things differently and contact
-MITRE about an issue that is not yet public, then please do not disclose
-to them more than the absolute minimum needed for them to assign a CVE ID."
+-- 
+chbi
+https://chbi.eu
 
-with links to:
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
 
-https://cveform.mitre.org
-http://www.openwall.com/lists/oss-security/2015/04/14/3
 
-Alexander
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
