@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/10
-Message-ID: <20170207235746.GA13577@sin.redhat.com>
-Date: Wed, 8 Feb 2017 10:27:46 +1030
-From: Doran Moppert <dmoppert@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/01/1
+Message-ID: <fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>
+Date: Sun, 1 Oct 2017 09:25:07 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XXE in Openpyxl
+Subject: Stored XSS vulnerability in BlogoText <= 3.7.5
 Content-Type: text/plain; charset=utf-8
 
-On Feb 07 2017, Sébastien Delafond wrote:
-> the Debian Security Team would like to request a CVE for an XML XEE
-> discovered in Openpyxl by Marcin Ulikowski from F-Secure; Openpyxl
-> resolves external entities by default:
-> 
->   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=854442
->   https://bitbucket.org/openpyxl/openpyxl/commits/3b4905f428e1
 
-This is yet another instance of CVE-2016-9318.  As already observed on
-the Debian tracker, disabling entity resolution altogether is probably
-going to make openpyxl fail on well-formed Excel documents using
-standard entities such as &lt;.
+Hi,
+
+I've discovered a security issue in BlogoText <= 3.7.5
+(https://github.com/BlogoText/blogotext/)
+
+
+A Stored XSS vulnerability via comment allows an unauthenticated
+attacker to inject JavaScript. If it is triggered as administrator an
+attacker can for example, change global settings or create/delete posts.
+It is also possible to execute JavaScript against unauthenticated users
+of the blog.
+
+Fix:
+https://github.com/BlogoText/blogotext/pull/320/commits/1a283cc8ad2cda37e0a6aff8f4558b98ecbfd9c2
+
+
+The issue is fixed in BlogoText 3.7.6.
+
+https://github.com/BlogoText/blogotext/releases/tag/3.7.6
+
+
+I've requested a CVE ID (MITRE).
 
 -- 
-Doran Moppert
-Red Hat Product Security
+chbi
+https://chbi.eu
 
-Content of type "application/pgp-signature" skipped
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
