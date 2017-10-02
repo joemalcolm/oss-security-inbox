@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/01/2
-Message-ID: <73d526b8-5895-0f1b-e15b-ad683f3f2574@Z5T1.com>
-Date: Fri, 1 Dec 2017 09:57:19 -0500
-From: Scott Court <z5t1@...1.com>
-To: Bram Moolenaar <Bram@...lenaar.net>
-Cc: Kurt Seifried <kseifrie@...hat.com>, oss-security@...ts.openwall.com, vim_dev@...glegroups.com
-Subject: Re: Re: Security risk of server side text editing ...
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/02/5
+Message-ID: <164d0bb4-6209-5e9b-32e9-0574cf31d54a@thekelleys.org.uk>
+Date: Mon, 2 Oct 2017 16:47:18 +0100
+From: Simon Kelley <simon@...kelleys.org.uk>
+To: oss-security@...ts.openwall.com
+Subject: dnsmasq: CVE-2017-14491 to CVE-2017-14496 and CVE-2017-13704
 Content-Type: text/plain; charset=utf-8
 
-This has been assigned CVE-2017-17087
->>     2. Vim .swp file group (Doesn't have a CVE ID)
->>
->> This vulnerability was discovered by me. When Vim creates a .swp file,
->> the .swp file is created with the owner and group set to the editor and
->> editor's primary group respectively. The .swp file is the set to the
->> same permissions as the original file (i.e. chmod 640). This creates a
->> security vulnerability when the editor's primary group is not the same
->> as the original file's group.
->>
->> For example, say the root user's primary group is "users", which every
->> user is a member of. If root goes to edit /etc/shadow, the
->> /etc/.shadow.swp file is created with permissions 640 and user:group set
->> to root:users. The original /etc/shadow file had user:group set to
->> root:shadow though; this now exposes the /etc/shadow file (which mind
->> you contains hashes of every user's password) to every user on the system.
->>
->> Originally, I thought this was an extension of CVE-2017-1000382 so I
->> didn't bother trying to get a CVE ID for it; however, upon looking at it
->> for a second time, it seems that this is indeed a different
->> vulnerability. It is possible to patch this vulnerability without
->> patching CVE-2017-1000382.
->
+A set of serious security vulnerabilities for dnsmasq have been released
+today.
 
+These include remote DoS and possibly code execution, and at least some
+apply to essentially every non-ancient dnsmasq release.
+
+Most of these were found by Google and their writeup is here.
+
+https://security.googleblog.com/2017/10/behind-masq-yet-more-dns-and-dhcp.html
+
+The fixes are contained in the dnsmasq 2-78 release, announced here:
+
+http://lists.thekelleys.org.uk/pipermail/dnsmasq-discuss/2017q4/011771.html
+
+
+and are in the dnsmasq git repo, here:
+
+
+http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=summary
+
+
+Cheers,
+
+Simon.
 
 
 
