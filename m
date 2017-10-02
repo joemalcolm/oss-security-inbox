@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/9
-Message-Id: <ECBAEA0F-C443-4B00-8928-E8577E20001C@apache.org>
-Date: Wed, 7 Jun 2017 16:31:01 -0400
-From: Velmurugan Periasamy <vel@...che.org>
-To: security <security@...che.org>, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Cc: private@...ger.apache.org, dev@...ger.apache.org, user@...ger.apache.org
-Subject: CVE update - fixed in Apache Ranger 0.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/02/2
+Message-ID: <20171002120644.GA4301@kroah.com>
+Date: Mon, 2 Oct 2017 14:06:44 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-1000252: KVM denial of service with posted interrupts on Intel systems (since Linux 4.4)
 Content-Type: text/plain; charset=utf-8
 
-Hello:
+On Fri, Sep 15, 2017 at 06:36:59PM +0200, Jan H. Schönherr wrote:
+> Hi.
+> 
+> We have discovered a user triggerable BUG() when using KVM with posted interrupts on Intel
+> systems. This requires an unprivileged user to have access to the KVM device.
+> 
+> Certain values in a KVM_IRQFD API call can trigger a BUG_ON() at a later point in
+> vmx_update_pi_irte(). KVM as a whole seems to hang after that.
+> 
+> The issue was introduced with Linux 4.4, patches have been posted to the KVM
+> mailing list:
+> - https://marc.info/?l=kvm&m=150549145711115&w=2
+> - https://marc.info/?l=kvm&m=150549146311117&w=2
 
-Please find below details on CVEs fixed in Ranger 0.7.1 release. Release details can be found at https://cwiki.apache.org/confluence/display/RANGER/0.7.1+Release+-+Apache+Ranger 
+Note, for those intersted in this, the second patch was reverted and
+doesn't seem to be needed.
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CVE-2017-7676: Apache Ranger policy evaluation ignores characters after ‘*’ wildcard character
-Severity: Critical
-Vendor: The Apache Software Foundation
-Versions Affected: 0.5.x/0.6.x/0.7.0 versions of Apache Ranger
-Users affected: Environments that use Ranger policies with characters after ‘*’ wildcard character – like my*test, test*.txt
-Description: Policy resource matcher ignores characters after ‘*’ wildcard character, which can result in unintended behavior.
-Fix detail: Ranger policy resource matcher was updated to correctly handle wildcard matches.
-Mitigation: Users should upgrade to 0.7.1 or later version of Apache Ranger with the fix.
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CVE-2017-7677: Apache Ranger Hive Authorizer should check for RWX permission when external location is specified
-Severity: Critical
-Vendor: The Apache Software Foundation
-Versions Affected: 0.5.x/0.6.x/0.7.0 versions of Apache Ranger
-Users affected: Environments that use external location for hive tables 
-Description: In environments that use external location for hive tables, Apache Ranger Hive Authorizer should check for RWX permission for the external location specified for create table.
-Fix detail: Ranger Hive Authorizer was updated to correctly handle permission check with external location.
-Mitigation: Users should upgrade to 0.7.1 or later version of Apache Ranger with the fix.
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+thanks,
 
-Thank you,
-Velmurugan Periasamy
+greg k-h
