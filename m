@@ -1,79 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/04/4
-Message-ID: <15646667.pyuNQbuQqX@arcadia>
-Date: Sat, 04 Feb 2017 13:20:51 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/02/4
+Message-ID: <3f64b550-039b-25b5-cd70-82ae5575fa62@census-labs.com>
+Date: Mon, 2 Oct 2017 18:14:47 +0300
+From: John Torakis <johntorakis@...sus-labs.com>
 To: oss-security@...ts.openwall.com
-Subject: pax-utils: dumpelf: two invalid memory read in dumpelf.c
+Cc: bugtraq@...urityfocus.com, fulldisclosure@...lists.org
+Subject: CVE-2017-9807: e2openplugin-OpenWebif: Remote code execution through HTTP GET parameter manipulation
 Content-Type: text/plain; charset=utf-8
 
-Description:
-pax-utils is a set of tools that check files for security relevant properties.
+Hello all,
 
-A fuzz on scanelf exposed two invalid memory read. They was reported to vapier 
-which fixed the issue immediately.
-Unfortunately I can’t get a symbolized ASan stacktrace, so I will show only 
-the useful part of both asan and gdb.
+e2openplugin-OpenWebif is an open source web interface plugin for IP TVs
+and media centers. It is found in several IP TV software images and
+hardware products including the commercial Dreambox devices.
 
-# dumpelf $FILE
-  SEGV on unknown address 0x7f8d94dc9e28 (pc 0x00000051efc6 bp 0x7ffe15ddbfa0 
-sp 0x7ffe15ddbf60 T0)
-==31647==The signal is caused by a READ memory access.
 
-(gdb)
-#0  0x00000000004067f7 in dump_dyn (dyn_void=dyn_void@...ry=0x7ff5f7ff6e28, 
-dyn_cnt=dyn_cnt@...ry=0, elf=0x60d8e0, elf=0x60d8e0) at dumpelf.c:486
-#1  0x0000000000401e24 in dumpelf (file_cnt=0, filename=) at dumpelf.c:146
-#2  parseargs (argv=0x7fffffffe1a8, argc=2) at dumpelf.c:557
-#3  main (argc=2, argv=0x7fffffffe1a8) at dumpelf.c:566
+A remote code injection vulnerability was found in the "key" HTTP GET
+parameter of the "/api/saveconfig" API call.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00140-pax-utils-dumpelf-invalidread-dump_dyn
+Further analysis of the vulnerability can be found here:
+https://census-labs.com/news/2017/10/02/e2openplugin-openwebif-saveconfig-remote-code-execution/
 
-# dumpelf $FILE
-SEGV on unknown address 0x6360e1292000 (pc 0x00000051fba9 bp 0x7ffeef817f20 sp 
-0x7ffeef817ec0 T0)
-==8213==The signal is caused by a READ memory access.
+The vulnerability allows remote code execution on hosts running the
+aforementioned plugin. Some devices affected also run the plugin under
+root privileges (e.g: Dreambox DM800 HD se), allowing for complete
+remote takeover of the host.
 
-(gdb)
-#0  dump_notes (B=B@...ry=64, memory=memory@...ry=0x63fff7ff5000, 
-memory_end=0x6414f7ff5000, elf=0x60d8e0, elf=0x60d8e0) at dumpelf.c:228
-#1  0x0000000000405636 in dump_phdr (elf=elf@...ry=0x60d8e0, 
-phdr_void=phdr_void@...ry=0x7ffff7ff50f0, phdr_cnt=phdr_cnt@...ry=1) at 
-dumpelf.c:324
-#2  0x0000000000401dd9 in dumpelf (file_cnt=0, filename=) at dumpelf.c:91
-#3  parseargs (argv=0x7fffffffe1a8, argc=2) at dumpelf.c:557
-#4  main (argc=2, argv=0x7fffffffe1a8) at dumpelf.c:566
+This defect has been patched by the vendor with the git commit:
+09a050c8f04afd3bb4a14af98994be255aae10d9
+(https://github.com/E2OpenPlugins/e2openplugin-OpenWebif/commit/09a050c8f04afd3bb4a14af98994be255aae10d9).
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00141-pax-utils-dumpelf-invalidread-dump_notes
+Administrators of affected devices are strongly advised to update their
+running instance of e2openplugin-OpenWebif to the latest version of the
+code. An official release containing the fix has not been released yet.
 
-Affected version:
-1.2.2
 
-Fixed version:
-N/A
+References:
+https://github.com/E2OpenPlugins/e2openplugin-OpenWebif/issues/620
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9807
+https://census-labs.com/news/2017/10/02/e2openplugin-openwebif-saveconfig-remote-code-execution/
 
-Commit fix:
-https://github.com/gentoo/pax-utils/commit/18ded0e30ee5a84260cceb80d818b9c21ade4c76
+Disclosure Timeline:
+Vendor Contact: June 21st, 2017
+CVE assignment: June 22nd, 2017
+Vendor Patch: September 15th, 2017
+Public Advisory: October 2nd, 2017
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-N/A
+Regards,
+--
+John Torakis
 
-Timeline:
-2017-01-30: bug discovered and reported to upstream
-2017-02-01: upstream released a patch
-2017-02-04: blog post about the issue
+Security Researcher
+CENSUS S.A.
 
-Note:
-This bug was found with American Fuzzy Lop.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/04/pax-utils-dumpelf-two-invalid-memory-read-in-dumpelf-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
