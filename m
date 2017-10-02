@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/19/4
-Message-ID: <20170119143700.GA5132@kroah.com>
-Date: Thu, 19 Jan 2017 15:37:00 +0100
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/02/1
+Message-ID: <CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>
+Date: Mon, 02 Oct 2017 11:01:19 +0000
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: Anarcheuz Fritz <anarcheuz@...il.com>, cve-assign@...re.org
-Subject: Re: CVE Request - Samsung Exynos GPU driver OOB read
+Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 19, 2017 at 02:38:31PM +0800, Idler wrote:
-> Hello,
-> 
-> I'd like to request CVE for the following security issue:
-> 
-> Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2017
-> 
-> SVE-2016-6362: out of bound read in gpu driver
-> 
-> Severity: Low
-> Affected versions: M(6.0), N(7.0) devices with Exynos AP chipsets
-> Reported on: May 31, 2016
-> Disclosure status: Privately disclosed.
-> Vulnerability in gpu driver does not properly check the boundary of
-> buffers leading to a possible memory corruption.
-> The applied patch avoids an illegal access to memory by checking the boundary.
-> 
-> Source code:
-> Source code of the affected GPU drivers (as part of the Linux kernel
-> source) can be downloaded from Samsung Opensource Resource center:
-> http://opensource.samsung.com/
-> 
-> The particular model of phone we used to reproduce this issue is:
-> http://opensource.samsung.com/reception/receptionSub.do?method=sub&sub=F&searchValue=SM-G9200
+On Fri, Sep 29, 2017 at 6:12 AM Hanno Böck <hanno@...eck.de> wrote:
 
-Any pointer to the commit(s) that happened to resolve this issue?
+> On Thu, 28 Sep 2017 23:13:22 -0700
+> Reed Loden <reed@...dloden.com> wrote:
+>
+> > Separately, we're happy to announce that libav (
+> > https://git.libav.org/?p=libav.git;a=summary) was added to the scope
+> > earlier today.
+>
+> I'm surprised by this. When I saw the ibb-data bounty I immediately
+> wondered whether ffmpeg should be in there.
+>
+> Is there a reason libav is in and ffmpeg is not? Were there concerns by
+> the ffmpeg devs? (I'm not taking a side in the libav/ffmpeg wars, but
+> my impression is that many distros who had used libav for some time
+> have switched back and ffmpeg is clearly the more widely used of the
+> forks.)
 
-thanks,
 
-greg k-h
+We’d love to have FFmpeg in-scope, but the simple reason is that they don’t
+reply to our e-mails. All projects participating must explicitly opt-in,
+and we can’t get anybody at FFmpeg to let us know their thoughts on if they
+would like to be added or not.
+
+If somebody could help with that (or at least put us in contact with the
+appropriate folks), would appreciate it. :-)
+
+~reed
+(For the IBB)
+
