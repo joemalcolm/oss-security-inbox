@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["683" "Wednesday" "21" "June" "2017" "10:22:20" "-0600" "Jeff Law" "law@redhat.com" "<cbf49fff-2cd8-cb8c-59b8-07c2b7c37b0f@redhat.com>" "15" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062116:22:20" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        law@redhat.c Jun 21   15/683   " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<14558692.afnJ5aRU9J@wanheda>" ("<20170619152843.GC7769@localhost.localdomain>" "<14558692.afnJ5aRU9J@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["716" "Monday" "2" "October" "2017" "14:06:44" "+0200" "Greg KH" "greg@kroah.com" "<20171002120644.GA4301@kroah.com>" "20" "Re: [oss-security] CVE-2017-1000252: KVM denial of service with posted interrupts on Intel systems (since Linux 4.4)" "^Date:" nil nil "10" "2017100212:06:44" "[oss-security] CVE-2017-1000252: KVM denial of service with posted interrupts on Intel systems (since Linux 4.4)" (number mark "        greg@kroah.c Oct  2   20/716   " thread-indent "\"Re: [oss-security] CVE-2017-1000252: KVM denial of service with posted interrupts on Intel systems (since Linux 4.4)\"\n") "<63ba101d-71b7-fcb0-5f28-ed6f78ebfbbd@amazon.de>" ("<63ba101d-71b7-fcb0-5f28-ed6f78ebfbbd@amazon.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5529 invoked by uid 550); 21 Jun 2017 16:22:34 -0000
+Received: (qmail 27699 invoked by uid 550); 2 Oct 2017 12:06:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5511 invoked from network); 21 Jun 2017 16:22:33 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 7DD8368A9
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=law@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 7DD8368A9
-References: <20170619152843.GC7769@localhost.localdomain>
- <14558692.afnJ5aRU9J@wanheda>
-Message-ID: <cbf49fff-2cd8-cb8c-59b8-07c2b7c37b0f@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
+Received: (qmail 27679 invoked from network); 2 Oct 2017 12:06:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=
+	fm1; bh=R94HHQw18QkmH6baRVaxBmPg0J6O9kfdgO/Sk/dAv98=; b=L0bJrgly
+	vGcTnQq1lrV//gMXLnGxqf9sAy3wQeARep/xDrBW1qCiTN6GO0K5ttyWkWbYBnPw
+	RMH63VOaL93sqnYFaJ5jt37Q9xU/ZwOxt4imfx8JAEkmsU3uxCHcSNH7nQbuTlDe
+	SsPzm28qnXzu7MBIdzGssWF+1YhMV/0MITHEzRoK4JCiZTbZXWGcBuftPsA/oX1A
+	1E7GjvqgCavowFXR8ghfPuEd4ssQ5afHcpYJuGQqq1vVZ28O7brwatrC5iDq3EyJ
+	JroLSiahq/NQ8M0X0AlQ7Auw+LFINxaB9jtWav5vTyrgQ/6kaAzdRr4Oe8Gt72p8
+	w+QgGlfaIJfLqA==
+X-ME-Sender: <xms:yivSWfIkNAMVfv3ln6uVnka4fMH1wS1euq2qI2VgfxfES35jamDciw>
+X-Sasl-enc: WxiUKO7sdeFRHIWTAY0OybzdLxeyUOf7+rLgVBYN2ra5 1506945994
+Message-ID: <20171002120644.GA4301@kroah.com>
+References: <63ba101d-71b7-fcb0-5f28-ed6f78ebfbbd@amazon.de>
 MIME-Version: 1.0
-In-Reply-To: <14558692.afnJ5aRU9J@wanheda>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Wed, 21 Jun 2017 16:22:21 +0000 (UTC)
-Date: Wed, 21 Jun 2017 10:22:20 -0600
-From: Jeff Law <law@redhat.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <63ba101d-71b7-fcb0-5f28-ed6f78ebfbbd@amazon.de>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+Date: Mon, 2 Oct 2017 14:06:44 +0200
+From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
-To: oss-security@lists.openwall.com, Agostino Sarubbo <ago@gentoo.org>
+Subject: Re: [oss-security] CVE-2017-1000252: KVM denial of service with
+ posted interrupts on Intel systems (since Linux 4.4)
+To: oss-security@lists.openwall.com
 
-On 06/21/2017 04:46 AM, Agostino Sarubbo wrote:
-> On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
->> III. Solutions
->> - Recompile all userland code (ld.so, libraries, binaries) with GCC's
->>   "-fstack-check" option, which prevents the stack-pointer from moving
->>   into another memory region without accessing the stack guard-page (it
->>   writes one word to every 4KB page allocated on the stack).
+On Fri, Sep 15, 2017 at 06:36:59PM +0200, Jan H. Schönherr wrote:
+> Hi.
 > 
-> For the record, Gentoo Hardened enables by default -fstack-check=specific
-And if you were to look at the generated code, you'll see that it
-happily skips 2-3 pages of probes in prologues as well as within alloca
-spaces.  It's a false sense of security.
+> We have discovered a user triggerable BUG() when using KVM with posted interrupts on Intel
+> systems. This requires an unprivileged user to have access to the KVM device.
+> 
+> Certain values in a KVM_IRQFD API call can trigger a BUG_ON() at a later point in
+> vmx_update_pi_irte(). KVM as a whole seems to hang after that.
+> 
+> The issue was introduced with Linux 4.4, patches have been posted to the KVM
+> mailing list:
+> - https://marc.info/?l=kvm&m=150549145711115&w=2
+> - https://marc.info/?l=kvm&m=150549146311117&w=2
 
-jeff
+Note, for those intersted in this, the second patch was reverted and
+doesn't seem to be needed.
 
+thanks,
+
+greg k-h
