@@ -1,54 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/18
-Message-ID: <20170714185402.GA20840@openwall.com>
-Date: Fri, 14 Jul 2017 20:54:02 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/8
+Message-id: <FBF3AE41-DB79-43A7-A4FB-806C3702EC7E@me.com>
+Date: Tue, 03 Oct 2017 11:34:09 -0400
+From: Joel Esler <joel.esler@...com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: Re: clamav: Out of bounds read and segfault in xar parser
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 14, 2017 at 12:40:18PM -0600, kseifried@...hat.com wrote:
-> Sorry I thought I'd replied earlier to this thread
+Hello — My name is Joel Esler, I’m the Open Source lead here for ClamAV at Cisco.  A few comments here on list inline below:
 
-IIRC, you did, but you were not specific.
 
-> (phone email clients,
-> how do they work?) Red Hat will continue to help (let's pick #1 and #2
-> explicitly),
 
-What's #1 and #2 - do you mean the technical or the administrative tasks?
+> On Oct 1, 2017, at 3:37 AM, Eddie Chapman <eddie@...k.net> wrote:
+> 
+> On 29/09/17 14:09, Hanno Böck wrote:
+>> Meta-level comment:
+>> It seems to me clamav development has mostly stalled. Detection rates
+>> are very low and I'm considering to stop using it for mail filtering.
+>> (also there's of course the whole AV debate, however I never saw
+>> clamav as a security tool, more as something like a spam filter that
+>> prevents crap in my inbox. Still of course it needs to have secure
+>> parsers.)
+> 
+> I agree with much of this, and I think you're right that the effectiveness of Clamav in mail filtering contexts can be debated, though maybe more in terms of the AV debate, as you say.  As a user myself with it deployed filtering multi-user domains, I agree that detection rates are low.
 
-Technical are:
+Something we were working on.  To be honest, shipping detection in the method that we currently ship detection is not going to scale.  We are thinking about ways to change this.
 
-1. Propose (other) ways to fix, work around, or mitigate the reported issues
+> 
+> However, checking just now on Github I do not get the impression at all that development has stalled. Judging purely by number of commits, every month there are consistently a very healthy number. But what has stalled is stable releases; the last one being 0.99.2 on 22nd April 2016, so something is not quite right. But I've seen many open source/free software projects stalled over the years and definitely Clamav does not, IMO, fit that description (at least not yet).
 
-2. Develop and share fixes, workarounds, or mitigations
 
-and currently these are vacant.
 
-Administrative are:
+It’s not dead.  At all.  99.2 as a stable release was released in 2016, yes.  We have been working on 99.3 since, and are planning 99.4 and 99.5 now.  99.3 has been in beta for a couple months now, and the fix for this issue has been in git since the date mentioned earlier in the thread.  It’s also obviously in 99.3.
 
-1. Promptly review new issue reports for meeting the list's requirements
-and confirm receipt of the report and, when necessary, inform the
-reporter of any issues with their report (e.g., obviously not actionable
-by the distros) and request and/or propose any required yet missing
-information (most notably, a tentative public disclosure date) -
-primary: CloudLinux, backup: vacant
-
-2. If the proposed public disclosure date is not within list policy,
-insist on getting this corrected and propose a suitable earlier date -
-primary: CloudLinux, backup: vacant
-
-As you can see, the primary distro for them is currently CloudLinux, and
-as discussed in here I'd like each new distro joining to take at least
-task 1, unless they strongly prefer something else.  There's currently
-no backup, so I will gladly list Red Hat as backup here if you confirm.
-
-> I know we already have more than 2 people on the list so I
-> don't think we need to nominate a backup?
-
-If you're confident you'll fully handle a task without needing a backup
-distro, then we may list that as such.  Right now, you do have Debian
-listed as backup for the CVE tasks, though.
-
-Alexander
+--
+Joel Esler
+Manager
+Talos Group
+http://www.talosintelligence.com
