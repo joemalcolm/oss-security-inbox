@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1317" "Tuesday" "24" "January" "2017" "03:12:09" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<c66b6384d0834cb09b4c472e15f2131c@imshyb01.MITRE.ORG>" "36" "[oss-security] Re: CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow" nil nil nil "1" "2017012408:12:09" "[oss-security] Re: CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow" (number mark "U       cve-assign@m Jan 24   36/1317  " thread-indent "\"[oss-security] Re: CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow\"\n") "<f7ba24cc-1b0e-7ea8-fd2d-d062c817d55d@insomniasec.com>" ("<f7ba24cc-1b0e-7ea8-fd2d-d062c817d55d@insomniasec.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["760" "Tuesday" "3" "October" "2017" "07:30:06" "+0000" "Terry Chia" "terrycwk1994@gmail.com" "<CAGqxZSUxjgaWr67Hiwfh1RfA8L5-JtezAQwhuwmjQbyus45Lhw@mail.gmail.com>" "21" "[oss-security] Graphicsmagick: NULL Pointer Dereference in DICOM Decoder (CVE-2017-14994)" "^Date:" nil nil "10" "2017100307:30:06" "[oss-security] Graphicsmagick: NULL Pointer Dereference in DICOM Decoder (CVE-2017-14994)" (number mark "U       terrycwk1994 Oct  3   21/760   " thread-indent "\"[oss-security] Graphicsmagick: NULL Pointer Dereference in DICOM Decoder (CVE-2017-14994)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5525 invoked by uid 550); 24 Jan 2017 08:12:23 -0000
+Received: (qmail 13720 invoked by uid 550); 3 Oct 2017 07:45:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5507 invoked from network); 24 Jan 2017 08:12:22 -0000
-From: <cve-assign@mitre.org>
-To: <murray.mcallister@insomniasec.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <f7ba24cc-1b0e-7ea8-fd2d-d062c817d55d@insomniasec.com>
-Message-ID: <c66b6384d0834cb09b4c472e15f2131c@imshyb01.MITRE.ORG>
-Date: Tue, 24 Jan 2017 03:12:09 -0500
+Received: (qmail 30459 invoked from network); 3 Oct 2017 07:30:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=PnSRpa5eS/7FErKFfg6732jBIaOsOtX2RgiYHxaN7d0=;
+        b=ZlCqlSAFjyrJdEgLezLgrCC1AGFFgyoKfDN60YpqLNIF2aa+JSpOB0rfHw40b7sdMf
+         9bDP+ot5jQ+qL7g75naFHdHe5LjDPpDey0bgTJSvKiKTnnYFyQtl9nV9VeW0QFuJ6Ccm
+         Tevb2A2ees5bDE4Dpi0YoodgW6Oo5PrK3tvar/2WCKuUrRykYzrPSTkz4gJMvWEfkdEa
+         g6u3oCApX+Y8aKG4Ed47gO/SXO2nQjUb5huBsGwiIkKMV1cAOfN3yfM0dPYGgvEBDg57
+         OCSFumC+fO6yz6QVbbM2oT19loKIhX2QYDaNIwwftib/CajVFlC4CaUb98WidoQOj9if
+         ZSVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=PnSRpa5eS/7FErKFfg6732jBIaOsOtX2RgiYHxaN7d0=;
+        b=PQzPp37n7EAU0C9SyYq4DFroleD3Lrxy5F/EiCJK19lFbKHHDaOtxhz54C2Fkw3WN6
+         b3DDEAHx6SK4yS09a9CE3a5ko1yq3aInf9WRi2B19Wss8j/NTqWKDdFSmJmufZw3GZN1
+         W16DSq0ImnB0Qjy621w4+Jw2Pp2HSWyMC1cK4BbHxdRzwJhobukNNpxCVsdNwX//CFbV
+         peIHJoEQKn5rdjS8mb4BuHdx7lrIkk4WHFpnFOBREIo6Lra83OlSeVOMbGYapFHouiZJ
+         XvItfXOfZ+lzx0nBRgzdAGM/kx0jsO6SCjYiYaimS0vnRArbbskamljYHA3lMAGHxfw+
+         VHjw==
+X-Gm-Message-State: AMCzsaWqUXe372U2Yo7qyD/QtedzH7DVFmimoB4safpkj/nmRo9AVduV
+	mt9WE0Zr5ldYPoSMG55AGOVVAYd+Ay8uYj9sWnLsqw==
+X-Google-Smtp-Source: AOwi7QAqO2ITe1/QM22v8vpEWrkq74ofliATm3mLoTovs22nPzmf47i3UIxfGmLLYzAHjJnJ9ovT7ODF4TrEhZAGXA8=
+X-Received: by 10.55.134.68 with SMTP id i65mr18939678qkd.192.1507015817394;
+ Tue, 03 Oct 2017 00:30:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow
+Message-ID: <CAGqxZSUxjgaWr67Hiwfh1RfA8L5-JtezAQwhuwmjQbyus45Lhw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="94eb2c072ed4777fd2055a9f7692"
+Date: Tue, 03 Oct 2017 07:30:06 +0000
+From: Terry Chia <terrycwk1994@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Graphicsmagick: NULL Pointer Dereference in DICOM Decoder (CVE-2017-14994)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--94eb2c072ed4777fd2055a9f7692
+Content-Type: text/plain; charset="UTF-8"
 
-> [PATCH 1/2] drm/vc4: Fix an integer overflow in temporary allocation layout.
-> https://lkml.org/lkml/2017/1/17/761
+A null pointer dereference vulnerability in the GraphicsMagick DICOM image
+decoder allows an attacker to cause a denial-of-service condition or other
+unspecified impact.
 
-Use CVE-2017-5576.
+Bug: https://sourceforge.net/p/graphicsmagick/bugs/512/
+Writeup: https://nandynarwhals.org/CVE-2017-14994/
 
+Timeline:
+30 Sept 2017 - Discovery of the vulnerability.
+1 Oct 2017 - Disclosure of vulnerability to the vendor.
+1 Oct 2017 - Vulnerability fixed in mercurial commit.
+2 Oct 2017 - CVE number requested.
+3 Oct 2017 - CVE-2017-14994 assigned.
+3 Oct 2017 - Advisory sent to oss-security mailing list.
 
-> [PATCH 2/2] drm/vc4: Return -EINVAL on the overflow checks failing.
-> https://lkml.org/lkml/2017/1/17/759
+This issue was discovered by Terry Chia (Ayrx) and Jeremy Heng (@nn_amon).
 
-Use CVE-2017-5577.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYhwunAAoJEHb/MwWLVhi2S/wP/jt59qeY74I02n9My1lTZEYd
-jy7AWveL6n8B/Z3JTcJq+70wVn8wQ0j+oKI+Hd4PdQzK0inBYINgRvuPnrtFaY0R
-yNgJhfrOHyw+FRwrAqgjQeo/0iiWmmOus3iQeK/4z4snHFdo3nXkQULAS3hh5J0y
-U0EEubTWGp8czySRj325Lz05ZyRsTW8A3oIm/mtbocuh85r2OdHrisE8SxRvzmdM
-plXtCFqLzwnw4ay23VB7AsZOjJUknyxwohARgyQBLjIyRD/GGhKhblfAzbsJ1GeS
-C43os7VZkxlkZMIJJMt/C4iZJdihzVSuQ9sA70exo8bwBMcAs6Fa1IG8HuZTPQH5
-bU1sBzKu55b/Iyo2CK3+fTDkNbvAggF0RzJkTUZ7FDuqupbpDgCCPOxqFc67cnkY
-0sS4iVJRQctUSV2DCcbGvlxL3SMA1raBGzVszoPuhrM1KQP6cHGEj6Zkx/q2/UKh
-sCD9dV7ZUXo/HRGGfdgWmkMC1quhQ0Vbh7KQYna2Sb6CrUFVPfyyAymv4daF4xe/
-HjjxrtLcsr75GbI4m7z7HvMHuR3Ec2ok6cx3NMM/G1ya8nhbjDJkgOd87DFohgYV
-OHvBTQbk1g955spSJsQNsI0W9UcORJ2/b7N0PR9JP4Xtn/61A1VNdZSUKijFl/s/
-F6HMPX7zYdSE8i9NWJ7D
-=vnRT
------END PGP SIGNATURE-----
+--94eb2c072ed4777fd2055a9f7692--
