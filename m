@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/3
-Message-ID: <dfb21a5f-dc61-a3d4-93ff-333a902623f9@apache.org>
-Date: Wed, 8 Nov 2017 15:51:54 +0900
-From: Akira Ajisaka <aajisaka@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/13
+Message-ID: <1507061053.24302.4.camel@debian.org>
+Date: Tue, 03 Oct 2017 22:04:13 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability
+On Wed, 2017-09-27 at 17:09 +0200, Solar Designer wrote:
+> However, if Debian and any
+> other distros doing similar have the resources, I'd appreciate it if
+> they bring in here info on vulnerabilities in Open Source software that
+> they're tracking / are about to patch / have already patched / have even
+> issued advisories on, but that haven't been mentioned in here before.
 
-Severity: Important
+When working on an advisory and update for Debian, I usually scheme through
+oss-sec in order to see if the vulnerability has already been discussed here,
+or if the package I'm working on has been discussed recently.
 
-Vendor: The Apache Software Foundation
+I'll try to send a brief summary mail to this list if it happens that the
+package and/or vulnerability is not on the oss-sec radar. Something along the
+line of “We've just fixed / We're currently in the process of fixing
+$vulnerability in $package (CVE-XXXX).
 
-Versions Affected:
-Hadoop 2.6.1+, 2.7.x before 2.7.4, 3.0.0-alpha before 3.0.0-alpha4
-
-Description:
-In a cluster where the YARN user has been granted access to all HDFS
-encryption keys, if a file in an encryption zone with access permissions
-that make it world readable is localized via YARN's localization mechanism,
-e.g. via the MapReduce distributed cache, that file will be stored
-in a world-readable location and shared freely with any application
-that requests to localize that file, no matter who the application owner
-is or whether that user should be allowed to access files from the
-target encryption zone.
-
-Mitigation:
-Users on 2.6.1+ and 2.7.x before 2.7.4 should upgrade to 2.7.4 or later
-Users on 3.0.0-alpha before 3.0.0-alpha4 should upgrade to 3.0.0-alpha4 or later
-
-Impact:
-Users may gain access to files that should be protected by HDFS
-transparent encryption if those files have world readable access
-permissions and are localized through YARN's localization mechanism
-in a cluster where YARN has been granted access to all HDFS encryption keys.
-
-Credit:
-This issue was discovered by Luke Herbert.
+Regards,
+-- 
+Yves-Alexis
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
