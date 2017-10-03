@@ -1,44 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/23/1
-Message-ID: <20171223033916.GA10696@lonestar>
-Date: Sat, 23 Dec 2017 09:09:16 +0530
-From: Dhiru Kholia <dhiru.kholia@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/12
+Message-ID: <071bacf8-a762-f4f1-39d8-f2e286413ea6@xiscosoft.es>
+Date: Tue, 3 Oct 2017 20:54:50 +0200
+From: klondike <klondike@...cosoft.es>
 To: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+Subject: Re: clamav: md5 collision based detection avoidance, Was: Out of bounds read and segfault in xar parser
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 22, 2017 at 08:52:52PM +0100, Solar Designer wrote:
-> On Sun, Dec 17, 2017 at 09:06:08AM +0000, halfdog wrote:
+DISCLAIMER: I'm stepping in here pointed in by Hanno...
+
+There is also another fun issue with the way caching works (which is
+enabled by default) that allows avoiding detection by ClamAV.
+
+This issue was originally reported on 14/05/2016 on
+https://bugzilla.clamav.net/show_bug.cgi?id=11570 (which I asked to be
+made public) and publicly disclosed after rejections from Defcon, Black
+Hat and SEC-T at Bornhack this August.
+
+Attached is a small demo, showing the issue.
+
+Basically both files share the same md5 and use Peter Selinger's code
+http://www.mathstat.dal.ca/~selinger/md5collision/ to behave differently
+based on the contents of the colliding blocks. The custom signature to
+detect evil is:
+0eb6e7de97c5db6b584036024e18d43b94df0213c036a8cdf38aba20b07e29bf:14616:Ransomware.gen
+Which you may need to place on /var/lib/clamav/
+
+Basically as long as answer is scanned first, ransom will not be
+detected, this can be used to bypass detection by amavisd reliably as
+attachments are scanned in the order in which they appear.
+
+Keep in mind this is a simple PoC detection of such binaries is easy but
+I never made use of cryptography to obfuscate them ;)
+
+Anyways this was not fixed on 0.99.3, I didn't check git but given how
+deep in the code the cache's requirement for MD5 delves I wouldn't be
+surprised if it wasn't.
+
+I'll publish a longer paper on the article when time allows including
+some mitigations that can be used if MD5 is a strong requirement, but
+for now this is my contribution to this discussion.
+
+Klondike
+
+El 03/10/17 a las 17:34, Joel Esler escribió:
+> Hello — My name is Joel Esler, I’m the Open Source lead here for ClamAV at Cisco.  A few comments here on list inline below:
 >
-> > > You may process the private key file with gpg2john, then try to crack it
-> > > with john.  This will output the actual value, as well as show you the
-> > > speed at which passphrases can be tested against that key on your system
-> > > and with that version of JtR.  To use a GPU, add "--format=gpg-opencl".
-> > > Please use latest bleeding-jumbo off GitHub for all of this.
-> >
-> > Done that, but still fighting how to use "gpg2john" with the new
-> > gpgv2 "private-keys-v1.d" key format. Exporting the private keys
-> > using gpgv2 does not help as that requires the passphrase already,
-> > thus removing the gpgv2-encryption, we want to test.
 >
-> I tried asking a JtR jumbo contributor to look into this, but
-> unfortunately I got no response yet, and I had no time to look into it
-> myself.  This is something we ought to have an answer to, but I
-> currently don't.
+>
+>> On Oct 1, 2017, at 3:37 AM, Eddie Chapman <eddie@...k.net> wrote:
+>>
+>> On 29/09/17 14:09, Hanno Böck wrote:
+>>> Meta-level comment:
+>>> It seems to me clamav development has mostly stalled. Detection rates
+>>> are very low and I'm considering to stop using it for mail filtering.
+>>> (also there's of course the whole AV debate, however I never saw
+>>> clamav as a security tool, more as something like a spam filter that
+>>> prevents crap in my inbox. Still of course it needs to have secure
+>>> parsers.)
+>> I agree with much of this, and I think you're right that the effectiveness of Clamav in mail filtering contexts can be debated, though maybe more in terms of the AV debate, as you say.  As a user myself with it deployed filtering multi-user domains, I agree that detection rates are low.
+> Something we were working on.  To be honest, shipping detection in the method that we currently ship detection is not going to scale.  We are thinking about ways to change this.
+>
+>> However, checking just now on Github I do not get the impression at all that development has stalled. Judging purely by number of commits, every month there are consistently a very healthy number. But what has stalled is stable releases; the last one being 0.99.2 on 22nd April 2016, so something is not quite right. But I've seen many open source/free software projects stalled over the years and definitely Clamav does not, IMO, fit that description (at least not yet).
+>
+>
+> It’s not dead.  At all.  99.2 as a stable release was released in 2016, yes.  We have been working on 99.3 since, and are planning 99.4 and 99.5 now.  99.3 has been in beta for a couple months now, and the fix for this issue has been in git since the date mentioned earlier in the thread.  It’s also obviously in 99.3.
+>
+> --
+> Joel Esler
+> Manager
+> Talos Group
+> http://www.talosintelligence.com
 
-Please see https://github.com/magnumripper/JohnTheRipper/issues/847 (Add
-support for the new GPG 2.1 "format") regarding this topic.
 
-To summarize,
 
-* Currently, gpg2john does not understand the "private-keys-v1.d" key
-  format.
+Download attachment "answer" of type "application/octet-stream" (14616 bytes)
 
-* We have a very rough cracking implementation for "private-keys-v1.d"
-  key format at the moment. See "filter.c" on that GitHub issue.
+Download attachment "ransom" of type "application/octet-stream" (14616 bytes)
 
-I can start working on a proper native cracking implementation (with GPU
-support likely), if there is interest in this stuff.
-
---
-Dhiru
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
