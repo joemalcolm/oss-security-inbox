@@ -1,25 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/4
-Message-ID: <CAMopvkMDajj=C-aJKXi2F9q4fB8T1Rk84p391PQvYsox0EDGwg@mail.gmail.com>
-Date: Thu, 10 Aug 2017 21:35:32 +0200
-From: Lukasz Lenart <lukaszlenart@...che.org>
-To: Struts Users Mailing List <user@...uts.apache.org>
-Cc: "announcements@...uts.apache.org" <announcements@...uts.apache.org>,  Struts Developers List <dev@...uts.apache.org>, announce@...che.org,  "security@...uts.apache.org" <security@...uts.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com, Yasser Zamani <yasser.zamani@...e.com>
-Subject: [ANN] Apache Struts: S2-049 Security Bulletin update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/4
+Message-ID: <F90F7078-F65C-46F0-8F51-CB4FB23B5DD7@gatech.edu>
+Date: Tue, 3 Oct 2017 14:39:55 +0000
+From: "Xu, Meng" <meng.xu@...ech.edu>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: FreeBSD kernel, double-fetch bug in smb_strdupin
 Content-Type: text/plain; charset=utf-8
 
-This is an update of the recently announced Security Bulletin S2-049 -
-http://struts.apache.org/docs/s2-049.html
+Hello,
 
-The bulletin was extended with an additional information when the
-potential vulnerability can be present in your application. Please
-re-read the mentioned bulletin and apply required actions if needed.
+In function  smb_strdupin()  of file sys/netsmb/smb_subr.c,
+smb_strdupin() tried to roll a copyin() based strlen to allocate a buffer
+and then blindly copyin that size.  Of course, a malicious user program
+could simultaneously manipulate the buffer, resulting in a non-terminated
+string being copied.
 
-Please report any problems back to the Struts Security mailing list -
-security@...uts.apache.org
+Bug report: https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=222687
+Patch: https://svnweb.freebsd.org/base?view=revision&revision=324102
 
+Please help assign a CVE to it.
 
-Kind regards
--- 
-Łukasz
-+ 48 606 323 122 http://www.lenart.org.pl/
+Thanks,
+Meng
+
