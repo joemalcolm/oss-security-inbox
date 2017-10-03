@@ -1,80 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/3
-Message-ID: <3424828.aBMPeXRjiz@blackgate>
-Date: Tue, 14 Feb 2017 10:50:59 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/7
+Message-ID: <20171003153340.GA26029@kroah.com>
+Date: Tue, 3 Oct 2017 17:33:40 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: A note about the multiple crashes in zziplib
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-> http://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-__zzip_get32-fetch-c/
+On Tue, Oct 03, 2017 at 09:00:38AM -0600, Kurt Seifried wrote:
+> On Tue, Oct 3, 2017 at 5:27 AM, Greg KH <greg@...ah.com> wrote:
+> 
+> >
+> >
+> > Yeah, this one keeps trying to get re-introduced as a "fix", when it
+> > really isn't (see the archives of the stable@...r mailing list for
+> > details.
+> >
+> > I don't know how you can "reject" a CVE, is there a proceedure
+> > somewhere?  There's lots of CVEs out there that people create against
+> > the kernel that just aren't issues at all, but I've been ignoring them
+> > as it makes people happy to assign and track them for no reason.
+> 
+> 
+> > Is there some way a project can get them rejected?
+> >
+> 
+> As mentioned before, there is the cveform page at https://cveform.mitre.org/
+> which can be used to update CVEs, including asking for REJECT. Simply chose
+> "Request an update to an existing CVE entry" then in "Type of update
+> requested" please choose "Rejection".
+> 
+> AN EASY WAY TO INTERACT WITH CVE TO UPDATE/REJECT/ETC PLEASE IS TO USE THE
+> CVEFORM.
+> 
+> CVEFORM URL: https://cveform.mitre.org/
 
-This is CVE-2017-5974.
+Well, it's not as easy as using email, but ok, I've attempted to submit
+a "reject this CVE" for the above mentioned one, let's see what happens
+:)
 
+thanks,
 
-
-> http://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-__zzip_get64-fetch-c/
-
-This is CVE-2017-5975.
-
-
-
-> http://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-zzip_mem_entry_extra_block-memdisk-c/
-
-This is CVE-2017-5976.
-
-
-
-> http://blogs.gentoo.org/ago/2017/02/09/zziplib-invalid-memory-read-in-zzip_mem_entry_extra_block-memdisk-c/
-
-This is CVE-2017-5977.
-
-
-
-> http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-mem-c/
-
-This is a functionality bug in a command-line program. There is
-no CVE ID at this time.
-
-
-
-> http://blogs.gentoo.org/ago/2017/02/09/zziplib-out-of-bounds-read-in-zzip_mem_entry_new-memdisk-c/
-
-This is CVE-2017-5978.
-
-
-
-> http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-prescan_entry-fseeko-c/
-
-This is CVE-2017-5979.
-
-
-
-> http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-zzip_mem_entry_new-memdisk-c/
-
-This is CVE-2017-5980.
-
-
-
-> http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-c/
-
-This is a functionality bug in a command-line program. There is
-no CVE ID at this time.
-
-
-
-> http://blogs.gentoo.org/ago/2017/02/09/zziplib-assertion-failure-in-seeko-c/
-
-This is CVE-2017-5981.
-
-
-> https://blogs.gentoo.org/ago/2017/02/09/zziplib-load-of-misaligned-address-in-memdisk-c/
-Please consider this a duplicate of:
-http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-mem-c/
-
-
-All CVEs where assigned via https://cveform.mitre.org
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+greg k-h
