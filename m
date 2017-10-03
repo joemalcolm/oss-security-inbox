@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/1
-Message-ID: <alpine.LFD.2.20.1702230954570.7757@wniryva>
-Date: Thu, 23 Feb 2017 09:59:13 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-2633 Qemu: VNC: memory corruption due to unchecked resolution limit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/6
+Message-ID: <20171003152213.u6zlrgu3nb7yk7ng@eldamar.local>
+Date: Tue, 3 Oct 2017 17:22:13 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: FreeBSD kernel, double-fetch bug in smb_strdupin
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi
 
-Quick Emulator(Qemu) built with the VNC display driver support is vulnerable 
-to an out-of-bounds memory access issue. It could occur while refreshing the 
-vnc display surface area in 'vnc_refresh_server_surface'.
+On Tue, Oct 03, 2017 at 02:39:55PM +0000, Xu, Meng wrote:
+> Hello,
+> 
+> In function  smb_strdupin()  of file sys/netsmb/smb_subr.c,
+> smb_strdupin() tried to roll a copyin() based strlen to allocate a buffer
+> and then blindly copyin that size.  Of course, a malicious user program
+> could simultaneously manipulate the buffer, resulting in a non-terminated
+> string being copied.
+> 
+> Bug report: https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=222687
+> Patch: https://svnweb.freebsd.org/base?view=revision&revision=324102
+> 
+> Please help assign a CVE to it.
 
-A user/process inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+CVE's are not anymore requested via the oss-security list. If you want
+to request one please have a look at https://cveform.mitre.org/
 
-Upstream patch:
----------------
-   -> http://git.qemu-project.org/?p=qemu.git;a=commitdiff;h=bea60dd7679364493a0d7f5b54316c767cf894ef
-   -> http://git.qemu-project.org/?p=qemu.git;a=commitdiff;h=9f64916da20eea67121d544698676295bbb105a7
+Once you have the CVE assigned, can you please loop back the
+assignement in this thread?
 
-Older versions of Qemu are affected, latest upstream releases are not.
-
-'CVE-2017-2633' has been assigned to this issue by Red Hat Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Regards,
+Salvatore
