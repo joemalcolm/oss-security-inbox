@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1012" "Tuesday" "24" "November" "2015" "23:09:19" "+0100" "Matthias Geerdsen" "matthias@vorlons.info" "<5654E00F.5050806@vorlons.info>" "29" "[oss-security] CVE request: Redmine - information disclosure on the time logging form" nil nil nil "11" "2015112422:09:19" "[oss-security] CVE request: Redmine - information disclosure on the time logging form" (number mark "U       matthias@vor Nov 24   29/1012  " thread-indent "\"[oss-security] CVE request: Redmine - information disclosure on the time logging form\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1250" "Tuesday" "3" "October" "2017" "09:00:38" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0NXSozVQfV9hkPkLH2Yc1h1WzGGovG8OpYdvTSX1+Gtw@mail.gmail.com>" "46" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Date:" nil nil "10" "2017100315:00:38" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        kseifried@re Oct  3   46/1250  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<20171003112709.GA30134@kroah.com>" ("<1978278.8CZP0B31Sj@wanheda>" "<20170926073214.GA8108@kroah.com>" "<4188502.8b3PN4uBSd@wanheda>" "<20170926150446.GA11530@kroah.com>" "<CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>" "<20170927125149.GA2500@openwall.com>" "<20170927130424.GA19695@kroah.com>" "<20170928073533.mlntvkfnzl6sann7@eldamar.local>" "<20170928143420.GB6123@kroah.com>" "<20170928213721.GA5119@grsecurity.net>" "<20171003112709.GA30134@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 15529 invoked by uid 550); 25 Nov 2015 00:31:56 -0000
+Received: (qmail 1544 invoked by uid 550); 3 Oct 2017 15:00:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19929 invoked from network); 24 Nov 2015 22:09:33 -0000
-X-Virus-Scanned: Debian amavisd-new at mail.vorlons.info
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vorlons.info;
-	s=mail; t=1448402960;
-	bh=ZHzUAd+CAedhWjKE7VPizq/HqVCNuzUtTiuFM22Rx2o=;
-	h=Date:From:To:Subject:From;
-	b=TQjlrJ8SFmaKxlK5ceAEpWwStGnEucrDnmD5LH1qKR7jywnxCCCS0fubt9MYVdRLN
-	 9J64T0Wz0QdYQ8LhFHCTW3FElFyF2FVjXFjBi8oKKM1yJrdprAoKO0MfdUlkh0QXSr
-	 vZLCBvkvohZ0d1bDXmdgxu347HM4Px7qYiGIegLo=
-Message-ID: <5654E00F.5050806@vorlons.info>
-Date: Tue, 24 Nov 2015 23:09:19 +0100
-From: Matthias Geerdsen <matthias@vorlons.info>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.8.0
+Received: (qmail 1513 invoked from network); 3 Oct 2017 15:00:51 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=4Qh3Yy+6HMPW1jIbFS7TDLOeHySyj77iC3Djxwe6xAw=;
+        b=LHX1gR578BKD1Q902Rdj0kOC2YYVGEJAz1pzEdhLfF5AQXw9oSvmvKo15MSTH+buAY
+         8e6k5eNwizh2InKz5LpeH6JTZomkFJDEp14qPuSwJ1FPrJDzfYNYwO9malJSnt786Atm
+         EI7GURTD4X2rMQlAAbTMPLw3qOVybJMVvlJnJVgOygGBros8+T1c5Yy4aLh1wvBh/tgr
+         ViWHeEGZ2A2kKGtpKOENEoiq0BFarJ++wKY6vNqYrgdq5FCFt5B7rsdAOwNKcTGoc6Cj
+         xyafBJGqf3q2DuQW1l8C6WuqUjTYX0QBYJqLpLJmWgtm+1xQZuqqcvy96lY+E/g3G+Yo
+         BzCQ==
+X-Gm-Message-State: AMCzsaVwAOGziYicHUrGZLJEZUwAFJ/bomOgp1BWxwYdaE/myPfXPX4O
+	fAnbjSzmCs6afTATH7SYShWYtm9PqWS52FQme4fGNuSVctM=
+X-Google-Smtp-Source: AOwi7QAuVQoI7tFmLGlsDg6VKitLDkdT1fdB4fkSLQXSblMp4WPPhjGOU0qnwTVvqVTf7PR+KY72BBss5+nF53zGAO0=
+X-Received: by 10.157.18.211 with SMTP id g77mr2905631otg.375.1507042839462;
+ Tue, 03 Oct 2017 08:00:39 -0700 (PDT)
 MIME-Version: 1.0
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE request: Redmine - information disclosure on the time logging
- form
+In-Reply-To: <20171003112709.GA30134@kroah.com>
+References: <1978278.8CZP0B31Sj@wanheda> <20170926073214.GA8108@kroah.com>
+ <4188502.8b3PN4uBSd@wanheda> <20170926150446.GA11530@kroah.com>
+ <CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>
+ <20170927125149.GA2500@openwall.com> <20170927130424.GA19695@kroah.com>
+ <20170928073533.mlntvkfnzl6sann7@eldamar.local> <20170928143420.GB6123@kroah.com>
+ <20170928213721.GA5119@grsecurity.net> <20171003112709.GA30134@kroah.com>
+Message-ID: <CANO=Ty0NXSozVQfV9hkPkLH2Yc1h1WzGGovG8OpYdvTSX1+Gtw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="94eb2c0c0afe1b9da9055aa5c16b"
+Date: Tue, 3 Oct 2017 09:00:38 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
+To: oss-security <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--94eb2c0c0afe1b9da9055aa5c16b
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+On Tue, Oct 3, 2017 at 5:27 AM, Greg KH <greg@kroah.com> wrote:
 
-please assign a CVE ID for an information disclosure issue in the
-latest Redmine releases (2.6.8, 3.0.6 and 3.1.2) [1]. The issue is
-listed at [2] and a commit can be found at [3]. A private bug report
-appears to exist at [4]
+>
+>
+> Yeah, this one keeps trying to get re-introduced as a "fix", when it
+> really isn't (see the archives of the stable@vger mailing list for
+> details.
+>
+> I don't know how you can "reject" a CVE, is there a proceedure
+> somewhere?  There's lots of CVEs out there that people create against
+> the kernel that just aren't issues at all, but I've been ignoring them
+> as it makes people happy to assign and track them for no reason.
 
-Cheers
-Matthias
 
-[1] <http://www.redmine.org/news/102>
-[2] <http://www.redmine.org/projects/redmine/wiki/Security_Advisories>
-[3]
-<https://github.com/redmine/redmine/commit/c096dde88ff02872ba35edc4dc403c80a7867b5c>
-[4] <https://www.redmine.org/issues/21150>
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+> Is there some way a project can get them rejected?
+>
 
-iQEcBAEBCAAGBQJWVOAJAAoJEDVYuxv9Aw7qGhQH/3xLVit66gjxG5pbJee6kykm
-Ifzc9U7CKSmdMPT6Mv6DOYBLB0FnEHQS7Zybp0qU06b202Et9cnLm4tsibUBCZ3t
-aCnoIMamd9O2ED3pHdVp8KbVgRftHzZeeKWsofE5dfQrKFyLSYmUOjEjySxmjwpH
-OokliyvVl1xOqw9CF/mYv0gxROvJBG+/3jEeI6ACANRiVfAlV0lEBak1nBk3Ri+w
-ihlfAbCMKVzOTL5OYgT4GYLMT8Lp2vXdp/S3WoeUMHhUd5yKQ0J4/Z+IevhW+I25
-Mo1NcRmYCzBkWLzWFEZUtfUlmyt+mIqnfOts2Qx09OfCzVYO0xae4CFX+C/QgxQ=
-=MSUo
------END PGP SIGNATURE-----
+As mentioned before, there is the cveform page at https://cveform.mitre.org/
+which can be used to update CVEs, including asking for REJECT. Simply chose
+"Request an update to an existing CVE entry" then in "Type of update
+requested" please choose "Rejection".
+
+AN EASY WAY TO INTERACT WITH CVE TO UPDATE/REJECT/ETC PLEASE IS TO USE THE
+CVEFORM.
+
+CVEFORM URL: https://cveform.mitre.org/
+
+
+>
+> thanks,
+>
+> greg k-h
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--94eb2c0c0afe1b9da9055aa5c16b--
