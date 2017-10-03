@@ -1,19 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/2
-Message-ID: <3284786.rxzJs1xbWv@blackgate>
-Date: Mon, 13 Mar 2017 10:35:13 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: audiofile: heap-based buffer overflow in alaw2linear_buf (G711.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/11
+Message-ID: <CANO=Ty16YH2oUFMG2W=S8tc08id5ehNAZyssNcocNJ5pXgqF1g@mail.gmail.com>
+Date: Tue, 3 Oct 2017 11:37:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 26 February 2017 11:50:44 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow
-> -in-alaw2linear_buf-g711-cpp
+Because I messed up the git pull request to submit it.
 
-This is CVE-2017-6830
+On Tue, Oct 3, 2017 at 11:05 AM, Jan Schaumann <jschauma@...meister.org>
+wrote:
+
+> Qualys Security Advisory <qsa@...lys.com> wrote:
+> >
+> > Qualys Security Advisory
+> >
+> > Linux PIE/stack corruption (CVE-2017-1000253)
+>
+> How come this CVE does not yet show up on cve.mitre.org?
+>
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000253
+>
+> It's been a week since the publication.
+>
+> -Jan
+>
+
+
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
