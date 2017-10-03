@@ -1,47 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/6
-Message-ID: <CADSYzsugzEnV-7WjgVetwCHLmhaX3bY9DPgR-Gvo-UodR0R1xA@mail.gmail.com>
-Date: Mon, 24 Apr 2017 18:14:59 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/9
+Message-ID: <20171003170533.GY2338@netmeister.org>
+Date: Tue, 3 Oct 2017 13:05:33 -0400
+From: Jan Schaumann <jschauma@...meister.org>
 To: oss-security@...ts.openwall.com
-Subject: SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
+Subject: Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)
 Content-Type: text/plain; charset=utf-8
 
-SquirrelMail <= 1.4.23 Remote Code Execution (CVE-2017-7692)
+Qualys Security Advisory <qsa@...lys.com> wrote:
+> 
+> Qualys Security Advisory
+> 
+> Linux PIE/stack corruption (CVE-2017-1000253)
 
-Desc.:
-SquirrelMail is affected by a critical Remote Code Execution vulnerability
-which stems from insufficient escaping of user-supplied data when
-SquirrelMail has been configured with Sendmail as the main transport.
-An authenticated attacker may be able to exploit the vulnerability
-to execute arbitrary commands on the target and compromise the remote
-system.
+How come this CVE does not yet show up on cve.mitre.org?
 
-Discovered by:
-Dawid Golunski (https://legalhackers.com : https://ExploitBox.io)
-, as well as Filippo Cavallarin (see attached advisory for details)
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000253
 
-Official solution:
-Vendor seems to have released a new version of 1.4.23 on
-squirrelmail-20170424_0200-SVN.stable.tar.gz
-which still seems to be vulnerable hence a new subject/thread.
+It's been a week since the publication.
 
-The exploit from my advisory was also confirmed to work on Ubuntu
-package: '1.4.23~svn20120406-2ubuntu1.16.04.1'.
-
-Hence the updated version in the subject/advisory title.
-
-Full advisory URL:
-
-https://legalhackers.com/advisories/SquirrelMail-Exploit-Remote-Code-Exec-CVE-2017-7692-Vuln.html
-
-
-
--- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-https://ExploitBox.io
-t: @dawid_golunski
-
-View attachment "SquirrelMail_RCE.txt" of type "text/plain" (16343 bytes)
+-Jan
