@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/2
-Message-ID: <nycvar.YSQ.7.76.1709071533330.14257@wniryva>
-Date: Thu, 7 Sep 2017 15:43:37 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Thomas Garnier <thgarnie@...gle.com>
-Subject: CVE-2017-14167 Qemu: i386: multiboot OOB access while loading guest kernel image
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/10
+Message-ID: <20171003170820.GA27650@localhost.localdomain>
+Date: Tue, 3 Oct 2017 10:08:20 -0700
+From: Qualys Security Advisory <qsa@...lys.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi all,
 
-Quick Emulator(Qemu) built with the PC System Emulator with multiboot feature 
-support is vulnerable to an OOB r/w memory access issue. It could occur due to 
-an integer overflow while loading a kernel image during a guest boot.
+On Tue, Sep 26, 2017 at 08:08:25AM -0700, Qualys Security Advisory wrote:
+> As a proof-of-concept, we will publish CVE-2017-1000253.c
 
-A user/process could use this flaw to potentially achieve arbitrary code 
-execution on a host.
+Since CentOS 7 patched this vulnerability on September 13, 2017 (release
+1708), we attached our CVE-2017-1000253.c exploit for CentOS-7 kernel
+versions "3.10.0-514.21.2.el7.x86_64" and "3.10.0-514.26.1.el7.x86_64"
+to this email (alternatively, this exploit is also available at
+https://www.qualys.com/research/security-advisories/).
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-09/msg01483.html
+Thank you very much!  With best regards,
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1489375
+-- 
+the Qualys Security Advisory team
 
-This issue was reported by Thomas Garnier of Google.com.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+View attachment "CVE-2017-1000253.c" of type "text/plain" (15548 bytes)
