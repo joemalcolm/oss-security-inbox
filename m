@@ -1,25 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/2
-Message-ID: <5951818E.21842.8B6A4375@pageexec.freemail.hu>
-Date: Mon, 26 Jun 2017 23:50:06 +0200
-From: "PaX Team" <pageexec@...email.hu>
-To: oss-security <oss-security@...ts.openwall.com>, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/2
+Message-ID: <20171003112709.GA30134@kroah.com>
+Date: Tue, 3 Oct 2017 13:27:09 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-On 26 Jun 2017 at 13:47, Kurt Seifried wrote:
+On Thu, Sep 28, 2017 at 05:37:21PM -0400, Brad Spengler wrote:
+> > > CVE-2017-0605:
+> > > --------------
+> > > https://security-tracker.debian.org/tracker/CVE-2017-0605
+> > > upstream: (4.12-rc1) [e09e28671cda63e6308b31798b997639120e2a21]
+> > > 
+> > > is e.g. includedin 3.16.44 (a1141b19b23a0605d46f3fab63fd2d76207096c4),
+> > > 3.2.89 (e39e64193a8a611d11d4c62579a7246c1af70d1c) but not in 4.9.
+> > > 
+> > > (afaics not Cc'ed to stable).
+> > 
+> > Ouch, thanks for letting me know, that's not good, we don't want to get
+> > the trees out of sync for obvious reasons.
+> 
+> The above CVE shouldn't exist; the patch doesn't fix any vulnerability
+> as the upstream commit message itself notes, and didn't need to be
+> backported to any of the kernels it was backported to.  Not only that, the
+> above advisory marked it as a remote vulnerability with critical severity.
+> It looks like Debian and Ubuntu released updated kernels, while Red Hat and
+> SuSE marked it as WONTFIX and unaffected, respectively.  I am not sure why
+> neither simply rejected the CVE.
 
-> I think we can agree as a community of professionals that insults and name
-> calling are unnecessary and also not very effective.
+Yeah, this one keeps trying to get re-introduced as a "fix", when it
+really isn't (see the archives of the stable@...r mailing list for
+details.
 
-I completely agree with you but then I can't explain why you chose to insult
-our projects last week and still have not remedied it (both the CVE and your
-insulting tweet are still up). I find it curious how you can preach about
-professionalism after being the very instigator of the recent splat (heck,
-instead of answering, you called it a conspiracy theory when I asked you in
-private why you issued the CVE to begin with which then forced us to take
-the issue public).
+I don't know how you can "reject" a CVE, is there a proceedure
+somewhere?  There's lots of CVEs out there that people create against
+the kernel that just aren't issues at all, but I've been ignoring them
+as it makes people happy to assign and track them for no reason.
 
-cheers,
- PaX Team
+Is there some way a project can get them rejected?
 
+thanks,
+
+greg k-h
