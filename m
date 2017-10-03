@@ -1,4 +1,9 @@
-Received: (qmail 30459 invoked by uid 550); 29 Dec 2025 17:05:35 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["736" "Tuesday" "3" "October" "2017" "11:37:07" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty16YH2oUFMG2W=S8tc08id5ehNAZyssNcocNJ5pXgqF1g@mail.gmail.com>" "32" "Re: [oss-security] Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)" "^Date:" nil nil "10" "2017100317:37:07" "[oss-security] Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)" (number mark "        kseifried@re Oct  3   32/736   " thread-indent "\"Re: [oss-security] Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)\"\n") "<20171003170533.GY2338@netmeister.org>" ("<20170926150825.GA17707@localhost.localdomain>" "<20171003170533.GY2338@netmeister.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1379 invoked by uid 550); 3 Oct 2017 17:37:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,58 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26583 invoked from network); 29 Dec 2025 09:15:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=verbuecheln.ch;
-	s=default; t=1766999731;
-	bh=wcBk5mkc6ixBKBAwY3iSguZBJRNLAY0y2rj0CrQUnjc=;
-	h=Subject:From:To:Date:In-Reply-To:References:From;
-	b=oCuiWhWL49lohKv+Cyt4wW0x+JBtMmV8JeLbMRpsZQNEf8RGyPnoFwzwVIar3Bt+a
-	 7MXvrn/wvqgxbBQLEEa9+A58CGDEKzOdJ4T0WTj10mP4Fs65cSZuJD75EGGO/mDNA+
-	 ++Nh/JaBuzib3N/EWnV0ReYSRyA+FsQq3kqL2mlEXXpOUp/T6cMmPS7Nb2ut6crGY4
-	 DQ5gmF/c0VMV6fk3Yhm0VZXnHJf6Tak+ZzAMqYKNgRy7GA458RCDMxvnMrSmRJwwm7
-	 QxDC5Jj3XbvAJbINAKVoAJlIpPwmSWpYORNmEqh24gYl1JdyZyL4f4X+vFdfGf5U+O
-	 XqMhx88mef10A==
-Message-ID: <a5b000db3ddb1c25e18435218f88d6516bbfa7fa.camel@verbuecheln.ch>
-From: Stephan =?ISO-8859-1?Q?Verb=FCcheln?= <stephan@verbuecheln.ch>
-To: oss-security@lists.openwall.com
-Date: Mon, 29 Dec 2025 10:15:29 +0100
-In-Reply-To: <e689f7a6-3167-41ea-9ec0-88b87df4d68a@gmail.com>
-References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
-	 <87y0mnj593.fsf@gentoo.org>
-	 <e689f7a6-3167-41ea-9ec0-88b87df4d68a@gmail.com>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-tTUCEGw82fJjXADORCQ6"
-User-Agent: Evolution 3.56.2-0+deb13u1 
+Received: (qmail 1356 invoked from network); 3 Oct 2017 17:37:19 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=oJnfzWAgO/WkRAg56oAM+0se9CKmlesV9hhCfCcmiQI=;
+        b=trP8ljSB8XcNS7afqaumZeXouRz32gGkJTgR2/abdvcVWlhUHIKc1PfQjx24eCoR0g
+         LZkSqqGJpnMGQAfYlPa3g2KO3nf6PINtu+rlsdmJ0IQYUY0G0nLnNKuTkLo22Tq1W4MC
+         p1WTyyuBCh1ByHn/eVf3VOVNVolnIAMwDqEZj2Xs6laByA4uTfVukHrRP2xL10ToCWTs
+         mPI5wEyKQzRGGCqIGTVHmBErhF4VpJGhwKWl/pspQSWZS92TKrZE4VQRPwfEQfWc+dkK
+         jbu/mAb8hPwJfz3f67EEKu9jfOnebJaDv9dEtNxtFVb4H1XjUc/vT6aE77rxmcOYG292
+         F/BQ==
+X-Gm-Message-State: AMCzsaVVeMIGhFERfoEJV6dnhR4cWJrET7RdKNGVWYaV/gsnMAAD5525
+	b4VT/ut+cIfI7WYe5NcaSGpY8ZvlncgSzMnhL8kx3HKb
+X-Google-Smtp-Source: AOwi7QAjYXaRxJhuNK+qHyOVPy2XMCG0ppTG/fr/JFbXyzBOg2D4+QuSsCiiP6yJKuSQqs3pmPN7ljOxFeJuEvzhNuw=
+X-Received: by 10.202.240.195 with SMTP id o186mr1622551oih.262.1507052228173;
+ Tue, 03 Oct 2017 10:37:08 -0700 (PDT)
 MIME-Version: 1.0
-Subject: Re: [oss-security] Many vulnerabilities in GnuPG
+In-Reply-To: <20171003170533.GY2338@netmeister.org>
+References: <20170926150825.GA17707@localhost.localdomain> <20171003170533.GY2338@netmeister.org>
+Message-ID: <CANO=Ty16YH2oUFMG2W=S8tc08id5ehNAZyssNcocNJ5pXgqF1g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="94eb2c096318b82ff3055aa7f08c"
+Date: Tue, 3 Oct 2017 11:37:07 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Qualys Security Advisory - Linux PIE/stack
+ corruption (CVE-2017-1000253)
+To: oss-security <oss-security@lists.openwall.com>
 
---=-tTUCEGw82fJjXADORCQ6
+--94eb2c096318b82ff3055aa7f08c
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-GnuPG follows a traditional versioning scheme where even numbers (e.g.
-2.2 and 2.4) are release branches and odd numbers (2.3 and 2.5) are
-developer branches. So what we have to wait for is 2.4.9 fixing the
-vulnerabilities.
+Because I messed up the git pull request to submit it.
 
-Alternatively, distributions will fix the critical ones independently.
-For instance, Debian 13 Trixie is using 2.4.7 and applies patches
-downstream.
+On Tue, Oct 3, 2017 at 11:05 AM, Jan Schaumann <jschauma@netmeister.org>
+wrote:
 
-Regards
+> Qualys Security Advisory <qsa@qualys.com> wrote:
+> >
+> > Qualys Security Advisory
+> >
+> > Linux PIE/stack corruption (CVE-2017-1000253)
+>
+> How come this CVE does not yet show up on cve.mitre.org?
+>
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000253
+>
+> It's been a week since the publication.
+>
+> -Jan
+>
 
---=-tTUCEGw82fJjXADORCQ6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
 
------BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRB1rjSpCJd8a7h6mNgNUJZCjx8YgUCaVJGsQAKCRBgNUJZCjx8
-Yi6jAQDUzyVtdlixUPGpqS8WHoVyHSNoYeXB8vWz1VBRJxCMtgD/QFq86yTHn5s7
-S9JPpW/p3hHcvolUOFSYPStR5hGFdwc=
-=juJm
------END PGP SIGNATURE-----
+-- 
 
---=-tTUCEGw82fJjXADORCQ6--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--94eb2c096318b82ff3055aa7f08c--
