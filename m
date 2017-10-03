@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/21/1
-Message-ID: <20171121151146.GA10328@weckbecker.name>
-Date: Tue, 21 Nov 2017 16:11:46 +0100
-From: Matthias Weckbecker <matthias@...kbecker.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/1
+Message-ID: <CAGqxZSUxjgaWr67Hiwfh1RfA8L5-JtezAQwhuwmjQbyus45Lhw@mail.gmail.com>
+Date: Tue, 03 Oct 2017 07:30:06 +0000
+From: Terry Chia <terrycwk1994@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: Graphicsmagick: NULL Pointer Dereference in DICOM Decoder (CVE-2017-14994)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+A null pointer dereference vulnerability in the GraphicsMagick DICOM image
+decoder allows an attacker to cause a denial-of-service condition or other
+unspecified impact.
 
-On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno Boeck wrote:
-> I just sent this to the vim dev list, but I guess it's interesting for
-> oss-security, too.
-> [...]
-> 
-> I wanted to point out an issue here with vim swap files that make them
-> a security problem.
+Bug: https://sourceforge.net/p/graphicsmagick/bugs/512/
+Writeup: https://nandynarwhals.org/CVE-2017-14994/
 
-this is not limited to swap files.
+Timeline:
+30 Sept 2017 - Discovery of the vulnerability.
+1 Oct 2017 - Disclosure of vulnerability to the vendor.
+1 Oct 2017 - Vulnerability fixed in mercurial commit.
+2 Oct 2017 - CVE number requested.
+3 Oct 2017 - CVE-2017-14994 assigned.
+3 Oct 2017 - Advisory sent to oss-security mailing list.
 
-> 
-> On web servers this can be a severe security risk. One can e.g. scan
-> for web hosts that have swap files of PHP configuration files and thus
-> expose settings like database passwords. (e.g. wget
-> http://example.com/.wp-config.php.swp )
->
-> In a scan of the alexa top 1 million I found ~750 instances of such
-> files. I tried to inform affected people as best as I could. I also
-> discovered such scans in my own web server logs, so I assume black hats
-> are already aware of this and it's actively exploitet.
->
+This issue was discovered by Terry Chia (Ayrx) and Jeremy Heng (@nn_amon).
 
-One might want to consider adding e.g. .un~ files to the scanning too.
-Unless 'undodir' is configured in ~/.vimrc, those files end up in the
-same directory if 'undofile' is set.
-
-Matthias
