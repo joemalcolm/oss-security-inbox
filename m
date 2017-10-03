@@ -1,32 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/13
-Message-ID: <CAK0OdpxiQO7Mt6TCSn-92D+nwnj3iJCwU4OTiuZ1=Kn5Rx_-xg@mail.gmail.com>
-Date: Thu, 23 Feb 2017 17:31:42 +0100
-From: Bálint Réczey <balint@...intreczey.hu>
-To: oss-security@...ts.openwall.com
-Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/5
+Message-ID: <CANO=Ty0NXSozVQfV9hkPkLH2Yc1h1WzGGovG8OpYdvTSX1+Gtw@mail.gmail.com>
+Date: Tue, 3 Oct 2017 09:00:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Oct 3, 2017 at 5:27 AM, Greg KH <greg@...ah.com> wrote:
 
-2017-02-23 17:08 GMT+01:00 Hanno Böck <hanno@...eck.de>:
-> On Thu, 23 Feb 2017 07:56:51 -0500
-> Assaf Gordon <assafgordon@...il.com> wrote:
 >
->> GNU Coreutils stopped installing 'su' by default in 2007,
->> and completely removed 'su' (including the 'su.c' source file)
->> in 2012.
 >
-> That's good to know, so now there are only 2 competing versions of su
-> instead of 3 in major packages :-)
+> Yeah, this one keeps trying to get re-introduced as a "fix", when it
+> really isn't (see the archives of the stable@...r mailing list for
+> details.
 >
-> Anyone have a good idea who is using shadow vs. util-linux su? Do they
-> have specific advantages/disadvantages, would it be reasonable to try
-> to get all distros to use them same one?
+> I don't know how you can "reject" a CVE, is there a proceedure
+> somewhere?  There's lots of CVEs out there that people create against
+> the kernel that just aren't issues at all, but I've been ignoring them
+> as it makes people happy to assign and track them for no reason.
 
-In Debian we are looking into switching to util-linux from shadow for
-commands provided by both packages:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833256
 
-Cheers,
-Balint
+> Is there some way a project can get them rejected?
+>
+
+As mentioned before, there is the cveform page at https://cveform.mitre.org/
+which can be used to update CVEs, including asking for REJECT. Simply chose
+"Request an update to an existing CVE entry" then in "Type of update
+requested" please choose "Rejection".
+
+AN EASY WAY TO INTERACT WITH CVE TO UPDATE/REJECT/ETC PLEASE IS TO USE THE
+CVEFORM.
+
+CVEFORM URL: https://cveform.mitre.org/
+
+
+>
+> thanks,
+>
+> greg k-h
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
