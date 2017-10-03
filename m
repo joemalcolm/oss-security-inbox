@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["548" "Monday" "21" "December" "2015" "16:03:49" "+0100" "Adam Maris" "amaris@redhat.com" "<567814D5.2000303@redhat.com>" "19" "[oss-security] CVE-2015-7557, CVE-2015-7558 librsvg2: Out-of-bounds heap read and stack exhaustion" nil nil nil "12" "2015122115:03:49" "[oss-security] CVE-2015-7557, CVE-2015-7558 librsvg2: Out-of-bounds heap read and stack exhaustion" (number mark "U       amaris@redha Dec 21   19/548   " thread-indent "\"[oss-security] CVE-2015-7557, CVE-2015-7558 librsvg2: Out-of-bounds heap read and stack exhaustion\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["299" "Tuesday" "3" "October" "2017" "13:05:33" "-0400" "Jan Schaumann" "jschauma@netmeister.org" "<20171003170533.GY2338@netmeister.org>" "13" "Re: [oss-security] Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)" "^Date:" nil nil "10" "2017100317:05:33" "[oss-security] Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)" (number mark "        jschauma@net Oct  3   13/299   " thread-indent "\"Re: [oss-security] Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)\"\n") "<20170926150825.GA17707@localhost.localdomain>" ("<20170926150825.GA17707@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12136 invoked by uid 550); 21 Dec 2015 15:04:05 -0000
+Received: (qmail 16215 invoked by uid 550); 3 Oct 2017 17:05:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +11,31 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12115 invoked from network); 21 Dec 2015 15:04:04 -0000
-To: oss-security@lists.openwall.com
-From: Adam Maris <amaris@redhat.com>
-Message-ID: <567814D5.2000303@redhat.com>
-Date: Mon, 21 Dec 2015 16:03:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+Received: (qmail 16197 invoked from network); 3 Oct 2017 17:05:45 -0000
+Message-ID: <20171003170533.GY2338@netmeister.org>
+References: <20170926150825.GA17707@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Subject: [oss-security] CVE-2015-7557, CVE-2015-7558 librsvg2: Out-of-bounds heap read and
- stack exhaustion
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170926150825.GA17707@localhost.localdomain>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Tue, 3 Oct 2017 13:05:33 -0400
+From: Jan Schaumann <jschauma@netmeister.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Qualys Security Advisory - Linux PIE/stack
+ corruption (CVE-2017-1000253)
+To: oss-security@lists.openwall.com
 
-CVE-2015-7557: Out-of-bounds heap read in librsvg2 was found when 
-parsing SVG file.
+Qualys Security Advisory <qsa@qualys.com> wrote:
+> 
+> Qualys Security Advisory
+> 
+> Linux PIE/stack corruption (CVE-2017-1000253)
 
-Upstream patch:
+How come this CVE does not yet show up on cve.mitre.org?
 
-https://git.gnome.org/browse/librsvg/commit/rsvg-shapes.c?id=40af93e6eb1c94b90c3b9a0b87e0840e126bb8df
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000253
 
-CVE-2015-7558: Stack exhaustion due to cyclic dependency causing to 
-crash an application was found in librsvg2 while parsing SVG file. It 
-has been fixed in 2.40.12 by many commits that has rewritten the checks 
-for cyclic references.
+It's been a week since the publication.
 
-RH bug:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1268243
-
--- 
-Adam Maris / Red Hat Product Security
-
+-Jan
