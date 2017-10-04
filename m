@@ -1,4 +1,9 @@
-Received: (qmail 19656 invoked by uid 550); 13 Mar 2025 21:04:32 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2927" "Wednesday" "4" "October" "2017" "15:44:46" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<390386.279297189-sendEmail@localhost>" "68" "[oss-security] binutils: divide-by-zero in decode_line_info (dwarf2.c)" nil nil nil "10" "2017100415:44:46" "[oss-security] binutils: divide-by-zero in decode_line_info (dwarf2.c)" (number mark "U       ago@gentoo.o Oct  4   68/2927  " thread-indent "\"[oss-security] binutils: divide-by-zero in decode_line_info (dwarf2.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 2025 invoked by uid 550); 4 Oct 2017 15:45:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,109 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19632 invoked from network); 13 Mar 2025 21:04:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741899863; x=1742504663; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XKjdBKy9kbil98XfommDOrXIUnpZCVWPoG3h2h1HyUs=;
-        b=b4TsbK7abCcKdrg0Pk5MjuFr/nciTp0edMTGS0bXsVBepMwsqa6hYWgOAm2BXF7Tr6
-         TqXaWyhJzAcjPN9wPAk0A7UV5dP5o3olqHfGU8CjnouZqrXB6draFZ8lc+MN2hrNvrOv
-         NSg1h2lI40PmNP4CgL3yqZCqSot3nOx0F6n4cPG7LNWFZLfpY+KbJYVmLTQBxQpRnhBd
-         NaFXXAlbO0HdKOwnDhVoYIEgAdnrW6cuO7ptwgev8zxEftrCe2J5KQM1yOzLgQTMsZrP
-         cp9ImejspfxcwRZPstU4QXc67TTNds8QrWVK63eBCpdCh8Wn604RbFgyGEFTbyRyTHMy
-         AJkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741899863; x=1742504663;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=XKjdBKy9kbil98XfommDOrXIUnpZCVWPoG3h2h1HyUs=;
-        b=TOW/EO2d9bBteAzSofN4og4rWzUD8nonAC9r10Pid7w2DAqUCbh+JhmsZUpnJ1PQzr
-         JEwZ4Clr/gsjsE16n6cjLj1dsXhhVKAxtARUbGWX4j5l9lhls/dh1oVFlba0LB0j6UPU
-         Z5PXcMRBqyp/MNU7gJiAKlDS4zBJsznqBpQ8ozES9Yh3pnbO0qlEWKuM1nvyEnZoLFaW
-         qYUE4Vrc3bMo2mHz1rv13B8uKBqJ6mS9ZA9yvGd5cVAS8VQte3px9uCUwtr7Cy2R/Os7
-         zAJ7uUFD+1TroM8vWCBhkLNvEt0n4l/5Syz+Qe317La3RXQ60yD5ZELuDQ2dimeMoCHy
-         1bXQ==
-X-Gm-Message-State: AOJu0YzjONv5eccwHYwzzLRlc5hL4CVNCNe493FhRrNqqOdhPJXvl+RW
-	JJN/rCmrADTsXPw8Byxv1cnj4iVL0sM32yNE116VdAxcdqBIWSo2bEz0iXWc
-X-Gm-Gg: ASbGnctYuLM0ebtcXQTvb42aCjbtLsMEG7hJuCqEHJI6Yw7+z6eWZV+VIlwt2V3xge5
-	Vs8rGF3IP5tGvXmHz5YGSG1PifkRmLxC6na76AnTh0o36hoD9/VhMohjI26KzQhtDd5yKbphxpO
-	/pzBvALHTpoA9C1tAEQP47Z+IN6fM8uhSVjV+nDiyZU97pH5V/dVZARmX4ZHExtF9ovMT69EmZo
-	DW8KOSrSKir0KTj1iwyK4ILhsgJMK6ISUJvP8E4fvXgxjDJvzf1LsSgYUXKaquLKbZUYIpvvspT
-	g+VZM5rMFR5tBwSLL8JjBRmu6Asd4WzIk+e9iIfmnTR1x4I/0eljtHcvZWl7HR+TMNWsQA+lMf5
-	Ebw==
-X-Google-Smtp-Source: AGHT+IHooqSCV1Za2ylYskDeDy/7oYC5wkNZJu+dLdl0ZdwH5iVN9++BmFGeDuGWOyPnT9Zsui8naw==
-X-Received: by 2002:a17:907:3e06:b0:ac2:844f:2ccc with SMTP id a640c23a62f3a-ac330181ab7mr656366b.17.1741899862630;
-        Thu, 13 Mar 2025 14:04:22 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Thu, 13 Mar 2025 22:04:21 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <Z9NIVY6Jaf5qPZzl@eldamar.lan>
-References: <fccc1170fe964f6f5b68a9211959f24a9ee4bc53.camel@michel-slm.name>
- <ca277a69-a5a2-44c6-89fa-d04ae9da33ec@canonical.com>
+Received: (qmail 1920 invoked from network); 4 Oct 2017 15:45:02 -0000
+Message-ID: <390386.279297189-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Wed, 4 Oct 2017 15:44:46 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ca277a69-a5a2-44c6-89fa-d04ae9da33ec@canonical.com>
-Subject: Re: [oss-security] CVE-2025-27363: out of bounds write in FreeType
- <= 2.13.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-59877.8643916411"
+Subject: [oss-security] binutils: divide-by-zero in decode_line_info (dwarf2.c)
 
-Hi Marc,
+------MIME delimiter for sendEmail-59877.8643916411
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 13, 2025 at 10:50:38AM -0400, Marc Deslauriers wrote:
-> Hi,
-> 
-> On 2025-03-12 16:57, Michel Lind wrote:
-> > Description:
-> > 
-> > An out of bounds write exists in FreeType versions 2.13.0 and below
-> > when attempting to parse font subglyph structures related to TrueType
-> > GX and variable font files. The vulnerable code assigns a signed short
-> > value to an unsigned long and then adds a static value causing it to
-> > wrap around and allocate too small of a heap buffer. The code then
-> > writes up to 6 signed long integers out of bounds relative to this
-> > buffer. This may result in arbitrary code execution. This vulnerability
-> > may have been exploited in the wild.
-> > 
-> > https://www.facebook.com/security/advisories/cve-2025-27363
-> > 
-> > This commit fixes most of the issue - except `limit` is still signed
-> > short - but needs to be redone if you're backporting to 2.10.4
-> > 
-> > https://gitlab.freedesktop.org/freetype/freetype/-/commit/ef636696524b081f1b8819eb0c6a0b932d35757d
-> > 
-> 
-> Perhaps I need more coffee this morning, but I'm having trouble
-> consolidating that patch with the description. If "limit" is the signed
-> short, what is the unsigned long?
+Description:
+binutils is a set of tools necessary to build programs.
 
-It is related to this:
-https://gitlab.freedesktop.org/freetype/freetype/-/commit/73720c7c9958e87b3d134a7574d1720ad2d24442
-see
-https://gitlab.freedesktop.org/freetype/freetype/-/issues/1322#note_2822105
-. The commit self is only in 2.13.3.
+The complete ASan output of the issue:
 
-> Also, if this is meant as the fix:
-> 
-> -        if ( FT_NEW_ARRAY( points, limit + 4 )    ||
-> -             FT_NEW_ARRAY( tags, limit + 4 )      ||
-> -             FT_NEW_ARRAY( contours, limit + 4 )  ||
-> -             FT_NEW_ARRAY( unrounded, limit + 4 ) )
-> +        if ( FT_QNEW_ARRAY( outline.points, limit + 4 ) ||
-> +             FT_QNEW_ARRAY( outline.tags, limit )       ||
-> +             FT_QNEW_ARRAY( outline.contours, limit )   ||
-> +             FT_QNEW_ARRAY( unrounded, limit + 4 )      )
-> 
-> ...not only would the remaining + 4 wrap around too, but FT_NEW_ARRAY
-> already checks for a value < 0, so I'm not sure that is it.
-> 
-> What am I not seeing?
+ # nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==11125==ERROR: AddressSanitizer: FPE on unknown address 0x7f5e01fd42e5 (pc 0x7f5e01fd42e5 bp 0x7ffdaa5de290 sp 0x7ffdaa5de0e0 T0)
+    #0 0x7f5e01fd42e4 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c
+    #1 0x7f5e01fe192b in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3608:26
+    #2 0x7f5e01fe192b in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
+    #3 0x7f5e01fde94f in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4755:11
+    #4 0x7f5e01f1c20b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
+    #5 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
+    #6 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #7 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #8 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #9 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #10 0x7f5e00e61680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #11 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
 
-Do you have already working backport set for 2.12.1 based version?
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: FPE /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c in decode_line_info
+==11125==ABORTING
 
-Regards,
-Salvatore
+Affected version:
+2.29.51.20170921 and maybe past releases
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=d8010d3e75ec7194a4703774090b27486b742d48
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-15025
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00372-binutils-FPE-decode_line_info
+
+Timeline:
+2017-09-22: bug discovered and reported to upstream
+2017-09-24: upstream released a patch
+2017-10-03: blog post about the issue
+2017-10-04: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
+Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/10/03/binutils-divide-by-zero-in-decode_line_info-dwarf2-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-59877.8643916411--
+
