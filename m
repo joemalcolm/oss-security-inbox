@@ -1,73 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/05/4
-Message-Id: <1512485234.nayti5pl04.tristanC@fedora>
-Date: Tue, 05 Dec 2017 14:53:30 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2017-005.1] Nova Filter Scheduler bypass through rebuild action (CVE-2017-16239) ERRATA
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/8
+Message-ID: <486401.030651422-sendEmail@localhost>
+Date: Wed, 4 Oct 2017 15:45:57 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: binutils: infinite loop in find_abstract_instance_name (dwarf2.c)
 Content-Type: text/plain; charset=utf-8
 
-====================================================================
-OSSA-2017-005.1: Nova Filter Scheduler bypass through rebuild action
-====================================================================
+Description:
+binutils is a set of tools necessary to build programs.
 
-:Date: November 14, 2017
-:CVE: CVE-2017-16239
+The relevant ASan output of the issue:
 
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==22616==ERROR: AddressSanitizer: stack-overflow on address 0x7ffc2948efe8 (pc 0x0000004248eb bp 0x7ffc2948f8e0 sp 0x7ffc2948efe0 T0)
+    #0 0x4248ea in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_allocator.cc:381
+    #1 0x41f8f3 in __asan::asan_malloc(unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_allocator.cc:814
+    #2 0x4d8de4 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:68
+    #3 0x7ff17b5b237c in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9                                                                                                     
+    #4 0x7ff17b5a7b2f in bfd_get_full_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/compress.c:248:21                                                                               
+    #5 0x7ff17b5e16d3 in bfd_simple_get_relocated_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/simple.c:193:12                                                                     
+    #6 0x7ff17b75626e in read_section /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:556:8                                                                                                   
+    #7 0x7ff17b772053 in read_indirect_string /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:730:9                                                                                           
+    #8 0x7ff17b772053 in read_attribute_value /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1189                                                                                            
+    #9 0x7ff17b76ebf4 in read_attribute /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1306:14                                                                                               
+    #10 0x7ff17b76ebf4 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2913                                                                                    
+    #11 0x7ff17b76ec98 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2930:12                                                                                 
+    #12 0x7ff17b76ec98 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2930:12                                                                                 
+    [..cut..]
+    #252 0x7ff17b76ec98 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2930:12
 
-Affects
-~~~~~~~
-- Nova: <=14.0.10, >=15.0.0 <=15.0.8, >=16.0.0 <=16.0.3
+Affected version:
+2.29.51.20170921 and maybe past releases
 
+Fixed version:
+N/A
 
-Description
-~~~~~~~~~~~
-George Shuklin from servers.com reported a vulnerability in Nova. By
-rebuilding an instance, an authenticated user may be able to
-circumvent the Filter Scheduler bypassing imposed filters (for
-example, the ImagePropertiesFilter or the IsolatedHostsFilter). All
-setups using Nova Filter Scheduler are affected.
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=52a93b95ec0771c97e26f0bb28630a271a667bd2
 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Errata
-~~~~~~
-The former fix introduced regressions in the rebuild functionality.
-Rebuild may fail depending on configured scheduler filters and
-environment, for example, when the compute host is running at capacity
-or when the host is disabled. This update provides an additional set
-of fixes for these regressions.
+CVE:
+CVE-2017-15024
 
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00371-binutils-infiniteloop-find_abstract_instance_name
 
-Patches
-~~~~~~~
-- https://review.openstack.org/519684 (Newton)
-- https://review.openstack.org/523434 (errata) (Newton)
-- https://review.openstack.org/519681 (Ocata)
-- https://review.openstack.org/523427 (errata) (Ocata)
-- https://review.openstack.org/519672 (Pike)
-- https://review.openstack.org/523212 (errata) (Pike)
-- https://review.openstack.org/519662 (Queens)
-- https://review.openstack.org/521186 (errata) (Queens)
+Timeline:
+2017-09-22: bug discovered and reported to upstream
+2017-09-24: upstream released a patch
+2017-10-03: blog post about the issue
+2017-10-04: CVE assigned
 
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
+Infrastructure Initiative.
 
-Credits
-~~~~~~~
-- George Shuklin from Servers.com (CVE-2017-16239)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1664931
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16239
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2017-12-05 - Errata 1
-- 2017-11-14 - Original Version
+Permalink:
+https://blogs.gentoo.org/ago/2017/10/03/binutils-infinite-loop-in-find_abstract_instance_name-dwarf2-c/
 
 --
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Agostino Sarubbo
+Gentoo Linux Developer
 
-Content of type "application/pgp-signature" skipped
+
