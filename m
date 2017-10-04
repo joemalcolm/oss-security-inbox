@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/6
-Message-ID: <20171101145538.yohxjiyyinlvcliv@jwilk.net>
-Date: Wed, 1 Nov 2017 15:55:38 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/2
+Message-id: <9F893C48-015F-4A88-92F0-A75B731F3ABB@me.com>
+Date: Wed, 04 Oct 2017 11:28:38 -0400
+From: Joel Esler <joel.esler@...com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: Re: clamav: md5 collision based detection avoidance, Was: Out of bounds read and segfault in xar parser
 Content-Type: text/plain; charset=utf-8
 
-* Leonid Isaev <leonid.isaev@...a.colorado.edu>, 2017-10-31, 20:33:
->Just to clarify:
->1. vim creates a swap file applying user's umask.
+> On Oct 3, 2017, at 2:54 PM, klondike <klondike@...cosoft.es> wrote:
+> 
+> There is also another fun issue with the way caching works (which is
+> enabled by default) that allows avoiding detection by ClamAV.
 
-I reproduced Kurt's findings on Debian unstable. Vim chmods the swapfile 
-without honouring umask.
+I will ensure this is prioritized for a future release.
 
-It does seem to keep read permissions of the original file, which is not 
-the same thing as honouring umask, and which is a rather dubious 
-behavior, especially when editing files belonging to other users.
 
->2. It is totally OK to edit files in /tmp or /dev/shm or /var/tmp.
-
-No, it's not.
-
->The described "attack" when someone plants a /tmp/file.swp before 
->another user edits /tmp/file is not going to work because vim will 
->complain that the swap file already exists.
-
-Sounds like a successful (albeit mild) DoS attack to me.
-But it's worse than that. vim attempts to read the swapfile before 
-showing you the complaint:
-
-$ mkfifo -m 644 /tmp/.bar.swp
-$ vim /tmp/bar
-[hangs forever]
-
--- 
-Jakub Wilk
+--
+Joel Esler
+Manager
+Talos Group
+http://www.talosintelligence.com
