@@ -1,47 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/15
-Message-ID: <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>
-Date: Tue, 30 May 2017 08:50:43 -0600
-From: "kseifried@...hat.com" <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/3
+Message-ID: <116345.929538028-sendEmail@localhost>
+Date: Wed, 4 Oct 2017 15:42:21 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: binutils: heap-based buffer overflow in parse_die (dwarf1.c)
 Content-Type: text/plain; charset=utf-8
 
-On 05/30/2017 05:41 AM, Simon McVittie wrote:
-> On Tue, 30 May 2017 at 08:17:54 +0400, Ilya Matveychikov wrote:
->> When using get_options() it's possible to specify a range of numbers,
->> like 1-100500. The problem is that it doesn't track array size while
->> calling internally to get_range() which iterates over the range and
->> fills the memory with numbers.
-> 
-> Is there a realistic way in which an attacker can provide Linux kernel
-> command-line arguments, without being able to achieve arbitrary code
-> execution via those command-line arguments?
-> 
-> In other words, is this a security vulnerability, or just a bug?
-> 
-> (If the attacker can already achieve arbitrary code execution then
-> this bug does not give them any capability they do not already have.)
-> 
->     S
+Description:
+binutils is a set of tools necessary to build programs.
 
-Here's my response from the initial assignment:
+The complete ASan output of the issue:
 
-For the purposes of CVE this is a vulnerability (secureboot says you
-won't be monkeying with the kernel in general). In general: the promise
-of secureboot is not a fully secure system, the promise of secureboot is
-a secured bootchain, so for example the kernel itself is trusted and
-secure, once it goes to user space, then things go to "it depends" (e.g.
-if you have signed binaries that are secure, you would in theory have a
-secure userland, if you boot to unsigned binaries, then good luck and
-have fun). But code execution within the kernel is generally a definite
-no-no.
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==26890==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6130000006d3 at pc 0x000000472115 bp 0x7ffdb7d8a0d0 sp 0x7ffdb7d89880                                                                         
+READ of size 298 at 0x6130000006d3 thread T0                                                                                                                                                                      
+    #0 0x472114 in __interceptor_strlen /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:302                      
+    #1 0x68fea5 in parse_die /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf1.c:254:12                                                                                                           
+    #2 0x68ddda in _bfd_dwarf1_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf1.c:521:13                                                                                       
+    #3 0x5f2f00 in _bfd_elf_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8659:10                                                                                            
+    #4 0x517755 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1004:12                                                                                                      
+    #5 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7                                                                                                      
+    #6 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200                                                                                                     
+    #7 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7                                                                                                       
+    #8 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12                                                                                                              
+    #9 0x7f3dea34e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                    
+    #10 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)                                                                                                                                 
+                                                                                                                                                                                                                  
+0x6130000006d3 is located 0 bytes to the right of 339-byte region [0x613000000580,0x6130000006d3)                                                                                                                 
+allocated by thread T0 here:                                                                                                                                                                                      
+    #0 0x4d8828 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:67                                                                      
+    #1 0x53f138 in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9
+    #2 0x799bc8 in bfd_get_full_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/compress.c:248:21
+    #3 0x7b8797 in bfd_simple_get_relocated_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/simple.c:193:12
+    #4 0x68e3b1 in _bfd_dwarf1_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf1.c:490:4
+    #5 0x5f2f00 in _bfd_elf_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8659:10
+    #6 0x517755 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1004:12
+    #7 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #8 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #9 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #10 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #11 0x7f3dea34e680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Please use CVE-2017-1000363 for this issue.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:302 in 
+__interceptor_strlen
+Shadow bytes around the buggy address:
+  0x0c267fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff8090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff80a0: 00 00 00 04 fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff80c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c267fff80d0: 00 00 00 00 00 00 00 00 00 00[03]fa fa fa fa fa
+  0x0c267fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff80f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff8100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff8110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff8120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==26890==ABORTING
+
+Affected version:
+2.29.51.20170924 and maybe past releases
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=1da5c9a485f3dcac4c45e96ef4b7dae5948314b5
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-15020
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00376-binutils-heapoverflow-parse_die
+
+Timeline:
+2017-09-25: bug discovered and reported to upstream
+2017-09-25: upstream released a patch
+2017-10-03: blog post about the issue
+2017-10-04: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
+Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/10/03/binutils-heap-based-buffer-overflow-in-parse_die-dwarf1-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
