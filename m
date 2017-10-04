@@ -1,48 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/3
-Message-ID: <CAA7hUgE_9Q_sta09JaBZNezm=7O5hvaJ1DVUARxdV+MMyvGGng@mail.gmail.com>
-Date: Sun, 17 Dec 2017 13:53:47 +0100
-From: Raphael Geissert <atomo64@...il.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Sonatype Nexus Repository Manager 2.x weak password encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/4
+Message-ID: <757654.26512541-sendEmail@localhost>
+Date: Wed, 4 Oct 2017 15:43:03 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: binutils: NULL pointer dereference in bfd_hash_hash (hash.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
+binutils is a set of tools necessary to build programs.
 
-The Nexus Repository Manager in at least version 2.14.5 [0] (latest of
-the 2.x series), stores the LDAP bind password in an on-disk file
-using PBE (bouncy castle's implementation of PBEWithSHAAnd128BitRC4).
+The stacktrace of this issue appears to be a NULL pointer access. However the upstream maintainer changed the summary of the bugreport to “DW_AT_name with out of bounds reference”. The commit also 
+reference to “DW_AT_name with out of bounds reference”
 
-This is all great except for:
-- it using only 23 iterations[1]
-- it using a hard-coded and weak password[2]
+The complete ASan output of the issue:
 
-Therefore offering as much protection as a rot13 would.
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==8739==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000053bf16 bp 0x7ffcab59ee60 sp 0x7ffcab59ee20 T0)
+==8739==The signal is caused by a READ memory access.
+==8739==Hint: address points to the zero page.
+    #0 0x53bf15 in bfd_hash_hash /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/hash.c:441:15
+    #1 0x53bf15 in bfd_hash_lookup /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/hash.c:467
+    #2 0x6a2049 in insert_info_hash_table /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:487:37
+    #3 0x6a2049 in comp_unit_hash_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3776
+    #4 0x6a2049 in stash_maybe_update_info_hash_tables /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4120
+    #5 0x69cbbc in stash_maybe_enable_info_hash_tables /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4214:3
+    #6 0x69cbbc in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4613
+    #7 0x5f330e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10
+    #8 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
+    #9 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #10 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #11 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #12 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #13 0x7fd148c7b680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #14 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)
 
-Given that the same PasswordHelper containing the weak password is
-present elsewhere in the code, it is very likely that this weak crypto
-issue affects other passwords stored by Nexus:
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/hash.c:441:15 in bfd_hash_hash
+==8739==ABORTING
 
-- components/nexus-core/src/main/java/org/sonatype/nexus/configuration/PasswordHelper.java[3]
-- components/nexus-security/src/main/java/org/sonatype/security/configuration/source/PasswordHelper.java[4]
+Affected version:
+2.29.51.20170924 and maybe past releases
 
-It appears that this code is no longer used by the 3.x series.
+Fixed version:
+N/A
 
-FWIW, the on-file password is:
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=11855d8a1f11b102a702ab76e95b22082cccf2f8
 
-base64(SALT_SIZE || SALT || PBE_OUTPUT )
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-SALT_SIZE always being 8 (hard-coded).
+CVE:
+CVE-2017-15022
 
-N.b. I'll be filing a CVE request in a moment.
-N.b. I have not contacted sonatype. I couldn't find an email address.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00375-binutils-NULLptr-bfd_hash_hash
 
-[0] https://help.sonatype.com/display/NXRM2/2017+Release+Notes
-[1] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-ldap-common/src/main/java/org/sonatype/security/ldap/upgrade/cipher/DefaultPlexusCipher.java#L64
-[2] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-ldap-common/src/main/java/org/sonatype/security/ldap/realms/persist/DefaultPasswordHelper.java
-[3] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-core/src/main/java/org/sonatype/nexus/configuration/PasswordHelper.java
-[4] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-security/src/main/java/org/sonatype/security/configuration/source/PasswordHelper.java
+Timeline:
+2017-09-25: bug discovered and reported to upstream
+2017-09-25: upstream released a patch
+2017-10-03: blog post about the issue
+2017-10-04: CVE assigned
 
-Cheers,
--- 
-Raphael Geissert
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
+Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/10/03/binutils-null-pointer-dereference-in-bfd_hash_hash-hash-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
