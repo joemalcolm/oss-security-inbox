@@ -1,72 +1,142 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/8
-Message-ID: <20170925200950.eakcj2hrgyyuedgd@eldamar.local>
-Date: Mon, 25 Sep 2017 22:09:50 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/9
+Message-ID: <084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>
+Date: Wed, 4 Oct 2017 20:18:40 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Cc: lianyihan@....cn
-Subject: Re: CVE-2017-14160: libvorbis-1.3.5 bark_noise_hybridmp() integer signedness bug
+Subject: Several Privilege Escalation issues in Kanboard <= 1.0.46
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-On Thu, Sep 21, 2017 at 06:27:15AM +0000, 连一汉 wrote:
-> Hi,
-> 
-> I’m a security researcher of Qihoo 360 GearTeam.
-> My partner Zhibin Hu and I found a vulnerability of libvorbis-1.3.5.
-> And we have applied for CVE-2017-14160 of this vulnerability.
-> ================== test command ====================
-> 
-> ffmpeg –i poc.mp4 –y 1.mkv
-> // libvorbis-1.3.5 has been compiled into ffmpeg static.
-> 
-> ================= needed version ====================
-> 
-> I compile it as https://github.com/google/oss-fuzz/blob/master/projects/ffmpeg/build.sh
-> 
-> This is the problem of libvorbis-1.3.5, and I tried libvorbis in ubuntu repo, it could also trigger this vul or bug.
-> 
-> =================== crash info ======================
-> 
-> (gdb) bt
-> #0  0x0000000001f95afd in bark_noise_hybridmp (n=256, b=0x32cd940, f=0x32e5010, noise=0x32f7ed0, offset=140, fixed=-1) at psy.c:630
-> 
-> #1  0x0000000001f95430 in _vp_noisemask (p=0x32aa820, logmdct=0x32e5010, logmask=0x32f7ed0) at psy.c:705
-> #2  0x0000000001facac9 in mapping0_forward (vb=0x329cfb0) at mapping0.c:417
-> #3  0x0000000001f92c9e in vorbis_analysis (vb=0x329cfb0, op=0x0) at analysis.c:46
-> #4  0x0000000000bc2725 in libvorbis_encode_frame (avctx=0x329ca00, avpkt=0x32ab540, frame=0x32e4400, got_packet_ptr=0x7fffffffdbf4) at libavcodec/libvorbisenc.c:311
-> #5  0x00000000009e5717 in avcodec_encode_audio2 (avctx=0x329ca00, avpkt=0x32ab540, frame=0x32e4400, got_packet_ptr=0x7fffffffdbf4)at libavcodec/encode.c:198
-> #6  0x00000000009e62d8 in do_encode (avctx=0x329ca00, frame=0x32e4400, got_packet=0x7fffffffdbf4) at libavcodec/encode.c:375
-> 
-> #7  0x00000000009e6224 in avcodec_send_frame (avctx=0x329ca00, frame=0x32e4400) at libavcodec/encode.c:421
-> #8  0x0000000000438ef5 in do_audio_out (of=0x3299560, ost=0x329c7a0, frame=0x32e4400) at ffmpeg.c:921
-> #9  0x0000000000436c5b in reap_filters (flush=0) at ffmpeg.c:1515
-> #10 0x000000000042dc30 in transcode_step () at ffmpeg.c:4553
-> #11 0x000000000042bc49 in transcode () at ffmpeg.c:4597
-> #12 0x000000000042b092 in main (argc=5, argv=0x7fffffffe678) at ffmpeg.c:4803
-> 
-> (gdb) l
-> 625
-> 626         lo = b[i] >> 16;
-> 627         hi = b[i] & 0xffff;
-> 628         if(hi>=n)break;
-> 629
-> 630         tN = N[hi] - N[lo];
-> 631         tX = X[hi] - X[lo];
-> 632         tXX = XX[hi] - XX[lo];
-> 633         tY = Y[hi] - Y[lo];
-> 634         tXY = XY[hi] - XY[lo];
-> (gdb) p hi
-> $4 = 0
-> (gdb) p lo
-> $5 = 49656                                                                 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-> (gdb) p i
-> $6 = 259
+Hi,
 
-If possible, please do report your findings back to upstream (in this
-case at https://gitlab.xiph.org/xiph/vorbis/issues) so that upstream
-might get noticed and can address the issues.
+I've discovered several security issues in Kanboard <= 1.0.46
+(https://kanboard.net)
 
-Regards,
-Salvatore
+
+
+1)
+By altering form data an authenticated user can edit Name, Email,
+Identifier, Description,... of a private project of another user.
+
+
+2)
+By altering form data an authenticated user can add a new task to a
+private project of another user.
+
+
+3)
+By altering form data an authenticated user can edit columns of a
+private project of another user.
+
+
+4)
+By altering form data an authenticated user can add a new category to a
+private project of another user.
+
+
+5)
+By altering form data an authenticated user can edit a category of a
+private project of another user.
+
+
+6)
+By altering form data an authenticated user can edit swimlanes of a
+private project of another user.
+
+
+7)
+By altering form data an authenticated user can edit tags of a private
+project of another user.
+
+
+8)
+By altering form data an authenticated user can add automatic actions to
+a private project of another user.
+
+
+9)
+By altering form data an authenticated user can remove columns from a
+private project of another user.
+
+
+10)
+By altering form data an authenticated user can remove categories from a
+private project of another user.
+
+
+11)
+By altering form data an authenticated user can at least see the name of
+tags of a private project of another user.
+
+
+12)
+By altering form data an authenticated user can remove automatic actions
+from a private project of another user.
+
+
+13)
+By altering form data an authenticated user can edit tasks of a private
+project of another user.
+
+
+14)
+By altering form data an authenticated user can add a external link to a
+private project of another user.
+
+
+15)
+By altering form data an authenticated user can add a internal link to a
+private project of another user.
+
+
+Fix:
+https://github.com/kanboard/kanboard/commit/074f6c104f3e49401ef0065540338fc2d4be79f0
+https://github.com/kanboard/kanboard/commit/3e0f14ae2b0b5a44bd038a472f17eac75f538524
+
+
+
+
+16)
+By altering form data an authenticated user can download attachments
+from a private project of another user.
+
+
+17)
+By altering form data an authenticated user can see thumbnails of
+pictures from a private project of another user.
+
+
+18)
+By altering form data an authenticated user can remove attachments from
+a private project of another user.
+
+
+Fix:
+https://github.com/kanboard/kanboard/commit/7100f6de8a1f566e260b3e65312767e4cde112b1
+
+
+
+The issues are fixed in Kanboard 1.0.47.
+
+https://kanboard.net/news/version-1.0.47
+
+
+
+
+Should I request a CVE ID for each issue or one CVE ID for all issues?
+
+What is the recommended method?
+
+
+
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
