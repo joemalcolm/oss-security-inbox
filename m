@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1738" "Thursday" "10" "March" "2016" "09:07:11" "-0800" "Tim" "tim-security@sentinelchicken.org" "<20160310170710.GM1250@sentinelchicken.org>" "35" "Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies" nil nil nil "3" "2016031017:07:11" "[oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "U       tim-security Mar 10   35/1738  " thread-indent "\"Re: [oss-security] RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<56E17B10.1090800@igalia.com>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>" "<CAFJuDmNWWkHoh5brvTgZNYzNeH3ZbueHDBYC=WG7P1H7fJbKOA@mail.gmail.com>" "<20160305000740.GB1250@sentinelchicken.org>" "<56DC7B1E.4050507@oracle.com>" "<56E0BE38.6030400@igalia.com>" "<56E112D4.1070302@oracle.com>" "<56E17B10.1090800@igalia.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4261" "Wednesday" "4" "October" "2017" "15:45:57" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<486401.030651422-sendEmail@localhost>" "67" "[oss-security] binutils: infinite loop in find_abstract_instance_name (dwarf2.c)" nil nil nil "10" "2017100415:45:57" "[oss-security] binutils: infinite loop in find_abstract_instance_name (dwarf2.c)" (number mark "U       ago@gentoo.o Oct  4   67/4261  " thread-indent "\"[oss-security] binutils: infinite loop in find_abstract_instance_name (dwarf2.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5272 invoked by uid 550); 10 Mar 2016 17:07:37 -0000
+Received: (qmail 11648 invoked by uid 550); 4 Oct 2017 15:46:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5231 invoked from network); 10 Mar 2016 17:07:36 -0000
-Date: Thu, 10 Mar 2016 09:07:11 -0800
-From: Tim <tim-security@sentinelchicken.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20160310170710.GM1250@sentinelchicken.org>
-References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>
- <56D9DD1F.1030302@cert.org>
- <6C149CB0AE53E944A358EC6730D07C7442EC599128@TUS1XCHEVSPIN35.SYMC.SYMANTEC.COM>
- <CAFJuDmNWWkHoh5brvTgZNYzNeH3ZbueHDBYC=WG7P1H7fJbKOA@mail.gmail.com>
- <20160305000740.GB1250@sentinelchicken.org>
- <56DC7B1E.4050507@oracle.com>
- <56E0BE38.6030400@igalia.com>
- <56E112D4.1070302@oracle.com>
- <56E17B10.1090800@igalia.com>
+Received: (qmail 11519 invoked from network); 4 Oct 2017 15:46:13 -0000
+Message-ID: <486401.030651422-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Wed, 4 Oct 2017 15:45:57 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <56E17B10.1090800@igalia.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] RE: Concerns about CVE coverage shrinking -
- direct impact to researchers/companies
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-852021.536397846"
+Subject: [oss-security] binutils: infinite loop in find_abstract_instance_name (dwarf2.c)
 
-> > I'm one of the admins of the public bugzilla at bugs.freedesktop.org, and
-> > I've had to deal with spam there, and I've seen reports of spams in other
-> > public bugzillas for open source projects.
-> > 
-> > github requires account creation as well, and I'm sure we've all seen out
-> > of control comment threads there that had to be locked down to stop abuse.
-> > 
-> 
-> Then the next level is to require not only e-mail validation but also to
-> solve a captcha for creating a new account.
-> 
-> Or even harder, to require any account with less than 10 comments to
-> solve a captcha for any new comment. That way the annoyance for legit
-> users is temporal (up to the 10th comment), meanwhile for spammers is
-> not, because their account is probably going to be blocked before they
-> reach the 10th comment and have to start again with a new account.
-> 
-> I'm not saying that some level of moderation is required. Of course it
-> is. But I think that if proper antispam measures are implemented, then
-> the level of moderation required is relatively low, and can be done by
-> the bugzilla admins without much effort.
+------MIME delimiter for sendEmail-852021.536397846
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+Description:
+binutils is a set of tools necessary to build programs.
+
+The relevant ASan output of the issue:
+
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==22616==ERROR: AddressSanitizer: stack-overflow on address 0x7ffc2948efe8 (pc 0x0000004248eb bp 0x7ffc2948f8e0 sp 0x7ffc2948efe0 T0)
+    #0 0x4248ea in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_allocator.cc:381
+    #1 0x41f8f3 in __asan::asan_malloc(unsigned long, __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_allocator.cc:814
+    #2 0x4d8de4 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-5.0.0/work/compiler-rt-5.0.0.src/lib/asan/asan_malloc_linux.cc:68
+    #3 0x7ff17b5b237c in bfd_malloc /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:193:9                                                                                                     
+    #4 0x7ff17b5a7b2f in bfd_get_full_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/compress.c:248:21                                                                               
+    #5 0x7ff17b5e16d3 in bfd_simple_get_relocated_section_contents /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/simple.c:193:12                                                                     
+    #6 0x7ff17b75626e in read_section /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:556:8                                                                                                   
+    #7 0x7ff17b772053 in read_indirect_string /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:730:9                                                                                           
+    #8 0x7ff17b772053 in read_attribute_value /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1189                                                                                            
+    #9 0x7ff17b76ebf4 in read_attribute /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1306:14                                                                                               
+    #10 0x7ff17b76ebf4 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2913                                                                                    
+    #11 0x7ff17b76ec98 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2930:12                                                                                 
+    #12 0x7ff17b76ec98 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2930:12                                                                                 
+    [..cut..]
+    #252 0x7ff17b76ec98 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2930:12
+
+Affected version:
+2.29.51.20170921 and maybe past releases
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=52a93b95ec0771c97e26f0bb28630a271a667bd2
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-15024
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00371-binutils-infiniteloop-find_abstract_instance_name
+
+Timeline:
+2017-09-22: bug discovered and reported to upstream
+2017-09-24: upstream released a patch
+2017-10-03: blog post about the issue
+2017-10-04: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
+Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/10/03/binutils-infinite-loop-in-find_abstract_instance_name-dwarf2-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Right, this is my thinking as well.  If you create very high barriers
-to automated spamming, and protect against DDoS, then the level of
-manual spam should be low enough that minimal moderation would be
-required.  Of course you could also start white listing people who
-have posted more than N approved comments, etc.  And apply some
-bayesian filters on new postings from unknown people.  It's all
-doable, and likely less work than what the CVE moderators have to do
-now.  The hard work is building the system initially and finding a way
-to get enough volunteers involved for distributed hosting and
-moderation.
+------MIME delimiter for sendEmail-852021.536397846--
 
-tim
