@@ -1,88 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/02/2
-Message-ID: <20170802134032.547770e7@redhat.com>
-Date: Wed, 2 Aug 2017 13:40:32 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Pali Rohár <pali.rohar@...il.com>
-Cc: oss-security@...ts.openwall.com, security@...iadb.org, secalert_us@...cle.com, security@...cona.com, Andrea Barisani <andrea@...ersepath.com>, Michiel Beijen <michiel.beijen@...il.com>, Alceu Rodrigues de Freitas Junior <glasswalk3r@...oo.com.br>, cve-assign@...re.org
-Subject: Re: MySQL - use-after-free after mysql_stmt_close()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/10
+Message-ID: <b86bcba4-0a25-bb0c-5dd6-681f4a8381dc@oracle.com>
+Date: Wed, 4 Oct 2017 15:24:18 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
+Subject: Fwd: X server fixes for CVE-2017-13721 & CVE-2017-13723
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 8 Jun 2017 23:49:03 +0200 Pali Rohár wrote:
+-------- Forwarded Message --------
+Subject: X server fixes for CVE-2017-13721 & CVE-2017-13723
+Date: Wed, 4 Oct 2017 15:22:58 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+Reply-To: xorg@...ts.freedesktop.org
+To: xorg-announce@...ts.x.org
 
-> MySQL applications written according to Oracle's MySQL documentation & 
-> examples for mysql_stmt_close() function call are vulnerable to use-
-> after-free defect.
+The X.Org Foundation today published fixes for CVE-2017-13721 & CVE-2017-13723
+as part of the xorg-server 1.19.4 release.
 
-...
+Git commits for these vulnerabilities:
+https://cgit.freedesktop.org/xorg/xserver/commit/?id=b95f25af141d33a65f6f821ea9c003f66a01e1f1
+https://cgit.freedesktop.org/xorg/xserver/commit/?id=94f11ca5cf011ef123bd222cabeaef6f424d76ac
 
-> Whole example of usage is written in mysql_stmt_execute() function [3]. 
-> The relevant part for mysql_stmt_close() is at the end of example:
-> 
-> /* Close the statement */
-> if (mysql_stmt_close(stmt))
-> {
->   fprintf(stderr, " failed while closing the statement\n");
->   fprintf(stderr, " %s\n", mysql_stmt_error(stmt));
->   exit(0);
-> }
-> 
-> And here is a problem, use-after-free defect. Current implementation of 
-> mysql_stmt_close() function unconditionally free passed statement 
-> structure and therefore following mysql_stmt_error() call is defective 
-> to use-after-free.
+xorg-server 1.19.4 announcement:
+https://lists.x.org/archives/xorg-announce/2017-October/002808.html
 
-...
-
-> Oracle team was unwilling to tell anything, provide any information how 
-> to handle such issue or what to do, therefore with suggestion from oCERT 
-> I decided to make this report public and open public discussion for 
-> other people on oss-security list how to handle this problem.
-> 
-> As Oracle fully ignored this problem and have not stated if problem is 
-> in documentation, implementation or both, I see probably 3 different 
-> solutions:
-
-Oracle has previously updated code examples in the documentation.  They
-apparently also assigned CVE-2017-3635 via July 2017 CPU:
-
-http://www.oracle.com/technetwork/security-advisory/cpujul2017-3236622.html#AppendixMSQL
-
-There's the following note for the CVE:
-
-"""
-The documentation has also been updated for the correct way to use mysql_stmt_close(). Please see:
-https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-execute.html,
-https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-fetch.html,
-https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-close.html,
-https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-error.html,
-https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-errno.html, and
-https://dev.mysql.com/doc/refman/5.7/en/mysql-stmt-sqlstate.html
-"""
-
-The issue is listed as fixed in versions 5.5.57, 5.6.37, and 5.7.19.
-Their release notes also mention the change:
-
-https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-57.html
-https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-37.html
-https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-19.html
-
-"""
-If the mysql_stmt_close() C API function was called, it freed memory
-that later could be accessed if mysql_stmt_error(), mysql_stmt_errno(),
-or mysql_stmt_sqlstate() was called. To obtain error information after
-a call to mysql_stmt_close(), call mysql_error(), mysql_errno(), or
-mysql_sqlstate() instead. (Bug #25988681)
-"""
-
-There is also a code change referencing the above bug:
-
-https://github.com/mysql/mysql-server/commit/3d8134d2c9b74bc8883ffe2ef59c168361223837
-
-which does not seem to address the use-after-free problem.
-
-It seems the CVE is effectively for buggy documentation, and the
-fixed-in version numbers are not really relevant.
+X.Org thanks Michal Srb of SuSE for finding these issues and bringing them to
+our attention, Julien Cristau of Debian for getting the fixes integrated, and
+Adam Jackson of Red Hat for publishing the release.
 
 -- 
-Tomas Hoger / Red Hat Product Security
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	  X.Org Security Response Team - xorg-security@...ts.x.org
+_______________________________________________
+xorg-announce mailing list
+xorg-announce@...ts.x.org
+https://lists.x.org/mailman/listinfo/xorg-announce
