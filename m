@@ -1,52 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/10
-Message-ID: <ca93bd9008234863a8d3c5733fb36a02@imshyb01.MITRE.ORG>
-Date: Tue, 31 Jan 2017 10:20:47 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <jiangxin1@...wei.com>
-Subject: Re: CVE request Qemu: sd: sdhci OOB access during multi block SDMA transfer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/5
+Message-ID: <568660.939901264-sendEmail@localhost>
+Date: Wed, 4 Oct 2017 15:43:42 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: binutils: NULL pointer dereference in concat_filename (dwarf2.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+binutils is a set of tools necessary to build programs.
 
-> Quick emulator(Qemu) built with the SDHCI device emulation support is
-> vulnerable to an OOB heap access issue. It could occur while doing a multi
-> block SDMA transfer via 'sdhci_sdma_transfer_multi_blocks' routine.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS or potentially execute arbitrary code with privileges of the
-> Qemu process on the host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2017-01/msg06191.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1417559
+The complete ASan output of the issue:
 
-Use CVE-2017-5667.
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==3765==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000006a7376 bp 0x7ffd5f9a3d50 sp 0x7ffd5f9a3d20 T0)
+==3765==The signal is caused by a READ memory access.
+==3765==Hint: address points to the zero page.
+    #0 0x6a7375 in concat_filename /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8
+    #1 0x696e83 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2258:44
+    #2 0x6a2ab8 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3642:26
+    #3 0x6a2ab8 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3677
+    #4 0x6a0104 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4789:11
+    #5 0x5f330e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10
+    #6 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
+    #7 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #8 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #9 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #10 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #11 0x7f0f4a74b680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #12 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/sd/sdhci.c but
-that may be an expected place for a later update.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8 in concat_filename
+==3765==ABORTING
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Affected version:
+2.29.51.20170924 and maybe past releases
 
-iQIcBAEBCAAGBQJYkKkGAAoJEHb/MwWLVhi2+ugQAJBaikvxAT2i0CTdFelKnLXJ
-XI2FCrbCLqVuJ2k4SnRhj6mw+TqDmd+rc620wUrAzOSLWIrHXQ995qEpVLHmUVUJ
-puR03yJAJnk9/+EmTYTTilJX1gmfvTbT2HirBv/HFRQBTcMaVHLcnnsLhDJlmiJv
-W6KTvYdcWoFzwV+5nsTnrg99S5MturKOnh/lTNo91o77NXS/ha92iay3UzHUPZP8
-OmlePV3t1xaClrZZhMjP3zFShSGJEnp8pT5/ItTpIN+mn376C3CstKcM013rfrv9
-J7g6P5tTmdjJahg5PoJrEo/mkNBUucfvMVR8n7Y4hLKvSvut/+vqAcCH4NkFhnv7
-yJzIAnDstsePk0VburOYHFRA//pAk4H3kMaAgtH9onoDoLxSLK1YZLXNvP3iwW+o
-y6DzfOriTWa3GH+DNoEqSlo29tDatofGgSvUmcK2maxWOu0d2J5p2FMXA3Vf/6yk
-iWNmBYLDgtpf5QI14acbJT1PMr6YZ1UhS0j7BImrx/21UJ9tmeMAtDhGM7n7vBwa
-SUhWuJaWrTpXRxaeS3RmV04xdYjj1uVZ9OOZ11T88zulEcRNJw4z0wKP+FJRtNQ8
-AarpeNWlz4J1cYP+82shegPZluo6HlNjz8BfCfvidUzs3TXfQWDUuQwjLVWww1IJ
-9obnnQn7sju5xf7e+k7Z
-=B54L
------END PGP SIGNATURE-----
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=c361faae8d964db951b7100cada4dcdc983df1bf
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-15023
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00374-binutils-NULLptr-concat_filename
+
+Timeline:
+2017-09-25: bug discovered and reported to upstream
+2017-09-25: upstream released a patch
+2017-10-03: blog post about the issue
+2017-10-04: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
+Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/10/03/binutils-null-pointer-dereference-in-concat_filename-dwarf2-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
