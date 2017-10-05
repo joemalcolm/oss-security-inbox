@@ -1,28 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/22
-Message-ID: <594AE554.22038.7198001A@pageexec.freemail.hu>
-Date: Wed, 21 Jun 2017 23:29:56 +0200
-From: "PaX Team" <pageexec@...email.hu>
-To: oss-security@...ts.openwall.com, Agostino Sarubbo <ago@...too.org>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/05/1
+Message-ID: <59d5f345e210c_118b4443c08122012047.email-sidekiq-4@outbound-email.freshdesk.com>
+Date: Thu, 05 Oct 2017 08:54:30 +0000 (UTC)
+From: Andrey Bazhenov <support@...dgain.freshdesk.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2017-14614] GridGain Visor GUI Console - File System Path Traversal
 Content-Type: text/plain; charset=utf-8
 
-On 21 Jun 2017 at 10:22, Jeff Law wrote:
+Severity: Important 
+   
+ Vendor: GridGain Systems 
+   
+ Versions Affected: 
+   
+ * GridGain 8.1.4 and earlier 
+ * GridGain 1.9.6 and earlier 
+ * GridGain 1.8.11 and earlier 
+ * GridGain 1.7.15 and earlier 
+   
+ Impact: 
+   The vulnerability impacts GridGain Visor GUI Management Console users. Visor allows open log files of remote cluster nodes and observe them locally. To get the logs a user needs to provide a path to the files. Visor does not sanitize the path provided that might result in an unauthorized access to sensitive files. 
+   
+ Description: 
+   Visor GUI Console uses a user-supplied input to construct a pathname to a remote directory with log files. The application does not sanitize this path and malicious application users can get an access to restricted or sensitive files stored on a server’s file system. 
+   
+ Mitigation: 
+   
+ Start cluster nodes under a system user that has restricted access to the file system. 
+ In addition, to make the cluster more secure consider using GridGain’s Security module setting up basic authentication and authorization parameters.  
+   
+ Upgrade to the versions below to enable the path sanitization by default: 
+ * GridGain 8.1.5 or later 
+ * GridGain 1.9.7 or later 
+ * GridGain 1.8.12 or later 
+ * GridGain 1.7.16 or later 
+   
+ References: 
+   
+ * http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14614
 
-> On 06/21/2017 04:46 AM, Agostino Sarubbo wrote:
-> > On Monday 19 June 2017 08:28:43 Qualys Security Advisory wrote:
-> >> III. Solutions
-> >> - Recompile all userland code (ld.so, libraries, binaries) with GCC's
-> >>   "-fstack-check" option, which prevents the stack-pointer from moving
-> >>   into another memory region without accessing the stack guard-page (it
-> >>   writes one word to every 4KB page allocated on the stack).
-> > 
-> > For the record, Gentoo Hardened enables by default -fstack-check=specific
-> And if you were to look at the generated code, you'll see that it
-> happily skips 2-3 pages of probes in prologues as well as within alloca
-> spaces.  It's a false sense of security.
 
-Gentoo Hardened uses the grsecurity kernel which enforces a 64kB heap-stack
-gap by default (it's also user adjustable). are you saying that the gcc
-probes are not sufficient to prevent jumping over that range?
 
