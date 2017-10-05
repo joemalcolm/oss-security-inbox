@@ -1,34 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/4
-Message-ID: <20171101100459.kfu6dabrzj7ymt4d@perpetual.pseudorandom.co.uk>
-Date: Wed, 1 Nov 2017 10:04:59 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/05/2
+Message-ID: <1507235866.17141.24.camel@debian.org>
+Date: Thu, 05 Oct 2017 22:37:46 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: [CVE-2017-14604] .desktop vulnerability again
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 31 Oct 2017 at 20:33:30 -0600, Leonid Isaev wrote:
-> 1. vim creates a swap file applying user's umask.
+Hi list,
 
-More specifically, this should be (and does indeed seem to be) the
-permissions of the file being edited, masked by the user's umask -
-so that if have a loose umask and I edit a secret file, the swap file
-doesn't leak its contents.
+I'm currently in the process of uploading a nautilus package fixing CVE-2017-
+14604 which is again a vulnerability in the handling of desktop file. As I
+don't think it's been discussed here, it might be a good idea to do a wrap-up, 
+and maybe start a discussion if people are interested and have good ideas.
 
-~/tmp/vim% umask
-022
-~/tmp/vim% ls -Al
-total 4
--rw------- 1 smcv smcv 8 Nov  1 09:50 secret-file
-~/tmp/vim% gvim secret-file
-~/tmp/vim% ls -Al
-total 16
--rw------- 1 smcv smcv 12288 Nov  1 09:50 .secret-file.swp
--rw------- 1 smcv smcv     8 Nov  1 09:50 secret-file
+There was some publicity on this at beginning of the year with a blog post
+using that vulnerability in order to break out of SubGraph OS (https://micahfl
+ee.com/2017/04/breaking-the-security-model-of-subgraph-os/)
 
-A more naive implementation might have created .secret-file.swp with
--rw-r--r-- permissions according to my umask, but that would have been
-bad.
+Last time we had a vulnerability related to the handling of .desktop file, it
+was handled by refusing to run it unless it has the executable bit.
+Unfortunately, this permission bit is maintained when storing inside a
+tarball, for example, so if an attacker wraps an executable .desktop file
+posing (for example) as a PDF inside a tarball, a victim could extract the
+file and double click on the PDF and the system will happily execute the
+command inside the Exec= field of the .desktop file.
+
+Some bugs were opened against various file managers:
+
+Nautilus (GNOME): https://bugzilla.gnome.org/show_bug.cgi?id=777991
+Caja (Mate): https://github.com/mate-desktop/caja/issues/727
+Nemo (Cinnamon): https://github.com/linuxmint/nemo/issues/1404
+PCManFM (LXDE): https://github.com/lxde/pcmanfm-qt/issues/449
+Thunar (Xfce): https://bugzilla.xfce.org/show_bug.cgi?id=13329
+
+I'm not sure if a bug was opened against others, like KDE's Dolphin.
+
+As far as I understand it only Nautilus got a CVE. If we consider it a
+vulnerability I guess every file manager should get a CVE, but I'm interested
+in other opinions on this.
+
+Scanning through the various bugs, not everyone agree on how to fix this:
+
+- Nautilus doesn't use the executable bit anymore but store a trusted
+attribute in a gio/gvfs metadata, which is stored on the filesystem in
+XDG_DATA_DIR/.gvfs-metada (usually ~/.local/share/gvfs-metadata) which I guess
+should not be reachable from a tarball unless the extraction process has a
+directory traversal vulnerability
+- there's PR on Nemo to basically do the same thing
+- PCManFM now treats .desktop file like it apparently treats executable, and
+always request explicit user permission before running it
+- Thunar and Cara are not yet fixed.
+
+Obviously there's a usability vs. security tradeoff here and I'm unsure if
+there's a good solution. For now I'll just push the Debian updates for
+Nautilus and keep an eye on this.
 
 Regards,
-    smcv
+-- 
+Yves-Alexis
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
