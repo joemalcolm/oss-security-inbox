@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/5
-Message-Id: <20170516174512.274A517FDA8@rebar.astron.com>
-Date: Tue, 16 May 2017 13:45:11 -0400
-From: christos@...las.com (Christos Zoulas)
-To: oss-security@...ts.openwall.com
-Subject: Re: NetBSD/pkgsrc membership on distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/06/1
+Message-ID: <nycvar.YSQ.7.76.1710061218550.15372@wniryva>
+Date: Fri, 6 Oct 2017 12:20:09 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Tuomas Tynkkynen <tuomas.tynkkynen@....fi>
+Subject: CVE-2017-15038 Qemu: 9p: virtfs: information disclosure when reading extended attributes
 Content-Type: text/plain; charset=utf-8
 
-On May 16,  5:39pm, solar@...nwall.com (Solar Designer) wrote:
--- Subject: [oss-security] NetBSD/pkgsrc membership on distros list
+   Hello,
 
-| If anyone from NetBSD who is on oss-security has anything relevant to
-| say on this, please speak up.
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to an information disclosure issue. 
+It could occur while accessing extended attributes of a file due to a race 
+condition.
 
-Hi Alexander,
+A user inside guest could use this flaw to disclose uninitialised heap memory 
+contents on the host.
 
-I've contacted the pkgsrc people and I will get back to you (or they will).
-You are right; you should be chasing distros.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-10/msg00729.html
 
-Thanks,
+This issue was reported by Tuomas Tynkkynen.
 
-christos
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
