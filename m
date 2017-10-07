@@ -1,67 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/1
-Message-ID: <20170927084651.GB14379@suse.de>
-Date: Wed, 27 Sep 2017 10:46:51 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/07/1
+Message-ID: <4e04d782-268e-46bf-f74e-06696f5bdc7a@chbi.eu>
+Date: Sat, 7 Oct 2017 08:56:48 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Cc: Agostino Sarubbo <ago@...too.org>
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+Subject: Stored XSS vulnerabilities in Flyspray
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Underlined _YES_ to that.
+I've discovered two security issues in Flyspray (http://www.flyspray.org/)
 
-It is very easy to do this if you see something, do not get distracted by the amount of fields
-as most are optional.
 
-This is lowcost detached effort.
+A stored XSS vulnerability in Flyspray before 1.0-rc6 allows an
+authenticated user to inject JavaScript to gain administrator privileges.
 
-Ciao, Marcus
-On Tue, Sep 26, 2017 at 02:03:30PM -0600, Kurt Seifried wrote:
-> If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
-> CVE FORM (yes, I am shouting).
-> 
-> https://cveform.mitre.org
-> 
-> Choose "Request an update to an existing CVE entry" and then for "Type of
-> update requested" choose "Update References" and then eneter the CVE #, the
-> ifo and URL and hit "Submit Request"
-> 
-> TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
-> (the CVE community) didn't make it easy to contribute. Well now we have
-> made it easy to contribute, so please do.
-> 
-> 
-> On Tue, Sep 26, 2017 at 1:07 PM, Agostino Sarubbo <ago@...too.org> wrote:
-> 
-> > On martedì 26 settembre 2017 20:18:38 CEST Kurt Seifried wrote:
-> > > You can check the CVE Database? There is the official MITRE one:
-> > > cve.mitre.org and the DWF for Open Source (and yes, I lag in
-> > submissions to
-> > > MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/
-> > in
-> > > both cases the CVEs will have reference link(s) that ideally point to the
-> > > upstream making it easy to match up.
-> >
-> > As pointed out in the past (maybe spender?) the real issue is when there
-> > is a
-> > silent fix of a vulnerability where the commit message does not clearly
-> > state
-> > about the security implication. Afaik it happens frequently.
-> >
-> > --
-> > Agostino Sarubbo
-> > Gentoo Linux Developer
-> >
-> 
-> 
-> 
-> -- 
-> 
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> Red Hat Product Security contact: secalert@...hat.com
+Fix:
+https://github.com/Flyspray/flyspray/commit/754ec5d04348ef7ecb8cb02ade976dc412b031f8
+
+
+A stored XSS vulnerability in Flyspray between 1.0-rc4 and 1.0-rc6
+allows an authenticated user to inject JavaScript to gain administrator
+privileges and also to execute JavaScript against other users (including
+unauthenticated users).
+
+Fix
+https://github.com/Flyspray/flyspray/commit/00cfae5661124f9d67ac6733db61b2bfee34dccc
+
+
+Both issues are fixed in Flyspray 1.0-rc6.
+
+https://github.com/Flyspray/flyspray/releases/tag/v1.0-rc6
+
+
+I've requested CVE IDs (MITRE).
+
 
 -- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
