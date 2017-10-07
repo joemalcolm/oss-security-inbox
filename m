@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1703" "Tuesday" "23" "February" "2016" "11:42:42" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160223164242.E296172E035@smtpvbsrv1.mitre.org>" "39" "[oss-security] Re: CVE request Qemu: usb: integer overflow in remote NDIS control message handling" "^Cc:" nil nil "2" "2016022316:42:42" "[oss-security] Re: CVE request Qemu: usb: integer overflow in remote NDIS control message handling" (number mark "        cve-assign@m Feb 23   39/1703  " thread-indent "\"[oss-security] Re: CVE request Qemu: usb: integer overflow in remote NDIS control message handling\"\n") "<alpine.LFD.2.20.1602222116400.26144@wniryva>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2277" "Saturday" "7" "October" "2017" "13:14:56" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<4c8ff4e2-cef7-e228-ae65-c1f2f86b06da@chbi.eu>" "69" "[oss-security] Reflected XSS vulnerability in Shaarli v0.9.1" nil nil nil "10" "2017100711:14:56" "[oss-security] Reflected XSS vulnerability in Shaarli v0.9.1" (number mark "U       chbi@chbi.eu Oct  7   69/2277  " thread-indent "\"[oss-security] Reflected XSS vulnerability in Shaarli v0.9.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11847 invoked by uid 550); 23 Feb 2016 16:42:55 -0000
+Received: (qmail 30376 invoked by uid 550); 7 Oct 2017 11:39:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11789 invoked from network); 23 Feb 2016 16:42:55 -0000
-In-Reply-To: <alpine.LFD.2.20.1602222116400.26144@wniryva>
-Message-Id: <20160223164242.E296172E035@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, luodalongde@gmail.com
-Date: Tue, 23 Feb 2016 11:42:42 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request Qemu: usb: integer overflow in remote NDIS control message handling
-To: ppandit@redhat.com
+Received: (qmail 7989 invoked from network); 7 Oct 2017 11:15:13 -0000
+To: oss-security@lists.openwall.com
+From: chbi@chbi.eu
+Message-ID: <4c8ff4e2-cef7-e228-ae65-c1f2f86b06da@chbi.eu>
+Date: Sat, 7 Oct 2017 13:14:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="uN4msR7VCm3q6DcWswRAoQoa9frLv26mh"
+Subject: [oss-security] Reflected XSS vulnerability in Shaarli v0.9.1
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--uN4msR7VCm3q6DcWswRAoQoa9frLv26mh
+Content-Type: multipart/mixed; boundary="Pu1vpuIUbWOfrfnFeqv6wtmr7qeeXK87L";
+ protected-headers="v1"
+From: chbi@chbi.eu
+To: oss-security@lists.openwall.com
+Message-ID: <4c8ff4e2-cef7-e228-ae65-c1f2f86b06da@chbi.eu>
+Subject: Reflected XSS vulnerability in Shaarli v0.9.1
 
-> Qemu emulator built with the USB Net device emulation support is vulnerable to
-> an integer overflow issue. It could occur while processing remote NDIS control
-> message packets. As the incoming informationBufferOffset & Length combination
-> could cross the integer range.
-> 
-> A privileged user inside guest could use this flaw to leak host memory bytes
-> to guest or crash the Qemu process instance resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg03658.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1303120
-> http://git.qemu.org/?p=qemu.git;a=commit;h=fe3c546c5ff2a6210f9a4d8561cc64051ca8603e
+--Pu1vpuIUbWOfrfnFeqv6wtmr7qeeXK87L
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-Use CVE-2016-2538.
+Hi,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+I've discovered a security issue in Shaarli v0.9.1
+(https://github.com/shaarli/Shaarli)
+
+
+A reflected XSS vulnerability in Shaarli v0.9.1 allows an
+unauthenticated attacker to inject JavaScript. If the victim is an
+administrator, an attacker can (for example) takeover the admin session
+or change global settings or add/delete links. It is also possible to
+execute JavaScript against unauthenticated users.
+
+Fix:
+https://github.com/shaarli/Shaarli/pull/987
+
+
+The issue is fixed in Shaarli v0.9.2.
+
+https://github.com/shaarli/Shaarli/releases/tag/v0.9.2
+
+
+I've requested a CVE ID (MITRE).
+
+--=20
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+--Pu1vpuIUbWOfrfnFeqv6wtmr7qeeXK87L--
+
+--uN4msR7VCm3q6DcWswRAoQoa9frLv26mh
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWzIuYAAoJEL54rhJi8gl5DgIP/0fv8AMSd2UpPw15iW5ZHpMW
-Zf3Jhk66jJthy3CWUcZmdnjX9JWCOcVsbSbRbuGcVnuh4neNV1hQrWJk5VO/IuSl
-fLD6OiiMk/3vgjfJwjkDLEXgFZdobTh/kM5pGKeNz24g/9erPImMyQrvx6jDIMkH
-4+k7qm/fQrOaC7jYgNkF3ftulD7cTyDe1rJkuCGnxG0I0kOLzxsqWUEoCYZn3GJC
-HBgv+mT0O+Z1Q6YkBV4a75mTnq4/sj+bpz+KCqX2cNXnddn4KvNPDufb75FVuBEa
-EiQjnBpp1O2LukBs4Z39d9+EFYIlUQgrtjeN2m1jeWZmtGBpwa7N51NGUp1ybIKQ
-6wQ+AlB3HIAMKXXMXK94jw6zj+KQwioT7PR6D0hKMY/8VbVvm8Q4Wwx7da9jzP/l
-rjJzBQUw6BZf67z/0HAS0R/150Kw6KTzH4k5a2Qf5aY0V4KUAEEKCZisfEEiCZ/4
-LwAMcoZmu/8SMGdVPZPsZ+K2BUEdWF8j5o2y9Ki9I8kTEGMffE81uj88TZte9R/j
-VrQQ4Rtg+A2NQHcpg1cf37vEKP+uEFWnRH42LKkffsrfK9ULsPe+4hc93f6M9Ggo
-ja8lzqaio5iMPcU6AHY7CsW3TR66P73809RdjiIqOh5Izg19qdZxvk6OvYqDZ3Bq
-e4YbRFlNvht23xUA1jnD
-=at9D
+iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlnYtzAACgkQunuT+ZA3
+rn7vjhAAiesMTO0vjR1kMThvCQ5We0jl/OiqnB1xvbrEie9b9DTuc7IgsaPrz+LC
+XTsNtSUnuKqFBA+FC9Cv1arzPiLbiNGuCTZay/wtDMcSEl28Ry9RfSwTgsgRfUcy
+GFjZ1XSyPOsj7yi/f8cMcW0XKG59r+XV6nbpyRPMjicIcdzA/FgLUpAWyi8Fp4Wf
+d0TJqo7wCkvD8ASCXKNUu7+C4dhlBhSrt8rbFRc97kvSWRTTLkz9keQdeAzJSYu5
+FTL30sXNYkR72CYQUTDXq4xlx/YjajOJUKa/XuhHrtz9q7VVlJroWzeReeFpGh8v
++r5APSEtFrc/OFt8H3p3eyH+o1u8KYEMe/6xVCs3t8xpfmcf+c5Pt3AUKGtcmhuJ
+bQnIFj8mOpF4G+2ZmsF5HH6FlW08arM/IHoZhl5MS9jTVTR46VLkMsOpsJX9Yd8f
+K2hL9Yl9QKZIWR6gMz3hxnllLo9g8/QjI+qBd+AO92V+OPl+G3A8LjnxPd9UsmER
+xVv934AW6W1rqKMmWT6XKwmYU8mI/Au6mgOwN7udzWCqJOP9vEVF8WuBj55D18t6
+1mR3EgQgOcO4ztBiJSqwvK8HbBIwnEsoWZFcFQjxoqPtxutzG7Zcemw9BC1v/MCz
+P6sX8QN1XZS1iXFuSuYd3RDxUwfL5wSdfIPH88tbEdl5biUYxJc=
+=s7TV
 -----END PGP SIGNATURE-----
+
+--uN4msR7VCm3q6DcWswRAoQoa9frLv26mh--
