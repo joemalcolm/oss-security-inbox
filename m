@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1234" "Friday" "23" "June" "2017" "22:53:56" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9pFsfuGgvY6pkAZPoJYXUzabqxiWbo54Qo7LufhJB-J1w@mail.gmail.com>" "31" "[oss-security] Remotely exploitable crash in dhcpcd" nil nil nil "6" "2017062320:53:56" "[oss-security] Remotely exploitable crash in dhcpcd" (number mark "U       Jason@zx2c4. Jun 23   31/1234  " thread-indent "\"[oss-security] Remotely exploitable crash in dhcpcd\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2210" "Sunday" "8" "October" "2017" "23:48:07" "+0200" "Michael Niedermayer" "michael@niedermayer.cc" "<20171008214807.GA17602@nb4>" "68" "Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" nil nil nil "10" "2017100821:48:07" "[oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" (number mark "U       michael@nied Oct  8   68/2210  " thread-indent "\"Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)\"\n") "<CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>" ("<20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>" "<CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>" "<CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>" "<20170929151218.0cfb25c2@pc1>" "<CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1900 invoked by uid 550); 23 Jun 2017 20:54:14 -0000
+Received: (qmail 32333 invoked by uid 550); 9 Oct 2017 06:24:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1867 invoked from network); 23 Jun 2017 20:54:11 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
-	:from:date:message-id:subject:to:cc:content-type; s=mail; bh=ql7
-	W+i7Ksrc6fHHoCOgjewjB/m4=; b=mRBKyRYDv7PhX1Zz8P6qR0LRtwwJVkiUHBQ
-	GVrnsloxn5Fo+9LmtNUo5yAUbEIS+f2bdvbfefENQkiTsCtyc2t6lzK0UsRGw/UE
-	7AMYHz1k56y7j8JeZvAaNO0CiTkXSyAd+Q93zbFO1abwvIw7PciDtzqQUZ+FF2Gj
-	3vHRUUSMR7fXt68X52ihn376BYtBhuU9BYw8ZkjdjYxznzECDYu4ferb9hOklY//
-	WlPvkKBl1mGYTfpUO/iSwtz0nUAsDggcb8Wp/nBtFxlFpp2yY0hkPamta6Bhge2+
-	f5j8HGQu5F7xl8yGby6GHLTDcymKp93/0zUR6ltLz0EYf9PLOwQ==
-X-Gm-Message-State: AKS2vOwxlcV2M0i5kwt4mUWnBaOeo4RbqYlLxl8G0q5LcDHsLu8OVH/c
-	iJukahTZHex9Zlmyp3IBrJ8O5zFsyA==
-X-Received: by 10.202.182.86 with SMTP id g83mr1310106oif.4.1498251238056;
- Fri, 23 Jun 2017 13:53:58 -0700 (PDT)
+Received: (qmail 16352 invoked from network); 8 Oct 2017 21:48:26 -0000
+X-Originating-IP: 213.47.41.20
+Date: Sun, 8 Oct 2017 23:48:07 +0200
+From: Michael Niedermayer <michael@niedermayer.cc>
+To: oss-security@lists.openwall.com
+Message-ID: <20171008214807.GA17602@nb4>
+References: <20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>
+ <CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>
+ <CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>
+ <20170929151218.0cfb25c2@pc1>
+ <CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>
 MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 23 Jun 2017 22:53:56 +0200
-X-Gmail-Original-Message-ID: <CAHmME9pFsfuGgvY6pkAZPoJYXUzabqxiWbo54Qo7LufhJB-J1w@mail.gmail.com>
-Message-ID: <CAHmME9pFsfuGgvY6pkAZPoJYXUzabqxiWbo54Qo7LufhJB-J1w@mail.gmail.com>
-To: dhcpcd-discuss@marples.name, Roy Marples <roy@marples.name>
-Cc: oss-security <oss-security@lists.openwall.com>
-Content-Type: multipart/mixed; boundary="001a113cf188d451940552a6cc5a"
-Subject: [oss-security] Remotely exploitable crash in dhcpcd
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ReaqsoxgOBHFXBhH"
+Content-Disposition: inline
+In-Reply-To: <CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)
 
---001a113cf188d451940552a6cc5a
-Content-Type: text/plain; charset="UTF-8"
+--ReaqsoxgOBHFXBhH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi Roy,
+Hi
 
-I found that by sending the same exact DHCP response to two different
-DHCP requests on different interfaces, I was able to segfault dhcpcd.
-The attached patch fixes the problem, though you might want to
-investigate a bit further precisely why this is necessary.
+On Mon, Oct 02, 2017 at 11:01:19AM +0000, Reed Loden wrote:
+> On Fri, Sep 29, 2017 at 6:12 AM Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
+>=20
+> > On Thu, 28 Sep 2017 23:13:22 -0700
+> > Reed Loden <reed@reedloden.com> wrote:
+> >
+> > > Separately, we're happy to announce that libav (
+> > > https://git.libav.org/?p=3Dlibav.git;a=3Dsummary) was added to the sc=
+ope
+> > > earlier today.
+> >
+> > I'm surprised by this. When I saw the ibb-data bounty I immediately
+> > wondered whether ffmpeg should be in there.
+> >
+> > Is there a reason libav is in and ffmpeg is not? Were there concerns by
+> > the ffmpeg devs? (I'm not taking a side in the libav/ffmpeg wars, but
+> > my impression is that many distros who had used libav for some time
+> > have switched back and ffmpeg is clearly the more widely used of the
+> > forks.)
+>=20
+>=20
+> We=E2=80=99d love to have FFmpeg in-scope, but the simple reason is that =
+they don=E2=80=99t
+> reply to our e-mails. All projects participating must explicitly opt-in,
+> and we can=E2=80=99t get anybody at FFmpeg to let us know their thoughts =
+on if they
+> would like to be added or not.
 
-Regards,
-Jason
+Your mails where misidentified as spam on my side at least, and while
+i admit i saw them and wanted to reply later i forgot and somehow
+apparently everyone else forgot to reply too.
+Finally replied and yes of course FFmpeg wants to participate
 
---001a113cf188d451940552a6cc5a
-Content-Type: text/x-patch; charset="US-ASCII"; name="dhcpcd-7.0.0-crash-fix.patch"
-Content-Disposition: attachment; filename="dhcpcd-7.0.0-crash-fix.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_j4ac300d0
+Thanks
 
-ZGlmZiAtcnUgZGhjcGNkLTcuMC4wLXJjMS9zcmMvaXB2NC5jIGRoY3BjZC03
-LjAuMC1yYzEtZml4ZWQvc3JjL2lwdjQuYwotLS0gZGhjcGNkLTcuMC4wLXJj
-MS9zcmMvaXB2NC5jCTIwMTctMDUtMTAgMTI6MjQ6MjguMDAwMDAwMDAwICsw
-MjAwCisrKyBkaGNwY2QtNy4wLjAtcmMxLWZpeGVkL3NyYy9pcHY0LmMJMjAx
-Ny0wNi0yMyAyMjozNzo1NS45Mjk4NTc5MDggKzAyMDAKQEAgLTI1NSw3ICsy
-NTUsNyBAQAogCWludCBuOwogCiAJc3RhdGUgPSBEX0NTVEFURShpZnApOwot
-CWlmIChzdGF0ZSA9PSBOVUxMIHx8IHN0YXRlLT5zdGF0ZSAhPSBESFNfQk9V
-TkQpCisJaWYgKHN0YXRlID09IE5VTEwgfHwgc3RhdGUtPnN0YXRlICE9IERI
-U19CT1VORCB8fCBzdGF0ZS0+YWRkciA9PSBOVUxMKQogCQlyZXR1cm4gMDsK
-IAogCVRBSUxRX0lOSVQoJm5yb3V0ZXMpOwo=
+>=20
+> If somebody could help with that (or at least put us in contact with the
+> appropriate folks), would appreciate it. :-)
+>=20
+> ~reed
+> (For the IBB)
 
---001a113cf188d451940552a6cc5a--
+--=20
+Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
+
+If a bugfix only changes things apparently unrelated to the bug with no
+further explanation, that is a good sign that the bugfix is wrong.
+
+--ReaqsoxgOBHFXBhH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAlnanRcACgkQYR7HhwQLD6ss5gCfeSZvenwYs5ZX2DBEoBmU8Nta
+jHIAoIpo/gIzL/AFY+zWtQBTJXNUBrz7
+=g7+F
+-----END PGP SIGNATURE-----
+
+--ReaqsoxgOBHFXBhH--
