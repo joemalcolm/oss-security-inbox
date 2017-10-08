@@ -1,44 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/7
-Message-ID: <20171009131118.7d95c501@fabiankeil.de>
-Date: Mon, 9 Oct 2017 13:11:18 +0200
-From: Fabian Keil <fk@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/2
+Message-ID: <20171008214807.GA17602@nb4>
+Date: Sun, 8 Oct 2017 23:48:07 +0200
+From: Michael Niedermayer <michael@...dermayer.cc>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> wrote:
+Hi
 
-> If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
-> CVE FORM (yes, I am shouting).
+On Mon, Oct 02, 2017 at 11:01:19AM +0000, Reed Loden wrote:
+> On Fri, Sep 29, 2017 at 6:12 AM Hanno Böck <hanno@...eck.de> wrote:
 > 
-> https://cveform.mitre.org
+> > On Thu, 28 Sep 2017 23:13:22 -0700
+> > Reed Loden <reed@...dloden.com> wrote:
+> >
+> > > Separately, we're happy to announce that libav (
+> > > https://git.libav.org/?p=libav.git;a=summary) was added to the scope
+> > > earlier today.
+> >
+> > I'm surprised by this. When I saw the ibb-data bounty I immediately
+> > wondered whether ffmpeg should be in there.
+> >
+> > Is there a reason libav is in and ffmpeg is not? Were there concerns by
+> > the ffmpeg devs? (I'm not taking a side in the libav/ffmpeg wars, but
+> > my impression is that many distros who had used libav for some time
+> > have switched back and ffmpeg is clearly the more widely used of the
+> > forks.)
+> 
+> 
+> We’d love to have FFmpeg in-scope, but the simple reason is that they don’t
+> reply to our e-mails. All projects participating must explicitly opt-in,
+> and we can’t get anybody at FFmpeg to let us know their thoughts on if they
+> would like to be added or not.
 
-As you seem to be "shouting" a lot lately, I just like to point out
-that using the MITRE(!) form requires the execution of non-free and
-unsigned software from various sources.
+Your mails where misidentified as spam on my side at least, and while
+i admit i saw them and wanted to reply later i forgot and somehow
+apparently everyone else forgot to reply too.
+Finally replied and yes of course FFmpeg wants to participate
 
-Some people don't consider this a problem, others do.
+Thanks
 
-> Choose "Request an update to an existing CVE entry" and then for "Type of
-> update requested" choose "Update References" and then eneter the CVE #,
-> the ifo and URL and hit "Submit Request"
+> 
+> If somebody could help with that (or at least put us in contact with the
+> appropriate folks), would appreciate it. :-)
+> 
+> ~reed
+> (For the IBB)
 
-... trust your browser's "sandbox" to work as advertised for a change
-and ignore the fact that you're running proprietary software that may
-or may not be customised just for your system and can't be easily
-audited in advance.
+-- 
+Michael     GnuPG fingerprint: 9FF2128B147EF6730BADF133611EC787040B0FAB
 
-> TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
-> (the CVE community) didn't make it easy to contribute. Well now we have
-> made it easy to contribute, so please do.
+If a bugfix only changes things apparently unrelated to the bug with no
+further explanation, that is a good sign that the bugfix is wrong.
 
-TL;DR: Not everyone wants to allow remote code execution just to
-request a CVE. Some people are sufficiently satisfied when security
-issues are found and fixed in time. While CVE number are sometimes
-nice to have, other identifiers work just as well (for some).
-
-Fabian
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
