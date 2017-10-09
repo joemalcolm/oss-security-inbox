@@ -1,81 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/3
-Message-ID: <20170702172722.GA14846@openwall.com>
-Date: Sun, 2 Jul 2017 19:27:22 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/11
+Message-ID: <oXx80JgYC6BjD_znKZs7JW2ithWRy0sZNy5FQelve1UwJsLmZWxJvIRVdS8HyQJee3Z59PxupDs022828NIklgHpmOyUTayvrNtaykmB_ww=@itk.swiss>
+Date: Mon, 09 Oct 2017 16:17:40 -0400
+From: Stiepan <stie@....swiss>
+To: fk@...iankeil.de, oss-security@...ts.openwall.com
+Cc: kseifried@...hat.com
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 01, 2017 at 03:23:07PM -0400, Stiepan wrote:
-> I have a general remark on the recent developments on this list, in particular in relation with the "distros" list and especially, focusing on Linux kernel security:
-> a core issue at hand seems to be the funding of work that follows due diligence, standards and so forth, which is a top priority, and should be given appropriate importance at the top decision-making level. I think that in that line, applying for institutional funding through calls for H2020 public-private partnerships such as https://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/topics/ds-08-2017.html and similar non-European initiatives - if there are any - would be more than appropriate, as Linux is a core privacy-enhancing technology, in addition to the fact that "Open source and externally auditable solutions are encouraged in order to maximise uptake and increase the trustworthiness of proposed solutions.". By the way, the same would apply for BSDs, where I have a more direct interest, although they do not share Linux's European heritage! ;)
++1; let's use other identifiers! And why not, a blockchain (based on at least SHA3) for public security issues? That would be great. And as trustable, as transparent as it needs to be.
 
-Thank you for thinking outside the box and suggesting this, but no,
-"in relation with the "distros" list" (in your words), let's not apply
-for any funding.  Here are some reasons why not, in arbitrary order:
+Amen
 
-1. The costs of hosting one old server for the distros list are small.
+-------- Original Message --------
+On 9 Oct 2017, 13:11, Fabian Keil wrote:
 
-2. The effort of administering that system is also small. (*)
-
-3. The effort of handling the administrative tasks is also small - I
-shared my estimate of it in the previous message I sent to this thread.
-
-4. I think this effort is best spread across the distros, and that's not
-because one entity could not bear the full "cost" (I think many could),
-but because we should prefer to have all distros visibly involved and
-responsible (if a distro isn't, maybe they shouldn't stay subscribed).
-
-5. The effort that may be put into the technical expertise roles/tasks
-is ideally not small, but I think it's best that capable distros
-themselves take care of it.  This means they're paying their employees
-to do this sort of work for the distros community. (**)
-
-6. Which entity would accept the funding?  How would it distribute the
-funds to entities/people doing the actual work?  How transparent would
-it be?  At least this adds overhead, but it also brings us to:
-
-7. Let's not unnecessarily add to the controversy and thus to potential
-conspiracy theories inherently surrounding embargoes and funding.
-
-(*) I admit there are things we probably could do better with greater
-effort.  For example, we could rewrite from scratch and release as Open
-Source the encrypted mailing list software, which is currently an awful
-hack.  I wouldn't oppose doing that piece of software development under
-a separate funded project, if capable people were available for that.
-However, I am worried that most teams tasked to work on something like
-this would produce a complex monster, which wouldn't otherwise be
-directly comparable (as in: is it better or worse? is it more or less
-secure?) to the current hack.
-
-(**) A month ago, we also started to accept capable and trusted
-volunteers.  I am currently undecided on whether this should change if
-some distros accept responsibility for all of the same roles.  It would
-seem unfair to use these volunteers' time when the distros are paying
-their employees to do similar work, whereas the volunteers join in their
-individual capacity independent from their employment.
-
-As to "focusing on Linux kernel security" (also in your words), we
-already see how something like this is happening with KSPP.  Various
-companies pay their employees to do portions of the work, Linux
-Foundation funds a few other people's work, and there are many
-volunteers.  All of this is met with criticism, controversy, and
-conspiracy theories.  Yet the project proceeds, even if arguably slowly
-and inefficiently.  Overall, would it benefit from or be hurt by more
-funding, or by an extra funding source?  I don't know.  Funding creates
-an incentive to work on and push academic security detached from
-real-world threats.  That said, with no formal entity behind KSPP, lucky
-people may choose whether and how they want their potential
-contributions funded.  I guess someone or a team could apply for a grant
-under H2020, then participate in KSPP.  This might or might not be a
-good thing.
-
-I think funded work generally has lower efficiency than volunteer work,
-and I also think that's fine.  Ditto for coordinated effort rather than
-independent work.  Low efficiency is part of the criticism, but I think
-this is not entirely justified - that's just how things work in funded
-and larger projects (in people count, not LOC).  I say this in relation
-to KSPP.  I think we don't need to go for this for the distros list.
-
-Alexander
+> Kurt Seifried  wrote:
+>
+>> If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
+>> CVE FORM (yes, I am shouting).
+>>
+>> https://cveform.mitre.org
+>
+> As you seem to be "shouting" a lot lately, I just like to point out
+> that using the MITRE(!) form requires the execution of non-free and
+> unsigned software from various sources.
+>
+> Some people don't consider this a problem, others do.
+>
+>> Choose "Request an update to an existing CVE entry" and then for "Type of
+>> update requested" choose "Update References" and then eneter the CVE #,
+>> the ifo and URL and hit "Submit Request"
+>
+> ... trust your browser's "sandbox" to work as advertised for a change
+> and ignore the fact that you're running proprietary software that may
+> or may not be customised just for your system and can't be easily
+> audited in advance.
+>
+>> TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
+>> (the CVE community) didn't make it easy to contribute. Well now we have
+>> made it easy to contribute, so please do.
+>
+> TL;DR: Not everyone wants to allow remote code execution just to
+> request a CVE. Some people are sufficiently satisfied when security
+> issues are found and fixed in time. While CVE number are sometimes
+> nice to have, other identifiers work just as well (for some).
+>
+> Fabian @redhat.com>
