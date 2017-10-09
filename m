@@ -1,131 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/08/1
-Message-ID: <CAA7hUgFVeLSChQuCvYaribpdt=9kj=o+A_LYoa1v7QgMy=RzmA@mail.gmail.com>
-Date: Fri, 8 Sep 2017 10:59:35 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: Tcpdump 4.9.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/10
+Message-ID: <CANLc_9KJTmetFt6MrsFQm+adr-1w2VeGYyMJMVVZ281-3UmJKw@mail.gmail.com>
+Date: Mon, 9 Oct 2017 10:09:37 -0700
+From: Patrick Hunt <phunt@...che.org>
+To: DevZooKeeper <dev@...keeper.apache.org>, UserZooKeeper <user@...keeper.apache.org>,  announce@...che.org, security <security@...che.org>, security@...keeper.apache.org,  oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2017-5637: DOS attack on wchp/wchc four letter words (4lw)
 Content-Type: text/plain; charset=utf-8
 
-On 7 September 2017 at 22:06, Leo Famulari <leo@...ulari.name> wrote:
-> My understanding is that tcpdump 4.9.2 was supposed to be embargoed
-> until September 25.
->
-> However, it's already being distributed publicly:
->
-> https://git.archlinux.org/svntogit/packages.git/commit/trunk/PKGBUILD?h=packages/tcpdump&id=ae8cb07d00feb32a4f8a500fc8fa668d3f8c5275
->
-> So, I recommend that everyone update ASAP.
+CVE-2017-5637: DOS attack on wchp/wchc four letter words (4lw)
 
+Severity: moderate
+Vendor:
+The Apache Software Foundation
+Versions Affected:
+ZooKeeper 3.4.0 to 3.4.9
+ZooKeeper 3.5.0 to 3.5.2
+The unsupported ZooKeeper 1.x through 3.3.x versions may be also affected
+Note: The 3.5 branch is still beta at this time.
 
-Quoting the CHANGES file of the tarball[1]:
+Description:
+Two four letter word commands “wchp/wchc” are CPU intensive and could cause
+spike of CPU utilization on ZooKeeper server if abused,
+which leads to the server unable to serve legitimate client requests. There
+is no known compromise which takes advantage of this vulnerability.
 
-> Sunday September 3, 2017 denis@...ienko.info
->   Summary for 4.9.2 tcpdump release
->     Do not use getprotobynumber() for protocol name resolution.  Do not do
->       any protocol name resolution if -n is specified.
->     Improve errors detection in the test scripts.
->     Fix a segfault with OpenSSL 1.1 and improve OpenSSL usage.
->     Clean up IS-IS printing.
->     Fix buffer overflow vulnerabilities:
->       CVE-2017-11543 (SLIP)
->       CVE-2017-13011 (bittok2str_internal)
->     Fix infinite loop vulnerabilities:
->       CVE-2017-12989 (RESP)
->       CVE-2017-12990 (ISAKMP)
->       CVE-2017-12995 (DNS)
->       CVE-2017-12997 (LLDP)
->     Fix buffer over-read vulnerabilities:
->       CVE-2017-11541 (safeputs)
->       CVE-2017-11542 (PIMv1)
->       CVE-2017-12893 (SMB/CIFS)
->       CVE-2017-12894 (lookup_bytestring)
->       CVE-2017-12895 (ICMP)
->       CVE-2017-12896 (ISAKMP)
->       CVE-2017-12897 (ISO CLNS)
->       CVE-2017-12898 (NFS)
->       CVE-2017-12899 (DECnet)
->       CVE-2017-12900 (tok2strbuf)
->       CVE-2017-12901 (EIGRP)
->       CVE-2017-12902 (Zephyr)
->       CVE-2017-12985 (IPv6)
->       CVE-2017-12986 (IPv6 routing headers)
->       CVE-2017-12987 (IEEE 802.11)
->       CVE-2017-12988 (telnet)
->       CVE-2017-12991 (BGP)
->       CVE-2017-12992 (RIPng)
->       CVE-2017-12993 (Juniper)
->       CVE-2017-11542 (PIMv1)
->       CVE-2017-11541 (safeputs)
->       CVE-2017-12994 (BGP)
->       CVE-2017-12996 (PIMv2)
->       CVE-2017-12998 (ISO IS-IS)
->       CVE-2017-12999 (ISO IS-IS)
->       CVE-2017-13000 (IEEE 802.15.4)
->       CVE-2017-13001 (NFS)
->       CVE-2017-13002 (AODV)
->       CVE-2017-13003 (LMP)
->       CVE-2017-13004 (Juniper)
->       CVE-2017-13005 (NFS)
->       CVE-2017-13006 (L2TP)
->       CVE-2017-13007 (Apple PKTAP)
->       CVE-2017-13008 (IEEE 802.11)
->       CVE-2017-13009 (IPv6 mobility)
->       CVE-2017-13010 (BEEP)
->       CVE-2017-13012 (ICMP)
->       CVE-2017-13013 (ARP)
->       CVE-2017-13014 (White Board)
->       CVE-2017-13015 (EAP)
->       CVE-2017-11543 (SLIP)
->       CVE-2017-13016 (ISO ES-IS)
->       CVE-2017-13017 (DHCPv6)
->       CVE-2017-13018 (PGM)
->       CVE-2017-13019 (PGM)
->       CVE-2017-13020 (VTP)
->       CVE-2017-13021 (ICMPv6)
->       CVE-2017-13022 (IP)
->       CVE-2017-13023 (IPv6 mobility)
->       CVE-2017-13024 (IPv6 mobility)
->       CVE-2017-13025 (IPv6 mobility)
->       CVE-2017-13026 (ISO IS-IS)
->       CVE-2017-13027 (LLDP)
->       CVE-2017-13028 (BOOTP)
->       CVE-2017-13029 (PPP)
->       CVE-2017-13030 (PIM)
->       CVE-2017-13031 (IPv6 fragmentation header)
->       CVE-2017-13032 (RADIUS)
->       CVE-2017-13033 (VTP)
->       CVE-2017-13034 (PGM)
->       CVE-2017-13035 (ISO IS-IS)
->       CVE-2017-13036 (OSPFv3)
->       CVE-2017-13037 (IP)
->       CVE-2017-13038 (PPP)
->       CVE-2017-13039 (ISAKMP)
->       CVE-2017-13040 (MPTCP)
->       CVE-2017-13041 (ICMPv6)
->       CVE-2017-13042 (HNCP)
->       CVE-2017-13043 (BGP)
->       CVE-2017-13044 (HNCP)
->       CVE-2017-13045 (VQP)
->       CVE-2017-13046 (BGP)
->       CVE-2017-13047 (ISO ES-IS)
->       CVE-2017-13048 (RSVP)
->       CVE-2017-13049 (Rx)
->       CVE-2017-13050 (RPKI-Router)
->       CVE-2017-13051 (RSVP)
->       CVE-2017-13052 (CFM)
->       CVE-2017-13053 (BGP)
->       CVE-2017-13054 (LLDP)
->       CVE-2017-13055 (ISO IS-IS)
->       CVE-2017-13687 (Cisco HDLC)
->       CVE-2017-13688 (OLSR)
->       CVE-2017-13689 (IKEv1)
->       CVE-2017-13690 (IKEv2)
->       CVE-2017-13725 (IPv6 routing headers)
+Mitigation:
+This affects ZooKeeper ensembles whose client port is publicly accessible,
+so it is recommended to protect ZooKeeper ensemble with firewall.
+Documentation has also been updated to clarify on this point. In addition,
+a patch (ZOOKEEPER-2693) is provided to disable "wchp/wchc” commands
+by default.
+- ZooKeeper 3.4.x users should upgrade to 3.4.10 or apply the patch.
+- ZooKeeper 3.5.x users should upgrade to 3.5.3 or apply the patch.
 
-[1] https://sources.archlinux.org/other/packages/tcpdump/tcpdump-4.9.2.tar.gz
+References
+[1] https://issues.apache.org/jira/browse/ZOOKEEPER-2693
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
