@@ -1,51 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/5
-Message-ID: <CANO=Ty0NXSozVQfV9hkPkLH2Yc1h1WzGGovG8OpYdvTSX1+Gtw@mail.gmail.com>
-Date: Tue, 3 Oct 2017 09:00:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/5
+Message-ID: <tencent_A0FE1C07287ACEC3E61C0508DD6FC7185107@qq.com>
+Date: Mon, 9 Oct 2017 15:58:30 +0800
+From: "NOIRFATE" <noirfate@....qq.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: ImageMagick : CVE-2017-14989 : heap use-after-free in RenderFreetype
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 3, 2017 at 5:27 AM, Greg KH <greg@...ah.com> wrote:
+Description:
+The RenderFreetype function in MagickCore/annotate.c in ImageMagick allows attackers to cause a denial of service via a crafted font file.
 
->
->
-> Yeah, this one keeps trying to get re-introduced as a "fix", when it
-> really isn't (see the archives of the stable@...r mailing list for
-> details.
->
-> I don't know how you can "reject" a CVE, is there a proceedure
-> somewhere?  There's lots of CVEs out there that people create against
-> the kernel that just aren't issues at all, but I've been ignoring them
-> as it makes people happy to assign and track them for no reason.
+Affected version:
+ImageMagick 7.0.7-3 (maybe previous versions are affected as well)
 
+Fixed version:
+ImageMagick 7.0.7-7
 
-> Is there some way a project can get them rejected?
->
+Commit fix:
+https://github.com/ImageMagick/ImageMagick/commit/97740ccc177ee264e79091fa573d994eb6b05628
 
-As mentioned before, there is the cveform page at https://cveform.mitre.org/
-which can be used to update CVEs, including asking for REJECT. Simply chose
-"Request an update to an existing CVE entry" then in "Type of update
-requested" please choose "Rejection".
+Details:
+https://github.com/ImageMagick/ImageMagick/issues/781
 
-AN EASY WAY TO INTERACT WITH CVE TO UPDATE/REJECT/ETC PLEASE IS TO USE THE
-CVEFORM.
+Credit:
+This bug was discovered by Yihan Lian of GearTeam at Qihoo360
 
-CVEFORM URL: https://cveform.mitre.org/
-
-
->
-> thanks,
->
-> greg k-h
->
-
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+CVE:
+CVE-2017-14989
