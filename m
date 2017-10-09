@@ -1,79 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/5
-Message-ID: <821859.070656018-sendEmail@localhost>
-Date: Thu, 7 Sep 2017 15:32:58 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: aacplusenc: NULL pointer dereference in DeleteBitBuffer (bitbuffer.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/9
+Message-ID: <8fa0ac92-c2b4-a981-d828-b0ea189ab4f0@chbi.eu>
+Date: Mon, 9 Oct 2017 19:51:02 +0200
+From: chbi@...i.eu
+To: oss-security@...ts.openwall.com
+Subject: Re: Stored XSS vulnerability in BlogoText <= 3.7.5
 Content-Type: text/plain; charset=utf-8
 
-Description:
-aacplusenc is an High-Efficiency AAC (AAC+) Encoder.
+FYI
 
-The complete ASan output of the issue:
-
-# aacplusenc $FILE out.aac 32
-                                                                                                                                                                                                                  
-*************************************************************                                                                                                                                                     
-* Enhanced aacPlus Encoder                                                                                                                                                                                        
-* Build Aug 30 2017, 14:40:49                                                                                                                                                                                     
-* Matteo Croce                                                                                                                                                                                
-*************************************************************                                                                                                                                                     
-                                                                                                                                                                                                                  
-input file 101.crashes.wav:                                                                                                                                                                                       
-sr = 48000, nc = 1                                                                                                                                                                                                
-                                                                                                                                                                                                                  
-output file out.aac:                                                                                                                                                                                              
-br = 32000 sr-OUT = 48000  nc-OUT = 1                                                                                                                                                                             
-                                                                                                                                                                                                                  
-                                                                                                                                                                                                                  
-ASAN:DEADLYSIGNAL
-=================================================================
-==21496==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000030 (pc 0x000000562e2f bp 0x7ffc2ec32430 sp 0x7ffc2ec32430 T0)
-==21496==The signal is caused by a WRITE memory access.
-==21496==Hint: address points to the zero page.
-    #0 0x562e2e in DeleteBitBuffer /var/tmp/portage/media-sound/aacplusenc-0.17.5/work/aacplusenc/libbitbuf/bitbuffer.c:97:23
-    #1 0x50d909 in AacEncClose /var/tmp/portage/media-sound/aacplusenc-0.17.5/work/aacplusenc/libaacenc/aacenc.c:469:5
-    #2 0x50c0df in main /var/tmp/portage/media-sound/aacplusenc-0.17.5/work/aacplusenc/aacplusenc.c:536:2
-    #3 0x7f0e4c21b680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #4 0x419e78 in _init (/usr/bin/aacplusenc+0x419e78)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-sound/aacplusenc-0.17.5/work/aacplusenc/libbitbuf/bitbuffer.c:97:23 in DeleteBitBuffer
-==21496==ABORTING
-
-Affected version:
-0.17.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14181
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00332-aacplusenc-NULLptr-DeleteBitBuffer
-
-Timeline:
-2017-08-31: bug discovered and reported to upstream
-2017-09-07: blog post about the issue
-2017-09-07: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/07/aacplusenc-null-pointer-dereference-in-deletebitbuffer-bitbuffer-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+After further investigation, I've discovered that with this XSS
+vulnerability it is also possible, for an unauthenticated user, to
+upload a simple php web shell to execute code on the server.
 
 
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
