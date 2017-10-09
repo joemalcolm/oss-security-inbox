@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2163" "Monday" "17" "October" "2016" "01:02:45" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20161017010245.267aae32@pc1>" "64" "Re: [oss-security] Re: Fuzzing jasper" "^Cc:" nil nil "10" "2016101623:02:45" "[oss-security] Re: Fuzzing jasper" (number mark "        hanno@hboeck Oct 17   64/2163  " thread-indent "\"Re: [oss-security] Re: Fuzzing jasper\"\n") "<CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>" ("<1528713.C8CqGc87r5@arcadia>" "<20161016030229.F231642E027@smtpvbsrv1.mitre.org>" "<CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6103" "Monday" "9" "October" "2017" "16:02:37" "-0700" "Andy LoPresto" "alopresto@apache.org" "<13B90414-1C62-4858-BD74-051F67F1F6D4@apache.org>" "125" "[oss-security] [ANNOUNCE] Apache NiFi CVE-2017-12623" nil nil nil "10" "2017100923:02:37" "[oss-security] [ANNOUNCE] Apache NiFi CVE-2017-12623" (number mark "U       alopresto@ap Oct  9  125/6103  " thread-indent "\"[oss-security] [ANNOUNCE] Apache NiFi CVE-2017-12623\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5924 invoked by uid 550); 16 Oct 2016 23:02:59 -0000
+Received: (qmail 9799 invoked by uid 550); 10 Oct 2017 00:46:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,160 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5901 invoked from network); 16 Oct 2016 23:02:59 -0000
-Message-ID: <20161017010245.267aae32@pc1>
-In-Reply-To: <CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>
-References: <1528713.C8CqGc87r5@arcadia>
-	<20161016030229.F231642E027@smtpvbsrv1.mitre.org>
-	<CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>
-X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-15125-1476658967-0001-2"
-Cc: oss-security@lists.openwall.com, ago@gentoo.org,
-  cve-assign@mitre.org
-Date: Mon, 17 Oct 2016 01:02:45 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Fuzzing jasper
-To: Graham Christensen <graham@grahamc.com>
+Received: (qmail 11828 invoked from network); 9 Oct 2017 23:02:56 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:reply-to:subject:date:message-id:to
+         :mime-version;
+        bh=T+JI2M9ilhwqTjBZSuScCQw2xO9aNbZmfX3pkGvd8Po=;
+        b=cSSNTv8aP3z3/bKQSNbGAI1e4QSOL1YfHAvX3nYGnAoFZ2GtArPTHze0lWys0fgTRa
+         2e6s6DyNl74eaxufCri5TWLvuOB7DFCqhMMBj0QeSZ6ghHcJJ69dQXr6VUzN3pD/7mrP
+         zgNWl+f8c4O7Hr91TLXxT05LqzsJluUuxmZQd9EboniYywGHHyGh+9nGMa/K2qNo2wKM
+         UPq2wO8KoANM+NaMpQuT9henKnQAPcoTfWY8lmYbw4GOpitmwzM+gludJID+42iPFbR+
+         DQyuu7Qyn5MqCiqp+owCV6eCMPmrJyqAe7aLer94bPHGP1XaxBJDPXHa0SuzfHK1ANf9
+         UT/Q==
+X-Gm-Message-State: AMCzsaVrovykpzCGiBHFeVFa7XgNHMyb+WIYNVhZs5ngVpJVanWz+N14
+	pOQaZS0iM+CYPw9JSTWWOh0=
+X-Google-Smtp-Source: AOwi7QDDo/+87En6S0dYTicCcSkNKFZaDzuGzRz9yGxby3/Os/TFGUi1L6Hnxto87RGr/LKhAvcH5A==
+X-Received: by 10.98.74.155 with SMTP id c27mr11535588pfj.236.1507590164565;
+        Mon, 09 Oct 2017 16:02:44 -0700 (PDT)
+From: Andy LoPresto <alopresto@apache.org>
+Content-Type: multipart/signed; boundary="Apple-Mail=_36449B45-FB89-461C-9B54-406E03B9A5B0"; protocol="application/pgp-signature"; micalg=pgp-sha512
+Date: Mon, 9 Oct 2017 16:02:37 -0700
+Message-Id: <13B90414-1C62-4858-BD74-051F67F1F6D4@apache.org>
+To: security@nifi.apache.org,
+ dev@nifi.apache.org,
+ users@nifi.apache.org,
+ oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com,
+ announce@apache.org
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] [ANNOUNCE] Apache NiFi CVE-2017-12623
 
---=_zucker.schokokeks.org-15125-1476658967-0001-2
-Content-Type: text/plain; charset=UTF-8
+--Apple-Mail=_36449B45-FB89-461C-9B54-406E03B9A5B0
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_681709A7-040E-4D6B-AB7A-591B09CCE207"
+
+
+--Apple-Mail=_681709A7-040E-4D6B-AB7A-591B09CCE207
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-Hi,
+Apache NiFi PMC would like to announce the discovery and resolution of CVE-=
+2017-12623. This issue has been resolved and a new version of the Apache Ni=
+Fi project was released in accordance with the Apache Release Process.
 
-On Sun, 16 Oct 2016 10:23:43 +0000
-Graham Christensen <graham@grahamc.com> wrote:
+Apache NiFi is an easy to use, powerful, and reliable system to process and=
+ distribute data. It supports powerful and scalable directed graphs of data=
+ routing, transformation, and system mediation logic.
 
-> For what it is worth, Jasper has recently issued a release fixing many
-> CVEs, and would likely appreciate these fussing results as bug
-> reports on their github project: https://github.com/mdadams/jasper/
+Fixed in Apache NiFi 1.4.0 (Released: October 2, 2017)
 
-I tested the code again with afl (after the fixes for the stuff
-Agostino reported) and it immediately found multiple issues:
+CVE-2017-12623: Apache NiFi XXE issue when loading template
 
-https://github.com/mdadams/jasper/issues/28
-Heap overflow in jpc_dec_cp_setfromcox()
+Severity: Medium
 
-https://github.com/mdadams/jasper/issues/29
-Heap overflow in jpc_getuint16()
+Versions Affected:
 
-https://github.com/mdadams/jasper/issues/30
-segfault / null pointer access in jpc_pi_destroy
+Apache NiFi 1.0.0 - 1.3.0
 
-https://github.com/mdadams/jasper/issues/31
-double free on jpeg parsing
+Description: An authorized user could upload a template which contained mal=
+icious code and accessed sensitive files via an XML External Entity (XXE) a=
+ttack.
 
-https://github.com/mdadams/jasper/issues/32
-assert in jpc_dec_tiledecode()
+Mitigation: The fix to properly handle XML External Entities was applied on=
+ the Apache NiFi 1.4.0 release. Users running a prior 1.x release should up=
+grade to the appropriate release.
+
+Credit: This issue was discovered by Pawe=C5=82 Gocyla.
+
+For more information: https://nifi.apache.org/security.html
+
+Andy LoPresto
+alopresto@apache.org
+alopresto.apache@gmail.com
+PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
 
 
-This will need some work till it's fuzzing resistant.
+--Apple-Mail=_681709A7-040E-4D6B-AB7A-591B09CCE207
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html charset=
+=3Dutf-8"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode: s=
+pace; -webkit-line-break: after-white-space;" class=3D""><div class=3D""><d=
+iv class=3D"">Apache NiFi PMC would like to announce the discovery and reso=
+lution of CVE-2017-12623. This issue has been resolved and a new version of=
+ the Apache NiFi project was released in accordance with the Apache Release=
+ Process.&nbsp;</div><div class=3D""><br class=3D""></div><div class=3D"">A=
+pache NiFi is an easy to use, powerful, and reliable system to process and =
+distribute data. It supports powerful and scalable directed graphs of data =
+routing, transformation, and system mediation logic.</div><div class=3D""><=
+br class=3D""></div><div class=3D"">Fixed in Apache NiFi 1.4.0 (Released: O=
+ctober 2, 2017)</div><div class=3D""><br class=3D""></div><div class=3D"">C=
+VE-2017-12623: Apache NiFi XXE issue when loading template</div><div class=
+=3D""><br class=3D""></div><div class=3D"">Severity: Medium</div><div class=
+=3D""><br class=3D""></div><div class=3D"">Versions Affected:</div><div cla=
+ss=3D""><br class=3D""></div><div class=3D"">Apache NiFi 1.0.0 - 1.3.0</div=
+><div class=3D""><br class=3D""></div><div class=3D"">Description: An autho=
+rized user could upload a template which contained malicious code and acces=
+sed sensitive files via an XML External Entity (XXE) attack.&nbsp;</div><di=
+v class=3D""><br class=3D""></div><div class=3D"">Mitigation: The fix to pr=
+operly handle XML External Entities was applied on the Apache NiFi 1.4.0 re=
+lease. Users running a prior 1.x release should upgrade to the appropriate =
+release.&nbsp;</div><div class=3D""><br class=3D""></div><div class=3D"">Cr=
+edit: This issue was discovered by Pawe=C5=82 Gocyla.</div><div class=3D"">=
+<br class=3D""></div><div class=3D"">For more information: <a href=3D"https=
+://nifi.apache.org/security.html" class=3D"">https://nifi.apache.org/securi=
+ty.html</a></div></div><div class=3D""><br class=3D""></div><div class=3D"">
+<div style=3D"letter-spacing: normal; orphans: auto; text-align: start; tex=
+t-indent: 0px; text-transform: none; white-space: normal; widows: auto; wor=
+d-spacing: 0px; -webkit-text-stroke-width: 0px; word-wrap: break-word; -web=
+kit-nbsp-mode: space; -webkit-line-break: after-white-space;" class=3D""><d=
+iv style=3D"letter-spacing: normal; orphans: auto; text-align: start; text-=
+indent: 0px; text-transform: none; white-space: normal; widows: auto; word-=
+spacing: 0px; -webkit-text-stroke-width: 0px; word-wrap: break-word; -webki=
+t-nbsp-mode: space; -webkit-line-break: after-white-space;" class=3D""><div=
+ style=3D"color: rgb(0, 0, 0);" class=3D"">Andy LoPresto</div><div style=3D=
+"color: rgb(0, 0, 0);" class=3D""><a href=3D"mailto:alopresto@apache.org" c=
+lass=3D"">alopresto@apache.org</a></div><div class=3D""><i class=3D""><font=
+ color=3D"#c0c0c0" class=3D""><a href=3D"mailto:alopresto.apache@gmail.com"=
+ class=3D"">alopresto.apache@gmail.com</a></font></i></div><div style=3D"co=
+lor: rgb(0, 0, 0);" class=3D"">PGP Fingerprint:&nbsp;70EC B3E5 98A6 5A3F D3=
+C4 &nbsp;BACE 3C6E F65B 2F7D EF69</div></div></div>
+</div>
+<br class=3D""></body></html>=
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+--Apple-Mail=_681709A7-040E-4D6B-AB7A-591B09CCE207--
 
---=_zucker.schokokeks.org-15125-1476658967-0001-2
-Content-Type: application/pgp-signature
+--Apple-Mail=_36449B45-FB89-461C-9B54-406E03B9A5B0
 Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
 -----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
 
-iQIcBAEBCAAGBQJYBAcVAAoJEKWIAHK7tR5CrG4QAJmNbYneWTK6dazWqTglFRqD
-DGTl34KIyNIxiwtDyamXoy0uR3TJj3H2R1S4Q9tNsa19cEVn4ro1vFFFURF9SXxB
-Y52wF8jfh8SEvD49RPKmR3iOgvuheahMBQlBfajjPC7z+3rQYb0JeFNWL2V3rbkQ
-95EXugD2qj1o+eTBFwc5no0WlpB6aKlANPdsVjFNCViykFZZ/LnTeI8JPZuWbY+l
-4uYgKjc7oaPtYLbzNuoTxuDCkCshGyO29AGy09+UGjUSre7jtsw2BnjCW4n7+6/B
-/D8K79KW4T6rM6HMKM+yWm3NMi5O/Umo31tNsjXhvc1WShs0JP3yDiFa+d9zKJw7
-gI7c5QmuXJYkMf+yNHIeTXOyjAS4+8v6E984fsi9aM4i7uYdqmiY0q9ITCjHf48K
-KoUAZtfWEPjZRx3VbasEpgC+iYS1HYox0HgaCxp4YYAAwErTXf3XEDlj8iw3PgFJ
-9HrvTGAacLY9sacQoashT1J+aJPY3aAubnqjZx4FUBRBaCGaXsXtfpwM8a5dn1th
-zc2jcQm33EMXULxXNxPen4mEDsIl+b55sbFTdhUuPgaYJPSwb3Sz8sKY3ctqKRym
-MpRzyItSXjcFY8vPLEwZaxmAqi+6T2sAXm2mPiAKOFWQKZyssCAhSs9+6u0/qa62
-p1SB38+iZrMCfwF6ueJq
-=WApC
+iQIcBAEBCgAGBQJZ3AAOAAoJEDxu9lsvfe9pKMIP/jwWH1jOjeuzBEBIrNio/vTT
+Pa9iVoXW/DSqSUevZPO6qT8khYYpzbrfrH1iO6rMhfL3oHU0VuEBulOFFM1e3Ug+
+blS5VyWYIlL2WTMiXdHWYopNp2AMptQqtFS6BCXlqQHzlhdwCaobCcVEelU7JnIZ
+jCjx+VTQUf/w+ILNoDYLnVpklFqDaVv+41Q2+rHdT8aQSQKtWAeNuCFanD58SiYB
+IMRGoW+IMmIcUpCTQ3pk67U+YZyoeAkk1N5ClhYC8qy/+L12mj9ruMMzuXKFgMLS
+WGOcO7l4jgUZMaycnn6207HttlbmDeruCGaJh5VUe6BXL4fOB4igXj+1vQMv6++Y
+WC4iz1QpBXfqlr4OSZ/atg90HbRe7d6MMou5hsDkGyvOd0KDYA0SDdTTdh1GJpii
+8f6GvTMNKrqwWeYYGM2bv9GAxO3g0ZH0tlVuXd0GjSL3h6UiK09KCl9eaXxurFnn
+GIuYWDdMy5cBJOZ+5UO/xVHfriWMQNhqnRfyO/SeHXaangM67xYKA8vmgV3oH/sN
+gnT3kT68wYOTB1oZfLq615WKXjBCZ2bGZsQg4BH0EEj0W5OS4LOsHGAqEHWDRP63
+F3KRcSrNYerMS0S3TZE6tnKwnum/9oAKw9q0bxHu+XrpxOtAF7tw4E6bboNiFZTv
+ueuD5GP7vcg3yRrhlf22
+=4VYx
 -----END PGP SIGNATURE-----
 
---=_zucker.schokokeks.org-15125-1476658967-0001-2--
+--Apple-Mail=_36449B45-FB89-461C-9B54-406E03B9A5B0--
