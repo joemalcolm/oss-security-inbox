@@ -1,27 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/27
-Message-ID: <94fcbfb6-70a5-348f-3f5c-ef5f6aec00fe@gentoo.org>
-Date: Thu, 6 Jul 2017 00:06:03 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Daniel Micay <danielmicay@...il.com>
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/7
+Message-ID: <20171009131118.7d95c501@fabiankeil.de>
+Date: Mon, 9 Oct 2017 13:11:18 +0200
+From: Fabian Keil <fk@...iankeil.de>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Linux kernel CVEs not mentioned on oss-security
 Content-Type: text/plain; charset=utf-8
 
-On 07/05/2017 05:06 PM, Daniel Micay wrote:
-> https://github.com/shadow-maint/shadow/blob/master/libmisc/chkname.c#L49
+Kurt Seifried <kseifried@...hat.com> wrote:
+
+> If you see this: PLEASE SUBMIT THE URL AS AN UPDATE TO THE CVE USING THE
+> CVE FORM (yes, I am shouting).
 > 
-> POSIX also says "." is a portable character, which isn't allowed by
-> shadow either. What are distributions using to provide useradd if not
-> shadow?
+> https://cveform.mitre.org
 
-At least Gentoo has patched shadow to allow dot in username since 2005:
-https://gitweb.gentoo.org/repo/gentoo/historical.git/commit/?id=be804d756a1834932c05896a87e6ca2e7c602038
+As you seem to be "shouting" a lot lately, I just like to point out
+that using the MITRE(!) form requires the execution of non-free and
+unsigned software from various sources.
 
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+Some people don't consider this a problem, others do.
 
+> Choose "Request an update to an existing CVE entry" and then for "Type of
+> update requested" choose "Update References" and then eneter the CVE #,
+> the ifo and URL and hit "Submit Request"
 
+... trust your browser's "sandbox" to work as advertised for a change
+and ignore the fact that you're running proprietary software that may
+or may not be customised just for your system and can't be easily
+audited in advance.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+> TL;DR: Everyone wants the cat to wear a bell, and in past I'll admit we
+> (the CVE community) didn't make it easy to contribute. Well now we have
+> made it easy to contribute, so please do.
+
+TL;DR: Not everyone wants to allow remote code execution just to
+request a CVE. Some people are sufficiently satisfied when security
+issues are found and fixed in time. While CVE number are sometimes
+nice to have, other identifiers work just as well (for some).
+
+Fabian
+
+Content of type "application/pgp-signature" skipped
