@@ -1,52 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/30/2
-Message-ID: <987945.267788263-sendEmail@localhost>
-Date: Sun, 30 Apr 2017 09:11:39 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: imageworsener: two left shift
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/6
+Message-ID: <CAG_fn=WuQgi2dWQesBdAzYEvRGWbLU97qdGMAjiyWkbCEX=bRQ@mail.gmail.com>
+Date: Mon, 9 Oct 2017 11:12:08 +0200
+From: Alexander Potapenko <glider@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-14991 in the Linux Kernel: local infoleak via an SG_GET_REQUEST_TABLE ioctl call for /dev/sg0
 Content-Type: text/plain; charset=utf-8
 
-Description:
-imageworsener is a utility for image scaling and processing.
+Hello,
 
-There are two left shift visible with UbSan enabled.
+Kernel commit 109bade9c625c89bb5ea753aaa1a0a97e6fbb548 has introduced
+an infoleak which manifests when the SG_GET_REQUEST_TABLE ioctl is
+called for /dev/sg0 (see the attached repro).
+The bug allows local users to obtain sensitive information from
+uninitialized kernel heap-memory locations. Linux kernels before
+4.13.4 are affected.
+The bug has been found with syzkaller and KMSAN, upstream fix is here:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3e0097499839e0fe3af380410eababe5a47c4cf9
 
-# imagew $FILE /tmp/out -outfmt bmp
-src/imagew-util.c:415:68: runtime error: left shift of 255 by 24 places cannot be represented in type 'int'
-src/imagew-bmp.c:427:10: runtime error: left shift of 1 by 31 places cannot be represented in type 'int'
-Affected version:
-1.3.0
+-- 
+Alexander Potapenko
+Software Engineer
 
-Fixed version:
-1.3.1
+Google Germany GmbH
+Erika-Mann-Straße, 33
+80636 München
 
-Commit fix:
-https://github.com/jsummers/imageworsener/commit/a00183107d4b84bc8a714290e824ca9c68dac738
+Geschäftsführer: Paul Manicle, Halimah DeLaine Prado
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8326
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00271-imageworsener-leftshift
-
-Timeline:
-2017-04-13: bug discovered and reported to upstream
-2017-04-22: upstream released a patch
-2017-04-27: blog post about the issue
-2017-04-29: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/27/imageworsener-two-left-shift/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+View attachment "sg_ioctl.c" of type "text/x-csrc" (1683 bytes)
