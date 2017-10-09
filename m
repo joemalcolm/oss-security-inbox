@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4473" "Wednesday" "10" "November" "2021" "14:32:02" "+0100" "Solar Designer" "solar@openwall.com" nil "138" "[oss-security] Fwd: Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are available for Download" nil nil nil "11" nil nil (number mark "U       solar@openwa Nov 10  138/4473  " thread-indent "\"[oss-security] Fwd: Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are available for Download\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Fwd: Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are available for Download" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2331" "Monday" "9" "October" "2017" "16:17:40" "-0400" "Stiepan" "stie@itk.swiss" "<oXx80JgYC6BjD_znKZs7JW2ithWRy0sZNy5FQelve1UwJsLmZWxJvIRVdS8HyQJee3Z59PxupDs022828NIklgHpmOyUTayvrNtaykmB_ww=@itk.swiss>" "43" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Cc:" nil nil "10" "2017100920:17:40" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        stie@itk.swi Oct  9   43/2331  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<20171009131118.7d95c501@fabiankeil.de>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>" "<CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>" "<4174873.rEhhimjYuO@wanheda>" "<CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>" "<20171009131118.7d95c501@fabiankeil.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 19747 invoked by uid 550); 10 Nov 2021 13:33:05 -0000
+Received: (qmail 9337 invoked by uid 550); 9 Oct 2017 22:05:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,153 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19584 invoked from network); 9 Oct 2017 20:17:57 -0000
+Authentication-Results: mail1.protonmail.ch; dkim=none
+Message-ID: <oXx80JgYC6BjD_znKZs7JW2ithWRy0sZNy5FQelve1UwJsLmZWxJvIRVdS8HyQJee3Z59PxupDs022828NIklgHpmOyUTayvrNtaykmB_ww=@itk.swiss>
+In-Reply-To: <20171009131118.7d95c501@fabiankeil.de>
+References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>
+ <alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>
+ <CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>
+ <4174873.rEhhimjYuO@wanheda>
+ <CANO=Ty1M0XZw6DT39Lg7oa3sewknn3_WGWoFO3swMQf1UF3CvQ@mail.gmail.com>
+ <20171009131118.7d95c501@fabiankeil.de>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="b1_522399bc425c1edf333b9f796eb8db4f"
+Cc: kseifried@redhat.com
+Date: Mon, 09 Oct 2017 16:17:40 -0400
+From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19585 invoked from network); 10 Nov 2021 13:32:18 -0000
-Date: Wed, 10 Nov 2021 14:32:02 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20211110133202.GA4302@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Fwd: Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are available for Download
+Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
+To: fk@fabiankeil.de, oss-security@lists.openwall.com
 
------ Forwarded message from Stefan Metzmacher <metze@samba.org> -----
+--b1_522399bc425c1edf333b9f796eb8db4f
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Date: Tue, 9 Nov 2021 19:26:03 +0100
-From: Stefan Metzmacher <metze@samba.org>
-To: samba-announce@lists.samba.org, samba@lists.samba.org,
-	samba-technical@lists.samba.org
-Subject: [Announce] Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are
- available for Download
+KzE7IGxldCdzIHVzZSBvdGhlciBpZGVudGlmaWVycyEgQW5kIHdoeSBub3Qs
+IGEgYmxvY2tjaGFpbiAoYmFzZWQgb24gYXQgbGVhc3QgU0hBMykgZm9yIHB1
+YmxpYyBzZWN1cml0eSBpc3N1ZXM/IFRoYXQgd291bGQgYmUgZ3JlYXQuIEFu
+ZCBhcyB0cnVzdGFibGUsIGFzIHRyYW5zcGFyZW50IGFzIGl0IG5lZWRzIHRv
+IGJlLgoKQW1lbgoKLS0tLS0tLS0gT3JpZ2luYWwgTWVzc2FnZSAtLS0tLS0t
+LQpPbiA5IE9jdCAyMDE3LCAxMzoxMSwgRmFiaWFuIEtlaWwgd3JvdGU6Cgo+
+IEt1cnQgU2VpZnJpZWQgIHdyb3RlOgo+Cj4+IElmIHlvdSBzZWUgdGhpczog
+UExFQVNFIFNVQk1JVCBUSEUgVVJMIEFTIEFOIFVQREFURSBUTyBUSEUgQ1ZF
+IFVTSU5HIFRIRQo+PiBDVkUgRk9STSAoeWVzLCBJIGFtIHNob3V0aW5nKS4K
+Pj4KPj4gaHR0cHM6Ly9jdmVmb3JtLm1pdHJlLm9yZwo+Cj4gQXMgeW91IHNl
+ZW0gdG8gYmUgInNob3V0aW5nIiBhIGxvdCBsYXRlbHksIEkganVzdCBsaWtl
+IHRvIHBvaW50IG91dAo+IHRoYXQgdXNpbmcgdGhlIE1JVFJFKCEpIGZvcm0g
+cmVxdWlyZXMgdGhlIGV4ZWN1dGlvbiBvZiBub24tZnJlZSBhbmQKPiB1bnNp
+Z25lZCBzb2Z0d2FyZSBmcm9tIHZhcmlvdXMgc291cmNlcy4KPgo+IFNvbWUg
+cGVvcGxlIGRvbid0IGNvbnNpZGVyIHRoaXMgYSBwcm9ibGVtLCBvdGhlcnMg
+ZG8uCj4KPj4gQ2hvb3NlICJSZXF1ZXN0IGFuIHVwZGF0ZSB0byBhbiBleGlz
+dGluZyBDVkUgZW50cnkiIGFuZCB0aGVuIGZvciAiVHlwZSBvZgo+PiB1cGRh
+dGUgcmVxdWVzdGVkIiBjaG9vc2UgIlVwZGF0ZSBSZWZlcmVuY2VzIiBhbmQg
+dGhlbiBlbmV0ZXIgdGhlIENWRSAjLAo+PiB0aGUgaWZvIGFuZCBVUkwgYW5k
+IGhpdCAiU3VibWl0IFJlcXVlc3QiCj4KPiAuLi4gdHJ1c3QgeW91ciBicm93
+c2VyJ3MgInNhbmRib3giIHRvIHdvcmsgYXMgYWR2ZXJ0aXNlZCBmb3IgYSBj
+aGFuZ2UKPiBhbmQgaWdub3JlIHRoZSBmYWN0IHRoYXQgeW91J3JlIHJ1bm5p
+bmcgcHJvcHJpZXRhcnkgc29mdHdhcmUgdGhhdCBtYXkKPiBvciBtYXkgbm90
+IGJlIGN1c3RvbWlzZWQganVzdCBmb3IgeW91ciBzeXN0ZW0gYW5kIGNhbid0
+IGJlIGVhc2lseQo+IGF1ZGl0ZWQgaW4gYWR2YW5jZS4KPgo+PiBUTDtEUjog
+RXZlcnlvbmUgd2FudHMgdGhlIGNhdCB0byB3ZWFyIGEgYmVsbCwgYW5kIGlu
+IHBhc3QgSSdsbCBhZG1pdCB3ZQo+PiAodGhlIENWRSBjb21tdW5pdHkpIGRp
+ZG4ndCBtYWtlIGl0IGVhc3kgdG8gY29udHJpYnV0ZS4gV2VsbCBub3cgd2Ug
+aGF2ZQo+PiBtYWRlIGl0IGVhc3kgdG8gY29udHJpYnV0ZSwgc28gcGxlYXNl
+IGRvLgo+Cj4gVEw7RFI6IE5vdCBldmVyeW9uZSB3YW50cyB0byBhbGxvdyBy
+ZW1vdGUgY29kZSBleGVjdXRpb24ganVzdCB0bwo+IHJlcXVlc3QgYSBDVkUu
+IFNvbWUgcGVvcGxlIGFyZSBzdWZmaWNpZW50bHkgc2F0aXNmaWVkIHdoZW4g
+c2VjdXJpdHkKPiBpc3N1ZXMgYXJlIGZvdW5kIGFuZCBmaXhlZCBpbiB0aW1l
+LiBXaGlsZSBDVkUgbnVtYmVyIGFyZSBzb21ldGltZXMKPiBuaWNlIHRvIGhh
+dmUsIG90aGVyIGlkZW50aWZpZXJzIHdvcmsganVzdCBhcyB3ZWxsIChmb3Ig
+c29tZSkuCj4KPiBGYWJpYW4gQHJlZGhhdC5jb20+
 
-Release Announcements
----------------------
+--b1_522399bc425c1edf333b9f796eb8db4f--
 
-These are security releases in order to address the following defects:
-
-o CVE-2016-2124:  SMB1 client connections can be downgraded to plaintext
-                  authentication.
-                  https://www.samba.org/samba/security/CVE-2016-2124.html
-
-o CVE-2020-25717: A user on the domain can become root on domain members.
-                  https://www.samba.org/samba/security/CVE-2020-25717.html
-                  (PLEASE READ! There are important behaviour changes described)
-
-o CVE-2020-25718: Samba AD DC did not correctly sandbox Kerberos tickets issued
-                  by an RODC.
-                  https://www.samba.org/samba/security/CVE-2020-25718.html
-
-o CVE-2020-25719: Samba AD DC did not always rely on the SID and PAC in Kerberos
-                  tickets.
-                  https://www.samba.org/samba/security/CVE-2020-25719.html
-
-o CVE-2020-25721: Kerberos acceptors need easy access to stable AD identifiers
-                  (eg objectSid).
-                  https://www.samba.org/samba/security/CVE-2020-25721.html
-
-o CVE-2020-25722: Samba AD DC did not do suffienct access and conformance
-                  checking of data stored.
-                  https://www.samba.org/samba/security/CVE-2020-25722.html
-
-o CVE-2021-3738:  Use after free in Samba AD DC RPC server.
-                  https://www.samba.org/samba/security/CVE-2021-3738.html
-
-o CVE-2021-23192: Subsequent DCE/RPC fragment injection vulnerability.
-                  https://www.samba.org/samba/security/CVE-2021-23192.html
-
-There's sadly a regression that "allow trusted domains = no" prevents winbindd
-from starting, we'll try to provide a follow up fix as soon as possible.
-
-Changes:
---------------------
-
-o  Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
-   * CVE-2020-25722
-
-o  Andrew Bartlett <abartlet@samba.org>
-   * CVE-2020-25718
-   * CVE-2020-25719
-   * CVE-2020-25721
-   * CVE-2020-25722
-
-o  Ralph Boehme <slow@samba.org>
-   * CVE-2020-25717
-
-o  Alexander Bokovoy <ab@samba.org>
-   * CVE-2020-25717
-
-o  Samuel Cabrero <scabrero@samba.org>
-   * CVE-2020-25717
-
-o  Nadezhda Ivanova <nivanova@symas.com>
-   * CVE-2020-25722
-
-o  Stefan Metzmacher <metze@samba.org>
-   * CVE-2016-2124
-   * CVE-2020-25717
-   * CVE-2020-25719
-   * CVE-2020-25722
-   * CVE-2021-23192
-   * CVE-2021-3738
-   * ldb release 2.3.2 (for Samba 4.14.10)
-   * ldb release 2.2.3 (for Samba 4.13.14)
-
-o  Andreas Schneider <asn@samba.org>
-   * CVE-2020-25719
-
-o  Joseph Sutton <josephsutton@catalyst.net.nz>
-   * CVE-2020-17049
-   * CVE-2020-25718
-   * CVE-2020-25719
-   * CVE-2020-25721
-   * CVE-2020-25722
-   * MS CVE-2020-17049
-
-
-#######################################
-Reporting bugs & Development Discussion
-#######################################
-
-Please discuss this release on the samba-technical mailing list or by
-joining the #samba-technical IRC channel on irc.libera.chat or the
-#samba-technical:matrix.org matrix channel.
-
-If you do report problems then please try to send high quality
-feedback. If you don't provide vital information to help us track down
-the problem then you will probably be ignored.  All bug reports should
-be filed under the Samba 4.1 and newer product in the project's Bugzilla
-database (https://bugzilla.samba.org/).
-
-
-======================================================================
-== Our Code, Our Bugs, Our Responsibility.
-== The Samba Team
-======================================================================
-
-
-
-================
-Download Details
-================
-
-The uncompressed tarballs and patch files have been signed
-using GnuPG (ID AA99442FB680B620).  The source code can be downloaded
-from:
-
-        https://download.samba.org/pub/samba/stable/
-
-The release notes are available online at:
-
-        https://www.samba.org/samba/history/samba-4.15.2.html
-        https://www.samba.org/samba/history/samba-4.14.10.html
-        https://www.samba.org/samba/history/samba-4.13.14.html
-
-Our Code, Our Bugs, Our Responsibility.
-(https://bugzilla.samba.org/)
-
-                        --Enjoy
-                        The Samba Team
-
------ End forwarded message -----
