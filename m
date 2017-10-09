@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["474" "Wednesday" "22" "November" "2017" "08:34:23" "-0800" "Michal Zalewski" "lcamtuf@coredump.cx" "<CALx_OUCSLH1n0JaBT4XAysVpEQMLF-vGUBtn4dmJ3ED8cZigEg@mail.gmail.com>" "12" "Re: [oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)" nil nil nil "11" "2017112216:34:23" "[oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)" (number mark "U       lcamtuf@core Nov 22   12/474   " thread-indent "\"Re: [oss-security] Go programming language invalid modular exponentiation result (Exp() in math/big pkg)\"\n") "<20171122081339.eacdjs5pewelvhod@scully.more-magic.net>" ("<CAO5O-ELaS6a9jPqxZeuEYX3nhT1k2X8hWkz2D6=1G+mBW14BPw@mail.gmail.com>" "<20171122081339.eacdjs5pewelvhod@scully.more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["956" "Monday" "9" "October" "2017" "01:04:30" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNW35RHRmVgfdAG118m9Yghfa0X6ZHFRzpUuhCsQbWE8Xw@mail.gmail.com>" "32" "Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" nil nil nil "10" "2017100908:04:30" "[oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)" (number mark "U       reed@reedlod Oct  9   32/956   " thread-indent "\"Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)\"\n") "<20171008214807.GA17602@nb4>" ("<20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>" "<CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>" "<CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>" "<20170929151218.0cfb25c2@pc1>" "<CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>" "<20171008214807.GA17602@nb4>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13444 invoked by uid 550); 22 Nov 2017 16:55:52 -0000
+Received: (qmail 15608 invoked by uid 550); 9 Oct 2017 08:05:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13940 invoked from network); 22 Nov 2017 16:34:55 -0000
+Received: (qmail 15581 invoked from network); 9 Oct 2017 08:05:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=coredump-cx.20150623.gappssmtp.com; s=20150623;
+        d=reedloden.com; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=itcFjameUS1sbtDW2lUcabFGB0ULExfDzj2JecyX3n0=;
-        b=o9vwSc8N287DJP2fDfJUWmcafR1kvm+EHpF7IV7RrC+k39WEfawqXuyXooW06vWAV7
-         w4dPfhcA+StEanKErhvsdGXA89CSWQqbYSq+iNsuAVyRJjWMBKMz744Drn161S12k+TM
-         Xtjr6FVsR83zOacTM9+lt7L8lRe3yqf3aoV09RyFPjy3NeIZyqQRwZtDQ+CEyWAlN7AS
-         ts3XcOPdVvqsdU7J2JV9iw7caMwgz9B19eAUyAlt5eY0TVBzaKQ6rLtG/X+V7qyQa2fw
-         qplllIE2YQa7vgdc5mJFiy1+puIbLQ8puAJvLF2/onpGbfIvXpY7WK/SI01dHYN6/7vs
-         8J7g==
+        bh=xoe/sJKfY2dfztTox6IxOO3cl3aBLoQVm9F6eBqDfto=;
+        b=ke15CZPJ0Pe9mFBtipKuEw1YO1TAPxeyZYcNdCngDQ5KOJTHFK5nlCSd0EsAElaylX
+         w6zdJjQwiiBohsRpvFJjaB/5Q5+9c2gXB1I6Cfb9lB1Pg1FhMPq/8XTMYHRGFUd8jweM
+         Pnj6BOWmZWTCrDU9O0IWtj0W2N0PbmF2EL9z+qtOE2VzczATOMK5m/jlzT4r3NwJ7eWy
+         qE3dkyQA/Xww/v5TmtwoDETJETu38Ru9n96oWLNzEKXg2JmZa3VA9k2oajuNwfgXW9X3
+         YqDn4O/5ut/NCF3Fbl84hXsdQ5lCyc+4+pEuh2ha3dJUANgNF7wzsM6l0YCCDoR4MUg8
+         1klQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to;
-        bh=itcFjameUS1sbtDW2lUcabFGB0ULExfDzj2JecyX3n0=;
-        b=IVH2TL9XKEW4auBzIspIKBHXfy7UyBk8oRPNodd5OCd+HhP/ZEB7YqZ4ZIQ+HLHoU9
-         gd7a8iRXyuZDYxLq93posc7Lvcy9zvoV9+N2sWdUampR3WVndimJ4SAxwWu33zKBwCqK
-         cW7fUvOXxW5+T+tjC2o5BXxenKT5xBVC8UcsufQ/XyMYQpRCSiRcUzVeSlHEewR5LtVk
-         xpN12GI7KFKQuJHp1ka/AH2bCop0HuLCBFAY7qLleNtpWU/PwObpKW9HGQLhlBdttT5L
-         IRmCke7Xg91JySRj4LYbxOaeJ56ja8i9hOLM+sVTwCcrKkJpMAH+LLSW8IP/6sko7g0r
-         pbVg==
-X-Gm-Message-State: AJaThX7Sykj2Ve/IF+JhsD2vbjRTfMjKb9EE4vsYvAifdN4jTWeCikP/
-	/N2WOpvwsmeB2y0Reorm0jPf0mMzEue6uUa6Ru9ogWNo
-X-Google-Smtp-Source: AGs4zMZjeFKaEIU9m+hyd9zaKzTk/aXidYd266Rgi8VnCby6H9U/0vRAL5SBWQyzCTA5PSxHAC917N58bb5TWFkOnwk=
-X-Received: by 10.80.243.136 with SMTP id g8mr30543031edm.42.1511368483604;
- Wed, 22 Nov 2017 08:34:43 -0800 (PST)
+        bh=xoe/sJKfY2dfztTox6IxOO3cl3aBLoQVm9F6eBqDfto=;
+        b=QIyLCN+R5SKYVjnM8zXzuxVPcLsxw7OFZSzgp+n5UrcnaU69wqQyg/ntG+7NbauAeg
+         Cj5Nujs6ch8C3XkCb3Sgt9jaTnfsu6KPReeLyu6vx8CMV5yymGBuE6GyieKZFl8l0Oka
+         kJEI7stNvV7TbqyflDsZ/yyUeT1iR46qLNtw1zDIFMrQcG0UHqXesSa+cbfwQRA7KdyA
+         l73ZXMdLKnKbwPI4DLg1660H6IajKq1BkTOd5gLvLPPsUeNak/hRUpbZ1kIhXDcpxARl
+         cvX01rTP5ydJpzRPmviNnjyVqr0mqbH6nb+b+ZoCUd/K/R4dIEfm360tBC55hoWLamZZ
+         H/sg==
+X-Gm-Message-State: AMCzsaUi1oDl5z2k7ifXtR8EEHB7rozO0cbfAKS4bButLoH5YP2pdvgN
+	636opfFCmcOwGgtPImatLq6nw7EhXc7CvEh+c/LBRJeX
+X-Google-Smtp-Source: AOwi7QAT1rok5LWkD4l3rvdiiYb9bWg4z7SOvb1L3HmKtxr9mlv/098dX24NPdqedd0y17XgRJn/k8KBnCnu+z4ZA3s=
+X-Received: by 10.159.50.72 with SMTP id y8mr5051493uad.194.1507536290820;
+ Mon, 09 Oct 2017 01:04:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20171122081339.eacdjs5pewelvhod@scully.more-magic.net>
-References: <CAO5O-ELaS6a9jPqxZeuEYX3nhT1k2X8hWkz2D6=1G+mBW14BPw@mail.gmail.com>
- <20171122081339.eacdjs5pewelvhod@scully.more-magic.net>
-From: Michal Zalewski <lcamtuf@coredump.cx>
-Date: Wed, 22 Nov 2017 08:34:23 -0800
-Message-ID: <CALx_OUCSLH1n0JaBT4XAysVpEQMLF-vGUBtn4dmJ3ED8cZigEg@mail.gmail.com>
-To: oss-security <oss-security@lists.openwall.com>
+In-Reply-To: <20171008214807.GA17602@nb4>
+References: <20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>
+ <CAO5O-EL=MsSrj39-A_yf9_NmE-m7hrF6YfC+SOFnAw41Ae4g8Q@mail.gmail.com>
+ <CALPTtNWjgtc00AvQrdfUspAqx0U+-0aEPGL3aiP1j-im4XC+6w@mail.gmail.com>
+ <20170929151218.0cfb25c2@pc1> <CALPTtNXNQyq_P5FodjEOpf0J_UBEKWhioRqdGhQLfYOFSQHdiw@mail.gmail.com>
+ <20171008214807.GA17602@nb4>
+From: Reed Loden <reed@reedloden.com>
+Date: Mon, 9 Oct 2017 01:04:30 -0700
+Message-ID: <CALPTtNW35RHRmVgfdAG118m9Yghfa0X6ZHFRzpUuhCsQbWE8Xw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="001a1147608219caba055b18a5ea"
+Subject: Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)
+
+--001a1147608219caba055b18a5ea
 Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Go programming language invalid modular
- exponentiation result (Exp() in math/big pkg)
+Content-Transfer-Encoding: quoted-printable
 
-> Is this fuzzer freely available?  I'd love to try it out on the bignum
-> support I added to the CHICKEN Scheme implementation for its upcoming
-> new major release (probably somewhere mid-2018).  Being able to release
-> it with a bit higher confidence in its correctness would be nice, as this
-> is almost all brand new code.
+On Sun, Oct 8, 2017 at 11:24 PM Michael Niedermayer <michael@niedermayer.cc>
+wrote:
 
-Not the same tool, but Hanno released a bignum fuzzer that found quite
-a few issues back in the day:
+> > We=E2=80=99d love to have FFmpeg in-scope, but the simple reason is tha=
+t they
+> don=E2=80=99t
+> > reply to our e-mails. All projects participating must explicitly opt-in,
+> > and we can=E2=80=99t get anybody at FFmpeg to let us know their thought=
+s on if
+> they
+> > would like to be added or not.
+>
+> Your mails where misidentified as spam on my side at least, and while
+> i admit i saw them and wanted to reply later i forgot and somehow
+> apparently everyone else forgot to reply too.
+> Finally replied and yes of course FFmpeg wants to participate
+>
 
-https://github.com/hannob/bignum-fuzz/
+Awesome! Thanks for getting back to us.
 
-/mz
+We've added FFmpeg to the scope at the bottom of
+https://hackerone.com/ibb-data.
+
+Happy hacking,
+~reed
+(for the IBB)
+
+--001a1147608219caba055b18a5ea--
