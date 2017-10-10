@@ -1,105 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/26
-Message-ID: <7ab551aa-36d6-b99f-175f-5ea8b01c6eeb@gentoo.org>
-Date: Thu, 9 Feb 2017 16:33:11 +0100
-From: Thomas Deutschmann <whissi@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/10/7
+Message-ID: <b784889f-6aa3-998c-6b8e-d21bc4f566a1@chbi.eu>
+Date: Tue, 10 Oct 2017 19:54:53 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Firejail local root exploit
+Subject: Re: Reflected XSS vulnerability in Shaarli v0.9.1
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I just received the CVE for the incomplete fix from MITRE via new
-webform. Please see the forwarded message below:
+> A reflected XSS vulnerability in Shaarli v0.9.1 allows an
+> unauthenticated attacker to inject JavaScript. If the victim is an
+> administrator, an attacker can (for example) takeover the admin session
+> or change global settings or add/delete links. It is also possible to
+> execute JavaScript against unauthenticated users.
+> 
+> Fix:
+> https://github.com/shaarli/Shaarli/pull/987
 
+CVE-2017-15215 has been assigned.
 
--------- Forwarded Message --------
-Subject: Re: [scr292978] firejail - Affected <0.9.44.6
-Date: Thu, 9 Feb 2017 10:18:58 -0500
-
-The CVE ID is provided below, after the text associated with your
-https://cveform.mitre.org submission. The text reflects the current
-status of the CVE at MITRE, and may already have minor changes
-relative to your form entry. Changes are made in order to capture the
-information in the intended presentation format; changes are not an
-attempt to revise the results of vulnerability research.
-
-You may republish or redistribute this text. We think that you have
-already posted to oss-security about this vulnerability. To make
-oss-security list members aware of the CVE ID assignment, you could
-reply to your own oss-security post and include pertinent information
-below along with the CVE ID.
-
-> [Suggested description]
-> firejail before 0.9.44.6 and 0.9.38.x LTS before 0.9.38.10 LTS
-> does not comprehensively address dotfile cases during its
-> attempt to prevent accessing user files with an euid of zero,
-> which allows local users to conduct sandbox-escape attacks
-> via vectors involving a symlink and the --private option.
-> NOTE: this vulnerability exists because of an incomplete
-> fix for CVE-2017-5180.
-> 
-> ------------------------------------------
-> [Additional Information]
-> This is a fix for the incomplete fix of CVE-2017-5180.
-> 
-> I already tried to request a new CVE on OSS-Sec which wasn't answered
-> yet: http://www.openwall.com/lists/oss-security/2017/01/31/16
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> Incomplete fix of CVE-2017-5180
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> https://firejail.wordpress.com/
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> firejail - Affected <0.9.44.6
-> firejail-lts - Affected <0.9.38.10
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Local
-> 
-> ------------------------------------------
-> 
-> [Impact Escalation of Privileges]
-> true
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://firejail.wordpress.com/download-2/release-notes/
-> https://github.com/netblue30/firejail/commit/38d418505e9ee2d326557e5639e8da49c298858f
-> https://github.com/netblue30/firejail/commit/b8a4ff9775318ca5e679183884a6a63f3da8f863
-> https://github.com/netblue30/firejail/commit/903fd8a0789ca3cc3c21d84cd0282481515592ef
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Sebastian Krahmer
-
-Use CVE-2017-5940.
-
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15215
 
 
 -- 
-Regards,
-Thomas Deutschmann / Gentoo Security Team
-C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
 
 
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
