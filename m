@@ -1,122 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/18/1
-Message-ID: <82514.6065066917-sendEmail@localhost>
-Date: Tue, 18 Jul 2017 08:06:34 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: graphicsmagick: use-after-free in CloseBlob (blob.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/10/2
+Message-ID: <20171010030437.GA4002@TC.local>
+Date: Mon, 9 Oct 2017 20:04:37 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2017-0903] Unsafe Object Deserialization Vulnerability in RubyGems
 Content-Type: text/plain; charset=utf-8
 
-Description:
-graphicsmagick is a collection of tools and libraries for many image formats.
+# Unsafe Object Deserialization Vulnerability in RubyGems
 
-The complete ASan outputof the issue:
+There is a possible unsafe object desrialization vulnerability in RubyGems.
+It is possible for YAML deserialization of gem specifications to bypass class
+white lists.  Specially crafted serialized objects can possibly be used to
+escalate to remote code execution. This vulnerability has been assigned the
+CVE identifier CVE-2017-0903.
 
-# gm identify $FILE
-==20404==ERROR: AddressSanitizer: heap-use-after-free on address 0x6230000053c0 at pc 0x7fc01a253357 bp 0x7fffcd2d2630 sp 0x7fffcd2d2628
-READ of size 8 at 0x6230000053c0 thread T0
-    #0 0x7fc01a253356 in CloseBlob /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/blob.c:859:3
-    #1 0x7fc013fbed77 in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5144:11
-    #2 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #3 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #4 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #5 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #6 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #7 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #8 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+Versions Affected:  >= 2.0.0.
+Not affected:       < 2.0.0
+Fixed Versions:     2.6.14
 
-0x6230000053c0 is located 6848 bytes inside of 6856-byte region [0x623000003900,0x6230000053c8)
-freed by thread T0 here:
-    #0 0x4cf4d0 in __interceptor_cfree /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:55
-    #1 0x7fc01a8f13d2 in MagickFree /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:509:5
-    #2 0x7fc01a7dc750 in DestroyImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:1277:3
-    #3 0x7fc01a8a7cda in DestroyImageList /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/list.c:239:5
-    #4 0x7fc013fbed6f in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5143:11
-    #5 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #6 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #7 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #8 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #9 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #10 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+Impact
+------
+When packaging a Gem, RubyGems will store information about the gem (the
+"specification") inside the Gem package, and formatted as YAML.  When reading
+Gem information, RubyGems will parse that YAML.  Without safeguards, YAML can
+be used to instantiate objects in a target system.  If an attacker knows about
+the target system, they can use these instantiated objects as a way to
+escalate to an RCE via other means like `Marshal.load`.
 
-previously allocated by thread T0 here:
-    #0 0x4cf688 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
-    #1 0x7fc01a8f04d6 in MagickMalloc /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/memory.c:156:10
-    #2 0x7fc01a7a6fa3 in AllocateImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:336:18
-    #3 0x7fc013f7819a in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:3872:9
-    #4 0x7fc01a50ee88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #5 0x7fc01a3a1f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #6 0x7fc01a3de0c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #7 0x7fc01a48985b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #8 0x7fc01a486991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #9 0x7fc018cf1680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+Normally, a remote code execution flaw isn't a problem in RubyGems because
+RubyGems is designed to execute arbitrary code any time a Gem is installed.
+However, services that process Gems like RubyGems.org can be impacted by this.
+In other words, when used as a client, RubyGems is not impacted.  Applications
+that process Gems on the server are impacted.
 
-SUMMARY: AddressSanitizer: heap-use-after-free /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/blob.c:859:3 in CloseBlob
-Shadow bytes around the buggy address:
-  0x0c467fff8a20: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c467fff8a30: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c467fff8a40: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c467fff8a50: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c467fff8a60: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-=>0x0c467fff8a70: fd fd fd fd fd fd fd fd[fd]fa fa fa fa fa fa fa
-  0x0c467fff8a80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c467fff8a90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c467fff8aa0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c467fff8ab0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c467fff8ac0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==20404==ABORTING
+Releases
+--------
+The FIXED releases are available at the normal locations.
 
-Affected version:
-1.3.26
+Workarounds
+-----------
+For users that can't patch or upgrade, the following monkey patch will
+mitigate this risk:
 
-Fixed version:
-N/A
+```
+module Gem
+  class Specification
+    WHITELISTED_CLASSES = %w(
+      Symbol
+      Time
+      Date
+      Gem::Dependency
+      Gem::Platform
+      Gem::Requirement
+      Gem::Specification
+      Gem::Version
+      Gem::Version::Requirement
+    )
 
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/d0a76868ca37
+    WHITELISTED_SYMBOLS = %w(
+      development
+      runtime
+    )
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+    def self.from_yaml(input)
+      input = normalize_yaml_input input
+      spec = Psych.safe_load(input, WHITELISTED_CLASSES, WHITELISTED_SYMBOLS, true)
 
-CVE:
-CVE-2017-11403
+      fail Gem::EndOfYAMLException if spec && spec.class == FalseClass
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00301-graphicsmagick-UAF-CloseBlob
+      unless Gem::Specification === spec
+        fail Gem::Exception, "YAML data doesn't evaluate to gem specification"
+      end
 
-Timeline:
-2017-07-10: bug discovered and reported to upstream
-2017-07-10: upstream released a fix
-2017-07-12: blog post about the issue
-2017-07-18: CVE assigned
+      spec.specification_version ||= NONEXISTENT_SPECIFICATION_VERSION
+      spec.reset_nil_attributes_to_default
 
-Note:
-This bug was found with American Fuzzy Lop.
+      spec
+    end
+  end
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/07/12/graphicsmagick-use-after-free-in-closeblob-blob-c/
+  class Package
+    def read_checksums gem
+      Gem.load_yaml
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+      @checksums = gem.seek 'checksums.yaml.gz' do |entry|
+        Zlib::GzipReader.wrap entry do |gz_io|
+          Psych.safe_load(gz_io.read, Gem::Specification::WHITELISTED_CLASSES, Gem::Specification::WHITELISTED_SYMBOLS, true)
+        end
+      end
+    end
+  end
+end
 
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
+* 2-6-whitelist-bypass.patch - Patch for 2.6 series
+
+Please note that only the 2.6.x series is supported at present. Users
+of earlier unsupported releases are advised to upgrade as soon as possible as we
+cannot guarantee the continued availability of security fixes for unsupported
+releases.
+
+Credits
+-------
+Thanks to Max Justicz ( https://mastodon.mit.edu/@maxj ) for reporting this!
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "2-6-whitelist-bypass.patch" of type "text/plain" (4675 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
