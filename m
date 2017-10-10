@@ -1,31 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/26/1
-Message-ID: <20170126123155.fquerqnvgz7frque@lorien.valinor.li>
-Date: Thu, 26 Jan 2017 13:31:55 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Requests: libgd: potential unsigned onderflow, denial-of-service in gdImageCreateFromGd2Ctx and signed overflow in gd_io.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/10/5
+Message-ID: <508c1572-a532-24d3-7dd0-c8e2de74d56f@chbi.eu>
+Date: Tue, 10 Oct 2017 19:45:52 +0200
+From: chbi@...i.eu
+To: oss-security@...ts.openwall.com
+Subject: Re: Several Privilege Escalation issues in Kanboard <= 1.0.46
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-[I'm collecting the request in one mail, although maybe I should have
-splitted up, apologies for that].
+> 1)
+CVE-2017-15199
 
-libgd fixed some issues in the git repositories, for which the
-following three does not seem to have CVE ids:
+> 2)
+CVE-2017-15200
 
-1/ Fix potential unsigned underflow
-Commit: https://github.com/libgd/libgd/commit/60bfb401ad5a4a8ae995dcd36372fe15c71e1a35
+> 3)
+CVE-2017-15202
 
-2/ Fix DOS vulnerability in gdImageCreateFromGd2Ctx()
-Commit: https://github.com/libgd/libgd/commit/fe9ed49dafa993e3af96b6a5a589efeea9bfb36f
+> 4)
+CVE-2017-15197
 
-3/ Fix #354: Signed Integer Overflow gd_io.c
-Commit: https://github.com/libgd/libgd/commit/69d2fd2c597ffc0c217de1238b9bf4d4bceba8e6
-Issue: https://github.com/libgd/libgd/issues/354
+> 5)
+CVE-2017-15198
 
-Could you please assign CVE id's for those?
+> 6)
+CVE-2017-15195
 
-Regards,
-Salvatore
+> 7)
+CVE-2017-15201
+
+> 8)
+CVE-2017-15204
+
+> 9)
+CVE-2017-15196
+
+> 10)
+CVE-2017-15203
+
+> 11)
+CVE-2017-15212
+
+> 12)
+CVE-2017-15208
+
+> 13)
+CVE-2017-15207
+
+> 14)
+CVE-2017-15211
+
+> 15)
+CVE-2017-15206
+
+> 16)
+CVE-2017-15205
+
+> 17)
+CVE-2017-15210
+
+> 18)
+CVE-2017-15209
+
+
+https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=kanboard
+
+
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
