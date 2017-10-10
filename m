@@ -1,88 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/1
-Message-ID: <9734ca76ee5140c0b81410555e2a85f5@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 00:48:06 -0500
-From: <cve-assign@...re.org>
-To: <paulcher@...lab.cs.msu.su>, <neex.emil@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: ffmpeg remote exploitaion results code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/10/4
+Message-ID: <1454353123.19019329.1507651438402.JavaMail.zimbra@redhat.com>
+Date: Tue, 10 Oct 2017 12:03:58 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Heololo,
 
-> links to exploits:
-> https://gist.github.com/PaulCher/324690b88db8c4cf844e056289d4a1d6
-> https://gist.github.com/PaulCher/9acf4dc47c95a8b40b456ba03b05a913
+Vitaly Mayatskikh has found that bio_map_user_iov() and bio_unmap_user() in
+'block/bio.c' do unbalanced pages refcounting if IO vector has small consecutive
+buffers belonging to the same page. bio_add_pc_page() merges them into one, but
+the page reference is never dropped, causing memory leak.
 
-> [ 1 - libavformat/http.c  ]
-> 
-> After executing of http_read_stream we read each http header, where we
-> pass "Transfer-Encoding: chunked. header, and we come into
-> http_buf_read function [1]. Due to incorrect use of strtoll function
-> and integer sizes (chunk_size in int64_t)[2], it was possible to pass
-> negative chunk_size in chunk encoding, so after computing final size
-> using FFMIN function later on it would be passed as argument to
-> avio_read function. This results a heap-overflow which we found out to
-> be exploitable, because overflowed buffer is allocated right next to
-> the AVIOContext structure[3]. Overflowing function pointer in this
-> structure immediately results in rip control and then code execution.
-> 
-> * [1] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1166
-> * [2] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1259
-> * [3] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/aviobuf.c#L899
-> 
-> This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/2a05c8f813de6f2278827734bf8102291e7484aa
+Regarding security affect, the flaw is somewhat useless for an attacker on
+a local system as it requires SCSI disk to be present, root privileges or RAWIO
+caps, but this can be quickly turned into a meaningful attack if a SCSI disk is
+passed through to a virtual machine. An attacker can issue absolutely legit SCSI
+read/write commands to a disk in his VM, that will make VM's memory pages used
+for IO to be extra refcounted. Then attacker can power down a VM and the memory
+will be definitely lost. Few exploit runs with power cycles in between, and
+the whole host can get OOM.
 
-Use CVE-2016-10190.
+References:
 
+https://bugzilla.redhat.com/show_bug.cgi?id=1495089
 
-> [ 2 - libavformat/rtmppkt.c ]
-> 
-> Issue is connected with buffer overflow on the heap in RTMP protocol.
-> After a bit of reverse engineering of RTMP protocol you can notice
-> that it uses chunk (of max 0x80 bytes) to _transfer_ data, but chunks
-> of more size could be used to _store_ the data. Because size of packet
-> is not checked that it is the same as it was in the same transmission
-> you can first send packet with smaller size and then bigger size, and
-> this results in heap-overflow[1]. If you can align chunks right you can
-> achieve write-what-where condition and that results in RCE.
-> 
-> * [1] - https://github.com/FFmpeg/FFmpeg/blob/d903b4e3ad4a81b3dd79f12c2f3b9cb16e511173/libavformat/rtmppkt.c#L268
-> 
-> The issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/7d57ca4d9a75562fa32e40766211de150f8b3ee7
+A reproducer:
 
-Use CVE-2016-10191.
+https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1495887.html
 
+A proposed patch:
 
-> [ 3 - ffserver.c ]
-> 
-> This issue is completely like the first one and it results in heap overflow.
-> 
-> This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/a5d25faa3f4b18dac737fdb35d0dd68eb0dc2156
+https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1495884.html
 
-Use CVE-2016-10192.
+The patch for this flaw is not in the Linux kernel upstream at the moment of
+this writing (Oct 10 2017) and is being discussed, see an ongoing discussion:
 
+https://marc.info/?t=150605752800001&r=1&w=2
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYksbXAAoJEHb/MwWLVhi2UgcQAJP5bl4pfmex1h/9mVfFlvaX
-J+k0EeXJnyaKyofaE3Xz/Hy4WRlzEjO7DZML+hbilTwinojlvUuhTUqBrvEGkP6L
-jbBQc3+diHBbYFTCqUccQdssUmJargBPj5pFtrrge4do/brPS1oBqWEcLEN2D2Hm
-vTVw4tlG2CYRMDcoin6LWkmcPOaB6kXh6kig36aUA/8NlHay9LFEWMGDsZdxtyq4
-lDhiEmokYJ9adeZISw0gIEtjAh/phsHfQHJBkkgyuiufZqyVzLOVPxUx4aqUcG8F
-GvRtgaH6WW1uBj6zArRjz6O95vK62jbv0FA29cXTglV9ZNniCDNnBJAy7pnr6Co9
-MdpB0vI+GNvbyHFKXLOIQZbaIFP7eHGYJzDBNLXpRwBZLJGhTj4RecoWPo6Mvnl+
-KF7w8LZs38nWsCZL8uaovksHv7KZHbJu3xbSLdj/NGMfh7PKi9XPP3PMNluWjpzd
-hW0MC3EpSL1l+7zV39kpES+m31sKZA4+/y4iS6A58nt3hIyzRQBjbxVEA7bt5rKQ
-+j/msNvwUUqn0TeAg3VCjnEtsGoJXpjrwxW8re5nNDKkstfwLLEVgUrK5mGBgw9Y
-JCEUnAvGDspVW7fBNKw+aq7OQ52kWQCfrjmIRNmtZqSm5FSJZXt79WmgCppTLKb+
-wORuhMtK5Dtn1Sv05NwM
-=TZVr
------END PGP SIGNATURE-----
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
