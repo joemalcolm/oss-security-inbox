@@ -1,24 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/5
-Message-ID: <32f3823a-56ce-f384-03dc-7c813169cf38@securify.nl>
-Date: Wed, 1 Mar 2017 07:17:51 +0100
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/10/6
+Message-ID: <30403a24-9bb8-9761-3490-c7907cf21a9d@chbi.eu>
+Date: Tue, 10 Oct 2017 19:53:18 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities affecting various WordPress Plugins
+Subject: Re: Stored XSS vulnerabilities in Flyspray
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+
+> A stored XSS vulnerability in Flyspray before 1.0-rc6 allows an
+> authenticated user to inject JavaScript to gain administrator privileges.
+> 
+> Fix:
+> https://github.com/Flyspray/flyspray/commit/754ec5d04348ef7ecb8cb02ade976dc412b031f8
+
+CVE-2017-15213 has been assigned.
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15213
+
+
+> A stored XSS vulnerability in Flyspray between 1.0-rc4 and 1.0-rc6
+> allows an authenticated user to inject JavaScript to gain administrator
+> privileges and also to execute JavaScript against other users (including
+> unauthenticated users).
+> 
+> Fix
+> https://github.com/Flyspray/flyspray/commit/00cfae5661124f9d67ac6733db61b2bfee34dccc
+
+CVE-2017-15214 has been assigned.
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15214
+
+
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
 
 
 
-
-View attachment "analytics_stats_counter_statistics_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3420 bytes)
-
-View attachment "simple_ads_manager_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3175 bytes)
-
-View attachment "vaultpress___remote_code_execution_via_man_in_the_middle_attack.txt" of type "text/plain" (7387 bytes)
-
-View attachment "wordpress_adminer_plugin_allows_public__local__database_login.txt" of type "text/plain" (4299 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
