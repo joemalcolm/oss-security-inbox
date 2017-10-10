@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2476" "Tuesday" "25" "June" "2019" "08:41:08" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>" "54" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062513:41:08" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        bfriesen@sim Jun 25   54/2476  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" "<alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>" "<E1hfSKS-00015J-V5@rmmprod07.runbox>" "<20190624193048.GA8039@espresso.pseudorandom.co.uk>" "<CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2309" "Tuesday" "10" "October" "2017" "19:54:53" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<b784889f-6aa3-998c-6b8e-d21bc4f566a1@chbi.eu>" "63" "Re: [oss-security] Reflected XSS vulnerability in Shaarli v0.9.1" nil nil nil "10" "2017101017:54:53" "[oss-security] Reflected XSS vulnerability in Shaarli v0.9.1" (number mark "U       chbi@chbi.eu Oct 10   63/2309  " thread-indent "\"Re: [oss-security] Reflected XSS vulnerability in Shaarli v0.9.1\"\n") "<4c8ff4e2-cef7-e228-ae65-c1f2f86b06da@chbi.eu>" ("<4c8ff4e2-cef7-e228-ae65-c1f2f86b06da@chbi.eu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24154 invoked by uid 550); 25 Jun 2019 13:41:21 -0000
+Received: (qmail 24005 invoked by uid 550); 10 Oct 2017 17:55:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24109 invoked from network); 25 Jun 2019 13:41:21 -0000
-X-X-Sender: bfriesen@freddy.simplesystems.org
-In-Reply-To: <CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>
-Message-ID: <alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>
-References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com> <20190617113203.GH15432@suse.de> <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com> <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
- <alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org> <E1hfSKS-00015J-V5@rmmprod07.runbox> <20190624193048.GA8039@espresso.pseudorandom.co.uk> <CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 25 Jun 2019 08:41:09 -0500 (CDT)
-Date: Tue, 25 Jun 2019 08:41:08 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
- OSS-Fuzz
+Received: (qmail 23981 invoked from network); 10 Oct 2017 17:55:22 -0000
 To: oss-security@lists.openwall.com
+References: <4c8ff4e2-cef7-e228-ae65-c1f2f86b06da@chbi.eu>
+From: chbi@chbi.eu
+Message-ID: <b784889f-6aa3-998c-6b8e-d21bc4f566a1@chbi.eu>
+Date: Tue, 10 Oct 2017 19:54:53 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+In-Reply-To: <4c8ff4e2-cef7-e228-ae65-c1f2f86b06da@chbi.eu>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="MifAseBFtH3q9nQvKihESC7Taf6CKGQj5"
+Subject: Re: [oss-security] Reflected XSS vulnerability in Shaarli v0.9.1
 
-On Mon, 24 Jun 2019, Alex Gaynor wrote:
-> - Not having sooooo many vulnerabilities. While there's some dispute over
-> just what % of the bugs that OSS-Fuzz and syzbot turn up are exploitable,
-> there's no doubt that they find a _lot_ of them. Even if only 20% of
-> OSS-Fuzz reports were truly exploitable vulnerabilities, that'd still be
->> 600 of them. We can't produce this many vulnerabilities and then try to
-> clean up afterwards by finding them with fuzzing -- at some point the
-> number of vulnerabilities simply overwhelms us. Tactics for reducing
-> vulnerabilities in the first instance, like memory safe languages, are an
-> important part of making this problem tractable.
->
-> Do folks feel like there were important themes that this misses?
+--MifAseBFtH3q9nQvKihESC7Taf6CKGQj5
+Content-Type: multipart/mixed; boundary="dcCKhMln8W4XjS7dClAuHln53a7u71NfF";
+ protected-headers="v1"
+From: chbi@chbi.eu
+To: oss-security@lists.openwall.com
+Message-ID: <b784889f-6aa3-998c-6b8e-d21bc4f566a1@chbi.eu>
+Subject: Re: [oss-security] Reflected XSS vulnerability in Shaarli v0.9.1
+References: <4c8ff4e2-cef7-e228-ae65-c1f2f86b06da@chbi.eu>
+In-Reply-To: <4c8ff4e2-cef7-e228-ae65-c1f2f86b06da@chbi.eu>
 
-I see the assumption that 20% of oss-fuzz reports are exploitable 
-vulnerabilities.  Where does this percentage estimate come from?  What 
-does it mean to be "exploitable"?
+--dcCKhMln8W4XjS7dClAuHln53a7u71NfF
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
->From working on fixing oss-fuzz detected bugs in GraphicsMagick I see 
-that many/most of the issues are not significant from a security 
-standpoint, assuming that the software is deployed in a way suitable 
-for its level of exposure.  Common issues include:
 
-  * Huge uninitialized memory allocations (which do not really matter
-    under Linux since Linux does not reserve anything but virtual
-    memory space).
+> A reflected XSS vulnerability in Shaarli v0.9.1 allows an
+> unauthenticated attacker to inject JavaScript. If the victim is an
+> administrator, an attacker can (for example) takeover the admin session
+> or change global settings or add/delete links. It is also possible to
+> execute JavaScript against unauthenticated users.
+>=20
+> Fix:
+> https://github.com/shaarli/Shaarli/pull/987
 
-  * Consumption of uninitialized data (e.g. image data) which is not
-    used to make important decisions.  This is usually due to unhandled
-    cases or error handling which does not quit immediately.
+CVE-2017-15215 has been assigned.
 
-  * Tiny heap over-reads which are not past the bounds of the
-    underlying allocation.
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2017-15215
 
-  * Heap over-reads or over-writes which cause an immediate core dump.
 
-  * Excessively slow code with the slowness emphasized by ASAN and
-    UBSAN code running vastly slower.  The excessively slow code is not
-    necessarily noticeable in a normal compilation.
+--=20
+chbi
+https://chbi.eu
 
-  * Memory leaks.
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
 
-  * "undefined behavior" which nevertheless has a common behavior that
-    compilers have followed since the dawn of time.
 
-The most important thing that oss-fuzz contributes is a large 
-collection of files which cause problems for unfixed software such 
-that only the unaware or foolish do not update to fixed versions.
+--dcCKhMln8W4XjS7dClAuHln53a7u71NfF--
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+--MifAseBFtH3q9nQvKihESC7Taf6CKGQj5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlndCW0ACgkQunuT+ZA3
+rn70aRAAmp/lpihi5maRdG0L2ibJ9LHyeOS87ohaWWsZ84lppZSyF8tWchFCDm4A
+Rkc4P6ILmFiPrQQLzmCNE1UKjgexW6yZl58hdalkGIANFeST8+ySJA7ssFjzb4vg
+BGYlmBAKgYURJ5htL33F/ezfz4svyiu0RM6cVHSam+B/vtUv8XvvlbVf7SjKavSh
+JshFVuGfqXWfYCXfMwi66gx1WvwC7i5J1Vjk67oJBnoOvk7OSHd5PqyWjgjJz2o/
+n5YJdW88KLDcxX+bUu7wooJT1yeiazwvGn1tRvGF9Dm0tJPSyFam3swLEJPho0IG
+0mwQdJCaeO0Z5hzp8jvL+rMZlRjgCBxE033ZfnZMTEfS33APDQovfG/kvKb5O5Pw
+BYJ14+aiswxdsIHnlJU7xBPW31oKUTxZYWeKUVKY7tVTqa8PfZMHtsKYngsINvQ4
+HOsnSYvSKpBGlv38nbZWTojW9DeCIybx9m7v2Lat/VZMHuhcATqjmew8dc6bRe//
+1AGYpsPPs9LXB2mqFz9QWoVmvWppiWHpYNdOS7HTWXikM2eKnsdSi+WYeoDyF7xx
+LuiUHgCTQP3p8cJOiaD7GwUsPZDpFFbA1lgQU18HiIbiT9ygDwwQIOeNqke5K3om
+nxuHmajqWIrLzKGbas+8KcIphmD54csaCz08Qy8DqzU0fL8yoDU=
+=r3hC
+-----END PGP SIGNATURE-----
+
+--MifAseBFtH3q9nQvKihESC7Taf6CKGQj5--
