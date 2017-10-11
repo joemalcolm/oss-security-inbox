@@ -1,42 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/12/1
-Message-ID: <20170912052251.yunyqonyel2hibg4@lorien.valinor.li>
-Date: Tue, 12 Sep 2017 07:22:51 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/11/2
+Message-ID: <20171011044549.4p5ochtrxok2nmem@lorien.valinor.li>
+Date: Wed, 11 Oct 2017 06:45:49 +0200
 From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: GNU Emacs 25.2 enriched text remote code execution
+To: Leon Zhao <leon.zhao.7@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Two DoS vulneribilities in libextractor
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi Leon,
 
-On Mon, Sep 11, 2017 at 08:58:57PM +0200, Salvatore Bonaccorso wrote:
-> Hi Paul,
+On Wed, Oct 11, 2017 at 11:40:33AM +0800, Leon Zhao wrote:
+> Hello oss security,
 > 
-> On Sun, Sep 10, 2017 at 11:56:20PM -0700, Paul Eggert wrote:
-> > GNU Emacs is an extensible, customizable, free/libre text editor and
-> > software environment.  When Emacs renders MIME text/enriched data (Internet
-> > RFC 1896), it is vulnerable to arbitrary code execution. Since Emacs-based
-> > mail clients decode "Content-Type: text/enriched", this code is exploitable
-> > remotely. This bug affects GNU Emacs versions 19.29 through 25.2.
-> > 
-> > Although we know no efforts to exploit this in the wild, exploitation is easy.
-> [...]
-> > == Timeline ==
-> > 
-> > 2017-09-04. Bug reported to the Emacs bug tracker by Charles A. Roelli.
-> > 
-> > 2017-09-07. POC for remote code execution sent to the maintainers of Emacs
-> > and Gnus (Reiner Steib <Reiner.Steib@....de>, private mail).
-> > 
-> > 2017-09-08. Patch (by Lars Ingebrigtsen <larsi@...s.org>) to disable the
-> > problematic code and mitigation (private mail).
-> > 
-> > 2017-09-09. Patch committed in main development repository.
+> I found two DoS vulneribilities in libextractor,
 > 
-> Have you requested a CVE for this issue?
+> Affected version
+> 1.4
+> 
+> 1. Divide-By-Zero
+> https://bugzilla.redhat.com/show_bug.cgi?id=1499599
+> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00002.html
+> Fixed
+> 
+> 2. Null Pointer Dereference
+> https://bugzilla.redhat.com/show_bug.cgi?id=1499600
+> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00003.html
+> Fixed
 
-FTR, it seems this was submitted to DWF already as per:
-https://debbugs.gnu.org/cgi/bugreport.cgi?bug=28350#63
+As this states explicitly a 'CVE request' on the subject. Please note
+that CVEs cannot be requested anymore via the oss-security list,
+instead please fill the form at https://cveform.mitre.org/ 
+
+Once you got CVEs assigned, can you please post those assignment
+following up here on your original post to have the other members of
+this list informed on the assignment.
+
+Thanks for your contribution!
 
 Regards,
 Salvatore
