@@ -1,17 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/6
-Message-ID: <CA+PdXcvm1e3zS6uWy-hRs1Sg+RevsbY5kV0X16_sKwS6DxRnxQ@mail.gmail.com>
-Date: Wed, 9 Aug 2017 08:18:54 -0400
-From: Glenn Randers-Pehrson <glennrp@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Cve issue discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/11/3
+Message-ID: <20171011130353.GD667@suse.de>
+Date: Wed, 11 Oct 2017 15:03:53 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Linux kernel: alsa: use-after-free in /dev/snd/seq CVE-2017-15265
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 9, 2017 at 3:49 AM, ne xo <nexo123@...look.kr> wrote:
-> Most bugs in ASan do not cause crash in non-ASan environments.
->
-> You should check with the valgrind tool.
+Hi folks,
 
-That's what I do.
+This kernel issue is being published without embargoe.
+(came via security@...nel.org to Takashi@...E);
 
-Valgrind exhibited the large memory request but did it quickly.
+Reported by Michael23 Yu.
+
+https://bugzilla.suse.com/show_bug.cgi?id=1062520
+
+Proposed Patch:
+http://mailman.alsa-project.org/pipermail/alsa-devel/2017-October/126292.html
+
+A use-after-free window in /dev/snd/seq, Mitre has assigned CVE-2017-15265 to it.
+
+Ciao, Marcus
