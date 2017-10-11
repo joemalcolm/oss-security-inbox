@@ -1,33 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/07/1
-Message-ID: <alpine.LFD.2.20.1707071443340.951@wniryva>
-Date: Fri, 7 Jul 2017 14:48:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-10806 Qemu: usb-redirect: stack buffer overflow in debug logging
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/11/4
+Message-Id: <307E5A53-DC12-428C-ADD6-98D74D13B20E@beckweb.net>
+Date: Wed, 11 Oct 2017 18:21:48 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+releases contain fixes for security vulnerabilities:
 
-Quick emulator(Qemu) built with the USB redirector support is vulnerable to a 
-stack buffer overflow flaw. It could occur while logging debug messages when 
-the debug mode is enabled in the device.
+* Jenkins (weekly) 2.84
+* Jenkins (LTS) 2.73.2
 
-A user/process could use this flaw to crash the Qemu process on the host 
-resulting in DoS.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2017-10-11/
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-05/msg03087.html
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1468496
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-This issue was reported by Li Qiang of Qihoo 360 Gear Team.
+---
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+SECURITY-478
+Users with permission to create or configure agents in Jenkins could 
+configure a launch method called Launch agent via execution of command on 
+master. This allowed them to run arbitrary shell commands on the master 
+node whenever the agent was supposed to be launched.
+
+SECURITY-514
+Information about Jenkins user accounts is generally available to anyone 
+with Overall/Read permissions via the /user/(username)/api remote API. This 
+included e.g. Jenkins users' email addresses if the Mailer Plugin is 
+installed.
+
+SECURITY-555
+Jenkins bundled a version of the commons-httpclient library with the 
+vulnerability CVE-2012-6153 that incorrectly verified SSL certificates, 
+making it susceptible to man-in-the-middle attacks.
+
+SECURITY-611
+The remote API at /computer/(agent-name)/api showed information about tasks 
+(typically builds) currently running on that agent. This included 
+information about tasks that the current user otherwise has no access to, 
+e.g. due to lack of Job/Read permission.
+
+SECURITY-618
+The remote API at /queue/item/(ID)/api showed information about tasks in 
+the queue (typically builds waiting to start). This included information 
+about tasks that the current user otherwise has no access to, e.g. due to 
+lack of Job/Read permission.
+
+SECURITY-617
+The remote API at /job/(job-name)/api contained information about upstream 
+and downstream projects. This included information about tasks that the 
+current user otherwise has no access to, e.g. due to lack of Job/Read 
+permission.
+
+SECURITY-616
+The Jenkins default form control for passwords and other secrets, 
+<f:password/>, supports form validation (e.g. for API keys). The form 
+validation AJAX requests were sent via GET, which could result in secrets 
+being logged to a HTTP access log in non-default configurations of 
+Jenkins, and made available to users with access to these log files.
+
