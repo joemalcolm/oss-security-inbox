@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["999" "Tuesday" "12" "January" "2021" "17:09:42" "+0100" "Greg KH" "greg@kroah.com" "<X/3JxrqAuE7mDlpZ@kroah.com>" "26" "Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" nil nil nil "1" "2021011216:09:42" "[oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" (number mark "U       greg@kroah.c Jan 12   26/999   " thread-indent "\"Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic\"\n") "<93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>" ("<CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>" "<X/1YIT59FZ7clijT@kroah.com>" "<93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["923" "Wednesday" "11" "October" "2017" "06:45:49" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20171011044549.4p5ochtrxok2nmem@lorien.valinor.li>" "32" "Re: [oss-security] CVE request: Two DoS vulneribilities in libextractor" "^Cc:" nil nil "10" "2017101104:45:49" "[oss-security] CVE request: Two DoS vulneribilities in libextractor" (number mark "        carnil@debia Oct 11   32/923   " thread-indent "\"Re: [oss-security] CVE request: Two DoS vulneribilities in libextractor\"\n") "<CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>" ("<CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28631 invoked by uid 550); 12 Jan 2021 16:08:46 -0000
+Received: (qmail 18307 invoked by uid 550); 11 Oct 2017 04:46:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28610 invoked from network); 12 Jan 2021 16:08:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
-	date:from:to:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=fm2; bh=y4a0W+Mn9VHBLvssWPC9RCgGfzI
-	nYmx4kTQ1OpeKg8g=; b=BMJYdOjA9fasT38g6EJvwnzGdfa4Tf8TZDlL/9bkRCZ
-	SUZNjgJb4C3YJYMUyAVeIzgcsBIGr2YcOwrmcp+MG8/PfeGlo2vfTwidM+Tmn862
-	EPgJuFFDu2lX2llpgodqdV6LHC5VIXuTmjPMqdw3lSd2M0XA4MVLMix9tImSjAKJ
-	Q8L1X2t08uiFsgEPRsri+Ziu8FXrY2D3x+Un1Zhq6QFgmN5537Hh50T5Nd4gfSA2
-	aIA9lzCacicadwLIHekxwihbIPUfXJoYZqS+ubDoTH//vPxcgNg38rPsM78LhTnE
-	2TSFVM7zsxK9Kgt88U1wt9FcxAwkjVr6RPexQIL14wg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=y4a0W+
-	Mn9VHBLvssWPC9RCgGfzInYmx4kTQ1OpeKg8g=; b=Z4G+XBUhW+xPVEGxVBVNmi
-	LU6snWl07BctgTNpA5rmbjzt14nXl/1GkAEDiVURhBX0BycoBQLJyB9h+H6pCyd0
-	+Ks8A9mIiWksW9y1Rv2dgO3UQk/Ez7N/V0pOtcxaT4Bfwzn/j1jyhyGQpsQQBmpr
-	FgkXf/z7rQ9AR7DxK23xIJY1HjBksk6Lh1NasnRoJq0UmnsbaitrRW0Ri+Uhnet4
-	yeSf1gbIVkbEAvT578LHOVVE4xt8WmNgxf1Y+DQclhRVxFFK15vjkkdjpvDurIv+
-	EG/yWMEqGEWXbUU4mqlwgySPa4Cgig2dmJH8s9sbJT1BDDuwxsteiVeYZr3txASg
-	==
-X-ME-Sender: <xms:gcn9X9tTcCtVsc_TlhvagSG0pInChZ3uwHAtjINZ6oXwY5QhbUgjrQ>
-    <xme:gcn9X2eSBOpSXNyqZTlK1xhcxVpUXZtJ8MZYZbZ0Rtm_dTdbwhi-0aNJPkbenUSmb
-    5xak3Fv9XtEMA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedukedrtddtgdehfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
-    ucggtffrrghtthgvrhhnpeevueehjefgfffgiedvudekvdektdelleelgefhleejieeuge
-    egveeuuddukedvteenucfkphepkeefrdekiedrjeegrdeigeenucevlhhushhtvghrufhi
-    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:gcn9Xww4z_-Tmnxa-l4y1zeE554reNjKfUnweB0RR5Uyl43MNDSJZA>
-    <xmx:gcn9X0MRiW8mp1fR3GUggFAZPRuY3A9Dq5Ts97jbnowyIms2jrjq-A>
-    <xmx:gcn9X99P5uICopxr8wE5Owt_B-ZNa80_TpfHBRsO3rLp9N6scaSZYQ>
-    <xmx:gcn9XwI_hw2Xxna8SinZE0pSAbBX9meuUwyDFR9AbIrtmtnG8qmapA>
-Date: Tue, 12 Jan 2021 17:09:42 +0100
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <X/3JxrqAuE7mDlpZ@kroah.com>
-References: <CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>
- <X/1YIT59FZ7clijT@kroah.com>
- <93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>
+Received: (qmail 18287 invoked from network); 11 Oct 2017 04:46:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+dm2b3W9pdj9h/yvZooFRbsf7PIQNjsT79zUkIx48tk=;
+        b=iE4VIDraXWWJ1b06KjYmPVb3s4VVXq4wz+DsSTdVEy1+e2hObdsfRWfNNg8pBJMsj6
+         xnpbstRhKQSad7G7t+a2ThqOSU6PGbBOvqaSF+yZTNmsKL9XBfwct5c0XzZVQeOz0kdA
+         kTbkNDXoSFRFjySiKQ1l1aRMQpisDqfqQSzvwtnxPENozRKgCWeH0cnYyIY1L9OTbiUc
+         kWAzjehIdI1+8dCTCchoio8hcqiO7P/mCgGuYkZI/xP0XnR5QKZC0aelD7Z438D1LmPA
+         C1nMIFQ/aY6hrXT2jrL6x6SL4h2ZWyQKFLpKoI/a9oGMgxPZMWsGOgm2ubRFCAig4PXO
+         DBvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+dm2b3W9pdj9h/yvZooFRbsf7PIQNjsT79zUkIx48tk=;
+        b=Ji1agUK0LFGhkFW1k9eH69GCiQY8pAy5zJJfYVerzEZhpB0L+8bPdc9qjULFh4gWPe
+         qsrR8QhR7VRafHez8MZWEIzA2U4I0YQ2/kXGoVrbVSU6orlccYrByIJjIWgxxAVQaI9t
+         d0PT8WwhpJ948WhUurAS15iHHh15V0KmVN7Gs5Bu9rZNQGqCwtB7emAhvJaqNFteUtWz
+         KeRFMcwmNQxRLvfzGmKEe/3Em4tstMGcNpxHlbggNNuwuGr5TDZ86ROKKXNzRE7//w5B
+         bmEUkNGcz33sKlMKj6N2cXPA5eWVCefYICkQ2flNEw1iNvHGH482yiQaSXYrBLG8rZkZ
+         x3YA==
+X-Gm-Message-State: AMCzsaUQXTb9SoO9FOekoE4vOClzGQyXiLtu0AsIcvcL7iYdEwAvV4zf
+	MQGQqfqGoM0FMzsnwH1w8edb7Q==
+X-Google-Smtp-Source: AOwi7QCixudbalYPKtLqeOF4gjlsCnMqUqMxD0mMdKwMXb8TX5gwhlUGk6wpbfWAL5LaDpH1tQ6M4g==
+X-Received: by 10.28.87.13 with SMTP id l13mr12408623wmb.45.1507697151674;
+        Tue, 10 Oct 2017 21:45:51 -0700 (PDT)
+Message-ID: <20171011044549.4p5ochtrxok2nmem@lorien.valinor.li>
+References: <CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>
-Subject: Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule
- could result in kernel panic
+In-Reply-To: <CAPwMjngHAWa4F-_hRffJRkNk1JmhKqEFojJyd0VUF+2q5sGN7A@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+Cc: oss-security@lists.openwall.com
+Date: Wed, 11 Oct 2017 06:45:49 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: Re: [oss-security] CVE request: Two DoS vulneribilities in
+ libextractor
+To: Leon Zhao <leon.zhao.7@gmail.com>
 
-On Tue, Jan 12, 2021 at 03:23:16PM +0000, John Haxby wrote:
-> 
-> 
-> > On 12 Jan 2021, at 08:04, Greg KH <greg@kroah.com> wrote:
-> > 
-> > I still do not understand why you report issues that are fixed over a
-> > year ago (October 2019) and assign them a CVE like this.  Who does this
-> > help out?  And what about the thousands of other issues that are fixed
-> > in the kernel and not assigned a CVE like this, are they somehow not as
-> > important to your group?
-> > 
-> > What determines what you want to give a CVE to and what you do not?
-> 
-> 
-> I think I can answer that.   There's nothing technical going on here,
-> it's down to the behaviour of the end users of enterprise systems.
+Hi Leon,
 
-Ok, I can understand that crazyness, and somehow believe it, so I have
-not complained when announcements like this come out for issues that
-affect RHEL releases as RH is known for abusing^using the CVE system in
-this manner.  But that was not the case here at all, which is why I
-asked this.
+On Wed, Oct 11, 2017 at 11:40:33AM +0800, Leon Zhao wrote:
+> Hello oss security,
+> 
+> I found two DoS vulneribilities in libextractor,
+> 
+> Affected version
+> 1.4
+> 
+> 1. Divide-By-Zero
+> https://bugzilla.redhat.com/show_bug.cgi?id=1499599
+> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00002.html
+> Fixed
+> 
+> 2. Null Pointer Dereference
+> https://bugzilla.redhat.com/show_bug.cgi?id=1499600
+> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00003.html
+> Fixed
 
-thanks,
+As this states explicitly a 'CVE request' on the subject. Please note
+that CVEs cannot be requested anymore via the oss-security list,
+instead please fill the form at https://cveform.mitre.org/ 
 
-greg k-h
+Once you got CVEs assigned, can you please post those assignment
+following up here on your original post to have the other members of
+this list informed on the assignment.
+
+Thanks for your contribution!
+
+Regards,
+Salvatore
