@@ -1,36 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/21/4
-Message-ID: <alpine.LFD.2.20.1707211639130.27610@wniryva>
-Date: Fri, 21 Jul 2017 16:43:30 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-7539 Qemu: qemu-nbd crashes due to undefined I/O coroutine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/11/5
+Message-Id: <15F70552-0CCA-437A-947E-E6442FA282DB@beckweb.net>
+Date: Wed, 11 Oct 2017 18:25:10 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+plugin releases contain fixes for security vulnerabilities:
 
-Quick Emulator(Qemu) built with the Network Block Device(NBD) Server support 
-is vulnerable to a crash via assertion failure. It could occur if a client 
-sent undue data during initial connection negotiation.
+* Maven Plugin 3.0
+* Swarm Plugin (Client) 3.5
 
-A remote user/process could use this flaw to crash the qemu-nbd server 
-resulting in DoS.
+A vulnerability in the Speaks! Plugin has no fix; its distribution has been
+suspended.
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=2b0bbc4f8809c972bad134bc1a2570dbb01dea0b
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2017-10-11/
 
-Introduced by:
---------------
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=ff82911cd3f69f028f2537825c9720ff78bc3f19
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1473622
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-'CVE-2017-7539' assigned by Red Hat Inc.
+---
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+SECURITY-557
+Maven Plugin bundled a version of the commons-httpclient library with the 
+vulnerability CVE-2012-6153 that incorrectly verified SSL certificates, 
+making it susceptible to man-in-the-middle attacks.
+
+SECURITY-597
+Swarm Plugin Client bundled a version of the commons-httpclient library 
+with the vulnerability CVE-2012-6153 that incorrectly verified SSL 
+certificates, making it susceptible to man-in-the-middle attacks.
+
+SECURITY-623
+Speaks! Plugin allows users with Job/Configure permission to run arbitrary 
+Groovy code inside the Jenkins JVM, effectively elevating privileges to 
+Overall/Run Scripts.
+
