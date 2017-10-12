@@ -1,56 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/5
-Message-ID: <20171219171119.3f4c7ae5@pc1>
-Date: Tue, 19 Dec 2017 17:11:19 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: GIMP parser bugs (FLIMP and more)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/5
+Message-ID: <CAPshzHa=n0hn+JSdb+D4WZqXQjcFF0D8ffepOqjtysHAb3=W9Q@mail.gmail.com>
+Date: Thu, 12 Oct 2017 12:52:05 +0200
+From: Hunger <hunger@...ger.hu>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: nix-devel@...glegroups.com, Graham Christensen <graham@...hamc.com>,  Franz Pletz <fpletz@...rdicwalking.de>, Domen Kožar <domen@....si>,  Rob Vermaas <rob.vermaas@...il.com>
+Subject: Re: Privilege escalation with kill(-1, SIGKILL) in XNU kernel of macOS High Sierra
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Oct 12, 2017 at 4:00 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 
-See also
-https://flimp.fuzzing-project.org/
-
-Background: In 2014, back when I started the fuzzing project, I
-reported two bugs in GIMP in their more obscure parsers. Recently I was
-contacted by Tobias Stöckmann who wrote a working exploit (on freebsd <-
-no aslr, thus easier) for one of those bugs in the FLIC parser. He also
-submitted a patch.
-
-The bugs were ignored all the time, patches as well.
-
-I reported a couple of more bugs and also contacted the GNOME security
-team. Some have patches, others not, ony one got handled. It seems
-overall the file format importers are unmaintained.
-I also tried to submit a fuzzing guide to the gimp wiki, which failed,
-because the people who are supposed to hand out user accounts don't
-answer. (gimp is not fuzzing friendly.)
-
-The bugs:
-
-Heap overflow in FLI import (the one where we have an exploit):
-https://bugzilla.gnome.org/show_bug.cgi?id=739133
-
-OOB read in TGA (with patch)
-https://bugzilla.gnome.org/show_bug.cgi?id=739134
-
-OOB read in XCF (patch, the only one that got merged and fixed)
-https://bugzilla.gnome.org/show_bug.cgi?id=790783
-
-OOB read in GBR (no patch, looks like string/utf8 issue)
-https://bugzilla.gnome.org/show_bug.cgi?id=790784
-
-Heap overflow in PSP (no patch, doesn't look straightforward to fix)
-https://bugzilla.gnome.org/show_bug.cgi?id=790849
-
-OOB read in PSP (no patch)
-https://bugzilla.gnome.org/show_bug.cgi?id=790853
+> So I normally wouldn't accept this posting (and no doubt Solar will be
+> annoyed because this isn't Open Source per se, and he's 100% right) but
+> this posting does provide a good teachable moment.
+>
 
 
--- 
-Hanno Böck
-https://hboeck.de/
+And here's the teachable moment for you...
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+The XNU kernel is Open Source:
+
+https://opensource.apple.com/source/xnu/xnu-4570.1.46/
+
+The Apple Public Source License 2.0 approved by the OSI:
+
+https://opensource.org/licenses/APSL-2.0
+
