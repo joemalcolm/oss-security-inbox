@@ -1,55 +1,197 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/8
-Message-ID: <CANO=Ty0BX4m57asPzCzr2mcKP96VjYc2j12FxwrOy28ggbapGg@mail.gmail.com>
-Date: Mon, 8 May 2017 11:34:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: remote DoS via CPU exhaustion in anon FTP server glob expansion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/10
+Message-Id: <E1e2cPS-00073d-OP@xenbits.xenproject.org>
+Date: Thu, 12 Oct 2017 12:16:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 237 - multiple MSI mapping issues on x86
 Content-Type: text/plain; charset=utf-8
 
-Just a note on how CVE works: CVE is for specific vulnerabilities. E.g. If
-you find a specific XSS in a product for example, or a globbing problem in
-an FTP server that allows someone to crash it by ls */*/*....*/*/*.
-Alternatively there can be CVE's for protocol level flaws (e.g. where the
-specification itself was flawed), or for security technologies that aren't
-secure anymore (e.g. DES, 56bit keyspace just isn't big enough anymore with
-a modern laptop, let alone access to cloud GPU systems) to name a few more
-general cases.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Also for DoS type attacks it can be a gray area, e.g. "send a ping of
-death, system crashes" is clearly a problem, but "open X Million
-connections and system gets slow" is... well... normal behavior for most
-things. In the case of globbing where do we go from "it simply takes a long
-time for a complicated request" to "this is pathological behavior and needs
-to be fixed" (it takes 1 second? 100 seconds? 100 minutes?).
+                    Xen Security Advisory XSA-237
+                              version 2
 
-In any event if there are specific instances of a given FTP server (or
-whatever) that can be crashed/made really non responsive by this class of
-attack then that is appropriate to ask for a CVE and would be given one.
+                  multiple MSI mapping issues on x86
 
-On Mon, May 8, 2017 at 7:10 AM, Russ Cox <rsc@...ch.com> wrote:
+UPDATES IN VERSION 2
+====================
 
-> On Mon, Apr 24, 2017 at 10:06 AM, Russ Cox <rsc@...ch.com> wrote:
-> > > Due to the widespread but limited ("only" CPU exhaustion) nature of
-> > the problem, I have not attempted any embargoed prenotification.
-> > I will forward this note directly to product-security@...le.com and
-> > bugs@...eftpd.org. I filled out the "DWF Open Source Request Form v2"
-> > for a CVE number for the generic problem, and I will reply here when
-> > I receive the number.
->
-> FYI, over the weekend I received notification (two weeks after applying)
-> that DWF has declined to issue a CVE number for this general problem.
-> Interested parties will have to obtain their own CVE numbers for specific
-> products.
->
-> Russ
->
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
+Multiple issues exist with the setup of PCI MSI interrupts:
+- - unprivileged guests were permitted access to devices not owned by
+  them, in particular allowing them to disable MSI or MSI-X on any
+  device
+- - HVM guests can trigger a codepath intended only for PV guests
+- - some failure paths partially tear down previously configured
+  interrupts, leaving inconsistent state
+- - with XSM enabled, caller and callee of a hook disagreed about the
+  data structure pointed to by a type-less argument
 
--- 
+IMPACT
+======
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+A malicious or buggy guest may cause the hypervisor to crash, resulting
+in Denial of Service (DoS) affecting the entire host.  Privilege
+escalation and information leaks cannot be excluded.
 
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from at 3.3 onwards are vulnerable.  Xen versions 3.2
+and earlier are not vulnerable.
+
+Only x86 systems are affected.  ARM systems are not affected.
+
+Only guests which have a physical device assigned to them can exploit
+the vulnerability.
+
+MITIGATION
+==========
+
+Not passing through physical devices to untrusted guests will avoid
+the vulnerability.
+
+The vulnerability can be avoided if the guest kernel is controlled by
+the host rather than guest administrator, provided that further steps
+are taken to prevent the guest administrator from loading code into the
+kernel (e.g. by disabling loadable modules etc) or from using other
+mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Simon Gaiser of Qubes OS Project.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached set of patches resolves this issue.
+
+xsa237-unstable/*.patch     xen-unstable
+xsa237-4.9/*.patch          Xen 4.9.x
+xsa237-4.8/*.patch          Xen 4.8.x, Xen 4.7.x
+xsa237-4.6/*.patch          Xen 4.6.x
+xsa237-4.5/*.patch          Xen 4.5.x
+
+$ sha256sum xsa237* xsa237*/*
+1d4d3fa452e91d235fd688761d695752bde2f2e91fd9b17f566c4cee23ae26d0  xsa237.meta
+3259cd514ea80e3cbac5b72376b4e964afb3b2cabee347440ec2bdd6e585c513  xsa237-unstable/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+7ef53f6a5f3fc6952cb8411e31e0a670de5a78ab2c8176037db32cf147438aa6  xsa237-unstable/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+494a79332fc5f854f0dc7606669201717a41e5b89b44db2fb30607a326930bfb  xsa237-unstable/0003-x86-MSI-disallow-redundant-enabling.patch
+503b58512c5336aff9692c0d0768f38ee956c0988fa3fad4d439f13814736e06  xsa237-unstable/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+dc5f27245e44582db682ac53f24007685ea2f8cb104bad9b4d6afeaa7c4e73d2  xsa237-unstable/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+cd9cd248c4564552bbe847462d247b78ff6af1052198e6b6529178a8a624e1f6  xsa237-4.5/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+87bbb240323b3cce9767da73961d58436c436db6da614c62ade7640f87f748dd  xsa237-4.5/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+6a2e6772fa7b7a1683f7b1041f06757562622228635aedb8c760ebcd9ad0ff7a  xsa237-4.5/0003-x86-MSI-disallow-redundant-enabling.patch
+c558ca347b6df9b430fbdaf9c9b8e3b203c273be1e2bb01aa3424773b88df91d  xsa237-4.5/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+60169e2016451e1c479c4f873ee6798b6abc46e3223a60a4b83bac20a7a3d27c  xsa237-4.5/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+cd9cd248c4564552bbe847462d247b78ff6af1052198e6b6529178a8a624e1f6  xsa237-4.6/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+d39d1c0eaf2ba169b6596520b05930d280721c397fafa3414b6da6168e8b73ca  xsa237-4.6/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+494a79332fc5f854f0dc7606669201717a41e5b89b44db2fb30607a326930bfb  xsa237-4.6/0003-x86-MSI-disallow-redundant-enabling.patch
+c558ca347b6df9b430fbdaf9c9b8e3b203c273be1e2bb01aa3424773b88df91d  xsa237-4.6/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+4cdcd71758d9e5b392c38aeafc9960a4f3ef5c109508e69b2218a8d8394edf0b  xsa237-4.6/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+1ae6aefb86ba0c48a45ecc14ff56ea0bc3d9d354937668bcacadaed1225017a8  xsa237-4.8/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+bf2ca9cb99ee64d7db77d628cec1a84684c360fd36de433cbc78fbcde8095319  xsa237-4.8/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+494a79332fc5f854f0dc7606669201717a41e5b89b44db2fb30607a326930bfb  xsa237-4.8/0003-x86-MSI-disallow-redundant-enabling.patch
+9a38899afd728d504382954de28657aa82af7da352eb4e45a5e615bd646834c5  xsa237-4.8/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+fef5c77f19e2c6229912f1fd19cbcb41c1ce554ff53be22198b2f34ea7a27314  xsa237-4.8/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+c97819cdf567c9bb2c38083a941995f836d7dabe3c8bbedf2205e3996cfbce68  xsa237-4.9/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+d31a2d1053d377e7159060f24a7dbf1d5fd9ebd1f4e4556c4c16b3f409a81130  xsa237-4.9/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+494a79332fc5f854f0dc7606669201717a41e5b89b44db2fb30607a326930bfb  xsa237-4.9/0003-x86-MSI-disallow-redundant-enabling.patch
+f8d8c9f70b22d735960393bce042f39caaaf12e42344394e6078461437fa39aa  xsa237-4.9/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+7f3955a8218850ee2cc9ddd9d11fdc25f526d32e80e189d063e3e779d448af40  xsa237-4.9/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZ310MAAoJEIP+FMlX6CvZT1AIAJA2DvAtZ3iMEVAPkpCUTibf
+9gNGp6osdzFMDP7F2Hwym3Ujm4if2Gr10DeKGAwpDXQhmQ98YSImDY3D11EROVAZ
+DkfXScGCImXIf8Kaya4N3bTYydYa9gsraXUZgL9Jcq6/27ihHx/qIbN0q0QPN5TL
+AIjaOq7SjhWMubM6+DmjaEsz2KGAE7vXLpkVGQaUhy72InNd2dKqmXnn37lQsi5t
+4PEu0CPajb8lQOI2Vu7yhrGGmYMlzJhDs3PuLR4gjIKoxjPtr/MmiAiu2PZXbTKP
+mqUmiIXuofbItwuHl1XfJQt+4wFb4rF39b9xulGfQxjTubiRdXTnPiTkdKmNL/E=
+=rznL
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa237.meta" of type "application/octet-stream" (1702 bytes)
+
+Download attachment "xsa237-unstable/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch" of type "application/octet-stream" (843 bytes)
+
+Download attachment "xsa237-unstable/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch" of type "application/octet-stream" (2177 bytes)
+
+Download attachment "xsa237-unstable/0003-x86-MSI-disallow-redundant-enabling.patch" of type "application/octet-stream" (2156 bytes)
+
+Download attachment "xsa237-unstable/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch" of type "application/octet-stream" (3725 bytes)
+
+Download attachment "xsa237-unstable/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch" of type "application/octet-stream" (1273 bytes)
+
+Download attachment "xsa237-4.5/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch" of type "application/octet-stream" (843 bytes)
+
+Download attachment "xsa237-4.5/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch" of type "application/octet-stream" (2161 bytes)
+
+Download attachment "xsa237-4.5/0003-x86-MSI-disallow-redundant-enabling.patch" of type "application/octet-stream" (2439 bytes)
+
+Download attachment "xsa237-4.5/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch" of type "application/octet-stream" (3887 bytes)
+
+Download attachment "xsa237-4.5/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch" of type "application/octet-stream" (1266 bytes)
+
+Download attachment "xsa237-4.6/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch" of type "application/octet-stream" (843 bytes)
+
+Download attachment "xsa237-4.6/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch" of type "application/octet-stream" (2161 bytes)
+
+Download attachment "xsa237-4.6/0003-x86-MSI-disallow-redundant-enabling.patch" of type "application/octet-stream" (2156 bytes)
+
+Download attachment "xsa237-4.6/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch" of type "application/octet-stream" (3887 bytes)
+
+Download attachment "xsa237-4.6/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch" of type "application/octet-stream" (1266 bytes)
+
+Download attachment "xsa237-4.8/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch" of type "application/octet-stream" (843 bytes)
+
+Download attachment "xsa237-4.8/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch" of type "application/octet-stream" (2161 bytes)
+
+Download attachment "xsa237-4.8/0003-x86-MSI-disallow-redundant-enabling.patch" of type "application/octet-stream" (2156 bytes)
+
+Download attachment "xsa237-4.8/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch" of type "application/octet-stream" (3887 bytes)
+
+Download attachment "xsa237-4.8/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch" of type "application/octet-stream" (1273 bytes)
+
+Download attachment "xsa237-4.9/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch" of type "application/octet-stream" (843 bytes)
+
+Download attachment "xsa237-4.9/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch" of type "application/octet-stream" (2177 bytes)
+
+Download attachment "xsa237-4.9/0003-x86-MSI-disallow-redundant-enabling.patch" of type "application/octet-stream" (2156 bytes)
+
+Download attachment "xsa237-4.9/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch" of type "application/octet-stream" (3887 bytes)
+
+Download attachment "xsa237-4.9/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch" of type "application/octet-stream" (1273 bytes)
