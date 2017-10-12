@@ -1,4 +1,9 @@
-Received: (qmail 29776 invoked by uid 550); 22 Apr 2022 17:05:25 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["711" "Thursday" "12" "October" "2017" "13:02:40" "-0700" "Kees Cook" "keescook@chromium.org" "<CAGXu5jKM-reNUQpJwH-MTvCZomjCKkLm0CYf2imDbF3veycaLQ@mail.gmail.com>" "24" "[oss-security] CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()" nil nil nil "10" "2017101220:02:40" "[oss-security] CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()" (number mark "U       keescook@chr Oct 12   24/711   " thread-indent "\"[oss-security] CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30594 invoked by uid 550); 12 Oct 2017 20:06:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,109 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22284 invoked from network); 22 Apr 2022 16:38:05 -0000
+Received: (qmail 26451 invoked from network); 12 Oct 2017 20:02:53 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=Jqk8WiaVgdsahuEYZYBvQsZbqNizU7cG0Z0TkAl127s=;
-        b=ICVr5sxZPb6RJGir4ZHAms0DHjW3vejr5H+CpFcLnBYlPFN9hMOkFNMSB2k+Or9G4O
-         aEXCDGcmQH2Q+eZAxH39N+sp7sMzR1Z/IRVB+wSXpOKS0G/gOVtcknzwCQNnWW9wxq8S
-         QCqD+4BrvEcCPJfzaVWGqqfJgQes2ebSOkWK0AXNdGISYoWeIZAbSsif9FbS25rQUAyk
-         vCx7DZ02BsecKGYItKkFcyppMwb5TKPr5+vRbWE6zoj6x45VhXKWT+UzNe8wuYEBwYQi
-         NIUdtLaPo7rhkdb7TXOXTREr4mjwXSvUwmMPRnNIlFxEz7EScL/wpGPxacnV9eGM2zEi
-         4REw==
+        d=google.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to:cc;
+        bh=Pm+nHm1pSqcipAd3Xo7uLSkdO3s6UNSo7tB/dVReSeA=;
+        b=enTNs4SArLZdLbzwmOKRg9EC9S4tokdxLwu5QhqFnJl4XwKOkvTwoC0m3pj9Yyd9Eh
+         Md5Q0WEHH/gtbSnehcZbBXnBEoYfPshcSFAgwpXVNBzj3ymE2wDA5gqgiXtgQloPmQMx
+         5aBpBFk6/fIgwMr6CLWMkDaGG4kd5UBgTs4nIdX3AfrMlOxeWbbWNKhz7mRaoiqhkCy3
+         YIVncz7AV9wSWB7aPYclbLQaEfzyrW1XmhYGQBmWdarnxTkAhPLs6XYDIWH/Ul2xPvrY
+         +uC3FvAQLGYcDb2JLga0Tltsl7XTqWbfySAniJBnzmu/1Pg/wnxfQsmX7F8RfSw+9fFZ
+         sKyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:sender:from:date:message-id:subject:to:cc;
+        bh=Pm+nHm1pSqcipAd3Xo7uLSkdO3s6UNSo7tB/dVReSeA=;
+        b=PYDoDyX7lFsWk4HicS1YR1qZaUKR1owTFLBccXxVp2OIXOTAmyqekMYzXBEX9vu1b5
+         yE8Tm2wUGbI1XSBw/tjidM5B98g5/DwyEBMyX+wL4xEWQic4aWbr/EB/YBDfEGA7bBzB
+         MXK61hfAaAxRvPz588zP7uoEWLFjxnReqKUR4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=Jqk8WiaVgdsahuEYZYBvQsZbqNizU7cG0Z0TkAl127s=;
-        b=QRHG2hVO0sQOMb9ZhuW2F6O8gU5xOLbvqs2PFJre5LgQyw/QXLrIug7RqI76NmOmgT
-         oZnQPAw2xbsu5inaExMi3PXhg8KcnOWp34gKOk5E0oz99Vh4+R4zzsq5Zro7sVNOARqC
-         Kl0Q9n/QAbrgDdMBEnUIWrWT3+NGihjWKp2cbflSFrmU8L6cfW5cObcezGeEa9lnWXaW
-         N8h2oYEKzIyvaSOPkzAw+SNwfDUV/JnKhRkM18k3iw5LDNguSluVcs0aWWMyxNzaNhbh
-         U2ZZZATj6iQBeoiru1XSGmdWqldyqR6b6ar1m2owqEdWzyTSkH6BYJVrfFvb192ao3oh
-         VUlg==
-X-Gm-Message-State: AOAM532MvSDrDe4bZZ7+2L1cX0OdxqfZvxt3qd96GleaTkazcp1qDThH
-	NY4WK8p1zRlb7/dh50VrE9H1JBeZXQGkw45N3hyjmWprzWk=
-X-Google-Smtp-Source: ABdhPJwYtjDctHToKgRZk3LjYTr+5IUx6SDmahdEoUTIcZAkBZnGTMJLiZPrbq1nUljwMxNoBiAY5KFBw4B3DuLHBTw=
-X-Received: by 2002:a81:9d5:0:b0:2f4:dd93:4513 with SMTP id
- 204-20020a8109d5000000b002f4dd934513mr5578227ywj.54.1650645471799; Fri, 22
- Apr 2022 09:37:51 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to:cc;
+        bh=Pm+nHm1pSqcipAd3Xo7uLSkdO3s6UNSo7tB/dVReSeA=;
+        b=Hlu8ErSxjNr+6QwhSgt4By0/JvM5RXd2P2kkqmkkgxu9Ib7O8cA9CFO6B7trSnS6TU
+         XulDNrlSF3IuOmYW2b4bUZXdhJjcv8K3BE98Ds5/J6JkbO7bFX9ChVRifkQIhVs+4Sfh
+         PiSnIwksTyYiOXLVOoRQXNgWQTTJbX0cHg/5ZshiKKHEzNw9UmsfPD4wCyzAsVqYFqyL
+         OhG9AA4f9rK7+0pYeYtcqE8D7071UbJbUf9AVOYqbwIisn9okwnbnb4S5fKS7jki07E1
+         zptxoiOS3DF+AmR8Pt1kUKCbGDpgloyqcwjk2gxTFazDftTuSDZXUycZzpx6V/2oiKMv
+         SB6g==
+X-Gm-Message-State: AMCzsaXOhA8IJsrB4Yi1Q4nDq6tr53heZEejW7lPWDF39zt++ro092Al
+	KrGhslwi+0Ig8gwZUkZgcxcCenK07ubGEw7P6y2RmX6gzFk=
+X-Google-Smtp-Source: ABhQp+S5GRX08owCF6LshlJYUPwgpDY76wB0iVHJcY9rOQbaDmSQD6R2enfRfuT6obHYYT/PVULrvUhIz0j0g8ZtD88=
+X-Received: by 10.107.48.76 with SMTP id w73mr4586116iow.301.1507838560730;
+ Thu, 12 Oct 2017 13:02:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <CABdrxGAvPXmkfcZaDKtSK9wdZrreHGR48oC7HUPQO3gXJm_BwA@mail.gmail.com>
-In-Reply-To: <CABdrxGAvPXmkfcZaDKtSK9wdZrreHGR48oC7HUPQO3gXJm_BwA@mail.gmail.com>
-From: CJ Cullen <cjcullen@google.com>
-Date: Fri, 22 Apr 2022 09:37:40 -0700
-Message-ID: <CABdrxGC5N9J4TqhzAOVpKuFkYijWREVtj5ToB5aD+GQx-YDsJA@mail.gmail.com>
+Sender: keescook@google.com
+From: Kees Cook <keescook@chromium.org>
+Date: Thu, 12 Oct 2017 13:02:40 -0700
+X-Google-Sender-Auth: -F4ElDNuJJj98PHkxri3P48-F-U
+Message-ID: <CAGXu5jKM-reNUQpJwH-MTvCZomjCKkLm0CYf2imDbF3veycaLQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000ff9d8a05dd40d8ec"
-Subject: [oss-security] [kubernetes] CVE-2021-25745: Ingress-nginx `path` can be pointed to
- service account token file
-
---000000000000ff9d8a05dd40d8ec
+Cc: Chris Salls <chrissalls5@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()
 
-Issue Details
+Hi,
 
-A security issue was discovered in ingress-nginx
-<https://github.com/kubernetes/ingress-nginx> where a user that can create
-or update ingress objects can use the `spec.rules[].http.paths[].path`
-field of an Ingress object (in the `networking.k8s.io` or `extensions` API
-group) to obtain the credentials of the ingress-nginx controller. In the
-default configuration, that credential has access to all secrets in the
-cluster.
+Chris Salls discovered that when the waitid() syscall in Linux kernel
+v4.13 was refactored, it accidentally stopped checking that the
+incoming argument was pointing to userspace. This allowed local
+attackers to write directly to kernel memory, which could lead to
+privilege escalation.
 
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L>),
-and assigned CVE-2021-25745.
-Affected Components and Configurations
+Introduced by this commit:
+https://git.kernel.org/linus/4c48abe91be03d191d0c20cc755877da2cb35622
 
-This bug affects ingress-nginx. If you do not have ingress-nginx installed
-on your cluster, you are not affected. You can check this by running
-`kubectl get po -n ingress-nginx`.
+Fixed with this commit to mainline tree:
+https://git.kernel.org/linus/96ca579a1ecc943b75beba58bebb0356f6cc4b51
 
-Multitenant environments where non-admin users have permissions to create
-Ingress objects are most affected by this issue.
-Affected Versions
+This should be fixed in the -stable free (in the future v4.13.7) soon:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/log/?h=linux-4.13.y
 
-   -
+Thanks,
 
-   <v1.2.0
+-Kees
 
-Fixed Versions
-
-   -
-
-   v1.2.0-beta.0
-   -
-
-   v1.2.0
-
-Mitigation
-
-If you are unable to roll out the fix, this vulnerability can be mitigated
-by implementing an admission policy that restricts the
-`spec.rules[].http.paths[].path` field on the networking.k8s.io/Ingress
-resource to known safe characters (see the newly added rules
-<https://github.com/kubernetes/ingress-nginx/blame/main/internal/ingress/inspector/rules.go>,
-or the suggested value for annotation-value-word-blocklist
-<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#annotation-value-word-blocklist>
-).
-
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-Additional Details
-
-See ingress-nginx Issue #8502
-<https://github.com/kubernetes/ingress-nginx/issues/8502>for more details.
-Acknowledgements
-
-This vulnerability was reported by Gafnit Amiga.
-
-Thank You,
-
-CJ Cullen on behalf of the Kubernetes Security Response Committee
-
---000000000000ff9d8a05dd40d8ec--
+-- 
+Kees Cook
+Pixel Security
