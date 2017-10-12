@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/3
-Message-ID: <CAHmME9p-tvS=nc5J9REB6kRurCHXLUSR6r+hxcFzPHwWFuVDGw@mail.gmail.com>
-Date: Wed, 17 May 2017 00:15:55 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/7
+Message-ID: <a54bb6fe-9c95-a0d9-1c70-c0deefb802db@rs-labs.com>
+Date: Thu, 12 Oct 2017 14:05:39 +0200
+From: Roman Medina-Heigl Hernandez <roman@...labs.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Privilege escalation with kill(-1, SIGKILL) in XNU kernel of macOS High Sierra
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 17, 2017 at 12:03 AM, Solar Designer <solar@...nwall.com> wrote:
-> Jason, Robert -
+More teachable moments:
+
+DoS != Privilege escalation
+
+Saludos,
+-Román
+
+El 12/10/2017 a las 12:52, Hunger escribió:
+> On Thu, Oct 12, 2017 at 4:00 AM, Kurt Seifried <kseifried@...hat.com> wrote:
 >
-> On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
->> A harmless example from rxvt - pushing back the new-line character:
+>> So I normally wouldn't accept this posting (and no doubt Solar will be
+>> annoyed because this isn't Open Source per se, and he's 100% right) but
+>> this posting does provide a good teachable moment.
 >>
->> $ echo -ne "\eGQ;"
->> ;$ 0
->> bash: 0: command not found
 >
-> Does this also affect rxvt-unicode?
+> And here's the teachable moment for you...
+>
+>
+> The XNU kernel is Open Source:
+>
+> https://opensource.apple.com/source/xnu/xnu-4570.1.46/
+>
+> The Apple Public Source License 2.0 approved by the OSI:
+>
+> https://opensource.org/licenses/APSL-2.0
+>
 
-It does, actually. I've CCd rxvt-unicode upstream on this in order to
-hear their assessment.
-
-Regards,
-Jason
