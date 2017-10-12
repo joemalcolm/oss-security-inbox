@@ -1,25 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/08/1
-Message-ID: <20170108084501.ncsnqkhyytpawpbh@eldamar.local>
-Date: Sun, 8 Jan 2017 09:45:01 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: icoutils: exploitable crash in wrestool programm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/2
+Message-ID: <CANO=Ty2wCpT6iaGt05=+quEZYbWCgtxroceUs7YPk=6=Y1vQYg@mail.gmail.com>
+Date: Wed, 11 Oct 2017 20:00:23 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: nix-devel@...glegroups.com, Graham Christensen <graham@...hamc.com>,  Franz Pletz <fpletz@...rdicwalking.de>, Domen Kožar <domen@....si>,  Rob Vermaas <rob.vermaas@...il.com>
+Subject: Re: Privilege escalation with kill(-1, SIGKILL) in XNU kernel of macOS High Sierra
 Content-Type: text/plain; charset=utf-8
 
-Hi
+So I normally wouldn't accept this posting (and no doubt Solar will be
+annoyed because this isn't Open Source per se, and he's 100% right) but
+this posting does provide a good teachable moment.
 
-Choongwoo Han reported[0] an exploitable crash in wrestool from the
-icoutils[1]. The command line tools is e.g. used in KDE's
-metadataparsing, c.f. [2]. A patch is available in the Debian
-packaging[3].
+On Wed, Oct 11, 2017 at 6:58 PM, Shea Levy <shea@...alevy.com> wrote:
 
-Could you please assign a CVE for this issue?
+> Hello oss-security,
+>
+> We have found an issue in the XNU kernel of macOS High Sierra wherein an
+> unprivileged user can terminate all running processes using the kill
+> system call. In short, a completely unprivileged user can bring down the
+> entire system with kill(-1, SIGKILL) (and, in a shell, kill SIGKILL -1),
+> so long as there is at least one other process running owned by that
+> user. In some cases we've seen it take a few tries in a loop to actually
+> trigger the issue.
+>
 
-Regards,
-Salvatore
+In general this isn't a huge issue based on normal Mac OS usage as it;s not
+typically a shell server. But it's still "local user makes system die"
+which is of interest.
 
- [0] https://bugs.debian.org/850017
- [1] http://www.nongnu.org/icoutils/
- [2] https://codesearch.debian.net/search?q=wrestool&perpkg=1
- [3] https://anonscm.debian.org/git/users/cjwatson/icoutils.git/plain/debian/patches/check-offset-overflow.patch
+
+> We have reported the issue to Apple, who do not see it as a security
+> concern. On its own the ability to easily bring down a multi-user system
+> is concerning, but the fact that we found this accidentally and that the
+> behavior is exactly what you'd expect if there were no permissions check
+> for the kill call at all leads us to believe that there is likely more
+> that can be done to exploit this issue. Some reports include log
+> messages showing services being killed prior to the system breaking,
+> though this has been difficult to reproduce.
+>
+> We have not reserved a CVE for this issue as Apple is a CNA and does not
+> see it as a security issue.
+>
+
+And here's my main teachable moment.
+
+If a CVE Numbering Authority (CNA) does not grant a CVE to an issue
+(whether it be due to "not a bug" or non responsiveness or whatever) there
+is a simple process to deal with this. You go to the CNA's parent, a list
+of CNA's is currently at:
+
+https://cve.mitre.org/cve/cna.html
+
+in general most current CNA's have MITRE as their parent (we're working on
+a federated hierarchy but we're in the early stages), so using the form:
+
+https://cveform.mitre.org/
+
+to request a CVE would be your next step. For the Open Source Distributed
+Weakness Filing (DWF) hierarchy each CNA and sub CNA is registered at:
+
+https://github.com/distributedweaknessfiling/DWF-CNA-Registry/tree/master/CNA-Registry
+
+
+so essentially you go to the parent and keep working your way up until
+either you are satisfied, or you hit MITRE and they tell you to take a
+hike, or give you a CVE.
+
+Speaking of which if you are an Open Source project and want to be a CNA,
+polease contact me and chances are I can set you up in a pretty quick
+timeframe (faster than I assign CVEs because creating a CNA is a much
+better ROI of my time than issuing a CVE). .
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
