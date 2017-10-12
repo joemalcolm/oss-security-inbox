@@ -1,73 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/5
-Message-ID: <66f867c6-a0da-52da-657b-b7ca4a8ee07d@redhat.com>
-Date: Mon, 22 May 2017 20:04:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/3
+Message-ID: <87k201ynu5.wl-wmealing@redhat.com>
+Date: Thu, 12 Oct 2017 14:47:14 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to request a CVE for open source projects
+Subject: CVE-2017-12192 kernel: NULL pointer dereference due to KEYCTL_READ on negative key
 Content-Type: text/plain; charset=utf-8
 
-On 2017-05-22 7:13 PM, Kurt H Maier wrote:
-> On Mon, May 22, 2017 at 06:53:42PM -0600, Kurt Seifried wrote:
->>
->> On 2017-05-22 5:44 PM, Kurt H Maier wrote:
->> Neither, that's part of what I'm figuring out. Most likely it'll look
->> like a trusted pool of people (aka CVE Mentors) that can either
->> contribute or more easily gatekeep). Also the doc are out of date and
->> the process is evolving rapidly so I haven't really bothered updating
->> them since things keep changing.
-> It might be worth noting that in the README file on the documentation
-> repo.  It wouldn't take long and may prevent confusion in the meantime.
->
->> Good question. What exactly is it you want to input? CVE requests? CVE
->> assignments? Modify existing CVE entries?
-> Primarily, freeform discussion of the sort that occurred on this list as
-> a natural outcropping of the CVE request process led to people linking
-> to verification code, temporary mitigations, highlighting of incomplete
-> fixes, and the sort of information that was requested earlier in this
-> thread.  This ability to easily chip in to ongoing situations wasn't
-> just useful for mitre staff doing CVE work, it was also useful for the
-> "community of practice" looking for the latest information regarding
-> self-defense.  I've prevented more than one attack thanks to a one-off
-> reply from someone in response to a CVE request.  
 
-You can still do this. oss-security is a list run by Solar Designer
-(openwall.com). I happen to be a long time poster/moderator, but I have
-no official control/etc (I don't even block posts, that's up to solar, I
-just allow stuff or ignore it when it's up for moderation).
+Gday,
 
-The DWF will not be taking CVE requests on oss-security (ditto for
-MITRE/etc.), why? They're way to messy. We need well structured requests
-i we want this to scale (I should know, I've done over 5000 CVE
-assignments). One goal is to get CVE assignments down to minutes with
-minimal latency (e.g. a large pool of assigners so timezones aren't a
-problem). This stuff can then be posted to oss-security WITH a CVE.
+A vulnerability in the Key Management sub component was found in the Linux
+kernel. Trying to KEYTCL_READ on negative key would lead to a NULL pointer
+dereference. A local attacker could use this flaw to crash the kernel.
 
-Or you can post it to oss-security WITHOUT a CVE (like you did in past)
-and still have all the discussion. The only change is if you want a CVE
-you hav to fill out a simple form and wait a bit. You had to wait when
-you posted here so the waiting part hasn't changed much. (well ok, right
-now the DWF is slow, but again I'm working on that).
+It looks as though the read primitive is limited to a fixed address so this
+has very limited use as an arbitrary read primitive to leverage for another
+exploit.
 
->
-> The CVE assignment process was more than just a collaborative
-> database-population effort.  With the shift to webforms and javascript
-> the natural environment which promoted that discourse is being removed.
-I disagree. If not assigning CVE's on the list kills this list, then...
-wow. Good to know I personally kept this list up and running for a few
-years.
->
->> Not really. the docs are out of date and I'm more concerned about
->> evolving this right now then updating documentation.
-> Again, I strongly suggest you note on the README that this is the case.
-> As matters stand the documentation represents itself as accurate.
-Which README specifically (there's a bunch), feel free to reply offlist.
+Fixed by:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=37863c43b2c6464f252862bf2e9768264e961678
 
->
-> khm
+Introduced by:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=61ea0c0ba904a55f55317d850c1072ff7835ac92
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Wade Mealing
