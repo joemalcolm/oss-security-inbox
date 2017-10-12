@@ -1,26 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/15
-Message-ID: <1839589.Shjyq5iZ1H@arcadia>
-Date: Sun, 26 Feb 2017 21:09 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: gnu-paxutils: multiple crashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/15
+Message-ID: <20171012172310.kejumlealja5qu2k@eldamar.local>
+Date: Thu, 12 Oct 2017 19:23:10 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Leon Zhao <leon.zhao.7@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Two DoS vulneribilities in libextractor
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 25 February 2017 12:49:12 Assaf Gordon wrote:
-> Not sure what "rejected" means (did the email delivery failed or the
-> maintainer rejected your input, etc).
-delivery failed
+Hi
 
-> But generally for GNU Software,
-> If you don't get timely response from the maintainer,
-> you can send an email to "security@....org" ,
-> and if that doesn't help, escalate to "maintainers@....org".
-> see https://www.gnu.org/software/security/
-sent to security@....org.
+On Wed, Oct 11, 2017 at 11:40:33AM +0800, Leon Zhao wrote:
+> Hello oss security,
+> 
+> I found two DoS vulneribilities in libextractor,
+> 
+> Affected version
+> 1.4
+> 
+> 1. Divide-By-Zero
+> https://bugzilla.redhat.com/show_bug.cgi?id=1499599
+> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00002.html
+> Fixed
 
-However not all crashes are security relevant.
+This was assigned CVE-2017-15266.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+> 2. Null Pointer Dereference
+> https://bugzilla.redhat.com/show_bug.cgi?id=1499600
+> http://lists.gnu.org/archive/html/bug-libextractor/2017-10/msg00003.html
+> Fixed
+
+This was assigned CVE-2017-15267.
+
+Regards,
+Salvatore
