@@ -1,52 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/2
-Message-ID: <cd9f00addf1c43088cde0881b4b8560b@imshyb02.MITRE.ORG>
-Date: Mon, 9 Jan 2017 22:58:27 -0500
-From: <cve-assign@...re.org>
-To: <aacid@....org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <security@....org>
-Subject: Re: ark vulnerability: need CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/9
+Message-Id: <E1e2cPa-00077n-Fi@xenbits.xenproject.org>
+Date: Thu, 12 Oct 2017 12:16:26 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 239 - hypervisor stack leak in x86 I/O intercept code
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> The problem is that the "Open" functionality of ark would run shell scripts,
-> this is quite unexpected.
-> 
-> The title for the advisory we're preparing is
->   Ark: unintended execution of scripts and executable files
-> 
-> https://cgit.kde.org/ark.git/commit/?id=82fdfd24d46966a117fa625b68784735a40f9065
+                    Xen Security Advisory XSA-239
+                              version 2
 
->> Stop running executables when opening urls
->> This is a security risk because it's not clear when an entry in an archive is an executable.
->> BUG: 374572
->> FIXED-IN: 16.12.1 
->> 
->> part/part.cpp
+            hypervisor stack leak in x86 I/O intercept code
 
-Use CVE-2017-5330.
+UPDATES IN VERSION 2
+====================
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Intercepted I/O operations may deal with less than a full machine
+word's worth of data.  While read paths had been the subject of earlier
+XSAs (and hence have been fixed), at least one write path was found
+where the data stored into an internal structure could contain bits
+from an uninitialized hypervisor stack slot.  A subsequent emulated
+read would then be able to retrieve these bits.
+
+IMPACT
+======
+
+A malicious unprivileged x86 HVM guest may be able to obtain sensitive
+information from the host or other guests.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+Only x86 systems are affected.  ARM systems are not affected.
+
+Only HVM guests can leverage this vulnerability.  PV guests cannot
+leverage this vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Roger Pau Monné of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa239.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
+xsa239-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa239*
+eb7971be89199eb3ff510f4f5650fd5a8ec588b9fcb8f89230216fac4214ef21  xsa239.meta
+087a8b3cf7ecbdbde593033c127cbcf6c37f532bf33d90f72c19e493970a799c  xsa239.patch
+b91a68fe67240f2a5bb9460c5b650e9595364afa180f8702aef783815e3d7dcd  xsa239-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYdFt9AAoJEHb/MwWLVhi2O1cP/j2jfRgKsZmXXe0W8jJ6E7Kv
-cIWbn9rinS+2a+EpZFPBapmQlLEgG9ONtne7HxEZcotGaG8R3Mxe10S02tsfs2JO
-CV8gAddvtB5KPAhRwca+A67ZyTQNT9Dci7tirO2ybyEFd5yeUw+QDSSJ86ccr2PZ
-HxKbHvK6u0F1LTU9mvdZA7pEdK/SJkNirX3xZN8O+EFr0IAi2ZY/ddOB2XRg+SXI
-37/sLuoLytE0XzZpzQd88xkA/zh7U7BNwmIoDO3Lkl4AnbJVg2Onq/UsjNomZL2o
-HJcKrMmN1iexeIUHbu7Td8S9gZO4cOXstPlhtyczR4gFcck3aS1XJqGDRXJPskGW
-dSgVQIVzjGEDoTGTmtj2R1aBKl2D4clQuI6XTlnxoCFnJVIBvTsJYJrMpu2GwM1i
-zzHPkCPQrkP1o5Q7D6JY8QgHyeUFxYDgYZSYfwY9EQb2sApryLu1sWJU508PlRpF
-Db8TqayWIv43/W7A3+GYvqJgV2W5aqmC6g3K4twPgf7hutkClXdAKFScfrnPj6Vl
-fLEdkClmCOPnTzxf1p/+T0wdSoZpSXeEdHDqp114K+sUm2E40AngsiUKwLpOsVq/
-eYGRsiimFoFD3Q5y1W6qMkx3bxUohBVGm4kLwTtTEyS9Wxj6BGbNif4rmoImqAkq
-QL8FSCznwEMU4rixmDum
-=tetf
+iQEcBAEBCAAGBQJZ31v8AAoJEIP+FMlX6CvZ1AQIAMmN4FghnJvlec7xsPQBgPBs
+nlOItkaXMYZnIajohG2/U5zfFU02oj0GmCz4CDODaKiaZem2p69LzVeVOkqAqQ4p
+osYMy918GROxrvfHo+36gCBDfwlB7TWr6dQzM50nHh+6O1l1+QlpCw3k+gb5CnNT
+Rkn/V1ZZGVy7ycwGiMK1mP0C9hsGyuC5xxwCR9XxK01X0x+NTEXZWAS+GbPHBJAS
+HyopB9W+PkQ0qL/j7VjfGdUWTGquBPffnDGQFBN7CqQ+Pt6Mpv4RvkHiS3NTP5qd
+8rp5M0xjVBnpCC/JAQXL9oLK+LZf99oIal1zbQ1FrECYFXIIyf/hUMxguBbsON4=
+=8UQF
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa239.meta" of type "application/octet-stream" (1965 bytes)
+
+Download attachment "xsa239.patch" of type "application/octet-stream" (1784 bytes)
+
+Download attachment "xsa239-4.5.patch" of type "application/octet-stream" (2101 bytes)
