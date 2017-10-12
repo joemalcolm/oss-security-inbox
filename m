@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3009" "Tuesday" "25" "June" "2019" "09:37:53" "-0600" "Jeff Law" "law@redhat.com" "<ab9c5d55-c33e-5a0b-6877-178a2dc23503@redhat.com>" "73" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062515:37:53" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        law@redhat.c Jun 25   73/3009  " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<ED9DF282-AA92-46A4-ACE0-E8A4EB386032@trust-in-soft.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" "<alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>" "<E1hfSKS-00015J-V5@rmmprod07.runbox>" "<20190624193048.GA8039@espresso.pseudorandom.co.uk>" "<CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>" "<alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>" "<2422A407-94F6-4AB2-9928-310C5089EA5D@gmail.com>" "<1543f203-6032-8926-b722-6de2e06d3e71@redhat.com>" "<ED9DF282-AA92-46A4-ACE0-E8A4EB386032@trust-in-soft.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["13093" "Thursday" "12" "October" "2017" "12:16:24" "+0000" "Xen.org security team" "security@xen.org" "<E1e2cPY-000765-3B@xenbits.xenproject.org>" "282" "[oss-security] Xen Security Advisory 238 - DMOP map/unmap missing argument checks" nil nil nil "10" "2017101212:16:24" "[oss-security] Xen Security Advisory 238 - DMOP map/unmap missing argument checks" (number mark "U       security@xen Oct 12  282/13093 " thread-indent "\"[oss-security] Xen Security Advisory 238 - DMOP map/unmap missing argument checks\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25869 invoked by uid 550); 25 Jun 2019 15:38:08 -0000
+Received: (qmail 27654 invoked by uid 550); 12 Oct 2017 12:59:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,132 +11,299 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25846 invoked from network); 25 Jun 2019 15:38:07 -0000
-References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
- <20190617113203.GH15432@suse.de>
- <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
- <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
- <alpine.LRH.2.21.1906241152180.4597@fairfax.gathman.org>
- <E1hfSKS-00015J-V5@rmmprod07.runbox>
- <20190624193048.GA8039@espresso.pseudorandom.co.uk>
- <CAFRnB2XeQ-casQLm0MRCdRmQ5aeF9K=X3Km5eYg9DB6A915d5A@mail.gmail.com>
- <alpine.GSO.2.20.1906250816590.2070@freddy.simplesystems.org>
- <2422A407-94F6-4AB2-9928-310C5089EA5D@gmail.com>
- <1543f203-6032-8926-b722-6de2e06d3e71@redhat.com>
- <ED9DF282-AA92-46A4-ACE0-E8A4EB386032@trust-in-soft.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=law@redhat.com; prefer-encrypt=mutual; keydata=
- mQENBFkbIO8BCACVIqDhDVh9ur8C+zNV1J/cXfwvVDAUcphDEFl4jyHqZORK4Pd3Db8oWqLm
- Q8lOCr/VOS7lrCtdpVMQkLGOGA16oJ8g7hzhnojpjY09UjsoUiG7oKacuxj8skfp6SIx93Zl
- +iNYPRa4S+za6nY8qiVjyUuiyX04ZPZMrKp2c2sGi+HnBKUZXGhrz/Jdzdox3tjajWZnObyy
- nhEN6hn9L3KawTtGPE/R6A/1RhHTD9FQmIWIeucpaY5c6GNKXTFpj2VYx57LY5hve1R5vhrJ
- IZcgwZAiOtmik5lVi96glY5h6bugRwpexjhwORTLPBCkwiYotSxX99mWd6EHL576i5CNABEB
- AAG0GUplZmYgTGF3IDxsYXdAcmVkaGF0LmNvbT6JAU4EEwEIADgWIQR+niGjtnP5P/8PpRq8
- fP682pgzWwUCWRsg7wIbAwULCQgHAgYVCAkKCwIEFgIDAQIeAQIXgAAKCRC8fP682pgzW5QG
- B/9VATJmx5235RB+8jiDYGXQf3vd9gBfPy/l1tsaK400eFAevDzfGvKmeCKe+uGnlrH3vyT8
- rg9zqH+s5a1Y+lDXPOpJAFmmzbOLU4FW4ucbawmtYvBL65PqpQneCTYnC802/OAcxjm/Onem
- HlgeK6WicNsBTPwYN/0araDFUejyYBIFi9CNqqflwk5Z3brKbQ9bAYIkysVLC/c3njKPmM0c
- WPFHG91ubLbWCHwTIK0+mAL714eTD74dXzOjO2ZDBPLGlFN/kO3+YjaO6UOD2O8acvAMCivT
- kWLr7JwRgLIQDN2DkhQDd3LTPqQE/yOcMcXBTO+fxm8KG0iKQBqWMyGJuQENBFkbIO8BCACy
- qbOsv7XegSeea8XORt5zMaBVWKoSyhmmcCmlxZFS2cuYOBt79MO13lZE2DlO3Lv5IKikj/D4
- ketGVO4+h5psEMH5Yz5P8bx0TmgwbK1GxPZrzeXozUFJDvvCDbIlT0v0pwUXuK3hg8Ieo2h5
- uTed/cn1OjySXW5BqLxN0cyr5hL+J6dcsHvKLT/N3nTgCQhoJXK2MrEMhAGgF3jKpMn3CoS4
- i/ZbNI2MQR6LWHwdZ95f0fI8NzHSfVzeLtzCKQec7nr9fgd6Ylk1ZpGWQUPlQmKjzYgeCeTK
- NO04cwt20WIrQWeWiZFPA0U86NDBdSBrYp4kG3dfIXE+wSSvE7qPABEBAAGJATYEGAEIACAW
- IQR+niGjtnP5P/8PpRq8fP682pgzWwUCWRsg7wIbDAAKCRC8fP682pgzW3REB/9cT7iKRPg/
- OK9bpLlllIEDM90IaKC79DQrv+fRudOR78cdV4XUwPSFnyHUsP3VJ4lDy5FhiKCwGie0BK53
- EsxgMrLy1L8hboFdTE4Vi0xzCheMaMVp4hATDU29k1cuxu1VPpCa8E3mYeHjNV7ip0HN5L4D
- rfs8lRPJE/oM1vGs9DgQFZrCPPNRNGKC97BH+DHccesEJr7tSsQrkPkt0z/FTKr5wIM02vSx
- OJjgmcVbGB7dc2j/Sx8loXmuKnuKtM35668kUG8jeJvSQk3o/VHpD27bhl0rR68R2jN6G6kQ
- egMVb6dPu1Ius8rBE5rFw88J4JEb5q4hMNClWWUFHIdP
-Message-ID: <ab9c5d55-c33e-5a0b-6877-178a2dc23503@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
-MIME-Version: 1.0
-In-Reply-To: <ED9DF282-AA92-46A4-ACE0-E8A4EB386032@trust-in-soft.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.45]); Tue, 25 Jun 2019 15:37:55 +0000 (UTC)
-Date: Tue, 25 Jun 2019 09:37:53 -0600
-From: Jeff Law <law@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
- OSS-Fuzz
-To: Pascal Cuoq <cuoq@trust-in-soft.com>,
- "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 18249 invoked from network); 12 Oct 2017 12:16:45 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1e2cPY-000765-3B@xenbits.xenproject.org>
+Date: Thu, 12 Oct 2017 12:16:24 +0000
+Subject: [oss-security] Xen Security Advisory 238 - DMOP map/unmap missing argument checks
 
-On 6/25/19 9:02 AM, Pascal Cuoq wrote:
-> Hello,
-> 
->> On 25 Jun 2019, at 16:33, Jeff Law <law@redhat.com> wrote:
->> 
->> On 6/25/19 8:14 AM, Matthew Fernandez wrote:
->>> 
->>> 
->>> C/C++ compilers will infer backwards from uninitialized variable
->>> reads (undefined behavior in these languages) that preceding code
->>> is unreachable. For example, when moving from GCC 6 series to GCC
->>> 7 series we found one of our code bases would produce a binary
->>> that would only segfault when compiled at >= -O2. We root caused
->>> this to exactly the situation you describe: an error handling
->>> path that read uninitialized variables. The compiler appeared to
->>> infer backwards that the error check itself was a no-op as the
->>> true branch led to unconditional UB (this is my interpretation of
->>> its actions; I did not delve into the compiler’s internals).
->> Well, as a GCC developer, I can say it doesn't use an uninitialized
->> read to allow back-propagation of state to eliminate conditionals.
->> It may have looked that way, but there had to be something else
->> going on.
-> 
-> This is tangential to the subject and perhaps we should take this
-> sub-discussion off the list, or at least make a new thread. I'm
-> interested in your opinion of what is going on with Ubuntu's packaged
-> GCC version 4.4.3 in the example under the section “The next example”
-> in this blog post, where this very thing is happening (when invoked
-> with fewer than 3 arguments, the compiled code claims that the result
-> of an unsigned multiplication by 2 is odd):
-> 
-> http://blog.frama-c.com/index.php?post/2013/03/13/indeterminate-undefined
->
->  I have not been able to reproduce this with any of the GCC versions
-> hosted at Compiler Explorer, so I believe that this may never have
-> been part of the GCC official tree, but the fact remains that all of
-> Ubuntu 4.4.3 and all source programs that were compiled with Ubuntu
-> 4.4.3's default compiler were compiled with a compiler that did this
-> (surprising, dangerous in some contexts) thing.
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-#include <stdio.h>
+                    Xen Security Advisory XSA-238
+                              version 2
 
-int main(int c, char **v)
-{
-  unsigned int j;
-  if (c==4)
-    j = 1;
-  else
-    j *= 2;
-  printf("j:%u ",j);
-  printf("c:%d\n",c);
-}
+                DMOP map/unmap missing argument checks
 
-Just like the first example, the compiler can choose any value for the
-input and output of the j *= 2 statement.  It does not have to be even.
- The compiler does not have to actually perform the multiplication or
-any computation for that matter.  It can just use whatever value is
-conveniently lying around in a register for the result.
+UPDATES IN VERSION 2
+====================
 
-In theory that would in turn allow the compiler to elide the conditional
-because it could make the else clause be "j = 1" and once the then/else
-are identical the conditional can be eliminated because it serves no
-purpose.  GCC doesn't do that, but it could.  I believe LLVM is more
-aggressive in this kind of stuff.
+Public release.
 
-Now if the else clause has an observable side effect, then that would
-prevent this kind of optimization because those side effects still have
-to happen.
+ISSUE DESCRIPTION
+=================
 
-Jeff
+DMOPs (which were a subgroup of HVMOPs in older releases) allow guests
+to control and drive other guests.  The I/O request server page mapping
+interface uses range sets to represent I/O resources the emulation of
+which is provided by a given I/O request server.  The internals of the
+range set implementation require that ranges have a starting value no
+lower than the ending one.  Checks for this fact were missing.
 
+IMPACT
+======
 
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 can mount a denial of service attack which, if
+successful, can affect the whole system.
+
+Only domains controlling HVM guests can exploit this vulnerability.
+(This includes domains providing hardware emulation services to HVM
+guests.)
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.5 and later are vulnerable.  Xen versions 4.4 and
+earlier are not vulnerable.
+
+Only x86 systems are affected.  ARM systems are not affected.
+
+This vulnerability is only applicable to Xen systems using stub domains
+or other forms of disaggregation of control domains for HVM guests.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+(The security of a Xen system using stub domains is still better than
+with a qemu-dm running as an unrestricted dom0 process.  Therefore
+users with these configurations should not switch to an unrestricted
+dom0 qemu-dm.)
+
+CREDITS
+=======
+
+This issue was discovered by Vitaly Kuznetsov of RedHat.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa238.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x, Xen 4.7.x
+xsa238-4.6.patch       Xen 4.6.x
+xsa238-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa238*
+3cced09a1fb2936644d654c568f38580952328b84e28601b019ea74122228c36  xsa238.meta
+85d3f9713bef1bc86c682857dbd7388a1d1f20089363ddfc4cb9ecbd88eaffec  xsa238.patch
+034e91c234f6831dbaa1aaf29f4f90de2e822f99301424f7f3527f9da883ff68  xsa238-4.5.patch
+29255a81729b24866e594426167de5fbef70de21ef62a95ba95de191d2a7fd54  xsa238-4.6.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZ31v7AAoJEIP+FMlX6CvZrBgIAMg3C1Gvc3rnrPjT+0Im7gdQ
+vBXGAWViWDs7EC1Vl5IU6lQQKETNmx40kRPyOYOVSdPzWamOotXOSadpJ49mbTX1
+CA2iSJ8OAdqcPhgKjdUYVJXkybujNp6WkdlcT6ZXvEs6DLuvKJXZBaRoX2vYtObq
+JjwUfGgpHcOc8vLhaEjEZTWRnKJotqQPaPaDHzrtGJAkHB0F+gwqpM4lBD6Q18+/
+DzyBWlDENEcoSwzDldZ/4Ktl/rOXDOPoYYZfnFmYA2puWP7ujonio8iofOy+6GH3
+GoKSPs1ciC4ax1WdJqbuxM0TCStz4QFOselVQ0hEJNdH6k3mmA4wMg+6kPNDf2U=
+=9idj
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa238.meta"
+Content-Disposition: attachment; filename="xsa238.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAyMzgsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC45IiwKICAgICI0LjgiLAogICAgIjQuNyIsCiAg
+ICAiNC42IiwKICAgICI0LjUiCiAgXSwKICAiVHJlZXMiOiBbCiAgICAieGVu
+IgogIF0sCiAgIlJlY2lwZXMiOiB7CiAgICAiNC41IjogewogICAgICAiWGVu
+VmVyc2lvbiI6ICI0LjUiLAogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAi
+eGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI4MzcyNGQ5ZjNhZTIx
+YTNiOTYzNjI3NDJlMmYwNTJiMTlkOWY1NTlhIiwKICAgICAgICAgICJQcmVy
+ZXFzIjogWwogICAgICAgICAgICAyMzcKICAgICAgICAgIF0sCiAgICAgICAg
+ICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTIzOC00LjUucGF0Y2gi
+CiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQu
+NiI6IHsKICAgICAgIlhlblZlcnNpb24iOiAiNC42IiwKICAgICAgIlJlY2lw
+ZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYi
+OiAiMTY1OGE4NzY5MGFjODM5ZTg1ZGIxMmJiZjQwOWJlNjJiYjkzODY0MCIs
+CiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMjM3CiAgICAg
+ICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4
+c2EyMzgtNC42LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
+fQogICAgfSwKICAgICI0LjciOiB7CiAgICAgICJYZW5WZXJzaW9uIjogIjQu
+NyIsCiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
+ICAgICAiU3RhYmxlUmVmIjogImM3NzgzZDljMjZmYzE5MTg2MmQ5ODgzZGEy
+MjM4NzM0MGIxZmFiMTgiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAg
+ICAgICAgIDIzNwogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjog
+WwogICAgICAgICAgICAieHNhMjM4LnBhdGNoIgogICAgICAgICAgXQogICAg
+ICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjgiOiB7CiAgICAgICJYZW5W
+ZXJzaW9uIjogIjQuOCIsCiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4
+ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjM2ODk4ZWIxMjU3MmYw
+YTFmODVjYjU0ZDRhOWU5MGFmY2I2ZjcwNDUiLAogICAgICAgICAgIlByZXJl
+cXMiOiBbCiAgICAgICAgICAgIDIzNwogICAgICAgICAgXSwKICAgICAgICAg
+ICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjM4LnBhdGNoIgogICAg
+ICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjkiOiB7
+CiAgICAgICJYZW5WZXJzaW9uIjogIjQuOSIsCiAgICAgICJSZWNpcGVzIjog
+ewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjJj
+YzNkMzJmNDBjNzFjYjI0MjQ3N2EzZjg5MzgwNzRkNGZjMzY4MjkiLAogICAg
+ICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDIzNwogICAgICAgICAg
+XSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjM4
+LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwK
+ICAgICJtYXN0ZXIiOiB7CiAgICAgICJYZW5WZXJzaW9uIjogIm1hc3RlciIs
+CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
+ICAiU3RhYmxlUmVmIjogImE4ZWE2ZTI2ODgxMThhM2UxOWUyOWIzOWUzMTZm
+YWE1Zjk2YWI5ZDEiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAg
+ICAgIDIzNwogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwog
+ICAgICAgICAgICAieHNhMjM4LnBhdGNoIgogICAgICAgICAgXQogICAgICAg
+IH0KICAgICAgfQogICAgfQogIH0KfQ==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa238.patch"
+Content-Disposition: attachment; filename="xsa238.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBjZGMyODg3MDc2YjE5YjM5ZmFiOWZhZWM0OTUwODI1ODZmMzExM2Rm
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBYZW5Qcm9qZWN0IFNl
+Y3VyaXR5IFRlYW0gPHNlY3VyaXR5QHhlbnByb2plY3Qub3JnPgpEYXRlOiBU
+dWUsIDUgU2VwIDIwMTcgMTM6NDE6MzcgKzAyMDAKU3ViamVjdDogeDg2L2lv
+cmVxIHNlcnZlcjogY29ycmVjdGx5IGhhbmRsZSBib2d1cwogWEVOX0RNT1Bf
+eyx1bn1tYXBfaW9fcmFuZ2VfdG9faW9yZXFfc2VydmVyIGFyZ3VtZW50cwoK
+TWlzYmVoYXZpbmcgZGV2aWNlIG1vZGVsIGNhbiBwYXNzIGluY29ycmVjdCBY
+RU5fRE1PUF9tYXAvCnVubWFwX2lvX3JhbmdlX3RvX2lvcmVxX3NlcnZlciBh
+cmd1bWVudHMsIG5hbWVseSBlbmQgPCBzdGFydCB3aGVuCnNwZWNpZnlpbmcg
+YWRkcmVzcyByYW5nZS4gV2hlbiB0aGlzIGhhcHBlbnMgd2UgaGl0IEFTU0VS
+VChzIDw9IGUpIGluCnJhbmdlc2V0X2NvbnRhaW5zX3JhbmdlKCkvcmFuZ2Vz
+ZXRfb3ZlcmxhcHNfcmFuZ2UoKSB3aXRoIGRlYnVnIGJ1aWxkcy4KUHJvZHVj
+dGlvbiBidWlsZHMgd2lsbCBub3QgdHJhcCByaWdodCBhd2F5IGJ1dCBtYXkg
+bWlzYmVoYXZlIGxhdGVyCndoaWxlIGhhbmRsaW5nIHN1Y2ggYm9ndXMgcmFu
+Z2VzLgoKVGhpcyBpcyBYU0EtMjM4LgoKU2lnbmVkLW9mZi1ieTogVml0YWx5
+IEt1em5ldHNvdiA8dmt1em5ldHNAcmVkaGF0LmNvbT4KUmV2aWV3ZWQtYnk6
+IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KLS0tCiB4ZW4vYXJj
+aC94ODYvaHZtL2lvcmVxLmMgfCA2ICsrKysrKwogMSBmaWxlIGNoYW5nZWQs
+IDYgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL3hlbi9hcmNoL3g4Ni9o
+dm0vaW9yZXEuYyBiL3hlbi9hcmNoL3g4Ni9odm0vaW9yZXEuYwppbmRleCBi
+MmE4YjBlOTg2Li44YzhiZjFmMGVjIDEwMDY0NAotLS0gYS94ZW4vYXJjaC94
+ODYvaHZtL2lvcmVxLmMKKysrIGIveGVuL2FyY2gveDg2L2h2bS9pb3JlcS5j
+CkBAIC04MjAsNiArODIwLDkgQEAgaW50IGh2bV9tYXBfaW9fcmFuZ2VfdG9f
+aW9yZXFfc2VydmVyKHN0cnVjdCBkb21haW4gKmQsIGlvc2VydmlkX3QgaWQs
+CiAgICAgc3RydWN0IGh2bV9pb3JlcV9zZXJ2ZXIgKnM7CiAgICAgaW50IHJj
+OwogCisgICAgaWYgKCBzdGFydCA+IGVuZCApCisgICAgICAgIHJldHVybiAt
+RUlOVkFMOworCiAgICAgc3Bpbl9sb2NrX3JlY3Vyc2l2ZSgmZC0+YXJjaC5o
+dm1fZG9tYWluLmlvcmVxX3NlcnZlci5sb2NrKTsKIAogICAgIHJjID0gLUVO
+T0VOVDsKQEAgLTg3Miw2ICs4NzUsOSBAQCBpbnQgaHZtX3VubWFwX2lvX3Jh
+bmdlX2Zyb21faW9yZXFfc2VydmVyKHN0cnVjdCBkb21haW4gKmQsIGlvc2Vy
+dmlkX3QgaWQsCiAgICAgc3RydWN0IGh2bV9pb3JlcV9zZXJ2ZXIgKnM7CiAg
+ICAgaW50IHJjOwogCisgICAgaWYgKCBzdGFydCA+IGVuZCApCisgICAgICAg
+IHJldHVybiAtRUlOVkFMOworCiAgICAgc3Bpbl9sb2NrX3JlY3Vyc2l2ZSgm
+ZC0+YXJjaC5odm1fZG9tYWluLmlvcmVxX3NlcnZlci5sb2NrKTsKIAogICAg
+IHJjID0gLUVOT0VOVDsK
+
+--=separator
+Content-Type: application/octet-stream; name="xsa238-4.5.patch"
+Content-Disposition: attachment; filename="xsa238-4.5.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogWGVuUHJvamVjdCBTZWN1cml0eSBUZWFtIDxzZWN1cml0eUB4ZW5w
+cm9qZWN0Lm9yZz4KU3ViamVjdDogeDg2L2lvcmVxIHNlcnZlcjogY29ycmVj
+dGx5IGhhbmRsZSBib2d1cwogWEVOX0RNT1Bfeyx1bn1tYXBfaW9fcmFuZ2Vf
+dG9faW9yZXFfc2VydmVyIGFyZ3VtZW50cwoKTWlzYmVoYXZpbmcgZGV2aWNl
+IG1vZGVsIGNhbiBwYXNzIGluY29ycmVjdCBYRU5fRE1PUF9tYXAvCnVubWFw
+X2lvX3JhbmdlX3RvX2lvcmVxX3NlcnZlciBhcmd1bWVudHMsIG5hbWVseSBl
+bmQgPCBzdGFydCB3aGVuCnNwZWNpZnlpbmcgYWRkcmVzcyByYW5nZS4gV2hl
+biB0aGlzIGhhcHBlbnMgd2UgaGl0IEFTU0VSVChzIDw9IGUpIGluCnJhbmdl
+c2V0X2NvbnRhaW5zX3JhbmdlKCkvcmFuZ2VzZXRfb3ZlcmxhcHNfcmFuZ2Uo
+KSB3aXRoIGRlYnVnIGJ1aWxkcy4KUHJvZHVjdGlvbiBidWlsZHMgd2lsbCBu
+b3QgdHJhcCByaWdodCBhd2F5IGJ1dCBtYXkgbWlzYmVoYXZlIGxhdGVyCndo
+aWxlIGhhbmRsaW5nIHN1Y2ggYm9ndXMgcmFuZ2VzLgoKVGhpcyBpcyBYU0Et
+MjM4LgoKU2lnbmVkLW9mZi1ieTogVml0YWx5IEt1em5ldHNvdiA8dmt1em5l
+dHNAcmVkaGF0LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1
+bGljaEBzdXNlLmNvbT4KLS0tCiB4ZW4vYXJjaC94ODYvaHZtL2h2bS5jIHwg
+NiArKysrKysKIDEgZmlsZSBjaGFuZ2VkLCA2IGluc2VydGlvbnMoKykKCmRp
+ZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvaHZtL2lvcmVxLmMgYi94ZW4vYXJj
+aC94ODYvaHZtL2lvcmVxLmMKaW5kZXggYjJhOGIwZTk4Ni4uOGM4YmYxZjBl
+YyAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L2h2bS9odm0uYworKysgYi94
+ZW4vYXJjaC94ODYvaHZtL2h2bS5jCkBAIC0xMTUxLDYgKzExNTEsOSBAQCBp
+bnQgaHZtX21hcF9pb19yYW5nZV90b19pb3JlcV9zZXJ2ZXIoc3RydWN0IGRv
+bWFpbiAqZCwgaW9zZXJ2aWRfdCBpZCwKICAgICBzdHJ1Y3QgaHZtX2lvcmVx
+X3NlcnZlciAqczsKICAgICBpbnQgcmM7CiAKKyAgICBpZiAoIHN0YXJ0ID4g
+ZW5kICkKKyAgICAgICAgcmV0dXJuIC1FSU5WQUw7CisKICAgICBzcGluX2xv
+Y2tfcmVjdXJzaXZlKCZkLT5hcmNoLmh2bV9kb21haW4uaW9yZXFfc2VydmVy
+LmxvY2spOwogCiAgICAgcmMgPSAtRU5PRU5UOwpAQCAtMTIwMiw2ICsxMjA1
+LDkgQEAgaW50IGh2bV91bm1hcF9pb19yYW5nZV9mcm9tX2lvcmVxX3NlcnZl
+cihzdHJ1Y3QgZG9tYWluICpkLCBpb3NlcnZpZF90IGlkLAogICAgIHN0cnVj
+dCBodm1faW9yZXFfc2VydmVyICpzOwogICAgIGludCByYzsKIAorICAgIGlm
+ICggc3RhcnQgPiBlbmQgKQorICAgICAgICByZXR1cm4gLUVJTlZBTDsKKwog
+ICAgIHNwaW5fbG9ja19yZWN1cnNpdmUoJmQtPmFyY2guaHZtX2RvbWFpbi5p
+b3JlcV9zZXJ2ZXIubG9jayk7CiAKICAgICByYyA9IC1FTk9FTlQ7Cg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa238-4.6.patch"
+Content-Disposition: attachment; filename="xsa238-4.6.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogWGVuUHJvamVjdCBTZWN1cml0eSBUZWFtIDxzZWN1cml0eUB4ZW5w
+cm9qZWN0Lm9yZz4KU3ViamVjdDogeDg2L2lvcmVxIHNlcnZlcjogY29ycmVj
+dGx5IGhhbmRsZSBib2d1cwogWEVOX0RNT1Bfeyx1bn1tYXBfaW9fcmFuZ2Vf
+dG9faW9yZXFfc2VydmVyIGFyZ3VtZW50cwoKTWlzYmVoYXZpbmcgZGV2aWNl
+IG1vZGVsIGNhbiBwYXNzIGluY29ycmVjdCBYRU5fRE1PUF9tYXAvCnVubWFw
+X2lvX3JhbmdlX3RvX2lvcmVxX3NlcnZlciBhcmd1bWVudHMsIG5hbWVseSBl
+bmQgPCBzdGFydCB3aGVuCnNwZWNpZnlpbmcgYWRkcmVzcyByYW5nZS4gV2hl
+biB0aGlzIGhhcHBlbnMgd2UgaGl0IEFTU0VSVChzIDw9IGUpIGluCnJhbmdl
+c2V0X2NvbnRhaW5zX3JhbmdlKCkvcmFuZ2VzZXRfb3ZlcmxhcHNfcmFuZ2Uo
+KSB3aXRoIGRlYnVnIGJ1aWxkcy4KUHJvZHVjdGlvbiBidWlsZHMgd2lsbCBu
+b3QgdHJhcCByaWdodCBhd2F5IGJ1dCBtYXkgbWlzYmVoYXZlIGxhdGVyCndo
+aWxlIGhhbmRsaW5nIHN1Y2ggYm9ndXMgcmFuZ2VzLgoKVGhpcyBpcyBYU0Et
+MjM4LgoKU2lnbmVkLW9mZi1ieTogVml0YWx5IEt1em5ldHNvdiA8dmt1em5l
+dHNAcmVkaGF0LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1
+bGljaEBzdXNlLmNvbT4KLS0tCiB4ZW4vYXJjaC94ODYvaHZtL2h2bS5jIHwg
+NiArKysrKysKIDEgZmlsZSBjaGFuZ2VkLCA2IGluc2VydGlvbnMoKykKCmRp
+ZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvaHZtL2lvcmVxLmMgYi94ZW4vYXJj
+aC94ODYvaHZtL2lvcmVxLmMKaW5kZXggYjJhOGIwZTk4Ni4uOGM4YmYxZjBl
+YyAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L2h2bS9odm0uYworKysgYi94
+ZW4vYXJjaC94ODYvaHZtL2h2bS5jCkBAIC0xMjcxLDYgKzEyNzEsOSBAQCBp
+bnQgaHZtX21hcF9pb19yYW5nZV90b19pb3JlcV9zZXJ2ZXIoc3RydWN0IGRv
+bWFpbiAqZCwgaW9zZXJ2aWRfdCBpZCwKICAgICBzdHJ1Y3QgaHZtX2lvcmVx
+X3NlcnZlciAqczsKICAgICBpbnQgcmM7CiAKKyAgICBpZiAoIHN0YXJ0ID4g
+ZW5kICkKKyAgICAgICAgcmV0dXJuIC1FSU5WQUw7CisKICAgICBzcGluX2xv
+Y2tfcmVjdXJzaXZlKCZkLT5hcmNoLmh2bV9kb21haW4uaW9yZXFfc2VydmVy
+LmxvY2spOwogCiAgICAgcmMgPSAtRU5PRU5UOwpAQCAtMTMyMiw2ICsxMzI1
+LDkgQEAgaW50IGh2bV91bm1hcF9pb19yYW5nZV9mcm9tX2lvcmVxX3NlcnZl
+cihzdHJ1Y3QgZG9tYWluICpkLCBpb3NlcnZpZF90IGlkLAogICAgIHN0cnVj
+dCBodm1faW9yZXFfc2VydmVyICpzOwogICAgIGludCByYzsKIAorICAgIGlm
+ICggc3RhcnQgPiBlbmQgKQorICAgICAgICByZXR1cm4gLUVJTlZBTDsKKwog
+ICAgIHNwaW5fbG9ja19yZWN1cnNpdmUoJmQtPmFyY2guaHZtX2RvbWFpbi5p
+b3JlcV9zZXJ2ZXIubG9jayk7CiAKICAgICByYyA9IC1FTk9FTlQ7Cg==
+
+--=separator--
