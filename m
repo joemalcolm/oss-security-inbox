@@ -1,32 +1,140 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/2
-Message-ID: <b2da8b9c-d1f3-ff80-971f-86f8f032544c@redhat.com>
-Date: Mon, 22 May 2017 18:51:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Martin <martin.gubri@...masoft.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: How to request a CVE for open source projects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/14
+Message-Id: <E1e2cPk-0007GA-Pi@xenbits.xenproject.org>
+Date: Thu, 12 Oct 2017 12:16:36 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 244 - x86: Incorrect handling of IST settings during CPU hotplug
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+                    Xen Security Advisory XSA-244
+                              version 2
 
-On 2017-05-22 2:21 PM, Martin wrote:
-> On 22/05/2017 at 15:16, Kurt Seifried wrote:
->
->> Ah, I recently did a large number of CVE assignments, I haven't emailed out
->> to the sequesters yet, yours was
->> https://github.com/distributedweaknessfiling/DWF-CVE-2017-1000000/blob/f2e15ac3468dd382d9ffa3d5acc032c106f3248c/CVE-2017-1000025.json
->> I believe.
-> I was in the same situation than Michael. I found mine now.
-> Is it normal that these CVE aren't accessible on MITRE?
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000025
->
-We (MITRE, the CVE board and various CNAs) ar working on making that
-faster (read: automated). So yeah, it's bormal, but hopefully as time
-goes on it'll get better.
+      x86: Incorrect handling of IST settings during CPU hotplug
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+UPDATES IN VERSION 2
+====================
 
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The x86-64 architecture allows interrupts to be run on distinct stacks.
+The choice of stack is encoded in a field of the corresponding
+interrupt descriptor in the Interrupt Descriptor Table (IDT).  That
+field selects an entry from the active Task State Segment (TSS).
+
+Since, on AMD hardware, Xen switches to an HVM guest's TSS before
+actually entering the guest, with the Global Interrupt Flag still set,
+the selectors in the IDT entry are switched when guest context is
+loaded/unloaded.
+
+When a new CPU is brought online, its IDT is copied from CPU0's IDT,
+including those selector fields.  If CPU0 happens at that moment to be
+in HVM context, wrong values for those IDT fields would be installed
+for the new CPU.  If the first guest vCPU to be run on that CPU
+belongs to a PV guest, it will then have the ability to escalate its
+privilege or crash the hypervisor.
+
+IMPACT
+======
+
+A malicious or buggy x86 PV guest could escalate its privileges or
+crash the hypervisor.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from at least 3.2 onwards are vulnerable.  Earlier
+versions have not been checked.
+
+Only PV guests can exploit the vulnerability.  HVM guests cannot
+exploit the vulnerability, but their presence is necessary for the
+exposure of the vulnerability to PV guests.
+
+Only x86 systems using SVM (AMD virtualisation extensions) rather than
+VMX (Intel virtualisation extensions) are vulnerable.  Therefore AMD
+x86 hardware is vulnerable; Intel hardware is not vulnerable.
+
+ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+Avoiding to online CPUs at runtime will avoid this vulnerability.
+
+Running only HVM or only PV guests on any individual host will also
+avoid this vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa244.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x
+xsa244-4.7.patch       Xen 4.7.x
+xsa244-4.6.patch       Xen 4.6.x
+xsa244-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa244*
+5b663620a1b0d5f07e7ae4d1d3506d925515d5f85830ca49dda75cab1218506f  xsa244.meta
+bcf22b332bf3f6fe8c86e4de67f82628c9b8e257d9513c3bf5c7f5dd71d86c33  xsa244.patch
+4c4543fdfd25b4a8ea7d53f3f45011ec137798e7d4e690d8f3ea58d77afb5f06  xsa244-4.5.patch
+eaa3ba303980d783813db7aee948a9cb2723328da5fa5650ffca7b825c21bab6  xsa244-4.6.patch
+4d8cf754f760ef05488e9fb25a7ebd9a7e46f3742e91eee1a8385fd1e611ea8c  xsa244-4.7.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZ31wEAAoJEIP+FMlX6CvZixEIALXqWn6ShR2MCMeiGHy1ewsX
+S80m2OFqHYgZuawTuA3TN3mYfQONLNpobpchU5Y/RoWxS70sfV5PqLf6IHYPlSSC
+3VI+U+Q3nhPhudQo4RFkyFeDGg6dKEnver+Bfik1pHsTBB0o0ojAdgqbW+K4HEoE
+flqPaXuQSFSFE5mYzQ+UxI7nE9I7IwDRD+eDSE/JRtTmXuoJPB8bC4De68dM4BbM
++nfaNR95PvyNTToKluYdcST7pq/jRal5/O8GSxNsolgcd6C4IZrX1wB2ibMoa1wh
+ElLmcw/gyT/DfvO0STjvVQ/Ryaoj3ZLjMrNRt7pA8IQ1gig312f7vCGpF0/EeYM=
+=9+du
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa244.meta" of type "application/octet-stream" (2483 bytes)
+
+Download attachment "xsa244.patch" of type "application/octet-stream" (2366 bytes)
+
+Download attachment "xsa244-4.5.patch" of type "application/octet-stream" (2069 bytes)
+
+Download attachment "xsa244-4.6.patch" of type "application/octet-stream" (2072 bytes)
+
+Download attachment "xsa244-4.7.patch" of type "application/octet-stream" (2052 bytes)
