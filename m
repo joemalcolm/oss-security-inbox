@@ -1,18 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/20
-Message-ID: <CAJ6=jSCBZjEsKoOhq=AJMcF+HcDcks9=kz57a-xXWJDrKw7bTQ@mail.gmail.com>
-Date: Mon, 10 Apr 2017 07:55:43 -0700
-From: Leandro Pereira <leandro@...dinfo.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/18
+Message-ID: <CAGXu5jKM-reNUQpJwH-MTvCZomjCKkLm0CYf2imDbF3veycaLQ@mail.gmail.com>
+Date: Thu, 12 Oct 2017 13:02:40 -0700
+From: Kees Cook <keescook@...omium.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: alloca in inline functions can be dangerous
+Cc: Chris Salls <chrissalls5@...il.com>
+Subject: CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 10, 2017 at 7:36 AM, Jason A. Donenfeld <Jason@...c4.com> wrote:
-> I'm interested if anybody else has encountered this behavior or has any
-> thoughts about it.
+Hi,
 
-Yes, and I usually mark those functions with __attribute__((noinline))
-to avoid precisely this kind of behavior.
+Chris Salls discovered that when the waitid() syscall in Linux kernel
+v4.13 was refactored, it accidentally stopped checking that the
+incoming argument was pointing to userspace. This allowed local
+attackers to write directly to kernel memory, which could lead to
+privilege escalation.
+
+Introduced by this commit:
+https://git.kernel.org/linus/4c48abe91be03d191d0c20cc755877da2cb35622
+
+Fixed with this commit to mainline tree:
+https://git.kernel.org/linus/96ca579a1ecc943b75beba58bebb0356f6cc4b51
+
+This should be fixed in the -stable free (in the future v4.13.7) soon:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/log/?h=linux-4.13.y
+
+Thanks,
+
+-Kees
 
 -- 
- Leandro
+Kees Cook
+Pixel Security
