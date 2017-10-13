@@ -1,4 +1,9 @@
-Received: (qmail 30149 invoked by uid 550); 12 Nov 2024 17:59:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8228" "Friday" "13" "October" "2017" "18:41:34" "+0200" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<b07ab35f-c872-253b-86fb-0ce0fd074336@x41-dsec.de>" "238" "[oss-security] Advisory X41-2017-008: Multiple Vulnerabilities in Shadowsocks" "^Date:" nil nil "10" "2017101316:41:34" "[oss-security] Advisory X41-2017-008: Multiple Vulnerabilities in Shadowsocks" (number mark "U       advisories@x Oct 13  238/8228  " thread-indent "\"[oss-security] Advisory X41-2017-008: Multiple Vulnerabilities in Shadowsocks\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29802 invoked by uid 550); 13 Oct 2017 17:07:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,174 +11,255 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 27670 invoked from network); 12 Nov 2024 17:31:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hexsys.org;
-	s=protonmail2; t=1731432696; x=1731691896;
-	bh=2EN6RsPL/5aIF7B8qvyXLyRIuhQEpqcK4d6IxkAk9os=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=pmRxlLh42quV4HIQK16Tp40jpXxiZ65eomUzdJczVHqTV+dF9kCYVwVwVHlVE48+R
-	 YbaJWbwatznB22pZVKw/tyjzx/Mp/bNJNsCK+XqoiRRzq60P7RLIRnhEf6NufgOAhU
-	 a5pDTZvEgRYsKfKlBzX7kF26g936mxRobUs0a6o7454+smhgUmh9sxPXqvK/DGBJ5j
-	 aPa30VizQO8pNQTSTG7wPgDSDcKyikB7fuzj9Cy09jMaZuLdPhaUFhGweg7fbfUosa
-	 7Pw2J1J8XklWss90JsjMIzGJMlt5cixesoSmVzDZDIYZ3cFlWW5q22lQyljhY3wQ6Q
-	 e+MhVtb9Z0VMA==
-Date: Tue, 12 Nov 2024 17:31:32 +0000
-To: oss-security@lists.openwall.com
-From: Ali Polatel <alip@hexsys.org>
-Message-ID: <yPOEyvOUfuKsklWzFpBdmDaFvVBey86L51kH7CwV-FzPfbHqBtd-TjZDy4CzpGRPcSnI0SG6ASuvbVrziaGJa9hpTLR9tPWf22iAD4CPVOI=@hexsys.org>
-In-Reply-To: <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>
-References: <20241106041215.GA4432@openwall.com> <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>
-Feedback-ID: 105281019:user:proton
-X-Pm-Message-ID: 84db6fc2d4f2080f404bbd223b0151d292ce4247
+Received: (qmail 15752 invoked from network); 13 Oct 2017 16:42:56 -0000
+Message-ID: <b07ab35f-c872-253b-86fb-0ce0fd074336@x41-dsec.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------7b2ce4b061ba69c07e4be8d0add5a94437f7f9f748ce1dd9b50dea69d04afb54"; charset=utf-8
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="Kt6LiaAbb1L36CjRCh77TLHgCa4k6JARC"
+Date: Fri, 13 Oct 2017 18:41:34 +0200
+From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Advisory X41-2017-008: Multiple Vulnerabilities in Shadowsocks
+To: oss-security@lists.openwall.com
 
---------7b2ce4b061ba69c07e4be8d0add5a94437f7f9f748ce1dd9b50dea69d04afb54
-Content-Type: multipart/mixed;boundary=---------------------391fa675981a2d1918f9e96bfde16e44
+--Kt6LiaAbb1L36CjRCh77TLHgCa4k6JARC
+Content-Type: multipart/mixed; boundary="X58v8lHX4frSmvVvLwgW1mpBM8pXQ6hxP";
+ protected-headers="v1"
+From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
+To: oss-security@lists.openwall.com
+Message-ID: <b07ab35f-c872-253b-86fb-0ce0fd074336@x41-dsec.de>
+Subject: Advisory X41-2017-008: Multiple Vulnerabilities in Shadowsocks
 
------------------------391fa675981a2d1918f9e96bfde16e44
+--X58v8lHX4frSmvVvLwgW1mpBM8pXQ6hxP
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
-
-On Wednesday, November 6th, 2024 at 15:44, David A. Wheeler <dwheeler@dwhee=
-ler.com> wrote:
-
-> Long ago I wrong a really long essay about POSIX filename issues.
-> Some people here may find it interesting:
-> https://dwheeler.com/essays/fixing-unix-linux-filenames.html
-
-Thank you. Around six months ago I added a restriction on filenames with
-control characters to Sydbox[1] after I had read about a vulnerability
-here on this list. I think it was about tar but my memory may not serve
-me right. Sydbox is secure by default, so at first this feature was
-enabled without any way to turn it off. After a few months of testing
-with fellow Exherbo Linux developers, we have noticed some package tests
-(nvim was one of them) actually rely on creating paths with control charact=
-ers as
-part of their test suites, so I added a setting to disable this feature
-which was set by our package manager.
-
-Having read your article, and three versions of your Safename LSM
-patch-sets, and having felt immensely thankful and enlightened for a
-while, I have proceeded to replace the control characters restrictions
-above with an implementation that is very similar to yours. A
-possibly incomplete list of what Sydbox does different is:
-1. Existing bad files are hidden.
-2. Tilde prefix is forbidden, I have noticed you have dropped this in
-your third version with reasons irrelevant to Sydbox.
-3. "$" and "`" characters are forbidden.=20
 
 
-Finally, I am sharing the relevant part of the syd(7)[2] manual page
-as food for thought. Note, 3.28.0 has not been released at the time
-of writing so this is also in part a request for feedback :). You may
-find the code changes here[3]. Sydbox is GPL-3.0-or-later and Safename
-LSM is GPL-2.0 so I have taken the liberty to rewrite most of the main
-logic from C to Rust and added unit tests. The file src/path.rs includes
-an attribution to you and your work in the copyright header. Thank you!
+X41 D-Sec GmbH Security Advisory: X41-2017-008
 
---8<--
-## Enhanced Path Integrity Measures
+Multiple Vulnerabilities in Shadowsocks
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-As of version 3.17.4, Syd incorporates crucial enhancements to maintain
-the integrity of file system paths by systematically denying and masking
-paths that contain control characters. These modifications are essential
-for preventing the exploitation of terminal-based vulnerabilities and
-for maintaining robustness in logging activities. Paths identified with
-control characters are not only denied during sandbox access check but
-are also sanitized when logged to ensure that potentially harmful data
-does not compromise log integrity or facilitate inadvertent security
-breaches. Such measures underscore Syd's ongoing commitment to
-fortifying security by adhering to rigorous, up-to-date standards for
-handling untrusted input efficiently.
+Overview
+--------
+Confirmed Affected Versions: Latest commit 2ab8c6b on Sep 6
+Confirmed Patched Versions: N/A
+Vendor: Shadowsocks
+Vendor URL: https://github.com/shadowsocks/shadowsocks/tree/master
+Vector: Network
+Credit: X41 D-Sec GmbH, Niklas Abel
+Status: Public
+Advisory-URL:
+https://www.x41-dsec.de/lab/advisories/x41-2017-008-shadowsocks/
 
-As of version 3.18.6, this restriction can be relaxed by using the
-setting "trace/allow_unsafe_filename:1". This setting may be toggled
-from within the sandbox during runtime prior to locking the sandbox.
 
-As of version 3.28.0, Syd has enhanced its path integrity measures by
-incorporating an implementation based on David A. Wheeler's Safename
-Linux Security Module (LSM) patches. This update not only prevents the
-creation of filenames containing potentially harmful characters but also
-hides existing files with such names. Invalid filenames are now denied
-with an "EINVAL" error when necessary. In alignment with Wheeler's
-recommendations on restricting dangerous filenames, the validation now
-enforces stricter rules:
+Summary and Impact
+------------------
+Several issues have been identified, which allow attackers to manipulate
+log files, execute commands and to brute force Shadowsocks with enabled
+autoban.py brute force detection. Brute force detection from autoban.py
+does not work with suggested tail command. The key of captured
+Shadowsocks traffic can be brute forced.
 
-- *Control Characters*: Filenames containing control characters (bytes 0x00=
-=E2=80=930x1F and 0x7F) are denied.
-- *UTF-8 Encoding*: Filenames must be valid UTF-8 sequences.
-- *Forbidden Characters*: The following characters are disallowed in
-  filenames as they may interfere with shell operations or be
-  misinterpreted by programs: \*, ?, :, [, ], ", <, >, |, (, ), {, }, &, ',
-  !, \\, ;, $, and `.
-- *Leading Characters*: Filenames cannot start with a space ( ), dash (-), =
-or tilde (~).
-- *Trailing Characters*: Filenames cannot end with a space ( ).
 
-These measures mitigate security risks associated with malicious
-filenames by ensuring that both new and existing filenames adhere to
-stringent validation rules. This enhancement strengthens overall system
-robustness by preventing potential exploitation through untrusted input
-in file operations. For more information, refer to the following links:
+Product Description
+-------------------
+Shadowsocks is a fast tunnel proxy that helps you bypass firewalls.
 
-- https://dwheeler.com/essays/fixing-unix-linux-filenames.html
-- https://lwn.net/Articles/686021/
-- https://lwn.net/Articles/686789/
-- https://lwn.net/Articles/686792/
--->8--
 
-[1]: https://sydbox.exherbolinux.org
-[2]: http://man.exherbolinux.org/syd.7.html#Enhanced_Path_Integrity_Measures
-[3]: https://gitlab.exherbo.org/sydbox/sydbox/-/compare/7a6cc9b9cddc5d074d6=
-f72b2b1a3f9aef065fed6...50fb41f21c1ce7e9556c778707a731d1a56e152c
 
->=20
+Log file manipulation
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity Rating: Medium
+Confirmed Affected Versions: Latest commit 2ab8c6b on Sep 6
+Confirmed Patched Versions: N/A
+Vector: Network
+CVE: not yet issued
+CWE: 117
+CVSS Score: 4.3
+CVSS Vector: CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N
 
-> --- David A. Wheeler
+Summary and Impact
+------------------
+Log file manipulation is possible with a manipulated hostname, sent to
+the server from a client, even if Shadowsocks is as quiet as possible
+with "-qq".
 
-Best regards,
-Ali Polatel=
+Therefore a string like "\nI could be any log entry\n" could be sent as
+hostname to Shadowsocks. The server would log an additional line with
+"I could be any log entry".
 
------------------------391fa675981a2d1918f9e96bfde16e44
-Content-Type: application/pgp-keys; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
 
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWmdRSmRSWUpLd1lCQkFI
-YVJ3OEJBUWRBbjlaVnJMbi9tclpseThqTE9qVklwTmRWSXhTSVZ4WmUKL2ZDeDZpcTNPM1hOSVdG
-c2FYQkFhR1Y0YzNsekxtOXlaeUE4WVd4cGNFQm9aWGh6ZVhNdWIzSm5Qc0tNCkJCQVdDZ0ErQllK
-bUJBbDFCQXNKQndnSmtCY2phUTFHWTNTNkF4VUlDZ1FXQUFJQkFoa0JBcHNEQWg0QgpGaUVFd2ky
-cDNrbUo2K2VhOUErdEZ5TnBEVVpqZExvQUFFaDlBUUNVRlB2YytPL1FzYzdpVDF0STcvMTAKakJW
-aklPa2xyL01DU2lzZ2w0SzRqQUQvZkRaejVuVStqbzBmcjh3QXNLdFU0M1UrVWd5alVuNHhuczVQ
-CnVzcFViZy9PT0FSbUJBbDFFZ29yQmdFRUFaZFZBUVVCQVFkQXFrait2ejdsbjQyNmhmQS9wSWZz
-elJKbQpWWHpLc1VJOWJQd3dqZEdQUlNRREFRZ0h3bmdFR0JZS0FDb0ZnbVlFQ1hVSmtCY2phUTFH
-WTNTNkFwc00KRmlFRXdpMnAza21KNitlYTlBK3RGeU5wRFVaamRMb0FBTHNMQVAwWUVEUkw1OVdi
-UndSTFdpN0RlRjY2ClRCSzZtdmZGeG5maG9rM3JKSU1lWXdFQTZGNi85c1J6SzJqbExCRk9kbHlu
-ZGdZbEpxUFVpZk1CZGU5ego2QkZFY1FnPQo9NFhXSgotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBC
-TE9DSy0tLS0tCg==
+Workarounds
+-----------
+There is no workaround available, do not trust the logfiles until a
+patch is released.
 
------------------------391fa675981a2d1918f9e96bfde16e44--
 
---------7b2ce4b061ba69c07e4be8d0add5a94437f7f9f748ce1dd9b50dea69d04afb54
+
+Command Execution
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity Rating: Critical
+Confirmed Affected Versions: Latest commit 2ab8c6b on Sep 6
+Confirmed Patched Versions: N/A
+Vector: Network
+CVE: not yet issued
+CWE: 78
+CVSS Score: 9.0
+CVSS Vector: CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H
+
+
+Summary and Impact
+------------------
+When the brute force detection with autoban.py is enabled, remote
+attackers are able to execute arbitrary commands.
+
+Command execution is possible because of because of line 53 "os.system(cmd)"
+in autoban.py, which executes "cmd =3D 'iptables -A INPUT -s %s -j DROP' %
+ip". The "ip" parameter gets parsed from the log file, whose contents
+can be controlled by a third party sending unauthenticated packets.
+
+
+Proof of Concept
+----------------
+When, a string like "can not parse header when ||ls&:\n" is sent as host
+name to Shadowsocks, it would end up in the logfile and lead to the
+execution of "ls".
+Autoban.py does not execute commands with spaces due to internal
+sanitization. A requested hostname like:
+
+" can not parse header when ||ls&:\ntouch /etc/evil.txt\nexit\ncan not
+parse header when ||/bin/bash</var/log/shadowsocks.log&:\n" could be
+used to work around this limitation. It writes the command "touch
+/etc/evil.txt" into the logfile and executes it with
+"/bin/bash</var/log/shadowsocks.log".
+The exit; command is an important factor, without it an unbounded
+recursion would occur leading to a DoS.
+
+
+Workarounds
+-----------
+No workaround available, do not use autoban.py.
+
+
+
+Lack of Bruteforce detection through autoban.py
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Confirmed Affected Versions: Latest commit 2ab8c6b on Sep 6
+Confirmed Patched Versions: N/A
+
+
+Summary and Impact
+------------------
+The brute force detection autoban.py does not work at all with the suggested
+tail command, suggested at
+https://github.com/shadowsocks/shadowsocks/wiki/Ban-Brute-Force-Crackers.
+
+The command "python autoban.py < /var/log/shadowsocks.log" does work,
+but the suggested "nohup tail -F /var/log/shadowsocks.log | python
+autoban.py > log 2>log &" does not block IP's.
+The "for line in sys.stdin:" from autoban.py parses the input until
+there is an end of file (EOF). As "tail -F" will never pipe an EOF into
+the pyhon script, the sys.stdin will block the script forever. So the
+"tail -F /var/log/shodowsocks | autoban.py" will never block anything
+except itself.
+
+Workarounds
+-----------
+Use python "autoban.py < /var/log/shadowsocks.log" in a cronjob. Do not
+use autoban.py until the command execution issue gets fixed.
+
+
+
+Bruteforcable Shadowsocks traffic because of MD5
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Confirmed Affected Versions: Latest commit 2ab8c6b on Sep 6
+Confirmed Patched Versions: N/A
+
+Summary and Impact
+------------------
+Shadowsocks uses no brute force prevention for it's key derivation function.
+
+The key for Shadowsocks traffic encryption is static and derived from
+the password, using MD5. The password derivation is in encrypt.py in
+line 56 to 63: "
+
+while len(b''.join(m)) < (key_len + iv_len):
+        md5 =3D hashlib.md5()
+        data =3D password
+        if i > 0:
+            data =3D m[i - 1] + password
+        md5.update(data)
+        m.append(md5.digest())
+        i +=3D 1
+"
+
+MD5 should not be used to generate keys, since it is a hash function.
+A proper key derivation function increases the costs for this operation,
+which is a small burden for a user, but a big one for an attacker,
+which performs this operation many more times. As passwords usually have
+low-entropy, a good password derivation function has to be slow.
+
+
+Workarounds
+-----------
+Use a secure password generated by a cryptographically secure random
+generator. Wait for a patch that uses a password based key derivation
+function like "Argon2" instead of a hash.
+
+
+
+About X41 D-Sec GmbH
+--------------------
+X41 D-Sec is a provider of application security services. We focus on
+application code reviews, design review and security testing. X41 D-Sec
+GmbH was founded in 2015 by Markus Vervier. We support customers in
+various industries such as finance, software development and public
+institutions.
+
+
+Timeline
+--------
+2017-09-28	Issues found
+2017-10-05	Vendor contacted
+2017-10-09	Vendor contacted, replied to use GitHub for a full disclosure
+2017-10-11	Vendor contacted, asked if the vendor is sure to want a full
+disclosure
+2017-10-12	Vendor contacted, replied to create a public issue on GitHub
+2017-10-13	Created public issues on GitHub
+2017-10-13	Advisory release
+
+
+--X58v8lHX4frSmvVvLwgW1mpBM8pXQ6hxP--
+
+--Kt6LiaAbb1L36CjRCh77TLHgCa4k6JARC
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: ProtonMail
 
-wnUEARYKACcFgmczkNwJkBcjaQ1GY3S6FiEEwi2p3kmJ6+ea9A+tFyNpDUZj
-dLoAACzjAP9SD+5VobsxpkTN5ChAqIC0z9yi+sS5eklsVbg55qJ45gEAhWJg
-VI5QwGoUztk+TYaTSxnHYhaSmd0hL1DkfNlI7AU=
-=Mtsk
+iQJLBAEBCAA1FiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAlng7L4XHGFkdmlzb3Jp
+ZXNAeDQxLWRzZWMuZGUACgkQo5Klpg50CxDLXw//RFEVjJt5/Xx4ej0FevMYuv68
+5pkZHTkoP8gOIv1hRrEveAkwpmlj3fy1/2ozNwTktdk5dPPobqAM6xtmpKT78ajD
+rYOpuL7TwW5m0j5TSapRqJvS4HPp8L0k7pvFHFgEhAol0zDucshxBSJoLQSFBi0L
+Ni2TsZIdhcv5evmSDuh8xgfkvFkuTn+YzK3SOpQYKry1Qqb6VsV9lU787eqQQXwB
+2yrjPyJ2rES8W+28DULr9HG81XX2/saCpCyPmkLAzZG42L6wN4mPoyk/cQrOQHeJ
+rIfMGhbZ5PjWI3RpZ1PpDaRle2qPXuKpkKBSKzQPhMlg6yc7BskU5zaWdCnsMXur
+xjTSVVKkayvfdSehMb6jVQGHq6hBCvneqQJHSSy33etbSnL+BUpv455Wel7516t2
+Z2HWuM6pGBfE2o/ma+kAT6azPCli1PUwGdYpMR8R97S0OjN6R2OWcxPmXunvvMnJ
+FM+PAz23t3+DTUX+sbg8XseBuDY5Z8e21/H3hWwNcWkmpur+ABvlsJWJNdwFblgJ
+nFDoltyZIujfXjWMeJPNaK3J0bz+fII2Bu8fHyDKdEBEzFwN+7YVodiPLoXDGCMJ
+RlxeGOSUBwiOG74hs++6vwF42tYlWG1FtIkoiBvFBcZnfgPdyUubnW/uwcZb2sF/
+4jz4feJ2S1NLUMsh0pA=
+=U+fV
 -----END PGP SIGNATURE-----
 
-
---------7b2ce4b061ba69c07e4be8d0add5a94437f7f9f748ce1dd9b50dea69d04afb54--
-
+--Kt6LiaAbb1L36CjRCh77TLHgCa4k6JARC--
