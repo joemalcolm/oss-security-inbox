@@ -1,19 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/4
-Message-ID: <25248205.gSqYAvQOXh@blackgate>
-Date: Mon, 13 Mar 2017 10:36:52 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/13/1
+Message-ID: <c15cf180-9dd5-7ade-1e4e-5fef72274dc1@redhat.com>
+Date: Fri, 13 Oct 2017 17:41:18 +0200
+From: Andrej Nemec <anemec@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: audiofile: heap-based buffer overflow in MSADPCM::decodeBlock (MSADPCM.cpp)
+Subject: CVE-2017-12629 Solr: Code execution via entity expansion
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 26 February 2017 11:53:02 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow
-> -in-msadpcmdecodeblock-msadpcm-cpp
+Hello oss-security,
 
-This is CVE-2017-6832
+I would like to make the list aware of CVE-2017-12629, which was
+yesterday reported with a working 0-day exploit to the public Lucene
+development mailing list [1]. Lucene / Solr developers quickly confirmed
+the bug and moved to fixing it ASAP. There is also a late Apache
+announcement [2] which came out yesterday, appended below.
+
+[1]
+http://lucene.472066.n3.nabble.com/Re-Several-critical-vulnerabilities-discovered-in-Apache-Solr-XXE-amp-RCE-td4358308.html
+
+[2] https://marc.info/?l=apache-announce&m=150786685013286
+
+
+Dear Apache Solr users,
+
+Please secure your Solr servers since a zero-day exploit has been
+reported on a public mailing list. This has been assigned a public
+CVE (CVE-2017-12629) which we will reference in future communication
+about resolution and mitigation steps.
+
+Here is what we're recommending and what we're doing now:
+
+* Until fixes are available, all Solr users are advised to restart their
+Solr instances with the system parameter `-Ddisable.configEdit=true`.
+This will disallow any changes to be made to configurations via the
+Config API. This is a key factor in this vulnerability, since it allows
+GET requests to add the RunExecutableListener to the config. This is
+sufficient to protect you from this type of attack, but means you cannot
+use the edit capabilities of the Config API until the other fixes
+described below are in place.
+
+* A new release of Lucene/Solr was in the vote phase, but we have now
+pulled it back to be able to address these issues in the upcoming 7.1
+release. We will also determine mitigation steps for users on earlier
+versions, which may include a 6.6.2 release for users still on 6.x.
+
+* The RunExecutableListener will be removed in 7.1. It was previously
+used by Solr for index replication but has been replaced and is no
+longer needed.
+
+* The XML Parser will be fixed and the fixes will be included in the 7.1
+release.
+
+* The 7.1 release was already slated to include a change to disable the
+`stream.body` parameter by default, which will further help protect
+systems.
+
+Thanks, The Apache Lucene/Solr team
+
+[1] : https://s.apache.org/FJDl
+
+
+Best Regards,
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
