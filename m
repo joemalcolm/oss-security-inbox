@@ -1,71 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/10
-Message-ID: <633036.383983807-sendEmail@localhost>
-Date: Thu, 2 Mar 2017 16:37:11 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: podofo: NULL pointer dereference in PoDoFo::PdfColorGray::~PdfColorGray (PdfColor.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/13/2
+Message-ID: <0b737631-4f6a-7fdf-f709-4957a8cd5ef2@x41-dsec.de>
+Date: Fri, 13 Oct 2017 18:44:21 +0200
+From: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
+To: oss-security@...ts.openwall.com
+Subject: Advisory X41-2017-010: Command Execution in Shadowsocks-libev
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
 
-A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+X41 D-Sec GmbH Security Advisory: X41-2017-010
 
-The complete ASan output:
+Command Execution in Shadowsocks-libev
+======================================
 
-# podofocolor dummy $FILE foo
-==5815==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f025d243787 bp 0x7ffe33517c50 sp 0x7ffe33517be0 T0)
-==5815==The signal is caused by a READ memory access.
-==5815==Hint: address points to the zero page.
-    #0 0x7f025d243786 in PoDoFo::PdfColorGray::~PdfColorGray() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfColor.cpp:435:1
-    #1 0x52c9b2 in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/graphicsstack.h:29:11
-    #2 0x52c9b2 in __gnu_cxx::new_allocator::destroy(GraphicsStack::TGraphicsStackElement*) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/ext/new_allocator.h:133
-    #3 0x52c9b2 in std::deque<GraphicsStack::TGraphicsStackElement, std::allocator >::_M_pop_back_aux() /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/deque.tcc:515
-    #4 0x52c9b2 in std::deque<GraphicsStack::TGraphicsStackElement, std::allocator >::pop_back() /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_deque.h:1459
-    #5 0x52c9b2 in std::stack<GraphicsStack::TGraphicsStackElement, std::deque<GraphicsStack::TGraphicsStackElement, std::allocator > >::pop() /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_stack.h:218
-    #6 0x52c9b2 in GraphicsStack::Pop() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/graphicsstack.cpp:48
-    #7 0x522031 in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:190:35
-    #8 0x51ed8e in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:120:15
-    #9 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
-    #10 0x7f025bd2e61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #11 0x428718 in _start (/usr/bin/podofocolor+0x428718)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfColor.cpp:435:1 in PoDoFo::PdfColorGray::~PdfColorGray()
-==5815==ABORTING
-
-Affected version:
-0.9.4
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00175-podofo-nullptr-PoDoFo-PdfColorGray-PdfColorGray
-
-Timeline:
-2017-02-13: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-podofopdfcolorgraypdfcolorgray-pdfcolor-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Overview
+--------
+Severity Rating: High
+Confirmed Affected Versions: 3.1.0
+Confirmed Patched Versions: N/A
+Vendor: Shadowsocks
+Vendor URL: https://github.com/shadowsocks/shadowsocks-libev
+Vector: Local
+Credit: X41 D-Sec GmbH, Niklas Abel
+Status: Public
+CVE: not yet assigned
+Advisory-URL:
+https://www.x41-dsec.de/lab/advisories/x41-2017-010-shadowsocks-libev/
 
 
+Summary and Impact
+------------------
+Shadowsocks-libev offers local command execution per configuration file
+or/and additionally, code execution per UDP request on 127.0.0.1.
+
+The configuration file on the file system or the JSON configuration
+received via UDP request is parsed and the arguments are passed to the
+"add_server" function.
+The function calls "construct_command_line(manager, server);" which
+returns a string from the parsed configuration.
+The string gets executed at line 486 "if (system(cmd) == -1) {", so if a
+configuration parameter contains "||evil command&&" within the "method"
+parameter, the evil command will get executed.
+
+The ss-manager uses UDP port 8830 to get control commands on 127.0.0.1.
+By default no authentication is required, although a password can be set
+with the '-k' parameter.
+
+
+Product Description
+-------------------
+Shadowsocks-libev is a lightweight secured SOCKS5 proxy for embedded
+devices and low-end boxes. The ss-manager is meant to control
+Shadowsocks servers for multiple users, it spawns new servers if needed.
+
+It is a port of Shadowsocks created by @clowwindy, and maintained by
+@madeye and @linusyang.
+
+
+Proof of Concept
+----------------
+As passed configuration requests are getting executed, the following command
+will create file "evil" in /tmp/ on the server:
+
+nc -u 127.0.0.1 8839
+    add: {"server_port":8003, "password":"test", "method":"||touch
+/tmp/evil||"}
+
+The code is executed through shadowsocks-libev/src/manager.c.
+If the configuration file on the file system is manipulated, the code
+would get executed as soon as a Shadowsocks instance is started from
+ss-manage, as long as the malicious part of the configuration has not
+been overwritten.
+
+
+Workarounds
+-----------
+There is no workaround available, do not use ss-manage until a patch is
+released.
+
+
+About X41 D-Sec GmbH
+--------------------
+X41 D-Sec is a provider of application security services. We focus on
+application code reviews, design review and security testing. X41 D-Sec
+GmbH was founded in 2015 by Markus Vervier. We support customers in
+various industries such as finance, software development and public
+institutions.
+
+Timeline
+--------
+2017-09-28	Issues found
+2017-10-05	Vendor contacted
+2017-10-09	Vendor contacted, replied to use GitHub for a full disclosure
+2017-10-11	Vendor contacted, asked if the vendor is sure to want a full
+disclosure
+2017-10-12	Vendor contacted, replied to create a public issue on GitHub
+2017-10-13	Created public issue on GitHub
+2017-10-13	Advisory release
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (867 bytes)
