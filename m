@@ -1,4 +1,9 @@
-Received: (qmail 25644 invoked by uid 550); 8 Oct 2025 00:39:52 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11044" "Monday" "16" "October" "2017" "12:08:49" "+0300" "Jouni Malinen" "j@w1.fi" "<20171016090849.GB9257@w1.fi>" "227" "[oss-security] wpa_supplicant/hostapd: WPA packet number reuse with replayed messages and key reinstallation" nil nil nil "10" "2017101609:08:49" "[oss-security] wpa_supplicant/hostapd: WPA packet number reuse with replayed messages and key reinstallation" (number mark "U       j@w1.fi      Oct 16  227/11044 " thread-indent "\"[oss-security] wpa_supplicant/hostapd: WPA packet number reuse with replayed messages and key reinstallation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7696 invoked by uid 550); 16 Oct 2017 09:10:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,153 +12,242 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24563 invoked from network); 8 Oct 2025 00:39:52 -0000
-Date: Tue, 7 Oct 2025 20:39:43 -0400
-From: Jan Schaumann <jschauma@netmeister.org>
+Received: (qmail 30347 invoked from network); 16 Oct 2017 09:09:02 -0000
+Date: Mon, 16 Oct 2017 12:08:49 +0300
+From: Jouni Malinen <j@w1.fi>
 To: oss-security@lists.openwall.com
-Message-ID: <aOWyz7tkcULTJKut@netmeister.org>
+Message-ID: <20171016090849.GB9257@w1.fi>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: [oss-security] several vulnerabilities fixed in Go 1.25.2 and Go 1.24.8
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] wpa_supplicant/hostapd: WPA packet number reuse with replayed
+ messages and key reinstallation
 
-Forwarding from
-https://groups.google.com/g/golang-nuts/c/Gxn25BP4MXk/m/3KrM-XBOBAAJ
-because I don't think I've seen it here on this list
-yet.
+Published: October 16, 2017
+Identifiers:
+- CERT case ID: VU#228519
+- CVE-2017-13077
+- CVE-2017-13078
+- CVE-2017-13079
+- CVE-2017-13080
+- CVE-2017-13081
+- CVE-2017-13082
+- CVE-2017-13084 (not applicable)
+- CVE-2017-13086
+- CVE-2017-13087
+- CVE-2017-13088
+Latest version available from: https://w1.fi/security/2017-1/
 
------ Forwarded message from announce@golang.org -----
 
-> Date: Tue, 7 Oct 2025 18:50:38 +0000
-> From: announce@golang.org
-> To: golang-nuts@googlegroups.com
-> Subject: [security] Go 1.25.2 and Go 1.24.8 are released
-> 
-> Hello gophers,
-> 
-> We have just released Go versions 1.25.2 and 1.24.8, minor point releases.
-> 
-> These minor releases include 10 security fixes following the security policy <https://go.dev/security>:
-> 
-> -	net/mail: excessive CPU consumption in ParseAddress
-> 
-> 	The ParseAddress function constructed domain-literal address components through repeated string concatenation. When parsing large domain-literal components, this could cause excessive CPU consumption.
-> 
-> 	Thanks to Philippe Antoine (Catena cyber) for reporting this issue.
-> 
-> 	This is CVE-2025-61725 and Go issue https://go.dev/issue/75680.
-> 
-> -	crypto/x509: quadratic complexity when checking name constraints
-> 
-> 	Due to the design of the name constraint checking algorithm, the processing time
-> 	of some inputs scales non-linearly with respect to the size of the certificate.
-> 
-> 	This affects programs which validate arbitrary certificate chains.
-> 
-> 	Thanks to Jakub Ciolek for reporting this issue.
-> 
-> 	This is CVE-2025-58187 and Go issue https://go.dev/issue/75681.
-> 
-> -	crypto/tls: ALPN negotiation errors can contain arbitrary text
-> 
-> 	The crypto/tls conn.Handshake method returns an error on the server-side when
-> 	ALPN negotation fails which can contain arbitrary attacker controlled
-> 	information provided by the client-side of the connection which is not escaped.
-> 
-> 	This affects programs which log these errors without any additional form of
-> 	sanitization, and may allow injection of attacker controlled information into
-> 	logs.
-> 
-> 	Thanks to National Cyber Security Centre Finland for reporting this issue.
-> 
-> 	This is CVE-2025-58189 and Go issue https://go.dev/issue/75652.
-> 
-> -	encoding/pem: quadratic complexity when parsing some invalid inputs
-> 
-> 	Due to the design of the PEM parsing function, the processing time for some
-> 	inputs scales non-linearly with respect to the size of the input.
-> 
-> 	This affects programs which parse untrusted PEM inputs.
-> 
-> 	Thanks to Jakub Ciolek for reporting this issue.
-> 
-> 	This is CVE-2025-61723 and Go issue https://go.dev/issue/75676.
-> 
-> -	net/url: insufficient validation of bracketed IPv6 hostnames
-> 
-> 	The Parse function permitted values other than IPv6 addresses to be included in square brackets within the host component of a URL. RFC 3986 permits IPv6 addresses to be included within the host component, enclosed within square brackets. For example: "http://[::1]/". IPv4 addresses and hostnames must not appear within square brackets. Parse did not enforce this requirement.
-> 
-> 	Thanks to Enze Wang, Jingcheng Yang and Zehui Miao of Tsinghua University for reporting this issue.
-> 
-> 	This is CVE-2025-47912 and Go issue https://go.dev/issue/75678.
-> 
-> -	encoding/asn1: pre-allocating memory when parsing DER payload can cause memory exhaustion
-> 
-> 	When parsing DER payloads, memories were being allocated prior to fully validating the payloads.
-> 	This permits an attacker to craft a big empty DER payload to cause memory exhaustion in functions such as asn1.Unmarshal, x509.ParseCertificateRequest, and ocsp.ParseResponse.
-> 
-> 	Thanks to Jakub Ciolek for reporting this issue.
-> 
-> 	This is CVE-2025-58185 and Go issue https://go.dev/issue/75671.
-> 
-> -	net/http: lack of limit when parsing cookies can cause memory exhaustion
-> 
-> 	Despite HTTP headers having a default limit of 1 MB, the number of cookies that can be parsed did not have a limit.
-> 	By sending a lot of very small cookies such as "a=;", an attacker can make an HTTP server allocate a large amount of structs, causing large memory consumption.
-> 
-> 	net/http now limits the number of cookies accepted to 3000, which can be adjusted using the httpcookiemaxnum GODEBUG option.
-> 
-> 	Thanks to jub0bs for reporting this issue.
-> 
-> 	This is CVE-2025-58186 and Go issue https://go.dev/issue/75672.
-> 
-> -	crypto/x509: panic when validating certificates with DSA public keys
-> 
-> 	Validating certificate chains which contain DSA public keys can cause programs
-> 	to panic, due to a interface cast that assumes they implement the Equal method.
-> 
-> 	This affects programs which validate arbitrary certificate chains.
-> 
-> 	Thanks to Jakub Ciolek for reporting this issue.
-> 
-> 	This is CVE-2025-58188 and Go issue https://go.dev/issue/75675.
-> 
-> -	archive/tar: unbounded allocation when parsing GNU sparse map
-> 
-> 	tar.Reader did not set a maximum size on the number of sparse region data blocks in GNU tar pax 1.0 sparse files. A maliciously-crafted archive containing a large number of sparse regions could cause a Reader to read an unbounded amount of data from the archive into memory. When reading from a compressed source, a small compressed input could result in large allocations.
-> 
-> 	Thanks to Harshit Gupta (Mr HAX) - https://www.linkedin.com/in/iam-harshit-gupta/ for reporting this issue.
-> 
-> 	This is CVE-2025-58183 and Go issue https://go.dev/issue/75677.
-> 
-> -	net/textproto: excessive CPU consumption in Reader.ReadResponse
-> 
-> 	The Reader.ReadResponse function constructed a response string through
-> 	repeated string concatenation of lines. When the number of lines in a response is large,
-> 	this could cause excessive CPU consumption.
-> 
-> 	Thanks to Jakub Ciolek for reporting this issue.
-> 
-> 	This is CVE-2025-61724 and Go issue https://go.dev/issue/75716.
-> 
-> View the release notes for more information:
-> https://go.dev/doc/devel/release#go1.25.2
-> 
-> You can download binary and source distributions from the Go website:
-> https://go.dev/dl/
-> 
-> To compile from source using a Git clone, update to the release with
-> git checkout go1.25.2 and build as usual.
-> 
-> Thanks to everyone who contributed to the releases.
-> 
-> Cheers,
-> Michael and Carlos for the Go team
-> 
-> -- 
-> You received this message because you are subscribed to the Google Groups "golang-announce" group.
-> To unsubscribe from this group and stop receiving emails from it, send an email to golang-announce+unsubscribe@googlegroups.com.
-> To view this discussion visit https://groups.google.com/d/msgid/golang-announce/459c470d.BAAAB6Txh8AAAAAAAAAAA-p9MGAAAYKKSQYAAAAAADE8OwBo5WD-%40mailjet.com.
+Vulnerability
 
------ End forwarded message -----
+A vulnerability was found in how a number of implementations can be
+triggered to reconfigure WPA/WPA2/RSN keys (TK, GTK, or IGTK) by
+replaying a specific frame that is used to manage the keys. Such
+reinstallation of the encryption key can result in two different types
+of vulnerabilities: disabling replay protection and significantly
+reducing the security of encryption to the point of allowing frames to
+be decrypted or some parts of the keys to be determined by an attacker
+depending on which cipher is used.
+
+This document focuses on the cases that apply to systems using hostapd
+(AP) or wpa_supplicant (station), but it should be noted that the
+generic vulnerability itself is applicable to other implementations and
+may have different impact in other cases.
+
+This vulnerability can in theory apply to any case where a TK (the
+pairwise/unicast encryption key used with TKIP, CCMP, GCMP), a GTK
+(group/multicast encryption key), or an IGTK (group management frame
+integrity protection key) is configured by the Authentication/Supplicant
+component to the WLAN driver/firmware taking care of the TX/RX path and
+encryption/decryption of frames.
+
+If the same key is configured multiple times, it is likely that the
+transmit and receive packet numbers (PN, IPN, RSC/TSC, etc.) are cleared
+to a smaller value (zero in case of pairwise keys, zero or at least a
+smaller value than the last used value in case of group keys). When this
+happens with the same key, this breaks replay protection on RX side and
+can result in reuse of packet numbers on TX side. The former may allow
+replaying of previously delivered packets (without the attacker being
+able to decrypt them or modify their contents) while the latter may
+result in more severe issues on the TX side due to resulting CCM nonce
+replay and related issues with GCMP and TKIP. The TX side issue may make
+it significantly easier for the attacker to decrypt frames and determine
+some parts of the keys (e.g., a Michael MIC key in case of TKIP).
+
+Impact on AP/hostapd
+
+On the AP side, this generic issue has been determined to be applicable
+in the case where hostapd is used to operate an RSN/WPA2 network with FT
+(Fast BSS Transition from IEEE 802.11r) enabled. Replaying of the
+Reassociation Request frame can be used to get the AP reinstalling the
+TK which results in the AP accepting previously delivered unicast frames
+from the station and the AP reusing previously used packet numbers
+(local TX packet number gets reset to zero). This latter issue on the TX
+side can result in CCM nonce reuse which invalidates CCMP security
+properties. In case of TKIP this can result in the attacker being able
+to determine part of the TK more easily and with GCMP, result in similar
+issues.
+
+It should be noted that the AP side issue with FT would be close to
+applying to FILS authentication (from IEEE 802.11ai) in hostapd with
+replaying of (Re)Association Request frames. However, due to a different
+handling of the repeated association processing with FILS, this would
+actually result in the station getting immediately disconnected which
+prevents this attack in practice. In addition, the FILS implementation
+in the current hostapd version is still experimental and documented as
+being discouraged in production use cases.
+
+Another area of potentially reduced security was identified when looking
+into these issues. When AP/Authenticator implementation in hostapd is
+requested to rekey the PTK without performing EAP reauthentication
+(either through local periodic rekeying or due to a request from an
+association station), the ANonce value does not get updated. This
+results in the new 4-way handshake depending on the station/supplicant
+side generating a new, unique (for the current PMK/PSK) SNonce for the
+PTK derivation to result in a new key. While a properly working
+supplicant would do so, if there is a supplicant implementation that
+does not, this combination could result in deriving the same PTK
+again. When the TK from that PTK gets configured in the driver, this
+would result in reinstalling the same key and the same issues as
+described above for the FT protocol case.
+
+Impact on station/wpa_supplicant
+
+On the station side, this generic issue has been determined to be
+applicable in the cases where wpa_supplicant processes a group key (GTK
+or IGTK) update from the AP. An attacker that is able to limit access
+to frame delivery may be able to extract two update messages and deliver
+those to the station with significant time delay between them. When
+wpa_supplicant processes the second message, it may end up reinstalling
+the same key to the driver and when doing this, clear the RX packet
+number to an old value. This would allow the attacker to replay all
+group-addressed frames that the AP sent between the time the key update
+message was originally sent and the time when the attacker forwarded the
+second frame to the station. The attacker would not be able to decrypt
+or modify the frames based on this vulnerability, though. There is an
+exception to this with older wpa_supplicant versions as noted below in
+version specific notes.
+
+For the current wpa_supplicant version (v2.6), there is also an
+additional EAPOL-Key replay sequence where an additional forged
+EAPOL-Key message can be used to bypass the existing protection for the
+pairwise key reconfiguration in a manner that ends up configuring a
+known TK that an attacker could use to decrypt any frame sent by the
+station and to inject arbitrary unicast frames. Similar issues are
+reachable in older versions as noted below.
+
+PeerKey / TDLS PeerKey
+
+As far as the related CVE-2017-13084 (reinstallation of the STK key in
+the PeerKey handshake) is concerned, it should be noted that PeerKey
+implementation in wpa_supplicant is not fully functional and the actual
+installation of the key into the driver does not work. As such, this
+item is not applicable in practice. Furthermore, the PeerKey handshake
+for IEEE 802.11e DLS is obsolete and not known to have been deployed.
+
+As far as the TDLS PeerKey handshake is concerned (CVE-2017-13086),
+wpa_supplicant implementation is already rejecting TPK M2 retries, so
+the reconfiguration issue cannot apply for it. For TPK M3, there is a
+theoretical impact. However, if that frame is replayed, the current
+wpa_supplicant implementation ends up tearing down the TDLS link
+immediately and as such, there is no real window for performing the
+attack. Furthermore, TPK M3 goes through the AP path and if RSN is used
+there, that frame has replay protection, so the attacker could not
+perform the attack. If the AP path were to use WEP, the frame could be
+replayed, though. That said, if WEP is used on the AP path, it would be
+fair to assume that there is no security in the network, so a new attack
+vector would be of small additional value.
+
+With older wpa_supplicant versions, it may be possible for an attacker
+to cause TPK M2 to be retransmitted with delay that would be able to
+trigger reinstallation of TK on the peer receiving TPK M2
+(CVE-2017-13086). This may open a short window for the attack with v2.3,
+v2.4, and v2.5; and a longer window with older versions.
+
+Vulnerable versions/configurations
+
+For the AP/Authenticator TK (unicast) reinstallation in FT protocol
+(CVE-2017-13082):
+
+hostapd v0.7.2 and newer with FT enabled (i.e., practically all versions
+that include full FT implementation). FT needs to be enabled in the
+runtime configuration to make this applicable.
+
+For the AP/Authenticator missing ANonce during PTK rekeying:
+
+All hostapd versions.
+
+For the station/Supplicant side GTK/IGTK reinstallation and TK
+configuration:
+
+All wpa_supplicant versions. The impact on older versions can be more
+severe due to earlier changes in this area: v2.3 and older can also
+reinstall the pairwise key and as such have similar impact as the AP FT
+case (CVE-2017-13077); v2.4 and v2.5 end up configuring an all-zero TK
+which breaks the normal data path, but could allow an attacker to
+decrypt all following frames from the station and to inject arbitrary
+frames to the station. In addition, a different message sequence
+involving 4-way handshake can result in configuration of an all-zero TK
+in v2.6 and the current snapshot of the development repository as of the
+publication of this advisory.
+
+
+Acknowledgments
+
+Thanks to Mathy Vanhoef of the imec-DistriNet research group of KU
+Leuven for discovering and reporting this issue. Thanks to John A. Van
+Boxtel for finding additional issues related to this topic.
+
+
+Possible mitigation steps
+
+- For AP/hostapd and FT replay issue (CVE-2017-13082), it is possible to
+  prevent the issue temporarily by disabling FT in runtime
+  configuration, if needed before being able to update the
+  implementations.
+
+- Merge the following commits to hostapd/wpa_supplicant and rebuild them:
+
+  hostapd and replayed FT reassociation request frame (CVE-2017-13082):
+  hostapd: Avoid key reinstallation in FT handshake
+
+  hostapd PTK rekeying and ANonce update:
+  Fix PTK rekeying to generate a new ANonce
+
+  wpa_supplicant and GTK/IGTK rekeying (CVE-2017-13078, CVE-2017-13079,
+  CVE-2017-13080, CVE-2017-13081, CVE-2017-13087, CVE-2017-13088):
+  Prevent reinstallation of an already in-use group key
+  Extend protection of GTK/IGTK reinstallation of WNM-Sleep Mode cases
+
+  wpa_supplicant (v2.6 or newer snapshot) and known TK issue:
+  Prevent installation of an all-zero TK
+
+  Additional protection steps for wpa_supplicant:
+  TDLS: Reject TPK-TK reconfiguration
+  WNM: Ignore WNM-Sleep Mode Response without pending request
+  FT: Do not allow multiple Reassociation Response frames
+
+  These patches are available from https://w1.fi/security/2017-1/
+  (both against the snapshot of hostap.git master branch and rebased on
+  top of the v2.6 release)
+
+  For the TDLS TPK M2 retransmission issue (CVE-2017-13086) with older
+  wpa_supplicant versions, consider updating to the latest version or
+  merge in a commit that is present in v2.6:
+  https://w1.fi/cgit/hostap/commit/?id=dabdef9e048b17b22b1c025ad592922eab30dda8
+  ('TDLS: Ignore incoming TDLS Setup Response retries')
+
+- Update to hostapd/wpa_supplicant v2.7 or newer, once available
+  * it should be noted that there are number of additional changes in
+    the related areas of the implementation to provide extra layer of
+    protection for potential unknown issues; these changes are not
+    included in this advisory as they have not been identified to be
+    critical for preventing any of the identified security
+    vulnerabilities; however, users of hostapd/wpa_supplicant are
+    encouraged to consider merging such changes even if not fully
+    moving to v2.7
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
