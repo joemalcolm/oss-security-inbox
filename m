@@ -1,40 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/16
-Message-ID: <20170714182358.GA20536@openwall.com>
-Date: Fri, 14 Jul 2017 20:23:58 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/16/1
+Message-ID: <690621455.20591654.1508144945361.JavaMail.zimbra@redhat.com>
+Date: Mon, 16 Oct 2017 05:09:05 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Subject: CVE-2017-15299: Linux kernel: incorrect update of uninstantiated keys can crash a kernel
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 14, 2017 at 11:09:39AM -0700, Anthony Liguori wrote:
-> We (Amazon Linux) are very happy to fill in whatever gaps are needed.
+Heololo,
+
+> [Suggested description]
+> The KEYS subsystem in the Linux kernel through 4.13.7 mishandles use of
+> the add_key() for a key that already exists but is uninstantiated, which
+> allows local users to cause a denial of service (NULL pointer dereference
+> and a system crash) or possibly have unspecified other impact via a crafted
+> system call.
 > 
-> Most of the places where that can be done most effectively already
-> have a primary.  I hate to just sign up to be backup but if we did
-> that, we would track independently to ensure nothing got missed.
+> ------------------------------------------
 > 
-> So maybe backup for administrative tasks 9-13 and then we can be
-> primary for technical task 3?  We already test all of these fixes so
-> responding with a report of the testing we've done is straight forward
-> enough.
+> [VulnerabilityType Other]
+> CWE-476 NULL Pointer Dereference
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> kernel.org: Linux kernel
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> Linux kernel - upto v4.14
+> 
+> ------------------------------------------
+> 
+> [Affected Component]
+> 'security/keys/keyring.c', 'security/keys/key.c' files, find_key_to_update(),
+> key_create_or_update() functions
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Denial of Service]
+> true
+> 
+> ------------------------------------------
+> 
+> [Attack Vectors]
+> to exploit a vulnerability an attacker should run a certain binary as unprivileged user
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://bugzilla.redhat.com/show_bug.cgi?id=1498016
+> https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1499828.html
+> https://marc.info/?t=150654188100001&r=1&w=2
+> https://marc.info/?t=150783958600011&r=1&w=2
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Eric Biggers <ebiggers@...gle.com>
+>
+> Use CVE-2017-15299.
 
-This works.  I've just listed Amazon for those tasks as you suggested.
-Thank you!
-
-This leaves administrative task 10 with no primary yet, though:
-
-10. Monitor relevant public channels (mailing lists, code repositories,
-etc.) and inform the reporter and the list in case an issue is made
-public prematurely (that is, leaks or is independently rediscovered) -
-primary: vacant, backup: Amazon
-
-Does this mean Amazon will be taking care of it until we find a primary?
-Or only in cases when no other distro (visibly) does?
-
-Ideally, a distro should volunteer to be primary for that task now, so
-that Amazon wouldn't have to volunteer for more than they offered.
-
-> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-
-Alexander
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
