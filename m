@@ -1,4 +1,9 @@
-Received: (qmail 9819 invoked by uid 550); 26 Jun 2023 11:43:10 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["607" "Tuesday" "17" "October" "2017" "12:54:24" "+0200" "Marcus Meissner" "meissner@suse.de" "<20171017105424.GG3302@suse.de>" "19" "[oss-security] Re: Linux kernel: alsa: use-after-free in /dev/snd/seq CVE-2017-15265" nil nil nil "10" "2017101710:54:24" "[oss-security] Re: Linux kernel: alsa: use-after-free in /dev/snd/seq CVE-2017-15265" (number mark "U       meissner@sus Oct 17   19/607   " thread-indent "\"[oss-security] Re: Linux kernel: alsa: use-after-free in /dev/snd/seq CVE-2017-15265\"\n") "<20171011130353.GD667@suse.de>" ("<20171011130353.GD667@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28322 invoked by uid 550); 17 Oct 2017 10:54:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10157 invoked from network); 26 Jun 2023 07:01:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1687762870;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ceBNFsPUArIBCIThtx1IeB7WclRV0vJAcmZbDao+wXk=;
-	b=ED6Z5ZpncrAG1bUIrRkjHfgwllGFEBfkhMkfCWgxi1tFhej83lnjUQcS9+t4ThAkTwn1YU
-	8mZ5FxuAhEi+ydE8J3qdpPgbeCk/d0H1WpIfHZyw4Njgobe1haDOalB/dzLAXJ++PJSWBv
-	vurUHD2ApvEMeabMEu6OySlW0te5IwM=
-X-MC-Unique: 5WH8Fn5NM4G4BW_oVvmZfQ-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687762867; x=1690354867;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ceBNFsPUArIBCIThtx1IeB7WclRV0vJAcmZbDao+wXk=;
-        b=kh2j/1KSn/ri8zrGHBs4Y9WNPxClHHCpLtayy56Xolgg+JzmavAsZ8yHA4/QlzjuZT
-         WKmB95dLpkHRr79wh+uaonHEICA4+9MrlHtp9i7IjdxmFmckwd0A7oxBgH9OKQvNycbl
-         2okRHbQyV27KHNztPOGSoDtns/+eHASJgmqDbY9O57/TSaZzkFRSrsww/INkcOHx7C1q
-         TQ8TnVB5TG7+e48ml83xf+876m+3wLvusvUC5t3O1KeG+VLUsVS9IjV38kTPUETeKNEY
-         GRuRvSKZGaGnJVbs96y35UmvLsrLV3i1qahkX5oP3TggCRmHgW6URwBXA6+Zp1Uc5bJz
-         0YHw==
-X-Gm-Message-State: AC+VfDxSWjmBmhKqI2QmyJPgQxhSZ2p9rOIpxZZnXOsgGw9Qu1rMl1aK
-	u8N+B3qXg97dZbe1a7MbzzhMYmnWZ2+OvIXNdnuJzF8OuKyIqavj63r43q874j7errPz13curhd
-	Nd6wVQV9LFcdGG74EYMiD4SBvDxLi
-X-Received: by 2002:a05:6402:da:b0:518:7415:3b61 with SMTP id i26-20020a05640200da00b0051874153b61mr15674951edu.23.1687762867422;
-        Mon, 26 Jun 2023 00:01:07 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ5ojNBD5LBYceAuJJuNpOnOzo9hqQUWpbtXeUrtfMkQ88rfi720h9a7JYikyzqB1e/ZrmPy2w==
-X-Received: by 2002:a05:6402:da:b0:518:7415:3b61 with SMTP id i26-20020a05640200da00b0051874153b61mr15674935edu.23.1687762867073;
-        Mon, 26 Jun 2023 00:01:07 -0700 (PDT)
-Message-ID: <0517227e-d2e6-cd57-55f7-ad089b34b17c@redhat.com>
-Date: Mon, 26 Jun 2023 09:01:05 +0200
+Received: (qmail 28301 invoked from network); 17 Oct 2017 10:54:36 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 17 Oct 2017 12:54:24 +0200
+From: Marcus Meissner <meissner@suse.de>
+To: OSS Security List <oss-security@lists.openwall.com>
+Message-ID: <20171017105424.GG3302@suse.de>
+References: <20171011130353.GD667@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
-References: <c2d7a824-5122-e130-68c8-44ddc1ffd241@redhat.com>
- <20230623150242.GA10337@openwall.com>
-From: Zdenek Dohnal <zdohnal@redhat.com>
-In-Reply-To: <20230623150242.GA10337@openwall.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2023-34241: CUPS: use-after-free in
- cupsdAcceptClient()
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171011130353.GD667@suse.de>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] Re: Linux kernel: alsa: use-after-free in /dev/snd/seq CVE-2017-15265
 
-I'm sorry for the confusion :( - yes, the emails to oss-security were 
-announcing the end of embargoes and that the fixes are already merged.
+On Wed, Oct 11, 2017 at 03:03:53PM +0200, Marcus Meissner wrote:
+> Hi folks,
+> 
+> This kernel issue is being published without embargoe.
+> (came via security@kernel.org to Takashi@SUSE);
+> 
+> Reported by Michael23 Yu.
+> 
+> https://bugzilla.suse.com/show_bug.cgi?id=1062520
+> 
+> Proposed Patch:
+> http://mailman.alsa-project.org/pipermail/alsa-devel/2017-October/126292.html
+> 
+> A use-after-free window in /dev/snd/seq, Mitre has assigned CVE-2017-15265 to it.
 
-I've updated the guide I was following to prevent this in the future.
+The reporter asked to add that this bug was found by ADLab of venustech.
+(I was not able to associate him directly before, sorry.)
 
-
-Zdenek
-
-On 6/23/23 17:02, Solar Designer wrote:
-> On Thu, Jun 22, 2023 at 12:02:39PM +0200, Zdenek Dohnal wrote:
->> there is currently the embargoed CVE-2023-34241 in CUPS project:
-> Of course, this wasn't actually embargoed anymore at that time - Zdenek
-> simply resent the exact same message he had sent to the distros list on
-> June 13, when the issue was in fact still embargoed.
->
-> Similarly, the previous CUPS vulnerability disclosure on June 1 was a
-> copy of the distros message from May 23:
->
-> https://www.openwall.com/lists/oss-security/2023/06/01/1
->
-> Let's be updating these when posting them publicly going forward to
-> avoid confusion - like "was this published inadvertently when still
-> under embargo?" (luckily, no).
->
-> Alexander
->
--- 
-Zdenek Dohnal
-Senior Software Engineer
-Red Hat, BRQ-TPBC
-
+Ciao, Marcus
