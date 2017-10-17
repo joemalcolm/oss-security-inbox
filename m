@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/9
-Message-ID: <514529694.39760564.1502113890222.JavaMail.zimbra@redhat.com>
-Date: Mon, 7 Aug 2017 09:51:30 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/17/2
+Message-ID: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>
+Date: Tue, 17 Oct 2017 18:25:07 +0200
+From: Bastian Blank <waldi@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()
+Subject: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi folks
 
-1) We would like to make an additional announcement that an important part of this flaw
-research was conducted by Leilei Lin <leilei.lin@...baba-inc.com> of Alibaba Group, who
-developed the initial patches:
+ftpsync is the tool we use to mirror Debian everywhere.  It uses rsync
+to do the heavy lifting.
 
-https://patchwork.kernel.org/patch/9755753/
-https://patchwork.kernel.org/patch/9755757/
+rsync can copy symlinks.  We enable this option, as the Debian tree
+includes symlinks in various of locations.  Unless a special option
+(--safe-links) is given, such symlinks can point to arbitrary locations,
+even outside of the mirror tree.
 
-2) Unfortunately, the wording "in the wild" in this announcement is probably incorrect.
-The mentioned exploit was developed by the flaw researchers and we are not aware of it
-being available publicly or used by a wider audience. We are sorry for this misinformation.
+An attacker with the ability to add symlinks to the upstream mirror can
+create symlinks to arbitrary files or even directories.  Depending on
+the config, a HTTP server will follow such symlinks.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Upstream patch:
+---------------
+  -> https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=d1ca2ab2210990b6dfb664cd6776a41b71c48016
+
+Regards,
+Bastian
+
+-- 
+Beam me up, Scotty!
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
