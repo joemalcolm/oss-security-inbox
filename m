@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/02/2
-Message-ID: <20171002120644.GA4301@kroah.com>
-Date: Mon, 2 Oct 2017 14:06:44 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/17/3
+Message-ID: <8a886780-1b10-6412-06bf-e61aef4a8a2c@chbi.eu>
+Date: Tue, 17 Oct 2017 19:43:56 +0200
+From: chbi@...i.eu
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-1000252: KVM denial of service with posted interrupts on Intel systems (since Linux 4.4)
+Subject: Stored XSS vulnerability in ILIAS <= 5.2.8 and <= 5.1.20
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 15, 2017 at 06:36:59PM +0200, Jan H. Schönherr wrote:
-> Hi.
-> 
-> We have discovered a user triggerable BUG() when using KVM with posted interrupts on Intel
-> systems. This requires an unprivileged user to have access to the KVM device.
-> 
-> Certain values in a KVM_IRQFD API call can trigger a BUG_ON() at a later point in
-> vmx_update_pi_irte(). KVM as a whole seems to hang after that.
-> 
-> The issue was introduced with Linux 4.4, patches have been posted to the KVM
-> mailing list:
-> - https://marc.info/?l=kvm&m=150549145711115&w=2
-> - https://marc.info/?l=kvm&m=150549146311117&w=2
+Hi,
 
-Note, for those intersted in this, the second patch was reverted and
-doesn't seem to be needed.
+I've discovered a security issue in ILIAS <= 5.2.8 and <= 5.1.20
+(https://www.ilias.de)
 
-thanks,
 
-greg k-h
+A stored XSS vulnerability in the media object component allows an
+authenticated user to inject JavaScript to gain administrator privileges.
+
+
+Fix:
+https://github.com/ILIAS-eLearning/ILIAS/commit/b2a4660afec1e87d41c83c8e381f549bc6dfc70f
+
+
+The issue is fixed in ILIAS 5.2.9 and 5.1.21.
+
+https://www.ilias.de/docu/goto_docu_pg_75377_35.html
+https://www.ilias.de/docu/goto_docu_pg_75378_1719.html
+
+
+I've requested a CVE ID (MITRE).
+
+-- 
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
