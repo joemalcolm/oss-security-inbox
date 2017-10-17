@@ -1,4 +1,9 @@
-Received: (qmail 32613 invoked by uid 550); 30 Jan 2023 19:47:43 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1202" "Tuesday" "17" "October" "2017" "17:44:33" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1327005831.21431439.1508276673309.JavaMail.zimbra@redhat.com>" "30" "Re: [oss-security] CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors" nil nil nil "10" "2017101721:44:33" "[oss-security] CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors" (number mark "U       vdronov@redh Oct 17   30/1202  " thread-indent "\"Re: [oss-security] CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors\"\n") "<1454353123.19019329.1507651438402.JavaMail.zimbra@redhat.com>" ("<2113704961.13214334.1506089666956.JavaMail.zimbra@redhat.com>" "<466141472.14007261.1506337465946.JavaMail.zimbra@redhat.com>" "<1454353123.19019329.1507651438402.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17881 invoked by uid 550); 17 Oct 2017 21:44:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,57 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27788 invoked from network); 30 Jan 2023 19:38:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jfr.im; s=google;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QsLrAs+rHHFBc0uVowVlCUZvUpM9SNBN2tG3SJ7Av2k=;
-        b=LFCO7o1UJShQvJwOhCP+70xVMEoXfRTtv6Y+xLrFaODjENVoiVox8xanC7oS7Z2CKC
-         peUGL8Hqw7OXpIyNyBdlamylXlhbCwkhaNBQLOVwu1M5/t7vzHbRyzq/G22souzmyR7+
-         5Am6Qxi8gbDlgt6Owl7rSiZXEi6pDCT0Zevog8x86Z3ZSgJgkkf2EwGj7PDWAUwkOktY
-         ALV3SVO3bAGAsd/xPYAoLM4d3/Hsnx87VVsp+J4gI4A8v0+J7GBo45D5xG5K8fmztDcQ
-         hZmSfPWnEU/nKeQoqIRxIi0kXAoMKP43SBbmGzH2Barz2MQqJ6Gg4Ekl2OPnALcb5R3F
-         0OnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QsLrAs+rHHFBc0uVowVlCUZvUpM9SNBN2tG3SJ7Av2k=;
-        b=zArHDg796BGZP39+7KlsDF0Vksh/ZAnfczTKoAIdyo58tJZ5+4+0JkLA0iCIQrykoP
-         N7Sj0uPp2z9F/t9dRI2sg+mbVTckxiOfTiXJnKfXxildZV//cJrqHDteDFikyokm3VMl
-         X2kS2eDn7dGMCNMGM7EcJWQCsrNJz0kZQGx26lHrrHYhdF2hwvavgONtbtscge7gNnCo
-         MfaZoSOI7NMg3bCHQVJnKkzm9T+0fAbu9wzfxYwc+4RA46xke4vvj6OxosrTtjKz1RlE
-         qEcetoBVWfoWVoFjPAbAPdTt7C6bqNmeeMJRuKHZSEH4VhBTaJSXFs82GqSYGrgg2g4T
-         3NWw==
-X-Gm-Message-State: AO0yUKXwWvBGQMAZng7IgbtyVKmXTCV7GdzgEheMYK7XZo1QKbDn6wpT
-	c08075F20LrPv21szswhlmjQFoWbrWC6b8y4
-X-Google-Smtp-Source: AK7set88D9Hvz2W+CxWaSEJZ4WYodpSaJOIovLfmUBnsBDTKxFyPG1IkX6L3rIunLEv0E4g0OkFqqQ==
-X-Received: by 2002:a05:6870:f707:b0:15f:8e58:f000 with SMTP id ej7-20020a056870f70700b0015f8e58f000mr4317926oab.15.1675107521112;
-        Mon, 30 Jan 2023 11:38:41 -0800 (PST)
-X-Received: by 2002:a05:6870:414e:b0:163:319f:d28 with SMTP id
- r14-20020a056870414e00b00163319f0d28mr1833302oad.265.1675107520621; Mon, 30
- Jan 2023 11:38:40 -0800 (PST)
-MIME-Version: 1.0
-References: <Y9GEU0G9N5etu+H3@sol.localdomain>
-In-Reply-To: <Y9GEU0G9N5etu+H3@sol.localdomain>
-From: John Runyon <me@jfr.im>
-Date: Mon, 30 Jan 2023 13:38:29 -0600
-X-Gmail-Original-Message-ID: <CADCiM6vwTMJoOuLmdmmCeKovvmdthDbou+Qx0g1n-rJ_FygBUQ@mail.gmail.com>
-Message-ID: <CADCiM6vwTMJoOuLmdmmCeKovvmdthDbou+Qx0g1n-rJ_FygBUQ@mail.gmail.com>
+Received: (qmail 17851 invoked from network); 17 Oct 2017 21:44:45 -0000
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 8E4CF37E79
+Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
+Date: Tue, 17 Oct 2017 17:44:33 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000ba406405f3805cac"
-Subject: Re: [oss-security] Data operand dependent timing on Intel and Arm CPUs
+Message-ID: <1327005831.21431439.1508276673309.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1454353123.19019329.1507651438402.JavaMail.zimbra@redhat.com>
+References: <2113704961.13214334.1506089666956.JavaMail.zimbra@redhat.com> <466141472.14007261.1506337465946.JavaMail.zimbra@redhat.com> <1454353123.19019329.1507651438402.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.4.227, 10.4.195.14]
+Thread-Topic: CVE-2017-14489: Linux kernel: scsi: nlmsg is not properly parsed in iscsi_if_rx()
+Thread-Index: gkd0qV23MyyXWIu3XbwzK7w8u71B1FTIlwG+kChVwnopHe6FJw==
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Tue, 17 Oct 2017 21:44:33 +0000 (UTC)
+Subject: Re: [oss-security] CVE-2017-12190: Linux kernel: block: memory leak
+ when merging small consecutive buffers in SCSI IO vectors
 
---000000000000ba406405f3805cac
-Content-Type: text/plain; charset="UTF-8"
+Hello, oss-security@,
 
->  I consider this issue to be a CPU security vulnerability
+If somebody could help me a bit with this CVE? Could you please run a reproducer
+from (it does only a number of disk reads and allocates a memory):
 
-By that logic, allowing users to log into their system is a security
-vulnerability.
+https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1495887.html
 
-A choice taken by design is not generally a vuln, even if/though it creates
-vulns in other systems.
+and check if the issue reproduces on your system? The system should have a scsi
+disk, so for a virtual machine a virtio disk (/dev/vda) won't work, but a virtual
+scsi disk (/dev/sda) should.
 
---000000000000ba406405f3805cac--
+Please, check a value of 'Active(anon)' in /proc/meminfo before and after running
+a reproducer, it should jump up for 40Mb and should not decrease, like this:
+
+(as root)# grep anon /proc/meminfo ; ./sgio-leak /dev/sda ; grep anon /proc/meminfo
+Active(anon):      39156 kB
+Inactive(anon):     8368 kB
+Active(anon):      79268 kB
+Inactive(anon):     8368 kB
+(as root)# grep anon /proc/meminfo ; ./sgio-leak /dev/sda ; grep anon /proc/meminfo
+Active(anon):      79268 kB
+Inactive(anon):     8368 kB
+Active(anon):     119156 kB
+Inactive(anon):     8368 kB
+
+If the issue in not reproduced, 'Active(anon)' should jump up shortly but return to
+the previous before-the-run value on an idle system.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
