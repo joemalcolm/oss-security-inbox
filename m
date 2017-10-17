@@ -1,91 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/7
-Message-ID: <20170316163421.GI759@scully.more-magic.net>
-Date: Thu, 16 Mar 2017 17:34:21 +0100
-From: Peter Bex <peter@...e-magic.net>
-To: oss-security@...ts.openwall.com
-Cc: Adam Maris <amaris@...hat.com>
-Subject: Re: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/17/1
+Message-ID: <20171017105424.GG3302@suse.de>
+Date: Tue, 17 Oct 2017 12:54:24 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: Linux kernel: alsa: use-after-free in /dev/snd/seq CVE-2017-15265
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 16, 2017 at 01:17:13PM +0100, Peter Korsgaard wrote:
-> >>>>> "Peter" == Peter Bex <peter@...e-magic.net> writes:
+On Wed, Oct 11, 2017 at 03:03:53PM +0200, Marcus Meissner wrote:
+> Hi folks,
 > 
->  > On Thu, Mar 16, 2017 at 10:31:17AM +0100, Adam Maris wrote:
->  >> Hi Peter,
->  >> 
->  >> oss-security mailing is no longer a place for requesting CVEs. Please,
->  >> request CVE from MITRE via https://cveform.mitre.org/ or also possibly
->  >> from DWF project via http://iwantacve.org/
+> This kernel issue is being published without embargoe.
+> (came via security@...nel.org to Takashi@...E);
 > 
->  > Oh yeah, I forgot about that.  I've filled out the form, and I hope I've
->  > done this correctly.
+> Reported by Michael23 Yu.
 > 
-> Please don't forget to forward the form details to this list once a CVE
-> has been assigned. Thanks.
+> https://bugzilla.suse.com/show_bug.cgi?id=1062520
+> 
+> Proposed Patch:
+> http://mailman.alsa-project.org/pipermail/alsa-devel/2017-October/126292.html
+> 
+> A use-after-free window in /dev/snd/seq, Mitre has assigned CVE-2017-15265 to it.
 
-This was assigned CVE-2017-6949.  The form details were in my original
-mail, but I'll include them here again, though I must say fiddling around
-with e-mail to forward it is much much more inconvenient than how it used
-to work:
+The reporter asked to add that this bug was found by ADLab of venustech.
+(I was not able to associate him directly before, sorry.)
 
-> [Suggested description]
-> An issue was discovered in CHICKEN Scheme through 4.12.0.
-> When using a nonstandard CHICKEN-specific extension to allocate an
-> SRFI-4 vector in unmanaged memory, the vector size would be used in
-> unsanitised form as an argument to malloc(). With an unexpected size,
-> the impact may have been a segfault or buffer overflow.
-> 
-> ------------------------------------------
-> 
-> [Vulnerability Type]
-> Buffer Overflow
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> Affected: All versions up to and including 4.12.0.  No fixed versions released yet
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> All SRFI-4 vector constructor functions in CHICKEN Scheme
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Context-dependent
-> 
-> ------------------------------------------
-> 
-> [Impact Code execution]
-> true
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> When using a nonstandard CHICKEN-specific extension to allocate a
-> SRFI-4 vector in unmanaged memory, the vector size would be used in
-> unsanitised form as argument to malloc().
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> http://lists.gnu.org/archive/html/chicken-announce/2017-03/msg00000.html
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Lemonboy
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Ciao, Marcus
