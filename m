@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/2
-Message-ID: <20170428015004.11956.12148@falcon>
-Date: Fri, 28 Apr 2017 01:50:04 -0000
-From: security@...assian.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/17/4
+Message-ID: <1327005831.21431439.1508276673309.JavaMail.zimbra@redhat.com>
+Date: Tue, 17 Oct 2017 17:44:33 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8291 ghostscript remote code execution
+Subject: Re: CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors
 Content-Type: text/plain; charset=utf-8
 
- Hi,
+Hello, oss-security@,
 
+If somebody could help me a bit with this CVE? Could you please run a reproducer
+from (it does only a number of disk reads and allocates a memory):
 
- CVE-2017-8291 was reported initially to Ghostscript by the Atlassian Security Team. We worked with the developers of Ghostscript to address this vulnerability. This vulnerability impacts versions 9.21 and earlier, and is called from many other libraries, such as Pillow and ImageMagick. Fortunately, fixes have now been pushed to master and can be reviewed here: https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirKb6U3wFxO6cZ2MrfZFe9KXxeenPQ9IFz8TJhw6LOtOaFuB-2BSAw9BeCw0BhtT081tIKPb6Ah9qpSmP-2FzO2sx-2BjA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbIeCjEPp1RqnDE5ZMVkV8u-2FQck2RKXjMbDOcixr2-2BNtOmj3Wzq5XwkhDFXhU2AKyL9layYKe-2BQtxt0vvnrLW-2BhggU2jp-2FuYmlu1mgnKq3GLT-2BQs66xRLMVK0ptzU4dayw9UBPVRQ2Fkfj-2FJw1BXrk-2BY-3D and https://u4790715.ct.sendgrid.net/wf/click?upn=UqF7hxEfY-2BoQE5y7ee5wrpEERVsJr450MPBUJBBKike04wjKjU6jNBRqCvnzFkirJzYNkGRnjRAeENnIy4IlGMktl4IMwqOL-2F6c9eA2tuyk4XtZY7kQE2gU21K2S6Iame7IH19-2BL1vfBFf0SU6yEiA-3D-3D_XV8vHdrbCxPyFLm6RhvyOinpL-2BlJJ4T-2BnPsLAd4H4ga1C-2B6KK34tjEg4ad7hndokvEujZN9oFs-2BPmwZc69UJbPyFjltEjXNsT3qz-2Fb9AtZOlxcf7srfg3ApNJwAPl06rQsoKGLAu393JsVQP6IMnwpmfkPtqhUc0Kd-2Fr-2BdA39SFaSuqgV1MSaFq7Bx7Osg3G1ng9ujPr9Xt71FOQOsCM9Ada5YhYxQbHq72hBUfE7-2Bo-3D
+https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1495887.html
 
+and check if the issue reproduces on your system? The system should have a scsi
+disk, so for a virtual machine a virtio disk (/dev/vda) won't work, but a virtual
+scsi disk (/dev/sda) should.
 
- Since this issue is potentially serious, we encourage people to patch and update as soon as possible.
+Please, check a value of 'Active(anon)' in /proc/meminfo before and after running
+a reproducer, it should jump up for 40Mb and should not decrease, like this:
 
+(as root)# grep anon /proc/meminfo ; ./sgio-leak /dev/sda ; grep anon /proc/meminfo
+Active(anon):      39156 kB
+Inactive(anon):     8368 kB
+Active(anon):      79268 kB
+Inactive(anon):     8368 kB
+(as root)# grep anon /proc/meminfo ; ./sgio-leak /dev/sda ; grep anon /proc/meminfo
+Active(anon):      79268 kB
+Inactive(anon):     8368 kB
+Active(anon):     119156 kB
+Inactive(anon):     8368 kB
 
- --
- Atlassian Security Team
+If the issue in not reproduced, 'Active(anon)' should jump up shortly but return to
+the previous before-the-run value on an idle system.
 
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
