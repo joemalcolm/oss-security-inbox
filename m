@@ -1,57 +1,201 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/10/7
-Message-Id: <F9830DA3-7A0E-494D-B755-C0EDEEBC6132@gmail.com>
-Date: Wed, 10 May 2017 10:59:34 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: Re: Numerous FreeTDS crashes fixed on master
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/10
+Message-ID: <f4773901-967b-a496-de1d-2e866686dfb2@igalia.com>
+Date: Wed, 18 Oct 2017 15:12:07 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2017-0008
 Content-Type: text/plain; charset=utf-8
 
-I was asked what software this affects.
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0008
+------------------------------------------------------------------------
 
-PHP - http://www.freetds.org/userguide/php.htm <http://www.freetds.org/userguide/php.htm>
-Perl DBI - http://www.peppler.org/freeware/dbd-sybase.html <http://www.peppler.org/freeware/dbd-sybase.html>
-Ruby DBI w/ Sybase - http://stackoverflow.com/questions/721960/connecting-to-sql-server-with-activerecord <http://stackoverflow.com/questions/721960/connecting-to-sql-server-with-activerecord>
-Python-Sybase - http://python-sybase.sourceforge.net/index.html <http://python-sybase.sourceforge.net/index.html>
+Date reported      : October 18, 2017
+Advisory ID        : WSA-2017-0008
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0008.html
+CVE identifiers    : CVE-2017-7081, CVE-2017-7087, CVE-2017-7089,
+                     CVE-2017-7090, CVE-2017-7091, CVE-2017-7092,
+                     CVE-2017-7093, CVE-2017-7094, CVE-2017-7095,
+                     CVE-2017-7096, CVE-2017-7098, CVE-2017-7099,
+                     CVE-2017-7100, CVE-2017-7102, CVE-2017-7104,
+                     CVE-2017-7107, CVE-2017-7109, CVE-2017-7111,
+                     CVE-2017-7117, CVE-2017-7120, CVE-2017-7142.
 
-Other languages have less-official bindings.
+Several vulnerabilities were discovered in WebKitGTK+.
 
-Go - https://github.com/minus5/gofreetds <https://github.com/minus5/gofreetds>
-Erlang - http://arcusfelis.github.io/blog/2012/07/02/odbc/ <http://arcusfelis.github.io/blog/2012/07/02/odbc/>
-R - http://eriqande.github.io/2014/12/19/setting-up-rodbc.html <http://eriqande.github.io/2014/12/19/setting-up-rodbc.html>
+CVE-2017-7081
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed through improved input validation.
+
+CVE-2017-7087
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7089
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Anton Lopanitsyn of ONSEC, Frans Rosén of Detectify.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue existed
+    in the handling of the parent-tab. This issue was addressed with
+    improved state management.
+
+CVE-2017-7090
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Apple.
+    Impact: Cookies belonging to one origin may be sent to another
+    origin. Description: A permissions issue existed in the handling of
+    web browser cookies. This issue was addressed by no longer returning
+    cookies for custom URL schemes.
+
+CVE-2017-7091
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Wei Yuan of Baidu Security Lab working with Trend Micro’s
+    Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7092
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Qixun Zhao (@S0rryMybad) of Qihoo 360 Vulcan Team, Samuel
+    Gro and Niklas Baumstark working with Trend Micro's Zero Day
+    Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7093
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Samuel Gro and Niklas Baumstark working with Trend Micro’s
+    Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7094
+    Versions affected: WebKitGTK+ before 2.16.3.
+    Credit to Tim Michaud (@TimGMichaud) of Leviathan Security Group.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7095
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Wang Junjie, Wei Lei, and Liu Yang of Nanyang
+    Technological University working with Trend Micro’s Zero Day
+    Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7096
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Wei Yuan of Baidu Security Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7098
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Felipe Freitas of Instituto Tecnológico de Aeronáutica.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7099
+    Versions affected: WebKitGTK+ before 2.16.4.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7100
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Masato Kinugawa and Mario Heiderich of Cure53.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7102
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Wang Junjie, Wei Lei, and Liu Yang of Nanyang
+    Technological University.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7104
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to likemeng of Baidu Secutity Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7107
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Wang Junjie, Wei Lei, and Liu Yang of Nanyang
+    Technological University.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7109
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to avlidienbrunn.
+    Impact: Processing maliciously crafted web content may lead to a
+    cross site scripting attack. Description: Application Cache policy
+    may be unexpectedly applied.
+
+CVE-2017-7111
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to likemeng of Baidu Security Lab (xlab.baidu.com) working
+    with Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7117
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7120
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to chenqin (陈钦) of Ant-financial Light-Year Security Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7142
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to an anonymous researcher.
+    Impact: Website data may persist after a Safari Private browsing
+    session. Description: An information leakage issue existed in the
+    handling of website data in Safari Private windows. This issue was
+    addressed with improved data handling.
 
 
-Also, obviously the tsql binary if used to connect to an untrusted MSSQL/Sybase server.
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
 
-> On May 9, 2017, at 9:34 AM, Brandon Perry <bperry.volatile@...il.com> wrote:
-> 
-> Attached is a zip file of reported TDS streams that cause segmentation faults in the FreeTDS library. The ‘tsql’ binary was used for the fuzzing, so these most likely only affect client-side functionality. These have been resolved on master and the 1.0 branch.
-> 
-> Also included in the zip file is a bucket.txt, a crashwalk db dump detailing the crashes for the files in the zip file.
-> 
-> You can find the bucket.txt itself in the following Github gist as well. No CVE’s have been requested.
-> 
-> https://gist.github.com/brandonprry/bfb0e58682d464e2d2d319644790bdf5 <https://gist.github.com/brandonprry/bfb0e58682d464e2d2d319644790bdf5>
-> 
-> To test, you can compile FreeTDS, then use preeny to redirect network IO to stdin/stdout.
-> 
-> export LD_PRELOAD=~/preeny/x86_64-linux-gnu/desock.so
-> unzip freetds_crashed.zip
-> cd rpt
-> for i in id*; do valgrind ~/freetds/build/src/apps/tsql -S 127.0.0.1 -U fdsa -P fdsa -I ~/tdsconfig < $i; done
-> 
-> A simple tdsconfig file can be used to speed things up a bit.
-> 
-> [global]
-> timeout = 1
-> connect timeout = 1
-> 
-> 
-> Many thanks to Frediano Ziglio, the maintainer of FreeTDS, for quick communication and bug fix turn arounds.
-> 
-> <freetds_crashes.zip>
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+October 18, 2017
 
 
-Content of type "text/html" skipped
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
