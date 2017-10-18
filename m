@@ -1,72 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/3
-Message-ID: <2ECE9D9EEF1F524185270138AE23265955AB00AF@S0MSMAIL112.arc.local>
-Date: Tue, 13 Jun 2017 07:45:32 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Vixie/ISC Cron group crontab to root escalation 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/19/1
+Message-ID: <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
+Date: Wed, 18 Oct 2017 16:55:07 -0400
+From: Robert Watson <robertcwatson1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-> From: Casper.Dik@...cle.com [mailto:Casper.Dik@...cle.com]
+May be that this convo should be migrated somewhere else, but I'd really
+like to understand how this has anything to do with symlinks. Been
+programming Unix/Linux for 30 years but now need to be a real SysAdmin so
+need to correct my misconceptions.
+
+Removing the ability for rsync to copy symlinks pointing to targets outside
+the mirror tree would greatly cripple it. I need to understand how the
+danger is worth the loss of this functionality.
+
+Can you or anyone help me with this?
+
+
+
+
+
+*Trust in truth keeps hope aliverobertcwatson1@...il.com
+<robertcwatson1@...il.com>webmaster@...icchorale.org
+<webmaster@...icchorale.org>alpha.docsalvager.info
+<http://alpha.docsalvager.info>www.CivicChorale.org
+<http://www.CivicChorale.org>*
+
+On Wed, Oct 18, 2017 at 9:30 AM, Ben Tasker <ben@...tasker.co.uk> wrote:
+
+> On Wed, Oct 18, 2017 at 1:55 PM, Robert Watson <robertcwatson1@...il.com>
+> wrote:
 >
->
-> >On Jun 9,  6:27pm, solar@...nwall.com (Solar Designer) wrote:
-> >-- Subject: Re: [oss-security] Vixie/ISC Cron group crontab to root
-> escalatio
+> > Since security is determined by file and directory permissions and
+> > ownership, not by symlinks, wouldn't the fact that a malicious user did
+> not
+> > have permissions to access the symlink's target file/directory prevent
+> any
+> > harm?
 > >
-> >| Oh, I did in fact mention this in the private discussion, so I'll
-> quote:
-> >|
-> >| | Another detail: somehow in Owl we introduced lstat() prior to open,
-> and
-> >| | check lstat()'s struct for all the required properties before
-> proceeding
-> >| | with open() with O_NOFOLLOW.  Then we check that st_dev/st_ino
-> stayed
-> >| | the same.  We also kept the post-open() checks.  I don't recall
-> exactly
-> >| | why we added this, but maybe because of the possibility of side-
-> effects
-> >| | on open() for hard links to device files (like with tape drives).
-> And
-> >| | it looks like we neglected to add the same for at jobs (perhaps
-> didn't
-> >| | revisit this when support for at jobs appeared via our update to
-> later
-> >| | OpenBSD code) - maybe we should.
-> >
-> >Thanks, perhaps a comment in the code can't hurt...
-> >Or even O_NODEV which does not exist, or O_PATH (linux only)..
 >
-> As there is a O_DIRECTORY it would be more orthogonal to have O_REGULAR
-> (open only a regular file).  But that becomes more and more icky as
-> we're
-> running out of 32 bits of O_*)
+> If I'm reading the original correctly, then the user that will access the
+> target will be the user your HTTP daemon runs as (so, for sake of example,
+> nginx).
+>
+> There's stuff that will be protected by permissions (for example, you
+> shouldn't be able to pull down /etc/shadow - so long as nginx/apache isn't
+> running as root), but there are other files that you might consider
+> sensitive(ish). Pulling down /etc/passwd would give you a list of known
+> good usernames to better target brute-force attempts (for example). Or
+> perhaps using it to grab the config file of some dynamic site on the same
+> server etc.
+>
+> So there is potential scope for abuse there, and others probably have
+> better imaginations than I do.
+>
+> The "nice" thing about it is: if an attacker gets access to the upstream
+> mirror they still may not be able to mess with the packages themselves (as
+> they're signed), but with this they can still potentially be hostile to
+> downstream.
+>
+>
+> --
+> Ben Tasker
+> https://www.bentasker.co.uk
+>
 
-Why not stop that at all and have an O_POLICY, that defines the filename 
-pointer is pointing to a policy structure? The policy could then have all the 
-very useful fields and flags for opening/creating files, e.g.
-
-struct open_policy {
-
-  int		policy_type = ..
-
-POL_FILE_OWNER_SAME_AS_DIR_OWNER
-POL_ON_SAME_FILESYSTEM_AS (plus additional reference-fd)
-POL_XATTR_PRESENT (plus xattr definition)
-POL_UID_PRESENT_IN_CURRENT_USERNS
-POL_REGULAR_FILE
-POL_FILE_IS_ON_NO_SUID_FILESYSTEM
-POL_FILE_OWNER (uid)
-POL_FILE_GROUP (group)
-...
-
-  void	*policy_data; // additional data, e.g. the reference-fd from above, the 
-expected UID, ...
-  char	*file_name; // ... and of course the pointer to the filename, we abuse
-}
-
-For simplicity, type/data was not repeated, which would make sense to have 
-logical AND of multiple policies.
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
