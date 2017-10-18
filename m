@@ -1,88 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/14/1
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A33288BDA@EX02.corp.qihoo.net>
-Date: Mon, 14 Aug 2017 09:52:51 +0000
-From: 连一汉 <lianyihan@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/13
+Message-ID: <52301d2a-72db-417a-91cf-f2d37cf1a44e@chbi.eu>
+Date: Wed, 18 Oct 2017 18:58:48 +0200
+From: chbi@...i.eu
+To: oss-security@...ts.openwall.com
+Subject: Re: Stored XSS vulnerability in ILIAS <= 5.2.8 and <= 5.1.20
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I’m Yihan Lian, a security researcher of Qihoo 360 GearTeam.
+> A stored XSS vulnerability in the media object component allows an
+> authenticated user to inject JavaScript to gain administrator privileges.
+> 
+> 
+> Fix:
+> https://github.com/ILIAS-eLearning/ILIAS/commit/b2a4660afec1e87d41c83c8e381f549bc6dfc70f
+> 
 
-I found a vulnerability of ffmpeg-3.3.2.
+CVE-2017-15538 has been assigned.
 
-FFmpeg could be crashed when it is parsing a crafted mov file.
-
-======================== test command =========================
-ffmpeg -c:v dnxhd -i poc.mov -y output.ts
-
-======================== crash info ===========================
-Program received signal SIGSEGV, Segmentation fault.
-0x0000000000b672e7 in ff_combine_frame (pc=0x22f4bf0, next=-1, buf=0x7fffffffd5b8, buf_size=0x7fffffffd5b4) at libavcodec/parser.c:311
-
-311             pc->state   = pc->state   << 8 | pc->buffer[pc->last_index + next];
-Missing separate debuginfos, use: debuginfo-install glibc-2.17-106.el7_2.4.x86_64 libXau-1.0.8-2.1.el7.x86_64 libxcb-1.11-4.el7.x86_64 xz-libs-5.1.2-12alpha.el7.x86_64
-
-(gdb) bt
-#0  0x0000000000b672e7 in ff_combine_frame (pc=0x22f4bf0, next=-1, buf=0x7fffffffd5b8, buf_size=0x7fffffffd5b4) at libavcodec/parser.c:311
-
-#1  0x000000000088f3b6 in dnxhd_parse (s=0x22f4a80, avctx=0x22f45f0, poutbuf=0x7fffffffd728, poutbuf_size=0x7fffffffd730, buf=0x22f5f50 "", buf_size=-1)
-
-    at libavcodec/dnxhd_parser.c:138
-#2  0x0000000000b66d8e in av_parser_parse2 (s=0x22f4a80, avctx=0x22f45f0, poutbuf=0x7fffffffd728, poutbuf_size=0x7fffffffd730, buf=0x22f5f50 "", buf_size=1024,
-
-    pts=-9223372036854775808, dts=-9223372036854775808, pos=0) at libavcodec/parser.c:182
-#3  0x00000000007cb35c in parse_packet (s=0x22f3310, pkt=0x7fffffffd800, stream_index=0) at libavformat/utils.c:1415
-#4  0x00000000007cbf5c in read_frame_internal (s=0x22f3310, pkt=0x7fffffffdb50) at libavformat/utils.c:1610
-#5  0x00000000007d2ae0 in avformat_find_stream_info (ic=0x22f3310, options=0x22f3cf0) at libavformat/utils.c:3574
-#6  0x000000000040f3d8 in open_input_file (o=0x7fffffffde70, filename=0x7fffffffe725 "mov/input.mov") at ffmpeg_opt.c:1013
-
-#7  0x00000000004186ff in open_files (l=0x22f3028, inout=0x13dd697 "input", open_file=0x40ea94 <open_input_file>) at ffmpeg_opt.c:3203
-
-#8  0x0000000000418860 in ffmpeg_parse_options (argc=7, argv=0x7fffffffe478) at ffmpeg_opt.c:3243
-#9  0x000000000042d193 in main (argc=7, argv=0x7fffffffe478) at ffmpeg.c:4760
-(gdb) p pc->buffer
-$1 = (uint8_t *) 0x0
-
-We can see that the value of pc->buffer is NULL !!!
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15538
 
 
-And I have sent this POC to HYPERLINK "mailto:cve-request@...re.org"cve-request@...re.org. They give me a CVE number. Use CVE-2017-9608.
+-- 
+chbi
+https://chbi.eu
 
-Below is its email:
------邮件原件-----
-发件人: cve-request@...re.org<mailto:cve-request@...re.org> [mailto:cve-request@...re.org]
-发送时间: 2017年6月14日 10:50
-收件人: 连一汉
-抄送: cve-request@...re.org<mailto:cve-request@...re.org>
-主题: Re: [scr346798] ffmpeg - 3.3.2
-
-> [VulnerabilityType Other]
-> null-point-exception
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> ffmpeg - 3.3.2
->
-> ------------------------------------------
->
-> [Attack Type Other]
-> Local and remote
->
-> ------------------------------------------
->
-> [Impact Denial of Service]
-> true
-
-Use CVE-2017-9608.
-
---
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA [ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
 
 
 
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
