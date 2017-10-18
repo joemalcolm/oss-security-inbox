@@ -1,95 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/15/1
-Message-Id: <C6395DC7-CB29-4844-9EB0-E572C7AAAE81@gmail.com>
-Date: Fri, 14 Jul 2017 19:27:53 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-1000083: evince: Command injection vulnerability in CBT handler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/2
+Message-Id: <E1e4n92-0001A0-8j@xenbits.xenproject.org>
+Date: Wed, 18 Oct 2017 12:08:20 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 235 (CVE-2017-15596) - add-to-physmap error paths fail to release lock on ARM
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Jul 13, 2017, at 10:43 AM, Johannes Segitz <jsegitz@...e.de> wrote:
-> 
-> Hello,
-> 
-> we were asked to bring this to distros and per list policy it is now made
-> public on this list.
-> 
-> From: Felix Wilhelm
-> =========================
-> The comic book backend in evince 3.24.0 is vulnerable to a command
-> injection bug that can be used to execute arbitrary commands when a cbt
-> file is opened:
-> 
-> cbt files are simple tar archives containing images. When a cbt file is
-> processed, evince calls
-> "tar -xOf $archive $filename" for every image file in the archive:
-> 
-> // backend/comics/comics-document.c: 914
->        command_line = g_strdup_printf ("%s %s %s",
->                                        comics_document->extract_command,
->                                        quoted_archive,
->                                        quoted_filename);
-> 
-> While both the archive name and the filename are quoted to not be
-> interpreted by the shell,
-> the filename is completely attacker controlled an can start with "--"
-> which leads to tar interpreting it
-> as a command line flag.
-> 
-> This can be exploited by creating a tar archive with an embedded file
-> named something
-> like this: "--checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg"
-> 
-> (Make sure evince is not sandboxed by apparmor before trying to reproduce
-> the attached POC)
+            Xen Security Advisory CVE-2017-15596 / XSA-235
+                              version 2
 
-Not sure if the list ate the attachment, but I don’t see it available. Perhaps a link to it somewhere else would be of use?
+        add-to-physmap error paths fail to release lock on ARM
 
-> 
-> fwilhelm@box $ tar -tf poc.cbt
-> --checkpoint-action=exec=bash -c 'touch ~/covfefe.evince;'.jpg
-> fwilhelm@box $ ls -la ~/covfefe.evince
-> ls: cannot access covfefe.evince: No such file or directory
-> fwilhelm@box $ evince poc.cbt
-> fwilhelm@box $ ls -la ~/covfefe.evince
-> -rw-r----- 1 fwilhelm eng 0 Jun 28 11:05 /home/fwilhelm/covfefe.evince
-> 
-> An easy way to fix this would be to change the  ComicBookDecompressCommand
-> entry for tar to
-> {"%s -xOf --"          , "%s -tf -- %s"      , NULL             , FALSE,
-> NO_OFFSET}
-> 
-> Please credit Felix Wilhelm from the Google Security Team in all releases,
-> patches and advisories related to this issue.
-> =========================
-> 
-> Additional information by Michael Catanzaro:
-> =========================
-> It looks like the affected code was deleted right after the Evince 3.24.0
-> release, so master is not vulnerable. But current releases are. I'll ask
-> around to see how we want to handle this.
-> =========================
-> 
-> and
-> 
-> =========================
-> Since it looks like this can probably be used to take over a user account
-> with no user interaction beyond visiting a malicious webpage (via drive-by
-> web browser download -> nautilus thumbnailer) I guess we should probably do
-> a coordinated disclosure instead of just dropping new releases with no
-> warning.
-> =========================
-> 
-> This is tracked as CVE-2017-1000083, further information can be found at
-> https://bugzilla.gnome.org/show_bug.cgi?id=784630
-> 
-> Johannes
-> --
-> GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-> Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-> SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-> HRB 21284 (AG Nürnberg)
+UPDATES IN VERSION 2
+====================
 
+CVE assigned.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+ISSUE DESCRIPTION
+=================
+
+When dealing with the grant map space of add-to-physmap operations,
+ARM specific code recognizes a number of error conditions, but fails
+to release a lock being held on the respective exit paths.
+
+IMPACT
+======
+
+A malicious guest administrator can cause a denial of service.
+Specifically, prevent use of a physical CPU for an indefinite period
+of time.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.4 and later are vulnerable.  Xen versions 4.3 and
+earlier are not vulnerable.
+
+Only ARM systems are affected.  X86 systems are not affected.
+
+MITIGATION
+==========
+
+On systems where the guest kernel is controlled by the host rather than
+guest administrator, running only kernels which only issue sane
+hypercalls will prevent untrusted guest users from exploiting this
+issue.  However untrusted guest administrators can still trigger it
+unless further steps are taken to prevent them from loading code into
+the kernel (e.g by disabling loadable modules etc) or from using other
+mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Wei Liu of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa235.patch           xen-unstable
+xsa235-4.9.patch       Xen 4.9.x, Xen 4.8.x
+xsa235-4.7.patch       Xen 4.7.x
+xsa235-4.6.patch       Xen 4.6.x
+xsa235-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa235*
+6ec8bf9462de65fee3896246f52c00941b2d83c759b3f7b28a440eb977fcbc37  xsa235.meta
+c81f534e96fe38b9f77794bb143d104d66ce2d7177bda43f872642616e23df65  xsa235.patch
+3c21cb1a53f5979b069568c6cd6df3aad00c19e0e459e37625d6a3c0f4f360cc  xsa235-4.5.patch
+47cda4f32b65f3543af368c324a2e5b308b698a1c7d8bc84fc274eb2cdb45c0e  xsa235-4.6.patch
+f30848eee71e66687b421b87be1d8e3f454c0eb395422546c62a689153d1e31c  xsa235-4.7.patch
+d8f012734fbf6019c1ff864744e308c41dfb9c7804ca3be2771c2c972cdf4bd5  xsa235-4.9.patch
+$
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The issue was discussed publicly before being recognized as a security
+issue.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZ50QUAAoJEIP+FMlX6CvZR0QH/RdlZ9q8CcqWVVF+De8dlKwk
+HtgYWWGK/gYgfiwhnYT1fJlW3XZOvbf/fZDUTnuFYL6izJtpcEPuEb3tWM5Nzcs/
+u85wyYQmzmDPRCJVuONamWFc0vnSBvb1NqKVqwQEBo3WVbPS5YwIaFgA/z8lZaT9
+NV90FLOBjjRyh9ktxqtGQQvt1JcxVxNWLbV974PwFuURMC5kTt2eNvU2vOmgWV5V
+gmlBcJyMEzAaZKCmotkt1Tla82ydXG1F+obaLhSVRWp0JFugvVJX9I3cqZk4rovv
+HKqLm1bmzloWPo2wvjSnRJIVu9us3MD4VqjxWOwQQq1nrTdDdlMcC6sfn93PaVo=
+=R0BH
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa235.meta" of type "application/octet-stream" (1585 bytes)
+
+Download attachment "xsa235.patch" of type "application/octet-stream" (1508 bytes)
+
+Download attachment "xsa235-4.5.patch" of type "application/octet-stream" (1526 bytes)
+
+Download attachment "xsa235-4.6.patch" of type "application/octet-stream" (1527 bytes)
+
+Download attachment "xsa235-4.7.patch" of type "application/octet-stream" (1526 bytes)
+
+Download attachment "xsa235-4.9.patch" of type "application/octet-stream" (1542 bytes)
