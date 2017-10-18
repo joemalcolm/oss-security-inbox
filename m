@@ -1,49 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/8
-Message-ID: <D159A2841943CE409CC23D3F12A4633A516569@mb2010-3.intra.tut.fi>
-Date: Tue, 10 Jan 2017 15:50:28 +0000
-From: Cesar Pereida Garcia <cesar.pereidagarcia@....fi>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/11
+Message-ID: <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
+Date: Wed, 18 Oct 2017 12:55:21 +0000
+From: Robert Watson <robertcwatson1@...il.com>
+To: oss-security@...ts.openwall.com, Bastian Blank <waldi@...ian.org>
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-Attack Vector: Local
+Since security is determined by file and directory permissions and
+ownership, not by symlinks, wouldn't the fact that a malicious user did not
+have permissions to access the symlink's target file/directory prevent any
+harm?
 
-Vendor: OpenSSL, LibreSSL, BoringSSL
+On Tue, Oct 17, 2017, 12:27 Bastian Blank <waldi@...ian.org> wrote:
 
-Versions Affected:
-OpenSSL 1.0.1u and previous versions
-LibreSSL (pre 6.0 errata 16, pre 5.9 errata 33)
-BoringSSL pre November 2015
+> Hi folks
+>
+> ftpsync is the tool we use to mirror Debian everywhere.  It uses rsync
+> to do the heavy lifting.
+>
+> rsync can copy symlinks.  We enable this option, as the Debian tree
+> includes symlinks in various of locations.  Unless a special option
+> (--safe-links) is given, such symlinks can point to arbitrary locations,
+> even outside of the mirror tree.
+>
+> An attacker with the ability to add symlinks to the upstream mirror can
+> create symlinks to arbitrary files or even directories.  Depending on
+> the config, a HTTP server will follow such symlinks.
+>
+> Upstream patch:
+> ---------------
+>   ->
+> https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=d1ca2ab2210990b6dfb664cd6776a41b71c48016
+>
+> Regards,
+> Bastian
+>
+> --
+> Beam me up, Scotty!
+>
+-- 
 
-Description:
-The signing function in crypto/ecdsa/ecdsa_ossl.c in certain OpenSSL versions and forks
-is vulnerable to timing attacks when signing with the standardized elliptic
-curve P-256 despite featuring constant-time curve operations and modular inversion.
-A software defect omits setting the BN_FLG_CONSTTIME flag for nonces, failing
-to take a secure code path in the BN_mod_inverse method and therefore resulting
-in a cache-timing attack vulnerability.
-A malicious user with local access can recover ECDSA P-256 private keys.
+Robert "DocSalvager" Watson
+... trust in truth keeps hope alive
+www.DocSalvage.info
 
-Mitigation:
-Users of OpenSSL with the affected versions should apply
-the patch available in the manuscript at [1].
-
-Users of LibreSSL should apply the official patch from OpenBSD [2,3].
-
-Users of BoringSSL should upgrade to a more recent version.
-
-Credit:
-This issue was reported by Cesar Pereida García and Billy Brumley
-(Tampere University of Technology).
-
-Timeline:
-19 Dec 2016 Disclosure to OpenSSL, LibreSSL, BoringSSL security teams
-29 Dec 2016 Embargo lifted
-
-References:
-[1] http://ia.cr/2016/1195
-[2] https://ftp.openbsd.org/pub/OpenBSD/patches/5.9/common/033_libcrypto.patch.sig
-[3] https://ftp.openbsd.org/pub/OpenBSD/patches/6.0/common/016_libcrypto.patch.sig
-
-- Cesar
