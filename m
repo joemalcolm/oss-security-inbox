@@ -1,44 +1,140 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/31/1
-Message-ID: <b2719aac-c013-4b29-ad19-c1aa26d298a5.tony.sh@alibaba-inc.com>
-Date: Thu, 31 Aug 2017 10:07:24 +0800
-From: "孙浩" <tony.sh@...baba-inc.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Cc: "张洪亮(望初)" <wangchu.zhl@...baba-inc.com>, "Bob Friesenhahn" <bfriesen@...ple.dallas.tx.us>, "曲富平(杭特)" <fuping.qfp@...baba-inc.com>
-Subject: CVE-2017-13777: GraphicsMagick 1.3.26 Denial of Service issue in ReadXBMImage() in coders/xbm.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/4
+Message-Id: <E1e4n9G-0001KT-1X@xenbits.xenproject.org>
+Date: Wed, 18 Oct 2017 12:08:34 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 241 (CVE-2017-15588) - Stale TLB entry due to page type release race
 Content-Type: text/plain; charset=utf-8
 
-Hi all.
-Description:graphicsmagick is a collection of tools and libraries for many image formats.
-We found a denial of service (DoS) issue in xbm.c at line 314, GraphicsMagick-1.3.26.The vulnerable code snippet is shown as below.    313   if (version == 10)
-    314     for (i=0; i < (long) (bytes_per_line*image->rows); (i+=2))
-    315     {
-    316       value=XBMInteger(image,hex_digits);
-    317       *p++=(unsigned char) value;
-    318       if (!padding || ((i+2) % bytes_per_line))
-    319         *p++=(unsigned char) (value >> 8);
-    320     }When a crafted XBM image file, which claims large image->rows and image->columns but does not contains sufficient backing data, is provided,the
- loop at line 314 would consume huge CPU and memroy 
-resources, since there is no EOF (End of File) check inside the loop.It is worth noting that variable bytes_per_line is computed based on image->columns earlier.In our test, we used a machine with Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz, 4 CPU cores and 16GB RAM.This bug casued 100% CPU and up to 4GB RAM consumption.
-This process lasted for more than 9 minutes.
-Affected version:
-1.3.26
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Fixed version:
-N/A
+            Xen Security Advisory CVE-2017-15588 / XSA-241
+                              version 4
 
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/233a720bfd5eCredit:
-This bug was discovered by Xiaohei and Wangchu from Alibaba Security Team.
+             Stale TLB entry due to page type release race
 
-CVE:
-CVE-2017-13777
+UPDATES IN VERSION 4
+====================
 
-Reproducer:
-https://github.com/shqking/graphicsmagick-poc/blob/master/poc-314.xbmThe command we was using is     gm convert poc-314.xbm test.jpg
+CVE assigned.
 
-Timeline:
-2017-08-24: bug discovered and reported to upstream privately
-2017-08-26: upstream released a fix
-2017-08-30: CVE assigned
+ISSUE DESCRIPTION
+=================
 
+x86 PV guests effect TLB flushes by way of a hypercall.  Xen tries to
+reduce the number of TLB flushes by delaying them as much as possible.
+When the last type reference of a page is dropped, the need for a TLB
+flush (before the page is re-used) is recorded.  If a guest TLB flush
+request involves an Inter Processor Interrupt (IPI) to a CPU in which
+is the process of dropping the last type reference of some page, and
+if that IPI arrives at exactly the right instruction boundary, a stale
+time stamp may be recorded, possibly resulting in the later omission
+of the necessary TLB flush for that page.
+
+IMPACT
+======
+
+A malicious x86 PV guest may be able to access all of system memory,
+allowing for all of privilege escalation, host crashes, and
+information leaks.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from at least 3.2 onwards are vulnerable.  Earlier
+versions have not been checked.
+
+Only x86 systems are affected.  ARM systems are not affected.
+
+Only x86 PV guests can leverage the vulnerability.  x86 HVM guests
+cannot leverage the vulnerability.
+
+RISK ASSESSMENT
+===============
+
+A successful attack would require introducing an extended delay between
+two adjacent operations on one cpu -- long enough for two hypercalls to
+complete on another cpu.  The security team currently has no
+proof-of-concept for this vulnerability.
+
+However, techniques for these sorts of timing-based attacks are
+continually advancing, so we still recommend users potentially affected
+by this issue apply the patch as soon as reasonably possible.
+
+MITIGATION
+==========
+
+Running only HVM guests will avoid this vulnerability.
+
+For PV guests, the vulnerability can be avoided if the guest kernel is
+controlled by the host rather than guest administrator, provided that
+further steps are taken to prevent the guest administrator from loading
+code into the kernel (e.g. by disabling loadable modules etc) or from
+using other mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa241.patch           xen-unstable
+xsa241-4.9.patch       Xen 4.9.x
+xsa241-4.8.patch       Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
+
+$ sha256sum xsa241*
+5e239ba4dbd74fd61e59a27f9abc8ea6ba32532bdf81eeb2d7e66f0fd53e40b4  xsa241.meta
+b8db933d53e7e289652ffda6c46ce284a0254a9f8bc9e1be6793e388009f49ce  xsa241.patch
+443a5b0818045ada44fad0370ac01af0c96181be5a4078ae3b2575799e4a4e5b  xsa241-4.8.patch
+927ef14d875556481c38d4065f501211a78eec1c2396a954a4a4abfb9255960f  xsa241-4.9.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZ50QlAAoJEIP+FMlX6CvZp/cH/2z+BXU30Jg8PlfnXM7LDulR
++ZyoPggsqJfE8AlY7XmsPXo8qY1vsG1NHI6D0YoTvgQyFDVa2h2IBkIc/aZd7jfW
+iUYTluAQcxFKSC7G02HCrMdY6w9HkpIo4AtYw9Rm6tueF9/0vaWm0jy7MCMrNxAt
+Dbx8a91dkKiJ9MImLralZUMewK6kym1p2PhVPgWmF3lprvLiLSbRu19eiYSAdjBa
+C8ulKhUZsDymM3Lpe+F7+9FATZ58sEyvqgAach0Wn/vhaJ0axHroW3KKVCdNMNVJ
+AqFHjv6NKgHGS3HU9TEOCfCptYqE+Ne/UB4M19nVOZulfZn4Ok2MgBvogJXIA/Q=
+=7sHr
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa241.meta" of type "application/octet-stream" (2185 bytes)
+
+Download attachment "xsa241.patch" of type "application/octet-stream" (6123 bytes)
+
+Download attachment "xsa241-4.8.patch" of type "application/octet-stream" (4959 bytes)
+
+Download attachment "xsa241-4.9.patch" of type "application/octet-stream" (4981 bytes)
