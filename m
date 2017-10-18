@@ -1,72 +1,151 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/15
-Message-ID: <e59bd254-68c2-b809-6143-f822e3452481@suse.de>
-Date: Thu, 18 May 2017 08:35:40 +0930
-From: Simon Lees <sflees@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/7
+Message-Id: <E1e4n9M-0001QD-Rn@xenbits.xenproject.org>
+Date: Wed, 18 Oct 2017 12:08:40 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 243 (CVE-2017-15592) - x86: Incorrect handling of self-linear shadow mappings with translated guests
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+            Xen Security Advisory CVE-2017-15592 / XSA-243
+                              version 4
 
-On 05/02/2017 02:14 AM, Solar Designer wrote:
-> Hi,
-> 
-> It is a well-known feature, previously discussed in here, that data
-> printed to a terminal (emulator) may control that terminal, including
-> making it effectively unusable until reset, and in some cases even
-> pasting characters as if they were typed by the user.  Also as discussed
-> what characters may be pasted varies by terminal - sometimes they can be
-> arbitrary (e.g., if the terminal supports macro recording and playback
-> via escape sequences) and sometimes not so (like a terminal reporting
-> back its status, usually not followed by a linefeed, so not yet
-> executing a shell command until further user assistance).  Here are some
-> relevant threads:
-> 
-> http://www.openwall.com/lists/oss-security/2015/08/11/8
-> http://www.openwall.com/lists/oss-security/2015/09/17/5
-> http://www.openwall.com/lists/oss-security/2016/11/04/12
-> 
-> (I link to messages that started these threads, not necessarily to most
-> informative messages in the threads.  So you might want to go through
-> the threads with the "thread-next" links.)
-> 
-> Besides (mis)features, there may also be implementation bugs.  A couple
-> of weeks ago, I brought in here vulnerabilities in terminal escape
-> handling in minicom and prl-vzvncserver (both already fixed in latest
-> versions by then):
-> 
-> http://www.openwall.com/lists/oss-security/2017/04/18/5
-> 
-> I already knew this wouldn't be the end of the story as some other
-> terminal emulators exhibited suspicious behavior when targeted with
-> streams of unusual escape sequences involving large or negative integer
-> parameters.  I sent the following to the distros list on April 17,
-> presented here with updates reflecting the current status.
-> 
-> 
-> terminology:
-> 
-> ---
-> ERR<10676>:termpty termptyesc.c:1115 _handle_esc_csi() unhandled CSI 'x': 2147483647;0x
-> ERR<10676>:termpty termptyesc.c:1115 _handle_esc_csi() unhandled CSI 'x': 2147483647;0x
-> ERR<10676>:termpty termptyesc.c:1115 _handle_esc_csi() unhandled CSI 'x': 2147483647;0x
-> ---
-> 
+ x86: Incorrect handling of self-linear shadow mappings with translated guests
 
-For reference terminology was fixed with this commit
-https://phab.enlightenment.org/rTRM63d65ed4bb06094e6a8b6cafdc7c4cbfc62dd677
+UPDATES IN VERSION 4
+====================
 
-Thanks
+CVE assigned.
 
--- 
+ISSUE DESCRIPTION
+=================
 
-Simon Lees (Simotek)                            http://simotek.net
+The shadow pagetable code uses linear mappings to inspect and modify the
+shadow pagetables.  A linear mapping which points back to itself is known as
+self-linear.  For translated guests, the shadow linear mappings (being in a
+separate address space) are not intended to be self-linear.  For
+non-translated guests, the shadow linear mappings (being the same
+address space) are intended to be self-linear.
 
-Emergency Update Team                           keybase.io/simotek
-SUSE Linux                           Adelaide Australia, UTC+10:30
-GPG Fingerprint: 5B87 DB9D 88DC F606 E489 CEC5 0922 C246 02F0 014B
+When constructing a monitor pagetable for Xen to run on a vcpu with, the shadow
+linear slot is filled with a self-linear mapping, and for translated guests,
+shortly thereafter replaced with a non-self-linear mapping, when the guest's
+%cr3 is shadowed.
 
+However when writeable heuristics are used, the shadow mappings are used as
+part of shadowing %cr3, causing the heuristics to be applied to Xen's
+pagetables, not the guest shadow pagetables.
 
+While investigating, it was also identified that PV auto-translate mode was
+insecure.  This mode was removed in Xen 4.7 due to being unused, unmaintained
+and presumed broken.  We are not aware of any guest implementation of PV
+auto-translate mode.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (485 bytes)
+IMPACT
+======
+
+A malicious or buggy HVM guest may cause a hypervisor crash, resulting in a
+Denial of Service (DoS) affecting the entire host, or cause hypervisor memory
+corruption.  We cannot rule out a guest being able to escalate its privilege.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+HVM guests using shadow mode paging can exploit this vulnerability.
+HVM guests using Hardware Assisted Paging (HAP) as well as PV guests
+cannot exploit this vulnerability.
+
+ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+Where the HVM guest is explicitly configured to use shadow paging (eg
+via the `hap=0' xl domain configuration file parameter), changing to
+HAP (eg by setting `hap=1') will avoid exposing the vulnerability to
+those guests.  HAP is the default (in upstream Xen), where the
+hardware supports it; so this mitigation is only applicable if HAP has
+been disabled by configuration.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa243.patch             xen-unstable, Xen 4.9.x
+xsa243-4.8.patch         Xen 4.8.x
+xsa243-4.7.patch         Xen 4.7.x
+xsa243-4.6-[1,2].patch   Xen 4.6.x
+xsa243-4.{6-1,5-2}.patch Xen 4.5.x
+
+$ sha256sum xsa243*
+61b05e2d6655f5d18cd53b16e03499152c603162584f64d68fad31b088cc5cd2  xsa243.meta
+a5b484db80346f7e75c7921ee4780567f04b9f9b4620c0cde4bfa1df3ac0f87f  xsa243.patch
+79e1c5e088eee8e78aa67895a29d611352c64251854e4c5129e33c85988a47a5  xsa243-4.5-2.patch
+722073aad1e734e24b0b79d03a1957e491f3616fe6e244a89050f7a50f8f356b  xsa243-4.6-1.patch
+94cb346c486f88f2f4f701564017e1997e518a5a14218f0e38ff882c60fb382c  xsa243-4.6-2.patch
+465ba9e3293591a3c84c122ffd73474fe96483f5e21565440d5fbc207fa4c4a9  xsa243-4.7.patch
+f8e471b42502905a442d43934ac339663a6124118c9762b31f2ad930fd532e64  xsa243-4.8.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZ50QoAAoJEIP+FMlX6CvZfY8H/j9FvKi/ZMCbL0bkiHzDurGB
+oUhuw21LyJ0xCvBu+Qo94LsKPNwmhcsGdk13kjwYHorIBsjlJgAxavri4HnWLVx/
+vdAavrPXrjf69q4YAbLVowjevhwdapGYaEn9q/ftURReDi5c5UEs/sxRgg2BeMWb
+CYYFGYEWfpWDR2KpOgZib8Pg4G9Jz8oyzFAopnJpuBK2whbnTDlABnX15DGTFeih
+Rk9OJDqfARelnqXS6I+AG8erqyaI1gWvoVjEuSDDUv/H27N/qRaG4WCsSdENQS/V
+HLm+oxgJyC8sWAyE8Fr6DUZSf/jW8QBvt1iuLJIUXL7ns8B0U527iM3185T2TYA=
+=Gwk6
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa243.meta" of type "application/octet-stream" (2433 bytes)
+
+Download attachment "xsa243.patch" of type "application/octet-stream" (4174 bytes)
+
+Download attachment "xsa243-4.5-2.patch" of type "application/octet-stream" (4243 bytes)
+
+Download attachment "xsa243-4.6-1.patch" of type "application/octet-stream" (1064 bytes)
+
+Download attachment "xsa243-4.6-2.patch" of type "application/octet-stream" (4192 bytes)
+
+Download attachment "xsa243-4.7.patch" of type "application/octet-stream" (4177 bytes)
+
+Download attachment "xsa243-4.8.patch" of type "application/octet-stream" (4162 bytes)
