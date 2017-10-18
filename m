@@ -1,138 +1,197 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/1
-Message-ID: <2172-1513501568.968862@pLoG.Le7g.f3CQ>
-Date: Sun, 17 Dec 2017 09:06:08 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/3
+Message-Id: <E1e4n96-0001EB-Gx@xenbits.xenproject.org>
+Date: Wed, 18 Oct 2017 12:08:24 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 237 (CVE-2017-15590) - multiple MSI mapping issues on x86
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer writes:
-> On Thu, Dec 07, 2017 at 06:32:11AM +0000, halfdog wrote:
-> > After getting gpg and agent running, I noticed, that not reliably
-> > stopping the gpg-agent on initrd would introduce a private key
-> > data leak via /proc from early boot process to running system
-> > when stopping fails.
-> 
-> Can you elaborate on this, please?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-As the agent process stays alive and initrd PID namespace is the
-same as final init-process PID namespace, the agent will stay
-via /proc and traceable by root using PTRACE.
+            Xen Security Advisory CVE-2017-15590 / XSA-237
+                              version 3
 
-> > Thus the Debian switch from gpg1 to gpg2 just introduced efforts
-> > fiddling with functionality I do not need and cannot disable,
-> > provides a keymanagement that cannot be configured easily to
-> > protect against the threats it should mitigate (theft of key material)
-> > and creating additional attack surface without any recognizable
-> > benefit.
-> 
-> I think the benefit is being on a version upstream intends to maintain
-> to a greater extent and for a longer time.  For example, when yet
-> another side-channel leak was reported against GnuPG 1 & 2 recently,
-> upstream officially patched it for GnuPG 2 only and said that GnuPG 1
-> probably contains many other side-channel leaks anyway: ...
->
-> Personally, I intend to stay with GnuPG 1 for now.
+                  multiple MSI mapping issues on x86
 
-As Debian marked the packages with "gnupg1 - GNU privacy guard -
-a PGP implementation (deprecated "classic" version)" I wanted to
-anticipate the changes now, giving me more time to evaluate the
-changes and to find alternatives when needed. Apart from that,
-I am also inclined to switching, when statements from open-source
-community seem to indicate, that the burden to maintain both
-versions in a LTS scheme might be too much to carry. They should
-have their hands free for doing good work on the latest version,
-leaving the LTS procedures to payed service providers, I do not
-use privately.
- 
-> ...
-> > has changed
-> > from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
-> > cause any warning or error. Thus previous audited procedures continue
-> > to work but do not produce the same results any more. Of course,
-> > I could have compared documentation of all parameters of (at least
-> > security-related) programs after Jessie to Stretch upgrade, but
-> > I assumed, that security critical parameters would not change
-> > their meaning without any noticable effect - so just my fault.
-> 
-> Are you saying "--s2k-count" option to "gpg2" is ignored, and moreover
-> that this is documented?  gnupg-2.1.23/doc/gpg.texi says (formatted):
-> 
-> `--s2k-count `n''
->      Specify how many times the passphrase mangling is repeated.  This
->      value may range between 1024 and 65011712 inclusive.  The default
->      is inquired from gpg-agent.  Note that not all values in the
->      1024-65011712 range are legal and if an illegal value is selected,
->      GnuPG will round up to the nearest legal value.  This option is
->      only meaningful if `--s2k-mode' is 3.
+UPDATES IN VERSION 3
+====================
 
-Here is the gpgv2 documentation:
+CVE assigned.
 
-"     --s2k-count n
-              Specify how many times the passphrases  mangling  for  symmetric
-              encryption  is  repeated.  This value may range between 1024 and
-              65011712 inclusive.  The default  is  inquired  from  gpg-agent.
-              Note  that  not  all values in the 1024-65011712 range are legal
-              and if an illegal value is selected, GnuPG will round up to  the
-              nearest  legal  value.  This option is only meaningful if --s2k-
-              mode is set to the default of 3."
+ISSUE DESCRIPTION
+=================
 
-You noticed the additional "symmetric" word? According to GPG
-developer that means, that with gpgv2 this setting is only applied
-with symmetric schemes, e.g. the "--symmetric" mode of GPG. For
-assymetric mode the parameter is just ignored.
+Multiple issues exist with the setup of PCI MSI interrupts:
+- - unprivileged guests were permitted access to devices not owned by
+  them, in particular allowing them to disable MSI or MSI-X on any
+  device
+- - HVM guests can trigger a codepath intended only for PV guests
+- - some failure paths partially tear down previously configured
+  interrupts, leaving inconsistent state
+- - with XSM enabled, caller and callee of a hook disagreed about the
+  data structure pointed to by a type-less argument
 
-> This doesn't say the option is ignored - only that "the default is
-> inquired from gpg-agent."  Is the option in fact ignored?  That would be
-> a bug in either code or documentation.
-> 
-> > Still, this would just be a minor mishap, but what reduced my
-> > trust in GPG, was the comment of a developer: it was assumed,
-> > that they know better, where there software will be run without
-> > specifying that "where" in the documentation. Also his replies
-> > matched that picture, e.g. "(gpg-agent will) ... calibrate the
-> > S2K count to match the current machine", assuming that this is
-> > good reason to change "--s2k-count" meaning and ignore the parameter.
-> 
-> I see no problem with gpg-agent providing a calibrated default, if that
-> default can be overridden.  If it can't be, and especially if that's in
-> conflict with the documentation, that's problematic.
+IMPACT
+======
 
-It is not in conflict with documentation, as the "symmetric" word
-was added but therefore the parameter's meaning changed quite
-radically, considering that gpg is a tool used for assymetric
-encryption mainly.
- 
-> > PS: I do not know, how much the gpg-agent calibration under
-> > increased system load reduced the KDF complexity, as I failed
-> > to extract the KDF rounds value from the gpg data structures,
-> > but the value seems to be at least below 70ms due to total time
-> > measurements for gpg-agent (math, interprocess communication,
-> > filesystem) to unlock a key on an idle system.
-> 
-> You may process the private key file with gpg2john, then try to crack it
-> with john.  This will output the actual value, as well as show you the
-> speed at which passphrases can be tested against that key on your system
-> and with that version of JtR.  To use a GPU, add "--format=gpg-opencl".
-> Please use latest bleeding-jumbo off GitHub for all of this.
+A malicious or buggy guest may cause the hypervisor to crash, resulting
+in Denial of Service (DoS) affecting the entire host.  Privilege
+escalation and information leaks cannot be excluded.
 
-Done that, but still fighting how to use "gpg2john" with the new
-gpgv2 "private-keys-v1.d" key format. Exporting the private keys
-using gpgv2 does not help as that requires the passphrase already,
-thus removing the gpgv2-encryption, we want to test.
+VULNERABLE SYSTEMS
+==================
 
-Just FYI: your releases on Openwall are still signed with the old
-openwall-key, according to http://www.openwall.com/signatures/ the
-key is "Old Openwall offline signing key (no longer used)". Apart
-from that, gnupgv2 cannot read it any more anyway. (gpg man page
-"You only need  to  use  GnuPG  1.x  if  your  platform
-doesn't  support  GnuPG 2.x, or you need support for some features that
-GnuPG 2.x has deprecated, e.g.,  decrypting  data  created  with  PGP-2
-keys."
+All Xen versions from at 3.3 onwards are vulnerable.  Xen versions 3.2
+and earlier are not vulnerable.
 
-> ....
+Only x86 systems are affected.  ARM systems are not affected.
 
-hd
+Only guests which have a physical device assigned to them can exploit
+the vulnerability.
 
+MITIGATION
+==========
 
+Not passing through physical devices to untrusted guests will avoid
+the vulnerability.
+
+The vulnerability can be avoided if the guest kernel is controlled by
+the host rather than guest administrator, provided that further steps
+are taken to prevent the guest administrator from loading code into the
+kernel (e.g. by disabling loadable modules etc) or from using other
+mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Simon Gaiser of Qubes OS Project.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached set of patches resolves this issue.
+
+xsa237-unstable/*.patch     xen-unstable
+xsa237-4.9/*.patch          Xen 4.9.x
+xsa237-4.8/*.patch          Xen 4.8.x, Xen 4.7.x
+xsa237-4.6/*.patch          Xen 4.6.x
+xsa237-4.5/*.patch          Xen 4.5.x
+
+$ sha256sum xsa237* xsa237*/*
+1d4d3fa452e91d235fd688761d695752bde2f2e91fd9b17f566c4cee23ae26d0  xsa237.meta
+3259cd514ea80e3cbac5b72376b4e964afb3b2cabee347440ec2bdd6e585c513  xsa237-unstable/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+7ef53f6a5f3fc6952cb8411e31e0a670de5a78ab2c8176037db32cf147438aa6  xsa237-unstable/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+494a79332fc5f854f0dc7606669201717a41e5b89b44db2fb30607a326930bfb  xsa237-unstable/0003-x86-MSI-disallow-redundant-enabling.patch
+503b58512c5336aff9692c0d0768f38ee956c0988fa3fad4d439f13814736e06  xsa237-unstable/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+dc5f27245e44582db682ac53f24007685ea2f8cb104bad9b4d6afeaa7c4e73d2  xsa237-unstable/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+cd9cd248c4564552bbe847462d247b78ff6af1052198e6b6529178a8a624e1f6  xsa237-4.5/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+87bbb240323b3cce9767da73961d58436c436db6da614c62ade7640f87f748dd  xsa237-4.5/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+6a2e6772fa7b7a1683f7b1041f06757562622228635aedb8c760ebcd9ad0ff7a  xsa237-4.5/0003-x86-MSI-disallow-redundant-enabling.patch
+c558ca347b6df9b430fbdaf9c9b8e3b203c273be1e2bb01aa3424773b88df91d  xsa237-4.5/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+60169e2016451e1c479c4f873ee6798b6abc46e3223a60a4b83bac20a7a3d27c  xsa237-4.5/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+cd9cd248c4564552bbe847462d247b78ff6af1052198e6b6529178a8a624e1f6  xsa237-4.6/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+d39d1c0eaf2ba169b6596520b05930d280721c397fafa3414b6da6168e8b73ca  xsa237-4.6/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+494a79332fc5f854f0dc7606669201717a41e5b89b44db2fb30607a326930bfb  xsa237-4.6/0003-x86-MSI-disallow-redundant-enabling.patch
+c558ca347b6df9b430fbdaf9c9b8e3b203c273be1e2bb01aa3424773b88df91d  xsa237-4.6/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+4cdcd71758d9e5b392c38aeafc9960a4f3ef5c109508e69b2218a8d8394edf0b  xsa237-4.6/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+1ae6aefb86ba0c48a45ecc14ff56ea0bc3d9d354937668bcacadaed1225017a8  xsa237-4.8/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+bf2ca9cb99ee64d7db77d628cec1a84684c360fd36de433cbc78fbcde8095319  xsa237-4.8/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+494a79332fc5f854f0dc7606669201717a41e5b89b44db2fb30607a326930bfb  xsa237-4.8/0003-x86-MSI-disallow-redundant-enabling.patch
+9a38899afd728d504382954de28657aa82af7da352eb4e45a5e615bd646834c5  xsa237-4.8/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+fef5c77f19e2c6229912f1fd19cbcb41c1ce554ff53be22198b2f34ea7a27314  xsa237-4.8/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+c97819cdf567c9bb2c38083a941995f836d7dabe3c8bbedf2205e3996cfbce68  xsa237-4.9/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch
+d31a2d1053d377e7159060f24a7dbf1d5fd9ebd1f4e4556c4c16b3f409a81130  xsa237-4.9/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch
+494a79332fc5f854f0dc7606669201717a41e5b89b44db2fb30607a326930bfb  xsa237-4.9/0003-x86-MSI-disallow-redundant-enabling.patch
+f8d8c9f70b22d735960393bce042f39caaaf12e42344394e6078461437fa39aa  xsa237-4.9/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch
+7f3955a8218850ee2cc9ddd9d11fdc25f526d32e80e189d063e3e779d448af40  xsa237-4.9/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZ50QfAAoJEIP+FMlX6CvZT/YH/RNPskIGMXkly2KENMZjKIIe
+n+PNYB0X1YYr0QS2ooMg2IWrA/3AcxC7IIldVTA0GTUFsg6hSSijAllZY7RtClO8
+9hUAt1v3v2vsQ2IM5M+4+ADhGwmclMxYcjjjiZI4odA5qaM9s8v5VlPW048JBu2N
+9r9KpEcOZ7o/QCZIZIn0Wzk3HK6CrFPQcTBAEaKuADJA8Ub3M0R61pgRRzJKOlIA
+pzCrh7dr1bmmFPlb3UxklsaaW/Z9aOS6s21dAMjqcOEu3KVl0EPq56aW5K0o8Emn
+C68MMs19kqXh1GnrtuPH5GeauKRNKxS3F/O6m3JupLc+YQkwmAyYg7cpPdciCLY=
+=4/VD
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa237.meta" of type "application/octet-stream" (1702 bytes)
+
+Download attachment "xsa237-unstable/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch" of type "application/octet-stream" (843 bytes)
+
+Download attachment "xsa237-unstable/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch" of type "application/octet-stream" (2177 bytes)
+
+Download attachment "xsa237-unstable/0003-x86-MSI-disallow-redundant-enabling.patch" of type "application/octet-stream" (2156 bytes)
+
+Download attachment "xsa237-unstable/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch" of type "application/octet-stream" (3725 bytes)
+
+Download attachment "xsa237-unstable/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch" of type "application/octet-stream" (1273 bytes)
+
+Download attachment "xsa237-4.5/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch" of type "application/octet-stream" (843 bytes)
+
+Download attachment "xsa237-4.5/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch" of type "application/octet-stream" (2161 bytes)
+
+Download attachment "xsa237-4.5/0003-x86-MSI-disallow-redundant-enabling.patch" of type "application/octet-stream" (2439 bytes)
+
+Download attachment "xsa237-4.5/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch" of type "application/octet-stream" (3887 bytes)
+
+Download attachment "xsa237-4.5/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch" of type "application/octet-stream" (1266 bytes)
+
+Download attachment "xsa237-4.6/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch" of type "application/octet-stream" (843 bytes)
+
+Download attachment "xsa237-4.6/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch" of type "application/octet-stream" (2161 bytes)
+
+Download attachment "xsa237-4.6/0003-x86-MSI-disallow-redundant-enabling.patch" of type "application/octet-stream" (2156 bytes)
+
+Download attachment "xsa237-4.6/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch" of type "application/octet-stream" (3887 bytes)
+
+Download attachment "xsa237-4.6/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch" of type "application/octet-stream" (1266 bytes)
+
+Download attachment "xsa237-4.8/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch" of type "application/octet-stream" (843 bytes)
+
+Download attachment "xsa237-4.8/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch" of type "application/octet-stream" (2161 bytes)
+
+Download attachment "xsa237-4.8/0003-x86-MSI-disallow-redundant-enabling.patch" of type "application/octet-stream" (2156 bytes)
+
+Download attachment "xsa237-4.8/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch" of type "application/octet-stream" (3887 bytes)
+
+Download attachment "xsa237-4.8/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch" of type "application/octet-stream" (1273 bytes)
+
+Download attachment "xsa237-4.9/0001-x86-dont-allow-MSI-pIRQ-mapping-on-unowned-device.patch" of type "application/octet-stream" (843 bytes)
+
+Download attachment "xsa237-4.9/0002-x86-enforce-proper-privilege-when-mapping-pIRQ-s.patch" of type "application/octet-stream" (2177 bytes)
+
+Download attachment "xsa237-4.9/0003-x86-MSI-disallow-redundant-enabling.patch" of type "application/octet-stream" (2156 bytes)
+
+Download attachment "xsa237-4.9/0004-x86-IRQ-conditionally-preserve-irq-pirq-mapping-on-error.patch" of type "application/octet-stream" (3887 bytes)
+
+Download attachment "xsa237-4.9/0005-x86-FLASK-fix-unmap-domain-IRQ-XSM-hook.patch" of type "application/octet-stream" (1273 bytes)
