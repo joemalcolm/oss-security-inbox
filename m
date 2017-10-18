@@ -1,65 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/21/2
-Message-ID: <NT2ewSquUVWSMuwQD9mS66GINerAtE1IodPQcjwuABcw6_-xHNatY9qmcPa6ICmd3OB1Exrmg2gm3npm-JsFkvY3dylH7vsHdOdBUOwOCZw=@itk.swiss>
-Date: Fri, 21 Jul 2017 05:45:25 -0400
-From: Stiepan <stie@....swiss>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Martin Decky <decky@....mff.cuni.cz>
-Subject: Re: CoreOS membership to linux-distros (updated)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/6
+Message-Id: <E1e4n99-0001G3-P0@xenbits.xenproject.org>
+Date: Wed, 18 Oct 2017 12:08:27 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 239 (CVE-2017-15589) - hypervisor stack leak in x86 I/O intercept code
 Content-Type: text/plain; charset=utf-8
 
-Back to CoreOS, I think that the practical answer is https://coreos.com/os/docs/latest/selinux.html .
-Now is it good / acceptable to rely on it (over classical Unix privileges, or another MAC) is actually an interesting, relatively unexplored research subject...
-What makes no doubt is that it is in line with the use made by Google of Linux, including in Android and therefore, very probably makes sense for Google.
-We lack some literature to back this choice for general-purpose use by the public at large, however.
-http://www.cse.psu.edu/~trj1/cse544-s13/slides/cse544-selinux.pdf and https://www.ibm.com/developerworks/library/l-selinux/ * provide good starting points for such research; (public) research seems to have stopped since then (= more or less in 2009 apparently)†.
-*With pointers to some alternatives in Linux and other operating systems, likewise many references
-†The first presentation cites www.isoc.org/isoc/conferences/ndss/09/pdf/16.pdf, which provides an analysis of MAC mechanisms' (remote) attack surface.
-A more recent, Android-centered presentation (http://kernsec.org/files/lss2015/vanderstoep.pdf) cites Wikipedia, stating that "[...] the security of an SELinux system depends primarily on the correctness of the kernel and its security-policy configuration", further highlighting the lack of in-depth research.
-(the emphasis / bold typeface on the second part of the sentence was left as in the original quote)
-I guess the question now is - do we trust Wikipedia articles on such matters? - and if we do, was the correctness in question attained in CoreOS's case?
-Likewise, could we somehow measure / quantify a level of this correctness using a formal method? (and if so, what about generalizing it to other OS + xAC pairs so as to evaluate their suitability for specific use cases, target demographics, likewise threat models?)
-Stiepan
-P.S.: Full disclosure - I have an interest in finding a secure, yet broadly compatible enough OS. CC-ing Martin Decky, who was 1st to propose a formal approach to it.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> -------- Original Message --------
-> Subject: Re: [oss-security] CoreOS membership to linux-distros (updated)
-> Local Time: July 20, 2017 7:04 PM
-> UTC Time: July 20, 2017 7:04 PM
-> From: jesse_hertz@...le.com
-> To: oss-security@...ts.openwall.com
-> Additionally, Docker doesn"t maintain a kernel distribution, whereas OpenVZ does, making this request strange to say the least.
-> I also think its disingenuous to imply there"s "one patch" that divides a secure containerization system from another. Container/Kernel security is... quite complicated to say the least.
->> On Jul 20, 2017, at 6:42 AM, Greg KH <greg@...ah.com> wrote:
->>
->> On Thu, Jul 20, 2017 at 07:13:03AM +0300, gremlin@...mlin.ru wrote:
->>> On 2017-07-18 14:56:23 -0700, Euan Kemp wrote:
->>>
->>>> I???ve listed each criterion and why I think we, the Container
->>>> Linux team at CoreOS, qualify.
->>>>
->>>>
->>>>> 1. Be an actively maintained Unix-like operating system distro
->>>>> with substantial use of Open Source components
->>>> All components of the distro are open source, as are all the
->>>> tools used to build it.
->>>
->>> Prior to any decision to be made, I"d ask you to show the kernel
->>> patch which you use to avoid escaping from the container to host
->>> system (Docker allows such escape, OpenVZ does not). Could you,
->>> please, show it?
->>
->> All of CoreOS"s kernel patches are public, here"s their latest branch:
->> https://github.com/coreos/linux/tree/v4.12.2-coreos
->>
->> But what does a specific kernel patch have to do with linux-distro"s
->> membership requirements?
->>
->> confused,
->>
->> greg k-h
+            Xen Security Advisory CVE-2017-15589 / XSA-239
+                              version 3
 
-Stiepan Aurélien Kovac
+            hypervisor stack leak in x86 I/O intercept code
 
-IT Kovac + itk AVtobvS Sàrl
-Geneva + Jussy, Geneva CH
+UPDATES IN VERSION 3
+====================
+
+CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+Intercepted I/O operations may deal with less than a full machine
+word's worth of data.  While read paths had been the subject of earlier
+XSAs (and hence have been fixed), at least one write path was found
+where the data stored into an internal structure could contain bits
+from an uninitialized hypervisor stack slot.  A subsequent emulated
+read would then be able to retrieve these bits.
+
+IMPACT
+======
+
+A malicious unprivileged x86 HVM guest may be able to obtain sensitive
+information from the host or other guests.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are vulnerable.
+
+Only x86 systems are affected.  ARM systems are not affected.
+
+Only HVM guests can leverage this vulnerability.  PV guests cannot
+leverage this vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Roger Pau Monné of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa239.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
+xsa239-4.5.patch       Xen 4.5.x
+
+$ sha256sum xsa239*
+eb7971be89199eb3ff510f4f5650fd5a8ec588b9fcb8f89230216fac4214ef21  xsa239.meta
+087a8b3cf7ecbdbde593033c127cbcf6c37f532bf33d90f72c19e493970a799c  xsa239.patch
+b91a68fe67240f2a5bb9460c5b650e9595364afa180f8702aef783815e3d7dcd  xsa239-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCAAGBQJZ50QiAAoJEIP+FMlX6CvZ9+EH/3FDnPzVeA+Rd8rblNpLh7VQ
+oyQ0B0olLYPZHLHQ2yzNJAg/1wv1ar7K2Rs0E1kovSqFZWdrTeo0DFKy418+rD6j
+TvSxYq0ktC0ir5cUSeExhHRDkBGDlEAuugdC381e0g89KT7Sv+kQz8t06yBV9KIP
+hnWPWcGvzeIKQX//Gd5i4618zhqGHI29LBuFJyMdrDcHSdD8f5B81n+pWojZ8JDP
+gYbhLHr0MLev2CH0URiegc7FIvbEPbW4rAzuEAKbMLfLMMwPg+eLJsM25WCTWuE7
+AiQUvx3zyD76EZ7gjVIDV/AazOWmMpZHrS1Rd+LwNYTeuV77JDebSI6KJ+X0jHc=
+=v3zp
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa239.meta" of type "application/octet-stream" (1965 bytes)
+
+Download attachment "xsa239.patch" of type "application/octet-stream" (1784 bytes)
+
+Download attachment "xsa239-4.5.patch" of type "application/octet-stream" (2101 bytes)
