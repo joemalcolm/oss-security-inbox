@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/09/6
-Message-Id: <20170609174117.DBE0617FDA8@rebar.astron.com>
-Date: Fri, 9 Jun 2017 13:41:17 -0400
-From: christos@...las.com (Christos Zoulas)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/9
+Message-ID: <877467503.21605361.1508329271692.JavaMail.zimbra@redhat.com>
+Date: Wed, 18 Oct 2017 08:21:11 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vixie/ISC Cron group crontab to root escalation
+Subject: Re: CVE-2017-12190: Linux kernel: block: memory leak when merging small consecutive buffers in SCSI IO vectors
 Content-Type: text/plain; charset=utf-8
 
-On Jun 9,  6:27pm, solar@...nwall.com (Solar Designer) wrote:
--- Subject: Re: [oss-security] Vixie/ISC Cron group crontab to root escalatio
+Hello,
 
-| Oh, I did in fact mention this in the private discussion, so I'll quote:
-| 
-| | Another detail: somehow in Owl we introduced lstat() prior to open, and
-| | check lstat()'s struct for all the required properties before proceeding
-| | with open() with O_NOFOLLOW.  Then we check that st_dev/st_ino stayed
-| | the same.  We also kept the post-open() checks.  I don't recall exactly
-| | why we added this, but maybe because of the possibility of side-effects
-| | on open() for hard links to device files (like with tape drives).  And
-| | it looks like we neglected to add the same for at jobs (perhaps didn't
-| | revisit this when support for at jobs appeared via our update to later
-| | OpenBSD code) - maybe we should.
+A patch fixing this issue was accepted upstream:
 
-Thanks, perhaps a comment in the code can't hurt...
-Or even O_NODEV which does not exist, or O_PATH (linux only)..
+commit 95d78c28b5a85bacbc29b8dba7c04babb9b0d467 fix unbalanced page refcounting in bio_map_user_iov
 
-christos
+I would also consider next 2 related patches if backporting:
+
+commit 2b04e8f6bbb196cab4b232af0f8d48ff2c7a8058 more bio_map_user_iov() leak fixes
+commit 1cfd0ddd82232804e03f3023f6a58b50dfef0574 bio_copy_user_iov(): don't ignore ->iov_offset #v4.5+
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
