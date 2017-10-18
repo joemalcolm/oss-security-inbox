@@ -1,4 +1,9 @@
-Received: (qmail 15678 invoked by uid 550); 25 Jul 2023 09:11:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["966" "Wednesday" "18" "October" "2017" "15:33:12" "+0800" "amon" "amon@nandynarwhals.org" "<CAFw=huUjK8X=AEimVPLtg9bGh3rKpJ8CpLujQEqwWQ7kvdxmNQ@mail.gmail.com>" "25" "[oss-security] MuPDF mutools Out-of-Bounds Write Vulnerability (CVE-2017-15587)" nil nil nil "10" "2017101807:33:12" "[oss-security] MuPDF mutools Out-of-Bounds Write Vulnerability (CVE-2017-15587)" (number mark "U       amon@nandyna Oct 18   25/966   " thread-indent "\"[oss-security] MuPDF mutools Out-of-Bounds Write Vulnerability (CVE-2017-15587)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11462 invoked by uid 550); 18 Oct 2017 09:54:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,96 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21535 invoked from network); 25 Jul 2023 09:06:21 -0000
+Received: (qmail 3115 invoked from network); 18 Oct 2017 07:33:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=5OcmhQSVMs6h56rO27PtANkD/OnEhpG5yY+/n1ckccg=;
+        b=AmoYSU3WZeZbQkkBbjigFkPsXW9YPlErkUIVW6yQovXMWKp/rxWQUI0Q4PJTOXenxe
+         8brakKZU9FTiHJr/DYagu7IEpijXXW7efJjACScTDFQUIQCDGxGBsjEw7WQxfaoNfdih
+         bahiCIQdrKWdfoONziKhqlQowTaW2zKOxTibtRfKWu0rfDYxjRV+a/odF6zxt13qomoL
+         qjDC6Si0//T2fzQgWIcuKq/n/K/fgm41FSnuiqGIH0caYpZ2S9cguXOo1qjUm2jzpx0P
+         177lm9juIVE7LhyoogJEMzNi7mHMrp6g0VYiqQyYF0cmGSESlg7P4NjitLIvjjb3vJPi
+         HGxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=5OcmhQSVMs6h56rO27PtANkD/OnEhpG5yY+/n1ckccg=;
+        b=cT92Zj0CiCADD9sEG12rWPL9U3cnbZldPiu9mSFReYKHbCRJRVR9H9IHsF15FEAfEa
+         VWEaq2NKOFAZV8lcR/Aobq4mxEsHOOvRq1yCFWjx4DYM5HM4dlIBqygSDDWLUUiWE1eR
+         dX5oPLulc5qPB8cZvX6ivOCP7PIx0RtVdaK04ZHKM4BG5TdYxceBbbpQDO9KzrQOxhCe
+         zGfsUfWaHE7cZFxOIACkfD4KMXAqic+VIVhnAz0ka8tw4zWQqDeDyo/VIVZ6qtcfM3+B
+         S4oOc+w5feq3Alw9PvaYMuSCjwCERdLWySeQ8E8RAI60qpQslPxzAs0kkTz2dlZ+S4l/
+         lyPw==
+X-Gm-Message-State: AMCzsaXL+Rz8THUSvYKYeSkdQIhj4ic2AsUF9JIi7EzkwifgCvw+aDq8
+	GqIhUmxd5ETReW3FiVxBGZ2MMIwYxUDrWNm9+5F9PtOn
+X-Google-Smtp-Source: ABhQp+QBkzIYEwrIBMKu9sHIN6GaOhPOeu3NPySAzhv4FmkwA61Jrhruvdr+q/ysXyhA5uiOAXmJTL3RTpC5WKG92FA=
+X-Received: by 10.13.202.72 with SMTP id m69mr822129ywd.42.1508311992609; Wed,
+ 18 Oct 2017 00:33:12 -0700 (PDT)
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ayaya.dev; s=key1;
-	t=1690275970;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=NDDHnRlrGpZxINK3swHHblXSsTkRHTnceir0aBJbM5g=;
-	b=dH7hB7VWY4dGWTtoxVj/gXQaN29rVMbTk63bD6yU87bhS3isBGX+uzD+0HcBKag5VnyvMh
-	VpX49Pkfxrm0dC7bbT41G/onLs1DJMO9oPnemVkgU4k23RSX3JVdNfDlXpswDaaaPeU+vh
-	ASStBtLbVBfUj8ZkLEh+ujjmLRftHAY=
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 25 Jul 2023 09:06:05 +0000
-Message-Id: <CUB4TMY2T01E.9PNA8WXRWGZR@sumire>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "alice" <alice@ayaya.dev>
-To: <oss-security@lists.openwall.com>
-References: <ZL6Kgih+pRaeA2e/@thinkstation.cmpxchg8b.net>
- <43f83e16-e492-4540-b34d-d2b51da2bb74@canonical.com>
- <ZL8lFPN2e+6jX5HH@largo.jsg.id.au>
-In-Reply-To: <ZL8lFPN2e+6jX5HH@largo.jsg.id.au>
-X-Migadu-Flow: FLOW_OUT
-Subject: Re: [oss-security] CVE-2023-20593: A use-after-free in AMD Zen2
- Processors
+Sender: jergorn93@gmail.com
+From: amon <amon@nandynarwhals.org>
+Date: Wed, 18 Oct 2017 15:33:12 +0800
+X-Google-Sender-Auth: ipiAoV7RrOcMPb1vECaZJqZ_6pk
+Message-ID: <CAFw=huUjK8X=AEimVPLtg9bGh3rKpJ8CpLujQEqwWQ7kvdxmNQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="001a114f275a87b1fe055bcd40ce"
+Subject: [oss-security] MuPDF mutools Out-of-Bounds Write Vulnerability (CVE-2017-15587)
 
-On Tue Jul 25, 2023 at 1:27 AM UTC, Jonathan Gray wrote:
-> On Mon, Jul 24, 2023 at 01:41:36PM -0400, Marc Deslauriers wrote:
-> > Hi,
-> >=20
-> > There seems to be confusion regarding which is the correct commit:
-> >=20
-> > Your blog post says it's 0bc3126c9cfa0b8c761483215c25382f831a7c6f which=
- is
-> > for family 17h.
-> >=20
-> > This post says it's b250b32ab1d044953af2dc5e790819a7703b7ee6 which is f=
-or
-> > family 19h.
-> >=20
-> > I assume the 17h family one is the correct one?
-> >=20
-> > Thanks,
-> >=20
-> > Marc.
->
-> Yes, but it by no means covers all zen 2 models.  See amd-ucode/README
->
->   Family=3D0x17 Model=3D0x31 Stepping=3D0x00: Patch=3D0x0830107a Length=
-=3D3200 bytes
->   Family=3D0x17 Model=3D0xa0 Stepping=3D0x00: Patch=3D0x08a00008 Length=
-=3D3200 bytes
->
-> 17-31-00 Rome/Castle Peak	0x0830107a
-> 17-a0-00 Mendocino		0x08a00008
->
-> Models missing include:
->
-> 17-60-01 Renoir			0x0860010b
-> 17-68-01 Lucienne		0x08608105
-> 17-71-00 Matisse		0x08701032
-> 17-90-02 Van Gogh
->
-> The known good patch levels are used by xen and linux.  But the
-> microcode for Renoir, Lucienne and Matisse is not available as far as
-> I can tell.
+--001a114f275a87b1fe055bcd40ce
+Content-Type: text/plain; charset="UTF-8"
 
-the amd security bulletin at
-https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
-states that really only 2nd-gen epyc is fixed. etas for all other cpus (con=
-sumer
-level) are in october/november/december.
+A vulnerability in mutools PDF parsing functionality allows an attacker to
+write controlled data to an arbitrary location in memory due to an integer
+overflow when performing truncated xref checks.
 
-quoting above:
-2nd Gen AMD EPYC=E2=84=A2 Processors "Rome" (fixed)
-AMD Ryzen 3000 Series Desktop Processors "Matisse" (Target Dec 2023)
-AMD Ryzen 4000 Series Desktop Processors with Radeon Graphics "Renoir" AM4 =
-(Target Dec 2023)
-AMD Ryzen Threadripper 3000 Series Processors "Castle Peak" HEDT (Target Oc=
-t 2023)
-AMD Ryzen Threadripper PRO 3000WX Series Processors "Castle Peak" WS SP3 (T=
-arget Nov 2023/Dec 2023)
-AMD Ryzen 5000 Series Mobile Processors with Radeon Graphics "Lucienne" (Ta=
-rget Dec 2023)
-AMD Ryzen 4000 Series Mobile Processors with Radeon Graphics "Renoir" (Targ=
-et Nov 2023)
-AMD Ryzen 7020 Series Processors "Mendocino" FT6 (Target Dec 2023)
+Fix:
+http://git.ghostscript.com/?p=mupdf.git;h=82df2631d7d0446b206ea6b434ea609b6c28b0e8
+Writeup: https://nandynarwhals.org/CVE-2017-15587/
 
-this is a disaster of a security announcement from AMD. nothing is fixed ex=
-cept
-for epyc. the only workaround anyone really has is the chicken bit, thankfu=
-lly.
+Timeline
+28 Sept 2017 - Discovery of the vulnerability.
+28 Sept 2017 - Disclosure (
+https://bugs.ghostscript.com/show_bug.cgi?id=698605) of vulnerability to
+the vendor and to Debian Security Team.
+16 Oct 2017 - Vendor fixes the issue in git commit (
+http://git.ghostscript.com/?p=mupdf.git;h=82df2631d7d0446b206ea6b434ea609b6c28b0e8
+).
+18 Oct 2017 - CVE-2017-15587 assigned to the issue.
+18 Oct 2017 - Publication of the vulnerability details.
+
+This issue was discovered by Terry Chia (Ayrx) and Jeremy Heng (nn_amon).
+
+--001a114f275a87b1fe055bcd40ce--
