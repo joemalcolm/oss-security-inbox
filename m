@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/8
-Message-ID: <CAKoP-y-NnHqx=87K+m_6UibGG3jzFcGNzU=3Y5o52FVLJ75m-g@mail.gmail.com>
-Date: Wed, 21 Jun 2017 07:35:34 -0500
-From: Josh Bressers <josh@...ss.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/1
+Message-ID: <CAFw=huUjK8X=AEimVPLtg9bGh3rKpJ8CpLujQEqwWQ7kvdxmNQ@mail.gmail.com>
+Date: Wed, 18 Oct 2017 15:33:12 +0800
+From: amon <amon@...dynarwhals.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+Subject: MuPDF mutools Out-of-Bounds Write Vulnerability (CVE-2017-15587)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 19, 2017 at 3:39 PM, Solar Designer <solar@...nwall.com> wrote:
->
->
-> That said, we owe apologies to the community for violating the published
-> distros list policy regarding the maximum embargo duration.  Personally
-> and as distros list admin, I do apologize for letting this happen.
->
-> I think we shouldn't have let it happen.
->
->
-I suspect the extended embargo was exactly correct in this instance. Having
-a policy you follow no matter what isn't ideal either (in fact it's
-probably dangerous).
+A vulnerability in mutools PDF parsing functionality allows an attacker to
+write controlled data to an arbitrary location in memory due to an integer
+overflow when performing truncated xref checks.
 
-We've all been through a lot of embargoes, two weeks is more than
-acceptable for most of them, it's a very good thing to have a forcing
-function when needed. This one was special, nobody can deny that. It was
-big, complex, and amazing. It ticked all the boxes. It affected a
-substantial portion of the Internet. Had a name. Is a very old bug. Was
-very serious. Had a great advisory and organization behind it.
+Fix:
+http://git.ghostscript.com/?p=mupdf.git;h=82df2631d7d0446b206ea6b434ea609b6c28b0e8
+Writeup: https://nandynarwhals.org/CVE-2017-15587/
 
-Yet nobody flipped out. It was unexciting.
+Timeline
+28 Sept 2017 - Discovery of the vulnerability.
+28 Sept 2017 - Disclosure (
+https://bugs.ghostscript.com/show_bug.cgi?id=698605) of vulnerability to
+the vendor and to Debian Security Team.
+16 Oct 2017 - Vendor fixes the issue in git commit (
+http://git.ghostscript.com/?p=mupdf.git;h=82df2631d7d0446b206ea6b434ea609b6c28b0e8
+).
+18 Oct 2017 - CVE-2017-15587 assigned to the issue.
+18 Oct 2017 - Publication of the vulnerability details.
 
-I suspect it was all so smooth because on Monday because everyone was
-ready, everyone knew what was going on. There was no rushing, nothing was
-on fire. There was time to develop patches properly. Everyone had their
-story straight. It's quite likely if you force a release in two weeks
-because that's the rule, someone not ready would create a story where one
-shouldn't exist.
-
-I applaud everyone involved. I'm sure there were issues, but I doubt such a
-large effort could have gone better. Rules such as this exist to guide us,
-don't let them constrain us.
-
--- 
-    JB
+This issue was discovered by Terry Chia (Ayrx) and Jeremy Heng (nn_amon).
 
