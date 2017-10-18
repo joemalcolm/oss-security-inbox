@@ -1,4 +1,9 @@
-Received: (qmail 26336 invoked by uid 550); 4 Dec 2024 17:00:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10082" "Wednesday" "18" "October" "2017" "15:12:07" "+0200" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<f4773901-967b-a496-de1d-2e866686dfb2@igalia.com>" "234" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0008" nil nil nil "10" "2017101813:12:07" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0008" (number mark "U       clopez@igali Oct 18  234/10082 " thread-indent "\"[oss-security] WebKitGTK+ Security Advisory WSA-2017-0008\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28217 invoked by uid 550); 18 Oct 2017 13:12:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,170 +12,262 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28622 invoked from network); 4 Dec 2024 16:42:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=djangoproject-com.20230601.gappssmtp.com; s=20230601; t=1733330548; x=1733935348; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Ks7x2L9we9zVOrAKd11/VWO6BFY/ZOT/08bFUAF9Mek=;
-        b=rRhcy8deXXPXidcFSrets8Zj82WSOWUmQgJU4TOG1D8hGNENHe2DFiYUJFLyUY/57V
-         F4JtbPyC/49vDiwWN8AvPwHOvj/lIgOm2PGM8Url1BagFAC6RBMvd3A2TyusjvqOD7MF
-         fhxAMuWNNp1vA7wqu1JQNTGlWHqS5GvRNFpKgv0j+YkzaQ5+UHlYrEfBjipxwf7uy/cF
-         iNeYGl4AW3E8rYbYg3QgP4TGYmiXnuXV/aFTI9TGLdVbOnEA82v48rVAVO3zi6LqJPnU
-         1d7ojzf21hvm7KHmN7n3fKgyNCVvmsPlCIa//kKmQg3HRevX9w3rG8l2bhzM/BzqOUN0
-         t4Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733330548; x=1733935348;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ks7x2L9we9zVOrAKd11/VWO6BFY/ZOT/08bFUAF9Mek=;
-        b=nfcDWbImmUIF7M6S9NAq+nJdGqhsZyIHzcmd5klRUFjb+ybbiUOF94b+J8XbAodIoC
-         1qEv6Ij6tiQUY/KYquhw/uxfgQySFJ7g+xe5hhf0R/jvOAP8P9ebdjeL1jdU3azk0uDH
-         7MHmXNflnmgx5Oz8g+I/Fe38zFiQKVLNShMPiGEafd8qVTigEoKArMzKzBgWW14TBiJK
-         LVOkkFBZ/gZYdGcKtlaG0mtFTEjwL5dORzNF7DmiYyuQ4luRtxpOnu5cPf7ZRvOrb9vO
-         1tJE4gyFrNUHfYFBkjW8yqKykNTHG32Ojc3ov/x0i8xVZvuiN48FEELLv9jH76K0zThG
-         k3XQ==
-X-Gm-Message-State: AOJu0YzAd0qpro+u4+ra/xeQChdvL4pLZfibJU94bYe+Q0M0LK62dynl
-	Y4ZZakOS9P1jFtIeUEUQEdkzsoGg0PS1BYIoJNPcpSkJlAOSlNYyqZJLoJkIdkzvFAKHKmrqe0d
-	t5/btG1fj/ipCOE7h6TODnB89oTVDKgzlu67X/k6hFPeivD41r3I=
-X-Gm-Gg: ASbGncveHYa5nFoILfRP44MBYFkTh8FTAqFskVFQbVDKNUEIxVYxgYZfogzs4S2n1j9
-	7Hun/AyysE6XimpCxn7fzbgFydTemNn7fyDatX8MuE6bstlChokAa42irgdAEoA58aA==
-X-Google-Smtp-Source: AGHT+IFMrgHXVarTW9J0ur75jost1+1LBCDPnsNfItHtkvD3wioAmZ/jVJ1zoGSdFqmYef4IA9Ch+TuuEfF27+QF+3o=
-X-Received: by 2002:a17:907:1b07:b0:aa4:d861:127f with SMTP id
- a640c23a62f3a-aa5f7f57df7mr963281466b.53.1733330548429; Wed, 04 Dec 2024
- 08:42:28 -0800 (PST)
+Received: (qmail 28180 invoked from network); 18 Oct 2017 13:12:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=L9tsEOPODdvyol0Hl/xLmSO4U7sZm5yy8QybkUaTxO0=;
+	b=Nypz+KS1OmL3Qv1ALaCs4NsFeUA8O7rbg/kyN7ZNYyHRITeH1hPOYEZuq5lXIvpRh7cg5OlS9lRqP1arVOA9q4VRO/eALXFhBwveevSLF0bTcqSkfheKeYNo03CsWbyYdiyBW5D8/VVRLMFERnlzJPz8hFtFnDh6JThWODRAP8bCDB7p7OS/T49BtpF2P8C/z12Iyz3N8OTOM9uWB18zVLQzk9p219GzKR0Q1RkiSeLhV3ZU8iDslb1DZ/DhcxUi1t7H8Uy7WfVtkN0WFl/8V9rkgp4GvgT3HYz+7CGGFimnmURer6YwhH6Syu1cIcPTxbmbCCB1zC0XrL/x/iYgRA==;
+To: "webkit-gtk@lists.webkit.org" <webkit-gtk@lists.webkit.org>
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
+ url=http://key.neutrino.es
+Organization: Igalia S.L.
+Mail-Followup-To: "webkit-gtk@lists.webkit.org"
+ <webkit-gtk@lists.webkit.org>, security@webkit.org,
+ distributor-list@gnome.org, oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com
+Message-ID: <f4773901-967b-a496-de1d-2e866686dfb2@igalia.com>
+Date: Wed, 18 Oct 2017 15:12:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-From: Sarah Boyce <sarahboyce@djangoproject.com>
-Date: Wed, 4 Dec 2024 17:42:17 +0100
-Message-ID: <CAN+fQHwsn21=myA6ay4=pqRVrpC4mo3eLWejcHKazzLmW+6Zqw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: Django Security Team <security@djangoproject.com>
-Content-Type: multipart/alternative; boundary="0000000000009e2fa606287477ac"
-Subject: [oss-security] Django CVE-2024-53907 and CVE-2024-53908
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="wBpPRO4GcwpVFxBdLsaRwN1R2vcjlJbv2"
+Subject: [oss-security] WebKitGTK+ Security Advisory WSA-2017-0008
 
---0000000000009e2fa606287477ac
-Content-Type: text/plain; charset="UTF-8"
+--wBpPRO4GcwpVFxBdLsaRwN1R2vcjlJbv2
+Content-Type: multipart/mixed; boundary="JDSGQTGpvlO8EqwtvsBTxpicBs1lsSp6t";
+ protected-headers="v1"
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+To: "webkit-gtk@lists.webkit.org" <webkit-gtk@lists.webkit.org>
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-ID: <f4773901-967b-a496-de1d-2e866686dfb2@igalia.com>
+Subject: WebKitGTK+ Security Advisory WSA-2017-0008
 
-https://www.djangoproject.com/weblog/2024/dec/04/security-releases/
+--JDSGQTGpvlO8EqwtvsBTxpicBs1lsSp6t
+Content-Type: text/plain; charset=utf-8
+Content-Language: es
+Content-Transfer-Encoding: quoted-printable
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
-team
-is issuing releases for
-`Django 5.1.4 <https://docs.djangoproject.com/en/dev/releases/5.1.4/>`_,
-`Django 5.0.10 <https://docs.djangoproject.com/en/dev/releases/5.0.10/>`_,
-and
-`Django 4.2.17 <https://docs.djangoproject.com/en/dev/releases/4.2.17/>`_.
-These releases address the security issues detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0008
+------------------------------------------------------------------------
 
-CVE-2024-53907: Potential denial-of-service in
-``django.utils.html.strip_tags()``
-=================================================================================
+Date reported      : October 18, 2017
+Advisory ID        : WSA-2017-0008
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0008.html
+CVE identifiers    : CVE-2017-7081, CVE-2017-7087, CVE-2017-7089,
+                     CVE-2017-7090, CVE-2017-7091, CVE-2017-7092,
+                     CVE-2017-7093, CVE-2017-7094, CVE-2017-7095,
+                     CVE-2017-7096, CVE-2017-7098, CVE-2017-7099,
+                     CVE-2017-7100, CVE-2017-7102, CVE-2017-7104,
+                     CVE-2017-7107, CVE-2017-7109, CVE-2017-7111,
+                     CVE-2017-7117, CVE-2017-7120, CVE-2017-7142.
 
-The ``strip_tags()`` method and ``striptags`` template filter are subject
-to a
-potential denial-of-service attack via certain inputs containing large
-sequences of nested incomplete HTML entities.
+Several vulnerabilities were discovered in WebKitGTK+.
 
-Thanks to jiangniao for the report.
+CVE-2017-7081
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed through improved input validation.
 
-This issue has severity "moderate" according to the Django security policy.
+CVE-2017-7087
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-CVE-2024-53908: Potential SQL injection in ``HasKey(lhs, rhs)`` on Oracle
-=========================================================================
+CVE-2017-7089
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Anton Lopanitsyn of ONSEC, Frans Ros=C3=A9n of Detectify.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue existed
+    in the handling of the parent-tab. This issue was addressed with
+    improved state management.
 
-Direct usage of the ``django.db.models.fields.json.HasKey`` lookup on
-Oracle is
-subject to SQL injection if untrusted data is used as a ``lhs`` value.
-Applications that use the ``jsonfield.has_key`` lookup through the ``__``
-syntax are
-unaffected.
+CVE-2017-7090
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Apple.
+    Impact: Cookies belonging to one origin may be sent to another
+    origin. Description: A permissions issue existed in the handling of
+    web browser cookies. This issue was addressed by no longer returning
+    cookies for custom URL schemes.
 
-Thanks to Seokchan Yoon for the report.
+CVE-2017-7091
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Wei Yuan of Baidu Security Lab working with Trend Micro=E2=80=
+=99s
+    Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-This issue has severity "high" according to the Django security policy.
+CVE-2017-7092
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Qixun Zhao (@S0rryMybad) of Qihoo 360 Vulcan Team, Samuel
+    Gro and Niklas Baumstark working with Trend Micro's Zero Day
+    Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7093
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Samuel Gro and Niklas Baumstark working with Trend Micro=E2=
+=80=99s
+    Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7094
+    Versions affected: WebKitGTK+ before 2.16.3.
+    Credit to Tim Michaud (@TimGMichaud) of Leviathan Security Group.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7095
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Wang Junjie, Wei Lei, and Liu Yang of Nanyang
+    Technological University working with Trend Micro=E2=80=99s Zero Day
+    Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7096
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Wei Yuan of Baidu Security Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7098
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Felipe Freitas of Instituto Tecnol=C3=B3gico de Aeron=C3=A1ut=
+ica.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7099
+    Versions affected: WebKitGTK+ before 2.16.4.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7100
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Masato Kinugawa and Mario Heiderich of Cure53.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7102
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Wang Junjie, Wei Lei, and Liu Yang of Nanyang
+    Technological University.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7104
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to likemeng of Baidu Secutity Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7107
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to Wang Junjie, Wei Lei, and Liu Yang of Nanyang
+    Technological University.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7109
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to avlidienbrunn.
+    Impact: Processing maliciously crafted web content may lead to a
+    cross site scripting attack. Description: Application Cache policy
+    may be unexpectedly applied.
+
+CVE-2017-7111
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to likemeng of Baidu Security Lab (xlab.baidu.com) working
+    with Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7117
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7120
+    Versions affected: WebKitGTK+ before 2.18.0.
+    Credit to chenqin (=E9=99=88=E9=92=A6) of Ant-financial Light-Year Secu=
+rity Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2017-7142
+    Versions affected: WebKitGTK+ before 2.16.1.
+    Credit to an anonymous researcher.
+    Impact: Website data may persist after a Safari Private browsing
+    session. Description: An information leakage issue existed in the
+    handling of website data in Safari Private windows. This issue was
+    addressed with improved data handling.
 
 
-Affected supported versions
-===========================
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
 
-* Django main
-* Django 5.1
-* Django 5.0
-* Django 4.2
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
 
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's
-main, 5.1, 5.0, and 4.2 branches.
-The patches may be obtained from the following changesets.
-
-CVE-2024-53907: Potential denial-of-service in
-django.utils.html.strip_tags()
------------------------------------------------------------------------------
-
-* On the `main branch <
-https://github.com/django/django/commit/49ff1042aa66bb25eda87e9a8ef82f3b0ad4eeba
->`__
-* On the `5.1 branch <
-https://github.com/django/django/commit/bbc74a7f7eb7335e913bdb4787f22e83a9be947e
->`__
-* On the `5.0 branch <
-https://github.com/django/django/commit/a5a89ea28cc550c1b29b03f9e14ef3c128ec1e84
->`__
-* On the `4.2 branch <
-https://github.com/django/django/commit/790eb058b0716c536a2f2e8d1c6d5079d776c22b
->`__
-
-CVE-2024-53908: Potential SQL injection in HasKey(lhs, rhs) on Oracle
----------------------------------------------------------------------
-
-* On the `main branch <
-https://github.com/django/django/commit/8f8dc5a1fca7d076e749f307f6573af3512e7e99
->`__
-* On the `5.1 branch <
-https://github.com/django/django/commit/6943d61818e63e77b65d8b1ae65941e8f04bd87b
->`__
-* On the `5.0 branch <
-https://github.com/django/django/commit/ff08bb6c70aa45f83a5ef3bd0b601c7c9d1a7642
->`__
-* On the `4.2 branch <
-https://github.com/django/django/commit/7376bcbf508883282ffcc0f0fac5cf0ed2d6cbc5
->`__
+The WebKitGTK+ team,
+October 18, 2017
 
 
-The following releases have been issued
-=======================================
+--JDSGQTGpvlO8EqwtvsBTxpicBs1lsSp6t--
 
-* Django 5.1.4 (`download Django 5.1.4
-  <https://www.djangoproject.com/m/releases/5.1/Django-5.1.4.tar.gz>`_ |
-  `5.1.4 checksums
-  <https://www.djangoproject.com/m/pgp/Django-5.1.4.checksum.txt>`_)
-* Django 5.0.10 (`download Django 5.0.10
-  <https://www.djangoproject.com/m/releases/5.0/Django-5.0.10.tar.gz>`_ |
-  `5.0.10 checksums
-  <https://www.djangoproject.com/m/pgp/Django-5.0.10.checksum.txt>`_)
-* Django 4.2.17 (`download Django 4.2.17
-  <https://www.djangoproject.com/m/releases/4.2/Django-4.2.17.tar.gz>`_ |
-  `4.2.17 checksums
-  <https://www.djangoproject.com/m/pgp/Django-4.2.17.checksum.txt>`_)
+--wBpPRO4GcwpVFxBdLsaRwN1R2vcjlJbv2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-The PGP key ID used for this release is Sarah Boyce: `3955B19851EA96EF <
-https://github.com/sarahboyce.gpg>`_
+-----BEGIN PGP SIGNATURE-----
+Comment: You can fetch my GnuPG key from http://key.neutrino.es
 
-General notes regarding security reporting
-==========================================
+iQIzBAEBCgAdFiEEtdK1C8SOx/HukNmrllCJzmuV+IIFAlnnUycACgkQllCJzmuV
++IImORAAl2aKcx3NpstN8CT2GrWz26WXEpecLXi0oyDZZ2nXXavgKDlr/BHfNEW7
+7fTtmTJn/3H/ivs/eWbLdRDrY3Qcrx6oYPwDe6Pv2jtnkpNHZfnXnGdGVuifywCE
+VgnE2TVK8s3omBxNu1TXGZgbnuO+Pp/2txr+tsAdEUHSK3yd+3g/jdXI6w05wHKA
+c36b+cMgF74ySGQIXbFZbK47TICVt1cBTqjjGpVfbon0am4oqdcHCVsbS036m5ps
+JcJeziDRt4yz2fvzOUOvXHitdhSMetXojwhs8cTKBM6uJ7jxMAmTA9C1nvopD8Cw
+wn0reGbfl/0Pb/rpEKV/KvT4UAjNLOsrAd7JaZKBGTf8mcFDK520icdnx57PIRpv
+TLPSLvBYnQIhAs3L2AnMVmoUnpQw/nuaOMNqudj9huuX7/FfYLpgAkKlb1a9vWr2
+BR8uguPf6eSDX7rZJNK53r215iq54AtHm28n2ncbRc/Nwdmghn5EBM41pypJnxsT
+U27ixxZBsqb8dicYxQaXCig1rSoXZ3j3fLCC3oTio9iXHCEYtunrrWMaWiXj5nDp
+yYVlunkZk3pibj2ZLTMcaunY4R5Pp8+oUFNuf3M8Heo350A4VvqnE0eD6MJN3ST7
+0s7EJkJ8e8wrWUsCh9JrLeVogfvcqByhbDDQjiywfqMNVHEbNyI=
+=0V6W
+-----END PGP SIGNATURE-----
 
-As always, we ask that potential security issues be reported via private
-email
-to ``security@djangoproject.com``, and not via Django's Trac instance, nor
-via
-the Django Forum, nor via the django-developers list. Please see `our
-security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
---0000000000009e2fa606287477ac--
+--wBpPRO4GcwpVFxBdLsaRwN1R2vcjlJbv2--
