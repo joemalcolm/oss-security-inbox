@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1538" "Sunday" "1" "January" "2017" "19:39:38" "-0600" "Brandon Perry" "bperry.volatile@gmail.com" "<4F81C4B3-94D3-4F62-9B83-7564BDF36B6D@gmail.com>" "39" "[oss-security] Re: Multiple issues in OpenH264 1.5.1" nil nil nil "1" "2017010201:39:38" "[oss-security] Re: Multiple issues in OpenH264 1.5.1" (number mark "U       bperry.volat Jan  1   39/1538  " thread-indent "\"[oss-security] Re: Multiple issues in OpenH264 1.5.1\"\n") "<68CFC008-17E9-46A4-BF96-19FD7F7DC056@gmail.com>" ("<68CFC008-17E9-46A4-BF96-19FD7F7DC056@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1827" "Thursday" "19" "October" "2017" "12:44:28" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20171019194428.GK20315@hunt>" "44" "Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" "^Date:" nil nil "10" "2017101919:44:28" "[oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" (number mark "        seth.arnold@ Oct 19   44/1827  " thread-indent "\"Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync\"\n") "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>" ("<20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>" "<CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>" "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>" "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22468 invoked by uid 550); 2 Jan 2017 01:39:54 -0000
+Received: (qmail 3830 invoked by uid 550); 19 Oct 2017 19:44:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3808 invoked from network); 19 Oct 2017 19:44:42 -0000
+Message-ID: <20171019194428.GK20315@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>
+ <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
+ <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
+ <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0FM4RQAc0jwHekq5"
+Content-Disposition: inline
+In-Reply-To: <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Thu, 19 Oct 2017 12:44:28 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22438 invoked from network); 2 Jan 2017 01:39:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:mime-version:subject:date:references:to:in-reply-to:message-id;
-        bh=zOFkK97O8jweTT1bOAw65sZ4EgGnr5SNEDZxTqc9efI=;
-        b=s6hIVdBBpFGHz7VuzfWVP/+tfne/vVEqIxWDqXgSm0l3OW3QE6MygZId7aoH4PAR7m
-         SIHuwYUzOE8YVt4Jh/RBWuBjLwRcWlrlt3Mz+tQYh81Jw03lXQlnz/FRBZkAZ4hPMSZC
-         9kocmGyXuEZv6Vp4Q0hcZt7S6vY2EDXuQE3nrrO8fCGDsmGUHkfUHKrmhPPmVadBIghC
-         t4/iH2nbjBt7L/PfBll7TpLNdlHwn42OnEJ/GivFIH+AXOelI8ZhppmFv5NyGmmrEnE7
-         9rFMEHcyTgzzDEUJLIaVC5OnqiNC1L3nZgFW1ACZdl2ZmwIlp7F6DFojNzclZtRUSqh3
-         uTPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:mime-version:subject:date:references:to
-         :in-reply-to:message-id;
-        bh=zOFkK97O8jweTT1bOAw65sZ4EgGnr5SNEDZxTqc9efI=;
-        b=NmKrM1s6X9C1PzzFZaU0zY7HjU2yEnegS+/aNXp7zIsPBZJOPrhp/j9mMsoZd5wzdC
-         5UE4iXBZqxgvAY6kfbZONt6PaPXEgG7CuZH4pewdp5k3lbX4B8QpiIc38BHJFZFElEed
-         cfvOA6owPNrcfgAD8vA6BgIVW9q2lIkHxHWZ9g8XCRssm0S0/6eCu0UvCOGTnNt1NaDH
-         KBEc9jJwz5fs3dG2fxexsGHQSQMPfpyNLyqqStUV2wCPcvHXXTUSkvMBYVrDw/82wRCd
-         8h37WN+Mc8huZU6BqIXG40kZkzyeDGLMrq5O1ALqLycUux/BnpQfRhC0P89UhtOhbc44
-         q1MA==
-X-Gm-Message-State: AIkVDXITfL6ABR0z//qlYe0RReJShGLzMOGjTYQtBkCB4sC/sfGu9z3jSdZx3L1hSpKUzw==
-X-Received: by 10.157.9.208 with SMTP id 16mr23844626otz.12.1483321180637;
-        Sun, 01 Jan 2017 17:39:40 -0800 (PST)
-From: Brandon Perry <bperry.volatile@gmail.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_943C1FDD-40E9-4B7A-8313-1FC8BC93611D"
-Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
-Date: Sun, 1 Jan 2017 19:39:38 -0600
-References: <68CFC008-17E9-46A4-BF96-19FD7F7DC056@gmail.com>
+Subject: Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in
+ Debian mirror script ftpsync
 To: oss-security@lists.openwall.com
-In-Reply-To: <68CFC008-17E9-46A4-BF96-19FD7F7DC056@gmail.com>
-Message-Id: <4F81C4B3-94D3-4F62-9B83-7564BDF36B6D@gmail.com>
-X-Mailer: Apple Mail (2.3259)
-Subject: [oss-security] Re: Multiple issues in OpenH264 1.5.1
 
---Apple-Mail=_943C1FDD-40E9-4B7A-8313-1FC8BC93611D
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+--0FM4RQAc0jwHekq5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
+> Removing the ability for rsync to copy symlinks pointing to targets outside
+> the mirror tree would greatly cripple it. I need to understand how the
+> danger is worth the loss of this functionality.
 
-> On Jan 1, 2017, at 7:32 PM, Brandon Perry <bperry.volatile@gmail.com> wro=
-te:
->=20
-> Recently, Firefox updated their OpenH264 plugin to 1.6. Earlier this year=
-, I reported multiple crashes I had found while fuzzing version 1.5.1 of th=
-e decoder (which was what was shipped at the time).
->=20
-> While these issues have been resolved on the 1.6 branch of the openh264 c=
-odebase for some time (a year?), it doesn=E2=80=99t seem like Firefox got t=
-he update until recently (correct me if I=E2=80=99m wrong), which is why I =
-am releasing my fuzz results. I initially reported these to Mozilla, but co=
-llided with Tyler Smith, one of their security engineers who had also been =
-fuzzing the decoder. I am not sure if these issues got CVEs or not, but I d=
-on=E2=80=99t see any.
->=20
-> https://raw.githubusercontent.com/brandonprry/openh264-fuzz/ <https://raw=
-.githubusercontent.com/brandonprry/openh264-fuzz/>
-Whoops, mislinked.
+Note that the fix isn't modifying rsync, the fix is modifying the ftpsync
+script that calls rsync:
 
-https://github.com/brandonprry/openh264-fuzz <https://github.com/brandonprr=
-y/openh264-fuzz>
->=20
-> Attached is the README for the linked GitHub repo, which shows the three =
-distinct bugs and their stack traces. There might be another bug or two tha=
-t I missed during triage. None of the crashes work on 1.6, which is now shi=
-pped with up-to-date Firefox installs.
->=20
-> Happy New Year!
->=20
-> <README.md>
++    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links --timeout 3600 --stats --no-human-readable"}
 
+https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=d1ca2ab2210990b6dfb664cd6776a41b71c48016
 
---Apple-Mail=_943C1FDD-40E9-4B7A-8313-1FC8BC93611D--
+Of course for people who run this mirroring tool as a specific user
+account and set file permissions appropriately this is more or less a
+no-op. But this is a useful hardening for people who run the ftpsync
+command as a user with too many privileges. (I wouldn't have bothered
+filing for a CVE for this change; I see it as a simple hardening change.)
+
+This option shouldn't cripple ftpsync as a well-run repository is highly
+unlikely to have symlinks pointing out of the tree. A repository with
+symlinks pointing out of the tree is already not a suitable rsync source.
+
+Thanks
+
+--0FM4RQAc0jwHekq5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBCgAGBQJZ6QCcAAoJEPMhclmdjS6XqT4H/2Woj3PvN90ke1kkdEZ6IDbR
+SyxyE801ywPHzbI2o6HIl8vsmMYfA5xS0WMQ50vu4txXWkL8mJvYr0gUZJFoksKf
+38qx/on3QW1anM8Ug7glCqwFlR0F6c4HLnMmYn4zfZtUsPRPfiKHoojxczY1Jt4e
+HTAX51LIn2MNBb6ZUfOk5cYRzw/rQB0eI7t9uV9CYkWc3c5BIjNzGxN0aBglgYa6
+gTRvk5lseSVduL4DZ1eVWtsxBpWUjtAC7FdtkXcWCHkNtQZJ/og/i7mbM8jLEhfX
+nysF776U9660K6avdAxUE2gAS+UbcZTi+kcn6HrcJkKw03vRk5SvRj0c+SiXUJI=
+=+wb+
+-----END PGP SIGNATURE-----
+
+--0FM4RQAc0jwHekq5--
