@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/13
-Message-ID: <CADSYzstfctEZTo4GKGR-H2WXC3kZRSAj7sj7ZHCAu9C7Ff5BYw@mail.gmail.com>
-Date: Wed, 3 May 2017 17:32:03 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/19/5
+Message-ID: <20171019201757.GA31838@oevtugenva.nrevsny.pk>
+Date: Thu, 19 Oct 2017 16:17:57 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: [white-paper] Pwning PHP mail() function For Fun And RCE (ver 1.0)
+Cc: Felix Wilhelm <fwilhelm@...gle.com>, musl@...ts.openwall.com
+Subject: CVE request: musl libc 1.1.16 and earlier dns buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Here's a paper I wrote back in December.  It was originally meant to go
-into Phrack but the team wanted a more general article on parameter injection
-as mail() was supposedly an outdated technique.
-Meanwhile, the RCE-chain continues :) So I decided to post it as it is without
-changing it as mail() injection deserves a separate article imho.
+Felix Wilhelm has discovered a flaw in the dns response parsing for
+musl libc 1.1.16 that leads to overflow of a stack-based buffer.
+Earlier versions are also affected.
 
-https://exploitbox.io/paper/Pwning-PHP-Mail-Function-For-Fun-And-RCE.html
+When an application makes a request via getaddrinfo for both IPv4 and
+IPv6 results (AF_UNSPEC), an attacker who controls or can spoof the
+nameservers configured in resolv.conf can reply to both the A and AAAA
+queries with A results. Since A records are smaller than AAAA records,
+it's possible to fit more addresses than the precomputed bound, and a
+buffer overflow occurs.
 
-I reveal some exim code-execution vectors in there that should change
-the whole game slightly :)
+Users are advised to upgrade to 1.1.17 or patch; the patch is simple
+and should apply cleanly to all recent versions:
 
-See my exploit for WordPress Core that is based on it:
-https://exploitbox.io/vuln/WordPress-Exploit-4-6-RCE-CODE-EXEC-CVE-2016-10033.html
+https://git.musl-libc.org/cgit/musl/patch/?id=45ca5d3fcb6f874bf5ba55d0e9651cef68515395
 
+Users who cannot patch or upgrade immediately can mitigate the issue
+by running a caching nameserver on localhost and pointing resolv.conf
+to 127.0.0.1.
 
-I'll attach copies of the white-paper here in the next revision as I
-haven't slept for 3 nights and need to double check on everything
-before it goes into the archive forever :)
-
-
-Regards,
-Dawid Golunski
-https://legalhackers.com
-https://ExploitBox.io
-t: @dawid_golunski
+Rich
