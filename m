@@ -1,19 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/12
-Message-ID: <1536479.pTyB5C28Yh@blackgate>
-Date: Mon, 13 Mar 2017 11:06:39 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/19/4
+Message-ID: <20171019194428.GK20315@hunt>
+Date: Thu, 19 Oct 2017 12:44:28 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: podofo: NULL pointer dereference in ColorChanger::GetColorFromStack (colorchanger.cpp)
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 02 March 2017 16:34:17 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-c
-> olorchangergetcolorfromstack-colorchanger-cpp
+On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
+> Removing the ability for rsync to copy symlinks pointing to targets outside
+> the mirror tree would greatly cripple it. I need to understand how the
+> danger is worth the loss of this functionality.
 
-This is CVE-2017-6842
+Note that the fix isn't modifying rsync, the fix is modifying the ftpsync
+script that calls rsync:
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
++    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links --timeout 3600 --stats --no-human-readable"}
+
+https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=d1ca2ab2210990b6dfb664cd6776a41b71c48016
+
+Of course for people who run this mirroring tool as a specific user
+account and set file permissions appropriately this is more or less a
+no-op. But this is a useful hardening for people who run the ftpsync
+command as a user with too many privileges. (I wouldn't have bothered
+filing for a CVE for this change; I see it as a simple hardening change.)
+
+This option shouldn't cripple ftpsync as a well-run repository is highly
+unlikely to have symlinks pointing out of the tree. A repository with
+symlinks pointing out of the tree is already not a suitable rsync source.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
