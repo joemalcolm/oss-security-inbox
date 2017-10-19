@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2730" "Saturday" "30" "September" "2017" "20:36:12" "+0200" "Guido =?iso-8859-1?Q?G=FCnther?=" "agx@sigxcpu.org" "<20170930183612.mkgwgygmi7qri4wb@bogon.m.sigxcpu.org>" "63" "Re: [oss-security] CVE-2017-14160: libvorbis-1.3.5 bark_noise_hybridmp() integer signedness bug" nil nil nil "9" "2017093018:36:12" "[oss-security] CVE-2017-14160: libvorbis-1.3.5 bark_noise_hybridmp() integer signedness bug" (number mark "U       agx@sigxcpu. Sep 30   63/2730  " thread-indent "\"Re: [oss-security] CVE-2017-14160: libvorbis-1.3.5 bark_noise_hybridmp() integer signedness bug\"\n") "<A962A2D04FAB5C4499FEFD15B642FA0A35DEB814@EX02.corp.qihoo.net>" ("<A962A2D04FAB5C4499FEFD15B642FA0A35DEB814@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2371" "Thursday" "19" "October" "2017" "15:38:34" "+0530" "Shalin Shekhar Mangar" "shalin@apache.org" "<CAOOKt5258X689V+=_XtyOJ_n9jiYrLQTcPtsEgGTdb=sWY_2mg@mail.gmail.com>" "61" "[oss-security] [ANNOUNCE] [SECURITY] CVE-2017-12629: Several critical vulnerabilities discovered in Apache Solr (XXE & RCE)" nil nil nil "10" "2017101910:08:34" "[oss-security] [ANNOUNCE] [SECURITY] CVE-2017-12629: Several critical vulnerabilities discovered in Apache Solr (XXE & RCE)" (number mark "U       shalin@apach Oct 19   61/2371  " thread-indent "\"[oss-security] [ANNOUNCE] [SECURITY] CVE-2017-12629: Several critical vulnerabilities discovered in Apache Solr (XXE & RCE)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17985 invoked by uid 550); 30 Sep 2017 19:00:54 -0000
+Received: (qmail 28251 invoked by uid 550); 19 Oct 2017 10:30:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,83 +12,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3111 invoked from network); 30 Sep 2017 18:36:26 -0000
-X-Virus-Scanned: Debian amavisd-new at honk.sigxcpu.org
-Date: Sat, 30 Sep 2017 20:36:12 +0200
-From: Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>
-To: =?utf-8?B?6L+e5LiA5rGJ?= <lianyihan@360.cn>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20170930183612.mkgwgygmi7qri4wb@bogon.m.sigxcpu.org>
-References: <A962A2D04FAB5C4499FEFD15B642FA0A35DEB814@EX02.corp.qihoo.net>
+Received: (qmail 18145 invoked from network); 19 Oct 2017 10:08:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=YxMFLU9F2dJ0lf8XoPYI2huAsrs7FKg15F0zhxCSRrc=;
+        b=LknjQIawx6ODSowLMzViPMgH7y6qdPbgicQjly3C9Y3dWug4b9p5IjsqM1AxBiwKdK
+         baHw5B2A62TJlPTb7UIQjg9hMC9uH6x99BXiKeb3wLu1g8AsmuZPKNqQjAZD6lnTzidu
+         z+9hxJAkV+Kk6zX+EVQyBs3smUzsLwkMmTrNPfaJoQGiXX9c7ZqnDxTr06Fpk+xWrcX9
+         6eX/TRdpmb5ygRlc2LdgV2X/IyOsSY91/Grpn76iIXDllyStp0kHS9ZYDV1hZEjhJ/Iy
+         hQkdmVXcHFNt2sw9cXipGF4B/noAGWRVGi/KI1grxbn7kpsBzDE+ryJFQWofOl6cJRvt
+         uk0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=YxMFLU9F2dJ0lf8XoPYI2huAsrs7FKg15F0zhxCSRrc=;
+        b=K5cbdAwd8fnujHnqGvPBTqJUCJmuatboVVlJYvfHyvPwdxZ8UzsaPrKs9iQzjXTTB3
+         4iDLju/sPGyHCSmIxC8Gs0TVO9kwrHkxZRKysNlAd1gEyfH+cYaPnIHmesFxG1o2QKTL
+         dsbI8iqViECXbG/FdW+nM+2AJZF2ASXC4yoxQKO0o2sCd4S1BEN824+dX8ZfXbg2neiX
+         sXFIm532g2NYZe7Nb1irQRZmA2/SB7hejO3nyar8wYP4Z7R/FOBRyG+5VmgY+gSSU1IV
+         IpXbsPY++QhqXsoicfQx+PayRYBrqeZyPV9sOdaWNQYlKkm8ovkQQkEwyVjNee/vXLUP
+         QOtg==
+X-Gm-Message-State: AMCzsaXJNIjuzEbpchWWbVKF59jLhDuwbb8g7qI1ijD2sZZaN1yOZwp4
+	lLkAT/4jOlo5SYORRZzDI/e3BnUXiBRKVEBFMeCdBkX2
+X-Google-Smtp-Source: ABhQp+TIB1wNul2YR7TbE4b8yr3PVQH9OAyENQMwn0p3AQj2hGgLyWr4u17V2dQBZx60zutczwFfF+LUV+PEFv43AVw=
+X-Received: by 10.36.202.131 with SMTP id k125mr1483808itg.138.1508407715539;
+ Thu, 19 Oct 2017 03:08:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <A962A2D04FAB5C4499FEFD15B642FA0A35DEB814@EX02.corp.qihoo.net>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Subject: Re: [oss-security] CVE-2017-14160: libvorbis-1.3.5
- bark_noise_hybridmp() integer signedness bug
+Sender: shalinmangar@gmail.com
+From: Shalin Shekhar Mangar <shalin@apache.org>
+Date: Thu, 19 Oct 2017 15:38:34 +0530
+X-Google-Sender-Auth: -DK5VkrMK3Bi4O5QizwKpFFy5xs
+Message-ID: <CAOOKt5258X689V+=_XtyOJ_n9jiYrLQTcPtsEgGTdb=sWY_2mg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [ANNOUNCE] [SECURITY] CVE-2017-12629: Several critical
+ vulnerabilities discovered in Apache Solr (XXE & RCE)
 
-Hi,
-On Thu, Sep 21, 2017 at 06:27:15AM +0000, 连一汉 wrote:
-> Hi,
-> 
-> I’m a security researcher of Qihoo 360 GearTeam.
-> My partner Zhibin Hu and I found a vulnerability of libvorbis-1.3.5.
-> And we have applied for CVE-2017-14160 of this vulnerability.
-> ================== test command ====================
-> 
-> ffmpeg –i poc.mp4 –y 1.mkv
+CVE-2017-12629: Several critical vulnerabilities discovered in Apache
+Solr (XXE & RCE)
 
-Where can the reproducer for this be found? Can you attach it to
+Severity: Critical
 
-    https://gitlab.xiph.org/xiph/vorbis/issues/2330
+Vendor:
+The Apache Software Foundation
 
-Cheers,
- -- Guido
+Versions Affected:
+Solr 5.5.0 to 5.5.4
+Solr 6.0.0 to 6.6.1
+Solr 7.0.0 to 7.0.1
 
-> // libvorbis-1.3.5 has been compiled into ffmpeg static.
-> 
-> ================= needed version ====================
-> 
-> I compile it as https://github.com/google/oss-fuzz/blob/master/projects/ffmpeg/build.sh
-> 
-> This is the problem of libvorbis-1.3.5, and I tried libvorbis in ubuntu repo, it could also trigger this vul or bug.
-> 
-> =================== crash info ======================
-> 
-> (gdb) bt
-> #0  0x0000000001f95afd in bark_noise_hybridmp (n=256, b=0x32cd940, f=0x32e5010, noise=0x32f7ed0, offset=140, fixed=-1) at psy.c:630
-> 
-> #1  0x0000000001f95430 in _vp_noisemask (p=0x32aa820, logmdct=0x32e5010, logmask=0x32f7ed0) at psy.c:705
-> #2  0x0000000001facac9 in mapping0_forward (vb=0x329cfb0) at mapping0.c:417
-> #3  0x0000000001f92c9e in vorbis_analysis (vb=0x329cfb0, op=0x0) at analysis.c:46
-> #4  0x0000000000bc2725 in libvorbis_encode_frame (avctx=0x329ca00, avpkt=0x32ab540, frame=0x32e4400, got_packet_ptr=0x7fffffffdbf4) at libavcodec/libvorbisenc.c:311
-> #5  0x00000000009e5717 in avcodec_encode_audio2 (avctx=0x329ca00, avpkt=0x32ab540, frame=0x32e4400, got_packet_ptr=0x7fffffffdbf4)at libavcodec/encode.c:198
-> #6  0x00000000009e62d8 in do_encode (avctx=0x329ca00, frame=0x32e4400, got_packet=0x7fffffffdbf4) at libavcodec/encode.c:375
-> 
-> #7  0x00000000009e6224 in avcodec_send_frame (avctx=0x329ca00, frame=0x32e4400) at libavcodec/encode.c:421
-> #8  0x0000000000438ef5 in do_audio_out (of=0x3299560, ost=0x329c7a0, frame=0x32e4400) at ffmpeg.c:921
-> #9  0x0000000000436c5b in reap_filters (flush=0) at ffmpeg.c:1515
-> #10 0x000000000042dc30 in transcode_step () at ffmpeg.c:4553
-> #11 0x000000000042bc49 in transcode () at ffmpeg.c:4597
-> #12 0x000000000042b092 in main (argc=5, argv=0x7fffffffe678) at ffmpeg.c:4803
-> 
-> (gdb) l
-> 625
-> 626         lo = b[i] >> 16;
-> 627         hi = b[i] & 0xffff;
-> 628         if(hi>=n)break;
-> 629
-> 630         tN = N[hi] - N[lo];
-> 631         tX = X[hi] - X[lo];
-> 632         tXX = XX[hi] - XX[lo];
-> 633         tY = Y[hi] - Y[lo];
-> 634         tXY = XY[hi] - XY[lo];
-> (gdb) p hi
-> $4 = 0
-> (gdb) p lo
-> $5 = 49656                                                                 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-> (gdb) p i
-> $6 = 259
-> 
+Description:
+The details of this vulnerability were reported on public mailing
+lists. See https://s.apache.org/FJDl
+
+The first vulnerability relates to XML external entity expansion in
+the XML Query Parser which is available, by default, for any query
+request with parameters deftype=xmlparser. This can be exploited to
+upload malicious data to the /upload request handler. It can also be
+used as Blind XXE using ftp wrapper in order to read arbitrary local
+files from the solr server.
+
+The second vulnerability relates to remote code execution using the
+RunExecutableListener available on all affected versions of Solr.
+
+At the time of the above report, this was a 0-day vulnerability with a
+working exploit affecting the versions of Solr mentioned in the
+previous section. However, mitigation steps were announced to protect
+Solr users the same day. See
+https://lucene.apache.org/solr/news.html#12-october-2017-please-secure-your-apache-solr-servers-since-a-zero-day-exploit-has-been-reported-on-a-public-mailing-list
+
+Mitigation:
+Users are advised to upgrade to either Solr 6.6.2 or Solr 7.1.0
+releases both of which address the two vulnerabilities. Once upgrade is
+complete, no other steps are required.
+
+If users are unable to upgrade to Solr 6.6.2 or Solr 7.1.0 then they
+are advised to restart their Solr instances with the system parameter
+`-Ddisable.configEdit=true`. This will disallow any changes to be made
+to your configurations via the Config API. This is a key factor in
+this vulnerability, since it allows GET requests to add the
+RunExecutableListener to your config. Users are also advised to re-map
+the XML Query Parser to another parser to mitigate the XXE
+vulnerability. For example, adding the following to the solrconfig.xml
+file re-maps the xmlparser to the edismax parser:
+<queryParser name="xmlparser" class="solr.ExtendedDismaxQParserPlugin"/>
+
+Credit:
+Michael Stepankin (JPMorgan Chase)
+Olga Barinova (Gotham Digital Science)
+
+References:
+https://issues.apache.org/jira/browse/SOLR-11482
+https://issues.apache.org/jira/browse/SOLR-11477
+https://wiki.apache.org/solr/SolrSecurity
+
+-- 
+Regards,
+Shalin Shekhar Mangar.
