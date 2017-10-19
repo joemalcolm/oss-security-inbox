@@ -1,76 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/06/4
-Message-ID: <1496784716.2351.0.camel@gmail.com>
-Date: Tue, 06 Jun 2017 23:31:56 +0200
-From: Ailin Nemui <ailin.nemui@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/3
+Message-ID: <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
+Date: Thu, 19 Oct 2017 20:32:55 +0000
+From: Robert Watson <robertcwatson1@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: FYI: Irssi Security Advisory 2017/06
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-IRSSI-SA-2017-06 Irssi Security Advisory [1]
-============================================
+Scripts depend on the underlying functionality of the various utilities
+like rsync that they call. I'm having trouble understanding how a script
+could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
 
-Description
------------
+We are overwhelmed with more vulnerabilities than can be fixed quickly
+already.
 
-Two vulnerabilities have been located in Irssi.
+Are "just to be safer" type things really a wise use of our resources?
 
-(a) When receiving a DCC message without source nick/host, Irssi would
-    attempt to dereference a NULL pointer. Found by Joseph
-    Bisch. (CWE-690)
+Does a proliferation of a large number of low-caliber problems make
+monitoring these lists more trouble than it's worth? Does it cause
+high-impact problems to be lost amongst low-impact ones?
 
-(b) When receiving certain incorrectly quoted DCC files, Irssi would
-    try to find the terminating quote one byte before the allocated
-    memory. Found by Joseph Bisch. (CWE-129, CWE-127)
+On Thu, Oct 19, 2017, 15:46 Seth Arnold <seth.arnold@...onical.com> wrote:
 
+> On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
+> > Removing the ability for rsync to copy symlinks pointing to targets
+> outside
+> > the mirror tree would greatly cripple it. I need to understand how the
+> > danger is worth the loss of this functionality.
+>
+> Note that the fix isn't modifying rsync, the fix is modifying the ftpsync
+> script that calls rsync:
+>
+> +    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links --timeout
+> 3600 --stats --no-human-readable"}
+>
+>
+> https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=d1ca2ab2210990b6dfb664cd6776a41b71c48016
+>
+> Of course for people who run this mirroring tool as a specific user
+> account and set file permissions appropriately this is more or less a
+> no-op. But this is a useful hardening for people who run the ftpsync
+> command as a user with too many privileges. (I wouldn't have bothered
+> filing for a CVE for this change; I see it as a simple hardening change.)
+>
+> This option shouldn't cripple ftpsync as a well-run repository is highly
+> unlikely to have symlinks pointing out of the tree. A repository with
+> symlinks pointing out of the tree is already not a suitable rsync source.
+>
+> Thanks
+>
+-- 
 
-Impact
-------
+Robert "DocSalvager" Watson
+... trust in truth keeps hope alive
+www.DocSalvage.info
 
-(a) May result in denial of service (remote crash).
-
-(b) May result in denial of service (remote crash), but in practice
-    this seems to be very unlikely unless address sanitizer is
-    enabled.
-
-
-Affected versions
------------------
-
-All Irssi versions that we observed.
-
-
-Fixed in
---------
-
-Irssi 1.0.3
-
-
-Recommended action
-------------------
-
-Upgrade to Irssi 1.0.3. Irssi 1.0.3 is a maintenance release in the
-1.0 series, without any new features.
-
-After installing the updated packages, one can issue the /upgrade
-command to load the new binary. TLS connections will require
-/reconnect.
-
-
-Mitigating facts
-----------------
-
-(a) requires control over the ircd
-
-
-Patch
------
-
-https://github.com/irssi/irssi/commit/fb08fc7f1aa6b2e616413d003bf021612
-301ad55
-
-
-References
-----------
-
-[1] https://irssi.org/security/irssi_sa_2017_06.txt
