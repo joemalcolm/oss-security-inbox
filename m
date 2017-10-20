@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2037" "Friday" "30" "June" "2017" "12:55:16" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20170630195516.GB1011@hunt>" "50" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "6" "2017063019:55:16" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        seth.arnold@ Jun 30   50/2037  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170630132209.GA4625@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2440" "Friday" "20" "October" "2017" "15:37:58" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20171020223757.GA28323@hunt>" "61" "Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" "^Date:" nil nil "10" "2017102022:37:58" "[oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" (number mark "        seth.arnold@ Oct 20   61/2440  " thread-indent "\"Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync\"\n") "<CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>" ("<20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>" "<CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>" "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>" "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>" "<20171019194428.GK20315@hunt>" "<CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9746 invoked by uid 550); 30 Jun 2017 19:55:30 -0000
+Received: (qmail 17814 invoked by uid 550); 20 Oct 2017 22:38:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9725 invoked from network); 30 Jun 2017 19:55:29 -0000
-Message-ID: <20170630195516.GB1011@hunt>
+Received: (qmail 17796 invoked from network); 20 Oct 2017 22:38:11 -0000
+Message-ID: <20171020223757.GA28323@hunt>
 Mail-Followup-To: oss-security@lists.openwall.com
-References: <20170628200239.GA25525@openwall.com>
- <20170630132209.GA4625@openwall.com>
+References: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>
+ <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
+ <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
+ <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
+ <20171019194428.GK20315@hunt>
+ <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ZfOjI3PrQbgiZnxM"
+	protocol="application/pgp-signature"; boundary="J2SCkAp4GZ/dPZZf"
 Content-Disposition: inline
-In-Reply-To: <20170630132209.GA4625@openwall.com>
+In-Reply-To: <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Fri, 30 Jun 2017 12:55:16 -0700
+Date: Fri, 20 Oct 2017 15:37:58 -0700
 From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+Subject: Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in
+ Debian mirror script ftpsync
 To: oss-security@lists.openwall.com
 
---ZfOjI3PrQbgiZnxM
+--J2SCkAp4GZ/dPZZf
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 30, 2017 at 03:22:09PM +0200, Solar Designer wrote:
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-=
-back
->=20
-> No volunteers so far?  I know some of you are actually helping with
-> these, but I'd prefer that you explicitly take responsibility for them.
+On Thu, Oct 19, 2017 at 08:32:55PM +0000, Robert Watson wrote:
+> Scripts depend on the underlying functionality of the various utilities
+> like rsync that they call. I'm having trouble understanding how a script
+> could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
 
-I didn't volunteer for the things that I've already done on occasion.
-Since I'm on the west coast of the united states and tend to sleep in and
-work late (and spend entirely too much time in mutt already) I'm often the
-first to spot new postings to the list if made during a few hour window.
+I'm not sure what 'script' vs 'not-script' has to do with anything.
+'Script' really just means "interpreted programming language" and says
+nothing about the threat model in use.
 
-In those hours I'll let people know their post made it through the list.
-(This is common practice on the list since the anti-spam setup just
-drops mails that lack [vs] or [vs-plain] in the Subject: line. Frequent
-posters who aren't subscribed know to look for confirmation mails from
-list readers to see if their posts made it through and re-send if they
-don't get a reply.)
+This ftpsync script and similar scripts are the primary tool for mirroring
+Debian, Ubuntu, and other derived Linux distributions, to the mirror
+networks that support many millions of computers.
 
-But this window really only works a few hours each day, a few days each
-week. If I _sign up_ for this task, the other 160 hours each week would
-get worse.
+Probably other programs use rsync without --safe-links when they should.
+I didn't know the option existed until this thread was started (seriously,
+rsync(1) is a HUGE manpage) so I'm grateful to the original reporter
+for sending it along.
 
-Communally shared tasks have felt fine to me so far. Yes they often fall
-to you, but not always. And if you weren't always attached to your MUA,
-perhaps it wouldn't always fall to you either. :)
+> We are overwhelmed with more vulnerabilities than can be fixed quickly
+> already.
+
+Yes.
+
+> Are "just to be safer" type things really a wise use of our resources?
+
+Yes. I think we all wish to see software that's less likely to fail.
+
+> Does a proliferation of a large number of low-caliber problems make
+> monitoring these lists more trouble than it's worth? Does it cause
+> high-impact problems to be lost amongst low-impact ones?
+
+It's up to you how you prioritize your time. For this issue, I updated my
+own personal mirroring script and a co-worker updated our wiki page:
+https://wiki.ubuntu.com/Mirrors/Scripts
+These steps took a few minutes and are unlikely to cause problems so it
+was an easy choice. Filing for a CVE for a wiki page feels like a waste of
+time so I'm not going to bother. The page is fixed and users can adopt the
+change if they wish.
 
 Thanks
 
---ZfOjI3PrQbgiZnxM
+--J2SCkAp4GZ/dPZZf
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCgAGBQJZVqykAAoJEPMhclmdjS6XZf0H/jb0/TpOoJWBzWhSFfbxgsvD
-VycWyf4Qn+mRcSMVH243IeeJCSSJHwQmjEl/hOvtPXhp0EZ6E6rCvkV+wFpIespv
-jHzYpaYeHbczIS3hZJ33hGMTi2cClR3qaEaiOj+/ni7zbxY+fHJS8JxZC9VWdO22
-/lU8HY2WnuPVHAEKpXF6rBoDRPatV7eTcO21pyjWAdBoQS5ZZqD/LgZ9fPRob088
-I9azBKgEnTA/gQYZylG/bJKuUmrDu/wsHlNES/hoQYHQCD87l2Ej6n0XOxCg2zU2
-/varRXd50m3gEACJuplrLa39nXb31l0yUcndrkmbzdRBcBRM/1zoxpV8Vt4O++s=
-=R+BA
+iQEcBAEBCgAGBQJZ6nrFAAoJEPMhclmdjS6XB30H/00tqyB9MkxBhQ5YvltxQraE
+6FPKdsbc2cd4QvgIYM5l3DY8ENLX6dAtopieuAKTUA13sKYbKeps1XMahoDIHQiM
+CBtEzYooupZoo7DvZfUBGIIfLaBv0X50P8JmoFaMQDTlU684cG0aoHmOjVQVLauk
+0F2KVgR0oOWVErMYVgndCND1vqe7B7ANN97YFRDiF0wBKszZ8OBesjqUmLZwBL1Q
+HZEL2Wu8nqI74Bay+Bh9/QLxbJ/cTbcjzgcLm02iIeHbotQHnAfB0zxdRrLFrMoL
+ICaDIO2UktU6dTNxw4m2EoDUB3qyOhZyfXQrFaQ9JGXMqEu6GNH/O0enbOUaG6c=
+=JHgu
 -----END PGP SIGNATURE-----
 
---ZfOjI3PrQbgiZnxM--
+--J2SCkAp4GZ/dPZZf--
