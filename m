@@ -1,40 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/1
-Message-ID: <457875.000636221-sendEmail@localhost>
-Date: Mon, 10 Apr 2017 07:03:25 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2017-7592: libtiff: left shift
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/1
+Message-ID: <20171020012547.GT1627@oevtugenva.nrevsny.pk>
+Date: Thu, 19 Oct 2017 21:25:47 -0400
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Cc: Felix Wilhelm <fwilhelm@...gle.com>, musl@...ts.openwall.com
+Subject: Re: CVE request: musl libc 1.1.16 and earlier dns buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-http://bugzilla.maptools.org/show_bug.cgi?id=2658 :
+On Thu, Oct 19, 2017 at 04:17:57PM -0400, Rich Felker wrote:
+> Felix Wilhelm has discovered a flaw in the dns response parsing for
+> musl libc 1.1.16 that leads to overflow of a stack-based buffer.
+> Earlier versions are also affected.
+> 
+> When an application makes a request via getaddrinfo for both IPv4 and
+> IPv6 results (AF_UNSPEC), an attacker who controls or can spoof the
+> nameservers configured in resolv.conf can reply to both the A and AAAA
+> queries with A results. Since A records are smaller than AAAA records,
+> it's possible to fit more addresses than the precomputed bound, and a
+> buffer overflow occurs.
+> 
+> Users are advised to upgrade to 1.1.17 or patch; the patch is simple
+> and should apply cleanly to all recent versions:
+> 
+> https://git.musl-libc.org/cgit/musl/patch/?id=45ca5d3fcb6f874bf5ba55d0e9651cef68515395
+> 
+> Users who cannot patch or upgrade immediately can mitigate the issue
+> by running a caching nameserver on localhost and pointing resolv.conf
+> to 127.0.0.1.
 
-In tif_getimage.c, in function putagreytile, there is a shift of unsigned char
-by 24:
-*(pp+1) << 24.
+CVE-2017-15650 has been assigned for this issue.
 
-Since there is no cast, *(pp+1) is treated as int, so
-UndefinedBehaviorSanitizer says:
-runtime error: left shift of 134 by 24 places cannot be represented in type
-'int'
-
-Maybe we could have something like:
-
-*cp++ = BWmap[*pp][0] & ((uint32)*(pp+1) << 24 | ~A1);
-
-###########
-
-Fixed per
-
-2017-01-11 Even Rouault <even.rouault at spatialys.com>
-
-        * libtiff/tif_getimage.c: add explicit uint32 cast in putagreytile to
-        avoid UndefinedBehaviorSanitizer warning.
-        Patch by Nicolás Peña.
-        Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2658
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
+Rich
 
