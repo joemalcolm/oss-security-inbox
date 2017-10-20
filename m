@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1690" "Wednesday" "13" "June" "2018" "21:05:36" "+0530" "Lets Secure" "is3curi5@gmail.com" "<CAAtL=4L-Cpcsgy8AZACFwytH0BHF32Fz2vVoZgvuSPjn0ihaNg@mail.gmail.com>" "48" "[oss-security] Third Party Code Signing Vulnerability in Squirrel & Sparkle" "^Date:" nil nil "6" "2018061315:35:36" "[oss-security] Third Party Code Signing Vulnerability in Squirrel & Sparkle" (number mark "U       is3curi5@gma Jun 13   48/1690  " thread-indent "\"[oss-security] Third Party Code Signing Vulnerability in Squirrel & Sparkle\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1061" "Thursday" "19" "October" "2017" "21:25:47" "-0400" "Rich Felker" "dalias@libc.org" "<20171020012547.GT1627@brightrain.aerifal.cx>" "25" "Re: [oss-security] CVE request: musl libc 1.1.16 and earlier dns buffer overflow" nil nil nil "10" "2017102001:25:47" "[oss-security] CVE request: musl libc 1.1.16 and earlier dns buffer overflow" (number mark "U       dalias@libc. Oct 19   25/1061  " thread-indent "\"Re: [oss-security] CVE request: musl libc 1.1.16 and earlier dns buffer overflow\"\n") "<20171019201757.GA31838@brightrain.aerifal.cx>" ("<20171019201757.GA31838@brightrain.aerifal.cx>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22192 invoked by uid 550); 13 Jun 2018 15:38:39 -0000
+Received: (qmail 5517 invoked by uid 550); 20 Oct 2017 02:59:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10159 invoked from network); 13 Jun 2018 15:35:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=O09NaFX89FxDIaDdmXia7LJ8piaAmPWqau2A/1SLeUM=;
-        b=fUd5nv+6ETv+Y6bv7FCaaqVdRXBfsDYkVuHx7Ch4LsEXHnrdhuf4k99JYxgh5m0alc
-         zHwClIjCMJM5BtLW9wA8OGTOaHwAhMMIWJlRYSESKSWCL3DTJPFNbLaHu7K9w8pxMAaY
-         RNUqF8BnTZXNKQpFYM84cCpO4gF5P8BwkhPxqLvLMWoOXhruryvn6hH/PbciFGe4AqBB
-         rksKoTHt9rHgz8o9BCOnR9IExGFOjJtv15AvS1LBaFePqrT77XzHLYzrRDlgIo2QSGVz
-         ftkvZ5EzQZTTTSuPAGVaoe+tS4FUlM/iHCn0JVNrvT9F0T4EyOQ6zPdloAdfSOkifKus
-         n6ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=O09NaFX89FxDIaDdmXia7LJ8piaAmPWqau2A/1SLeUM=;
-        b=do50iwPGtcfVSG5ORXVWvMfHcmdoU17TZ+KnAD2vgwSLeG04PyCAOAvhvrjIdTk3WT
-         PxcBgnma/u6lbzwVrUpLRVRy+YbXTreu/6gEsuh4n0BXUFj61pobDvaaUjb6em/mCJX7
-         vfFzBwUBqp0qgMAWfifs8E/HlWLfLKIKobsx619L4HhxgmIUp5PGMVKTRgt6wuQeK83Q
-         gUTzt+BQe0u76NszQGsYBQFVt5pN7GZurJOvGJUrD7iDoM0ykh54BijKaV+KQAJPw48q
-         rv9KleFF9qzmfA/HG3VyX0JGiwjm7AfHrZu8K62BD9mf9PLqpKyFGgJTwSK2IxpSygNw
-         Ovjw==
-X-Gm-Message-State: APt69E0LF9vsw52+LbUdWGrw52qnRmCGpF9vIT/8C22fFhdDnXKegxRJ
-	sDR3qXtKiiNVbPMXSzhWs9F1GOrFYf/3/3Yk/X8+RA==
-X-Google-Smtp-Source: ADUXVKLrf0D0wJvIe15i+LMCfyWjYp8LFFxDMsyz5JOe5KsPuS3UsySvRqhPChRPHrZOd3DGhIkEOQgJM3oS+uzhkh8=
-X-Received: by 2002:ab0:1ee:: with SMTP id 101-v6mr3665971ual.200.1528904137501;
- Wed, 13 Jun 2018 08:35:37 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAAtL=4L-Cpcsgy8AZACFwytH0BHF32Fz2vVoZgvuSPjn0ihaNg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000002ef34056e87bcb6"
-Date: Wed, 13 Jun 2018 21:05:36 +0530
-From: Lets Secure <is3curi5@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Third Party Code Signing Vulnerability in Squirrel & Sparkle
+Received: (qmail 27653 invoked from network); 20 Oct 2017 01:26:00 -0000
+Date: Thu, 19 Oct 2017 21:25:47 -0400
+From: Rich Felker <dalias@libc.org>
 To: oss-security@lists.openwall.com
+Cc: Felix Wilhelm <fwilhelm@google.com>, musl@lists.openwall.com
+Message-ID: <20171020012547.GT1627@brightrain.aerifal.cx>
+References: <20171019201757.GA31838@brightrain.aerifal.cx>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171019201757.GA31838@brightrain.aerifal.cx>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: Rich Felker <dalias@aerifal.cx>
+Subject: Re: [oss-security] CVE request: musl libc 1.1.16 and earlier dns
+ buffer overflow
 
---00000000000002ef34056e87bcb6
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Oct 19, 2017 at 04:17:57PM -0400, Rich Felker wrote:
+> Felix Wilhelm has discovered a flaw in the dns response parsing for
+> musl libc 1.1.16 that leads to overflow of a stack-based buffer.
+> Earlier versions are also affected.
+> 
+> When an application makes a request via getaddrinfo for both IPv4 and
+> IPv6 results (AF_UNSPEC), an attacker who controls or can spoof the
+> nameservers configured in resolv.conf can reply to both the A and AAAA
+> queries with A results. Since A records are smaller than AAAA records,
+> it's possible to fit more addresses than the precomputed bound, and a
+> buffer overflow occurs.
+> 
+> Users are advised to upgrade to 1.1.17 or patch; the patch is simple
+> and should apply cleanly to all recent versions:
+> 
+> https://git.musl-libc.org/cgit/musl/patch/?id=45ca5d3fcb6f874bf5ba55d0e9651cef68515395
+> 
+> Users who cannot patch or upgrade immediately can mitigate the issue
+> by running a caching nameserver on localhost and pointing resolv.conf
+> to 127.0.0.1.
 
-Based on the recent disclosure at
-https://www.okta.com/security-blog/2018/06/issues-around-third-party-apple-code-signing-checks/
+CVE-2017-15650 has been assigned for this issue.
 
-The Squirrel
-<https://github.com/Squirrel/Squirrel.Mac/blob/e9e2188cda3efb4bc08b1719bdef71880f9dc9b1/Squirrel/SQRLCodeSignature.m#L127>
-&
-Sparkle
-<https://github.com/sparkle-project/Sparkle/blob/d19c98a8771e6a38766199bb96654de5d8c3efb2/Sparkle/SUCodeSigningVerifier.m#L98>
- framework also doesn't perform strict validation to check nested
-architecture and revocations & validity of the signer cert and can
-essentially result in bypassing the code sign validations.
+Rich
 
-*Squirrel*
-SQRLCodeSignature.m#L127
-result = SecStaticCodeCheckValidityWithErrors(staticCode,
-kSecCSCheckAllArchitectures, (__bridge SecRequirementRef)self.requirement,
-&validityError);
-
-SecStaticCodeCheckValidityWithErros is called without flags -
-kSecCSDefaultFlags
-| kSecCSCheckNestedCode | kSecCSCheckAllArchitectures |
-kSecCSEnforceRevocationChecks
-
-Also, it lacks checks for chain of trust across nested binaries in Fat
-file.
-i.e. missing this code:
-SecRequirementCreateWithString(CFSTR("anchor apple"), kSecCSDefaultFlags,
-&requirementRef);
-
-*Sparkle*
-SUCodeSigningVerifier.m#L98
-SecCSFlags flags = (SecCSFlags) (kSecCSDefaultFlags |
-kSecCSCheckAllArchitectures);
-result = SecStaticCodeCheckValidityWithErrors(staticCode, flags, NULL,
-&cfError);
-
-The flags should have been set with:
-SecCSFlags flags = (SecCSFlags) (kSecCSDefaultFlags | kSecCSCheckNestedCode
-| kSecCSCheckAllArchitectures | kSecCSEnforceRevocationChecks)
-
-But, that's not the case with Sparkle.
-
-Best Regards!
-
---00000000000002ef34056e87bcb6--
