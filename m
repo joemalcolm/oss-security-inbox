@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/06/3
-Message-ID: <alpine.LFD.2.20.1706061738020.10792@wniryva>
-Date: Tue, 6 Jun 2017 17:40:00 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-9374 Qemu: usb: ehci host memory leakage during hotunplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/5
+Message-ID: <87po9iugl6.fsf@gnu.org>
+Date: Fri, 20 Oct 2017 14:52:21 +0200
+From: ludo@....org (Ludovic Courtès)
+To: 连一汉 <lianyihan@....cn>
+Cc: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi,
 
-Quick Emulator(Qemu) built with the USB EHCI Emulation support is vulnerable 
-to a memory leakage issue. It could occur while hot-unplugging the device, as 
-it does not release the memory allocated at initialisation.
+连一汉 <lianyihan@....cn> skribis:
 
-A guest user/process could use this issue to leak host memory, resulting in 
-DoS for host.
+> FFmpeg trigger double-free when it parsing an craft AVI file to MKV file using ffvhuff decoder.
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commit;h=d710e1e7bd3d5bfc26b631f02ae87901ebe646b0
+[...]
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1459132
+> This was fixed with the following commit:
+> https://www.ffmpeg.org/download.html#releases
 
-This issue was reported by Li Qiang of Qihoo 360 Gear Team.
+Looks like this is not the URL you intended to share, is it?
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Ludo’.
