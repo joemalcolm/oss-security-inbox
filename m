@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/19/2
-Message-ID: <alpine.LFD.2.20.1704191332230.20535@wniryva>
-Date: Wed, 19 Apr 2017 13:35:12 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Greg Kurz <groug@...d.org>
-Subject: CVE-2017-7471 Qemu: 9p: virtfs allows guest to change filesystem attributes on host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/4
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A35DF0CA5@EX02.corp.qihoo.net>
+Date: Fri, 20 Oct 2017 09:10:45 +0000
+From: 连一汉 <lianyihan@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to an improper access control issue. 
-It could occur while accessing files on a shared host directory.
+Affected package: ffmpeg
+Affected versions: <= 3.3.4
 
-A privileged user inside guest could use this flaw to access host file system 
-beyond the shared folder and potentially escalating their privileges on a 
-host.
+FFmpeg trigger double-free when it parsing an craft AVI file to MKV file using ffvhuff decoder.
 
-Upstream patches:
------------------
-   -> http://git.qemu-project.org/?p=qemu.git;a=commitdiff;h=9c6b899f7a46893ab3b671e341a2234e9c0c060e
+From the back trace, we can see that ffmpeg frees a filter array firstly:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1443401
+#0  av_free (ptr=0x32bb920) at libavutil/mem.c:209
+#1  0x000000000162a759 in initFilter (outFilter=0x32ae7f8, filterPos=0x32ae818, outFilterSize=0x32ae82c, xInc=65536, srcW=45, dstW=45, filterAlign=1,
+    one=4096, flags=8196, cpu_flags=1037275, srcFilter=0x0, dstFilter=0x0, param=0x32adef0, srcPos=128, dstPos=128) at libswscale/utils.c:713
+#2  0x00000000016263bd in sws_init_context (c=0x32ade80, srcFilter=0x7fffffffcf50, dstFilter=0x7fffffffcf50) at libswscale/utils.c:1681
+#3  0x0000000000629c5b in config_props (outlink=0x32adce0) at libavfilter/vf_scale.c:333
+#4  0x00000000004675c8 in avfilter_config_links (filter=0x32ac5c0) at libavfilter/avfilter.c:316
+#5  0x000000000046754b in avfilter_config_links (filter=0x32acae0) at libavfilter/avfilter.c:305
+#6  0x000000000046bc62 in graph_config_links (graph=0x32989e0, log_ctx=0x0) at libavfilter/avfiltergraph.c:275
+#7  0x000000000046b712 in avfilter_graph_config (graphctx=0x32989e0, log_ctx=0x0) at libavfilter/avfiltergraph.c:1274
 
+But because of an error handing, this filter will be freed again when exit program:
 
-'CVE-2017-7471' has been assigned to it by Red Hat Inc.
+#0  av_free (ptr=0x32bb920) at libavutil/mem.c:209
+#1  0x00000000017d59b3 in av_freep (arg=0x7fffffffe2b8) at libavutil/mem.c:219
+#2  0x00000000017baeba in buffer_pool_free (pool=0x0) at libavutil/buffer.c:272
+#3  0x00000000017bae19 in av_buffer_pool_uninit (ppool=0x32bb670) at libavutil/buffer.c:285
+#4  0x0000000000481a79 in ff_frame_pool_uninit (pool=0x32ad140) at libavfilter/framepool.c:292
+#5  0x0000000000466e2e in avfilter_link_free (link=0x7fffffffe358) at libavfilter/avfilter.c:181
+#6  0x0000000000468a46 in free_link (link=0x32ad060) at libavfilter/avfilter.c:786
+#7  0x00000000004687f7 in avfilter_free (filter=0x32ac5c0) at libavfilter/avfilter.c:806
+#8  0x000000000046b1b8 in avfilter_graph_free (graph=0x3299c50) at libavfilter/avfiltergraph.c:123
+#9  0x000000000042b22c in ffmpeg_cleanup (ret=0) at ffmpeg.c:477
+#10 0x000000000040eff7 in exit_program (ret=0) at cmdutils.c:138
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This was fixed with the following commit:
+https://www.ffmpeg.org/download.html#releases
+
+Regards
+
+Reported by Zhibin Hu and Yihan Lian from Qihoo 360 GearTeam
+
