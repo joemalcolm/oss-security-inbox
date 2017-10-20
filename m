@@ -1,53 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/3
-Message-ID: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
-Date: Fri, 3 Nov 2017 11:07:14 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Security risk of server side text editing in general and vim.tiny specifically
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/6
+Message-ID: <CABMkiz6X3N8X7nq8eCnNGVUEx8jzd7hNLk3W_8OdW0Pg+UvSYQ@mail.gmail.com>
+Date: Fri, 20 Oct 2017 14:40:50 +0100
+From: Ben Tasker <ben@...tasker.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-Dear OSS-Security List,
+On Thu, Oct 19, 2017 at 9:32 PM, Robert Watson <robertcwatson1@...il.com>
+wrote:
 
-Due to the recent discussion on vim swap file use, I expected also attraction of of evil-minded to the topic of text editing security and thus an increase in attack probability on server side text editing in general. Therefore I wanted to review our software qualification criteria for text editing on servers, where vim/vim.tiny is used and probably update the SOPs and guidelines.
+> Scripts depend on the underlying functionality of the various utilities
+> like rsync that they call. I'm having trouble understanding how a script
+> could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
+>
 
-As .swp security problems also arise from unclear software behaviour expectations, I looked at the behaviour of vim.tiny to verify it works according to specification (man pages as reference). As it seems, the tool is not suited for editing of files not owned by the same user, which is not mentioned in the man pages. Maybe that indicates, that the software design process did not include that specific security requirement or implementation was insufficient. Therefore I would assume, that numerous bugs of similar kind might be found, but there is no time (funding) to do in depth checks.
+Whether you think it applies to the current example is obviously a
+different debate, but the simple principle is that the script is (arguably)
+using the underlying tool unsafely. The tool (rsync in this case) provides
+an argument to prevent the "risky" behaviour, but the calling script isn't
+using it, potentially opening a vector for misuse.
 
-I would be interested in consensus, if editing of non-root files by root user is bad practice in general (thus, e.g. should be mentioned in SECURITY section of man pages of various common server side test editing tools to raise awareness, but no CVEs) or if you think, that this is software misbehaviour.
+So if there should be a CVE, it shouldn't be against rsync (as it provides
+the means to avoid, and in other cases you may even find the calling script
+is overriding the "safe" behaviour) but against the calling script.
 
-Input from "Solar Designer <solar at openwall x com>" to that topic:
+To give a fairly limited example, both of these scripts rely on the same
+functionality, but one is riskier (albeit not from a security perspective)
+- in neither case is the tool at risk
 
-"This discussion does not belong on the distros list.  Please bring it to
-oss-security ASAP, including the PoC (or optionally delay it by at most
-a week, but I see no reason for that as nothing will change in that week
-anyway), and people will hopefully reply for real in there.
+fname=$1
+rm -rf "/$1"
 
-There's no embargoed issue here that I can see and no proposed unembargo
-date either (a requirement for any initial posting to distros), I don't
-see how anything will change within distros' list maximum embargo time
-of 14 days, and it is indeed "bad practice in general" to access files
-as root in user-writable directories, which is not at all limited to
-text editors."
+...
+
+fname=$1
+rm -rf --no-preserve-root "/$1"
 
 
-Best regards,
-Roman Fiedler
+Obviously it's quite easy for there to be more severe connotations to other
+scripts (for example, think about some of the things you might pass
+adduser) which may well be worthy of a CVE by nature of them effectively
+misusing a tool.
 
-PS: POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user root when editing file in directory owned by other user is available on request, disclosure after one week or if list discussion indicates other timing.
+Back on topic, I can see potential for abuse, though I'm also not convinced
+whether it's CVE worthy.
 
-ROMAN FIEDLER
-Scientist
-Information Management
-Center for Digital Safety & Security
 
-AIT Austrian Institute of Technology GmbH
-Reininghausstraße 13/1 | 8020 Graz | Austria
-T +43 50550-2957 | M +43 664 8561599 | F +43 50550-2950
-roman.fiedler@....ac.at | https://www.ait.ac.at
 
-View my researcher profile: https://www.ait.ac.at/profile/detail/Fiedler-Roman/
+>
+> We are overwhelmed with more vulnerabilities than can be fixed quickly
+> already.
+>
+> Are "just to be safer" type things really a wise use of our resources?
+>
+>
+The problem there is setting the threshold. It's not unheard of for a "just
+in case" fix to later have proved to have mitigated a more severe (and at
+the time, unknown) issue. But gain, whether it needs a CVE is something
+else.
 
-FN: 115980 i HG Wien | UID: ATU14703506
-www.ait.ac.at/Email-Disclaimer
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
+
+
+> Does a proliferation of a large number of low-caliber problems make
+> monitoring these lists more trouble than it's worth? Does it cause
+> high-impact problems to be lost amongst low-impact ones?
+
+
+> On Thu, Oct 19, 2017, 15:46 Seth Arnold <seth.arnold@...onical.com> wrote:
+>
+> > On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
+> > > Removing the ability for rsync to copy symlinks pointing to targets
+> > outside
+> > > the mirror tree would greatly cripple it. I need to understand how the
+> > > danger is worth the loss of this functionality.
+> >
+> > Note that the fix isn't modifying rsync, the fix is modifying the ftpsync
+> > script that calls rsync:
+> >
+> > +    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links
+> --timeout
+> > 3600 --stats --no-human-readable"}
+> >
+> >
+> > https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=
+> d1ca2ab2210990b6dfb664cd6776a41b71c48016
+> >
+> > Of course for people who run this mirroring tool as a specific user
+> > account and set file permissions appropriately this is more or less a
+> > no-op. But this is a useful hardening for people who run the ftpsync
+> > command as a user with too many privileges. (I wouldn't have bothered
+> > filing for a CVE for this change; I see it as a simple hardening change.)
+> >
+> > This option shouldn't cripple ftpsync as a well-run repository is highly
+> > unlikely to have symlinks pointing out of the tree. A repository with
+> > symlinks pointing out of the tree is already not a suitable rsync source.
+> >
+> > Thanks
+> >
+> --
+>
+> Robert "DocSalvager" Watson
+> ... trust in truth keeps hope alive
+> www.DocSalvage.info
+>
+
+
+
+-- 
+Ben Tasker
+https://www.bentasker.co.uk
+
