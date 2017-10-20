@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["728" "Thursday" "8" "March" "2018" "23:52:33" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1803082349521.8732@wniryva>" "22" "[oss-security] CVE-2018-7550 Qemu: i386: multiboot OOB access while loading kernel image" nil nil nil "3" "2018030818:22:33" "[oss-security] CVE-2018-7550 Qemu: i386: multiboot OOB access while loading kernel image" (number mark "U       ppandit@redh Mar  8   22/728   " thread-indent "\"[oss-security] CVE-2018-7550 Qemu: i386: multiboot OOB access while loading kernel image\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["340" "Friday" "20" "October" "2017" "14:52:21" "+0200" "Ludovic =?utf-8?B?Q291cnTDqHM=?=" "ludo@gnu.org" "<87po9iugl6.fsf@gnu.org>" "15" "Re: [oss-security] [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder" nil nil nil "10" "2017102012:52:21" "[oss-security] [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder" (number mark "U       ludo@gnu.org Oct 20   15/340   " thread-indent "\"Re: [oss-security] [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder\"\n") "<A962A2D04FAB5C4499FEFD15B642FA0A35DF0CA5@EX02.corp.qihoo.net>" ("<A962A2D04FAB5C4499FEFD15B642FA0A35DF0CA5@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18260 invoked by uid 550); 8 Mar 2018 18:22:50 -0000
+Received: (qmail 23666 invoked by uid 550); 20 Oct 2017 13:16:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,39 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18241 invoked from network); 8 Mar 2018 18:22:50 -0000
-Date: Thu, 8 Mar 2018 23:52:33 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Cyrille Chatras <cyrille.chatras@orange.com>
-Message-ID: <nycvar.YSQ.7.76.1803082349521.8732@wniryva>
+Received: (qmail 32688 invoked from network); 20 Oct 2017 12:52:34 -0000
+X-Virus-Scanned: Debian amavisd-new at aquilenet.fr
+From: ludo@gnu.org (Ludovic =?utf-8?Q?Court=C3=A8s?=)
+To: =?utf-8?B?6L+e5LiA5rGJ?= <lianyihan@360.cn>
+Cc: "oss-security\@lists.openwall.com" <oss-security@lists.openwall.com>
+References: <A962A2D04FAB5C4499FEFD15B642FA0A35DF0CA5@EX02.corp.qihoo.net>
+X-URL: http://www.fdn.fr/~lcourtes/
+X-Revolutionary-Date: 29 =?utf-8?Q?Vend=C3=A9miaire?= an 226 de la
+ =?utf-8?Q?R=C3=A9volution?=
+X-PGP-Key-ID: 0x090B11993D9AEBB5
+X-PGP-Key: http://www.fdn.fr/~lcourtes/ludovic.asc
+X-PGP-Fingerprint: 3CE4 6455 8A84 FDC6 9DB4  0CFB 090B 1199 3D9A EBB5
+X-OS: x86_64-pc-linux-gnu
+Date: Fri, 20 Oct 2017 14:52:21 +0200
+In-Reply-To: <A962A2D04FAB5C4499FEFD15B642FA0A35DF0CA5@EX02.corp.qihoo.net>
+ ("
+	\=\?utf-8\?B\?6L+e5LiA5rGJIidz\?\= message of "Fri, 20 Oct 2017 09:10:45 +0000")
+Message-ID: <87po9iugl6.fsf@gnu.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Thu, 08 Mar 2018 18:22:38 +0000 (UTC)
-Subject: [oss-security] CVE-2018-7550 Qemu: i386: multiboot OOB access while loading kernel
- image
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder
 
-   Hello,
+Hi,
 
-Quick Emulator(QEMU) built with the PC System Emulator with multiboot feature 
-support is vulnerable to an OOB r/w memory access issue. It could occur while 
-loading a kernel image during a guest boot if multiboot head addresses 
-mh_load_end_addr was greater than mh_bss_end_addr.
+=E8=BF=9E=E4=B8=80=E6=B1=89 <lianyihan@360.cn> skribis:
 
-A user/process could use this flaw to potentially achieve arbitrary code 
-execution on a host.
+> FFmpeg trigger double-free when it parsing an craft AVI file to MKV file =
+using ffvhuff decoder.
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2018-03/msg01885.html
+[...]
 
-This issue was reported by Cyrille Chatras of Orange.com.
+> This was fixed with the following commit:
+> https://www.ffmpeg.org/download.html#releases
 
-CVE-2018-7550 assigned via -> https://cveform.mitre.org/
+Looks like this is not the URL you intended to share, is it?
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Ludo=E2=80=99.
