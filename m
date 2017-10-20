@@ -1,44 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/3
-Message-ID: <20170917115512.GA11577@curry>
-Date: Sun, 17 Sep 2017 14:55:12 +0300
-From: Alexander Batischev <eual.jp@...il.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Podbeuter podcast fetcher: remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/7
+Message-ID: <20171020223757.GA28323@hunt>
+Date: Fri, 20 Oct 2017 15:37:58 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Oct 19, 2017 at 08:32:55PM +0000, Robert Watson wrote:
+> Scripts depend on the underlying functionality of the various utilities
+> like rsync that they call. I'm having trouble understanding how a script
+> could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
 
-This has been assigned CVE-2017-14500: 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14500
+I'm not sure what 'script' vs 'not-script' has to do with anything.
+'Script' really just means "interpreted programming language" and says
+nothing about the threat model in use.
 
-On Sat, Sep 16, 2017 at 09:05:44PM +0200, Solar Designer wrote:
->"Instead, please start by posting about the (to be made) public issue 
->to oss-security (without a CVE ID), request a CVE ID from MITRE 
->directly, and finally "reply" to your own posting when you also have 
->the CVE ID to add."
+This ftpsync script and similar scripts are the primary tool for mirroring
+Debian, Ubuntu, and other derived Linux distributions, to the mirror
+networks that support many millions of computers.
 
-I was under impression that having a CVE ID speeds up processes in 
-distros, and fixes are released quicker. That's why for my previous (and 
-first ever) vulnerability I first got an ID and only then released the 
-details and the patch. The assignment took just a day.
+Probably other programs use rsync without --safe-links when they should.
+I didn't know the option existed until this thread was started (seriously,
+rsync(1) is a HUGE manpage) so I'm grateful to the original reporter
+for sending it along.
 
-Was my impression wrong? I just want to do things "right", so that 
-attackers have as little time as possible to exploit users. (I do 
-realize this all is best-effort and distros might still take time to 
-release, and then users might take ages to upgrade.)
+> We are overwhelmed with more vulnerabilities than can be fixed quickly
+> already.
 
-Now that I had an experience of waiting for three weeks, I'll also 
-re-consider if I want to become a CNA for my project. Previously it 
-seemed like a hassle; I'm not so sure now.
+Yes.
 
--- 
-Regards,
-Alexander Batischev
+> Are "just to be safer" type things really a wise use of our resources?
 
-PGP key 356961A20C8BFD03
-Fingerprint: CE6C 4307 9348 58E3 FD94  A00F 3569 61A2 0C8B FD03
+Yes. I think we all wish to see software that's less likely to fail.
 
+> Does a proliferation of a large number of low-caliber problems make
+> monitoring these lists more trouble than it's worth? Does it cause
+> high-impact problems to be lost amongst low-impact ones?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+It's up to you how you prioritize your time. For this issue, I updated my
+own personal mirroring script and a co-worker updated our wiki page:
+https://wiki.ubuntu.com/Mirrors/Scripts
+These steps took a few minutes and are unlikely to cause problems so it
+was an easy choice. Filing for a CVE for a wiki page feels like a waste of
+time so I'm not going to bother. The page is fixed and users can adopt the
+change if they wish.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
