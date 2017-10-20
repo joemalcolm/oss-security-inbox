@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/27/3
-Message-ID: <alpine.LFD.2.20.1702272324550.10165@wniryva>
-Date: Mon, 27 Feb 2017 23:26:54 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-6355 Virglrenderer: integer overflow while creating shader object
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/2
+Message-ID: <1db0dc47-b5d8-bcfa-62c9-319a0b7d5249@apache.org>
+Date: Fri, 20 Oct 2017 10:33:46 +0700
+From: Tellier Benoit <btellier@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: Announce: Apache James 3.0.1 security release
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+I, in the name of Apache James PMCs, am glad to announce you the release
+version 3.0.1 of Apache James server.
 
-Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
-for the virtio GPU, is vulnerable to an integer overflow issue. It could occur 
-when creating a shader object in vrend_create_shader().
+It fixes vulnerability described in CVE-2017-12628. The JMX server, also
+used by the command line client is exposed to a java de-serialization
+issue, and thus can be used to execute arbitrary commands. As James
+exposes JMX socket by default only on local-host, this vulnerability can
+only be used for privilege escalation.
 
-A guest user/process could use this flaw to crash the Qemu process resulting 
-DoS.
+Release 3.0.1 upgrades the incriminated library.
 
-Upstream patch:
----------------
-   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=93761787b29f37fa627dea9082cdfc1a1ec608d6
+Note that you can take additional defensive steps in order to mitigate
+this vulnerability:
 
-This issue was reported by Li Qiang of 360.cn Inc.
+ - Ensure that you restrict the access to JMX only on local-host
 
-'CVE-2017-6355' assigned via -> http://cveform.mitre.org/
+ - Ensure that you are using a recent Java Run-time Environment. For
+instance OpenJDK 8 u111 is vulnerable but OpenJDK 8 u 141 is not.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+ - You can additionally run James in a container to limit damages of
+potential exploits
+
+ - And of course upgrade to the newest 3.0.1 version.
+
+Best regards,
+
+Benoit Tellier
+
