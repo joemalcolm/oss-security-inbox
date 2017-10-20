@@ -1,84 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/1
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A35DEFDF7@EX02.corp.qihoo.net>
-Date: Mon, 9 Oct 2017 01:59:52 +0000
-From: 连一汉 <lianyihan@....cn>
-To: Guido Günther <agx@...xcpu.org>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: 答复: CVE-2017-14160: libvorbis-1.3.5 bark_noise_hybridmp() integer signedness bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/1
+Message-ID: <CAOfWR+Ga88eCNj-cQiBBXzM=S+xBfE5fsbgBWXMWSnN=8_4rFw@mail.gmail.com>
+Date: Fri, 20 Oct 2017 23:08:14 +0000
+From: Robert Watson <robertcwatson1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-> Where can the reproducer for this be found? Can you attach it to
+Thank You for taking the time to explain the scripting issue.
 
-I have add poc-attachment on https://gitlab.xiph.org/xiph/vorbis/issues/2330 :)
+Okay, so a script adds a symlink to /etc/shadow or something else
+confidential. Unless they're root, what good does it do them? They can't
+read it.
 
------邮件原件-----
-发件人: Guido Günther [mailto:agx@...xcpu.org] 
-发送时间: 2017年10月1日 2:36
-收件人: 连一汉
-抄送: oss-security@...ts.openwall.com
-主题: Re: [oss-security] CVE-2017-14160: libvorbis-1.3.5 bark_noise_hybridmp() integer signedness bug
+On Fri, Oct 20, 2017, 14:35 Ben Tasker <ben@...tasker.co.uk> wrote:
 
-Hi,
-On Thu, Sep 21, 2017 at 06:27:15AM +0000, 连一汉 wrote:
-> Hi,
-> 
-> I’m a security researcher of Qihoo 360 GearTeam.
-> My partner Zhibin Hu and I found a vulnerability of libvorbis-1.3.5.
-> And we have applied for CVE-2017-14160 of this vulnerability.
-> ================== test command ====================
-> 
-> ffmpeg –i poc.mp4 –y 1.mkv
+> On Thu, Oct 19, 2017 at 9:32 PM, Robert Watson <robertcwatson1@...il.com>
+> wrote:
+>
+> > Scripts depend on the underlying functionality of the various utilities
+> > like rsync that they call. I'm having trouble understanding how a script
+> > could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
+> >
+>
+> Whether you think it applies to the current example is obviously a
+> different debate, but the simple principle is that the script is (arguably)
+> using the underlying tool unsafely. The tool (rsync in this case) provides
+> an argument to prevent the "risky" behaviour, but the calling script isn't
+> using it, potentially opening a vector for misuse.
+>
+> So if there should be a CVE, it shouldn't be against rsync (as it provides
+> the means to avoid, and in other cases you may even find the calling script
+> is overriding the "safe" behaviour) but against the calling script.
+>
+> To give a fairly limited example, both of these scripts rely on the same
+> functionality, but one is riskier (albeit not from a security perspective)
+> - in neither case is the tool at risk
+>
+> fname=$1
+> rm -rf "/$1"
+>
+> ...
+>
+> fname=$1
+> rm -rf --no-preserve-root "/$1"
+>
+>
+> Obviously it's quite easy for there to be more severe connotations to other
+> scripts (for example, think about some of the things you might pass
+> adduser) which may well be worthy of a CVE by nature of them effectively
+> misusing a tool.
+>
+> Back on topic, I can see potential for abuse, though I'm also not convinced
+> whether it's CVE worthy.
+>
+>
+>
+> >
+> > We are overwhelmed with more vulnerabilities than can be fixed quickly
+> > already.
+> >
+> > Are "just to be safer" type things really a wise use of our resources?
+> >
+> >
+> The problem there is setting the threshold. It's not unheard of for a "just
+> in case" fix to later have proved to have mitigated a more severe (and at
+> the time, unknown) issue. But gain, whether it needs a CVE is something
+> else.
+>
+>
+>
+>
+> > Does a proliferation of a large number of low-caliber problems make
+> > monitoring these lists more trouble than it's worth? Does it cause
+> > high-impact problems to be lost amongst low-impact ones?
+>
+>
+> > On Thu, Oct 19, 2017, 15:46 Seth Arnold <seth.arnold@...onical.com>
+> wrote:
+> >
+> > > On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
+> > > > Removing the ability for rsync to copy symlinks pointing to targets
+> > > outside
+> > > > the mirror tree would greatly cripple it. I need to understand how
+> the
+> > > > danger is worth the loss of this functionality.
+> > >
+> > > Note that the fix isn't modifying rsync, the fix is modifying the
+> ftpsync
+> > > script that calls rsync:
+> > >
+> > > +    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links
+> > --timeout
+> > > 3600 --stats --no-human-readable"}
+> > >
+> > >
+> > > https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=
+> > d1ca2ab2210990b6dfb664cd6776a41b71c48016
+> > >
+> > > Of course for people who run this mirroring tool as a specific user
+> > > account and set file permissions appropriately this is more or less a
+> > > no-op. But this is a useful hardening for people who run the ftpsync
+> > > command as a user with too many privileges. (I wouldn't have bothered
+> > > filing for a CVE for this change; I see it as a simple hardening
+> change.)
+> > >
+> > > This option shouldn't cripple ftpsync as a well-run repository is
+> highly
+> > > unlikely to have symlinks pointing out of the tree. A repository with
+> > > symlinks pointing out of the tree is already not a suitable rsync
+> source.
+> > >
+> > > Thanks
+> > >
+> > --
+> >
+> > Robert "DocSalvager" Watson
+> > ... trust in truth keeps hope alive
+> > www.DocSalvage.info
+> >
+>
+>
+>
+> --
+> Ben Tasker
+> https://www.bentasker.co.uk
+>
+-- 
 
-Where can the reproducer for this be found? Can you attach it to
+Robert "DocSalvager" Watson
+... trust in truth keeps hope alive
+www.DocSalvage.info
 
-    https://gitlab.xiph.org/xiph/vorbis/issues/2330
-
-Cheers,
- -- Guido
-
-> // libvorbis-1.3.5 has been compiled into ffmpeg static.
-> 
-> ================= needed version ====================
-> 
-> I compile it as https://github.com/google/oss-fuzz/blob/master/projects/ffmpeg/build.sh
-> 
-> This is the problem of libvorbis-1.3.5, and I tried libvorbis in ubuntu repo, it could also trigger this vul or bug.
-> 
-> =================== crash info ======================
-> 
-> (gdb) bt
-> #0  0x0000000001f95afd in bark_noise_hybridmp (n=256, b=0x32cd940, f=0x32e5010, noise=0x32f7ed0, offset=140, fixed=-1) at psy.c:630
-> 
-> #1  0x0000000001f95430 in _vp_noisemask (p=0x32aa820, logmdct=0x32e5010, logmask=0x32f7ed0) at psy.c:705
-> #2  0x0000000001facac9 in mapping0_forward (vb=0x329cfb0) at mapping0.c:417
-> #3  0x0000000001f92c9e in vorbis_analysis (vb=0x329cfb0, op=0x0) at analysis.c:46
-> #4  0x0000000000bc2725 in libvorbis_encode_frame (avctx=0x329ca00, avpkt=0x32ab540, frame=0x32e4400, got_packet_ptr=0x7fffffffdbf4) at libavcodec/libvorbisenc.c:311
-> #5  0x00000000009e5717 in avcodec_encode_audio2 (avctx=0x329ca00, avpkt=0x32ab540, frame=0x32e4400, got_packet_ptr=0x7fffffffdbf4)at libavcodec/encode.c:198
-> #6  0x00000000009e62d8 in do_encode (avctx=0x329ca00, frame=0x32e4400, got_packet=0x7fffffffdbf4) at libavcodec/encode.c:375
-> 
-> #7  0x00000000009e6224 in avcodec_send_frame (avctx=0x329ca00, frame=0x32e4400) at libavcodec/encode.c:421
-> #8  0x0000000000438ef5 in do_audio_out (of=0x3299560, ost=0x329c7a0, frame=0x32e4400) at ffmpeg.c:921
-> #9  0x0000000000436c5b in reap_filters (flush=0) at ffmpeg.c:1515
-> #10 0x000000000042dc30 in transcode_step () at ffmpeg.c:4553
-> #11 0x000000000042bc49 in transcode () at ffmpeg.c:4597
-> #12 0x000000000042b092 in main (argc=5, argv=0x7fffffffe678) at ffmpeg.c:4803
-> 
-> (gdb) l
-> 625
-> 626         lo = b[i] >> 16;
-> 627         hi = b[i] & 0xffff;
-> 628         if(hi>=n)break;
-> 629
-> 630         tN = N[hi] - N[lo];
-> 631         tX = X[hi] - X[lo];
-> 632         tXX = XX[hi] - XX[lo];
-> 633         tY = Y[hi] - Y[lo];
-> 634         tXY = XY[hi] - XY[lo];
-> (gdb) p hi
-> $4 = 0
-> (gdb) p lo
-> $5 = 49656                                                                 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-> (gdb) p i
-> $6 = 259
-> 
