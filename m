@@ -1,29 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/12
-Message-ID: <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
-Date: Tue, 31 Oct 2017 10:54:08 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/7
+Message-ID: <20171021224129.34you4kzttvgnbj7@tunkki.bugs.fi>
+Date: Sun, 22 Oct 2017 01:41:29 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: LAME 3.100 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno Böck wrote:
-> I just sent this to the vim dev list, but I guess it's interesting for
-> oss-security, too.
-> ...
+Hello,
 
-Good thing to point out.  Same goes for other editors that drop ~ and
-#...# files and the like.  The default location shouldn't be an
-exposure.
+LAME 3.100 has been released including fixes to security vulnerabilities.
+Coy-paste from history:
 
-Sure, you can argue that maybe some systems should ignore these files,
-block access, etc, but it is pretty absurd to expect every other piece
-of software in the universe to work around very unsafe defaults of text
-editors.  
+Rogério Brito
 
-Also, it almost never makes sense to put things in /tmp, for several
-reasons pointed out by others.  Making ~/.vim/... the default location
-clearly is the best solution.
+- Don't include the debian directory as one that is needed during builds. Patch
+taken from Debian's packaging of lame.
 
-Cheers,
-tim
+- Resurrect Owen Taylor's code dated from 97-11-3 to properly deal with GTK1.
+This was transplanted back from aclocal.m4 with a patch provided by Andres
+Mejia. This change makes it easy to regenerate autotools' files with a simple
+invocation of autoconf -vfi.
+
+- Fix possible race condition causing build failures in libmp3lame. Discovered
+in automated builds by the Debian project with patch provided by Andres Mejia.
+
+Robert Hegemann
+
+- Improved detection of MPEG audio data in RIFF WAVE files. Tracker item [
+3545112 ] Invalid sampling detection
+
+- New switch --gain <decibel>, range -20.0 to +12.0, a more convenient way to
+apply Gain adjustment in decibels, than the use of --scale <factor>.
+
+- Fix for tracker item [ 3558466 ] Bug in path handling
+
+- Fix for tracker item [ 3567844 ] problem with Tag genre
+
+- Fix for tracker item [ 3565659 ] no progress indication with pipe input
+
+- Fix for tracker item [ 3544957 ] scale (empty) silent encode without warning
+
+- Fix for tracker item [ 3580176 ] environment variable LAMEOPT doesn't work
+anymore
+
+- Fix for tracker item [ 3608583 ] input file name displayed with wrong
+character encoding (on windows console with CP_UTF8)
+
+- Fix for bug ticket [ #447 ] Fix dereference NULL and Buffer not NULL
+terminated issues. Thanks to Surabhi Mishra
+
+- Fix for bug ticket [ #445 ] dereference of a null pointer possible in loop.
+Thanks to Renu Tyagi
+
+- Fix for bug ticket [ #449 ] Make sure functions with SSE instructions
+maintain their own properly aligned stack. Thanks to Fabian Greffrath
+
+- Fix for bug ticket [ #458 ] Multiple Stack and Heap Corruptions from
+Malicious File. Thanks to Gareth Evans and Elio Blanca
+
+- Fix for bug ticket [ #460 ] A division by zero vulnerability. Thanks to Wang
+Shiyang, Liu Bingchang
+
+- Fix for bug ticket [ #461 ] CVE-2017-9410 fill_buffer_resample function in
+libmp3lame/util.c heap-based buffer over-read and ap
+
+- Fix for bug ticket [ #462 ] CVE-2017-9411 fill_buffer_resample function in
+libmp3lame/util.c invalid memory read and application crash
+
+- Fix for bug ticket [ #463 ] CVE-2017-9412 unpack_read_samples function in
+frontend/get_audio.c invalid memory read and application crash
+
+- Fix for bug ticket [ #434 ] clip detect scale suggestion unaware of scale
+input value
+
+- HIP decoder bug fixed: decoding mixed blocks of lower sample frequency Layer3
+data resulted in internal buffer overflow (write). Thanks to Henri Salo
+
+Alexander Leidinger
+
+- Feature request, patch ticket [ #27 ] Add
+lame_encode_buffer_interleaved_int() by Michael Fink
+
+-- 
+Henri Salo
