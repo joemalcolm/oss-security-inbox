@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1481" "Thursday" "23" "July" "2015" "20:14:42" "+0300" "Henri Salo" "henri@nerv.fi" "<20150723171442.GA587@tunkki>" "38" "[oss-security] CVE request: WordPress 4.2.2 and earlier cross-site scripting vulnerability" nil nil nil "7" "2015072317:14:42" "[oss-security] CVE request: WordPress 4.2.2 and earlier cross-site scripting vulnerability" (number mark "U       henri@nerv.f Jul 23   38/1481  " thread-indent "\"[oss-security] CVE request: WordPress 4.2.2 and earlier cross-site scripting vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2439" "Saturday" "21" "October" "2017" "12:58:47" "+0200" "Solar Designer" "solar@openwall.com" "<20171021105847.GA16973@openwall.com>" "52" "Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" "^Date:" nil nil "10" "2017102110:58:47" "[oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" (number mark "        solar@openwa Oct 21   52/2439  " thread-indent "\"Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync\"\n") "<CAOfWR+Ga88eCNj-cQiBBXzM=S+xBfE5fsbgBWXMWSnN=8_4rFw@mail.gmail.com>" ("<20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>" "<CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>" "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>" "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>" "<20171019194428.GK20315@hunt>" "<CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>" "<CABMkiz6X3N8X7nq8eCnNGVUEx8jzd7hNLk3W_8OdW0Pg+UvSYQ@mail.gmail.com>" "<CAOfWR+Ga88eCNj-cQiBBXzM=S+xBfE5fsbgBWXMWSnN=8_4rFw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7416 invoked by uid 550); 23 Jul 2015 17:14:25 -0000
+Received: (qmail 15813 invoked by uid 550); 21 Oct 2017 11:00:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7355 invoked from network); 23 Jul 2015 17:14:24 -0000
-X-Virus-Scanned: Debian amavisd-new at mango.nerv.fi
-Date: Thu, 23 Jul 2015 20:14:42 +0300
-From: Henri Salo <henri@nerv.fi>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <20150723171442.GA587@tunkki>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 15366 invoked from network); 21 Oct 2017 10:58:58 -0000
+Message-ID: <20171021105847.GA16973@openwall.com>
+References: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org> <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com> <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com> <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com> <20171019194428.GK20315@hunt> <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com> <CABMkiz6X3N8X7nq8eCnNGVUEx8jzd7hNLk3W_8OdW0Pg+UvSYQ@mail.gmail.com> <CAOfWR+Ga88eCNj-cQiBBXzM=S+xBfE5fsbgBWXMWSnN=8_4rFw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE request: WordPress 4.2.2 and earlier cross-site scripting
- vulnerability
+In-Reply-To: <CAOfWR+Ga88eCNj-cQiBBXzM=S+xBfE5fsbgBWXMWSnN=8_4rFw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Date: Sat, 21 Oct 2017 12:58:47 +0200
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+To: oss-security@lists.openwall.com
 
-Can I get CVE for WordPress 4.2.2 and earlier cross-site scripting
-vulnerability, thanks.
+Robert,
 
-https://wordpress.org/news/2015/07/wordpress-4-2-3/
+As a moderator, I let your questions through so far, as well as all
+replies.  I think it is in fact beneficial to question things and make
+sure people are on the same page as to what constitutes (or does not
+constitute) a security issue, and what exactly the issues are.  That
+said, please remember that your messages reach thousands of people and
+take up a tiny bit of each person's time - which adds up to way more
+time than you probably put into writing these messages.  Thus, you're
+expected to invest quite some time into reading and thinking of the
+replies you got so far before you post anything further.  To make this
+specific, please stop and re-read and think for 10 minutes before you
+possibly post anything else to this mailing list.
 
-"""
-WordPress 4.2.3 is now available. This is a security release for all previous
-versions and we strongly encourage you to update your sites immediately.
+I feel that you posted the below without giving it enough time and
+thought first:
 
-WordPress versions 4.2.2 and earlier are affected by a cross-site scripting
-vulnerability, which could allow users with the Contributor or Author role to
-compromise a site. This was reported by Jon Cave and fixed by Robert Chapin,
-both of the WordPress security team.
+On Fri, Oct 20, 2017 at 11:08:14PM +0000, Robert Watson wrote:
+> Okay, so a script adds a symlink to /etc/shadow or something else
+> confidential. Unless they're root, what good does it do them? They can't
+> read it.
 
-We also fixed an issue where it was possible for a user with Subscriber
-permissions to create a draft through Quick Draft. Reported by Netanel Rubin
-from Check Point Software Technologies.
+I think this specific question had already been addressed by Ben in:
 
-Our thanks to those who have practiced responsible disclosure of security
-issues.
+http://www.openwall.com/lists/oss-security/2017/10/18/12
 
-WordPress 4.2.3 also contains fixes for 20 bugs from 4.2. For more information,
-see the release notes or consult the list of changes.
+"There's stuff that will be protected by permissions (for example, you
+shouldn't be able to pull down /etc/shadow - so long as nginx/apache isn't
+running as root), but there are other files that you might consider
+sensitive(ish). Pulling down /etc/passwd would give you a list of known
+good usernames to better target brute-force attempts (for example). Or
+perhaps using it to grab the config file of some dynamic site on the same
+server etc."
 
-Download WordPress 4.2.3 or venture over to Dashboard → Updates and simply click
-“Update Now.” Sites that support automatic background updates are already
-beginning to update to WordPress 4.2.3.
+When a thread starts going in circles like that, as a moderator I have
+to intervene and stop it.  So I do.
 
-Thanks to everyone who contributed to 4.2.3:
+While we're at it, I also recommend that you avoid top-posting and
+over-quoting.  Here's how to format your messages better:
 
-Aaron Jorbin, Andrew Nacin, Andrew Ozz, Boone Gorges, Chris Christoff, Dion
-Hulse, Dominik Schilling, Ella Iseulde Van Dorpe, Gabriel Pérez, Gary
-Pendergast, Mike Adams, Robert Chapin, Nikolay Bachiyski, Ross Wintle, and Scott
-Taylor.
-"""
+http://www.complang.tuwien.ac.at/anton/mail-news-errors.html
+http://www.netmeister.org/news/learn2quote.html
 
--- 
-Henri Salo
+I don't find this message formatting aspect terribly important per se,
+but I may use it as yet another unreliable indicator of whether the
+person posting cares for other people's time or not.  If someone
+top-posts and quotes the previous message in its entirety on a mailing
+list (not in business correspondence, where this unfortunately became
+customary), chances are they didn't think much of what they're replying
+to and what they're posting as well.
+
+Alexander
