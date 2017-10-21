@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/16/6
-Message-ID: <20170216201616.GA26922@openwall.com>
-Date: Thu, 16 Feb 2017 21:16:16 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/4
+Message-ID: <20171021113934.bk2kdbl66o6anpbr@perpetual.pseudorandom.co.uk>
+Date: Sat, 21 Oct 2017 12:39:34 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 16, 2017 at 03:16:45PM -0200, Fabio Olive Leite wrote:
-> On 02/11/2017 09:35 PM, Solar Designer wrote:
-> >> C5. I want MITRE to send the https://cveform.mitre.org form data, and
-> >> the CVE ID, to the oss-security list at the same time that these are
-> >> sent to the requester.
-> >>
-> >> R5. We have had internal discussions within MITRE about this. We are
-> >> able to implement this easily if the community requires this approach.
-> >> At the moment, we are expecting the requester to resend this
-> >> information to oss-security once they accept their CVE ID assignment.
-> > 
-> > MITRE - can you please implement that, and we'll see how it goes and
-> > whether we need it adjusted or possibly discontinued if things go wrong
-> > or if there's opposition (so far, there's almost none)?
-> 
-> Was there any response from Mitre to this request?  I believe a lot of
-> people would feel better if they confirmed they will do it.
+On Fri, 20 Oct 2017 at 23:08:14 +0000, Robert Watson wrote:
+> Okay, so a script adds a symlink to /etc/shadow or something else
+> confidential. Unless they're root, what good does it do them? They can't
+> read it.
 
-I saw no response from MITRE.
+In that particular case, it would do an attacker no good. (Unless the
+web server that will be serving the mirrored content is running as root,
+but don't do that.)
 
-Kurt, who is not with MITRE but who presumably knows what he's saying,
-implied it'd be non-trivial for MITRE to separate issues in open source
-vs. other software:
+However, there are plenty of files on a system that are readable by the
+web server, but should not be readable by random people on the Internet.
+If the same web server has password-protected directories (for example
+using Apache .htaccess/.htpasswd) then the files with their passwords
+usually need to be readable by the web server, but should not be served.
 
-http://www.openwall.com/lists/oss-security/2017/02/12/2
+/etc/passwd is another common example: it doesn't contain actual
+passwords since shadow passwords became widespread, but having a list
+of valid usernames available to the public would make life easier for
+an attacker, and should usually be avoided.
 
-"We could also have the MITRE CVE ID feed new stuff into oss-security but it
-would include non open source stuff."
-
-MITRE - is this difficulty the reason for the lack of response so far?
-If so, should we consider workarounds such as setting up another mailing
-list to which all assigned CVE IDs would be posted?
-
-Alexander
+    smcv
