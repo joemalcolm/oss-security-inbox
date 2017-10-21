@@ -1,193 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/6
-Message-ID: <2f823095-af60-b5d7-b828-d92981e05973@maxsi.org>
-Date: Wed, 8 Nov 2017 17:16:00 +0100
-From: Jonas 'Sortie' Termansen <sortie@...si.org>
-To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com, John Haxby <john.haxby@...cle.com>
-Subject: Re: Race condition between UDP bind(2) and connect(2) delivers wrong datagrams
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/3
+Message-ID: <20171021105847.GA16973@openwall.com>
+Date: Sat, 21 Oct 2017 12:58:47 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-Hi Florian & John,
+Robert,
 
-(Please to/cc me on responses as I am not subscribed)
+As a moderator, I let your questions through so far, as well as all
+replies.  I think it is in fact beneficial to question things and make
+sure people are on the same page as to what constitutes (or does not
+constitute) a security issue, and what exactly the issues are.  That
+said, please remember that your messages reach thousands of people and
+take up a tiny bit of each person's time - which adds up to way more
+time than you probably put into writing these messages.  Thus, you're
+expected to invest quite some time into reading and thinking of the
+replies you got so far before you post anything further.  To make this
+specific, please stop and re-read and think for 10 minutes before you
+possibly post anything else to this mailing list.
 
-Thank you for your thoughtful replies, you raise some good points. I had
-thought about them previously and should have mentioned them in my original
-email.
+I feel that you posted the below without giving it enough time and
+thought first:
 
-My argument is as follows:
+On Fri, Oct 20, 2017 at 11:08:14PM +0000, Robert Watson wrote:
+> Okay, so a script adds a symlink to /etc/shadow or something else
+> confidential. Unless they're root, what good does it do them? They can't
+> read it.
 
-1) Let us first agree on how to interpret what POSIX mandates and how to
-   interpret the documentation for existing systems, as this is a
-   prerequisite for coming to an agreement.
-2) A disconnect between the promises made by documentation/standards and
-   what implementations actually do can be enough to be a security problem.
-3) The behavior of existing implementations is not useful, and the
-   standardized behavior (and arguably documented behavior) is useful.
-4) We should fix the implementations to filter the receive queue on connect
-   and ideally clarify the intended behavior in all the existing
-   documentation.
+I think this specific question had already been addressed by Ben in:
 
-On 11/06/2017 07:42 PM, Florian Weimer wrote:
-> The alternative is that these systems are handling the situation
-> correctly.
-> 
-> [...]
-> 
-> Whatever the exact wording used is, the intent of POSIX is to describe
-> the BSD sockets API behavior.  If the API does something else, that's a
-> POSIX bug.
+http://www.openwall.com/lists/oss-security/2017/10/18/12
 
-Absolutely, if the standard mdanated one behavior, and if all the
-implementations did something else and documented that they did so, it would
-be a bug in the standard that should be fixed.
+"There's stuff that will be protected by permissions (for example, you
+shouldn't be able to pull down /etc/shadow - so long as nginx/apache isn't
+running as root), but there are other files that you might consider
+sensitive(ish). Pulling down /etc/passwd would give you a list of known
+good usernames to better target brute-force attempts (for example). Or
+perhaps using it to grab the config file of some dynamic site on the same
+server etc."
 
-This issue is not that case because Darwin[1], DragonFly[2], FreeBSD[3],
-GNU/Hurd (though by importing Linux man pages), Linux[4], NetBSD[5], and
-OpenBSD[6] all document behavior compatible with POSIX[7].
+When a thread starts going in circles like that, as a moderator I have
+to intervene and stop it.  So I do.
 
-POSIX 2008 (2016 edition) says[7]:
+While we're at it, I also recommend that you avoid top-posting and
+over-quoting.  Here's how to format your messages better:
 
-    "For SOCK_DGRAM sockets, the peer address identifies where all datagrams
-     are sent on subsequent send() functions, and limits the remote sender
-     for subsequent recv() functions."
+http://www.complang.tuwien.ac.at/anton/mail-news-errors.html
+http://www.netmeister.org/news/learn2quote.html
 
-POSIX talks about the behavior of the recv() functions here, that they limit
-the remote sender subsequent to the connect(2) call. It is clearly not
-allowing the behavior I'm seeing in all the affected operating systems. Yes,
-this text is based on the documentation of existing systems, so let's see
-what the BSD systems all say:
+I don't find this message formatting aspect terribly important per se,
+but I may use it as yet another unreliable indicator of whether the
+person posting cares for other people's time or not.  If someone
+top-posts and quotes the previous message in its entirety on a mailing
+list (not in business correspondence, where this unfortunately became
+customary), chances are they didn't think much of what they're replying
+to and what they're posting as well.
 
-Darwin[1], DragonFly[2], FreeBSD[3], NetBSD[5], OpenBSD[6] says:
-
-    "If it is of type SOCK_DGRAM, this call specifies the peer with which
-     the socket is to be associated; this address is that to which datagrams
-     are to be sent, and the only address from which datagrams are to be
-     received."
-
-This language is the same in all these systems and I can track it to
-2.10 BSD[8].
-
-The key ambiguity here is what "are to be received" means. Arguably, it
-means when the kernel socket receives the datagram and adds it to the
-receive queue. Alternatively, it refers to the act of using one of the
-recv() functions. I think it's likely the author did not consider the bind +
-connect race condition.
-
-Linux[4] and GNU/Hurd says:
-
-    "If the socket sockfd is of type SOCK_DGRAM, then addr is the address to
-     which datagrams are sent by default, and the only address from which
-     datagrams are received."
-
-The language is different here, though it shares the same language about
-receiving datagrams.
-
-If we interpret 'receive' in the BSD & Linux documentation to mean the act
-of using a recv() function, then there is a disconnect between the
-documentation and the actual implementations. If we interpret 'receive' as
-the act of the kernel receiving the datagram and adding it to the receive
-queue, then the documentation is correct, but is negligent by failing to
-mention the subtle race condition. In either case, application programmers
-do not know they need to either empty the receive after connect(2) or that
-they need to check the sender using recvfrom(2) / recvmsg(2).
-
-If the documentation leads developers to believe connect(2) will cause any
-subsequent recv() call to only receive from the connected remote, and it is
-not the case, then that is a security problem.
-
-The advantage of connect(2)'ing a UDP socket is that a default address is
-set and now send(2), write(2), and writev(2) can be used as well, which
-makes communicating with a single peer more convenient. Likewise the ability
-to limit incoming packets to a single peer is also convenient and lets you
-receive using recv(2), read(2), readv(2) without worrying about the sender
-address. However, to use the sender check advantage right now, we need to
-empty the receive queue after the connect(2). This is error prone, as the
-programmer needs to know to do this (it's not documented anywhere). I don't
-believe it's useful at all that the receive queue remains unfiltered
-following a connect(2), while it is useful to have connect(2) provide the
-guarantee that any subsequent recv() function will return only datagrams
-from the remote peer.
-
-That is, I believe the behavior described by POSIX is superior to what all
-the implementations actually do.
-
-I see two internally consistent ways we could resolve this problem:
-
-1) Implement the behavior described by POSIX by having connect(2) on an UDP
-   socket filter the receive queue, and possibly updating the connect(2)
-   documentation of every OS to be a little less ambiguous and say the same
-   as POSIX. Software that relied on bind+connect not having a race
-   condition will be secured by the kernel fix.
-
-2) Declare the existing behavior desirable, add a caveats section to every
-   connect(2) manual page describing this pitfall and the need to empty the
-   receive queue after connect(2). File a POSIX bug and have the mandated
-   behavior changed in the next POSIX Technical Corrigendum or next major
-   update. We audit software on every operating system for this flaw and
-   ensure they properly empty the receive queue.
-
-My preference is 1) because I believe the receive queue filtering behavior
-to be more useful. It also automatically closes the race condition in any
-software that use bind+connect and doesn't empty the receive queue.
-
-On 11/06/2017 07:42 PM, Florian Weimer wrote:
-> It's often possible to simply drain all pending datagrams after the
-> connect call because the application knows that all packets received at
-> this points must be garbage and not intended for it to process.
-
-Yep. The application programmer would of course need to know to do this.
-The pending data might not only be datagrams, but could also be synchronous
-errors that need to be ignored.
-
-On 11/06/2017 07:42 PM, Florian Weimer wrote:
->> I've not been able to think of / find any other software that bind(2)
->> a UDP
->> socket to an address and then use connect(2) to fix a particular peer,
->> but
->> I don't have time to do a thorough search. Please let me know if you can
->> think of any.
-> 
-> OpenJDK had a similar issue because it supported socket disconnect.
-
-Interesting. Do you have have any reference on this, I would love to read
-more about it.
-
-On 11/07/2017 14:20 PM, John Haxby wrote:
-> I know that that's not Posix, but it underlines the interesting question
-> of what happens to packets that have already been received that have the
-> "wrong" source address?
-
-POSIX does specify what happens in connect(), any subsequent recv()
-function (not the act of the kernel receiving the datagram) will limit the
-remote sender. POSIX's focus is on the recv() functions, which does cover
-anything already in the receive queue.
-
-On 11/07/2017 14:20 PM, John Haxby wrote:
-> You might hope that the kernel will just flush any datagrams that the
-> application has picked up.  What happens, though, if the program is
-> working its way through datagrams that it has received or is receiving
-> from the kernel?   That's a rhetorical question -- it should, of course,
-> discard packets it is (no longer) interested in.
->
-> While there's plenty of scope for programs to get this wrong, I don't
-> think the kernel is under any obligation to attempt to flush anything
-> either from a standards point of view or from a real-world
-> implementation point of view.
-
-POSIX does obligate the kernel to limit the remote sender for subsequent
-recv() functions. While delivering wrong datagrams does not harm the kernel
-itself, it is good if the kernel can provide user-space with useful
-guarantees. In this case, the documentation suggests a guarantee exists when
-it actually doesn't, which is bad.
-
-Jonas
-
-[1] https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man2/connect.2.html
-[2] https://leaf.dragonflybsd.org/cgi/web-man?command=connect&section=2
-[3] https://www.freebsd.org/cgi/man.cgi?query=connect&sektion=2
-[4] http://man7.org/linux/man-pages/man2/connect.2.html
-[5] http://netbsd.gw.com/cgi-bin/man-cgi?connect+2+NetBSD-current
-[6[ https://man.openbsd.org/connect.2
-[7] http://pubs.opengroup.org/onlinepubs/9699919799/functions/connect.html
-[8] https://www.freebsd.org/cgi/man.cgi?query=connect&apropos=0&sektion=2&manpath=2.10+BSD&arch=default&format=html
+Alexander
