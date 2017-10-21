@@ -1,43 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/8
-Message-ID: <20170622125636.GC3350@intrepid>
-Date: Thu, 22 Jun 2017 14:56:38 +0200
-From: Alexander Bergmann <abergmann@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/5
+Message-ID: <4eb93d94-2788-3d38-06e7-53cfe9d43a52@ehuk.net>
+Date: Sat, 21 Oct 2017 19:19:46 +0100
+From: Eddie Chapman <eddie@...k.net>
 To: oss-security@...ts.openwall.com
-Cc: thomasdullien@...gle.com
-Subject: Re: CVE Request: unrar: VMSF_DELTA filter allows arbitrary memory write
+Subject: CVE-2017-15670, CVE-2017-15671 glibc: Buffer overflow and memory leak in glob with GLOB_TILDE
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 21, 2017 at 02:20:01PM +0200, Alexander Bergmann wrote:
-> Hi,
-> 
-> It was reported that unrar fixed a VMSF_DELTA memory corruption issue in
-> there latest version unrarsrc-5.5.5.tar.gz. This problem was reported to
-> Sophos AV in 2012 but never reach upstream rar.
-> 
-> https://bugs.chromium.org/p/project-zero/issues/detail?id=1286&desc=6#maincol
-> 
-> Reproducer:
-> 
-> Base64-encoded RAR file to trigger the VMSF_DELTA issue:
-> 
-> UmFyIRoHAPlOcwAADgAAAAAAAAAAMAh0AAAmAI4AAAAAAAAAAhBBUiEAAAAAHQAGAAAAACBzdGRv
-> dXQgIVUMzRDNmBGByDAda+AXaSv4KvQr1K/oejL05mXmXmww5tEk8gA9k8nmieyeyeswuOR6cx69
-> a2Hd6zQwu3aoMDDwMEswADAAMD4P938w+dydoRFwAmwAAAAAvv////+/////+9W3QFgAAQAGAAAA
-> Ooimhd12AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-> 
-> As far as I can tell no CVE was assigned to this issue so far.
+Just a heads up for anyone around over the weekend ...
 
-Mitre.org assigned CVE-2012-6706 to this issue.
+== CVE-2017-15670 ==
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15670
+"The GNU C Library (aka glibc or libc6) before 2.27 contains an 
+off-by-one error leading to a heap-based buffer overflow in the glob 
+function in glob.c, related to the processing of home directories using 
+the ~ operator followed by a long string."
+
+https://sourceware.org/bugzilla/show_bug.cgi?id=22320
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1504804
+"It is possible that an attacker might use this to escalate his 
+privileges or execute code."
+
+Upstream patch:
+https://git.savannah.gnu.org/cgit/gnulib.git/commit/?id=2d1bd71ec70a31b01d01b734faa66bb1ed28961f
 
 
-Regards,
-Alex~
+== CVE-2017-15671 ==
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15671
+"The glob function in glob.c in the GNU C Library (aka glibc or libc6) 
+before 2.27, when invoked with GLOB_TILDE, could skip freeing allocated 
+memory when processing the ~ operator with a long user name, potentially 
+leading to a denial of service (memory leak)."
 
-
--- 
-Alexander Bergmann <abergmann@...e.com>, Security Engineer, GPG:9FFA4886
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nürnberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+https://sourceware.org/bugzilla/show_bug.cgi?id=22325
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2017-15671
