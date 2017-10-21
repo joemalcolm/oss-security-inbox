@@ -1,4 +1,9 @@
-Received: (qmail 3641 invoked by uid 550); 9 Jul 2024 10:24:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2797" "Sunday" "22" "October" "2017" "01:41:29" "+0300" "Henri Salo" "henri@nerv.fi" "<20171021224129.34you4kzttvgnbj7@tunkki.bugs.fi>" "77" "[oss-security] LAME 3.100 released with security fixes" nil nil nil "10" "2017102122:41:29" "[oss-security] LAME 3.100 released with security fixes" (number mark "U       henri@nerv.f Oct 22   77/2797  " thread-indent "\"[oss-security] LAME 3.100 released with security fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28268 invoked by uid 550); 21 Oct 2017 22:41:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,51 +12,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11626 invoked from network); 8 Jul 2024 23:53:09 -0000
-Date: Tue, 9 Jul 2024 09:52:58 +1000 (AEST)
-From: Damien Miller <djm@mindrot.org>
+Received: (qmail 28234 invoked from network); 21 Oct 2017 22:41:52 -0000
+X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
+Date: Sun, 22 Oct 2017 01:41:29 +0300
+From: Henri Salo <henri@nerv.fi>
 To: oss-security@lists.openwall.com
-cc: Qualys Security Advisory <qsa@qualys.com>
-In-Reply-To: <20240708162106.GA4920@openwall.com>
-Message-ID: <67430275-b84d-462e-ab74-5a756c6d068f@mindrot.org>
-References: <20240701083838.GA12787@localhost.localdomain> <20240708162106.GA4920@openwall.com>
+Message-ID: <20171021224129.34you4kzttvgnbj7@tunkki.bugs.fi>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.75 on 130.102.79.58
-Subject: Re: [oss-security] CVE-2024-6387: RCE in OpenSSH's server, on
- glibc-based Linux systems
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: [oss-security] LAME 3.100 released with security fixes
 
-On Mon, 8 Jul 2024, Solar Designer wrote:
+Hello,
 
-> Hi,
-> 
-> Today is the coordinated release date to publicly disclose a related
-> issue I found during review of Qualys' findings, with further analysis
-> by Qualys.  My summary is:
-> 
-> CVE-2024-6409: OpenSSH: Possible remote code execution in privsep child
-> due to a race condition in signal handling
+LAME 3.100 has been released including fixes to security vulnerabilities.
+Coy-paste from history:
 
-As an aside, who wrote the text of
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-6409 ?
+Rogério Brito
 
-It's disappointing that this CVE states that this is a vulnerability
-in OpenSSH sshd, and fails to make clear that this only affects Redhat
-versions and users of their downstream patch.
+- Don't include the debian directory as one that is needed during builds. Patch
+taken from Debian's packaging of lame.
 
-This follows another critical failure to properly issue CVEs for OpenSSH:
-CVE-2024-6387 only lists CPEs for Redhat systems as affected (see the
-JSON dump of the entry: https://cveawg.mitre.org/api/cve/CVE-2024-6387 )
+- Resurrect Owen Taylor's code dated from 97-11-3 to properly deal with GTK1.
+This was transplanted back from aclocal.m4 with a patch provided by Andres
+Mejia. This change makes it easy to regenerate autotools' files with a simple
+invocation of autoconf -vfi.
 
-This means that anyone using automation that consumes CVEs for detecting
-vulnerabilities will be left exposed.
+- Fix possible race condition causing build failures in libmp3lame. Discovered
+in automated builds by the Debian project with patch provided by Andres Mejia.
 
-Moreover, the explanatory text for CVE-2024-6387 is also extremely lacking.
-It fails to explain the consequence of the vulnerability (unauth RCE) and
-just talks about mechanism.
+Robert Hegemann
 
-I don't know if it's in anyone on this list's ability to get these
-fixed, but IMO they are serious failures of the CVE process that make
-it near-useless for consumers of this information.
+- Improved detection of MPEG audio data in RIFF WAVE files. Tracker item [
+3545112 ] Invalid sampling detection
 
--d
+- New switch --gain <decibel>, range -20.0 to +12.0, a more convenient way to
+apply Gain adjustment in decibels, than the use of --scale <factor>.
+
+- Fix for tracker item [ 3558466 ] Bug in path handling
+
+- Fix for tracker item [ 3567844 ] problem with Tag genre
+
+- Fix for tracker item [ 3565659 ] no progress indication with pipe input
+
+- Fix for tracker item [ 3544957 ] scale (empty) silent encode without warning
+
+- Fix for tracker item [ 3580176 ] environment variable LAMEOPT doesn't work
+anymore
+
+- Fix for tracker item [ 3608583 ] input file name displayed with wrong
+character encoding (on windows console with CP_UTF8)
+
+- Fix for bug ticket [ #447 ] Fix dereference NULL and Buffer not NULL
+terminated issues. Thanks to Surabhi Mishra
+
+- Fix for bug ticket [ #445 ] dereference of a null pointer possible in loop.
+Thanks to Renu Tyagi
+
+- Fix for bug ticket [ #449 ] Make sure functions with SSE instructions
+maintain their own properly aligned stack. Thanks to Fabian Greffrath
+
+- Fix for bug ticket [ #458 ] Multiple Stack and Heap Corruptions from
+Malicious File. Thanks to Gareth Evans and Elio Blanca
+
+- Fix for bug ticket [ #460 ] A division by zero vulnerability. Thanks to Wang
+Shiyang, Liu Bingchang
+
+- Fix for bug ticket [ #461 ] CVE-2017-9410 fill_buffer_resample function in
+libmp3lame/util.c heap-based buffer over-read and ap
+
+- Fix for bug ticket [ #462 ] CVE-2017-9411 fill_buffer_resample function in
+libmp3lame/util.c invalid memory read and application crash
+
+- Fix for bug ticket [ #463 ] CVE-2017-9412 unpack_read_samples function in
+frontend/get_audio.c invalid memory read and application crash
+
+- Fix for bug ticket [ #434 ] clip detect scale suggestion unaware of scale
+input value
+
+- HIP decoder bug fixed: decoding mixed blocks of lower sample frequency Layer3
+data resulted in internal buffer overflow (write). Thanks to Henri Salo
+
+Alexander Leidinger
+
+- Feature request, patch ticket [ #27 ] Add
+lame_encode_buffer_interleaved_int() by Michael Fink
+
+-- 
+Henri Salo
