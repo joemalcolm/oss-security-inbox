@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["214" "Wednesday" "27" "July" "2016" "22:26:01" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdRcZ7YGWxfGf2NsJnb0tiJkCZQR7jkARtJZoZujjcFJ6A@mail.gmail.com>" "9" "Re: [oss-security] Re: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7" nil nil nil "7" "2016072720:26:01" "[oss-security] Re: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7" (number mark "U       gustavo.grie Jul 27    9/214   " thread-indent "\"Re: [oss-security] Re: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7\"\n") "<20160726213218.C0BD36C49F4@smtpvmsrv1.mitre.org>" ("<CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>" "<20160726213218.C0BD36C49F4@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1169" "Saturday" "21" "October" "2017" "19:19:46" "+0100" "Eddie Chapman" "eddie@ehuk.net" "<4eb93d94-2788-3d38-06e7-53cfe9d43a52@ehuk.net>" "28" "[oss-security] CVE-2017-15670, CVE-2017-15671 glibc: Buffer overflow and memory leak in glob with GLOB_TILDE" nil nil nil "10" "2017102118:19:46" "[oss-security] CVE-2017-15670, CVE-2017-15671 glibc: Buffer overflow and memory leak in glob with GLOB_TILDE" (number mark "U       eddie@ehuk.n Oct 21   28/1169  " thread-indent "\"[oss-security] CVE-2017-15670, CVE-2017-15671 glibc: Buffer overflow and memory leak in glob with GLOB_TILDE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16197 invoked by uid 550); 27 Jul 2016 20:26:14 -0000
+Received: (qmail 3686 invoked by uid 550); 21 Oct 2017 19:43:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16173 invoked from network); 27 Jul 2016 20:26:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=rWoNWVBB4tLV6JG4mD7r+Ql/KCPXJSAfXsS2oZQe+BI=;
-        b=f18ne8pelqzeR6RfukDXEEJCpl8+H9ELnz5TF4I7za8CRmuB3PcNec2tVMf4bMfE/n
-         n2tEVpHYvrxFAPAfsyMm5ltXMdq2aM/EtrQFlz/iJ5+7Rcxoj2dk5wEjdBMT0XntoLkn
-         EsMyOt+JQ9ARHPv9GmeqafzUMVfE38YbHPKpJ8E3X9lThXI0zQA8Pr61j/v1YfbRhozr
-         UkNyOOEahojYd6xzNPiJY0uTnuaOtgxupvWCwG15n/6prl/mxNHMHuApXICtTRcEI9gx
-         J1XE5t/zjRTknDEX2NhTQqSG+O76jND4kCRsnY0OPV8mfQpwyH6aimQEMmH5vhVfngjr
-         JAVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=rWoNWVBB4tLV6JG4mD7r+Ql/KCPXJSAfXsS2oZQe+BI=;
-        b=LVFPmVNBoA9USH1aWLLSmdwbhXOhrjy+XaO4CALgnEcZFJLOZhf3/7wSqIllnKi1hX
-         IG4ziRkZu5DpIXwMjkthKlRJ4l/ZKASPDb1r8LVFvPA3ZXHaDChjdIi+ofrFOcfyDneQ
-         4F+kBUgXRvAI7CbuNS6sNJuLIePm71hXyOwpRxmIUVSK1HZtudGazZZ6Wvb7P9EuFt/z
-         gBXWkTrs92H8LNy4kz7krI6DuvwTL+1LxyE3N/1fZ13d0enu3qxC/ofQ5hIfYqFS/7o1
-         Vd+3czX5iXaBdxb3O48WV5oD1tSJIMbwaKn/Dl9R9T8MCcD0uhZx8cam+n1E0HngKcHS
-         LgfQ==
-X-Gm-Message-State: AEkoous9NWMTbpyHjJQlv9yiF63ut1K4ZaM9rhm6mVTaOlmk7J5+HJ/Zba4stdYVdqNOA3ee5HtdKuTOTf9XEw==
-X-Received: by 10.36.209.196 with SMTP id w187mr37525891itg.47.1469651161833;
- Wed, 27 Jul 2016 13:26:01 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20160726213218.C0BD36C49F4@smtpvmsrv1.mitre.org>
-References: <CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>
- <20160726213218.C0BD36C49F4@smtpvmsrv1.mitre.org>
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
-Date: Wed, 27 Jul 2016 22:26:01 +0200
-Message-ID: <CACn5sdRcZ7YGWxfGf2NsJnb0tiJkCZQR7jkARtJZoZujjcFJ6A@mail.gmail.com>
+Received: (qmail 9359 invoked from network); 21 Oct 2017 18:19:58 -0000
+DKIM-Filter: OpenDKIM Filter v2.10.3 schatzi.steelbluetech.co.uk 99C9D1F623
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
+	t=1508609986; bh=LAk+SSM9Uh++pY0hCkpAh+k4Inkx5csheNxmFcWa0mA=;
+	h=To:From:Subject:Reply-To:Date:From;
+	b=GHlS3VexoP8vYtpvFEF6zCNxMY40DK1+nkA7Vb57VrFQmwlRiukOUO7ZvoRwNp1Wx
+	 ylILsNr5f12gwLi7tQXieCWBucGNT++tOHZKq7PJKJqZiOhFBCgxKv3OUaBJj5NABS
+	 ujOBPaVGsP+dUJh1ZBqATX9n11oyKj49gtdQjr3o=
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] Re: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
+From: Eddie Chapman <eddie@ehuk.net>
+Message-ID: <4eb93d94-2788-3d38-06e7-53cfe9d43a52@ehuk.net>
+Date: Sat, 21 Oct 2017 19:19:46 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2017-15670, CVE-2017-15671 glibc: Buffer overflow and memory leak
+ in glob with GLOB_TILDE
 
-> Use CVE-2016-6352.
+Just a heads up for anyone around over the weekend ...
 
-Also, the upstream report is here:
+== CVE-2017-15670 ==
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15670
+"The GNU C Library (aka glibc or libc6) before 2.27 contains an 
+off-by-one error leading to a heap-based buffer overflow in the glob 
+function in glob.c, related to the processing of home directories using 
+the ~ operator followed by a long string."
 
-https://bugzilla.gnome.org/show_bug.cgi?id=769170#
+https://sourceware.org/bugzilla/show_bug.cgi?id=22320
 
-and they said:
+https://bugzilla.redhat.com/show_bug.cgi?id=1504804
+"It is possible that an attacker might use this to escalate his 
+privileges or execute code."
 
-> I have reproduced this with 2.30.7, 2.31.1 and 2.35.2. It doesn't happen with 2.26.1.
+Upstream patch:
+https://git.savannah.gnu.org/cgit/gnulib.git/commit/?id=2d1bd71ec70a31b01d01b734faa66bb1ed28961f
+
+
+== CVE-2017-15671 ==
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15671
+"The glob function in glob.c in the GNU C Library (aka glibc or libc6) 
+before 2.27, when invoked with GLOB_TILDE, could skip freeing allocated 
+memory when processing the ~ operator with a long user name, potentially 
+leading to a denial of service (memory leak)."
+
+https://sourceware.org/bugzilla/show_bug.cgi?id=22325
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2017-15671
