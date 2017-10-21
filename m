@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/10/7
-Message-ID: <b784889f-6aa3-998c-6b8e-d21bc4f566a1@chbi.eu>
-Date: Tue, 10 Oct 2017 19:54:53 +0200
-From: chbi@...i.eu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/6
+Message-ID: <CAOfWR+E5EBSOe5kbSFh2zwUXKAahDXi6Dpax6dr9FLVkT1pY3g@mail.gmail.com>
+Date: Sat, 21 Oct 2017 15:57:52 -0400
+From: Robert Watson <robertcwatson1@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Reflected XSS vulnerability in Shaarli v0.9.1
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-
-> A reflected XSS vulnerability in Shaarli v0.9.1 allows an
-> unauthenticated attacker to inject JavaScript. If the victim is an
-> administrator, an attacker can (for example) takeover the admin session
-> or change global settings or add/delete links. It is also possible to
-> execute JavaScript against unauthenticated users.
-> 
-> Fix:
-> https://github.com/shaarli/Shaarli/pull/987
-
-CVE-2017-15215 has been assigned.
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15215
+Thank You for tolerating my questions. I've read the wikis and pages
+you've suggested, and am attempting to format this reply as required.
+Please advise if anything is still wrong.
 
 
--- 
-chbi
-https://chbi.eu
+On Sat, Oct 21, 2017 at 6:58 AM, Solar Designer <solar@...nwall.com> wrote:
+>
+>
+> On Fri, Oct 20, 2017 at 11:08:14PM +0000, Robert Watson wrote:
+> > Okay, so a script adds a symlink to /etc/shadow or something else
+> > confidential. Unless they're root, what good does it do them? They can't
+> > read it.
+>
+> I think this specific question had already been addressed by Ben in:
+>
+> http://www.openwall.com/lists/oss-security/2017/10/18/12
+> ...
 
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
+I didn't see how revealing configuration details was anything more
+than "security by obscurity" but that's not a discussion for this
+forum. Mea Culpa.
 
+> While we're at it, I also recommend that you avoid top-posting and
+> over-quoting.  Here's how to format your messages better:
 
+Believe it or not, this is first occasion using the "Plain text"
+feature in the browser version of Gmail and editing the included text.
+Was using Google Inbox on a tablet before. I write programs. Really
+pretty naive when it comes to skillfully using software.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Will use this in the future.
+
+Robert
