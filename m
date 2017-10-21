@@ -1,4 +1,9 @@
-Received: (qmail 11917 invoked by uid 550); 26 Jul 2024 19:46:40 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1156" "Saturday" "21" "October" "2017" "12:03:37" "+0200" "Bastian Blank" "waldi@debian.org" "<20171021100336.2q44qr4hl76lmj2c@shell.thinkmo.de>" "28" "Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" "^Date:" nil nil "10" "2017102110:03:37" "[oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" (number mark "        waldi@debian Oct 21   28/1156  " thread-indent "\"Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync\"\n") "<20171020223757.GA28323@hunt>" ("<20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>" "<CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>" "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>" "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>" "<20171019194428.GK20315@hunt>" "<CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>" "<20171020223757.GA28323@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13429 invoked by uid 550); 21 Oct 2017 10:24:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,129 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10081 invoked from network); 26 Jul 2024 19:46:12 -0000
-Date: Fri, 26 Jul 2024 21:46:06 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: sebastian@centricular.com
-Message-ID: <20240726194606.GA12556@openwall.com>
-References: <2309f1ae-1898-41f4-a369-c964498e9128@oracle.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 21586 invoked from network); 21 Oct 2017 10:03:48 -0000
+Message-ID: <20171021100336.2q44qr4hl76lmj2c@shell.thinkmo.de>
+Mail-Followup-To: Bastian Blank <waldi@debian.org>,
+	oss-security@lists.openwall.com
+References: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>
+ <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
+ <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
+ <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
+ <20171019194428.GK20315@hunt>
+ <CAOfWR+H_UbXfxh=oECSqUEcLmAh+RZciH61q0E5LqskWSOYWKA@mail.gmail.com>
+ <20171020223757.GA28323@hunt>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2309f1ae-1898-41f4-a369-c964498e9128@oracle.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] GStreamer Security Advisory 2024-0003: Orc compiler stack-based buffer overflow
+In-Reply-To: <20171020223757.GA28323@hunt>
+User-Agent: NeoMutt/20170113 (1.7.2)
+Date: Sat, 21 Oct 2017 12:03:37 +0200
+From: Bastian Blank <waldi@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in
+ Debian mirror script ftpsync
+To: oss-security@lists.openwall.com
 
-On Fri, Jul 26, 2024 at 11:57:09AM -0700, Alan Coopersmith wrote:
-> https://gstreamer.freedesktop.org/security/sa-2024-0003.html reports:
+Hi Seth
 
-> >Patches: 
-> >https://gitlab.freedesktop.org/gstreamer/orc/-/merge_requests/191.patch
-> 
-> The commit message on the fix states:
-> 
-> >vasprintf() is a GNU/BSD extension and would allocate as much memory as 
-> >required
-> >on the heap, similar to g_strdup_printf(). It's ridiculous that such a 
-> >function
-> >is still not provided as part of standard C.
-> 
-> Note that asprintf() and vasprintf() are part of the POSIX.1-2024 standard
-> which was officially published last month, so these are no longer
-> system-specific extensions:
-> 
-> https://pubs.opengroup.org/onlinepubs/9799919799/functions/asprintf.html
-> https://pubs.opengroup.org/onlinepubs/9799919799/functions/vasprintf.html
-> 
-> though they are not yet part of the C standard itself.
+On Fri, Oct 20, 2017 at 03:37:58PM -0700, Seth Arnold wrote:
+> I'm not sure what 'script' vs 'not-script' has to do with anything.
+> 'Script' really just means "interpreted programming language" and says
+> nothing about the threat model in use.
 
-Unfortunately, *asprintf() are not that easy to use safely:
+Almost none of the so called script languages are interpreted.  They
+include a compiler, usually compile the input to some form of byte-code
+and executed it within a VM.  But that's just definition.
 
-"For asprintf(), if memory allocation was not possible, or if some other
-error occurs, the function shall return a negative value, and the
-contents of the location referenced by ptr are undefined, but shall not
-refer to allocated memory."
+> Probably other programs use rsync without --safe-links when they should.
+> I didn't know the option existed until this thread was started (seriously,
+> rsync(1) is a HUGE manpage) so I'm grateful to the original reporter
+> for sending it along.
 
-Indeed, 191.patch referenced above is unsafe, e.g.:
+Raising awareness was one reason why I asked for a CVE id instead of
+just fixing it.  rsync, even if the protocol is really bad, is widly
+used to mirror all sorts of software.  It is also a generic tool, so the
+defaults are there to replicate the input as much as possible, not to be
+safe from problematic things.
 
--  vsprintf (text, format, args);
-+#ifdef HAVE_VASPRINTF
-+  char *text;
-+  vasprintf (&text, format, args);
-+#else
-+  char text[ORC_ERROR_LENGTH] = { '\0' };
-+  vsnprintf (text, sizeof (text), format, args);
-+#endif
- 
-   orc_vector_append (&parser->errors,
-                      orc_parse_error_new (orc_parse_get_error_where (parser),
-                                           parser->line_number, -1, text));
-+
-+#ifdef HAVE_VASPRINTF
-+  free (text);
-+#endif
+Regards,
+Bastian
 
-If vasprintf() fails, "char *text" may remain uninitialized (or have any
-other value that "shall not refer to allocated memory").  It may happen
-to be a valid pointer to something else, perhaps if a pointer had been
-on that stack location before.  Then some other data would be accessed
-in place of the intended text, and eventually something else would be
-freed, which may happen to be an exploitable vulnerability e.g. via heap
-spraying and chunk unlinking.
-
-As I recall, on *BSD's *asprintf() also reset the pointer to NULL.  On
-upstream glibc, it does not.  We failed to get this change past Ulrich
-back then:
-
-https://sourceware.org/legacy-ml/libc-alpha/2001-12/msg00045.html
-
-> "Dmitry V. Levin" <ldv@alt-linux.org> writes:
-> 
-> > I'm talking about already written software which rely on zeroing
-> > result_ptr.
-> 
-> There is no such software using glibc.  Changing this (which is
-> completely unnecessary) will create an incompatibility.  Newly
-> developed code might check only for the NULL pointer value and these
-> programs would then fail with older glibc versions.
-> 
-> > In this case no: former asprintf implementation in bad written program
-> > usually results to free(unitialized_pointer), while suggested feature will
-> > lead to free(0). See the difference?
-> 
-> Crap.  If the return value says "failed; don't use the result" you
-> cannot use the pointer value.  It's that easy.  The interface is
-> completely in line with other interfaces which behave the same.
-> 
-> -- 
-> ---------------.                          ,-.   1325 Chesapeake Terrace
-> Ulrich Drepper  \    ,-------------------'   \  Sunnyvale, CA 94089 USA
-> Red Hat          `--' drepper at redhat.com   `------------------------
-
-but distros carried it as a patch in ALT Linux, Owl, and more recently
-in Rocky Linux SIG/Security.  I think glibc upstream should revisit
-merging it (or equivalent):
-
-https://sig-security.rocky.page/packages/glibc/
-
-"In asprintf(3)/vasprintf(3) reset the pointer to NULL on error, like
-BSDs do, so that the caller wouldn't access memory over an uninitialized
-or stale pointer (ALT Linux)"
-
-The patches are currently in:
-
-https://git.rockylinux.org/sig/security/src/glibc
-
-glibc-2.34-alt-asprintf.patch and glibc-2.34-rocky-asprintf.patch (the
-latter revises documentation)
-
-Regardless, users of these functions must be checking the return value.
-
-Also seen in 191.patch context is that the original code did not and
-still does not check return value from malloc(), which is also a bug.
-However, that is at worst a crash, whereas the impact of not checking
-the return value from *asprintf() is potentially worse.
-
-Alexander
+-- 
+Humans do claim a great deal for that particular emotion (love).
+		-- Spock, "The Lights of Zetar", stardate 5725.6
