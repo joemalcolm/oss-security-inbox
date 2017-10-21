@@ -1,13 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/30/3
-Message-ID: <CAJEJqRw=B_7TCQpR5rye09p45rOQ7o5hC2cxWyVJwtxiNy2DGg@mail.gmail.com>
-Date: Mon, 30 Jan 2017 08:09:27 -0500
-From: David Manouchehri <david@...idmanouchehri.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/2
+Message-ID: <20171021100336.2q44qr4hl76lmj2c@shell.thinkmo.de>
+Date: Sat, 21 Oct 2017 12:03:37 +0200
+From: Bastian Blank <waldi@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: FW: [DSA 3775-1] tcpdump security update]
+Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
 Content-Type: text/plain; charset=utf-8
 
-The source along with samples can be found over here.
+Hi Seth
 
-https://anonscm.debian.org/cgit/users/rfrancoise/tcpdump.git/commit/?id=b4f4a803b9b5f9d507201cd1c48ddd992a62aee2
+On Fri, Oct 20, 2017 at 03:37:58PM -0700, Seth Arnold wrote:
+> I'm not sure what 'script' vs 'not-script' has to do with anything.
+> 'Script' really just means "interpreted programming language" and says
+> nothing about the threat model in use.
 
+Almost none of the so called script languages are interpreted.  They
+include a compiler, usually compile the input to some form of byte-code
+and executed it within a VM.  But that's just definition.
+
+> Probably other programs use rsync without --safe-links when they should.
+> I didn't know the option existed until this thread was started (seriously,
+> rsync(1) is a HUGE manpage) so I'm grateful to the original reporter
+> for sending it along.
+
+Raising awareness was one reason why I asked for a CVE id instead of
+just fixing it.  rsync, even if the protocol is really bad, is widly
+used to mirror all sorts of software.  It is also a generic tool, so the
+defaults are there to replicate the input as much as possible, not to be
+safe from problematic things.
+
+Regards,
+Bastian
+
+-- 
+Humans do claim a great deal for that particular emotion (love).
+		-- Spock, "The Lights of Zetar", stardate 5725.6
