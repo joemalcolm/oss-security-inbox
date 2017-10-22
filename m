@@ -1,31 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/2
-Message-ID: <20170223074630.GB26098@suse.de>
-Date: Thu, 23 Feb 2017 08:46:30 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: util-linux 2.29.2 fixes CVE-2017-2616
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/22/4
+Message-ID: <1508682959.3197.1.camel@gmail.com>
+Date: Sun, 22 Oct 2017 16:35:59 +0200
+From: Ailin Nemui <ailin.nemui@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Irssi 1.0.5: CVE-2017-15228, CVE-2017-15227, CVE-2017-15721, CVE-2017-15722, CVE-2017-15723
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> Irssi 1.0.5 has been released. This release fixes a few security 
+> issues in Irssi as well as a few bugs. There are no new features. 
+> All Irssi users should upgrade to this version. See the NEWS for 
+> details.
 
-util-linux 2.29.2 fixes CVE-2017-2616, a race condition which allowed local users
-to kill other processes.
+> Most issues have been identified using fuzzing, thanks to Hanno Böck 
+> and Joseph Bisch. We expect Joseph will be able to tell you more 
+> about his newest fuzzer at freenode.live on the weekend!
 
-https://www.kernel.org/pub/linux/utils/util-linux/v2.29/v2.29.2-ReleaseNotes
+IRSSI-SA-2017-10 Irssi Security Advisory [1]
+============================================
+CVE-2017-15228, CVE-2017-15227, CVE-2017-15721, CVE-2017-15723,
+CVE-2017-15722
 
-"
-  It is possible for any local user to send SIGKILL to other processes with root
-  privileges.  To exploit this, the user must be able to perform su with a
-  successful login.  SIGKILL can only be sent to processes which were executed
-  after the su process.  It is not possible to send SIGKILL to processes which
-  were already running.
-"
+Description
+-----------
 
-Root cause of the flaw that a regular exit of the child process and the su ctrl-c kill of the
-child PID could race and so you would be able to later started process with this specific PID.
+Multiple vulnerabilities have been located in Irssi.
 
-The fix is here:
-https://github.com/karelzak/util-linux/commit/dffab154d29a288aa171ff50263ecc8f2e14a891
+(a) When installing themes with unterminated colour formatting
+    sequences, Irssi may access data beyond the end of the
+    string. (CWE-126) Found by Hanno Böck.
 
-Ciao, Marcus
+    CVE-2017-15228 was assigned to this issue.
+
+(b) While waiting for the channel synchronisation, Irssi may
+    incorrectly fail to remove destroyed channels from the query list,
+    resulting in use after free conditions when updating the state
+    later on. Found by Joseph Bisch. (CWE-416 caused by CWE-672)
+
+    CVE-2017-15227 was assigned to this issue.
+
+(c) Certain incorrectly formatted DCC CTCP messages could cause NULL
+    pointer dereference. Found by Joseph Bisch. This is a separate,
+    but similar issue to CVE-2017-9468. (CWE-690)
+
+    CVE-2017-15721 was assigned to this issue.
+
+(d) Overlong nicks or targets may result in a NULL pointer dereference
+    while splitting the message. Found by Joseph Bisch. (CWE-690)
+
+    CVE-2017-15723 was assigned to this issue.
+
+(e) In certain cases Irssi may fail to verify that a Safe channel ID
+    is long enough, causing reads beyond the end of the string. Found
+    by Joseph Bisch. (CWE-126)
+
+    CVE-2017-15722 was assigned to this issue.
+
+
+Impact
+------
+
+(a,b,c,d) May result in denial of service (remote crash).
+
+(e) May affect the stability of Irssi.
+
+
+Affected versions
+-----------------
+
+(a,b,c,e) All Irssi versions that we observed.
+
+(d) Starting from 0.8.17.
+
+
+Fixed in
+--------
+
+Irssi 1.0.5
+
+
+Recommended action
+------------------
+
+Upgrade to Irssi 1.0.5. Irssi 1.0.5 is a maintenance release in the
+1.0 series, without any new features.
+
+After installing the updated packages, one can issue the /upgrade
+command to load the new binary. TLS connections will require
+/reconnect.
+
+
+Mitigating facts
+----------------
+
+(a) requires user to install malicious or broken theme file
+
+(b,c,e) requires a broken ircd or control over the ircd
+
+(d) irc servers typically have length limits in place
+
+
+Patch
+-----
+
+https://github.com/irssi/irssi/commit/43e44d553d44e313003cee87e6ea5e24d68b84a1
+
+
+References
+----------
+
+[1] https://irssi.org/security/irssi_sa_2017_10.txt
