@@ -1,40 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/07/4
-Message-ID: <8d300c59-47af-f2ad-2d75-2d38c611491d@gmail.com>
-Date: Tue, 7 Mar 2017 12:16:03 +0100
-From: Emilio Pozuelo Monfort <pochu27@...il.com>
-To: oss-security@...ts.openwall.com, Craig Small <csmall@....com.au>
-Subject: Re: CVE Request: Wordpress: 6 security issues in Wordpress 4.7 2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/22/3
+Message-ID: <20171022113629.GA24942@openwall.com>
+Date: Sun, 22 Oct 2017 13:36:30 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Noam Rathaus <noamr@...ondsecurity.com>, Dan Carpenter <dan.carpenter@...cle.com>
+Subject: Re: Netlink XFRM socket subsystem NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-On 07/03/17 11:44, Craig Small wrote:
-> Hello again,
->  Wordpress 4.7.3 fixes 6 security issues.  Summer of Pwnage has reported 2
-> here yesterday but here is the list from the wordpress site.
+On Sun, Oct 22, 2017 at 01:21:19PM +0200, Marius Bakke wrote:
+> Noam Rathaus <noamr@...ondsecurity.com> writes:
+> > I was forwarded by:
+> > Dan Carpenter <dan.carpenter@...cle.com>
+> >
+> > To you regarding obtaining a CVE for the mentioned (in the title)
+> > vulnerability
+> >
+> > I know a patch is being created and placed into mainstream code of the
+> > Kernel
+> >
+> > I would like also to get a CVE for it, so that we can put that in the
+> > advisory we will release
 > 
-> Cross-site scripting (XSS) via media file metadata. Reported by Chris Andrè
-> Dale, Yorick Koster, and Simon P. Briggs.
-> 
-> Control characters can trick redirect URL validation. Reported by Daniel
-> Chatfield.
-> 
-> Unintended files can be deleted by administrators using the plugin deletion
-> functionality. Reported by xuliang.
-> 
-> Cross-site scripting (XSS) via video URL in YouTube embeds. Reported by
-> Marc Montpas.
-> 
-> Cross-site scripting (XSS) via taxonomy term names. Reported by Delta.
-> 
-> Cross-site request forgery (CSRF) in Press This leading to excessive use of
-> server resources. Reported by Sipke Mellema.
-> 
-> 
-> Reference:
-> https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+> Unfortunately CVE IDs are not assigned through this list anymore.
+> Please use <https://cveform.mitre.org/> to request a CVE.
 
-Please report these through http://cveform.mitre.org/ to get CVEs assigned, and
-follow up here with the CVE identifiers after that's done.
+Marius is right.  More detail on how we'd like this used as it relates
+to also posting to oss-security:
 
-Thanks,
-Emilio
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
+
+"Previously, one could request CVE IDs for issues in Open Source
+software from oss-security.  This is no longer the case.  Instead, please
+start by posting about the (to be made) public issue to oss-security
+(without a CVE ID), request a CVE ID from MITRE directly, and finally
+"reply" to your own posting when you also have the CVE ID to add.  With
+the described approach you would only approach MITRE after the issue is
+already public, but if you choose to do things differently and contact
+MITRE about an issue that is not yet public, then please do not disclose
+to them more than the absolute minimum needed for them to assign a CVE ID."
+
+> > Do we need to give you the full technical writeup of the vulnerability?
+> 
+> It's by no means required,
+
+Actually, this is in fact required:
+
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should remain
+valuable even with all of the external resources gone."
+
+Of course, only post the full detail once it's meant to be made public.
+
+Noam's message so far is not sufficiently detailed for oss-security, for
+when the issue is public (I get the feeling it might not be yet).
+
+> but it would be appreciated if you could get
+> back to this list with the advisory and CVE identifier when ready.
+
+Right.
+
+Finally, let's not assume that "kernel" implies "Linux", even though
+it's usually the case in postings in here.  Going forward, let's
+explicitly say "Linux kernel" where appropriate (especially at the start
+of message Subjects), so that we don't discourage reporting and
+discussion of issues in other Open Source kernels in here.  (This
+thread's Subject should stay as it is not to add confusion, though.)
+
+Alexander
