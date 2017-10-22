@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/24/2
-Message-ID: <20170224100342.GA3592@f195.suse.de>
-Date: Fri, 24 Feb 2017 11:03:42 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/22/1
+Message-ID: <CAHqykcQNaNcFOrpPdDMny0oVFbuLkReex34wV1NWDYCkevp1EA@mail.gmail.com>
+Date: Sun, 22 Oct 2017 08:55:44 +0300
+From: Noam Rathaus <noamr@...ondsecurity.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-5956 virglrenderer: Virglrenderer: OOB access while in vrend_draw_vbo
+Subject: Netlink XFRM socket subsystem NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-> Upstream patch:
-> ---------------
->   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=a5ac49940c40ae415eac0cf912eac7070b4ba95d
+Hi,
 
-Please note that the fix for this issue opens a memory leak, because it
-forgets to free the 've' structure from this line:
+I was forwarded by:
+Dan Carpenter <dan.carpenter@...cle.com>
 
-  ve = calloc(num_elements, sizeof(struct pipe_vertex_element));
+To you regarding obtaining a CVE for the mentioned (in the title)
+vulnerability
 
-A possible follow-up patch is attached.
+I know a patch is being created and placed into mainstream code of the
+Kernel
 
-I've already informed the reporter of this issue but there seems to be
-no upstream fix yet.
+I would like also to get a CVE for it, so that we can put that in the
+advisory we will release
 
-Regards
-
-Matthias
+Do we need to give you the full technical writeup of the vulnerability?
 
 -- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
 
-SUSE Linux GmbH 
-GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
+Thanks,
+Noam Rathaus
+Beyond Security
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+PGP Key ID: 2D24B275B1EB4475 (Exp 2018-03)
+
