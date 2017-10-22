@@ -1,4 +1,9 @@
-Received: (qmail 9271 invoked by uid 550); 18 Nov 2022 10:54:34 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2834" "Sunday" "22" "October" "2017" "13:36:30" "+0200" "Solar Designer" "solar@openwall.com" "<20171022113629.GA24942@openwall.com>" "65" "Re: [oss-security] Netlink XFRM socket subsystem NULL pointer dereference" nil nil nil "10" "2017102211:36:30" "[oss-security] Netlink XFRM socket subsystem NULL pointer dereference" (number mark "U       solar@openwa Oct 22   65/2834  " thread-indent "\"Re: [oss-security] Netlink XFRM socket subsystem NULL pointer dereference\"\n") "<87tvyrmnrk.fsf@fastmail.com>" ("<CAHqykcQNaNcFOrpPdDMny0oVFbuLkReex34wV1NWDYCkevp1EA@mail.gmail.com>" "<87tvyrmnrk.fsf@fastmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7774 invoked by uid 550); 22 Oct 2017 11:37:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,109 +12,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32065 invoked from network); 18 Nov 2022 03:59:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=01elNcFpgCtlWAdHEMnBlSE/txa9nqQLhh6aty5uMVU=;
-        b=M2z7m2CegrjgiwBpt2Hak1tzJI5ogNwe1xeALUPvyG9JEXr0XJ97NUpHolk0ajj2Nh
-         X+9T0GFib/l4fPYY2rwQlMPdi/ZFXI7HrrE6EhfVJi2ejZBB9plVP5i6OED/kpIrgFnC
-         P7j9LiVQ3bgtBoDzDl5PbwgOBuGt8sbzPh0tSuYvH8NKU2zSNQr6mCXoTSbIRlHV9XKY
-         VgR0qd2K2D58Al/y5IZ05vJy1XDvPQj3XIPIdtDd2/dWj8f0k7yfR6x0UAjGayMsVC8m
-         e5BK6q+Gm4V3AIluMBXx8mW1FvOnmRCCKMDerUHfr8rJ/Z8IXiMmfqejXtUNxiaCyY2a
-         7IOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=01elNcFpgCtlWAdHEMnBlSE/txa9nqQLhh6aty5uMVU=;
-        b=fk1GXLJs1DWuCaKNmczFc0M3piMnZR/h2FkKROq1062sILeAQHVQFp9AGHq6REy9R/
-         +hK/ok/WDmQdDZM2DAbnxdganiW+uIwcpR7psJ0QXhGjsp+HFqvgKgnFPQ05ba5JIM+u
-         XRMGgLsW9xu6mHM3KxcCw0xrLMsCSGUe4bo/dTSyfYZqVBR0sJlEudyXvp3WQSUruJlL
-         EIpN+JbcG90oKDuU8gDdlYkpHo60r5zUfIXSnHUgF6uh9AyxU6KOSWP9FkI7rHybF0w7
-         Qmz2X/kNassI+zwj6pSpXT1h0dgOBSReZtLRuUVEviSWSEy1CzaNlb3ggTSPD3cQrJ4I
-         L0cQ==
-X-Gm-Message-State: ANoB5pnKewdfDnWzfkQ3hKjcVo05mmESxsM10VhTUNuKytg/pI1Q0S12
-	MK9e4sLboG1PN0rJk4+y1KqXoDwwpc3331MKLmQh+yyXblhZXM5r
-X-Google-Smtp-Source: AA0mqf5N/FIXt+F33Tf9cc+38Z5FuidSwuOJRt6bnV29SASFhAwnsCoL+Vi1hBqvRFyVrkrL4ktfcg0Aj2zat98zwMw=
-X-Received: by 2002:a05:6870:89a1:b0:13c:45c8:ab01 with SMTP id
- f33-20020a05687089a100b0013c45c8ab01mr6025618oaq.189.1668743949659; Thu, 17
- Nov 2022 19:59:09 -0800 (PST)
-MIME-Version: 1.0
-From: Zheng Hacker <hackerzheng666@gmail.com>
-Date: Fri, 18 Nov 2022 11:58:55 +0800
-Message-ID: <CAJedcCyz-uNq+tyK+BqG0xCD9_WOOC8nta77Up7gaOBs+pfwyA@mail.gmail.com>
+Received: (qmail 7568 invoked from network); 22 Oct 2017 11:36:40 -0000
+Date: Sun, 22 Oct 2017 13:36:30 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Linux kernel: staging: rtl8712: A Use-after-Free/Double-Free bug in
- read_bbreg_hdl in drivers/staging/rtl8712/rtl8712_cmd.c
+Cc: Noam Rathaus <noamr@beyondsecurity.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>
+Message-ID: <20171022113629.GA24942@openwall.com>
+References: <CAHqykcQNaNcFOrpPdDMny0oVFbuLkReex34wV1NWDYCkevp1EA@mail.gmail.com> <87tvyrmnrk.fsf@fastmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87tvyrmnrk.fsf@fastmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Netlink XFRM socket subsystem NULL pointer dereference
 
-hi,
-This is a bug I've found in linux kernel before 5.19.2, which is
-in cmd_hdl_filter in drivers/staging/rtl8712/rtl8712_cmd.c, allows
-attacker to launch Local Denial of Service attack and gain escalation
-of privileges.
-I reported it to linux kernel in 2022.8.29 and the upstream fixed it in
-2022.09.06. Now the patch was opened to the public
+On Sun, Oct 22, 2017 at 01:21:19PM +0200, Marius Bakke wrote:
+> Noam Rathaus <noamr@beyondsecurity.com> writes:
+> > I was forwarded by:
+> > Dan Carpenter <dan.carpenter@oracle.com>
+> >
+> > To you regarding obtaining a CVE for the mentioned (in the title)
+> > vulnerability
+> >
+> > I know a patch is being created and placed into mainstream code of the
+> > Kernel
+> >
+> > I would like also to get a CVE for it, so that we can put that in the
+> > advisory we will release
+> 
+> Unfortunately CVE IDs are not assigned through this list anymore.
+> Please use <https://cveform.mitre.org/> to request a CVE.
 
-## Root cause && possible exploit
+Marius is right.  More detail on how we'd like this used as it relates
+to also posting to oss-security:
 
-This is a uaf / double free bug. Whenrtl8712 wireless networdk adapter
-initialized, for example using command "ifconfig wlan0 up",
-it calls netdev_open function, which final calls cmd_hdl_filter function.
-As we can control the command code, we can trigger the vulnerabiliy.
-After pcmd object was freed, we can use msg_msg heap spray to
-get the object, and design the layout of it. By controlling the parambuf
-address, we can leak infomation to pcmbuf, which will finally write to
-adapater's memory. By using msg_msg tech we can also leak the information.
-Then in r8712_free_cmd_obj funtion , as we have access to pcmd->parmbuf. Now
-we have a Arbitrary Free bug. This is a powerful primitive and there is some
-common skill after that.
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
 
-## Fix
+"Previously, one could request CVE IDs for issues in Open Source
+software from oss-security.  This is no longer the case.  Instead, please
+start by posting about the (to be made) public issue to oss-security
+(without a CVE ID), request a CVE ID from MITRE directly, and finally
+"reply" to your own posting when you also have the CVE ID to add.  With
+the described approach you would only approach MITRE after the issue is
+already public, but if you choose to do things differently and contact
+MITRE about an issue that is not yet public, then please do not disclose
+to them more than the absolute minimum needed for them to assign a CVE ID."
 
-[1] https://lore.kernel.org/all/20220906132823.157986856@linuxfoundation.org/
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c53b3dcb9942b8ed7f81ee3921c4085d87070c73
+> > Do we need to give you the full technical writeup of the vulnerability?
+> 
+> It's by no means required,
 
-## CVE
+Actually, this is in fact required:
 
-Now no CVE number is assigned for this issue.
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-## Timeline
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should remain
+valuable even with all of the external resources gone."
 
-2022-08-29: reported to security@kernel.org
-2022-08-29: bug confirmed
-2022-09-06: patch it
-2022-09-06: patch released
-2022-09-07: apply for a CVE number in MITRE
-2022-09-29: reported to secalert@redhat.com
-2022-11-18: Announced on oss-security lists.
+Of course, only post the full detail once it's meant to be made public.
 
-## Credit
+Noam's message so far is not sufficiently detailed for oss-security, for
+when the issue is public (I get the feeling it might not be yet).
 
-Zheng Wang(@xmzyshypnc) and Zhuorao Yang(@A1ex)
+> but it would be appreciated if you could get
+> back to this list with the advisory and CVE identifier when ready.
 
-## Additional Information
+Right.
 
-This is a bug reported to Linux kernel. Although staging driver is not
-a so important driver module in Linux. [1] This vulnerability has been
-introduced as far as the driver was added in 2010. I've checked the
-issue doesn't affect the vendor in the CNA-project list. But this
-issue can affect othe company who use it as their rtl8712 adapter
-driver module like D-link [2] . I  searched the related issue like
-CVE-2021-28660. I think its NOTE description(NOTE: from the
-perspective of kernel.org releases, CVE IDs are not normally used for
-drivers/staging/* (unfinished work); however, system integrators may
-have situations in which a drivers/staging issue is relevant to their
-own customer base) is very appropriate for my situation.  This is a
-long-existing issue as far as the driver module was added so I think
-it's necessary to assign a CVE number so that anyone using it can fix
-the bug.
+Finally, let's not assume that "kernel" implies "Linux", even though
+it's usually the case in postings in here.  Going forward, let's
+explicitly say "Linux kernel" where appropriate (especially at the start
+of message Subjects), so that we don't discourage reporting and
+discussion of issues in other Open Source kernels in here.  (This
+thread's Subject should stay as it is not to add confusion, though.)
 
-[1] https://github.com/torvalds/linux/commit/2865d42c78a9121caad52cb02d1fbb7f5cdbc4ef
-[2] https://cateee.net/lkddb/web-lkddb/R8712U.html
-
-
-Best regards,
-Zheng Wang
+Alexander
