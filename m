@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1234" "Sunday" "4" "December" "2016" "22:13:54" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<d20fed1084474487a95ace3810a92752@imshyb02.MITRE.ORG>" "31" "[oss-security] Re: libming: listswf: NULL pointer dereference in dumpBuffer (read.c)" nil nil nil "12" "2016120503:13:54" "[oss-security] Re: libming: listswf: NULL pointer dereference in dumpBuffer (read.c)" (number mark "U       cve-assign@m Dec  4   31/1234  " thread-indent "\"[oss-security] Re: libming: listswf: NULL pointer dereference in dumpBuffer (read.c)\"\n") "<2637042.StuLhmWT5T@arcadia>" ("<2637042.StuLhmWT5T@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["590" "Sunday" "22" "October" "2017" "08:55:44" "+0300" "Noam Rathaus" "noamr@beyondsecurity.com" "<CAHqykcQNaNcFOrpPdDMny0oVFbuLkReex34wV1NWDYCkevp1EA@mail.gmail.com>" "28" "[oss-security] Netlink XFRM socket subsystem NULL pointer dereference" nil nil nil "10" "2017102205:55:44" "[oss-security] Netlink XFRM socket subsystem NULL pointer dereference" (number mark "U       noamr@beyond Oct 22   28/590   " thread-indent "\"[oss-security] Netlink XFRM socket subsystem NULL pointer dereference\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1546 invoked by uid 550); 5 Dec 2016 03:14:08 -0000
+Received: (qmail 5750 invoked by uid 550); 22 Oct 2017 10:57:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1518 invoked from network); 5 Dec 2016 03:14:06 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <2637042.StuLhmWT5T@arcadia>
-Message-ID: <d20fed1084474487a95ace3810a92752@imshyb02.MITRE.ORG>
-Date: Sun, 4 Dec 2016 22:13:54 -0500
+Received: (qmail 16213 invoked from network); 22 Oct 2017 05:56:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=beyondsecurity-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=KbWPRPPKbttrq3wiuDz2+ZBdhVifMXYovXaqedGGOaU=;
+        b=piFJ+HuYmIxWv7JUx5tFXcJW7e1zvgJnCPygwYLoQBL2HVaHLNgYAAdjMnas5y3g29
+         jX3gbCD12BLL6NRVfzNCWBklYbpxSJHqmri69Uv6byCq0jeHHiw7pWPfrxXiNAyydIDH
+         QwK3mTnZd/MdzA/GdiibpU+f6Czg1D5g3bB/JSuEV8n574azZ0uwAMmlIAPenjhN/Xbk
+         vdiTKJPwm66FoLZN0osgkJjNjgcieJk9E5QXzNBgjZAtCb5ny1j3IkqRl9ekvBQ6VUWC
+         XBD2uUh8KPW9wmW+57XYdrAAVEMPDm9amRaPkh1YZOrDaxFg3uWmBCsskNADetRwquH6
+         17HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=KbWPRPPKbttrq3wiuDz2+ZBdhVifMXYovXaqedGGOaU=;
+        b=eaNcSTl7hMugdMRNX98V5oz01cHZIw++LUvIytt9ivf13hX+QIh+KHVknqcRNIgiya
+         hx4QL77/heoeI+437nepz5n/B4YIwRosuZQum/gt7WLE8Lt5l5JfmlZxV8vLjRqZUXxD
+         XEVam8U0xlpglo9pNyxOlFsowToMS73ot5RACZbEkOQG5WVaoPDN5hRm4tbsk8R1MX/A
+         BUCX0iVoPs+g/giROyWIJFK08J44Nk4p+A7ywU8eSgFxyiPVbzAVrEolU7ZH0F0O/te3
+         4HkVJuZ8+H2tsxcZAQC9lRnxCEs3aIQQ4ite7v0aohpTCsL/nDq8dFir/VvLCwFfLLw2
+         CO0g==
+X-Gm-Message-State: AMCzsaXyvuWT/fKnBcnIynN/rIKtjrbnkvfTIyZbfxvkvGj8X29ZrzY/
+	BD9Y6x9/+IyTd5ZBEGFG2Fbs9RPcUAY2OyIs06t+SbmMzAY=
+X-Google-Smtp-Source: ABhQp+TiloumODicPfJLo3BATez4ohLqC7c277bIKstvajD7CovLNHir6bc0tuhSHgNsKcXP7l2v802uhSxTv8L706E=
+X-Received: by 10.107.40.68 with SMTP id o65mr13297762ioo.120.1508651785071;
+ Sat, 21 Oct 2017 22:56:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: libming: listswf: NULL pointer dereference in dumpBuffer (read.c)
+From: Noam Rathaus <noamr@beyondsecurity.com>
+Date: Sun, 22 Oct 2017 08:55:44 +0300
+Message-ID: <CAHqykcQNaNcFOrpPdDMny0oVFbuLkReex34wV1NWDYCkevp1EA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="001a113528ccbd411e055c1c5dff"
+Subject: [oss-security] Netlink XFRM socket subsystem NULL pointer dereference
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a113528ccbd411e055c1c5dff
+Content-Type: text/plain; charset="UTF-8"
 
-> https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-null-pointer-dereference-in-dumpbuffer-read-c
+Hi,
 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
+I was forwarded by:
+Dan Carpenter <dan.carpenter@oracle.com>
 
-Use CVE-2016-9828.
+To you regarding obtaining a CVE for the mentioned (in the title)
+vulnerability
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I know a patch is being created and placed into mainstream code of the
+Kernel
 
-iQIcBAEBCAAGBQJYRNjQAAoJEHb/MwWLVhi2cvAP+gPY4EcM+y7VKMOf3XRSMw5A
-vhej56NfW87dxFdi2e0WcqxlVLdGXkKNt0KwcnxWHeBU+qYZEnjhzqjnofGwQGM5
-tlOLkTvuoCGz2es+CeeIONpR2EXo1H/3eg8phW7oOV31eU+GRec21c5WMfIsbt6T
-vnUNvtsM9f8P86HujL3P108io2T0aUC48jDJu1zvlWstoSWzib5xATKq5EeQ5rvB
-67dpp4ss9hE02OhvleENnIWx/Yit4DpuIcqPEykT48z0X9IcArqLto27deQeJZ5e
-mgT/4KmR+V5DkwNtzxWpSNyuN4xXivC1Sy9bntp64Qbz10j4Bi/8jymHvzkaTF44
-vfjO2z816WOTDKR0gmCyAlEKe0Lf+bSe2mL9edEFvlgkZfYAANTNUI9yIPQArd1h
-Y1AfrSi598Dp5TODVb9EK9LU9VL3bL+yts8whhCozcR3DQ9SLzbSmb39E9XLISFt
-hzR7Vd8FFaUZahYfTtiEffqWJT/wKhcRM7HD0zyG93s72G4lYYreJwdqUVbgiAPf
-h44bnPzlxEi4RYUMd6vY80BAH/9AgK48coWIeGurRJ7qa8Fv5+sN704nx3hJGHX8
-0TqSEy+RwlWCJkRqKRgBQMjtkw1XCkmAhkHYNGrKMNBkM4sfhFWjHGrf57goj4kR
-GHYADtxkylXkQsIHgcuM
-=no5m
------END PGP SIGNATURE-----
+I would like also to get a CVE for it, so that we can put that in the
+advisory we will release
+
+Do we need to give you the full technical writeup of the vulnerability?
+
+-- 
+
+Thanks,
+Noam Rathaus
+Beyond Security
+
+PGP Key ID: 2D24B275B1EB4475 (Exp 2018-03)
+
+--001a113528ccbd411e055c1c5dff--
