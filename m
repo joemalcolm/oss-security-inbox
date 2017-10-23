@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["211" "Tuesday" "25" "August" "2015" "11:13:55" "-0500" "Mark Felder" "feld@feld.me" "<1440519235.1817961.365674337.0BC4CF7A@webmail.messagingengine.com>" "9" "Re: [oss-security] Several low impact ntp.org ntpd issues" nil nil nil "8" "2015082516:13:55" "[oss-security] Several low impact ntp.org ntpd issues" (number mark "        feld@feld.me Aug 25    9/211   " thread-indent "\"Re: [oss-security] Several low impact ntp.org ntpd issues\"\n") "<55DC3431.6000008@redhat.com>" ("<55DC3431.6000008@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2324" "Monday" "23" "October" "2017" "08:07:06" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1710230805480.24229@tvnag.unkk.fr>" "82" "[oss-security] [SECURITY ADVISORY] curl: IMAP FETCH response out of bounds read" nil nil nil "10" "2017102306:07:06" "[oss-security] [SECURITY ADVISORY] curl: IMAP FETCH response out of bounds read" (number mark "U       daniel@haxx. Oct 23   82/2324  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: IMAP FETCH response out of bounds read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19954 invoked by uid 550); 25 Aug 2015 16:14:08 -0000
+Received: (qmail 5617 invoked by uid 550); 23 Oct 2017 06:07:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19931 invoked from network); 25 Aug 2015 16:14:07 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=Yo0HITdmWJKwOxjKuvaUSrao2Nc=; b=gJXl4q
-	+CxkPXixstMXkXJQ58wgbnpjD68gPCSnxrHfJdvrR2Gu19RoP6XTgis1rTYSHa+a
-	GItotCOweHxbkw5/VZjNOX5gbhGSBhg/KMkwfMnhW+mspYs/58/N6nsvSzwVIsKv
-	AkvpBNdLMvbNOQYKFTo/58fjpzqWZozZnYA2M=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Yo0HITdmWJKwOxj
-	KuvaUSrao2Nc=; b=FQdPgKuvYm1A4/s2fHjO+jPUxOQmPnMJn2pAnCOX1DiyfYG
-	LBgliM2Q7s839erEfNpbZzdkGMwp1cjpjo4NAnm9Nf3qcEySfyIgJy47HNux1ziM
-	gC+qJUdTP6gzMOy47PyKJc5tQT3r15U2bC5QLbke0NKld1LJDGaHcQS4YRsw=
-Message-Id: <1440519235.1817961.365674337.0BC4CF7A@webmail.messagingengine.com>
-X-Sasl-Enc: +EP5fq/IFBztNhRsMx61mgjwEHBCXltE0ibbIBu2pOps 1440519235
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-4500bf93
-In-Reply-To: <55DC3431.6000008@redhat.com>
-References: <55DC3431.6000008@redhat.com>
-Date: Tue, 25 Aug 2015 11:13:55 -0500
-From: Mark Felder <feld@feld.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Several low impact ntp.org ntpd issues
-To: oss-security@lists.openwall.com
+Received: (qmail 5568 invoked from network); 23 Oct 2017 06:07:20 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Mon, 23 Oct 2017 08:07:06 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1710230805480.24229@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: IMAP FETCH response out of bounds read
 
+IMAP FETCH response out of bounds read
+======================================
 
+Project curl Security Advisory, October 23rd 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_20171023.html)
 
-On Tue, Aug 25, 2015, at 04:24, Florian Weimer wrote:
-> 
-> (Impact may be higher if ntpd runs with root privileges.)
-> 
+VULNERABILITY
+-------------
 
-Doesn't ntpd have to run as root to steer the clock? Are there any OSes
-where it's not?
+libcurl contains a buffer overrun flaw in the IMAP handler.
+
+An IMAP FETCH response line indicates the size of the returned data, in number
+of bytes. When that response says the data is zero bytes, libcurl would pass
+on that (non-existing) data with a pointer and the size (zero) to the
+deliver-data function.
+
+libcurl's deliver-data function treats zero as a magic number and invokes
+strlen() on the data to figure out the length. The strlen() is called on a
+heap based buffer that might not be zero terminated so libcurl might read
+beyond the end of it into whatever memory lies after (or just crash) and then
+deliver that to the application as if it was actually downloaded.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This bug was introduced in commit
+[ec3bb8f727](https://github.com/curl/curl/commit/ec3bb8f727), December 2009,
+when the initial support for IMAP was introduced.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-1000257 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.20.0 to and including 7.56.0
+- Not affected versions: libcurl < 7.20.0 and >= 7.56.1
+
+curl is used by many applications, but not always advertised as such.
+
+THE SOLUTION
+------------
+
+In libcurl version 7.56.1, a zero bytes response is not passed on.
+
+A [patch for CVE-2017-1000257](https://curl.haxx.se/CVE-2017-1000257.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl to version 7.56.1
+
+  B - Apply the patch to your version and rebuild
+
+  C - Switch off IMAP in `CURLOPT_PROTOCOLS`
+
+TIME LINE
+---------
+
+It was reported to the curl project on October 6, 2017.  We contacted
+distros@openwall on October 17.
+
+curl 7.56.1 was released on October 23 2017, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Brian Carpenter, Geeknik Labs and 0xd34db347. Also independently
+detected by and reported by the OSS-Fuzz project. Patch by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
