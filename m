@@ -1,135 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/12/6
-Message-Id: <E1drjui-00085v-K8@xenbits.xenproject.org>
-Date: Tue, 12 Sep 2017 12:03:36 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 234 (CVE-2017-14319) - insufficient grant unmapping checks for x86 PV guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/23/2
+Message-Id: <D63A4457-CF66-4203-BBA2-F2D432A2DBE0@beckweb.net>
+Date: Mon, 23 Oct 2017 14:20:30 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around 
+the world to reliably build, test, and deploy their software. The following 
+plugin releases contain fixes for security vulnerabilities:
 
-            Xen Security Advisory CVE-2017-14319 / XSA-234
-                               version 3
+* Active Choices (uno-choice) Plugin 2.0
+* Build-Publisher Plugin 1.22
+* Dependency Graph Viewer Plugin 0.13
+* global-build-stats Plugin 1.5
+* Multijob Plugin 1.26
 
-          insufficient grant unmapping checks for x86 PV guests
+Additionally, we announce a vulnerability in SCP publisher plugin without fix.
 
-UPDATES IN VERSION 3
-====================
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://jenkins.io/security/advisory/2017-10-23/
 
-Added metadata file
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Public release.
+If you find security vulnerabilities in Jenkins, please report them as
+described here:
+https://jenkins.io/security/#reporting-vulnerabilities
 
-ISSUE DESCRIPTION
-=================
+---
 
-When removing or replacing a grant mapping, the x86 PV specific path
-needs to make sure page table entries remain in sync with other
-accounting done.  Although the identity of the page frame was
-validated correctly, neither the presence of the mapping nor page
-writability were taken into account.
+SECURITY-470
+Active Choices plugin allowed users with Job/Configure permission to
+provide arbitrary HTML to be shown on the Build With Parameters page
+through the Active Choices Reactive Reference Parameter type. This could
+include, for example, arbitrary JavaScript.
 
-IMPACT
-======
 
-A malicious or buggy x86 PV guest could escalate its privileges or
-crash the hypervisor.
+SECURITY-50
+Some URLs provided by global-build-stats plugin returned a JSON response 
+that contained request parameters. These responses had the 
+Content-Type: text/html, so could have been interpreted as HTML by clients,
+resulting in a potential reflected cross-site scripting vulnerability.
 
-VULNERABLE SYSTEMS
-==================
+Additionally, some URLs provided by global-build-stats plugin that modify 
+data did not require POST requests to be sent, resulting in a potential 
+cross-site request forgery vulnerability.
 
-All Xen versions are affected.
 
-Only x86 PV guests can leverage the vulnerability.  x86 HVM guests as
-well as ARM guests cannot leverage the vulnerability.
+SECURITY-57
+Dependency Graph Viewer plugin did not perform permission checks for the 
+API endpoint that modifies the dependency graph, allowing anyone with 
+Overall/Read permission to modify this data.
 
-MITIGATION
-==========
 
-Running only HVM guests will avoid this vulnerability.  However, the
-vulnerability is exposed to PV stub qemu serving as the device model
-for HVM guests.  Our default assumption is that an HVM guest has
-compromised its PV stub qemu.  By extension, it is likely that the
-vulnerability is exposed to HVM guests which are served by a PV stub
-qemu.
+SECURITY-374
+SCP publisher plugin stores credentials to other Jenkins instances in the 
+file be.certipost.hudson.plugin.SCPRepositoryPublisher.xml in the Jenkins 
+master home directory. These credentials are stored unencrypted, allowing 
+anyone with local file system access to access them.
 
-For PV guests, the vulnerability can be avoided if the guest kernel is
-controlled by the host rather than guest administrator, provided that
-further steps are taken to prevent the guest administrator from loading
-code into the kernel (e.g. by disabling loadable modules etc) or from
-using other mechanisms which allow them to run code at kernel privilege.
+Additionally, the credentials are also transmitted in plain text as part 
+of the configuration form. This could result in exposure of the credentials 
+through browser extensions, cross-site scripting vulnerabilities, and 
+similar situations.
 
-CREDITS
-=======
 
-This issue was discovered by Andrew Cooper of Citrix.
+SECURITY-378
+Build-Publisher plugin stores credentials to other Jenkins instances in the 
+file hudson.plugins.build_publisher.BuildPublisher.xml in the Jenkins 
+master home directory. These credentials were stored unencrypted, allowing 
+anyone with local file system access to access them.
 
-RESOLUTION
-==========
+Additionally, the credentials were also transmitted in plain text as part 
+of the configuration form. This could result in exposure of the API key 
+through browser extensions, cross-site scripting vulnerabilities, and 
+similar situations.
 
-Applying the appropriate attached patch resolves this issue.
 
-xsa234.patch           xen-unstable
-xsa234-4.9.patch       Xen 4.9.x
-xsa234-4.8.patch       Xen 4.8.x, Xen 4.7.x
-xsa234-4.6.patch       Xen 4.6.x
-xsa234-4.5.patch       Xen 4.5.x
+JENKINS-36333
+Multijob plugin did not check permissions in the Resume Build action, 
+allowing anyone with Job/Read permission to resume the build.
 
-$ sha256sum xsa234*
-efbcc7eac0f010281c5651d191076ac08cc7dd22a1945e88e92ba8a03ae8cc40  xsa234.meta
-08ffa79e5c2a77db0b91b3bfcf9fa5c50f174fe842b7418e2e1549d47e0aec4d  xsa234.patch
-4b74f3c85a98bc6f40c6a448b068bf45e71f7cce887b7cb1481aca0e8746d990  xsa234-4.5.patch
-3df4ce173196111c1ff849039ea4927c0b4bd632b08a501fb26f64e31b951fba  xsa234-4.6.patch
-169e4e0eaa6b27e58ff0f4ce50e8fcc3f81b1e0a10210decf22d1b4cac7501fb  xsa234-4.8.patch
-213f9d81a4ab785db67b9f579c9e88c9c8586c46b93f466a309060750df2df32  xsa234-4.9.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZt80HAAoJEIP+FMlX6CvZBCsH/1ghPnUr7fpKSgd7huB5gtGC
-+QsoqJlmI8U+eWqmS8RlAZ0f5A2Umy7GyYDWqFbvJR2o60AMf7DI9d1QVHQYRSfD
-JFw+M4ohZ/gZoHykof929QYY15Fhrnt5PoMJ6ztt3ZsBXYkXTJfyvHwVjCD43Nvt
-fANPcYOpm8NneV9mAviVEjR3u08ultjcfq0Gdks22L5zWKzG38j/rbBtA75mx5eT
-v/eYXEqrSgXEfI2zJOP/j53D2CwMJnmbbsxgQTvAalSLq1zqNrXFSHEkfyqi+Aix
-QReMmubpNVbIv1ybtZsE1tRMgBY7VJBJEbT5/PrOUErb9XMoL0wtMwP+kHuVD2w=
-=qFgP
------END PGP SIGNATURE-----
-
-Download attachment "xsa234.meta" of type "application/octet-stream" (1951 bytes)
-
-Download attachment "xsa234.patch" of type "application/octet-stream" (7395 bytes)
-
-Download attachment "xsa234-4.5.patch" of type "application/octet-stream" (7090 bytes)
-
-Download attachment "xsa234-4.6.patch" of type "application/octet-stream" (7036 bytes)
-
-Download attachment "xsa234-4.8.patch" of type "application/octet-stream" (7024 bytes)
-
-Download attachment "xsa234-4.9.patch" of type "application/octet-stream" (7279 bytes)
