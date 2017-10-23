@@ -1,4 +1,9 @@
-Received: (qmail 7849 invoked by uid 550); 3 Jun 2026 06:36:35 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2273" "Monday" "23" "October" "2017" "23:13:03" "+0200" "Egidio Romano" "research@karmainsecurity.com" "<46e966ba-bcd8-36d9-d0ff-97bcaf38267e@karmainsecurity.com>" "70" "[oss-security] [KIS-2017-02] Tuleap <= 9.6 Second-Order PHP Object Injection Vulnerability" nil nil nil "10" "2017102321:13:03" "[oss-security] [KIS-2017-02] Tuleap <= 9.6 Second-Order PHP Object Injection Vulnerability" (number mark "U       research@kar Oct 23   70/2273  " thread-indent "\"[oss-security] [KIS-2017-02] Tuleap <= 9.6 Second-Order PHP Object Injection Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22286 invoked by uid 550); 23 Oct 2017 21:27:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +12,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11953 invoked from network); 3 Jun 2026 00:34:35 -0000
-Date: Wed, 3 Jun 2026 02:34:25 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjcj.net; s=dkim;
-	t=1780446866;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=cGt3kmUTJYgmoIDN6PJigl1lr625X0jxumr0Dz6SbFE=;
-	b=nvBgcUJcuCYWlyWHMd0MioEqSWDYPtzM2JsmqWW0bM2IbslEogwGO3Y8FX+ZpAaxBvsaLp
-	9xAtdk1d5sK3f4o89w0JZLNcDJbt/WnfQscKKLdnXoTKBShS9b+arddWcsjFhiOUegoZxd
-	W92AdC0DepZIPCKH1nDt5kOpo8/Xy5wCD0AR0M6+lxhiBgaheQigzskn0qmcX9fXc1z7u6
-	16Jp3skdQ/5tHfWicXqskqx+ry3quwsAW7F7Z2XJqwEkDIdQMBFUL67V+Mu5VfMaID9Pkd
-	vjUfPUxhWTh2Ttqpax29SZqBjPwPPaLA1s/Xfhs2ZONJomCeay41a+2D5lcc9g==
-Authentication-Results: pjcj.com;
-	auth=pass smtp.mailfrom=paul@pjcj.net
-From: Paul Johnson <paul@pjcj.net>
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Message-ID: <ah92IamQXkTJ8Lpv@pjcj.com>
+Received: (qmail 7510 invoked from network); 23 Oct 2017 21:13:18 -0000
+To: bugtraq@securityfocus.com, fulldisclosure@seclists.org,
+ oss-security@lists.openwall.com
+From: Egidio Romano <research@karmainsecurity.com>
+Message-ID: <46e966ba-bcd8-36d9-d0ff-97bcaf38267e@karmainsecurity.com>
+Date: Mon, 23 Oct 2017 23:13:03 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Subject: [oss-security] CVE-2026-9516: Cpanel::JSON::XS versions before 4.41 for Perl allow
- denial of service via UTF-8 BOM prefixed input when a decode filter callback
- throws
+Content-Type: text/plain; charset=iso-8859-15
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - srv-hp7.netsons.net
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - karmainsecurity.com
+X-Get-Message-Sender-Via: srv-hp7.netsons.net: authenticated_id: research@karmainsecurity.com
+X-Authenticated-Sender: srv-hp7.netsons.net: research@karmainsecurity.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+Subject: [oss-security] [KIS-2017-02] Tuleap <= 9.6 Second-Order PHP Object Injection
+ Vulnerability
 
-========================================================================
-CVE-2026-9516                                        CPAN Security Group
-========================================================================
-
-        CVE ID:  CVE-2026-9516
-  Distribution:  Cpanel-JSON-XS
-      Versions:  before 4.41
-
-      MetaCPAN:  https://metacpan.org/dist/Cpanel-JSON-XS
-      VCS Repo:  https://github.com/rurban/Cpanel-JSON-XS
-
-
-Cpanel::JSON::XS versions before 4.41 for Perl allow denial of service
-via UTF-8 BOM prefixed input when a decode filter callback throws
-
-Description
------------
-Cpanel::JSON::XS versions before 4.41 for Perl allow denial of service
-via UTF-8 BOM prefixed input when a decode filter callback throws.
-
-To skip a leading 3-byte UTF-8 BOM, decode_json() advances the input
-scalar's string pointer past the mark with SvPV_set() and restores it
-only on the normal return path. When decoding aborts through a Perl
-exception, for example a filter_json_object callback that croaks, the
-restore is skipped and the scalar is left with its string pointer
-offset into its own buffer and a shortened length.
-
-When that scalar is later freed, the allocator receives an invalid
-pointer and the interpreter aborts. A single BOM prefixed document
-decoded with a throwing filter callback crashes any caller.
-
-Problem types
--------------
-- CWE-763 Release of Invalid Pointer or Reference
-- CWE-755 Improper Handling of Exceptional Conditions
-
-Solutions
----------
-Upgrade to Cpanel::JSON::XS 4.41 or later.
+-------------------------------------------------------------
+Tuleap <= 9.6 Second-Order PHP Object Injection Vulnerability
+-------------------------------------------------------------
 
 
-References
-----------
-https://github.com/rurban/Cpanel-JSON-XS/commit/dfe1b41a36caba51dc12a2917fe50285d1ffaa7b.patch
-https://metacpan.org/release/RURBAN/Cpanel-JSON-XS-4.41/changes
+[-] Software Links:
 
-Timeline
---------
-- 2026-05-18: Issue reported.
-- 2026-05-27: Version 4.41 released with fix.
-- 2026-05-28: Fix verified.
+https://www.tuleap.org
+https://www.enalean.com
 
--- 
-Paul Johnson - paul@pjcj.net
+
+[-] Affected Versions:
+
+All versions from 5.0 to 9.6.
+
+
+[-] Vulnerability Description:
+
+The vulnerable code can be triggered through the User::getRecentElements() method defined in /src/common/user/User.class.php:
+
+
+1425.	    public function getRecentElements() {
+1426.	        if ($recent_elements = $this->getPreference(self::PREFERENCE_RECENT_ELEMENTS)) {
+1427.	            if ($recent_elements = unserialize($recent_elements)) {
+1428.	                if (is_array($recent_elements)) {
+1429.	                    return $recent_elements;
+1430.	                }
+1431.	            }
+1432.	            //somthing wrong happen. Delete the preference
+1433.	            $this->delPreference(self::PREFERENCE_RECENT_ELEMENTS);
+1434.	        }
+1435.	        return array();
+1436.	    }
+
+The vulnerability exists because this method is using the unserialize() function with a value that can be arbitrarily manipulated by a user through
+the REST API interface. This can be exploited to inject arbitrary PHP objects into the application scope, and could allow authenticated attackers to
+execute arbitrary PHP code via specially crafted serialized objects. Successful exploitation of this vulnerability requires an user account with
+permissions to create or access artifacts in a tracker.
+
+
+[-] Solution:
+
+Update to version 9.7 or later.
+
+
+[-] Disclosure Timeline:
+
+[03/04/2017] - Vendor notified
+[03/04/2017] - Vendor acknowledgement
+[03/04/2017] - Vendor submitted artifact: https://tuleap.net/plugins/tracker/?aid=10118
+[03/04/2017] - CVE number requested
+[03/04/2017] - CVE number assigned
+[05/04/2017] - Vulnerability fixed on the git repository: https://goo.gl/X2AT4z
+[26/04/2017] - Version 9.7 released
+[23/10/2017] - Publication of this advisory
+
+
+[-] CVE Reference:
+
+The Common Vulnerabilities and Exposures project (cve.mitre.org) has assigned the name CVE-2017-7411 to this vulnerability.
+
+
+[-] Credits:
+
+Vulnerability discovered by Egidio Romano.
+
+
+[-] Original Advisory:
+
+http://karmainsecurity.com/KIS-2017-02
