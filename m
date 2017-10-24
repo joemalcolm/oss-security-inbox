@@ -1,69 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/15/5
-Message-Id: <E1dhabg-0006i6-PG@xenbits.xenproject.org>
-Date: Tue, 15 Aug 2017 12:06:00 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/24/3
+Message-Id: <E1e6zgQ-0007u1-QN@xenbits.xenproject.org>
+Date: Tue, 24 Oct 2017 13:55:54 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 230 - grant_table: possibly premature clearing of GTF_writing / GTF_reading
+Subject: Xen Security Advisory 236 (CVE-2017-15597) - pin count / page reference race in grant table code
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-                    Xen Security Advisory XSA-230
-                              version 2
+            Xen Security Advisory CVE-2017-15597 / XSA-236
+                               version 3
 
- grant_table: possibly premature clearing of GTF_writing / GTF_reading
+          pin count / page reference race in grant table code
 
-UPDATES IN VERSION 2
+UPDATES IN VERSION 3
 ====================
 
-Public release.  (A CVE request for this issue is currently outstanding.)
+We now once again think that only Xen 4.2 and newer are vulnerable.
+
+Fix grammar typo.
+
+Public release.
 
 ISSUE DESCRIPTION
 =================
 
-Xen maintains the _GTF_{read,writ}ing bits as appropriate, to inform the
-guest that a grant is in use.  A guest is expected not to modify the
-grant details while it is in use, whereas the guest is free to
-modify/reuse the grant entry when it is not in use.
-
-Under some circumstances, Xen will clear the status bits too early,
-incorrectly informing the guest that the grant is no longer in use.
+Grant copying code made an implication that any grant pin would be
+accompanied by a suitable page reference.  Other portions of code,
+however, did not match up with that assumption.  When such a grant
+copy operation is being done on a grant of a dying domain, the
+assumption turns out wrong.
 
 IMPACT
 ======
 
-A guest may prematurely believe that a granted frame is safely private
-again, and reuse it in a way which contains sensitive information, while
-the domain on the far end of the grant is still using the grant.
+A malicious guest administrator can cause hypervisor memory
+corruption, most likely resulting in host crash and a Denial of
+Service.  Privilege escalation and information leaks cannot be ruled
+out.
 
 VULNERABLE SYSTEMS
 ==================
 
-All systems are vulnerable.
+Xen versions from 4.2 onwards are vulnerable.  Xen versions 4.1 and
+earlier are not vulnerable.
+
+Both x86 and ARM are vulnerable, and on x86 both PV and HVM guests can
+trigger the vulnerability.
 
 MITIGATION
 ==========
 
-There are no mitigations.
+Running only guests without para-virtual drivers, and known not to
+issue grant table operations can avoid the vulnerability.
 
 CREDITS
 =======
 
-This issue was discovered by Jan Beulich of SUSE.
+This issue was discovered by Pawel Wieczorkiewicz of Amazon.
 
 RESOLUTION
 ==========
 
 Applying the appropriate attached patch resolves this issue.
 
-xsa230.patch           xen-unstable, 4.9, 4.8, 4.7, 4.6, 4.5
+xsa236.patch           xen-unstable
+xsa236-4.9.patch       Xen 4.9.x, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
+xsa236-4.5.patch       Xen 4.5.x
 
-$ sha256sum xsa230*
-912c24771dc9e9b305be630b7771505abb3db735564c5574fc30b58a5da0139e  xsa230.meta
-77a73f1c32d083e315ef0b1bbb119cb8840ceb5ada790cad76cbfb9116f725cc  xsa230.patch
+$ sha256sum xsa236*
+2f7736c43b6da7d983cf3edbc10024c4cba9d6d3e5b2b758a07de726a804617d  xsa236.meta
+f06f01fb4ffcfc7938a2fc6ab73559ebbaac2d448bd36ca538bb07ba510eeb4a  xsa236.patch
+c98a4b50d021414626cd68002643e9aa0cc6067b98cd5dd995c0140a7933d1ea  xsa236-4.5.patch
+b6fe5604af26e93184f30127ebbb644f127ecc7116b093c161ca3044b44d2fe9  xsa236-4.9.patch
 $
 
 DEPLOYMENT DURING EMBARGO
@@ -81,7 +93,6 @@ Predisclosure list members who wish to deploy significantly different
 patches and/or mitigations, please contact the Xen Project Security
 Team.
 
-
 (Note: this during-embargo deployment notice is retained in
 post-embargo publicly released Xen Project advisories, even though it
 is then no longer applicable.  This is to enable the community to have
@@ -90,26 +101,22 @@ oversight of the Xen Project Security Team's decisionmaking.)
 For more information about permissible uses of embargoed information,
 consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
-
-
-NOTE REGARDING SHORT EMBARGO
-============================
-
-This issue was discovered while investigating problems with the initial
-version of XSA-226.  Accordingly, XSA-230 is embargoed and the embargo
-will end at the same time as that of XSA-226.
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCAAGBQJZkuNZAAoJEIP+FMlX6CvZ+UwH/AjbZSL+HVazwku2f5qtV4SK
-tBO0oiA4+o4hC9N71jV2JroQub37zEKBahpVIe0YpZ7QmedNme9URTnndkI7J9xj
-qarVafofxbtgqHA8Dqe8TcvOiU0PgmR3JgJYUbXIQYwsPRpJsCtTgWB/IOwYZlcM
-FpQSdPhvfVUAONTcM8bGqqe8pww40kW61dvwu4qlqyA1W4nj+Et4Yu9yn+Ga5H94
-E8BjHgVE26sh5Q4D8JL70IpgQeuHPQ3wgRvnmzQgnpc5192zUC9ybDC5j9L17O1r
-ckJlbaSNKgEHrYhflog/Haa55ZfyiYJF67KIQAYcOa5em0jvgCr7zIzPUPprsT0=
-=eYJA
+iQEcBAEBCAAGBQJZ70ZiAAoJEIP+FMlX6CvZlBgH/0cwYrP3/zvc3dNJRtpxyn1J
+BkigYP8JBIYW85M7KdZDFBhgXIpuw6x45XZ4qfq6rrz3GOp5oZgZVFIoggHZBzRe
+eVCIpjOAXInM7ThsE6pV1Qr/JKe8V6RJumXEgqr5zznWpGmcFChWmobA+BBq64P6
+87ALWjXBcuqOyjJnJQwEjk+kHJMnIpocVZk6NqcDeoHoJvRh/Zk4YYc78qm4Lucw
+d0yHq5azA9bgt5iJgxUvF74B4r8JxTLmA8sn7Kx280UJGEAkqM7jj1QVQ6sb8fgO
+q6RSzBVnuVqLh4E1Dji9KaxcRRVnbrp2FFpBUUWHAVVO4O0GYlu5NxERnnye9v0=
+=zI77
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa230.meta" of type "application/octet-stream" (1914 bytes)
+Download attachment "xsa236.meta" of type "application/octet-stream" (2695 bytes)
 
-Download attachment "xsa230.patch" of type "application/octet-stream" (1360 bytes)
+Download attachment "xsa236.patch" of type "application/octet-stream" (2341 bytes)
+
+Download attachment "xsa236-4.5.patch" of type "application/octet-stream" (2183 bytes)
+
+Download attachment "xsa236-4.9.patch" of type "application/octet-stream" (2347 bytes)
