@@ -1,43 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/5
-Message-ID: <CAA7hUgF5wi+ECx7=xycRfQib8X+j0n+6Mxopnd67x62K9YfnWw@mail.gmail.com>
-Date: Wed, 15 Feb 2017 15:03:24 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/24/2
+Message-ID: <20171024114611.GA2330@openwall.com>
+Date: Tue, 24 Oct 2017 13:46:11 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Juan Diego <diego@...ux.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Hash thief on Windows shared folder with SCF files. ADV170014 NTLM SSO
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Juan, all -
 
-On 12 February 2017 at 00:35, Solar Designer <solar@...nwall.com> wrote:
-> On Fri, Feb 10, 2017 at 10:59:27PM -0500, cve-assign@...re.org wrote:
->> C5. I want MITRE to send the https://cveform.mitre.org form data, and
->> the CVE ID, to the oss-security list at the same time that these are
->> sent to the requester.
->>
->> R5. We have had internal discussions within MITRE about this. We are
->> able to implement this easily if the community requires this approach.
->> At the moment, we are expecting the requester to resend this
->> information to oss-security once they accept their CVE ID assignment.
-[...]
-> MITRE - can you please implement that, and we'll see how it goes and
-> whether we need it adjusted or possibly discontinued if things go wrong
-> or if there's opposition (so far, there's almost none)?
->
->> Please see http://www.openwall.com/lists/oss-security/2017/02/09/26
->> for an example.
->
-> This is also an example of how the change breaks threading.  First,
-> there was a thread about the issue on the list.  Then there was CVE
-> request and assignment off-list.  And then there's this new thread on
-> the CVE assignment.
+On Mon, Oct 23, 2017 at 04:47:46PM -0700, Juan Diego wrote:
+> I want to share some information with the people on the list.
+> On May 24, I found a problem with NTLM auth on Windows.
 
-If this was to be implemented, the submitter could also just include
-the message-id of the related oss-sec post.
-The mail by MITRE could then set a In-Reply-To accordingly to avoid
-thread breaking.
+This is interesting, but it's mostly off-topic for oss-security, so as a
+moderator I ask that further discussion please be handled on other lists
+(once Juan's message probably gets through moderation in there).
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Our only poor excuse for having this on oss-security at all is the use
+of Open Source tools to demonstrate the attack - Metasploit, JtR, Samba -
+but I think it's not enough of a reason to have postings like this on
+oss-security.  If others feel differently, please let me know.
+
+Juan, please re-read the oss-security list content guidelines, and note
+that we not only require relevance to Open Source (lacking here), but
+also discourage cross-postings:
+
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+
+"Please keep discussions relevant to Open Source software.  This is not a
+list to discuss the behavior or problems with closed source software or
+companies."
+
+"Please don't cross-post messages to oss-security and other mailing
+lists at once, especially not to high-volume lists such as LKML and
+netdev, as this tends to result in threads that wander partially or
+fully off-topic (e.g., Linux kernel coding style detail may end up being
+discussed in comments to a patch posted to LKML, but it would be
+off-topic for oss-security).  If you feel that something needs to be
+posted to oss-security and to another list, please make separate
+postings.  You may mention the other posting(s) in your oss-security
+posting, and even link to other lists' archives."
+
+No reply to this message is expected, unless there's relevant detail to
+add (e.g., the same issue also present in certain Open Source software).
+
+Thanks,
+
+Alexander
