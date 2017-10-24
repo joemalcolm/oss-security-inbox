@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["989" "Thursday" "3" "December" "2020" "18:07:07" "+0000" "Mark Thomas" "markt@apache.org" "<c5bf3041-13a2-fa1a-b8b2-d70fcbdb24c1@apache.org>" "31" "[oss-security] [SECURITY] CVE-2020-17527 Apache Tomcat HTTP/2 Request header mix-up" nil nil nil "12" "2020120318:07:07" "[oss-security] [SECURITY] CVE-2020-17527 Apache Tomcat HTTP/2 Request header mix-up" (number mark "U       markt@apache Dec  3   31/989   " thread-indent "\"[oss-security] [SECURITY] CVE-2020-17527 Apache Tomcat HTTP/2 Request header mix-up\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] CVE-2020-17527 Apache Tomcat HTTP/2 Request header mix-up" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5866" "Tuesday" "24" "October" "2017" "20:30:07" "+0200" "Solar Designer" "solar@openwall.com" "<20171024183007.GA4656@openwall.com>" "143" "Re: [oss-security] CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters" nil nil nil "10" "2017102418:30:07" "[oss-security] CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters" (number mark "U       solar@openwa Oct 24  143/5866  " thread-indent "\"Re: [oss-security] CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters\"\n") "<51096780.5070204@redhat.com>" ("<540932871.18362792.1359546030409.JavaMail.root@redhat.com>" "<51096780.5070204@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30581 invoked by uid 550); 3 Dec 2020 18:29:09 -0000
+Received: (qmail 28537 invoked by uid 550); 24 Oct 2017 18:30:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,89 +12,164 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5351 invoked from network); 3 Dec 2020 18:07:21 -0000
-From: Mark Thomas <markt@apache.org>
+Received: (qmail 28261 invoked from network); 24 Oct 2017 18:30:20 -0000
+Date: Tue, 24 Oct 2017 20:30:07 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Autocrypt: addr=markt@apache.org; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <c5bf3041-13a2-fa1a-b8b2-d70fcbdb24c1@apache.org>
-Date: Thu, 3 Dec 2020 18:07:07 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [SECURITY] CVE-2020-17527 Apache Tomcat HTTP/2 Request header mix-up
+Cc: Jan Lieskovsky <jlieskov@redhat.com>, Jeff Law <law@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>,
+	Andreas Schwab <schwab@suse.de>,
+	Carlos O'Donell <carlos@systemhalted.org>
+Message-ID: <20171024183007.GA4656@openwall.com>
+References: <540932871.18362792.1359546030409.JavaMail.root@redhat.com> <51096780.5070204@redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <51096780.5070204@redhat.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters
 
-CVE-2020-17527 Apache Tomcat HTTP/2 Request header mix-up
+Hi,
 
-Severity: Moderate
+I'm not sure it makes sense to add to this old thread, but FWIW:
 
-Vendor: The Apache Software Foundation
+On Wed, Jan 30, 2013 at 11:33:36AM -0700, Kurt Seifried wrote:
+> On 01/30/2013 04:40 AM, Jan Lieskovsky wrote:
+> > a security flaw was found in the regular expression matching 
+> > routine of glibc, the GNU libc libraries, processed multibyte 
+> > characters input. If an application utilized the glibc's regular 
+> > expression matching mechanism, an attacker could provide a
+> > specially-crafted input that, when processed would lead to that
+> > executable crash.
+> > 
+> > Upstream bug report: [1]
+> > http://sourceware.org/bugzilla/show_bug.cgi?id=15078
+> > 
+> > Relevant patch: [2]
+> > http://sourceware.org/ml/libc-alpha/2013-01/msg00967.html
+> > 
+> > More background: * (from Paolo): Jan 30 11:34:19 <bonzini> iankko:
+> > it is a memset(foo, 0, ...) that overruns the buffer, so it's not
+> > controllable by the attacker
+> > 
+> > * but the denial of service scenario / attack vector is valid
+> > (consider network facing application using glibc's regexp matching
+> > on untrusted input)
+> > 
+> > Could you allocate a CVE id for this?
+> > 
+> > Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> > Security Response Team
+> 
+> Please use CVE-2013-0242 for this issue.
 
-Versions Affected:
-Apache Tomcat 10.0.0-M1 to 10.0.0-M9
-Apache Tomcat 9.0.0.M5 to 9.0.39
-Apache Tomcat 8.5.1 to 8.5.59
+In a follow-up to Andreas Schwab's libc-alpha posting referenced above,
+Carlos O'Donell points out that the "Double the lengthes of the
+buffers." comment in extend_buffers() hadn't been true since MIN() was
+added by:
 
-Description:
-While investigating Bug 64830 it was discovered that Apache Tomcat could
-re-use an HTTP request header value from the previous stream received
-on an HTTP/2 connection for the request associated with the subsequent
-stream. While this would most likely lead to an error and the closure of
-the HTTP/2 connection, it is possible that information could leak
-between requests.
+https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=8887a920a4b81a500f54893250085e0d1a52cf9a
 
-Mitigation:
-- Upgrade to Apache Tomcat 10.0.0-M10 or later
-- Upgrade to Apache Tomcat 9.0.40 or later
-- Upgrade to Apache Tomcat 8.5.60 or later
+---
+commit 8887a920a4b81a500f54893250085e0d1a52cf9a
+Author: Ulrich Drepper <drepper@gmail.com>
+Date:   Sat May 28 17:14:30 2011 -0400
 
-Credit:
-This issue was identified by the Apache Tomcat Security Team.
+    Fix unnecessary overallocation due to incomplete character
 
-References:
-[1] http://tomcat.apache.org/security-10.html
-[2] http://tomcat.apache.org/security-9.html
-[3] http://tomcat.apache.org/security-8.html
+    When incomplete characters are found at the end of a string the
+    code ran amok and allocated lots of memory.  Stricter limits
+    are now in place.
+---
+
+That commit includes this change:
+
+   /* Double the lengthes of the buffers.  */
+-  ret = re_string_realloc_buffers (pstr, pstr->bufs_len * 2);
++  ret = re_string_realloc_buffers (pstr, MIN (pstr->len, pstr->bufs_len * 2));
+
+Andreas' commit fixing the issue reported in 2013 is:
+
+https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a445af0bc722d620afed7683cd320c0e4c7c6059
+
+---
+commit a445af0bc722d620afed7683cd320c0e4c7c6059
+Author: Andreas Schwab <schwab@suse.de>
+Date:   Tue Jan 29 14:45:15 2013 +0100
+
+    Fix buffer overrun in regexp matcher
+---
+
+and it further changes the code to:
+
++  /* Double the lengthes of the buffers, but allocate at least MIN_LEN.  */
++  ret = re_string_realloc_buffers (pstr,
++                                  MAX (min_len,
++                                       MIN (pstr->len, pstr->bufs_len * 2)));
+
+Carlos also wrote that "MIN() never yields anything near double the
+length", but Andreas disagreed by "That is not true, otherwise the bug
+would not have happend.  bufs_len starts out pretty small (MB_CUR_MAX)."
+
+I don't follow the logic behind "otherwise the bug would not have
+happend".  The bug was reported against glibc after the 2011 commit, and
+I found no evidence of it manifesting itself against pre-2011 glibc.
+"bufs_len starts out pretty small (MB_CUR_MAX)" makes sense to me, but
+isn't convincing that this size was necessarily too small.
+
+I failed to visibly trigger the bug in pre-2011 glibc with bug-regex34.c
+(yes, with a en_US.UTF-8 locale built) as included in the 2013 commit,
+as well as with its revisions e.g. adding the below hack near the end of
+do_test():
+
+  /* Additional attempt to trigger a buffer overflow on older glibc */
+  re_compile_pattern ("[^y]y", 5, &r);
+  while (1) {
+    char *q;
+    int n = asprintf(&q, "%s%s", s, s);
+    if (n < 0 || n > 10000000)
+      break;
+    q[n] = 'y';
+    re_search (&r, q, strlen (q), 0, strlen (q), 0);
+    q[n] = 'x';
+    s = q;
+  }
+
+as well as other tricks (e.g., so that the string length increases one
+char at a time rather than by powers of 2).  Watching such tests run
+under ltrace, they appear to work as intended - sane return values, and
+indeed no crash.  This doesn't convincingly say there were no out of
+bounds accesses, though - maybe they just happened to be benign here.
+
+This makes me question whether the issue fully existed (as in allowing
+one to trigger a "buffer overrun" as the Subject says) prior to the 2011
+commit.  Maybe the doubling of buffer size (without the MIN()
+constraint) happened to be sufficient, and thus the issue only fully
+existed in the 2011 to 2013 period (as it relates to upstream glibc)?
+
+Looking at how Red Hat patched it in their older distros, I see that
+for RHEL5 and RHEL6 glibc-rh905874.patch effectively makes both changes
+at once (even though it does not reference the 2011 commit):
+
+-  /* Double the lengthes of the buffers.  */
+-  ret = re_string_realloc_buffers (pstr, pstr->bufs_len * 2);
++  /* Double the lengthes of the buffers, but allocate at least MIN_LEN.  */
++  ret = re_string_realloc_buffers (pstr,
++                                  MAX (min_len,
++                                       MIN (pstr->len, pstr->bufs_len * 2)));
+
+This implies there was never a RHEL5 or RHEL6 package of glibc with one
+change without the other, and thus maybe (only if the guess above that
+the buffer doubling happened to be sufficient is right) never a package
+vulnerable to this issue.
+
+Of course, I don't recommend anyone to rely on this without proper
+analysis (the above analysis isn't sufficiently complete yet), and now
+that the issue has been patched it is probably not worth further
+analysis.  Thus, now this is mostly a curiosity and a remaining
+uncertainty whether backporting the fix to pre-2011 glibc was needed or
+not.  This could be of practical relevance to someone intending to use
+the bug against older unpatched systems in a penetration test, though.
+
+Alexander
