@@ -1,28 +1,153 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/5
-Message-Id: <6543F18F-81C2-492A-917E-6F331F917D02@gmail.com>
-Date: Fri, 12 May 2017 12:09:30 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: Multiple crashes in OpenEXR
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/24/4
+Message-ID: <20171024183007.GA4656@openwall.com>
+Date: Tue, 24 Oct 2017 20:30:07 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, Jeff Law <law@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>, Florian Weimer <fweimer@...hat.com>, Andreas Schwab <schwab@...e.de>, Carlos O'Donell <carlos@...temhalted.org>
+Subject: Re: CVE Request -- glibc: DoS due to a buffer overrun in regexp matcher by processing multibyte characters
 Content-Type: text/plain; charset=utf-8
 
-Attached is a zip file of EXR images that cause segmentation faults in the OpenEXR library (tested against 2.2.0). http://www.openexr.com/downloads.html <http://www.openexr.com/downloads.html>
+Hi,
 
-These were reported to ehanway@....com <mailto:ehanway@....com> on January 12, 2017, but no updates or information has been reported back. I have attempted to see what the status is, but no responses from ILM. Since this has surpassed the general 90-day mark as is standard for many disclosures, these are being disclosed. It’s actually been 120 days exactly.
+I'm not sure it makes sense to add to this old thread, but FWIW:
 
-You can see the last update to the OpenEXR codebase was on January 9. https://github.com/openexr/openexr <https://github.com/openexr/openexr>
+On Wed, Jan 30, 2013 at 11:33:36AM -0700, Kurt Seifried wrote:
+> On 01/30/2013 04:40 AM, Jan Lieskovsky wrote:
+> > a security flaw was found in the regular expression matching 
+> > routine of glibc, the GNU libc libraries, processed multibyte 
+> > characters input. If an application utilized the glibc's regular 
+> > expression matching mechanism, an attacker could provide a
+> > specially-crafted input that, when processed would lead to that
+> > executable crash.
+> > 
+> > Upstream bug report: [1]
+> > http://sourceware.org/bugzilla/show_bug.cgi?id=15078
+> > 
+> > Relevant patch: [2]
+> > http://sourceware.org/ml/libc-alpha/2013-01/msg00967.html
+> > 
+> > More background: * (from Paolo): Jan 30 11:34:19 <bonzini> iankko:
+> > it is a memset(foo, 0, ...) that overruns the buffer, so it's not
+> > controllable by the attacker
+> > 
+> > * but the denial of service scenario / attack vector is valid
+> > (consider network facing application using glibc's regexp matching
+> > on untrusted input)
+> > 
+> > Could you allocate a CVE id for this?
+> > 
+> > Thank you && Regards, Jan. -- Jan iankko Lieskovsky / Red Hat
+> > Security Response Team
+> 
+> Please use CVE-2013-0242 for this issue.
 
-Of note is that Adobe Photoshop actually ships with a version of OpenEXR for reading EXR images, so some of these images also crash Photoshop. ImageMagick also can support EXR image by using the OpenEXR library. https://github.com/ImageMagick/exr/tree/master/openexr <https://github.com/ImageMagick/exr/tree/master/openexr>
+In a follow-up to Andreas Schwab's libc-alpha posting referenced above,
+Carlos O'Donell points out that the "Double the lengthes of the
+buffers." comment in extend_buffers() hadn't been true since MIN() was
+added by:
 
-As of this writing, these issues are unfixed. No CVEs have been requested.
+https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=8887a920a4b81a500f54893250085e0d1a52cf9a
 
+---
+commit 8887a920a4b81a500f54893250085e0d1a52cf9a
+Author: Ulrich Drepper <drepper@...il.com>
+Date:   Sat May 28 17:14:30 2011 -0400
 
+    Fix unnecessary overallocation due to incomplete character
 
-Content of type "text/html" skipped
+    When incomplete characters are found at the end of a string the
+    code ran amok and allocated lots of memory.  Stricter limits
+    are now in place.
+---
 
-Download attachment "ilm.zip" of type "application/zip" (15315 bytes)
+That commit includes this change:
 
-Content of type "text/html" skipped
+   /* Double the lengthes of the buffers.  */
+-  ret = re_string_realloc_buffers (pstr, pstr->bufs_len * 2);
++  ret = re_string_realloc_buffers (pstr, MIN (pstr->len, pstr->bufs_len * 2));
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Andreas' commit fixing the issue reported in 2013 is:
+
+https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=a445af0bc722d620afed7683cd320c0e4c7c6059
+
+---
+commit a445af0bc722d620afed7683cd320c0e4c7c6059
+Author: Andreas Schwab <schwab@...e.de>
+Date:   Tue Jan 29 14:45:15 2013 +0100
+
+    Fix buffer overrun in regexp matcher
+---
+
+and it further changes the code to:
+
++  /* Double the lengthes of the buffers, but allocate at least MIN_LEN.  */
++  ret = re_string_realloc_buffers (pstr,
++                                  MAX (min_len,
++                                       MIN (pstr->len, pstr->bufs_len * 2)));
+
+Carlos also wrote that "MIN() never yields anything near double the
+length", but Andreas disagreed by "That is not true, otherwise the bug
+would not have happend.  bufs_len starts out pretty small (MB_CUR_MAX)."
+
+I don't follow the logic behind "otherwise the bug would not have
+happend".  The bug was reported against glibc after the 2011 commit, and
+I found no evidence of it manifesting itself against pre-2011 glibc.
+"bufs_len starts out pretty small (MB_CUR_MAX)" makes sense to me, but
+isn't convincing that this size was necessarily too small.
+
+I failed to visibly trigger the bug in pre-2011 glibc with bug-regex34.c
+(yes, with a en_US.UTF-8 locale built) as included in the 2013 commit,
+as well as with its revisions e.g. adding the below hack near the end of
+do_test():
+
+  /* Additional attempt to trigger a buffer overflow on older glibc */
+  re_compile_pattern ("[^y]y", 5, &r);
+  while (1) {
+    char *q;
+    int n = asprintf(&q, "%s%s", s, s);
+    if (n < 0 || n > 10000000)
+      break;
+    q[n] = 'y';
+    re_search (&r, q, strlen (q), 0, strlen (q), 0);
+    q[n] = 'x';
+    s = q;
+  }
+
+as well as other tricks (e.g., so that the string length increases one
+char at a time rather than by powers of 2).  Watching such tests run
+under ltrace, they appear to work as intended - sane return values, and
+indeed no crash.  This doesn't convincingly say there were no out of
+bounds accesses, though - maybe they just happened to be benign here.
+
+This makes me question whether the issue fully existed (as in allowing
+one to trigger a "buffer overrun" as the Subject says) prior to the 2011
+commit.  Maybe the doubling of buffer size (without the MIN()
+constraint) happened to be sufficient, and thus the issue only fully
+existed in the 2011 to 2013 period (as it relates to upstream glibc)?
+
+Looking at how Red Hat patched it in their older distros, I see that
+for RHEL5 and RHEL6 glibc-rh905874.patch effectively makes both changes
+at once (even though it does not reference the 2011 commit):
+
+-  /* Double the lengthes of the buffers.  */
+-  ret = re_string_realloc_buffers (pstr, pstr->bufs_len * 2);
++  /* Double the lengthes of the buffers, but allocate at least MIN_LEN.  */
++  ret = re_string_realloc_buffers (pstr,
++                                  MAX (min_len,
++                                       MIN (pstr->len, pstr->bufs_len * 2)));
+
+This implies there was never a RHEL5 or RHEL6 package of glibc with one
+change without the other, and thus maybe (only if the guess above that
+the buffer doubling happened to be sufficient is right) never a package
+vulnerable to this issue.
+
+Of course, I don't recommend anyone to rely on this without proper
+analysis (the above analysis isn't sufficiently complete yet), and now
+that the issue has been patched it is probably not worth further
+analysis.  Thus, now this is mostly a curiosity and a remaining
+uncertainty whether backporting the fix to pre-2011 glibc was needed or
+not.  This could be of practical relevance to someone intending to use
+the bug against older unpatched systems in a penetration test, though.
+
+Alexander
