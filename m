@@ -1,26 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/31/8
-Message-ID: <20170531203037.hxl4v36govklpenk@pisco.westfalen.local>
-Date: Wed, 31 May 2017 22:30:37 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/26/1
+Message-ID: <CAOOKt51=OWnBX--UvhijgPjg2H=wQPztXm6ZmgGt9VQNnGStnQ@mail.gmail.com>
+Date: Thu, 26 Oct 2017 17:15:24 +0530
+From: Shalin Shekhar Mangar <shalin@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Information on recent sqlite3 issues?
+Subject: CVE-2016-6809: Java code execution for serialized objects embedded in MATLAB files parsed by Apache Solr using Tika
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-one of the latest Apple advisories mentions several vulnerabilities in sqlite:
-https://support.apple.com/en-us/HT207798
+CVE-2016-6809: Java code execution for serialized objects embedded in
+MATLAB files parsed by Apache Solr using Tika
 
-CVE-2017-2513: found by OSS-Fuzz
-CVE-2017-2518: found by OSS-Fuzz
-CVE-2017-2520: found by OSS-Fuzz
-CVE-2017-2519: found by OSS-Fuzz
-CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
-CVE-2017-6991: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
+Severity: Important
 
-Does anyone have additional information on those and whether that
-applies to the standard sqlite releases or Apple-specific changes?
+Vendor:
+The Apache Software Foundation
 
-Cheers,
-        Moritz
-	 
+Versions Affected:
+Solr 5.0.0 to 5.5.4
+Solr 6.0.0 to 6.6.1
+Solr 7.0.0 to 7.0.1
+
+Description:
+
+Apache Solr uses Apache Tika for parsing binary file types such as
+doc, xls, pdf etc. Apache Tika wraps the jmatio parser
+(https://github.com/gradusnikov/jmatio) to handle MATLAB files. The
+parser uses native deserialization on serialized Java objects embedded
+in MATLAB files. A malicious user could inject arbitrary code into a
+MATLAB file that would be executed when the object is deserialized.
+
+This vulnerability was originally described at
+http://mail-archives.apache.org/mod_mbox/tika-user/201611.mbox/%3C2125912914.1308916.1478787314903%40mail.yahoo.com%3E
+
+Mitigation:
+Users are advised to upgrade to either Solr 5.5.5 or Solr 6.6.2 or Solr 7.1.0
+releases which have fixed this vulnerability.
+
+Solr 5.5.5 upgrades the jmatio parser to v1.2 and disables the Java
+deserialisation support to protect against this vulnerability.
+
+Solr 6.6.2 and Solr 7.1.0 have upgraded the bundled Tika to v1.16.
+
+Once upgrade is complete, no other steps are required.
+
+References:
+https://issues.apache.org/jira/browse/SOLR-11486
+https://issues.apache.org/jira/browse/SOLR-10335
+https://wiki.apache.org/solr/SolrSecurity
+
+-- 
+Regards,
+Shalin Shekhar Mangar.
