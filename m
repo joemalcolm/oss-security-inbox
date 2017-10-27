@@ -1,271 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/04/3
-Message-ID: <000301d36d47$979bc4b0$c6d34e10$@oststrom.com>
-Date: Mon, 4 Dec 2017 22:33:56 +0100
-From: "oststrom \(public\)" <pub@...strom.com>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE-2017-16930 - Claymore's Dual Ethereum Miner unauth stack buffer overflow in remote management interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/27/3
+Message-ID: <93509.5195631845-sendEmail@localhost>
+Date: Fri, 27 Oct 2017 20:25:11 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: binutils: NULL pointer dereference in concat_filename (dwarf2.c) (INCOMPLETE FIX FOR CVE-2017-15023)
 Content-Type: text/plain; charset=utf-8
 
-VuNote
-===================
-
-  Author:       <github.com/tintinweb>
-  Ref:
-https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-16930
- 
-https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-16929
-
-  Version:      0.2
-  Date:         Nov 30th, 2017
-
-  Tag:          claymore dual ethereum decred crypto currency miner
-
-Overview
---------
-
-  Name:         Claymore's Dual ETH + DCR/SC/LBC/PASC GPU Miner
-  Vendor:       nanopool/claymore
-  References:   * https://github.com/nanopool/Claymore-Dual-Miner
-                * https://bitcointalk.org/index.php?topic=1433925.0
-
-  Version:        10.1 [2]
-  Latest Version: 10.1 [2]
-  Other Versions: <= 10.1
-  Platform(s):    windows, linux
-  Technology:     C/C++
-
-  Vuln Classes:   CWE-121: Stack-based Buffer Overflow
-  Origin:         remote
-  Min. Privs.:    None
-
-  Source:         Closed; runtime protection mechanisms
-
-  CVE:            CVE-2017-16930
-
-
-
-Description
----------
-
-A specialized mining solution with remote management interface for mining
-ethereum / decred / siacoin / LBRY Credits / pascal coin.
-
-quote website [1][2]
-
-  - Supports new "dual mining" mode: mining both Ethereum and
-Decred/Siacoin/Lbry/Pascal at the same time, with no impact on Ethereum
-mining speed. Ethereum-only mining mode is supported as well.
-  - Effective Ethereum mining speed is higher by 3-5% because of a
-completely different miner code - much less invalid and outdated shares,
-higher GPU load, optimized OpenCL code, optimized assembler kernels.
-  - Supports both AMD and nVidia cards, even mixed.
-  - No DAG files.
-  - Supports all Stratum versions for Ethereum: can be used directly without
-any proxies with all pools that support eth-proxy, qtminer or miner-proxy.
-  - Supports Ethereum and Siacoin solo mining.
-  - Supports both HTTP and Stratum for Decred.
-  - Supports both HTTP and Stratum for Siacoin. Note: not all Stratum
-versions are supported currently for Siacoin.
-  - Supports Stratum for Lbry and Pascal.
-  - Supports failover.
-  - Displays detailed mining information and hashrate for every card.
-  - Supports remote monitoring and management.
-  - Supports GPU selection, built-in GPU overclocking features and
-temperature management.
-  - Supports Ethereum forks (Expanse, etc).
-  - Windows and Linux versions.
-
-Summary
--------
-
-Claymore's Dual ETH miner's remote management interface is prone to an
-unauthenticated remote stack buffer overwrite that can be triggered by
-simply sending an overly long api request to the management interface
-resulting in an unbound `(v)sprintf` style buffer overwrite when trying to
-log to file or console.
-
-
-* unauthenticated
-* remote
-* stack buffer overwrite
-
-conditions:
-* remote management must be enabled: -mport <port>
-* also works in read-only mode (-<port>)
-
-Successful exploitation can be turned into:
-* DoS - taking profit from crashing the miner
-* RCE - execute arbitrary code, silently take over the mining node or host
-system.
-
-See PoC ref github.
-
-//Also see: CVE-2017-16929 - Claymore's Dual ETH Miner relative path
-traversal in remote management interface [4] //For details see ref github.
-
-Details
--------
-
-Service Discovery:
-* shodan: 'eth result' lists about 170-240 publicly available instances [3]
-with significant hash power
-* banner:
-
-
-<html><body bgcolor="#000000" style="font-family: monospace;">
-{"result": ["10.1 - ETH", "4286", "149336;7492;0",
-"30620;29877;28285;30605;29946", "0;0;0", "off;off;off;off;off",
-"62;65;51;64;61;75;51;67;62;72", "eth-us-east1.nanopool.org:9999",
-"0;1;0;0"]}<br><br><font color="#ff0000">Remote management: read-only mode,
-command miner_file ignored </font><br><font color="#00ff00">ETH:
-11/22/17-15:28:38 - SHARE FOUND - (GPU 3) ...
-
-
-Remote Management API overview:
-
-# >nc -L -p 3333
-{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"}
-{"id":0,"jsonrpc":"2.0","method":"miner_file","params":["epools.txt","<encod
-ed>"]}
-{"id":0,"jsonrpc":"2.0","method":"miner_getfile","params":["config.txt"]}
-{"id":0,"jsonrpc":"2.0","method":"miner_restart"}
-{"id":0,"jsonrpc":"2.0","method":"miner_reboot"}
-{"id":0,"jsonrpc":"2.0","method":"control_gpu","params":["0", "1"]}
-{"id":0,"jsonrpc":"2.0","method":"control_gpu","params":["-1", "0"]}
-{"id":0,"jsonrpc":"2.0","method":"control_gpu","params":["0", "2"]}
-{"id":0,"jsonrpc":"2.0","method":"miner_file","params":["config.txt","<encod
-ed>"]}
-{"id":0,"jsonrpc":"2.0","method":"miner_file","params":["dpools.txt","<encod
-ed>"]}
-
-
-EthDcrMiner64 comes with an optional http/tcp based remote management
-interface that can be enabled by providing `-mport <[-]port>` as a command
-line argument. Providing a negative port starts the remote management
-interface in readonly mode. The remote management interfaces request handler
-checks for a list of known commands (see Remote Management API overview).
-Commands are being logged to file. When the handler encounters an invalid
-command a logline like `log(level, "Remote management: unknown command
-%s\n", request)` is being emitted. This method internally calls `sprintf`
-multiple times writing to a fixed size buffer of `0x4000` (16384) bytes. Any
-attempt to log more than `0x4000` bytes us causing a stack buffer overwrite.
-There's likely multiple occurrences of the same bug within this software.
-
-//see PoC vector: method, extrafield, psw
-
-See PoC ref github.
-
-Proof of Concept
-----------------
-
-Prerequisites:
-* compatible AMD/NVidia hardware
-
-
-RCE:
-
-1. start the miner, specify any pool and the readonly management port 3333
-with a management password 123456
-
-
-#> EthDcrMiner64.exe -epool http://192.168.0.1:8545 -mport -3333
-
-+----------------------------------------------------------------+
-|     Claymore's Dual ETH + DCR/SC/LBC/PASC GPU Miner v10.0      |
-+----------------------------------------------------------------+
-
-...
-Total cards: 1
-ETH - connecting to 192.168.0.1:8545
-DUAL MINING MODE ENABLED: ETHEREUM+DECRED
-DCR: Stratum - connecting to 'pasc-eu2.nanopool.org' <213.32.29.168> port
-15555
-ETH: HTTP SOLO mode
-Ethereum HTTP requests time (-etht) is set to 200 ms Watchdog enabled Remote
-management (READ-ONLY MODE) is enabled on port 3333
-
-DCR: Stratum - Connected (pasc-eu2.nanopool.org:15555)
-DCR: Authorized
-DCR: 11/22/17-22:05:12 - New job from pasc-eu2.nanopool.org:15555
-
-    2. wait for it to initialize
-    3. run `poc.py --vector=method localhost:3333` (using the "method"
-vector)
-
-#> poc.py 127.0.0.1:3333
-[poc.py -             <module>() ][    INFO] --start--
-[poc.py -             <module>() ][    INFO] # Claymore's Dual ETH +
-DCR/SC/LBC/PASC GPU Miner - Remote Buffer Overwrite
-[poc.py -             <module>() ][    INFO] # github.com/tintinweb
-[poc.py -         iter_targets() ][ WARNING] shodan apikey missing! shodan
-support disabled.
-[poc.py -             <module>() ][    INFO] [i] Target: 127.0.0.1:3333
-[poc.py -             <module>() ][    INFO] [+] connected.
-[poc.py -             <module>() ][    INFO] [+] peer disappeared.
-vulnerable!
-[poc.py -             <module>() ][ WARNING] error(10054, 'Eine vorhandene
-Verbindung wurde vom Remotehost geschlossen')
-[poc.py -             <module>() ][    INFO] --done--
-
-
-4. EthDcrMiner64.exe faults with `INVALID_POINTER_WRITE_EXPLOITABLE` (stack
-overwrite, see stacktrace)
-
-
-GPU0 t=57C fan=0%
-Remote management: unknown command miner_getstat1
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-.... <crash>
-
-
-WinDBG:
-
-%< %< see ref github link. >% >%
-
-Patch
------
-
-n/A - closed source
-
-Notes
------
-
-* Timeline
-
-11/22/2017 - vendor contact: report sent
-11/23/2017 - vendor response:
-             fixed version 10.2 ready and publicly available
-             request for 7+ day embargo
-12/04/2017 - public disclosure
-
-* Vendor Changelog
-
-Fixed version: v10.2
-
-
-References
-----------
-
-[1] https://github.com/nanopool/Claymore-Dual-Miner
-[2] https://bitcointalk.org/index.php?topic=1433925.0
-[3] https://www.shodan.io/search?query=eth+result
-[4] https://github.com/tintinweb/pub/tree/master/pocs/cve-2017-16929
-
-Contact
--------
-
-https://github.com/tintinweb
+Description:
+binutils is a set of tools necessary to build programs.
+
+The commit fix for this issue says:
+
+The PR22200 fuzzer testcase found one way to put NULLs into .debug_line file tables. PR22205 finds another.
+So mitre considers this an incomplete fix.
+
+The complete ASan output of the issue:
+
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==19042==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000006a76a6 bp 0x7ffde0afde30 sp 0x7ffde0afde00 T0)
+==19042==The signal is caused by a READ memory access.
+==19042==Hint: address points to the zero page.
+    #0 0x6a76a5 in concat_filename /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8
+    #1 0x696ff3 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2265:44
+    #2 0x6a2d36 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3651:26
+    #3 0x6a2d36 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3686
+    #4 0x6a0369 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4798:11
+    #5 0x5f332e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10
+    #6 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
+    #7 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #8 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #9 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #10 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #11 0x7f6c6d793680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #12 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8 in concat_filename
+==19042==ABORTING
+
+Affected version:
+2.29.51.20170925 and maybe past releases
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=a54018b72d75abf2e74bf36016702da06399c1d9
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-15939
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00380-binutils-NULLptr-concat_filename
+
+Timeline:
+2017-09-25: bug discovered and reported to upstream
+2017-09-26: upstream released a patch
+2017-10-24: blog post about the issue
+2017-10-27: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/10/24/binutils-null-pointer-dereference-in-concat_filename-dwarf2-c-incomplete-fix-for-cve-2017-15023/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
