@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["977" "Monday" "21" "September" "2015" "11:18:33" "+0100" "Dominic Cleal" "dominic@cleal.org" "<55FFD979.3040203@cleal.org>" "34" "[oss-security] CVE-2015-5282: Foreman stored XSS in parameter hide checkbox" nil nil nil "9" "2015092110:18:33" "[oss-security] CVE-2015-5282: Foreman stored XSS in parameter hide checkbox" (number mark "U       dominic@clea Sep 21   34/977   " thread-indent "\"[oss-security] CVE-2015-5282: Foreman stored XSS in parameter hide checkbox\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3361" "Friday" "27" "October" "2017" "20:25:11" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<93509.5195631845-sendEmail@localhost>" "75" "[oss-security] binutils: NULL pointer dereference in concat_filename (dwarf2.c) (INCOMPLETE FIX FOR CVE-2017-15023)" nil nil nil "10" "2017102720:25:11" "[oss-security] binutils: NULL pointer dereference in concat_filename (dwarf2.c) (INCOMPLETE FIX FOR CVE-2017-15023)" (number mark "U       ago@gentoo.o Oct 27   75/3361  " thread-indent "\"[oss-security] binutils: NULL pointer dereference in concat_filename (dwarf2.c) (INCOMPLETE FIX FOR CVE-2017-15023)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20344 invoked by uid 550); 21 Sep 2015 10:28:45 -0000
+Received: (qmail 1710 invoked by uid 550); 27 Oct 2017 20:25:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7507 invoked from network); 21 Sep 2015 10:18:46 -0000
-To: oss-security@lists.openwall.com
-From: Dominic Cleal <dominic@cleal.org>
-X-Enigmail-Draft-Status: N1210
-Cc: foreman-security@googlegroups.com
-Message-ID: <55FFD979.3040203@cleal.org>
-Date: Mon, 21 Sep 2015 11:18:33 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
+Received: (qmail 1681 invoked from network); 27 Oct 2017 20:25:32 -0000
+Message-ID: <93509.5195631845-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Fri, 27 Oct 2017 20:25:11 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2015-5282: Foreman stored XSS in parameter hide checkbox
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-22789.9549800021"
+Subject: [oss-security] binutils: NULL pointer dereference in concat_filename (dwarf2.c) (INCOMPLETE FIX FOR CVE-2017-15023)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+------MIME delimiter for sendEmail-22789.9549800021
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-CVE-2015-5282: Foreman is affected by a stored XSS vulnerability in
-its parameter key/value web UI.
+Description:
+binutils is a set of tools necessary to build programs.
 
-A checkbox exists to hide the values of parameters stored in the
-application to mask them from casual viewing.  When changing the
-hide/show checkbox, the value is masked/unmasked in the UI, but the
-parameter value was not properly escaped when updating the UI which
-allowed stored HTML/JS etc. to be evaluated.
+The commit fix for this issue says:
 
-Affects: Foreman 1.7.0 or higher
-Fix to be released in Foreman 1.10.0
+The PR22200 fuzzer testcase found one way to put NULLs into .debug_line file tables. PR22205 finds another.
+So mitre considers this an incomplete fix.
 
-Patch:
-https://github.com/theforeman/foreman/commit/4f3555b217be8723e8045f9816d
-147b5f684ec57
+The complete ASan output of the issue:
 
-More information:
-http://theforeman.org/security.html#2015-5282
-http://projects.theforeman.org/issues/11859
-http://theforeman.org/
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==19042==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000006a76a6 bp 0x7ffde0afde30 sp 0x7ffde0afde00 T0)
+==19042==The signal is caused by a READ memory access.
+==19042==Hint: address points to the zero page.
+    #0 0x6a76a5 in concat_filename /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8
+    #1 0x696ff3 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2265:44
+    #2 0x6a2d36 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3651:26
+    #3 0x6a2d36 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3686
+    #4 0x6a0369 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4798:11
+    #5 0x5f332e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10
+    #6 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
+    #7 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
+    #8 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
+    #9 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
+    #10 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
+    #11 0x7f6c6d793680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #12 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)
 
-- -- 
-Dominic Cleal
-dominic@cleal.org
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8 in concat_filename
+==19042==ABORTING
 
-iEYEARECAAYFAlX/2XMACgkQfH0ybywrcsxlNACeJ/9XQm9eMcXf+xw3JFCSf5vY
-VN0An1WwmASbhE0cci+no2LUO0fIpiOV
-=V/Ke
------END PGP SIGNATURE-----
+Affected version:
+2.29.51.20170925 and maybe past releases
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=a54018b72d75abf2e74bf36016702da06399c1d9
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-15939
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00380-binutils-NULLptr-concat_filename
+
+Timeline:
+2017-09-25: bug discovered and reported to upstream
+2017-09-26: upstream released a patch
+2017-10-24: blog post about the issue
+2017-10-27: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/10/24/binutils-null-pointer-dereference-in-concat_filename-dwarf2-c-incomplete-fix-for-cve-2017-15023/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-22789.9549800021--
+
