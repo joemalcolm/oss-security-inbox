@@ -1,193 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/7
-Message-ID: <20170622121833.GI32005@suse.de>
-Date: Thu, 22 Jun 2017 14:18:33 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Vasily Averin <vvs@...tuozzo.com>, Konstantin Khorenko <khorenko@...tuozzo.com>
-Subject: Re: stackguard fix in Red Hat and Ubuntu kernels
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/27/4
+Message-ID: <577273.647857027-sendEmail@localhost>
+Date: Fri, 27 Oct 2017 20:25:56 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: binutils: invalid memory read in find_abstract_instance_name (dwarf2.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
+binutils is a set of tools necessary to build programs.
 
-Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
+The complete ASan output of the issue:
 
-Ciao, Marcus
-On Thu, Jun 22, 2017 at 02:13:30PM +0200, Solar Designer wrote:
-> I think the below should be in here regardless of whether it was already
-> known or not, so forwarding.
-> 
-> I've re-attached the reproducer program.
-> 
-> Thanks, Vasily and Konstantin.
-> 
-> (And yes, I've verified that both Vasily's and Konstantin's e-mail
-> addresses here were already publicly known.  It's something everyone
-> should do before forwarding stuff to a public mailing list.)
-> 
-> ----- Forwarded message from Vasily Averin <vvs@...tuozzo.com> -----
-> 
-> From: Vasily Averin <vvs@...tuozzo.com>
-> To: Solar Designer <solar@...nwall.com>
-> Cc: Konstantin Khorenko <khorenko@...tuozzo.com>
-> Subject: stackguard fix in RedHat and Ubuntu kernels
-> Date: Thu, 22 Jun 2017 14:40:02 +0300
-> 
-> Dear Alexander,
-> probably it is already known,
-> otherwise please share it in oss-security@
-> I've noticed the problem on Red Hat kernels first, and reported to Red Hat already,
-> but now I've found the same problem on Ubuntu kernels.
-> It does not affect mainline patch "mm: larger stack guard gap, between vmas"
-> but seems distributors have used some other incorrect patch (shared in linux-distros@ ??? )
-> 
-> Description of problem:
-> mmap(MAP_GROUWSDOWN) works incorrectly on Red Hat and Ubuntu kernels with stackguard fix.
-> 
-> We have application that creates stack by using MAP_GROUWSDOWN , provide this area into clone(), 
-> where it fails on access to mapped area.
-> 
-> Steps to Reproduce:
-> execute attached reproducer.
-> It maps 2 pages with MAP_GROUWSDOWN, an access to 2nd page mapped page triggers SIGBUS or SIGSEGV
-> 
-> Actual results:
-> - access to end of mapped area generated SIGBUS or SIGSEGV
-> - /proc/<pid>/maps shows incorrect start address for allocated area
-> please see details below
-> 
-> Expected results:
-> on previous Ubuntu/RHEL kernels this testcase works well without crashes
-> http://man7.org/linux/man-pages/man2/mmap.2.html
-> 
->        MAP_GROWSDOWN
->               This flag is used for stacks.  It indicates to the kernel
->               virtual memory system that the mapping should extend downward
->               in memory.  The return address is one page lower than the
->               memory area that is actually created in the process's virtual
->               address space.  Touching an address in the "guard" page below
->               the mapping will cause the mapping to grow by a page.  This
->               growth can be repeated until the mapping grows to within a
->               page of the high end of the next lower mapping, at which point
->               touching the "guard" page will result in a SIGSEGV signal.
-> 
-> On new Ubuntu kernel 4.4.0-81-generic (with stackguard fix)
-> 
-> 20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
-> (gdb) n
-> 
-> (changes in /proc/<pid>/maps)
->  7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
->  7ffff7dd7000-7ffff7dfd000 r-xp 00000000 fc:00 524776                     /lib/x86_64-linux-gnu/ld-2.23.so
->  7ffff7feb000-7ffff7fee000 rw-p 00000000 00:00 0 
-> +7ffff80f4000-7ffff7ff6000 rw-p 00000000 00:00 0  <<<< incorrect start address is shown here 
->  7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
->  7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
->  7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
-> 
-> 23		printf("stack = %p\n", stack);
-> (gdb) n
-> stack = 0x7ffff7ff4000
-> 24		end = stack + STACK_SIZE - 8;
-> (gdb) n
-> 25		printf("end = %p\n", end);
-> (gdb) n
-> end = 0x7ffff7ff5ff8
-> 26		printf("write to *end\n");
-> (gdb) n
-> write to *end
-> 27		*end = 0;
-> (gdb) n
-> 
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x000000000040062f in main () at sk.c:27
-> 
-> 
-> on Ubuntu 4.4.0-79-generic  -- works as expected
-> 
-> mmap return address of guard page,
-> access to end of mapped area works works correctly,
-> touch on guard page grows stack down,
-> then touch of previous page grows stack down again.
-> 
-> 20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
-> (gdb) n
-> 23		printf("stack = %p\n", stack);
-> (gdb) n
-> stack = 0x7ffff7ff4000
-> 
->  7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
->  7ffff7dd7000-7ffff7dfd000 r-xp 00000000 08:01 27001906                   /lib/x86_64-linux-gnu/ld-2.23.so
->  7ffff7fc8000-7ffff7fcb000 rw-p 00000000 00:00 0 
-> +7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
->  7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
->  7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
->  7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
-> 
-> 24		end = stack + STACK_SIZE - 8;
-> (gdb) n
-> 25		printf("end = %p\n", end);
-> (gdb) n
-> end = 0x7ffff7ff5ff8
-> 26		printf("write to *end\n");
-> (gdb) n
-> write to *end
-> 27		*end = 0;
-> (gdb) n
-> 28		printf("write to *stack\n");
-> (gdb) n
-> write to *stack
-> 29		*(stack) = 0;
-> (gdb) n
-> 
-> -7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
-> +7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0   <<<< Stack grow down
-> 
-> 30		printf("write to *(stack-1)\n");
-> (gdb) n
-> write to *(stack-1)
-> 31		*(stack-1) = 0;
-> (gdb) n
-> 32	}
-> 
-> -7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0 
-> +7ffff7ff3000-7ffff7ff6000 rw-p 00000000 00:00 0 <<<< Stack grows down again
-> 
-> ----- End forwarded message -----
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==23816==ERROR: AddressSanitizer: SEGV on unknown address 0x4700004008d0 (pc 0x0000005427b6 bp 0x7ffd49033690 sp 0x7ffd49033680 T0)                                                                               
+==23816==The signal is caused by a READ memory access.                                                                                                                                                            
+    #0 0x5427b5 in _bfd_safe_read_leb128 /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:1019:14                                                                                              
+    #1 0x6a9b25 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2918:19                                                                                        
+    #2 0x69a3ff in scan_unit_for_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3168:10                                                                                              
+    #3 0x6a2de6 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3660:9                                                                                    
+    #4 0x6a2de6 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3686                                                                                                   
+    #5 0x6a0369 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4798:11                                                                                      
+    #6 0x5f332e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10                                                                                                    
+    #7 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9                                                                                                       
+    #8 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7                                                                                                      
+    #9 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200                                                                                                     
+    #10 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7                                                                                                      
+    #11 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12                                                                                                             
+    #12 0x7f839bb03680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                   
+    #13 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)                                                                                                                                 
+                                                                                                                                                                                                                  
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:1019:14 in _bfd_safe_read_leb128
+==23816==ABORTING
 
-> 
-> #define _GNU_SOURCE
-> 
-> #include <stdio.h>
-> #include <errno.h>
-> #include <string.h>
-> #include <unistd.h>
-> #include <stdlib.h>
-> #include <sys/stat.h>
-> #include <sys/types.h>
-> #include <sys/param.h>
-> #include <sys/mman.h>
-> 
-> #define STACK_SIZE	2*4096
-> 
-> int main()
-> {
-> 	unsigned char *end;
-> 	/* Allocate stack */
->         unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
-> 			MAP_PRIVATE | MAP_ANON | MAP_GROWSDOWN, 0, 0);
-> 
-> 	printf("stack = %p\n", stack);
-> 	end = stack + STACK_SIZE - 8;
-> 	printf("end = %p\n", end);
-> 	printf("write to *end\n");
-> 	*end = 0;
-> 	printf("write to *stack\n");
-> 	*(stack) = 0;
-> 	printf("write to *(stack-1)\n");
-> 	*(stack-1) = 0;
-> }
+Affected version:
+2.29.51.20170925 and maybe past releases
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=1b86808a86077722ee4f42ff97f836b12420bb2a
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-15938
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00381-binutils-invalidread-find_abstract_instance_name
+
+Timeline:
+2017-09-26: bug discovered and reported to upstream
+2017-09-26: upstream released a patch
+2017-10-24: blog post about the issue
+2017-10-27: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/10/24/binutils-invalid-memory-read-in-find_abstract_instance_name-dwarf2-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
