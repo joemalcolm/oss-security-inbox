@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1168" "Thursday" "18" "January" "2018" "22:21:14" "+0100" "Solar Designer" "solar@openwall.com" "<20180118212114.GA8771@openwall.com>" "21" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018011821:21:14" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        solar@openwa Jan 18   21/1168  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5074" "Friday" "27" "October" "2017" "20:25:56" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<577273.647857027-sendEmail@localhost>" "70" "[oss-security] binutils: invalid memory read in find_abstract_instance_name (dwarf2.c)" "^Date:" nil nil "10" "2017102720:25:56" "[oss-security] binutils: invalid memory read in find_abstract_instance_name (dwarf2.c)" (number mark "U       ago@gentoo.o Oct 27   70/5074  " thread-indent "\"[oss-security] binutils: invalid memory read in find_abstract_instance_name (dwarf2.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26040 invoked by uid 550); 18 Jan 2018 21:21:35 -0000
+Received: (qmail 7993 invoked by uid 550); 27 Oct 2017 20:26:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25641 invoked from network); 18 Jan 2018 21:21:20 -0000
-Message-ID: <20180118212114.GA8771@openwall.com>
-References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 18 Jan 2018 22:21:14 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 7859 invoked from network); 27 Oct 2017 20:26:14 -0000
+Message-ID: <577273.647857027-sendEmail@localhost>
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-874608.076484041"
+Date: Fri, 27 Oct 2017 20:25:56 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
-To: oss-security@lists.openwall.com
+Subject: [oss-security] binutils: invalid memory read in find_abstract_instance_name (dwarf2.c)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-On Thu, Jan 18, 2018 at 05:10:05PM +0100, Florian Weimer wrote:
-> Subject says it all: What do you do if you receive a vulnerability 
-> report, and the reporter requests an embargo at some time in the future 
-> because that's when their paper/conference presentation/patent 
-> submission is scheduled?
+------MIME delimiter for sendEmail-874608.076484041
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-I think it's best for your project (I guess glibc?) to prominently
-publish near the security contact address a maximum embargo time you'd
-(be likely to) agree to.  That's what security at kernel.org does
-(7 days) and what we do with (linux-)distros (14 days).  That way, it's
-less important for you to judge whether the reason for embargo is
-valid/altruistic or bogus/selfish - a sane maximum embargo time
-minimizes the damage to all parties either way.  When someone requests a
-longer embargo for whatever reason, just decline and insist on your
-previously published maximum.  Those who want to have their issue
-disclosure timed with some other event will then be expected to delay
-reporting the issue to your project until it's close enough to that
-other event.  That's not ideal, but I think it's better than having no
-maximum embargo time specified.
+Description:
+binutils is a set of tools necessary to build programs.
 
-Alexander
+The complete ASan output of the issue:
+
+# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
+==23816==ERROR: AddressSanitizer: SEGV on unknown address 0x4700004008d0 (pc 0x0000005427b6 bp 0x7ffd49033690 sp 0x7ffd49033680 T0)                                                                               
+==23816==The signal is caused by a READ memory access.                                                                                                                                                            
+    #0 0x5427b5 in _bfd_safe_read_leb128 /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:1019:14                                                                                              
+    #1 0x6a9b25 in find_abstract_instance_name /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2918:19                                                                                        
+    #2 0x69a3ff in scan_unit_for_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3168:10                                                                                              
+    #3 0x6a2de6 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3660:9                                                                                    
+    #4 0x6a2de6 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3686                                                                                                   
+    #5 0x6a0369 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4798:11                                                                                      
+    #6 0x5f332e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10                                                                                                    
+    #7 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9                                                                                                       
+    #8 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7                                                                                                      
+    #9 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200                                                                                                     
+    #10 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7                                                                                                      
+    #11 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12                                                                                                             
+    #12 0x7f839bb03680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                   
+    #13 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)                                                                                                                                 
+                                                                                                                                                                                                                  
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/libbfd.c:1019:14 in _bfd_safe_read_leb128
+==23816==ABORTING
+
+Affected version:
+2.29.51.20170925 and maybe past releases
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=1b86808a86077722ee4f42ff97f836b12420bb2a
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+CVE-2017-15938
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00381-binutils-invalidread-find_abstract_instance_name
+
+Timeline:
+2017-09-26: bug discovered and reported to upstream
+2017-09-26: upstream released a patch
+2017-10-24: blog post about the issue
+2017-10-27: CVE assigned
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/10/24/binutils-invalid-memory-read-in-find_abstract_instance_name-dwarf2-c/
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-874608.076484041--
+
