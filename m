@@ -1,35 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/02/6
-Message-ID: <AEE7726B-5FE6-4972-BEFB-8CED939E875F@synopsys.com>
-Date: Tue, 2 May 2017 13:08:43 +0000
-From: Ari Kauppi <Ari.Kauppi@...opsys.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2017-7895 Linux kernel: nfsd: Remote arbitrary memory read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/27/2
+Message-ID: <20171027160953.vriub4ox5ztmyzkj@eldamar.local>
+Date: Fri, 27 Oct 2017 18:09:53 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Advisory X41-2017-010: Command Execution in Shadowsocks-libev
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-Linux kernel NFSv3 server is vulnerable to a remote arbitrary memory read attack.
+On Fri, Oct 13, 2017 at 06:44:21PM +0200, X41 D-Sec GmbH Advisories wrote:
+> 
+> X41 D-Sec GmbH Security Advisory: X41-2017-010
+> 
+> Command Execution in Shadowsocks-libev
+> ======================================
+> 
+> Overview
+> --------
+> Severity Rating: High
+> Confirmed Affected Versions: 3.1.0
+> Confirmed Patched Versions: N/A
+> Vendor: Shadowsocks
+> Vendor URL: https://github.com/shadowsocks/shadowsocks-libev
+> Vector: Local
+> Credit: X41 D-Sec GmbH, Niklas Abel
+> Status: Public
+> CVE: not yet assigned
+> Advisory-URL:
+> https://www.x41-dsec.de/lab/advisories/x41-2017-010-shadowsocks-libev/
+> 
+> 
+> Summary and Impact
+> ------------------
+> Shadowsocks-libev offers local command execution per configuration file
+> or/and additionally, code execution per UDP request on 127.0.0.1.
+> 
+> The configuration file on the file system or the JSON configuration
+> received via UDP request is parsed and the arguments are passed to the
+> "add_server" function.
+> The function calls "construct_command_line(manager, server);" which
+> returns a string from the parsed configuration.
+> The string gets executed at line 486 "if (system(cmd) == -1) {", so if a
+> configuration parameter contains "||evil command&&" within the "method"
+> parameter, the evil command will get executed.
+> 
+> The ss-manager uses UDP port 8830 to get control commands on 127.0.0.1.
+> By default no authentication is required, although a password can be set
+> with the '-k' parameter.
 
-A specifically crafted request can extract chunks of arbitrary memory from both
-kernel-space and user-space.
+CVE-2017-15924 has been assigned for this issue.
 
-The attack vector requires write access to a NFS mount on the target host.
-
-The issue has been verified to be reproducible on multiple baselines. At least
-2.6.32, 3.2, 4.4, 4.8 and 4.10 baselines (and distributions derived from those)
-have been confirmed to be vulnerable. Fixed in 4.11 release. Most probably
-this has been introduced about 10 years ago due to fs/nfsd changes for 2.6.22.
-
-CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N (7.7 / High)
-
-Upstream patch:
-https://git.kernel.org/linus/13bf9fbff0e5e099e2b6f003a0ab8ae145436309
-
-This issue was found by Ari Kauppi from Synopsys Ltd with Synopsys Defensics
-fuzzer combined with KASAN.
-
-Thanks,
-
---
-Ari Kauppi / Synopsys Ltd.
+Regards,
+Salvatore
