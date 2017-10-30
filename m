@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3852" "Thursday" "8" "September" "2016" "19:27:41" "+0200" "Summer of Pwnage" "lists@securify.nl" "<149ffd43-942f-3e77-31dc-897e0ccec1e2@securify.nl>" "84" "[oss-security] Persistent Cross-Site Scripting vulnerability in WordPress due to unsafe processing of file names" nil nil nil "9" "2016090817:27:41" "[oss-security] Persistent Cross-Site Scripting vulnerability in WordPress due to unsafe processing of file names" (number mark "U       lists@securi Sep  8   84/3852  " thread-indent "\"[oss-security] Persistent Cross-Site Scripting vulnerability in WordPress due to unsafe processing of file names\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3054" "Monday" "30" "October" "2017" "10:24:22" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20171030102422.15d1d9c2@pc1>" "74" "[oss-security] Magento: Leaking of config file local.xml" "^Date:" nil nil "10" "2017103009:24:22" "[oss-security] Magento: Leaking of config file local.xml" (number mark "        hanno@hboeck Oct 30   74/3054  " thread-indent "\"[oss-security] Magento: Leaking of config file local.xml\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30446 invoked by uid 550); 8 Sep 2016 17:27:56 -0000
+Received: (qmail 24288 invoked by uid 550); 30 Oct 2017 09:24:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30424 invoked from network); 8 Sep 2016 17:27:55 -0000
-X-Virus-Scanned: amavisd-new at pine.nl
-From: Summer of Pwnage <lists@securify.nl>
-To: oss-security@lists.openwall.com
-Organization: Securify B.V.
-Message-ID: <149ffd43-942f-3e77-31dc-897e0ccec1e2@securify.nl>
-Date: Thu, 8 Sep 2016 19:27:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+Received: (qmail 24239 invoked from network); 30 Oct 2017 09:24:36 -0000
+Message-ID: <20171030102422.15d1d9c2@pc1>
+X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Persistent Cross-Site Scripting vulnerability in WordPress due to
- unsafe processing of file names
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 30 Oct 2017 10:24:22 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Magento: Leaking of config file local.xml
+To: oss-security@lists.openwall.com
 
-------------------------------------------------------------------------
-Persistent Cross-Site Scripting vulnerability in WordPress due to unsafe
-processing of file names
-------------------------------------------------------------------------
-Han Sahin, July 2016
+Magento is a web shop written in PHP.
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-A persistent Cross-Site Scripting (XSS) vulnerability has been found in
-WordPress. An attacker can create a specially crafted image file name
-which, when uploaded in WordPress, injects malicious JavaScript code
-into the application. An attacker can use this vulnerability to perform
-a wide variety of actions, such as stealing victims' session tokens or
-login credentials, and performing arbitrary actions on their behalf.
+Magento stores its configuration in a file local.xml, stored in the
+webroot under app/etc/local.xml. As it is an xml file by default a web
+server will not parse it in any way, but directly expose it to users.
 
-------------------------------------------------------------------------
-OVE ID
-------------------------------------------------------------------------
-OVE-20160724-0018
+Magento protects against this by shipping an .htaccess file that blocks
+access to that directory. However that is not a sufficient
+protection. .htaccess files are specific to the Apache web server.
+Other web servers like nginx don't support .htaccess. This leaves users
+with a situation where installation on any web server other than Apache
+will by default lead to a configuration where the local.xml file can be
+downloaded by anyone over the Internet. Even worse, the installation
+doc doesn't mention this issue [1].
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was successfully tested on WordPress [2] 4.5.3.
+In June I scanned the Alexa top 1 Million and found 324 vulnerable
+installations (out of 10501 magento installations in total). I tried to
+inform the affected parties via their abuse contacts.
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-This vulnerability is resolved in WordPress 4.6.1 [3] (Release Notes
-[4]).
 
-------------------------------------------------------------------------
-Introduction
-------------------------------------------------------------------------
-WordPress Media Upload functionality is used to upload image, audio,
-video and other allowed file extensions. The uploaded media types are
-automatically available to public users via so called public 'Attachment
-Pages'.
+Recommended Fix
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-WordPress performs insufficient validation on the file name of uploaded
-media types and in specific images. The file name of an image is used as
-image Title (meta) in so called ‘attachment pages’ (HTML). An
-attacker can exploit this vulnerability by crafting an image file name
-with Cross-Site Scripting payload and lure an admin into uploading the
-image with the malicious file name.
+The core of this issue is that using an XML file in the web root to
+configure a PHP application is inherently dangerous. There is no
+software-independent way to make sure such a configuration doesn't get
+exposed. I think the only reasonable safe way to store configurations
+for PHP applications is in .php files. If you want to keep using XML
+configurations you could store them in a multiline string within a PHP
+file.
 
-------------------------------------------------------------------------
-Limitations
-------------------------------------------------------------------------
+As this is a severe change a mitigation would be to let the backend
+interface check via javascript whether access to the config file is
+properly prevented. If the local.xml is accessible magento should
+refuse to operate.
 
-Operating System
+At the very least this needs to be properly documented within the
+installation docs.
 
-Please note that the WordPress admin (victim) needs to use an operating
-system like for example Mac or Linux. These provide extended file name
-capabilities necessary for an attacker to be able to successfully use
-this vulnerability.
+[1] http://devdocs.magento.com/guides/m1x/install/installing.html
 
-Social Engineering
 
-For the attack to succeed the following conditions have to be met:
+Comment / relation to other issues
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-- A WordPress admin uploads a malicious image file requested by a user
-this admin trusts or a popular malicious image that was spread via
-social media. This involves social engineering. In the Proof of Concept
-the file name cengizhansahinsumofpwn<img src=a
-onerror=alert(document.cookie)>.jpg was used.
+There is a general problem for PHP applications that there is no
+server-independent way to prevent access to files. Many use htaccess,
+which is insufficient, as it only works on Apache. Recently the Free
+Software Foundation had a security issue [2] with Drupal's
+backup_migrate module that was based on a very similar problem.
 
-- An attacker can now determine if the file name with which the
-malicious file is available on the WordPress site. With this information
-he can spread the URL to end users and the WordPress admin.
+Therefore it should generally be considered an anti-pattern to store
+secret files within PHP apps in the web root. Possible solutions are
+storage outside of the web root, storage in databases or storage within
+PHP code (as it's commonly done for configuration files).
 
-------------------------------------------------------------------------
-References
-------------------------------------------------------------------------
-[1] 
-https://sumofpwn.nl/advisory/2016/persistent_cross_site_scripting_vulnerability_in_wordpress_due_to_unsafe_processing_of_file_names.html
-[2] https://wordpress.org/
-[3] https://wordpress.org/wordpress-4.6.1.zip
-[4] 
-https://wordpress.org/news/2016/09/wordpress-4-6-1-security-and-maintenance-release/
+[2] http://www.openwall.com/lists/oss-security/2017/10/29/1
+
+Disclosure
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+2017-06-17 Reported via Magento's Bugcrowd Bug Bounty
+2017-06-19 Reply that this has already been reported on 2017-03-28 by
+someone else.
+2017-06-24 I asked whether this will be fixed/changed and whether there
+is a timeline for disclosing the original report. No reply.
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
