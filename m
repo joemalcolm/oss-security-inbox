@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/5
-Message-ID: <alpine.LRH.2.20.1703250033190.23114@namei.org>
-Date: Sat, 25 Mar 2017 00:35:26 +1100 (AEDT)
-From: James Morris <jmorris@...ei.org>
-To: Solar Designer <solar@...nwall.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: [ANNOUNCE] Linux Security Summit 2017 - CFP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/30/3
+Message-ID: <ad8e08c6-e1f9-280c-41a7-169b901ca859@chbi.eu>
+Date: Mon, 30 Oct 2017 20:15:51 +0100
+From: chbi@...i.eu
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-14752, CVE-2017-15273: Stored XSS vulnerability in Mahara <= 15.04.14, <= 16.04.8, <= 16.10.5, <= 17.04.3
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 24 Mar 2017, Solar Designer wrote:
+Hi,
 
-> Hi James,
-> 
-> With all due respect to you and recognition of the importance of this
-> event, as I had pointed out last year, I wish you either informed
-> oss-security of the outcomes of each year's LSS or didn't post the CFPs
-> in here.  Posting only a CFP and then nothing until next year's CFP
-> sort of works on other lists, but not on oss-security.  Please re-read:
-> 
-> http://www.openwall.com/lists/oss-security/2016/03/25/7
-
-Sorry, I forgot to posting the outcomes back to the list.
-
-Here is a wrapup of the 2016 LSS:
-
-http://blog.namei.org/2016/09/30/linux-security-summit-2016-wrapup/
-
-> These are so much more useful (or rather, to more people) than a CFP
-> with no follow-ups.  I wish Kees, James, and others posted this kind of
-> material in here in text/plain, in addition to blogging.
-
-I'll see what I can do in future.
+I've discovered two security issues in Mahara <= 15.04.14, <= 16.04.8,
+<= 16.10.5, <= 17.04.3 (https://mahara.org)
 
 
-- James
+CVE-2017-14752:
+A stored XSS vulnerability in "First name", "Last name" and "Display
+name" allows an authenticated user to inject JavaScript to gain
+administrator privileges.
+
+https://mahara.org/interaction/forum/topic.php?id=8083
+
+
+CVE-2017-15273:
+A stored XSS vulnerability in the title of a journal allows an
+authenticated user to inject JavaScript to gain administrator privileges.
+
+https://mahara.org/interaction/forum/topic.php?id=8081
+
+
+The issues are fixed in Mahara 15.04.15, 16.04.9, 16.10.6, 17.04.4
+
+
 -- 
-James Morris
-<jmorris@...ei.org>
+chbi
+https://chbi.eu
 
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
