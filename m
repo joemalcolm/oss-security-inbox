@@ -1,4 +1,9 @@
-Received: (qmail 28599 invoked by uid 550); 22 Aug 2023 19:54:20 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1466" "Monday" "30" "October" "2017" "10:09:55" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<d9773cc8-16e8-e0f8-445b-023be2c835b4@orlitzky.com>" "33" "Re: [oss-security] Magento: Leaking of config file local.xml" "^Date:" nil nil "10" "2017103014:09:55" "[oss-security] Magento: Leaking of config file local.xml" (number mark "        michael@orli Oct 30   33/1466  " thread-indent "\"Re: [oss-security] Magento: Leaking of config file local.xml\"\n") "<20171030102422.15d1d9c2@pc1>" ("<20171030102422.15d1d9c2@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7983 invoked by uid 550); 30 Oct 2017 14:10:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15613 invoked from network); 22 Aug 2023 08:05:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692691524; x=1693296324;
-        h=thread-index:content-language:content-transfer-encoding
-         :mime-version:message-id:date:subject:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=eEHU5iHK+SaSlLi/TDwlgOQQk2QZZtlHlM/opJ1dacM=;
-        b=EvEyW5O1HZd+RGApDHKyYK/uIPobskqnm9PM9Vo7YXOSRNYNWBILYE643bb5IE2mOp
-         lYEMn/40oUOuB5G6ChyaO6Sd60AkzHahIdXNcakYEuVntYTO+AlyRwKKezrCbdUKJbIE
-         Ql7AaIKgACyJV9edcEpMECtnYJY6tqorJSEWGRoq4yM8lf5dCDG/O9aSxsOad7N2cK+B
-         rqv+IqicF9e1xB1Cg/ftijwG3qLsa4spXDDrwWKC+M7q22LYet6HeA0y4mvY7Unr/dvK
-         L0XNJB1d6JIAzVCrqvLGL28xyNvaoFVRtiG/uYplymNRdHzrdcvpjuHx1UD2aoaJSB4n
-         PYyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692691524; x=1693296324;
-        h=thread-index:content-language:content-transfer-encoding
-         :mime-version:message-id:date:subject:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eEHU5iHK+SaSlLi/TDwlgOQQk2QZZtlHlM/opJ1dacM=;
-        b=LQ9ngJ/2Ky13QvfwyOQpwjagSOqDxVqGlYTeq63wQjYu+6mZrWpX5JzyzcK+1xfjE8
-         7vln6eW4hiy8Nof4ss+R+KX+l3lvS/ztoXnK0PCknU5L3Y6iQHWAkqYha6iMv9NcTyzb
-         dNhP4XpDqIVsKGcHj4q2VllpAJbmcyXKDCoxm7sfhhzRjAN9hBPQyOlSZC0QZn98MQuU
-         Rm2AyduBrG0d7njcIydpmWxnM2e5tqlJQ+JETrGRv36MvkwBuGUgzkD4HFKXwZgu3qLC
-         KzaFaEHM5AksnG6wDCARAbTdNd4QbjLlFozjJqOmcq5cT/Quxz2Yqscaj5l50QMk+X8h
-         +TXQ==
-X-Gm-Message-State: AOJu0Yywxcx0GWZypUvaxt9mPbxZhfKKzK+dWQOH+FBJtyyBOB4/zFGH
-	C97ndatHXq8+xrVnd9YjDHvOXdedsge2AA==
-X-Google-Smtp-Source: AGHT+IHyc4EbO3Bl0Zq+s2zJmJssCbiQ+b616DeBu00M19BAi2tFZCXQL4xPm4+Y8CTOZKsVuRohCA==
-X-Received: by 2002:a5d:4b8f:0:b0:317:4bde:9e72 with SMTP id b15-20020a5d4b8f000000b003174bde9e72mr9248361wrt.10.1692691523723;
-        Tue, 22 Aug 2023 01:05:23 -0700 (PDT)
-From: "Simon Steiner" <simonsteiner1984@gmail.com>
-To: <general@xmlgraphics.apache.org>,
-	<batik-dev@xmlgraphics.apache.org>,
-	<batik-users@xmlgraphics.apache.org>,
-	"'Apache Security Team'" <security@apache.org>,
-	<oss-security@lists.openwall.com>
-Date: Tue, 22 Aug 2023 09:05:22 +0100
-Message-ID: <001601d9d4cf$66c49ba0$344dd2e0$@gmail.com>
+Received: (qmail 7898 invoked from network); 30 Oct 2017 14:10:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1509372600; bh=bx3eThjYmi0HhXJkCsoepD6mO/+nVfRnjXHdiPu9tjg=;
+	h=Subject:To:References:From:Date:In-Reply-To;
+	b=CtwzBapmYUtD0pPGXYBKAn++tM3ac0b6sp+LUxTHtC5ozR8l7ld7zJfyCbfIqchYV
+	 8qq+yvAz43FHBAmsLYoDDt+5/iJBJoJ8vTbmZIfEegV6s2w74OpRwK7mqdSkVbu0B/
+	 PEjNjdVxI6uIqzbQMtmfagR2rCUW+kPWEItSqp0s=
+References: <20171030102422.15d1d9c2@pc1>
+Message-ID: <d9773cc8-16e8-e0f8-445b-023be2c835b4@orlitzky.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-gb
-Thread-Index: AdnUzqTJlqivUE/xT2KKfzq5XGk4Tg==
-Subject: [oss-security] [CVE-2022-44730] Apache Batik information disclosure vulnerability
+In-Reply-To: <20171030102422.15d1d9c2@pc1>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Date: Mon, 30 Oct 2017 10:09:55 -0400
+From: Michael Orlitzky <michael@orlitzky.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Magento: Leaking of config file local.xml
+To: oss-security@lists.openwall.com
 
-CVE-2022-44730:
-        Apache Batik information disclosure vulnerability
+On 10/30/2017 05:24 AM, Hanno Böck wrote:
+> Magento is a web shop written in PHP.
+> 
+> Magento stores its configuration in a file local.xml, stored in the
+> webroot under app/etc/local.xml. As it is an xml file by default a web
+> server will not parse it in any way, but directly expose it to users.
 
-Severity:
-        Medium
+Thanks for publicizing this, it's an ancient issue, see e.g.
 
-Vendor:
-        The Apache Software Foundation
+https://tomrobertshaw.net/2012/11/magento-security-check-your-appetclocal-xml-file/
 
-Versions Affected:
-        Batik 1.0 - 1.16
-
-Description:
-        Switch to empty whitelist for rhino
-
-Mitigation:
-        Users should upgrade to Batik 1.17
-
-Credit:
-        This issue was independently reported by Julien Lacour
-
-References:
-        http://xmlgraphics.apache.org/security.html
-        https://issues.apache.org/jira/browse/BATIK-1347
-
-The Apache XML Graphics team.
+I think it may finally be fixed in the 2.x series of Magento which now
+has a "pub" directory beside "app" in the tree. With DocumentRoot =
+"pub", your local.xml should be safe.
 
 
+> Magento protects against this by shipping an .htaccess file that blocks
+> access to that directory. However that is not a sufficient
+> protection. .htaccess files are specific to the Apache web server.
 
+Indeed. And since you mentioned Drupal, they've done the same thing in
+the past (search "code execution"):
 
+https://www.drupal.org/forum/newsletters/security-advisories-for-drupal-core/2013-11-20/sa-core-2013-003-drupal-core
 
+What's worse is that the Drupal status report will warn you about the
+issue, but the "vulnerability check" that it does simply checks for the
+existence of an .htaccess! So if you're running nginx and if you have
+their impotent .htaccess file laying around, Drupal will tell you that
+everything's OK.
+
+(And of course, if you fix the issue properly, the status report will
+tell you that you're vulnerable...)
