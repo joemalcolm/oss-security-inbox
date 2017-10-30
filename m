@@ -1,65 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/3
-Message-ID: <CAPGxrc_yrmXsGOs_nRLJoqP=sTPRnjsnxL=ts=E5Vj-UxT_VhQ@mail.gmail.com>
-Date: Sat, 29 Apr 2017 19:24:09 +0800
-From: redrain root <rootredrain@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/30/2
+Message-ID: <d9773cc8-16e8-e0f8-445b-023be2c835b4@orlitzky.com>
+Date: Mon, 30 Oct 2017 10:09:55 -0400
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8291 ghostscript remote code execution
+Subject: Re: Magento: Leaking of config file local.xml
 Content-Type: text/plain; charset=utf-8
 
-nope~
-I know this issue is a type confusion similar to your initialized dsc
-parser
-for example
-The last previous vulnerability code exists in the
-zinitialize_dsc_parser(). The method gets the memory data using
-dict_memory() and treats it as an object to call its gs_alloc_struct()
-method.
-in the Evince code execution demo,  uses ghostscript (libgs.so) as the .ps
-file processor
-and another demo attack imagick is the shell command injection vuln.
+On 10/30/2017 05:24 AM, Hanno Böck wrote:
+> Magento is a web shop written in PHP.
+> 
+> Magento stores its configuration in a file local.xml, stored in the
+> webroot under app/etc/local.xml. As it is an xml file by default a web
+> server will not parse it in any way, but directly expose it to users.
 
-and CVE-2017-8291 is a part of my exploit last year it also affect some
-programs use ghostscript
-that's why I use Evince as the example.
+Thanks for publicizing this, it's an ancient issue, see e.g.
 
-Regards,
-redrain
+https://tomrobertshaw.net/2012/11/magento-security-check-your-appetclocal-xml-file/
+
+I think it may finally be fixed in the 2.x series of Magento which now
+has a "pub" directory beside "app" in the tree. With DocumentRoot =
+"pub", your local.xml should be safe.
 
 
+> Magento protects against this by shipping an .htaccess file that blocks
+> access to that directory. However that is not a sufficient
+> protection. .htaccess files are specific to the Apache web server.
 
-2017-04-29 13:36 GMT+08:00 Tavis Ormandy <taviso@...gle.com>:
+Indeed. And since you mentioned Drupal, they've done the same thing in
+the past (search "code execution"):
 
-> On Fri, Apr 28, 2017 at 7:43 PM, redrain root <rootredrain@...il.com>
-> wrote:
-> >
-> > what a awkward??
-> > I have discovered a part of my vulns about ghostscript last year and
-> > exploited in fulldisclosure early!
-> > and these vulns are part of mine I was going to discovered these in
-> defcon
-> > or other conference...WTF...
-> > u guys are logo designer???
-> >
-> > there are two demos last year
-> > Evince Arbitrary Code Execution https://youtu.be/wzcrHXngfcM Attack
-> Imagick
-> > through Ghostscript https://youtu.be/tPGm_ANDyOw
-> >
->
-> I don't think so, that is CVE-2016-7976 and is entirely unrelated to
-> the issue being discussed, other than superficial similarity of the
-> exploit.
->
-> That issue was reported by me, and we discussed the ImageMagick and
-> evince attack vectors at the time, you can check the archives if
-> you're interested.
->
-> http://seclists.org/oss-sec/2016/q4/29
->
-> This issue (CVE-2017-8291) is a type confusion vulnerability (well,
-> technically two vulnerabilities), and was found in the wild.
->
-> Tavis.
->
+https://www.drupal.org/forum/newsletters/security-advisories-for-drupal-core/2013-11-20/sa-core-2013-003-drupal-core
 
+What's worse is that the Drupal status report will warn you about the
+issue, but the "vulnerability check" that it does simply checks for the
+existence of an .htaccess! So if you're running nginx and if you have
+their impotent .htaccess file laying around, Drupal will tell you that
+everything's OK.
+
+(And of course, if you fix the issue properly, the status report will
+tell you that you're vulnerable...)
