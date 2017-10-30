@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1884" "Friday" "21" "May" "2021" "16:07:57" "+0200" "Maurits van Rees" "maurits@vanrees.org" nil "45" "[oss-security] Plone security hotfix 20210518" nil nil nil "5" nil nil (number mark "U       maurits@vanr May 21   45/1884  " thread-indent "\"[oss-security] Plone security hotfix 20210518\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Plone security hotfix 20210518" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2400" "Monday" "30" "October" "2017" "20:15:51" "+0100" "chbi@chbi.eu" "chbi@chbi.eu" "<ad8e08c6-e1f9-280c-41a7-169b901ca859@chbi.eu>" "71" "[oss-security] CVE-2017-14752, CVE-2017-15273: Stored XSS vulnerability in Mahara <= 15.04.14, <= 16.04.8, <= 16.10.5, <= 17.04.3" "^Date:" nil nil "10" "2017103019:15:51" "[oss-security] CVE-2017-14752, CVE-2017-15273: Stored XSS vulnerability in Mahara <= 15.04.14, <= 16.04.8, <= 16.10.5, <= 17.04.3" (number mark "U       chbi@chbi.eu Oct 30   71/2400  " thread-indent "\"[oss-security] CVE-2017-14752, CVE-2017-15273: Stored XSS vulnerability in Mahara <= 15.04.14, <= 16.04.8, <= 16.10.5, <= 17.04.3\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10081 invoked by uid 550); 21 May 2021 14:23:24 -0000
+Received: (qmail 4082 invoked by uid 550); 30 Oct 2017 19:16:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1283 invoked from network); 21 May 2021 14:08:17 -0000
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vanrees.org; s=MBO0001;
-	t=1621606083;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=0DM3Yit68O9ZMS6GGYOeXv1xJv8ztWDgeyVWqUGDTgY=;
-	b=e5GLU7FelMWwVB8eom6NylAxYZ2cHXcHZbbyjCp1ydb2Ad8bv6rbNNflO7XX3rSzj7H14a
-	r1jDQZR7ox8jL9E7QU0HbIulEwrEf5NNqmcqKvpBmdYzy7tW7vIrXS/t3GKbxGuvsYHdMb
-	1whNi5Z8dko7EQXuGvF+DFpdk1QnRWgYV4Hs8vzlnwBNJlVwgp2Gzz6Dtyh7Gf3booos2j
-	fOZFEdZWyuau7vR0godPU63AQZ++L8vkf4zL/g6mZtS7EX/d349EyPGYPmkZD/Y5gE5lwa
-	yyh76MDpnDhX3dS11hBI6DvNvzc1W9LbfPZVkqfkAP+DL2AB7mUSAs2/madBNw==
-To: oss-security@lists.openwall.com
-From: Maurits van Rees <maurits@vanrees.org>
-Message-ID: <0919707c-0f29-ac46-35f5-d6890faf0f4e@vanrees.org>
-Date: Fri, 21 May 2021 16:07:57 +0200
+Received: (qmail 4053 invoked from network); 30 Oct 2017 19:16:17 -0000
+Message-ID: <ad8e08c6-e1f9-280c-41a7-169b901ca859@chbi.eu>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="CT91gHkEt46frGhwA3TelGGbod44xT9LD"
+Date: Mon, 30 Oct 2017 20:15:51 +0100
+From: chbi@chbi.eu
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2017-14752, CVE-2017-15273: Stored XSS vulnerability in Mahara <=
+ 15.04.14, <= 16.04.8, <= 16.10.5, <= 17.04.3
+To: oss-security@lists.openwall.com
+
+--CT91gHkEt46frGhwA3TelGGbod44xT9LD
+Content-Type: multipart/mixed; boundary="anfKgi7md9Vm7Mvs4dfEVi2Vl4UUkvmo0";
+ protected-headers="v1"
+From: chbi@chbi.eu
+To: oss-security@lists.openwall.com
+Message-ID: <ad8e08c6-e1f9-280c-41a7-169b901ca859@chbi.eu>
+Subject: CVE-2017-14752, CVE-2017-15273: Stored XSS vulnerability in Mahara <=
+ 15.04.14, <= 16.04.8, <= 16.10.5, <= 17.04.3
+
+--anfKgi7md9Vm7Mvs4dfEVi2Vl4UUkvmo0
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-X-MBO-SPAM-Probability: 
-Subject: [oss-security] Plone security hotfix 20210518
+Content-Transfer-Encoding: quoted-printable
 
-A Plone security hotfix was released on Tuesday, May 18 2021.
-For details, see https://plone.org/security/hotfix/20210518
-Most CVE numbers are not yet issued. I will request them from Mitre shortly.
+Hi,
 
-BTW, I am following the instructions at 
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests 
-to first post to this list, then request CVEs at Mitre, then reply to my 
-own post.
-I don't see many other people doing it in this order. Is that page still 
-accurate?
+I've discovered two security issues in Mahara <=3D 15.04.14, <=3D 16.04.8,
+<=3D 16.10.5, <=3D 17.04.3 (https://mahara.org)
 
-Versions Affected: All supported Plone versions (4.3.20 and any earlier 
-4.3.x version, 5.2.4 and any earlier 5.x version).
 
-Versions Not Affected: None. Earlier versions may be affected, but the 
-hotfix has not been tested on them.
+CVE-2017-14752:
+A stored XSS vulnerability in "First name", "Last name" and "Display
+name" allows an authenticated user to inject JavaScript to gain
+administrator privileges.
 
-The patch addresses several security issues:
+https://mahara.org/interaction/forum/topic.php?id=3D8083
 
-- Remote Code Execution via traversal in expressions. Reported by David 
-Miller. CVE-2021-32633.
-- Writing arbitrary files via docutils and Python Script. Reported by 
-Calum Hutton.
-- Various information disclosures: mostly installation logs. Reported by 
-Calum Hutton. CVE-2021-21360 and CVE-2021-21336.
-- Stored XSS from file upload (svg, html). Reported separately by Emir 
-Cüneyt Akkutlu and Tino Kautschke.
-- Reflected XSS in various spots. Reported by Calum Hutton.
-- XSS vulnerability in CMFDiffTool. Reported by Igor Margitich.
-- Stored XSS from user fullname. Reported by Tino Kautschke.
-- Blind SSRF via feedparser accessing an internal URL. Reported by 
-Subodh Kumar Shree.
-- Server Side Request Forgery via event ical URL. Reported by MisakiKata 
-and David Miller.
-- Server Side Request Forgery via lxml parser. Reported by MisakiKata 
-and David Miller.
 
-A hotfix package has been created at 
-https://pypi.org/project/Products.PloneHotfix20210518/
-The fixes will be incorporated in future release Plone 5.2.5.
+CVE-2017-15273:
+A stored XSS vulnerability in the title of a journal allows an
+authenticated user to inject JavaScript to gain administrator privileges.
 
--- 
-Maurits van Rees https://maurits.vanrees.org/
-Plone Security Team security@plone.org
+https://mahara.org/interaction/forum/topic.php?id=3D8081
 
+
+The issues are fixed in Mahara 15.04.15, 16.04.9, 16.10.6, 17.04.4
+
+
+--=20
+chbi
+https://chbi.eu
+
+GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
+     https://chbi.eu/chbi.asc
+
+
+--anfKgi7md9Vm7Mvs4dfEVi2Vl4UUkvmo0--
+
+--CT91gHkEt46frGhwA3TelGGbod44xT9LD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAln3enUACgkQunuT+ZA3
+rn7TDw//QwLbVJQoausI89gt6qi34w2ceGwwnBdFoFYumKTsONx66eF25Yt5J176
+wfwgOMB86toNiSWMw25ehZdxgiKOr45KWNwxVJ2fcMsnUCh3YhuuGVDaC47gpE1I
+iUPa8VC/Bvo+d/9iQyEnpt/dfe9Rw6SeStBkRJ7PjQwDVzfBrdhEUqBds9HgaB1e
+uNGQROcuhcvsAl5pAvdBvZO7PbiACXSXAnDTqAcHbdm9twyHRWJ16/toPbFZSpvR
+T9iDIQYOO8+9rPMiN3z9IS/eFba3QqyGavLe8mX4hvS0r3HTmSt9z7qxZ7BOfOuO
+hx0Dr5vCdjwZn0vnvqwwSiHHLryHmfN64skg4YbemAKodfXBHmzeX8tFALLjRvh9
+of/KsyBeh5NR4eRZYD8hbR6nnR0dY9FohvoJpJld60ycEIucKCcAzlFb8E2I3eBG
+FQZAdKv6WWTXDgeiI8gp8kqc/mmPKUdsKA/UN5ECS40vvDe+lXr+e/NAfSgG+hvZ
+rZHWtVoywUq4/o50V+OLpSFxu7CDKnjvsq0s6tpGRfLb7mgdctCnMTag2ubK/KqW
+Dak+294msqUwSsaXm7l/byGqazGPcXgclPR9FuyMAjX4JjREcvHFoxgoZCKP/tff
+4alZjLaXmLEkj67TKkRQzS6FGBVd1wecIMkDm+EI5uWrOirBjn0=
+=6Eh0
+-----END PGP SIGNATURE-----
+
+--CT91gHkEt46frGhwA3TelGGbod44xT9LD--
