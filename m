@@ -1,83 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/5
-Message-ID: <0b4f01d2726f$d3b693e0$7b23bba0$@gmail.com>
-Date: Fri, 20 Jan 2017 00:19:34 +0800
-From: "idl3r" <idler1984@...il.com>
-To: <oss-security@...ts.openwall.com>
-Cc: "'Anarcheuz Fritz'" <anarcheuz@...il.com>, <cve-assign@...re.org>
-Subject: RE: CVE Request - Samsung Exynos GPU driver OOB read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/30/1
+Message-ID: <20171030102422.15d1d9c2@pc1>
+Date: Mon, 30 Oct 2017 10:24:22 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Magento: Leaking of config file local.xml
 Content-Type: text/plain; charset=utf-8
 
-Unfortunately, there is no official git for tracking from Samsung, so I
-can't give a pointer to the particular commit.
+Magento is a web shop written in PHP.
 
-The bug itself resides in
-<root>/drivers/gpu/arm/t7xx/r5p0/mali_kbase_core_linux.c of the src tree, in
-function kbase_dispatch which is the main ioctl dispatcher of the driver:
+Magento stores its configuration in a file local.xml, stored in the
+webroot under app/etc/local.xml. As it is an xml file by default a web
+server will not parse it in any way, but directly expose it to users.
 
-static mali_error kbase_dispatch(struct kbase_context *kctx, void * const
-args, u32 args_size)
-{
-...
-    /* setup complete, perform normal operation */
+Magento protects against this by shipping an .htaccess file that blocks
+access to that directory. However that is not a sufficient
+protection. .htaccess files are specific to the Apache web server.
+Other web servers like nginx don't support .htaccess. This leaves users
+with a situation where installation on any web server other than Apache
+will by default lead to a configuration where the local.xml file can be
+downloaded by anyone over the Internet. Even worse, the installation
+doc doesn't mention this issue [1].
 
-    switch (id) {
-...
-	case KBASE_FUNC_TMU_SKIP:
-		{
-/* MALI_SEC_INTEGRATION */
-#ifdef CONFIG_SENSORS_SEC_THERMISTOR
-#ifdef CONFIG_USE_VSYNC_SKIP
-			struct kbase_uk_tmu_skip *tskip = args;
-			int thermistor = sec_therm_get_ap_temperature();
-			u32 i, t_index = tskip->num_ratiometer;
+In June I scanned the Alexa top 1 Million and found 324 vulnerable
+installations (out of 10501 magento installations in total). I tried to
+inform the affected parties via their abuse contacts.
 
-			for (i = 0; i < tskip->num_ratiometer; i++)
-<== missing of boundary check
-				if (thermistor >= tskip->temperature[i])
-					t_index = i;
 
-tskip->temperature is a uint32 array of static size(10 elements) and
-tskip->num_ratiometer a uint32 which is user controlled. Since the boundary
-check is missing, OOB read may happen leading to possible memory corruption.
+Recommended Fix
+===============
 
------Original Message-----
-From: Greg KH [mailto:greg@...ah.com] 
-Sent: Thursday, January 19, 2017 10:37 PM
-To: oss-security@...ts.openwall.com
-Cc: Anarcheuz Fritz <anarcheuz@...il.com>; cve-assign@...re.org
-Subject: Re: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read
+The core of this issue is that using an XML file in the web root to
+configure a PHP application is inherently dangerous. There is no
+software-independent way to make sure such a configuration doesn't get
+exposed. I think the only reasonable safe way to store configurations
+for PHP applications is in .php files. If you want to keep using XML
+configurations you could store them in a multiline string within a PHP
+file.
 
-On Thu, Jan 19, 2017 at 02:38:31PM +0800, Idler wrote:
-> Hello,
-> 
-> I'd like to request CVE for the following security issue:
-> 
-> Security bulletin: 
-> http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2017
-> 
-> SVE-2016-6362: out of bound read in gpu driver
-> 
-> Severity: Low
-> Affected versions: M(6.0), N(7.0) devices with Exynos AP chipsets 
-> Reported on: May 31, 2016 Disclosure status: Privately disclosed.
-> Vulnerability in gpu driver does not properly check the boundary of 
-> buffers leading to a possible memory corruption.
-> The applied patch avoids an illegal access to memory by checking the
-boundary.
-> 
-> Source code:
-> Source code of the affected GPU drivers (as part of the Linux kernel
-> source) can be downloaded from Samsung Opensource Resource center:
-> http://opensource.samsung.com/
-> 
-> The particular model of phone we used to reproduce this issue is:
-> http://opensource.samsung.com/reception/receptionSub.do?method=sub&sub
-> =F&searchValue=SM-G9200
+As this is a severe change a mitigation would be to let the backend
+interface check via javascript whether access to the config file is
+properly prevented. If the local.xml is accessible magento should
+refuse to operate.
 
-Any pointer to the commit(s) that happened to resolve this issue?
+At the very least this needs to be properly documented within the
+installation docs.
 
-thanks,
+[1] http://devdocs.magento.com/guides/m1x/install/installing.html
 
-greg k-h
 
+Comment / relation to other issues
+==================================
+
+There is a general problem for PHP applications that there is no
+server-independent way to prevent access to files. Many use htaccess,
+which is insufficient, as it only works on Apache. Recently the Free
+Software Foundation had a security issue [2] with Drupal's
+backup_migrate module that was based on a very similar problem.
+
+Therefore it should generally be considered an anti-pattern to store
+secret files within PHP apps in the web root. Possible solutions are
+storage outside of the web root, storage in databases or storage within
+PHP code (as it's commonly done for configuration files).
+
+[2] http://www.openwall.com/lists/oss-security/2017/10/29/1
+
+Disclosure
+==========
+
+2017-06-17 Reported via Magento's Bugcrowd Bug Bounty
+2017-06-19 Reply that this has already been reported on 2017-03-28 by
+someone else.
+2017-06-24 I asked whether this will be fixed/changed and whether there
+is a timeline for disclosing the original report. No reply.
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
