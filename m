@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4365" "Friday" "10" "February" "2017" "15:23:03" "+0100" "Solar Designer" "solar@openwall.com" "<20170210142302.GA23293@openwall.com>" "99" "Re: [oss-security] Use after free in libmysqlclient.so" "^Cc:" nil nil "2" "2017021014:23:03" "[oss-security] Use after free in libmysqlclient.so" (number mark "        solar@openwa Feb 10   99/4365  " thread-indent "\"Re: [oss-security] Use after free in libmysqlclient.so\"\n") "<201702101200.00422@pali>" ("<201701272353.40452@pali>" "<201702101200.00422@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2080" "Tuesday" "31" "October" "2017" "14:20:34" "+0000" "Jason Cooper" "osssecurity@lakedaemon.net" "<20171031142034.GJ31388@io.lakedaemon.net>" "52" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "10" "2017103114:20:34" "[oss-security] Fw: Security risk of vim swap files" (number mark "        osssecurity@ Oct 31   52/2080  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171031132352.2df6d2ad@pc1>" ("<20171031132352.2df6d2ad@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24206 invoked by uid 550); 10 Feb 2017 14:23:35 -0000
+Received: (qmail 7804 invoked by uid 550); 31 Oct 2017 15:17:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24034 invoked from network); 10 Feb 2017 14:23:10 -0000
-Message-ID: <20170210142302.GA23293@openwall.com>
-References: <201701272353.40452@pali> <201702101200.00422@pali>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 5679 invoked from network); 31 Oct 2017 14:20:49 -0000
+X-MHO-User: b6e64d47-be46-11e7-a938-4f970e858fdb
+X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
+X-Originating-IP: 108.39.34.239
+X-Mail-Handler: DuoCircle Outbound SMTP
+X-DKIM: OpenDKIM Filter v2.6.8 io 9845B8012B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lakedaemon.net;
+	s=mail; t=1509459634;
+	bh=8CZBYPZqZZZXd+UTD5mzKni61Qe7QVhjoQCR69kbKds=;
+	h=Date:From:To:Subject:References:In-Reply-To;
+	b=qYl6abdHQ7TnstZLYMum6ERTV84fgVh4Bz9gIu8bbR6lR9YqC9PR1Y2sM/GEZaNNj
+	 CKBKYtmW2G4XG9mIz7rHLPWGOC/XxCZ3B/nBpeBEove7EYdxGV4T8VNyfSPZUasqwd
+	 1aQJ1JzVciymvuBw5PLrSdKIeWD4MBsIyv3D02fOIkWFpuLKNKMCxqmlHmRjRTJiZY
+	 dh/mNrai1199KJOxPCisNIB854f6SxxnHDWE75PfkELjrtBAbdj1fuCOuJ9GYrqwus
+	 Slov+Iiq657KJnb6WsaEV+FNSnkJAooUWjz8wIo5izd53BcijQh8dF7wTNNJ/D5gaw
+	 fMOoush4sX4FA==
+Message-ID: <20171031142034.GJ31388@io.lakedaemon.net>
+References: <20171031132352.2df6d2ad@pc1>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <201702101200.00422@pali>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Fri, 10 Feb 2017 15:23:03 +0100
-From: Solar Designer <solar@openwall.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171031132352.2df6d2ad@pc1>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Tue, 31 Oct 2017 14:20:34 +0000
+From: Jason Cooper <osssecurity@lakedaemon.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Use after free in libmysqlclient.so
-To: pali@cpan.org
+Subject: Re: [oss-security] Fw: Security risk of vim swap files
+To: oss-security@lists.openwall.com
 
-On Fri, Feb 10, 2017 at 11:59:59AM +0100, pali@cpan.org wrote:
-> Hello, are you going to assign CVE for this particular defect?
+Hi Hanno,
 
-MITRE has recently switched to accepting CVE requests via a web form.
-Please see this thread:
+On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno Böck wrote:
+> I think vim should change the behavior of swap files:
+> 1. they should be stored in /tmp by default
 
-http://www.openwall.com/lists/oss-security/2017/02/09/7
+This opens up a host of other issues, which others have highlighted.
 
-I guess it means that since they didn't get back to you on your CVE
-request yet, you probably need to resubmit it via the web form now.
+> 2. they should have secure permissions (tmp file security is
+> a tricky thing and needs careful consideration to avoid symlink attacks
+> and the like, but there are dedicated functions for this like mkstemp).
 
-Alexander
+This is only if you move to /tmp.
 
-> On Friday 27 January 2017 23:53:29 pali@cpan.org wrote:
-> > Hello, I would like to report problem related to MySQL/MariaDB and
-> > possibly asking for assigning CVE if this list is the right place.
-> > 
-> > C client library for MySQL (libmysqlclient.so) has use-after-free
-> > defect which can cause crash of applications using that MySQL
-> > client.
-> > 
-> > Defect occurs by calling mysql_close() function from
-> > libmysqlclient.so. If mysql_close() is called before calling all
-> > mysql_stmt_close() (for all allocated stmts), then following
-> > mysql_stmt_close() call try to write to already released memory.
-> > mysql_close() let dangling pointer exist for prepared statements.
-> > Real problem is in function
-> > mysql_prune_stmt_list() which incorrectly iterate over elements.
-> > Function list_add() overwrite ->next pointer of current element which
-> > overwrite next element for iteration.
-> > 
-> > Basically it is just wrong usage of linked list structure.
-> > 
-> > Languages in which is not guaranteed order of executing destructor of
-> > created objects have a big problem as such writing to memory pointed
-> > by dangling can cause crash of whole application.
-> > 
-> > E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of
-> > whole perl process with simple script:
-> > 
-> > perl -MDBI -e '
-> > $dbh = DBI->connect("dbi:mysql:", "root", undef,
-> >                     {RaiseError => 1, mysql_server_prepare => 1});
-> > $sth1 = $dbh->prepare("SELECT 1");
-> > $sth2 = $dbh->prepare("USE mysql");
-> > $dbh->disconnect;
-> > $dbh = undef;
-> > '
-> > Segmentation fault
-> > 
-> > Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce
-> > change username, password and host where is running mysql server.
-> > Valgrind can prove that memory corruption really occurs.
-> > 
-> > This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But
-> > is present in all MySQL 5.5 versions (and also older) and
-> > appropriate older 5.6 and 5.7 versions. MySQL 5.5 is still used,
-> > supported and included in lot of linux distributions.
-> > 
-> > Moreover this defect is present also in MariaDB releases. I tested
-> > all last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all
-> > those are affected.
-> > 
-> > MySQL and MariaDB provides also standalone package with only C client
-> > library libmysqlclient.so (without server) under name "Connector/C"
-> > and so appropriate versions of it are affected too.
-> > 
-> > I found that this defected was fixed in MySQL git repository by
-> > commit:
-> > https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc5
-> > 52424132806f46e93
-> > 
-> > That commit can be easily applied to last MySQL 5.5.54 version and
-> > fixes this defect.
-> > 
-> > Looks like problem was already reported and is publically available
-> > in MySQL bug tracker, see more details on links:
-> > https://bugs.mysql.com/bug.php?id=70429
-> > https://bugs.mysql.com/bug.php?id=63363
-> > (tickets are closed despite fact that MySQL 5.5 and older are not
-> > fixed)
-> > 
-> > ---
-> > 
-> > I reported this problem to Oracle secalert_us@oracle.com two months
-> > ago, but they did absolutely nothing for fixing it in MySQL 5.5.
-> > Instead they started resending this problem to some random people
-> > with @cpan.org address for unknown reason. And told me to not
-> > disclose information about this defect. Resending does not look like
-> > normal handling of security related problem! Therefore I suggest
-> > other people to not wasting time reporting problems to Oracle for
-> > open source applications.
-> > 
-> > As two months is really long time to fix such problem which was
-> > already fixed in new versions; it is already publically disclosed in
-> > MySQL bug tracker; fix available in public git; problem is in major
-> > MariaDB versions; fix is small; and this is open source product
-> > included in many linux distributions I decided to send information
-> > to oss-security.
+> 3. Ideally they also shouldn't leak currently edited filenames (e.g.
+> they shouldn't be called /tmp/.test.txt.swp, but more something
+> like /tmp/.vim_swap.123782173)
+
+Adding this requirement begs for a Rube Goldberg solution.  :-)  Since
+vim needs a deterministic name to search for when it opens the file the
+next time.  And next time could be after a reboot.
+
+Maybe we just need to change the default backup pattern to something
+that isn't hidden by default?  e.g. wp-config.php.swp (no leading
+period), or wp-config.php~ ?  Thus, it's more likely to be caught by the
+developer.
+
+Honestly, The real problem is just webserver design in general.  In
+order to have automatic reboot/restart, you need to grossly compromise
+security in several ways.
+
+  a) store the server ssl key on disk without a password.
+  b) store passwords in the clear in config files, readable by the
+     running server user.
+
+The real answer is "Don't do that."  Which, years ago, was really
+infeasible since most servers were physically hosted and redundancy was
+expensive.
+
+But we're not there anymore.  Wether you use a caching provider like
+cloudflare, or a hosting service using VMs, there's plenty of cheap
+redundancy.  Having an individual box down doesn't mean your site is
+down.  So, this gives us some wiggle room to ask for a password to
+decrypt the key (or, load from remote), and provide credentials for the
+server to access other resources.
+
+But, I digress.  Yes, vim swap files are a problem.  But only because
+we've built stupid decisions (necessary at one time) into the design.
+
+thx,
+
+Jason.
