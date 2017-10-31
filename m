@@ -1,49 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/11
-Message-ID: <20171106184918.GB2500@gremlin.ru>
-Date: Mon, 6 Nov 2017 21:49:18 +0300
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: tftpd-hpa - insecure chroot()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/17
+Message-ID: <3791103E-80D5-4E75-AF23-6F8ED54DDEBE@apache.org>
+Date: Tue, 31 Oct 2017 12:44:38 -0700
+From: Jesus Camacho Rodriguez <jcamacho@...che.org>
+To: "user@...e.apache.org" <user@...e.apache.org>, <dev@...e.apache.org>, "security@...e.apache.org" <security@...e.apache.org>, <announce@...che.org>, <oss-security@...ts.openwall.com>
+Subject: [CVE-2017-12625] Apache Hive information disclosure vulnerability for column masking
 Content-Type: text/plain; charset=utf-8
 
-On 2017-11-03 02:56:47 +0300, Dmitry V. Levin wrote:
+CVE-2017-12625: Apache Hive information disclosure vulnerability for column masking
 
- >> #ifdef __CYGWIN__
- >>  chdir("/");             /* Cygwin chroot() bug workaround */
- >> #endif }
+Severity: Important
 
- > Sorry, why do you think that
- >  chdir(dir) == 0 && chroot(".") == 0
- > is any worse than
- >  chroot(dir) == 0 && chdir("/") == 0
- > assuming that you have control over your signal handlers and can
- > ensure they won't issue any chdir or chroot calls between these
- > two calls?
+Vendor: The Apache Software Foundation
 
-Personally I just prefer the second sequence since first reading
-`man 2 chroot` over 20 years ago: "This call does not change the
-current working directory". So all my programs do change it just
-immediately after chroot()ing. I've even made a Linux kernel patch
-to force chroot() to do internal chdir("/"), but noone was really
-interested. Those were the days...
+Versions Affected: Hive 2.1.0 to 2.3.0
 
-Now, I've simply (and really accidentally, as all I wanted at that
-time was to boot-up some hardware via PXE) noticed the tftpd server
-running with "-s" ("secure") parameter without being chroot()ed.
-This issue did cost me only some time, as that was in a properly
-isolated VLAN, but I really prefer chroot()ed programs not to leave
-their subdirectories, so I decided to have a look into the code and
-the abovequoted piece appeared as the most suspicious for me.
+Description:
+Hive exposes an interface through which masking policies can be defined on tables or
+views, e.g., using Apache Ranger. When a view is created over a given table, the
+policy enforcement does not happen correctly on the table for masked columns.
 
-The ${subj} in general and this issue in particular may deserve
-more thoroughful exploration, but I'm very unlikely to do this in
-the observable future, but even this notice may save (at least)
-time to someone else.
+Mitigation:
+2.3.0 users should upgrade to 2.3.1
+2.2.0 users should upgrade to 2.3.1, obtain the latest source from git for branch-2.2
+or apply this patch which will be included from 2.2.1
+https://git1-us-west.apache.org/repos/asf?p=hive.git;a=commit;h=0e795debddf261b0ac6ace90e2d774f9a99b7f4b
+2.1.x users should upgrade to 2.3.1, obtain the latest source from git for branch-2.1
+or apply this patch which will be included from 2.1.2
+https://git1-us-west.apache.org/repos/asf?p=hive.git;a=commit;h=6db9fd6e43f6eef3c9d1ca8e324b2edaa54fb0d3
+
+To mitigate this vulnerability until Hive is upgraded to a new version, there are two
+possible options. These steps need to be done manually in Ranger / Hive.
+1) Restrict users from creating views on tables with column masking rules defined. For
+this in Ranger Hive Policy:
+ - Users should not have SELECT permission for those Table columns with masking rules
+defined.
+ - Give SELECT permission only for those columns without masking rules defined.
+2) Review the Hive Column Masking Policies maintained in Ranger for the tables. Then
+check in Hive if views that read those tables have been defined.
+If present, either change the view definition so those columns are not selected or
+directly drop those views.
+
+Credit:
+This issue was reported by ﻿Suja Santhosh of Hortonworks.
 
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+If you have any question, please reach out to us in the Hive dev list.
 
-Content of type "application/pgp-signature" skipped
+Regards,
+
+The Apache Hive Team
+
+
