@@ -1,49 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/18/5
-Message-ID: <CAOOKt53_E7=PL=drJhbQ3ar8prnWccxpVrq6dHgXnOwQL7NjLQ@mail.gmail.com>
-Date: Mon, 18 Sep 2017 10:45:14 -0700
-From: Shalin Shekhar Mangar <shalin@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/2
+Message-ID: <20171031123745.GA10823@openwall.com>
+Date: Tue, 31 Oct 2017 13:37:45 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-9803: Security vulnerability in kerberos delegation token functionality
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-9803: Security vulnerability in kerberos delegation token functionality
+On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno B??ck wrote:
+> I think vim should change the behavior of swap files:
+> 1. they should be stored in /tmp by default
+> 2. they should have secure permissions (tmp file security is
+> a tricky thing and needs careful consideration to avoid symlink attacks
+> and the like, but there are dedicated functions for this like mkstemp).
+> 3. Ideally they also shouldn't leak currently edited filenames (e.g.
+> they shouldn't be called /tmp/.test.txt.swp, but more something
+> like /tmp/.vim_swap.123782173)
 
-Severity: Important
+Out of these, I think only 2 should be done: the files should be mode
+0600 or 0400 even if the original file's permissions and/or the umask
+are more relaxed.
 
-Vendor:
-The Apache Software Foundation
+1 and 3 go against intended use for these files - recovery of an edit in
+progress if the editor or the entire system crashes (and comes back up
+e.g. after a power-cycle).  /tmp contents might not survive a reboot,
+and randomized filenames would prevent vim itself from detecting the
+problem and offering recovery, which it does now.
 
-Versions Affected:
-Apache Solr 6.2.0 to 6.6.0
-
-Description:
-
-Solr's Kerberos plugin can be configured to use delegation tokens,
-which allows an application to reuse the authentication of an end-user
-or another application.
-There are two issues with this functionality (when using
-SecurityAwareZkACLProvider type of ACL provider e.g.
-SaslZkACLProvider),
-
-Firstly, access to the security configuration can be leaked to users
-other than the solr super user. Secondly, malicious users can exploit
-this leaked configuration for privilege escalation to further
-expose/modify private data and/or disrupt operations in the Solr
-cluster.
-
-The vulnerability is fixed from Solr 6.6.1 onwards.
-
-Mitigation:
-6.x users should upgrade to 6.6.1
-
-Credit:
-This issue was discovered by Hrishikesh Gadre of Cloudera Inc.
-
-References:
-https://issues.apache.org/jira/browse/SOLR-11184
-https://wiki.apache.org/solr/SolrSecurity
-
-
--- 
-The Lucene PMC
+Alexander
