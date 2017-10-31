@@ -1,40 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/10/11
-Message-ID: <CANO=Ty0vV1M86uXiYW8X+i2N3dHB4855s=Lk7Ejmqwp=8vzJYA@mail.gmail.com>
-Date: Mon, 10 Jul 2017 15:15:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Marcus Meissner <meissner@...e.de>, security@....net, kaplanlior@...il.com
-Subject: Re: Re: PHP CVE assignments: [cve-request@...re.org: Re: [scr358150] 7 PHP CVEs]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/11
+Message-Id: <1509468802.3617.0@smtp.gmail.com>
+Date: Tue, 31 Oct 2017 12:53:22 -0400
+From: Gordo Lowrey <gordo@...eval.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-A note, for issues like this please contact MITRE via the cve form at:
-https://cveform.mitre.org/ and pick the update option.
+It's not the fault of the program if an end-user insists upon use of a 
+stupid configuration. There's no problem with VIM here IMO.
 
-On Mon, Jul 10, 2017 at 3:03 PM, Stanislav Malyshev <smalyshev@...il.com>
+As others have said, your version control should ignore swap files, 
+first of all, so they are not deployed.
+
+If you do edit a file on the server, directly, then you should ensure 
+proper configuration, which brings to the second point: you should put 
+your swap/temp files into a directory that only you can control, like 
+~/.vim/{backup/tmp} or ~/.local/tmp, etc...
+
+On Tue, Oct 31, 2017 at 9:50 AM, Solar Designer <solar@...nwall.com> 
 wrote:
-
-> Hi!
->
->
-> > Raw form of PHP CVE assignments.
-> >
-> > If I made a mistake feel free to update via webform or mail me so I can
-> do.
->
-> Looks like CVE-2017-11145 and CVE-2017-11146 are actually exactly the
-> same bug.
->
-> --
-> Stas Malyshev
-> smalyshev@...il.com
->
-
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+> On Tue, Oct 31, 2017 at 02:35:59PM +0100, Jakub Wilk wrote:
+>>  There's another problem with vim swapfiles.
+>> 
+>>  If you edit a file directly in /tmp, vim will happily read a 
+>> swapfile
+>>  that were planted there by somebody else. Local users could exploit 
+>> this
+>>  for denial of service (or maybe worse if there are any swapfile 
+>> parsing
+>>  bugs...).
+>> 
+>>  Is that a bug in vim? Or is it a user error to edit file directly in
+>>  /tmp?
+> 
+> Almost all manual uses of /tmp are user errors, yet we could want to
+> harden programs to make such misuses less risky.
+> 
+>>  In the latter case, we should fix at least vipe(1) and vidir(1) from
+>>  moreutils; and run-mailcap(1).
+> 
+> Alexander
 
