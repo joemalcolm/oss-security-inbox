@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9955" "Thursday" "3" "September" "2015" "05:25:11" "+0000" "Fiedler Roman" "Roman.Fiedler@ait.ac.at" "<2ECE9D9EEF1F524185270138AE23265954E74D77@S0MSMAIL112.arc.local>" "179" "AW: [oss-security] Re: CVE request: screen stack overflow (deep recursion)" nil nil nil "9" "2015090305:25:11" "AW: [oss-security] Re: CVE request: screen stack overflow (deep recursion)" (number mark "        Roman.Fiedle Sep  3  179/9955  " thread-indent "\"AW: [oss-security] Re: CVE request: screen stack overflow (deep recursion)\"\n") "<20150903051105.6AB28B2E4ED@smtpvbsrv1.mitre.org>" ("<87vbbusojr.fsf@mid.deneb.enyo.de>" "<20150903051105.6AB28B2E4ED@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1043" "Tuesday" "31" "October" "2017" "10:41:48" "-0400" "Adam Shannon" "adamkshannon@gmail.com" "<CAONXncapSQ4ZT2ffu3jOwefoeyRTO9p_xpUrhrXjOXNaAc1gYg@mail.gmail.com>" "30" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "10" "2017103114:41:48" "[oss-security] Fw: Security risk of vim swap files" (number mark "        adamkshannon Oct 31   30/1043  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171031135005.GA12455@openwall.com>" ("<20171031132352.2df6d2ad@pc1>" "<20171031133559.7aqu2z45atxudb7c@jwilk.net>" "<20171031135005.GA12455@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22485 invoked by uid 550); 3 Sep 2015 05:25:27 -0000
+Received: (qmail 8063 invoked by uid 550); 31 Oct 2017 15:17:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,208 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22461 invoked from network); 3 Sep 2015 05:25:26 -0000
-Thread-Topic: [oss-security] Re: CVE request: screen stack overflow (deep
- recursion)
-Thread-Index: AQHQ5gb6CDeW5ESS80ax7jKLld0cT54qQyJQ
-Message-ID: <2ECE9D9EEF1F524185270138AE23265954E74D77@S0MSMAIL112.arc.local>
-References: <87vbbusojr.fsf@mid.deneb.enyo.de>
- <20150903051105.6AB28B2E4ED@smtpvbsrv1.mitre.org>
-In-Reply-To: <20150903051105.6AB28B2E4ED@smtpvbsrv1.mitre.org>
-Accept-Language: en-US, de-AT
-Content-Language: de-DE
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.30.249.121]
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
-	micalg=SHA1; boundary="----=_NextPart_000_000C_01D0E619.A86003E0"
+Received: (qmail 6008 invoked from network); 31 Oct 2017 14:42:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=dZZ3jDlqT4/LKN1Yji9878FeklGzlenxnI32uwBh6s0=;
+        b=ts4YvFVcTyO/i5MAMkalVilIBGZ8XzFEzn/PRyA9pITfExPReLLG7/iKEpqbOnQjQk
+         VNJG5TYfvcJQ1EErABpbAXLzyY20Cg+V+5cmAVoi7J2hgToJeI07YWhnaw9ec7yn/86m
+         EFuiJDCh+E6wP0fEKw7Y93itK27Q32v4H3uT6j5YI2dmgbuLd7pV8fIBhoazv7faxO9Y
+         /Hg1e0574CqRuxPUUsFicQjDkMW2NEWyHPNoIWmCtsqVlW0rBK+P34UQdeMXJz2YY/S/
+         t8xR9k4WFx8VHH4BbuWTgvM2cXYJU6RtvyaEC63UtVNJybcrpXY4EjA1Ea12SKPwpf0k
+         J9LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=dZZ3jDlqT4/LKN1Yji9878FeklGzlenxnI32uwBh6s0=;
+        b=ibX41PexwsBoWa2faHgAJ8ZqUDhQPTteP5IM9Hp01VN56yat44Fcc9fP4nIaj8jTuh
+         YuCRsPxbcHGePwG9Gj9RNWbWKDB9TzgpSy2zOIMEQl+5wlUdS6uz6TH+oM5pgSLUgdXJ
+         0ZFgJoLT3q3tuGqo1FtbqleYGJsHXzAMqtsBLbjt1iVIA9ZSs1Oyc4L7DNotskYK2Slb
+         k3jUu9FMHvnl8tTe0R2cdqUyI0aq4r6zMf+yBPInRu2qpph7GRTtMpAGlfMbj27/EduL
+         krm2qA9IoOeEU+VMYCgfG7fy3Xt0/LyZ7OpIxam3OHIkO89HX7z3uysty2lYrZnAZtnH
+         1zrw==
+X-Gm-Message-State: AMCzsaWOm69FUOb+lQvhaX+JelZaDAVm0isa1x1iQEgpcQ67sZJNLExP
+	XowSAPXdZjvHKrt513v+IdQA8S3H4rYekGsbvflWxQ==
+X-Google-Smtp-Source: ABhQp+TgTqFe0vALSj00gBFnz09f87fnWrSGhRBX9nwysCgFMbjLQmJ3Z3id9vOYljBPHfV7hBadLwcDf7Kz4W0o1WY=
+X-Received: by 10.37.186.9 with SMTP id t9mr1462241ybg.307.1509460928608; Tue,
+ 31 Oct 2017 07:42:08 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.14.151,1.0.33,0.0.0000
- definitions=2015-09-03_03:2015-09-02,2015-09-03,1970-01-01 signatures=0
-CC: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 3 Sep 2015 05:25:11 +0000
-From: Fiedler Roman <Roman.Fiedler@ait.ac.at>
+In-Reply-To: <20171031135005.GA12455@openwall.com>
+References: <20171031132352.2df6d2ad@pc1> <20171031133559.7aqu2z45atxudb7c@jwilk.net>
+ <20171031135005.GA12455@openwall.com>
+Message-ID: <CAONXncapSQ4ZT2ffu3jOwefoeyRTO9p_xpUrhrXjOXNaAc1gYg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="f403043e8a3c73c2b3055cd8c262"
+Date: Tue, 31 Oct 2017 10:41:48 -0400
+From: Adam Shannon <adamkshannon@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: AW: [oss-security] Re: CVE request: screen stack overflow (deep
- recursion)
-To: "fw@deneb.enyo.de" <fw@deneb.enyo.de>
+Subject: Re: [oss-security] Fw: Security risk of vim swap files
+To: oss-security@lists.openwall.com
 
-------=_NextPart_000_000C_01D0E619.A86003E0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+--f403043e8a3c73c2b3055cd8c262
+Content-Type: text/plain; charset="UTF-8"
 
-> Von: cve-assign@mitre.org [mailto:cve-assign@mitre.org]
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> Use CVE-2015-6806.
-> 
-> We feel that the CVE inclusion case for this issue might be marginal.
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=797624#5 says
-> 
->   Hence this can be used to cause a denial of service attack by
->   tricking a user into e.g. displaying a file with "cat" inside screen
+metasploit has had such a check available for a while now.
 
-What about "tail -f /var/log/syslog", Apache or other kind of logs for
-debugging? [Yes, that's often how logs are running over the screen in videos
-when talking about IT-security]. It's convenient and I'm using screen
-exactly to avoid any injection of commands via TIOCSTI into my current TTY
-when a context switch is needed before starting tail, e.g. when working with
-LXC containers.
+https://github.com/rapid7/metasploit-framework/blob/master/modules/auxiliary/scanner/http/backup_file.rb
 
-Still not sure, if this is an argument for CVE inclusion, at least it is one
-for more auditing/hardening on tools like screen, which is now happening.
-Thanks for that!
+On Tue, Oct 31, 2017 at 9:50 AM, Solar Designer <solar@openwall.com> wrote:
 
-> [..snip..]
+> On Tue, Oct 31, 2017 at 02:35:59PM +0100, Jakub Wilk wrote:
+> > There's another problem with vim swapfiles.
+> >
+> > If you edit a file directly in /tmp, vim will happily read a swapfile
+> > that were planted there by somebody else. Local users could exploit this
+> > for denial of service (or maybe worse if there are any swapfile parsing
+> > bugs...).
+> >
+> > Is that a bug in vim? Or is it a user error to edit file directly in
+> > /tmp?
+>
+> Almost all manual uses of /tmp are user errors, yet we could want to
+> harden programs to make such misuses less risky.
+>
+> > In the latter case, we should fix at least vipe(1) and vidir(1) from
+> > moreutils; and run-mailcap(1).
+>
+> Alexander
+>
 
-------=_NextPart_000_000C_01D0E619.A86003E0
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEH
-AQAAoIIUMTCCBDYwggMeoAMCAQICAQEwDQYJKoZIhvcNAQEFBQAwbzELMAkG
-A1UEBhMCU0UxFDASBgNVBAoTC0FkZFRydXN0IEFCMSYwJAYDVQQLEx1BZGRU
-cnVzdCBFeHRlcm5hbCBUVFAgTmV0d29yazEiMCAGA1UEAxMZQWRkVHJ1c3Qg
-RXh0ZXJuYWwgQ0EgUm9vdDAeFw0wMDA1MzAxMDQ4MzhaFw0yMDA1MzAxMDQ4
-MzhaMG8xCzAJBgNVBAYTAlNFMRQwEgYDVQQKEwtBZGRUcnVzdCBBQjEmMCQG
-A1UECxMdQWRkVHJ1c3QgRXh0ZXJuYWwgVFRQIE5ldHdvcmsxIjAgBgNVBAMT
-GUFkZFRydXN0IEV4dGVybmFsIENBIFJvb3QwggEiMA0GCSqGSIb3DQEBAQUA
-A4IBDwAwggEKAoIBAQC39xoz5vIABC054E5b7R+8bA/Ntfojts7emxEzl6Qp
-TH2Tn71KvJPtAxrjj8/lbVBa1pcplFqAsEl62y6V/bjKvzc4LR4+kUGtcFbH
-8E8/6DKedMrIkFTpxl8PeJ2aQDwOrGGqXhSPnoehalDc15pOrwWzpnGUnHGz
-UGAKxxOdOAeGAqjpqGkmGJCrTLBPI6s6T4TY386f4Wlvu9dC12tE5Met7m1B
-X3JacQg3s3llpFmglDf3AC8NwpJy2tA4ctsUqEXEXSp9t7TWxO6szRNEt8kr
-3UMAJfphuWlqWCMRt6czj1Z1WfXNKddGtworZbbTQm8Vsrh7++/pXVPVNFon
-AgMBAAGjgdwwgdkwHQYDVR0OBBYEFK29mHo0tCb3+sQmVO8DveAky1QaMAsG
-A1UdDwQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MIGZBgNVHSMEgZEwgY6AFK29
-mHo0tCb3+sQmVO8DveAky1QaoXOkcTBvMQswCQYDVQQGEwJTRTEUMBIGA1UE
-ChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRU
-UCBOZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290
-ggEBMA0GCSqGSIb3DQEBBQUAA4IBAQCwm+CFJcLWI+IPlgaSnUGYnNmEeYHZ
-HlsUByM2ZY+w2He7rEFsR2CDUbD5Mj3n/PYmE8eAFqW/WvyHz3h5iSGa4kwH
-CoY1vPLeUcTSlrfcfk7ucP0cOesMAlEULY69FuDB30Z15ySt7PRCtIWTcBBn
-up0GNUoY0yt6zFFCoXpj0ea7ocUrwja+Ew3mvWN+eXunCQ1Aq2rdj4rD9vaM
-GkIFUdRF9Z+nYiFoFSBDPJnnfL0k2KmRF3OIP1YbMTgYtHEPms3IDp6OLhvh
-jJiDyx8x8URMxgRzSXZgD8f4vReAay7pzEwOWpp5DyAKLtWeYyYeVZKU2IIX
-WnvQvMePToYEMIIEnTCCA4WgAwIBAgIQND3pK6wnNP+PyzSU+8xwVDANBgkq
-hkiG9w0BAQUFADBvMQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1c3Qg
-QUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRUUCBOZXR3b3JrMSIw
-IAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290MB4XDTA1MDYwNzA4
-MDkxMFoXDTIwMDUzMDEwNDgzOFowga4xCzAJBgNVBAYTAlVTMQswCQYDVQQI
-EwJVVDEXMBUGA1UEBxMOU2FsdCBMYWtlIENpdHkxHjAcBgNVBAoTFVRoZSBV
-U0VSVFJVU1QgTmV0d29yazEhMB8GA1UECxMYaHR0cDovL3d3dy51c2VydHJ1
-c3QuY29tMTYwNAYDVQQDEy1VVE4tVVNFUkZpcnN0LUNsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgRW1haWwwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
-AoIBAQCyOYWk8n2rQTtiRjeuzcFgdbw5ZflKGkeiucxIzGqY1U01GbmkQuXO
-SeKKLx580jEHx060g2SdLinVomTEhb2FUTV5pE5okHsceqSSqBfymBXyk8zJ
-pDKVuwxPML2YoAuL5W4bokb6eLyib6tZXqUvz8rabaov66yhs2qqty5nNYt5
-4R5piOLmRs2gpeq+C852OnoOm+r82idbPXMfIuZIYcZM82mxqC4bttQxICy8
-goqOpA6l14lD/BZarx1x1xFZ2rqHDa/68+HC8KTFZ4zW1lQ63gqkugN3s2XI
-/R7TdGKqGMpokx6hhX71R2XL+E1XKHTSNP8wtu72YjAUjCzrAgMBAAGjgfQw
-gfEwHwYDVR0jBBgwFoAUrb2YejS0Jvf6xCZU7wO94CTLVBowHQYDVR0OBBYE
-FImCZ33EnSZwAEu0UEh83j2uBG59MA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB
-Af8EBTADAQH/MBEGA1UdIAQKMAgwBgYEVR0gADBEBgNVHR8EPTA7MDmgN6A1
-hjNodHRwOi8vY3JsLnVzZXJ0cnVzdC5jb20vQWRkVHJ1c3RFeHRlcm5hbENB
-Um9vdC5jcmwwNQYIKwYBBQUHAQEEKTAnMCUGCCsGAQUFBzABhhlodHRwOi8v
-b2NzcC51c2VydHJ1c3QuY29tMA0GCSqGSIb3DQEBBQUAA4IBAQABvJzjYyiw
-8zEBwt973WKgAZ0jMQ+cknNTUeofTPrWn8TKL2d+eDMPdBa5kYeR9Yom+mRw
-ANge+QsEYlCHk4HU2vUj2zS7hVa0cDRueIM3HoUcxREVkl+HF72sav3xwtHM
-iV+xfPA+UfI183zsYJhrOivg79+zfYbrtRv1W+yifJgT1wBQudEtc94DeHTh
-BYUxXsuauZ2UxrmUN3Vy3ET7Z+jw+iUeUqfaJelH4KDHPKBOsQo2+3dIn++X
-ivu0/uOUFKiDvFwtP9JgcWDuwnGCDOmINuPaILSjoGyqlku4gI51ykkH9jsU
-ut/cBdmf2+Cy5k2geCbn5y1uf1/GHogVMIIFGjCCBAKgAwIBAgIQbRnqpxlP
-ajMi5iIyeqpx3jANBgkqhkiG9w0BAQUFADCBrjELMAkGA1UEBhMCVVMxCzAJ
-BgNVBAgTAlVUMRcwFQYDVQQHEw5TYWx0IExha2UgQ2l0eTEeMBwGA1UEChMV
-VGhlIFVTRVJUUlVTVCBOZXR3b3JrMSEwHwYDVQQLExhodHRwOi8vd3d3LnVz
-ZXJ0cnVzdC5jb20xNjA0BgNVBAMTLVVUTi1VU0VSRmlyc3QtQ2xpZW50IEF1
-dGhlbnRpY2F0aW9uIGFuZCBFbWFpbDAeFw0xMTA0MjgwMDAwMDBaFw0yMDA1
-MzAxMDQ4MzhaMIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBN
-YW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8g
-Q0EgTGltaXRlZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRoZW50aWNh
-dGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOC
-AQ8AMIIBCgKCAQEAkoSEW0tXmNReL4uk4UDIo1NYX2Zl8TJO958yfVXQeExV
-t0KU4PkncQfFxmmkuTLE8UAakMwnVmJ/F7Vxaa7lIBvky2NeYMqiQfZq4aP/
-uN8fSG1lQ4wqLitjOHffsReswtqCAtbUMmrUZ28gE49cNfrlVICv2HEKHTcK
-AlBTbJUdqRAUtJmVWRIx/wmi0kzcUtve4kABW0ho3cVKtODtJB86r3FfB+Os
-vxQ7sCVxaD30D9YXWEYVgTxoi4uDD216IVfmNLDbMn7jSuGlUnJkJpFOpZIP
-/+CxYP0ab2hRmWONGoulzEKbm30iY9OpoPzOnpDfRBn0XFs1uhbzp5v/wQID
-AQABo4IBSzCCAUcwHwYDVR0jBBgwFoAUiYJnfcSdJnAAS7RQSHzePa4Ebn0w
-HQYDVR0OBBYEFHoTTgB0W8Z4Y2QnwS/ioFu8ecV7MA4GA1UdDwEB/wQEAwIB
-BjASBgNVHRMBAf8ECDAGAQH/AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBYBgNV
-HR8EUTBPME2gS6BJhkdodHRwOi8vY3JsLnVzZXJ0cnVzdC5jb20vVVROLVVT
-RVJGaXJzdC1DbGllbnRBdXRoZW50aWNhdGlvbmFuZEVtYWlsLmNybDB0Bggr
-BgEFBQcBAQRoMGYwPQYIKwYBBQUHMAKGMWh0dHA6Ly9jcnQudXNlcnRydXN0
-LmNvbS9VVE5BZGRUcnVzdENsaWVudF9DQS5jcnQwJQYIKwYBBQUHMAGGGWh0
-dHA6Ly9vY3NwLnVzZXJ0cnVzdC5jb20wDQYJKoZIhvcNAQEFBQADggEBAIXW
-vnhXVW0zf0RS/kLVBqgBA4CK+w2y/Uq/9q9BSfUbWsXSrRtzbj7pJnzmTJjB
-MCjfy/tCPKElPgp11tA9OYZm0aGbtU2bb68obB2v5ep0WqjascDxdXovnrqT
-ecr+4pEeVnSy+I3T4ENyG+2P/WA5IEf7i686ZUg8mD2lJb+972DgSeUWyOs/
-Q4Pw4O4NwdPNM1+b0L1garM7/vrUyTo8H+2b/5tJM75CKTmD7jNpLoKdRU2o
-adqAGx490hpdfEeZpZsIbRKZhtZdVwcbpzC+S0lEuJB+ytF5OOu0M/qgOl0m
-WJ5hVRi0IdWZ1eBDQEIwvuql55TSsP7zdfl/bucwggY0MIIFHKADAgECAhBg
-VZtaTmI0LOuF0yVA2jvLMA0GCSqGSIb3DQEBBQUAMIGTMQswCQYDVQQGEwJH
-QjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxm
-b3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09N
-T0RPIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENB
-MB4XDTE0MDMyNzAwMDAwMFoXDTE3MDMyNjIzNTk1OVowggFBMQswCQYDVQQG
-EwJBVDENMAsGA1UEERMEMTIyMDENMAsGA1UECBMEV2llbjENMAsGA1UEBxME
-V2llbjElMCMGA1UECRMcRG9uYXUtQ2l0eS1TdHJhc2UgMXRlY2gvR2F0ZTEy
-MDAGA1UEChMpQUlUIEF1c3RyaWFuIEluc3RpdHV0ZSBvZiBUZWNobm9sb2d5
-IEdtYkgxSTBHBgNVBAsTQElzc3VlZCB0aHJvdWdoIEFJVCBBdXN0cmlhbiBJ
-bnN0aXR1dGUgb2YgVGVjaG5vbG9neSBHbWJIIEUtUEtJIE0xHzAdBgNVBAsT
-FkNvcnBvcmF0ZSBTZWN1cmUgRW1haWwxFjAUBgNVBAMTDVJvbWFuIEZpZWRs
-ZXIxJjAkBgkqhkiG9w0BCQEWF3JvbWFuLmZpZWRsZXJAYWl0LmFjLmF0MIIB
-IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqhBnj5yFCMMUpzJHbsST
-Q0BZBqLAKKP4+SlxZGtV+YAHLUWhFbeWjcmMp+ONSjMlGdIm45TvM9GrDA8i
-ushm2xYmEJejahLhK3MZMHuyrsS2quy32b7stwFVFLWx2NM4yPwFW5Q8NNtl
-UDwuTRN0zY2+uIEAJGpm+TqdVXAtc915nKsLGyURDoAd8nWVwFVw3F1O9FXa
-nodaLQrY94IVkXkMqa5fg6+Z6vNFBOBgnw9Plx04eOGqVRllQjtF2dogT+C1
-HMfZ+/kQGUSukF+B3H6b+siqPozLt8Lagi/UORsNtQrMbSV0XTvtVuQ69T/H
-2tdV5a8Jcto+FhoICtpIuQIDAQABo4IB0TCCAc0wHwYDVR0jBBgwFoAUehNO
-AHRbxnhjZCfBL+KgW7x5xXswHQYDVR0OBBYEFPO39FQG0PJ//Q3kCUuzH4an
-euWaMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQG
-CCsGAQUFBwMEBggrBgEFBQcDAjBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgED
-BTArMCkGCCsGAQUFBwIBFh1odHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQ
-UzBXBgNVHR8EUDBOMEygSqBIhkZodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9D
-T01PRE9DbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3Js
-MIGIBggrBgEFBQcBAQR8MHowUgYIKwYBBQUHMAKGRmh0dHA6Ly9jcnQuY29t
-b2RvY2EuY29tL0NPTU9ET0NsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJl
-RW1haWxDQS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2Nh
-LmNvbTAiBgNVHREEGzAZgRdyb21hbi5maWVkbGVyQGFpdC5hYy5hdDANBgkq
-hkiG9w0BAQUFAAOCAQEAJNkvZvEQuSMveOXqauL/oCneMiEg500S1jOV7yjY
-G8vYPVSws10zur520Z0ttlukgliRPMjzNzzs9qPp0LQ3VN3kNQNykjiEqCBM
-nWwUZW8qgxdtEhyyNiC+sTCf2HYG+m5GmaJLI2y7sVwZcqhBtkQW/p5SVv45
-hN5TM47QMZOefqd2zuTTqVoatC0W/c3XhTJfSksMu3GI/4kfyg7CqcZQKHSd
-UlKnhkkTFTbk0lwjBFFYVJAsdoW9HBokRY48X9N9fLtIx9uunffwNrowvoKw
-zvhA3WK7as3M0eIg82rF+CFxKfROlrQ/55p4Vm7qnwWXvXMKfDU77DMRjHtg
-8zGCBFkwggRVAgEBMIGoMIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFD
-T01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRo
-ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhBgVZtaTmI0LOuF0yVA
-2jvLMAkGBSsOAwIaBQCgggKFMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
-HAYJKoZIhvcNAQkFMQ8XDTE1MDkwMzA1MjUwNlowIwYJKoZIhvcNAQkEMRYE
-FOcWXHGzPRunlpt4M7fu99XfdeMrMIGrBgkqhkiG9w0BCQ8xgZ0wgZowCwYJ
-YIZIAWUDBAEqMAsGCWCGSAFlAwQBFjAKBggqhkiG9w0DBzALBglghkgBZQME
-AQIwDgYIKoZIhvcNAwICAgCAMAcGBSsOAwIHMA0GCCqGSIb3DQMCAgFAMA0G
-CCqGSIb3DQMCAgEoMAcGBSsOAwIaMAsGCWCGSAFlAwQCAzALBglghkgBZQME
-AgIwCwYJYIZIAWUDBAIBMIG5BgkrBgEEAYI3EAQxgaswgagwgZMxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcT
-B1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMTkwNwYDVQQD
-EzBDT01PRE8gQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1h
-aWwgQ0ECEGBVm1pOYjQs64XTJUDaO8swgbsGCyqGSIb3DQEJEAILMYGroIGo
-MIGTMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRl
-ZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQg
-U2VjdXJlIEVtYWlsIENBAhBgVZtaTmI0LOuF0yVA2jvLMA0GCSqGSIb3DQEB
-AQUABIIBAIOq/+W6rCw0gGIxEf0SySqbWPo7UfPFGr8+MUXJGUuqRHt2bZu3
-GokqUVXVfSBOxA5tEnHrrNq0N6QK4VCqpJa8MWiX9dpNJRtz5MD64Zk3vQ1y
-vWIbhUF8w/JnC8L6vIWW8ZoSYRHI35GIjux0wv/dYq0dpY/n+YKVNvNaBWAT
-W2nF2MF/VX68mTKQLgY4SzBEhdSH7a0RTqemIaFzJDExP9bM9r9+WSadS0Hg
-h4w9m7RsyiNeAILWnBwHex4eGo4pBVpEn/tPfdK8vIrV5q9/MeesJ3KVIWYi
-nRn8oXWS9/yBIluR3nrckuBCX5xKAdFTF4DlURNGn8nzz0vSB9UAAAAAAAA=
-
-------=_NextPart_000_000C_01D0E619.A86003E0--
+--f403043e8a3c73c2b3055cd8c262--
