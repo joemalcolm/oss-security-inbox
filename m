@@ -1,77 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/17
-Message-ID: <4623205.KGy1lP8IPD@blackgate>
-Date: Thu, 09 Feb 2017 14:48:10 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/1
+Message-ID: <20171031132352.2df6d2ad@pc1>
+Date: Tue, 31 Oct 2017 13:23:52 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: zziplib: NULL pointer dereference in zzip_mem_entry_new (memdisk.c)
+Subject: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+I just sent this to the vim dev list, but I guess it's interesting for
+oss-security, too.
 
-A fuzz on it discovered an NULL pointer access.
+Begin forwarded message:
 
-The complete ASan output:
+Date: Tue, 31 Oct 2017 11:30:50 +0100
+Subject: Security risk of vim swap files
 
-# unzzipcat-mem $FILE
-==7955==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000001a (pc 
-0x7fcfc78e3c50 bp 0x7ffdf55d4f70 sp 0x7ffdf55d4e40 T0)
-==7955==The signal is caused by a READ memory access.
-==7955==Hint: address points to the zero page.
-    #0 0x7fcfc78e3c4f in zzip_mem_entry_new /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21
-    #1 0x7fcfc78e3c4f in zzip_mem_disk_load /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
-    #2 0x7fcfc78e38b7 in zzip_mem_disk_open /tmp/portage/dev-
-libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
-    #3 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12
-    #4 0x7fcfc6a2361f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #5 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21 in zzip_mem_entry_new
-==7955==ABORTING
+Hi,
 
-also, the undefined behavior sanitizer says about:
+I wanted to point out an issue here with vim swap files that make them
+a security problem.
 
-# unzzipcat-mem $FILE
-/tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21: runtime error: member access 
-within null pointer of type 'struct zzip_file_header'
+By default vim creates a file with the name .filename.swp in the same
+directory while editing. They contain the full content of the edited
+file. This usually gets deleted upon exit, but not if vim crashes or
+gets killed (e.g. due to a reboot).
 
-Affected version:
-0.13.62
+On web servers this can be a severe security risk. One can e.g. scan
+for web hosts that have swap files of PHP configuration files and thus
+expose settings like database passwords. (e.g. wget
+http://example.com/.wp-config.php.swp )
 
-Fixed version:
-N/A
+In a scan of the alexa top 1 million I found ~750 instances of such
+files. I tried to inform affected people as best as I could. I also
+discovered such scans in my own web server logs, so I assume black hats
+are already aware of this and it's actively exploitet.
 
-Commit fix:
-N/A
+I was wondering how to best avoid this on my own servers and I first
+thought about saving the swap files to tmp ( with "set directory").
+However on multiuser systems this creates another security problem.
+These files are world readable, thus instead of leaking information to
+the world it's now leaking information to other users on the same
+system. Thus even if one is aware of the issue it's nontrivial to get
+secure settings (I've now worked around this by having per-user tmp
+dirs with secure permissions.)
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00154-zziplib-nullptr-zzip_mem_entry_new
-
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-zzip_mem_entry_new-memdisk-c
+I think vim should change the behavior of swap files:
+1. they should be stored in /tmp by default
+2. they should have secure permissions (tmp file security is
+a tricky thing and needs careful consideration to avoid symlink attacks
+and the like, but there are dedicated functions for this like mkstemp).
+3. Ideally they also shouldn't leak currently edited filenames (e.g.
+they shouldn't be called /tmp/.test.txt.swp, but more something
+like /tmp/.vim_swap.123782173)
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
