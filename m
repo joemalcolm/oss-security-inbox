@@ -1,22 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/21/6
-Message-ID: <2e4fb997-2f4d-2a9d-4a4d-87e5bc5c5946@intra2net.com>
-Date: Thu, 21 Sep 2017 20:03:51 +0200
-From: Thomas Jarosch <thomas.jarosch@...ra2net.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/4
+Message-ID: <c5658eb7-b673-0543-8104-47e35f5a18a0@lighttpd.net>
+Date: Tue, 31 Oct 2017 13:50:36 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: code execution in Horde_Image 2.0.0 to 2.5.1
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-> This vulnerability affects all  
-> versions of Horde_Image from 2.0.0 to 2.5.1.
+On 10/31/2017 01:37 PM, Solar Designer wrote:
+> On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno B??ck wrote:
+>> I think vim should change the behavior of swap files:
+>> 1. they should be stored in /tmp by default
+>> 2. they should have secure permissions (tmp file security is
+>> a tricky thing and needs careful consideration to avoid symlink attacks
+>> and the like, but there are dedicated functions for this like mkstemp).
+>> 3. Ideally they also shouldn't leak currently edited filenames (e.g.
+>> they shouldn't be called /tmp/.test.txt.swp, but more something
+>> like /tmp/.vim_swap.123782173)
 > 
-> A fixed version of the Horde_Image (version 2.5.2) library has already  
-> been released and everybody is advised to upgrade to Horde_Image 2.5.2  
-> as soon as possible.
+> Out of these, I think only 2 should be done: the files should be mode
+> 0600 or 0400 even if the original file's permissions and/or the umask
+> are more relaxed.
+> 
+> 1 and 3 go against intended use for these files - recovery of an edit in
+> progress if the editor or the entire system crashes (and comes back up
+> e.g. after a power-cycle).  /tmp contents might not survive a reboot,
+> and randomized filenames would prevent vim itself from detecting the
+> problem and offering recovery, which it does now.
 
-the issue has been assigned CVE-2017-14650.
+You could keep the .test.txt.swp file, but make it a symlink and encode
+information where to find the real swap file (/var/tmp/, /tmp, ...) in
+the symlink.
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14650
+It shouldn't link directly to the swap file, but perhaps look like
+"swap:///var/tmp/.vim_swap.random_id".
 
-Best regards,
-Thomas Jarosch / Intra2net AG
+Instead of a symlink you could of course just create a normal text file
+with the real swap filename in it, but then it might be easier for an
+attacker to find the real filename and read that file.
+
+cheers,
+Stefan
