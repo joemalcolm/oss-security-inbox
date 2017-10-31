@@ -1,61 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/04/2
-Message-ID: <CANO=Ty1OptwCFzf8+pHAWB9Ofw75ee5s-kPFPx-k9+J1ATqnJQ@mail.gmail.com>
-Date: Fri, 4 Aug 2017 11:07:40 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/15
+Message-ID: <CANO=Ty3-SjDC5=Dq3s19GxY4fwjJEah2-fbNAEp4bpGDUXOGfg@mail.gmail.com>
+Date: Tue, 31 Oct 2017 12:48:33 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security <oss-security@...ts.openwall.com>
-Cc: willemdebruijn.kernel@...il.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
-Subject: Re: Reporting and disclosing Linux kernel vulnerabilities
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 4, 2017 at 10:59 AM, Andrey Konovalov <andreyknvl@...il.com>
-wrote:
+On Tue, Oct 31, 2017 at 6:23 AM, Hanno Böck <hanno@...eck.de> wrote:
 
-> Hi!
+> I just sent this to the vim dev list, but I guess it's interesting for
+> oss-security, too.
 >
-> It's not completely clear to me how to properly report and disclose
-> Linux kernel security issues. There are a few different parties [1, 2,
-> 3] that need to be informed and coordinated. I couldn't find a
-> publicly available actionable list of steps, so I've outlined it as I
-> see it here:
+> Begin forwarded message:
 >
-> https://github.com/google/syzkaller/blob/master/docs/
-> linux_kernel_reporting_bugs.md#reporting-security-bugs
+> Date: Tue, 31 Oct 2017 11:30:50 +0100
+> Subject: Security risk of vim swap files
 >
-> Thoughts? Comments?
 >
-
-I would strongly suggest that people notify distros@ (keeping in mind it
-has a 2 week embargo limit, so if you need more than that, don't notify
-distros@ until you are ready) and notify the Kernel (we want this fixed
-upstream too,obviously, but also keeping in mind that they have a 1 week
-embargo limit, so if you need more than that, don't notify the Kernel until
-you are ready). Another option it to notify a vendor such as Red Hat (
-secalert@...hat.com) or SUSE (security@...e.com) as we can handle things in
-house (we have kernel devs/etc) and we know whom to notify at other vendors
-as needed (e.g. Debian, Ubuntu, etc.) and can hold embargoes as needed
-(although typically we don't like long embargoes either, I would say 4-5
-weeks absolute max ideally).
-
-Another benefit of notifying the vendors/distros is we can help with the
-coordination and notification, CVEs, etc. Kernel upstream basically just
-fixes it and moves on (which is legitimate, it's not their job to make sure
-every possible downstream gets notified*)
-
-[*] although it would be nice if this stuff gets a CVE and the CVE gets
-used, then people know to pay attention to those commits/etc.
-
-
+> Hi,
 >
-> Thanks!
+> I wanted to point out an issue here with vim swap files that make them
+> a security problem.
 >
-> [1] https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
->
-> [2] http://oss-security.openwall.org/wiki/mailing-lists/distros
->
-> [3] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+> By default vim creates a file with the name .filename.swp in the same
+> directory while editing. They contain the full content of the edited
+> file. This usually gets deleted upon exit, but not if vim crashes or
+> gets killed (e.g. due to a reboot).
 >
 
+The challenge is that the filename MUST be deterministic otherwise how do
+you find it post reboot/crash/etc.
+
+There is a flaw here, it appears on some distros that vim (and emacs) will
+ignore a user's umask and go with less restrictive file permissions
+(ideally you think vi would use the files existing perms, plus any umask
+limitations as expected), for example vim failing:
+
+[kseifrie@...alhost vi]$ umask
+0007
+[kseifrie@...alhost vi]$ touch foo
+[kseifrie@...alhost vi]$ ls -la
+total 8
+drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+-rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+[kseifrie@...alhost vi]$ chmod o+r foo
+[kseifrie@...alhost vi]$ ls -la
+total 8
+drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+-rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+[kseifrie@...alhost vi]$ vi foo
+
+in another terminal:
+
+[kseifrie@...alhost vi]$ ls -la
+total 12
+drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+-rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+-rw-r--r--.  1 kseifrie kseifrie 4096 Oct 31 10:50 .foo.swp
+
+So vim ignores the umask of the user =(.
+
+For example cat (and cpo and tar) work as expected:
+
+[kseifrie@...alhost vi]$ umask
+0007
+[kseifrie@...alhost vi]$ rm -rf *
+[kseifrie@...alhost vi]$ touch foo
+[kseifrie@...alhost vi]$ ls -la
+total 8
+drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:49 .
+drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+-rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:49 foo
+[kseifrie@...alhost vi]$ chmod o+r foo
+[kseifrie@...alhost vi]$ ls -la
+total 8
+drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:49 .
+drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+-rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:49 foo
+[kseifrie@...alhost vi]$ cat foo > bar
+[kseifrie@...alhost vi]$ ls -la
+total 8
+drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:49 .
+drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+-rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:49 bar
+-rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:49 foo
+
+So from a CVE perspective we have a situation where a user has explicitly
+set a umask (of say 0007) which is to say they've made a security assertion
+of "any file I create I want the rwx permissions for "other" removed" which
+vim and emacs (and possibly others) are violating when they create swap
+files/backups/whatever. To add insult to injury most other utilities that
+create a file (e.g. cp, cat, dd) seem to respect umask.
+
+Please use CVE-2017-1000382 for VIM version 8.0.1187 (and other versions
+most likely) ignores umask when creating a swap file
+(\"[ORIGINAL_FILENAME].swp\") resulting in files that may be world readable
+or otherwise accessible in ways not intended by the user running the vi
+binary.
+
+Please use CVE-2017-1000383 for GNU Emacs version 25.3.1 (and other
+versions most likely) ignores umask when creating a backup save file
+(\"[ORIGINAL_FILENAME]~\") resulting in files that may be world readable or
+otherwise accessible in ways not intended by the user running the emacs
+binary.
 
 
 -- 
