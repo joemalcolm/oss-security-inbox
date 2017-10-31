@@ -1,4 +1,9 @@
-Received: (qmail 12081 invoked by uid 550); 4 May 2026 16:09:30 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["664" "Tuesday" "31" "October" "2017" "14:50:05" "+0100" "Solar Designer" "solar@openwall.com" "<20171031135005.GA12455@openwall.com>" "18" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "10" "2017103113:50:05" "[oss-security] Fw: Security risk of vim swap files" (number mark "        solar@openwa Oct 31   18/664   " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171031133559.7aqu2z45atxudb7c@jwilk.net>" ("<20171031132352.2df6d2ad@pc1>" "<20171031133559.7aqu2z45atxudb7c@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 6140 invoked by uid 550); 31 Oct 2017 13:50:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,46 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5913 invoked from network); 31 Oct 2017 13:50:09 -0000
+Message-ID: <20171031135005.GA12455@openwall.com>
+References: <20171031132352.2df6d2ad@pc1> <20171031133559.7aqu2z45atxudb7c@jwilk.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171031133559.7aqu2z45atxudb7c@jwilk.net>
+User-Agent: Mutt/1.4.2.3i
+Date: Tue, 31 Oct 2017 14:50:05 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9701 invoked from network); 4 May 2026 12:09:13 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Eric Covener <covener@apache.org>
+Subject: Re: [oss-security] Fw: Security risk of vim swap files
 To: oss-security@lists.openwall.com
-Message-ID: <e5852a07-8226-5c25-6d04-99f3335878fe@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 04 May 2026 12:05:11 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-24072: Apache HTTP Server: mod_rewrite elevation of
- privileges via ap_expr 
 
-Severity: moderate=20
+On Tue, Oct 31, 2017 at 02:35:59PM +0100, Jakub Wilk wrote:
+> There's another problem with vim swapfiles.
+> 
+> If you edit a file directly in /tmp, vim will happily read a swapfile 
+> that were planted there by somebody else. Local users could exploit this 
+> for denial of service (or maybe worse if there are any swapfile parsing 
+> bugs...).
+> 
+> Is that a bug in vim? Or is it a user error to edit file directly in 
+> /tmp?
 
-Affected versions:
+Almost all manual uses of /tmp are user errors, yet we could want to
+harden programs to make such misuses less risky.
 
-- Apache HTTP Server through 2.4.66
+> In the latter case, we should fix at least vipe(1) and vidir(1) from 
+> moreutils; and run-mailcap(1).
 
-Description:
-
-An escalation of privilege bug in various modules in Apache HTTP 2.4.66 and=
- earlier allows local .htaccess authors to read files with the privileges o=
-f the httpd user.
-
-Users are recommended to upgrade to version 2.4.67, which fixes this issue.
-
-Credit:
-
-y7syeu (finder)
-
-References:
-
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-24072
-
-Timeline:
-
-2026-01-20: Report received
-2026-05-04: fixed in 2.4.x by r1933350
-
+Alexander
