@@ -1,31 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/8
-Message-ID: <20170702200114.GA18695@openwall.com>
-Date: Sun, 2 Jul 2017 22:01:14 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Kristian Fiskerstrand <k_f@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/8
+Message-ID: <20171031142034.GJ31388@io.lakedaemon.net>
+Date: Tue, 31 Oct 2017 14:20:34 +0000
+From: Jason Cooper <osssecurity@...edaemon.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 02, 2017 at 09:22:46PM +0200, Kristian Fiskerstrand wrote:
-> On 07/02/2017 07:27 PM, Solar Designer wrote:
-> > we could rewrite from scratch and release as Open
-> > Source the encrypted mailing list software, which is currently an awful
-> > hack.  I wouldn't oppose doing that piece of software development under
-> > a separate funded project, if capable people were available for that.
-> > However, I am worried that most teams tasked to work on something like
-> > this would produce a complex monster, which wouldn't otherwise be
-> > directly comparable (as in: is it better or worse? is it more or less
-> > secure?) to the current hack.
-> 
-> To have it mentioned as part of the discussion at least; has something
-> like http://schleuder2.nadir.org/documentation/v2.2/concept.html even
-> been considered? and if considered and found not appropriate, the
-> rationale for it is likely interesting as well.
+Hi Hanno,
 
-No, it wasn't considered yet.  I vaguely recall someone pointing me at
-something like it (could be this one) on some occasion, but I couldn't
-find that e-mail now.  Thank you for the link!
+On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno Böck wrote:
+> I think vim should change the behavior of swap files:
+> 1. they should be stored in /tmp by default
 
-Alexander
+This opens up a host of other issues, which others have highlighted.
+
+> 2. they should have secure permissions (tmp file security is
+> a tricky thing and needs careful consideration to avoid symlink attacks
+> and the like, but there are dedicated functions for this like mkstemp).
+
+This is only if you move to /tmp.
+
+> 3. Ideally they also shouldn't leak currently edited filenames (e.g.
+> they shouldn't be called /tmp/.test.txt.swp, but more something
+> like /tmp/.vim_swap.123782173)
+
+Adding this requirement begs for a Rube Goldberg solution.  :-)  Since
+vim needs a deterministic name to search for when it opens the file the
+next time.  And next time could be after a reboot.
+
+Maybe we just need to change the default backup pattern to something
+that isn't hidden by default?  e.g. wp-config.php.swp (no leading
+period), or wp-config.php~ ?  Thus, it's more likely to be caught by the
+developer.
+
+Honestly, The real problem is just webserver design in general.  In
+order to have automatic reboot/restart, you need to grossly compromise
+security in several ways.
+
+  a) store the server ssl key on disk without a password.
+  b) store passwords in the clear in config files, readable by the
+     running server user.
+
+The real answer is "Don't do that."  Which, years ago, was really
+infeasible since most servers were physically hosted and redundancy was
+expensive.
+
+But we're not there anymore.  Wether you use a caching provider like
+cloudflare, or a hosting service using VMs, there's plenty of cheap
+redundancy.  Having an individual box down doesn't mean your site is
+down.  So, this gives us some wiggle room to ask for a password to
+decrypt the key (or, load from remote), and provide credentials for the
+server to access other resources.
+
+But, I digress.  Yes, vim swap files are a problem.  But only because
+we've built stupid decisions (necessary at one time) into the design.
+
+thx,
+
+Jason.
