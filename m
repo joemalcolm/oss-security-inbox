@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["640" "Thursday" "25" "April" "2019" "14:39:18" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1904251435470.3256@xnncv>" "20" "[oss-security] CVE-2019-3900 Kernel: vhost_net: infinite loop while receiving packets leads to DoS" nil nil nil "4" "2019042509:09:18" "[oss-security] CVE-2019-3900 Kernel: vhost_net: infinite loop while receiving packets leads to DoS" (number mark "U       ppandit@redh Apr 25   20/640   " thread-indent "\"[oss-security] CVE-2019-3900 Kernel: vhost_net: infinite loop while receiving packets leads to DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-3900 Kernel: vhost_net: infinite loop while receiving packets leads to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2135" "Tuesday" "31" "October" "2017" "13:23:52" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20171031132352.2df6d2ad@pc1>" "54" "[oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "10" "2017103112:23:52" "[oss-security] Fw: Security risk of vim swap files" (number mark "        hanno@hboeck Oct 31   54/2135  " thread-indent "\"[oss-security] Fw: Security risk of vim swap files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21568 invoked by uid 550); 25 Apr 2019 09:09:34 -0000
+Received: (qmail 28362 invoked by uid 550); 31 Oct 2017 12:24:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21547 invoked from network); 25 Apr 2019 09:09:33 -0000
-Date: Thu, 25 Apr 2019 14:39:18 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-cc: Jason Wang <jasowang@redhat.com>
-Message-ID: <nycvar.YSQ.7.76.1904251435470.3256@xnncv>
+Received: (qmail 28322 invoked from network); 31 Oct 2017 12:24:06 -0000
+Message-ID: <20171031132352.2df6d2ad@pc1>
+X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.43]); Thu, 25 Apr 2019 09:09:22 +0000 (UTC)
-Subject: [oss-security] CVE-2019-3900 Kernel: vhost_net: infinite loop while receiving
- packets leads to DoS
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 31 Oct 2017 13:23:52 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Fw: Security risk of vim swap files
+To: oss-security@lists.openwall.com
 
-   Hello,
+I just sent this to the vim dev list, but I guess it's interesting for
+oss-security, too.
 
-An infinite loop issue was found in the vhost_net kernel module, while 
-handling incoming packets in handle_rx(). It could occur if one end sends 
-packets faster than the other end can process them.
+Begin forwarded message:
 
-A guest user, maybe remote one, could use this flaw to stall the vhost_net 
-kernel thread, resulting in a DoS scenario.
+Date: Tue, 31 Oct 2017 11:30:50 +0100
+Subject: Security risk of vim swap files
 
-Upstream patch:
----------------
-   -> https://www.spinics.net/lists/kernel/msg3111012.html
 
-This issue was discovered by Jason Wang(CC'd) of Red Hat Inc.
-'CVE-2019-3900' assigned by Red Hat Inc.
+Hi,
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+I wanted to point out an issue here with vim swap files that make them
+a security problem.
+
+By default vim creates a file with the name .filename.swp in the same
+directory while editing. They contain the full content of the edited
+file. This usually gets deleted upon exit, but not if vim crashes or
+gets killed (e.g. due to a reboot).
+
+On web servers this can be a severe security risk. One can e.g. scan
+for web hosts that have swap files of PHP configuration files and thus
+expose settings like database passwords. (e.g. wget
+http://example.com/.wp-config.php.swp )
+
+In a scan of the alexa top 1 million I found ~750 instances of such
+files. I tried to inform affected people as best as I could. I also
+discovered such scans in my own web server logs, so I assume black hats
+are already aware of this and it's actively exploitet.
+
+I was wondering how to best avoid this on my own servers and I first
+thought about saving the swap files to tmp ( with "set directory").
+However on multiuser systems this creates another security problem.
+These files are world readable, thus instead of leaking information to
+the world it's now leaking information to other users on the same
+system. Thus even if one is aware of the issue it's nontrivial to get
+secure settings (I've now worked around this by having per-user tmp
+dirs with secure permissions.)
+
+I think vim should change the behavior of swap files:
+1. they should be stored in /tmp by default
+2. they should have secure permissions (tmp file security is
+a tricky thing and needs careful consideration to avoid symlink attacks
+and the like, but there are dedicated functions for this like mkstemp).
+3. Ideally they also shouldn't leak currently edited filenames (e.g.
+they shouldn't be called /tmp/.test.txt.swp, but more something
+like /tmp/.vim_swap.123782173)
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
