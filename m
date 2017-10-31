@@ -1,38 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/8
-Message-ID: <20170615213740.GB2269@hunt>
-Date: Thu, 15 Jun 2017 14:37:40 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/16
+Message-ID: <20171031185714.Z6cNT%steffen@sdaoden.eu>
+Date: Tue, 31 Oct 2017 19:57:14 +0100
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: MySQL - use-after-free after mysql_stmt_close()
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 15, 2017 at 11:29:26AM -0600, kseifried@...hat.com wrote:
-> Well part of it would be the current test case of "does anyone care",
-> e.g. do people actually use this/care enough to do the work to assign a
-> CVE, if someone wants to spend their time being the CNA for
-> stackoverflow and put out good CVEs I'm fine with that.
+Tim <tim-security@...tinelchicken.org> wrote:
+ |On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno Böck wrote:
+ |> I just sent this to the vim dev list, but I guess it's interesting for
+ |> oss-security, too.
+ |> ...
+ ...
+ |Sure, you can argue that maybe some systems should ignore these files,
+ |block access, etc, but it is pretty absurd to expect every other piece
+ |of software in the universe to work around very unsafe defaults of text
+ |editors.  
+ |
+ |Also, it almost never makes sense to put things in /tmp, for several
+ |reasons pointed out by others.  Making ~/.vim/... the default location
+ |clearly is the best solution.
 
-For stackoverflow and other sites in the stack exchange network I think
-your time would be better spent downvoting answers and adding a comment
-along the lines of:
+I for one really dislike that for many years (i think .gconf and
+all around that was the first time i recognized the problem) that
+more and more programs think they can simply create a dot
+directory in my $HOME.  Indeed i have started using umask 0077 due
+to this.  I use "set dir=~/traffic" and "set backupdir=~/traffic"
+and that has a mode of 0700.  My vim(s) has/ve never needed ~/.vim.
 
-    -1: This answer uses [foo which is insecure](link) and should use
-    [bar which is safe](link) instead to protect against [attack
-    name](link).
-
-That way it will be visible in the same spot as the incorrect answer,
-let the person who answered the question know they made a mistake, let the
-person who asked the question know there was a mistake, and provide a
-notice to the future about both what's wrong and what's better.
-
-If it gets hidden because there's already too many comments, then get a
-pal to upvote your comment to make it more likely to be visible by
-default.
-
-Upvote any answers without security problems. If there's no correct
-answers, then provide a correct answer at the same time for extra credit.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
