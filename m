@@ -1,45 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/31/3
-Message-ID: <de6ce21e-1bd5-4fac-9222-e916e92943c1.tony.sh@alibaba-inc.com>
-Date: Thu, 31 Aug 2017 09:54:01 +0800
-From: "孙浩" <tony.sh@...baba-inc.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Cc: "Bob Friesenhahn" <bfriesen@...ple.dallas.tx.us>, "张洪亮(望初)" <wangchu.zhl@...baba-inc.com>, "曲富平(杭特)" <fuping.qfp@...baba-inc.com>
-Subject: CVE-2017-13775: GraphicsMagick 1.3.26 Denial of Service issue in ReadJNXImage() in coders/jnx.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/10
+Message-Id: <AB0C651A-408B-4BCB-A377-075EEE265AC2@surevine.com>
+Date: Tue, 31 Oct 2017 14:46:59 +0000
+From: "Simon Waters (Surevine)" <simon.waters@...evine.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Hi all.
-Description:graphicsmagick is a collection of tools and libraries for many image formats.
-We found a denial of service (DoS) issue in jnx.c at line 326, GraphicsMagick-1.3.26.The vulnerable code snippet is shown as below.    326       for (j = 0; j < JNXLevelInfo[i].TileCount; j++)
-    327         {
-    328           PositionList[j].TileBounds.NorthEast.lat = ReadBlobLSBLong(image);
-    329           PositionList[j].TileBounds.NorthEast.lon = ReadBlobLSBLong(image);
-    330           PositionList[j].TileBounds.SouthWest.lat = ReadBlobLSBLong(image);
-    331           PositionList[j].TileBounds.SouthWest.lon = ReadBlobLSBLong(image);
-    332           PositionList[j].PicWidth = ReadBlobLSBShort(image);
-    333           PositionList[j].PicHeight = ReadBlobLSBShort(image);
-    334           PositionList[j].PicSize = ReadBlobLSBLong(image);
-    335           PositionList[j].PicOffset = ReadBlobLSBLong(image);
-    336         }When a crafted JNX image file, which claims large TileCount but does not contain sufficient backing data, is provided,the loop at line 326 would consume huge CPU and memroy resources, since there is no EOF (End of File) check inside the loop.In our test, we used a machine with Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz, 4 CPU cores and 16GB RAM.This bug caused 100% CPU and up to 4GB RAM consumption.This process lasted for about 4 minutes.
-Affected version:
-1.3.26
 
-Fixed version:
-N/A
 
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/b037d79b6ccd
-Credit:
-This bug was discovered by Xiaohei and Wangchu from Alibaba Security Team.
+> On 31 Oct 2017, at 12:23, Hanno Böck <hanno@...eck.de> wrote:
+> 
+> I was wondering how to best avoid this on my own servers and I first
+> thought about saving the swap files to tmp ( with "set directory”).
 
-CVE:
-CVE-2017-13775
+The specific website issue, the web server config can exclude dot files.
 
-Reproducer:
-https://github.com/shqking/graphicsmagick-poc/blob/master/poc.jnxThe command we was using is     gm convert poc.jnx test.jpg
+Apache ships with
 
-Timeline:
-2017-08-24: bug discovered and reported to upstream privately
-2017-08-26: upstream released a fix
-2017-08-30: CVE assigned
+<Files ~ "^\.ht">
+    Order allow,deny
+    Deny from all
+</Files>
 
+The obvious generalisations of this work. Although some sources also recommend blocking in “Location” to prevent requests with “*/.*stuff”  which are parsed by templating libraries or other directives.
+
+To rub salt in most distros ship Apache with
+
+IndexIgnore .??* *~ *# RCS CVS *,v *,t
+
+Which means that if you use the Apache directory indexing approach these files will be hidden but not blocked.
+
+I now realise the Alexa top 1 million will now be searched for remaining uses of RCS and CVS ;)
+
+In a previous role the roll out scripts cleaned this sort of junk and told you if any new files had been added to the web application, this approach has much to recommend it if you have the time to perfect your applications, and your roll out procedures.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (874 bytes)
