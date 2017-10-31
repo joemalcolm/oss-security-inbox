@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/8
-Message-ID: <87bmqqc2n5.fsf@fifthhorseman.net>
-Date: Wed, 17 May 2017 22:36:14 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Robert Święcki <robert@...ecki.net>
-Cc: oss-security@...ts.openwall.com, "Jason A. Donenfeld" <Jason@...c4.com>, rxvt-unicode@...ts.schmorp.de, rxvt@...morp.de
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/13
+Message-ID: <20171031181051.GA75618@wopr>
+Date: Tue, 31 Oct 2017 11:10:51 -0700
+From: Kurt H Maier <khm@...ops.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On Thu 2017-05-18 02:05:24 +0200, Robert Święcki wrote:
-> I believe you should try with
->
-> $ ping ZZZ
->
-> With
->
-> $ ping 127.0.0.3
->
-> it doesn't do reverse lookups at all (as you'd pointed out).
+On Tue, Oct 31, 2017 at 10:54:08AM -0700, Tim wrote:
+> 
+> Sure, you can argue that maybe some systems should ignore these files,
+> block access, etc, but it is pretty absurd to expect every other piece
+> of software in the universe to work around very unsafe defaults of text
+> editors.  
 
-ah, absolutely right.  that does the trick. :(
+It's also fairly absurd to insist that people can run whatever program
+they want, wherever they want, on a production web server, without being
+familiar enough with the program to understand the risks.
 
-"ping -c3 ZZZ" results in 6 attempted invocations of "0" after it
-completes, when using iputils-ping 3:20161105-1
+Anyone who edits files in the deployment path with an insufficient
+education is going to have problems, and not having noswapfile set is
+the least of them.
 
-Regards,
-
-    --dkg
+khm
