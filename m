@@ -1,64 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/6
-Message-ID: <CAJouXQmLpm3-cdy--hUjNy70XXGmQ=Rnuwr0W+FQJkWA4BuX4w@mail.gmail.com>
-Date: Mon, 17 Apr 2017 13:35:26 -0700
-From: Kenton Varda <kenton@...udflare.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Tom Lee <debian@...lee.co>
-Subject: Re: Re: CVE Request: Cap'n Proto: Bounds check elided by compiler optimization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/9
+Message-ID: <CAONXncapSQ4ZT2ffu3jOwefoeyRTO9p_xpUrhrXjOXNaAc1gYg@mail.gmail.com>
+Date: Tue, 31 Oct 2017 10:41:48 -0400
+From: Adam Shannon <adamkshannon@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+metasploit has had such a check available for a while now.
 
-This has been assigned: CVE-2017-7892
+https://github.com/rapid7/metasploit-framework/blob/master/modules/auxiliary/scanner/http/backup_file.rb
 
-Apologies for failing to follow the list guidelines.
+On Tue, Oct 31, 2017 at 9:50 AM, Solar Designer <solar@...nwall.com> wrote:
 
-Thanks,
--Kenton
-
-On Mon, Apr 17, 2017 at 11:07 AM, Solar Designer <solar@...nwall.com> wrote:
-
-> On Mon, Apr 17, 2017 at 10:35:51AM -0700, Kenton Varda wrote:
-> > Whoops, apparently I'm supposed to use the web form now. Sorry!
+> On Tue, Oct 31, 2017 at 02:35:59PM +0100, Jakub Wilk wrote:
+> > There's another problem with vim swapfiles.
+> >
+> > If you edit a file directly in /tmp, vim will happily read a swapfile
+> > that were planted there by somebody else. Local users could exploit this
+> > for denial of service (or maybe worse if there are any swapfile parsing
+> > bugs...).
+> >
+> > Is that a bug in vim? Or is it a user error to edit file directly in
+> > /tmp?
 >
-> Yes, but many of us in here care(d) about being notified of security
-> issues much more than about CVEs, hence as a moderator I approved your
-> posting anyway.  Once you've obtained the CVE ID from MITRE, please post
-> it to this same thread as a "reply".
+> Almost all manual uses of /tmp are user errors, yet we could want to
+> harden programs to make such misuses less risky.
 >
-> > On Mon, Apr 17, 2017 at 10:32 AM, Kenton Varda <kenton@...udflare.com>
-> wrote:
-> > > Full details and fix covered here: https://github.com/sandstorm-i
-> > > o/capnproto/blob/master/security-advisories/2017-04-17-0-
-> > > apple-clang-elides-bounds-check.md
->
-> The lack of detail in your posting goes against published oss-security
-> guidelines, which are:
->
-> http://oss-security.openwall.org/wiki/mailing-lists/oss-
-> security#list-content-guidelines
->
-> "At least the most essential part of your message (e.g., vulnerability
-> detail and/or exploit) should be directly included in the message itself
-> (and in plain text), rather than only included by reference to an
-> external resource.  Posting links to relevant external resources as well
-> is acceptable, but posting only links is not.  Your message should
-> remain valuable even with all of the external resources gone."
->
-> Here's the "unbroken" GitHub URL:
->
-> https://github.com/sandstorm-io/capnproto/blob/master/
-> security-advisories/2017-04-17-0-apple-clang-elides-bounds-check.md
->
-> and I've attached to this message the "raw" (text) version from:
->
-> https://raw.githubusercontent.com/sandstorm-io/capnproto/
-> master/security-advisories/2017-04-17-0-apple-clang-elides-bounds-check.md
->
-> as text/plain.
->
-> Thanks,
+> > In the latter case, we should fix at least vipe(1) and vidir(1) from
+> > moreutils; and run-mailcap(1).
 >
 > Alexander
 >
