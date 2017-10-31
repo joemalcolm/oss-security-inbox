@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1733" "Wednesday" "2" "November" "2016" "13:57:35" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611021349520.375@tvnag.unkk.fr>" "42" "Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" "^cc:" nil nil "11" "2016110212:57:35" "[oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" (number mark "        daniel@haxx. Nov  2   42/1733  " thread-indent "\"Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host\"\n") "<20161102115304.GA11945@hurricane.linuxnetz.de>" ("<alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>" "<20161102115304.GA11945@hurricane.linuxnetz.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1914" "Tuesday" "31" "October" "2017" "12:44:38" "-0700" "Jesus Camacho Rodriguez" "jcamacho@apache.org" "<3791103E-80D5-4E75-AF23-6F8ED54DDEBE@apache.org>" "59" "[oss-security] [CVE-2017-12625] Apache Hive information disclosure vulnerability for column masking" nil nil nil "10" "2017103119:44:38" "[oss-security] [CVE-2017-12625] Apache Hive information disclosure vulnerability for column masking" (number mark "U       jcamacho@apa Oct 31   59/1914  " thread-indent "\"[oss-security] [CVE-2017-12625] Apache Hive information disclosure vulnerability for column masking\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3863 invoked by uid 550); 2 Nov 2016 12:57:56 -0000
+Received: (qmail 23953 invoked by uid 550); 31 Oct 2017 19:45:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3845 invoked from network); 2 Nov 2016 12:57:55 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-In-Reply-To: <20161102115304.GA11945@hurricane.linuxnetz.de>
-Message-ID: <alpine.DEB.2.20.1611021349520.375@tvnag.unkk.fr>
-References: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr> <20161102115304.GA11945@hurricane.linuxnetz.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="1129329158-1285204328-1478091455=:375"
-cc: oss-security@lists.openwall.com
-Date: Wed, 2 Nov 2016 13:57:35 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use
- wrong host
-To: Robert Scheck <robert@fedoraproject.org>
+Received: (qmail 23598 invoked from network); 31 Oct 2017 19:44:55 -0000
+User-Agent: Microsoft-MacOutlook/0.0.0.151105
+Date: Tue, 31 Oct 2017 12:44:38 -0700
+From: Jesus Camacho Rodriguez <jcamacho@apache.org>
+To: "user@hive.apache.org" <user@hive.apache.org>,
+	<dev@hive.apache.org>,
+	"security@hive.apache.org" <security@hive.apache.org>,
+	<announce@apache.org>,
+	<oss-security@lists.openwall.com>
+Message-ID: <3791103E-80D5-4E75-AF23-6F8ED54DDEBE@apache.org>
+Thread-Topic: [CVE-2017-12625] Apache Hive information disclosure
+ vulnerability for column masking
+Mime-version: 1.0
+Content-type: text/plain;
+	charset="UTF-8"
+Content-transfer-encoding: quoted-printable
+Subject: [oss-security] [CVE-2017-12625] Apache Hive information disclosure vulnerability for
+ column masking
 
---1129329158-1285204328-1478091455=:375
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+CVE-2017-12625: Apache Hive information disclosure vulnerability for column=
+ masking
 
-On Wed, 2 Nov 2016, Robert Scheck wrote:
+Severity: Important
 
->> curl is not alone with this problem, as there's currently a big flux in the
->> world of network user-agents about which IDNA version to support and use.
->
-> From my point of view, this especially affects GNU libc for example.
->
-> On the other hand, I am wondering if this should be really classified as a 
-> security related issue.
+Vendor: The Apache Software Foundation
 
-Can this be used to trick users or give malicious actors an advantage? I think 
-yes. I think it has a security impact. To what extent can be debated, but then 
-I don't grade our security vulnerabilites.
+Versions Affected: Hive 2.1.0 to 2.3.0
 
-> I guess many upstreams should be explicitly made aware of that soon. Maybe 
-> MITRE (or somebody else) could share their thoughts about this, too?
+Description:
+Hive exposes an interface through which masking policies can be defined on =
+tables or
+views, e.g., using Apache Ranger. When a view is created over a given table=
+, the
+policy enforcement does not happen correctly on the table for masked column=
+s.
 
-I would say so. Since IDNA2003 and IDNA2008 make clients end up on different 
-target machines, there's no doubt in my mind that this *can* be abused. I'm 
-confident that many other tools and libraries in addition to curl have the 
-same problem.
+Mitigation:
+2.3.0 users should upgrade to 2.3.1
+2.2.0 users should upgrade to 2.3.1, obtain the latest source from git for =
+branch-2.2
+or apply this patch which will be included from 2.2.1
+https://git1-us-west.apache.org/repos/asf?p=3Dhive.git;a=3Dcommit;h=3D0e795=
+debddf261b0ac6ace90e2d774f9a99b7f4b
+2.1.x users should upgrade to 2.3.1, obtain the latest source from git for =
+branch-2.1
+or apply this patch which will be included from 2.1.2
+https://git1-us-west.apache.org/repos/asf?p=3Dhive.git;a=3Dcommit;h=3D6db9f=
+d6e43f6eef3c9d1ca8e324b2edaa54fb0d3
 
-> I reported the "ß" issue and the lack of IDNA 2008 support in cURL on Sun, 
-> 18 May 2014 17:17:03 +0200 directly to you, but I didn't classify it as a 
-> security related issue though... ;-)
+To mitigate this vulnerability until Hive is upgraded to a new version, the=
+re are two
+possible options. These steps need to be done manually in Ranger / Hive.
+1) Restrict users from creating views on tables with column masking rules d=
+efined. For
+this in Ranger Hive Policy:
+ - Users should not have SELECT permission for those Table columns with mas=
+king rules
+defined.
+ - Give SELECT permission only for those columns without masking rules defi=
+ned.
+2) Review the Hive Column Masking Policies maintained in Ranger for the tab=
+les. Then
+check in Hive if views that read those tables have been defined.
+If present, either change the view definition so those columns are not sele=
+cted or
+directly drop those views.
 
-Then I appologize for having dropped the ball and not having seen the problem 
-correctly back then. I don't remember that occasion, but I believe you.
+Credit:
+This issue was reported by =EF=BB=BFSuja Santhosh of Hortonworks.
 
-NOTE: the IDNA 2008 fix seems to be incomplete [1] so right now it is probably 
-better to just disable IDN support in curl, at least if libidn2 powered.
 
-[1] = https://curl.haxx.se/mail/lib-2016-11/0033.html
+If you have any question, please reach out to us in the Hive dev list.
 
--- 
+Regards,
 
-  / daniel.haxx.se
---1129329158-1285204328-1478091455=:375--
+The Apache Hive Team
+
+
