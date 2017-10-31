@@ -1,38 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/1
-Message-ID: <20170711012837.GE2012@hunt>
-Date: Mon, 10 Jul 2017 18:28:37 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/6
+Message-ID: <20171031134530.GA12340@openwall.com>
+Date: Tue, 31 Oct 2017 14:45:30 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 10, 2017 at 11:42:53AM +0200, Dr. Thomas Orgis wrote:
-> Is this really worth a CVE, though? So far I was only able to see a
-> crash triggered by the AddressSanitizer. Never from a normal build. So
+On Tue, Oct 31, 2017 at 01:50:36PM +0100, Stefan B??hler wrote:
+> On 10/31/2017 01:37 PM, Solar Designer wrote:
+> > On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno B??ck wrote:
+> >> I think vim should change the behavior of swap files:
+> >> 1. they should be stored in /tmp by default
+> >> 2. they should have secure permissions (tmp file security is
+> >> a tricky thing and needs careful consideration to avoid symlink attacks
+> >> and the like, but there are dedicated functions for this like mkstemp).
+> >> 3. Ideally they also shouldn't leak currently edited filenames (e.g.
+> >> they shouldn't be called /tmp/.test.txt.swp, but more something
+> >> like /tmp/.vim_swap.123782173)
+> > 
+> > Out of these, I think only 2 should be done: the files should be mode
+> > 0600 or 0400 even if the original file's permissions and/or the umask
+> > are more relaxed.
+> > 
+> > 1 and 3 go against intended use for these files - recovery of an edit in
+> > progress if the editor or the entire system crashes (and comes back up
+> > e.g. after a power-cycle).  /tmp contents might not survive a reboot,
+> > and randomized filenames would prevent vim itself from detecting the
+> > problem and offering recovery, which it does now.
+> 
+> You could keep the .test.txt.swp file, but make it a symlink and encode
+> information where to find the real swap file (/var/tmp/, /tmp, ...) in
+> the symlink.
+> 
+> It shouldn't link directly to the swap file, but perhaps look like
+> "swap:///var/tmp/.vim_swap.random_id".
+> 
+> Instead of a symlink you could of course just create a normal text file
+> with the real swap filename in it, but then it might be easier for an
+> attacker to find the real filename and read that file.
 
-It is common to assign CVEs for issues discovered via fuzzers and
-sanitizers even if the consequences aren't visible without them: perhaps
-the consequences aren't visible to users only by accident.
+We could do a lot of things, but that doesn't mean those are good things
+to do.  What you describe solves one of the problems I mentioned, but I
+see little reason to go for this extra complexity, partial breakage of
+vim's feature by default (/tmp and /var/tmp are commonly volatile), and
+added risks (and extra complexity to deal with them - checking the
+/var/tmp file's ownership and permissions in case it's been replaced by
+someone else after a reboot).
 
-Some people only accept a vulnerability report if there's an exploit that
-goes along with it but developing even a proof of concept is difficult
-and error-prone. Lack of an exploit doesn't prove that an issue can safely
-be ignored. (There's always someone more dedicated to writing an exploit.)
-
-Assigning a CVE number makes downstream consumers aware of the issue and
-each can prioritize a fix as they see fit based on their own threat models.
-
-> every build of mpg123 in the wild, except for extremely hardened
-> distros that build everything with GCC's sanitizers enabled for daily
-> use, is not affected. Are people running binaries in production with
-> the sanitizers on?
-
-I believe the general consensus is that only the UBSAN sanitizer is safe
-for 'daily use'; the others aren't themselves security hardened and in
-fact have lead to exploits. This thread has more discussion:
-http://www.openwall.com/lists/oss-security/2016/02/18/1
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Alexander
