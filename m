@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5819" "Tuesday" "12" "April" "2016" "07:23:45" "+0000" "=?gb2312?B?1cU=?==?gb2312?B?v6rP6A==?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0B9BCEB@EX02.corp.qihoo.net>" "98" "[oss-security] CVE-2016-3991 : out-of-bounds write in loadImage() in tiffcrop tool" nil nil nil "4" "2016041207:23:45" "[oss-security] CVE-2016-3991 : out-of-bounds write in loadImage() in tiffcrop tool" (number mark "U       zhangkaixian Apr 12   98/5819  " thread-indent "\"[oss-security] CVE-2016-3991 : out-of-bounds write in loadImage() in tiffcrop tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["774" "Wednesday" "1" "November" "2017" "10:04:59" "+0000" "Simon McVittie" "smcv@debian.org" "<20171101100459.kfu6dabrzj7ymt4d@perpetual.pseudorandom.co.uk>" "25" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110110:04:59" "[oss-security] Fw: Security risk of vim swap files" (number mark "        smcv@debian. Nov  1   25/774   " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171101023330.GK30551@takahe.colorado.edu>" ("<20171031132352.2df6d2ad@pc1>" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" "<20171101023330.GK30551@takahe.colorado.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 21999 invoked by uid 550); 12 Apr 2016 07:25:42 -0000
+Received: (qmail 28270 invoked by uid 550); 1 Nov 2017 10:05:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,120 +11,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21557 invoked from network); 12 Apr 2016 07:24:00 -0000
-From: =?gb2312?B?1cW/qs/o?= <zhangkaixiang@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2016-3991 : out-of-bounds write in loadImage() in tiffcrop
- tool
-Thread-Index: AdGUjAnBSGQc4cwwSjmrRXVg4v7FCw==
-Date: Tue, 12 Apr 2016 07:23:45 +0000
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B9BCEB@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.62]
-Content-Type: multipart/alternative;
-	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0B9BCEBEX02corpqihoonet_"
+Received: (qmail 28240 invoked from network); 1 Nov 2017 10:05:28 -0000
+Message-ID: <20171101100459.kfu6dabrzj7ymt4d@perpetual.pseudorandom.co.uk>
+References: <20171031132352.2df6d2ad@pc1>
+ <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
+ <20171101023330.GK30551@takahe.colorado.edu>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2016-3991 : out-of-bounds write in loadImage() in tiffcrop tool
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171101023330.GK30551@takahe.colorado.edu>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Date: Wed, 1 Nov 2017 10:04:59 +0000
+From: Simon McVittie <smcv@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Fw: Security risk of vim swap files
+To: oss-security@lists.openwall.com
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0B9BCEBEX02corpqihoonet_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+On Tue, 31 Oct 2017 at 20:33:30 -0600, Leonid Isaev wrote:
+> 1. vim creates a swap file applying user's umask.
 
-RGV0YWlscw0KDQo9PT09PT09PT09PT0NCg0KUHJvZHVjdDogbGlidGlmZg0K
-DQpBZmZlY3RlZCBWZXJzaW9uczogPD0gNC4wLjYNCg0KQ1ZFIElEOiBDVkUt
-MjAxNi0zOTkxDQoNClRlc3RlZCBzeXN0ZW06IENlbnRPUyBMaW51eCByZWxl
-YXNlIDcuMS4xNTAzIDY0Yml0DQoNClZ1bG5lcmFiaWxpdHkgVHlwZTogb3V0
-LW9mLWJvdW5kcyB3cml0ZQ0KVmVuZG9yIFVSTDogaHR0cDovL3d3dy5yZW1v
-dGVzZW5zaW5nLm9yZy9saWJ0aWZmLw0KDQpDcmVkaXQ6IEthaXhpYW5nIFpo
-YW5nIG9mIHRoZSBDbG91ZCBTZWN1cml0eSBUZWFtLCBRaWhvbyAzNjANCg0K
-DQoNCkludHJvZHVjdGlvbg0KDQo9PT09PT09PT09PT0NCg0KQW4gT3V0LW9m
-LWJvdW5kcyB3cml0ZSBjYXVzZWQgYnkgaGVhcCBvdmVyZmxvdyB3aGVuIHVz
-aW5nIHRpZmZjcm9wIHRvb2wsIHRoZSB2dWxuIGlzIGluIGxvYWRJbWFnZSgp
-IGZ1bmN0aW9uIGluIHRpZmZjcm9wLmMuIGxvYWRJbWFnZSgpIHdpbGwgcmVh
-ZCB0aGUgbnVtYmVycyBvZiB0aWxlcyBieSBjYWxsaW5nIFRJRkZOdW1iZXJP
-ZlRpbGVzKCkuDQoNCkhvd2V2ZXIsIGlmIHRoZSBudW1iZXJzIG9mIHRpbGVz
-IGlzIDAsIGxvYWRJbWFnZSgpIHdpbGwgc3RpbGwgcmVhZCB0aWxlIGRhdGEg
-YnkgY2FsbGluZyByZWFkQ29udGlnVGlsZXNJbnRvQnVmZmVyKCkgZnJvbSB0
-aGUgaW1hZ2UsIHJlZ2FyZGxlc3Mgb2YgdGhlIG51bWJlcnMuIEluIHRoYXQg
-Y2FzZSwgbG9hZEltYWdlKCkgd2lsbCBhbGxvY2F0ZSAzIGJ5dGVzDQoNCmhl
-YXAgdG8gc3RvcmUgYSB0aWxlIGRhdGEsIGhlYXAgb3ZlcmZsb3cgb2NjdXJz
-IGlmIGEgdGlsZSBkYXRhIGJleW9uZCAzIGJ5dGVzLCBhbmQgdGhlIGNvdmVy
-ZCBtZW1vcnkgY291bGQgYmUgY29udHJvbGVkLiBJdCB3aWxsIGNhdXNlIGRl
-bmlhbC1vZi1zZXJ2aWNlIG9yIG1heSBjb21tYW5kIGV4Y3V0aW9uIHdoZW4g
-ZnJlZWluZw0KDQp0aGUgY292ZXJkIGhlYXAgbWVtb3J5Li4NCg0KDQpTb3Vy
-Y2UgaW5mbw0KDQo9PT09PT09PT09PT0NCjU5NDEgICAgcmVhZHVuaXQgPSBU
-SUxFOw0KNTk0MiAgICB0bHNpemUgPSBUSUZGVGlsZVNpemUoaW4pOw0KNTk0
-MyAgICBudGlsZXMgPSBUSUZGTnVtYmVyT2ZUaWxlcyhpbik7DQo1OTQ0ICAg
-IFRJRkZHZXRGaWVsZChpbiwgVElGRlRBR19USUxFV0lEVEgsICZ0dyk7DQo1
-OTQ1ICAgIFRJRkZHZXRGaWVsZChpbiwgVElGRlRBR19USUxFTEVOR1RILCAm
-dGwpOw0KDQo1OTQ3ICAgIHRpbGVfcm93c2l6ZSAgPSBUSUZGVGlsZVJvd1Np
-emUoaW4pOw0KNTk0OCAgICAgICBidWZmc2l6ZSA9IHRsc2l6ZSAqIG50aWxl
-czsNCqGtIKGtDQo2MDE1ICAgICAgIGlmICghcmVhZF9idWZmKQ0KNjAxNiAg
-ICAgICAgICAgICAgcmVhZF9idWZmID0gKHVuc2lnbmVkIGNoYXIgKilfVElG
-Rm1hbGxvYyhidWZmc2l6ZSszKTsNCqGtIKGtDQo2MDcxICAgICAgIGlmICgh
-KHJlYWRDb250aWdUaWxlc0ludG9CdWZmZXIoaW4sIHJlYWRfYnVmZiwgbGVu
-Z3RoLCB3aWR0aCwgdHcsIHRsLCBzcHAsIGJwcykpKQ0KNjA3MiAgICAgICB7
-DQo2MDczICAgICAgICAgICAgICBUSUZGRXJyb3IoImxvYWRJbWFnZSIsICJV
-bmFibGUgdG8gcmVhZCBjb250aWd1b3VzIHRpbGVzIGludG8gYnVmZmVyIik7
-DQo2MDc0ICAgICAgICAgICAgICByZXR1cm4gKC0xKTsNCjYwNzUgICAgICAg
-fQ0KDQoNCg0KRGVidWcgaW5mbw0KDQo9PT09PT09PT09PT0NCmdkYiAgLS1h
-cmdzICB0aWZmY3JvcCAgX1RJRkZmcmVlLnRpZiAgc3JjMS50aWYgdG1wb3V0
-LnRpZg0Koa2hrQ0KKGdkYikgYiB0aWZfZGlycmVhZC5jOjQ3NTgNCihnZGIp
-IGMNCg0KQnJlYWtwb2ludCAxLCBUSUZGRmV0Y2hOb3JtYWxUYWcgKHRpZj10
-aWZAZW50cnk9MHg4MGFhMDA4LCBkcD1kcEBlbnRyeT0weDgwYWE0MmMsIHJl
-Y292ZXI9cmVjb3ZlckBlbnRyeT0xKSBhdCB0aWZfZGlycmVhZC5jOjQ3NTgN
-CjQ3NTggICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBvPV9USUZGbWFs
-bG9jKCh1aW50MzIpZHAtPnRkaXJfY291bnQrMSk7DQooZ2RiKSBuDQo0NzU5
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICBpZiAobz09TlVMTCkNCihnZGIpIHAgbw0K
-JDkgPSAodWludDggKikgMHg4MGFhN2UwICIiDQooZ2RiKWIgdGlmX2RpcnJl
-YWQuYzoxOTE3DQooZ2RiKSBjDQpDb250aW51aW5nLg0KDQpCcmVha3BvaW50
-IDIsIFRJRkZSZWFkRGlyRW50cnlMb25nOEFycmF5ICh0aWY9dGlmQGVudHJ5
-PTB4ODBhYTAwOCwgZGlyZW50cnk9MHg4MGFhNDU0LCB2YWx1ZT12YWx1ZUBl
-bnRyeT0weGJmZmY5ODRjKSBhdCB0aWZfZGlycmVhZC5jOjE5MTcNCjE5MTcg
-ICAgICAgICAgICAgICAgICAgZGF0YT0odWludDY0KilfVElGRm1hbGxvYyhj
-b3VudCo4KTsNCihnZGIpIG4NCjE5MTggICAgICAgICAgICAgICAgICAgaWYg
-KGRhdGE9PTApDQooZ2RiKSBwIGRhdGENCiQxMyA9ICh1aW50NjQgKikgMHg4
-MGFhODAwDQooZ2RiKSBiIHRpZl91bml4LmM6MzQwDQooZ2RiKSBjDQoNCkJy
-ZWFrcG9pbnQgMywgX1RJRkZtZW1jcHkgKGQ9MHg4MGFhN2UwLCBzPTB4ODBh
-YTgwMCwgYz0xMDg4KSBhdCB0aWZfdW5peC5jOjM0MA0KMzQwICAgICAgICAg
-ICAgbWVtY3B5KGQsIHMsIChzaXplX3QpIGMpOw0KKGdkYikgeC8xNnh3IGQN
-CjB4ODBhYTdlMDogICAgICAweDAwMDAwMDAwICAgICAweGI3ZDkxN2I4ICAg
-ICAweDAwMDAwMDEwICAgICAweDAwMDAwMDExDQoweDgwYWE3ZjA6ICAgICAg
-IDB4MDAwMDAwMDEgICAgIDB4MDAwMDAwMDAgICAgIDB4MDAwMDAwMDAgICAg
-IDB4MDAwMDA0NDkNCjB4ODBhYTgwMDogICAgICAweDAwMDAwMDAwICAgICAw
-eGI3ZDkxOGYwICAgICAgMHgwMDAwMDAxMCAgICAgMHgwMDAwMDEzOA0KMHg4
-MGFhODEwOiAgICAgIDB4YTAwMDJhNDkgICAgIDB4ODAwMDAwMDAgICAgIDB4
-Mzg1MGUwM2YgICAgICAweDIwODYwOTI0DQooZ2RiKSBmaW5pc2gNCihnZGIp
-IHgvMTZ4dyAweDgwYWE3ZTANCjB4ODBhYTdlMDogICAgICAweDAwMDAwMDAw
-ICAgICAweGI3ZDkxOGYwICAgICAgMHgwMDAwMDAxMCAgICAgMHgwMDAwMDEz
-OA0KMHg4MGFhN2YwOiAgICAgICAweGEwMDAyYTQ5ICAgICAweDgwMDAwMDAw
-ICAgICAweDM4NTBlMDNmICAgICAgMHgyMDg2MDkyNA0KMHg4MGFhODAwOiAg
-ICAgIDB4ODNkMGJmMDAgICAgICAweDAwMDIwN2UxICAgICAweGUxYmYyYTAw
-ICAgICAgMHhmZDliZjc4Zg0KMHg4MGFhODEwOiAgICAgIDB4NDQwMDUwZjgg
-ICAgICAweDg5YzJhZmUyICAgICAgMHg4ZDAyOWY0NCAgICAgIDB4NDg4MDYz
-YzcNCg0KKGdkYikgYw0KQ29udGludWluZy4NClByb2dyYW0gcmVjZWl2ZWQg
-c2lnbmFsIFNJR1NFR1YsIFNlZ21lbnRhdGlvbiBmYXVsdC4NCjB4YjdjM2Y2
-ZDcgaW4gX19HSV9fX2xpYmNfZnJlZSAobWVtPTB4ODBhYTgwMCkgYXQgbWFs
-bG9jLmM6Mjk2OA0KMjk2OCAgICAgICAgICAgYXJfcHRyID0gYXJlbmFfZm9y
-X2NodW5rIChwKTsNCihnZGIpIGJ0DQojMCAgMHhiN2MzZjZkNyBpbiBfX0dJ
-X19fbGliY19mcmVlIChtZW09MHg4MGFhODAwKSBhdCBtYWxsb2MuYzoyOTY4
-DQojMSAgMHhiN2ZhYThmOCBpbiBfVElGRmZyZWUgKHA9MHg4MGFhODAwKSBh
-dCB0aWZfdW5peC5jOjMyMg0KIzIgIDB4MDgwN2Q1NGMgaW4gcmVhZENvbnRp
-Z1RpbGVzSW50b0J1ZmZlciAoaW49aW5AZW50cnk9MHg4MGFhMDA4LCBidWY9
-YnVmQGVudHJ5PTB4ODBhYTdlMCAiIiwgaW1hZ2VsZW5ndGg9NjU1MzYsIGlt
-YWdld2lkdGg9NTQ0LCB0dz01NDQsIHRsPTEsIHNwcD0xLCBicHM9MTYpIGF0
-IHRpZmZjcm9wLmM6ODMwDQojMyAgMHgwODA0ZmUwMCBpbiBsb2FkSW1hZ2Ug
-KHJlYWRfcHRyPTB4YmZmZjlhYjgsIGR1bXA9MHhiZmZmZDJiNCwgaW1hZ2U9
-MHhiZmZmOWFlYywgaW49PG9wdGltaXplZCBvdXQ+KSBhdCB0aWZmY3JvcC5j
-OjYwNzENCiM0ICBtYWluIChhcmdjPTQsIGFyZ3Y9MHhiZmZmZjM5NCkgYXQg
-dGlmZmNyb3AuYzoyMjc4DQoNCg0KUmVmZXJlbmNlczoNClsxXSBodHRwOi8v
-d3d3LnJlbW90ZXNlbnNpbmcub3JnL2xpYnRpZmYvDQoNCg0KVGhhbmsgeW91
-IQ0KDQpCZXN0IFJlZ2FyZHMsDQpLYWl4aWFuZyBaaGFuZw0KLS0tIC0tLQ0K
+More specifically, this should be (and does indeed seem to be) the
+permissions of the file being edited, masked by the user's umask -
+so that if have a loose umask and I edit a secret file, the swap file
+doesn't leak its contents.
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0B9BCEBEX02corpqihoonet_--
+~/tmp/vim% umask
+022
+~/tmp/vim% ls -Al
+total 4
+-rw------- 1 smcv smcv 8 Nov  1 09:50 secret-file
+~/tmp/vim% gvim secret-file
+~/tmp/vim% ls -Al
+total 16
+-rw------- 1 smcv smcv 12288 Nov  1 09:50 .secret-file.swp
+-rw------- 1 smcv smcv     8 Nov  1 09:50 secret-file
+
+A more naive implementation might have created .secret-file.swp with
+-rw-r--r-- permissions according to my umask, but that would have been
+bad.
+
+Regards,
+    smcv
