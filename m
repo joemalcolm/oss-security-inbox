@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/30
-Message-ID: <20170209184530.darj47kpt4sg3mrw@jwilk.net>
-Date: Thu, 9 Feb 2017 19:45:30 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/4
+Message-ID: <20171101100459.kfu6dabrzj7ymt4d@perpetual.pseudorandom.co.uk>
+Date: Wed, 1 Nov 2017 10:04:59 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple DoS parsing and executing extended regex expressions in GNU libc
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-* Gustavo Grieco <gustavo.grieco@...il.com>, 2017-02-09, 14:24:
->We found a few extended regex expressions in GNU libc that will crash or abort 
->the execution of regcomp or regexec. For instance:
->
->\a?{1,32767}
->
->will immediately exhaust the stack calling calc_eclosure_iter in the 
->compilation.
+On Tue, 31 Oct 2017 at 20:33:30 -0600, Leonid Isaev wrote:
+> 1. vim creates a swap file applying user's umask.
 
-FWIW, glibc's policy seems to be that DoS via crafted regexp is not considered 
-a security problem: https://sourceware.org/glibc/wiki/Security%20Exceptions
+More specifically, this should be (and does indeed seem to be) the
+permissions of the file being edited, masked by the user's umask -
+so that if have a loose umask and I edit a secret file, the swap file
+doesn't leak its contents.
 
-"[...] resource exhaustion issues which can be triggered only with crafted 
-patterns (either during compilation or execution) are not treated as security 
-bugs. (This does not mean we do not intend to fix such issues as regular bugs 
-if possible.)
+~/tmp/vim% umask
+022
+~/tmp/vim% ls -Al
+total 4
+-rw------- 1 smcv smcv 8 Nov  1 09:50 secret-file
+~/tmp/vim% gvim secret-file
+~/tmp/vim% ls -Al
+total 16
+-rw------- 1 smcv smcv 12288 Nov  1 09:50 .secret-file.swp
+-rw------- 1 smcv smcv     8 Nov  1 09:50 secret-file
 
-However, during execution, crashes, infinite loops, buffer overflows and 
-reading past buffers (read-only buffer overruns), memory leaks and other, 
-similar bugs should be treated as security vulnerabilities, assuming that the 
-pattern is trusted and reasonably structured."
+A more naive implementation might have created .secret-file.swp with
+-rw-r--r-- permissions according to my umask, but that would have been
+bad.
 
--- 
-Jakub Wilk
+Regards,
+    smcv
