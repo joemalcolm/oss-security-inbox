@@ -1,25 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/18/5
-Message-ID: <B2EABFD5-AB0F-45B2-893A-FC86F95A59F0@adobe.com>
-Date: Mon, 18 Dec 2017 15:45:25 +0000
-From: Antonio Sanso <asanso@...be.com>
-To: dev <dev@...ng.apache.org>, users <users@...ng.apache.org>, "security@...ng.apache.org" <security@...ng.apache.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>, François Lajeunesse-Robert <francois.lajeunesse.robert@...il.com>
-Subject: CVE-2017-15700 - Apache Sling Authentication Service vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/2
+Message-ID: <20171101221420.GA23969@takahe.colorado.edu>
+Date: Wed, 1 Nov 2017 16:14:20 -0600
+From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+On Wed, Nov 01, 2017 at 03:55:38PM +0100, Jakub Wilk wrote:
+> * Leonid Isaev <leonid.isaev@...a.colorado.edu>, 2017-10-31, 20:33:
+> > Just to clarify:
+> > 1. vim creates a swap file applying user's umask.
+> 
+> I reproduced Kurt's findings on Debian unstable. Vim chmods the swapfile
+> without honouring umask.
+> 
+> It does seem to keep read permissions of the original file, which is not the
+> same thing as honouring umask, and which is a rather dubious behavior,
+> especially when editing files belonging to other users.
 
-Vendor: The Apache Software Foundation
+Hmm, my umask is 0077, and vim creates swap files with permissions 600. But I
+never used debian, so dunno...
 
-Versions Affected:
-Apache Sling Authentication Service 1.4.0
+> 
+> > 2. It is totally OK to edit files in /tmp or /dev/shm or /var/tmp.
+> 
+> No, it's not.
 
-Description:
-A flaw in the org.apache.sling.auth.core.AuthUtil#isRedirectValid method allows an attacker, through the Sling login form, to trick a victim to send over their credentials.
+Except when you want to avoid writes to the /home filesystem...
 
-Mitigation:
-Users should upgrade to version 1.4.2 or later of the Apache Sling Authentication Service module
+> 
+> > The described "attack" when someone plants a /tmp/file.swp before
+> > another user edits /tmp/file is not going to work because vim will
+> > complain that the swap file already exists.
+> 
+> Sounds like a successful (albeit mild) DoS attack to me.
+> But it's worse than that. vim attempts to read the swapfile before showing
+> you the complaint:
+> 
+> $ mkfifo -m 644 /tmp/.bar.swp
+> $ vim /tmp/bar
+> [hangs forever]
 
-Credit:
-François Lajeunesse-Robert
- 
+Yes, I agree there are some inconveniences, but there is no information
+disclosure others seem to have pointed out.
+
+Cheers,
+-- 
+Leonid Isaev
