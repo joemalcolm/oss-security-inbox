@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/23/1
-Message-ID: <1205294999.1101309.1503488822700.JavaMail.zimbra@redhat.com>
-Date: Wed, 23 Aug 2017 07:47:02 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7558: Linux kernel: sctp: out-of-bounds read in inet_diag_msg_sctp{,l}addr_fill() and sctp_get_sctp_info()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/7
+Message-ID: <alpine.GSO.2.20.1711010952290.14662@scrappy.simplesystems.org>
+Date: Wed, 1 Nov 2017 09:59:42 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks
 Content-Type: text/plain; charset=utf-8
 
-Heololo,
+On Wed, 1 Nov 2017, ???? wrote:
+>
+>> [Suggested description]
+>> LibTIFF 4.0.8 has multiple memory leak vulnerabilities, which allow
+>> attackers to cause a denial of service (memory consumption), as demonstrated
+>> by tif_open.c, tif_lzw.c, and tif_aux.c
+>>
+>> ------------------------------------------
+>>
+>> [Additional Information]
+>> /tiff2bw ../../../../libtiff_4.0.8_afl/2bw_output/crashes/poc.tif 222.tif
 
-A kernel data leak due to an out-of-bound read was found in Linux kernel in
-inet_diag_msg_sctp{,l}addr_fill() and sctp_get_sctp_info() functions present
-since v4.7-rc1 upto v4.13-rc6 including. A data leak happens when these functions
-fill in sockaddr data structures used to export socket's diagnostic information.
-As a result up to 100 bytes of the slab data could be leaked to a userspace.
+I am not seeing any memory leak vulnerability.  I do see that tiff2bw 
+made no attempt to release any memory at all (not strictly required 
+for a utility since memory is released when it quits).  I have 
+modified the code in the development CVS version to release memory to 
+satisfy memory checkers.
 
-Details: it is leaking exactly 100 bytes of a kernel slab whenever we answer to
-a netlink request of type INET_DIAG_LOCALS or INET_DIAG_PEERS for a SCTP socket
-(e.g. sent by the 'ss' tool included in the 'iproute2' package with 'ss -Si' or
-'ss -Sm').
+>
+> Use CVE-2017-16232.
 
-A researcher of this flaw and a patch author is Stefano Brivio of the Red Hat.
+This is a memory-based DOS issue within tiff2bw itself (not directly 
+inside libtiff).  TIFF files using LZW compression can achieve a very 
+high compression ratio so it can be difficult to predict if a file's 
+pixel dimensions are bogus or not.  Valid files also pose a DOS 
+opportunity.  There are no arbitrary limits imposed within tiff2bw.
 
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1480266
-
-https://marc.info/?t=150348787500002&r=1&w=2
-
-Suggested patch:
-
-https://marc.info/?l=linux-netdev&m=150348777122761&w=2
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
