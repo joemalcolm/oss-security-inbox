@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["869" "Monday" "19" "September" "2016" "13:52:45" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNVZu3oCinNrhmTbeFc_JQcJDS0N55suTN3JFQof2AvbVw@mail.gmail.com>" "28" "Re: [oss-security] Possible CVE for TLS protocol issue" nil nil nil "9" "2016091920:52:45" "[oss-security] Possible CVE for TLS protocol issue" (number mark "U       reed@reedlod Sep 19   28/869   " thread-indent "\"Re: [oss-security] Possible CVE for TLS protocol issue\"\n") "<CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>" ("<CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2793" "Wednesday" "1" "November" "2017" "17:11:36" "+0100" "Solar Designer" "solar@openwall.com" "<20171101161136.GA20860@openwall.com>" "54" "Re: [oss-security] CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks" nil nil nil "11" "2017110116:11:36" "[oss-security] CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks" (number mark "U       solar@openwa Nov  1   54/2793  " thread-indent "\"Re: [oss-security] CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks\"\n") "<94352367.aY5R7YHe3W@wanheda>" ("<tencent_C577451864B1690107062CD83581D6BE5708@qq.com>" "<94352367.aY5R7YHe3W@wanheda>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24078 invoked by uid 550); 19 Sep 2016 20:53:19 -0000
+Received: (qmail 8159 invoked by uid 550); 1 Nov 2017 16:12:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24054 invoked from network); 19 Sep 2016 20:53:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reedloden.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=0BIE9gdm6R94YVCOATlxgy6QuIEa3HNxdrW9TywZkZU=;
-        b=XGOxzAl2++qWQhcEQnXSbWOQ/nEAPuaKyGrXqzQrOal/4UM2qQqxuaMWJllA+IVa02
-         3U4H8bqGqRyS8fs9DSFDip43xy950cOQL4iRkYyxiV7Jdx8rcbl3SfwuHFR92DrLqU3H
-         I6ZgFzGBePCmXim00cvbjaGqcieEa+VNKXAP0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=0BIE9gdm6R94YVCOATlxgy6QuIEa3HNxdrW9TywZkZU=;
-        b=mVor556YF6vZe5qu5TTrXn97wZ8P7612N4YBDcZC78kbt1PqA3QhlFD8ofOOveIgnF
-         ERVw9MOMjrWL+yQZh0jgIjJNCCoLndi+l8XF32HLpEtXjusdq3SraBRt9ZAya0FCOW+r
-         K0/JFMZ8SpyWO5fP9syxaWzkGFWChRjCVMJ9o6XPFvax5IYsaej5Rrh2L+mgIzmUCDkN
-         DN8F0wizFYgZ2xnWpNExCE8p0DVXhjPm6HcJIx7dTiT+VOx4GxZJAqRJ46OXT1YURogD
-         twyL4FRvvs4J5gmjRek0B9n+64kQQqtN34D36fuByLKiHz0ilrrQqpv010Q/nluhjrSg
-         0Elg==
-X-Gm-Message-State: AE9vXwOXHqpLlDC/7JR3itWaN13Ujlw6nOBDh26CgPADdSIUAgXwDrDbBx+MPmDTbjWhg/I262oM7Q6xMJ7FcbYZ
-X-Received: by 10.107.27.14 with SMTP id b14mr42977616iob.60.1474318386524;
- Mon, 19 Sep 2016 13:53:06 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>
-References: <CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>
-From: Reed Loden <reed@reedloden.com>
-Date: Mon, 19 Sep 2016 13:52:45 -0700
-Message-ID: <CALPTtNVZu3oCinNrhmTbeFc_JQcJDS0N55suTN3JFQof2AvbVw@mail.gmail.com>
+Received: (qmail 7719 invoked from network); 1 Nov 2017 16:11:49 -0000
+Date: Wed, 1 Nov 2017 17:11:36 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a113fdd68b736d8053ce27f04
-Subject: Re: [oss-security] Possible CVE for TLS protocol issue
+Cc: 16362505@qq.com
+Message-ID: <20171101161136.GA20860@openwall.com>
+References: <tencent_C577451864B1690107062CD83581D6BE5708@qq.com> <94352367.aY5R7YHe3W@wanheda>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <94352367.aY5R7YHe3W@wanheda>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks
 
---001a113fdd68b736d8053ce27f04
-Content-Type: text/plain; charset=UTF-8
+On Wed, Nov 01, 2017 at 04:29:32PM +0100, Agostino Sarubbo wrote:
+> On mercoled?? 1 novembre 2017 03:26:56 CET ?????? wrote:
+> > > [Suggested description]
+> > > In PCRE 8.41,
+> > > after compiling, a pcretest load test PoC produces a crash overflow
+> > > in the function match() in pcre_exec.c because of a self-recursive call.
+[...]
+> > Use CVE-2017-16231.
+> 
+> I guess that this bug is similar or the same described here:
+> https://bugs.exim.org/show_bug.cgi?id=2047
+> 
+> Based on the upstream comment I'd suggest to reject the CVE.
 
-Seems pretty old, just FYI:
+Let's quote that comment in here for discussion and archival:
 
-Research paper published: 2015/11/08. Additional content added: 2015/14/09.
+"Philip Hazel 2017-02-24 15:53:50 GMT
 
-~reed
+It is very easy to write patterns that have extremely large search
+trees, and these can consume a lot of time and/or stack in the current
+implementation of pcre2_match(). There are options (*LIMIT_MATCH) and
+(*LIMIT_RECURSION) that can be used to limit the amount of stack that is
+used. The limits can also be set from pcretest and from programs that
+call the library directly. This is all well documented. Fuzzers should
+always set these limits much lower than the defaults. See, for example,
+the file src/pcre2_fuzzsupport.c in PCRE2.
 
-On Mon, Sep 19, 2016 at 1:39 PM, Kurt Seifried <kseifried@redhat.com> wrote:
+Also, as I have said several times recently on the list, there will soon
+be a new implementation of pcre2_match() that uses heap storage rather
+than the stack. The same limits are available to control the amount of
+resource used. This should avoid stack overflows, but there will always
+be patterns that will take a lot of resources if you don't limit them."
 
-> This was pointed out to me by mjc@:
->
-> https://kcitls.org/
->
-> TL;DR: if you can trick someone to install a client certificate you can
-> then spoof any future web site. Certainly not what we want from the people
-> issuing client certificates. It sounds like this is a protocol level
-> vulnerability affecting closed and Open Source vendors potentially, and it
-> is public so posting it here.
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> Red Hat Product Security contact: secalert@redhat.com
->
+I'm not sure I agree with Philip on this.  Based on the comment above,
+this is documented behavior and there are limits in place that a program
+could use.  However, the suggestion that "Fuzzers should always set
+these limits much lower than the defaults." might mean that the defaults
+are inadequate for safe production use as well, if a pattern might be
+untrusted.  If fuzzers could hit stack overflow with default limits,
+then so could untrusted patterns in production, no?  If so, that would
+keep this a security issue, and probably a CVE-worthy one, unless the
+documentation also states that only trusted patterns are supported.
 
---001a113fdd68b736d8053ce27f04--
+Alexander
+
+P.S. The original message arrived to oss-security with a Subject of
+"Re: [scr412063] PCRE; LibTIFF" preceded by some probably Chinese
+characters.  As a moderator, I edited the Subject to what it currently
+is before approving the message.  I regret that the message combines
+issues in two unrelated packages, but I never edit message bodies as me
+doing so would certainly be too much and potentially inappropriate
+(misrepresentation of what someone else posted; even fixing the Subjects
+is borderline in that respect).  I can only hope that future postings by
+16362505 will be better, given this little note. ;-)
