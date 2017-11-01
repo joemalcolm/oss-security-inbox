@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["716" "Tuesday" "3" "December" "2019" "07:54:54" "+0200" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD97nkCGns=1JSAH+StSYtTaHPoF6bm5n8WXk=dKoFzN_A@mail.gmail.com>" "18" "Re: [oss-security] virtual consoles" "^Date:" nil nil "12" "2019120305:54:54" "[oss-security] virtual consoles" (number mark "        gguninski@gm Dec  3   18/716   " thread-indent "\"Re: [oss-security] virtual consoles\"\n") "<20191202165638.GA3235@thinkstation>" ("<20191202165638.GA3235@thinkstation>") nil nil nil nil nil nil nil "Re: [oss-security] virtual consoles" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1222" "Wednesday" "1" "November" "2017" "10:32:41" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2TdNjz6NzOTsmaiYegKwGck5S07V4LAbW7p1NcXP27sw@mail.gmail.com>" "35" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110116:32:41" "[oss-security] Fw: Security risk of vim swap files" (number mark "        kseifried@re Nov  1   35/1222  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>" ("<20171031132352.2df6d2ad@pc1>" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" "<20171101023330.GK30551@takahe.colorado.edu>" "<20171101144927.srk7stiwoia4qt57@sentinelchicken.org>" "<CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30431 invoked by uid 550); 3 Dec 2019 10:53:43 -0000
+Received: (qmail 3954 invoked by uid 550); 1 Nov 2017 16:32:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17832 invoked from network); 3 Dec 2019 05:55:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=C7GEKSPnghugHDXZlyUUSh9MmciwRNtcKTbIX8SiXeM=;
-        b=DDA2zkIRcTxHOlEGKYE8rM4n4/jGsXf6KTcny7sUVlR5hatVhHNsFEWdJuoTLkU7/b
-         iediQqmYuCSKec7pUcgVUJ6jxbcin9oxWIw0p5wbGMQQXIDjkZpaeyxCyF6yEwElOPCq
-         I2pP4KdLvtiFUvBy4/KeKYYy11js2oUi5HUJyiX0nnsj2P/sHuTxGletMl2N5XM4zOef
-         vr2iPQj1wyRnseOTTjX3KRzOZapQjVBE4uSC667rbvy7fv/fBfemKiy5fXWDeHbxPwho
-         KAqBmU3MVreJDOqz30gwInAqKNQCwkpD8nRpXe5EbTkuFr7pFWvN7Cona+btm8QNMa+h
-         Rwxg==
+Received: (qmail 3933 invoked from network); 1 Nov 2017 16:32:54 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to;
-        bh=C7GEKSPnghugHDXZlyUUSh9MmciwRNtcKTbIX8SiXeM=;
-        b=FbAIFyahSO7tXE8Xxy/CZnp3P6IpopFRk4JWWufcnoiiWXvXW04DBz5+AmYQcpNRwc
-         wTy7HSw1Q4A/gIg5WG9rufXiAIFdPY2cB8aWiyrcacCUrkOkWLtfaGjYQu4ZZsXRkowp
-         9GLn/X1MRUxtJcVxfgelnhscnzkw7293cOHhGGgbSe/fK0uJOBrGVfbiGOFHwCP4G1mC
-         93FriCtSCVTMm3ymG32rvxtTv68l5BpBqjwT/PBtxqq5RY4zvUxUNawRinyJBELaRd1c
-         Lf+f/C51ImVjBoDRgwL4OhlV0m5XMh/liUMKJHeD60R2IJpdJPGVuVL1aRYcc0AMrJA2
-         FFoA==
-X-Gm-Message-State: APjAAAVdNYVEeJfPaWtbIO/JqruyrowHTZ1uE/++8SYJv351SoBhzh7H
-	mo07NhOXjaI0Pp+xF/lfyXoEM1xDjWP8g/tQJuZUD59zT+E=
-X-Google-Smtp-Source: APXvYqz18eZ/cV85xAtdaTAwQWrG3Zk9VFme08hNCdJ6Nc8UnGdyKKIn9ADC3H/p1oQD0ps58IX4HovVx/c2G1+u+ZE=
-X-Received: by 2002:a92:d38e:: with SMTP id o14mr3310481ilo.238.1575352507218;
- Mon, 02 Dec 2019 21:55:07 -0800 (PST)
+        bh=yChfSMdub0d7AcSYIZyoqOf/lLBxV0uzqtsCF3ketvo=;
+        b=BbeWEiBJa9L8k43sc5jROhsnqQ6GazRWrGzH5lBl7yB5/2bH+OhVzrjgBWDYo5udfv
+         GLKeyBY1lbUb/Vr5T67qGjozCq85FpKTHlglj3wozJ/83XdFXlsSInRuwLtjr3cAjFNu
+         vhN7reZGJw6mjYA748sCG+vZckIpBy7Eg+FIZocgLsxbAv2oNbIkR7TgdQMYa+ZR6yzu
+         bV2vUFUR1GKSFNf2GUhG0KMtdOzAbD3uSJAZw/irBpwjewHxltbFvn+iHch/lQI+5UvN
+         0a75SCBVmUAuSF9+yDh5Ci8PB0VR2lwM32DqUoB3bxyuRq9y6shEdMJORSGJj3Kgpmv3
+         n4WA==
+X-Gm-Message-State: AMCzsaWf3dWO8c8hQU76/KXG94IsEUa5cKVCWAheTTVa6B33KyCHW9wx
+	vivD/UFOtUHjOIu9FONgWyzSI9uAawz43bFpyTrd8TW0B5c=
+X-Google-Smtp-Source: ABhQp+QNwuT9hq0gnz4lit9y3Wi/Xvn3z8evU3FyEMJwR+b3VJl0uRlhWDkwYfGlr1zW9mS+uARvj2NO2pUqJbRRWso=
+X-Received: by 10.202.191.196 with SMTP id p187mr249305oif.162.1509553962562;
+ Wed, 01 Nov 2017 09:32:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20191202165638.GA3235@thinkstation>
-In-Reply-To: <20191202165638.GA3235@thinkstation>
-Message-ID: <CAGUWgD97nkCGns=1JSAH+StSYtTaHPoF6bm5n8WXk=dKoFzN_A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Tue, 3 Dec 2019 07:54:54 +0200
-From: Georgi Guninski <gguninski@gmail.com>
+In-Reply-To: <CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>
+References: <20171031132352.2df6d2ad@pc1> <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
+ <20171101023330.GK30551@takahe.colorado.edu> <20171101144927.srk7stiwoia4qt57@sentinelchicken.org>
+ <CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>
+Message-ID: <CANO=Ty2TdNjz6NzOTsmaiYegKwGck5S07V4LAbW7p1NcXP27sw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="001a113d673cb552e9055cee6b92"
+Date: Wed, 1 Nov 2017 10:32:41 -0600
+From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] virtual consoles
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Fw: Security risk of vim swap files
+To: oss-security <oss-security@lists.openwall.com>
 
-On Mon, Dec 2, 2019 at 7:13 PM Tavis Ormandy <taviso@gmail.com> wrote:
->
-> Hey List, we were discussing simple screen spoofing attacks today, and
-> whether we consider it a vulnerability or just social engineering. For
-> example, this paper on tricks Android malware can use to trick the user
-> into granting permissions to the wrong app.
->
+--001a113d673cb552e9055cee6b92
+Content-Type: text/plain; charset="UTF-8"
 
-Precedence in mobile code:
+One note on something a lot of people seem to be getting confused about:
 
-1. This exists in Android 9, I had hard time exiting fullscreen
-video player
-2. Mozilla fixed similar bug about 15 years ago.
-3. In 2001 internet exploder was remotely vulnerable and hitting
-control-alt-del was not easy:
+umask is a mask that is applied to permissions when a file is created.
 
-https://www.dslreports.com/forum/r1651258-Javascript-in-IE-may-spoof-the-whole-screen
-http://www.guninski.com/popspoof.html
+umask is NOT the reverse of the permissions your programs/etc are supposed
+to create files with.
+
+E.g.:
+
+1) if I have a umask of 0002 I'm saying "never create a file that is
+readable by 'other'"
+2) if I have a umask of 0007 I'm saying "never create a file that is rwx by
+'other'"
+3) if I have a umask of 0077 I'm saying "never create a file that is rwx by
+'group' or 'other'"
+
+A umask of e.g. 0007 is NOT saying "create my files with rwxrwx----", it is
+saying "remove 'rwx' from other when creating a file, I don't really care
+what you do with user and group permissions"
+
+So programs are free to create files with less permissions, e.g.
+ssh-keygen, it creates files rw-r-----, minus whatever your umask is, so if
+you apply a umask of 0077 you'll get files with rw-------- which is what
+you' expect.
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a113d673cb552e9055cee6b92--
