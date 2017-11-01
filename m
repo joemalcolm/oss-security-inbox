@@ -1,201 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/10
-Message-ID: <f4773901-967b-a496-de1d-2e866686dfb2@igalia.com>
-Date: Wed, 18 Oct 2017 15:12:07 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2017-0008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/13
+Message-ID: <32e60988-4ab4-fe39-9d94-5f3453eb50b0@orlitzky.com>
+Date: Wed, 1 Nov 2017 13:52:41 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2017-0008
-------------------------------------------------------------------------
+On 11/01/2017 11:41 AM, Z5T1 wrote:
+> 
+> " Move the swap file location to protect against CVE-2017-1000382
+> silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
+> set directory=~/.vim/swap/
+> 
+> This safely sets the swap file directory to a directory that should not
+> cause any security problems.
+This is what I used to do in emacs before I disabled the backups
+completely. I was wondering if there were any problems with it. If there
+aren't, it seems like a better default to me, for both emacs and vim.
 
-Date reported      : October 18, 2017
-Advisory ID        : WSA-2017-0008
-Advisory URL       : https://webkitgtk.org/security/WSA-2017-0008.html
-CVE identifiers    : CVE-2017-7081, CVE-2017-7087, CVE-2017-7089,
-                     CVE-2017-7090, CVE-2017-7091, CVE-2017-7092,
-                     CVE-2017-7093, CVE-2017-7094, CVE-2017-7095,
-                     CVE-2017-7096, CVE-2017-7098, CVE-2017-7099,
-                     CVE-2017-7100, CVE-2017-7102, CVE-2017-7104,
-                     CVE-2017-7107, CVE-2017-7109, CVE-2017-7111,
-                     CVE-2017-7117, CVE-2017-7120, CVE-2017-7142.
-
-Several vulnerabilities were discovered in WebKitGTK+.
-
-CVE-2017-7081
-    Versions affected: WebKitGTK+ before 2.16.1.
-    Credit to Apple.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed through improved input validation.
-
-CVE-2017-7087
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Apple.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7089
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Anton Lopanitsyn of ONSEC, Frans Rosén of Detectify.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue existed
-    in the handling of the parent-tab. This issue was addressed with
-    improved state management.
-
-CVE-2017-7090
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Apple.
-    Impact: Cookies belonging to one origin may be sent to another
-    origin. Description: A permissions issue existed in the handling of
-    web browser cookies. This issue was addressed by no longer returning
-    cookies for custom URL schemes.
-
-CVE-2017-7091
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Wei Yuan of Baidu Security Lab working with Trend Micro’s
-    Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7092
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Qixun Zhao (@S0rryMybad) of Qihoo 360 Vulcan Team, Samuel
-    Gro and Niklas Baumstark working with Trend Micro's Zero Day
-    Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7093
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Samuel Gro and Niklas Baumstark working with Trend Micro’s
-    Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7094
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to Tim Michaud (@TimGMichaud) of Leviathan Security Group.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7095
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Wang Junjie, Wei Lei, and Liu Yang of Nanyang
-    Technological University working with Trend Micro’s Zero Day
-    Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7096
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Wei Yuan of Baidu Security Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7098
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Felipe Freitas of Instituto Tecnológico de Aeronáutica.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7099
-    Versions affected: WebKitGTK+ before 2.16.4.
-    Credit to Apple.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7100
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Masato Kinugawa and Mario Heiderich of Cure53.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7102
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Wang Junjie, Wei Lei, and Liu Yang of Nanyang
-    Technological University.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7104
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to likemeng of Baidu Secutity Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7107
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to Wang Junjie, Wei Lei, and Liu Yang of Nanyang
-    Technological University.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7109
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to avlidienbrunn.
-    Impact: Processing maliciously crafted web content may lead to a
-    cross site scripting attack. Description: Application Cache policy
-    may be unexpectedly applied.
-
-CVE-2017-7111
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to likemeng of Baidu Security Lab (xlab.baidu.com) working
-    with Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7117
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7120
-    Versions affected: WebKitGTK+ before 2.18.0.
-    Credit to chenqin (陈钦) of Ant-financial Light-Year Security Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7142
-    Versions affected: WebKitGTK+ before 2.16.1.
-    Credit to an anonymous researcher.
-    Impact: Website data may persist after a Safari Private browsing
-    session. Description: An information leakage issue existed in the
-    handling of website data in Safari Private windows. This issue was
-    addressed with improved data handling.
-
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-October 18, 2017
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+It might be interesting to ask upstream how they'd feel about moving them.
