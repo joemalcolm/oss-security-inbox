@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["470" "Sunday" "20" "May" "2018" "14:46:05" "+0300" "nullbyte" "seclist45@gmail.com" "<CAPbtD9m-rSCBh5S4EmW-VT5tLHPnp9UqUW4F6CicS4P-bbt3BQ@mail.gmail.com>" "19" "[oss-security] Reptile: a LKM rootkit written for evil purposes" nil nil nil "5" "2018052011:46:05" "[oss-security] Reptile: a LKM rootkit written for evil purposes" (number mark "U       seclist45@gm May 20   19/470   " thread-indent "\"[oss-security] Reptile: a LKM rootkit written for evil purposes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1699" "Wednesday" "1" "November" "2017" "07:49:27" "-0700" "Tim" "tim-security@sentinelchicken.org" "<20171101144927.srk7stiwoia4qt57@sentinelchicken.org>" "41" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110114:49:27" "[oss-security] Fw: Security risk of vim swap files" (number mark "        tim-security Nov  1   41/1699  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171101023330.GK30551@takahe.colorado.edu>" ("<20171031132352.2df6d2ad@pc1>" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" "<20171101023330.GK30551@takahe.colorado.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31797 invoked by uid 550); 20 May 2018 12:35:42 -0000
+Received: (qmail 8087 invoked by uid 550); 1 Nov 2017 14:49:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7423 invoked from network); 20 May 2018 11:46:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=8o+pZ2xkY/ZnLdO0vBVI8ZYgkZRpXOc808y3rjeWbHg=;
-        b=n0833+2AO46ykct5hGeSAb2H39O4WvMEv/vDtnizkQp9YOaAe2ZdiRUdviuqOBUyDi
-         j0gUjASQPRBdlxp8FdOwJRrqTOZ1dchujYaeAvh6hiiYE3WrL4LY8DKfGtbN8h6e3tvD
-         vGNp04qFww8zuHBla1CucS/wyfmIR+P12rzYRbcrM73y1e/fkxSNEmYfB07JuzwtGoKT
-         XKh5xsvL43xvCyIWxPYC4JduQ7vMNcL7QTkoScrKGOkUI0tm7295ViWDBLdzf7dxhZaL
-         0SJ79fixRq7IujyY/zkkOGnv1HDbB7CuLIZ0L9YBunFmE1vOh8YC5XD58cLSNolQWyz+
-         1sow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=8o+pZ2xkY/ZnLdO0vBVI8ZYgkZRpXOc808y3rjeWbHg=;
-        b=QU4kGSLquoukvVnzWlutiNxlGOVpnw70AmrHi+bwNe9JDucIvmsYIB5UrYQKgLRLw8
-         ZIQ17ExTkAV/iran93LZe6eui2Fr5Dl5K1SRqi72wo6HRG3XME83sWqBLcLTnKd2bWZJ
-         AaB3Fwzz0oBYeng1Bv5WFpNIREk5gLYvvAP7/mB3kuzPP6OVRVZDDPy4FXT28mVx3xQ4
-         m/hVKYYZ4EgwA1oE4vHhBOWjwNmIz0dXa4OO4D3czS3fUuUayUS0Yhkpmf2oRDYOIE9R
-         thU/9WPA9wLDW1MryFUiym8EQ9C/mJDazfC1DXrgkvwnLwlE9mNZYnjFHQ06973zPlEV
-         +Gbw==
-X-Gm-Message-State: ALKqPwcd4EP4fliBun5P5Dn055zphX6B6NEnRNNnfkK/cryIqVqtLtmX
-	wj5vRWUCNfwvZPWfItmEKVQULsdNtP/AS2Haq1lk3hoJ
-X-Google-Smtp-Source: AB8JxZrdoCI7L87+TAiqdEyCPWjGyvv9iZVKIUCxSPX4aoEdfYcaC/ECbNPMR8h8YwLQF51wqA3HfTE5xAbA/rkN008=
-X-Received: by 2002:a2e:6c10:: with SMTP id h16-v6mr9571919ljc.81.1526816766134;
- Sun, 20 May 2018 04:46:06 -0700 (PDT)
+Received: (qmail 8063 invoked from network); 1 Nov 2017 14:49:46 -0000
+Message-ID: <20171101144927.srk7stiwoia4qt57@sentinelchicken.org>
+References: <20171031132352.2df6d2ad@pc1>
+ <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
+ <20171101023330.GK30551@takahe.colorado.edu>
 MIME-Version: 1.0
-From: nullbyte <seclist45@gmail.com>
-Date: Sun, 20 May 2018 14:46:05 +0300
-Message-ID: <CAPbtD9m-rSCBh5S4EmW-VT5tLHPnp9UqUW4F6CicS4P-bbt3BQ@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171101023330.GK30551@takahe.colorado.edu>
+User-Agent: NeoMutt/20170609 (1.8.3)
+Date: Wed, 1 Nov 2017 07:49:27 -0700
+From: Tim <tim-security@sentinelchicken.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Fw: Security risk of vim swap files
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000fb8f91056ca1ba3d"
-Subject: [oss-security] Reptile: a LKM rootkit written for evil purposes
 
---000000000000fb8f91056ca1ba3d
-Content-Type: text/plain; charset="UTF-8"
+> > Also, it almost never makes sense to put things in /tmp, for several
+> > reasons pointed out by others.  Making ~/.vim/... the default location
+> > clearly is the best solution.
+> 
+> And all those reasons make no sense. /tmp has a sticky bit precisely so that
+> people could put stuff there, as opposed to /run.
 
-Features:
+We've been spending decades fixing filesystem races that arise from
+cases where people use temporary files in world-writable directories.
+You have to get a half dozen things exactly correct in order to use
+/tmp.  Why take the risk?  Doesn't every normal (human) user account
+have a home directory that is already protected?
 
-- Supported Linux kernel versions: 2.6.x/3.x/4.x
-- Give root to unprivileged users
-- Hide files and directories
-- Hide files contents
-- Hide processes
-- Hide himself
-- Hidden boot persistence
-- ICMP/UDP/TCP port-knocking backdoor
-- Full TTY/PTY shell with file transfer
-- Client to handle Reptile Shell
 
-Download: https://github.com/f0rb1dd3n/Reptile
+> Just to clarify:
+> 1. vim creates a swap file applying user's umask.
+>    Tested with vim on ArchLinux and vi on Fedora, if your vim doesn't do that,
+>    the corresponding package is broken.
 
---000000000000fb8f91056ca1ba3d--
+Glad to hear at least some implementations are safe.  But that is just
+one of several potential issues.
+
+
+> 2. It is totally OK to edit files in /tmp or /dev/shm or /var/tmp.
+>    The described "attack" when someone plants a /tmp/file.swp before another
+>    user edits /tmp/file is not going to work because vim will complain that the
+>    swap file already exists.
+
+I hope they got the TOCTOU correct...
+
+And as Alexander pointed out, /tmp is a bad place to put recovery
+files because everything is often wiped from /tmp at reboot.  
+
+
+What's wrong with ~/.vim/ ??  You've argued that /tmp is OK, but
+haven't given a reason why ~/.vim/ is bad.  I suppose you could argue
+that ~/.vim/{full-system-path-of-file} could get too long for the
+underlying filesystem.  Fine, then store these files as
+~/.vim/{hmac-sha-256-of-full-system-path} and call it a day.
+
+tim
