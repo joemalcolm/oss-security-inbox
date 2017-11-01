@@ -1,52 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/29/8
-Message-ID: <CANO=Ty1WTxQjjqZt6KALD2hrfubJYG2gbZKaLVewG1o9KMA2XA@mail.gmail.com>
-Date: Fri, 29 Sep 2017 08:42:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/8
+Message-ID: <94352367.aY5R7YHe3W@wanheda>
+Date: Wed, 01 Nov 2017 16:29:32 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: 旺仔 <16362505@...com>, cve-assign <cve-assign@...re.org>
+Subject: Re: CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 28, 2017 at 5:03 PM, Guido Vranken <guidovranken@...il.com>
-wrote:
+On mercoledì 1 novembre 2017 03:26:56 CET 旺仔 wrote:
+> > [Suggested description]
+> > In PCRE 8.41,
+> > after compiling, a pcretest load test PoC produces a crash overflow
+> > in the function match() in pcre_exec.c because of a self-recursive call.
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Vulnerability Type]
+> > Buffer Overflow
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Vendor of Product]
+> > Perl Compatible Regular Expressions
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Affected Product Code Base]
+> > PCRE - 8.41
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Affected Component]
+> > file:pcre_exec.c
+> > function match() line 983 and line 2061
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Attack Type]
+> > Local
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Impact Denial of Service]
+> > true
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Attack Vectors]
+> > A crash file
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Discoverer]
+> > ZHANG JIAWANG from cncert
+> 
+> 
+> Use CVE-2017-16231.
 
-> I found a buffer overflow in one of the projects within 30 minutes,
-> and there are probably many more issues to be found (as in virtually
-> any large, unaudited project). What makes this project special
-> compared to other bug bounties for C libraries (such as the regular
-> Internet Big Bounty programs) is that they require a full, reliable
-> exploit.
->
-> If they would be willing to be lenient in their qualification of what
-> constitutes a working exploit, such as exploitation of a binary
-> without advanced anti-exploit protections such ASLR, I might bother,
-> otherwise I won't. Enhancing open source projects is a honourable
->
+I guess that this bug is similar or the same described here:
+https://bugs.exim.org/show_bug.cgi?id=2047
 
-The simple reason being is it gets rid of all the chaff and time wasters.
-Anyone can run a fuzzer and find a crash case. That's not what we need, we
-need a root cause analysis that identifies where in the code it failed, or
-a reliable exploit that causes code exec so we can do the research and
-actually figure out if this is exploitable or not. Their money, their rules.
-
-
-
->
-> All in all I think they should reconsider their current program
-> stipulations, if only to increase their own return-on-investment
-> (making the internet safer with a limited funding).
->
-> Guido
->
-
-I think you're forgetting about the cost of analyzing a lot of false
-positives. This is why I push back and ask for more information on a lot of
-CVE requests now.
-
-
+Based on the upstream comment I'd suggest to reject the CVE.
 -- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Agostino Sarubbo
+Gentoo Linux Developer
