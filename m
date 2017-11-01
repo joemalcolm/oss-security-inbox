@@ -1,57 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/7
-Message-ID: <54005790-f2e6-2654-fdbb-41652f32060d@hpe.com>
-Date: Thu, 1 Jun 2017 07:17:41 -0600
-From: Nicholas Luedtke <nsl@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/6
+Message-ID: <20171101145538.yohxjiyyinlvcliv@jwilk.net>
+Date: Wed, 1 Nov 2017 15:55:38 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Information on recent sqlite3 issues?
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
+* Leonid Isaev <leonid.isaev@...a.colorado.edu>, 2017-10-31, 20:33:
+>Just to clarify:
+>1. vim creates a swap file applying user's umask.
 
-On 06/01/2017 07:14 AM, Kurt Seifried wrote:
-> I will bring this up at the next cve board meeting (2 weeks from now).
->
->
-> -Kurt
-Thanks Kurt, its worth noting this happens often with libxml as well.
+I reproduced Kurt's findings on Debian unstable. Vim chmods the swapfile 
+without honouring umask.
 
->> On Jun 1, 2017, at 00:20, Johannes Segitz <jsegitz@...e.de> wrote:
->>
->>> On Thu, Jun 01, 2017 at 12:24:10AM +0200, Andreas Stieger wrote:
->>> Hello,
->>>
->>>
->>>> On 05/31/2017 10:30 PM, Moritz Muehlenhoff wrote:
->>>> one of the latest Apple advisories mentions several vulnerabilities in sqlite:
->>>> https://support.apple.com/en-us/HT207798
->>>>
->>>> CVE-2017-2513: found by OSS-Fuzz
->>>> CVE-2017-2518: found by OSS-Fuzz
->>>> CVE-2017-2520: found by OSS-Fuzz
->>>> CVE-2017-2519: found by OSS-Fuzz
->>>> CVE-2017-6983: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
->>>> CVE-2017-6991: Chaitin Security Research Lab (@ChaitinTech) working with Trend Micro's Zero Day Initiative
->>>>
->>>> Does anyone have additional information on those and whether that
->>>> applies to the standard sqlite releases or Apple-specific changes?
->>> SUSE has asked Apple, but has not yet received an answer as far as I am
->>> aware.
->> They replied:
->>
->>> Thank you for contacting the Apple Product Security team.
->>>
->>> Please contact the SQLite maintainers to coordinate.
->> I think it is problematic that they assign CVEs but don't provice any
->> details even if it's not only their code. I contacted the sqlite-devs for
->> details but didn't receive a reply up to this point.
->>
->> Johannes
+It does seem to keep read permissions of the original file, which is not 
+the same thing as honouring umask, and which is a rather dubious 
+behavior, especially when editing files belonging to other users.
+
+>2. It is totally OK to edit files in /tmp or /dev/shm or /var/tmp.
+
+No, it's not.
+
+>The described "attack" when someone plants a /tmp/file.swp before 
+>another user edits /tmp/file is not going to work because vim will 
+>complain that the swap file already exists.
+
+Sounds like a successful (albeit mild) DoS attack to me.
+But it's worse than that. vim attempts to read the swapfile before 
+showing you the complaint:
+
+$ mkfifo -m 644 /tmp/.bar.swp
+$ vim /tmp/bar
+[hangs forever]
 
 -- 
-Nicholas Luedtke
-HPE Linux Security, Hewlett-Packard Enterprise
-
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Jakub Wilk
