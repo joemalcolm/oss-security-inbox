@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1888" "Monday" "26" "September" "2016" "11:34:05" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160926113405.6454bfa6@hboeck.de>" "55" "Re: [oss-security] Re: ffmpeg afl bugs" "^Date:" nil nil "9" "2016092609:34:05" "[oss-security] Re: ffmpeg afl bugs" (number mark "        hanno@hboeck Sep 26   55/1888  " thread-indent "\"Re: [oss-security] Re: ffmpeg afl bugs\"\n") "<20160926054540.231936DCCB9@smtpvmsrv1.mitre.org>" ("<trinity-791b10d9-ee4c-4418-ab3c-338e17152b44-1474834018724@3capp-gmx-bs68>" "<20160926054540.231936DCCB9@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1484" "Wednesday" "1" "November" "2017" "16:29:32" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<94352367.aY5R7YHe3W@wanheda>" "89" "Re: [oss-security] CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks" nil nil nil "11" "2017110115:29:32" "[oss-security] CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks" (number mark "U       ago@gentoo.o Nov  1   89/1484  " thread-indent "\"Re: [oss-security] CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks\"\n") "<tencent_C577451864B1690107062CD83581D6BE5708@qq.com>" ("<tencent_C577451864B1690107062CD83581D6BE5708@qq.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28330 invoked by uid 550); 26 Sep 2016 09:34:19 -0000
+Received: (qmail 21883 invoked by uid 550); 1 Nov 2017 15:29:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28306 invoked from network); 26 Sep 2016 09:34:19 -0000
-Message-ID: <20160926113405.6454bfa6@hboeck.de>
-In-Reply-To: <20160926054540.231936DCCB9@smtpvmsrv1.mitre.org>
-References: <trinity-791b10d9-ee4c-4418-ab3c-338e17152b44-1474834018724@3capp-gmx-bs68>
-	<20160926054540.231936DCCB9@smtpvmsrv1.mitre.org>
-X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-13811-1474882448-0001-2"
-Date: Mon, 26 Sep 2016 11:34:05 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: ffmpeg afl bugs
+Received: (qmail 21865 invoked from network); 1 Nov 2017 15:29:49 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-
---=_zucker.schokokeks.org-13811-1474882448-0001-2
-Content-Type: text/plain; charset=UTF-8
+Cc: =?utf-8?B?5pe65LuU?= <16362505@qq.com>, cve-assign <cve-assign@mitre.org>
+Date: Wed, 01 Nov 2017 16:29:32 +0100
+Message-ID: <94352367.aY5R7YHe3W@wanheda>
+In-Reply-To: <tencent_C577451864B1690107062CD83581D6BE5708@qq.com>
+References: <tencent_C577451864B1690107062CD83581D6BE5708@qq.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks
 
-Hello,
-
-On Mon, 26 Sep 2016 01:45:40 -0400 (EDT)
-cve-assign@mitre.org wrote:
-
-> > overread end of atom 'stsd' by 4294967134 bytes=20=20
+On mercoled=C3=AC 1 novembre 2017 03:26:56 CET =E6=97=BA=E4=BB=94 wrote:
+> > [Suggested description]
+> > In PCRE 8.41,
+> > after compiling, a pcretest load test PoC produces a crash overflow
+> > in the function match() in pcre_exec.c because of a self-recursive call.
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Vulnerability Type]
+> > Buffer Overflow
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Vendor of Product]
+> > Perl Compatible Regular Expressions
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Affected Product Code Base]
+> > PCRE - 8.41
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Affected Component]
+> > file:pcre_exec.c
+> > function match() line 983 and line 2061
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Attack Type]
+> > Local
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Impact Denial of Service]
+> > true
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Attack Vectors]
+> > A crash file
+> >
+> >
+> >
+> > ------------------------------------------
+> >
+> >
+> >
+> > [Discoverer]
+> > ZHANG JIAWANG from cncert
 >=20
-> Use CVE-2016-7554.
+>=20
+> Use CVE-2017-16231.
 
-I don't think this is any vuln.
+I guess that this bug is similar or the same described here:
+https://bugs.exim.org/show_bug.cgi?id=3D2047
 
-This is a warning message from ffmpeg itself, not from any memory
-safety tool. Thus I interpret this as "this file is garbled and would
-overread if we'd do what the file offsets indicate".
-
-It probably indicated a bug that Michal originally found with this
-file, but that happened long ago. The file is from Dec 2014 (looks like
-this [1]).
-
-
-[1] https://ffmpeg.org/pipermail/ffmpeg-cvslog/2014-December/084342.html
+Based on the upstream comment I'd suggest to reject the CVE.
 --=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
---=_zucker.schokokeks.org-13811-1474882448-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCAAGBQJX6OuNAAoJEKWIAHK7tR5CFKMP+gNzf6fNshbQfzrlrGuYishP
-8/Hdza6db5QVwsv5e2x7T4BrzSgKoriklxYKDYzGgOcXcRgiRxdxtRgzQ0ARCph0
-yfasWRbp5wTXISfXh7Br7iVpSXv8OQXgnulogeBLkbSb6XNT5nnupy1DJhluCrce
-FAqcXRU8npdulhygdPAyE3QDf/hNgjNl9SsQN3C/D/8YaHbteDecV2Ws50rZAe6b
-Mqi2HYaQE5iN6C8cWrhg5Ggw0iwcGDggW2SAtLv0x2O6ekL5pwSm4mEP1Xfyrn2a
-AQQqOh8ZZTKRusvu6gGTIHP0ERh0Qz+J7cuVPIJ02RfDEFds2P2NuzgrlWO24g+m
-++rZU6uVbzU+xYvmKsMkKBqz+Ad3m7jpBj+jVviUNQkGlK8L8rUrP2NFdcfu05LL
-3OCY0TrB9p05/nKtXX33H6Cf1+7zmB3EnhmO1YzF/Jk1VCFhOQrm8Ng9CAEKt80S
-B/9gdaq4Y0L7Ibfm0HX9u6do9VcrLOGu9KE1STAQKRKfXoWBZAaHDRTfKHcxDdhp
-Yz3pIus3+ofCSEYbfkFhN5/R5wY6SsiRSE266O9HjVX5agtx2g0vDBmKTccG95fr
-KTQT1g9rHdOzMn4BFstb/spW6kvGK4+Wk1ChONuAPtTLBL775Wz05/C2kZ5T5/n+
-V32i4aTCgie2fADXSmQF
-=FoUG
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-13811-1474882448-0001-2--
+Agostino Sarubbo
+Gentoo Linux Developer
