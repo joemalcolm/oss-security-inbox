@@ -1,82 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/15
-Message-ID: <CA+aC4ktnyUy1KExK-zi8ptYFa-P1CQrWBRsQutue0vODuwCqVA@mail.gmail.com>
-Date: Fri, 14 Jul 2017 11:09:39 -0700
-From: Anthony Liguori <anthony@...emonkey.ws>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/2
+Message-ID: <20171101085306.GF14183@redhat.com>
+Date: Wed, 1 Nov 2017 09:53:06 +0100
+From: Jan Pokorný <jpokorny@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 14, 2017 at 10:56 AM, Solar Designer <solar@...nwall.com> wrote:
-> On Sat, Jul 08, 2017 at 04:11:25PM +0200, Salvatore Bonaccorso wrote:
->> On Wed, Jun 28, 2017 at 10:02:40PM +0200, Solar Designer wrote:
->> > 6. If CVE IDs are requested, the report is valid, and you're a CNA,
->> > assign those (requesting any required information from the reporter
->> > first)
->> >
->> > 7. If the report does not mention CVE IDs (neither requests nor provides
->> > them, and doesn't mention the reporter having requested them elsewhere),
->> > yet the report is valid and it looks like distros will need CVE IDs, and
->> > you're a CNA, ask the reporter whether they have already requested CVE
->> > IDs elsewhere, then assign those if they haven't been requested
->> > elsewhere
->>
->> Speaking for Debian: Debian beeing a CNA can *help* monitoring those
->> explicitly and assign where needed CVEs from the assigned pool.
->
-> I've listed Debian as backup for the two CVE tasks above.  I've also
-> listed Red Hat as primary for these two tasks, based on Red Hat's
-> contributions so far.  And I've listed Cloud Linux and Gentoo beside
-> the tasks they kindly volunteered for in postings in here.
->
-> I see that Gentoo is already active at their tasks, including reminding
-> reporters to post to oss-security and taking care of the SPICE posting
-> (when the reporter wasn't available to make it on time):
->
-> http://www.openwall.com/lists/oss-security/2017/07/14/1
->
-> as well as collecting statistics.  Thanks!
->
->> We are already as well contributing to other tasks, and will continue
->> to do so as time permits.
->
-> Thank you!
->
-> However, many tasks remain vacant, with no distro responsible for them.
-> This doesn't mean they're not getting done - just that no particular
-> distro is responsible - yet that's something I'd like to see change.
->
-> Specifically, all 6 of the technical tasks and 5 of 13 administrative
-> tasks are now fully vacant.  Additionally, 11 of the administrative
-> tasks have no backup.
+On 31/10/17 12:48 -0600, Kurt Seifried wrote:
+> For example cat (and cpo and tar) work as expected:
+> 
+> [...]
+> 
+> [kseifrie@...alhost vi]$ cat foo > bar
 
-We (Amazon Linux) are very happy to fill in whatever gaps are needed.
+Just noting that cat has nothing to do with how the file born by the
+means of output redirection gets created.  It's the responsibility
+of the executing shell that supports such a concept in the first place.
 
-Most of the places where that can be done most effectively already
-have a primary.  I hate to just sign up to be backup but if we did
-that, we would track independently to ensure nothing got missed.
+-- 
+Jan (Poki)
 
-So maybe backup for administrative tasks 9-13 and then we can be
-primary for technical task 3?  We already test all of these fixes so
-responding with a report of the testing we've done is straight forward
-enough.
-
-Regards,
-
-Anthony Liguori
-
->
-> These distros have no task assigned: ALT Linux, Amazon Linux AMI, Arch
-> Linux, Chrome OS, Openwall, Oracle, Slackware, SUSE, Ubuntu, Wind River,
-> FreeBSD, NetBSD/pkgsrc.
->
-> Openwall might be exempt for now for us running the lists and being the
-> last resort fallback for most tasks. ;-)  The rest should volunteer for
-> some tasks now!
->
-> Red Hat almost made this list, except that I listed them for the two CVE
-> tasks on my own.
->
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
-> Alexander
+Content of type "application/pgp-signature" skipped
