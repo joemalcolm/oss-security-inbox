@@ -1,72 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/8
-Message-ID: <CAMNd5sthm7v3xxeZvpd6WBXQoM8OJsst+AWK9jQinzkM-VbZiw@mail.gmail.com>
-Date: Fri, 17 Mar 2017 00:58:05 +0800
-From: Thuan Pham <thuanpv@...p.nus.edu.sg>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/5
+Message-ID: <20171101144927.srk7stiwoia4qt57@sentinelchicken.org>
+Date: Wed, 1 Nov 2017 07:49:27 -0700
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: multiple bugs found in BFD libraries and Binutils' utilities
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
+> > Also, it almost never makes sense to put things in /tmp, for several
+> > reasons pointed out by others.  Making ~/.vim/... the default location
+> > clearly is the best solution.
+> 
+> And all those reasons make no sense. /tmp has a sticky bit precisely so that
+> people could put stuff there, as opposed to /run.
 
-Using AFLGo, a directed version of AFL/AFLFast fuzzing tool, we found
-several bugs in the Binutils' utilities such as readelf, objdump, nm and
-the BFD library (DWARF and STABS parsers).
+We've been spending decades fixing filesystem races that arise from
+cases where people use temporary files in world-writable directories.
+You have to get a half dozen things exactly correct in order to use
+/tmp.  Why take the risk?  Doesn't every normal (human) user account
+have a home directory that is already protected?
 
-Binary File Descriptor (BFD) library is a GNU library to manipulate object
-files of many processor architecture (>=25) in a variety of formats (>=50).
-The library is used by several widely-used tools like GNU Assembler (GAS),
-GNU Linker (GLD), GNU Binary Utilities ("binutils") tools, and the GNU
-Debugger (GDB). Binutils' utilities like readelf, objdump and nm are common
-tools to analyze program objects..
 
-Here is the list of bug reports & bug fixes. All of them have been
-confirmed and fixed by Binutils' maintainers.
+> Just to clarify:
+> 1. vim creates a swap file applying user's umask.
+>    Tested with vim on ArchLinux and vi on Fedora, if your vim doesn't do that,
+>    the corresponding package is broken.
 
-1) Heap Buffer Overflow - Invalid Write in Readelf
-https://sourceware.org/bugzilla/show_bug.cgi?id=21137
-https://sourceware.org/bugzilla/show_bug.cgi?id=21155 (bug still exists
-because of incomplete fix in PR Binutils/21137)
+Glad to hear at least some implementations are safe.  But that is just
+one of several potential issues.
 
-2) Heap Buffer Overflow - Invalid Read in BFD library's DWARF
-https://sourceware.org/bugzilla/show_bug.cgi?id=21151
 
-3) Heap Buffer Overflow - Invalid Read in BFD library's handling of STABS
-debug information causing Objdump to crash
-https://sourceware.org/bugzilla/show_bug.cgi?id=21157
+> 2. It is totally OK to edit files in /tmp or /dev/shm or /var/tmp.
+>    The described "attack" when someone plants a /tmp/file.swp before another
+>    user edits /tmp/file is not going to work because vim will complain that the
+>    swap file already exists.
 
-4) Global Buffer Overflow - Invalid Read in BFD library's handling of STABS
-debug information
-https://sourceware.org/bugzilla/show_bug.cgi?id=21158
+I hope they got the TOCTOU correct...
 
-5) Use after free in Readelf
-https://sourceware.org/bugzilla/show_bug.cgi?id=21139
+And as Alexander pointed out, /tmp is a bad place to put recovery
+files because everything is often wiped from /tmp at reboot.  
 
-6) Heap buffer overflow - invalid read of size 4 in Readelf
-https://sourceware.org/bugzilla/show_bug.cgi?id=21156
 
-7) Heap buffer overflow in Readelf (Invalid Read of size 1)
-https://sourceware.org/bugzilla/show_bug.cgi?id=21135
-https://sourceware.org/bugzilla/show_bug.cgi?id=21159 (bug still exists due
-to incomplete fix in PR Binutils/21135)
+What's wrong with ~/.vim/ ??  You've argued that /tmp is OK, but
+haven't given a reason why ~/.vim/ is bad.  I suppose you could argue
+that ~/.vim/{full-system-path-of-file} could get too long for the
+underlying filesystem.  Fine, then store these files as
+~/.vim/{hmac-sha-256-of-full-system-path} and call it a day.
 
-8) Heap buffer overflow in Readelf (Invalid Read of size 1)
-https://sourceware.org/bugzilla/show_bug.cgi?id=21147
-
-9) Heap buffer overflow in Readelf (Multiple Invalid Read of size 1)
-https://sourceware.org/bugzilla/show_bug.cgi?id=21148
-
-10) Heap buffer overflow in Readelf (Multiple Invalid Read of size 1)
-https://sourceware.org/bugzilla/show_bug.cgi?id=21149
-
-11) Global buffer overflow in Nm (Invalid Read of size 1)
-https://sourceware.org/bugzilla/show_bug.cgi?id=21150
-
-Could you please check whether these bugs are suitable for CVEs?
-Many thanks,
-
-----------------------------
-Thuan Pham
-TSUNAMi Security Research Center
-National University of Singapore
-
+tim
