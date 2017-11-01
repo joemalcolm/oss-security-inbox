@@ -1,84 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/09/3
-Message-ID: <20171109152412.qmh4gw62lcrd5a4h@jwilk.net>
-Date: Thu, 9 Nov 2017 16:24:12 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/10
+Message-ID: <CAH8yC8=KKh8SPtDUUSAL_GuDHT7eYBrmHvVjzeQ5n4ocFh4m5Q@mail.gmail.com>
+Date: Wed, 1 Nov 2017 11:31:57 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: nvi denial of service
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Instead of applying more and more duct tape on nvi's broken design, you 
-should stop abusing /var/tmp and store swapfiles in user's home 
-directory instead; and drop the virecorver script completely.
+On Wed, Nov 1, 2017 at 10:49 AM, Tim <tim-security@...tinelchicken.org> wrote:
+>> > Also, it almost never makes sense to put things in /tmp, for several
+>> > reasons pointed out by others.  Making ~/.vim/... the default location
+>> > clearly is the best solution.
+>>
+>> And all those reasons make no sense. /tmp has a sticky bit precisely so that
+>> people could put stuff there, as opposed to /run.
+>
+> We've been spending decades fixing filesystem races that arise from
+> cases where people use temporary files in world-writable directories.
+> You have to get a half dozen things exactly correct in order to use
+> /tmp.  Why take the risk?  Doesn't every normal (human) user account
+> have a home directory that is already protected?
 
-* coypu@....org, 2017-11-09, 02:32:
-> /*
->+ * Since vi creates recovery files only accessible by the user, files
->+ * accessible by group or others are probably malicious so avoid them.
->+ * This is simpler than checking for getuid() == st.st_uid and we want
->+ * to preserve the functionality that root can recover anything which
->+ * means that root should know better and be careful.
->+ */
->+static int
->+checkok(int fd)
->+{
->+	struct stat sb;
->+
->+	return fstat(fd, &sb) != -1 && S_ISREG(sb.st_mode) &&
->+	    (sb.st_mode & (S_IRWXG|S_IRWXO)) == 0;
+Some installs don't allow users to write to /tmp. For example, some
+machines on GCC's compile farm do not allow it. I seem to recall the
+error was a RO mount. Also see https://gcc.gnu.org/wiki/CompileFarm.
 
-Clever, but racy. Between the open() and fstat() calls, the owner could 
-change permissions to make this test pass.
+Code and scripts certainly need to check TMPDIR and then have a
+fallback strategy if it is missing.
 
->-		if ((fp = fopen(dp->d_name, "r+")) == NULL)
->+		if ((fp = fopen(dp->d_name, "r+efl")) == NULL)
-
-These are non-standard modifiers:
-"e" opens the file with O_CLOEXEC;
-"l" opens the file with O_NOFOLLOW;
-"f" opens only regular files.
-
-("e" is available in glibc; the others are not.)
-
-AFAICS, implementation of the "f" modifier in NetBSD is not atomic: it 
-opens the file, then closes it if it's not a regular file.
-
->-		if ((fd = open(recpath, O_RDWR, 0)) == -1)
->+		if ((fd = open(recpath, O_RDWR|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC,
-
-I believe that even with O_NONBLOCK, opening a non-regular file can have 
-side effects.
-
->+for i in $RECDIR/vi.*; do
->+
->+	case "$i" in
->+	$RECDIR/vi.\*) continue;;
->+	esac
-
-(Not related to security, but this check for non-expanded wildcard is 
-not needed, because the code skips non-existent files later anyway.)
-
->+for i in $RECDIR/recover.*; do
->+
->+	case "$i" in
->+	$RECDIR/recover.\*) continue;;
->+	esac
-
-(Ditto.)
-
->+	# Delete any recovery files that are zero length, corrupted,
->+	# or that have no corresponding backup file.  Else send mail
->+	# to the user.
->+	recfile=$(awk '/^X-vi-recover-path:/{print $2}' < "$i")
-
-It's still happy to read any file as root. (So it's trivial for a local 
-user to make the script hang forever.)
-
->+	if [ -n "$recfile" ] && [ -s "$recfile" ]; then
->+		$SENDMAIL -t < "$i"
-
-It's still happy to send email arbitrary emails (including non-local 
-recipients) as root.
-
--- 
-Jakub Wilk
+Jeff
