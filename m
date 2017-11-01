@@ -1,46 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/4
-Message-ID: <20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>
-Date: Wed, 21 Jun 2017 20:26:05 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/9
+Message-ID: <e7a2d0fa-bb31-7320-44ba-47652bcfba47@Z5T1.com>
+Date: Wed, 1 Nov 2017 11:41:54 -0400
+From: Z5T1 <z5t1@...1.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - The Stack Clash
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-:Still, if OpenBSD was able to resolve the issues necessary after 
-:notification without leaking full details to the public, shouldn't 
-:this have been possible for the other projects without an embargo, 
+Hello All. I'd just like to add my two sense to this conversation.
 
-Several open-source distros fixing the same flavor of issue in the
-same timeframe might've raised suspicions in a way that one distro
-alone wouldn't have.  Heck, I've tracked down embargoed security
-issues just from what multiple closed source vendors documented in
-their release notes.
+I have reproduced this on Centos 6 and Cucumber Linux 1.0. It appears
+that the umask plays no role in the permissions on swap files; Vim
+creates its swap files with the same permissions as the file being
+edited. This is still a problem though, as configuration files in
+/var/www are usually readable by the httpd user, so the Vim .swp will
+also be readable by the httpd user and consequentially anyone connecting
+to the webserver.
 
-:My take on the embargoing process (outside of what's already mentioned
-:on https://grsecurity.net/an_ancient_kernel_hole_is_not_closed.php ):
-:I've always been concerned by the fact that smaller distros seem to 
-:be barred from distros-list membership; it seems the arrangement 
-:lends itself too much to enabling the marketing of the larger 
-:companies and in fact perhaps even disincentivizing their investment 
-:in security as the embargo process enables them to skirt much of the 
-:public pain they'd otherwise have to experience (for in this 
-:instance what was a completely avoidable problem).  I get the practical
-:reasons for the policy (increased leak risk, major distros often do
-:the actual fixing work, etc) but from a level of principle it's always
-:rubbed me the wrong way.
+Storing the swap files in /tmp is a bad idea for all the reasons
+previously discussed; /tmp gets wiped on reboot on most (but not all)
+Linux distributions and storing the swap files in a location that is
+readable by every user on the system has is own security problems. For
+instance, what if root goes to edit /etc/shadow and the swap file is
+placed in /tmp?
 
-In the past, I've proposed that the embargo mailing list archives
-themselves have an "embargo", after which they become public.  That
-way, there's after-the-fact transparency, and it gives the folks who
-care a good idea of what happened.  Is there anything sensitive at
-this point in, say, the March 2017 linux-distros archives??   
+I have found this problem can be mitigated by changing the swap
+directory with the 'set directory' directive as Hanno originally
+suggested. I have added the following lines to my '/etc/vimrc':
 
--Mike
+" Move the swap file location to protect against CVE-2017-1000382
+silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
+set directory=~/.vim/swap/
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Well done is better than well said."                           -Ben Franklin
+This safely sets the swap file directory to a directory that should not
+cause any security problems. For added security, the directory is
+created so that only the owner has access to it, regardless of how the
+system's umask is set.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (188 bytes)
+Additionally, the swap file collision (if you edit both ~/foo/file and
+~/bar/file at the same time) is not a major issue; Vim detects this and
+gives the second swap file a different file extension. When you go to
+restore from the swap file, you get a prompt asking which swap file you
+want to use (if there are two swap files with the same basename), which
+doesn't strike me as being terribly problematic.
+
+I will be adding this to the default '/etc/vimrc' on Cucumber Linux in
+the next few hours. I thought it may be helpful for other distro
+maintainers to know as well.
+
+    - Scott
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
