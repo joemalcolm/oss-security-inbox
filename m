@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["862" "Thursday" "23" "August" "2018" "13:29:23" "+0200" "Mateusz Lenik" "mlen@mlen.pl" "<CALDAOtuLdurT759O0AxPovJ4ThgcrYrJkYsxJPR4EgWf2QG_+g@mail.gmail.com>" "29" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "8" "2018082311:29:23" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        mlen@mlen.pl Aug 23   29/862   " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<5b7dd771.1c69fb81.a6d8.6521@mx.google.com>" ("<CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>" "<CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>" "<alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>" "<CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>" "<CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>" "<CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>" "<alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>" "<5b7dd771.1c69fb81.a6d8.6521@mx.google.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3599" "Wednesday" "1" "November" "2017" "11:41:54" "-0400" "Z5T1" "z5t1@z5t1.com" "<e7a2d0fa-bb31-7320-44ba-47652bcfba47@Z5T1.com>" "84" "[oss-security] Re: Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110115:41:54" "[oss-security] Re: Fw: Security risk of vim swap files" (number mark "U       z5t1@z5t1.co Nov  1   84/3599  " thread-indent "\"[oss-security] Re: Fw: Security risk of vim swap files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5908 invoked by uid 550); 23 Aug 2018 11:35:20 -0000
+Received: (qmail 19960 invoked by uid 550); 1 Nov 2017 15:47:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,128 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30670 invoked from network); 23 Aug 2018 11:29:46 -0000
+Received: (qmail 12178 invoked from network); 1 Nov 2017 15:42:30 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mlen.pl; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=LjtmoANvNeYuGsvNqi23Gw0s3zTjKDxXhGXW4BEuLbI=;
-        b=Lb1bXb+55cjk6t+aPX8KBfZn+km37TqwVf29x18th9f3p+mVoX6blnQJq5rHHQ3BSQ
-         Y1de2Zg9eGsH7iBslzuF3DAFb8F4mPkvSeDrWCPTqmW4gYPUS5adMwSd0T0x+Xk6fh4Q
-         Ev+Nyxj7iLs+Kdd9Dk7aS6XAoS2hE7sZG0EUo=
+        d=z5t1-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:subject:message-id:date:user-agent:mime-version;
+        bh=UF+XweSCC5Jt/gUOH+x+UDMYnvWt1oS39xHt/E/uvtY=;
+        b=ryLX9eGihRd7dNvdhI5jXKl9dKXinyIzlZLK6gsIRM3WabT2d8+3yI1rRY1bEgAlFE
+         /OzU1StwQnKnXWXH/xNXhMm9x51uoan34z1zimakmnB3dJ2UpGnBmb9RC9solWdYUDn8
+         d7Nv41hkAq2sVsPm5vbGksYkRewYn+J2Vo2tVxEEpB1ioTvN3zFUiO1U+RKTxQ6MixVb
+         D2io5Z/GGVVjw1/sAcrWmt21tca5P++6od+ygGv/i4hx4id7sli/o8lFheodBqi9434R
+         +4mpUaM7pgxy0VrYAHR5w4TQw3LdlxOV9AFhI28q2AkcdkO1mZmOTKX4PBrLKt3FBh5a
+         q7sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=LjtmoANvNeYuGsvNqi23Gw0s3zTjKDxXhGXW4BEuLbI=;
-        b=m7ZUmxUm2qOEhDau/KY3lGJgAZ/eDB7CiubWra459ySGZ0vUrvXHY+KGFGMZC8dts0
-         iZyMPelA8wQ6H5wTsbOSh0DvMP4y+LdsHMswtfAg52oiJ+4rGcMO2b6nUM8eoDLvHNYa
-         i6+WPvx2PiE11OBkZVh3HYTA+poUMxtpw8WuDJ646fkqEG6HaNqGmKb1DdRz9r+KyDlM
-         44jAzfGPt1kO8OvdrJd0F9DUcgnj4zVDvBGc5JH94phNBd8UDkSvyeNcE/aZ4NGnb7m7
-         ajY3meJ4Y+Vqy9kUc9U1BOBqZBiqVZcpr32hfSHdb3CcHQ+nGGPVhFXptNK5VgeCyfHm
-         MZDA==
-X-Gm-Message-State: AOUpUlF6gHaOgbP27CdY+48JilGd2ODEL386DxJ6hsUiNgtSoO4CBFJo
-	1yIJjIlwL7OVhFHGvUnoCseWybSPqAjGwwFVwHOr36FkZIA=
-X-Google-Smtp-Source: AA+uWPzyHHQCkRssxZPv7UU4wq50up3h434H5i2j/8rSau4HGIXuph9m1RT2cKIloAp0xB1H/V+qcE9cSXPT3LUkGHo=
-X-Received: by 2002:aa7:c74b:: with SMTP id c11-v6mr19162068eds.113.1535023774908;
- Thu, 23 Aug 2018 04:29:34 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:message-id:date:user-agent
+         :mime-version;
+        bh=UF+XweSCC5Jt/gUOH+x+UDMYnvWt1oS39xHt/E/uvtY=;
+        b=IZTEWPiP13vAdOaCpctm/nBK4yk5kxzT4rkIbU8/ieTkW2FkIkgXoDDw3hPdDDIAHA
+         /Pzi3YwZ2+KZ2SEPLRdWrP/sXgH6W7vIAZT/Hod/mQJ4ShzcRLKcfwrk2dEi2xd5YFuw
+         DOkN5ZoMEFpcSD0LTJEigxpJ/iyEkAW71g0BkMif/jNiBLauqmWM1ad1MzrUspc+nXSy
+         BFOk5qepd9BNV6UvhyxBhiQRl7/64TTMdqzaa5PAZwsNT2WsXE+Q5XpRntcQQhKB3pKQ
+         17qzb1nBib9wfwSFVpaCAW+25X2EJzwfrzvrJIBz/tt0FHpFOCQBlXxhcKyE9iTNirDT
+         Kv+Q==
+X-Gm-Message-State: AMCzsaVR18LGpLytRZRLgnhJr00qWZik2f5BjtRg8H6RNlwPqot0leKo
+	ykVVrG0p3ATsRs20L/CVO5o/PHWNBuY=
+X-Google-Smtp-Source: ABhQp+SfOQ0pfWrTJ4YOvxlc8XLr87uqYagQnmIfNudqwuZyma0Ea5xt4h9zAO6dJ2Fpl7O+5DUiYg==
+X-Received: by 10.200.41.19 with SMTP id y19mr437720qty.300.1509550938662;
+        Wed, 01 Nov 2017 08:42:18 -0700 (PDT)
+X-Google-Original-From: Z5T1 <Z5T1@Z5T1.com>
+Message-ID: <e7a2d0fa-bb31-7320-44ba-47652bcfba47@Z5T1.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-References: <CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>
- <CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>
- <alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>
- <CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>
- <CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>
- <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>
- <alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org> <5b7dd771.1c69fb81.a6d8.6521@mx.google.com>
-In-Reply-To: <5b7dd771.1c69fb81.a6d8.6521@mx.google.com>
-Message-ID: <CALDAOtuLdurT759O0AxPovJ4ThgcrYrJkYsxJPR4EgWf2QG_+g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000d359c10574189206"
-Date: Thu, 23 Aug 2018 13:29:23 +0200
-From: Mateusz Lenik <mlen@mlen.pl>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="lGxmo5SoxaEed0D5xkiCWFmkvNdLnbcBS"
+Date: Wed, 1 Nov 2017 11:41:54 -0400
+From: Z5T1 <z5t1@z5t1.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
- coders in policy.xml by default?
+Subject: [oss-security] Re: Fw: Security risk of vim swap files
 To: oss-security@lists.openwall.com
 
---000000000000d359c10574189206
-Content-Type: text/plain; charset="UTF-8"
+--lGxmo5SoxaEed0D5xkiCWFmkvNdLnbcBS
+Content-Type: multipart/mixed; boundary="BrAGdwnhMGFn7heCpGkk5xinrcwxGXLOW";
+ protected-headers="v1"
+From: Z5T1 <Z5T1@Z5T1.com>
+To: oss-security@lists.openwall.com
+Message-ID: <e7a2d0fa-bb31-7320-44ba-47652bcfba47@Z5T1.com>
+Subject: Re: Fw: Security risk of vim swap files
 
-Hello,
+--BrAGdwnhMGFn7heCpGkk5xinrcwxGXLOW
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-On Thu, Aug 23, 2018 at 11:06 AM Leonardo Taccari <iamleot@gmail.com> wrote:
+Hello All. I'd just like to add my two sense to this conversation.
 
-> Bob Friesenhahn writes:
-> > The CERT advisory at https://www.kb.cert.org/vuls/id/332928 provides a
-> > policy.xml example which does not appear to block PS2 and PS3, which
-> > are also entry points for reading Postscript.
-> > [...]
->
-> If I am not missing something I think that ghostscript isn't used
-> for them though.
->
+I have reproduced this on Centos 6 and Cucumber Linux 1.0. It appears
+that the umask plays no role in the permissions on swap files; Vim
+creates its swap files with the same permissions as the file being
+edited. This is still a problem though, as configuration files in
+/var/www are usually readable by the httpd user, so the Vim .swp will
+also be readable by the httpd user and consequentially anyone connecting
+to the webserver.
 
-It seems to be possible to disable GhostScript in ImageMagick completely by
-the policy rule below. It's not possible to miss any format with it.
+Storing the swap files in /tmp is a bad idea for all the reasons
+previously discussed; /tmp gets wiped on reboot on most (but not all)
+Linux distributions and storing the swap files in a location that is
+readable by every user on the system has is own security problems. For
+instance, what if root goes to edit /etc/shadow and the swap file is
+placed in /tmp?
 
-<policy domain="delegate" rights="none" pattern="gs" />
+I have found this problem can be mitigated by changing the swap
+directory with the 'set directory' directive as Hanno originally
+suggested. I have added the following lines to my '/etc/vimrc':
 
-I also found out that Amit's exploit works with lesspipe that ships with
-less by default -- it uses gs via ps2ascii wrapper
+" Move the swap file location to protect against CVE-2017-1000382
+silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
+set directory=3D~/.vim/swap/
 
-Best,
-Mateusz
+This safely sets the swap file directory to a directory that should not
+cause any security problems. For added security, the directory is
+created so that only the owner has access to it, regardless of how the
+system's umask is set.
 
---000000000000d359c10574189206--
+Additionally, the swap file collision (if you edit both ~/foo/file and
+~/bar/file at the same time) is not a major issue; Vim detects this and
+gives the second swap file a different file extension. When you go to
+restore from the swap file, you get a prompt asking which swap file you
+want to use (if there are two swap files with the same basename), which
+doesn't strike me as being terribly problematic.
+
+I will be adding this to the default '/etc/vimrc' on Cucumber Linux in
+the next few hours. I thought it may be helpful for other distro
+maintainers to know as well.
+
+=C2=A0=C2=A0=C2=A0 - Scott
+
+
+
+--BrAGdwnhMGFn7heCpGkk5xinrcwxGXLOW--
+
+--lGxmo5SoxaEed0D5xkiCWFmkvNdLnbcBS
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJZ+etIAAoJEI1dl2DAZNZcMBUP/3hTxTSNHW4/CcZotDvYUsb+
+K2t/MikvA5tTpBTyXIvC+lcqN5cxQ3d5dsm872BjvVwJKnITq0ptWivPERKCnhGW
+/azC8GEbV7kt3jWjdwQBJrJQzQgz5LotYls5Zd7xcWu8Cqjz/jzgfm/CmPQdGAqy
+A/xRtf0LvMxC9EfvRf0OSn3R1m+UJsXcSWeuE/YDVJaXkaAU3PdOSxpSDcZ7E4UU
+OWnJQ7ejV1sbr+u7Tuylty1uitcfWoQsqxymnIZJV683RZIvz2e2/SK36Ao+x5tG
+PIro+J9TQsMDk2UhkJbxeax+pCUVTnonaISr7xB4mgtWkO1J/gDd+GNtMwdEUne7
+Vmu0Lj9YPi1eFS1VmZJqAnjWcDF6dunPD5DAT3IjIGDP5jEoWuXws/ohXi+jUATn
++UujQTS5S46ZMMOuilzK0t6BUtiV2Fmf8Jxb5rcBXqpU8fjSOugZ9J8upB809fnv
+ZRtAxydgY74vT2c4ZjugjbWh/rxVj+8ZV05a0z/aVITugypaRM9cLGM3mUnJsXO0
+uQr7mvEpHZ27qrQRcr+akwcIND93uGnQtfA0JZRHNkaFxCg+w24T43kUHSN1rqS7
+JZyhyfRpASzyqYneswNrNUEDnFBAK/q00wH/DjLDNGWXuRklmE6WnhgBEXflz3em
+FVdWHcYna0Mk1XddANRM
+=BZLa
+-----END PGP SIGNATURE-----
+
+--lGxmo5SoxaEed0D5xkiCWFmkvNdLnbcBS--
