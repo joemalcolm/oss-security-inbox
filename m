@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["555" "Tuesday" "7" "July" "2015" "13:52:18" "+0200" "Moritz Muehlenhoff" "jmm@debian.org" "<20150707115217.GA30660@pisco.westfalen.local>" "14" "Re: [oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released" nil nil nil "7" "2015070711:52:18" "[oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released" (number mark "U       jmm@debian.o Jul  7   14/555   " thread-indent "\"Re: [oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31 released\"\n") "<CAG8=FRj5sL+J6YUJqY95uBJN=vxtS=rWfngAfHk4k2vyShadHw@mail.gmail.com>" ("<CAG8=FRj5sL+J6YUJqY95uBJN=vxtS=rWfngAfHk4k2vyShadHw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["807" "Wednesday" "1" "November" "2017" "11:56:06" "-0700" "Bill Farner" "wfarner@apache.org" "<CAFWq12XK1SHqMYtxkgMmVq1JpfNL=kQb8qFnkLfn60qPsAxiRA@mail.gmail.com>" "23" "[oss-security] [CVE-2016-4437] Apache Aurora information disclosure vulnerability" nil nil nil "11" "2017110118:56:06" "[oss-security] [CVE-2016-4437] Apache Aurora information disclosure vulnerability" (number mark "U       wfarner@apac Nov  1   23/807   " thread-indent "\"[oss-security] [CVE-2016-4437] Apache Aurora information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3433 invoked by uid 550); 7 Jul 2015 11:52:31 -0000
+Received: (qmail 3854 invoked by uid 550); 1 Nov 2017 19:05:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,35 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3413 invoked from network); 7 Jul 2015 11:52:31 -0000
-Date: Tue, 7 Jul 2015 13:52:18 +0200
-From: Moritz Muehlenhoff <jmm@debian.org>
-To: oss-security@lists.openwall.com
-Cc: security@apache.org
-Message-ID: <20150707115217.GA30660@pisco.westfalen.local>
-References: <CAG8=FRj5sL+J6YUJqY95uBJN=vxtS=rWfngAfHk4k2vyShadHw@mail.gmail.com>
+Received: (qmail 27991 invoked from network); 1 Nov 2017 18:56:21 -0000
+X-Gm-Message-State: AMCzsaX3EVBEBC4f4+T72/4iwn24mlZ74vr9+hqvxzn24SqaY4VcrX96
+	Nm8uT8a1ogTPbfNVSbOwiH5DEAVZGG2Ut4v0qdc=
+X-Google-Smtp-Source: ABhQp+TLg3bzphKZ3vkQMaXMILSjs6aiFvSjCIFaFxhc/aPzgTqzoeKNUiwlVV+/yYHUT6UkVvnzwAeJIJAU6L7WVJI=
+X-Received: by 10.28.62.67 with SMTP id l64mr929895wma.6.1509562567240; Wed,
+ 01 Nov 2017 11:56:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAG8=FRj5sL+J6YUJqY95uBJN=vxtS=rWfngAfHk4k2vyShadHw@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 95.33.225.85
-X-SA-Exim-Mail-From: jmm@inutil.org
-X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
-Subject: Re: [oss-security] [ANNOUNCE] Apache Directory LDAP API 1.0.0-M31
- released
+From: Bill Farner <wfarner@apache.org>
+Date: Wed, 1 Nov 2017 11:56:06 -0700
+X-Gmail-Original-Message-ID: <CAFWq12XK1SHqMYtxkgMmVq1JpfNL=kQb8qFnkLfn60qPsAxiRA@mail.gmail.com>
+Message-ID: <CAFWq12XK1SHqMYtxkgMmVq1JpfNL=kQb8qFnkLfn60qPsAxiRA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="001a1148fcb8963672055cf06c6f"
+Subject: [oss-security] [CVE-2016-4437] Apache Aurora information disclosure vulnerability
 
-On Tue, Jul 07, 2015 at 11:07:37AM +0200, Emmanuel Lecharny wrote:
-> 
-> This release is fixing a security vulnerability : CVE-2015-3050, a
-> Timing Attack vulnerability.
+--001a1148fcb8963672055cf06c6f
+Content-Type: text/plain; charset="UTF-8"
 
-This ID is already used for a vulnerability in Adobe Reader?
+Versions Affected:
+Aurora 0.10.0 to 0.18.0
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3050:
-| Adobe Reader and Acrobat 10.x before 10.1.14 and 11.x before 11.0.11
-| on Windows and OS X allow attackers to execute arbitrary code or cause
-| denial of service (memory corruption) via unspecified vectors.
-                            
-Cheers,
-        Moritz
+Description:
+The affected versions of the scheduler rely on a version of Apache Shiro
+which is vulnerable to CVE-2016-4437.  Under certain conditions, the
+vulnerability allows remote attackers to execute arbitrary code or bypass
+intended access restrictions via an unspecified request parameter.
+
+Mitigation:
+0.18.0 users should upgrade to 0.18.1
+0.10.0 - 0.17.0 users should upgrade to 0.18.1 or apply this patch
+https://git-wip-us.apache.org/repos/asf?p=aurora.git;a=commit;h=ec640117
+Alternatively, INI configuration mitigations outlined in CVE-2016-4437
+may be applied.
+
+Credit:
+This issue was discovered by Greg Harris from the Fitbit Security team.
+
+--001a1148fcb8963672055cf06c6f--
