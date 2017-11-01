@@ -1,57 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/8
-Message-ID: <CAHmME9rNUXu16RD_fYYDfJa74F8M38tSjk+OU8ugEk8Zi4WKug@mail.gmail.com>
-Date: Wed, 17 May 2017 13:41:32 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: Marc Lehmann <schmorp@...morp.de>, oss-security <oss-security@...ts.openwall.com>
-Cc: rxvt-unicode@...morp.de, "jer@...too.org" <jer@...too.org>
-Subject: Defense in depth patch for rxvt-unicode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/12
+Message-ID: <CANO=Ty2TdNjz6NzOTsmaiYegKwGck5S07V4LAbW7p1NcXP27sw@mail.gmail.com>
+Date: Wed, 1 Nov 2017 10:32:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+One note on something a lot of people seem to be getting confused about:
 
-This email thread concerns my request to Marc to include the attached
-patch inside rxvt-unicode upstream. My own downstream -- Gentoo's
-jer@, also CCd -- won't include the patch until the agreement of
-upstream. Thus, it's important we come to a good conclusion.
+umask is a mask that is applied to permissions when a file is created.
 
-On Wed, May 17, 2017 at 3:17 AM, Marc Lehmann <schmorp@...morp.de> wrote:
-> On Fri, May 12, 2017 at 02:18:29PM +0200, "Jason A. Donenfeld" <zx2c4@...too.org> wrote:
->> I realize I might have used the wrong email address, so please see the
->> thread below.
->
-> You used the right address, but since I was quite busy, and your mail
-> contained nothing but a patch that might break valid uses without any
-> explanation of what it might be useful for, I didn't immediately know what
-> to reply and it fell through the cracks.
+umask is NOT the reverse of the permissions your programs/etc are supposed
+to create files with.
 
-Hi Marc,
+E.g.:
 
-This patch was part of a larger discussion on which you were CCd from
-distros. It seems possible that either those messages didn't make it
-to you, or you didn't have time to read them.
+1) if I have a umask of 0002 I'm saying "never create a file that is
+readable by 'other'"
+2) if I have a umask of 0007 I'm saying "never create a file that is rwx by
+'other'"
+3) if I have a umask of 0077 I'm saying "never create a file that is rwx by
+'group' or 'other'"
 
-In any case, the attached patch would be a useful defense in depth
-measure to prevent future integer overflow bugs, such as the one that
-was recently found in rxvt. Briefly looking though the code, it seems
-like there is a considerable amount of unchecked integer arithmetic,
-often passing between several functions in several files. Short of
-somehow auditing every arithmetic call path, a considerable
-undertaking, Alexander and I would recommend simply limiting the range
-of input from users.
+A umask of e.g. 0007 is NOT saying "create my files with rwxrwx----", it is
+saying "remove 'rwx' from other when creating a file, I don't really care
+what you do with user and group permissions"
 
-As Alexander wrote in a recent email to you, the general opinion of
-this list is that terminal emulators should not support the most
-dangerous uses of escape sequences, even if they're technically valid.
-The attached patch falls into that category. You seem to have made the
-argument that the patch "might break valid uses". I've now provided to
-you a bit of the backstory and recent basis which motivates this
-patch. If this is compelling, I'd rest well knowing it's accepted
-upstream. If this is not compelling, could you indicate to the list
-why "might break valid uses" outweighs the potential security
-mitigations?
+So programs are free to create files with less permissions, e.g.
+ssh-keygen, it creates files rw-r-----, minus whatever your umask is, so if
+you apply a umask of 0077 you'll get files with rw-------- which is what
+you' expect.
 
-Regards,
-Jason
+-- 
 
-View attachment "rxvt-unicode-defense-in-depth-fix.patch" of type "text/x-patch" (447 bytes)
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
