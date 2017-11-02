@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1866" "Tuesday" "26" "January" "2016" "12:49:12" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160126174912.8D47B73C4C1@smtpvmsrv1.mitre.org>" "52" "[oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function" "^Cc:" nil nil "1" "2016012617:49:12" "[oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function" (number mark "        cve-assign@m Jan 26   52/1866  " thread-indent "\"[oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function\"\n") "<3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>" ("<3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2175" "Thursday" "2" "November" "2017" "22:29:16" "+0100" "Christian Brabandt" "cb@256bit.org" "<20171102212916.GC23769@256bit.org>" "52" "[oss-security] Re: Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110221:29:16" "[oss-security] Re: Fw: Security risk of vim swap files" (number mark "        cb@256bit.or Nov  2   52/2175  " thread-indent "\"[oss-security] Re: Fw: Security risk of vim swap files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29908 invoked by uid 550); 26 Jan 2016 17:49:43 -0000
+Received: (qmail 21556 invoked by uid 550); 2 Nov 2017 21:37:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29888 invoked from network); 26 Jan 2016 17:49:42 -0000
-In-Reply-To: <3626D6E697A150459C44C0E5D8D8D00E0DBD56EB@EX02.corp.qihoo.net>
-Message-Id: <20160126174912.8D47B73C4C1@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 26 Jan 2016 12:49:12 -0500 (EST)
-From: cve-assign@mitre.org
+Received: (qmail 11436 invoked from network); 2 Nov 2017 21:29:27 -0000
+Message-ID: <20171102212916.GC23769@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Date: Thu, 2 Nov 2017 22:29:16 +0100
+From: Christian Brabandt <cb@256bit.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
-To: limingxing@360.cn
+Subject: [oss-security] Re: Fw: Security risk of vim swap files
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Kurt Seifried wrote:
 
-> HTMLparser.c line:2517 :
+> There is a flaw here, it appears on some distros that vim (and emacs) will
+> ignore a user's umask and go with less restrictive file permissions
+> (ideally you think vi would use the files existing perms, plus any umask
+> limitations as expected), for example vim failing:
 > 
->        return(xmlDictLookup(ctxt->dict, ctxt->input->cur - len, len));
+> [kseifrie@...alhost vi]$ umask
+> 0007
+> [kseifrie@...alhost vi]$ touch foo
+> [kseifrie@...alhost vi]$ ls -la
+> total 8
+> drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> -rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> [kseifrie@...alhost vi]$ chmod o+r foo
+> [kseifrie@...alhost vi]$ ls -la
+> total 8
+> drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> -rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> [kseifrie@...alhost vi]$ vi foo
 > 
-> "ctxt->input->cur - len"  cause Out-of-bounds Read.
+> in another terminal:
 > 
-> heap-buffer-overflow
-> READ of size 1
-
-Use CVE-2016-2073.
-
-
-> From: Salvatore Bonaccorso
+> [kseifrie@...alhost vi]$ ls -la
+> total 12
+> drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> -rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> -rw-r--r--.  1 kseifrie kseifrie 4096 Oct 31 10:50 .foo.swp
 > 
-> While checking upstream bugzilla to see if that was reported I noticed
+> So vim ignores the umask of the user =(.
+
+> So from a CVE perspective we have a situation where a user has explicitly
+> set a umask (of say 0007) which is to say they've made a security assertion
+> of "any file I create I want the rwx permissions for "other" removed" which
+> vim and emacs (and possibly others) are violating when they create swap
+> files/backups/whatever. To add insult to injury most other utilities that
+> create a file (e.g. cp, cat, dd) seem to respect umask.
 > 
-> https://bugzilla.gnome.org/show_bug.cgi?id=749115
-> 
-> Does this have the same root cause?
+> Please use CVE-2017-1000382 for VIM version 8.0.1187 (and other versions
+> most likely) ignores umask when creating a swap file
+> (\"[ORIGINAL_FILENAME].swp\") resulting in files that may be world readable
+> or otherwise accessible in ways not intended by the user running the vi
+> binary.
 
-The CVE-2016-2073 PoC is an '&' followed by three characters, one of
-which is a 0273 character. The PoC in 749115 has an unexpected
-character immediately after a "<!DOCTYPE html" substring. We feel that
-the CVE-2016-2073 report can have that unique ID on the basis of (at
-least) a different attack methodology. CVE assignment for 749115 is
-also possible unless 749115 already has a CVE ID.
+Vim copies the permission from the file being edited. Although the swap 
+file is readable by others this does not leak any information here, 
+since the file being edited is already readable by others.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWp7B+AAoJEL54rhJi8gl5DrYP/210C002flIvBM/PY66OYkJw
-BXYc5DDLMANTpXaXoaHqYGODfRtwQjZF/sFYUgtOxFTYi3UCHxOpRNjhU77OOlQA
-7aNSZ+PU/Tl15dt7PEJWdNuK0mD9Lofzg6HhxkJD6F6EQHarH0NHIbdEGV6WKGGR
-c2hACkO8WLCQxd+914f5YJBPsd+pKmWADKcmjV3yQMSr+6irHfzp+9UEDX/ma/3b
-9yRwy+7Ubse2t5GNq/F4lepT2fF/lTLweNhSJgdzPg59/NGjf9ZBD14d/RmrRCgR
-KLlIjavWH8fGOAecBcyz7zVJAadQFOVy4DuCyOrvcVMJ6cCPjfv+oZD1r2COhPHW
-9kYlHo5icgJQU8m796+H4pC9a71ckCFZ2EZ7uy8nWS1SG7WmUMJjE5lryt4O9MFt
-8mmiJFXZGpX1gfaq2xHLkptGNMoaTkl+id2Vr/j2ATSCXHV3oNs4+IQLThp9vZ0Y
-q+fajmn0Yp0sO34/vWmDzoxvNWTuwf+LgPjFNsirG80a1Ivv2XtHaxh8G2xTCZh4
-L6gv9PT3ha/UK2RKQxB7atIt/LS2I+DqD72TckY69JygqFg43Q+QAdGQKn1YP2tA
-pgs1SmgAtfOCPoph+4BYZAyIvmMzVDfAI4kjJE7AlZqAIwO3mIxaDFEd1OW3u/JY
-fYAMTYnQVg9Ld8+b+XPY
-=QCuy
------END PGP SIGNATURE-----
+Christian
