@@ -1,173 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/14
-Message-Id: <E1dNHsQ-0007FF-Hf@xenbits.xenproject.org>
-Date: Tue, 20 Jun 2017 12:03:22 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 218 - Races in the grant table unmap code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/4
+Message-ID: <CALJHwhQXo_Om-Fhbg6ZjH31h3OmqCmXgkmUTTEr7HyjVczFY+Q@mail.gmail.com>
+Date: Thu, 2 Nov 2017 13:09:21 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-12193 Linux kernel: Null pointer dereference due to incorrect node-splitting in assoc_array implementation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Gday,
 
-                    Xen Security Advisory XSA-218
-                              version 4
+A flaw was reported to Red Hat by Wu Fan regarding a kernel panic/oops
+based on a flaw in the assoc_array implementation used heavily by the
+keyring subsystem.
 
-                 Races in the grant table unmap code
+The flaw description explains it better than I will:
 
-UPDATES IN VERSION 4
-====================
+---
+Fix a case in the assoc_array implementation in which a new leaf is
+added that needs to go into a node that happens to be full, where the
+existing leaves in that node cluster together at that level to the
+exclusion of new leaf.
 
-Adjust last patch description and add review tag.
+What needs to happen is that the existing leaves get moved out to a
+new node, N1, at level + 1 and the existing node needs replacing with
+one, N0, that has pointers to the new leaf and to N1.
 
-Public release.
+The code that tries to do this gets this wrong in two ways:
 
-ISSUE DESCRIPTION
-=================
+ (1) The pointer that should've pointed from N0 to N1 is set to point
+     recursively to N0 instead.
 
-We have discovered two bugs in the code unmapping grant references.
+ (2) The backpointer from N0 needs to be set correctly in the case N0 is
+     either the root node or reached through a shortcut.
 
-* When a grant had been mapped twice by a backend domain, and then
-unmapped by two concurrent unmap calls, the frontend may be informed
-that the page had no further mappings when the first call completed rather
-than when the second call completed.
+Fix this by removing this path and using the split_node path instead,
+which achieves the same end, but in a more general way (thanks to Eric
+Biggers for spotting the redundancy).
+---
 
-* A race triggerable by an unprivileged guest could cause a grant
-maptrack entry for grants to be "freed" twice.  The ultimate effect of
-this would be for maptrack entries for a single domain to be re-used.
+Thanks to: Fan Wu, Haoran Qiu, and Shixiong Zhao supervised by Dr.
+Heming Cui from the department of Computer Science, University of Hong
+Kong" for reporting this issue.
 
-IMPACT
-======
+Upstream patch:
 
-For the first issue, for a short window of time, a malicious backend
-could still read and write memory that the frontend thought was its
-own again.  Depending on the usage, this could be either an
-information leak, or a backend-to-frontend privilege escalation.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ea6789980fdaa610d7eb63602c746bf6ec70cd2b
 
-The second issue is more difficult to analyze. It can probably cause
-reference counts to leak, preventing memory from being freed on domain
-destruction (denial-of-service), but information leakage or host
-privilege escalation cannot be ruled out.
+--
 
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-Both ARM and x86 are vulnerable.
-
-On x86, systems with either PV or HVM guests are vulnerable.
-
-MITIGATION
-==========
-
-None.
-
-CREDITS
-=======
-
-This issue was discovered by Jann Horn of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the appropriate set of attached patches resolves this issue.
-
-xsa218-unstable/*.patch    xen-unstable
-xsa218-4.8/*.patch         Xen 4.8.x
-xsa218-4.7/*.patch         Xen 4.7.x
-xsa218-4.6/*.patch         Xen 4.6.x
-xsa218-4.5/*.patch         Xen 4.5.x
-
-$ sha256sum xsa218*/*
-6f5e588edb6d3f0a37b89235e95cdcc7ca73cdff236d86b65e6f608bd15b03ec  xsa218-unstable/0001-gnttab-fix-unmap-pin-accounting-race.patch
-5cb85f0aaa19ff343fc51b08addbf37d62352774115acd28eb18a73f67507e21  xsa218-unstable/0002-gnttab-Avoid-potential-double-put-of-maptrack-entry.patch
-f5f3d27ce2829b3aa5e09b216bf9afcb1dc6b1f9f3b3a0f3ebfe5a68b4948aef  xsa218-unstable/0003-gnttab-correct-maptrack-table-accesses.patch
-fafb8773957bbffb21ab43c7a3559efe15f52d234afba5f2ad2739411946c021  xsa218-4.5/0001-IOMMU-handle-IOMMU-mapping-and-unmapping-failures.patch
-4398ad7111421dbf954ede651cb7f9acd83c654c7fa93d54a4e5f9b7b25fe918  xsa218-4.5/0002-gnttab-fix-unmap-pin-accounting-race.patch
-9d23946afb96a70c574b8c7ff42ed8b30b72e9a1f751ff617a7578c79645c094  xsa218-4.5/0003-gnttab-Avoid-potential-double-put-of-maptrack-entry.patch
-27d92c6f4d89de3fd9e9311337823370303c1ef985cce2bd9bea28f00cd6c184  xsa218-4.5/0004-gnttab-correct-maptrack-table-accesses.patch
-99ac090d7955a46c6c9c73ca62b64cef6b8f05439961e52278c662f030a36ee2  xsa218-4.6/0001-IOMMU-handle-IOMMU-mapping-and-unmapping-failures.patch
-e0f0839336e055c1422cf0f76c37f6d9cc8474b0140ffef2451dca6697a9f20f  xsa218-4.6/0002-gnttab-fix-unmap-pin-accounting-race.patch
-5f6f63211b18bb6ec157353b9e8b844abe3fd767ef1780e6d28731e935559fbc  xsa218-4.6/0003-gnttab-Avoid-potential-double-put-of-maptrack-entry.patch
-6a786a8c4b916b6f99092598bd4d60381907cd7e728c98a79e999afeec4f45a6  xsa218-4.6/0004-gnttab-correct-maptrack-table-accesses.patch
-58354eec5f4f0b87640c702c6e1ce0eeb57dffbd09394a96e88bd6ff42c53e7e  xsa218-4.7/0001-IOMMU-handle-IOMMU-mapping-and-unmapping-failures.patch
-0683d7ffdbe60dc8e1d161adeb0c5465df1840e86353b5cbb96dd204f2dbb526  xsa218-4.7/0002-gnttab-fix-unmap-pin-accounting-race.patch
-6bfef9e1653a305e49653c5b81acb57ca41ee8410ea085d49c9bc7e4ccd31e54  xsa218-4.7/0003-gnttab-Avoid-potential-double-put-of-maptrack-entry.patch
-b4ede29e3a94d9e7992c90b8b7c8d489e071764218b28962b5755a444040e1ae  xsa218-4.7/0004-gnttab-correct-maptrack-table-accesses.patch
-c2a1b40e76764333f3ee34dd9bc7d3e34bab91f8b44eaae7aa6f187bbddb358f  xsa218-4.8/0001-gnttab-fix-unmap-pin-accounting-race.patch
-a210ff17a0ca1a81f2c98cce84a104ac7dd2f1a72fa3855ca5f3b3d13e95468c  xsa218-4.8/0002-gnttab-Avoid-potential-double-put-of-maptrack-entry.patch
-0b8fa3d6a0f3ccb43c8134db2240867d5a850ee0821d4124a1642596b4d6cb5a  xsa218-4.8/0003-gnttab-correct-maptrack-table-accesses.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZSQ8GAAoJEIP+FMlX6CvZMtoH/jDvFJKVeBCD3p/6sg8XiMR9
-saDiNfB0ULOIw6ffqFMC8SKYS7cRh+ijmt66ehsPZ/Azv17P5L19bmXQlW2y0Ea9
-sAoJ3OJGI7FUz2O8SVhLmN+wSxKmfwmzuK6Rn3xX6VE9UPL8yfzdZIDT1K+Oparz
-0mw0IAp7xukXdB0LlWePf1RLTl+0tZAoqsOIQXmM58kz1zvXIgOuSbI/ULUb/vnY
-cj6BJKdyARM+7Kgpdj7bw1cunjo5RiH2aSeji9/T6QJbO6sVv3cb7qZfV94SRfJL
-eaem+3awJjo39R5itO/UgL55K77/7yqtKt8ZUvhndKgmXeWyQsTp7HQx+lE8zv4=
-=sS5B
------END PGP SIGNATURE-----
-
-Download attachment "xsa218-unstable/0001-gnttab-fix-unmap-pin-accounting-race.patch" of type "application/octet-stream" (3821 bytes)
-
-Download attachment "xsa218-unstable/0002-gnttab-Avoid-potential-double-put-of-maptrack-entry.patch" of type "application/octet-stream" (7700 bytes)
-
-Download attachment "xsa218-unstable/0003-gnttab-correct-maptrack-table-accesses.patch" of type "application/octet-stream" (2930 bytes)
-
-Download attachment "xsa218-4.5/0001-IOMMU-handle-IOMMU-mapping-and-unmapping-failures.patch" of type "application/octet-stream" (2480 bytes)
-
-Download attachment "xsa218-4.5/0002-gnttab-fix-unmap-pin-accounting-race.patch" of type "application/octet-stream" (3822 bytes)
-
-Download attachment "xsa218-4.5/0003-gnttab-Avoid-potential-double-put-of-maptrack-entry.patch" of type "application/octet-stream" (7335 bytes)
-
-Download attachment "xsa218-4.5/0004-gnttab-correct-maptrack-table-accesses.patch" of type "application/octet-stream" (1007 bytes)
-
-Download attachment "xsa218-4.6/0001-IOMMU-handle-IOMMU-mapping-and-unmapping-failures.patch" of type "application/octet-stream" (2480 bytes)
-
-Download attachment "xsa218-4.6/0002-gnttab-fix-unmap-pin-accounting-race.patch" of type "application/octet-stream" (3821 bytes)
-
-Download attachment "xsa218-4.6/0003-gnttab-Avoid-potential-double-put-of-maptrack-entry.patch" of type "application/octet-stream" (7774 bytes)
-
-Download attachment "xsa218-4.6/0004-gnttab-correct-maptrack-table-accesses.patch" of type "application/octet-stream" (2931 bytes)
-
-Download attachment "xsa218-4.7/0001-IOMMU-handle-IOMMU-mapping-and-unmapping-failures.patch" of type "application/octet-stream" (2480 bytes)
-
-Download attachment "xsa218-4.7/0002-gnttab-fix-unmap-pin-accounting-race.patch" of type "application/octet-stream" (3821 bytes)
-
-Download attachment "xsa218-4.7/0003-gnttab-Avoid-potential-double-put-of-maptrack-entry.patch" of type "application/octet-stream" (7768 bytes)
-
-Download attachment "xsa218-4.7/0004-gnttab-correct-maptrack-table-accesses.patch" of type "application/octet-stream" (2930 bytes)
-
-Download attachment "xsa218-4.8/0001-gnttab-fix-unmap-pin-accounting-race.patch" of type "application/octet-stream" (3821 bytes)
-
-Download attachment "xsa218-4.8/0002-gnttab-Avoid-potential-double-put-of-maptrack-entry.patch" of type "application/octet-stream" (7701 bytes)
-
-Download attachment "xsa218-4.8/0003-gnttab-correct-maptrack-table-accesses.patch" of type "application/octet-stream" (2930 bytes)
+Best regards,
+Wade Mealing| Red Hat, Inc. | Product Security Engineer
