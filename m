@@ -1,59 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/4
-Message-ID: <20170630105705.GA4208@openwall.com>
-Date: Fri, 30 Jun 2017 12:57:05 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/7
+Message-ID: <20171102212916.GC23769@256bit.org>
+Date: Thu, 2 Nov 2017 22:29:16 +0100
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Cc: ISC Security Officer <security-officer@....org>
-Subject: Re: ISC announces two BIND vulnerabilities
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-For transparency and for information of those wanting to join the
-distros list (thus, for them to have a better idea of whether
-membership would be useful to them or not): ISC brought these issues to
-the distros list on June 28 (or the night of June 29 UTC), so distros
-list members had about 1.5 days of advance notice.
+Kurt Seifried wrote:
 
-On Fri, Jun 30, 2017 at 12:41:33PM +0200, Yves-Alexis Perez wrote:
-> As per list policy, and since I'm following these for Debian, here's some more
-> details inline for the list.
-
-Thank you, Yves-Alexis!
-
-Adding to this, attached are text exports of the ISC advisories,
-produced by running ELinks against "Print Article" versions of the ISC
-web pages.
-
-It would be great if ISC would resume posting the actual detail in here
-themselves, in addition to the website links.
-
-> The vulnerabilities are very similar to the knot one (no CVE yet) found by the
-> same researchers (Synaktiv):
+> There is a flaw here, it appears on some distros that vim (and emacs) will
+> ignore a user's umask and go with less restrictive file permissions
+> (ideally you think vi would use the files existing perms, plus any umask
+> limitations as expected), for example vim failing:
 > 
-> CVE-2017-3142: An error in TSIG authentication can permit unauthorized zone
-> transfers
+> [kseifrie@...alhost vi]$ umask
+> 0007
+> [kseifrie@...alhost vi]$ touch foo
+> [kseifrie@...alhost vi]$ ls -la
+> total 8
+> drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> -rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> [kseifrie@...alhost vi]$ chmod o+r foo
+> [kseifrie@...alhost vi]$ ls -la
+> total 8
+> drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> -rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> [kseifrie@...alhost vi]$ vi foo
 > 
-> An attacker who is able to send and receive messages to an authoritative DNS
-> server and who has knowledge of a valid TSIG key name may be able to
-> circumvent TSIG authentication of AXFR requests via a carefully constructed
-> request packet. A server that relies solely on TSIG keys for protection with
-> no other ACL protection could be manipulated into:
+> in another terminal:
 > 
-> * providing an AXFR of a zone to an unauthorized recipient
-> * accepting bogus NOTIFY packets
+> [kseifrie@...alhost vi]$ ls -la
+> total 12
+> drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> -rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> -rw-r--r--.  1 kseifrie kseifrie 4096 Oct 31 10:50 .foo.swp
 > 
-> CVE-2017-3043: An error in TSIG authentication can permit unauthorized dynamic
-> updates
+> So vim ignores the umask of the user =(.
+
+> So from a CVE perspective we have a situation where a user has explicitly
+> set a umask (of say 0007) which is to say they've made a security assertion
+> of "any file I create I want the rwx permissions for "other" removed" which
+> vim and emacs (and possibly others) are violating when they create swap
+> files/backups/whatever. To add insult to injury most other utilities that
+> create a file (e.g. cp, cat, dd) seem to respect umask.
 > 
-> An attacker who is able to send and receive messages to an authoritative DNS
-> server and who has knowledge of a valid TSIG key name for the zone and service
-> being targeted may be able to manipulate BIND into accepting an unauthorized
-> dynamic update.
+> Please use CVE-2017-1000382 for VIM version 8.0.1187 (and other versions
+> most likely) ignores umask when creating a swap file
+> (\"[ORIGINAL_FILENAME].swp\") resulting in files that may be world readable
+> or otherwise accessible in ways not intended by the user running the vi
+> binary.
 
-Thanks again,
+Vim copies the permission from the file being edited. Although the swap 
+file is readable by others this does not leak any information here, 
+since the file being edited is already readable by others.
 
-Alexander
-
-View attachment "CVE-2017-3142.txt" of type "text/plain" (6478 bytes)
-
-View attachment "CVE-2017-3143.txt" of type "text/plain" (5981 bytes)
+Christian
