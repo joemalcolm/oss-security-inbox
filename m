@@ -1,169 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/10
-Message-Id: <E1dNHpH-000643-NI@xenbits.xenproject.org>
-Date: Tue, 20 Jun 2017 12:00:07 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 220 - x86: PKRU and BND* leakage between vCPU-s
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/3
+Message-ID: <20171102012112.GB23674@sin.redhat.com>
+Date: Thu, 2 Nov 2017 11:51:59 +1030
+From: Doran Moppert <dmoppert@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2017-15095:  further deserialisation attacks against jackson-databind (follow-up to CVE-2017-7525)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+In July, deserialisation vulnerabilities were disclosed affecting
+jackson-databind [1], assigned CVE-2017-7525.  These were patched
+upstream by blacklisting vulnerable classes, resulting in release 2.8.9
+and the issue was closed.  Various downstreams including Red Hat issued
+a fix at this point.
 
-                    Xen Security Advisory XSA-220
-                              version 2
+1: https://github.com/FasterXML/jackson-databind/issues/1599
 
-               x86: PKRU and BND* leakage between vCPU-s
-
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Memory Protection Extensions (MPX) and Protection Key (PKU) are features in
-newer processors, whose state is intended to be per-thread and context
-switched along with all other XSAVE state.
-
-Xen's vCPU context switch code would save and restore the state only
-if the guest had set the relevant XSTATE enable bits.  However,
-surprisingly, the use of these features is not dependent (PKU) or may
-not be dependent (MPX) on having the relevant XSTATE bits enabled.
-
-VMs which use MPX or PKU, and context switch the state manually rather
-than via XSAVE, will have the state leak between vCPUs (possibly,
-between vCPUs in different guests).  This in turn corrupts state in
-the destination vCPU, and hence may lead to weakened protections
-
-Experimentally, MPX appears not to make any interaction with BND*
-state if BNDCFGS.EN is set but XCR0.BND{CSR,REGS} are clear.  However,
-the SDM is not clear in this case; therefore MPX is included in this
-advisory as a precaution.
-
-IMPACT
-======
-
-There is an information leak, of control information mentioning
-pointers into guest address space; this may weaken address space
-randomisation and make other attacks easier.
-
-When an innocent guest acquires leaked state, it will run with
-incorrect protection state.  This could weaken the protection intended
-by the MPX or PKU features, making other attacks easier which would
-otherwise be excluded; and the incorrect state could also cause a
-denial of service by preventing legitimate accesses.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.4 and earlier are not vulnerable, as they do not use or expose
-MPX or PKU to guests.  Xen 4.5 and later expose MPX to guests.  Xen
-4.7 and later expose PKU to guests.  Therefore, Xen 4.5 and later are
-vulnerable.
-
-Only x86 hardware implementing the MPX or PKU features is vulnerable.
-At the time of writing, these are Intel Skylake (and later) processors
-for MPX, and Intel Skylake Server (and later) processors for PKU.
-
-ARM hardware is not vulnerable.
-
-The vulnerability is only exposed to HVM guests.  PV guests cannot
-exploit the vulnerability.
-
-Vulnerable guest operating systems
-- ----------------------------------
-
-Guests which use XSAVE for context switching PKU and MPX state are not
-vulnerable to inbound corruption caused by another malicious domain.
-
-With respect to PKU, the remaining outbound information leak is of no
-conceivable consequence.  And, experimentally, MPX does not appear to
-have a real vulnerability, even though the CPU documentation is not
-clear.
-
-Therefore we think that these guests (those which use XSAVE) are not
-vulnerable.
-
-Linux uses XSAVE, so is therefore not vulnerable.
-
-MITIGATION
-==========
-
-Passing "pku=0" on the hypervisor command line will avoid the PKU
-vulnerability (by not advertising the feature to guests).
-
-There is no corresponding option for the probably-theoretical MPX
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa220.patch           xen-unstable
-xsa220-4.8.patch       Xen 4.8
-xsa220-4.7.patch       Xen 4.7
-xsa220-4.6.patch       Xen 4.6
-xsa220-4.5.patch       Xen 4.5
-
-$ sha256sum xsa220*
-8b86d9a284c0b14717467e672e63aebfc2bce201658493a54c64fb7c1863ce49  xsa220.patch
-4b53ad5748313fb92c68eac1160b00d1bf7310019657028122a455855334252b  xsa220-4.5.patch
-befe5ca5321d903428fc496abeee3a3b5eb0cee27a382e20d3caf8cc7bdfced2  xsa220-4.6.patch
-555fa741348909943393aaf73571bc7817b30eafcff73dbfcd73911113db5d7f  xsa220-4.7.patch
-7a41ad9c6f9d46536abae051c517456bdfa3564278e98f80222a904df749fb0c  xsa220-4.8.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+But blacklists being what they are, a further set of dangerous classes
+have been added since (all included in release 2.9.1).  The further
+patches reference the original ticket, but given that security releases
+have already been issued for CVE-2017-7525 based on 2.8.9, we thought it
+prudent to issue a new CVE ID covering the additional classes:
+CVE-2017-15095.
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+This issue and CVE-2017-7525 were reported by Liao Xinxi of NSFOCUS.
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBCAAGBQJZSQ3QAAoJEIP+FMlX6CvZ6ogH/3HavoXiL0zhOEfVyCJqMk8N
-4gqV1U++wSP3/C+r/W0joZGnTtr7yDQi+zR0ElDBbwMZynJm4VXwFzCJr7HDc3JF
-Pdx3YD3d75QVzJxS1yGF2uGTqlDywqsabja5BqVc4tY78Sxj9dKyKkcR+HNsYDyA
-RoqQeOPN7GiAq1gtN5MW2HaUVDWOFCEbyMQhndqs6ZPmhxU9qQdSzltuMuLc/tNb
-f9YtxPydfXTYZXSQA8poqySESBikeCUosbLX9hJB0GBoxV9PlPVLSA14nrYPS6Sd
-kX9OJ2M4EoYNCROs5FFusbQwNdwLyMK8dNuTzOlZ9S9v5CpIwMQqs2Ypb1BVRqE=
-=c/uv
------END PGP SIGNATURE-----
+Note that there is a mitigation addressing both of these CVEs described
+at https://bugzilla.redhat.com/show_bug.cgi?id=1462702#c12
 
-Download attachment "xsa220.patch" of type "application/octet-stream" (3131 bytes)
 
-Download attachment "xsa220-4.5.patch" of type "application/octet-stream" (3223 bytes)
+More detail below from [2]:
 
-Download attachment "xsa220-4.6.patch" of type "application/octet-stream" (3203 bytes)
+2: https://bugzilla.redhat.com/show_bug.cgi?id=1506612#c3
 
-Download attachment "xsa220-4.7.patch" of type "application/octet-stream" (4442 bytes)
+> Other distributions may have made the same mistake, since the original
+> upstream ticket was closed before additional names were added to the
+> blacklist.
+> 
+> Original ticket + patches (CVE-2017-7525):
+> 
+>   https://github.com/FasterXML/jackson-databind/issues/1599
+>   https://github.com/FasterXML/jackson-databind/commit/60d459ce
+>   https://github.com/FasterXML/jackson-databind/commit/3bfbb835
+> 
+> Further tickets and patches to block more dangerous types (I think
+> these are
+> all):
+> 
+>   https://github.com/FasterXML/jackson-databind/issues/1680
+>   https://github.com/FasterXML/jackson-databind/issues/1723
+>   https://github.com/FasterXML/jackson-databind/issues/1737
+> 
+>   https://github.com/FasterXML/jackson-databind/commit/e8f043d1
+>   https://github.com/FasterXML/jackson-databind/commit/ddfddfba
+> 
+> This CVE-2017-15095 should be considered to include everything in
+> NO_DESER_CLASS_NAMES as of today:
+> 
+>  
+> https://github.com/FasterXML/jackson-databind/blob/
+> 7093008aa2afe8068e120df850189ae072dfa1b2/src/main/java/com/fasterxml/
+> jackson/databind/deser/BeanDeserializerFactory.java#L43
 
-Download attachment "xsa220-4.8.patch" of type "application/octet-stream" (3119 bytes)
+-- 
+Doran Moppert
+Red Hat Product Security
+
+Content of type "application/pgp-signature" skipped
