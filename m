@@ -1,87 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/1
-Message-Id: <201701272353.40452@pali>
-Date: Fri, 27 Jan 2017 23:53:29 +0100
-From: pali@...n.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/5
+Message-ID: <alpine.LRH.2.21.1711021348230.19623@namei.org>
+Date: Thu, 2 Nov 2017 14:47:35 +1100 (AEDT)
+From: James Morris <jmorris@...ei.org>
 To: oss-security@...ts.openwall.com
-Subject: Use after free in libmysqlclient.so
+Subject: Linux Security Summit 2017 Summary
 Content-Type: text/plain; charset=utf-8
 
-Hello, I would like to report problem related to MySQL/MariaDB and 
-possibly asking for assigning CVE if this list is the right place.
+The 2017 Linux Security Summit (LSS) [1] was held on Sept 14th and 15th in 
+Los Angeles, USA.  It was co-located with Open Source Summit North America 
+[2] (previously/including LinuxCon) and the Linux Plumbers Conference 
+(LPC) [3].
 
-C client library for MySQL (libmysqlclient.so) has use-after-free defect 
-which can cause crash of applications using that MySQL client.
+LSS is unique as a security conference as it's dedicated to Linux and Open 
+Source, and tends to be focused on defensive security engineering.
 
-Defect occurs by calling mysql_close() function from libmysqlclient.so. 
-If mysql_close() is called before calling all mysql_stmt_close() (for 
-all allocated stmts), then following mysql_stmt_close() call try to 
-write to already released memory. mysql_close() let dangling pointer 
-exist for prepared statements. Real problem is in function 
-mysql_prune_stmt_list() which incorrectly iterate over elements. 
-Function list_add() overwrite ->next pointer of current element which 
-overwrite next element for iteration.
+This year we had refereed presentations, Linux kernel security subsystem 
+updates, and BoF topics.
 
-Basically it is just wrong usage of linked list structure.
+The schedule is here:
+http://events.linuxfoundation.org/events/archive/2017/linux-security-summit/program/schedule
 
-Languages in which is not guaranteed order of executing destructor of 
-created objects have a big problem as such writing to memory pointed by 
-dangling can cause crash of whole application.
+Slides may be found here:
+http://events.linuxfoundation.org/events/archive/2017/linux-security-summit/program/slides
+(and in some cases by clicking on the session topics).
 
-E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of 
-whole perl process with simple script:
+There was no video this year, unfortunately, and we'll work on making that 
+happen for next year.
 
-perl -MDBI -e '
-$dbh = DBI->connect("dbi:mysql:", "root", undef,
-                    {RaiseError => 1, mysql_server_prepare => 1});
-$sth1 = $dbh->prepare("SELECT 1");
-$sth2 = $dbh->prepare("USE mysql");
-$dbh->disconnect;
-$dbh = undef;
-'
-Segmentation fault
+Also, due to the LPC co-location and schedule overlap, we had no LWN 
+coverage of the event.
 
-Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce change 
-username, password and host where is running mysql server. Valgrind can 
-prove that memory corruption really occurs.
+You can find attendee coverage here:
 
-This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But is 
-present in all MySQL 5.5 versions (and also older) and appropriate older 
-5.6 and 5.7 versions. MySQL 5.5 is still used, supported and included in 
-lot of linux distributions.
+http://blog.namei.org/2017/10/02/linux-security-summit-2017-roundup/
+http://www.paul-moore.com/blog/d/2017/09/linux-security-summit.html
+https://tyhicks.com/2017/09/22/2017-Linux-Security-Summit-Day-1/
+https://tyhicks.com/2017/09/25/2017-Linux-Security-Summit-Day-2/
 
-Moreover this defect is present also in MariaDB releases. I tested all 
-last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all those are 
-affected.
+There was also a shared day with LPC (on the 13th), where the TPMs and 
+containers microconfs were held. See:
 
-MySQL and MariaDB provides also standalone package with only C client 
-library libmysqlclient.so (without server) under name "Connector/C" and 
-so appropriate versions of it are affected too. 
+https://etherpad.openstack.org/p/LPC2017_TPM
+https://etherpad.openstack.org/p/LPC2017_Containers
 
-I found that this defected was fixed in MySQL git repository by commit:
-https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc552424132806f46e93
+It was certainly useful to have so many security-interested Linux folk 
+there across both conferences, although we will avoid co-locating with LPC 
+in the future.  It's also useful to have some time between LPC and LSS for 
+ideas raised at one to be developed further and discussed at the other.
 
-That commit can be easily applied to last MySQL 5.5.54 version and fixes 
-this defect.
+For 2018, there will be a new European version of LSS, which will be held 
+in addition to the main event in North America.  This will be led by Elena 
+Reshetova, a member of the LSS program committee, who proposed the idea as 
+there are a lot of Linux and Open Source security folk in Europe who may 
+not be able to make it to the US event.  Stay tuned for an official 
+announcement soon (all such announcements can be found at @LinuxSecSummit 
+on twitter).
 
-Looks like problem was already reported and is publically available in 
-MySQL bug tracker, see more details on links:
-https://bugs.mysql.com/bug.php?id=70429
-https://bugs.mysql.com/bug.php?id=63363
-(tickets are closed despite fact that MySQL 5.5 and older are not fixed)
+In terms of trends, over the past year, we've seen a lot of activity again 
+in kernel hardening via the kernel self protection project, and you can 
+see where things are at by looking at Kees' slides:
 
----
+http://schd.ws/hosted_files/lss2017/aa/LSS-2017-Kernel-Self-Protection-Project.pdf
 
-I reported this problem to Oracle secalert_us@...cle.com two months ago, 
-but they did absolutely nothing for fixing it in MySQL 5.5. Instead they 
-started resending this problem to some random people with @cpan.org 
-address for unknown reason. And told me to not disclose information 
-about this defect. Resending does not look like normal handling of 
-security related problem! Therefore I suggest other people to not 
-wasting time reporting problems to Oracle for open source applications.
+This work is primarily focused on forward-porting grsecurity/PaX to 
+mainline, and I gather this will continue to be the case over the next 1-2 
+years.  One of the most significant effects of the project is more 
+mainline kernel developers gaining knowledge and skills in security via 
+involvement in KSPP.  And culturally, there is also now much greater 
+awareness of contemporary security threats and acceptance of the need to 
+mitigate them.  Kernel security is hopefully becoming less of a 
+specialized niche area, and more open to general kernel developers.
 
-As two months is really long time to fix such problem which was already 
-fixed in new versions; it is already publically disclosed in MySQL bug 
-tracker; fix available in public git; problem is in major MariaDB 
-versions; fix is small; and this is open source product included in many 
-linux distributions I decided to send information to oss-security.
+We're also seeing continued activity in TPMs (v2.0 stack developoment), 
+integrity/boot verification, hardware-based mitigations, mobile/device, 
+and containers.  There are lots of challenges across these areas, and the 
+materials I've linked from LSS and LPC are a good place to start if you're 
+interested in where things are at currently.
+
+
+References:
+
+[1] http://events.linuxfoundation.org/events/archive/2017/linux-security-summit
+[2] http://events.linuxfoundation.org/events/open-source-summit-north-america
+[3] http://www.linuxplumbersconf.org/2017/
+
+
+
+
+-- 
+James Morris
+<jmorris@...ei.org>
+
