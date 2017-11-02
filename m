@@ -1,27 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/3
-Message-ID: <60bcff1f-fa22-502f-8b1e-95a662a52f0d@yandex.ru>
-Date: Fri, 27 Jan 2017 10:51:09 +0300
-From: Luc Lynx <luc.lynx@...dex.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/2
+Message-ID: <20171102235647.GA22038@altlinux.org>
+Date: Fri, 3 Nov 2017 02:56:47 +0300
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-Subject: SSRF issue in the svgsalamander library
+Subject: Re: tftpd-hpa - insecure chroot()
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thu, Nov 02, 2017 at 03:16:55PM +0300, gremlin@...mlin.ru wrote:
+> Just look at this code and guess how it would be compiled on most
+> systems:
+> 
+> ========================================
+>     /* Chroot and drop privileges */
+>     if (secure) {
+>         if (chroot(".")) {
+>             syslog(LOG_ERR, "chroot: %m");
+>             exit(EX_OSERR);
+>         }
+> #ifdef __CYGWIN__
+>         chdir("/");             /* Cygwin chroot() bug workaround */
+> #endif
+>     }
+> ========================================
+> 
+> :-)
 
-There is a java library for processing svg files called svgSalamander:
+Sorry, why do you think that
 
-https://github.com/blackears/svgSalamander
+	chdir(dir) == 0 && chroot(".") == 0
 
-It can also be found in maven:
+is any worse than
 
-http://search.maven.org/#search%7Cga%7C1%7Csvg-salamander
+	chroot(dir) == 0 && chdir("/") == 0
 
-If the library is used in a web application, SSRF isssue is possible. I
-created a ticket on github:
-https://github.com/blackears/svgSalamander/issues/11
+assuming that you have control over your signal handlers and can ensure
+they won't issue any chdir or chroot calls between these two calls?
 
-The issue seems to be in all versions of the library.
 
---
-LL
+-- 
+ldv
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
