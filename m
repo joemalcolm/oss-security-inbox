@@ -1,56 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/10
-Message-ID: <yxvPHItNI50y6jtPr94_GiCzhOzViGCZGO2BZ6xprBuRH4unl1EP0tRDPhgheue19XEBukMCxbeOOLsh6ehCrsZaNIwbOMat-Q9v7TNOFYQ=@itk.swiss>
-Date: Tue, 13 Jun 2017 16:48:04 -0400
-From: Stiepan <stie@....swiss>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: OpenJDK: java(1): untrusted search path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/5
+Message-ID: <20171103120109.sjaunqwdpfnkfymn@jwilk.net>
+Date: Fri, 3 Nov 2017 13:01:10 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
-Hi, confirmed on Ubuntu 32-bit running OpenJDK 1.8.0_131 (modified slightly your exploit to use "echo pwned" instead of using cowsay pwned).
+* Fiedler Roman <Roman.Fiedler@....ac.at>, 2017-11-03, 11:07:
+>POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user 
+>root when editing file in directory owned by other user is available on 
+>request, disclosure after one week or if list discussion indicates 
+>other timing.
 
-Stiepan
+By default[1], when vim wants to overwrite the file "foo", it does:
 
--------- Original Message --------
-Subject: [oss-security] OpenJDK: java(1): untrusted search path
-Local Time: June 13, 2017 3:23 PM
-UTC Time: June 13, 2017 3:23 PM
-From: jwilk@...lk.net
-To: oss-security@...ts.openwall.com
+   rename("foo", "foo~")                   = 0
+   open("foo", O_WRONLY|O_CREAT|O_TRUNC|O_LARGEFILE, 0600) = 3
 
-Running "java -help" can load code from a subdirectory of cwd:
+There's a race window between the two syscalls when the attacker could 
+re-create "foo", and then vim would happily write to it.
 
-$ javac launcher_en.java
-$ mkdir -p sun/launcher/resources/
-$ mv launcher_en.class sun/launcher/resources/
-$ java -help
-_______
-&lt; pwned &gt;
--------
-\ ^__^
-\ (oo)\_______
-(__)\ )\/\
-||----w |
-|| ||
+Is this the attack you meant?
 
-This happens because:
+NB, vim disables this behavior for files in /tmp (but not /var/tmp)[2].
 
-* By default (i.e. when CLASSPATH env var was unset and neither -cp nor -jar
-was specified), java sets "." as the user class path:
-https://docs.oracle.com/javase/8/docs/technotes/tools/findingclasses.html#userclass
 
-* The help message is apparently supposed to be internationalized.
+[1] http://vimdoc.sourceforge.net/htmldoc/options.html#%27writebackup%27
+[2] http://vimdoc.sourceforge.net/htmldoc/options.html#%27backupskip%27
 
-* The Java"s localization machinery loads classes:
-https://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html
-
-On Debian systems, jarwrapper (a binfmt-misc thing for running executable jar
-files) is affected. It contains the following code:
-
-if java -d32 2&gt;&amp;1 | grep "does not support" &gt; /dev/null; then
-...
-
-On 32-bit systems, this causes java to print the help message.
-
---
+-- 
 Jakub Wilk
