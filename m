@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/8
-Message-ID: <c3f3c2ec-aee4-75db-562c-7183fa0e3a29@oracle.com>
-Date: Mon, 7 Aug 2017 14:05:08 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Cve issue discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/4
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A35DFE3C1@EX02.corp.qihoo.net>
+Date: Fri, 3 Nov 2017 11:17:03 +0000
+From: 连一汉 <lianyihan@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [CVE-2017-15672]: ffmpeg: read out of bounds of buffer when it parsing an craft mp4 file.
 Content-Type: text/plain; charset=utf-8
 
-On 07/08/17 13:47, Glenn Randers-Pehrson wrote:
-> It's not causing a crash, just a delay.  You'll safely get either an OOM
-> message or an EOF message.and no memory leak.
-> 
+Affected package: ffmpeg
+Affected versions: <= 3.3.4
 
-That's scant comfort when your browser is the one hit by the OOM killer
-and then again when you restart it.  And also while you're wondering
-what's going on because your laptop is basically completely
-non-responsive ...
+FFmpeg could read out of bounds of buffer when it parsing an craft mp4 file.
 
-So yes, it's a remote DoS and definitely worth a CVE.  We have had other
-similar CVEs in the past with image handling libraries not being
-sufficiently paranoid.
+While ffmpeg calculating “bytestream_end” in ff_init_range_encoder() of libavcodec/rangecoder.c,
+it uses a small “buf_size”. But when using this structure in read_header() of libavcodec/ffv1dec.c,
+It will minus a bigger “trailer” than “buf_size” to read “size” through AV_RB24().
+So it reads the front memory of “bytestream”, and get an error “size”.
 
-jch
+The issue was fixed with the following commit:
+http://git.videolan.org/?p=ffmpeg.git;a=commitdiff;h=c20f4fcb74da2d0432c7b54499bb98f48236b904
 
-> Glenn
-> 
-> On Mon, Aug 7, 2017 at 8:37 AM, Marcus Meissner <meissner@...e.de> wrote:
->> Hi,
->>
->> if it could crash the image reader I would consider it "remote denial of service"
->> classed and CVE worthy.
+Regards
+
+Reported by Zhibin Hu and Yihan Lian from Qihoo 360 GearTeam
 
