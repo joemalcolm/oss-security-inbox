@@ -1,53 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/03/3
-Message-ID: <4b60f1b1e20142f484425629f4fef86b@imshyb02.MITRE.ORG>
-Date: Tue, 3 Jan 2017 10:39:40 -0500
-From: <cve-assign@...re.org>
-To: <peter@...ensteyn.nl>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <ludovic.rousseau@...e.fr>
-Subject: Re: CVE Request: pcsc-lite use-after-free and double-free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/7
+Message-ID: <2ECE9D9EEF1F524185270138AE23265955B0BACD@S0MSMAIL112.arc.local>
+Date: Fri, 3 Nov 2017 12:25:12 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> From: Jakub Wilk [mailto:jwilk@...lk.net]
+>
+> * Fiedler Roman <Roman.Fiedler@....ac.at>, 2017-11-03, 11:07:
+> >POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user
+> >root when editing file in directory owned by other user is available on
+> >request, disclosure after one week or if list discussion indicates
+> >other timing.
+>
+> By default[1], when vim wants to overwrite the file "foo", it does:
+>
+>    rename("foo", "foo~")                   = 0
+>    open("foo", O_WRONLY|O_CREAT|O_TRUNC|O_LARGEFILE, 0600) = 3
+>
+> There's a race window between the two syscalls when the attacker could
+> re-create "foo", and then vim would happily write to it.
+>
+> Is this the attack you meant?
 
-> The SCardReleaseContext function normally releases resources associated with the
-> given handle (including "cardsList") and clients should cease using this handle.
-> A malicious client can however make the daemon invoke SCardReleaseContext and
-> continue issuing other commands that use "cardsList", resulting in a
-> use-after-free.  When SCardReleaseContext is invoked multiple times, it
-> additionally results in a double-free of "cardsList".
-> 
-> http://lists.alioth.debian.org/pipermail/pcsclite-muscle/Week-of-Mon-20161226/000779.html
-> https://anonscm.debian.org/cgit/pcsclite/PCSC.git/commit/?id=697fe05967af7ea215bcd5d5774be587780c9e22
+This is one of the attack points, but there are multiple sequences of 
+problematic syscalls, especially when running vim.tiny as root, also
 
->> 2016-12-30
->> To avoid this problem, destroy the list only when the client connection is terminated.
+getxattr("x.txt", "system.posix_acl_access", ... -> get attrs of arbitrary 
+file via symlink
+setxattr("x.txt", "system.posix_acl_access",  ... -> set those attrs on 
+arbitrary file
+chmod("x.txt", 0100644)                 = 0   -> set mode of previous x.txt on 
+arbitrary file
+...
 
-Use CVE-2016-10109.
+As previously stated, this indicates, that the 
+"root-edits-file-of-non-root-user" use case was not considered. But is that a 
+problem?
 
-(The double-free is not sufficiently independent of the use-after-free to
-require two CVE IDs.)
+Put it another way: when a doctor cuts himself with his scalpel, is it the 
+doctor's or the scalpel's fault?
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+LG Roman
 
-iQIcBAEBCAAGBQJYa8TbAAoJEHb/MwWLVhi2T6gP/jW4DFCfQJPZLhy5ydgqwOqC
-XdrMCVUAVJ+sil8+Tx+v5ylnEDg9WitiUpbuRLILSD/h5XD0I9hYbGjeuNR1DGk/
-ZhHRyzLMK+njgmemtMCLS+mAjnu3WVvXs97hL1V4UE/9IVw2jW5fms3zL/DoEBHm
-XBXu0rnTRs/0LCM+uIwh7xTOXnnfATROi/eDZCsM32ufSFVfrqeha4uH42MIJa7H
-umBp7Gp4iRRMUOdH9mn7AvRni8E9U1JqMpnriz/BZkY9LBy7iCuIqlIV+s4Pnfz4
-bFv4QkGrI0MIa//Qe2hkXQ4qkK6kD3PdAZRp75t+o7QJcTiwZT3MdDhRsReuu+bu
-qqf2QHa/cnUd7jutDo+CB7rZbdZCt/zi2Vhubo4DwWoOA0InGzXH3UpYs0nd2EBL
-cyVclqmTelo3ylMZUwJvZ5WSSjI2dORoe5f4WmvC6AC5Hdgoj8pPpY5E+lXQDTLN
-hB2thbSgeMqhCchdVVn1ydqC4YuyrHfaVY9pA2lfJ4NwWy0/ggVKIGZ/qm1A9GCH
-IBXolytm4Va9GZ1hi0/R06lpwwsqJrPQpmDjgt7FIsEyleDAA1kf0Y+wcQGszTg6
-5CVxbci9e83OjFxdvZv+ITliarobUOHvnu/7AX04ZbIuiSoi7ce2HR6MwmhEy+YI
-GWjm/aDGodtMWYtZzI+Q
-=9VvD
------END PGP SIGNATURE-----
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
