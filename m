@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["558" "Monday" "6" "April" "2015" "09:40:19" "+0300" "Henri Salo" "henri@nerv.fi" "<20150406064019.GA27906@kludge.henri.nerv.fi>" "14" "[oss-security] CVE request: WordPress plugin wassup cross-site scripting vulnerability" nil nil nil "4" "2015040606:40:19" "[oss-security] CVE request: WordPress plugin wassup cross-site scripting vulnerability" (number mark "        henri@nerv.f Apr  6   14/558   " thread-indent "\"[oss-security] CVE request: WordPress plugin wassup cross-site scripting vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["749" "Friday" "3" "November" "2017" "17:39:36" "+0100" "Jakub Wilk" "jwilk@jwilk.net" "<20171103163936.cevlb7ghcwkln6x2@jwilk.net>" "16" "Re: [oss-security] Re: Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110316:39:36" "[oss-security] Re: Fw: Security risk of vim swap files" (number mark "        jwilk@jwilk. Nov  3   16/749   " thread-indent "\"Re: [oss-security] Re: Fw: Security risk of vim swap files\"\n") "<20171102212916.GC23769@256bit.org>" ("<20171102212916.GC23769@256bit.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11658 invoked by uid 550); 6 Apr 2015 06:40:49 -0000
+Received: (qmail 16147 invoked by uid 550); 3 Nov 2017 16:39:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,30 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11639 invoked from network); 6 Apr 2015 06:40:49 -0000
-Message-ID: <20150406064019.GA27906@kludge.henri.nerv.fi>
+Received: (qmail 16120 invoked from network); 3 Nov 2017 16:39:54 -0000
+Message-ID: <20171103163936.cevlb7ghcwkln6x2@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20171102212916.GC23769@256bit.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Mon, 6 Apr 2015 09:40:19 +0300
-From: Henri Salo <henri@nerv.fi>
+In-Reply-To: <20171102212916.GC23769@256bit.org>
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-Ovh-Tracer-Id: 11226910924218488742
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedttddrgeekgdektdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
+Date: Fri, 3 Nov 2017 17:39:36 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: WordPress plugin wassup cross-site scripting
- vulnerability
+Subject: Re: [oss-security] Re: Fw: Security risk of vim swap files
 To: oss-security@lists.openwall.com
 
-Please assign 2009 CVE identifier for WordPress plugin wassup cross-site
-scripting vulnerability fixed in 1.7.2.1 version, thanks.
+* Christian Brabandt <cb@256bit.org>, 2017-11-02, 22:29:
+>Vim copies the permission from the file being edited. Although the swap 
+>file is readable by others this does not leak any information here, 
+>since the file being edited is already readable by others.
 
-https://wordpress.org/plugins/wassup/changelog/
+In general, what vim does (copying mode bits) in not enough to ensure 
+that the swapfile is readable only by the users who had access to the 
+original file. It would have to copy also group ownership and ACLs.
 
-1.7.2.1
-Critical security and bug fix upgrade
-- disabled page reload triggered by WassUp screen resolution tracking.
-- fixed a security loophole found in main.php module.
-
-https://plugins.trac.wordpress.org/changeset?sfp_email=&sfph_mail=&reponame=&new=152760%40wassup%2Ftrunk%2Flib%2Fmain.php&old=151501%40wassup%2Ftrunk%2Flib%2Fmain.php&sfp_email=&sfph_mail=
+Also, keep in mind how this thread started. Somebody edited 
+wp-config.php, which was readable by the web server, of course; then vim 
+created .wp-config.php.swp with the same-ish permissions, which made the 
+file readable to the whole (external) world. Oops.
 
 -- 
-Henri Salo
+Jakub Wilk
