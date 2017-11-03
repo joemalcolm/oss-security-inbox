@@ -1,15 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/4
-Message-ID: <1496493559.21640.7.camel@gmail.com>
-Date: Sat, 03 Jun 2017 08:39:19 -0400
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/17
+Message-ID: <20171103183803.GB12742@256bit.org>
+Date: Fri, 3 Nov 2017 19:38:03 +0100
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-> The lockdown patches would be useful if they were complete
 
-In the context of filling holes in containment of root based on
-namespaces / chroots / MAC, where they can already be useful today. Not
-as something that's independently useful, especially when it's known to
-not be complete without other isolation primitives...
+On Fr, 03 Nov 2017, Jakub Wilk wrote:
+
+> * Christian Brabandt <cb@...bit.org>, 2017-11-02, 22:29:
+> >Vim copies the permission from the file being edited. Although the swap
+> >file is readable by others this does not leak any information here, since
+> >the file being edited is already readable by others.
+> 
+> In general, what vim does (copying mode bits) in not enough to ensure that
+> the swapfile is readable only by the users who had access to the original
+> file. It would have to copy also group ownership and ACLs.
+
+Yes, I am not saying there is no room for improvement here.
+
+> Also, keep in mind how this thread started. Somebody edited wp-config.php,
+> which was readable by the web server, of course; then vim created
+> .wp-config.php.swp with the same-ish permissions, which made the file
+> readable to the whole (external) world. Oops.
+
+I don't buy that argument. There are at least 2 problems here. Someone 
+misconfiguring his webserver so it does serve dotfiles and secondly 
+making some last minute changes on a live production server (and 
+thirdly, the Vim session must have crashed). That sounds more like an 
+user error. Also the other example about deleting the file that is 
+currently being edited is not very convincing.
+
+But please, if you really want to change how the swap files are created 
+please comment here:
+https://groups.google.com/d/msg/vim_dev/sRT9BtjLWMk/2oSF_b4MCAAJ
+or anywhere else in that thread starting here:
+https://groups.google.com/d/msg/vim_dev/sRT9BtjLWMk/Xn_Y3PHlBgAJ
+
+Note, first message needs approval.
+
+Christian
+-- 
+Aus der Tatsache, daß der Plural von Atlas Atlanten ist, kann man
+nicht schließen, daß der Plural von Kompass Kompanten sein muß.
