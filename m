@@ -1,4 +1,9 @@
-Received: (qmail 3484 invoked by uid 550); 3 Mar 2026 18:03:08 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["870" "Friday" "3" "November" "2017" "13:01:10" "+0100" "Jakub Wilk" "jwilk@jwilk.net" "<20171103120109.sjaunqwdpfnkfymn@jwilk.net>" "24" "Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically" "^Date:" nil nil "11" "2017110312:01:10" "[oss-security] Security risk of server side text editing in general and vim.tiny specifically" (number mark "        jwilk@jwilk. Nov  3   24/870   " thread-indent "\"Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically\"\n") "<2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>" ("<2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 7655 invoked by uid 550); 3 Nov 2017 12:01:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,77 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3423 invoked from network); 3 Mar 2026 18:03:08 -0000
-Date: Tue, 3 Mar 2026 13:02:58 -0500
-From: Jan Schaumann <jschauma@netmeister.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aaciUg8U0AQw90Iv@netmeister.org>
+Received: (qmail 7633 invoked from network); 3 Nov 2017 12:01:25 -0000
+Message-ID: <20171103120109.sjaunqwdpfnkfymn@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Subject: [oss-security] Issue with AWS-LC: an open-source, general-purpose cryptographic
- library (CVE-2026-3336, CVE-2026-3337, CVE-2026-3338)
+In-Reply-To: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-Ovh-Tracer-Id: 6523745536725145510
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedttddrgeekgdefhecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
+Date: Fri, 3 Nov 2017 13:01:10 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Security risk of server side text editing in
+ general and vim.tiny specifically
+To: oss-security@lists.openwall.com
 
-Via AWS Security Bulletin
+* Fiedler Roman <Roman.Fiedler@ait.ac.at>, 2017-11-03, 11:07:
+>POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user 
+>root when editing file in directory owned by other user is available on 
+>request, disclosure after one week or if list discussion indicates 
+>other timing.
 
-https://github.com/aws/aws-lc
+By default[1], when vim wants to overwrite the file "foo", it does:
 
------ Forwarded message from "Latest Bulletins: Amazon Web Services" <aws@amazon.com> -----
+   rename("foo", "foo~")                   = 0
+   open("foo", O_WRONLY|O_CREAT|O_TRUNC|O_LARGEFILE, 0600) = 3
 
-> Date: Tue, 03 Mar 2026 09:30:01 -0000
-> From: "Latest Bulletins: Amazon Web Services" <aws@amazon.com>
-> To: jschauma@netmeister.org
-> Subject: Issue with AWS-LC: an open-source, general-purpose cryptographic
-> 	library (CVE-2026-3336, CVE-2026-3337, CVE-2026-3338)
-> 
-> **Bulletin ID:** 2026-005-AWS  
-> **Scope:** AWS  
-> **Content Type:** Important (requires attention)  
-> **Publication Date:** 2026/03/02 14:30 PM PST
-> 
-> **Description:**
-> 
-> AWS-LC is an open-source, general-purpose cryptographic library. We identified
-> three distinct issues:
-> 
-> \- CVE-2026-3336: PKCS7_verify Certificate Chain Validation Bypass in AWS-LC  
-> Improper certificate validation in PKCS7_verify() in AWS-LC allows an
-> unauthenticated user to bypass certificate chain verification when processing
-> PKCS7 objects with multiple signers, except the final signer.  
-> \- CVE-2026-3337: Timing Side-Channel in AES-CCM Tag Verification in AWS-LC  
-> Observable timing discrepancy in AES-CCM decryption in AWS-LC allows an
-> unauthenticated user to potentially determine authentication tag validity via
-> timing analysis.  
-> \- CVE-2026-3338: PKCS7_verify Signature Validation bypass in AWS-LC  
-> Improper signature validation in PKCS7_verify() in AWS-LC allows an
-> unauthenticated user to bypass signature verification when processing PKCS7
-> objects with Authenticated Attributes.
-> 
-> **Impacted versions:**
-> 
-> \- PKCS7_verify Certificate Chain Validation Bypass in AWS-LC >= v1.41.0, <
-> v1.69.0  
-> \- PKCS7_verify Certificate Chain Validation Bypass in aws-lc-sys >= v0.24.0,
-> < v0.38.0  
-> \- Timing Side-Channel in AES-CCM Tag Verification in AWS-LC >= v1.21.0, <
-> v1.69.0  
-> \- Timing Side-Channel in AES-CCM Tag Verification in AWS-LC >= AWS-LC-
-> FIPS-3.0.0, < AWS-LC-FIPS-3.2.0  
-> \- Timing Side-Channel in AES-CCM Tag Verification in aws-lc-sys >= v0.14.0, <
-> v0.38.0  
-> \- Timing Side-Channel in AES-CCM Tag Verification in aws-lc-sys-fips >=
-> v0.13.0, < v0.13.12  
-> \- PKCS7_verify Signature Validation bypass in AWS-LC >= v1.41.0, < v1.69.0  
-> \- PKCS7_verify Signature Validation bypass in aws-lc-sys >= v0.24.0, <
-> v0.38.0
-> 
-> **Please refer to the article below for the most up-to-date and complete
-> information related to this AWS Security Bulletin.**
-> 
-> 
-> 
-> URL: https://aws.amazon.com/security/security-bulletins/rss/2026-005-aws/
+There's a race window between the two syscalls when the attacker could 
+re-create "foo", and then vim would happily write to it.
 
------ End forwarded message -----
+Is this the attack you meant?
+
+NB, vim disables this behavior for files in /tmp (but not /var/tmp)[2].
+
+
+[1] http://vimdoc.sourceforge.net/htmldoc/options.html#%27writebackup%27
+[2] http://vimdoc.sourceforge.net/htmldoc/options.html#%27backupskip%27
+
+-- 
+Jakub Wilk
