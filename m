@@ -1,34 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/30/2
-Message-ID: <alpine.LFD.2.20.1701301524160.12782@wniryva>
-Date: Mon, 30 Jan 2017 15:27:59 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Jiang Xin <jiangxin1@...wei.com>
-Subject: CVE request Qemu: sd: sdhci OOB access during multi block SDMA transfer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/3
+Message-ID: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
+Date: Fri, 3 Nov 2017 11:07:14 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Dear OSS-Security List,
 
-Quick emulator(Qemu) built with the SDHCI device emulation support is 
-vulnerable to an OOB heap access issue. It could occur while doing a multi 
-block SDMA transfer via 'sdhci_sdma_transfer_multi_blocks' routine.
+Due to the recent discussion on vim swap file use, I expected also attraction of of evil-minded to the topic of text editing security and thus an increase in attack probability on server side text editing in general. Therefore I wanted to review our software qualification criteria for text editing on servers, where vim/vim.tiny is used and probably update the SOPs and guidelines.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS or potentially execute arbitrary code with privileges of the 
-Qemu process on the host.
+As .swp security problems also arise from unclear software behaviour expectations, I looked at the behaviour of vim.tiny to verify it works according to specification (man pages as reference). As it seems, the tool is not suited for editing of files not owned by the same user, which is not mentioned in the man pages. Maybe that indicates, that the software design process did not include that specific security requirement or implementation was insufficient. Therefore I would assume, that numerous bugs of similar kind might be found, but there is no time (funding) to do in depth checks.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-01/msg06191.html
+I would be interested in consensus, if editing of non-root files by root user is bad practice in general (thus, e.g. should be mentioned in SECURITY section of man pages of various common server side test editing tools to raise awareness, but no CVEs) or if you think, that this is software misbehaviour.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1417559
+Input from "Solar Designer <solar at openwall x com>" to that topic:
 
-This issue was reported by Jiang Xin of Huawei PSIR team.
+"This discussion does not belong on the distros list.  Please bring it to
+oss-security ASAP, including the PoC (or optionally delay it by at most
+a week, but I see no reason for that as nothing will change in that week
+anyway), and people will hopefully reply for real in there.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+There's no embargoed issue here that I can see and no proposed unembargo
+date either (a requirement for any initial posting to distros), I don't
+see how anything will change within distros' list maximum embargo time
+of 14 days, and it is indeed "bad practice in general" to access files
+as root in user-writable directories, which is not at all limited to
+text editors."
+
+
+Best regards,
+Roman Fiedler
+
+PS: POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user root when editing file in directory owned by other user is available on request, disclosure after one week or if list discussion indicates other timing.
+
+ROMAN FIEDLER
+Scientist
+Information Management
+Center for Digital Safety & Security
+
+AIT Austrian Institute of Technology GmbH
+Reininghausstraße 13/1 | 8020 Graz | Austria
+T +43 50550-2957 | M +43 664 8561599 | F +43 50550-2950
+roman.fiedler@....ac.at | https://www.ait.ac.at
+
+View my researcher profile: https://www.ait.ac.at/profile/detail/Fiedler-Roman/
+
+FN: 115980 i HG Wien | UID: ATU14703506
+www.ait.ac.at/Email-Disclaimer
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
