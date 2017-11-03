@@ -1,66 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/13
-Message-ID: <fd8ae002-bf60-d687-8d52-2a00378b1713@foxmole.com>
-Date: Wed, 17 May 2017 22:08:25 +0200
-From: Stefan Pietsch <stefan.pietsch@...mole.com>
-To: <oss-security@...ts.openwall.com>
-CC: <fulldisclosure@...lists.org>
-Subject: Re: Dolibarr ERP & CRM - Multiple Issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/16
+Message-ID: <20171103183031.GA12742@256bit.org>
+Date: Fri, 3 Nov 2017 19:30:31 +0100
+From: Christian Brabandt <cb@...bit.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On 10.05.2017 10:28, FOXMOLE Advisories wrote:
-> === FOXMOLE - Security Advisory 2017-02-23 ===
-> 
-> Dolibarr ERP & CRM  - Multiple Issues
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> 
-> Affected Versions
-> =================
-> Dolibarr 4.0.4
-> 
-> Issue Overview
-> ==============
-> Vulnerability Type: SQL Injection, Cross Site Scripting,
->                     Weak Hash Algorithm without Salt, Weak Password Change Method
-> Technical Risk: critical
-> Likelihood of Exploitation: medium
-> Vendor: Dolibarr
-> Vendor URL: https://www.dolibarr.org/
-> Credits: FOXMOLE employees Tim Herres and Stefan Pietsch
-> Advisory URL: https://www.foxmole.com/advisories/foxmole-2017-02-23.txt
-> Advisory Status: Public
-> OVE-ID: OVE-20170223-0001
-> CVE Number: CVE-2017-7886, CVE-2017-7887, CVE-2017-7888
-> CVE URL: https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7886
->          https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7887
->          https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7888
-> CWE-ID: CWE-79, CWE-89, CWE-327, CWE-620, CWE-759
-> CVSS 2.0: 10.0 (AV:N/AC:L/Au:N/C:C/I:C/A:C)
 
---- snip ---
+On Fr, 03 Nov 2017, Scott Court wrote:
 
-Here is a small update to our security advisory.
+> " Move the swap file location to protect against CVE-2017-1000382
+> " More information at http://security.cucumberlinux.com/security/details.php?id=120
+> " A big thanks goes to Christian Brabandt (cb@...bit.org)
+> " for helping with this fix.
+> if ! isdirectory("~/.vim/swap/")
+>         silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
 
-An additional CVE ID got assigned for the password change finding:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8879
+make this
+         call system('install -d -m 700 ~/.vim/swap')
 
-
-Meanwhile the Dolibarr developers fixed more possible SQL injection bugs
-in this git commit:
-https://github.com/Dolibarr/dolibarr/commit/fa290c34fad108ec7c0751c0372ae9c4b4f63b06
-
-They still didn't release a fixed version of the Dolibarr software.
-
-
-
-For CVE-2017-7886 I don't agree with the CVSS v2 scoring from the NIST.
-They rated "Confidentiality Impact" as partial while I think it is
-complete as we have full access to all tables.
-
-
-Regards,
-Stefan
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Christian
+-- 
+Der Frieden kann bei uns nicht ausbrechen, weil er viel zu gut gesichert ist.
