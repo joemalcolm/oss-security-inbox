@@ -1,29 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/1
-Message-ID: <20171101023330.GK30551@takahe.colorado.edu>
-Date: Tue, 31 Oct 2017 20:33:30 -0600
-From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/15
+Message-ID: <CADyTPEwtFD=d_JB4n0s+9G867D_tNmSQOTt_f=EtNeqYp22Eyw@mail.gmail.com>
+Date: Fri, 3 Nov 2017 14:14:11 -0400
+From: Nick Bowler <nbowler@...conx.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: Re: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 31, 2017 at 10:54:08AM -0700, Tim wrote:
-> Also, it almost never makes sense to put things in /tmp, for several
-> reasons pointed out by others.  Making ~/.vim/... the default location
-> clearly is the best solution.
+On 2017-11-03, Scott Court <z5t1@...1.com> wrote:
+> I have refined the vimrc changes that I originally posted (with the help
+> of Christian) and have found appending the following to your vimrc be a
+> decent way to mitigate against all known forms of this attack until a
+> proper patch is released:
+>
+> " Move the swap file location to protect against CVE-2017-1000382
+> " More information at
+> http://security.cucumberlinux.com/security/details.php?id=120
+> " A big thanks goes to Christian Brabandt (cb@...bit.org)
+> " for helping with this fix.
+> if ! isdirectory("~/.vim/swap/")
+>         silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
+> endif
+> set directory=~/.vim/swap//
+>
+> The only drawback to this approach is that it eliminates the warning
+> when multiple users attempt to edit the same file at the same time;
+> however, this seems preferable to the alternative of being vulnerable.
 
-And all those reasons make no sense. /tmp has a sticky bit precisely so that
-people could put stuff there, as opposed to /run.
+This is not the "only drawback".  Among other things, such configuration
+fails very badly when network mounts are involved.
 
-Just to clarify:
-1. vim creates a swap file applying user's umask.
-   Tested with vim on ArchLinux and vi on Fedora, if your vim doesn't do that,
-   the corresponding package is broken.
-2. It is totally OK to edit files in /tmp or /dev/shm or /var/tmp.
-   The described "attack" when someone plants a /tmp/file.swp before another
-   user edits /tmp/file is not going to work because vim will complain that the
-   swap file already exists.
+ - If the swap directory is shared between multiple hosts (e.g., $HOME
+   is NFS-mounted), then you will get false positives when editing files
+   that happen to share a filename on different hosts.
+
+ - If the file being edited is shared between multiple hosts, then you
+   will get false negatives when trying to edit that file from different
+   hosts.
+
+Or a combination of the two scenarios.  In the default mode, network
+mounts basically work as expected because the swapfile location is
+shared the same way.
 
 Cheers,
--- 
-Leonid Isaev
+  Nick
