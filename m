@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2049" "Wednesday" "11" "May" "2016" "10:26:55" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160511142655.B3EC6332010@smtpvbsrv1.mitre.org>" "47" "[oss-security] Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer" nil nil nil "5" "2016051114:26:55" "[oss-security] Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer" (number mark "U       cve-assign@m May 11   47/2049  " thread-indent "\"[oss-security] Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer\"\n") "<s5hshxp9jdr.wl-tiwai@suse.de>" ("<s5hshxp9jdr.wl-tiwai@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["820" "Friday" "3" "November" "2017" "21:41:59" "+0100" "Jakub Wilk" "jwilk@jwilk.net" "<20171103204159.rnszmrzvcwkxkaak@jwilk.net>" "25" "Re: [oss-security] nvi crash recovery" "^Date:" nil nil "11" "2017110320:41:59" "[oss-security] nvi crash recovery" (number mark "        jwilk@jwilk. Nov  3   25/820   " thread-indent "\"Re: [oss-security] nvi crash recovery\"\n") "<20171103212659.378593da@pc1>" ("<2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>" "<20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>" "<20171103212659.378593da@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10186 invoked by uid 550); 11 May 2016 14:27:08 -0000
+Received: (qmail 11560 invoked by uid 550); 3 Nov 2017 20:42:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11536 invoked from network); 3 Nov 2017 20:42:16 -0000
+Message-ID: <20171103204159.rnszmrzvcwkxkaak@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
+ <20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>
+ <20171103212659.378593da@pc1>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171103212659.378593da@pc1>
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-Ovh-Tracer-Id: 15320120034376734630
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedttddrgeekgddufedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
+Date: Fri, 3 Nov 2017 21:41:59 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10166 invoked from network); 11 May 2016 14:27:07 -0000
-From: cve-assign@mitre.org
-To: tiwai@suse.de, kangjielu@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, csong84@gatech.edu, insu@gatech.edu, taesoo@gatech.edu
-In-Reply-To: <s5hshxp9jdr.wl-tiwai@suse.de>
-Message-Id: <20160511142655.B3EC6332010@smtpvbsrv1.mitre.org>
-Date: Wed, 11 May 2016 10:26:55 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer
+Subject: Re: [oss-security] nvi crash recovery
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* Hanno Böck <hanno@hboeck.de>, 2017-11-03, 21:26:
+>nvi saves recovery files to /var/tmp/vi.recover and creates them with 
+>600 permissions.
+>So all the problems discussed don't really apply here.
+>However the dir itself gets created by the first user using nvi.
 
-> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=cec8f96e49d9be372fdb0c3836dcf31ec71e457e
->   ALSA: timer: Fix leak in SNDRV_TIMER_IOCTL_PARAMS
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
->   ALSA: timer: Fix leak in events via snd_timer_user_ccallback
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=e4ec8cc8039a7063e24204299b462bd1383184a5
->   ALSA: timer: Fix leak in events via snd_timer_user_tinterrupt
+Sounds like a recipe for disaster.
 
+In Debian, installation scripts try to ensure that /var/tmp/vi.recover 
+is root-owned:
 
-> Maybe we can fold
+   if [[ -L /var/tmp/vi.recover || \
+	  -e /var/tmp/vi.recover && ! -d /var/tmp/vi.recover ]]; then
+     echo "Cannot create recovery directory /var/tmp/vi.recover" 1>&2
+     exit 1
+   fi
+   [ -d /var/tmp/vi.recover ] || mkdir -p /var/tmp/vi.recover
+   chown root:root /var/tmp/vi.recover
+   chmod 1777 /var/tmp/vi.recover
 
-That is not what we are going to do. Because the meaning of
-CVE-2016-4569 was already established to be the
-http://comments.gmane.org/gmane.linux.kernel/2214250 issue with the
-"tread" object, which is only
-cec8f96e49d9be372fdb0c3836dcf31ec71e457e, we are keeping that
-ID assignment the same.
+This is racy and can be exploited to chmod arbitrary files:
+https://bugs.debian.org/771375
 
-Use CVE-2016-4578 for both 9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
-and e4ec8cc8039a7063e24204299b462bd1383184a5.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXM0CDAAoJEHb/MwWLVhi2YdAQAKibrD8XeEWMfNOhVt1JJZyK
-7tjA7BnVA96YCv/wl5Ry4hbNCA7TmFIYjq4M9Fahbr/dlJxkol4xXGCmX2sOTA8l
-vAKVt30oYpgmESleRz8vJ5JVSYEXmem4v4y4xX37w3WNf6fXhB83zm1nniWddwio
-GLV7UGxZTfs+jCeZo0ou+Db02YpqgR5E0oOOIvPNuX6xLkNQy0JFNzRTKfP0Eo2W
-wLoKx7R6l74pe1FPoOqkGEs8oQ7fs1M9nQfUydsUqwTz8fGtwxVScOthze3FguaK
-UFJOr5pfM7aV5pZbxhvh/umd5hnl8LmkT91VqhpA8r5M2l9rqV0vRzr1PfbXeQfe
-UOpsS24GKgQ0wvGPBvxU8GCJcY3NPs2mF6fxrR46fwf1R5sZfwRV/nrS76E2CSuZ
-9VQ1v90VkH1uRZd8g7iluwlTa+V5EWiqUcTxuQPv1SjZGNDUqV+wOW8ttazCszwe
-DdjJRvmBnyyb835BJo24afw0u/QZkQCwdtub4ZQqBkuGudYIK+8AZsMG3vZ+Jlt7
-ZL4VFrSRsDW1c8pfBEkdH9/YJIEeEHckLOWcD2DoqokzcjVcr4DDw3bVuBTK2hwn
-OwMX7iXXuPEuJFeotCiv4VkK94DfdtVwJ4p55ErIDHHpkXBMB8BLuBdgvbNXw/FO
-DU8UQO+pwaNTDNx55N9Z
-=M8WL
------END PGP SIGNATURE-----
+-- 
+Jakub Wilk
