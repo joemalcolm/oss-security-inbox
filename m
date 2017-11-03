@@ -1,70 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/1
-Message-ID: <8a5a04a665204da0b2ed5ad2766b05b3@imshyb01.MITRE.ORG>
-Date: Mon, 16 Jan 2017 19:06:47 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: jasper: multiple crashes with UBSAN
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/9
+Message-ID: <20171103141849.GA2264@openwall.com>
+Date: Fri, 3 Nov 2017 15:18:49 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, Nov 03, 2017 at 12:57:25PM +0000, Fiedler Roman wrote:
+> I want to lessen possible legal issues
 
-> http://blogs.gentoo.org/ago/2017/01/16/jasper-multiple-crashes-with-ubsan/
+Oh.  I wouldn't have guessed.
 
-> [] jasper-1.900.17/src/libjasper/include/jasper/jas_math.h:156:11
-> runtime error: left shift of negative value -185
+> The bug may be in the documentation/specification: in my opinion, 
+> documentation of good, security aware software should a) implement things 
+> considering security bordercases (vim.tiny reporting, that a file was replaced 
+> or symlink encountered, proceed?)
 
-Use CVE-2017-5498.
+Those special cases you list are just a tip of the iceberg.
 
+> or b) state, they are not made for that 
+> purpose. Even when such statements are redundant for many different tools, 
+> they give users at least the chance to learn, that an operation is dangerous 
+> and may link to additional information, e.g. the link you provided below on 
+> secure root file access.
+> 
+> Why has each plastic bag of a new consumer device printed "There is a risk 
+> that children pull them over their head and suffocate." for safety reasons, 
 
-> [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1838:9
-> runtime error: signed integer overflow: -64356352 * 6359082673847140352 cannot
-> be represented in type 'long'
+My guess is mostly for legal reasons, although safety was also involved
+at some point.
 
-Use CVE-2017-5499.
+> but in software development, we assume, everybody knows and do not include 
+> such warnings at least in the footer of man pages?
 
+I don't assume everybody knows.  On the contrary, I know that most
+people don't know, nor do they want to know.  When I tell, or ask my
+fellow sysadmins to follow safer practices, they just get annoyed, in
+part because the safer practices are too complicated, too brittle, and
+sometimes also not perfectly safe.  But do we really need to include
+this in every man page?  I wish there were a better place.
 
-> [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1819:40
-> runtime error: shift exponent 117 is too large for 64-bit type 'jpc_fix_t'
-> (aka 'long')
+> > Editing of non-root files by root should be safe (or be made safe by
+> > making changes to the editors where necessary) only in the rare special
+> > case when those files are located in a trusted directory.  For example,
+> > editing as root /var/run/foo owned by user foo should be safe as long as
+> > /, /var, and /var/run are owned by root, but editing as root
+> > /home/foo/foo or /tmp/foo is unsafe and is likely to stay so.
+> 
+> I would need to check that on vim.tiny. As stat-ing, getxattr, renaming, 
+> chmod, ... are not atomic, I am not sure if vim.tiny as example would fulfil 
+> your expectations.
+> 
+> But before that: why do you expect the software to behave like that, when it 
+> is not stated anywhere?
 
-Use CVE-2017-5500.
+What I said in the paragraph quoted above is that I expect very little
+("only in the rare special case"), and even that might not be true yet
+(but we should make it true for specific tools if so).
 
+I focus on this special case because it's tenable.
 
-> [] jasper-1.900.17/src/libjasper/jpc/jpc_tsfb.c:233:35
-> runtime error: signed integer overflow: 2013306369 + 251691968 cannot be
-> represented in type 'int'
+What you say about non-atomicity of those syscalls is not a security
+issue when the directory and all parent directories are trusted.  It can
+still be a reliability and a safety issue e.g. if two sysadmins try to
+edit a file, but I thought that was beyond scope of our discussion.
 
-Use CVE-2017-5501.
+> > I doubt this belongs to "SECURITY section of man pages" because this is
+> > by no means limited to just text editors.  Most tools are unsafe to use
+> > on files in untrusted directories, with very few exceptions - for
+> > example, "cp" and "mv" are generally unsafe, but "ln" is generally safe.
+> 
+> But also those tools seem not state, how they really behave regarding security 
+> in man-pages, declaring what security expectations they fulfil and which the 
+> will not fulfil (I searched for security/concurrent/user/owner/privileg but no 
+> relevant hits in the man page). How should a normal user know the difference?
 
+I am not saying things are good as they are; I think they are not.  Like
+I say, people neither know nor want to know this, and it means they
+continue to do things insecurely.  I don't currently have a solution.
 
-> [] jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:485:49
-> runtime error: left shift of negative value -26
+> > It is tricky to access files in an untrusted directory safely.  Programs
+> > that knowingly do it end up using O_EXCL or O_NOFOLLOW|O_NOCTTY and
+> > such, and doing various *stat() calls, and even that is sometimes not
+> > enough.  It'd be naive to expect the same from every other program
+> > accepting an arbitrary pathname.
+> 
+> From my point of view, this mandates something like a "libSecureOpen" (trying 
+> to get that into libc as first step might be in vain), which has a solid 
+> implementation also considering different UNIX-system peculiarities and should 
+> be used by open source software doing that kind of risky operations.
 
-Use CVE-2017-5502.
+IIRC, something like this was proposed in 1990s, albeit not for that
+extensive a use.
 
+You say "risky operations", but under the threat model you imply (root
+using almost any tool on pathnames with components writable by a user)
+almost all filesystem accesses are risky.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+To partially achieve what you seem to want to achieve, almost all uses
+of open(2) and fopen(3), etc. would need to be replaced with "secure"
+alternatives, and that would be bad in many ways, including breaking of
+customary behavior of traditional Unix command-line programs, which
+existing scripts rely on.  We could proceed with introduction of
+isatty(3) and env var checks, but this would get messy.
 
-iQIcBAEBCAAGBQJYfV+HAAoJEHb/MwWLVhi29L0P/RqDlicXsi+o1z9ZFsl+bmfO
-yChkhBebWjCWyRlvQjce8JlYxpwK1sRSD1j+7tkoSkRbkBwuDPswg07l7xx4/N74
-B0MJpzC0XZe+7QmngkB5M29L8UY/qJ4E1WNu9ztMvbZCAimW9JR9Kbar3ptzIlD8
-C0bMFhIRiPkhrnxqzSkQHLVUXVr5I3KC4RHh6qWkFa9TnEUyD52MAjYb4sSPjmMH
-sqz9omf5+mt3g0gfjC/UMOwXx2j+s8EwQ9sslFhqKz+CCvj17zXlpXZt6yVpltBl
-beZ6amDVoEQ4lSjoLoI5tfpCAD5DdgXQHDaNFcyCcgUd8uCqhbpPFngbWPnISgDY
-tdify6oI9K5t1hnEkYjE2RLLexB6DoQ3l7xOv98lY5YN3isoxliA76AYS+74/sJ5
-d2/bVoeybQ/T/0BFbNOKP1fEUjoVVv/XCR6+fJOu0ABQ10ELWBPqzNNzd6fcvLon
-suXIQ7xwQfb3vRbwY8uERZugs9W04SxWe8FIHjmjskCSDgnPRgIGPki+yUvg1WwO
-s9Xq9GCrdwsnFH0PwCHpAF/AHcuuFJBda0W9NzEKXHNKuSFhvWqr1OK8lpwXSBut
-OfkwPU+zbyYX2z8h1lNaS6smZCRT7ys8m1SJ5BGzABBu8Zl9OtXwYKdRBKw10kgb
-hrjK/+wlvlxwNxlHUK0R
-=tuOh
------END PGP SIGNATURE-----
+I say "partially" because there's no way for a program to know that the
+file it's looking at is still the file the user had looked at when they
+decided to run the program against that pathname.  Not only the file
+itself could have been replaced, but an upper directory could have been.
+I included some steps to deal with this in the example referenced in my
+previous message, and one of the steps is a double-check by the user
+themselves after having created a hard link in a trusted directory.
+
+I suppose some alternate OS could introduce a paradigm where a user's
+view of the filesystem would be frozen when they stat() a file or list a
+directory and unfrozen after they've accessed a file in there.  This is
+another can of worms.  I guess it's more realistically (or less
+unrealistically) done for one thread in a program (with each thread
+having its own filesystem view freeze) rather than for a user's shell
+running multiple programs one after another.
+
+> Other 
+> software should explicitely declare: "is not safe for operating on file of 
+> different users/NFS in untrusted environments".
+
+This is true for 99%+ of Unix software.  Exceptions are few (like some
+uses of "ln", and even then there's the issue of parent directories).
+
+Alexander
