@@ -1,22 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/14/2
-Message-ID: <20170514104120.GA29066@kroah.com>
-Date: Sun, 14 May 2017 12:41:20 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/13
+Message-ID: <b5dbcc41-76a7-be99-df63-2b600d22151a@Z5T1.com>
+Date: Fri, 3 Nov 2017 13:03:57 -0400
+From: Scott Court <z5t1@...1.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Kernel 4.1.y might not contain patches for CVE-2016-10229
+Subject: Re: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On Sat, May 13, 2017 at 10:44:44PM -0400, Yury German wrote:
-> This is just a small notice that Linux Kernel 4.1.y might not contain
-> patches to CVE-2016-10229 [1]. This is a reference to the Vanilla
-> Linux sources without any distribution specific patching. Typically a
-> number of distributions apply their own patches to the standard
-> vanilla Kernel. 
+I pointed this out yesterday on the Vim mailing list. It is currently
+being discussed there
+(https://groups.google.com/forum/#!topic/vim_dev/sRT9BtjLWMk). Some
+people are calling for more restrictive permissions on .swp files;
+however, I believe that using a separate directory for .swp files is the
+best solution for a multitude of reasons I've discussed here and there.
+I have refined the vimrc changes that I originally posted (with the help
+of Christian) and have found appending the following to your vimrc be a
+decent way to mitigate against all known forms of this attack until a
+proper patch is released:
 
-Given that the last 4.1.y kernel was released on March 13, there are
-lots of things missing in that tree at the moment :)
+" Move the swap file location to protect against CVE-2017-1000382
+" More information at http://security.cucumberlinux.com/security/details.php?id=120
+" A big thanks goes to Christian Brabandt (cb@...bit.org)
+" for helping with this fix.
+if ! isdirectory("~/.vim/swap/")
+        silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
+endif
+set directory=~/.vim/swap//
 
-thanks,
+The only drawback to this approach is that it eliminates the warning
+when multiple users attempt to edit the same file at the same time;
+however, this seems preferable to the alternative of being vulnerable.
 
-greg k-h
+On 11/03/2017 12:39 PM, Jakub Wilk wrote:
+> * Christian Brabandt <cb@...bit.org>, 2017-11-02, 22:29:
+>> Vim copies the permission from the file being edited. Although the
+>> swap file is readable by others this does not leak any information
+>> here, since the file being edited is already readable by others.
+>
+> In general, what vim does (copying mode bits) in not enough to ensure
+> that the swapfile is readable only by the users who had access to the
+> original file. It would have to copy also group ownership and ACLs.
+>
+> Also, keep in mind how this thread started. Somebody edited
+> wp-config.php, which was readable by the web server, of course; then
+> vim created .wp-config.php.swp with the same-ish permissions, which
+> made the file readable to the whole (external) world. Oops.
+>
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
