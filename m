@@ -1,94 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/2
-Message-ID: <alpine.DEB.2.20.1708090803120.7715@tvnag.unkk.fr>
-Date: Wed, 9 Aug 2017 08:05:47 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: TFTP sends more than buffer size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/1
+Message-ID: <CANO=Ty1HsCH2q1CQBgz0Fap=sBzjUPPfBxMMtVY5T3YFL90_Ag@mail.gmail.com>
+Date: Thu, 2 Nov 2017 19:08:57 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-TFTP sends more than buffer size
-================================
+On Thu, Nov 2, 2017 at 3:29 PM, Christian Brabandt <cb@...bit.org> wrote:
 
-Project curl Security Advisory, August 9th 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_20170809B.html)
+> Kurt Seifried wrote:
+>
+> > There is a flaw here, it appears on some distros that vim (and emacs)
+> will
+> > ignore a user's umask and go with less restrictive file permissions
+> > (ideally you think vi would use the files existing perms, plus any umask
+> > limitations as expected), for example vim failing:
+> >
+> > [kseifrie@...alhost vi]$ umask
+> > 0007
+> > [kseifrie@...alhost vi]$ touch foo
+> > [kseifrie@...alhost vi]$ ls -la
+> > total 8
+> > drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> > drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> > -rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> > [kseifrie@...alhost vi]$ chmod o+r foo
+> > [kseifrie@...alhost vi]$ ls -la
+> > total 8
+> > drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> > drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> > -rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> > [kseifrie@...alhost vi]$ vi foo
+> >
+> > in another terminal:
+> >
+> > [kseifrie@...alhost vi]$ ls -la
+> > total 12
+> > drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
+> > drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
+> > -rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
+> > -rw-r--r--.  1 kseifrie kseifrie 4096 Oct 31 10:50 .foo.swp
+> >
+> > So vim ignores the umask of the user =(.
+>
+> > So from a CVE perspective we have a situation where a user has explicitly
+> > set a umask (of say 0007) which is to say they've made a security
+> assertion
+> > of "any file I create I want the rwx permissions for "other" removed"
+> which
+> > vim and emacs (and possibly others) are violating when they create swap
+> > files/backups/whatever. To add insult to injury most other utilities that
+> > create a file (e.g. cp, cat, dd) seem to respect umask.
+> >
+> > Please use CVE-2017-1000382 for VIM version 8.0.1187 (and other versions
+> > most likely) ignores umask when creating a swap file
+> > (\"[ORIGINAL_FILENAME].swp\") resulting in files that may be world
+> readable
+> > or otherwise accessible in ways not intended by the user running the vi
+> > binary.
+>
+> Vim copies the permission from the file being edited. Although the swap
+> file is readable by others this does not leak any information here,
+> since the file being edited is already readable by others.
+>
+> Christian
+>
 
-VULNERABILITY
--------------
-
-When doing a TFTP transfer and curl/libcurl is given a URL that contains a
-very long file name (longer than about 515 bytes), the file name is truncated
-to fit within the buffer boundaries, but the buffer size is still wrongly
-updated to use the untruncated length. This too large value is then used in
-the `sendto()` call, making curl attempt to send more data than what is
-actually put into the buffer. The `sendto()` function will then read beyond
-the end of the heap based buffer.
-
-A malicious HTTP(S) server could redirect a vulnerable libcurl-using client to
-a crafted TFTP URL (if the client hasn't restricted which protocols it allows
-redirects to) and trick it to send private memory contents to a remote server
-over UDP. Limit curl's redirect protocols with `--proto-redir` and libcurl's
-with `CURLOPT_REDIR_PROTOCOLS`.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw also affects the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-1000100 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This bug has been present in curl since TFTP support was added, in September
-2005 (commit [56d9624b566](https://github.com/curl/curl/commit/56d9624b566)).
-
-- Affected versions: libcurl 7.15.0 to and including 7.54.1
-- Not affected versions: libcurl < 7.15.0 and >= 7.55.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-The function now returns error if attempting to send a file name that is too
-long to fit in the TFTP packet.
-
-A [patch for CVE-2017-1000100](https://curl.haxx.se/CVE-2017-1000100.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.55.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Disable TFTP or otherwise restrict TFTP transfers
-
-TIME LINE
----------
-
-It was reported to the curl project on July 11, 2017. We contacted
-distros@...nwall on August 1.
-
-libcurl 7.55.0 was released on August 9 2017, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Even Rouault. Discovery: credit to OSS-Fuzz. Patch by Daniel
-Stenberg.
-
-Thanks a lot!
+That's usually true but it doesn't matter because a security assertion made
+via umask is being violated, so it wins a CVE. Also for example if you
+later delete that file and think you're safe the copy is still floating
+around world readable. Or you have something indexing the files and
+ignoring that file type, and the .swp gets indexed, and so on.
 
 -- 
 
-  / daniel.haxx.se
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
