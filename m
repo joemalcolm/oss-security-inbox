@@ -1,4 +1,9 @@
-Received: (qmail 1428 invoked by uid 550); 24 Feb 2026 23:32:28 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3684" "Friday" "3" "November" "2017" "13:15:39" "+0100" "Solar Designer" "solar@openwall.com" "<20171103121539.GA825@openwall.com>" "55" "Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically" "^Date:" nil nil "11" "2017110312:15:39" "[oss-security] Security risk of server side text editing in general and vim.tiny specifically" (number mark "        solar@openwa Nov  3   55/3684  " thread-indent "\"Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically\"\n") "<2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>" ("<2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9624 invoked by uid 550); 3 Nov 2017 12:17:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,46 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30377 invoked from network); 24 Feb 2026 23:01:18 -0000
-Date: Wed, 25 Feb 2026 00:01:08 +0100
-From: Vincent Lefevre <vincent@vinc17.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20260224230108.GK3223@qaa.vinc17.org>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com>
- <20260206172730.GA12303@unix-ag.uni-kl.de>
- <877bso8mhf.fsf@josefsson.org>
- <20260224011702.27987-1-justin.swartz@risingedge.co.za>
- <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com>
- <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
- <20260224203337.GA17345@openwall.com>
- <a0bad9ebbf4507c4@orthanc.ca>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Received: (qmail 7898 invoked from network); 3 Nov 2017 12:16:34 -0000
+Message-ID: <20171103121539.GA825@openwall.com>
+References: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a0bad9ebbf4507c4@orthanc.ca>
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/2.3+4 (71f3e314) vl-169878 (2026-01-27)
-Subject: Re: [oss-security] Telnetd Vulnerability Report
+In-Reply-To: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
+User-Agent: Mutt/1.4.2.3i
+Date: Fri, 3 Nov 2017 13:15:39 +0100
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically
+To: oss-security@lists.openwall.com
 
-On 2026-02-24 12:48:14 -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
-> > On Tue, Feb 24, 2026 at 05:05:58AM -0500, kf503bla@duck.com wrote:
-> > > Who uses telnet anyway? It's deprecated. Everyone uses ssh for any kind of 
-> > remote access.
+Roman,
+
+Thank you for bringing this to oss-security.
+
+IMO, there's really absolutely nothing to reasonably embargo here, not
+even the PoC and not even for a week.  The only reason I mentioned the
+possibility to optionally delay the posting of the PoC "by at most a
+week" is because the distros list policy allows that, and you're the one
+reporting this, so it's your call and you wouldn't be violating list
+policy by this unfortunate delay.  But that doesn't make it a good idea.
+
+On Fri, Nov 03, 2017 at 11:07:14AM +0000, Fiedler Roman wrote:
+> Due to the recent discussion on vim swap file use, I expected also attraction of of evil-minded to the topic of text editing security and thus an increase in attack probability on server side text editing in general. Therefore I wanted to review our software qualification criteria for text editing on servers, where vim/vim.tiny is used and probably update the SOPs and guidelines.
 > 
-> TELNET != login.  Before you utter those words again in the same
-> sentence, please read the Telnet RFC.  Notice how the term "login"
-> appears nowhere in that document.
+> As .swp security problems also arise from unclear software behaviour expectations, I looked at the behaviour of vim.tiny to verify it works according to specification (man pages as reference). As it seems, the tool is not suited for editing of files not owned by the same user, which is not mentioned in the man pages. Maybe that indicates, that the software design process did not include that specific security requirement or implementation was insufficient. Therefore I would assume, that numerous bugs of similar kind might be found, but there is no time (funding) to do in depth checks.
 
-Here, this is not just about telnet, but about telnetd, which
-involves a login process:
+I think it's an exaggeration to say these are bugs (except for ignoring
+of umask maybe), but there's room to make uses and even misuses of these
+tools safer, as well as their interactions with other tools (such as the
+original example of editing of .php files on a web server, where the
+editor should use explicit safe permissions on its temporary files
+regardless of the original file's permissions and regardless of umask,
+but also limited to at most what's permitted by umask).
 
-https://man.freebsd.org/cgi/man.cgi?query=telnetd&sektion=8&format=html
+> I would be interested in consensus, if editing of non-root files by root user is bad practice in general (thus, e.g. should be mentioned in SECURITY section of man pages of various common server side test editing tools to raise awareness, but no CVEs) or if you think, that this is software misbehaviour.
 
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
+Editing of non-root files by root should be safe (or be made safe by
+making changes to the editors where necessary) only in the rare special
+case when those files are located in a trusted directory.  For example,
+editing as root /var/run/foo owned by user foo should be safe as long as
+/, /var, and /var/run are owned by root, but editing as root
+/home/foo/foo or /tmp/foo is unsafe and is likely to stay so.
+
+I doubt this belongs to "SECURITY section of man pages" because this is
+by no means limited to just text editors.  Most tools are unsafe to use
+on files in untrusted directories, with very few exceptions - for
+example, "cp" and "mv" are generally unsafe, but "ln" is generally safe.
+
+It is tricky to access files in an untrusted directory safely.  Programs
+that knowingly do it end up using O_EXCL or O_NOFOLLOW|O_NOCTTY and
+such, and doing various *stat() calls, and even that is sometimes not
+enough.  It'd be naive to expect the same from every other program
+accepting an arbitrary pathname.
+
+"How to access users' files as root safely" (with hard links to trusted
+directory, and "su", and how it might still not be exactly safe):
+
+http://openwall.info/wiki/internal/accessing-users-files-as-root-safely
+
+based on excerpts from:
+
+http://www.openwall.com/lists/oss-security/2011/03/04/24
+http://www.openwall.com/lists/oss-security/2011/03/05/6
+
+Alexander
