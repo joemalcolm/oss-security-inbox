@@ -1,4 +1,9 @@
-Received: (qmail 6053 invoked by uid 550); 6 Oct 2022 17:49:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6219" "Friday" "3" "November" "2017" "15:18:49" "+0100" "Solar Designer" "solar@openwall.com" "<20171103141849.GA2264@openwall.com>" "122" "Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically" "^Date:" nil nil "11" "2017110314:18:49" "[oss-security] Security risk of server side text editing in general and vim.tiny specifically" (number mark "U       solar@openwa Nov  3  122/6219  " thread-indent "\"Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically\"\n") "<2ECE9D9EEF1F524185270138AE23265955B0BAE7@S0MSMAIL112.arc.local>" ("<2ECE9D9EEF1F524185270138AE23265955B0BAE7@S0MSMAIL112.arc.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11545 invoked by uid 550); 3 Nov 2017 14:19:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,122 +11,139 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11266 invoked from network); 3 Nov 2017 14:18:54 -0000
+Message-ID: <20171103141849.GA2264@openwall.com>
+References: <2ECE9D9EEF1F524185270138AE23265955B0BAE7@S0MSMAIL112.arc.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2ECE9D9EEF1F524185270138AE23265955B0BAE7@S0MSMAIL112.arc.local>
+User-Agent: Mutt/1.4.2.3i
+Date: Fri, 3 Nov 2017 15:18:49 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31787 invoked from network); 6 Oct 2022 17:00:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1665075610; x=
-	1665162010; bh=NiHih9FjfhmYlI+lM00+khMNQU/oeYl0oyc8FijvFJs=; b=T
-	z7KK7iUCLytPJvCLG2sZAC8XHkUWGPp9DPIuJITiwFnC5bZzYtlalbkUm37/yZQU
-	Xf3IQf7u1y5oLAiPkbQCdRhnoQ2OQA6FmclWexGJCBmAnVrwIQw+0Q4FOiybK5Au
-	bXXOq0bHkY5XehoiO9nnE/8MBVUqwIacLoZBuOjmwa3f5ROx8ygQk2yExIIhCyHT
-	XBOlNHCsyUmWy3jFztkQVNIt0TMtw68bDb3mxDx3e2iB6sW4rq3skSt2SFXpT+37
-	tKVXsZLSnU+knHsjj53TJIT1UwiFrFsLpB6I9Mj/Ret2tAxqjnWSl47cwsmrgoTD
-	VvMCAVZoLn+xw6ub9KiEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1665075610; x=1665162010; bh=NiHih9FjfhmYlI+lM00+khMNQU/o
-	eYl0oyc8FijvFJs=; b=eJAWc2R31rm9BDhs8q1PwzCpIAkoVAICOF9Y5Bw1Ibe7
-	zo4RQVF3ykvm7rScvDrbfC4Xr/GWE8R79An3+lNCzm6zuvUryaGPDwwYnTammkWd
-	CxJZWheGC3WbG/F9Q51N4UU5y5umdiGepxEa4A0ehg7//kVDTHiEwzhtoOiq083J
-	df1CF/HdCjEaUoU7o3JtvRKNGbPswqTkqHEi5psV48TuxHUerr5o/uxsi1CEJ1CC
-	E1Z/YryJss8sirNZ0jU1w9BejhzVV4CZk0ZAYnq2xYN2UJgPEsBLyKzjRrjQzYbf
-	HaeXROPjYRv8agwwmDV+m1ExOwtiUYuV4YH06FPLtw==
-X-ME-Sender: <xms:mgk_Y6G6E67C4BI8o9x_hGdxXWx3D9ycldZ4fim2W_p3VYmjVA4tgQ>
-    <xme:mgk_Y7U4dcooKtIatHTSgbt5zul_AMkINlnKArkniU45IceOFrDC_p3edyFZhB8r2
-    X7YeTajK5e9ZDw>
-X-ME-Received: <xmr:mgk_Y0IbGLna-L1hKBLkcqLGUQSqwwC-Gur2FcPTNi1Ant1qo1LABJ67QEDB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeeihedguddtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepffgvmhhi
-    ucforghrihgvucfqsggvnhhouhhruceouggvmhhisehinhhvihhsihgslhgvthhhihhngh
-    hslhgrsgdrtghomheqnecuggftrfgrthhtvghrnhepiefgieefvdfgjeelfeeifefgjedv
-    vdefleegleeifeegfffhgffffeffhfeuudehnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepuggvmhhisehinhhvihhsihgslhgvthhhihhnghhs
-    lhgrsgdrtghomh
-X-ME-Proxy: <xmx:mgk_Y0FTfBm4OE7ql4cWqF89SwUs0qy_o9HQbxD_OqY55XBNze84jQ>
-    <xmx:mgk_YwWd6-YchUcblhLsbDc1PTYb9DfOt-c2uIHTbYjeCaVEUglRbA>
-    <xmx:mgk_Y3P15phd22CxX5V-9oYpYwk18anzWXpAcJlhY9RLqGN9D3cTfA>
-    <xmx:mgk_Y5ee4OstydIM9Bl9_gibXWIt_2JTm1P4I65hQrj_6wemD52kuA>
-Feedback-ID: iac594737:Fastmail
-Date: Thu, 6 Oct 2022 13:00:03 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: Simon McVittie <smcv@debian.org>, oss-security@lists.openwall.com,
-	dbus-security@lists.freedesktop.org
-Message-ID: <Yz8JmGvc3Y6iYaKR@itl-email>
-References: <Yz6XZSTsVQm7VKia@momentum.pseudorandom.co.uk>
- <Yz7r3ke7oXMBHJ5A@itl-email>
- <Yz722hsDFWr/hqGb@momentum.pseudorandom.co.uk>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="plmH6EPkyJ/X9Oac"
-Content-Disposition: inline
-In-Reply-To: <Yz722hsDFWr/hqGb@momentum.pseudorandom.co.uk>
-Subject: Re: [oss-security] dbus denial of service: CVE-2022-42010, -42011,
- -42012
+Subject: Re: [oss-security] Security risk of server side text editing in general and vim.tiny specifically
+To: oss-security@lists.openwall.com
 
---plmH6EPkyJ/X9Oac
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 6 Oct 2022 13:00:03 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: Simon McVittie <smcv@debian.org>, oss-security@lists.openwall.com,
-	dbus-security@lists.freedesktop.org
-Subject: Re: [oss-security] dbus denial of service: CVE-2022-42010, -42011,
- -42012
+On Fri, Nov 03, 2017 at 12:57:25PM +0000, Fiedler Roman wrote:
+> I want to lessen possible legal issues
 
-On Thu, Oct 06, 2022 at 04:40:10PM +0100, Simon McVittie wrote:
-> On Thu, 06 Oct 2022 at 10:53:15 -0400, Demi Marie Obenour wrote:
-> > Is the memory corruption potentially exploitable for local privilege
-> > escalation?
->=20
-> It is not known to be, but also not known not to be. I'm sure a
-> sufficiently creative attacker can convert almost any memory corruption
-> into arbitrary code execution, but exploit development is not my job
-> (I'd rather fix the vulnerabilities!), so I have not attempted to
-> weaponize this.
+Oh.  I wouldn't have guessed.
 
-I, too, am not an exploit developer, but I agree with your conclusion.
+> The bug may be in the documentation/specification: in my opinion, 
+> documentation of good, security aware software should a) implement things 
+> considering security bordercases (vim.tiny reporting, that a file was replaced 
+> or symlink encountered, proceed?)
 
-> > Are clients using libdbus vulnerable if they are behind dbus-broker?
->=20
-> I don't maintain dbus-broker and have not tested or audited it, so
-> I don't know how much validation it does. I would hope that it would
-> detect and prevent CVE-2022-42011 and CVE-2022-42010 (which involve
-> invalid messages), but probably not CVE-2022-42012 (which involves a
-> message that is odd but technically valid).
+Those special cases you list are just a tip of the iceberg.
 
-Should different-endian messages over AF_UNIX sockets just be rejected
-outright?
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+> or b) state, they are not made for that 
+> purpose. Even when such statements are redundant for many different tools, 
+> they give users at least the chance to learn, that an operation is dangerous 
+> and may link to additional information, e.g. the link you provided below on 
+> secure root file access.
+> 
+> Why has each plastic bag of a new consumer device printed "There is a risk 
+> that children pull them over their head and suffocate." for safety reasons, 
 
---plmH6EPkyJ/X9Oac
-Content-Type: application/pgp-signature; name="signature.asc"
+My guess is mostly for legal reasons, although safety was also involved
+at some point.
 
------BEGIN PGP SIGNATURE-----
+> but in software development, we assume, everybody knows and do not include 
+> such warnings at least in the footer of man pages?
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmM/CZgACgkQsoi1X/+c
-IsF1Hw//YZD9e2EFHkqIVPTMNtJ0ELACA9SydsTUFJ6zJ8+ju7YUzrmvJinDVZ4j
-aOvKRsJrM/tB+B605Uq9n2J1YuMJzdSMQpQNG6NbTBlrPVkp/8xYUugmb7ZemzzL
-4rTjFwOqDlESoxRrQwzsqHvO2Ry4NIkumlJe6sL17Y1tsaN1upwTxbkT+6tnnBju
-U7oj9DRd8uMdS6s9SGJoXZS6Uqgslyth31x7w0fDJQB9Q3UGluINW4ux548A4KIl
-TbWm/y0O/xhXpmQ0qArS4MfMyjit37gj9p+iKlZCUVVinQOsgovTPhacZezsxaFC
-OeSiNIsY+tmuNnWcTAnu7AwjaYViZIv9SFn1OOOtt6CJbAin4y8nT9O01Ke1fo+g
-BrKC0yw0EAN0jVM97lJNdDLuAAFfi5tPLjeorlA47rZX6ZGwbcrH0IZcRjbvIrHM
-JCrdgH5jHEsqTyg+Y1DEjhNbGGYm+ZyxLiE7/H7eMTYnHqejompYPocUJ2oUgkel
-rgMa+lLhcfUlAzGMhFsHfph5DGub5cnalZfTQ2kIvZFLalfkURWe5TE74zyONk/n
-PZViuG2aIRTdmbVyGJW6SV3HQbC3eGqzwDzGg73lWBLGxYGsmOtjtOyIoj/+Gkdu
-R6H5CNVa90sRCiSgalThL9RCzHqzqeHbNfnijXhUiMfisHNs9m4=
-=P6OU
------END PGP SIGNATURE-----
+I don't assume everybody knows.  On the contrary, I know that most
+people don't know, nor do they want to know.  When I tell, or ask my
+fellow sysadmins to follow safer practices, they just get annoyed, in
+part because the safer practices are too complicated, too brittle, and
+sometimes also not perfectly safe.  But do we really need to include
+this in every man page?  I wish there were a better place.
 
---plmH6EPkyJ/X9Oac--
+> > Editing of non-root files by root should be safe (or be made safe by
+> > making changes to the editors where necessary) only in the rare special
+> > case when those files are located in a trusted directory.  For example,
+> > editing as root /var/run/foo owned by user foo should be safe as long as
+> > /, /var, and /var/run are owned by root, but editing as root
+> > /home/foo/foo or /tmp/foo is unsafe and is likely to stay so.
+> 
+> I would need to check that on vim.tiny. As stat-ing, getxattr, renaming, 
+> chmod, ... are not atomic, I am not sure if vim.tiny as example would fulfil 
+> your expectations.
+> 
+> But before that: why do you expect the software to behave like that, when it 
+> is not stated anywhere?
+
+What I said in the paragraph quoted above is that I expect very little
+("only in the rare special case"), and even that might not be true yet
+(but we should make it true for specific tools if so).
+
+I focus on this special case because it's tenable.
+
+What you say about non-atomicity of those syscalls is not a security
+issue when the directory and all parent directories are trusted.  It can
+still be a reliability and a safety issue e.g. if two sysadmins try to
+edit a file, but I thought that was beyond scope of our discussion.
+
+> > I doubt this belongs to "SECURITY section of man pages" because this is
+> > by no means limited to just text editors.  Most tools are unsafe to use
+> > on files in untrusted directories, with very few exceptions - for
+> > example, "cp" and "mv" are generally unsafe, but "ln" is generally safe.
+> 
+> But also those tools seem not state, how they really behave regarding security 
+> in man-pages, declaring what security expectations they fulfil and which the 
+> will not fulfil (I searched for security/concurrent/user/owner/privileg but no 
+> relevant hits in the man page). How should a normal user know the difference?
+
+I am not saying things are good as they are; I think they are not.  Like
+I say, people neither know nor want to know this, and it means they
+continue to do things insecurely.  I don't currently have a solution.
+
+> > It is tricky to access files in an untrusted directory safely.  Programs
+> > that knowingly do it end up using O_EXCL or O_NOFOLLOW|O_NOCTTY and
+> > such, and doing various *stat() calls, and even that is sometimes not
+> > enough.  It'd be naive to expect the same from every other program
+> > accepting an arbitrary pathname.
+> 
+> From my point of view, this mandates something like a "libSecureOpen" (trying 
+> to get that into libc as first step might be in vain), which has a solid 
+> implementation also considering different UNIX-system peculiarities and should 
+> be used by open source software doing that kind of risky operations.
+
+IIRC, something like this was proposed in 1990s, albeit not for that
+extensive a use.
+
+You say "risky operations", but under the threat model you imply (root
+using almost any tool on pathnames with components writable by a user)
+almost all filesystem accesses are risky.
+
+To partially achieve what you seem to want to achieve, almost all uses
+of open(2) and fopen(3), etc. would need to be replaced with "secure"
+alternatives, and that would be bad in many ways, including breaking of
+customary behavior of traditional Unix command-line programs, which
+existing scripts rely on.  We could proceed with introduction of
+isatty(3) and env var checks, but this would get messy.
+
+I say "partially" because there's no way for a program to know that the
+file it's looking at is still the file the user had looked at when they
+decided to run the program against that pathname.  Not only the file
+itself could have been replaced, but an upper directory could have been.
+I included some steps to deal with this in the example referenced in my
+previous message, and one of the steps is a double-check by the user
+themselves after having created a hard link in a trusted directory.
+
+I suppose some alternate OS could introduce a paradigm where a user's
+view of the filesystem would be frozen when they stat() a file or list a
+directory and unfrozen after they've accessed a file in there.  This is
+another can of worms.  I guess it's more realistically (or less
+unrealistically) done for one thread in a program (with each thread
+having its own filesystem view freeze) rather than for a user's shell
+running multiple programs one after another.
+
+> Other 
+> software should explicitely declare: "is not safe for operating on file of 
+> different users/NFS in untrusted environments".
+
+This is true for 99%+ of Unix software.  Exceptions are few (like some
+uses of "ln", and even then there's the issue of parent directories).
+
+Alexander
