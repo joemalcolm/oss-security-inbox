@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/17/2
-Message-ID: <alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>
-Date: Fri, 16 Jun 2017 21:02:31 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: two vulns in uClibc-0.9.33.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/20
+Message-ID: <1509747072.787.15.camel@gmail.com>
+Date: Fri, 03 Nov 2017 18:11:12 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: nvi crash recovery (was Re: Re: Security risk of server side text editing in general and vim.tiny specifically)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 16 Jun 2017, Michal Zalewski wrote:
->
-> Probably no JS engine using uclibc, though.
+On Fri, 2017-11-03 at 21:26 +0100, Hanno Böck wrote:
+> On Fri, 3 Nov 2017 11:12:43 -0700
+> Ian Zimmerman <itz@...y.loosely.org> wrote:
+> 
+> > How much of this (and the parallel thread of course) applies to nvi?
+> 
+> This is actually interesting:
+> nvi saves recovery files to /var/tmp/vi.recover and creates them with
+> 600 permissions.
+> So all the problems discussed don't really apply here.
+> However the dir itself gets created by the first user using nvi. Not
+> sure if that causes any other problems (permissions are rwx for all
+> and
+> sticky bit).
 
-Uclibc is a C library like GNU libc.  Why would a JS engine not use 
-it?
+It's strange it's using /var/tmp instead of ~/.cache but at least it can
+be protected with PAM's per-user isolated directory support rather than
+relying on it being done securely.
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+In /etc/security/namespace.conf, for per-user isolated /tmp and /var/tmp:
+
+    /tmp     /tmp-inst/     level
+    /var/tmp /var/tmp-inst/ level
+
+In /etc/pam.d/system-auth:
+
+    session   required  pam_namespace.so
+
+Likely also want to mount /tmp-inst as tmpfs (mode=000) if /tmp was
+tmpfs rather than just using the root directory pam will create.
