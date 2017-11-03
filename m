@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/08/2
-Message-ID: <20171208090949.j6zlcrgv6djmwq4l@mwanda>
-Date: Fri, 8 Dec 2017 12:09:50 +0300
-From: Dan Carpenter <dan.carpenter@...cle.com>
-To: Greg KH <greg@...ah.com>
-Cc: at zhou <zhouat2017@...il.com>, security@...nel.org, secalert@...hat.com, security@...e.com, tglx@...utronix.de, oss-security@...ts.openwall.com, linux-distros@...openwall.org
-Subject: Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/18
+Message-ID: <20171103212659.378593da@pc1>
+Date: Fri, 3 Nov 2017 21:26:59 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: nvi crash recovery (was Re: Re: Security risk of server side text editing in general and vim.tiny specifically)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 07, 2017 at 12:17:18PM +0100, Greg KH wrote:
-> On Thu, Dec 07, 2017 at 06:01:43PM +0800, at zhou wrote:
-> > Hi all,
-> > 
-> > credit   to   L5@...vulcan team
-> > 
-> > I fuzzed the linux kernel and find signed integer overflow on linux
-> > 4.15.0-rc1+.
-> > the crash log can see below, the .config and the poc file ,please see the
-> > attachments.
-> 
-> Odd, doesn't seem to affect a 4.9 or 4.15-rc2 kernel here on my
-> machines, is there something specific in the .config that might be
-> triggering this?
-> 
+On Fri, 3 Nov 2017 11:12:43 -0700
+Ian Zimmerman <itz@...y.loosely.org> wrote:
 
-Greg, you're running with UBSAN?
+> How much of this (and the parallel thread of course) applies to nvi?
 
-I've always wondered how UBSAN was going to work because there are *so*
-many harmless integer overflows in the kernel.  That's my main challenge
-with trying to use static analysis for integer overflows.
+This is actually interesting:
+nvi saves recovery files to /var/tmp/vi.recover and creates them with
+600 permissions.
+So all the problems discussed don't really apply here.
+However the dir itself gets created by the first user using nvi. Not
+sure if that causes any other problems (permissions are rwx for all and
+sticky bit).
 
-regards,
-dan carpenter
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
