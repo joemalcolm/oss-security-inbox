@@ -1,29 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/11
-Message-ID: <20170223170848.17d43fb3@pc1>
-Date: Thu, 23 Feb 2017 17:08:48 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/10
+Message-ID: <20171103143900.GA2541@openwall.com>
+Date: Fri, 3 Nov 2017 15:39:00 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
+Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 23 Feb 2017 07:56:51 -0500
-Assaf Gordon <assafgordon@...il.com> wrote:
+On Fri, Nov 03, 2017 at 03:18:49PM +0100, Solar Designer wrote:
+> I am not saying things are good as they are; I think they are not.  Like
+> I say, people neither know nor want to know this, and it means they
+> continue to do things insecurely.  I don't currently have a solution.
 
-> GNU Coreutils stopped installing 'su' by default in 2007,
-> and completely removed 'su' (including the 'su.c' source file)
-> in 2012.
+The closest to a solution I came up with so far (around year 2000, but
+still unimplemented) is two programs - call them give(1) and take(1) -
+for users to exchange files safely.  From users' perspective, these
+would go along with write(1) and talk(1).  From sysadmin's perspective,
+they'd be tools to use after using an unusually safe (allocating a new
+pty, filtering terminal escapes) implementation of su(1) (actually, it
+should become su(8), since no safe use of a "su" by a user is possible
+anyway) to access the user(s)' account(s) (to copy a file between two
+users, or between a user and root).
 
-That's good to know, so now there are only 2 competing versions of su
-instead of 3 in major packages :-)
+Implementation-wise, give(1) and take(1) could either rely on having a
+shared directory with /tmp-like permissions on the same filesystem with
+the users' home directories (and this would be rather specialized, not
+addressing the need to easily share files that are not on /home) and use
+of hard links, or they'd need a daemon like talkd(8) or reuse sshd(8).
 
-Anyone have a good idea who is using shadow vs. util-linux su? Do they
-have specific advantages/disadvantages, would it be reasonable to try
-to get all distros to use them same one?
+And this last possibility brings us to what we can (and I sometimes do)
+use already - setting up temporary SSH keys with forced "cat < ..." or
+"cat > ..." commands, and using SSH for safely exchanging files by users
+of the same host, or of different hosts for this matter.  It's just
+manual setup each time, and we could want to provide convenient tools to
+automate that.
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Alexander
