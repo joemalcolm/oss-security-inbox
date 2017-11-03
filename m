@@ -1,61 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/3
-Message-ID: <20171021105847.GA16973@openwall.com>
-Date: Sat, 21 Oct 2017 12:58:47 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/14
+Message-ID: <20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>
+Date: Fri, 3 Nov 2017 11:12:43 -0700
+From: Ian Zimmerman <itz@...y.loosely.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
-Robert,
+On 2017-11-03 11:07, Fiedler Roman wrote:
 
-As a moderator, I let your questions through so far, as well as all
-replies.  I think it is in fact beneficial to question things and make
-sure people are on the same page as to what constitutes (or does not
-constitute) a security issue, and what exactly the issues are.  That
-said, please remember that your messages reach thousands of people and
-take up a tiny bit of each person's time - which adds up to way more
-time than you probably put into writing these messages.  Thus, you're
-expected to invest quite some time into reading and thinking of the
-replies you got so far before you post anything further.  To make this
-specific, please stop and re-read and think for 10 minutes before you
-possibly post anything else to this mailing list.
+> Due to the recent discussion on vim swap file use, I expected also
+> attraction of of evil-minded to the topic of text editing security and
+> thus an increase in attack probability on server side text editing in
+> general. Therefore I wanted to review our software qualification
+> criteria for text editing on servers, where vim/vim.tiny is used and
+> probably update the SOPs and guidelines.
 
-I feel that you posted the below without giving it enough time and
-thought first:
+How much of this (and the parallel thread of course) applies to nvi?
 
-On Fri, Oct 20, 2017 at 11:08:14PM +0000, Robert Watson wrote:
-> Okay, so a script adds a symlink to /etc/shadow or something else
-> confidential. Unless they're root, what good does it do them? They can't
-> read it.
-
-I think this specific question had already been addressed by Ben in:
-
-http://www.openwall.com/lists/oss-security/2017/10/18/12
-
-"There's stuff that will be protected by permissions (for example, you
-shouldn't be able to pull down /etc/shadow - so long as nginx/apache isn't
-running as root), but there are other files that you might consider
-sensitive(ish). Pulling down /etc/passwd would give you a list of known
-good usernames to better target brute-force attempts (for example). Or
-perhaps using it to grab the config file of some dynamic site on the same
-server etc."
-
-When a thread starts going in circles like that, as a moderator I have
-to intervene and stop it.  So I do.
-
-While we're at it, I also recommend that you avoid top-posting and
-over-quoting.  Here's how to format your messages better:
-
-http://www.complang.tuwien.ac.at/anton/mail-news-errors.html
-http://www.netmeister.org/news/learn2quote.html
-
-I don't find this message formatting aspect terribly important per se,
-but I may use it as yet another unreliable indicator of whether the
-person posting cares for other people's time or not.  If someone
-top-posts and quotes the previous message in its entirety on a mailing
-list (not in business correspondence, where this unfortunately became
-customary), chances are they didn't think much of what they're replying
-to and what they're posting as well.
-
-Alexander
+-- 
+Please don't Cc: me privately on mailing lists and Usenet,
+if you also post the followup to the list or newsgroup.
+To reply privately _only_ on Usenet, fetch the TXT record for the domain.
