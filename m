@@ -1,75 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/6
-Message-Id: <210A80CE-06EC-41A2-8C8A-3ABDE2BBDD9B@redhat.com>
-Date: Tue, 1 Aug 2017 12:14:33 -0600
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/04/2
+Message-ID: <20171104224428.g5w7ptjctzgzgfxy@jwilk.net>
+Date: Sat, 4 Nov 2017 23:44:28 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Syslog forwarding with IP spoofing
+Subject: Re: nvi crash recovery
 Content-Type: text/plain; charset=utf-8
 
-I think messages like this may lead to a lot of "buy product X" (which we just had now....). I'd rather the list not become a commercial free for all.
+* Jakub Wilk <jwilk@...lk.net>, 2017-11-03, 21:41:
+>>nvi saves recovery files to /var/tmp/vi.recover and creates them 
+>>with 600 permissions.
+>>So all the problems discussed don't really apply here.
+>>However the dir itself gets created by the first user using nvi.
+>
+>Sounds like a recipe for disaster.
+
+I took a closer look at what nvi does. As I expected, it's hilariously 
+bad.
+
+1) The documentation says: "If the recovery directory does not exist, 
+ex/vi will attempt to create it. This can result in the recovery 
+directory being owned by a normal user, which means that that user will 
+be able to remove other user's recovery and backup files. This is 
+annoying, but is not a security issue as the user cannot otherwise 
+access or modify the files."
+
+Nope, it's not only annoying. For example, in strace I see:
+
+open("/var/tmp/vi.recover/vi.zwHPc3", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
+...
+open("/var/tmp/vi.recover/vi.zwHPc3", O_RDWR|O_LARGEFILE) = 3
+
+Between the two syscalls, malicious owner of /var/tmp/vi.recover could 
+delete vi.zwHPc3 and replace it with their own.
 
 
--Kurt
+2) "When the system is rebooted, all of the files in /var/tmp/vi.recover 
+named recover.XXXXXX should be sent to their owners, by email, using the 
+-t option of sendmail (or a similar mechanism in other mailers)."
+
+The script that upstream provides to implement this mailing happily 
+reads the /var/tmp/vi.recover/recover.* without checking file type, or 
+lowering privileges. This provides opportunity for denial of service, or 
+exploiting MTA bugs.
+
+Debian patched some of this in 2005:
+https://bugs.debian.org/298114
+
+(Debian's test for symlinks is racy, but hopefully it doesn't matter at 
+boot time.)
+
+Oh, at some point Debian broke the script in such a way it won't send 
+any legitimate mails; but OTOH, now it lets users execute arbitrary code 
+as user "nobody":
+https://bugs.debian.org/769719
 
 
+3) The recovery files have random names, which should make you wonder 
+how does nvi know which one to open when you actually want to recover 
+something. It turns out it tries reading every 
+/var/tmp/vi.recover/recover.* file until it finds something that 
+matches. There are no ownership or file type checks.
 
-
-
-> On Aug 1, 2017, at 11:33, Mikhail Utin <mikhailutin@...mail.com> wrote:
-> 
-> Hello,
-> 
-> Indeed, it is our of this list topic.
-> 
-> Options for The Alexander:
-> 
->  1.  Normal SIEM will work with syslog as it is widely supported format and will know where the log comes from by data source configuration.
->  2.  The "open source tool" is Perl, you can create any log format from any data sources and then send to SIEM.
->  3.  Talk to SIEM tech support. Good vendor will advise. If you do not have SIEM, buy LogRhythm. That should work. Freeware OSSIM I would bet will work with syslog as well.
->  4.  Alexander can email me mikhailutin@...mail.com for details.
-> 
-> 
-> Mikhail Utin, CISSP
-> 
-> 
-> ________________________________
-> From: Solar Designer <solar@...nwall.com>
-> Sent: Tuesday, August 1, 2017 13:06
-> To: Александр Носарев
-> Cc: oss-security@...ts.openwall.com
-> Subject: Re: [oss-security] Syslog forwarding with IP spoofing
-> 
-> Hi all,
-> 
->> On Tue, Aug 01, 2017 at 05:27:26PM +0300, Александр Носарев wrote:
->> I need to recive syslog messages, filter them and send them forward to the
->> SIEM.
->> 
->> Also HOST field is not represented in syslog, so i need to spoof IP of
->> forwarding
->> packets to bind messages recived by SIEM to it's original source IP.
->> 
->> If i will try to add some marks to syslog message, I will need to override
->> parsers for each syslog source type, so it seems like abad idea.
->> 
->> Is there any open source tool for that task?
-> 
-> Somehow we almost didn't have this sort of messages - someone seeking an
-> open source security tool - sent in here so far.  Do we want them in
-> here going forward?  The current list content guidelines do not address
-> this possibility, as it certainly wasn't the purpose of the oss-security
-> list so far.  Is there another mailing list where the above message
-> would have been more appropriate?
-> 
-> http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
-> mailing-lists:oss-security [OSS-Security]<http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines>
-> oss-security.openwall.org
-> The purpose of the Open Source Security (oss-security) group is to encourage public discussion of security flaws, concepts, and practices in the Open Source community.
-> 
-> 
-> 
-> Meanwhile, please feel free to address the actual question about the
-> tool.  (I don't know of such a tool.)
-> 
-> Alexander
+-- 
+Jakub Wilk
