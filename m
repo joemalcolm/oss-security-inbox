@@ -1,4 +1,9 @@
-Received: (qmail 25648 invoked by uid 550); 7 Sep 2022 17:28:57 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["487" "Sunday" "5" "November" "2017" "17:01:41" "+0200" "Tomer Brisker" "tbrisker@redhat.com" "<CAE=eJscBcsPYzh61Cz8Pp-b9T_wiDbHykG=NCUvD8sQ8+vdFrA@mail.gmail.com>" "14" "[oss-security] Foreman 1.2+ stored XSS in fact charts" nil nil nil "11" "2017110515:01:41" "[oss-security] Foreman 1.2+ stored XSS in fact charts" (number mark "U       tbrisker@red Nov  5   14/487   " thread-indent "\"[oss-security] Foreman 1.2+ stored XSS in fact charts\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1793 invoked by uid 550); 5 Nov 2017 15:21:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25630 invoked from network); 7 Sep 2022 17:28:56 -0000
-From: Russ Allbery <eagle@eyrie.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
-	(Georgi Guninski's message of "Wed, 7 Sep 2022 08:36:17 +0300")
-Organization: The Eyrie
-References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
-	<20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
-	<CAH8yC8k8C-gp9upSpJLsXrhBB5-qSnKGeP34+32A-_s5YG3UTA@mail.gmail.com>
-	<20220907013017.GA1357227@millbarge>
-	<CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-Date: Wed, 07 Sep 2022 10:28:42 -0700
-Message-ID: <87o7vrksad.fsf@hope.eyrie.org>
+Received: (qmail 12220 invoked from network); 5 Nov 2017 15:02:33 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=uXFrA1FaEMj2H5/VuJ/48JNkxPxZ9hLyGbjYStvtOiY=;
+        b=g6oonj8ccUHqMcHG/HaLSN9CzsQDUMSimW303ACcspQl3DUsT02uBvN6HwniNhO6b2
+         hBjkKBrbYwSWfSAEn+2QWoT+OS3zltr+LRb+iDfAZMdAIa7CrDhXMXrgX6JpK3w6Z+0h
+         vK+w2PYSXqDDZGJXzuJSzUOUpcmVuTBfEJFF/6YmuHeBJlL1yLEUAxm9yEAuU6tpMe0c
+         oo/hzeazJEyAWLd1j6ZXCLrEMctwJvBdTJIAeL3da3B58u3rdv+BcFNahM9CR+RO+ihk
+         4qaDJ6rjbk6wJE3pJxmvdVZHwyYgdDNHP+MbZTswklS+ZqpYRSJo2PUGhEWDoOfnseYl
+         iiSg==
+X-Gm-Message-State: AJaThX45MybX+G31BXFK6aZWOv7kbrugx2Vb7xw7tbWQ9tRpkXgws2mJ
+	CZW4neZeBOSTnoBOHTvJopuouqGGqjoXInI/60l/C5VE
+X-Google-Smtp-Source: ABhQp+SUf8ukC/mUOTp4vXRqrbFEDPxGUHy2YTEfn8IhjdT3xTZKjBmLWzbWjIkCwSHxYWbsTfPP5q6MLWE+8MfFnPQ=
+X-Received: by 10.36.9.144 with SMTP id 138mr6279661itm.106.1509894141759;
+ Sun, 05 Nov 2017 07:02:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
- overflow in mpz type
+From: Tomer Brisker <tbrisker@redhat.com>
+Date: Sun, 5 Nov 2017 17:01:41 +0200
+Message-ID: <CAE=eJscBcsPYzh61Cz8Pp-b9T_wiDbHykG=NCUvD8sQ8+vdFrA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: foreman-security@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Foreman 1.2+ stored XSS in fact charts
 
-Georgi Guninski <gguninski@gmail.com> writes:
+CVE-2017-15100: Facts reported by hosts to Foreman containing HTML are
+not properly escaped on fact charts in the facts page, statistics
+page, and trends page when hovering over the chart with the mouse.
 
-> on ubuntu 20 a lot of stuff depends on libgmp:
+Affects Foreman 1.2 and higher.
 
-> $ apt-cache rdepends libgmp10 | wc -l
-> 2442
-> $ apt-cache rdepends libgmp10 | grep -i crypt | wc -l
-> 28
-
-> some examples:
->   gcc-9
->   gawk
->   g++-9
->   dnsmasq-base
->   cpp-9-s390x-linux-gnu
-
-> will the infidels who argue that crash in python is nothing
-> still will claim that gmp crash in any of the 2442 packages
-> is still nothing?
-
-I don't think anyone here is trying to defend the behavior of gmp.  That
-it aborts on unexpected input has been a long-standing problem that's
-provoked a lot of discussion elsewhere.  It's certainly surprising, and it
-violates the expectations that a lot of people have about how libraries
-should work.  (I feel obligated to say that the gmp maintainers do have
-reasons for why they do this, so it's not a one-sided debate, but I think
-everyone would agree that the error handling is less than ideal and
-primarily disagree about whether doing better is practically feasible for
-this specific library.)
-
-The point that I think folks are making, and at least the point that I'm
-making, is that not all bugs are security bugs.  Even very serious bugs
-are not necessarily security bugs.  You'll find a bit of skepticism from
-time to time in the security community about declaring something a
-security bug because it's not uncommon for people to try to use security
-as a lever to get a bug that annoys them fixed.  (I'm not saying you're
-doing this, just that we've all seen it happen at one point or another.)
-
-The ability to make a program crash is not inherently a security bug.  The
-ability to make a program dump cryptographic keys to a core dump file is
-not inherently a security bug if the same person who can make it do that
-can also attach to it with gdb and just read the keys directly out of
-memory.  (And if you're particularly concerned about the core dump case,
-just turning off core dumps globally for your security-sensitive
-application may be easier than trying to chase each possible cause of a
-core dump.)  Sometimes this is equivalent to Ctrl-C or kill -SEGV or other
-operations that, while possibly unexpected, fall within the expected
-permission model.  There has to be some sort of impact on the permission
-model for it to be a security bug.
-
-There probably *are* such cases in the long list of things that depend on
-gmp.  That abort() behavior has led to DoS security bugs and potential
-information leakage via core dumps in the past and probably will in the
-future.  But, for example, I'm skeptical that there is a case where
-forcing gcc to crash with invalid input is going to count as a very
-interesting security bug.  If you're running gcc with untrusted input,
-you're probably already in a world where you need to be doing heavy
-sandboxing, and I'm not sure gmp's behavior is going to be your biggest
-challenge.
+Patch available at https://github.com/theforeman/foreman/pull/4967
+Fix will be release in Foreman 1.16.0 (to be released).
+For more information see: http://projects.theforeman.org/issues/21519
 
 -- 
-Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
+Have a nice day,
+Tomer Brisker
+Red Hat Engineering
