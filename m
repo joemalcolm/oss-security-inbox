@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4525" "Tuesday" "19" "January" "2016" "15:06:51" "-0600" "Jeremy C. Reed" "jreed@isc.org" "<alpine.NEB.2.11.1601191505520.10673@t1.m.reedmedia.net>" "124" "[oss-security] CVE-2015-8704: Specific APL data could trigger an INSIST in apl_42.c causing BIND named to exit" nil nil nil "1" "2016011921:06:51" "[oss-security] CVE-2015-8704: Specific APL data could trigger an INSIST in apl_42.c causing BIND named to exit" (number mark "U       jreed@isc.or Jan 19  124/4525  " thread-indent "\"[oss-security] CVE-2015-8704: Specific APL data could trigger an INSIST in apl_42.c causing BIND named to exit\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["511" "Sunday" "5" "November" "2017" "18:17:04" "+0100" "Christian Brabandt" "cb@256bit.org" "<20171105171704.GA9438@256bit.org>" "15" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110517:17:04" "[oss-security] Fw: Security risk of vim swap files" (number mark "        cb@256bit.or Nov  5   15/511   " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171103163936.cevlb7ghcwkln6x2@jwilk.net>" ("<20171102212916.GC23769@256bit.org>" "<20171103163936.cevlb7ghcwkln6x2@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20368 invoked by uid 550); 19 Jan 2016 21:50:21 -0000
+Received: (qmail 15704 invoked by uid 550); 5 Nov 2017 17:23:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,140 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22241 invoked from network); 19 Jan 2016 21:07:02 -0000
-Date: Tue, 19 Jan 2016 15:06:51 -0600 (CST)
-From: "Jeremy C. Reed" <jreed@isc.org>
-X-X-Sender: reed@t1.m.reedmedia.net
-To: oss-security@lists.openwall.com
-Message-ID: <alpine.NEB.2.11.1601191505520.10673@t1.m.reedmedia.net>
-User-Agent: Alpine 2.11 (NEB 23 2013-08-11)
+Received: (qmail 9658 invoked from network); 5 Nov 2017 17:17:15 -0000
+Message-ID: <20171105171704.GA9438@256bit.org>
+References: <20171102212916.GC23769@256bit.org>
+ <20171103163936.cevlb7ghcwkln6x2@jwilk.net>
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Subject: [oss-security] CVE-2015-8704: Specific APL data could trigger an INSIST in apl_42.c
- causing BIND named to exit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171103163936.cevlb7ghcwkln6x2@jwilk.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Date: Sun, 5 Nov 2017 18:17:04 +0100
+From: Christian Brabandt <cb@256bit.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Fw: Security risk of vim swap files
+To: oss-security@lists.openwall.com
 
-CVE:                   CVE-2015-8704
-Document Version:      2.0
-Posting date:          19 January 2016
-Program Impacted:      BIND
-Versions affected:     9.3.0->9.8.8, 9.9.0->9.9.8-P2,
-                       9.9.3-S1->9.9.8-S3, 9.10.0->9.10.3-P2
-Severity:              High
-Exploitable:           Remotely
 
-Description:
+On Fr, 03 Nov 2017, Jakub Wilk wrote:
 
-   A buffer size check used to guard against overflow could cause
-   named to exit with an INSIST failure In apl_42.c.
+> In general, what vim does (copying mode bits) in not enough to ensure that
+> the swapfile is readable only by the users who had access to the original
+> file. It would have to copy also group ownership and ACLs.
 
-Impact:
+I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
+the group ownership problem.
 
-   A server could exit due to an INSIST failure in apl_42.c when
-   performing certain string formatting operations.  Examples include
-   (but may not be limited to):
-
-    -  Slaves using text-format db files could be vulnerable if
-       receiving a malformed record in a zone transfer from their master.
-
-    -  Masters using text-format db files could be vulnerable if
-       they accept a malformed record in a DDNS update message.
-
-    -  Recursive resolvers are potentially vulnerable when debug
-       logging, if they are fed a deliberately malformed record by
-       a malicious server.
-
-    -  A server which has cached a specially constructed record
-       could encounter this condition while performing 'rndc dumpdb'.
-
-Please Note:
-
-   Versions of BIND from 9.3 through 9.8 are also affected, but
-   these branches are beyond their "end of life" (EOL) and no longer
-   receive testing or security fixes from ISC. For current information
-   on which versions are actively supported, please see
-   http://www.isc.org/downloads/.
-
-CVSS Score:            6.8
-CVSS Vector:           (AV:N/AC:L/Au:S/C:N/I:N/A:C)
-
-For more information on the Common Vulnerability Scoring System and
-to obtain your specific environmental score please visit:
-http://nvd.nist.gov/cvss.cfm?calculator&adv&version=2&vector=(AV:N/AC:L/Au:S/C:N/I:N/A:C)
-
-Workarounds:
-
-   None
-
-Active exploits:
-
-   No known active exploits.
-
-Solution:
-
-   Upgrade to the patched release most closely related to your
-   current version of BIND.  These can all be downloaded from
-   http://www.isc.org/downloads.
-
-    -  BIND 9 version 9.9.8-P3
-    -  BIND 9 version 9.10.3-P3
-
-   BIND 9 Supported Preview edition is a feature preview version
-   of BIND provided exclusively to eligible ISC Support customers.
-
-    -  BIND 9 version 9.9.8-S4
-
-Document Revision History:
-
-   1.0 Advance Notification 12 January 2016
-   2.0 Public Disclosure  19 January 2016
-
-Related Documents:
-
-   See our BIND9 Security Vulnerability Matrix at
-   https://kb.isc.org/article/AA-00913 for a complete listing of
-   Security Vulnerabilities and versions affected.
-
-If you'd like more information on ISC Subscription Support and
-Advance Security Notifications, please visit http://www.isc.org/support/.
-
-Do you still have questions?  Questions regarding this advisory
-should go to security-officer@isc.org.  To report a new issue,
-please encrypt your message using security-officer@isc.org's PGP
-key which can be found here:
-   https://www.isc.org/downloads/software-support-policy/openpgp-key/.
-If you are unable to use encrypted email, you may also report new
-issues at: https://www.isc.org/community/report-bug/.
-
-Note:
-
-   ISC patches only currently supported versions. When possible we
-   indicate EOL versions affected.  (For current information on
-   which versions are actively supported, please see
-   http://www.isc.org/downloads/).
-
-ISC Security Vulnerability Disclosure Policy:
-
-   Details of our current security advisory policy and practice can
-   be found here: https://kb.isc.org/article/AA-00861
-
-This Knowledge Base article: https://kb.isc.org/article/AA-01335
-is the complete and official security advisory document.
-
-Legal Disclaimer:
-
-   Internet Systems Consortium (ISC) is providing this notice on
-   an "AS IS" basis. No warranty or guarantee of any kind is expressed
-   in this notice and none should be implied. ISC expressly excludes
-   and disclaims any warranties regarding this notice or materials
-   referred to in this notice, including, without limitation, any
-   implied warranty of merchantability, fitness for a particular
-   purpose, absence of hidden defects, or of non-infringement. Your
-   use or reliance on this notice or materials referred to in this
-   notice is at your own risk. ISC may change this notice at any
-   time.  A stand-alone copy or paraphrase of the text of this
-   document that omits the document URL is an uncontrolled copy.
-   Uncontrolled copies may lack important information, be out of
-   date, or contain factual errors.
-
-(c) 2001-2016 Internet Systems Consortium
+Christian
+-- 
+Advokaten, die Bratenwender der Gesetze, die so lange die Gesetze
+wenden und anwenden, bis ein Braten für sie abfällt.
+		-- Heinrich Heine
