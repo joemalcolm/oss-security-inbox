@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/4
-Message-ID: <20171113151047.GA23493@openwall.com>
-Date: Mon, 13 Nov 2017 16:10:47 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/5
+Message-ID: <20171105171704.GA9438@256bit.org>
+Date: Sun, 5 Nov 2017 18:17:04 +0100
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Subject: (linux-)distros list use statistics
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I think it's time for Gentoo and/or Amazon to share with all of us the
-statistics they should have collected so far as per:
+On Fr, 03 Nov 2017, Jakub Wilk wrote:
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> In general, what vim does (copying mode bits) in not enough to ensure that
+> the swapfile is readable only by the users who had access to the original
+> file. It would have to copy also group ownership and ACLs.
 
-"13. Keep track of per-report and per-issue handling and disclosure
-timelines (at least times of notification of the private list and of
-actual public disclosure), at regular intervals produce and share
-statistics (most notably, the average embargo duration) as well as the
-raw data (except on issues that are still under embargo) by posting to
-oss-security - primary: Gentoo, backup: Amazon"
+I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
+the group ownership problem.
 
-Please do.
-
-Thanks,
-
-Alexander
+Christian
+-- 
+Advokaten, die Bratenwender der Gesetze, die so lange die Gesetze
+wenden und anwenden, bis ein Braten für sie abfällt.
+		-- Heinrich Heine
