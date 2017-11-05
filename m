@@ -1,87 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/5
-Message-ID: <CABMkiz61DeoXuSYd5yRBYRXmVbAenFduHNJAWC0ATijPHQ=xQg@mail.gmail.com>
-Date: Thu, 6 Jul 2017 09:57:25 +0100
-From: Ben Tasker <ben@...tasker.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/6
+Message-ID: <20171105175959.GA13011@openwall.com>
+Date: Sun, 5 Nov 2017 18:59:59 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+Cc: Bram@...lenaar.net
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 5, 2017 at 10:58 PM, Simon McVittie <smcv@...ian.org> wrote:
->
-> Not every bug is a security vulnerability (not even the really bad
-> ones). At the moment, there is a strong correlation between security
-> vulnerabilities with CVE IDs, and issues for which there is consensus
-> among relevant upstream and downstream developers that the issue is in
-> fact a vulnerability for which a prompt security update is necessary. I'm
-> becoming concerned that if the working definition of a vulnerability
-> gets stretched too far towards things that are "just a bug", it will
-> reduce the perceived importance of fixing CVEs promptly, harming the
-> overall level of security in software.
->
->
-Whilst I agree with you in the general sense on this, I'm not sure it's
-applicable to this particular issue.
+On Sun, Nov 05, 2017 at 06:17:04PM +0100, Christian Brabandt wrote:
+> On Fr, 03 Nov 2017, Jakub Wilk wrote:
+> 
+> > In general, what vim does (copying mode bits) in not enough to ensure that
+> > the swapfile is readable only by the users who had access to the original
+> > file. It would have to copy also group ownership and ACLs.
+> 
+> I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
+> the group ownership problem.
 
-If this issue is triggered, then a process will run with substantially
-elevated privileges compared to those that would be expected based on a
-review of the unit file (or indeed, the installing package).
+That's some effort and code complexity for a fix that is not even trying
+to address the problem Hanno pointed out. :-(  What we really need is
+simply forcing the permissions to 0600 no matter what.  I do notice that,
+non-surprisingly, Bram said:
 
-For some distro's, it might stand out immediately as a mistake (as they
-also prohibit usernames beginning with a digit), but for others (EL7 is
-referenced in the Github issue) it won't, because the username is
-considered valid.
+| Why would a web server expose and serve such a file?  That clearly is
+| the problem, not that Vim happens to create swap files (and undo and
+| backup files, depending on your configuration).
+| 
+| You probably also create new files and copies of files that should not
+| be served.  If you care about security, the web server must always use
+| whitelisting, only serve files that were intentionally made public.
 
-So, as a result, you've potentially got a daemon listening for connections
-from the outside world, whilst running as root (despite the fact you're
-expecting it to run as an unprivileged user). If someone can convince that
-daemon to run arbitrary code, it does so with superuser privileges.
+This makes sense, yet Vim can and should also do its part to make things
+safer when that does not conflict with its other goals nor introduce
+complexity.  Simply using mode 0600 is a win-win: addresses the problem
+Hanno reported for the common special case of web server running as a
+different user than the file owner, does not break any functionality,
+and makes Vim's code simpler.
 
-IMHO the discussion on how that unit file makes it onto the system in the
-first place is an irrelevant distraction.
+Yes, let's also force 0600 for "undo and backup files", please.
 
-Mistakes happen, whether that's a package reviewer missing the connotations
-of the *valid* username in the unit file, or some eejit leaving a unit file
-world writeable (I've seen kernel modules with 0777 on public facing
-production systems in the past). There is, of course, all kinds of other
-nastiness you could do in the case of the latter, but the issue in SystemD
-contributes a nice subtle means to gain root privileges without changing
-anything too much (reducing the risk of subsequent detection).
+Even without a web server or whatever other external interaction
+aspects, copying the original file's permissions and/or obeying umask is
+just wrong in this case because those files are created implicitly,
+often without the user's intent and knowledge, and because they might
+stay around for longer than the original file does.
 
-It may depend on additional prior mistakes, but there's a lot you could
-potentially do with this, and unless you know to look for it, it's not
-going to be particularly easy to detect. Assuming it's safe (for a given
-measure of) because it needs other mistakes to happen, is, at best, unwise.
-
-So personally, I'd argue that this is more than "just a bug" as there *are*
-real-world security connotations to it, and issuing CVE's for issues that
-require something else to be exploited first isn't a new concept.
-
-
-
-> On Wed, 05 Jul 2017 at 13:27:17 -0700, Alan Coopersmith wrote:
-> > Honestly, given the level of flaming and trolling that happens on issues
-> > like this, locking the report is the only sane option I can see once
-> > everyone started piling on.   Forcing FOSS maintainers to accept infinite
-> > amounts of shitposting is a horrible way to reduce security by burning
-> > out all FOSS maintainers quickly and leaving software abandoned.
->
-> I have little to add to this, but I couldn't resist a "me too" here,
-> because I think Alan's point is very important. Maintainers can't be
-> expected to behave in a professional and effective way if their working
-> environment is consistently hostile.
->
->
-+1
-
-And in their defence, I would add that SystemD, for various reasons, does
-attract a lot of vitriol. I'm sure a good chunk of it is perceived as
-well-deserved by those directing it, but the knock on effect is that other
-issues wind up getting locked far earlier than they perhaps should (IMO).
-
-
-
--- 
-Ben Tasker
-https://www.bentasker.co.uk
-
+Alexander
