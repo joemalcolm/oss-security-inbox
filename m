@@ -1,48 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/3
-Message-ID: <cfbff1a9c0f2415692d5eb80113b00bf@imshyb02.MITRE.ORG>
-Date: Tue, 7 Feb 2017 01:56:16 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: usb: integer overflow in emulated_apdu_from_guest
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/3
+Message-ID: <CAE=eJscBcsPYzh61Cz8Pp-b9T_wiDbHykG=NCUvD8sQ8+vdFrA@mail.gmail.com>
+Date: Sun, 5 Nov 2017 17:01:41 +0200
+From: Tomer Brisker <tbrisker@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: foreman-security@...glegroups.com
+Subject: Foreman 1.2+ stored XSS in fact charts
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2017-15100: Facts reported by hosts to Foreman containing HTML are
+not properly escaped on fact charts in the facts page, statistics
+page, and trends page when hovering over the chart with the mouse.
 
-> Quick Emulator(Qemu) built with the CCID Card device emulator support is
-> vulnerable to an integer overflow flaw. It could occur while passing message
-> via command/responses packets to and from the host.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> on host resulting in DoS.
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2017-02/msg01075.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1419699
-> http://git.qemu-project.org/?p=qemu.git;a=commit;h=c7dfbf322595ded4e70b626bf83158a9f3807c6a
+Affects Foreman 1.2 and higher.
 
-Use CVE-2017-5898.
+Patch available at https://github.com/theforeman/foreman/pull/4967
+Fix will be release in Foreman 1.16.0 (to be released).
+For more information see: http://projects.theforeman.org/issues/21519
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYmW4LAAoJEHb/MwWLVhi2SCUP/j/Oy+K8VNyjXK+10PXCEw5E
-GYZn60Ni+f7hbyH6qfj8/Mut1hfNUzDaWasJtqYggHYfywRYzDNSpXhmAReNWgY7
-0gWMkcPArwUX/JntGKt24jFJV+VA7QPxXFIVrXhk8bTuvT4o9rzpWg5K12u7WLb6
-gJpQVqLm2hVNZCHNbD8Bp5oBkE24X2uYK4FKuHfDr525/zVXci1jjPrqFd476wMy
-1gZuDMPoCNmctslDMNOZp+BxSicHK69r8Wg0Y8y0A/N0zOZqNGwqXTfeuj+Fc1cG
-jqYa+YaWVyaVzH85rtlZmg5Y0+oyUHenpnm5JgdKqHq6gGMYMd2+q8YQISFBBBSm
-Wwkh3859/qreQUGwxa8WWhb866FJL+U37gY6ZuyWzRwwOyKnHwiwDojgimXn7JZU
-k5kz1AC/I0Kno9tdunv1sfr3ZrepD765unrL69LoimZxpd0I+0gDFoUVsWNIb9gK
-z1Mhbn6o/SF1b8Vp1onBSlti58/94eMj8YRlryBb9PIv/zIpNomaqVwAEqgKxR56
-LQD+Xg8yQ5tYtCiGHO/dpzX2b7Zh2T9mo6X5O2Rx9w3qa42P43LwNkzlz4FT75yO
-zduqoMugISuJsrL2H53vXcHKL6ZRAknBRgWK9gMAJ1NwF7fJedQzQPtAUXUE9Tx6
-fpL9MSGOs1Br827mKz3Q
-=JS1o
------END PGP SIGNATURE-----
+-- 
+Have a nice day,
+Tomer Brisker
+Red Hat Engineering
