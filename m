@@ -1,62 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/05/3
-Message-ID: <a842988f-6778-03e2-0b74-c2922eb46bf4@apache.org>
-Date: Thu, 5 Jan 2017 15:12:56 +0000
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/1
+Message-ID: <20171105051329.GB22636@takahe.colorado.edu>
+Date: Sat, 4 Nov 2017 23:13:29 -0600
+From: Leonid Isaev <leonid.isaev@...a.colorado.edu>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY][UPDATE] CVE-2016-8745 Apache Tomcat Information Disclosure
+Subject: Re: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-8745 Apache Tomcat Information Disclosure
+On Fri, Nov 03, 2017 at 03:39:00PM +0100, Solar Designer wrote:
+> ... reuse sshd(8).
+> 
+> And this last possibility brings us to what we can (and I sometimes do)
+> use already - setting up temporary SSH keys with forced "cat < ..." or
+> "cat > ..." commands, and using SSH for safely exchanging files by users
+> of the same host, or of different hosts for this matter.  It's just
+> manual setup each time, and we could want to provide convenient tools to
+> automate that.
 
-Severity: Important
+Ah, great :) I've been using sshd and ssh as a sudo replacement on all
+machines, inspired by your old article about insecurities of the latter (with
+locked root password, so su also doesn't work). Of course, sshd is in general
+listens on localhost:22. As for the keys, the keypair to access root, as well
+as root's authorized_keys file, are generated at each boot and stored in tmpfs.
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M13
-Apache Tomcat 8.5.0 to 8.5.8
-Apache Tomcat 8.0.0.RC1 to 8.0.39 (new)
-Apache Tomcat 7.0.0 to 7.0.73 (new)
-Apache Tomcat 6.0.16 to 6.0.48 (new)
-
-Description
-A bug in the error handling of the send file code for the NIO HTTP
-connector resulted in the current Processor object being added to the
-Processor cache multiple times. This in turn meant that the same
-Processor could be used for concurrent requests. Sharing a Processor can
-result in information leakage between requests including, not not
-limited to, session ID and the response body.
-The bug was first noticed in 8.5.x onwards where it appears the
-refactoring of the Connector code for 8.5.x onwards made it more likely
-that the bug was observed. Initially it was thought that the 8.5.x
-refactoring introduced the bug but further investigation has shown that
-the bug is present in all currently supported Tomcat versions.
-
-Mitigation:
-Users of the NIO HTTP connector with the affected versions should apply
-one of the following mitigations
-- Switch to the BIO HTTP, NIO2 HTTP or APR HTTP connector
-- Disable send file
-- Upgrade to Apache Tomcat 9.0.0.M15 or later
-  (Apache Tomcat 9.0.0.M14 has the fix but was not released)
-- Upgrade to Apache Tomcat 8.5.9 or later
-- Upgrade to Apache Tomcat 8.0.40 or later when released
-- Upgrade to Apache Tomcat 7.0.74 or later when released
-- Upgrade to Apache Tomcat 6.0.49 or later when released
-
-Credit:
-This issue was reported publicly as Bug 60409 [1] and the security
-implications identified by the Tomcat security team.
-
-History:
-2016-12-12 Original advisory
-2017-01-04 Updated information on affected versions
-
-References:
-[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60409
-[2] http://tomcat.apache.org/security-9.html
-[3] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[3] http://tomcat.apache.org/security-6.html
-
+Thanks for the idea,
+-- 
+Leonid Isaev
