@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1589" "Thursday" "1" "December" "2016" "14:13:14" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<82df59c6546c4fa695c9c1cf6988d15c@imshyb02.MITRE.ORG>" "40" "[oss-security] Re: CVE request: Kernel: kvm: stack memory information leakage" nil nil nil "12" "2016120119:13:14" "[oss-security] Re: CVE request: Kernel: kvm: stack memory information leakage" (number mark "U       cve-assign@m Dec  1   40/1589  " thread-indent "\"[oss-security] Re: CVE request: Kernel: kvm: stack memory information leakage\"\n") "<alpine.LFD.2.20.1612011545500.26855@wniryva>" ("<alpine.LFD.2.20.1612011545500.26855@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1888" "Sunday" "5" "November" "2017" "18:59:59" "+0100" "Solar Designer" "solar@openwall.com" "<20171105175959.GA13011@openwall.com>" "39" "Re: [oss-security] Fw: Security risk of vim swap files" "^Cc:" nil nil "11" "2017110517:59:59" "[oss-security] Fw: Security risk of vim swap files" (number mark "        solar@openwa Nov  5   39/1888  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171105171704.GA9438@256bit.org>" ("<20171102212916.GC23769@256bit.org>" "<20171103163936.cevlb7ghcwkln6x2@jwilk.net>" "<20171105171704.GA9438@256bit.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5587 invoked by uid 550); 1 Dec 2016 19:13:27 -0000
+Received: (qmail 28275 invoked by uid 550); 5 Nov 2017 18:01:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26528 invoked from network); 5 Nov 2017 18:00:29 -0000
+Message-ID: <20171105175959.GA13011@openwall.com>
+References: <20171102212916.GC23769@256bit.org> <20171103163936.cevlb7ghcwkln6x2@jwilk.net> <20171105171704.GA9438@256bit.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171105171704.GA9438@256bit.org>
+User-Agent: Mutt/1.4.2.3i
+Cc: Bram@Moolenaar.net
+Date: Sun, 5 Nov 2017 18:59:59 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5566 invoked from network); 1 Dec 2016 19:13:26 -0000
-From: <cve-assign@mitre.org>
-To: <ppandit@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <alpine.LFD.2.20.1612011545500.26855@wniryva>
-Message-ID: <82df59c6546c4fa695c9c1cf6988d15c@imshyb02.MITRE.ORG>
-Date: Thu, 1 Dec 2016 14:13:14 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: Kernel: kvm: stack memory information leakage
+Subject: Re: [oss-security] Fw: Security risk of vim swap files
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support
-> is vulnerable to an information leakage issue. It could occur on x86 platform,
-> in 32bit mode, while emulating instructions.
+On Sun, Nov 05, 2017 at 06:17:04PM +0100, Christian Brabandt wrote:
+> On Fr, 03 Nov 2017, Jakub Wilk wrote:
 > 
-> A user/process could use this flaw to leak host kernel memory bytes.
+> > In general, what vim does (copying mode bits) in not enough to ensure that
+> > the swapfile is readable only by the users who had access to the original
+> > file. It would have to copy also group ownership and ACLs.
+> 
+> I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
+> the group ownership problem.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1400468
-> https://git.kernel.org/linus/2117d5398c81554fbf803f5fd1dc55eb78216c0c
+That's some effort and code complexity for a fix that is not even trying
+to address the problem Hanno pointed out. :-(  What we really need is
+simply forcing the permissions to 0600 no matter what.  I do notice that,
+non-surprisingly, Bram said:
 
->> KVM: x86: drop error recovery in em_jmp_far and em_ret_far
+| Why would a web server expose and serve such a file?  That clearly is
+| the problem, not that Vim happens to create swap files (and undo and
+| backup files, depending on your configuration).
+| 
+| You probably also create new files and copies of files that should not
+| be served.  If you care about security, the web server must always use
+| whitelisting, only serve files that were intentionally made public.
 
->> was left uninitialized outside of long mode
+This makes sense, yet Vim can and should also do its part to make things
+safer when that does not conflict with its other goals nor introduce
+complexity.  Simply using mode 0600 is a win-win: addresses the problem
+Hanno reported for the common special case of web server running as a
+different user than the file owner, does not break any functionality,
+and makes Vim's code simpler.
 
-Use CVE-2016-9756.
+Yes, let's also force 0600 for "undo and backup files", please.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Even without a web server or whatever other external interaction
+aspects, copying the original file's permissions and/or obeying umask is
+just wrong in this case because those files are created implicitly,
+often without the user's intent and knowledge, and because they might
+stay around for longer than the original file does.
 
-iQIcBAEBCAAGBQJYQHXsAAoJEHb/MwWLVhi2TgcQAIG2Ktz53lW9raKviMre4rfZ
-X2KyP4Z3K5IKcpMhKZRIFbwTE9VdN7T+w6avgh896X/b+qOyL4iAyXSumVMVsAzZ
-I5tr0qxJvL1wybm5v/+w+dwWySE9rETa6kYxhjt/SPqvNiO2MluysS2zt1IjG2IT
-oN+NnXWOk5rgfl4lp3Ei2sbLOU/0dWd0XgVRVmA332toD+w+AcsHCQBPy0Bba11B
-CHE8pzNqQr5R0237OuCEXd5aAQVw7YJKz6oQVii1HjK523m7Cf/C1NH6k/lAQby4
-mJcuC41yApyiPB/Ch2iUg1IKg6b2b1himL12kDEgTvgejE/4x0BNTaMw5bYCPSAe
-RhCNNMLmhKy6VBB3aUTKIGoFa0q/DplL9jGG5Jy2LQ9tg1rC68MWqrSdlHDDscxu
-svTUMiPpboh83D5BYhVTXajQzVEgFktbGyycOgfT2cos5imbF9RPXYtu/QD5e+Pp
-T/9ziafUnQ1YrU3X2wpV/v0P8mFoxsDVrEu8AMvvB/Q+tKyB62rSV/Fc952M52K3
-eeJPGEC83G7O51ZAuEXGaJGqSTQ90UrPM38fOJIYOmX18HwaBIyEdBFvhXshpjYE
-UfCjLblQYcnV3Ba02CjbA9MSkzfuClGXwHVBTPkIi8aV+BDKlR958wNrjO+HWQl/
-44D1okf1EQ/QqrejB32l
-=YB5I
------END PGP SIGNATURE-----
+Alexander
