@@ -1,43 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/20/6
-Message-id: <1ED75849-154D-47B3-8D07-6E0797B1D277@apple.com>
-Date: Thu, 20 Jul 2017 15:04:30 -0400
-From: Jesse Hertz <jesse_hertz@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/4
+Message-ID: <20171105153558.GA12333@openwall.com>
+Date: Sun, 5 Nov 2017 16:35:58 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CoreOS membership to linux-distros (updated)
+Subject: Re: Re: CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()
 Content-Type: text/plain; charset=utf-8
 
-Additionally, Docker doesn't maintain a kernel distribution, whereas OpenVZ does, making this request strange to say the least.
+On Sun, Nov 05, 2017 at 01:58:33PM +0100, up201407890@...nos.dcc.fc.up.pt wrote:
+> Here's a video
 
-I also think its disingenuous to imply there's "one patch" that divides a secure containerization system from another. Container/Kernel security is... quite complicated to say the least.
-> On Jul 20, 2017, at 6:42 AM, Greg KH <greg@...ah.com> wrote:
-> 
-> On Thu, Jul 20, 2017 at 07:13:03AM +0300, gremlin@...mlin.ru wrote:
->> On 2017-07-18 14:56:23 -0700, Euan Kemp wrote:
->> 
->>> I???ve listed each criterion and why I think we, the Container
->>> Linux team at CoreOS, qualify.
->>> 
->>> 
->>>> 1. Be an actively maintained Unix-like operating system distro
->>>> with substantial use of Open Source components
->>> All components of the distro are open source, as are all the
->>> tools used to build it.
->> 
->> Prior to any decision to be made, I'd ask you to show the kernel
->> patch which you use to avoid escaping from the container to host
->> system (Docker allows such escape, OpenVZ does not). Could you,
->> please, show it?
-> 
-> All of CoreOS's kernel patches are public, here's their latest branch:
-> 	https://github.com/coreos/linux/tree/v4.12.2-coreos
-> 
-> But what does a specific kernel patch have to do with linux-distro's
-> membership requirements?
-> 
-> confused,
-> 
-> greg k-h
+This is a mailing list.
 
+> I may write a more detailed write-up if people seem interested. :)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+A write-up included (at least) in the message itself would have been far
+more appropriate for oss-security.
+
+I appreciate you having included a summary, yet I feel we need to
+actively discourage video-mostly postings - hence this follow-up.
+
+Alexander
