@@ -1,76 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/16/1
-Message-ID: <690621455.20591654.1508144945361.JavaMail.zimbra@redhat.com>
-Date: Mon, 16 Oct 2017 05:09:05 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/7
+Message-ID: <20171105181431.a7zstp2v4bytdlvg@jwilk.net>
+Date: Sun, 5 Nov 2017 19:14:31 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-15299: Linux kernel: incorrect update of uninstantiated keys can crash a kernel
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-Heololo,
+* Christian Brabandt <cb@...bit.org>, 2017-11-05, 18:17:
+>>In general, what vim does (copying mode bits) in not enough to ensure 
+>>that the swapfile is readable only by the users who had access to the 
+>>original file. It would have to copy also group ownership and ACLs.
+>I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
+>the group ownership problem.
 
-> [Suggested description]
-> The KEYS subsystem in the Linux kernel through 4.13.7 mishandles use of
-> the add_key() for a key that already exists but is uninstantiated, which
-> allows local users to cause a denial of service (NULL pointer dereference
-> and a system crash) or possibly have unspecified other impact via a crafted
-> system call.
-> 
-> ------------------------------------------
-> 
-> [VulnerabilityType Other]
-> CWE-476 NULL Pointer Dereference
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> kernel.org: Linux kernel
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> Linux kernel - upto v4.14
-> 
-> ------------------------------------------
-> 
-> [Affected Component]
-> 'security/keys/keyring.c', 'security/keys/key.c' files, find_key_to_update(),
-> key_create_or_update() functions
-> 
-> ------------------------------------------
-> 
-> [Attack Type]
-> Local
-> 
-> ------------------------------------------
-> 
-> [Impact Denial of Service]
-> true
-> 
-> ------------------------------------------
-> 
-> [Attack Vectors]
-> to exploit a vulnerability an attacker should run a certain binary as unprivileged user
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> https://bugzilla.redhat.com/show_bug.cgi?id=1498016
-> https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1499828.html
-> https://marc.info/?t=150654188100001&r=1&w=2
-> https://marc.info/?t=150783958600011&r=1&w=2
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
-> 
-> ------------------------------------------
-> 
-> [Discoverer]
-> Eric Biggers <ebiggers@...gle.com>
->
-> Use CVE-2017-15299.
+So the code in question looks like this:
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+   /*
+    * If the group-read bit is set but not the world-read bit, then
+    * the group must be equal to the group of the original file.  If
+    * we can't make that happen then reset the group-read bit.  This
+    * avoids making the swap file readable to more users when the
+    * primary group of the user is too permissive.
+    */
+   if ((swap_mode & 044) == 040)
+   {
+       stat_T	swap_st;
+
+       if (mch_stat((char *)swap_fname, &swap_st) >= 0
+       	&& st.st_gid != swap_st.st_gid
+       	&& fchown(curbuf->b_ml.ml_mfp->mf_fd, -1, st.st_gid)
+       							 == -1)
+           swap_mode &= 0600;
+   }
+
+   (void)mch_setperm(swap_fname, (long)swap_mode);
+
+The logic here is based on the assumption that the 040 bit in the mode 
+implies that everyone in the group can read the file. Somewhat 
+surprisingly, this assumption is incorrect in the world with ACLs:
+
+   $ id -gn
+   users
+
+   $ ls -l foo
+   -rw-r-----+ 1 root users 0 Nov  5 18:34 foo
+
+   $ cat foo
+   cat: foo: Permission denied
+
+   $ getfacl foo
+   # file: foo
+   # owner: root
+   # group: users
+   user::rw-
+   user:nobody:r--
+   group::---
+   mask::r--
+   other::---
+
+I don't understand why this chmodding is needed at all.
+Couldn't vim create swapfiles with mode 0600 and be done with it?
+
+-- 
+Jakub Wilk
