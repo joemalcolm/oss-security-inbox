@@ -1,48 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/9
-Message-ID: <e2ec939c-1fa5-8619-7771-d68ee2bff13c@coreos.com>
-Date: Tue, 27 Jun 2017 13:59:48 -0700
-From: Euan Kemp <euan.kemp@...eos.com>
-To: oss-security@...ts.openwall.com
-Subject: CoreOS membership to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/2
+Message-ID: <20171105135833.15025s7hrnp0yd4w@webmail.alunos.dcc.fc.up.pt>
+Date: Sun, 05 Nov 2017 13:58:33 +0100
+From: up201407890@...nos.dcc.fc.up.pt
+To: oss-security@...ts.openwall.com, up201407890@...nos.dcc.fc.up.pt
+Subject: Re: Re: CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+Hello again list,
 
-We, the Container Linux team at CoreOS[0], would like to request
-membership to the linux-distros list.
+Here's a video on how I bypassed KASLR and got root using only  
+CVE-2017-5123, a non-controlled arbitrary write (though 0's are  
+written), without a single read.
 
-We've requested membership once before[1], but at the time new members
-weren't being added iirc.
+https://www.youtube.com/watch?v=DfwOJIcV5ZA
 
-Based on Solar's comments in the Stack Clash thread, this seems like a
-good time to renew this discussion.
+"This exploit uses solely CVE-2017-5123, a Linux kernel vulnerability  
+for 4.12-4.13, which gives an attacker a write-not-what-only-where  
+primitive, or in other words, the ability to write non-controlled user  
+data to arbitrary kernel memory.
+KASLR is bypassed using memory probing and root obtained via cred  
+struct spraying and location predictability.
 
+twitter.com/uid1000
 
-To preempt some possible questions:
+Music is from Sonic the Hedgehog (1991) for the Sega Genesis."
 
-Q: What’s Container Linux?
-Container Linux (formerly called CoreOS) is a linux distribution for
-servers which automatically updates by default; it’s generally available
-and has a fairly large install base.
+I may write a more detailed write-up if people seem interested. :)
 
-Q: Can you handle embargoed builds?
-We have the infrastructure and experience to make embargoed
-builds/releases. These have been exercised by e.g. docker CVEs in the past.
-
-Q: Do you have an advisory page?
-We don't have a more comprehensive advisory page than our release notes
-(which list CVEs fixed in each version) and in some cases blog posts.
-We intend to have an advisory page at some indeterminate point in the
-future.
+Thanks,
+Federico Bento.
 
 
-- Euan
-
-[0]: https://coreos.com/why/
-[1]: http://seclists.org/oss-sec/2016/q4/205
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
 
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (852 bytes)
