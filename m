@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["949" "Thursday" "30" "April" "2020" "15:56:06" "+0200" "Jacques Le Roux" "jacques.le.roux@les7arts.com" "<ea291a31-a9cc-88ed-67ad-8466b1024175@les7arts.com>" "38" "[oss-security] [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities" nil nil nil "4" "2020043013:56:06" "[oss-security] [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities" (number mark "U       jacques.le.r Apr 30   38/949   " thread-indent "\"[oss-security] [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1694" "Sunday" "5" "November" "2017" "19:14:31" "+0100" "Jakub Wilk" "jwilk@jwilk.net" "<20171105181431.a7zstp2v4bytdlvg@jwilk.net>" "57" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110518:14:31" "[oss-security] Fw: Security risk of vim swap files" (number mark "        jwilk@jwilk. Nov  5   57/1694  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171105171704.GA9438@256bit.org>" ("<20171102212916.GC23769@256bit.org>" "<20171103163936.cevlb7ghcwkln6x2@jwilk.net>" "<20171105171704.GA9438@256bit.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29722 invoked by uid 550); 30 Apr 2020 14:28:12 -0000
+Received: (qmail 22001 invoked by uid 550); 5 Nov 2017 18:14:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31837 invoked from network); 30 Apr 2020 13:58:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=les7arts.com;
-	s=nfrance; t=1588254962;
-	bh=DiDeji6DS5Ve5pHAsTuUqhnTpVAhDqVmvTlHdW/eoCc=;
-	h=To:From:Subject:Date;
-	z=To:=20oss-security@lists.openwall.com|From:=20Jacques=20Le=20Roux
-	 =20<jacques.le.roux@les7arts.com>|Subject:=20[CVE-2019-0235=20]=20
-	 Apache=20OFBiz=20multiple=20CSRF=20vulnerabilities|Date:=20Thu,=20
-	 30=20Apr=202020=2015:56:06=20+0200;
-	b=RmTcM/0j/oXhLpaBvx6Z3Al+jzj2FnJFLoZNGgloDgqs7VzIjyFKPwwWVIvlCLuH5
-	 Spde+iIdWg/kLQwZstoutlQHU79Zbr19qS4QhqO5e+L9wKar8nocEnUJy+9xjWdZmC
-	 6YuGjwum1GkqOAJ6Tfiyo0K7iJqQxjYehx3Pxp2o=
-To: oss-security@lists.openwall.com
-From: Jacques Le Roux <jacques.le.roux@les7arts.com>
-Organization: Les Arts Informatiques
-Message-ID: <ea291a31-a9cc-88ed-67ad-8466b1024175@les7arts.com>
-Date: Thu, 30 Apr 2020 15:56:06 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Received: (qmail 21980 invoked from network); 5 Nov 2017 18:14:48 -0000
+Message-ID: <20171105181431.a7zstp2v4bytdlvg@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20171102212916.GC23769@256bit.org>
+ <20171103163936.cevlb7ghcwkln6x2@jwilk.net>
+ <20171105171704.GA9438@256bit.org>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="------------F545C392E678C162885F3487"
-Content-Language: en-GB
-Subject: [oss-security] [CVE-2019-0235 ] Apache OFBiz multiple CSRF vulnerabilities
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20171105171704.GA9438@256bit.org>
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-Ovh-Tracer-Id: 6128273194230732710
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedttddrhedvgdduudefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
+Date: Sun, 5 Nov 2017 19:14:31 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Fw: Security risk of vim swap files
+To: oss-security@lists.openwall.com
 
---------------F545C392E678C162885F3487
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+* Christian Brabandt <cb@256bit.org>, 2017-11-05, 18:17:
+>>In general, what vim does (copying mode bits) in not enough to ensure 
+>>that the swapfile is readable only by the users who had access to the 
+>>original file. It would have to copy also group ownership and ACLs.
+>I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
+>the group ownership problem.
 
-Severity:
-Important
+So the code in question looks like this:
 
-Vendor:
-The Apache Software Foundation
+   /*
+    * If the group-read bit is set but not the world-read bit, then
+    * the group must be equal to the group of the original file.  If
+    * we can't make that happen then reset the group-read bit.  This
+    * avoids making the swap file readable to more users when the
+    * primary group of the user is too permissive.
+    */
+   if ((swap_mode & 044) == 040)
+   {
+       stat_T	swap_st;
 
-Versions Affected:
-OFBiz 17.12.01
+       if (mch_stat((char *)swap_fname, &swap_st) >= 0
+       	&& st.st_gid != swap_st.st_gid
+       	&& fchown(curbuf->b_ml.ml_mfp->mf_fd, -1, st.st_gid)
+       							 == -1)
+           swap_mode &= 0600;
+   }
 
-Description:
-Apache OFBiz is vulnerable to CSRF attacks
+   (void)mch_setperm(swap_fname, (long)swap_mode);
 
-Mitigation:
-Upgrade to 17.12.03 or manually apply the commits at OFBIZ-11470
-----
+The logic here is based on the assumption that the 040 bit in the mode 
+implies that everyone in the group can read the file. Somewhat 
+surprisingly, this assumption is incorrect in the world with ACLs:
 
-Credit:
-Initially known by the OFBiz security team (OFBIZ-10427),
-also reported later by
-Man Yue Mo via RT <security-reports@semmle.com>
-Shuibo Ye <shuiboye@gmail.com>
-Vikash Patnaik <vikash.patnaik@outlook.com>
-Sonali Agrahari <sonaliagrahari8@gmail.com>
-Girish Vasmatkar <girish.vasmatkar@hotwaxsystems.com>
-Dinesh Kumar Mohanty <kiitkp03@gmail.com>
-Jason Nordenstam <j.nordenstam@offensive-security.com>
-Pradeep Jairamani <pradeepjairamani22@gmail.com>
-Faiz Zaidi <faizzaidi17@gmail.com>
+   $ id -gn
+   users
 
-References:
-https://ofbiz.apache.org/security.html
+   $ ls -l foo
+   -rw-r-----+ 1 root users 0 Nov  5 18:34 foo
 
+   $ cat foo
+   cat: foo: Permission denied
 
---------------F545C392E678C162885F3487--
+   $ getfacl foo
+   # file: foo
+   # owner: root
+   # group: users
+   user::rw-
+   user:nobody:r--
+   group::---
+   mask::r--
+   other::---
+
+I don't understand why this chmodding is needed at all.
+Couldn't vim create swapfiles with mode 0600 and be done with it?
+
+-- 
+Jakub Wilk
