@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/19/2
-Message-ID: <nycvar.YSQ.7.76.1712191414120.29121@wniryva>
-Date: Tue, 19 Dec 2017 14:15:43 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2017-17741 kernel: kvm: stack-based out-of-bounds read via vmcall instruction
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/15
+Message-ID: <20171106211432.pfwrhchhbrncqggo@jwilk.net>
+Date: Mon, 6 Nov 2017 22:14:32 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+* Solar Designer <solar@...nwall.com>, 2017-11-06, 21:00:
+>I don't know what state glibc was in with regard to honoring, ignoring, 
+>or unsetting TMPDIR in SUID programs in 1998-1999.
 
-Linux kernel built with the KVM virtualization(CONFIG_KVM) support is 
-vulnerable to an out-of-bounds read access issue. It could occur when 
-emulating vmcall instruction invoked by a guest.
+glibc's tempnam() did inadvertently honor TMPDIR in setuid/setgid 
+programs, but the bug was fixed in 1996:
+https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=d68171edce96cb59b5cb869f6a82afcc50db00be
 
-A guest user/process could use this flaw to disclose kernel memory bytes.
+In 2000, glibc started unsetting TMPDIR in such programs:
+https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=74955460c5b9f23d7783395ce2478f5b7c5fd876
 
-Upstream patch:
----------------
-   -> https://www.spinics.net/lists/kvm/msg160796.html
+Curiously, Hurd implementation of tmpfile() seems to honor TMPDIR:
+https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/mach/hurd/tmpfile.c;h=8bcfb81a104f37f271b18fe2eea3d40f7d101634;hb=HEAD#l40
 
-CVE assigned via https://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+-- 
+Jakub Wilk
