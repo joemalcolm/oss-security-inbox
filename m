@@ -1,128 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/8
-Message-Id: <E1e2cPY-000765-3B@xenbits.xenproject.org>
-Date: Thu, 12 Oct 2017 12:16:24 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 238 - DMOP map/unmap missing argument checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/16
+Message-ID: <20171106230920.GB13910@hunt>
+Date: Mon, 6 Nov 2017 15:09:20 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sun, Nov 05, 2017 at 07:03:07PM -0700, Kurt Seifried wrote:
+> Also you're all still ignoring umask =(. Please, when you create a new
+> file, check the umask and subtract it to make sure you're abiding by the
+> user's wishes.
 
-                    Xen Security Advisory XSA-238
-                              version 2
+Is it not the kernel's responsibility to enforce umask(2) is properly
+applied?
 
-                DMOP map/unmap missing argument checks
+My umask(3p) includes:
 
-UPDATES IN VERSION 2
-====================
+       The file mode creation mask of the process is used to turn
+       off permission bits in the mode argument supplied during
+       calls to the following functions:
 
-Public release.
+        *  open(), openat(), creat(), mkdir(), mkdirat(), mkfifo(),
+           and mkfifoat()
 
-ISSUE DESCRIPTION
-=================
+        *  mknod(), mknodat()
 
-DMOPs (which were a subgroup of HVMOPs in older releases) allow guests
-to control and drive other guests.  The I/O request server page mapping
-interface uses range sets to represent I/O resources the emulation of
-which is provided by a given I/O request server.  The internals of the
-range set implementation require that ranges have a starting value no
-lower than the ending one.  Checks for this fact were missing.
+        *  mq_open()
 
-IMPACT
-======
+        *  sem_open()
 
-Malicious or buggy stub domain kernels or tool stacks otherwise living
-outside of Domain0 can mount a denial of service attack which, if
-successful, can affect the whole system.
+Obviously there's good case to be made that manual chmod(2) calls could
+or should be modified by umask(2) values by hand, but probably all those
+chmod(2) calls ought to be re-written to set the modes correctly at file
+creation time (or mkdir, etc) to avoid race conditions.
 
-Only domains controlling HVM guests can exploit this vulnerability.
-(This includes domains providing hardware emulation services to HVM
-guests.)
+Thanks
 
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.5 and later are vulnerable.  Xen versions 4.4 and
-earlier are not vulnerable.
-
-Only x86 systems are affected.  ARM systems are not affected.
-
-This vulnerability is only applicable to Xen systems using stub domains
-or other forms of disaggregation of control domains for HVM guests.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-(The security of a Xen system using stub domains is still better than
-with a qemu-dm running as an unrestricted dom0 process.  Therefore
-users with these configurations should not switch to an unrestricted
-dom0 qemu-dm.)
-
-CREDITS
-=======
-
-This issue was discovered by Vitaly Kuznetsov of RedHat.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa238.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x, Xen 4.7.x
-xsa238-4.6.patch       Xen 4.6.x
-xsa238-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa238*
-3cced09a1fb2936644d654c568f38580952328b84e28601b019ea74122228c36  xsa238.meta
-85d3f9713bef1bc86c682857dbd7388a1d1f20089363ddfc4cb9ecbd88eaffec  xsa238.patch
-034e91c234f6831dbaa1aaf29f4f90de2e822f99301424f7f3527f9da883ff68  xsa238-4.5.patch
-29255a81729b24866e594426167de5fbef70de21ef62a95ba95de191d2a7fd54  xsa238-4.6.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZ31v7AAoJEIP+FMlX6CvZrBgIAMg3C1Gvc3rnrPjT+0Im7gdQ
-vBXGAWViWDs7EC1Vl5IU6lQQKETNmx40kRPyOYOVSdPzWamOotXOSadpJ49mbTX1
-CA2iSJ8OAdqcPhgKjdUYVJXkybujNp6WkdlcT6ZXvEs6DLuvKJXZBaRoX2vYtObq
-JjwUfGgpHcOc8vLhaEjEZTWRnKJotqQPaPaDHzrtGJAkHB0F+gwqpM4lBD6Q18+/
-DzyBWlDENEcoSwzDldZ/4Ktl/rOXDOPoYYZfnFmYA2puWP7ujonio8iofOy+6GH3
-GoKSPs1ciC4ax1WdJqbuxM0TCStz4QFOselVQ0hEJNdH6k3mmA4wMg+6kPNDf2U=
-=9idj
------END PGP SIGNATURE-----
-
-Download attachment "xsa238.meta" of type "application/octet-stream" (1867 bytes)
-
-Download attachment "xsa238.patch" of type "application/octet-stream" (1545 bytes)
-
-Download attachment "xsa238-4.5.patch" of type "application/octet-stream" (1435 bytes)
-
-Download attachment "xsa238-4.6.patch" of type "application/octet-stream" (1435 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
