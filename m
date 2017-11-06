@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/11
-Message-ID: <e84de9d7-409e-1346-87a6-0950030449fe@insomniasec.com>
-Date: Wed, 14 Jun 2017 09:24:26 +1200
-From: Murray McAllister <murray.mcallister@...omniasec.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/3
+Message-ID: <20171106070849.GB9438@256bit.org>
+Date: Mon, 6 Nov 2017 08:08:49 +0100
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory in vmw_gb_surface_define_ioctl()
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
-On 13/06/17 15:39, Murray McAllister wrote:
-> The vmw_gb_surface_define_ioctl() function (accessible via
-> DRM_IOCTL_VMW_GB_SURFACE_CREATE) defines a backup_handle variable but
-> does not give it an initial value. If you attempt to create a GB
-> surface, and provide a previously-allocated DMA buffer to be used as a
-> backup buffer, the backup_handle variable does not get written to and is
-> then later returned to user-space.
-> 
-> Upstream commit:
-> 
-> https://github.com/torvalds/linux/commit/07678eca2cf9c9a18584e546c2b2a0d0c9a3150c
-> 
-> CVE:
-> 
-> I'll request one now and reply once I have one.
-> 
 
-MITRE assigned CVE-2017-9605.
+On So, 05 Nov 2017, Jakub Wilk wrote:
 
-Thanks
+> Couldn't vim create swapfiles with mode 0600 and be done with it?
+
+Because then users of the group could not recover the file anymore, 
+although they are able to read the original file.
+
+Christian
+-- 
+Was macht ein Ostfriese mit dem Messer auf dem Deich? 
+Er will in See stechen! 
