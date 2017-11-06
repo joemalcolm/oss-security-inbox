@@ -1,47 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/2
-Message-ID: <CACO5Y4zUtzG38tkpQZDAeUdz-c69Gg4Q7fz2dLaT0ywdfWQYcA@mail.gmail.com>
-Date: Tue, 25 Apr 2017 18:16:08 -0700
-From: Chris Douglas <cdouglas@...che.org>
-To: user@...oop.apache.org,  "common-dev@...oop.apache.org" <common-dev@...oop.apache.org>,  "general@...oop.apache.org" <general@...oop.apache.org>, "security@...che.org" <security@...che.org>,  full-disclosure@...ts.grok.org.uk, bugtraq <bugtraq@...urityfocus.com>,  oss-security@...ts.openwall.com,  "<security@...oop.apache.org>" <security@...oop.apache.org>
-Subject: CVE-2017-3161: Apache Hadoop NameNode XSS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/1
+Message-ID: <CANO=Ty2nVrHiLcEmOX-cSsEi5PLaPbZgMe47zprq9JoB0132Cg@mail.gmail.com>
+Date: Sun, 5 Nov 2017 19:03:07 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Fw: Security risk of vim swap files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Also you're all still ignoring umask =(. Please, when you create a new
+file, check the umask and subtract it to make sure you're abiding by the
+user's wishes.
 
-CVE-2017-3161: Apache Hadoop NameNode XSS vulnerability
+On Sun, Nov 5, 2017 at 11:19 AM, Scott Court <z5t1@...1.com> wrote:
 
-Severity: Important
+> Just want to point out that even if we do set 0600 permissions on all
+> .swp files, it still may allow for a form of the attack Hanno originally
+> pointed out if vim is ever run as the httpd user. In reality, this is
+> far less likely to occur but it's still worth pointing out.
+>
+> Storing the .swp files in a separate directory prevents this from
+> potentially being a problem as well. However, universally setting the
+> .swp files to 0600 is probably a better solution than that patch
+> (https://github.com/vim/vim/releases/tag/v8.0.1263).
+>
+>
+> On 11/05/2017 12:59 PM, Solar Designer wrote:
+> > On Sun, Nov 05, 2017 at 06:17:04PM +0100, Christian Brabandt wrote:
+> >> On Fr, 03 Nov 2017, Jakub Wilk wrote:
+> >>
+> >>> In general, what vim does (copying mode bits) in not enough to ensure
+> that
+> >>> the swapfile is readable only by the users who had access to the
+> original
+> >>> file. It would have to copy also group ownership and ACLs.
+> >> I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes
+> >> the group ownership problem.
+> > That's some effort and code complexity for a fix that is not even trying
+> > to address the problem Hanno pointed out. :-(  What we really need is
+> > simply forcing the permissions to 0600 no matter what.  I do notice that,
+> > non-surprisingly, Bram said:
+> >
+> > | Why would a web server expose and serve such a file?  That clearly is
+> > | the problem, not that Vim happens to create swap files (and undo and
+> > | backup files, depending on your configuration).
+> > |
+> > | You probably also create new files and copies of files that should not
+> > | be served.  If you care about security, the web server must always use
+> > | whitelisting, only serve files that were intentionally made public.
+> >
+> > This makes sense, yet Vim can and should also do its part to make things
+> > safer when that does not conflict with its other goals nor introduce
+> > complexity.  Simply using mode 0600 is a win-win: addresses the problem
+> > Hanno reported for the common special case of web server running as a
+> > different user than the file owner, does not break any functionality,
+> > and makes Vim's code simpler.
+> >
+> > Yes, let's also force 0600 for "undo and backup files", please.
+> >
+> > Even without a web server or whatever other external interaction
+> > aspects, copying the original file's permissions and/or obeying umask is
+> > just wrong in this case because those files are created implicitly,
+> > often without the user's intent and knowledge, and because they might
+> > stay around for longer than the original file does.
+> >
+> > Alexander
+>
+>
+>
 
-Vendor: The Apache Software Foundation
 
-Versions affected: Hadoop 2.6.x and earlier
+-- 
 
-Description:
-The HDFS web UI is vulnerable to a cross-site scripting (XSS) attack
-through an unescaped query parameter.
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-Mitigation:
-Users of Apache Hadoop 2.6.x and earlier should upgrade to Hadoop
-2.7.0 or later.
-
-Credit:
-This issue was discovered by Sunil Yadav.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJY//OZAAoJEPrQXCrFJpS4YEIP/RfhNS+MHoyc+Qgj2DXlw4NK
-yH8RVh2Kg2qnIkl/gaNromzYuJn7EEgBuyeXCkEUax4F2G0zUuVEImxVNPlLGVp3
-gvj4tAmpCQ6/JcaklI5p8C5LV1Qe17EnHXZ34eFKXTTej3NyE01o6D4mDYW9pmHG
-8JGjZ1FtZpP3YTvqiDrSbXTsSx5bY9uJOaqPrkQAdmTOWRrtnKHF/nS39vrBRJCL
-J/gEb3k8/UVco5gOtqFcWSXyNPgZofYCfaGgyWH2wauH8ngD6kEI5Yx1fX5CVDeU
-Kpr+mJxNGNqICI8+L84tCuHMXO4Ie0ec4X87VzWX1Bf9FGMfAm8UKapsw69qCJrk
-Pszul+d1Wq1gEcOUccbnEuMP0JfOuzer8GQ9FohCRUO26C6DFhN7sgMUFRUEJeia
-ElTiolEh9jv+2NssmNkgZH8eK6fKrK5MZR8TankmOUiw++nxJjqCRP/D6aGuEkYR
-g7zuS3KBK5G8EmLdT/DTRuakWIsKGDkVic0s/NMrYx+fV3DGUe/2hB4ejXfTHQnU
-85fYiyR7l8F4YmVqmCf9fb1FYclJ/J/9QuBHw0X523EKUH+sePOFjBzdiF+Apazp
-6I5iaPHlnNS50dCSksMs/hlu3GjcU5ZMm9xG+yBGYN8Ex5sEXKcqVuvw7n6Ju4OH
-AZbRxaHoIU5p8U0S237o
-=87hK
------END PGP SIGNATURE-----
