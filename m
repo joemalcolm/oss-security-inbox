@@ -1,35 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/31
-Message-ID: <72ad0aa8-88c8-cba1-84d4-35cc69fc86af@treenet.co.nz>
-Date: Fri, 10 Feb 2017 08:23:18 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/5
+Message-ID: <2ECE9D9EEF1F524185270138AE23265955B0C1F8@S0MSMAIL112.arc.local>
+Date: Mon, 6 Nov 2017 09:44:32 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+Subject: AW: Re: Security risk of server side text editing in general and vim.tiny specifically
 Content-Type: text/plain; charset=utf-8
 
-On 10/02/2017 5:07 a.m., Steven R. Loomis wrote:
-> On 2/9/17 6:54 AM, Peter Bex wrote:
->> In an ideal world, free software project leaders should be
->> able to request a CVE ID _before_ announcing a vulnerability to their
->> user base.  If there were some way to register people as project leaders,
->> the "proof" should not be necessary, they should be able to request a
->> CVE ID with authority.
-> Peter,
->  I actually wondered about this very thing, if it was possible to
-> request an ID before the details were fully available. From your note,
-> it sounds like this is not the case currently.
-> 
-> Steven
-> 
+Hello Jan,
 
-I used to request CVE with a brief description suitable for the CVE
-record and reference URL(s) eg. where the upstream advisory was going to
-be located. Nowdays someone at mitre seems to be waiting for the URL to
-go public before assignment :-(.
+> From: Ian Zimmerman [mailto:itz@...y.loosely.org]
+>
+> On 2017-11-03 11:07, Fiedler Roman wrote:
+>
+> > Due to the recent discussion on vim swap file use, I expected also
+> > attraction of of evil-minded to the topic of text editing security and
+> > thus an increase in attack probability on server side text editing in
+> > general. Therefore I wanted to review our software qualification
+> > criteria for text editing on servers, where vim/vim.tiny is used and
+> > probably update the SOPs and guidelines.
+>
+> How much of this (and the parallel thread of course) applies to nvi?
 
-AYJ
+Sorry about the parallel threads, Outlook removes the relevant mail headers 
+without asking under some circumstances.
 
+Nvi avoids the chmod/chown trickery, at least for Ubuntu Xenial. So all those 
+bugs do not apply.
 
+As written in another post, using /var/tmp in that way is really a bad idea. 
+In my opinion it is a pity, that the vim recover redesign did not cleanly 
+separate locking and recovery. In my opinion, a good solution would be to 
+create a [].lock file where the file resides, thus also working across network 
+shares, ... Recovery files should go only to user directories, where tmp dir 
+cleanup is not an issue. When same user attempts recovery, his personal 
+recovery copy is found anyway. If another user finds the lock, he has to 
+decide his actions anyway, e.g. a) make the change without knowing the "lost" 
+changes from another user, because it is urgent or b) find out, who the other 
+use is, search his change files (if root and allowed), ....
 
+With a lock file, nothing can leak. If "recovery of other user's changes" is a 
+common procedure in some companies, a special setting could cause the lock 
+file not to be empty but to contain the last editing user name, login time so 
+that it is easier to contact that user.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (835 bytes)
+LG Roman
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
