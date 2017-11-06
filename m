@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/14/7
-Message-ID: <20170314220336.GB14618@openwall.com>
-Date: Tue, 14 Mar 2017 23:03:36 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/14
+Message-ID: <20171106201851.arkdgqnjzx3rafv5@eldamar.local>
+Date: Mon, 6 Nov 2017 21:18:51 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)
+Cc: 连一汉 <lianyihan@....cn>
+Subject: Re: [CVE-2017-15186]: ffmpeg: Double free when ffmpeg parsing an craft AVI file to MKV file using ffvhuff decoder
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 26, 2017 at 11:46:23AM +0000, Agostino Sarubbo wrote:
-> ==6051==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a00001f708 at pc 0x0000004513de bp 0x7ffc71379b20 sp 0x7ffc713792d0
-> WRITE of size 2 at 0x61a00001f708 thread T0
->     #0 0x4513dd in read /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765
->     #1 0x7fd944373b2c in bool readValue(File*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:353:12
->     #2 0x7fd944373b2c in bool readSwap(File*, short*, int) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:375
->     #3 0x7fd944373b2c in _init /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:397
->     #4 0x7fd94439ce2f in WAVEFile::parseFormat(Tag const&, unsigned int) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:289:5
+Hi
 
-Agostino asked the list moderators to post to this thread that the above
-is CVE-2017-6828.
+On Fri, Oct 20, 2017 at 02:52:21PM +0200, Ludovic Courtès wrote:
+> Hi,
+> 
+> 连一汉 <lianyihan@....cn> skribis:
+> 
+> > FFmpeg trigger double-free when it parsing an craft AVI file to MKV file using ffvhuff decoder.
+> 
+> [...]
+> 
+> > This was fixed with the following commit:
+> > https://www.ffmpeg.org/download.html#releases
+> 
+> Looks like this is not the URL you intended to share, is it?
 
-Alexander
+The fix for this issue appears to be:
+
+https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/df62b70de8aaa285168e72fe8f6e740843ca91fa
+
+Regards,
+Salvatore
