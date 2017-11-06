@@ -1,44 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/18/12
-Message-ID: <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
-Date: Wed, 18 Oct 2017 14:30:31 +0100
-From: Ben Tasker <ben@...tasker.co.uk>
-To: oss-security@...ts.openwall.com
-Cc: Bastian Blank <waldi@...ian.org>
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/6
+Message-ID: <87efpbbt6v.fsf@concordia.ellerman.id.au>
+Date: Mon, 06 Nov 2017 21:24:56 +1100
+From: Michael Ellerman <mpe@...erman.id.au>
+To: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
+Cc: groug@...d.org, sam.bobroff@....ibm.com
+Subject: CVE-2017-15306: Linux kernel: KVM: PPC: Fix oops when checking KVM_CAP_PPC_HTM
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 18, 2017 at 1:55 PM, Robert Watson <robertcwatson1@...il.com>
-wrote:
+Hi folks,
 
-> Since security is determined by file and directory permissions and
-> ownership, not by symlinks, wouldn't the fact that a malicious user did not
-> have permissions to access the symlink's target file/directory prevent any
-> harm?
->
+Greg Kurz discovered a local denial of service (kernel oops) in the KVM
+code for powerpc.
 
-If I'm reading the original correctly, then the user that will access the
-target will be the user your HTTP daemon runs as (so, for sake of example,
-nginx).
+From his report:
 
-There's stuff that will be protected by permissions (for example, you
-shouldn't be able to pull down /etc/shadow - so long as nginx/apache isn't
-running as root), but there are other files that you might consider
-sensitive(ish). Pulling down /etc/passwd would give you a list of known
-good usernames to better target brute-force attempts (for example). Or
-perhaps using it to grab the config file of some dynamic site on the same
-server etc.
-
-So there is potential scope for abuse there, and others probably have
-better imaginations than I do.
-
-The "nice" thing about it is: if an attacker gets access to the upstream
-mirror they still may not be able to mess with the packages themselves (as
-they're signed), but with this they can still potentially be hostile to
-downstream.
+    The following program causes a kernel oops:
+    
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #include <fcntl.h>
+    #include <sys/ioctl.h>
+    #include <linux/kvm.h>
+    
+    main()
+    {
+        int fd = open("/dev/kvm", O_RDWR);
+        ioctl(fd, KVM_CHECK_EXTENSION, KVM_CAP_PPC_HTM);
+    }
+    
+    This happens because when using the global KVM fd with
+    KVM_CHECK_EXTENSION, kvm_vm_ioctl_check_extension() gets
+    called with a NULL kvm argument, which gets dereferenced
+    in is_kvmppc_hv_enabled().
 
 
--- 
-Ben Tasker
-https://www.bentasker.co.uk
+The bug was introduced in commit:
 
+  23528bb21ee2 ("KVM: PPC: Introduce KVM_CAP_PPC_HTM")
+
+Which was merged into kernel 4.8-rc1.
+
+The fix is now in mainline:
+
+  ac64115a66c1 ("KVM: PPC: Fix oops when checking KVM_CAP_PPC_HTM")
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ac64115a66c1
+
+
+cheers
+
+Download attachment "signature.asc" of type "application/pgp-signature" (819 bytes)
