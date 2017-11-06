@@ -1,72 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/6
-Message-ID: <2944552.SWHvZueMFW@arcadia>
-Date: Sun, 29 Jan 2017 17:51:29 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/8
+Message-ID: <CA+fCnZfP83sn2biq-=5x23Kfgzv_0YFKKDNpntrH89TwLRCEjw@mail.gmail.com>
+Date: Mon, 6 Nov 2017 14:45:01 +0100
+From: Andrey Konovalov <andreyknvl@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: mp3splt: invalid free in free_options (options_manager.c)
+Cc: Dmitry Vyukov <dvyukov@...gle.com>, Kostya Serebryany <kcc@...gle.com>
+Subject: Linux kernel: multiple vulnerabilities in the USB subsystem
 Content-Type: text/plain; charset=utf-8
 
-Description:
-mp3splt is a command line utility to split mp3 and ogg files without decoding.
+Hi!
 
-A fuzz on it discovered an invalid free.
+Below are the details for 14 vulnerabilities found with syzkaller in
+the Linux kernel USB subsystem. All of them can be triggered with a
+crafted malicious USB device in case an attacker has physical access
+to the machine.
 
-The complete ASan output:
+There's quite a lot more similar bugs reported [1] but not yet fixed.
 
-# mp3splt -P -f -t 0.1 -a $FILE
-==2631==ERROR: AddressSanitizer: attempting free on address which was not 
-malloc()-ed: 0x000000d3ef65 in thread T0
-    #0 0x4d3770 in free /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47
-    #1 0x50dbaa in free_options /tmp/portage/media-
-sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/options_manager.c:67:9
-    #2 0x515623 in free_main_struct /tmp/portage/media-
-sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/data_manager.c:74:7
-    #3 0x50ffa5 in process_confirmation_error /tmp/portage/media-
-sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/print_utils.c:266:7
-    #4 0x51df29 in main /tmp/portage/media-
-sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/mp3splt.c:873:9
-    #5 0x7f783aba361f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #6 0x41ad08 in _init (/usr/bin/mp3splt+0x41ad08)
+[1] https://github.com/google/syzkaller/blob/master/docs/linux/found_bugs_usb.md
 
-AddressSanitizer can not describe address in more detail (wild memory access 
-suspected).
-SUMMARY: AddressSanitizer: bad-free /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47 
-in free
-==2631==ABORTING
+### CVEs
 
-Affected version:
-0.9.2
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16525
 
-Fixed version:
-N/A
+The usb_serial_console_disconnect function in
+drivers/usb/serial/console.c in the Linux kernel before 4.13.8 allows
+local users to cause a denial of service (use-after-free and system
+crash) or possibly have unspecified other impact via a crafted USB
+device, related to disconnection and failed setup.
 
-Commit fix:
-N/A
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16526
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+drivers/uwb/uwbd.c in the Linux kernel before 4.13.6 allows local
+users to cause a denial of service (general protection fault and
+system crash) or possibly have unspecified other impact via a crafted
+USB device.
 
-CVE:
-N/A
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16527
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00130-mp3splt-badfree-free_options
+sound/usb/mixer.c in the Linux kernel before 4.13.8 allows local users
+to cause a denial of service (snd_usb_mixer_interrupt use-after-free
+and system crash) or possibly have unspecified other impact via a
+crafted USB device.
 
-Timeline:
-2017-01-01: private report to upstream via mail
-2017-01-29: public upstream report on sourceforge
-2017-01-29: blog post about the issue
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16528
 
-Note:
-This bug was found with American Fuzzy Lop.
+sound/core/seq_device.c in the Linux kernel before 4.13.4 allows local
+users to cause a denial of service (snd_rawmidi_dev_seq_free
+use-after-free and system crash) or possibly have unspecified other
+impact via a crafted USB device.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/29/mp3splt-invalid-free-in-free_options-options_manager-c
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16529
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+The snd_usb_create_streams function in sound/usb/card.c in the Linux
+kernel before 4.13.6 allows local users to cause a denial of service
+(out-of-bounds read and system crash) or possibly have unspecified
+other impact via a crafted USB device.
+
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16530
+
+The uas driver in the Linux kernel before 4.13.6 allows local users to
+cause a denial of service (out-of-bounds read and system crash) or
+possibly have unspecified other impact via a crafted USB device,
+related to drivers/usb/storage/uas-detect.h and
+drivers/usb/storage/uas.c.
+
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16531
+
+drivers/usb/core/config.c in the Linux kernel before 4.13.6 allows
+local users to cause a denial of service (out-of-bounds read and
+system crash) or possibly have unspecified other impact via a crafted
+USB device, related to the USB_DT_INTERFACE_ASSOCIATION descriptor.
+
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16532
+
+The get_endpoints function in drivers/usb/misc/usbtest.c in the Linux
+kernel through 4.13.11 allows local users to cause a denial of service
+(NULL pointer dereference and system crash) or possibly have
+unspecified other impact via a crafted USB device.
+
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16533
+
+The usbhid_parse function in drivers/hid/usbhid/hid-core.c in the
+Linux kernel before 4.13.8 allows local users to cause a denial of
+service (out-of-bounds read and system crash) or possibly have
+unspecified other impact via a crafted USB device.
+
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16534
+
+The cdc_parse_cdc_header function in drivers/usb/core/message.c in the
+Linux kernel before 4.13.6 allows local users to cause a denial of
+service (out-of-bounds read and system crash) or possibly have
+unspecified other impact via a crafted USB device.
+
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16535
+
+The usb_get_bos_descriptor function in drivers/usb/core/config.c in
+the Linux kernel before 4.13.10 allows local users to cause a denial
+of service (out-of-bounds read and system crash) or possibly have
+unspecified other impact via a crafted USB device.
+
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16536
+
+The cx231xx_usb_probe function in
+drivers/media/usb/cx231xx/cx231xx-cards.c in the Linux kernel through
+4.13.11 allows local users to cause a denial of service (NULL pointer
+dereference and system crash) or possibly have unspecified other
+impact via a crafted USB device.
+
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16537
+
+The imon_probe function in drivers/media/rc/imon.c in the Linux kernel
+through 4.13.11 allows local users to cause a denial of service (NULL
+pointer dereference and system crash) or possibly have unspecified
+other impact via a crafted USB device.
+
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16538
+
+drivers/media/usb/dvb-usb-v2/lmedm04.c in the Linux kernel through
+4.13.11 allows local users to cause a denial of service (general
+protection fault and system crash) or possibly have unspecified other
+impact via a crafted USB device, related to a missing warm-start check
+and incorrect attach timing (dm04_lme2510_frontend_attach versus
+dm04_lme2510_tuner).
